@@ -128,8 +128,7 @@ public partial class ListingData : IEquatable<ListingData>
     /// <summary>
     /// Specific customizable conditions that determine whether or not the listing can be purchased.
     /// </summary>
-    [NonSerialized]
-    [DataField(serverOnly: true)]
+    [DataField]
     public List<ListingCondition>? Conditions;
 
     /// <summary>

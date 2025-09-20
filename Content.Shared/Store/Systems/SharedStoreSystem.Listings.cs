@@ -1,20 +1,20 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Mind;
-using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Store.Systems;
+namespace Content.Shared.Store.Systems;
 
-public sealed partial class StoreSystem
+public abstract partial class SharedStoreSystem
 {
     /// <summary>
     /// Refreshes all listings on a store.
     /// Do not use if you don't know what you're doing.
     /// </summary>
-    /// <param name="component">The store to refresh</param>
-    public void RefreshAllListings(StoreComponent component)
+    /// <param name="store">The store to refresh</param>
+    public void RefreshAllListings(Entity<StoreComponent> store)
     {
+        var (uid, component) = store;
         var previousState = component.FullListingsCatalog;
         var newState = GetAllListings();
         // if we refresh list with existing cost modifiers - they will be removed,
@@ -37,6 +37,8 @@ public sealed partial class StoreSystem
         }
 
         component.FullListingsCatalog = newState;
+        DirtyField(uid, component, nameof(StoreComponent.FullListingsCatalog));
+        UpdateUi((store, component));
     }
 
     /// <summary>
@@ -46,7 +48,7 @@ public sealed partial class StoreSystem
     public HashSet<ListingDataWithCostModifiers> GetAllListings()
     {
         var clones = new HashSet<ListingDataWithCostModifiers>();
-        foreach (var prototype in _proto.EnumeratePrototypes<ListingPrototype>())
+        foreach (var prototype in Proto.EnumeratePrototypes<ListingPrototype>())
         {
             clones.Add(new ListingDataWithCostModifiers(prototype));
         }
@@ -62,7 +64,7 @@ public sealed partial class StoreSystem
     /// <returns>Whether or not the listing was added successfully</returns>
     public bool TryAddListing(StoreComponent component, string listingId)
     {
-        if (!_proto.TryIndex<ListingPrototype>(listingId, out var proto))
+        if (!Proto.TryIndex<ListingPrototype>(listingId, out var proto))
         {
             Log.Error("Attempted to add invalid listing.");
             return false;
@@ -145,7 +147,7 @@ public sealed partial class StoreSystem
     /// <param name="buyer">The buying entity.</param>
     public EntityUid GetBuyerMind(EntityUid buyer)
     {
-        if (!HasComp<MindComponent>(buyer) && _mind.TryGetMind(buyer, out var buyerMind, out var _))
+        if (!HasComp<MindComponent>(buyer) && _mind.TryGetMind(buyer, out var buyerMind, out _))
             return buyerMind;
 
         return buyer;
@@ -167,18 +169,21 @@ public sealed partial class StoreSystem
         return false;
     }
 
-    private bool TryGetListing(IReadOnlyCollection<ListingDataWithCostModifiers> collection, string listingId, [MaybeNullWhen(false)] out ListingDataWithCostModifiers found)
+    private bool TryGetListing(
+        IReadOnlyCollection<ListingDataWithCostModifiers> collection,
+        string listingId,
+        [NotNullWhen(true)] out ListingDataWithCostModifiers? found)
     {
+        found = null;
         foreach(var current in collection)
         {
-            if (current.ID == listingId)
-            {
-                found = current;
-                return true;
-            }
+            if (current.ID != listingId)
+                continue;
+
+            found = current;
+            return true;
         }
 
-        found = null!;
         return false;
     }
 }

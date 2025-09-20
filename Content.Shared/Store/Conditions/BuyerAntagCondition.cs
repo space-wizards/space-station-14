@@ -1,15 +1,16 @@
 using Content.Shared.Mind;
 using Content.Shared.Roles;
-using Content.Shared.Store;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
-namespace Content.Server.Store.Conditions;
+namespace Content.Shared.Store.Conditions;
 
 /// <summary>
 /// Allows a store entry to be filtered out based on the user's antag role.
 /// Supports both blacklists and whitelists. This is copypaste because roles
 /// are absolute shitcode. Refactor this later. -emo
 /// </summary>
+[Serializable, NetSerializable]
 public sealed partial class BuyerAntagCondition : ListingCondition
 {
     /// <summary>
