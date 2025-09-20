@@ -1,0 +1,13 @@
+﻿- type: constructionGraph
+  id: DrinkWaterBottleEmpty
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: waterbottle
+      steps:
+      - material: Plastic
+        amount: 1
+        doAfter: 3
+  - node: waterbottle
+    entity: DrinkWaterBottleEmpty
