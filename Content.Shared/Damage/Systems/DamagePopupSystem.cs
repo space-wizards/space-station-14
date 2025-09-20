@@ -31,7 +31,7 @@ public sealed class DamagePopupSystem : EntitySystem
                 _ => "Invalid type",
             };
 
-            _popupSystem.PopupPredicted(msg, ent.Owner, args.Origin);
+            _popupSystem.PopupPredicted(msg, ent.Owner, ent);
         }
     }
 
