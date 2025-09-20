@@ -66,7 +66,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
             var visuals = EnsureComp<JointVisualsComponent>(shotUid.Value);
             visuals.Sprite = component.RopeSprite;
             visuals.OffsetA = new Vector2(0f, 0.5f);
-            visuals.Target = GetNetEntity(uid);
+            visuals.Target = uid;
             Dirty(shotUid.Value, visuals);
         }
 
