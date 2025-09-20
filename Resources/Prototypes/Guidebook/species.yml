@@ -17,6 +17,7 @@
   - Shadekin
   - Vox
   - Vulpkanin
+  - Thaven #Starlight
 
 - type: guideEntry
   id: Arachnid
@@ -88,4 +89,5 @@
   id: Shadekin
   name: species-name-shadekin
   text: "/ServerInfo/Guidebook/Mobs/Shadekin.xml"
+
 

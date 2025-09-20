@@ -3,6 +3,7 @@ using Content.Server.NPC;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.HTN.PrimitiveTasks;
 using Content.Shared._Starlight.Actions.Jump;
+using Content.Shared.Throwing;
 using Robust.Shared.Map;
 
 namespace Content.Server._Starlight.NPC.HTN.PrimitiveTasks.Operators;
@@ -59,7 +60,10 @@ public sealed partial class JumpOperator : HTNOperator, IHtnConditionalShutdown
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
         if (!_entManager.TryGetComponent<JumpComponent>(owner, out var jump))
-            return HTNOperatorStatus.Failed;
+            return HTNOperatorStatus.Finished; // If we can't jump, we finish this.
+
+        if (_entManager.TryGetComponent<ThrownItemComponent>(owner, out var thrown) && !thrown.Landed)
+            return HTNOperatorStatus.Continuing;
 
         return HTNOperatorStatus.Finished;
     }

@@ -14501,5 +14501,315 @@ Entries:
   id: 135504
   time: '2025-09-17T15:58:49.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1355
+- author: Yagwog
+  changes:
+  - message: Added fillable and automatic fields to documents, [Signature], [Fill]
+      and [Check]
+    type: Add
+  id: 123400
+  time: '2025-09-17T16:09:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1234
+- author: Aedler
+  changes:
+  - message: Added buncha missing sprites for shotguns and rifles such as ARG and
+      Aussec.
+    type: Add
+  id: 118600
+  time: '2025-09-17T16:10:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1186
+- author: Conflee
+  changes:
+  - message: Increased the stock of nearly every item in every snack and drink vending
+      machine by 1, with some exceptions that didn't get buffed (14loco, contra stock,
+      etc)
+    type: Tweak
+  id: 129600
+  time: '2025-09-17T16:12:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1296
+- author: Conflee
+  changes:
+  - message: Increased the amount of flour, rice, cheese, and meat in the chef vender
+      slightly to aid in feeding the 200 hungry mouths we regularly have
+    type: Tweak
+  id: 129601
+  time: '2025-09-17T16:12:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1296
+- author: Conflee
+  changes:
+  - message: There is now a 50% chance of a second emergency EVA suit being in every
+      emergency closet, and a 50% chance of a space medipen being in every emergency
+      clost, to account for higher population and increased space damage now
+    type: Tweak
+  id: 129602
+  time: '2025-09-17T16:12:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1296
+- author: Conflee
+  changes:
+  - message: Increased the number of N2 and O2 tanks in EVA Tank Dispensers from 10
+      to 13, to account for higher population slightly
+    type: Tweak
+  id: 129603
+  time: '2025-09-17T16:12:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1296
+- author: PubliclyExecutedPig
+  changes:
+  - message: Space has been buffed into a Goldilocks zone. Not too weak, not too strong
+    type: Tweak
+  id: 137000
+  time: '2025-09-17T16:23:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1370
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed surgery. get ripping.
+    type: Fix
+  id: 166000
+  time: '2025-09-17T16:42:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1660
+- author: stickycheZ101
+  changes:
+  - message: added filled improvised ammo boxes, along with associated recipes
+    type: Add
+  id: 117000
+  time: '2025-09-17T16:49:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1170
+- author: stickycheZ101
+  changes:
+  - message: added crushed phosphorus, used in the creation of improvised ammunition
+    type: Add
+  id: 117001
+  time: '2025-09-17T16:49:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1170
+- author: Give Grace To Gods
+  changes:
+  - message: Thaven
+    type: Add
+  id: 144000
+  time: '2025-09-17T16:58:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1440
+- author: Give Grace To Gods
+  changes:
+  - message: Thaven brains can be used as borg brains directly
+    type: Tweak
+  id: 144001
+  time: '2025-09-17T16:58:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1440
+- author: Give Grace To Gods
+  changes:
+  - message: Thaven "no syringes" mood can now ban pills and patches
+    type: Tweak
+  id: 144002
+  time: '2025-09-17T16:58:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1440
+- author: STARLIGHT TEAM
+  changes:
+  - message: Temporarily switch back to starlight vulpkanin stats
+    type: Tweak
+  id: 166800
+  time: '2025-09-18T19:52:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1668
+- author: STARLIGHT TEAM
+  changes:
+  - message: Bold for Bold
+    type: Fix
+  id: 167000
+  time: '2025-09-18T20:25:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1670
+- author: Arkanic, Walksanatora
+  changes:
+  - message: Fix vulpkanin displacements, fix incorrect hair displacements
+    type: Fix
+  id: 165700
+  time: '2025-09-17T15:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1657
+- author: Arkanic, Walksanatora
+  changes:
+  - message: Fix vulpkanin wagging, fix vulpkanin growling accent
+    type: Fix
+  id: 165701
+  time: '2025-09-17T15:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1657
+- author: Arkanic, Walksanatora
+  changes:
+  - message: Fix vulpkanin eyes being wizden vulp eyes (sleepy)
+    type: Fix
+  id: 165702
+  time: '2025-09-17T15:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1657
+- author: Arkanic, Walksanatora
+  changes:
+  - message: Fix default vulpkanin markings to prevent character changes after update
+    type: Fix
+  id: 165703
+  time: '2025-09-17T15:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1657
+- author: Arkanic, Walksanatora
+  changes:
+  - message: Switch back to SL vulpkanin screams
+    type: Fix
+  id: 165704
+  time: '2025-09-17T15:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1657
+- author: Arkanic, Walksanatora
+  changes:
+  - message: Fix vulpkanin hair showing when wearing hardsuits
+    type: Fix
+  id: 165705
+  time: '2025-09-17T15:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1657
+- author: Arkanic, Walksanatora
+  changes:
+  - message: Switch back to using SL markings where duplicates exist
+    type: Tweak
+  id: 165706
+  time: '2025-09-17T15:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1657
+- author: Arkanic, Walksanatora
+  changes:
+  - message: Add missing emotes back to vulpkanin, fix creampie sprites
+    type: Fix
+  id: 165707
+  time: '2025-09-17T15:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1657
+- author: CorruptOmega
+  changes:
+  - message: Satanic Bible visual has been flipped upside down.
+    type: Tweak
+  id: 159100
+  time: '2025-09-17T15:29:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1591
+- author: Killer Tamashi
+  changes:
+  - message: Added Security shuttle "SEC-657 'Pursuit"
+    type: Add
+  id: 134800
+  time: '2025-09-17T16:07:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1348
+- author: CorruptOmega
+  changes:
+  - message: CentComm Communication paper to the document printer
+    type: Add
+  id: 147200
+  time: '2025-09-17T16:21:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1472
+- author: walksanatora
+  changes:
+  - message: New wizard spell that randomizes all spoken and understood languages
+      across everyone in the game. really should not spite your new god.
+    type: Add
+  id: 142700
+  time: '2025-09-17T16:25:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1427
+- author: Rinary
+  changes:
+  - message: Fixed emp scream & jump cooldowns.
+    type: Fix
+  id: 166600
+  time: '2025-09-18T21:46:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1666
+- author: Rinary
+  changes:
+  - message: Changed poison web injection from 2 to 0.5.
+    type: Tweak
+  id: 166601
+  time: '2025-09-18T21:46:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1666
+- author: Rinary
+  changes:
+  - message: Changed white spider battery from 200 to 150 and charge rate from 25
+      to 10.
+    type: Tweak
+  id: 166602
+  time: '2025-09-18T21:46:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1666
+- author: Rinary
+  changes:
+  - message: Fixed spider popup, now it separated and part with directions will be
+      popuped only when your spider can spawn more than one web in one action.
+    type: Fix
+  id: 166603
+  time: '2025-09-18T21:46:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1666
+- author: Rinary
+  changes:
+  - message: Changed web spinning cooldown from 25 to 15, but terror spiders web condition
+      target web count changed from 24 to 36.
+    type: Tweak
+  id: 166604
+  time: '2025-09-18T21:46:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1666
+- author: Conflee
+  changes:
+  - message: Changed pricing of some restock crates to be more reasonable. If the
+      resell price was close to the buy price, I made them cost slightly more. If
+      the resell price was way under the buy price, I made them cost slightly less.
+    type: Tweak
+  id: 166200
+  time: '2025-09-18T22:21:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1662
+- author: Conflee
+  changes:
+  - message: Fixed infinite money glitch with restock crates in cargo
+    type: Fix
+  id: 166201
+  time: '2025-09-18T22:21:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1662
+- author: CrazyPhantom
+  changes:
+  - message: Practice Laser Carbine Nerfed Into Oblivion (20 heat to 1)
+    type: Fix
+  id: 168000
+  time: '2025-09-19T01:14:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1680
+- author: Rinary
+  changes:
+  - message: Fixed emp scream cooldown for purple terror.
+    type: Fix
+  id: 168600
+  time: '2025-09-19T16:16:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1686
+- author: Rinary
+  changes:
+  - message: Fixed npc's with jumping task, now they work.(Hostile)
+    type: Fix
+  id: 168601
+  time: '2025-09-19T16:16:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1686
+- author: Rinary
+  changes:
+  - message: Changed black terror jump knockdown duration from 2 seconds to 1 seconds.
+    type: Tweak
+  id: 168602
+  time: '2025-09-19T16:16:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1686
+- author: Rinary
+  changes:
+  - message: Fixed web condition at evolving system.
+    type: Fix
+  id: 168700
+  time: '2025-09-19T18:08:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1687
+- author: CorruptOmega
+  changes:
+  - message: 'Scurrets now can understand Galactic Common again. Translation: Wawa,
+      wawaaaawa. Wawa!'
+    type: Tweak
+  id: 167300
+  time: '2025-09-19T20:43:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1673
+- author: CorruptOmega
+  changes:
+  - message: All Documents within the Document Printer have been updated with new
+      "Forms and Fields" functionality.
+    type: Tweak
+  id: 168400
+  time: '2025-09-19T22:54:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1684
+- author: CorruptOmega
+  changes:
+  - message: All Documents were given a bit of cleanup for formatting/grammar.
+    type: Tweak
+  id: 168401
+  time: '2025-09-19T22:54:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1684
 Order: -1
 
