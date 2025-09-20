@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Hitlinemoss
-  changes:
-  - message: The chef's closet no longer contains an emergency crowbar.
-    type: Remove
-  id: 8478
-  time: '2025-05-14T05:16:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37403
 - author: BigfootBravo
   changes:
   - message: No more spammed error message when trying to write on a acquisition slip.
@@ -3953,3 +3946,10 @@
   id: 8988
   time: '2025-09-19T19:30:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40372
+- author: Absotively
+  changes:
+  - message: Air alarms will not replace the number you're currently typing
+    type: Tweak
+  id: 8989
+  time: '2025-09-20T18:55:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40338
