@@ -468,7 +468,7 @@
     event: !type:ChameleonControllerOpenMenuEvent
 
 - type: entity
-  parent: BaseAction
+  parent: BaseMentalAction
   id: ActionIntrinsicStore
   name: Store
   description: Opens the store
@@ -476,4 +476,4 @@
   - type: Action
     icon: Interface/Actions/shop.png
   - type: InstantAction
-    event: !type:IntrinisicStoreActionEvent
+    event: !type:IntrinsicStoreActionEvent

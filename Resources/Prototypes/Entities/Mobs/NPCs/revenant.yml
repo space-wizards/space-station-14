@@ -67,7 +67,7 @@
   - type: Visibility
     layer: 2 #ghost vis layer
   - type: IntrinsicStore
-    shopActionId: ActionRevenantShop
+    storeActionId: ActionRevenantShop
   - type: Store
     categories:
     - RevenantAbilities

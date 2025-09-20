@@ -11,8 +11,8 @@ namespace Content.Shared.Store.Components;
 public sealed partial class IntrinsicStoreComponent : Component
 {
     [DataField]
-    public EntProtoId ShopActionId = "IntrinisicShopOpenShop";
+    public EntProtoId StoreActionId = "IntrinsicShopOpenShop";
 
     [DataField, AutoNetworkedField]
-    public EntityUid? ShopAction;
+    public EntityUid? StoreAction;
 }

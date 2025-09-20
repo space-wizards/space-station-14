@@ -1,7 +1,6 @@
 using System.Numerics;
 using Content.Server.Actions;
 using Content.Server.GameTicking;
-using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
@@ -21,7 +20,6 @@ using Content.Shared.Store.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Revenant.EntitySystems;
