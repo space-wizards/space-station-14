@@ -23,7 +23,7 @@
   abstract: true
   id: BaseJetpack
   name: jetpack
-  description: It's a jetpack. It can hold 5 litres of gas.
+  description: It's a jetpack. It can hold 5 L of gas.
   components:
   - type: Sprite
     sprite: Objects/Tanks/Jetpacks/blue.rsi
@@ -191,7 +191,7 @@
   id: JetpackMini
   parent: BaseJetpack
   name: mini jetpack
-  description: It's a jetpack. It can hold 1.5 litres of gas.
+  description: It's a jetpack. It can hold 1.5 L of gas.
   suffix: Empty
   components:
     - type: Item
@@ -231,7 +231,7 @@
   id: JetpackSecurity
   parent: [JetpackMini, BaseSecurityContraband]
   name: security mini jetpack
-  description: A compact jetpack utilized by station security when patrolling the station's exterior. Not intended for long range travel, it holds only 1.5 litres of gas.
+  description: A compact jetpack utilized by station security when patrolling the station's exterior. Not intended for long range travel, it holds only 1.5 L of gas.
   suffix: Empty
   components:
   - type: Item
@@ -316,7 +316,7 @@
   id: JetpackBluespace
   parent: [BaseJetpack, BaseCentcommContraband]
   name: bluespace jetpack
-  description: An elite, experimental jetpack designed to hold large quantities of air in an extremely small package. It can hold 20 litres of gas.
+  description: An elite, experimental jetpack designed to hold large quantities of air in an extremely small package. It can hold 20 L of gas.
   suffix: Empty
   components:
   - type: Item
