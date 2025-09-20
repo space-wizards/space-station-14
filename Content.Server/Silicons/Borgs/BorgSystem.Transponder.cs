@@ -118,6 +118,16 @@ public sealed partial class BorgSystem
         ent.Comp1.NextDisable = _timing.CurTime + ent.Comp1.DisableDelay;
     }
 
+    public void Destroy(EntityUid ent)
+    {
+        Entity<BorgTransponderComponent> entity;
+        if (TryComp<BorgTransponderComponent>(ent, out var comp))
+        {
+            entity = new Entity<BorgTransponderComponent>(ent, comp);
+            Destroy(entity);
+        }
+    }
+
     private void Destroy(Entity<BorgTransponderComponent> ent)
     {
         // this is stealthy until someone realises you havent exploded
