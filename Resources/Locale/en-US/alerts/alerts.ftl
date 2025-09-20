@@ -119,6 +119,3 @@ alerts-revenant-corporeal-desc = You have manifested physically. People around y
 
 alerts-rooted-name = Rooted
 alerts-rooted-desc = You are attached to the ground. You can't slip, but you absorb fluids under you.
-
-alerts-stealthy-name = Pickpocketing
-alerts-stealthy-desc = Whether you are currently pickpocketing. Click to toggle.
