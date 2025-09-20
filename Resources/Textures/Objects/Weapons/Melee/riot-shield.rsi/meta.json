@@ -2,7 +2,7 @@
   "version": 1,
   "size": {"x": 32, "y": 32},
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/Citadel-Station-13/Citadel-Station-13/commit/84223c65f5caf667a84f3c0f49bc2a41cdc6c4e3. Suitstorage state made by anomalyil (discord) for Space Station 14 server Мёртвый Космос, resprite by pyfya (discord) for Space Station 14 server Мёртвый Космос",
+  "copyright": "Taken from https://github.com/Citadel-Station-13/Citadel-Station-13/commit/84223c65f5caf667a84f3c0f49bc2a41cdc6c4e3. Suitstorage state made by anomalyil (discord) for Space Station 14 server Dead Space, resprite by pyfya (discord) for Space Station 14 server Мёртвый Космос",
   "states": [
     {
       "name": "icon"

@@ -19,6 +19,8 @@
     ClothingUniformJumpskirtSecGrey: 6
     ClothingUniformJumpsuitSecBlue: 4
     ClothingUniformSecurityTrooper: 2 # DS14
+    ClothingUniformJumpsuitSecBlack: 2 # DS14
+    ClothingUniformJumpskirtPencilSec: 2 # DS14
     ClothingHeadsetSecurity: 4
     ClothingOuterWinterSec: 4
     # ClothingOuterArmorBasic: 4 # DS14-disabled

@@ -1,0 +1,51 @@
+- type: entity
+  parent: [ClothingHeadHatHardhatBase, BaseSecurityContraband]
+  id: ClothingHeadHelmetSecurityFlashlight
+  name: тактический шлем
+  description: Стандартная защитная экипировка со встроенным фонариком. Защищает голову от ударов.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Head/Helmets/securityflash.rsi
+    layers:
+    - state: icon
+    - state: light-icon
+      shader: unshaded
+      visible: false
+      map: [ "light" ]
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Head/Helmets/securityflash.rsi
+  - type: ToggleableLightVisuals
+    spriteLayer: light
+    inhandVisuals:
+      left:
+      - state: on-inhand-left
+      right:
+      - state: on-inhand-right
+    clothingVisuals:
+      head:
+      - state: on-equipped-HELMET
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - SecurityHelmet
+
+#ви лив ин сосаити
+- type: entity
+  parent: ClothingHeadHelmetBasic
+  id: ClothingHeadHelmetBasicNeko
+  name: шлем с ушками
+  description: Нестандартная защитная экипировка. Защищает голову от ударов.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Head/Helmets/security-neko.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Head/Helmets/security-neko.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon

@@ -36,6 +36,23 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtDetectiveGrey
 
+# DS14-start
+- type: loadout
+  id: NoirJumpsuitAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitDetectiveGreyAlt
+
+- type: loadout
+  id: DetectiveJumpsuitAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitDetectiveAlt
+
+- type: loadout
+  id: NoirJumpskirtPencil
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtPencilDetectiveGrey
+# DS14-end
+
 # Back
 - type: loadout
   id: DetectiveSatchel
@@ -84,11 +101,6 @@
   id: UnderwearSocksDetective
   equipment:
     socks: ClothingUnderwearSocksDetective
-
-- type: loadout
-  id: UnderwearWomenSocksDetective
-  equipment:
-    socks: ClothingUnderwearWomenSocksDetective
 
 # Underwear
 - type: loadout

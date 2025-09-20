@@ -30,6 +30,7 @@ loadout-group-brigmedic-backpack = Бригмедик, рюкзак
 loadout-group-brigmedic-socks = Бригмедик, ноги
 loadout-group-brigmedic-underwear = Бригмедик, нижнее бельё
 loadout-group-brigmedic-medal = Бригмедик, медаль
+loadout-group-security-pilot-jumpsuit = Пилот СБ, комбинезон
 loadout-group-senior-officer-jumpsuit = Инструктор СБ, комбинезон
 loadout-group-senior-officer-backpack = Инструктор СБ, рюкзак
 loadout-group-senior-officer-outerclothing = Инструктор СБ, верхняя одежда

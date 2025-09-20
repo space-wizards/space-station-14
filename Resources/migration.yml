@@ -1037,3 +1037,13 @@ BorgModuleGrapplingGun: null
 
 # 2025-09-16 - DS14
 ChainswordDragonFox: WeaponMeleeChainsword
+
+# 2025-09-20 - DS14
+ClothingUnderwearWomenSocksSeniorOfficer: null
+ClothingUnderwearWomenSocksHeadOfSecurity: null
+ClothingUnderwearWomenSocksBrigmedic: null
+ClothingUnderwearWomenSocksCadet: null
+ClothingUnderwearWomenSocksDetective: null
+ClothingUnderwearWomenSocksSecurityOfficer: null
+ClothingUnderwearWomenSocksWarden: null
+

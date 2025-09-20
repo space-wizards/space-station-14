@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/2fea0a59470c476cf3f927833d3918d89cbe6af8 & inhand taken at commit https://github.com/tgstation/tgstation/commit/d1582bf1b41a0e24fd7a18124c6ff46b86b393f9, resprite by pyfya and inspector_jeleshka (discord) for Space Station 14 server Мёртвый Космос, [state] by pufya (discord) for Space Station 14 server Мёртвый Космос, Vox state by Flareguy for SS14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "light-icon"
+    },
+    {
+      "name": "off-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "off-equipped-HELMET-vox",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-HELMET-vox",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "on-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "on-inhand-right",
+      "directions": 4
+    }
+  ]
+}

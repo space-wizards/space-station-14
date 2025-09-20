@@ -6,17 +6,20 @@
     ClothingShoesColorBrown: 2
     ClothingOuterCoatDetective: 2
     ClothingOuterCoatDetectiveDark: 2 # Corvax-Resprite-Detective
-    ClothingOuterCoatDetectiveLoadout: 1
+    # ClothingOuterCoatDetectiveLoadout: 1
     ClothingOuterCoatDetectiveLoadoutGrey: 1
     ClothingOuterCoatDetectiveAlt: 1
     ClothingHeadHatFedoraBrown: 2
     ClothingUniformJumpsuitDetectiveGrey: 2
     ClothingUniformJumpskirtDetectiveGrey: 2
+    ClothingUniformJumpskirtPencilDetectiveGrey: 2 # DS14
     ClothingOuterVestDetective: 2
     ClothingNeckTieDet: 2
     ClothingHeadHatFedoraGrey: 2
     ClothingHandsGlovesColorBlack: 2
     ClothingHandsGlovesLatex: 2
     ClothingHeadsetSecurity: 2
+    ClothingUniformJumpsuitDetectiveGreyAlt: 2 # DS14
+    ClothingUniformJumpsuitDetectiveAlt: 2 # DS14
   contrabandInventory:
     ToyFigurineDetective: 1
