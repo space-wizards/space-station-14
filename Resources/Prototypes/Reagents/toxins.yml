@@ -62,6 +62,7 @@
   - Zookeeper
   metabolisms:
     Poison:
+      metabolismRate: 0.25 #1u every 4 sec, 2x duration
       effects:
       - !type:Emote
         emote: Yawn
@@ -82,7 +83,7 @@
           min: 20
         damage:
           types:
-            Poison: 1.5
+            Poison: 0.75 #effectively 1.5, just slower
 
 - type: reagent
   id: GastroToxin
