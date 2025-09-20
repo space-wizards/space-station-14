@@ -58,12 +58,8 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
         SubscribeLocalEvent<RoundRestartCleanupEvent>((_) => NewSharedMoods());
     }
 
-    //vvinvoke /system/ThavenMoodSystem/NewSharedMoods
-    //vvread /system/ThavenMoodsSystem/SharedMoods[0]
-    [ViewVariables]
-    private void NewSharedMoods()
+    public void NewSharedMoods()
     {
-        Log.Info("Rolling new Shared Moods");
         _sharedMoods.Clear();
         for (int i = 0; i < _config.GetCVar(ImpCCVars.ThavenSharedMoodCount); i++)
             TryAddSharedMood(notify: false); // don't spam notify if there are multiple moods
@@ -127,7 +123,7 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
         _bui.TryToggleUi(ent.Owner, ThavenMoodsUiKey.Key, actor.PlayerSession);
     }
 
-    private bool TryPick(string datasetProto, [NotNullWhen(true)] out ThavenMoodPrototype? proto, IEnumerable<ThavenMood>? currentMoods = null, HashSet<ProtoId<ThavenMoodPrototype>>? conflicts = null)
+    public bool TryPick(ProtoId<DatasetPrototype> datasetProto, [NotNullWhen(true)] out ThavenMoodPrototype? proto, IEnumerable<ThavenMood>? currentMoods = null, HashSet<ProtoId<ThavenMoodPrototype>>? conflicts = null)
     {
         var dataset = _proto.Index<DatasetPrototype>(datasetProto);
         var choices = dataset.Values.ToList();
@@ -250,6 +246,15 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
     }
 
     /// <summary>
+    /// Checks if the given mood prototype conflicts with the current moods, and
+    /// adds the mood if it does not.
+    /// </summary>
+    public bool TryAddMood(Entity<ThavenMoodsComponent> ent, ProtoId<ThavenMoodPrototype> moodProto, bool allowConflict = false, bool notify = true)
+    {
+        return TryAddMood(ent, _proto.Index(moodProto), allowConflict, notify);
+    }
+
+    /// <summary>
     /// Tries to add a random mood using a specific dataset.
     /// </summary>
     public bool TryAddRandomMood(Entity<ThavenMoodsComponent> ent, string datasetProto, bool notify = true)
@@ -335,6 +340,18 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
             return new List<ThavenMood>(SharedMoods.Concat(ent.Comp.Moods));
 
         return ent.Comp.Moods;
+    }
+
+    public void RemoveMood(Entity<ThavenMoodsComponent> ent, int index, bool notify = true)
+    {
+        var moods = ent.Comp.Moods;
+        if (moods.Count <= index)
+            return;
+
+        ent.Comp.Moods.RemoveAt(index);
+
+        if (notify)
+            NotifyMoodChange(ent);
     }
 
     private void OnThavenMoodInit(Entity<ThavenMoodsComponent> ent, ref MapInitEvent args)
