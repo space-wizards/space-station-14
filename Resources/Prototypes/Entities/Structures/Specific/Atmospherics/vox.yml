@@ -39,6 +39,8 @@
     - Ammonia
     - NitrousOxide
     - Frezon
+    overflowGases:
+    - Nitrogen # oxygen is already in filterGases
 
 # use this to prevent overriding filters with hardcoded defaults
 - type: entity

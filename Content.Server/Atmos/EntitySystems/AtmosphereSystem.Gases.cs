@@ -253,6 +253,23 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         /// <summary>
+        ///     Scrubs a fraction of specified gases from a gas mixture into a <see cref="destination"/> gas mixture.
+        /// </summary>
+        public void ScrubInto(GasMixture mixture, GasMixture destination, IReadOnlyCollection<Gas> filterGases, float fraction)
+        {
+            var buffer = new GasMixture(mixture.Volume) { Temperature = mixture.Temperature };
+
+            foreach (var gas in filterGases)
+            {
+                var moles = mixture.GetMoles(gas) * fraction;
+                buffer.AdjustMoles(gas, moles);
+                mixture.AdjustMoles(gas, -moles);
+            }
+
+            Merge(destination, buffer);
+        }
+
+        /// <summary>
         /// Calculates the dimensionless fraction of gas required to equalize pressure between two gas mixtures.
         /// </summary>
         /// <param name="gasMixture1">The first gas mixture involved in the pressure equalization.
