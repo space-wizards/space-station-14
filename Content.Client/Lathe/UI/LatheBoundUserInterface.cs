@@ -1,56 +1,56 @@
 using Content.Shared.Lathe;
+using Content.Shared.Lathe.Components;
 using Content.Shared.Research.Components;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 
-namespace Content.Client.Lathe.UI
+namespace Content.Client.Lathe.UI;
+
+[UsedImplicitly]
+public sealed class LatheBoundUserInterface : BoundUserInterface
 {
-    [UsedImplicitly]
-    public sealed class LatheBoundUserInterface : BoundUserInterface
+    [ViewVariables]
+    private LatheMenu? _menu;
+    public LatheBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
-        [ViewVariables]
-        private LatheMenu? _menu;
-        public LatheBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    }
+
+    protected override void Open()
+    {
+        base.Open();
+
+        _menu = this.CreateWindowCenteredRight<LatheMenu>();
+        _menu.SetEntity(Owner);
+
+        _menu.OnServerListButtonPressed += _ =>
         {
-        }
+            SendMessage(new ConsoleServerSelectionMessage());
+        };
 
-        protected override void Open()
+        _menu.RecipeQueueAction += (recipe, amount) =>
         {
-            base.Open();
+            SendMessage(new LatheQueueRecipeMessage(recipe, amount));
+        };
+        _menu.QueueDeleteAction += index => SendMessage(new LatheDeleteRequestMessage(index));
+        _menu.QueueMoveUpAction += index => SendMessage(new LatheMoveRequestMessage(index, -1));
+        _menu.QueueMoveDownAction += index => SendMessage(new LatheMoveRequestMessage(index, 1));
+        _menu.DeleteFabricatingAction += () => SendMessage(new LatheAbortFabricationMessage());
+    }
 
-            _menu = this.CreateWindowCenteredRight<LatheMenu>();
-            _menu.SetEntity(Owner);
+    public override void Update()
+    {
+        base.Update();
 
-            _menu.OnServerListButtonPressed += _ =>
-            {
-                SendMessage(new ConsoleServerSelectionMessage());
-            };
+        if (_menu == null)
+            return;
 
-            _menu.RecipeQueueAction += (recipe, amount) =>
-            {
-                SendMessage(new LatheQueueRecipeMessage(recipe, amount));
-            };
-            _menu.QueueDeleteAction += index => SendMessage(new LatheDeleteRequestMessage(index));
-            _menu.QueueMoveUpAction += index => SendMessage(new LatheMoveRequestMessage(index, -1));
-            _menu.QueueMoveDownAction += index => SendMessage(new LatheMoveRequestMessage(index, 1));
-            _menu.DeleteFabricatingAction += () => SendMessage(new LatheAbortFabricationMessage());
-        }
+        if (!EntMan.TryGetComponent(Owner, out LatheComponent? comp))
+            return;
 
-        protected override void UpdateState(BoundUserInterfaceState state)
-        {
-            base.UpdateState(state);
-
-            switch (state)
-            {
-                case LatheUpdateState msg:
-                    if (_menu != null)
-                        _menu.Recipes = msg.Recipes;
-                    _menu?.PopulateRecipes();
-                    _menu?.UpdateCategories();
-                    _menu?.PopulateQueueList(msg.Queue);
-                    _menu?.SetQueueInfo(msg.CurrentlyProducing);
-                    break;
-            }
-        }
+        _menu.Recipes = comp.Recipes;
+        _menu.PopulateRecipes();
+        _menu.UpdateCategories();
+        _menu.PopulateQueueList(comp.Queue);
+        _menu.SetQueueInfo(comp.CurrentRecipe);
     }
 }
