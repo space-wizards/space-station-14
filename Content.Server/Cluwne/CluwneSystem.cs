@@ -48,15 +48,15 @@ public sealed class CluwneSystem : EntitySystem
     /// <summary>
     /// On death removes active comps and gives genetic damage to prevent cloning, reduce this to allow cloning.
     /// </summary>
-    private void OnMobState(EntityUid uid, CluwneComponent component, MobStateChangedEvent args)
+    private void OnMobState(Entity<CluwneComponent> ent, ref MobStateChangedEvent args)
     {
         if (args.NewMobState == MobState.Dead)
         {
-            RemComp<CluwneComponent>(uid);
-            RemComp<ClumsyComponent>(uid);
-            RemComp<AutoEmoteComponent>(uid);
-            var damageSpec = new DamageSpecifier(_prototypeManager.Index(GeneticDamageGroup), 300);
-            _damageableSystem.TryChangeDamage(uid, damageSpec);
+            RemComp<CluwneComponent>(ent.Owner);
+            RemComp<ClumsyComponent>(ent.Owner);
+            RemComp<AutoEmoteComponent>(ent.Owner);
+            var damageSpec = new DamageSpecifier(_prototypeManager.Index(GeneticDamageGroup), ent.Comp.RevertDamage);
+            _damageableSystem.TryChangeDamage(ent.Owner, damageSpec);
         }
     }
 
@@ -65,52 +65,66 @@ public sealed class CluwneSystem : EntitySystem
     /// <summary>
     /// OnStartup gives the cluwne outfit, ensures clumsy, and makes sure emote sounds are laugh.
     /// </summary>
-    private void OnComponentStartup(EntityUid uid, CluwneComponent component, ComponentStartup args)
+    private void OnComponentStartup(Entity<CluwneComponent> ent, ref ComponentStartup args)
     {
-        if (component.EmoteSoundsId == null)
+        if (ent.Comp.EmoteSoundsId == null)
             return;
-        _prototypeManager.TryIndex(component.EmoteSoundsId, out EmoteSounds);
+        if (ent.Comp.OutfitId == null)
+            return;
 
-        EnsureComp<AutoEmoteComponent>(uid);
-        _autoEmote.AddEmote(uid, "CluwneGiggle");
-        EnsureComp<ClumsyComponent>(uid);
+        _prototypeManager.TryIndex(ent.Comp.EmoteSoundsId, out EmoteSounds);
 
-        _popupSystem.PopupEntity(Loc.GetString("cluwne-transform", ("target", uid)), uid, PopupType.LargeCaution);
-        _audio.PlayPvs(component.SpawnSound, uid);
 
-        _nameMod.RefreshNameModifiers(uid);
+        if (ent.Comp.RandomEmote && ent.Comp.AutoEmoteId != null)
+        {
+            EnsureComp<AutoEmoteComponent>(ent.Owner);
+            _autoEmote.AddEmote(ent.Owner, ent.Comp.AutoEmoteId);
+            EnsureComp<ClumsyComponent>(ent.Owner);
+        }
 
-        _outfitSystem.SetOutfit(uid, "CluwneGear");
+        var transformMessage = Loc.GetString(ent.Comp.TransformMessage, ("target", ent.Owner));
+
+        _popupSystem.PopupEntity(transformMessage, ent.Owner, PopupType.LargeCaution);
+        _audio.PlayPvs(ent.Comp.SpawnSound, ent.Owner);
+
+        _nameMod.RefreshNameModifiers(ent.Owner);
+
+
+        _outfitSystem.SetOutfit(ent.Owner, ent.Comp.OutfitId, unremovable: true);
     }
 
     /// <summary>
     /// Handles the timing on autoemote as well as falling over and honking.
     /// </summary>
-    private void OnEmote(EntityUid uid, CluwneComponent component, ref EmoteEvent args)
+    private void OnEmote(Entity<CluwneComponent> ent, ref EmoteEvent args)
     {
         if (args.Handled)
             return;
-        args.Handled = _chat.TryPlayEmoteSound(uid, EmoteSounds, args.Emote);
 
-        if (_robustRandom.Prob(component.GiggleRandomChance))
+        if (!ent.Comp.RandomEmote)
+            return;
+
+        args.Handled = _chat.TryPlayEmoteSound(ent.Owner, EmoteSounds, args.Emote);
+
+        if (_robustRandom.Prob(ent.Comp.GiggleRandomChance))
         {
-            _audio.PlayPvs(component.SpawnSound, uid);
-            _chat.TrySendInGameICMessage(uid, "honks", InGameICChatType.Emote, ChatTransmitRange.Normal);
+            _audio.PlayPvs(ent.Comp.SpawnSound, ent.Owner);
+            _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString(ent.Comp.GiggleEmote), InGameICChatType.Emote, ChatTransmitRange.Normal);
         }
 
-        else if (_robustRandom.Prob(component.KnockChance))
+        else if (_robustRandom.Prob(ent.Comp.KnockChance))
         {
-            _audio.PlayPvs(component.KnockSound, uid);
-            _stunSystem.TryUpdateParalyzeDuration(uid, TimeSpan.FromSeconds(component.ParalyzeTime));
-            _chat.TrySendInGameICMessage(uid, "spasms", InGameICChatType.Emote, ChatTransmitRange.Normal);
+            _audio.PlayPvs(ent.Comp.KnockSound, ent.Owner);
+            _stunSystem.TryUpdateParalyzeDuration(ent.Owner, TimeSpan.FromSeconds(ent.Comp.ParalyzeTime));
+            _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString(ent.Comp.KnockEmote), InGameICChatType.Emote, ChatTransmitRange.Normal);
         }
     }
 
     /// <summary>
     /// Applies "Cluwnified" prefix
     /// </summary>
-    private void OnRefreshNameModifiers(Entity<CluwneComponent> entity, ref RefreshNameModifiersEvent args)
+    private void OnRefreshNameModifiers(Entity<CluwneComponent> ent, ref RefreshNameModifiersEvent args)
     {
-        args.AddModifier("cluwne-name-prefix");
+        args.AddModifier(ent.Comp.NamePrefix);
     }
 }
