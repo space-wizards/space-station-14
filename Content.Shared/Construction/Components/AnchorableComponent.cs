@@ -2,7 +2,6 @@ using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Tools;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Construction.Components
 {

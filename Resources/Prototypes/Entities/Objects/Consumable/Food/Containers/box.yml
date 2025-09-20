@@ -46,7 +46,9 @@
       - Donut
   - type: Item
     sprite: Objects/Consumable/Food/Baked/donut.rsi
-    size: Small
+    size: Normal
+    shape:
+    - 0,0,2,1
     heldPrefix: box
   - type: StorageFill
     contents:
@@ -128,7 +130,10 @@
       - Egg
   - type: Item
     sprite: Objects/Consumable/Food/egg.rsi
-    size: Small
+    size: Normal
+    shape:
+    - 0,0,2,1
+    storedOffset: 0,-6
   - type: StorageFill
     contents:
     - id: FoodEgg
@@ -223,6 +228,7 @@
     heldPrefix: box
     shape:
     - 0,0,2,1
+    storedOffset: 0,-6
   - type: Appearance
   - type: EntityStorageVisuals
     stateDoorOpen: box-open
@@ -367,7 +373,10 @@
       - DonkPocket
   - type: Item
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
-    size: Small
+    size: Normal
+    shape:
+    - 0,0,2,1
+    storedOffset: -1,1
   - type: StorageFill
     contents:
     - id: FoodDonkpocket
@@ -714,8 +723,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: FoodBurgerCrazy
-        orGroup: Burgers
       - id: FoodBurgerCheese
         orGroup: Burgers
       - id: DrinkColaCan
@@ -880,6 +887,8 @@
       - ClothMade
   - type: Item
     size: Normal
+    shape:
+    - 0,0,1,1
   - type: StorageFill
     contents:
     - id: MaterialCloth10

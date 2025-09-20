@@ -57,7 +57,7 @@ public sealed partial class DungeonJob
 
         var roomConnections = new Dictionary<DungeonRoom, List<DungeonRoom>>();
         var tileDef = _tileDefManager[gen.Tile];
-        _prototype.TryIndex(gen.Flank, out var flankContents);
+        _prototype.Resolve(gen.Flank, out var flankContents);
         var contents = _prototype.Index(gen.Contents);
 
         foreach (var (room, border) in roomBorders)

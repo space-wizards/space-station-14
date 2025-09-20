@@ -282,6 +282,7 @@
     - id: ProtolatheMachineCircuitboard
     - id: ResearchComputerCircuitboard
     - id: CargoRequestScienceComputerCircuitboard
+    - id: StationAiFixerCircuitboard
     - id: RubberStampRd
 
 # Hardsuit table, used for suit storage as well

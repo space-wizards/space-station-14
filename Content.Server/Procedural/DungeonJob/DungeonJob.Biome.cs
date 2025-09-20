@@ -16,7 +16,7 @@ public sealed partial class DungeonJob
     /// </summary>
     private async Task PostGen(BiomeDunGen dunGen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
-        if (!_prototype.TryIndex(dunGen.BiomeTemplate, out var indexedBiome))
+        if (!_prototype.Resolve(dunGen.BiomeTemplate, out var indexedBiome))
             return;
 
         var biomeSystem = _entManager.System<BiomeSystem>();

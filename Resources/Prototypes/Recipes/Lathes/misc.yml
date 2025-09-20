@@ -202,6 +202,16 @@
 
 - type: latheRecipe
   parent: BaseFauxTileRecipe
+  id: FauxTileDarkAstroGrass
+  result: FloorTileItemDarkAstroGrass
+
+- type: latheRecipe
+  parent: BaseFauxTileRecipe
+  id: FauxTileLightAstroGrass
+  result: FloorTileItemLightAstroGrass
+
+- type: latheRecipe
+  parent: BaseFauxTileRecipe
   id: FauxTileAstroIce
   result: FloorTileItemAstroIce
 
@@ -219,6 +229,11 @@
   parent: BaseFauxTileRecipe
   id: FauxTileAstroAsteroidSandBorderless
   result: FloorTileItemAstroAsteroidSandBorderless
+
+- type: latheRecipe
+  parent: BaseFauxTileRecipe
+  id: FauxTileDesertAstroSand
+  result: FloorTileItemDesertAstroSand
 
 - type: latheRecipe
   id: FloorGreenCircuit
@@ -276,4 +291,19 @@
   completetime: 1
   materials:
     Steel: 30
-    
+
+- type: latheRecipe
+  id: BoxFolderClipboardEmpty
+  result: BoxFolderClipboardEmpty
+  completetime: 2
+  materials:
+    Wood: 100
+    Steel: 25
+
+- type: latheRecipe
+  id: BoxFolderPlasticClipboardEmpty
+  result: BoxFolderPlasticClipboardEmpty
+  completetime: 2
+  materials:
+    Plastic: 100
+    Steel: 25

@@ -27,6 +27,38 @@
     price: 500
 
 - type: entity
+  parent: [BaseWeaponBattery, BaseGunWieldable]
+  id: BaseLaserRifle
+  abstract: true
+  components:
+  - type: Item
+    size: Large
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: false
+  - type: Appearance
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+  - type: Gun
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+  - type: HitscanBatteryAmmoProvider
+    proto: RedLaser
+    fireCost: 62.5
+  - type: StaticPrice
+    price: 420
+
+- type: entity
   id: BaseWeaponPowerCell
   parent: BaseItem
   abstract: true
@@ -215,49 +247,23 @@
   - type: Appearance
 
 - type: entity
+  name: laser carbine
+  parent: [BaseLaserRifle, BaseGunWieldable, BaseSecurityContraband]
+  id: WeaponLaserCarbine
+  description: Favoured by Nanotrasen Security for being cheap and easy to use.
+
+- type: entity
   name: practice laser carbine
-  parent: [BaseWeaponBattery, BaseGunWieldable]
+  parent: [BaseLaserRifle, BaseGunWieldable]
   id: WeaponLaserCarbinePractice
   description: This modified laser carbine fires nearly harmless beams in the 40-watt range, for target practice.
   components:
-  - type: Item
-    size: Large
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-unshaded-4
-      map: ["enum.GunVisualLayers.MagUnshaded"]
-      shader: unshaded
-  - type: MagazineVisuals
-    magState: mag
-    steps: 5
-    zeroVisible: false
-  - type: Appearance
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
-  - type: Gun
-    selectedMode: SemiAuto
-    availableModes:
-    - SemiAuto
+  - type: StaticPrice
+    price: 300
   - type: HitscanBatteryAmmoProvider
     proto: RedLaserPractice
     fireCost: 62.5
-  - type: StaticPrice
-    price: 300
-
-- type: entity
-  name: laser carbine
-  parent: [WeaponLaserCarbinePractice, BaseGunWieldable, BaseSecurityContraband]
-  id: WeaponLaserCarbine
-  description: Favoured by Nanotrasen Security for being cheap and easy to use.
-  components:
-  - type: StaticPrice
-    price: 420
-  - type: HitscanBatteryAmmoProvider
-    proto: RedLaser
-    fireCost: 62.5
+  - type: PacifismAllowedGun
 
 - type: entity
   name: pulse pistol
@@ -508,6 +514,7 @@
     tags:
     - Taser
     - Sidearm
+  - type: PacifismAllowedGun
 
 - type: entity
   name: disabler
@@ -536,6 +543,7 @@
     guides:
     - Security
     - Antagonists
+  - type: PacifismAllowedGun
 
 - type: entity
   name: disabler SMG
@@ -576,6 +584,7 @@
   - type: Appearance
   - type: StaticPrice
     price: 260
+  - type: PacifismAllowedGun
 
 - type: entity
   name: taser
@@ -636,10 +645,6 @@
   id: WeaponAntiqueLaser
   description: This is an antique laser pistol. All craftsmanship is of the highest quality. It is decorated with a mahogany grip and chrome filigree. The object menaces with spikes of energy. On the item is an image of a captain and a clown. The clown is dead. The captain is striking a heroic pose.
   components:
-  - type: Item
-    size: Normal
-    shape:
-    - 0,0,1,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
     layers:

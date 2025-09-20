@@ -9,13 +9,7 @@ public sealed partial class Drunk : EntityEffect
     ///     BoozePower is how long each metabolism cycle will make the drunk effect last for.
     /// </summary>
     [DataField]
-    public float BoozePower = 3f;
-
-    /// <summary>
-    ///     Whether speech should be slurred.
-    /// </summary>
-    [DataField]
-    public bool SlurSpeech = true;
+    public TimeSpan BoozePower = TimeSpan.FromSeconds(3f);
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("reagent-effect-guidebook-drunk", ("chance", Probability));
@@ -24,11 +18,10 @@ public sealed partial class Drunk : EntityEffect
     {
         var boozePower = BoozePower;
 
-        if (args is EntityEffectReagentArgs reagentArgs) {
+        if (args is EntityEffectReagentArgs reagentArgs)
             boozePower *= reagentArgs.Scale.Float();
-        }
 
         var drunkSys = args.EntityManager.EntitySysManager.GetEntitySystem<SharedDrunkSystem>();
-        drunkSys.TryApplyDrunkenness(args.TargetEntity, boozePower, SlurSpeech);
+        drunkSys.TryApplyDrunkenness(args.TargetEntity, boozePower);
     }
 }

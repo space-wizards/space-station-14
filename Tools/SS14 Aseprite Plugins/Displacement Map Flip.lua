@@ -30,8 +30,8 @@ diag:button{
         local selection = sprite.selection
         local image = cel.image:clone()
 
-        for x = 0, selection.bounds.width do
-            for y = 0, selection.bounds.height do
+        for x = 0, selection.bounds.width - 1 do
+            for y = 0, selection.bounds.height - 1 do
                 local xSel = x + selection.origin.x
                 local ySel = y + selection.origin.y
 

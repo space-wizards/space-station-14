@@ -50,17 +50,6 @@
 
 #Paramedic
 - type: entity
-  parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitParamedicNT
-  name: paramedic jumpsuit
-  description: A basic white & blue jumpsuit made for Nanotrasen paramedics stationed in combat sectors.
-  components:
-  - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/paramedic_nt.rsi
-  - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/paramedic_nt.rsi
-
-- type: entity
   parent: [ ClothingUniformBase, BaseSyndicateContraband ]
   id: ClothingUniformJumpsuitParamedicSyndie
   name: syndicate paramedic jumpsuit
@@ -73,17 +62,6 @@
 
 #HEADS OF STAFF
 #Chief Engineer
-- type: entity
-  parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitChiefEngineerNT
-  name: chief engineer jumpsuit
-  description: It is often joked that the role of the combat-sector Chief Engineer is where the actual, logistically-minded engineers are promoted to. Good luck.
-  components:
-  - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/ce_nt.rsi
-  - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/ce_nt.rsi
-
 - type: entity
   parent: [ ClothingUniformBase, BaseSyndicateContraband ]
   id: ClothingUniformJumpsuitChiefEngineerSyndie

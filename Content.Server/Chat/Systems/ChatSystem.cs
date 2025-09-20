@@ -433,7 +433,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             RaiseLocalEvent(source, nameEv);
             name = nameEv.VoiceName;
             // Check for a speech verb override
-            if (nameEv.SpeechVerb != null && _prototypeManager.TryIndex(nameEv.SpeechVerb, out var proto))
+            if (nameEv.SpeechVerb != null && _prototypeManager.Resolve(nameEv.SpeechVerb, out var proto))
                 speech = proto;
         }
 

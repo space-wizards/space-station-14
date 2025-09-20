@@ -20,18 +20,18 @@ namespace Content.Shared.Nutrition.EntitySystems
             SubscribeLocalEvent<CreamPiedComponent, ThrowHitByEvent>(OnCreamPiedHitBy);
         }
 
-        public void SplatCreamPie(EntityUid uid, CreamPieComponent creamPie)
+        public void SplatCreamPie(Entity<CreamPieComponent> creamPie)
         {
             // Already splatted! Do nothing.
-            if (creamPie.Splatted)
+            if (creamPie.Comp.Splatted)
                 return;
 
-            creamPie.Splatted = true;
+            creamPie.Comp.Splatted = true;
 
-            SplattedCreamPie(uid, creamPie);
+            SplattedCreamPie(creamPie);
         }
 
-        protected virtual void SplattedCreamPie(EntityUid uid, CreamPieComponent creamPie) {}
+        protected virtual void SplattedCreamPie(Entity<CreamPieComponent, EdibleComponent?> entity) { }
 
         public void SetCreamPied(EntityUid uid, CreamPiedComponent creamPied, bool value)
         {
@@ -46,14 +46,14 @@ namespace Content.Shared.Nutrition.EntitySystems
             }
         }
 
-        private void OnCreamPieLand(EntityUid uid, CreamPieComponent component, ref LandEvent args)
+        private void OnCreamPieLand(Entity<CreamPieComponent> entity, ref LandEvent args)
         {
-            SplatCreamPie(uid, component);
+            SplatCreamPie(entity);
         }
 
-        private void OnCreamPieHit(EntityUid uid, CreamPieComponent component, ThrowDoHitEvent args)
+        private void OnCreamPieHit(Entity<CreamPieComponent> entity, ref ThrowDoHitEvent args)
         {
-            SplatCreamPie(uid, component);
+            SplatCreamPie(entity);
         }
 
         private void OnCreamPiedHitBy(EntityUid uid, CreamPiedComponent creamPied, ThrowHitByEvent args)

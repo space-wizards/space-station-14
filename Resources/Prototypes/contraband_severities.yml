@@ -21,6 +21,11 @@
   id: GrandTheft
   examineText: contraband-examine-text-GrandTheft
 
+# This is highly illegal contraband and is illegal to own IC.
+- type: contrabandSeverity
+  id: HighlyIllegal
+  examineText: contraband-examine-text-Highly-Illegal
+
 # This is clear syndicate contraband and is illegal to own IC.
 - type: contrabandSeverity
   id: Syndicate

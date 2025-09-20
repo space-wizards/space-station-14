@@ -194,6 +194,33 @@
   - type: Appearance
 
 - type: entity
+  parent: WeaponRifleLecter
+  id: WeaponRifleLecterXL8
+  name: XL8
+  description: |-
+    The Experimental Lecter 8
+    An unreasonably expensive military grade assault rifle with integrated optic. 
+    Uses .20 rifle ammo.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Rifles/XL8.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Rifles/XL8.rsi
+  - type: CursorOffsetRequiresWield
+  - type: EyeCursorOffset
+    maxOffset: 2
+    pvsIncrease: 0.2
+  - type: StaticPrice
+    price: 1500 #3x lecter
+  - type: Gun
+    shotsPerBurst: 3
+    selectedMode: Burst
+    availableModes:
+    - Burst
+    - SemiAuto
+    - FullAuto
+  
+- type: entity
   name: Estoc DMR
   parent: [BaseWeaponRifle, BaseSyndicateContraband]
   id: WeaponRifleEstoc

@@ -17,7 +17,7 @@ public sealed class RadiationProtectionSystem : EntitySystem
 
     private void OnInit(EntityUid uid, RadiationProtectionComponent component, ComponentInit args)
     {
-        if (!_prototypeManager.TryIndex(component.RadiationProtectionModifierSetId, out var modifier))
+        if (!_prototypeManager.Resolve(component.RadiationProtectionModifierSetId, out var modifier))
             return;
         var buffComp = EnsureComp<DamageProtectionBuffComponent>(uid);
         // add the damage modifier if it isn't in the dict yet

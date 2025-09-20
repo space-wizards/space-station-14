@@ -18,7 +18,6 @@ namespace Content.Client.UserInterface.Systems.Emotes;
 [UsedImplicitly]
 public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayState>
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
@@ -133,12 +132,12 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
         _menu = null;
     }
 
-    private IEnumerable<RadialMenuOption> ConvertToButtons(IEnumerable<EmotePrototype> emotePrototypes)
+    private IEnumerable<RadialMenuOptionBase> ConvertToButtons(IEnumerable<EmotePrototype> emotePrototypes)
     {
         var whitelistSystem = EntitySystemManager.GetEntitySystem<EntityWhitelistSystem>();
         var player = _playerManager.LocalSession?.AttachedEntity;
 
-        Dictionary<EmoteCategory, List<RadialMenuOption>> emotesByCategory = new();
+        Dictionary<EmoteCategory, List<RadialMenuOptionBase>> emotesByCategory = new();
         foreach (var emote in emotePrototypes)
         {
             if(emote.Category == EmoteCategory.Invalid)
@@ -158,19 +157,19 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
 
             if (!emotesByCategory.TryGetValue(emote.Category, out var list))
             {
-                list = new List<RadialMenuOption>();
+                list = new List<RadialMenuOptionBase>();
                 emotesByCategory.Add(emote.Category, list);
             }
 
             var actionOption = new RadialMenuActionOption<EmotePrototype>(HandleRadialButtonClick, emote)
             {
-                Sprite = emote.Icon,
+                IconSpecifier = RadialMenuIconSpecifier.With(emote.Icon),
                 ToolTip = Loc.GetString(emote.Name)
             };
             list.Add(actionOption);
         }
 
-        var models = new RadialMenuOption[emotesByCategory.Count];
+        var models = new RadialMenuOptionBase[emotesByCategory.Count];
         var i = 0;
         foreach (var (key, list) in emotesByCategory)
         {
@@ -178,7 +177,7 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
 
             models[i] = new RadialMenuNestedLayerOption(list)
             {
-                Sprite = tuple.Sprite,
+                IconSpecifier = RadialMenuIconSpecifier.With(tuple.Sprite),
                 ToolTip = Loc.GetString(tuple.Tooltip)
             };
             i++;
@@ -189,6 +188,6 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
 
     private void HandleRadialButtonClick(EmotePrototype prototype)
     {
-        _entityManager.RaisePredictiveEvent(new PlayEmoteMessage(prototype.ID));
+        EntityManager.RaisePredictiveEvent(new PlayEmoteMessage(prototype.ID));
     }
 }

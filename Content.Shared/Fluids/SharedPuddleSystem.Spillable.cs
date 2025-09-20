@@ -60,6 +60,8 @@ public abstract partial class SharedPuddleSystem
                 var puddleSolution = _solutionContainerSystem.SplitSolution(soln.Value, solution.Volume);
                 TrySpillAt(Transform(target).Coordinates, puddleSolution, out _);
 
+                // TODO: Make this an event subscription once spilling puddles is predicted.
+                // Injectors should not be hardcoded here.
                 if (TryComp<InjectorComponent>(entity, out var injectorComp))
                 {
                     injectorComp.ToggleState = InjectorToggleMode.Draw;

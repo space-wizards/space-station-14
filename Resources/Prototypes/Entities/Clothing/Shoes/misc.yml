@@ -109,13 +109,12 @@
   parent: ClothingShoesBase
   id: ClothingShoesSnakeskinBoots
   name: snakeskin boots
-  description: Boots made of high-class snakeskin, everyone around you will be jealous.
+  description: Boots made of once-valuable snakeskin, everyone around you would have been jealous.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Misc/snakeskin.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Misc/snakeskin.rsi
-  - type: NoSlip
 
 - type: entity
   parent: [ClothingShoesBase, PowerCellSlotSmallItem, BaseToggleClothing]
@@ -135,6 +134,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 1.5
     sprintModifier: 1.5
+    standing: true
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -182,7 +182,7 @@
     price: 75
   - type: Tag
     tags: [ ]
-   
+
 - type: entity
   parent: ClothingShoesBase
   id: ClothingShoesBootsJump
@@ -200,7 +200,7 @@
     jumpSound: /Audio/Effects/stealthoff.ogg
   - type: ActionGrant
     actions:
-    - ActionGravityJump 
+    - ActionGravityJump
   - type: ItemActionGrant
     actions:
     - ActionGravityJump

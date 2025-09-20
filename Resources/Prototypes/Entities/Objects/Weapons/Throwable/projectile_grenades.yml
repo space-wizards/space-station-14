@@ -61,6 +61,7 @@
     - timer
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
+    positional: true
   - type: SpawnOnTrigger
     keysIn:
     - timer
@@ -103,6 +104,7 @@
     - timer
     sound:
       path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
+    positional: true
   - type: StaticPrice
     price: 1500
 
@@ -134,5 +136,6 @@
     - timer
     sound:
       path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
+    positional: true
   - type: StaticPrice
     price: 1500

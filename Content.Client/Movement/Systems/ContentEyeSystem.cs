@@ -1,7 +1,6 @@
 using System.Numerics;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
-using Robust.Client.GameObjects;
 using Robust.Client.Player;
 
 namespace Content.Client.Movement.Systems;
@@ -57,6 +56,17 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
     public override void FrameUpdate(float frameTime)
     {
         base.FrameUpdate(frameTime);
+        var eyeEntities = AllEntityQuery<ContentEyeComponent, EyeComponent>();
+        while (eyeEntities.MoveNext(out var entity, out ContentEyeComponent? contentComponent, out EyeComponent? eyeComponent))
+        {
+            UpdateEyeOffset((entity, eyeComponent));
+        }
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+        // TODO: Ideally we wouldn't want this to run in both FrameUpdate and Update, but we kind of have to since the visual update happens in FrameUpdate, but interaction update happens in Update. It's a workaround and a better solution should be found.
         var eyeEntities = AllEntityQuery<ContentEyeComponent, EyeComponent>();
         while (eyeEntities.MoveNext(out var entity, out ContentEyeComponent? contentComponent, out EyeComponent? eyeComponent))
         {

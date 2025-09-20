@@ -24,3 +24,20 @@
     - id: CrewMonitoringServerFlatpack
     - id: CrewMonitoringComputerFlatpack
       amount: 3
+
+- type: entity
+  id: CrateStationAiCore
+  parent: CrateScienceSecure
+  name: station AI core crate
+  description: Contains the components for constructing a station AI core. Positronic brain not included. Requires Science access to open.
+  components:
+  - type: StorageFill
+    contents:
+    - id: StationAiCoreElectronics
+    - id: Intellicard
+    - id: SheetPlasteel1
+      amount: 4
+    - id: CableApcStack1
+      amount: 1
+    - id: SheetRGlass1
+      amount: 2

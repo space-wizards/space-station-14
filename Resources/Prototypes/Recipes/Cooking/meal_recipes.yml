@@ -1707,8 +1707,8 @@
   time: 5
   group: Cake
   solids:
-    FoodCakePlain: 1
-    FoodBerries: 5
+    FoodCakeBlueberry: 1
+    FoodBerries: 2
   reagents:
     Milk: 10
 

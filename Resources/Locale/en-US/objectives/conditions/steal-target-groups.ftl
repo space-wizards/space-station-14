@@ -23,6 +23,7 @@ steal-target-groups-encryption-keys = encryption key
 steal-target-groups-technology-disks = technology disk
 steal-target-groups-mail = mail
 steal-target-groups-id-cards = ID Card
+steal-target-groups-officer-handguns = security officer's handgun
 steal-target-groups-lamps = LAMP
 
 # Thief single item
@@ -43,6 +44,8 @@ steal-target-groups-bible = bible
 steal-target-groups-clothing-neck-goldmedal = gold medal of crewmanship
 steal-target-groups-clothing-neck-clownmedal = clown medal
 steal-target-groups-wanted-list-cartridge = wanted list cartridge
+steal-target-groups-belt-ce = chief engineer's toolbelt
+steal-target-groups-captain-sword = captain's sabre
 
 # Thief structures
 steal-target-groups-teg = teg generator part

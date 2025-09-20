@@ -1,10 +1,14 @@
-- type: entity
+﻿- type: entity
   id: BaseMaterialDoor
   parent: BaseStructure
   name: door
   abstract: true
   description: A door, where will it lead?
   components:
+  - type: Anchorable
+    flags:
+    - Anchorable
+  - type: Rotatable
   - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Doors/MineralDoors/metal_door.rsi
@@ -78,20 +82,10 @@
   id: WoodDoor
   name: wooden door
   parent: BaseMaterialDoorNavMap
-  description: A door, where will it lead?
   components:
   - type: Sprite
     sprite: Structures/Doors/MineralDoors/wood_door.rsi
-    layers:
-    - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
   - type: Door
-    bumpOpen: false
-    clickOpen: true
-    closeTimeOne: 0.2
-    closeTimeTwo: 0.6
-    openTimeOne: 0.6
-    openTimeTwo: 0.2
     openSound:
       path: /Audio/Effects/door_open.ogg
     closeSound:
@@ -115,13 +109,9 @@
   id: PaperDoor
   name: paper door
   parent: BaseMaterialDoorNavMap
-  description: A door, where will it lead?
   components:
   - type: Sprite
     sprite: Structures/Doors/MineralDoors/paper_door.rsi
-    layers:
-    - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
   - type: Destructible
     thresholds:
     - trigger:
@@ -143,13 +133,9 @@
   id: PlasmaDoor
   name: plasma door
   parent: BaseMaterialDoorNavMap
-  description: A door, where will it lead?
   components:
   - type: Sprite
     sprite: Structures/Doors/MineralDoors/plasma_door.rsi
-    layers:
-    - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
@@ -169,13 +155,9 @@
   id: GoldDoor
   name: gold door
   parent: BaseMaterialDoorNavMap
-  description: A door, where will it lead?
   components:
   - type: Sprite
     sprite: Structures/Doors/MineralDoors/gold_door.rsi
-    layers:
-    - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
   - type: Construction
     graph: DoorGraph
     node: goldDoor
@@ -184,13 +166,9 @@
   id: SilverDoor
   name: silver door
   parent: BaseMaterialDoorNavMap
-  description: A door, where will it lead?
   components:
   - type: Sprite
     sprite: Structures/Doors/MineralDoors/silver_door.rsi
-    layers:
-    - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
   - type: Construction
     graph: DoorGraph
     node: silverDoor
@@ -199,13 +177,9 @@
   id: BananiumDoor
   name: bananium door
   parent: BaseMaterialDoorNavMap
-  description: A door, where will it lead?
   components:
   - type: Sprite
     sprite: Structures/Doors/MineralDoors/bananium_door.rsi
-    layers:
-    - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
   - type: Construction
     graph: DoorGraph
     node: bananiumDoor
@@ -223,9 +197,6 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/web_door.rsi
-    layers:
-    - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
   - type: Construction
     graph: WebStructures
     node: door
@@ -262,43 +233,14 @@
     openSound:
       path: /Audio/Effects/rustle2.ogg
 
-
 - type: entity
   id: CardDoor
-  parent: BaseStructure
+  parent: BaseMaterialDoorNavMap
   name: cardboard door
-  description: A door, where will it lead?
   components:
-  - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Doors/MineralDoors/card_door.rsi
-    layers:
-    - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
-  - type: AnimationPlayer
-  - type: Physics
-    bodyType: Static
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.49,-0.49,0.49,0.49"
-        density: 100
-        mask:
-        - FullTileMask
-        layer:
-        - FlimsyLayer
   - type: Door
-    bumpOpen: false
-    clickOpen: true
-    canCrush: false
-    closeTimeOne: 0.2
-    closeTimeTwo: 0.6
-    openTimeOne: 0.6
-    openTimeTwo: 0.2
-    openingAnimationTime: 1.2
-    closingAnimationTime: 1.2
     openSound:
       path: /Audio/Effects/card_drag.ogg 
     closeSound:
@@ -308,7 +250,6 @@
       Brute:
         path:
           "/Audio/Weapons/pierce.ogg"
-  - type: Appearance
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Card
@@ -331,12 +272,6 @@
             max: 4
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Icon
-    sprite: Structures/Doors/MineralDoors/card_door.rsi
-    state: closed
   - type: Construction
     graph: DoorGraph
     node: cardDoor
-  - type: NavMapDoor
-  - type: Occluder
-  - type: BlockWeather

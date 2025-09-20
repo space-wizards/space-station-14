@@ -1,0 +1,83 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://github.com/DeltaV-Station/Delta-v/commit/e5426c4e3b160472b7d2913e1f89897bf72d957, some modification by FairlySadPanda (Github/Discord), ScarKy0 (Github/Discord) and TiniestShark (Github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "fennec",
+            "directions": 4
+        },
+        {
+            "name": "fennec-inner",
+            "directions": 4
+        },
+        {
+            "name": "fox",
+            "directions": 4
+        },
+        {
+            "name": "fox-inner",
+            "directions": 4
+        },
+        {
+            "name": "jackal",
+            "directions": 4
+        },
+        {
+            "name": "jackal-inner",
+            "directions": 4
+        },
+        {
+            "name": "otie",
+            "directions": 4
+        },
+        {
+            "name": "otie-inner",
+            "directions": 4
+        },
+        {
+            "name": "shock",
+            "directions": 4
+        },
+        {
+            "name": "shock-inner",
+            "directions": 4
+        },
+        {
+            "name": "terrier",
+            "directions": 4
+        },
+        {
+            "name": "terrier-inner",
+            "directions": 4
+        },
+        {
+            "name": "vulp",
+            "directions": 4
+        },
+        {
+            "name": "vulp-inner",
+            "directions": 4
+        },
+        {
+            "name": "vulp-sharp",
+            "directions": 4
+        },
+        {
+            "name": "vulp-fade",
+            "directions": 4
+        },
+        {
+            "name": "coyote",
+            "directions": 4
+        },
+        {
+            "name": "coyote-inner",
+            "directions": 4
+        }
+    ]
+}

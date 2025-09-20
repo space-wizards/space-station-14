@@ -62,7 +62,7 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
             });
         }
 
-        if (protoMan.TryIndex(loadout.Role, out var roleProto) && roleProto.Points != null && loadout.Points != null)
+        if (protoMan.Resolve(loadout.Role, out var roleProto) && roleProto.Points != null && loadout.Points != null)
         {
             RestrictionsContainer.AddChild(new Label()
             {
@@ -112,14 +112,14 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
                     })
                     .ToList();
 
-                /* 
-                * Determine which element should be displayed first: 
-                * - If any element is currently selected (its button is pressed), use it. 
-                * - Otherwise, fallback to the first element in the list. 
-                * 
-                * This moves the selected item outside of the sublist for better usability, 
-                * making it easier for players to quickly toggle loadout options (e.g. clothing, accessories) 
-                * without having to search inside expanded subgroups. 
+                /*
+                * Determine which element should be displayed first:
+                * - If any element is currently selected (its button is pressed), use it.
+                * - Otherwise, fallback to the first element in the list.
+                *
+                * This moves the selected item outside of the sublist for better usability,
+                * making it easier for players to quickly toggle loadout options (e.g. clothing, accessories)
+                * without having to search inside expanded subgroups.
                 */
                 var firstElement = uiElements.FirstOrDefault(e => e.Select.Pressed) ?? uiElements[0];
 
@@ -195,8 +195,8 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
     /// <summary>
     /// Creates a UI container for a single Loadout item.
     ///
-    /// This method was extracted from RefreshLoadouts because the logic for creating 
-    /// individual loadout items is used multiple times inside that method, and duplicating 
+    /// This method was extracted from RefreshLoadouts because the logic for creating
+    /// individual loadout items is used multiple times inside that method, and duplicating
     /// the code made it harder to maintain.
     ///
     /// Logic:

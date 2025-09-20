@@ -21,7 +21,6 @@ namespace Content.Client.Inventory
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IUserInterfaceManager _ui = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly ClientClothingSystem _clothingVisualsSystem = default!;
         [Dependency] private readonly ExamineSystem _examine = default!;
 

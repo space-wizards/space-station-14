@@ -5,6 +5,10 @@
   name: sentry turret
   description: A high-tech autonomous weapons system designed to keep unauthorized personnel out of sensitive areas.
   components:
+  - type: Anchorable
+    flags: 
+    - Anchorable
+  - type: Rotatable
   - type: Fixtures
     fixtures:
       body:
@@ -186,7 +190,7 @@
     - Borg
     - BasicSilicon
   - type: Machine
-    board: WeaponEnergyTurretSecurityMachineCircuitboard
+    board: WeaponEnergyTurretCommandMachineCircuitboard
   - type: DeviceNetwork
     receiveFrequencyId: TurretControl
     transmitFrequencyId: Turret

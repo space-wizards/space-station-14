@@ -12,6 +12,7 @@
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
   recognizable: true
+  standsout: true
   physicalDesc: reagent-physical-desc-ferrous
   metabolisms:
     Drink:
@@ -64,6 +65,7 @@
   flavor: slimy
   color: "#2cf274"
   recognizable: true
+  standsout: true
   physicalDesc: reagent-physical-desc-viscous
   viscosity: 0.25
   tileReactions:
@@ -166,14 +168,15 @@
     # Dragon doesn't require airloss healing, so omnizine is still best for humans.
       - !type:ModifyBloodLevel
         amount: 3
+      - !type:EvenHealthChange
+        damage:
+          Burn: -3
+          Brute: -3
+          Toxin: -2
       - !type:HealthChange
         damage:
-          groups:
-            Burn: -5
-            Brute: -5
-            Toxin: -2
           types:
-            Bloodloss: -5
+            Bloodloss: -3
       - !type:ModifyBleedAmount
         amount: -1.5
   # Just in case you REALLY want to water your plants

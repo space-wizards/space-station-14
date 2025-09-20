@@ -139,6 +139,12 @@ namespace Content.Shared.VendingMachines
         [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
         public TimeSpan NextEmpEject = TimeSpan.Zero;
 
+        /// <summary>
+        /// Audio entity used during restock in case the doafter gets canceled.
+        /// </summary>
+        [DataField]
+        public EntityUid? RestockStream;
+
         #region Client Visuals
         /// <summary>
         /// RSI state for when the vending machine is unpowered.

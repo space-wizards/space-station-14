@@ -190,7 +190,7 @@
   parent: BaseArrow
   id: ArrowCard
   name: cardboard arrow
-  description: Cant kill no matter how hard you try.
+  description: Careful, you'll poke an eye out!
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi

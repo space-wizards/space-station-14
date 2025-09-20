@@ -150,7 +150,7 @@ public sealed class SmartEquipSystem : EntitySystem
             }
 
             _hands.TryDrop((uid, hands), hands.ActiveHandId!);
-            _storage.Insert(slotItem, handItem.Value, out var stacked, out _);
+            _storage.Insert(slotItem, handItem.Value, out var stacked, out _, user: uid);
 
             // if the hand item stacked with the things in inventory, but there's no more space left for the rest
             // of the stack, place the stack back in hand rather than dropping it on the floor

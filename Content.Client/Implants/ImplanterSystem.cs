@@ -23,10 +23,12 @@ public sealed class ImplanterSystem : SharedImplanterSystem
     {
         if (_uiSystem.TryGetOpenUi<DeimplantBoundUserInterface>(uid, DeimplantUiKey.Key, out var bui))
         {
+            // TODO: Don't use protoId for deimplanting
+            // and especially not raw strings!
             Dictionary<string, string> implants = new();
             foreach (var implant in component.DeimplantWhitelist)
             {
-                if (_proto.TryIndex(implant, out var proto))
+                if (_proto.Resolve(implant, out var proto))
                     implants.Add(proto.ID, proto.Name);
             }
 

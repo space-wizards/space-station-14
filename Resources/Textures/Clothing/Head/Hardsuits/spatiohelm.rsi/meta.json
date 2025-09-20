@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Original by Emisse, modified by EmoGarbage404. Vox states by Flareguy for SS14. Dog states modified from base states by Sparlight (GitHub).",
+    "copyright": "Original by Emisse, modified by EmoGarbage404. Vox states by Flareguy for SS14. Dog states modified from base states by Sparlight (GitHub). Vulpkanin and Reptilian states by TiniestShark (Github).",
 
     "size": {
         "x": 32,
@@ -42,6 +42,30 @@
         },
         {
             "name": "equipped-head-unshaded-vox",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-vulpkanin",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-light-vulpkanin",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-unshaded-vulpkanin",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-reptilian",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-light-reptilian",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-unshaded-reptilian",
             "directions": 4
         },
         {

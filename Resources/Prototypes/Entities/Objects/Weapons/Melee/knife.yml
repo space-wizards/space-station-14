@@ -29,9 +29,9 @@
       path: /Audio/Items/Culinary/chop.ogg
 
 - type: entity
-  name: kitchen knife
   parent: BaseKnife
   id: KitchenKnife
+  name: kitchen knife
   description: A general purpose Chef's Knife made by Asters Merchant Guild. Guaranteed to stay sharp for years to come..
   components:
   - type: Tag
@@ -43,6 +43,8 @@
     state: icon
   - type: Item
     sprite: Objects/Weapons/Melee/kitchen_knife.rsi
+    storedOffset: -1,1
+    storedRotation: -45
   - type: GuideHelp
     guides:
     - Chef

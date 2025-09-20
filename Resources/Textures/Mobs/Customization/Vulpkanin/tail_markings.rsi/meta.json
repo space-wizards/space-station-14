@@ -1,0 +1,63 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/DeltaV-Station/Delta-v/commit/65d35d0b3c20aa4e8a0e749a4de8392e53051e86. Fluffy created by Skarletto (Github). Modified by FairlySadPanda (Github/Discord)",
+    "size": {"x": 32, "y": 32},
+    "states": [
+        {
+            "name": "tail-wag-icon"
+        },
+        {
+            "name": "fennec",
+            "directions": 4
+        },
+        {
+            "name": "fennec-tip",
+            "directions": 4
+        },
+        {
+            "name": "fluffy",
+            "directions": 4
+        },
+        {
+            "name": "fluffy-tip",
+            "directions": 4
+        },
+        {
+            "name": "husky",
+            "directions": 4
+        },
+        {
+            "name": "husky-inner",
+            "directions": 4
+        },
+        {
+            "name": "husky-outer",
+            "directions": 4
+        },
+        {
+            "name": "long",
+            "directions": 4
+        },
+        {
+            "name": "long-tip",
+            "directions": 4
+        },
+        {
+            "name": "vulp",
+            "directions": 4
+        },
+        {
+            "name": "vulp-fade",
+            "directions": 4
+        },
+        {
+            "name": "vulp-tip",
+            "directions": 4
+        },
+        {
+            "name": "coyote",
+            "directions": 4
+        }
+    ]
+}

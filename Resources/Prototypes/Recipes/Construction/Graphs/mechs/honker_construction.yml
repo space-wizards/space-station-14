@@ -6,6 +6,9 @@
     edges:
     - to: honker
       steps:
+      - assemblyId: Honker
+        guideString: mech-construction-guide-string
+
       - tool: Honking
         doAfter: 1
         completed:

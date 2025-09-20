@@ -1,6 +1,6 @@
 - type: entity
   id: BulletRifle
-  name: bullet (0.20 rifle)
+  name: bullet (.20 rifle)
   parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
@@ -11,7 +11,7 @@
 
 - type: entity
   id: BulletRiflePractice
-  name: bullet (0.20 rifle practice)
+  name: bullet (.20 rifle practice)
   parent: BaseBulletPractice
   categories: [ HideSpawnMenu ]
   components:
@@ -23,7 +23,7 @@
 - type: entity
   id: BulletRifleIncendiary
   parent: BaseBulletIncendiary
-  name: bullet (0.20 rifle incendiary)
+  name: bullet (.20 rifle incendiary)
   categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
@@ -35,7 +35,7 @@
 - type: entity
   id: BulletRifleUranium
   parent: BaseBulletUranium
-  name: bullet (0.20 rifle uranium)
+  name: bullet (.20 rifle uranium)
   categories: [ HideSpawnMenu ]
   components:
   - type: Projectile

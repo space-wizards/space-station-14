@@ -1,11 +1,11 @@
 using Content.Server.Chat.Systems;
-using Content.Shared.Radio;
-using Content.Server.Radio.Components;
+using Content.Shared.Radio.Components;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Speech.Components;
 using Content.Server.Wires;
-using Content.Shared.Wires;
+using Content.Shared.Radio;
 using Content.Shared.Speech;
+using Content.Shared.Wires;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Speech;
