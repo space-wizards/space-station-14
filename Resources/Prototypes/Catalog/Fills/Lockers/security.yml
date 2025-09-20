@@ -48,6 +48,7 @@
     - id: ClothingNeckBodyCamera # DS14
       amount: 4
     - id: BoxTapeRecorder # DS14
+    - id: CriminalRecordsMonitor
 
 - type: entityTable
   id: FillLockerWardenHarduit
