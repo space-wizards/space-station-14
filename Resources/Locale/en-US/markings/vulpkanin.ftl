@@ -38,7 +38,7 @@ marking-VulpEarOtie-otie-inner = Otie ears (Inner)
 marking-VulpEarOtie = Vulpkanin Otie
 
 marking-VulpEarShock-shock = Shock ears (Base)
-marking-VulpEarShock-inner = Shock ears (Inner)
+marking-VulpEarShock-shock-inner = Shock ears (Inner)
 marking-VulpEarShock = Vulpkanin Shock
 
 
