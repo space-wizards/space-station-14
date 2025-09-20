@@ -58,3 +58,19 @@
     sprite: _DeadSpace/Objects/Devices/encryption_keys.rsi
     layers:
     - state: crypt_typ
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyLawCommand
+  name: ключ шифрования юридически-командный
+  description: Ключ шифрования.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Law
+    - Command    
+    defaultChannel: Law
+  - type: Sprite
+    layers:
+    - state: crypt_silver
+    - state: lawcommand_label
