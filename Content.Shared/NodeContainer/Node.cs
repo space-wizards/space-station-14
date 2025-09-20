@@ -75,7 +75,7 @@ public abstract partial class Node
     ///     Invoked when the owning <see cref="NodeContainerComponent"/> is initialized.
     /// </summary>
     /// <param name="owner">The owning entity.</param>
-    public virtual void Initialize(EntityUid owner, IEntityManager entMan)
+    public virtual void Initialize(EntityUid owner, IEntityManager entMan, SharedMapSystem mapSystem)
     {
         Owner = owner;
     }
@@ -92,9 +92,11 @@ public abstract partial class Node
     /// of this asymmetric relation are made to manually update with <see cref="NodeGroupSystem.QueueReflood"/>.
     /// </para>
     /// </remarks>
-    public abstract IEnumerable<Node> GetReachableNodes(TransformComponent xform,
+    public abstract IEnumerable<Node> GetReachableNodes(
+        EntityUid uid,
         EntityQuery<NodeContainerComponent> nodeQuery,
         EntityQuery<TransformComponent> xformQuery,
-        MapGridComponent? grid,
-        IEntityManager entMan);
+        EntityQuery<MapGridComponent> gridQuery,
+        IEntityManager entMan,
+        SharedMapSystem mapSystem);
 }
