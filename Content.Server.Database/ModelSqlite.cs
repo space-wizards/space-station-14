@@ -70,7 +70,7 @@ namespace Content.Server.Database
                 v => JsonDocumentToString(v),
                 v => StringToJsonDocument(v));
 
-            var jsonByteArrayConverter = new ValueConverter<JsonDocument?, byte[]?>(
+            var jsonByteArrayConverter = new ValueConverter<JsonDocument?, byte[]>(
                 v => JsonDocumentToByteArray(v),
                 v => ByteArrayToJsonDocument(v));
 
@@ -80,10 +80,6 @@ namespace Content.Server.Database
 
             modelBuilder.Entity<Profile>()
                 .Property(log => log.Markings)
-                .HasConversion(jsonByteArrayConverter);
-
-            modelBuilder.Entity<CDModel.CDProfile>()
-                .Property(profile => profile.CharacterRecords)
                 .HasConversion(jsonByteArrayConverter);
 
             // EF core can make this automatically unique on sqlite but not psql.
@@ -132,11 +128,11 @@ namespace Content.Server.Database
             return JsonDocument.Parse(str);
         }
 
-        private static byte[]? JsonDocumentToByteArray(JsonDocument? document)
+        private static byte[] JsonDocumentToByteArray(JsonDocument? document)
         {
             if (document == null)
             {
-                return null;
+                return Array.Empty<byte>();
             }
 
             using var stream = new MemoryStream();
@@ -148,11 +144,8 @@ namespace Content.Server.Database
             return stream.ToArray();
         }
 
-        private static JsonDocument? ByteArrayToJsonDocument(byte[]? str)
+        private static JsonDocument ByteArrayToJsonDocument(byte[] str)
         {
-            if (str == null || str.Length == 0)
-                return null;
-
             return JsonDocument.Parse(str);
         }
     }
