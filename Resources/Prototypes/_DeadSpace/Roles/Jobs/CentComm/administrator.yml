@@ -33,3 +33,13 @@
     neck: ClothingNeckCloakCentcom
     pocket1: RubberStampCentcom
     pocket2: ClothingMaskGasCentcom
+
+- type: chameleonOutfit
+  id: CentralCommandAdministratorChameleonOutfit
+  job: CentralCommandAdministrator
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentcomFormal
+    shoes: ClothingShoesBootsLaceup
+    head: ClothingHeadHatCentcomcap
+    gloves: ClothingHandsGlovesDominator
+    neck: ClothingNeckCloakCentcom

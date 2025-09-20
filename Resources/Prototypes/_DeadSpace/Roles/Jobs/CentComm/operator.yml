@@ -34,3 +34,14 @@
     belt: BoxFolderCentComClipboard
     pocket1: RubberStampCentcom
     pocket2: ClothingMaskGasCentcom
+
+- type: chameleonOutfit
+  id: CentralCommandOperatorChameleonOutfit
+  job: CentralCommandOperator
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentcomOfficial
+    shoes: ClothingShoesBootsJack
+    head: ClothingHeadHatCentcomcap
+    gloves: ClothingHandsGlovesColorBlack
+    neck: ClothingNeckTieDet
+    belt: BoxFolderCentComClipboard
