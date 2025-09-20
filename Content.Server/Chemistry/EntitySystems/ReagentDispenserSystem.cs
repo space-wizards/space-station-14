@@ -16,6 +16,7 @@ using Robust.Shared.Prototypes;
 using Content.Shared.Labels.Components;
 using Content.Shared.Storage;
 using Content.Server.Hands.Systems;
+using Content.Shared.Chemistry.Components;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
