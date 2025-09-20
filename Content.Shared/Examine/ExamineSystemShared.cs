@@ -167,7 +167,7 @@ namespace Content.Shared.Examine
             MapCoordinates origin,
             MapCoordinates other,
             float range,
-            bool ignoreInsideBlocker)
+            bool ignoreInsideBlocker = true)
         {
             if (!ignoreInsideBlocker)
                 return _occluder.InRangeUnoccluded(origin, other, range);
