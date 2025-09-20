@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: BigfootBravo
-  changes:
-  - message: No more spammed error message when trying to write on a acquisition slip.
-    type: Fix
-  id: 8479
-  time: '2025-05-14T05:56:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37442
 - author: ToastEnjoyer
   changes:
   - message: Removed the high value target status on certain computer boards, replacing
@@ -3953,3 +3946,10 @@
   id: 8989
   time: '2025-09-20T18:55:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40338
+- author: Absotively
+  changes:
+  - message: Hand labeler's set text now displays on examine.
+    type: Tweak
+  id: 8990
+  time: '2025-09-20T19:00:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40334
