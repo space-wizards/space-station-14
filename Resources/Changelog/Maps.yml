@@ -694,4 +694,11 @@
   id: 83
   time: '2025-09-17T04:47:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40413
+- author: F1restar4
+  changes:
+  - message: On Plasma, added tropico to atmos
+    type: Add
+  id: 84
+  time: '2025-09-18T07:15:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40436
 Order: 1

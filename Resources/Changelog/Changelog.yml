@@ -1,103 +1,4 @@
 ﻿Entries:
-- author: Radezolid
-  changes:
-  - message: The cyborg cable module can be printed at the exosuit fabricator once
-      again.
-    type: Fix
-  id: 8464
-  time: '2025-05-12T16:28:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37361
-- author: Gentleman-Bird
-  changes:
-  - message: Added muffin tins to the kitchen dinnerware crate
-    type: Add
-  id: 8466
-  time: '2025-05-12T17:52:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36948
-- author: Prole0
-  changes:
-  - message: Changed wording/colors for alerts in health analyzer.
-    type: Tweak
-  id: 8467
-  time: '2025-05-12T20:52:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37376
-- author: perryprog
-  changes:
-  - message: Borgs in certain circumstances will no-longer draw much more power than
-      they should.
-    type: Fix
-  id: 8468
-  time: '2025-05-12T21:24:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37364
-- author: Hanzdegloker
-  changes:
-  - message: Previously unused flavors alongside some reworked ones now appear in
-      Dan's soaked smokes packs.
-    type: Tweak
-  id: 8469
-  time: '2025-05-12T23:27:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36979
-- author: EmoGarbage404
-  changes:
-  - message: Added the basilisk! This mob can be found on the vgroid and can freeze
-      you with his eye beam. His diamond exterior can sell for a pretty penny, however...
-    type: Add
-  id: 8470
-  time: '2025-05-12T23:42:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37135
-- author: perryprog
-  changes:
-  - message: You can now link uniform printers to silos.
-    type: Tweak
-  id: 8471
-  time: '2025-05-12T23:56:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37393
-- author: K-Dynamic
-  changes:
-  - message: Recoloured job icons of chaplain, librarian, boxer, janitor, lawyer and
-      ID icon of lawyer, boxer from grey to green
-    type: Tweak
-  id: 8472
-  time: '2025-05-13T07:43:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36580
-- author: chromiumboy
-  changes:
-  - message: Station AIs can personalize the appearance of their cores and holograms
-      by right-clicking the AI core in which they are inserted and selecting 'AI customization'
-      from the list
-    type: Add
-  id: 8473
-  time: '2025-05-13T08:50:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34501
-- author: EmoGarbage404
-  changes:
-  - message: Adjusted the sounds of various floors and shoes.
-    type: Tweak
-  id: 8474
-  time: '2025-05-13T09:16:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36941
-- author: metalgearsloth
-  changes:
-  - message: Predicted freezers + heaters UIs.
-    type: Tweak
-  id: 8475
-  time: '2025-05-13T11:49:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33837
-- author: AsnDen
-  changes:
-  - message: Supplybots can now pull things.
-    type: Add
-  id: 8476
-  time: '2025-05-13T17:15:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32468
-- author: BigfootBravo
-  changes:
-  - message: Cargo acquisition slips can now fit into folders, clipboards, and envelopes,
-      like other papers can.
-    type: Fix
-  id: 8477
-  time: '2025-05-14T04:42:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37439
 - author: Hitlinemoss
   changes:
   - message: The chef's closet no longer contains an emergency crowbar.
@@ -3954,3 +3855,101 @@
   id: 8975
   time: '2025-09-18T00:25:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40429
+- author: Pixel8-dev
+  changes:
+  - message: Fixed stun runes not stunning
+    type: Fix
+  id: 8976
+  time: '2025-09-18T02:37:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40432
+- author: sowelipililimute
+  changes:
+  - message: Vulpkanin use the standard hugging emote now
+    type: Tweak
+  id: 8977
+  time: '2025-09-18T17:17:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40183
+- author: vgskye
+  changes:
+  - message: You can now get chemical analysis goggles from a ChemDrobe.
+    type: Add
+  id: 8978
+  time: '2025-09-18T17:35:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40236
+- author: Kittygyat
+  changes:
+  - message: Snakeskin boots are no longer free, superior no-slips.
+    type: Tweak
+  id: 8979
+  time: '2025-09-18T17:39:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40201
+- author: TrixxedHeart
+  changes:
+  - message: The generic implanter that can be crafted in the medifab has been renamed
+      to implant extractor to better communicate its purpose.
+    type: Tweak
+  id: 8980
+  time: '2025-09-18T17:47:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40375
+- author: aada
+  changes:
+  - message: Mime bags are now silent for everyone.
+    type: Tweak
+  id: 8981
+  time: '2025-09-18T17:47:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40317
+- author: Hitlinemoss
+  changes:
+  - message: Spider Clan gear is now considered highly illegal contraband under Space
+      Law (rather than major contraband).
+    type: Tweak
+  id: 8982
+  time: '2025-09-18T17:49:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39855
+- author: rumaks-xyz
+  changes:
+  - message: Ichor now heals damage evenly, similarly to omnizine
+    type: Tweak
+  id: 8983
+  time: '2025-09-18T18:47:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39466
+- author: SlamBamActionman
+  changes:
+  - message: Several reagents now have contraband levels listed in the guidebook.
+    type: Add
+  id: 8984
+  time: '2025-09-18T19:01:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40426
+- author: Shot
+  changes:
+  - message: The cane blade can now slice, cut and execute
+    type: Tweak
+  id: 8985
+  time: '2025-09-18T19:37:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40311
+- author: Kittygyat
+  changes:
+  - message: Tarantulas and other spider mobs can now pull objects.
+    type: Add
+  id: 8986
+  time: '2025-09-18T19:59:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40433
+- author: 2DSiggy
+  changes:
+  - message: Thief can now be tasked with stealing Secoff/detective handguns, Captain's
+      sabre, and the CE's toolbelt.
+    type: Add
+  - message: Heavily reduced the likelihood of the LAMP objective for thief moths
+      and reduced the chance of beer goggles appearing as an objective.
+    type: Tweak
+  id: 8987
+  time: '2025-09-18T20:09:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39867
+- author: IProduceWidgets
+  changes:
+  - message: The Experimental Lecter 8 (XL8) has been added as an admin event weapon
+      for roles such as ERT.
+    type: Add
+  id: 8988
+  time: '2025-09-19T19:30:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40372

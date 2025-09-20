@@ -78,6 +78,7 @@
     - type: StunOnCollide
       stunAmount: 5
       knockdownAmount: 3
+      fixture: rune
     - type: Sprite
       sprite: Structures/Magic/Cult/trap.rsi
       layers:
