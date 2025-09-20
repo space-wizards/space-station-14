@@ -39,6 +39,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly PvsOverrideSystem _pvs = default!;
+    [Dependency] private readonly MetaDataSystem _meta = default!;
 
     public override void Initialize()
     {
@@ -73,7 +74,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
         SubscribeLocalEvent<HolopadUserComponent, JumpToCoreEvent>(OnJumpToCore);
         SubscribeLocalEvent<HolopadComponent, GetVerbsEvent<AlternativeVerb>>(AddToggleProjectorVerb);
         SubscribeLocalEvent<HolopadComponent, EntRemovedFromContainerMessage>(OnAiRemove);
-        SubscribeLocalEvent<HolopadComponent, EntParentChangedMessage>(OnParentChanged);
+        SubscribeLocalEvent<HolopadComponent, MapUidChangedEvent>(OnMapUidChanged);
         SubscribeLocalEvent<HolopadComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<HolopadComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<HolopadUserComponent, MobStateChangedEvent>(OnMobStateChanged);
@@ -324,6 +325,8 @@ public sealed class HolopadSystem : SharedHolopadSystem
     {
         if (entity.Comp.User != null)
             LinkHolopadToUser(entity, entity.Comp.User.Value);
+
+        _meta.AddFlag(entity, MetaDataFlags.ExtraTransformEvents);
     }
 
     private void OnHolopadUserInit(Entity<HolopadUserComponent> entity, ref ComponentInit args)
@@ -339,6 +342,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         ShutDownHolopad(entity);
         SetHolopadAmbientState(entity, false);
+        UpdateAllUIStates();
     }
 
     private void OnHolopadUserShutdown(Entity<HolopadUserComponent> entity, ref ComponentShutdown args)
@@ -437,7 +441,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
         _telephoneSystem.EndTelephoneCalls((entity, entityTelephone));
     }
 
-    private void OnParentChanged(Entity<HolopadComponent> entity, ref EntParentChangedMessage args)
+    private void OnMapUidChanged(Entity<HolopadComponent> entity, ref MapUidChangedEvent args)
     {
         UpdateHolopadControlLockoutStartTime(entity);
         UpdateAllUIStates();
