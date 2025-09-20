@@ -10,26 +10,17 @@
     closeable: true
     closeSound:
       collection: bottleCloseSounds
-  - type: Tag
-    tags:
-    - Ingredient
-
-- type: entity
-  parent: DrinkCartonBaseFull
-  id: DrinkCartonBaseLargeFull
-  abstract: true
-  components:
   - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 100
   - type: TrashOnSolutionEmpty
     solution: drink
+  - type: Item
+    size: Normal
   - type: Tag
     tags:
     - Ingredient
-  - type: Item
-    size: Normal
 
 - type: entity
   abstract: true
