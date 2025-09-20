@@ -3,6 +3,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Stacks;
 
+/// <summary>
+///     Prototype used to combine and spawn like-entities for <see cref="SharedStackSystem"/>.
+/// </summary>
 [Prototype]
 public sealed partial class StackPrototype : IPrototype
 {
@@ -23,6 +26,7 @@ public sealed partial class StackPrototype : IPrototype
     [DataField]
     public SpriteSpecifier? Icon { get; private set; }
 
+    // TODO Verify that this entity has StackComponent
     /// <summary>
     ///     The entity id that will be spawned by default from this stack.
     /// </summary>
