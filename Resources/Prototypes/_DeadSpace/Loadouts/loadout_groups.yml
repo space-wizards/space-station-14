@@ -24,6 +24,13 @@
   - BlueShieldOfficerJumpsuit
 
 - type: loadoutGroup
+  id: BlueShieldOfficerNeck
+  name: loadout-group-blue-shield-officer-neck
+  loadouts:
+  - BlueShieldOfficerCloak
+  - BlueShieldOfficerMantle
+
+- type: loadoutGroup
   id: BlueShieldOfficerUnderwear
   name: loadout-group-blue-shield-officer-underwear
   minLimit: 2

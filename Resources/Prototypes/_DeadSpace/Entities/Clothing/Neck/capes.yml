@@ -60,3 +60,14 @@
   components:
   - type: Sprite
     sprite: _DeadSpace/Clothing/hqdishka/Neck/flame.rsi
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckCapeBlueShield
+  name: плащ офицера "Синий Щит"
+  description: Данный плащ соткан из самой качественной ткани для офицера "Синий Щит".
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Neck/blueshield.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Neck/blueshield.rsi

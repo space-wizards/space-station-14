@@ -1,3 +1,12 @@
+- type: loadoutEffectGroup
+  id: MasterBlueShield
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobBlueShieldOfficer
+      time: 54000 #15 hrs
+
 # Backpack
 - type: loadout
   id: BlueShieldOfficerBackpack
@@ -9,6 +18,21 @@
   id: BlueShieldOfficerJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitBlueShield
+
+# Cloak
+- type: loadout
+  id: BlueShieldOfficerCloak
+  equipment:
+    neck: ClothingNeckCapeBlueShield
+
+# Mantle
+- type: loadout
+  id: BlueShieldOfficerMantle
+  equipment:
+    neck: ClothingNeckMantleBlueShieldhoulder
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterBlueShield
 
 # Underwear
 - type: loadout

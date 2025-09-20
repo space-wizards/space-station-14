@@ -19,3 +19,14 @@
     sprite: _DeadSpace/Clothing/Neck/pron_maid.rsi
   - type: Clothing
     sprite: _DeadSpace/Clothing/Neck/pron_maid.rsi
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckMantleBlueShieldhoulder
+  name: наплечная мантия офицера "Синий Щит"
+  description: Эта мантия является символом преданности к делу защиты глав станции.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Neck/blueshieldmantle_shoulder.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Neck/blueshieldmantle_shoulder.rsi
