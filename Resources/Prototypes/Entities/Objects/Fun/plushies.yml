@@ -1285,6 +1285,10 @@
     sprite: Objects/Fun/Plushies/vulp.rsi
     slots:
     - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.0625"
   - type: FoodSequenceElement
     entries:
       CottonBurger: PlushieVulp
