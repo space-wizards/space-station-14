@@ -662,9 +662,6 @@ namespace Content.Server.Atmos.EntitySystems
                     case AtmosphereProcessingCompletionState.Finished:
                         break;
                 }
-
-                // And increase the update counter.
-                atmosphere.UpdateCounter++;
             }
 
             // We finished processing all atmospheres successfully, therefore we won't be paused next tick.
@@ -814,6 +811,8 @@ namespace Content.Server.Atmos.EntitySystems
                     // We reached the end of this atmosphere's update tick. Break out of the switch.
                     break;
             }
+
+            atmosphere.UpdateCounter++;
 
             return AtmosphereProcessingCompletionState.Finished;
         }
