@@ -1,4 +1,3 @@
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Silicons.Laws.LawFormatCorruptions;
@@ -7,8 +6,7 @@ namespace Content.Server.Silicons.Laws.LawFormatCorruptions;
 /// Applies one of the specified colors at random to the text of the law.
 /// Uses uniform distribution to select the color to apply.
 /// </summary>
-[Prototype]
-public sealed partial class ColorizeFormatCorruptionPrototype : LawFormatCorruptionPrototype
+public sealed partial class ColorizeFormatCorruption : LawFormatCorruption
 {
     [DataField]
     public List<Color>? PossibleColors;

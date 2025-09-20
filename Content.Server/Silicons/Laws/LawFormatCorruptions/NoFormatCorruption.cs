@@ -1,5 +1,3 @@
-using Robust.Shared.Prototypes;
-
 namespace Content.Server.Silicons.Laws.LawFormatCorruptions;
 
 /// <summary>
@@ -7,8 +5,7 @@ namespace Content.Server.Silicons.Laws.LawFormatCorruptions;
 /// Exists to allow no formatting to be selected as a weighted random option.
 /// Also for type safety.
 /// </summary>
-[Prototype]
-public sealed partial class NoFormatCorruptionPrototype : LawFormatCorruptionPrototype
+public sealed partial class NoFormatCorruption : LawFormatCorruption
 {
     public override string? ApplyFormatCorruption(string toFormat)
     {
