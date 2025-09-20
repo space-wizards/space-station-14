@@ -12,6 +12,31 @@
       - material: Steel
         amount: 30
         doAfter: 1
+      - tag: Wrench
+        icon:
+          sprite: Objects/Tools/wrench.rsi
+          state: icon
+        name: crafting-menu-name-WRE
+      - tag: Wirecutter
+        icon:
+          sprite: Objects/Tools/wirecutters.rsi
+          state: cutters-map
+        name: crafting-menu-name-WIR
+      - tag: Screwdriver
+        icon:
+          sprite: Objects/Tools/screwdriver.rsi
+          state: screwdriver-map
+        name: crafting-menu-name-SCR
+      - tag: Crowbar
+        icon:
+          sprite: Objects/Tools/crowbar.rsi
+          state: storage
+        name: crafting-menu-name-CRO
+      - tag: EmergencyWelder
+        icon:
+          sprite: Objects/Tools/welder_mini.rsi
+          state: icon
+        name: crafting-menu-name-EW
       - tag: ModularReceiver
         icon:
           sprite: Objects/Misc/modular_receiver.rsi
@@ -40,6 +65,31 @@
       - material: Steel
         amount: 30
         doAfter: 1
+      - tag: Wrench
+        icon:
+          sprite: Objects/Tools/wrench.rsi
+          state: icon
+        name: crafting-menu-name-WRE
+      - tag: Wirecutter
+        icon:
+          sprite: Objects/Tools/wirecutters.rsi
+          state: cutters-map
+        name: crafting-menu-name-WIR
+      - tag: Screwdriver
+        icon:
+          sprite: Objects/Tools/screwdriver.rsi
+          state: screwdriver-map
+        name: crafting-menu-name-SCR
+      - tag: Crowbar
+        icon:
+          sprite: Objects/Tools/crowbar.rsi
+          state: storage
+        name: crafting-menu-name-CRO
+      - tag: EmergencyWelder
+        icon:
+          sprite: Objects/Tools/welder_mini.rsi
+          state: icon
+        name: crafting-menu-name-EW
       - tag: ModularReceiver
         icon:
           sprite: Objects/Misc/modular_receiver.rsi
