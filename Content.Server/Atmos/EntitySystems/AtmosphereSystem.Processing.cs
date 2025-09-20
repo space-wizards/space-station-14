@@ -678,10 +678,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="mapAtmosphere">The <see cref="MapAtmosphereComponent"/> belonging to the
         /// <see cref="GridAtmosphereComponent"/>'s map.</param>
         /// <param name="frameTime">The elapsed time since the last frame.</param>
-        /// <returns>Returns a bool pair that represents the completion state.
-        /// AtmosphereGridAtmosphereCompletionState.Return means the method is returning, ex. due to delegating processing to the next tick.
-        /// AtmosphereGridAtmosphereCompletionState.Continue means the method is continuing, ex. due to finishing a single processing stage.
-        /// (false, true) means the method is completely finished with the GridAtmosphere.</returns>
+        /// <returns>An <see cref="AtmosphereProcessingCompletionState"/> that represents the completion state.</returns>
         private AtmosphereProcessingCompletionState ProcessAtmosphere(Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
             Entity<MapAtmosphereComponent?> mapAtmosphere,
             float frameTime)
@@ -824,8 +821,19 @@ namespace Content.Server.Atmos.EntitySystems
 
     public enum AtmosphereProcessingCompletionState : byte
     {
+        /// <summary>
+        /// Method is returning, ex. due to delegating processing to the next tick.
+        /// </summary>
         Return,
+
+        /// <summary>
+        /// Method is continuing, ex. due to finishing a single processing stage.
+        /// </summary>
         Continue,
+
+        /// <summary>
+        /// Method is finished with the GridAtmosphere.
+        /// </summary>
         Finished,
     }
 
