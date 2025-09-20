@@ -110,7 +110,7 @@
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
   - type: Instrument
-    program: 115
+    program: 13 # Xylophone. Woodblock is 115 (another good option)
   - type: ActivatableUI
     blockSpectators: true # otherwise they can play client-side music
     inHandsOnly: false
