@@ -55,13 +55,14 @@ namespace Content.Server.Atmos.Reactions
         /// <param name="holder">The container of this gas mixture</param>
         /// <param name="atmosphereSystem">The atmosphere system</param>
         /// <param name="heatScale">Scaling factor that should be applied to all heat input or outputs.</param>
-        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem, float heatScale)
+        /// <param name="holderUid">The optional <see cref="EntityUid"/> that this reaction may be related with.</param>
+        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem, float heatScale, EntityUid? holderUid)
         {
             var result = ReactionResult.NoReaction;
 
             foreach (var effect in _effects)
             {
-                result |= effect.React(mixture, holder, atmosphereSystem, heatScale);
+                result |= effect.React(mixture, holder, atmosphereSystem, heatScale, holderUid);
             }
 
             return result;
