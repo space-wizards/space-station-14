@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Interaction;
@@ -162,64 +163,66 @@ namespace Content.Shared.Examine
             return TryComp<EyeComponent>(uid, out var eye) && eye.DrawFov;
         }
 
-        public bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true, IEntityManager? entMan = null)
+        public bool InRangeUnOccluded(
+            MapCoordinates origin,
+            MapCoordinates other,
+            float range,
+            bool ignoreInsideBlocker = true)
         {
-            // No, rider. This is better.
-            // ReSharper disable once ConvertToLocalFunction
-            var wrapped = (EntityUid uid, Ignored? wrapped)
-                => wrapped != null && wrapped(uid);
+            if (!ignoreInsideBlocker)
+                return _occluder.InRangeUnoccluded(origin, other, range);
 
-            return InRangeUnOccluded(origin, other, range, predicate, wrapped, ignoreInsideBlocker, entMan);
+            return _occluder.InRangeUnoccluded(
+                origin,
+                other,
+                range,
+                (_transform, origin, other),
+                OccluderSystem.IsColliding);
         }
 
-        public bool InRangeUnOccluded<TState>(MapCoordinates origin, MapCoordinates other, float range,
-            TState state, Func<EntityUid, TState, bool> predicate, bool ignoreInsideBlocker = true, IEntityManager? entMan = null)
+        public bool InRangeUnOccluded(MapCoordinates origin,
+            MapCoordinates other,
+            float range,
+            Ignored? predicate = null,
+            bool ignoreInsideBlocker = true)
         {
-            if (other.MapId != origin.MapId ||
-                other.MapId == MapId.Nullspace) return false;
+            if (predicate == null)
+                return InRangeUnOccluded(origin, other, range, ignoreInsideBlocker);
 
-            var dir = other.Position - origin.Position;
-            var length = dir.Length();
+            if (!ignoreInsideBlocker)
+                return _occluder.InRangeUnoccluded(origin, other, range, predicate, static (e, p) => p(e));
 
-            // If range specified also check it
-            // TODO: This rounding check is here because the API is kinda eh
-            if (range > 0f && length > range + 0.01f) return false;
+            return _occluder.InRangeUnoccluded(
+                origin,
+                other,
+                range,
+                (predicate, (_transform, origin, other)),
+                static (ent, s) => s.predicate(ent) || OccluderSystem.IsColliding(ent, s.Item2));
+        }
 
-            if (MathHelper.CloseTo(length, 0)) return true;
+        [Obsolete("use Occluder System")]
+        public bool InRangeUnOccluded<TState>(
+            MapCoordinates origin,
+            MapCoordinates other,
+            float range,
+            TState state,
+            Func<EntityUid, TState, bool> predicate,
+            bool ignoreInsideBlocker = true,
+            IEntityManager? entMan = null)
+        {
 
-            if (length > MaxRaycastRange)
+            if (!ignoreInsideBlocker)
             {
-                Log.Warning("InRangeUnOccluded check performed over extreme range. Limiting CollisionRay size.");
-                length = MaxRaycastRange;
+                return _occluder.InRangeUnoccluded(origin, other, range, (predicate, state),
+                    static (ent, s) => s.predicate(ent, s.state));
             }
 
-            var ray = new Ray(origin.Position, dir.Normalized());
-            var rayResults = _occluder
-                .IntersectRayWithPredicate(origin.MapId, ray, length, state, predicate, false);
-
-            if (rayResults.Count == 0) return true;
-
-            if (!ignoreInsideBlocker) return false;
-
-            foreach (var result in rayResults)
-            {
-                if (!TryComp(result.HitEntity, out OccluderComponent? o))
-                {
-                    continue;
-                }
-
-                var bBox = o.BoundingBox;
-                bBox = bBox.Translated(_transform.GetWorldPosition(result.HitEntity));
-
-                if (bBox.Contains(origin.Position) || bBox.Contains(other.Position))
-                {
-                    continue;
-                }
-
-                return false;
-            }
-
-            return true;
+            return _occluder.InRangeUnoccluded(
+                origin,
+                other,
+                range,
+                (state, predicate, (_transform, origin, other)),
+                static (ent, s) => s.predicate(ent, s.state) || OccluderSystem.IsColliding(ent, s.Item3));
         }
 
         public bool InRangeUnOccluded(EntityUid origin, EntityUid other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
