@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ToastEnjoyer
-  changes:
-  - message: Removed the high value target status on certain computer boards, replacing
-      them with command restricted status.
-    type: Tweak
-  id: 8480
-  time: '2025-05-14T17:47:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37452
 - author: LevitatingTree
   changes:
   - message: Changed the names of the neurodivergent pins to more accurately reflect
@@ -3953,3 +3945,11 @@
   id: 8990
   time: '2025-09-20T19:00:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40334
+- author: PJB3005
+  changes:
+  - message: Fixed stuff like camera views causing your computer to melt, explode,
+      and then collapse into a black hole.
+    type: Fix
+  id: 8991
+  time: '2025-09-21T05:16:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40181
