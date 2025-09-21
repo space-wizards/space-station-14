@@ -99,11 +99,6 @@
   result: ClothingUniformJumpskirtBartender
 
 - type: latheRecipe
-  parent: BaseJumpsuitRecipe
-  id: ClothingUniformJulianneVA11HALLA
-  result: ClothingUniformJulianneVA11HALLA
-
-- type: latheRecipe
   parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpsuitCaptain
   result: ClothingUniformJumpsuitCaptain
