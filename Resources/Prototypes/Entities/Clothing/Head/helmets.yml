@@ -273,7 +273,7 @@
     quickEquip: true
   - type: IngestionBlocker
   - type: TemperatureProtection
-    heatingCoefficient: 0.01
+    heatingCoefficient: 0.1
     coolingCoefficient: 0.2
   - type: FireProtection
     reduction: 0.15 # not fully sealed so less protection
