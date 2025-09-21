@@ -431,6 +431,9 @@ namespace Content.Server.Administration.Managers
             if (cmd is not ConsoleHost.RegisteredCommand registered)
                 return base.GetRequiredFlags(cmd);
 
+            // This command is just a method that was registered explicitly via IConsoleHost.Register()
+            // Sandboxing currently prevents us from checking attribute on this method in shared code
+            // TODO FIX THIS
             var method = registered.Callback.Method;
             if (Attribute.IsDefined(method, typeof(AnyCommandAttribute)))
                 return (true, []);
