@@ -15196,5 +15196,31 @@ Entries:
   id: 165101
   time: '2025-09-21T18:55:32.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1651
+- author: Conflee
+  changes:
+  - message: Added the Lube and Glue Grenades. They can be purchased from the Traitor
+      Uplink under Disruption for 2tc each. 1 of each can also be purchased by the
+      Clown at the HoHoHonkers Dispenser for 1000 Credits.
+    type: Add
+  id: 164100
+  time: '2025-09-21T19:04:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1641
+- author: Conflee
+  changes:
+  - message: Added a Remote Signaller and Network Configurator to the C4 Bundle, to
+      enable more aggressive and elaborate Traitor plays. At 150 pop every YouTool
+      and Vendomat is empty in 2 nanoseconds.
+    type: Add
+  id: 164101
+  time: '2025-09-21T19:04:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1641
+- author: Conflee
+  changes:
+  - message: Added the Recluse-class Comitas Systems Luxury Ship, the private ship
+      of Syndicate High Command codename 'Shalott' or 'Spider'.
+    type: Add
+  id: 164102
+  time: '2025-09-21T19:04:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1641
 Order: -1
 
