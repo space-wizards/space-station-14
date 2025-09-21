@@ -1,4 +1,3 @@
-using Content.Server.Forensics;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Forensics.Components;
