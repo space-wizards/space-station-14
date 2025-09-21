@@ -42,6 +42,11 @@
           sprite: Objects/Misc/modular_receiver.rsi
           state: icon
         name: construction-graph-tag-modular-receiver
+      - tag: BoneGel
+        icon:
+          sprite: Objects/Specific/Medical/Surgery/bone_gel.rsi
+          state: bone-gel
+        name: crafting-menu-name-BNGE
       - material: Cloth
         amount: 10
         doAfter: 2
@@ -95,6 +100,11 @@
           sprite: Objects/Misc/modular_receiver.rsi
           state: icon
         name: construction-graph-tag-modular-receiver
+      - tag: BoneGel
+        icon:
+          sprite: Objects/Specific/Medical/Surgery/bone_gel.rsi
+          state: bone-gel
+        name: crafting-menu-name-BNGE
       - material: Cloth
         amount: 10
         doAfter: 2
