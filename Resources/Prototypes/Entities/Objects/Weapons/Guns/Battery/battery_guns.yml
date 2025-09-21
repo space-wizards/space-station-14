@@ -53,13 +53,18 @@
   - type: Appearance
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
-  - type: Gun
+  - type: Gun #Starlight - Start
+    fireRate: 2
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
+    - FullAuto #Just allows people to hold down left click
+  - type: Battery 
+    maxCharge: 1500 # ~1:30 minutes for recharge
+    startingCharge: 1500
   - type: HitscanBatteryAmmoProvider
     proto: RedLaser
-    fireCost: 62.5
+    fireCost: 30 #Starlight - End
   - type: StaticPrice
     price: 420
 
@@ -272,18 +277,10 @@
     steps: 5
     zeroVisible: true
   - type: PacifismAllowedGun
-  - type: Gun #Starlight - Start
-    fireRate: 2
-    selectedMode: SemiAuto
-    availableModes:
-    - SemiAuto
-    - FullAuto #Just allows people to hold down left click
-  - type: Battery 
-    maxCharge: 1500 # ~1:30 minutes for recharge
-    startingCharge: 1500
   - type: HitscanBatteryAmmoProvider
-    proto: RedLaser
-    fireCost: 30 #Starlight - End
+    proto: RedLaserPractice
+    fireCost: 30 # Starlight
+
 
 #- type: entity
 #  name: pulse pistol
