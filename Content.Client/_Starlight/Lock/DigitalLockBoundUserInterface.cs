@@ -20,12 +20,20 @@ public sealed class DigitalLockBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
-
         _menu = this.CreateWindow<DigitalLockMenu>();
 
-        _menu.OnKeypadButtonPressed += i => SendMessage(new DigitalLockKeypadMessage(i));
-        _menu.OnEnterButtonPressed += () => SendMessage(new DigitalLockKeypadEnterMessage());
-        _menu.OnClearButtonPressed += () => SendMessage(new DigitalLockKeypadClearMessage());
+        _menu.OnKeypadButtonPressed += i =>
+        {
+            SendMessage(new DigitalLockKeypadMessage(i));
+        };
+        _menu.OnEnterButtonPressed += () =>
+        {
+            SendMessage(new DigitalLockKeypadEnterMessage());
+        };
+        _menu.OnClearButtonPressed += () =>
+        {
+            SendMessage(new DigitalLockKeypadClearMessage());
+        };
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

@@ -92,6 +92,7 @@
     containers:
       storagebase: !type:Container
         ents: []
+  - type: LockedStorage
 
 - type: entity
   parent: BaseWallSafe

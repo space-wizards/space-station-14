@@ -26,6 +26,7 @@
         spark:
           False: { visible: false }
           True: { visible: true }
+  - type: LockedStorage
   - type: AmbientSound
     enabled: false
     range: 20
