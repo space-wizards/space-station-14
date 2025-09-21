@@ -32,9 +32,7 @@ public sealed partial class SpecializationConsoleWindow : FancyWindow
     [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
     [Dependency] private readonly IResourceCache _cache = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
     [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
-    [Dependency] private readonly IClientNetManager _netManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     private readonly AccessReaderSystem _accessReader;
 
@@ -110,6 +108,7 @@ public sealed partial class SpecializationConsoleWindow : FancyWindow
         EntityUid? targetItem;
         AccessBox.DisposeAllChildren();
         EmployeeInfo.EntityViewBox.DisposeAllChildren();
+        SetButton.Disabled = DeleteButton.Disabled = true;
 
         if (!_entManager.TryGetComponent<SpecializationConsoleComponent>(_owner, out var specializationConsole))
             return;
@@ -120,10 +119,19 @@ public sealed partial class SpecializationConsoleWindow : FancyWindow
 
             if (!_entManager.TryGetComponent<IdCardComponent>(privilegedItem, out var idCard))
                 return;
+
             foreach (var department in idCard.JobDepartments)
             {
                 var departmentLabel = new RichTextLabel();
                 departmentLabel.SetMessage($"[{department.Id}]");
+                if (specializationConsole.TargetIdSlot.Item is { Valid: true } target)
+                {
+                    bool hasAccess = !CheckAccess(privilegedItem.Value, target);
+                    if (hasAccess)
+                        departmentLabel.Modulate = Color.LimeGreen;
+                    else
+                        departmentLabel.Modulate = Color.IndianRed;
+                }
                 AccessBox.AddChild(departmentLabel);
             }
         }
@@ -158,34 +166,55 @@ public sealed partial class SpecializationConsoleWindow : FancyWindow
         }
 
         if (privilegedItem != null && targetItem != null)
-        {
             SetButton.Disabled = DeleteButton.Disabled = CheckAccess(privilegedItem.Value, targetItem.Value);
-        }
     }
 
     private bool CheckAccess(EntityUid privilegedItem, EntityUid targetItem)
     {
         var privilegedTags = _accessReader.FindAccessTags(privilegedItem);
         var targetTags = _accessReader.FindAccessTags(targetItem);
+        var privilegedDepartments = new List<ProtoId<DepartmentPrototype>>();
+        var targetDepartments = new List<ProtoId<DepartmentPrototype>>();
 
-        if (privilegedTags.Contains("Captain") &&
-            targetTags.Contains("CentralCommand"))
-            return true;
+        if (_entManager.TryGetComponent<IdCardComponent>(privilegedItem, out var privCard))
+            privilegedDepartments = privCard.JobDepartments.ToList();
+        if (_entManager.TryGetComponent<IdCardComponent>(targetItem, out var targetCard))
+            targetDepartments = targetCard.JobDepartments.ToList();
+
         if (privilegedTags.Contains("CentralCommand"))
             return false;
+        if (targetTags.Contains("CentralCommand"))
+            return true;
 
+        // if there is no intersecting departments (captain and hop can edit anyone's specialization, exclude them) -> return true
+        foreach (var dep in privilegedDepartments)
+        {
+            if (dep == "Command" || privilegedTags.Contains("Captain") || privilegedTags.Contains("HeadOfPersonnel"))
+                continue;
+            if (!targetDepartments.Contains(dep))
+                return true;
+        }
+
+        // You can't edit command job specialization if you haven't captain or hop access
+        // & you can't edit captain specialization if you're not a captain or CC
+        if (targetTags.Contains("Command") &&
+            !privilegedTags.Contains("Captain") &&
+            !privilegedTags.Contains("HeadOfPersonnel") ||
+            targetTags.Contains("Captain") && !privilegedTags.Contains("Captain"))
+            return true;
+
+        // if there is intersecting tags excluding maintenance and external between command and target -> return false;
         if (privilegedTags.Contains("Command"))
         {
             foreach (var tag in privilegedTags)
             {
-                if (tag == "Maintenance")
+                if (tag == "Maintenance" || tag == "External")
                     continue;
 
                 if (targetTags.Contains(tag))
                     return false;
             }
         }
-
         return true;
     }
 }

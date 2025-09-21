@@ -64,10 +64,9 @@
                                 </PanelContainer>
                             </GridContainer>
                         </PanelContainer>
-                        <!-- Access configuration -->
                         <PanelContainer StyleClasses="Inset"
                                         Margin="0 10 0 0"
-                                        VerticalExpand="True">
+                                        SetSize="260 70">
                             <BoxContainer>
                                 <Label Text="Access" />
                                 <BoxContainer Name="AccessBox"
@@ -79,6 +78,7 @@
                                 </BoxContainer>
                             </BoxContainer>
                         </PanelContainer>
+                        <!-- Access configuration -->
                         <PanelContainer StyleClasses="Inset"
                                         Margin="0 10 0 0">
                             <BoxContainer Orientation="Vertical">
