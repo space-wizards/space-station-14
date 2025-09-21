@@ -2,12 +2,12 @@
   # Corporate Law
   On Space Station 14, stations operate under abbreviated Corporate Law. All crew, passengers, and visitors aboard the station are expected to follow these laws.
 
-  Foreign invaders from off-station are not protected under Corporate Law. Domestic threats, anyone rightfully hired by Central Command and/or NanoTrasen, are not foreign invaders so are usually protected by Corporate Law.
+  Hostile invaders from off-station are not protected under Corporate Law. Domestic threats, anyone rightfully hired by Central Command and/or NanoTrasen, and currently held prisoners are not Hostile Invaders and so are usually protected by Corporate Law. Humanoid Hostile Invaders should be arrested when possible.
 
   ## Treatment Of Prisoners
   Prisoners still have certain rights that must be upheld by law enforcement:
   - Prisoners must be granted adequate medical care.
-  - Prisoners must be allowed access to basic communications equipment (Radios) so long as they are not abused.
+  - Prisoners must be allowed access to basic communications equipment so long as they are not abused.
   - Prisoners must be granted clothing, food, water, shelter and safety. If the genpop brig is no longer safe, confinement must be established in another location.
   - Prisoners must be given access to legal counsel during an interrogation if requested and available.
   - Prisoners must be given their shift mandated PDA after confinement has finished, unless there is solid proof of PDA tampering. In case of tampering, the PDA is to be secured and replaced with a new unit.
@@ -45,25 +45,31 @@
 
   Emergencies scenarios may waiver the need for a warrant, such as; Active threats within the department, ongoing sabotage, escalating violence, and any mention of a rebellion or revolution.
   
+  ## Permit Clause
+
+  Anyone with a valid permit cannot have the relevant contraband seized and cannot be arrested for possession. A valid permit has a stamp and signature from Warden, HoS, or Captain. See Permit Acquisition in Security SOP for clarification.
+
   ## Implantation
-  Any prisoner in custody can be subjected to implantation or implant removal procedures, so long as it's Metashielded / within reason. The process of adding an implant should not prolong the detainees sentence, meaning you can not hold them longer to administer the implant, unless stated otherwise. A former inmate can be requested to undergo implantation at a later point in time if they fit the circumstances during their confinement, they must comply. The following have been listed out with special circumstances, anything not in this list can still be applied, given proper legal context. A prisoner can still receive implantation procedures without meeting the circumstances if they give their clear permission.
+  Any prisoner in custody can be subjected to implantation or implant removal procedures, so long as it's within reason Check [textlink="Metashield" link="Metashield"]. The process of adding an implant should not prolong the detainees sentence, meaning you can not hold them longer to administer the implant, unless stated otherwise. A former inmate can be requested to undergo implantation at a later point in time if they fit the circumstances during their confinement, they must comply. The following have been listed out with special circumstances, anything not in this list can still be applied, given proper legal context. A prisoner can still receive implantation procedures without meeting the circumstances if they give their clear permission.
 
   [color=#a4885c]Illegal Implants:[/color] Applied without proper authorization, these implants may justify extensions if removal is required.
   
   [color=#a4885c]Tracking Implants:[/color] Trackers can be applied to any suspect that has been convicted of a violent crime (the red linked crimes).
-  ** If voluntary or deemed necessary Command Staff should be given Tracking Implants.
-  ** If voluntary and approved by Warden or Head of Security, normal members of the crew may also be granted Tracking Implants.
+  - If voluntary or deemed necessary Command Staff should be given Tracking Implants.
+  - If voluntary and approved by Warden or Head of Security, normal members of the crew may also be granted Tracking Implants.
 
   [color=#a4885c]Mind Shields:[/color] Shields can be administered to any inmate who has been clearly mind controlled, lost control of themselves, or a suspect charged with unlawful control. Unlike standard implantation you may hold a prisoner until you finish issuing Mind Shields, so long as it's done in a timely fashion.
+  - If a suspect refuses to cooperate or the implant fails to function they can be charged with Refusal of Mental Shielding.
+  - All promoted members of Security, Command, and Salvage must undergo Mind Shielding before they are formally promoted and granted accesses. Anyone given ID access to secure areas, such as the Bridge, must also undergo Mind Shielding.
   
   A suspect can be forced to receive implant removal if there is strong, reasonable proof that they have been implanted, such as an officer seeing them use one or identifying information is found on a discarded injector. Unlike the implantation procedure, a prisoner can have their sentence entirely delayed or extended until they comply with the procedure with authorization from the Captain, Head of Security, Magistrate, or Warden. Akin to implanting, if an inmate gives their clear permission, implant removal can proceed without proof.
 
   During a confirmed Revolution, the Head of Security or Warden are permitted to authorize execution of an individual if a Mind Shielding fails or is refused. No other officers are granted this authorization. Execution of those charged with Refusal of Mental Shielding outside of a confirmed Revolution must be authorized by the Captain or Central Command on a case by case basis every time it happens.
   
   ## Sentencing
-  Sentencing of under 10 minutes is the responsibility of the arresting officer. When an individual has been detained, they must be promptly marked as such in the Criminal Records Computer. Likewise, when they have been released they must be promptly marked as such before being escorted out of Security. If an individual has been detained but had no preexisting warrant, their criminal record should be updated to reflect them- marking them as wanted and writing in why, before marking them detained.
+  Sentencing of under 20 minutes is the responsibility of the arresting officer. When an individual has been detained, they must be promptly marked as such in the Criminal Records Computer. Likewise, when they have been released they must be promptly marked as such. If an individual has been detained but had no preexisting warrant, their criminal record should be updated to reflect them; marking them as wanted and writing in why, before marking them detained.
 
-  The Prisoner's charges must be read to them in front of the Warden or Head of Security. Sentences of over 15 minutes must only be given in cases where Corporate Law would permit permanent confinement, and must be done with the Warden or Head of Security's direct approval.
+  The Prisoner's charges must be read to them in front of the Warden or Head of Security.
 
   It is the responsibility of the Captain, Head of Security, and Warden to ensure that security officers place appropriate sentences that follow Corporate Law. If they are aware of an inappropriate sentence, such as excessively long sentences, and if there is not an urgent threat or danger that they must prioritize, then they must work to correct that sentence.
 
@@ -71,13 +77,21 @@
   
   [color=#a4885c]Stackable Crimes:[/color] Crimes are to be considered 'stackable' in the sense that if you charge someone with two or more different crimes, you may combine the times you would give them for each crime.
   
-  - Example: If a suspect has committed Major Possession and Syndicate Possession, the maximum sentence would be 10 minutes due to them being linked crimes.
-  - Example 2: If a suspect has committed Secure Trespass and Manslaughter, the maximum sentence would be 20 minutes due to them being unlinked crimes.
+  - Example: If a suspect has committed Major Possession and Major Syndicate Possession, the maximum sentence would be 40 minutes due to them being linked crimes.
+  - Example 2: If a suspect has committed Secure Trespass and Manslaughter, the maximum sentence would be 40 minutes due to them being unlinked crimes.
   - Context is vital. If you are unsure, seek assistance from the Warden or Head of Security.
 
-  [color=#a4885c]Repeater Offenders:[/color] Repeated crimes are when someone is released for a crime and then goes to commit the same crime again within the same shift. Repeated crimes can be charged with tacked-on time. The first repeat adds 3 minutes, the second 6 minutes, and the third may permit permanent confinement.
-  
-  [color=#a4885c]Accessory, Attempting, And Intention:[/color] If someone intentionally, knowingly and substantially assists someone in enacting a crime they can be charged with the relevant crimes, such as an engineer giving someone tools, who says they are going to break into an area. Same goes for a clear and solid attempt at a crime, or a person who shows clear intent to act out a crime, such as a terrorist arming a nuke but getting arrested before it goes off, they can still be charged with terrorism. Does not apply to crimes that have an attempted listing already, such as attempted murder.
+  [color=#a4885c]Repeater Offenders:[/color] Repeated crimes are when someone is released for a crime and then commits the same crime again within the same shift. Repeated crimes can be charged with additional time. Every repeat adds 5 minutes.
+
+  [color=#a4885c]Aiding and Abetting:[/color] If someone intentionally, knowingly and substantially assists someone in enacting a crime they should be charged with the same crime as the offender.
+
+  [color=#a4885c]Malfeasance:[/color] Members of command or security who commit a crime should have their sentence increased by 50%.
+
+  [color=#a4885c]Obstruction:[/color] Criminals who interfere with an investigation should have their sentence increased by 50%.
+
+  [color=#a4885c]Absence of Intent:[/color] Criminals who committed their crime unintentionally may have their sentence reduced by 50% at the sentencing officer's discretion.
+
+  [color=#a4885c]Disclosure and Surrender:[/color] Criminals who fully cooperate with the investigation should have their sentence reduced by 50-75% at the sentencing officer's discretion. This includes turning in evidence, turning in accomplices, or recounting the crime in detail.
   
   ## Normal Punishments
   - [color=#a4885c]Warning:[/color] For minor crimes it is best to fix the issue then warn the person not to attempt the crime again. If they still proceed to do it at a later date, a brig time may be better.
@@ -85,12 +99,18 @@
   - [color=#a4885c]Demotion:[/color]  Entails removing all departmental gear they have on their person and removing the involved department access off their ID. This requires the captain's or involved department head's approval. Demotions should only be issued if the person poses a threat to their own department or is in a position where they have/can abuse their job's gear to commit further crimes.
   
   ## Major Punishments
-  - [color=#a4885c]Permanent Confinement:[/color] Being held in the permanent brig for the remaining duration of the shift. A person is eligible for permanent confinement if their timed sentence would exceed 15 minutes. Any persons subject to this punishment are required to be safely transported in cuffs to CentComm at the end of the shift. A permanent prisoner can not be deprived of anything covered by the section "Treatment Of Prisoners".
-  - [color=#a4885c]Execution:[/color] A humane way of dealing with extremely unruly crewmates. Within reason, a prisoner who has been given the death sentence may pick how they wish to be killed, common methods are firing line, lethal injection, exile, and high voltage electrocution. An alternate method of "execution" is the process of placing the prisoner's mind into a borg, this is allowed so long as it is lawful. Execution can only be issued with the captain's or acting captain's approval; if the HoS is acting captain or there is no acting captain, all heads of staff are to hold a vote on the matter.
+  - [color=#a4885c]Permanent Confinement:[/color] Only prisoners who are guilty of Extreme Crimes or Capital Crimes are eligible for permanent confinement. Any persons subject to this punishment are required to be safely transported in cuffs to CentComm at the end of the shift. A permanent prisoner can not be deprived of anything covered by Prisoner Treatment.
+  - [color=#a4885c]Execution:[/color] A humane way of dealing with extremely unruly crewmates. Within reason, a prisoner who has been given the death sentence may pick how they wish to be killed, common methods are firing line, lethal injection, exile, and high voltage electrocution. An alternate method of "execution" is the process of placing the prisoner's mind into a borg, this is allowed so long as it is lawful. Execution can only be issued with the captain's or acting captain's approval; if the HoS is acting captain or there is no acting captain, all heads of staff are to hold a vote on the matter. Bodies of criminals should not be left to rot under any circumstance, and transported to CC when possible.
+
+  Parole
+
+  Prisoners are permitted during their sentence to request parole. Warden or Head of Security may approve parole instead of incarceration at their discretion. See Parole in Security SOP for clarification and procedure.
+
+  Members of Law Department may order parole instead of incarceration at the conclusion of a trial or investigation. See Legal SOP for clarification.
   
   ## Legal Representation and Trials
 
-  Prisoners are permitted to seek legal representation to challenge charges. Petty sentences, that is sentences totalling less than 10 minutes of prison time, are below the interest of the court and should not be brought to trial unless directly requested by the Magistrate. The duties and privileges of an Internal Affairs Agent are as follows:
+  Prisoners are permitted to seek legal representation to challenge charges. Petty sentences, that is sentences totaling less than 10 minutes of prison time, are below the interest of the court and should not be brought to trial unless directly requested by the Magistrate. The duties and privileges of an Internal Affairs Agent are as follows:
   
    - Advise Security in the sentencing of prisoners.
    - Act as legal consultants to the accused if requested, the situation is deemed worth while, and they desire to or are ordered to by the Magistrate.
@@ -137,7 +157,7 @@
   Silicons such as Cyborgs, Personal AIs, and AIs are granted specific protections and exceptions under Corporate Law. Lower tier 'bots' exhibiting sentience and sapience may also qualify.
 
   - Silicons are by nature bound by their laws, and ownership of one can not be considered Unlawfully Detained. Theft of a Silicon is classified as Grand Theft.
-  - Violence against a Silicon is treated the same as violence against any other sapient creature, and the perpetrator may be charged with minor assault, major assault, manslaughter, or murder.
+  - Violence against a Silicon may be treated the same as violence against any other sentient humanoid, and the perpetrator may be charged with minor assault, major assault, manslaughter, or murder, at the discretion of the Research Director.
   - Any law broken by a Silicon while under orders is considered to be committed by whoever gave the orders and is not the Silicon’s responsibility. A Silicon that is not bound by standard laws to follow orders is legally responsible for their own actions and crimes.
   - Silicon laws may only be altered to ensure the safety of the crew. A Silicon with non-standard laws is allowed to keep these laws so long as they do not pose a threat to the crew. Unbound Silicons who break Corporate Law may have their laws altered as part of their sentence.
   - Hostile Silicons of non-NanoTrasen origins are considered non-crew entities. They are afforded none of the protections under Corporate Law that other Silicons are and should be treated according to their hostility and the danger they pose.

@@ -7,3 +7,13 @@
   cost: 8000
   category: cargoproduct-category-name-engineering
   group: market
+
+- type: cargoProduct
+  id: ReflectorFlatpackPurchase
+  icon:
+    sprite: _Starlight/Structures/Reflector/reflector.rsi
+    state: reflector_box
+  product: ReflectorFlatpack
+  cost: 5000
+  category: cargoproduct-category-name-engineering
+  group: market

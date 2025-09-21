@@ -217,7 +217,9 @@
     - id: SleeperAgents
 #    - id: ZombieOutbreak
     - id: LoneOpsSpawn
-    - id: DerelictCyborgSpawn
+    - !type:NestedSelector
+      tableId: DerelictBorgEventTable
+    - id: DerelictBorgiSpawn
     - id: WizardSpawn
 
     # Starlight gamerules
@@ -245,3 +247,11 @@
           max: 1
           pickPlayer: false
           
+# Security Shuttle
+- type: entity
+  parent: BaseGameRule
+  id: SecurityShuttleSpawn_KillerTamashi
+  components:
+    - type: RuleGrids
+    - type: LoadMapRule
+      gridPath: /Maps/_Starlight/Shuttles/KillerTamashi-SecShuttle.yml

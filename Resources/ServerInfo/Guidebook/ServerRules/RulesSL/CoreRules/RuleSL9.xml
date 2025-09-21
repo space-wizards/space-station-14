@@ -1,15 +1,16 @@
 <Document>
  # Rule 9 - Interacting with SSD/AFK players.
  SSD (Space Sleep Disorder) players are those who have disconnected from the game but can still return to their character. They are identified by yellow text upon inspection and Zs next to their character model. AFK players are those who remain in-game but are unresponsive to interactions around them. Killing or robbing an SSD player does not contribute to interesting gameplay—it disrupts both the killer's and the victim's experience. If your target is SSD, use Ahelp to determine the appropriate course of action.
+
 Players who have been AFK for a significant amount of time will be automatically transported to a cryo tube. 
 
 ## General Rules for SSD/AFK Interactions
 - You may not interact with SSD players unless doing so falls into one of the following cases:
-\n - [color=000000] Moving them to a cryo-pod
-\n - [color=000000] Providing medical assistance
-\n - [color=000000] Rescuing them from immediate danger (e.g., carrying them out of a fire)
+\n - [color=000000] Moving them to a cryo-pod [/color]
+\n - [color=000000] Providing medical assistance [/color]
+\n - [color=000000] Rescuing them from immediate danger (e.g., carrying them out of a fire) [/color]
 - If a player with SSD has a Wanted status, they may not be detained without administrator permission.
-\n - [color=000000] However, if the player went SSD during or immediately after detention, the arrest may proceed.
+\n - [color=000000] However, if the player went SSD during or immediately after detention, the arrest may proceed. [/color]
 - Antagonists may continue their interactions with a target if the player enters SSD after an attack has begun.
 - If interacting with an SSD player is necessary for roleplay or progression (e.g., retrieving critical equipment from a Captain), if in doubt, use ahelp first to confirm.
 

@@ -152,18 +152,17 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     private void OnAiAccessible(Entity<StationAiOverlayComponent> ent, ref AccessibleOverrideEvent args)
     {
+        // We don't want to allow entities to access the AI just because the eye is nearby.
+        // Only let the AI access entities through the eye.
+        if (args.Accessible || args.User != ent.Owner)
+            return;
+
         args.Handled = true;
 
         // Hopefully AI never needs storage
-        if (_containers.TryGetContainingContainer(args.Target, out var targetContainer))
-        {
+        if (_containers.TryGetContainingContainer(args.Target, out var targetContainer) ||
+            !_containers.IsInSameOrTransparentContainer(ent.Owner, args.Target, otherContainer: targetContainer))
             return;
-        }
-
-        if (!_containers.IsInSameOrTransparentContainer(args.User, args.Target, otherContainer: targetContainer))
-        {
-            return;
-        }
 
         args.Accessible = true;
     }

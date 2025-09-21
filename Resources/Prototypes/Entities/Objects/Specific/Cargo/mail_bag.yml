@@ -12,6 +12,7 @@
     quickEquip: false
     slots:
     - belt
+    - back
   - type: Item
     size: Ginormous
   - type: Storage
@@ -28,6 +29,10 @@
       #- Document
       #- Paper
   - type: Dumpable
+  - type: Tag
+    tags:
+    - ScurretWearable
+    - CorgiWearable
   - type: ItemToggle  #starlight edit, added toggle
     onUse: false
     verbToggleOn: "Activate Magnet"
