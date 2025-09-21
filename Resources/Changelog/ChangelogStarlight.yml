@@ -14916,5 +14916,12 @@ Entries:
   id: 170108
   time: '2025-09-21T01:05:39.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: RoadTrain
+  changes:
+  - message: Actually fixes the laser carbine by moving our code to the abstract laser.
+    type: Fix
+  id: 168300
+  time: '2025-09-20T15:45:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1683
 Order: -1
 
