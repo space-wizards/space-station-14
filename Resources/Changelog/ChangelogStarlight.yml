@@ -15266,5 +15266,58 @@ Entries:
   id: 161600
   time: '2025-09-21T19:10:22.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1616
+- author: CorruptOmega
+  changes:
+  - message: Added Archaic (Shakespeare) accent. // To be, or not to be, that is potentially
+      the answer.
+    type: Add
+  id: 157500
+  time: '2025-09-21T19:06:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1575
+- author: CorruptOmega
+  changes:
+  - message: Added Scottish accent. // Whit ye mean ae chiel cuid no' speak Scottish
+      afore?
+    type: Add
+  id: 157501
+  time: '2025-09-21T19:06:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1575
+- author: CorruptOmega
+  changes:
+  - message: Added Nerd accent. // Cause the Grand Admiral leads the Orbital Habitation
+      Module.
+    type: Add
+  id: 157502
+  time: '2025-09-21T19:06:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1575
+- author: CorruptOmega
+  changes:
+  - message: Added Polite accent. // You watch your language now.
+    type: Add
+  id: 157503
+  time: '2025-09-21T19:06:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1575
+- author: CorruptOmega
+  changes:
+  - message: Admin Smite Option. Speak Proper Language - Gives Polite accent.
+    type: Add
+  id: 157504
+  time: '2025-09-21T19:06:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1575
+- author: CorruptOmega
+  changes:
+  - message: Expanded Pirate accent. It was lacking in some of it's accent.
+    type: Tweak
+  id: 157505
+  time: '2025-09-21T19:06:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1575
+- author: CorruptOmega
+  changes:
+  - message: Omni Accent also got the new accents included (Not Polite, since I separate
+      that out)
+    type: Tweak
+  id: 157506
+  time: '2025-09-21T19:06:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1575
 Order: -1
 
