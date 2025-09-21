@@ -101,21 +101,24 @@ public sealed class SpiderSystem : SharedSpiderSystem
             result = true;
         }
 
-        if (ent.Comp.OneWebSpawn) // Starlight-edit: we spawn only one web in center
-            return result;
-
-        // Spawn web in other directions
-        for (var i = 0; i < 4; i++)
+        // Starlight-start: we spawn only one web in center
+        if (ent.Comp.OneWebSpawn)
         {
-            var direction = (DirectionFlag)(1 << i);
-            var outerSpawnCoordinates = coords.Offset(direction.AsDir().ToVec());
 
-            if (IsTileBlockedByWeb(outerSpawnCoordinates))
-                continue;
+            // Spawn web in other directions
+            for (var i = 0; i < 4; i++)
+            {
+                var direction = (DirectionFlag)(1 << i);
+                var outerSpawnCoordinates = coords.Offset(direction.AsDir().ToVec());
 
-            Spawn(ent.Comp.WebPrototype, outerSpawnCoordinates);
-            result = true;
+                if (IsTileBlockedByWeb(outerSpawnCoordinates))
+                    continue;
+
+                Spawn(ent.Comp.WebPrototype, outerSpawnCoordinates);
+                result = true;
+            }
         }
+        // Starlight-end
 
         // Starlight-start
         if (result)

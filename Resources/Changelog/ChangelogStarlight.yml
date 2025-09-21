@@ -14753,5 +14753,175 @@ Entries:
   id: 166201
   time: '2025-09-18T22:21:33.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1662
+- author: CrazyPhantom
+  changes:
+  - message: Practice Laser Carbine Nerfed Into Oblivion (20 heat to 1)
+    type: Fix
+  id: 168000
+  time: '2025-09-19T01:14:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1680
+- author: Rinary
+  changes:
+  - message: Fixed emp scream cooldown for purple terror.
+    type: Fix
+  id: 168600
+  time: '2025-09-19T16:16:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1686
+- author: Rinary
+  changes:
+  - message: Fixed npc's with jumping task, now they work.(Hostile)
+    type: Fix
+  id: 168601
+  time: '2025-09-19T16:16:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1686
+- author: Rinary
+  changes:
+  - message: Changed black terror jump knockdown duration from 2 seconds to 1 seconds.
+    type: Tweak
+  id: 168602
+  time: '2025-09-19T16:16:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1686
+- author: Rinary
+  changes:
+  - message: Fixed web condition at evolving system.
+    type: Fix
+  id: 168700
+  time: '2025-09-19T18:08:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1687
+- author: CorruptOmega
+  changes:
+  - message: 'Scurrets now can understand Galactic Common again. Translation: Wawa,
+      wawaaaawa. Wawa!'
+    type: Tweak
+  id: 167300
+  time: '2025-09-19T20:43:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1673
+- author: CorruptOmega
+  changes:
+  - message: All Documents within the Document Printer have been updated with new
+      "Forms and Fields" functionality.
+    type: Tweak
+  id: 168400
+  time: '2025-09-19T22:54:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1684
+- author: CorruptOmega
+  changes:
+  - message: All Documents were given a bit of cleanup for formatting/grammar.
+    type: Tweak
+  id: 168401
+  time: '2025-09-19T22:54:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1684
+- author: STARLIGHT TEAM
+  changes:
+  - message: FMJ deals slightly less damage.
+    type: Tweak
+  id: 155200
+  time: '2025-09-20T15:47:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1552
+- author: STARLIGHT TEAM
+  changes:
+  - message: HP deals most of its damage as blunt.
+    type: Tweak
+  id: 155201
+  time: '2025-09-20T15:47:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1552
+- author: CorruptOmega
+  changes:
+  - message: A bottle of Bone Gel is now included in Reaper Arms.
+    type: Tweak
+  id: 155600
+  time: '2025-09-20T15:48:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1556
+- author: walksanatora
+  changes:
+  - message: Alt-Click now signs papers again.
+    type: Fix
+  id: 170000
+  time: '2025-09-21T01:04:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1700
+- author: walksanatora
+  changes:
+  - message: Nanotransen Rep's cane can now be used as a mobility aid
+    type: Fix
+  id: 169700
+  time: '2025-09-21T01:03:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1697
+- author: walksanatora
+  changes:
+  - message: Vulps now can take eye implants, tongues, and chest cavity items again.
+    type: Fix
+  id: 169800
+  time: '2025-09-21T01:01:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1698
+- author: Trep_Maul
+  changes:
+  - message: Parole to Sec SOP
+    type: Add
+  id: 170100
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: Trep_Maul
+  changes:
+  - message: Permit Acquisition to Sec SOP
+    type: Add
+  id: 170101
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: Trep_Maul
+  changes:
+  - message: Enemy of Corporation to Crimes
+    type: Add
+  id: 170102
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: Trep_Maul
+  changes:
+  - message: Modified syndicate contra
+    type: Tweak
+  id: 170103
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: Trep_Maul
+  changes:
+  - message: Major adjustments to Rule 6, Nicknames!
+    type: Tweak
+  id: 170104
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: Trep_Maul
+  changes:
+  - message: Major Adjustment to Rule 12, Thaven!
+    type: Tweak
+  id: 170105
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: Trep_Maul
+  changes:
+  - message: Major Adjustment to Rule 13, Security!
+    type: Tweak
+  id: 170106
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: Trep_Maul
+  changes:
+  - message: Minor adjustments to rules
+    type: Tweak
+  id: 170107
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: Trep_Maul
+  changes:
+  - message: Major Adjustments to Corporate Law and punishments.
+    type: Tweak
+  id: 170108
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: RoadTrain
+  changes:
+  - message: Actually fixes the laser carbine by moving our code to the abstract laser.
+    type: Fix
+  id: 168300
+  time: '2025-09-20T15:45:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1683
 Order: -1
 

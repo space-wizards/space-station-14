@@ -40,10 +40,10 @@ public abstract class SharedJumpSystem : EntitySystem
     private void OnThrowCollide(EntityUid uid, JumpComponent component, ref ThrowDoHitEvent args)
     {
         if (component.KnockdownSelfOnCollision)
-            _stun.TryKnockdown(uid, TimeSpan.FromSeconds(2), true);
+            _stun.TryKnockdown(uid, TimeSpan.FromSeconds(component.KnockdownSelfDuration), true);
 
         if (component.KnockdownTargetOnCollision)
-            _stun.TryKnockdown(args.Target, TimeSpan.FromSeconds(2), true);
+            _stun.TryKnockdown(args.Target, TimeSpan.FromSeconds(component.KnockdownTargetDuration), true);
     }
 
     private void OnGetItemActions(Entity<JumpComponent> ent, ref GetItemActionsEvent args)
