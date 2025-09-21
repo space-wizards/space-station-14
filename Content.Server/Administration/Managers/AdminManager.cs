@@ -5,6 +5,7 @@ using Content.Server.Database;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Players;
+using Robust.Server.Console;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
@@ -13,12 +14,13 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Administration.Managers
 {
-    public sealed partial class AdminManager : SharedAdminManager, IAdminManager
+    public sealed partial class AdminManager : SharedAdminManager, IAdminManager, IConGroupControllerImplementation
     {
         [Dependency] private readonly IServerDbManager _dbManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IServerNetManager _netMgr = default!;
         [Dependency] private readonly IChatManager _chat = default!;
+        [Dependency] private readonly IConGroupController _conGroup = default!;
 
         private readonly Dictionary<ICommonSession, AdminReg> _admins = new();
         private readonly HashSet<NetUserId> _promotedPlayers = new();
@@ -39,6 +41,8 @@ namespace Content.Server.Administration.Managers
             _netMgr.RegisterNetMessage<MsgUpdateAdminStatus>();
             PlayerMan.PlayerStatusChanged += PlayerStatusChanged;
             InitializeMetrics();
+            _conGroup.Implementation = this;
+            Toolshed.ActivePermissionController = this;
         }
 
         public override AdminData? GetAdminData(ICommonSession session, bool includeDeAdmin = false)

@@ -9,7 +9,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Administration;
 
-public abstract class SharedAdminManager : ISharedAdminManager, IConGroupControllerImplementation
+public abstract class SharedAdminManager : ISharedAdminManager
 {
     [Dependency] protected readonly IConsoleHost ConsoleHost = default!;
     [Dependency] protected readonly ToolshedManager Toolshed = default!;
@@ -17,7 +17,6 @@ public abstract class SharedAdminManager : ISharedAdminManager, IConGroupControl
     [Dependency] protected readonly IResourceManager ResMan = default!;
     [Dependency] protected readonly ISharedPlayerManager PlayerMan = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
-    [Dependency] private readonly IConGroupController _conGroup = default!;
 
     protected readonly AdminCommandPermissions CommandPermissions = new();
     protected readonly AdminCommandPermissions ToolshedCommandPermissions = new();
@@ -30,20 +29,17 @@ public abstract class SharedAdminManager : ISharedAdminManager, IConGroupControl
         if (Initialized)
             throw new InvalidOperationException("Already initialized.");
         Initialized = true;
-        _conGroup.Implementation = this;
-        Toolshed.ActivePermissionController = this;
 
         Log = _logManager.GetSawmill("admin");
         ReloadCommandPermissions();
         ReloadToolshedPermissions();
-        Toolshed.CommandsLoaded += ReloadToolshedPermissions;
     }
 
     public virtual void ReloadCommandPermissions()
     {
         CommandPermissions.Clear();
 
-        foreach (var (cmdName, cmd) in ConsoleHost.RegisteredCommands)
+        foreach (var (cmdName, cmd) in ConsoleHost.AvailableCommands)
         {
             var (isAvail, flagsReq) = GetRequiredFlags(cmd);
             if (!isAvail)
@@ -62,9 +58,6 @@ public abstract class SharedAdminManager : ISharedAdminManager, IConGroupControl
 
     public virtual void ReloadToolshedPermissions()
     {
-        if (!Toolshed.Started)
-            return;
-
         ToolshedCommandPermissions.Clear();
         foreach (var spec in Toolshed.DefaultEnvironment.AllCommands())
         {
@@ -172,8 +165,8 @@ public abstract class SharedAdminManager : ISharedAdminManager, IConGroupControl
             // TODO FIX THIS
             // ConsoleHost.RegisteredCommand registered => registered.Callback.Method,
 
-            CommandSpec spec => spec.Cmd.GetType(), // Toolshed command
-            ToolshedProxyCommand proxy => proxy.Spec.Cmd.GetType(), // Toolshed command
+            CommandSpec spec => spec.Cmd.GetType(),
+            // ToolshedProxyCommand proxy => proxy.Spec.Cmd.GetType(), // Toolshed command
             _ => cmd.GetType() // Normal IConsoleCommand or some other object
         };
 

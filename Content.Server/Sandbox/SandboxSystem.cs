@@ -12,7 +12,6 @@ using Content.Shared.Sandbox;
 using Robust.Server.Console;
 using Robust.Server.Placement;
 using Robust.Server.Player;
-using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;

@@ -36,7 +36,7 @@ namespace Content.Client.Administration.Managers
 
         public override void ReloadToolshedPermissions()
         {
-            base.ReloadToolshedPermissions();
+            // base.ReloadToolshedPermissions();
 
             if (ResMan.TryContentFileRead(new ResPath("/clientToolshedEngineCommandPerms.yml"), out var f))
                 ToolshedCommandPermissions.LoadPermissionsFromStream(f);
