@@ -54,9 +54,9 @@ public sealed class FloatingVisualizerSystem : SharedFloatingVisualizerSystem
 
     private void OnAnimationCompleted(EntityUid uid, FloatingVisualsComponent component, AnimationCompletedEvent args)
     {
-        if (args.Key != component.AnimationKey)
+        if (args.Key != FloatingVisualsComponent.AnimationKey)
             return;
 
-        FloatAnimation(uid, component.Offset, component.AnimationKey, component.AnimationTime, stop: !component.CanFloat);
+        FloatAnimation(uid, component.Offset, FloatingVisualsComponent.AnimationKey, component.AnimationTime, stop: !component.CanFloat);
     }
 }

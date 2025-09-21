@@ -22,5 +22,5 @@ public sealed partial class FloatingVisualsComponent : Component
     [DataField, AutoNetworkedField]
     public bool CanFloat;
 
-    public readonly string AnimationKey = "gravity";
+    public const string AnimationKey = "gravity";
 }
