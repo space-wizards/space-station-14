@@ -14853,5 +14853,68 @@ Entries:
   id: 169800
   time: '2025-09-21T01:01:59.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1698
+- author: Trep_Maul
+  changes:
+  - message: Parole to Sec SOP
+    type: Add
+  id: 170100
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: Trep_Maul
+  changes:
+  - message: Permit Acquisition to Sec SOP
+    type: Add
+  id: 170101
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: Trep_Maul
+  changes:
+  - message: Enemy of Corporation to Crimes
+    type: Add
+  id: 170102
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: Trep_Maul
+  changes:
+  - message: Modified syndicate contra
+    type: Tweak
+  id: 170103
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: Trep_Maul
+  changes:
+  - message: Major adjustments to Rule 6, Nicknames!
+    type: Tweak
+  id: 170104
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: Trep_Maul
+  changes:
+  - message: Major Adjustment to Rule 12, Thaven!
+    type: Tweak
+  id: 170105
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: Trep_Maul
+  changes:
+  - message: Major Adjustment to Rule 13, Security!
+    type: Tweak
+  id: 170106
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: Trep_Maul
+  changes:
+  - message: Minor adjustments to rules
+    type: Tweak
+  id: 170107
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: Trep_Maul
+  changes:
+  - message: Major Adjustments to Corporate Law and punishments.
+    type: Tweak
+  id: 170108
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
 Order: -1
 
