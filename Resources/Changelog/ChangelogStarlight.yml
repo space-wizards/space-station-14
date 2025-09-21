@@ -14953,5 +14953,12 @@ Entries:
   id: 169401
   time: '2025-09-21T18:06:31.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1694
+- author: CawsForConcern
+  changes:
+  - message: Added Cluster Station
+    type: Add
+  id: 149700
+  time: '2025-09-21T18:18:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1497
 Order: -1
 
