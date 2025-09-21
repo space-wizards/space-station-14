@@ -1,9 +1,13 @@
 ﻿<Document>
   # Core Rule 5 - Do not metacom
-  Sharing ongoing round information outside the game is considered external communication ("metacom") and prohibited; you must wait for the end round screen before discussing the round. This rule also applies for other non-Wizard's Den servers.
+  Sharing current round information outside In-Character ("IC") channels is considered "metacom" and prohibited; you must wait for the end round screen to appear before discussing the round.
+
+  Bypassing IC speech accents and restrictions is considered metacom and prohibited.
+
+  Players may teach gameplay mechanics within the Local Out-of-Character ("LOOC") channel. You are highly encouraged to teach players within IC channels.
 
   ## Streaming
-  Viewing a stream while connected the same round ("stream sniping") is prohibited.
+  While streaming a round, you must kick and report viewers playing in the same round, as well as hide or delete current round information shared by viewers. Using a stream delay is highly recommended.
 
-  When streaming, you must kick and report viewers playing in the same round, and hide or delete ongoing round information shared by viewers. You are highly recommended to use a stream delay while streaming.
+  Viewing a stream while connected the same round ("stream sniping") is prohibited.
 </Document>
