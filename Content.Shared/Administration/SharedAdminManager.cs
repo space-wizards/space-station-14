@@ -167,13 +167,8 @@ public abstract class SharedAdminManager : ISharedAdminManager, IConGroupControl
     {
         var type = cmd switch
         {
-            // Method in somewhere that was explicitly registered via IConsoleHost.Register
-            // Alas, sandboxing prevents us from checking this.
-            // TODO FIX THIS
-            // ConsoleHost.RegisteredCommand registered => registered.Callback.Method,
-
-            CommandSpec spec => spec.Cmd.GetType(), // Toolshed command
             ToolshedProxyCommand proxy => proxy.Spec.Cmd.GetType(), // Toolshed command
+            CommandSpec spec => spec.Cmd.GetType(),
             _ => cmd.GetType() // Normal IConsoleCommand or some other object
         };
 
@@ -188,8 +183,7 @@ public abstract class SharedAdminManager : ISharedAdminManager, IConGroupControl
             .Select(p => p.Flags)
             .ToArray();
 
-        // If attribs.length == 0 then no access attribute is specified,
-        // and this is a server-only command.
+        // If attribs.length == 0 then no access attribute is specified, meaning that this is a server-only command.
         return (attribs.Length != 0, attribs);
     }
 
