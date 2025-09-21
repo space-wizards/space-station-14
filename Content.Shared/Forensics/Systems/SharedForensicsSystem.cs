@@ -1,4 +1,3 @@
-using Content.Server.Forensics;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;

@@ -1,6 +1,6 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Server.Forensics
+namespace Content.Shared.Forensics.Components
 {
     /// <summary>
     /// This controls fibers left by gloves on items,
