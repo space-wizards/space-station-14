@@ -15244,5 +15244,19 @@ Entries:
   id: 168502
   time: '2025-09-21T19:06:54.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1685
+- author: walksanatora
+  changes:
+  - message: Thaven can now self-emag
+    type: Tweak
+  id: 169600
+  time: '2025-09-21T19:08:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1696
+- author: walksanatora
+  changes:
+  - message: Thaven can now be emagged repeatedly.
+    type: Tweak
+  id: 169601
+  time: '2025-09-21T19:08:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1696
 Order: -1
 
