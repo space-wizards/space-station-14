@@ -30,6 +30,13 @@
       - state: inhand-left
       right:
       - state: inhand-right
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
   - type: Tag
     tags:
     - WhitelistChameleon
