@@ -167,6 +167,8 @@
   - CaptainJumpskirt
   - CaptainFormalSuit
   - CaptainFormalSkirt
+  - CapTurtleneckJumpskirt
+  - CapTurtleneckJumpsuit
 
 - type: loadoutGroup
   id: CaptainNeck
@@ -213,6 +215,8 @@
   loadouts:
   - HoPJumpsuit
   - HoPJumpskirt
+  - HoPTurtleneckJumpsuit # afterlight
+  - HoPTurtleneckJumpskirt # afterlight
 
 - type: loadoutGroup
   id: HoPNeck
@@ -773,7 +777,10 @@
   name: loadout-group-cargo-technician-jumpsuit
   loadouts:
   - CargoTechnicianJumpsuit
+  - CargoTechnicianJumpsuitAlt # afterlight
+  - CargoTechnicianJumpsuitFormal # afterlight
   - CargoTechnicianJumpskirt
+  - CargoTechnicianJumpskirtFormal # afterlight
 
 - type: loadoutGroup
   id: CargoTechnicianBackpack
@@ -824,6 +831,16 @@
   minLimit: 0
   loadouts:
   - SalvageSpecialistWintercoat
+
+- type: loadoutGroup # afterlight start
+  id: SalvageSpecialistJumpsuit
+  name: loadout-group-salvage-specialist-jumpsuit
+  minLimit: 0
+  loadouts:
+  - ClothingUniformJumpsuitMiningSpecialist
+  - ClothingUniformJumpskirtCargoSalvage
+  - ClothingUniformJumpskirtCargoSalvageFormal
+  - ClothingUniformJumpsuitSalvageFormal # afterlight end
 
 - type: loadoutGroup
   id: SalvageSpecialistShoes
@@ -1001,6 +1018,8 @@
   loadouts:
   - ResearchDirectorJumpsuit
   - ResearchDirectorJumpskirt
+  - RDClassicalJumpsuit
+  - RDClassicalJumpskirt
 
 - type: loadoutGroup
   id: ResearchDirectorOuterClothing
@@ -1044,6 +1063,7 @@
   loadouts:
   - ScientistJumpsuit
   - ScientistJumpskirt
+  - ScientistJumpskirtFormal # afterlight
   - RoboticistJumpsuit
   - RoboticistJumpskirt
   - SeniorResearcherJumpsuit
@@ -1123,6 +1143,8 @@
   - HeadofSecurityTurtleneckSkirt
   - HeadofSecurityFormalSuit
   - HeadofSecurityFormalSkirt
+  - HeadofSecurityBlackSuit
+  - HeadofSecurityBlackSkirt
   - HeadofSecurityBlueJumpsuit
   - HeadofSecurityGreyJumpsuit
 
@@ -1424,6 +1446,10 @@
   - MedicalBlueScrubs
   - MedicalGreenScrubs
   - MedicalPurpleScrubs
+  - NurseJumpskirt # afterlight
+  - CoronerJumpskirt # afterlight
+  - CoronerJumpsuit # afterlight
+  - CoronerJumpsuitAlt # afterlight
 
 - type: loadoutGroup
   id: MedicalDoctorOuterClothing
@@ -1567,6 +1593,8 @@
   loadouts:
   - ReporterJumpsuit
   - JournalistJumpsuit
+  - ReporterJumpskirt
+  - JournalistJumpskirt
 
 - type: loadoutGroup
   id: PsychologistJumpsuit
