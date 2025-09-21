@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: MisterImp
-  changes:
-  - message: A new recipe has been added for dracos (dragon meat tacos).
-    type: Add
-  id: 8483
-  time: '2025-05-14T19:33:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37212
 - author: LaCumbiaDelCoronavirus
   changes:
   - message: Maximum radius (not diameter) of atmos tank explosions has been increased
@@ -3953,3 +3946,11 @@
   id: 8993
   time: '2025-09-21T19:27:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40486
+- author: Nyxilath
+  changes:
+  - message: Posters now have proper damage resistances and values, instead of acting
+      like they were made out of metal.
+    type: Fix
+  id: 8994
+  time: '2025-09-21T20:40:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40489
