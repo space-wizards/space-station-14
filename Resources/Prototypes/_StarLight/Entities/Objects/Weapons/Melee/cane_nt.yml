@@ -69,3 +69,4 @@
     solution: battery
   - type: DrawableSolution
     solution: battery
+  - type: MobilityAid
