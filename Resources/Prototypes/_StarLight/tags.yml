@@ -148,6 +148,9 @@
   id: PrototypeVibroblade
 
 - type: Tag
+  id: RequiredForLmgTag
+
+- type: Tag
   id: Resomi
 
 - type: Tag

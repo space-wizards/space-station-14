@@ -1,6 +1,8 @@
 using Content.Shared.Actions;
+using Content.Shared.Dataset;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._Starlight.Thaven.Components;
@@ -35,6 +37,18 @@ public sealed partial class ThavenMoodsComponent : Component
 
     [DataField(serverOnly: true)]
     public EntityUid? Action;
+
+    /// <summary>
+    /// will grab 1 mood from each of these datasets on round start/map init
+    /// </summary>
+    [DataField(serverOnly: true)]
+    public List<ProtoId<DatasetPrototype>> MoodDatasets =  new() { SharedThavenMoodSystem.YesAndDataset, SharedThavenMoodSystem.NoAndDataset };
+
+    /// <summary>
+    /// what dataset will the "wildcard" mood be pulled from
+    /// </summary>
+    [DataField(serverOnly: true)]
+    public ProtoId<DatasetPrototype> Wildcard = SharedThavenMoodSystem.WildcardDataset;
 }
 
 public sealed partial class ToggleMoodsScreenEvent : InstantActionEvent;

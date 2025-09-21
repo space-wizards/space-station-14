@@ -81,6 +81,7 @@
     FlippoEngravedLighterStealObjective: 0.5
     ClothingHeadHatWardenStealObjective: 1
     WantedListCartridgeStealObjective: 1
+    Proto5xStealObjective: 1        # Starlight // HoS Gun
     ClothingOuterHardsuitVoidParamedStealObjective: 1   #med
     MedicalTechFabCircuitboardStealObjective: 1
     ClothingHeadsetAltMedicalStealObjective: 1
@@ -92,7 +93,6 @@
     BibleStealObjective: 1
     ClothingNeckGoldmedalStealObjective: 1              #other
     ClothingNeckClownmedalStealObjective: 0.5
-
 - type: weightedRandom
   id: ThiefObjectiveGroupStructure
   weights:

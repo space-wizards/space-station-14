@@ -221,6 +221,8 @@
       contents:
         - id: C4
           amount: 8
+        - id: NetworkConfigurator #SL EDIT
+        - id: RemoteSignaller #SL EDIT
 
 - type: entity
   parent: ClothingBackpackChameleon

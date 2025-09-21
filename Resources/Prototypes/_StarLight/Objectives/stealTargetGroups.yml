@@ -27,3 +27,12 @@
   sprite:
     sprite: _Starlight/Objects/Misc/hop_clipboard.rsi
     state: hop_clipboard
+
+#Thief single items
+
+- type: stealTargetGroup
+  id: Proto5x
+  name: steal-target-groups-proto5x
+  sprite:
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/energy_smg.rsi
+    state: icon

@@ -28,9 +28,9 @@ public sealed class HSeparator : Control
             ContentMarginBottomOverride = 2,
             ContentMarginLeftOverride = 2
         };
-
-        AddChild(new PanelContainer { PanelOverride = _styleBox });
         // Starlight-end
+
+        AddChild(new PanelContainer { PanelOverride = _styleBox }); // Starlight-edit
     }
 
     public HSeparator() : this(SeparatorColor) { }
