@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Reflection;
 using Content.Shared.Administration.Managers;
 using Robust.Shared.Console;
 using Robust.Shared.ContentPack;
@@ -182,7 +181,7 @@ public abstract class SharedAdminManager : ISharedAdminManager, IConGroupControl
             return (true, []);
         }
 
-        var attribs = type.GetCustomAttributes<AdminCommandAttribute>()
+        var attribs = type.GetAttributes<AdminCommandAttribute>()
             .Select(p => p.Flags)
             .ToArray();
 
