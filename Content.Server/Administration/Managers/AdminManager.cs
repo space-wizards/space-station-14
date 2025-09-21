@@ -242,19 +242,11 @@ namespace Content.Server.Administration.Managers
 
             var commands = new List<string>(CommandPermissions.AnyCommands);
 
-            // For the client, server-side toolshed commands are indistinguishable from "normal" server side commands.
-            // Hence, we just lump them together.
-            commands.AddRange(ToolshedCommandPermissions.AnyCommands);
-
             if (_admins.TryGetValue(session, out var adminData))
             {
                 msg.Admin = adminData.Data;
 
                 commands.AddRange(CommandPermissions.AdminCommands
-                    .Where(p => p.Value.Any(f => adminData.Data.HasFlag(f)))
-                    .Select(p => p.Key));
-
-                commands.AddRange(ToolshedCommandPermissions.AdminCommands
                     .Where(p => p.Value.Any(f => adminData.Data.HasFlag(f)))
                     .Select(p => p.Key));
             }
