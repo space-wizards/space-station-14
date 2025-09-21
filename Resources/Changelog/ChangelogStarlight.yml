@@ -15133,5 +15133,33 @@ Entries:
   id: 166401
   time: '2025-09-21T19:07:40.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1664
+- author: Fractalflower
+  changes:
+  - message: Several items are no longer in the Fashion-O-Mat...
+    type: Remove
+  id: 170500
+  time: '2025-09-21T19:07:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1705
+- author: Fractalflower
+  changes:
+  - message: '...instead, available in loadouts and the uniform printer!'
+    type: Add
+  id: 170501
+  time: '2025-09-21T19:07:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1705
+- author: Fractalflower
+  changes:
+  - message: Added BSO & NTR clothing to the uniform printer
+    type: Add
+  id: 170502
+  time: '2025-09-21T19:07:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1705
+- author: Fractalflower
+  changes:
+  - message: Salvage & Mining now have a jumpsuit selection.
+    type: Add
+  id: 170503
+  time: '2025-09-21T19:07:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1705
 Order: -1
 
