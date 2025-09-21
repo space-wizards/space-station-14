@@ -10,6 +10,8 @@
       organs:
         brain: OrganHumanBrain
         eyes: OrganHumanEyes
+        tongue: OrganHumanTongue #Starlight - surgery
+        eye_implant: null #Starlight - surgery
     torso:
       part: TorsoVulpkanin
       connections:
@@ -23,6 +25,7 @@
         stomach: OrganVulpkaninStomach # starlight - temp vulpkanin revert
         liver: OrganAnimalLiver
         kidneys: OrganHumanKidneys
+        cavity: null #Starlight - surgery
     right arm:
       part: RightArmVulpkanin
       connections:
