@@ -66,6 +66,9 @@
           stampedName: rr-cc
   - type: RailroadAssignRole
     role: RRMindRoleCriminal
+  - type: RailroadModifyIdCard
+    title: Criminal
+    icon: "JobIconPrisoner"
   - type: RailroadMessageOnChosen
     messages:
     - message: rr-criminal-message

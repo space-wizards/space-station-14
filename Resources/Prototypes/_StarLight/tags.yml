@@ -73,6 +73,9 @@
   id: HiltWood
 
 - type: Tag
+  id: ImprovisedAmmoBox
+
+- type: Tag
   id: ImprovisedCrowbar
 
 - type: Tag
@@ -140,6 +143,9 @@
 
 - type: Tag
   id: PrototypeVibroblade
+
+- type: Tag
+  id: RequiredForLmgTag
 
 - type: Tag
   id: Resomi

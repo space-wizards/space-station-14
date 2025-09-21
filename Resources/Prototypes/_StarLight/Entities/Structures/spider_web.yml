@@ -1,0 +1,167 @@
+- type: entity
+  id: SpiderWebStrong
+  parent: SpiderWebBase
+  name: strong spider web
+  description: It's stringy, sticky and strong.
+  components:
+  - type: Sprite
+    color: "#ffffffdd"
+  - type: Fixtures
+    fixtures:
+      fix1:
+        hard: false
+        density: 7
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - MidImpassable
+  - type: Destructible
+    thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWebSilk:
+            min: 1
+            max: 3
+  - type: SpeedModifierContacts
+    walkSpeedModifier: 0.5
+    sprintSpeedModifier: 0.5
+    blacklist:
+      components:
+      - IgnoreSpiderWeb
+
+- type: entity
+  id: SpiderWebStrongOpaque
+  parent: SpiderWebStrong
+  name: strong opaque spider web
+  description: It's stringy, sticky, opaque and strong.
+  components:
+  - type: Occluder
+
+- type: entity
+  id: SpiderWebSlime
+  parent: SpiderWebBase
+  name: slime spider web
+  description: It's stringy and sticky.
+  components:
+  - type: Sprite
+    color: "#94ffcdbe"
+  - type: Fixtures
+    fixtures:
+      fix1:
+        hard: false
+        density: 7
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - MidImpassable
+  - type: Destructible
+    thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWebSilk:
+            min: 0
+            max: 1
+  - type: SpeedModifierContacts
+    walkSpeedModifier: 0.3
+    sprintSpeedModifier: 0.3
+    blacklist:
+      components:
+      - IgnoreSpiderWeb
+  - type: InjectOnCollide
+    limit: 20
+    reagents:
+    - ReagentId: SpaceDrugs
+      Quantity: 2
+    blacklist:
+      components:
+      - IgnoreSpiderWeb
+
+- type: entity
+  id: SpiderWebPoison
+  parent: SpiderWebSlime
+  name: poison spider web
+  description: It's stringy and sticky.
+  components:
+  - type: Sprite
+    color: "#009926bd"
+  - type: SpeedModifierContacts
+    walkSpeedModifier: 0.5
+    sprintSpeedModifier: 0.5
+  - type: InjectOnCollide
+    limit: 20
+    reagents:
+    - ReagentId: Mechanotoxin
+      Quantity: 0.5
+    blacklist:
+      components:
+      - IgnoreSpiderWeb
+
+- type: entity
+  id: SpiderWebStealth
+  parent: SpiderWebBase
+  name: stealth spider web
+  description: It's stringy, sticky.
+  components:
+  - type: Sprite
+    color: "#ffffff5e"
+  - type: Fixtures
+    fixtures:
+      fix1:
+        hard: false
+        density: 7
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - MidImpassable
+  - type: Destructible
+    thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWebSilk:
+            min: 0
+            max: 1
+  - type: SpeedModifierContacts
+    walkSpeedModifier: 0.7
+    sprintSpeedModifier: 0.7
+    blacklist:
+      components:
+      - IgnoreSpiderWeb

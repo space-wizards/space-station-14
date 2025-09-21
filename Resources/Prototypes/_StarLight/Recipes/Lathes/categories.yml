@@ -47,3 +47,7 @@
 - type: latheCategory
   id: ErrorDocument
   name: lathe-category-error
+
+- type: latheCategory
+  id: Communications
+  name: lathe-category-communication

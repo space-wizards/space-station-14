@@ -1,0 +1,177 @@
+- type: entity
+  save: false
+  name: Urist McEars
+  parent: BaseMobSpeciesOrganic
+  id: BaseMobThaven
+  abstract: true
+  components:
+  - type: Absorbable
+  - type: Hunger
+  - type: Thirst
+  - type: Icon
+    sprite: _Starlight/Mobs/Species/Thaven/parts.rsi # Unlike dwarves elves are NOT made of slime
+    state: full
+  - type: ThavenMoods
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 2
+    damageRecovery:
+      types:
+        Asphyxiation: -1.0
+  - type: Sprite
+    noRot: true
+    drawdepth: Mobs
+    scale: 1, 1.05
+  - type: Body
+    prototype: Thaven
+    requiredLegs: 2
+  # - type: NoContractionsAccent //SL doesn't have a no contractions accent
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Thaven
+  - type: MeleeWeapon
+    attackRate: 0.55
+    soundHit:
+      collection: Punch
+    angle: 30
+    animation: WeaponArcPunch
+    damage:
+      types:
+        Blunt: 0
+  - type: StaminaDamageOnHit
+    damage: 18
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+      - id: FoodThavenMeat
+        amount: 5
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 120
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: TypingIndicator
+    proto: guardian
+  - type: Vocal
+    sounds:
+      Male: UnisexThaven
+      Female: UnisexThaven
+      Unsexed: UnisexThaven
+  - type: Speech
+    speechSounds: Alto
+  - type: HumanoidAppearance
+    species: Thaven
+    hideLayersOnEquip:
+    - Hair
+    - Snout
+  - type: LanguageKnowledge
+    speaks:
+      - GalacticCommon
+      - Thaveyan
+    understands: 
+      - GalacticCommon
+      - Thaveyan
+      - Carptongue
+  - type: Inventory
+    templateId: thaven
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Thaven/displacement.rsi
+            state: jumpsuit
+      head:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Thaven/displacement.rsi
+            state: head
+      eyes:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Thaven/displacement.rsi
+            state: eyes
+      ears:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Thaven/displacement.rsi
+            state: head
+      mask:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Thaven/displacement.rsi
+            state: mask
+      neck:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Thaven/displacement.rsi
+            state: neck
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Thaven/displacement.rsi
+            state: outerclothing_hardsuit
+      gloves:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Thaven/displacement.rsi
+            state: hands
+
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobThavenDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    scale: 1, 1
+  - type: Inventory
+    templateId: thaven
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Thaven/displacement.rsi
+            state: jumpsuit
+      head:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Thaven/displacement.rsi
+            state: head
+      eyes:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Thaven/displacement.rsi
+            state: eyes
+      ears:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Thaven/displacement.rsi
+            state: head
+      mask:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Thaven/displacement.rsi
+            state: mask
+      neck:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Thaven/displacement.rsi
+            state: neck
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Thaven/displacement.rsi
+            state: outerclothing_hardsuit
+      gloves:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Thaven/displacement.rsi
+            state: hands

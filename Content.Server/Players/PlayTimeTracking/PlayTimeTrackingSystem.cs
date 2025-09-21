@@ -241,7 +241,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
         foreach (var job in jobs.ShallowClone())
         {
-            if(!_prototypes.TryIndex(job, out var jobToRemove))
+            if(!_prototypes.Resolve(job, out var jobToRemove))
                 continue;
             var allProfilesForJob = _preferencesManager.GetPreferences(player.UserId).GetAllEnabledProfilesForJob(job);
             if (allProfilesForJob.Values.All(profile =>

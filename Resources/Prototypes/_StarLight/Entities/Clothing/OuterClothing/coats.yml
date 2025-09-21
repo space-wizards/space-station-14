@@ -68,6 +68,17 @@
 
 - type: entity
   parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatSquidPrisoner
+  name: last coat
+  description: Will look great on your body! Oh.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Coats/squid_prisoner.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Coats/squid_prisoner.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatInspector
   name: inspector's coat
   description: A strict inspector's coat from a bygone era.

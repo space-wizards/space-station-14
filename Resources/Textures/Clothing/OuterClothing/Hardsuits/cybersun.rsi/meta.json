@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Sprite made by Gtheglorious based on the sprite made by emisse for ss14, vox state made by Flareguy for SS14, monkey state made by MercerBray for Ss14, equipped-OUTERCLOTHING-dog modified from equipped-OUTERCLOTHING by casiliuscestus for SS14.",
+    "copyright": "Sprite made by Gtheglorious based on the sprite made by emisse for ss14, vox state made by Flareguy for SS14, monkey state made by MercerBray for Ss14, equipped-OUTERCLOTHING-dog modified from equipped-OUTERCLOTHING by casiliuscestus for SS14. Tail sprites by Tiniest Shark (github). Resomi state created by Huaqas (GitHub).",
     "size": {
         "x": 32,
         "y": 32
@@ -28,6 +28,10 @@
         },
         {
             "name": "equipped-OUTERCLOTHING-dog",
+            "directions": 4
+        },
+        {
+            "name": "equipped-OUTERCLOTHING-resomi",
             "directions": 4
         },
         {

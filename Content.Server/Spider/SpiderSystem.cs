@@ -7,6 +7,8 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Content.Shared._Starlight.Spider.Events; // Starlight-edit
+using Content.Shared.Weapons.Melee.Events; // Starlight-edit
 
 namespace Content.Server.Spider;
 
@@ -16,6 +18,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
     [Dependency] private readonly TurfSystem _turf = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!; // Starlight-edit
 
     /// <summary>
     ///     A recycled hashset used to check turfs for spiderwebs.
@@ -26,7 +29,16 @@ public sealed class SpiderSystem : SharedSpiderSystem
     {
         base.Initialize();
         SubscribeLocalEvent<SpiderComponent, SpiderWebActionEvent>(OnSpawnNet);
+        SubscribeLocalEvent<SpiderComponent, MeleeHitEvent>(OnMeleeHit); // Starlight-edit
     }
+
+    // Starlight-start
+    public void OnMeleeHit(EntityUid uid, SpiderComponent component, ref MeleeHitEvent args)
+    {
+        if (component.CantBreakWeb && args.HitEntities.Any(EntityManager.HasComponent<SpiderWebObjectComponent>))
+            args.BonusDamage = -args.BaseDamage;
+    }
+    // Starlight-end
 
     public override void Update(float frameTime)
     {
@@ -72,8 +84,10 @@ public sealed class SpiderSystem : SharedSpiderSystem
             _popup.PopupEntity(Loc.GetString("spider-web-action-success"), args.Performer, args.Performer);
             args.Handled = true;
         }
-        else
+        else if (!component.OneWebSpawn)
             _popup.PopupEntity(Loc.GetString("spider-web-action-fail"), args.Performer, args.Performer);
+        else
+            _popup.PopupEntity(Loc.GetString("spider-web-action-fail-single"), args.Performer, args.Performer);
     }
 
     private bool SpawnWeb(Entity<SpiderComponent> ent, EntityCoordinates coords)
@@ -87,18 +101,32 @@ public sealed class SpiderSystem : SharedSpiderSystem
             result = true;
         }
 
-        // Spawn web in other directions
-        for (var i = 0; i < 4; i++)
+        // Starlight-start: we spawn only one web in center
+        if (ent.Comp.OneWebSpawn)
         {
-            var direction = (DirectionFlag)(1 << i);
-            var outerSpawnCoordinates = coords.Offset(direction.AsDir().ToVec());
 
-            if (IsTileBlockedByWeb(outerSpawnCoordinates))
-                continue;
+            // Spawn web in other directions
+            for (var i = 0; i < 4; i++)
+            {
+                var direction = (DirectionFlag)(1 << i);
+                var outerSpawnCoordinates = coords.Offset(direction.AsDir().ToVec());
 
-            Spawn(ent.Comp.WebPrototype, outerSpawnCoordinates);
-            result = true;
+                if (IsTileBlockedByWeb(outerSpawnCoordinates))
+                    continue;
+
+                Spawn(ent.Comp.WebPrototype, outerSpawnCoordinates);
+                result = true;
+            }
         }
+        // Starlight-end
+
+        // Starlight-start
+        if (result)
+        {
+            var ev = new SpiderWebSpawnedEvent();
+            RaiseLocalEvent(ent.Owner, ev);
+        }
+        // Starlight-end
 
         return result;
     }
@@ -106,7 +134,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
     private bool IsTileBlockedByWeb(EntityCoordinates coords)
     {
         _webs.Clear();
-        _turf.GetEntitiesInTile(coords, _webs);
+        _webs.UnionWith(_lookup.GetEntitiesIntersecting(coords)); // Starlight-edit
         foreach (var entity in _webs)
         {
             if (HasComp<SpiderWebObjectComponent>(entity))

@@ -45,7 +45,7 @@
     # This allows Vox to take their mask off temporarily to eat something without needing a trip to medbay afterwards.
     allowedStates:
     - Alive
-    damageCap: 20
+    damageCap: 25 # Starlight
     damage:
       types:
         Heat: -0.07
@@ -68,7 +68,7 @@
     animation: WeaponArcClaw
     damage:
       types:
-        Slash: 5 # Reduce?
+        Slash: 6 # Starlight
   - type: Sprite # Need to redefine the whole order to draw the tail over their gas tank
     layers:
     - map: [ "enum.HumanoidVisualLayers.Chest" ]
@@ -96,6 +96,7 @@
     - map: [ "back" ]
     - map: [ "neck" ]
     - map: [ "suitstorage" ] # This is not in the default order
+    - map: [ "enum.HumanoidVisualLayers.SnoutCover" ]
     - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
     - map: [ "enum.HumanoidVisualLayers.Hair" ]
     - map: [ "enum.HumanoidVisualLayers.HeadSide" ]

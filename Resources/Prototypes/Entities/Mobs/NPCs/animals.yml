@@ -439,8 +439,6 @@
       - !type:GibBehavior
         recursive: false
   - type: NonSpreaderZombie
-  - type: SentienceTarget
-    flavorKind: station-event-random-sentience-flavor-organic
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Effects/bite.ogg
@@ -864,6 +862,7 @@
       behaviors:
       - !type:GibBehavior
         recursive: false
+  - type: ZombieImmune
 
 - type: entity
   name: cow

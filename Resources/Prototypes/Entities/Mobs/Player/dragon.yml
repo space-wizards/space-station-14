@@ -15,6 +15,7 @@
     understands:
     - GalacticCommon
     - Carptongue
+    - Thaveyan
   # Starlight-end
   - type: ThermalVision
   - type: Bloodstream
@@ -112,7 +113,6 @@
       types: {}
   - type: StatusEffects # Overwriting basesimplemob to remove flash, getting flashed as dragon just feelsbad
     allowed:
-    - Stutter
     - Electrocution
     - TemporaryBlindness
     - Pacified
