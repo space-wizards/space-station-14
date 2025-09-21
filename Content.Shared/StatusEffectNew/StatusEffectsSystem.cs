@@ -129,7 +129,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
     {
         if (!statusEffectEnt.Comp.Applied &&
             statusEffectEnt.Comp.AppliedTo != null &&
-            (statusEffectEnt.Comp.StartEffectTime == null || _timing.CurTime >= statusEffectEnt.Comp.StartEffectTime))
+            _timing.CurTime >= statusEffectEnt.Comp.StartEffectTime)
         {
             var ev = new StatusEffectAppliedEvent(statusEffectEnt.Comp.AppliedTo.Value);
             RaiseLocalEvent(statusEffectEnt, ref ev);
@@ -203,7 +203,8 @@ public sealed partial class StatusEffectsSystem : EntitySystem
 
         var endTime = delay == null ? _timing.CurTime + duration : _timing.CurTime + delay + duration;
         SetStatusEffectEndTime((effect.Value, effectComp), endTime); //Fix null delay causing null time
-        SetStatusEffectStartTime(effect.Value, _timing.CurTime + delay);
+        var startTime = delay == null ? TimeSpan.Zero : _timing.CurTime + delay.Value;
+        SetStatusEffectStartTime(effect.Value, startTime);
 
         TryApplyStatusEffect((effect.Value, effectComp));
 
@@ -238,15 +239,15 @@ public sealed partial class StatusEffectsSystem : EntitySystem
             return;
 
         // It's already started!
-        if (effect.Comp.StartEffectTime is null)
+        if (_timing.CurTime >= effect.Comp.StartEffectTime)
             return;
 
-        TimeSpan? newStartTime = null;
+        var newStartTime = TimeSpan.Zero;
 
         if (delay is not null)
         {
             // Don't update time to a smaller timespan...
-            newStartTime = _timing.CurTime + delay;
+            newStartTime = _timing.CurTime + delay.Value;
             if (effect.Comp.StartEffectTime < newStartTime)
                 return;
         }
@@ -286,7 +287,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         Dirty(ent);
     }
 
-    private void SetStatusEffectStartTime(Entity<StatusEffectComponent?> ent, TimeSpan? startTime)
+    private void SetStatusEffectStartTime(Entity<StatusEffectComponent?> ent, TimeSpan startTime)
     {
         if (!_effectQuery.Resolve(ent, ref ent.Comp))
             return;

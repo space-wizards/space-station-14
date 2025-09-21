@@ -74,10 +74,10 @@ public sealed partial class StatusEffectsSystem
         if (!TryGetStatusEffect(target, effectProto, out statusEffect))
             return TryAddStatusEffect(target, effectProto, out statusEffect, duration, delay);
 
-        if (!TryComp<StatusEffectComponent>(statusEffect, out var statusEffectComponent))
+        if (!_effectQuery.TryComp(statusEffect, out var statusEffectComponent))
             return false;
 
-        var endTime = (delay == null || statusEffectComponent.Applied) ? _timing.CurTime + duration : _timing.CurTime + delay + duration;
+        var endTime = delay == null || statusEffectComponent.Applied ? _timing.CurTime + duration : _timing.CurTime + delay + duration;
         SetStatusEffectEndTime(statusEffect.Value, endTime);
         UpdateStatusEffectDelay(statusEffect.Value, delay);
 
@@ -117,10 +117,10 @@ public sealed partial class StatusEffectsSystem
         if (!TryGetStatusEffect(target, effectProto, out statusEffect))
             return TryAddStatusEffect(target, effectProto, out statusEffect, duration, delay);
 
-        if (!TryComp<StatusEffectComponent>(statusEffect, out var statusEffectComponent))
+        if (!_effectQuery.TryComp(statusEffect, out var statusEffectComponent))
             return false;
 
-        var endTime = (delay == null || statusEffectComponent.Applied) ? duration : delay + duration;
+        var endTime = delay == null || statusEffectComponent.Applied ? duration : delay + duration;
         UpdateStatusEffectTime(statusEffect.Value, endTime);
         UpdateStatusEffectDelay(statusEffect.Value, delay);
 

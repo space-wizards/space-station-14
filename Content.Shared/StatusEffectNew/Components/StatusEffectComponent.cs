@@ -21,10 +21,10 @@ public sealed partial class StatusEffectComponent : Component
     public EntityUid? AppliedTo;
 
     /// <summary>
-    /// When this effect will end. If Null, the effect lasts indefinitely.
+    /// When this effect will start. Set to Timespan.Zero to start the effect immediately.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, AutoNetworkedField]
-    public TimeSpan? StartEffectTime;
+    public TimeSpan StartEffectTime;
 
     /// <summary>
     /// When this effect will end. If Null, the effect lasts indefinitely.
