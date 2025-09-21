@@ -194,3 +194,5 @@ crafting-menu-text-RIPRL = A poorly made replica of a coveted "Reaper" arm, cobb
 
 crafting-menu-name-RIPRR = right ripperdoc arm
 crafting-menu-text-RIPRR = A poorly made replica of a coveted "Reaper" arm, cobbled together from scrap found lying around in maintenance.
+
+crafting-menu-name-BNGE = bottle of bone gel
