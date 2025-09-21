@@ -989,9 +989,9 @@
     - item: AnomalyScanner
       hand:
         emptyLabel: borg-slot-anomalyscanner-empty
-        emptyRepresentative: Anomaly Scanner
+        emptyRepresentative: AnomalyScanner
         whitelist:
-          id:
+          components:
           - AnomalyScanner
     - item: AnomalyLocatorUnpowered
     - item: AnomalyLocatorWideUnpowered
