@@ -44,7 +44,7 @@ namespace Content.Shared.Damage
         /// <remarks>
         ///     If this data-field is specified, this allows damageable components to be initialized with non-zero damage.
         /// </remarks>
-        [DataField(readOnly: true)] //todo remove this readonly when implementing writing to damagespecifier
+        [DataField(readOnly: true)] // TODO FULL GAME SAVE
         public DamageSpecifier Damage = new();
 
         /// <summary>

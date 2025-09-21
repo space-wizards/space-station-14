@@ -37,4 +37,8 @@ public abstract class SharedExplosionSystem : EntitySystem
     public virtual void TriggerExplosive(EntityUid uid, ExplosiveComponent? explosive = null, bool delete = true, float? totalIntensity = null, float? radius = null, EntityUid? user = null)
     {
     }
+
+    public virtual void ReloadMap()
+    {
+    }
 }
