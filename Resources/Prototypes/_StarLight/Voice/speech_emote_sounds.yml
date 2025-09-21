@@ -1,88 +1,3 @@
-# species
-- type: emoteSounds
-  id: MaleVulpkanin
-  params:
-    variation: 0.125
-  sounds:
-    Scream:
-      collection: MaleScreams
-    Laugh:
-      collection: MaleLaugh
-    Growl:
-      collection: Growl
-    Howl:
-      path: /Audio/_Starlight/Effects/howl.ogg
-    Bark:
-      collection: Bark
-    Yip:
-      path: /Audio/_Starlight/Effects/yip.ogg
-    Whine:
-      collection: Whine
-    Sneeze:
-      collection: MaleSneezes
-    Cough:
-      collection: MaleCoughs
-    Yawn:
-      collection: MaleYawn
-    Snore:
-      collection: Snores
-    Sigh:
-      collection: MaleSigh
-    Crying:
-      collection: MaleCry
-    Whistle:
-      collection: Whistles
-    Weh:
-      collection: Weh
-    Hew:
-      collection: Hew
-    Gasp:
-      collection: MaleGasp
-    DefaultDeathgasp:
-      collection: MaleDeathGasp
-
-- type: emoteSounds
-  id: FemaleVulpkanin
-  params:
-    variation: 0.125
-  sounds:
-    Scream:
-      collection: FemaleScreams
-    Laugh:
-      collection: FemaleLaugh
-    Growl:
-      collection: Growl
-    Howl:
-      path: /Audio/_Starlight/Effects/howl.ogg
-    Bark:
-      collection: Bark
-    Yip:
-      path: /Audio/_Starlight/Effects/yip.ogg
-    Whine:
-      collection: Whine
-    Sneeze:
-      collection: FemaleSneezes
-    Cough:
-      collection: FemaleCoughs
-    Yawn:
-      collection: FemaleYawn
-    Snore:
-      collection: Snores
-    Sigh:
-      collection: FemaleSigh
-    Crying:
-      collection: FemaleCry
-    Whistle:
-      collection: Whistles
-    Weh:
-      collection: Weh
-    Hew:
-      collection: Hew
-    Gasp:
-      collection: FemaleGasp
-    DefaultDeathgasp:
-      collection: FemaleDeathGasp
-
 - type: emoteSounds
   id: MaleFelionoid
   params:
@@ -228,7 +143,7 @@
     Scream:
       path: /Audio/_Starlight/Effects/avali_scream.ogg
     Laugh:
-      collection: ResomiLaugh
+      path: /Audio/_Starlight/Voice/Avali/avali_laugh.ogg
     Sneeze:
       collection: MaleSneezes
     Cough:
@@ -262,7 +177,7 @@
     Squawk:
       collection: ResomiSquawk
     Crying:
-      collection: MaleCry
+      path: /Audio/_Starlight/Voice/Avali/avali_cry.ogg
     Honk:
       collection: BikeHorn
     Whistle:
@@ -278,7 +193,7 @@
     Scream:
       path: /Audio/_Starlight/Effects/avali_scream.ogg
     Laugh:
-      collection: ResomiLaugh
+      path: /Audio/_Starlight/Voice/Avali/avali_laugh.ogg
     Sneeze:
       collection: FemaleSneezes
     Cough:
@@ -312,7 +227,7 @@
     Squawk:
       collection: ResomiSquawk
     Crying:
-      collection: FemaleCry
+      path: /Audio/_Starlight/Voice/Avali/avali_cry.ogg
     Honk:
       collection: BikeHorn
     Whistle:

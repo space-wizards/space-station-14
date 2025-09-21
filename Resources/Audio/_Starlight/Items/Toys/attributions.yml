@@ -37,3 +37,8 @@
   license: "CC0-1.0"
   copyright: "None"
   source: "https://www.youtube.com/watch?v=YRmGZIENeq4"
+
+- files: ["bbc_scream.ogg"]
+  license: "Custom"
+  copyright: "tonsil5 (Freesound)"
+  source: "https://pixabay.com/sound-effects/cartoon-scream-1-6835/"

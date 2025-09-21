@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, BaseXenoArtifact]
   id: AbyssCore
   name: abyssium core
   description: Bright crystal, oozing with energy.

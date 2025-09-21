@@ -14,6 +14,7 @@
       proto: ExtRolesReq
   startingGear: MagistrateGear
   icon: "JobIconMagistrate"
+  rules: job-rules-corporate-aligned
   supervisors: job-supervisors-centcom
   canBeAntag: false
   setPreference: true

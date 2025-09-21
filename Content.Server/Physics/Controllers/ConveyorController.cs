@@ -10,6 +10,7 @@ using Content.Shared.Power;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Systems;
+using Content.Server._Starlight.Physics;
 
 namespace Content.Server.Physics.Controllers;
 
@@ -23,7 +24,7 @@ public sealed class ConveyorController : SharedConveyorController
 
     public override void Initialize()
     {
-        UpdatesAfter.Add(typeof(MoverController));
+        UpdatesAfter.Add(typeof(SLMoverController)); // Starlight
         SubscribeLocalEvent<ConveyorComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<ConveyorComponent, ComponentShutdown>(OnConveyorShutdown);
         SubscribeLocalEvent<ConveyorComponent, BreakageEventArgs>(OnBreakage);

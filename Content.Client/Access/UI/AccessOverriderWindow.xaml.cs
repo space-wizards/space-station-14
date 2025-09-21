@@ -40,6 +40,13 @@ namespace Content.Client.Access.UI
             _accessButtons.Populate(accessLevels, protoManager);
             AccessLevelControlContainer.AddChild(_accessButtons);
 
+            foreach (var access in accessLevels)
+            {
+                if (!protoManager.Resolve(access, out var accessLevel))
+                {
+                    continue;
+                }
+
             // Wire up group selection -> notify
             foreach (var (id, button) in _accessGroups.ButtonsList)
             {

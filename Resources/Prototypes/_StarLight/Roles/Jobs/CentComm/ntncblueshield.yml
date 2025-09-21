@@ -6,6 +6,7 @@
   setPreference: false
   startingGear: NTNCHardsuitGear
   icon: JobIconNTNCBlueShield
+  rules: job-rules-corporate-aligned
   supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:

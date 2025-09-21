@@ -11,4 +11,7 @@ public sealed partial class NightVisionComponent : Component
 {
     [DataField, AutoNetworkedField]
     public bool Active = true;
+
+    [DataField]
+    public EntProtoId EffectPrototype = "EffectNightVision";
 }
