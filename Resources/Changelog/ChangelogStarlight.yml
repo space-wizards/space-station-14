@@ -15033,5 +15033,75 @@ Entries:
   id: 167500
   time: '2025-09-21T18:56:56.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1675
+- author: Trep_Maul
+  changes:
+  - message: (Leth) Jr Pacmen and more Fuel
+    type: Add
+  id: 154600
+  time: '2025-09-21T18:59:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1546
+- author: Trep_Maul
+  changes:
+  - message: (Leth) More O2 lockers
+    type: Add
+  id: 154601
+  time: '2025-09-21T18:59:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1546
+- author: Trep_Maul
+  changes:
+  - message: (Leth) Emergecny lights
+    type: Add
+  id: 154602
+  time: '2025-09-21T18:59:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1546
+- author: Trep_Maul
+  changes:
+  - message: (Leth) A few more external cameras
+    type: Add
+  id: 154603
+  time: '2025-09-21T18:59:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1546
+- author: Trep_Maul
+  changes:
+  - message: (Leth) Missing Bar Button
+    type: Add
+  id: 154604
+  time: '2025-09-21T18:59:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1546
+- author: Trep_Maul
+  changes:
+  - message: (Leth) Brigmed plasma
+    type: Add
+  id: 154605
+  time: '2025-09-21T18:59:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1546
+- author: Trep_Maul
+  changes:
+  - message: (Leth) TEG
+    type: Tweak
+  id: 154606
+  time: '2025-09-21T18:59:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1546
+- author: Trep_Maul
+  changes:
+  - message: (Leth) a few tiles
+    type: Fix
+  id: 154607
+  time: '2025-09-21T18:59:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1546
+- author: Trep_Maul
+  changes:
+  - message: (Leth) Chem Access
+    type: Fix
+  id: 154608
+  time: '2025-09-21T18:59:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1546
+- author: Trep_Maul
+  changes:
+  - message: (Leth) Evac Length
+    type: Fix
+  id: 154609
+  time: '2025-09-21T18:59:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1546
 Order: -1
 
