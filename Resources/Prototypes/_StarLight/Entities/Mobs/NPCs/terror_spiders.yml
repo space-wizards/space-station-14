@@ -173,6 +173,7 @@
     evolveTo: MobTerrorPurple
     conditions: 
     - !type:SpiderWebCondition
+      targetWebAmount: 36
 
 - type: entity
   name: terror gray
@@ -236,6 +237,7 @@
     evolveTo: MobTerrorBlack
     conditions: 
     - !type:SpiderWebCondition
+      targetWebAmount: 36
     
 - type: entity
   name: terror green
@@ -359,10 +361,10 @@
     fireCost: 50
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 25
+    autoRechargeRate: 10
   - type: Battery
-    maxCharge: 200
-    startingCharge: 200
+    maxCharge: 150
+    startingCharge: 150
   - type: Gun
     fireRate: 0.5
     useKey: false

@@ -7,10 +7,18 @@
   defaultSkinTone: "#5a3f2d"
   markingLimits: MobVulpkaninMarkingLimits
   dollPrototype: MobVulpkaninDummy
-  skinColoration: VulpkaninColors
+  skinColoration: Hues # Starlight
   maleFirstNames: names_vulpkanin_male
   femaleFirstNames: names_vulpkanin_female
   lastNames: names_vulpkanin_last
+  # starlight start
+  minHeight: 0.9
+  defaultHeight: 1
+  maxHeight: 1.2
+  standardSize: 170
+  standardWeight: 75
+  standardDensity: 110
+  # starlight end
 
 - type: speciesBaseSprites
   id: MobVulpkaninSprites
