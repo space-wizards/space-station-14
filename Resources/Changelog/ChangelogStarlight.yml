@@ -15222,5 +15222,27 @@ Entries:
   id: 164102
   time: '2025-09-21T19:04:13.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1641
+- author: TheShuEd
+  changes:
+  - message: Containers can now block vision for entities that sit within it.
+    type: Tweak
+  id: 168500
+  time: '2025-09-21T19:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1685
+- author: Rinary
+  changes:
+  - message: Disposal system can now block vision for entities which flying in it/sit
+      in disposal unit.
+    type: Tweak
+  id: 168501
+  time: '2025-09-21T19:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1685
+- author: Rinary
+  changes:
+  - message: Vents can now block vision for entities which crawl in it.
+    type: Tweak
+  id: 168502
+  time: '2025-09-21T19:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1685
 Order: -1
 
