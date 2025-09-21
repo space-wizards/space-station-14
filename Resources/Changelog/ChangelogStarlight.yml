@@ -15012,5 +15012,19 @@ Entries:
   id: 110406
   time: '2025-09-21T18:33:18.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1104
+- author: CorruptOmega
+  changes:
+  - message: Added Proto-5x diabler visuals. Blue = Disable // Red = Laser
+    type: Add
+  id: 159000
+  time: '2025-09-21T18:48:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1590
+- author: CorruptOmega
+  changes:
+  - message: Thief Steal Objective - Head of Security's Proto-5x
+    type: Add
+  id: 159001
+  time: '2025-09-21T18:48:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1590
 Order: -1
 
