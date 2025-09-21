@@ -43,6 +43,16 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtResearchDirector
 
+- type: loadout # afterlight start
+  id: RDClassicalJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitRDClassical
+
+- type: loadout
+  id: RDClassicalJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtRDClassical # afterlight end
+
 # OuterClothing
 - type: loadout
   id: ResearchDirectorLabCoat

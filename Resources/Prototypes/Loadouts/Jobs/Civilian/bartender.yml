@@ -21,6 +21,11 @@
     jumpsuit: ClothingUniformJumpskirtBartender
 
 - type: loadout
+  id: BartenderJumpskirtVA11HALLA
+  equipment:
+    jumpsuit: ClothingUniformJulianneVA11HALLA
+
+- type: loadout
   id: BartenderJumpsuitPurple
   equipment:
     jumpsuit: ClothingUniformJumpsuitBartenderPurple

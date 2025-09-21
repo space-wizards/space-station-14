@@ -29,6 +29,16 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtHoP
 
+- type: loadout # afterlight start
+  id: HoPTurtleneckJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoPTurtleneck
+
+- type: loadout
+  id: HoPTurtleneckJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtHoPTurtleneck # afterlight end
+
 # Head
 - type: loadout
   id: HoPHead
