@@ -24,15 +24,15 @@
             "directions": 1
         },
         {
-            "name": "DamageOverlay_125",
-            "directions": 1
-        },
-        {
-            "name": "DamageOverlay_150",
-            "directions": 1
-        },
-        {
             "name": "DamageOverlay_175",
+            "directions": 1
+        },
+        {
+            "name": "DamageOverlay_250",
+            "directions": 1
+        },
+        {
+            "name": "DamageOverlay_325",
             "directions": 1
         }
     ]

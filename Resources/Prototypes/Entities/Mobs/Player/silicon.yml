@@ -216,7 +216,7 @@
         acts: [ "Breakage" ]
     - trigger:
         !type:DamageTrigger
-        damage: 800
+        damage: 1600
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -232,7 +232,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: DamageVisuals
-    thresholds: [25, 50, 75, 100, 125, 150, 175]
+    thresholds: [25, 50, 75, 100, 175, 250, 325]
     damageDivisor: 4
     trackAllDamage: true
     damageOverlay:
