@@ -15319,5 +15319,26 @@ Entries:
   id: 157506
   time: '2025-09-21T19:06:30.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1575
+- author: Conflee
+  changes:
+  - message: Added Directional Shuttle Windows, for mapping use only. Withstands the
+      same Delta Pressure as a full Reinforced Plasma Window (roughly double or triple
+      that of the Directional Reinforced Plasma Window) for compact atmos setups on
+      Shuttles.
+    type: Add
+  id: 168800
+  time: '2025-09-21T19:08:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1688
+- author: Conflee
+  changes:
+  - message: Changed DSshuttle, ERTShuttle, LancePirates, NSSV_MetaClass, NTSV_HarrierClass,
+      emergency_prism, and emergency_starboard shuttles to have more robust atmos
+      setups, in some cases using the new Directional Shuttle Windows, fixing Mixers
+      with incorrect default values, and adding a Point Defense Turrets and Civilian
+      NanoMed Machines where applicable
+    type: Tweak
+  id: 168801
+  time: '2025-09-21T19:08:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1688
 Order: -1
 
