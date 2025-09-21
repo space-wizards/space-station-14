@@ -4,9 +4,11 @@ using Robust.Shared.Spawners;
 using Robust.Shared.Timing;
 using Robust.Client.GameObjects;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
-using Content.Shared._Starlight.Actions.Stasis;
+using Content.Shared._Starlight.Actions.EntitySystems;
+using Content.Shared._Starlight.Actions.Events;
+using Content.Shared._Starlight.Actions.Components;
 
-namespace Content.Client._Starlight.Actions.Stasis;
+namespace Content.Client._Starlight.Actions.EntitySystems;
 
 /// <summary>
 /// Client-side system that handles visual and audio effects for stasis.

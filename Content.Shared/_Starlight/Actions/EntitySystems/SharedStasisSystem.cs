@@ -1,6 +1,7 @@
 using Content.Shared.Actions;
+using Content.Shared._Starlight.Actions.Components;
 
-namespace Content.Shared._Starlight.Actions.Stasis;
+namespace Content.Shared._Starlight.Actions.EntitySystems;
 
 /// <summary>
 /// Allows mobs to enter nanite induced stasis <see cref="StasisComponent"/>.

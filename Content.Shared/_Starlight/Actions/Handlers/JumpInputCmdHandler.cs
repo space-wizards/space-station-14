@@ -1,7 +1,6 @@
-using System;
-using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
+using Content.Shared._Starlight.Actions.Components;
 using Content.Shared.Actions.Events;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Shuttles.Components;
@@ -10,7 +9,7 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
-namespace Content.Shared._Starlight.Actions.Jump;
+namespace Content.Shared._Starlight.Actions.Handlers;
 
 public sealed class JumpInputCmdHandler(SharedActionsSystem actions, SharedChargesSystem charges, IGameTiming timing) : InputCmdHandler
 {

@@ -1,8 +1,8 @@
-using System;
-using System.Linq;
 using System.Numerics;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
+using Content.Shared._Starlight.Actions.Components;
+using Content.Shared._Starlight.Actions.Events;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio;
@@ -10,8 +10,10 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using Content.Shared.Stunnable;
+using Content.Shared.Charges.Components;
+using Content.Shared.Charges.Systems;
 
-namespace Content.Shared._Starlight.Actions.Jump;
+namespace Content.Shared._Starlight.Actions.EntitySystems;
 
 //idea taked from VigersRay
 public abstract class SharedJumpSystem : EntitySystem
@@ -24,6 +26,7 @@ public abstract class SharedJumpSystem : EntitySystem
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedChargesSystem _chargesSystem = default!;
 
     public override void Initialize()
     {
@@ -85,7 +88,7 @@ public abstract class SharedJumpSystem : EntitySystem
             || !TryReleaseGas(ent, ref args))
             return;
 
-        OnJump((JumpActionEvent)args);
+        OnJump(args);
     }
 
     private void OnJump(JumpActionEvent args)
@@ -101,7 +104,7 @@ public abstract class SharedJumpSystem : EntitySystem
         TryJump(args.Performer, args.Target, 15f, args.ToPointer, args.Sound, args.Distance);
     }
 
-    public bool TryJump(Entity<JumpComponent?> ent, EntityCoordinates targetCoords, float speed = 15f, bool toPointer = false, SoundSpecifier? sound = null, float? distance = null)
+    public bool TryJump(Entity<JumpComponent?> ent, EntityCoordinates targetCoords, float speed = 15f, bool toPointer = false, SoundSpecifier? sound = null, float? distance = null, bool decreaseCharges = false)
     {
         if (!Resolve(ent, ref ent.Comp, false)
             || ent.Comp.ActionEntity == null
@@ -109,12 +112,18 @@ public abstract class SharedJumpSystem : EntitySystem
             || _action.IsCooldownActive(action))
             return false;
 
-        Jump(new Entity<JumpComponent>(ent, ent.Comp), targetCoords, speed, toPointer, sound, distance);
+        Jump(new Entity<JumpComponent>(ent, ent.Comp), targetCoords, speed, toPointer, sound, distance, decreaseCharges);
         return true;
     }
 
-    public void Jump(Entity<JumpComponent> ent, EntityCoordinates targetCoords, float speed = 15f, bool toPointer = false, SoundSpecifier? sound = null, float? distance = null)
+    public void Jump(Entity<JumpComponent> ent, EntityCoordinates targetCoords, float speed = 15f, bool toPointer = false, SoundSpecifier? sound = null, float? distance = null, bool decreaseCharges = false)
     {
+        if (ent.Comp.ActionEntity != null
+            && TryComp<LimitedChargesComponent>(ent.Comp.ActionEntity, out var limitedCharges)
+            && !_chargesSystem.HasCharges((ent.Comp.ActionEntity.Value, limitedCharges), 1))
+            return;
+        else if (ent.Comp.ActionEntity != null && decreaseCharges)
+            _chargesSystem.TryUseCharge(ent.Comp.ActionEntity.Value);
         var userTransform = Transform(ent.Owner);
         var userMapCoords = _transform.GetMapCoordinates(userTransform);
         var targetMapCoords = _transform.ToMapCoordinates(targetCoords);
@@ -124,7 +133,7 @@ public abstract class SharedJumpSystem : EntitySystem
             && (!toPointer || Vector2.Distance(userMapCoords.Position, targetMapCoords.Position) > distance))
             vector = Vector2.Normalize(vector) * distance.Value;
 
-        if (ent.Comp.ActionEntity != null)
+        if (ent.Comp.ActionEntity != null && !HasComp<LimitedChargesComponent>(ent.Comp.ActionEntity))
             _action.SetUseDelay(ent.Comp.ActionEntity.Value, TimeSpan.FromSeconds(ent.Comp.Cooldown));
 
         _throwing.TryThrow(ent.Owner, vector, baseThrowSpeed: speed, doSpin: false);

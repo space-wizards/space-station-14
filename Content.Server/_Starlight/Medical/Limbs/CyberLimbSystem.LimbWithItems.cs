@@ -6,6 +6,7 @@ using Content.Shared.Interaction.Components;
 using Content.Shared.Starlight;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
+using static Content.Server._Starlight.Actions.EntitySystems.SLActionSystem;
 
 namespace Content.Server._Starlight.Medical.Limbs;
 public sealed partial class CyberLimbSystem : EntitySystem

@@ -1,11 +1,11 @@
 ﻿using Content.Server.Administration.Systems;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Construction.Conditions;
-using Content.Shared._Starlight.Actions.Jump;
+using Content.Shared._Starlight.Actions.EntitySystems;
+using Content.Shared._Starlight.Actions.Components;
+using Content.Shared._Starlight.Actions.Events;
 using Content.Shared.Atmos.Components;
-using Robust.Shared.Map;
 
-namespace Content.Server._Starlight.Jump;
+namespace Content.Server._Starlight.Actions.EntitySystems;
 public sealed class JumpSystem : SharedJumpSystem
 {
     [Dependency] private readonly GasTankSystem _gasTank = default!;

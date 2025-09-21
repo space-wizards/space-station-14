@@ -6,11 +6,13 @@ using Robust.Shared.Timing;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
-using Content.Shared._Starlight.Actions.Stasis;
+using Content.Shared._Starlight.Actions.EntitySystems;
+using Content.Shared._Starlight.Actions.Components;
+using Content.Shared._Starlight.Actions.Events;
 using Content.Shared.Body.Components;
 using Robust.Shared.Player;
 
-namespace Content.Server._Starlight.Actions.Stasis;
+namespace Content.Server._Starlight.Actions.EntitySystems;
 
 public sealed class StasisSystem : SharedStasisSystem
 {
@@ -165,7 +167,7 @@ public sealed class StasisSystem : SharedStasisSystem
         var damageToApply = new DamageSpecifier();
         foreach (var (type, amount) in args.DamageDelta.DamageDict)
         {
-            damageToApply.DamageDict.Add(type, amount - amount * healingValues.AdditionalDamageResistance);
+            damageToApply.DamageDict.Add(type, amount - (amount * healingValues.AdditionalDamageResistance));
         }
 
         // Apply the reduced damage

@@ -1,7 +1,8 @@
+using Content.Shared._Starlight.Actions.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared._Starlight.Actions.Stasis;
+namespace Content.Shared._Starlight.Actions.Components;
 
 /// <summary>
 /// Component that allows an entity to enter and exit stasis.

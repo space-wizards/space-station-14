@@ -8,8 +8,9 @@ using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Speech;
 using Content.Shared.Throwing;
+using Content.Shared._Starlight.Actions.Components;
 
-namespace Content.Shared._Starlight.Actions.Stasis;
+namespace Content.Shared._Starlight.Actions.EntitySystems;
 
 /// <summary>
 /// System that handles the freezing behavior of entities in stasis.

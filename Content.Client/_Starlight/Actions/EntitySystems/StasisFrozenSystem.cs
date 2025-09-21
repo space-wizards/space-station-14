@@ -1,6 +1,6 @@
-using Content.Shared._Starlight.Actions.Stasis;
+using Content.Shared._Starlight.Actions.EntitySystems;
 
-namespace Content.Client._Starlight.Actions.Stasis;
+namespace Content.Client._Starlight.Actions.EntitySystems;
 
 /// <summary>
 /// Client-side system that handles the freezing behavior of entities in stasis.

@@ -3,7 +3,7 @@ using Content.Shared._Starlight.Medical.Limbs;
 using Content.Shared.Actions;
 using Content.Shared.Starlight.Abstract.Codegen;
 
-namespace Content.Server._Starlight.Actions;
+namespace Content.Server._Starlight.Actions.EntitySystems;
 
 [GenerateLocalSubscriptions<IWithAction>]
 public sealed partial class SLActionSystem : EntitySystem
