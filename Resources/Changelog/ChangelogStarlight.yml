@@ -14923,5 +14923,13 @@ Entries:
   id: 168300
   time: '2025-09-20T15:45:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1683
+- author: CawsForConcern
+  changes:
+  - message: Cloth wraps now use the barefoot footsteps (no longer sound like hard-soled
+      shoes when walking)
+    type: Tweak
+  id: 170400
+  time: '2025-09-21T17:16:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1704
 Order: -1
 
