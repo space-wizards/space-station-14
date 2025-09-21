@@ -14846,5 +14846,12 @@ Entries:
   id: 169700
   time: '2025-09-21T01:03:36.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1697
+- author: walksanatora
+  changes:
+  - message: Vulps now can take eye implants, tongues, and chest cavity items again.
+    type: Fix
+  id: 169800
+  time: '2025-09-21T01:01:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1698
 Order: -1
 
