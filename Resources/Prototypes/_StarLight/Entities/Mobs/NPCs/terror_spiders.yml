@@ -495,3 +495,6 @@
       sprite: _Starlight/Mobs/Animals/Spiders/terror_mother.rsi
   - type: Spider
     webPrototype: SpiderWebSpiderlings
+  - type: SpawnOnAction
+    action: ActionRoyalJelly
+    entityToSpawn: SpiderJelly
