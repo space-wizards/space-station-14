@@ -67,9 +67,8 @@ public sealed partial class IdCardConsoleComponent : Component
         public readonly string? TargetIdJobTitle;
         public readonly List<ProtoId<AccessLevelPrototype>>? TargetIdAccessList;
         public readonly List<ProtoId<AccessLevelPrototype>>? AllowedModifyAccessList;
-        public readonly ProtoId<AccessLevelPrototype> TargetIdJobPrototype;
-        public readonly ProtoId<AccessGroupPrototype> CurrentAccessGroup; // Starlight-edit
         public readonly ProtoId<JobPrototype> TargetIdJobPrototype;
+        public readonly ProtoId<AccessGroupPrototype> CurrentAccessGroup; // Starlight-edit
 
         public IdCardConsoleBoundUserInterfaceState(bool isPrivilegedIdPresent,
             bool isPrivilegedIdAuthorized,
