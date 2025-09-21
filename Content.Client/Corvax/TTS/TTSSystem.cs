@@ -86,6 +86,11 @@ public sealed class TTSSystem : EntitySystem
             return;
         }
 
+        if (ev.SourceUid is { Id: 0 })
+        {
+            return;
+        }
+
         _sawmill.Verbose($"Play TTS audio {ev.Data.Length} bytes from {ev.SourceUid} entity");
 
         var filePath = new ResPath($"{_fileIdx++}.ogg");
