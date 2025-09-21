@@ -15111,5 +15111,27 @@ Entries:
   id: 153100
   time: '2025-09-21T19:03:09.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1531
+- author: Conflee
+  changes:
+  - message: Added Orange Alert. For scenarios much more severe than Yellow Alert.
+      Yellow tells you to sit in your department and avoid the hazard. Orange tells
+      you to prepare to Evacuate. Primary use case is Singuloose, Tesloose, or SM
+      Delamination.
+    type: Add
+  id: 166400
+  time: '2025-09-21T19:07:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1664
+- author: Conflee
+  changes:
+  - message: Changed the text of Yellow, Blue, and Red Alerts slightly (per Grape's
+      request) to more clearly communicate their use. Blue is a confirmed/potential
+      threat that doesn't risk the entire crew, Red is a confirmed threat that does
+      risk the entire crew, Yellow is for localized structural/atmos hazards that
+      can be recovered from, Orange is for station-wide structural/atmos hazards that
+      can't be recovered from
+    type: Tweak
+  id: 166401
+  time: '2025-09-21T19:07:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1664
 Order: -1
 
