@@ -14832,5 +14832,12 @@ Entries:
   id: 155600
   time: '2025-09-20T15:48:39.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1556
+- author: walksanatora
+  changes:
+  - message: Alt-Click now signs papers again.
+    type: Fix
+  id: 170000
+  time: '2025-09-21T01:04:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1700
 Order: -1
 
