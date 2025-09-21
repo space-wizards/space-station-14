@@ -159,3 +159,22 @@
         amount: 4
       - id: Binoculars
         amount: 2
+
+- type: entity
+  parent: [GunSafeBaseSecure, BaseSecurityContraband]
+  id: GunSafeHeavyWeapons
+  name: heavy weapon safe
+  description: For when talking it out just isn't enough.
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponLightMachineGunM492
+      amount: 1
+    - id: LightRifleHeavyMagazineSP
+      amount: 1
+    - id: LightRifleHeavyMagazineHP
+      amount: 1
+    - id: ClothingOuterHardsuitSecurityExperimental
+      amount: 1
+    - id: ClothingShoesBootsMagSec
+      amount: 1

@@ -78,10 +78,30 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitMedicalDoctor
 
+- type: loadout # afterlight start
+  id: CoronerJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCoroner
+
+- type: loadout
+  id: CoronerJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCoroner
+
+- type: loadout
+  id: CoronerJumpsuitAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCoronerAlt
+
+- type: loadout
+  id: NurseJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtSuitNurse
+
 - type: loadout
   id: MedicalDoctorJumpskirt
   equipment:
-    jumpsuit: ClothingUniformJumpskirtMedicalDoctor
+    jumpsuit: ClothingUniformJumpskirtMedicalDoctor # afterlight end
 
 - type: loadout
   id: SeniorPhysicianJumpsuit

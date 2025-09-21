@@ -14923,5 +14923,450 @@ Entries:
   id: 168300
   time: '2025-09-20T15:45:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1683
+- author: CawsForConcern
+  changes:
+  - message: Cloth wraps now use the barefoot footsteps (no longer sound like hard-soled
+      shoes when walking)
+    type: Tweak
+  id: 170400
+  time: '2025-09-21T17:16:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1704
+- author: CawsForConcern
+  changes:
+  - message: (Starboard) Brigmedic maints door is no-longer all access
+    type: Fix
+  id: 169300
+  time: '2025-09-21T18:06:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1693
+- author: CorruptOmega
+  changes:
+  - message: Water Cup now holds 15u again. They are small but 5u is silly.
+    type: Tweak
+  id: 169400
+  time: '2025-09-21T18:06:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1694
+- author: CorruptOmega
+  changes:
+  - message: Water Bottle can now be crafted by hand. Have fun molding plastic into
+      a bottle for a good chunk of time!
+    type: Add
+  id: 169401
+  time: '2025-09-21T18:06:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1694
+- author: CawsForConcern
+  changes:
+  - message: Added Cluster Station
+    type: Add
+  id: 149700
+  time: '2025-09-21T18:18:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1497
+- author: Killer Tamashi
+  changes:
+  - message: Added Experimental Security Hardsuit (You must wear this suit to use
+      the LMG)
+    type: Add
+  id: 110400
+  time: '2025-09-21T18:33:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1104
+- author: Killer Tamashi
+  changes:
+  - message: Heavy Weapon Safe (Currently contains the hardsuit/lmg)
+    type: Add
+  id: 110401
+  time: '2025-09-21T18:33:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1104
+- author: Killer Tamashi
+  changes:
+  - message: LMG speed debuff (The speed debuff has been moved to the suit, and made
+      more intense. 40% slowdown)
+    type: Remove
+  id: 110402
+  time: '2025-09-21T18:33:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1104
+- author: Killer Tamashi
+  changes:
+  - message: Changed LMG magazine size to 1x2
+    type: Tweak
+  id: 110403
+  time: '2025-09-21T18:33:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1104
+- author: Killer Tamashi
+  changes:
+  - message: Changed LMG sprite (again)
+    type: Tweak
+  id: 110404
+  time: '2025-09-21T18:33:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1104
+- author: Killer Tamashi
+  changes:
+  - message: Changed LMG magazine sprite (again)
+    type: Tweak
+  id: 110405
+  time: '2025-09-21T18:33:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1104
+- author: Killer Tamashi
+  changes:
+  - message: Fixed long-standing issue of taking out the cartridge first instead of
+      the magazine when alt-clicking
+    type: Fix
+  id: 110406
+  time: '2025-09-21T18:33:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1104
+- author: CorruptOmega
+  changes:
+  - message: Added Proto-5x diabler visuals. Blue = Disable // Red = Laser
+    type: Add
+  id: 159000
+  time: '2025-09-21T18:48:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1590
+- author: CorruptOmega
+  changes:
+  - message: Thief Steal Objective - Head of Security's Proto-5x
+    type: Add
+  id: 159001
+  time: '2025-09-21T18:48:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1590
+- author: STARLIGHT TEAM
+  changes:
+  - message: Xenoborgis now come printed with pet bags and basic EVA suits.
+    type: Add
+  id: 167500
+  time: '2025-09-21T18:56:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1675
+- author: Trep_Maul
+  changes:
+  - message: (Leth) Jr Pacmen and more Fuel
+    type: Add
+  id: 154600
+  time: '2025-09-21T18:59:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1546
+- author: Trep_Maul
+  changes:
+  - message: (Leth) More O2 lockers
+    type: Add
+  id: 154601
+  time: '2025-09-21T18:59:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1546
+- author: Trep_Maul
+  changes:
+  - message: (Leth) Emergecny lights
+    type: Add
+  id: 154602
+  time: '2025-09-21T18:59:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1546
+- author: Trep_Maul
+  changes:
+  - message: (Leth) A few more external cameras
+    type: Add
+  id: 154603
+  time: '2025-09-21T18:59:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1546
+- author: Trep_Maul
+  changes:
+  - message: (Leth) Missing Bar Button
+    type: Add
+  id: 154604
+  time: '2025-09-21T18:59:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1546
+- author: Trep_Maul
+  changes:
+  - message: (Leth) Brigmed plasma
+    type: Add
+  id: 154605
+  time: '2025-09-21T18:59:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1546
+- author: Trep_Maul
+  changes:
+  - message: (Leth) TEG
+    type: Tweak
+  id: 154606
+  time: '2025-09-21T18:59:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1546
+- author: Trep_Maul
+  changes:
+  - message: (Leth) a few tiles
+    type: Fix
+  id: 154607
+  time: '2025-09-21T18:59:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1546
+- author: Trep_Maul
+  changes:
+  - message: (Leth) Chem Access
+    type: Fix
+  id: 154608
+  time: '2025-09-21T18:59:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1546
+- author: Trep_Maul
+  changes:
+  - message: (Leth) Evac Length
+    type: Fix
+  id: 154609
+  time: '2025-09-21T18:59:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1546
+- author: Rinary
+  changes:
+  - message: Id card console now uses access groups, added tabs in ui, so now you
+      can easily find access without searching it at table with 50+ accesses.
+    type: Tweak
+  id: 153100
+  time: '2025-09-21T19:03:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1531
+- author: Conflee
+  changes:
+  - message: Added Orange Alert. For scenarios much more severe than Yellow Alert.
+      Yellow tells you to sit in your department and avoid the hazard. Orange tells
+      you to prepare to Evacuate. Primary use case is Singuloose, Tesloose, or SM
+      Delamination.
+    type: Add
+  id: 166400
+  time: '2025-09-21T19:07:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1664
+- author: Conflee
+  changes:
+  - message: Changed the text of Yellow, Blue, and Red Alerts slightly (per Grape's
+      request) to more clearly communicate their use. Blue is a confirmed/potential
+      threat that doesn't risk the entire crew, Red is a confirmed threat that does
+      risk the entire crew, Yellow is for localized structural/atmos hazards that
+      can be recovered from, Orange is for station-wide structural/atmos hazards that
+      can't be recovered from
+    type: Tweak
+  id: 166401
+  time: '2025-09-21T19:07:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1664
+- author: Fractalflower
+  changes:
+  - message: Several items are no longer in the Fashion-O-Mat...
+    type: Remove
+  id: 170500
+  time: '2025-09-21T19:07:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1705
+- author: Fractalflower
+  changes:
+  - message: '...instead, available in loadouts and the uniform printer!'
+    type: Add
+  id: 170501
+  time: '2025-09-21T19:07:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1705
+- author: Fractalflower
+  changes:
+  - message: Added BSO & NTR clothing to the uniform printer
+    type: Add
+  id: 170502
+  time: '2025-09-21T19:07:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1705
+- author: Fractalflower
+  changes:
+  - message: Salvage & Mining now have a jumpsuit selection.
+    type: Add
+  id: 170503
+  time: '2025-09-21T19:07:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1705
+- author: CawsForConcern
+  changes:
+  - message: (Exo) Ticket Machine to Salvage
+    type: Add
+  id: 161200
+  time: '2025-09-21T18:54:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1612
+- author: CawsForConcern
+  changes:
+  - message: (Exo) Missing Telecommunication Server for Law radio
+    type: Add
+  id: 161201
+  time: '2025-09-21T18:54:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1612
+- author: CawsForConcern
+  changes:
+  - message: (Exo) Engineering airlock for "HoP & Chemistry substation" room was all-access
+    type: Fix
+  id: 161202
+  time: '2025-09-21T18:54:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1612
+- author: Trep_Maul
+  changes:
+  - message: Slightly lowered commonality of Ninja, Dragon, Abductor, and LoneOp.
+    type: Tweak
+  id: 165100
+  time: '2025-09-21T18:55:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1651
+- author: Trep_Maul
+  changes:
+  - message: Ramping schedulers are now tied to CVar Shuttle.Auto_Call_Time.
+    type: Fix
+  id: 165101
+  time: '2025-09-21T18:55:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1651
+- author: Conflee
+  changes:
+  - message: Added the Lube and Glue Grenades. They can be purchased from the Traitor
+      Uplink under Disruption for 2tc each. 1 of each can also be purchased by the
+      Clown at the HoHoHonkers Dispenser for 1000 Credits.
+    type: Add
+  id: 164100
+  time: '2025-09-21T19:04:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1641
+- author: Conflee
+  changes:
+  - message: Added a Remote Signaller and Network Configurator to the C4 Bundle, to
+      enable more aggressive and elaborate Traitor plays. At 150 pop every YouTool
+      and Vendomat is empty in 2 nanoseconds.
+    type: Add
+  id: 164101
+  time: '2025-09-21T19:04:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1641
+- author: Conflee
+  changes:
+  - message: Added the Recluse-class Comitas Systems Luxury Ship, the private ship
+      of Syndicate High Command codename 'Shalott' or 'Spider'.
+    type: Add
+  id: 164102
+  time: '2025-09-21T19:04:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1641
+- author: TheShuEd
+  changes:
+  - message: Containers can now block vision for entities that sit within it.
+    type: Tweak
+  id: 168500
+  time: '2025-09-21T19:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1685
+- author: Rinary
+  changes:
+  - message: Disposal system can now block vision for entities which flying in it/sit
+      in disposal unit.
+    type: Tweak
+  id: 168501
+  time: '2025-09-21T19:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1685
+- author: Rinary
+  changes:
+  - message: Vents can now block vision for entities which crawl in it.
+    type: Tweak
+  id: 168502
+  time: '2025-09-21T19:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1685
+- author: walksanatora
+  changes:
+  - message: Thaven can now self-emag
+    type: Tweak
+  id: 169600
+  time: '2025-09-21T19:08:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1696
+- author: walksanatora
+  changes:
+  - message: Thaven can now be emagged repeatedly.
+    type: Tweak
+  id: 169601
+  time: '2025-09-21T19:08:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1696
+- author: Arkanic
+  changes:
+  - message: Bags can now be made click-to-open when equipped via a right click option
+      on them
+    type: Add
+  id: 161600
+  time: '2025-09-21T19:10:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1616
+- author: CorruptOmega
+  changes:
+  - message: Added Archaic (Shakespeare) accent. // To be, or not to be, that is potentially
+      the answer.
+    type: Add
+  id: 157500
+  time: '2025-09-21T19:06:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1575
+- author: CorruptOmega
+  changes:
+  - message: Added Scottish accent. // Whit ye mean ae chiel cuid no' speak Scottish
+      afore?
+    type: Add
+  id: 157501
+  time: '2025-09-21T19:06:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1575
+- author: CorruptOmega
+  changes:
+  - message: Added Nerd accent. // Cause the Grand Admiral leads the Orbital Habitation
+      Module.
+    type: Add
+  id: 157502
+  time: '2025-09-21T19:06:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1575
+- author: CorruptOmega
+  changes:
+  - message: Added Polite accent. // You watch your language now.
+    type: Add
+  id: 157503
+  time: '2025-09-21T19:06:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1575
+- author: CorruptOmega
+  changes:
+  - message: Admin Smite Option. Speak Proper Language - Gives Polite accent.
+    type: Add
+  id: 157504
+  time: '2025-09-21T19:06:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1575
+- author: CorruptOmega
+  changes:
+  - message: Expanded Pirate accent. It was lacking in some of it's accent.
+    type: Tweak
+  id: 157505
+  time: '2025-09-21T19:06:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1575
+- author: CorruptOmega
+  changes:
+  - message: Omni Accent also got the new accents included (Not Polite, since I separate
+      that out)
+    type: Tweak
+  id: 157506
+  time: '2025-09-21T19:06:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1575
+- author: Conflee
+  changes:
+  - message: Added Directional Shuttle Windows, for mapping use only. Withstands the
+      same Delta Pressure as a full Reinforced Plasma Window (roughly double or triple
+      that of the Directional Reinforced Plasma Window) for compact atmos setups on
+      Shuttles.
+    type: Add
+  id: 168800
+  time: '2025-09-21T19:08:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1688
+- author: Conflee
+  changes:
+  - message: Changed DSshuttle, ERTShuttle, LancePirates, NSSV_MetaClass, NTSV_HarrierClass,
+      emergency_prism, and emergency_starboard shuttles to have more robust atmos
+      setups, in some cases using the new Directional Shuttle Windows, fixing Mixers
+      with incorrect default values, and adding a Point Defense Turrets and Civilian
+      NanoMed Machines where applicable
+    type: Tweak
+  id: 168801
+  time: '2025-09-21T19:08:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1688
+- author: stickycheZ101
+  changes:
+  - message: greatly nerfed the ripperdoc arm
+    type: Tweak
+  id: 167400
+  time: '2025-09-21T20:47:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1674
+- author: stickycheZ101
+  changes:
+  - message: removed the ripperdoc arms from the RS cybernetics menu
+    type: Remove
+  id: 167401
+  time: '2025-09-21T20:47:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1674
+- author: stickycheZ101
+  changes:
+  - message: added the left ripperdoc arm as a trinket that requires 20 hours of surgeon
+    type: Add
+  id: 167402
+  time: '2025-09-21T20:47:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1674
+- author: stickycheZ101
+  changes:
+  - message: added a crafting recipe for both the left and right ripperdoc arms
+    type: Add
+  id: 167403
+  time: '2025-09-21T20:47:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1674
 Order: -1
 

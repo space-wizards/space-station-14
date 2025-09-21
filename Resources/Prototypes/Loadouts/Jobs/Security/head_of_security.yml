@@ -45,6 +45,18 @@
     jumpsuit: ClothingUniformJumpskirtHosFormal
   groupBy: "jumpskirt"
 
+- type: loadout # afterlight start
+  id: HeadofSecurityBlackSuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoSBlack
+  groupBy: "jumpsuit"
+
+- type: loadout
+  id: HeadofSecurityBlackSkirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtHoSBlack
+  groupBy: "jumpskirt" # afterlight end
+
 - type: loadout
   id: HeadofSecurityBlueJumpsuit
   equipment:

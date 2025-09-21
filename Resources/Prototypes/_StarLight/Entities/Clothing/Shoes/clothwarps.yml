@@ -37,6 +37,11 @@
     fiberMaterial: fibers-cloth
     fiberColor: fibers-white
   - type: ProtectedFromStepTriggers
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: BarestepHard
+      params:
+        volume: -6 # bit quieter than barefeet
   - type: Tag
     tags:
     - ClothMade
