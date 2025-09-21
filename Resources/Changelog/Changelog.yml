@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: LevitatingTree
-  changes:
-  - message: Changed the names of the neurodivergent pins to more accurately reflect
-      their meanings.
-    type: Tweak
-  id: 8481
-  time: '2025-05-14T18:03:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37416
 - author: metalgearsloth
   changes:
   - message: Predict gas valves.
@@ -3953,3 +3945,11 @@
   id: 8991
   time: '2025-09-21T05:16:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40181
+- author: cmorley191
+  changes:
+  - message: Improved reliability of cleanade/grenade launcher rounds and other collision-triggered
+      devices and spells.
+    type: Fix
+  id: 8992
+  time: '2025-09-21T15:23:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40428
