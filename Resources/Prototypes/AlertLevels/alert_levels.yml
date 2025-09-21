@@ -94,4 +94,15 @@
       emergencyLightColor: "#2288ff"
       forceEnableEmergencyLights: true
       shuttleTime: 1200
+    orange:
+      announcement: alert-level-orange-announcement
+      selectable: true
+      sound:
+        path: /Audio/_Starlight/Misc/orange.ogg
+        params:
+          volume: -2
+      color: "#ff8119"
+      emergencyLightColor: "#ff8119"
+      forceEnableEmergencyLights: true
+      shuttleTime: 600
       # end starlight
