@@ -1,5 +1,5 @@
 using Content.Shared.Maps;
-using Robust.Server.Console;
+using Robust.Shared.Console;
 using Robust.Shared.Utility;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
