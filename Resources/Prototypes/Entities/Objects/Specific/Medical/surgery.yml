@@ -735,7 +735,10 @@
     sprite: Objects/Specific/Medical/Surgery/bone_gel.rsi
     state: bone-gel
   - type: BoneGel
-  
+  - type: Tag
+    tags:
+    - BoneGel
+
 - type: entity
   name: abductor's bottle of bone gel
   id: BoneGelAbductor
