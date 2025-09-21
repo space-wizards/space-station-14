@@ -15103,5 +15103,13 @@ Entries:
   id: 154609
   time: '2025-09-21T18:59:11.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1546
+- author: Rinary
+  changes:
+  - message: Id card console now uses access groups, added tabs in ui, so now you
+      can easily find access without searching it at table with 50+ accesses.
+    type: Tweak
+  id: 153100
+  time: '2025-09-21T19:03:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1531
 Order: -1
 
