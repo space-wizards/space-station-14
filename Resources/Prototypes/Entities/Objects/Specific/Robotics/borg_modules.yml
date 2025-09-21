@@ -987,6 +987,12 @@
   - type: ItemBorgModule
     hands:
     - item: AnomalyScanner
+      hand:
+        emptyLabel: borg-slot-anomalyscanner-empty
+        emptyRepresentative: Anomaly Scanner
+        whitelist:
+          id:
+          - AnomalyScanner
     - item: AnomalyLocatorUnpowered
     - item: AnomalyLocatorWideUnpowered
     - item: HandLabeler
