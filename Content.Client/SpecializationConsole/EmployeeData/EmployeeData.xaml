@@ -1,14 +1,26 @@
 <Control xmlns="https://spacestation14.io"
-                                MouseFilter="Stop">
-    <GridContainer Columns="2">
-        <BoxContainer Orientation="Vertical" SeparationOverride="5" Margin="10 10 0 0" SetWidth="100">
-            <Label Text="Name:"/>
-            <RichTextLabel Name="EmployeeNameLabel" Margin="5 0 0 0" />
+         MouseFilter="Stop">
+    <GridContainer Columns="2"
+                   HorizontalExpand="True"
+                   Margin="8">
+        <BoxContainer Orientation="Vertical"
+                      SeparationOverride="5"
+                      SetWidth="130">
+            <Label Text="Name:" />
+            <RichTextLabel Name="EmployeeNameLabel"
+                           Margin="5 0 0 0" />
             <Label Text="Job:" />
-            <RichTextLabel Name="EmployeeJobLabel" Margin="5 0 0 0" />
+            <RichTextLabel Name="EmployeeJobLabel"
+                           Margin="5 0 0 0" />
             <Label Text="Specialization:" />
-            <RichTextLabel Name="EmployeeSpecLabel" Margin="5 0 0 0"/>
+            <RichTextLabel Name="EmployeeSpecLabel"
+                           Margin="5 0 0 0" />
         </BoxContainer>
-        <BoxContainer Name="EntityViewBox" Access="Public" HorizontalExpand="True" />
+        <BoxContainer Name="EntityViewBox"
+                      Access="Public"
+                      HorizontalExpand="True"
+                      VerticalExpand="True"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Right" />
     </GridContainer>
 </Control>

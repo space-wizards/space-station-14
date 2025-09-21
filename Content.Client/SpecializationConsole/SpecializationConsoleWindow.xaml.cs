@@ -110,7 +110,6 @@ public sealed partial class SpecializationConsoleWindow : FancyWindow
         EntityUid? targetItem;
         AccessBox.DisposeAllChildren();
         EmployeeInfo.EntityViewBox.DisposeAllChildren();
-        SetButton.Visible = DeleteButton.Visible = false;
 
         if (!_entManager.TryGetComponent<SpecializationConsoleComponent>(_owner, out var specializationConsole))
             return;
@@ -123,12 +122,7 @@ public sealed partial class SpecializationConsoleWindow : FancyWindow
                 return;
             foreach (var department in idCard.JobDepartments)
             {
-                var departmentLabel = new RichTextLabel
-                {
-                    Margin = new Thickness(5, 0, 5, 0),
-                    VerticalAlignment = VAlignment.Center,
-                    VerticalExpand = true,
-                };
+                var departmentLabel = new RichTextLabel();
                 departmentLabel.SetMessage($"[{department.Id}]");
                 AccessBox.AddChild(departmentLabel);
             }
@@ -166,7 +160,6 @@ public sealed partial class SpecializationConsoleWindow : FancyWindow
         if (privilegedItem != null && targetItem != null)
         {
             SetButton.Disabled = DeleteButton.Disabled = CheckAccess(privilegedItem.Value, targetItem.Value);
-            SetButton.Visible = DeleteButton.Visible = true;
         }
     }
 
