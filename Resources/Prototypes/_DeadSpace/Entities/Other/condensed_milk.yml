@@ -70,8 +70,8 @@
 
 - type: reagent
   id: BoiledCondensedMilk
-  name: reagent-name-condensed-milk
-  desc: reagent-desc-condensed-milk
+  name: reagent-name-boiled-condensed-milk
+  desc: reagent-desc-boiled-condensed-milk
   physicalDesc: reagent-physical-desc-sticky
   flavor: sweet
   color: "#86521f"

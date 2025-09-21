@@ -129,6 +129,7 @@
   - type: TTS
     voice: DrSezavo
   - type: NightVision # DS14
+  - type: ZombieImmune # DS14
 
 - type: entity
   id: MobRatKingBuff

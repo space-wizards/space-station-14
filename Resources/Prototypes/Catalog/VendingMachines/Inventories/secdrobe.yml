@@ -25,7 +25,7 @@
     ClothingOuterWinterSec: 4
     # ClothingOuterArmorBasic: 4 # DS14-disabled
     ClothingOuterVestArmorSec: 4 # DS14
-    ClothingNeckScarfStripedRed: 3
+    ClothingNeckScarfStripedBlue: 3 # DS14
     ClothingOuterArmorBasicSlim: 4
     ClothingEyesBlindfold: 2
     ClothingOuterCoatSecurityOvercoat: 6

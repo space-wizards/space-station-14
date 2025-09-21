@@ -195,8 +195,6 @@
             - "-0.5,-0.5"
             - "0.5,0.5"
             - "0.5,-0.5"
-        mask:
-        - FullTileMask
         layer:
         - GlassLayer
   - type: Construction
@@ -233,8 +231,6 @@
             - "-0.5,-0.5"
             - "0.5,0.5"
             - "0.5,-0.5"
-        mask:
-        - FullTileMask
         layer:
         - GlassLayer
   - type: Construction

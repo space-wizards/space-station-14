@@ -2,7 +2,7 @@
   parent: ChemicalMedipen
   id: SCSTMedipen
   name: медипен ОППУ
-  description: Разработка Нанотресен. Содержит вещества для лечения колющих повреждений и ядов.
+  description: Разработка NanoTrasen. Содержит вещества для лечения колющих повреждений и ядов.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi

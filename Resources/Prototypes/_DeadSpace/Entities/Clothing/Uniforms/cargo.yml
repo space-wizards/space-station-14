@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitSalvageFormal
-  name: официальная форма утилизатора.
+  name: официальная форма утилизатора
   description: Если копать, то только стильно!
   components:
   - type: Sprite
@@ -56,7 +56,7 @@
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtCargoFormal
-  name: официальная юбка-комбинезон грузчика.
+  name: официальная юбка-комбинезон грузчика
   description: Для сильных и независимых.
   components:
   - type: Sprite

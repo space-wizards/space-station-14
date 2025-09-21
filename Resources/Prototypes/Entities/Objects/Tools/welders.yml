@@ -25,6 +25,7 @@
     size: Small
     sprite: Objects/Tools/welder.rsi
   - type: ItemToggle
+    onActivate: false # DS14
     predictable: false
     soundActivate:
       collection: WelderOn
