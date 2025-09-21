@@ -10,6 +10,7 @@ using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Managers
 {
@@ -428,26 +429,6 @@ namespace Content.Server.Administration.Managers
             }
 
             return Equals(addr, System.Net.IPAddress.Loopback) || Equals(addr, System.Net.IPAddress.IPv6Loopback);
-        }
-
-        protected override (bool isAvail, AdminFlags[] flagsReq) GetRequiredFlags(object cmd)
-        {
-            if (cmd is not ConsoleHost.RegisteredCommand registered)
-                return base.GetRequiredFlags(cmd);
-
-            // This command is just a method that was registered explicitly via IConsoleHost.Register()
-            // Sandboxing currently prevents us from checking attribute on this method in shared code
-            // TODO FIX THIS
-            var method = registered.Callback.Method;
-            if (Attribute.IsDefined(method, typeof(AnyCommandAttribute)))
-                return (true, []);
-
-            var attribs = Attribute.GetCustomAttributes(method, typeof(AdminCommandAttribute))
-                .Cast<AdminCommandAttribute>()
-                .Select(p => p.Flags)
-                .ToArray();
-
-            return (attribs.Length != 0, attribs);
         }
 
         private void SendPermsChangedEvent(ICommonSession session)

@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Reflection;
 using Content.Shared.Administration.Managers;
 using Robust.Shared.Console;
 using Robust.Shared.ContentPack;
@@ -163,23 +164,38 @@ public abstract class SharedAdminManager : ISharedAdminManager, IConGroupControl
         return false;
     }
 
-    protected virtual (bool isAvail, AdminFlags[] flagsReq) GetRequiredFlags(object cmd)
+    private (bool isAvail, AdminFlags[] flagsReq) GetRequiredFlags(object cmd)
     {
+        if (cmd is ConsoleHost.RegisteredCommand registered)
+            return GetCallbackFlags(registered); // Method registered as command IConsoleHost.Register
+
         var type = cmd switch
         {
             ToolshedProxyCommand proxy => proxy.Spec.Cmd.GetType(), // Toolshed command
-            CommandSpec spec => spec.Cmd.GetType(),
-            _ => cmd.GetType() // Normal IConsoleCommand or some other object
+            CommandSpec spec => spec.Cmd.GetType(), // Toolshed command,
+            _ => cmd.GetType(), // Normal IConsoleCommand or some other object
         };
 
-        if (Attribute.IsDefined(type, typeof(AnyCommandAttribute)))
+        if (type.HasCustomAttribute<AnyCommandAttribute>())
         {
             // Available to everybody.
             return (true, []);
         }
 
-        var attribs = Attribute.GetCustomAttributes(type, typeof(AdminCommandAttribute))
-            .Cast<AdminCommandAttribute>()
+        var attribs = type.GetCustomAttributes<AdminCommandAttribute>()
+            .Select(p => p.Flags)
+            .ToArray();
+
+        // If attribs.length == 0 then no access attribute is specified, meaning that this is a server-only command.
+        return (attribs.Length != 0, attribs);
+    }
+
+    private (bool isAvail, AdminFlags[] flagsReq) GetCallbackFlags(ConsoleHost.RegisteredCommand cmd)
+    {
+        if (cmd.HasCustomAttribute<AnyCommandAttribute>())
+            return (true, []);
+
+        var attribs = cmd.GetCustomAttributes<AdminCommandAttribute>()
             .Select(p => p.Flags)
             .ToArray();
 
