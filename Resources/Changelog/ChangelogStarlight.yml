@@ -15340,5 +15340,33 @@ Entries:
   id: 168801
   time: '2025-09-21T19:08:30.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1688
+- author: stickycheZ101
+  changes:
+  - message: greatly nerfed the ripperdoc arm
+    type: Tweak
+  id: 167400
+  time: '2025-09-21T20:47:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1674
+- author: stickycheZ101
+  changes:
+  - message: removed the ripperdoc arms from the RS cybernetics menu
+    type: Remove
+  id: 167401
+  time: '2025-09-21T20:47:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1674
+- author: stickycheZ101
+  changes:
+  - message: added the left ripperdoc arm as a trinket that requires 20 hours of surgeon
+    type: Add
+  id: 167402
+  time: '2025-09-21T20:47:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1674
+- author: stickycheZ101
+  changes:
+  - message: added a crafting recipe for both the left and right ripperdoc arms
+    type: Add
+  id: 167403
+  time: '2025-09-21T20:47:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1674
 Order: -1
 
