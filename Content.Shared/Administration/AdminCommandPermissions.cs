@@ -64,15 +64,15 @@ public sealed class AdminCommandPermissions
             return true;
         }
 
-        if (admin == null)
-        {
-            // Player isn't an admin.
-            return false;
-        }
-
         if (!AdminCommands.TryGetValue(cmdName, out var flagsReq))
         {
             // Server-console only.
+            return false;
+        }
+
+        if (admin == null)
+        {
+            // Player isn't an admin.
             return false;
         }
 

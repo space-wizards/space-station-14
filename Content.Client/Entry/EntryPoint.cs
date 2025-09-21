@@ -83,7 +83,7 @@ namespace Content.Client.Entry
             // Hence this needs to be called in PreInit, instead of in Init()
             foreach (var callback in TestingCallbacks)
             {
-                var cast = (ClientModuleTestingCallbacks)callback;
+                var cast = (ClientModuleTestingCallbacks) callback;
                 cast.ClientBeforeIoC?.Invoke();
             }
         }
