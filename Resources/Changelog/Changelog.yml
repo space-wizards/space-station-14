@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Predict gas valves.
-    type: Tweak
-  id: 8482
-  time: '2025-05-14T18:06:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33836
 - author: MisterImp
   changes:
   - message: A new recipe has been added for dracos (dragon meat tacos).
@@ -3953,3 +3946,10 @@
   id: 8992
   time: '2025-09-21T15:23:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40428
+- author: ToastEnjoyer
+  changes:
+  - message: Changed the description to the corpsman antagonist.
+    type: Tweak
+  id: 8993
+  time: '2025-09-21T19:27:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40486
