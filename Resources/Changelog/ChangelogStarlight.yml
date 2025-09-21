@@ -15258,5 +15258,13 @@ Entries:
   id: 169601
   time: '2025-09-21T19:08:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1696
+- author: Arkanic
+  changes:
+  - message: Bags can now be made click-to-open when equipped via a right click option
+      on them
+    type: Add
+  id: 161600
+  time: '2025-09-21T19:10:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1616
 Order: -1
 
