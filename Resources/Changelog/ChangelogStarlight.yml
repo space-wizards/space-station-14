@@ -15026,5 +15026,12 @@ Entries:
   id: 159001
   time: '2025-09-21T18:48:52.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1590
+- author: STARLIGHT TEAM
+  changes:
+  - message: Xenoborgis now come printed with pet bags and basic EVA suits.
+    type: Add
+  id: 167500
+  time: '2025-09-21T18:56:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1675
 Order: -1
 
