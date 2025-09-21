@@ -14938,5 +14938,20 @@ Entries:
   id: 169300
   time: '2025-09-21T18:06:06.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1693
+- author: CorruptOmega
+  changes:
+  - message: Water Cup now holds 15u again. They are small but 5u is silly.
+    type: Tweak
+  id: 169400
+  time: '2025-09-21T18:06:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1694
+- author: CorruptOmega
+  changes:
+  - message: Water Bottle can now be crafted by hand. Have fun molding plastic into
+      a bottle for a good chunk of time!
+    type: Add
+  id: 169401
+  time: '2025-09-21T18:06:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1694
 Order: -1
 
