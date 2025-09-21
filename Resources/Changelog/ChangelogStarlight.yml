@@ -14839,5 +14839,12 @@ Entries:
   id: 170000
   time: '2025-09-21T01:04:19.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1700
+- author: walksanatora
+  changes:
+  - message: Nanotransen Rep's cane can now be used as a mobility aid
+    type: Fix
+  id: 169700
+  time: '2025-09-21T01:03:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1697
 Order: -1
 
