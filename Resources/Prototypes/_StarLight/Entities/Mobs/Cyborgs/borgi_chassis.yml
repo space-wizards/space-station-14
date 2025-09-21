@@ -247,18 +247,31 @@
     - type: ContainerFill
       containers:
         borg_brain:
-        - MMI
+          - MMI
         borg_module:
-        - XenoborgModuleBasic
-        - XenoborgModuleTool
-        - BorgModuleSyndicateWeapon
-        - BorgModuleTopicals
+          - XenoborgModuleBasic
+          - XenoborgModuleTool
+          - BorgModuleSyndicateWeapon
+          - BorgModuleTopicals
+        ears: 
+          - ClothingHeadsetAssistant
+        head: 
+          - ClothingHeadHelmetEVALarge
+        outerClothing: 
+          - ClothingOuterHardsuitEVA
+        mask:
+          - ClothingMaskBreath
+        suitstorage:
+          - OxygenTankFilled
+        id:
+          - BorgiClearPDA
+        back:
+          - ClothingBagPet
     - type: ItemSlots
       slots:
         cell_slot:
           name: power-cell-slot-component-slot-name-default
           startingItem: PowerCellHyper
-
 
 - type: entity
   parent: XenoBorgiPrinted
@@ -276,9 +289,23 @@
     - type: ContainerFill
       containers:
         borg_brain:
-        - MMIFilled
+          - MMIFilled
         borg_module:
-        - XenoborgModuleBasic
-        - XenoborgModuleTool
-        - BorgModuleSyndicateWeapon
-        - BorgModuleTopicals
+          - XenoborgModuleBasic
+          - XenoborgModuleTool
+          - BorgModuleSyndicateWeapon
+          - BorgModuleTopicals
+        ears: 
+          - ClothingHeadsetAssistant
+        head: 
+          - ClothingHeadHelmetEVALarge
+        outerClothing: 
+          - ClothingOuterHardsuitEVA
+        mask:
+          - ClothingMaskBreath
+        suitstorage:
+          - OxygenTankFilled
+        id:
+          - BorgiClearPDA
+        back:
+          - ClothingBagPet

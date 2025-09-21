@@ -14788,5 +14788,243 @@ Entries:
   id: 168700
   time: '2025-09-19T18:08:03.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1687
+- author: CorruptOmega
+  changes:
+  - message: 'Scurrets now can understand Galactic Common again. Translation: Wawa,
+      wawaaaawa. Wawa!'
+    type: Tweak
+  id: 167300
+  time: '2025-09-19T20:43:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1673
+- author: CorruptOmega
+  changes:
+  - message: All Documents within the Document Printer have been updated with new
+      "Forms and Fields" functionality.
+    type: Tweak
+  id: 168400
+  time: '2025-09-19T22:54:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1684
+- author: CorruptOmega
+  changes:
+  - message: All Documents were given a bit of cleanup for formatting/grammar.
+    type: Tweak
+  id: 168401
+  time: '2025-09-19T22:54:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1684
+- author: STARLIGHT TEAM
+  changes:
+  - message: FMJ deals slightly less damage.
+    type: Tweak
+  id: 155200
+  time: '2025-09-20T15:47:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1552
+- author: STARLIGHT TEAM
+  changes:
+  - message: HP deals most of its damage as blunt.
+    type: Tweak
+  id: 155201
+  time: '2025-09-20T15:47:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1552
+- author: CorruptOmega
+  changes:
+  - message: A bottle of Bone Gel is now included in Reaper Arms.
+    type: Tweak
+  id: 155600
+  time: '2025-09-20T15:48:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1556
+- author: walksanatora
+  changes:
+  - message: Alt-Click now signs papers again.
+    type: Fix
+  id: 170000
+  time: '2025-09-21T01:04:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1700
+- author: walksanatora
+  changes:
+  - message: Nanotransen Rep's cane can now be used as a mobility aid
+    type: Fix
+  id: 169700
+  time: '2025-09-21T01:03:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1697
+- author: walksanatora
+  changes:
+  - message: Vulps now can take eye implants, tongues, and chest cavity items again.
+    type: Fix
+  id: 169800
+  time: '2025-09-21T01:01:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1698
+- author: Trep_Maul
+  changes:
+  - message: Parole to Sec SOP
+    type: Add
+  id: 170100
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: Trep_Maul
+  changes:
+  - message: Permit Acquisition to Sec SOP
+    type: Add
+  id: 170101
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: Trep_Maul
+  changes:
+  - message: Enemy of Corporation to Crimes
+    type: Add
+  id: 170102
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: Trep_Maul
+  changes:
+  - message: Modified syndicate contra
+    type: Tweak
+  id: 170103
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: Trep_Maul
+  changes:
+  - message: Major adjustments to Rule 6, Nicknames!
+    type: Tweak
+  id: 170104
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: Trep_Maul
+  changes:
+  - message: Major Adjustment to Rule 12, Thaven!
+    type: Tweak
+  id: 170105
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: Trep_Maul
+  changes:
+  - message: Major Adjustment to Rule 13, Security!
+    type: Tweak
+  id: 170106
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: Trep_Maul
+  changes:
+  - message: Minor adjustments to rules
+    type: Tweak
+  id: 170107
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: Trep_Maul
+  changes:
+  - message: Major Adjustments to Corporate Law and punishments.
+    type: Tweak
+  id: 170108
+  time: '2025-09-21T01:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1701
+- author: RoadTrain
+  changes:
+  - message: Actually fixes the laser carbine by moving our code to the abstract laser.
+    type: Fix
+  id: 168300
+  time: '2025-09-20T15:45:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1683
+- author: CawsForConcern
+  changes:
+  - message: Cloth wraps now use the barefoot footsteps (no longer sound like hard-soled
+      shoes when walking)
+    type: Tweak
+  id: 170400
+  time: '2025-09-21T17:16:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1704
+- author: CawsForConcern
+  changes:
+  - message: (Starboard) Brigmedic maints door is no-longer all access
+    type: Fix
+  id: 169300
+  time: '2025-09-21T18:06:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1693
+- author: CorruptOmega
+  changes:
+  - message: Water Cup now holds 15u again. They are small but 5u is silly.
+    type: Tweak
+  id: 169400
+  time: '2025-09-21T18:06:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1694
+- author: CorruptOmega
+  changes:
+  - message: Water Bottle can now be crafted by hand. Have fun molding plastic into
+      a bottle for a good chunk of time!
+    type: Add
+  id: 169401
+  time: '2025-09-21T18:06:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1694
+- author: CawsForConcern
+  changes:
+  - message: Added Cluster Station
+    type: Add
+  id: 149700
+  time: '2025-09-21T18:18:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1497
+- author: Killer Tamashi
+  changes:
+  - message: Added Experimental Security Hardsuit (You must wear this suit to use
+      the LMG)
+    type: Add
+  id: 110400
+  time: '2025-09-21T18:33:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1104
+- author: Killer Tamashi
+  changes:
+  - message: Heavy Weapon Safe (Currently contains the hardsuit/lmg)
+    type: Add
+  id: 110401
+  time: '2025-09-21T18:33:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1104
+- author: Killer Tamashi
+  changes:
+  - message: LMG speed debuff (The speed debuff has been moved to the suit, and made
+      more intense. 40% slowdown)
+    type: Remove
+  id: 110402
+  time: '2025-09-21T18:33:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1104
+- author: Killer Tamashi
+  changes:
+  - message: Changed LMG magazine size to 1x2
+    type: Tweak
+  id: 110403
+  time: '2025-09-21T18:33:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1104
+- author: Killer Tamashi
+  changes:
+  - message: Changed LMG sprite (again)
+    type: Tweak
+  id: 110404
+  time: '2025-09-21T18:33:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1104
+- author: Killer Tamashi
+  changes:
+  - message: Changed LMG magazine sprite (again)
+    type: Tweak
+  id: 110405
+  time: '2025-09-21T18:33:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1104
+- author: Killer Tamashi
+  changes:
+  - message: Fixed long-standing issue of taking out the cartridge first instead of
+      the magazine when alt-clicking
+    type: Fix
+  id: 110406
+  time: '2025-09-21T18:33:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1104
+- author: CorruptOmega
+  changes:
+  - message: Added Proto-5x diabler visuals. Blue = Disable // Red = Laser
+    type: Add
+  id: 159000
+  time: '2025-09-21T18:48:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1590
+- author: CorruptOmega
+  changes:
+  - message: Thief Steal Objective - Head of Security's Proto-5x
+    type: Add
+  id: 159001
+  time: '2025-09-21T18:48:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1590
 Order: -1
 
