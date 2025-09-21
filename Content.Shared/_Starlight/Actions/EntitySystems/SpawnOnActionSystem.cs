@@ -32,6 +32,7 @@ public sealed class SpawnOnActionSystem : EntitySystem
             return;
 
         args.Handled = true;
-        SpawnAtPosition(component.EntityToSpawn, Transform(uid).Coordinates);
+
+        PredictedSpawnAtPosition(component.EntityToSpawn, Transform(uid).Coordinates);
     }
 }
