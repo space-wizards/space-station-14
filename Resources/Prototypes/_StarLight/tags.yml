@@ -22,6 +22,9 @@
   id: Bola
 
 - type: Tag
+  id: BoneGel
+
+- type: Tag
   id: BorgModulePurrfus
 
 - type: Tag
