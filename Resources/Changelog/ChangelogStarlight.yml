@@ -15368,5 +15368,12 @@ Entries:
   id: 167403
   time: '2025-09-21T20:47:40.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1674
+- author: Fasuh
+  changes:
+  - message: Fixed vox coloring regression.
+    type: Fix
+  id: 170800
+  time: '2025-09-21T23:52:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1708
 Order: -1
 
