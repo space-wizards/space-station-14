@@ -14960,5 +14960,57 @@ Entries:
   id: 149700
   time: '2025-09-21T18:18:41.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1497
+- author: Killer Tamashi
+  changes:
+  - message: Added Experimental Security Hardsuit (You must wear this suit to use
+      the LMG)
+    type: Add
+  id: 110400
+  time: '2025-09-21T18:33:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1104
+- author: Killer Tamashi
+  changes:
+  - message: Heavy Weapon Safe (Currently contains the hardsuit/lmg)
+    type: Add
+  id: 110401
+  time: '2025-09-21T18:33:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1104
+- author: Killer Tamashi
+  changes:
+  - message: LMG speed debuff (The speed debuff has been moved to the suit, and made
+      more intense. 40% slowdown)
+    type: Remove
+  id: 110402
+  time: '2025-09-21T18:33:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1104
+- author: Killer Tamashi
+  changes:
+  - message: Changed LMG magazine size to 1x2
+    type: Tweak
+  id: 110403
+  time: '2025-09-21T18:33:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1104
+- author: Killer Tamashi
+  changes:
+  - message: Changed LMG sprite (again)
+    type: Tweak
+  id: 110404
+  time: '2025-09-21T18:33:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1104
+- author: Killer Tamashi
+  changes:
+  - message: Changed LMG magazine sprite (again)
+    type: Tweak
+  id: 110405
+  time: '2025-09-21T18:33:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1104
+- author: Killer Tamashi
+  changes:
+  - message: Fixed long-standing issue of taking out the cartridge first instead of
+      the magazine when alt-clicking
+    type: Fix
+  id: 110406
+  time: '2025-09-21T18:33:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1104
 Order: -1
 
