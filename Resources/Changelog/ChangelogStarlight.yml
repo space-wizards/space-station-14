@@ -15182,5 +15182,19 @@ Entries:
   id: 161202
   time: '2025-09-21T18:54:50.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1612
+- author: Trep_Maul
+  changes:
+  - message: Slightly lowered commonality of Ninja, Dragon, Abductor, and LoneOp.
+    type: Tweak
+  id: 165100
+  time: '2025-09-21T18:55:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1651
+- author: Trep_Maul
+  changes:
+  - message: Ramping schedulers are now tied to CVar Shuttle.Auto_Call_Time.
+    type: Fix
+  id: 165101
+  time: '2025-09-21T18:55:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1651
 Order: -1
 
