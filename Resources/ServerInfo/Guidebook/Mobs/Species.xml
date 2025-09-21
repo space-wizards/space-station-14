@@ -12,7 +12,6 @@
   <GuideEntityEmbed Entity="MobMoth" Caption="Moth Person"/>
   </Box>
   <Box>
-
   <GuideEntityEmbed Entity="MobReptilian" Caption="Reptilian"/>
   <GuideEntityEmbed Entity="MobSlimePerson" Caption="Laspi"/> <!--Starlight-->
   <GuideEntityEmbed Entity="MobVox" Caption="Vox"/>
@@ -22,8 +21,11 @@
   <GuideEntityEmbed Entity="MobAvali" Caption="Avali"/>
   </Box>
   <Box>
-
+  <GuideEntityEmbed Entity="MobThaven" Caption="Thaven"/>
   <GuideEntityEmbed Entity="MobShadekin" Caption="Shadekin"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="MobVulpkanin" Caption="Vulpkanin"/>
   </Box>
 
 </Document>

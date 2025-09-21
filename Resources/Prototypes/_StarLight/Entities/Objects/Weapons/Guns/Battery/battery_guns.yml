@@ -817,21 +817,23 @@
   id: WeaponEnergySMG
   description: A one-of-a-kind prototype energy sub-machine gun. It offers high energy firepower and a powerful self recharge.
   components:
+  - type: Appearance
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Battery/energy_smg.rsi
     layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
-      - state: mag-unshaded-4
+      - state: laser
+        map: ["enum.FireModesLayers.FireMode"]
+      - state: laser-unshaded-0
         map: ["enum.GunVisualLayers.MagUnshaded"]
         shader: unshaded
-  - type: MagazineVisuals
-    magState: mag
-    steps: 6
-    zeroVisible: false
-  - type: Appearance
   - type: Clothing
     sprite: _Starlight/Objects/Weapons/Guns/Battery/energy_smg.rsi
+  - type: MagazineVisuals
+    magState: laser
+    steps: 6
+    zeroVisible: false
   - type: Gun
     fireRate: 4.5
     selectedMode: FullAuto
@@ -848,14 +850,20 @@
     fireModes:
     - proto: BulletEnergySMGLaser
       fireCost: 50
+      magState: laser
+      visualState: laser
     - proto: BulletEnergySMGDisabler
       fireCost: 25
+      magState: disable
+      visualState: disable
   - type: Item
     size: Large
     shape:
     - 0,0,3,1
     #sprite: _Starlight/Objects/Weapons/Guns/Battery/energy_smg.rsi
     #heldPrefix: energy
+  - type: StealTarget
+    stealGroup: Proto5x
   - type: Tag
     tags:
     - HighRiskItem
@@ -867,7 +875,7 @@
     startingCharge: 1500
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 100
+    autoRechargeRate: 80
     autoRechargePause: true
     autoRechargePauseTime: 10
 

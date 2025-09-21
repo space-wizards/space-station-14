@@ -105,6 +105,13 @@
       - !type:KeyExistsPrecondition
         key: Target
       tasks:
+        # Starlight-start entities jump in combat
+        - !type:HTNPrimitiveTask
+          operator: !type:JumpOperator
+            shutdownState: PlanFinished
+            removeKeyOnFinish: false
+            targetKey: TargetCoordinates
+        # Starlight-end
         - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
             shutdownState: PlanFinished

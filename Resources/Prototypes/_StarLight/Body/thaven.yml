@@ -1,0 +1,52 @@
+﻿- type: body
+  id: Thaven
+  name: "thaven"
+  root: torso
+  slots:
+    head:
+      part: HeadThaven
+      connections:
+      - torso
+      organs:
+        brain: OrganThavenBrain
+        eyes: OrganHumanEyes
+        tongue: OrganHumanTongue
+        eye_implant: null
+    torso:
+      part: TorsoThaven
+      connections:
+      - right arm
+      - left arm
+      - right leg
+      - left leg
+      organs:
+        heart: OrganHumanHeart
+        lungs: OrganHumanLungs
+        stomach: OrganHumanStomach
+        liver: OrganHumanLiver
+        kidneys: OrganHumanKidneys
+        cavity: null
+    right arm:
+      part: RightArmThaven
+      connections:
+      - right hand
+    left arm:
+      part: LeftArmThaven
+      connections:
+      - left hand
+    right hand:
+      part: RightHandThaven
+    left hand:
+      part: LeftHandThaven
+    right leg:
+      part: RightLegThaven
+      connections:
+      - right foot
+    left leg:
+      part: LeftLegThaven
+      connections:
+      - left foot
+    right foot:
+      part: RightFootThaven
+    left foot:
+      part: LeftFootThaven

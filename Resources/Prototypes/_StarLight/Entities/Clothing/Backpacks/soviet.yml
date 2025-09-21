@@ -102,3 +102,30 @@
       - id: FlippoEngravedLighter
       - id: MagazinePistolSP
 
+- type: entity
+  id: ClothingBackpackDuffelStechkinAPS
+  parent: ClothingBackpackDuffelSSF
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponPistolAPS
+      - id: MagazinePistol40SP
+      - id: MagazinePistol40SP
+
+- type: entity
+  id: ClothingBackpackDuffelDP28Bundle
+  parent: ClothingBackpackDuffelSSF
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponLightMachineGunDP28
+      - id: MagazineLightRifleMaxim
+
+- type: entity
+  id: ClothingBackpackDuffelPPShBundle
+  parent: ClothingBackpackDuffelSSF
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponSubMachineGunPPSH
+      - id: MagazinePistolSubMachineGunPPSH
