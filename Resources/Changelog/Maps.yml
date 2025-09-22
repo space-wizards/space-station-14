@@ -701,4 +701,20 @@
   id: 84
   time: '2025-09-18T07:15:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40436
+- author: IProduceWidgets
+  changes:
+  - message: Updates Oasis TEG
+    type: Add
+  - message: Oasis AI Restoration Console
+    type: Add
+  id: 85
+  time: '2025-09-20T18:10:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40463
+- author: ToastEnjoyer
+  changes:
+  - message: On Amber, added the AI restoration console to the RD's room.
+    type: Add
+  id: 86
+  time: '2025-09-20T18:37:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40393
 Order: 1

@@ -1416,5 +1416,12 @@ Entries:
   id: 171
   time: '2025-09-17T21:59:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35966
+- author: Kowlin
+  changes:
+  - message: The "unbanned by" message in the admin notes now formats its date properly.
+    type: Tweak
+  id: 172
+  time: '2025-09-21T15:26:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40484
 Name: Admin
 Order: 2
