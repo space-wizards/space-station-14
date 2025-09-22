@@ -23,6 +23,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
 using Robust.Shared.Reflection;
+using Robust.UnitTesting;
 using ItemToggleComponent = Content.Shared.Item.ItemToggle.Components.ItemToggleComponent;
 
 namespace Content.IntegrationTests.Tests.Interaction;
@@ -614,6 +615,9 @@ public abstract partial class InteractionTest
     /// <remarks>
     /// This currently only checks server-side events.
     /// </remarks>
+    /// <param name="uid">The entity at which the events are supposed to be directed</param>
+    /// <param name="count">How many new events are expected</param>
+    /// <param name="clear">Whether to clear all previously recorded events before invoking the delegate</param>
     protected async Task AssertFiresEvent<TEvent>(Func<Task> act, EntityUid? uid = null, int count = 1, bool clear = true)
         where TEvent : notnull
     {
@@ -637,12 +641,33 @@ public abstract partial class InteractionTest
     }
 
     /// <summary>
-    /// Asserts that running the action on the server causes an event to fired directed at the specified entity (defaults to <see cref="Target"/>).
+    /// This is a variant of <see cref="AssertFiresEvent{TEvent}"/> that passes the delegate to <see cref="RobustIntegrationTest.ServerIntegrationInstance.WaitPost"/>.
     /// </summary>
     /// <remarks>
     /// This currently only checks for server-side events.
     /// </remarks>
-    protected async Task AssertFiresEventPost<TEvent>(Action act, EntityUid? uid = null, int count = 1, bool clear = true)
+    /// <param name="uid">The entity at which the events are supposed to be directed</param>
+    /// <param name="count">How many new events are expected</param>
+    /// <param name="clear">Whether to clear all previously recorded events before invoking the delegate</param>
+    protected async Task AssertPostFiresEvent<TEvent>(Action act, EntityUid? uid = null, int count = 1, bool clear = true)
+        where TEvent : notnull
+    {
+        await AssertFiresEvent<TEvent>(async () => await Server.WaitPost(act), uid, count, clear);
+    }
+
+    /// <summary>
+    /// This is a variant of <see cref="AssertFiresEvent{TEvent}"/> that passes the delegate to <see cref="RobustIntegrationTest.ServerIntegrationInstance.WaitAssertion"/>.
+    /// </summary>
+    /// <remarks>
+    /// This currently only checks for server-side events.
+    /// </remarks>
+    /// <param name="uid">The entity at which the events are supposed to be directed</param>
+    /// <param name="count">How many new events are expected</param>
+    /// <param name="clear">Whether to clear all previously recorded events before invoking the delegate</param>
+    protected async Task AssertAssertionFiresEvent<TEvent>(Action act,
+        EntityUid? uid = null,
+        int count = 1,
+        bool clear = true)
         where TEvent : notnull
     {
         await AssertFiresEvent<TEvent>(async () => await Server.WaitAssertion(act), uid, count, clear);
@@ -655,6 +680,9 @@ public abstract partial class InteractionTest
     /// <remarks>
     /// This currently only checks server-side events.
     /// </remarks>
+    /// <param name="uid">The entity at which the events were directed</param>
+    /// <param name="count">How many new events are expected</param>
+    /// <param name="predicate">A predicate that can be used to filter the recorded events</param>
     protected void AssertEvent<TEvent>(EntityUid? uid = null, int count = 1, Func<TEvent,bool>? predicate = null)
         where TEvent : notnull
     {
@@ -668,6 +696,8 @@ public abstract partial class InteractionTest
     /// <remarks>
     /// This currently only gets for server-side events.
     /// </remarks>
+    /// <param name="uid">The entity at which the events were directed</param>
+    /// <param name="predicate">A predicate that can be used to filter the returned events</param>
     protected IEnumerable<TEvent> GetEvents<TEvent>(EntityUid? uid = null, Func<TEvent, bool>? predicate = null)
         where TEvent : notnull
     {
