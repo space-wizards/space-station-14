@@ -1,7 +1,7 @@
 - type: entity
-  name: Отбойник
-  parent: WeaponShotgunBulldog
   id: WeaponShotgunHammerhead
+  parent: WeaponShotgunBulldog
+  name: Отбойник
   description: Автоматический дробовик с магазинным питанием для ближнего боя. Имеет высокую скорострельность, что делает его убойным в противостоянии с любой целью в ближнем бою. Использует патроны калибра 12х70.
   suffix: Дробовик
   components:
@@ -29,3 +29,33 @@
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: ADTMagazineShotgunXL
+        priority: 2
+        whitelist:
+          tags:
+          - MagazineShotgun
+        whitelistFailPopup: gun-magazine-whitelist-fail
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+
+- type: entity
+  id: WeaponShotgunHammerheadIncendiary
+  parent: WeaponShotgunHammerhead
+  suffix: Дробовик, Зажигательные
+  components:
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: ADTMagazineShotgunIncendiaryXL
+        priority: 2
+        whitelist:
+          tags:
+          - MagazineShotgun
+        whitelistFailPopup: gun-magazine-whitelist-fail
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg

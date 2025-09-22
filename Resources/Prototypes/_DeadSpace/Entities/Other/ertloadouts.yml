@@ -261,7 +261,7 @@
     possibleSets:
     - PulseRifleSet
     - PulseShotgunSet
-    - MachineGunSet
+    - MinigunGunSet
     - HammerheadSet
   - type: ActivatableUI
     key: enum.ThiefBackpackUIKey.Key
@@ -343,17 +343,15 @@
     sprite: _DeadSpace/Objects/Weapons/Guns/Shotguns/hammerhead.rsi
     state: icon
   content:
-  - WeaponShotgunHammerhead
-  - MagazineShotgunIncendiary
-  - MagazineShotgunIncendiary
-  - MagazineShotgunIncendiary
-  - MagazineShotgunIncendiary
-  - MagazineShotgunIncendiary
-  - MagazineShotgunIncendiary
-  - MagazineShotgunIncendiary
-  - MagazineShotgunIncendiary
-  - BoxShotgunIncendiary
-  - BoxShotgunIncendiary
+  - WeaponShotgunHammerheadIncendiary
+  - ADTMagazineShotgunIncendiaryXL
+  - ADTMagazineShotgunIncendiaryXL
+  - ADTMagazineShotgunIncendiaryXL
+  - ADTMagazineShotgunIncendiaryXL
+  - ADTMagazineShotgunIncendiaryXL
+  - ADTMagazineShotgunIncendiaryXL
+  - ADTMagazineShotgunIncendiaryXL
+  - ADTMagazineShotgunIncendiaryXL
 
 - type: thiefBackpackSet
   id: EnergyShotgunSet
@@ -433,18 +431,14 @@
   - MagazineBoxRifle
 
 - type: thiefBackpackSet
-  id: MachineGunSet
-  name: ert-loadout-category-machinegun-name
-  description: ert-loadout-category-machinegun-description
+  id: MinigunGunSet
+  name: ert-loadout-category-minigun-name
+  description: ert-loadout-category-minigun-description
   sprite:
-    sprite: Objects/Weapons/Guns/LMGs/l6.rsi
+    sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
     state: icon
   content:
-  - WeaponLightMachineGunL6
-  - MagazineLightRifleBox
-  - MagazineLightRifleBox
-  - MagazineLightRifleBox
-  - MagazineLightRifleBox
+  - WeaponMinigun
 
 ### Лазеры
 - type: thiefBackpackSet

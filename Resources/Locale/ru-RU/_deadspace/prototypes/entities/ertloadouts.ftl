@@ -91,15 +91,15 @@ ert-loadout-category-pulsepistol-description =
 ert-loadout-category-hammerhead-name = Отбойник
 ert-loadout-category-hammerhead-description =
     Автоматический дробовик с магазинным питанием для ближнего боя. Имеет высокую скорострельность, что делает его убойным в противостоянии с любой целью в ближнем бою.
-    Использует патроны калибра 12х70. В комплекте идут зажигательные патроны.
+    Использует патроны калибра 12х70. В комплекте идут расширенные магазины с зажигательными патронами.
 ert-loadout-category-pulseshotgun-name = Импульсный дробовик
 ert-loadout-category-pulseshotgun-description =
     Высокотехнологичное энергетическое оружие ближнего боя.
     Имеет три режима стрельбы.
-ert-loadout-category-machinegun-name = Пулемёт L6
-ert-loadout-category-machinegun-description =
-    Лёгкий ручной пулемёт с высокой скорострельностью.
-    Использует патроны калибра 6.5х39 TSF.
+ert-loadout-category-minigun-name = Миниган
+ert-loadout-category-minigun-description =
+    Тяжёлый пулемёт с огромным боезапасом и скорострельностью.
+    Использует лёгкие патроны калибра 5.6х15 мм R.
 ert-loadout-category-pulserifle-name = Импульсная винтовка
 ert-loadout-category-pulserifle-description =
     Оружие, почти столь же печально известное, как и его пользователи.
