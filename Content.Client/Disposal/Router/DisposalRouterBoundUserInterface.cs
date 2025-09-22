@@ -2,7 +2,7 @@ using Content.Shared.Disposal.Components;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 
-namespace Content.Client.Disposal.Tube
+namespace Content.Client.Disposal.Router
 {
     /// <summary>
     /// Initializes a <see cref="DisposalRouterWindow"/> and updates it when new server messages are received.

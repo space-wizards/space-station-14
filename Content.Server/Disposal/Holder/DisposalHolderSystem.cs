@@ -1,10 +1,11 @@
 using Content.Server.Atmos.EntitySystems;
+using Content.Shared.Disposal.Holder;
 using Content.Shared.Disposal.Unit;
 
-namespace Content.Server.Disposal.Unit;
+namespace Content.Server.Disposal.Holder;
 
 /// <inheritdoc/>
-public sealed partial class DisposableSystem : SharedDisposableSystem
+public sealed partial class DisposalHolderSystem : SharedDisposalHolderSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
 

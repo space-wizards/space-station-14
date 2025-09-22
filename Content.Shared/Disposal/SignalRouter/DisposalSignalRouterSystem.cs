@@ -1,8 +1,9 @@
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.Disposal.Tube;
 using System.Linq;
 
-namespace Content.Shared.Disposal.Tube;
+namespace Content.Shared.Disposal.SignalRouter;
 
 /// <summary>
 /// Handles signals and the routing get next direction event.
@@ -40,14 +41,17 @@ public sealed class DisposalSignalRouterSystem : EntitySystem
 
     private void OnGetNextDirection(Entity<DisposalSignalRouterComponent> ent, ref GetDisposalsNextDirectionEvent args)
     {
-        var exits = _disposalTube.GetTubeConnectableDirections((ent, ent.Comp));
+        if (!TryComp<DisposalTubeComponent>(ent, out var disposalTube))
+            return;
+
+        var exits = _disposalTube.GetTubeConnectableDirections((ent, disposalTube));
 
         if (exits.Length < 3 || !ent.Comp.Routing)
         {
-            _disposalTube.SelectNextTube((ent, ent.Comp), exits, ref args);
+            _disposalTube.SelectNextTube((ent, disposalTube), exits, ref args);
             return;
         }
 
-        _disposalTube.SelectNextTube((ent, ent.Comp), exits.Skip(1).ToArray(), ref args);
+        _disposalTube.SelectNextTube((ent, disposalTube), exits.Skip(1).ToArray(), ref args);
     }
 }

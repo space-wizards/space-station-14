@@ -7,7 +7,6 @@ using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Tube;
-using Content.Shared.Disposal.Unit.Events;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Emag.Systems;

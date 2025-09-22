@@ -1,10 +1,13 @@
 using Content.Shared.Atmos;
+using Content.Shared.Disposal.Holder;
+using Content.Shared.Disposal.Tube;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Disposal.Unit;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(new[] { typeof(SharedDisposalTubeSystem), typeof(SharedDisposalHolderSystem) })]
 public sealed partial class DisposalHolderComponent : Component, IGasMixtureHolder
 {
     [DataField]
@@ -15,15 +18,6 @@ public sealed partial class DisposalHolderComponent : Component, IGasMixtureHold
     /// </summary>
     [DataField]
     public float TraversalSpeed { get; set; } = 5f;
-
-    [DataField, AutoNetworkedField]
-    public EntityUid? PreviousTube { get; set; }
-
-    [DataField, AutoNetworkedField]
-    public Direction PreviousDirection { get; set; } = Direction.Invalid;
-
-    [ViewVariables]
-    public Direction PreviousDirectionFrom => (PreviousDirection == Direction.Invalid) ? Direction.Invalid : PreviousDirection.GetOpposite();
 
     [DataField, AutoNetworkedField]
     public EntityUid? CurrentTube { get; set; }

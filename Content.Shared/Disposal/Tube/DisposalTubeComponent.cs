@@ -11,11 +11,9 @@ namespace Content.Shared.Disposal.Tube;
 /// Basic component for disposal pipes.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Virtual]
-public partial class DisposalTubeComponent : Component
+[Access(typeof(SharedDisposalTubeSystem))]
+public sealed partial class DisposalTubeComponent : Component
 {
-    public static readonly Regex TagRegex = new("^[a-zA-Z0-9, ]*$", RegexOptions.Compiled);
-
     /// <summary>
     /// Sound played when entities passing through this pipe change direction.
     /// </summary>
@@ -67,7 +65,7 @@ public partial class DisposalTubeComponent : Component
 }
 
 [ByRefEvent]
-public record struct GetDisposalsNextDirectionEvent(DisposalHolderComponent Holder)
+public record struct GetDisposalsNextDirectionEvent(Entity<DisposalHolderComponent> Holder)
 {
     public Direction Next;
 }

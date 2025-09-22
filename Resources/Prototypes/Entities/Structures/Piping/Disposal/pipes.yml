@@ -138,10 +138,11 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-tagger
-  - type: DisposalTagger
+  - type: DisposalTube
     exits:
     - South
     - North
+  - type: DisposalTagger
   - type: GenericVisualizer
     visuals:
       enum.AnchorVisuals.Anchored:
@@ -172,6 +173,7 @@
     exits:
     - South
     - North
+  - type: DisposalSignaller
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
@@ -180,7 +182,6 @@
     - ItemDetected
   - type: WirelessNetworkConnection
     range: 200
-  - type: DisposalSignaller
   - type: GenericVisualizer
     visuals:
       enum.AnchorVisuals.Anchored:
@@ -231,11 +232,12 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-j1s
-  - type: DisposalRouter
+  - type: DisposalTube
     exits:
+    - West
     - South
-    - East
     - North
+  - type: DisposalRouter
   - type: GenericVisualizer
     visuals:
       enum.AnchorVisuals.Anchored:
@@ -272,10 +274,10 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-j2s
-  - type: DisposalRouter
+  - type: DisposalTube
     exits:
+    - East
     - South
-    - West
     - North
   - type: GenericVisualizer
     visuals:
@@ -310,7 +312,7 @@
   - type: DisposalTube
     exits:
     - South
-    - East
+    - West
     - North
   - type: GenericVisualizer
     visuals:
@@ -345,7 +347,7 @@
   - type: DisposalTube
     exits:
     - South
-    - West
+    - East
     - North
   - type: GenericVisualizer
     visuals:
@@ -448,7 +450,7 @@
   - type: DisposalTube
     exits:
     - South
-    - East
+    - West
   - type: GenericVisualizer
     visuals:
       enum.AnchorVisuals.Anchored:
@@ -477,6 +479,11 @@
     layers:
     - map: [ "pipe" ]
       state: signal-router-free
+  - type: DisposalTube
+    exits:
+    - West
+    - South
+    - North
   - type: DisposalSignalRouter
   - type: DeviceLinkSink
     ports:
@@ -511,8 +518,8 @@
       state: signal-router-flipped-free
   - type: DisposalTube
     exits:
+    - East
     - South
-    - West
     - North
   - type: GenericVisualizer
     visuals:

@@ -29,6 +29,15 @@ public sealed partial class MailingUnitComponent : Component
 }
 
 /// <summary>
+/// Sent before the disposal unit flushes it's contents.
+/// Allows adding tags for sorting and preventing the disposal unit from flushing.
+/// </summary>
+public sealed class BeforeDisposalFlushEvent : CancellableEntityEventArgs
+{
+    public readonly List<string> Tags = new();
+}
+
+/// <summary>
 /// Message data sent from client to server when a disposal unit ui button is pressed.
 /// </summary>
 [Serializable, NetSerializable]

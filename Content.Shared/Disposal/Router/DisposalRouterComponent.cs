@@ -1,4 +1,4 @@
-using Content.Shared.Disposal.Tube;
+using Content.Shared.Disposal.Router;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -6,7 +6,8 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Disposal.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class DisposalRouterComponent : DisposalTubeComponent
+[Access(typeof(DisposalRouterSystem))]
+public sealed partial class DisposalRouterComponent : Component
 {
     /// <summary>
     /// List of tags that will be compared against the tags possessed

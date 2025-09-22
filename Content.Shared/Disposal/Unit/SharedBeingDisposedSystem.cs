@@ -1,4 +1,5 @@
 using Content.Shared.Disposal.Components;
+using Content.Shared.Disposal.Holder;
 using Content.Shared.Follower;
 using Content.Shared.Follower.Components;
 
@@ -11,7 +12,7 @@ namespace Content.Shared.Disposal.Unit;
 /// </summary>
 public abstract class SharedBeingDisposedSystem : EntitySystem
 {
-    [Dependency] private readonly SharedDisposableSystem _disposable = default!;
+    [Dependency] private readonly SharedDisposalHolderSystem _disposable = default!;
 
     public override void Initialize()
     {

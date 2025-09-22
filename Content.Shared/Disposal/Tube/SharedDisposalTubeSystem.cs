@@ -1,9 +1,8 @@
 using Content.Shared.Atmos;
 using Content.Shared.Disposal.Components;
+using Content.Shared.Disposal.Holder;
 using Content.Shared.Disposal.Unit;
 using Content.Shared.Popups;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
@@ -15,8 +14,7 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly SharedDisposableSystem _disposableSystem = default!;
+    [Dependency] private readonly SharedDisposalHolderSystem _disposableSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
@@ -25,108 +23,13 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DisposalEntryComponent, GetDisposalsNextDirectionEvent>(OnGetEntryNextDirection);
         SubscribeLocalEvent<DisposalTubeComponent, GetDisposalsNextDirectionEvent>(OnGetTubeNextDirection);
-        SubscribeLocalEvent<DisposalRouterComponent, GetDisposalsNextDirectionEvent>(OnGetRouterNextDirection);
-        SubscribeLocalEvent<DisposalTaggerComponent, GetDisposalsNextDirectionEvent>(OnGetTaggerNextDirection);
-
-        Subs.BuiEvents<DisposalRouterComponent>(DisposalRouterUiKey.Key, subs =>
-        {
-            subs.Event<DisposalRouterUiActionMessage>(OnUiAction);
-        });
-
-        Subs.BuiEvents<DisposalTaggerComponent>(DisposalTaggerUiKey.Key, subs =>
-        {
-            subs.Event<DisposalTaggerUiActionMessage>(OnUiAction);
-        });
-    }
-
-    /// <summary>
-    /// Handles UI messages from the client. For things such as button presses
-    /// which interact with the world and require server action.
-    /// </summary>
-    /// <param name="msg">A user interface message from the client.</param>
-    private void OnUiAction(Entity<DisposalTaggerComponent> ent, ref DisposalTaggerUiActionMessage msg)
-    {
-        if (!Exists(msg.Actor))
-            return;
-
-        // Check for correct message and ignore maleformed strings
-        if (msg.Action == DisposalTaggerUiAction.Ok && DisposalTaggerComponent.TagRegex.IsMatch(msg.Tag))
-        {
-            ent.Comp.Tag = msg.Tag.Trim();
-            Dirty(ent);
-
-            _audioSystem.PlayPredicted(ent.Comp.ClickSound, ent, msg.Actor, AudioParams.Default.WithVolume(-2f));
-        }
-    }
-
-    /// <summary>
-    /// Handles UI messages from the client. For things such as button presses
-    /// which interact with the world and require server action.
-    /// </summary>
-    /// <param name="msg">A user interface message from the client.</param>
-    private void OnUiAction(Entity<DisposalRouterComponent> ent, ref DisposalRouterUiActionMessage msg)
-    {
-        if (!Exists(msg.Actor))
-            return;
-
-        // Check for correct message and ignore maleformed strings
-        if (msg.Action == DisposalRouterUiAction.Ok && DisposalRouterComponent.TagRegex.IsMatch(msg.Tags))
-        {
-            ent.Comp.Tags.Clear();
-
-            foreach (var tag in msg.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries))
-            {
-                var trimmed = tag.Trim();
-
-                if (string.IsNullOrEmpty(trimmed))
-                    continue;
-
-                ent.Comp.Tags.Add(trimmed);
-            }
-
-            Dirty(ent);
-
-            _audioSystem.PlayPredicted(ent.Comp.ClickSound, ent, msg.Actor, AudioParams.Default.WithVolume(-2f));
-        }
-    }
-
-    private void OnGetEntryNextDirection(Entity<DisposalEntryComponent> ent, ref GetDisposalsNextDirectionEvent args)
-    {
-        // Ejects contents when they pass into the entry from within the disposals system
-        if (args.Holder.PreviousDirectionFrom != Direction.Invalid)
-        {
-            args.Next = Direction.Invalid;
-            return;
-        }
-
-        args.Next = Transform(ent).LocalRotation.GetDir();
     }
 
     private void OnGetTubeNextDirection(Entity<DisposalTubeComponent> ent, ref GetDisposalsNextDirectionEvent args)
     {
         var exits = GetTubeConnectableDirections(ent);
         SelectNextTube(ent, exits, ref args);
-    }
-
-    private void OnGetRouterNextDirection(Entity<DisposalRouterComponent> ent, ref GetDisposalsNextDirectionEvent args)
-    {
-        var exits = GetTubeConnectableDirections((ent, ent.Comp));
-
-        if (exits.Length < 3 || args.Holder.Tags.Overlaps(ent.Comp.Tags))
-        {
-            SelectNextTube((ent, ent.Comp), exits, ref args);
-            return;
-        }
-
-        SelectNextTube((ent, ent.Comp), exits.Skip(1).ToArray(), ref args);
-    }
-
-    private void OnGetTaggerNextDirection(Entity<DisposalTaggerComponent> ent, ref GetDisposalsNextDirectionEvent args)
-    {
-        args.Holder.Tags.Add(ent.Comp.Tag);
-        OnGetTubeNextDirection((ent, ent.Comp), ref args);
     }
 
     /// <summary>
@@ -156,18 +59,22 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
         // The first exit is the default
         args.Next = exits[0];
 
-        // This may change based on the number of potential exits available
-        var previousDirectionFrom = args.Holder.PreviousDirectionFrom;
+        // This may change based on the potential exits available
+        // and our current direction of travel
+        var currentDirection = args.Holder.Comp.CurrentDirection;
 
         switch (exits.Length)
         {
             // There is only one exit
             case 1:
+                if (args.Next.GetOpposite() == currentDirection)
+                    args.Next = Direction.Invalid;
+
                 return;
 
             // If there are two exits
             case 2:
-                if (args.Next == previousDirectionFrom)
+                if (args.Next.GetOpposite() == currentDirection)
                     args.Next = exits[1];
 
                 return;
@@ -176,13 +83,13 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
             default:
 
                 // Check that the default exit is valid
-                if (previousDirectionFrom == args.Next ||
-                    Math.Abs(Angle.ShortestDistance(previousDirectionFrom.ToAngle(), args.Next.ToAngle()).Theta) < ent.Comp.MinDeltaAngle.Theta)
+                if (args.Next.GetOpposite() == currentDirection ||
+                    Math.Abs(Angle.ShortestDistance(currentDirection.ToAngle(), args.Next.ToAngle())) < ent.Comp.MinDeltaAngle)
                 {
                     // If it isn't, remove it from the list, along with any other invalid exits
                     var directions = exits.Skip(1).
-                        Where(direction => direction != previousDirectionFrom &&
-                        Math.Abs(Angle.ShortestDistance(previousDirectionFrom.ToAngle(), direction.ToAngle()).Theta) >= ent.Comp.MinDeltaAngle).ToArray();
+                        Where(direction => direction != currentDirection &&
+                        Math.Abs(Angle.ShortestDistance(currentDirection.ToAngle(), direction.ToAngle())) >= ent.Comp.MinDeltaAngle).ToArray();
 
                     // If no exits were valid, just use the default
                     if (directions.Length == 0)
@@ -257,7 +164,7 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
             return;
 
         var directions = string.Join(", ", exits);
-        _popups.PopupPredicted(Loc.GetString("disposal-tube-component-popup-directions-text", ("directions", directions)), ent, recipient);
+        _popups.PopupEntity(Loc.GetString("disposal-tube-component-popup-directions-text", ("directions", directions)), ent, recipient);
     }
 
     /// <summary>

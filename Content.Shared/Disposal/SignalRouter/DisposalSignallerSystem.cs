@@ -1,6 +1,7 @@
 using Content.Shared.DeviceLinking;
+using Content.Shared.Disposal.Tube;
 
-namespace Content.Shared.Disposal.Tube;
+namespace Content.Shared.Disposal.SignalRouter;
 
 public sealed class DisposalSignallerSystem : EntitySystem
 {

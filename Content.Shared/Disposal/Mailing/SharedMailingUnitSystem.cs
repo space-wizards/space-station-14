@@ -5,7 +5,6 @@ using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Unit;
-using Content.Shared.Disposal.Unit.Events;
 using Content.Shared.Interaction;
 using Content.Shared.Power.EntitySystems;
 using Robust.Shared.Player;

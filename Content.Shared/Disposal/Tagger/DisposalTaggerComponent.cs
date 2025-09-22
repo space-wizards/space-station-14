@@ -1,4 +1,4 @@
-using Content.Shared.Disposal.Tube;
+using Content.Shared.Disposal.Tagger;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -6,11 +6,12 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Disposal.Components;
 
 /// <summary>
-/// Disposal holders that pass through this pipe will be marked with the tag
+/// Disposal holders that pass through this pipe will be marked with the specified tag.
 /// specified by <see cref="Tag"/>.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class DisposalTaggerComponent : DisposalTubeComponent
+[Access(typeof(DisposalTaggerSystem))]
+public sealed partial class DisposalTaggerComponent : Component
 {
     /// <summary>
     /// Tag to apply to passing entities.

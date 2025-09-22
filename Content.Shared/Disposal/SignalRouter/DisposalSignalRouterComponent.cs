@@ -1,4 +1,5 @@
 using Content.Shared.DeviceLinking;
+using Content.Shared.Disposal.SignalRouter;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -11,7 +12,7 @@ namespace Content.Shared.Disposal.Tube;
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(DisposalSignalRouterSystem))]
-public sealed partial class DisposalSignalRouterComponent : DisposalTubeComponent
+public sealed partial class DisposalSignalRouterComponent : Component
 {
     /// <summary>
     /// Whether to route items to the side or not.

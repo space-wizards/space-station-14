@@ -2,6 +2,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Tube;
+using Content.Shared.Disposal.Unit;
 using Content.Shared.Eye;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
@@ -10,14 +11,15 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
+using System.Text.RegularExpressions;
 
-namespace Content.Shared.Disposal.Unit;
+namespace Content.Shared.Disposal.Holder;
 
 /// <summary>
 /// This sytem handles the insertion, movement, and exiting of entities
 /// through the disposals system
 /// </summary>
-public abstract partial class SharedDisposableSystem : EntitySystem
+public abstract partial class SharedDisposalHolderSystem : EntitySystem
 {
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
@@ -34,6 +36,8 @@ public abstract partial class SharedDisposableSystem : EntitySystem
     private EntityQuery<DisposalUnitComponent> _disposalUnitQuery;
     private EntityQuery<MetaDataComponent> _metaQuery;
     private EntityQuery<TransformComponent> _xformQuery;
+
+    public static readonly Regex TagRegex = new("^[a-zA-Z0-9, ]*$", RegexOptions.Compiled);
 
     public override void Initialize()
     {
@@ -130,7 +134,7 @@ public abstract partial class SharedDisposableSystem : EntitySystem
             else
             {
                 _xformSystem.AttachToGridOrMap(held, heldXform);
-                var direction = ent.Comp.CurrentDirection == Direction.Invalid ? ent.Comp.PreviousDirection : ent.Comp.CurrentDirection;
+                var direction = ent.Comp.CurrentDirection;
 
                 if (direction != Direction.Invalid && _xformQuery.TryGetComponent(gridUid, out var gridXform))
                 {
@@ -168,7 +172,7 @@ public abstract partial class SharedDisposableSystem : EntitySystem
         if (ent.Comp.CurrentTube == tube)
             return false;
 
-        var ev = new GetDisposalsNextDirectionEvent(ent.Comp);
+        var ev = new GetDisposalsNextDirectionEvent(ent);
         RaiseLocalEvent(tube, ref ev);
 
         // If the next direction to move is invalid, exit immediately
@@ -187,19 +191,8 @@ public abstract partial class SharedDisposableSystem : EntitySystem
             }
         }
 
-        // Update trajectory
-        ent.Comp.PreviousDirection = ent.Comp.CurrentDirection;
-        ent.Comp.CurrentDirection = ev.Next;
-
-        ent.Comp.PreviousTube = ent.Comp.CurrentTube;
-        ent.Comp.CurrentTube = tube;
-        ent.Comp.NextTube = _disposalTubeSystem.NextTubeFor(tube, ent.Comp.CurrentDirection);
-
-        // Update rotation
-        Transform(ent).LocalRotation = ent.Comp.CurrentDirection.ToAngle();
-
         // Attempt to damage entities when changing direction
-        if (ent.Comp.Container != null && ent.Comp.CurrentDirection != ent.Comp.PreviousDirection)
+        if (ent.Comp.Container != null && ent.Comp.CurrentDirection != ev.Next)
         {
             foreach (var held in ent.Comp.Container.ContainedEntities)
             {
@@ -211,6 +204,14 @@ public abstract partial class SharedDisposableSystem : EntitySystem
                 _audio.PlayPvs(tube.Comp.ClangSound, tube);
             }
         }
+
+        // Update trajectory
+        ent.Comp.CurrentDirection = ev.Next;
+        ent.Comp.CurrentTube = tube;
+        ent.Comp.NextTube = _disposalTubeSystem.NextTubeFor(tube, ent.Comp.CurrentDirection);
+
+        // Update rotation
+        Transform(ent).LocalRotation = ent.Comp.CurrentDirection.ToAngle();
 
         Dirty(ent);
         return true;
@@ -245,6 +246,47 @@ public abstract partial class SharedDisposableSystem : EntitySystem
 
         var ev = new DisposalSystemTransitionEvent();
         RaiseLocalEvent(uid, ref ev);
+    }
+
+    /// <summary>
+    /// Adds a tag to a disposal holder.
+    /// </summary>
+    /// <param name="ent">The diposal holder.</param>
+    /// <param name="tag">The tag.</param>
+    public void AddTag(Entity<DisposalHolderComponent> ent, string tag)
+    {
+        ent.Comp.Tags.Add(tag);
+    }
+
+    /// <summary>
+    /// Removes a tag from a disposal holder.
+    /// </summary>
+    /// <param name="ent">The diposal holder.</param>
+    /// <param name="tag">The tag.</param>
+    public void RemoveTag(Entity<DisposalHolderComponent> ent, string tag)
+    {
+        ent.Comp.Tags.Remove(tag);
+    }
+
+    /// <summary>
+    /// Checks if the tags on a disposal holder has any overlap with specified list of tags.
+    /// </summary>
+    /// <param name="ent">The diposal holder.</param>
+    /// <param name="tag">The list of tags.</param>
+    /// <returns>True if the disposal holder has one of the listed tags.</returns>
+    public bool TagsOverlap(Entity<DisposalHolderComponent> ent, HashSet<string> tags)
+    {
+        return ent.Comp.Tags.Overlaps(tags);
+    }
+
+    /// <summary>
+    /// Checks if specified tag is valid for disposal holders.
+    /// </summary>
+    /// <param name="tag">The tag.</param>
+    /// <returns>True if the tag is valid.</returns>
+    public bool TagIsValid(string tag)
+    {
+        return TagRegex.IsMatch(tag);
     }
 
     public override void Update(float frameTime)
