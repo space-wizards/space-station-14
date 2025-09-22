@@ -18,4 +18,4 @@ id-card-access-level-debug5 = Debug5
 
 id-card-access-level-commie = Commie
 
-id-card-access-level-paramedic = Paramedic
+id-card-access-level-paramed = Paramedic

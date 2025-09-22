@@ -12,7 +12,7 @@
   
 - type: accessLevel
   id: Paramedic
-  name: id-card-access-level-paramedic
+  name: id-card-access-level-paramed
 
 - type: accessGroup
   id: Medical
