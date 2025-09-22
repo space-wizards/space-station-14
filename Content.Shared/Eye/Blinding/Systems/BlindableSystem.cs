@@ -48,7 +48,7 @@ public sealed class BlindableSystem : EntitySystem
     }
 
     [PublicAPI]
-    public void UpdateIsBlind(Entity<BlindableComponent?> blindable)
+    public void UpdateIsBlind(Entity<BlindableComponent?> blindable, bool bypass = false) // Starlight-edit: add bypass option
     {
         if (!Resolve(blindable, ref blindable.Comp, false))
             return;
@@ -63,7 +63,7 @@ public sealed class BlindableSystem : EntitySystem
         }
 
         // Don't bother raising an event if the eye is too damaged.
-        if (blindable.Comp.EyeDamage >= blindable.Comp.MaxDamage || forceBlind)
+        if ((blindable.Comp.EyeDamage >= blindable.Comp.MaxDamage || forceBlind) && !bypass) // Starlight-edit: add bypass option
         {
             blindable.Comp.IsBlind = true;
         }

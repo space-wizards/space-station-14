@@ -94,6 +94,9 @@
     containers:
       - entity_storage
   - type: RequireProjectileTarget
+  # Starlight-start: Blinding from containers
+  - type: ChildBlockVision
+  # Starlight-end
 
 - type: entity
   parent: CrateGeneric

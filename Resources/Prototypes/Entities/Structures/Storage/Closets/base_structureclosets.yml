@@ -113,6 +113,9 @@
     stateDoorClosed: generic_door
   - type: StaticPrice
     price: 75
+  # Starlight-start: Blinding from containers
+  - type: ChildBlockVision
+  # Starlight-end
 
 # steel closet base (that can be constructed/deconstructed)
 - type: entity
