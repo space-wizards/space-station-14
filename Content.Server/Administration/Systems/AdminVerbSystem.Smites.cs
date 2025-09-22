@@ -38,6 +38,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Polymorph;
 using Content.Shared.Popups;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
@@ -60,6 +61,9 @@ namespace Content.Server.Administration.Systems;
 
 public sealed partial class AdminVerbSystem
 {
+    private readonly ProtoId<PolymorphPrototype> LizardSmite = "AdminLizardSmite";
+    private readonly ProtoId<PolymorphPrototype> VulpkaninSmite = "AdminVulpSmite";
+  
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
@@ -706,12 +710,27 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Fun/Plushies/lizard.rsi"), "icon"),
             Act = () =>
             {
-                _polymorphSystem.PolymorphEntity(args.Target, "AdminLizardSmite");
+                _polymorphSystem.PolymorphEntity(args.Target, LizardSmite);
             },
             Impact = LogImpact.Extreme,
             Message = string.Join(": ", reptilianName, Loc.GetString("admin-smite-reptilian-species-swap-description"))
         };
         args.Verbs.Add(reptilian);
+
+        var vulpName = Loc.GetString("admin-smite-vulpkanin-species-swap-name").ToLowerInvariant();
+        Verb vulp = new()
+        {
+            Text = vulpName,
+            Category = VerbCategory.Smite,
+            Icon = new SpriteSpecifier.Rsi(new ("/Textures/Objects/Fun/Balls/tennisball.rsi"), "icon"),
+            Act = () =>
+            {
+                _polymorphSystem.PolymorphEntity(args.Target, VulpkaninSmite);
+            },
+            Impact = LogImpact.Extreme,
+            Message = string.Join(": ", vulpName, Loc.GetString("admin-smite-vulpkanin-species-swap-description"))
+        };
+        args.Verbs.Add(vulp);
 
         var lockerName = Loc.GetString("admin-smite-locker-stuff-name").ToLowerInvariant();
         Verb locker = new()
