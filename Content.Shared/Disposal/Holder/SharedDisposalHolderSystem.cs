@@ -182,7 +182,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
             return false;
         }
 
-        // Ensure all conatined entities are attached to the holder
+        // Ensure all contained entities are attached to the holder
         if (ent.Comp.Container != null)
         {
             foreach (var held in ent.Comp.Container.ContainedEntities)
@@ -212,6 +212,20 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
 
         // Update rotation
         Transform(ent).LocalRotation = ent.Comp.CurrentDirection.ToAngle();
+
+        // Check how many times the holder has visited the current pipe
+        var visits = 1;
+
+        if (ent.Comp.TubeVisits.TryGetValue(tube, out visits))
+        {
+            visits += 1;
+        }
+
+        ent.Comp.TubeVisits[tube] = visits;
+
+        // Check if the holder can escape the current pipe
+        if (TryEscapingDisposals(ent, tube))
+            return false;
 
         Dirty(ent);
         return true;
@@ -359,5 +373,18 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
     protected virtual void ExpelAtmos(Entity<DisposalHolderComponent> ent)
     {
         // Handled by the server
+    }
+
+    /// <summary>
+    /// The disposal tube holder attempts to escape the disposals system.
+    /// </summary>
+    /// <param name="ent">The disposal holder.</param>
+    /// <param name="tube">The disposal tube the holder is attempting to escape.</param>
+    /// <returns> True if the disposal holder escaped the disposal tube.</returns>
+    protected virtual bool TryEscapingDisposals(Entity<DisposalHolderComponent> ent, Entity<DisposalTubeComponent> tube)
+    {
+        // Handled by the server
+
+        return false;
     }
 }
