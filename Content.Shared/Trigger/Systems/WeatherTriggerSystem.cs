@@ -28,6 +28,12 @@ public sealed class WeatherTriggerSystem : EntitySystem
 
         var xform = Transform(args.User.Value);
 
+        if (ent.Comp.Weather == null) //Clear weather if nothing is set
+        {
+            _weather.SetWeather(xform.MapID, null, null);
+            return;
+        }
+
         _weather.SetWeather(xform.MapID, _prototypeManager.Index(ent.Comp.Weather), null);
     }
 }

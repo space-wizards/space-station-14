@@ -14,7 +14,7 @@ public sealed partial class WeatherOnTriggerComponent : BaseXOnTriggerComponent
     /// <summary>
     /// Weather type
     /// </summary>
-    [DataField(required: true)]
-    public ProtoId<WeatherPrototype> Weather;
+    [DataField]
+    public ProtoId<WeatherPrototype>? Weather;
 
 }
