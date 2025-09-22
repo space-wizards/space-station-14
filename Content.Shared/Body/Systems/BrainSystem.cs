@@ -1,12 +1,12 @@
-using Content.Server.Body.Components;
-using Content.Server.Ghost.Components;
+﻿using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
+using Content.Shared.Ghost;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Pointing;
 
-namespace Content.Server.Body.Systems;
+namespace Content.Shared.Body.Systems;
 
 public sealed class BrainSystem : EntitySystem
 {
@@ -14,8 +14,6 @@ public sealed class BrainSystem : EntitySystem
 
     public override void Initialize()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<BrainComponent, OrganAddedToBodyEvent>((uid, _, args) => HandleMind(args.Body, uid));
         SubscribeLocalEvent<BrainComponent, OrganRemovedFromBodyEvent>((uid, _, args) => HandleMind(uid, args.OldBody));
         SubscribeLocalEvent<BrainComponent, PointAttemptEvent>(OnPointAttempt);
@@ -31,6 +29,7 @@ public sealed class BrainSystem : EntitySystem
 
         var ghostOnMove = EnsureComp<GhostOnMoveComponent>(newEntity);
         ghostOnMove.MustBeDead = HasComp<MobStateComponent>(newEntity); // Don't ghost living players out of their bodies.
+        Dirty(newEntity, ghostOnMove);
 
         if (!_mindSystem.TryGetMind(oldEntity, out var mindId, out var mind))
             return;
@@ -38,9 +37,8 @@ public sealed class BrainSystem : EntitySystem
         _mindSystem.TransferTo(mindId, newEntity, mind: mind);
     }
 
-    private void OnPointAttempt(Entity<BrainComponent> ent, ref PointAttemptEvent args)
+    private static void OnPointAttempt(Entity<BrainComponent> ent, ref PointAttemptEvent args)
     {
         args.Cancel();
     }
 }
-
