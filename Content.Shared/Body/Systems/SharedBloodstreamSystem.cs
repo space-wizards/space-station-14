@@ -7,6 +7,8 @@ using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.EntityEffects.Effects;
+using Content.Shared.EntityEffects.NewEffects.Solution;
+using Content.Shared.EntityEffects.NewEffects.Transform;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
 using Content.Shared.Forensics.Components;
@@ -149,7 +151,8 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         {
             switch (effect)
             {
-                case CreateEntityReactionEffect: // Prevent entities from spawning in the bloodstream
+                // TODO: Kill this hardcoded cringe!
+                case SpawnEntity: // Prevent entities from spawning in the bloodstream
                 case AreaReactionEffect: // No spontaneous smoke or foam leaking out of blood vessels.
                     args.Cancelled = true;
                     return;

@@ -18,6 +18,7 @@ namespace Content.Shared.EntityEffects;
 ///     organ. They only trigger when all of <see cref="Conditions"/> are satisfied.
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
+[Obsolete("KILL MURDER KILL")]
 [MeansImplicitUse]
 public abstract partial class EntityEffect
 {

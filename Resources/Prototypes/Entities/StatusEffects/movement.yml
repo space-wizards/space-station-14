@@ -16,7 +16,7 @@
   - type: MovementModStatusEffect
 
 - type: entity
-  parent: MobStatusEffect
+  parent: MobStatusEffectBase
   id: StatusEffectSpeed
   abstract: true
   name: speed

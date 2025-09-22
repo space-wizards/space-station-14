@@ -19,11 +19,16 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
 
         foreach (var condition in conditions)
         {
-            if (!condition.RaiseEvent(target, this))
+            if (!TryCondition(target, condition))
                 return false;
         }
 
         return true;
+    }
+
+    public bool TryCondition(EntityUid target, AnyEntityCondition condition)
+    {
+        return condition.RaiseEvent(target, this);
     }
 
     public bool RaiseConditionEvent<T>(EntityUid target, T effect) where T : EntityConditionBase<T>

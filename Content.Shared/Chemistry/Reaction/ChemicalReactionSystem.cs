@@ -31,6 +31,7 @@ namespace Content.Shared.Chemistry.Reaction
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+        [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
 
         /// <summary>
         /// A cache of all reactions indexed by at most ONE of their required reactants.
@@ -212,10 +213,16 @@ namespace Content.Shared.Chemistry.Reaction
             _adminLogger.Add(LogType.ChemicalReaction, reaction.Impact,
                 $"Chemical reaction {reaction.ID:reaction} occurred with strength {unitReactions:strength} on entity {ToPrettyString(soln):metabolizer} at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not Found]")}");
 
-            foreach (var effect in reaction.Effects)
+            // TODO: Make this an array tbqh.
+            _entityEffects.ApplyEffects(soln, reaction.Effects.ToArray());
+
+            /*foreach (var effect in reaction.Effects)
             {
+                // TODO: Requirements n shit
+
                 if (!effect.ShouldApply(args))
                     continue;
+
 
                 if (effect.ShouldLog)
                 {
@@ -224,8 +231,8 @@ namespace Content.Shared.Chemistry.Reaction
                         $"Reaction effect {effect.GetType().Name:effect} of reaction {reaction.ID:reaction} applied on entity {ToPrettyString(entity):entity} at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not Found")}");
                 }
 
-                effect.Effect(args);
-            }
+                //effect.RaiseEvent();
+            }*/
 
             // Someday, some brave soul will thread through an optional actor
             // argument in from every call of OnReaction up, all just to pass

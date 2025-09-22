@@ -13,6 +13,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.EntityConditions.Conditions;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.NewEffects;
 using Content.Shared.EntityEffects.NewEffects.Body;
@@ -37,7 +38,7 @@ public sealed class RespiratorSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly EntityEffectSystem _entityEffect = default!;
+    [Dependency] private readonly SharedEntityConditionsSystem _entityConditions = default!;
 
     private static readonly ProtoId<MetabolismGroupPrototype> GasId = new("Gas");
 
@@ -349,11 +350,8 @@ public sealed class RespiratorSystem : EntitySystem
 
             foreach (var cond in effect.Conditions)
             {
-                // TODO: CONDITIONS
-                /*
-                if (cond is OrganType organ && !_entityEffect.OrganCondition(organ, lung))
+                if (cond is MetabolizerType organ && !_entityConditions.TryCondition(lung, organ))
                     return false;
-                    */
             }
 
             return true;

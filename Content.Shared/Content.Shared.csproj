@@ -23,6 +23,18 @@
       <Private>false</Private>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="EntityConditions\EffectConditions\**" />
+    <Compile Remove="EntityEffects\Effects\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="EntityConditions\EffectConditions\**" />
+    <EmbeddedResource Remove="EntityEffects\Effects\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="EntityConditions\EffectConditions\**" />
+    <None Remove="EntityEffects\Effects\**" />
+  </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <Import Project="..\RobustToolbox\MSBuild\Robust.CompNetworkGenerator.targets" />
 </Project>

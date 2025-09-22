@@ -54,26 +54,31 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
         // do all effects, if conditions apply
         foreach (var effect in effects)
         {
-            // TODO: This should be handled by EntityConditionsSystem...
-            if (!_condition.TryConditions(target, effect.Conditions))
-                continue;
-
-            // TODO: Logging
-            /*
-            if (effect.ShouldLog)
-            {
-                _adminLog.Add(
-                    LogType.ReagentEffect,
-                    effect.LogImpact,
-                    $"Metabolism effect {effect.GetType().Name:effect}"
-                    + $" of reagent {proto.LocalizedName:reagent}"
-                    + $" applied on entity {actualEntity:entity}"
-                    + $" at {Transform(actualEntity).Coordinates:coordinates}"
-                );
-            }*/
-
-            effect.RaiseEvent(target, this);
+            ApplyEffect(target, effect);
         }
+    }
+
+    public void ApplyEffect(EntityUid target, AnyEntityEffect effect)
+    {
+        // See if conditions apply
+        if (!_condition.TryConditions(target, effect.Conditions))
+            return;
+
+        // TODO: Logging
+        /*
+        if (effect.ShouldLog)
+        {
+            _adminLog.Add(
+                LogType.ReagentEffect,
+                effect.LogImpact,
+                $"Metabolism effect {effect.GetType().Name:effect}"
+                + $" of reagent {proto.LocalizedName:reagent}"
+                + $" applied on entity {actualEntity:entity}"
+                + $" at {Transform(actualEntity).Coordinates:coordinates}"
+            );
+        }*/
+
+        effect.RaiseEvent(target, this);
     }
 
     public void RaiseEffectEvent<T>(EntityUid target, T effect) where T : EntityEffectBase<T>
