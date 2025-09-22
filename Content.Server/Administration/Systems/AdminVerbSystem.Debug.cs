@@ -23,7 +23,7 @@ public sealed partial class AdminVerbSystem
 
         // TODO: This is a temporary solution. I will sort this soon. ~ Verin
         // Get Disposal tube direction verb
-        if (!_adminManager.CanCommand(player, "tubeconnections") || !TryComp(args.Target, out DisposalTubeComponent? tube))
+        if (!CanCommandOverride(player, "tubeconnections") || !TryComp(args.Target, out DisposalTubeComponent? tube))
             return;
 
         Verb verb = new()

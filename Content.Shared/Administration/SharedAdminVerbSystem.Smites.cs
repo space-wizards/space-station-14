@@ -59,7 +59,7 @@ public abstract partial class SharedAdminVerbSystem
 
         var player = actor.PlayerSession;
 
-        if (!_sharedAdmin.HasAdminFlag(player, AdminFlags.Fun))
+        if (!_adminManager.HasAdminFlag(player, AdminFlags.Fun))
             return;
 
         // 1984.

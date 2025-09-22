@@ -3,6 +3,7 @@ using Content.Shared.Administration.Managers;
 using Content.Shared.Mind.Components;
 using Content.Shared.Verbs;
 using Robust.Client.Console;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Administration.Systems;
@@ -15,6 +16,13 @@ public sealed class AdminVerbSystem : SharedAdminVerbSystem
     [Dependency] private readonly IClientConGroupController _clientConGroupController = default!;
     [Dependency] private readonly IClientConsoleHost _clientConsoleHost = default!;
     [Dependency] private readonly ISharedAdminManager _admin = default!;
+
+    // This is a solution to deal with the fact theres no shared way to check command perms.
+    // Should the ConGroupControllers be unified and shared, this should be replaced with that instead.
+    public override bool CanCommandOverride(ICommonSession player, string command)
+    {
+        return _clientConGroupController.CanCommand(command);
+    }
 
     protected override void AddAdminVerbs(GetVerbsEvent<Verb> args)
     {

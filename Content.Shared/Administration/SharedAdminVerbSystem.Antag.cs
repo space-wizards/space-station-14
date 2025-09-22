@@ -17,7 +17,7 @@ public abstract partial class SharedAdminVerbSystem
 
         var player = actor.PlayerSession;
 
-        if (!_sharedAdmin.HasAdminFlag(player, AdminFlags.Fun))
+        if (!_adminManager.HasAdminFlag(player, AdminFlags.Fun))
             return;
 
         if (!HasComp<MindContainerComponent>(args.Target) || !TryComp<ActorComponent>(args.Target, out var targetActor))
