@@ -4,7 +4,7 @@
   abstract: true
   id: BaseLawboardRecipe
   categories:
-  - Robotics
+  - Silicon
   completetime: 10
 
 ## Lawboards

@@ -51,3 +51,7 @@
 - type: latheCategory
   id: Communications
   name: lathe-category-communication
+
+- type: latheCategory
+  id: Silicon
+  name: lathe-category-silicon
