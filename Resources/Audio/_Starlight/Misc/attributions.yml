@@ -14,6 +14,6 @@
   source: "https://bsky.app/profile/conflee.bsky.social"
 
 - files: ["psi.ogg"]
-  licence: "CC-BY-SA-3.0"
+  license: "CC-BY-SA-3.0"
   copyright: "Modified by Bukkataro from xenoborg_buzz-two.ogg"
   source: "https://github.com/space-wizards/space-station-14/pull/36867"
