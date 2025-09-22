@@ -438,6 +438,8 @@
       Unsexed: UnisexSiliconSyndicate
   - type: PointLight
     color: "#dd200b"
+  - type: Damageable # DS14
+    damageModifierSet: CombatBorg
 
 - type: entity
   parent: BaseBorgChassisNotIonStormable
@@ -552,3 +554,5 @@
   - type: InteractionPopup
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: Damageable # DS14
+    damageModifierSet: CombatBorg

@@ -20,7 +20,7 @@
     specificHeat: 42
     coldDamage:
       types:
-        Cold: 0.01 #per second, scales with temperature & other constants
+        Cold: 0.05 #per second, scales with temperature & other constants
     heatDamage:
       types:
         Heat: 3 #per second, scales with temperature & other constants
@@ -114,7 +114,6 @@
     Blunt: 0.9
     Slash: 0.95
     Shock: 1.2
-    Cold: 0.5
     Heat: 1.5
     Caustic: 0.5
 

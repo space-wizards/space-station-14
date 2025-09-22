@@ -565,6 +565,11 @@
           - !type:OrganType
             type: Vox
             shouldHave: false
+# DS14-start
+          - !type:OrganType
+            type: Xenomorph
+            shouldHave: false
+# DS14-end
         type: Local
         visualType: MediumCaution
         messages: [ "generic-reagent-effect-sick" ]
@@ -578,6 +583,11 @@
           - !type:OrganType
             type: Vox
             shouldHave: false
+# DS14-start
+          - !type:OrganType
+            type: Xenomorph
+            shouldHave: false
+# DS14-end
       - !type:HealthChange
         conditions:
         - !type:OrganType
@@ -586,6 +596,11 @@
         - !type:OrganType
           type: Vox
           shouldHave: false
+# DS14-start
+        - !type:OrganType
+          type: Xenomorph
+          shouldHave: false
+# DS14-end
         damage:
           types:
             Poison: 1
@@ -601,6 +616,14 @@
           type: Vox
         reagent: Protein
         amount: 0.25
+# DS14-start
+      - !type:AdjustReagent
+        conditions:
+        - !type:OrganType
+          type: Xenomorph
+        reagent: Protein
+        amount: 0.3
+# DS14-end
 
 - type: reagent
   id: Allicin

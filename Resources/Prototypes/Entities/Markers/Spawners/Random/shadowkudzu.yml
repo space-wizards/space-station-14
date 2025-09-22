@@ -23,5 +23,12 @@
         - ShadowTree
       rareChance: 0.05
       rarePrototypes:
+# DS14-start
+        - MobButterflyShadow
+        - MobRabbitShadow
+        - MobJellyfishShadow
+        - MobAngelShadow
+        - MobSmokingShadow
+# DS14-end
         - MobCatShadow
         - ArtifactFragment1

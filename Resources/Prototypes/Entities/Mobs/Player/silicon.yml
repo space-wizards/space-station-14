@@ -178,7 +178,7 @@
   suffix: Empty
   components:
   - type: Anchorable
-    flags: 
+    flags:
     - Anchorable
   - type: Rotatable
   - type: WarpPoint
@@ -658,7 +658,7 @@
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellHyper
   - type: RandomMetadata
-    nameSegments: [NamesDeathCommando]
+    nameSegments: [NamesBorg] # DS14
 
 - type: entity
   parent: PlayerSyndicateAssaultBorgDerelict
