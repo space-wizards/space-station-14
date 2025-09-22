@@ -1,0 +1,326 @@
+- type: constructionGraph
+  id: Banner
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: nanotrasen
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 2
+            - material: Cloth
+              amount: 4
+              doAfter: 2
+        - to: cargo
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 2
+            - material: Cloth
+              amount: 4
+              doAfter: 2
+        - to: engineering
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 2
+            - material: Cloth
+              amount: 4
+              doAfter: 2
+        - to: medical
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 2
+            - material: Cloth
+              amount: 4
+              doAfter: 2
+        - to: science
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 2
+            - material: Cloth
+              amount: 4
+              doAfter: 2
+        - to: security
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 2
+            - material: Cloth
+              amount: 4
+              doAfter: 2
+        - to: blue
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 2
+            - material: Cloth
+              amount: 4
+              doAfter: 2
+        - to: red
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 2
+            - material: Cloth
+              amount: 4
+              doAfter: 2
+        - to: yellow
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 2
+            - material: Cloth
+              amount: 4
+              doAfter: 2
+        - to: green
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 2
+            - material: Cloth
+              amount: 4
+              doAfter: 2
+
+    # Nanotrasen banner
+    - node: nanotrasen
+      entity: BannerNanotrasen
+      edges:
+        - to: start
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 4
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Cutting
+              doAfter: 3
+
+    # Cargo banner
+    - node: cargo
+      entity: BannerCargo
+      edges:
+        - to: start
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 4
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Cutting
+              doAfter: 3
+
+    # Engineering banner
+    - node: engineering
+      entity: BannerEngineering
+      edges:
+        - to: start
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 4
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Cutting
+              doAfter: 3
+
+    # Medical banner
+    - node: medical
+      entity: BannerMedical
+      edges:
+        - to: start
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 4
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Cutting
+              doAfter: 3
+
+    # Revolution banner
+    - node: revolution
+      entity: BannerRevolution
+      edges:
+        - to: start
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 4
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Cutting
+              doAfter: 3
+
+    # Syndicate banner
+    - node: syndicate
+      entity: BannerSyndicate
+      edges:
+        - to: start
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 4
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Cutting
+              doAfter: 3
+
+    # Science banner
+    - node: science
+      entity: BannerScience
+      edges:
+        - to: start
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 4
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Cutting
+              doAfter: 3
+
+    # Security banner
+    - node: security
+      entity: BannerSecurity
+      edges:
+        - to: start
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 4
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Cutting
+              doAfter: 3
+
+    # Blue banner
+    - node: blue
+      entity: BannerBlue
+      edges:
+        - to: start
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 4
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Cutting
+              doAfter: 3
+
+    # Red banner
+    - node: red
+      entity: BannerRed
+      edges:
+        - to: start
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 4
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Cutting
+              doAfter: 3
+
+    # Yellow banner
+    - node: yellow
+      entity: BannerYellow
+      edges:
+        - to: start
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 4
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Cutting
+              doAfter: 3
+
+    # Green banner
+    - node: green
+      entity: BannerGreen
+      edges:
+        - to: start
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 4
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Cutting
+              doAfter: 3

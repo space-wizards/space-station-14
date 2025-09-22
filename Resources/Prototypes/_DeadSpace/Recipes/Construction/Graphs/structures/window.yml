@@ -1,19 +1,10 @@
 - type: constructionGraph
-  id: MiningWindow
+  id: Windows
   start: start
   graph:
     - node: start
       edges:
         - to: miningWindow
-          steps:
-            - material: ReinforcedGlass
-              amount: 2
-              doAfter: 2
-            - material: MetalRod
-              amount: 2
-              doAfter: 2
-
-        - to: miningWindowDiagonal
           steps:
             - material: ReinforcedGlass
               amount: 2
@@ -47,33 +38,5 @@
               doAfter: 5
             - tool: Screwing
               doAfter: 2
-            - tool: Anchoring
-              doAfter: 2
-
-    - node: miningWindowDiagonal
-      entity: MiningWindowDiagonal
-      edges:
-        - to: start
-          completed:
-            - !type:SpawnPrototype
-              prototype: SheetRGlass1
-              amount: 2
-            - !type:SpawnPrototype
-              prototype: PartRodMetal1
-              amount: 2
-            - !type:DeleteEntity {}
-          steps:
-            - tool: Anchoring
-              doAfter: 2
-            - tool: Welding
-              doAfter: 5
-            - tool: Screwing
-              doAfter: 1
-            - tool: Prying
-              doAfter: 2
-            - tool: Welding
-              doAfter: 5
-            - tool: Screwing
-              doAfter: 1
             - tool: Anchoring
               doAfter: 2

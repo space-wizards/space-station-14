@@ -1,6 +1,6 @@
 - type: construction
   id: MiningWindow
-  graph: MiningWindow
+  graph: Windows
   startNode: start
   targetNode: miningWindow
   category: construction-category-structures
@@ -14,9 +14,24 @@
 
 - type: construction
   id: MiningWindowDiagonal
-  graph: MiningWindow
+  name: construction-recipe-mining-window-diagonal
+  graph: DiagonalWindow
   startNode: start
   targetNode: miningWindowDiagonal
+  category: construction-category-structures
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  id: ShuttleWindowDiagonal
+  name: construction-recipe-shuttle-window-diagonal
+  graph: DiagonalWindow
+  startNode: start
+  targetNode: shuttleWindowDiagonal
   category: construction-category-structures
   canBuildInImpassable: true
   conditions:

@@ -62,6 +62,9 @@
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner
+  - type: Construction # DS14
+    graph: Banner
+    node: nanotrasen
 
 - type: entity
   id: BannerCargo
@@ -72,6 +75,9 @@
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner_cargo
+  - type: Construction # DS14
+    graph: Banner
+    node: cargo
 
 - type: entity
   id: BannerEngineering
@@ -82,6 +88,9 @@
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner_engineering
+  - type: Construction # DS14
+    graph: Banner
+    node: engineering
 
 - type: entity
   id: BannerMedical
@@ -92,6 +101,9 @@
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner_medical
+  - type: Construction # DS14
+    graph: Banner
+    node: medical
 
 - type: entity
   id: BannerRevolution
@@ -122,6 +134,9 @@
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner_science
+  - type: Construction # DS14
+    graph: Banner
+    node: science
 
 - type: entity
   id: BannerSecurity
@@ -132,6 +147,9 @@
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner_security
+  - type: Construction # DS14
+    graph: Banner
+    node: security
 
 - type: entity
   id: BannerBlue
@@ -142,6 +160,9 @@
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner-blue
+  - type: Construction # DS14
+    graph: Banner
+    node: blue
 
 - type: entity
   id: BannerRed
@@ -152,6 +173,9 @@
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner-red
+  - type: Construction # DS14
+    graph: Banner
+    node: red
 
 - type: entity
   id: BannerYellow
@@ -162,6 +186,9 @@
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner-yellow
+  - type: Construction # DS14
+    graph: Banner
+    node: yellow
 
 - type: entity
   id: BannerGreen
@@ -172,5 +199,6 @@
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner-green
-
-
+  - type: Construction # DS14
+    graph: Banner
+    node: green
