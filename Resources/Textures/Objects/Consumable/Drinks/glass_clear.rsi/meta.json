@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-NC-SA-4.0",
-    "copyright": "Created by github user moonheart08.",
+    "copyright": "Created by github user moonheart08. Inhands by TiniestShark (Github)",
     "states": [
         {
             "name": "icon"
@@ -39,6 +39,38 @@
         },
         {
             "name": "fill9"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-fill-1",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-fill-2",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-fill-3",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-fill-1",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-fill-2",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-fill-3",
+            "directions": 4
         }
     ]
 }

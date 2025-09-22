@@ -31,6 +31,8 @@
     metamorphicDefaultSprite:
       sprite: Objects/Consumable/Drinks/glass_clear.rsi
       state: icon
+    inHandsMaxFillLevels: 3
+    inHandsFillBaseName: -fill-
   - type: Tag
     tags:
     - DrinkCup # Do these tags
