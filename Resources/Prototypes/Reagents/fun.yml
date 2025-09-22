@@ -39,7 +39,7 @@
       effects:
       - !type:SatiateHunger
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Moth
 
 - type: reagent
@@ -242,7 +242,7 @@
     Extinguish:
       methods: [ Touch ]
       effects:
-      - !type:ExtinguishReaction # cold
+      - !type:Extinguish # cold
   metabolisms:
     Poison:
       metabolismRate : 0.45
@@ -275,14 +275,14 @@
         - !type:Temperature
           min: 160.15 # not quite enough for cryo, but can speed it up if you wanna take the risk
         amount: -10000
-      - !type:MovespeedModifier
+      - !type:MovementSpeedModifier
         conditions:
         - !type:ReagentThreshold
           reagent: Fresium
           max: 40 # slows when less than 40
         walkSpeedModifier: 0.6
         sprintSpeedModifier: 0.6
-      - !type:MovespeedModifier
+      - !type:MovementSpeedModifier
         conditions:
         - !type:ReagentThreshold
           reagent: Fresium
@@ -343,16 +343,18 @@
       - !type:Polymorph
         prototype: ArtifactLizard # Does the same thing as the original YML I made for this reagent.
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Animal
           shouldHave: false
         - !type:ReagentThreshold
+          reagent: JuiceThatMakesYouWeh
           min: 50
       - !type:AdjustReagent
         reagent: JuiceThatMakesYouWeh
         amount: -20
         conditions:
         - !type:ReagentThreshold
+          reagent: JuiceThatMakesYouWeh
           min: 50
 
 - type: reagent
@@ -376,16 +378,18 @@
       - !type:Polymorph
         prototype: ArtifactLizard
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Animal
           shouldHave: false
         - !type:ReagentThreshold
+          reagent: JuiceThatMakesYouHew
           min: 50
       - !type:AdjustReagent
         reagent: JuiceThatMakesYouHew
         amount: -20
         conditions:
         - !type:ReagentThreshold
+          reagent: JuiceThatMakesYouHew
           min: 50
 
 - type: reagent
@@ -411,10 +415,12 @@
         prototype: SmartCorgiMorph
         conditions:
         - !type:ReagentThreshold
+          reagent: CorgiJuice
           min: 50
       - !type:AdjustReagent
         reagent: CorgiJuice
         amount: -20
         conditions:
         - !type:ReagentThreshold
+          reagent: CorgiJuice
           min: 50

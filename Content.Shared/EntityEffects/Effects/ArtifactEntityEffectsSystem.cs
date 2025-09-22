@@ -45,6 +45,7 @@ public sealed partial class ArtifactUnlockEntityEffectSystem : EntityEffectSyste
     }
 }
 
+[DataDefinition]
 public sealed partial class ArtifactDurabilityRestore : EntityEffectBase<ArtifactDurabilityRestore>
 {
     /// <summary>
@@ -54,4 +55,5 @@ public sealed partial class ArtifactDurabilityRestore : EntityEffectBase<Artifac
     public int RestoredDurability = 1;
 }
 
+[DataDefinition]
 public sealed partial class ArtifactUnlock : EntityEffectBase<ArtifactUnlock>;

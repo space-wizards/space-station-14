@@ -14,7 +14,8 @@ public sealed partial class ModifyBloodLevelEntityEffectSystem : EntityEffectSys
     }
 }
 
-public sealed class ModifyBloodLevel : EntityEffectBase<ModifyBloodLevel>
+[DataDefinition]
+public sealed partial class ModifyBloodLevel : EntityEffectBase<ModifyBloodLevel>
 {
     /// <summary>
     /// Amount of bleed we're applying or removing if negative.

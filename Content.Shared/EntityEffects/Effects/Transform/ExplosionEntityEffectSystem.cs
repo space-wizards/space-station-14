@@ -11,7 +11,8 @@ public abstract partial class SharedExplosionEntityEffectSystem : EntityEffectSy
     }
 }
 
-public sealed class ExplosionEffect : EntityEffectBase<ExplosionEffect>
+[DataDefinition]
+public sealed partial class ExplosionEffect : EntityEffectBase<ExplosionEffect>
 {
     /// <summary>
     ///     The type of explosion. Determines damage types and tile break chance scaling.

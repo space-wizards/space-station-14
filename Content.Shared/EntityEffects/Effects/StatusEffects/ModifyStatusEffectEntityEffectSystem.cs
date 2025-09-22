@@ -31,7 +31,8 @@ public sealed partial class ModifyStatusEffectEntityEffectSystem : EntityEffectS
     }
 }
 
-public sealed class ModifyStatusEffect : BaseStatusEntityEffect<ModifyStatusEffect>
+[DataDefinition]
+public sealed partial class ModifyStatusEffect : BaseStatusEntityEffect<ModifyStatusEffect>
 {
     /// <summary>
     /// Prototype of the status effect we're modifying.

@@ -94,6 +94,7 @@
       - !type:ArtifactUnlock
         conditions:
         - !type:ReagentThreshold
+          reagent: Artifexium
           min: 5
 
 - type: reagent
@@ -155,9 +156,10 @@
             Heat: 1.5
     Medicine:
       effects:
-      - !type:ChemVomit
+      - !type:Vomit
         conditions:
         - !type:ReagentThreshold
+          reagent: SodiumHydroxide
           min: 5
         probability: 0.1
 

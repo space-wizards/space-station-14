@@ -19,6 +19,7 @@ public sealed partial class JitterEntityEffectSystem : EntityEffectSystem<Status
     }
 }
 
+[DataDefinition]
 public sealed partial class JitterEffect : EntityEffectBase<JitterEffect>
 {
     [DataField]

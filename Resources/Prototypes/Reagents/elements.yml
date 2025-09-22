@@ -8,11 +8,6 @@
   color: "#848789"
   boilingPoint: 2327.0
   meltingPoint: 660.0
-  newReactiveEffects:
-    Extinguish:
-      methods: [ Touch ]
-      effects:
-      - !type:ExtinguishEffectArgs
 
 - type: reagent
   id: Carbon
@@ -47,7 +42,10 @@
   metabolisms:
     Poison:
       effects:
-      - !type:ExtinguishEffectArgs
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 2
 
 - type: reagent
   id: Copper
@@ -65,7 +63,7 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Arachnid
           shouldHave: false
         damage:
@@ -75,7 +73,7 @@
       effects:
       - !type:ModifyBloodLevel
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Arachnid
           shouldHave: true
         amount: 0.4
@@ -156,7 +154,7 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Arachnid
           shouldHave: true
         damage:
@@ -166,7 +164,7 @@
       effects:
       - !type:ModifyBloodLevel
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Arachnid
           shouldHave: false
         amount: 0.4

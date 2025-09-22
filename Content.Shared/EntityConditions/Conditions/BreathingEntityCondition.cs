@@ -2,7 +2,8 @@
 
 namespace Content.Shared.EntityConditions.Conditions;
 
-public sealed class IsBreathing : EntityConditionBase<IsBreathing>
+[DataDefinition]
+public sealed partial class IsBreathing : EntityConditionBase<IsBreathing>
 {
     /*
     public override string GuidebookExplanation(IPrototypeManager prototype)

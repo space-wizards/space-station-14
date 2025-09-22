@@ -11,7 +11,8 @@ public abstract partial class SharedIgniteEntityEffectSystem : EntityEffectSyste
     }
 }
 
-public sealed class Ingite : EntityEffectBase<Ingite>
+[DataDefinition]
+public sealed partial class Ingite : EntityEffectBase<Ingite>
 {
     public override bool ShouldLog => true;
 

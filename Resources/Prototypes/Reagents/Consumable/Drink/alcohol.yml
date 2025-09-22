@@ -166,7 +166,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 15
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Dwarf
           shouldHave: false
         damage:
@@ -177,7 +177,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 15
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Dwarf
         damage:
           types:
@@ -186,19 +186,19 @@
         conditions:
         - !type:ReagentThreshold
           min: 15
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Dwarf
         damage:
           groups:
             Brute: -1
-      - !type:ChemVomit
+      - !type:Vomit
         probability: 0.04
         conditions:
         - !type:ReagentThreshold
           reagent: Ethanol
           min: 12
         # dwarves immune to vomiting from alcohol
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Dwarf
           shouldHave: false
       - !type:Drunk
@@ -2316,9 +2316,10 @@
   metabolisms:
     Drink:
       effects:
-      - !type:ChemVomit
+      - !type:Vomit
         conditions:
         - !type:ReagentThreshold
+          reagent: Mayojito
           min: 5
         probability: 0.5
       - !type:HealthChange
@@ -2522,7 +2523,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 6
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Dwarf
           shouldHave: false
         damage:
@@ -2532,17 +2533,17 @@
         conditions:
         - !type:ReagentThreshold
           min: 6
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Dwarf
         damage:
           types:
             Poison: 0.4 # TODO: Might increase this, even though it's just double of ethanol from 0.2 to 0.4
-      - !type:ChemVomit
+      - !type:Vomit
         probability: 0.1 #TODO: Tweak vomit probability, maybe make this more violent and poisonous but the body aggressively purges it...
         conditions:
         - !type:ReagentThreshold
           reagent: BacchusBlessing
           min: 8
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Dwarf
           shouldHave: false

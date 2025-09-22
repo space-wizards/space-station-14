@@ -14,7 +14,8 @@ public sealed partial class ReduceRottingEntityEffectSystem : EntityEffectSystem
     }
 }
 
-public sealed class ReduceRotting : EntityEffectBase<ReduceRotting>
+[DataDefinition]
+public sealed partial class ReduceRotting : EntityEffectBase<ReduceRotting>
 {
     [DataField]
     public TimeSpan Seconds = TimeSpan.FromSeconds(10);

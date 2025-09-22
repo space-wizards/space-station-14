@@ -1,7 +1,7 @@
 ﻿using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 
-namespace Content.Shared.EntityEffects.Effects;
+namespace Content.Shared.EntityEffects.Effects.Atmos;
 
 /// <summary>
 /// This is used for...
@@ -19,7 +19,8 @@ public sealed partial class ExtinguishEntityEffectSystem : EntityEffectSystem<Fl
     }
 }
 
-public sealed class Extinguish : EntityEffectBase<Extinguish>
+[DataDefinition]
+public sealed partial class Extinguish : EntityEffectBase<Extinguish>
 {
     /// <summary>
     ///     Amount of firestacks reduced.

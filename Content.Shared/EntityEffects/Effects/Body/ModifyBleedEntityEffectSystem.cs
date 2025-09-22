@@ -13,7 +13,8 @@ public sealed partial class ModifyBleedEntityEffectSystem : EntityEffectSystem<B
     }
 }
 
-public sealed class ModifyBleed : EntityEffectBase<ModifyBleed>
+[DataDefinition]
+public sealed partial class ModifyBleed : EntityEffectBase<ModifyBleed>
 {
     /// <summary>
     /// Amount of bleed we're applying or removing if negative.

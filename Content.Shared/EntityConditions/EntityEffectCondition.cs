@@ -5,6 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityEffects;
 
 [ImplicitDataDefinitionForInheritors]
+[Obsolete("KILL KILL KILL DONT FORGET TO DELETE AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA.")]
 [MeansImplicitUse]
 public abstract partial class EntityEffectCondition
 {

@@ -7,16 +7,26 @@ namespace Content.Shared.EntityEffects.Effects.Body;
 /// <summary>
 /// This is used for...
 /// </summary>
-public sealed partial class SatiateThirstEntityEffectsSystem : EntityEffectSystem<ThirstComponent, SatiateThirstEffect>
+public sealed partial class SatiateThirstEntityEffectsSystem : EntityEffectSystem<ThirstComponent, SatiateThirst>
 {
     [Dependency] private readonly ThirstSystem _thirst = default!;
-    protected override void Effect(Entity<ThirstComponent> entity, ref EntityEffectEvent<SatiateThirstEffect> args)
+    protected override void Effect(Entity<ThirstComponent> entity, ref EntityEffectEvent<SatiateThirst> args)
     {
         _thirst.ModifyThirst(entity, entity.Comp, args.Effect.HydrationFactor * args.Scale);
     }
 }
 
-public sealed partial class SatiateThirstEffect : EntityEffectBase<SatiateThirstEffect>
+public sealed partial class SatiateHungerEntityEffectsSystem : EntityEffectSystem<HungerComponent, SatiateHunger>
+{
+    [Dependency] private readonly HungerSystem _hunger = default!;
+    protected override void Effect(Entity<HungerComponent> entity, ref EntityEffectEvent<SatiateHunger> args)
+    {
+        _hunger.ModifyHunger(entity, args.Effect.NutritionFactor * args.Scale, entity.Comp);
+    }
+}
+
+[DataDefinition]
+public sealed partial class SatiateThirst : EntityEffectBase<SatiateThirst>
 {
     /// <summary>
     ///     Amount of firestacks reduced.
@@ -25,16 +35,8 @@ public sealed partial class SatiateThirstEffect : EntityEffectBase<SatiateThirst
     public float HydrationFactor = -1.5f;
 }
 
-public sealed partial class SatiateHungerEntityEffectsSystem : EntityEffectSystem<HungerComponent, SatiateHungerEffect>
-{
-    [Dependency] private readonly HungerSystem _hunger = default!;
-    protected override void Effect(Entity<HungerComponent> entity, ref EntityEffectEvent<SatiateHungerEffect> args)
-    {
-        _hunger.ModifyHunger(entity, args.Effect.NutritionFactor * args.Scale, entity.Comp);
-    }
-}
-
-public sealed partial class SatiateHungerEffect : EntityEffectBase<SatiateHungerEffect>
+[DataDefinition]
+public sealed partial class SatiateHunger : EntityEffectBase<SatiateHunger>
 {
     /// <summary>
     ///     Amount of firestacks reduced.

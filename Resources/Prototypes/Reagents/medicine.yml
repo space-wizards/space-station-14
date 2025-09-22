@@ -50,7 +50,7 @@
         visualType: Medium
         messages: [ "generic-reagent-effect-nauseous" ]
         probability: 0.2
-      - !type:ChemVomit
+      - !type:Vomit
         conditions:
         - !type:ReagentThreshold
           min: 20
@@ -153,7 +153,7 @@
           types:
             Asphyxiation: 0.5
             Poison: 1.5
-      - !type:ChemVomit
+      - !type:Vomit
         conditions:
         - !type:ReagentThreshold
           min: 30
@@ -264,6 +264,7 @@
       - !type:HealthChange
         conditions:
           - !type:ReagentThreshold
+            reagent: Dexalin
             min: 20
         damage:
           types:
@@ -390,11 +391,12 @@
         damage:
           types:
             Radiation: -1
-      - !type:ChemVomit
+      - !type:Vomit
         probability: 0.02
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Hyronalin
           min: 30
         damage:
           types:
@@ -402,6 +404,7 @@
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
+          reagent: Hyronalin
           min: 30
 
 - type: reagent
@@ -415,9 +418,10 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:ChemVomit
+      - !type:Vomit
         conditions:
         - !type:ReagentThreshold
+          reagent: Ipecac
           min: 4
         probability: 0.3
 
@@ -441,7 +445,7 @@
         damage:
           types:
             Asphyxiation: -2
-      - !type:ModifyBleedAmount
+      - !type:ModifyBleed
         amount: -0.25
 
 - type: reagent
@@ -465,6 +469,7 @@
         factor: -10
         conditions:
         - !type:ReagentThreshold
+          reagent: Kelotane
           min: 30
       - !type:PopupMessage
         type: Local
@@ -475,6 +480,7 @@
         probability: 0.1
         conditions:
         - !type:ReagentThreshold
+          reagent: Kelotane
           min: 25
 
 - type: reagent
@@ -530,14 +536,16 @@
       - !type:HealthChange
         conditions:
           - !type:ReagentThreshold
+            reagent: Barozine
             min: 30
         damage:
           types:
             Poison: 3
-      - !type:ChemVomit
+      - !type:Vomit
         probability: 0.15
         conditions:
           - !type:ReagentThreshold
+            reagent: Barozine
             min: 30
       - !type:GenericStatusEffect
         key: PressureImmunity
@@ -620,7 +628,7 @@
         damage:
           types:
             Asphyxiation: 3.5
-      - !type:ModifyBleedAmount
+      - !type:ModifyBleed
         amount: -0.25
 
 - type: reagent
@@ -667,7 +675,7 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:ModifyBleedAmount
+      - !type:ModifyBleed
         amount: -0.5
 
 - type: reagent
@@ -766,7 +774,7 @@
       effects:
       # Medium-large quantities can hurt you instead,
       # but still technically stop your bleeding.
-      - !type:ModifyBleedAmount
+      - !type:ModifyBleed
         amount: -1.5
       - !type:HealthChange
         conditions:
@@ -899,7 +907,7 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:ChemHealEyeDamage
+      - !type:EyeDamage
 
 - type: reagent
   id: Cognizine
@@ -915,6 +923,7 @@
       - !type:MakeSentient
         conditions:
         - !type:ReagentThreshold
+          reagent: Cognizine
           min: 5
 
 - type: reagent
@@ -1006,12 +1015,12 @@
         visualType: Medium
         messages: [ "generic-reagent-effect-nauseous" ]
         probability: 0.2
-      - !type:ChemVomit
+      - !type:Vomit
         conditions:
         - !type:ReagentThreshold
           min: 30
         probability: 0.02
-      - !type:ChemVomit
+      - !type:Vomit
         conditions:
         - !type:ReagentThreshold
           reagent: Arithrazine
@@ -1047,6 +1056,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Lacerinol
           min: 12
         damage:
           types:
@@ -1128,12 +1138,11 @@
             Heat: -0.2
             Shock: -0.2
             Cold: -0.2
-
   reactiveEffects:
     Extinguish:
       methods: [ Touch ]
       effects:
-      - !type:ExtinguishReaction
+      - !type:Extinguish
     Acidic:
       methods: [ Touch ]
       effects:
@@ -1174,7 +1183,7 @@
           types:
             Slash: 0.5
             Piercing: 0.5
-      - !type:ChemVomit
+      - !type:Vomit
         conditions:
         - !type:ReagentThreshold
           min: 15

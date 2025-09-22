@@ -31,7 +31,8 @@ public sealed partial class FlashEntityEffectSystem : EntityEffectSystem<Transfo
     }
 }
 
-public sealed class Flash : EntityEffectBase<Flash>
+[DataDefinition]
+public sealed partial class Flash : EntityEffectBase<Flash>
 {
     /// <summary>
     ///     Flash range per unit of reagent.

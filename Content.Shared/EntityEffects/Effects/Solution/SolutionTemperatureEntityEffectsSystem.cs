@@ -30,7 +30,8 @@ public sealed class AdjustSolutionTemperatureEntityEffectSystem : EntityEffectSy
     }
 }
 
-public sealed class AdjustSolutionTemperature : EntityEffectBase<AdjustSolutionTemperature>
+[DataDefinition]
+public sealed partial class AdjustSolutionTemperature : EntityEffectBase<AdjustSolutionTemperature>
 {
     /// <summary>
     ///     The change in temperature.
@@ -86,7 +87,8 @@ public sealed class AdjustSolutionThermalEnergyEntityEffectSystem : EntityEffect
     }
 }
 
-public sealed class AdjustSolutionThermalEnergy : EntityEffectBase<AdjustSolutionThermalEnergy>
+[DataDefinition]
+public sealed partial class AdjustSolutionThermalEnergy : EntityEffectBase<AdjustSolutionThermalEnergy>
 {
     /// <summary>
     ///     The change in temperature.

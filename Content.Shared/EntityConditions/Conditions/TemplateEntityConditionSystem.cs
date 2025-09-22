@@ -10,7 +10,8 @@ public sealed partial class TemplateEntityConditionSystem : EntityConditionSyste
     }
 }
 
-public sealed class Template : EntityConditionBase<Template>
+[DataDefinition]
+public sealed partial class Template : EntityConditionBase<Template>
 {
     // Datafields go here.
 }

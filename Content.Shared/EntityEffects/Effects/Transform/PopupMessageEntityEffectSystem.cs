@@ -21,7 +21,8 @@ public sealed partial class PopupMessageEntityEffectSystem : EntityEffectSystem<
     }
 }
 
-public sealed class PopupMessage : EntityEffectBase<PopupMessage>
+[DataDefinition]
+public sealed partial class PopupMessage : EntityEffectBase<PopupMessage>
 {
     [DataField(required: true)]
     public string[] Messages = default!;

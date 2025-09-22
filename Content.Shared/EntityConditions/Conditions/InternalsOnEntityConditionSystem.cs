@@ -14,7 +14,8 @@ public sealed partial class InternalsOnEntityConditionSystem : EntityConditionSy
     }
 }
 
-public sealed class InternalsOn : EntityConditionBase<InternalsOn>
+[DataDefinition]
+public sealed partial class InternalsOn : EntityConditionBase<InternalsOn>
 {
     // Datafields go here.
 }

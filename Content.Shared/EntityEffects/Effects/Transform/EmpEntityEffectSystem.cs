@@ -15,7 +15,8 @@ public sealed partial class EmpEntityEffectSystem : EntityEffectSystem<Transform
     }
 }
 
-public sealed class Emp : EntityEffectBase<Emp>
+[DataDefinition]
+public sealed partial class Emp : EntityEffectBase<Emp>
 {
     /// <summary>
     ///     Impulse range per unit of quantity

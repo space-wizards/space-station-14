@@ -166,13 +166,13 @@
       - !type:SatiateThirst
         factor: 1
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Vox
     Poison:
       effects:
       - !type:HealthChange
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Vox
           shouldHave: false
         damage:

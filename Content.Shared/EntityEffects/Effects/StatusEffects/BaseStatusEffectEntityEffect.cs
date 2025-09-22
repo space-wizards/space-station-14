@@ -19,3 +19,11 @@ public abstract class BaseStatusEntityEffect<T> : EntityEffectBase<T> where T : 
     [DataField]
     public StatusEffectMetabolismType Type = StatusEffectMetabolismType.Add;
 }
+
+public enum StatusEffectMetabolismType
+{
+    Refresh,
+    Add,
+    Remove,
+    Set,
+}

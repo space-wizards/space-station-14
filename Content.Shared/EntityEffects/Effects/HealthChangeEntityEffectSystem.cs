@@ -41,6 +41,7 @@ public sealed partial class HealthChangeEntityEffectSystem : EntityEffectSystem<
     }
 }
 
+[DataDefinition]
 public sealed partial class HealthChange : EntityEffectBase<HealthChange>
 {
     /// <summary>

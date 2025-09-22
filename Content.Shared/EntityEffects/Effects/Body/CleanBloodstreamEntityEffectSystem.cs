@@ -21,6 +21,7 @@ public sealed partial class CleanBloodstreamEntityEffectSystem : EntityEffectSys
     }
 }
 
+[DataDefinition]
 public sealed partial class CleanBloodstream : EntityEffectBase<CleanBloodstream>
 {
     /// <summary>

@@ -2,7 +2,9 @@
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;
-public sealed class Polymorph : EntityEffectBase<Polymorph>
+
+[DataDefinition]
+public sealed partial class Polymorph : EntityEffectBase<Polymorph>
 {
     /// <summary>
     ///     What polymorph prototype is used on effect

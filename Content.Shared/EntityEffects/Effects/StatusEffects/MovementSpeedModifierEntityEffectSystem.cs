@@ -56,7 +56,8 @@ public sealed partial class MovementSpeedModifierEntityEffectSystem : EntityEffe
     }
 }
 
-public sealed class MovementSpeedModifier : BaseStatusEntityEffect<MovementSpeedModifier>
+[DataDefinition]
+public sealed partial class MovementSpeedModifier : BaseStatusEntityEffect<MovementSpeedModifier>
 {
     /// <summary>
     /// How much the entities' walk speed is multiplied by.

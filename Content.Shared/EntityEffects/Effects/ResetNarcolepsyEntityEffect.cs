@@ -1,6 +1,7 @@
 ﻿namespace Content.Shared.EntityEffects.Effects;
 
-public sealed class ResetNarcolepsy : EntityEffectBase<ResetNarcolepsy>
+[DataDefinition]
+public sealed partial class ResetNarcolepsy : EntityEffectBase<ResetNarcolepsy>
 {
     /// <summary>
     /// The time we set our narcolepsy timer to.

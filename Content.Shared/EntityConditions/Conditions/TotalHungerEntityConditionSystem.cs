@@ -15,7 +15,8 @@ public sealed partial class TotalHungerEntityConditionSystem : EntityConditionSy
     }
 }
 
-public sealed class TotalHunger : EntityConditionBase<TotalHunger>
+[DataDefinition]
+public sealed partial class TotalHunger : EntityConditionBase<TotalHunger>
 {
     [DataField]
     public float Min;

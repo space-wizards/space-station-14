@@ -13,7 +13,8 @@ public sealed partial class TotalDamageEntityConditionSystem : EntityConditionSy
     }
 }
 
-public sealed class TotalDamage : EntityConditionBase<TotalDamage>
+[DataDefinition]
+public sealed partial class TotalDamage : EntityConditionBase<TotalDamage>
 {
     [DataField]
     public FixedPoint2 Max = FixedPoint2.MaxValue;

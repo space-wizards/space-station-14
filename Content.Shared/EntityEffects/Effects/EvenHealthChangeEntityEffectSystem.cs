@@ -61,7 +61,8 @@ public sealed partial class EvenHealthChangeEntityEffectSystem : EntityEffectSys
     }
 }
 
-public sealed class EvenHealthChange : EntityEffectBase<EvenHealthChange>
+[DataDefinition]
+public sealed partial class EvenHealthChange : EntityEffectBase<EvenHealthChange>
 {
     /// <summary>
     /// Damage to heal, collected into entire damage groups.

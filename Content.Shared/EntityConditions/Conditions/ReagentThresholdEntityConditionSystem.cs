@@ -16,7 +16,8 @@ public sealed partial class ReagentThresholdEntityConditionSystem : EntityCondit
     }
 }
 
-public sealed class ReagentThreshold : EntityConditionBase<ReagentThreshold>
+[DataDefinition]
+public sealed partial class ReagentThreshold : EntityConditionBase<ReagentThreshold>
 {
     [DataField]
     public FixedPoint2 Min = FixedPoint2.Zero;

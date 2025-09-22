@@ -35,7 +35,8 @@ public sealed partial class GlowEntityEffectSystem : EntityEffectSystem<MetaData
     };
 }
 
-public sealed class Glow : EntityEffectBase<Glow>
+[DataDefinition]
+public sealed partial class Glow : EntityEffectBase<Glow>
 {
     [DataField]
     public float Radius = 2f;

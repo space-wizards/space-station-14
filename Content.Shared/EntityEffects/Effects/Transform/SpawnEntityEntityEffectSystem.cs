@@ -23,7 +23,8 @@ public sealed partial class SpawnEntityEntityEffectSystem : EntityEffectSystem<T
     }
 }
 
-public sealed class SpawnEntity : EntityEffectBase<SpawnEntity>
+[DataDefinition]
+public sealed partial class SpawnEntity : EntityEffectBase<SpawnEntity>
 {
     /// <summary>
     /// Amount of entities we're spawning

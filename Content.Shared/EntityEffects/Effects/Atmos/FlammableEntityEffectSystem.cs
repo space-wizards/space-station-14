@@ -10,7 +10,8 @@ public abstract partial class SharedFlammableEntityEffectSystem : EntityEffectSy
     }
 }
 
-public sealed class Flammable : EntityEffectBase<Flammable>
+[DataDefinition]
+public sealed partial class Flammable : EntityEffectBase<Flammable>
 {
     [DataField]
     public float Multiplier = 0.05f;

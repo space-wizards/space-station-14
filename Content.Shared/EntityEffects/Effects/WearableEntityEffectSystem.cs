@@ -15,7 +15,8 @@ public sealed partial class CreateWearableEntityEffectSystem : EntityEffectSyste
     }
 }
 
-public sealed class CreateWearable : EntityEffectBase<CreateWearable>
+[DataDefinition]
+public sealed partial class CreateWearable : EntityEffectBase<CreateWearable>
 {
     /// <summary>
     /// Name of the slot we're spawning the item into.

@@ -16,7 +16,8 @@ public sealed partial class ElectrocuteEntityEffectSystem : EntityEffectSystem<S
     }
 }
 
-public sealed class Electrocute : EntityEffectBase<Electrocute>
+[DataDefinition]
+public sealed partial class Electrocute : EntityEffectBase<Electrocute>
 {
     /// <summary>
     /// Time we electrocute this entity

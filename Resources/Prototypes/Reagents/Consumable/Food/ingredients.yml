@@ -142,7 +142,7 @@
       - !type:AdjustReagent
         reagent: Vitamin
         amount: 0.1
-      - !type:ChemVomit
+      - !type:Vomit
         probability: 0.1
         conditions:
           - !type:ReagentThreshold
@@ -315,6 +315,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: FrostOil
           min: 5
         damage:
           types:

@@ -225,7 +225,7 @@ public sealed partial class IngestionSystem
                 foreach (var effect in entry.Effects)
                 {
                     // ignores any effect conditions, just cares about how much it can hydrate
-                    if (effect is SatiateHungerEffect hunger)
+                    if (effect is SatiateHunger hunger)
                     {
                         total += hunger.NutritionFactor * quantity.Quantity.Float();
                     }
@@ -276,7 +276,7 @@ public sealed partial class IngestionSystem
                 foreach (var effect in entry.Effects)
                 {
                     // ignores any effect conditions, just cares about how much it can hydrate
-                    if (effect is SatiateThirstEffect thirst)
+                    if (effect is SatiateThirst thirst)
                     {
                         total += thirst.HydrationFactor * quantity.Quantity.Float();
                     }

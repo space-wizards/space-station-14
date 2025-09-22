@@ -25,7 +25,7 @@
             Asphyxiation: 2
     Narcotic:
       effects:
-      - !type:MovespeedModifier
+      - !type:MovementSpeedModifier
         walkSpeedModifier: 1.35
         sprintSpeedModifier: 1.35
       - !type:GenericStatusEffect
@@ -68,7 +68,7 @@
   metabolisms:
     Narcotic:
       effects:
-      - !type:MovespeedModifier
+      - !type:MovementSpeedModifier
         walkSpeedModifier: 1.25
         sprintSpeedModifier: 1.25
       - !type:HealthChange
@@ -122,7 +122,7 @@
     Narcotic:
       metabolismRate: 1.0
       effects:
-      - !type:MovespeedModifier
+      - !type:MovementSpeedModifier
         walkSpeedModifier: 1.3
         sprintSpeedModifier: 1.3
       - !type:HealthChange
@@ -228,7 +228,7 @@
   metabolisms:
     Narcotic:
       effects:
-      - !type:MovespeedModifier
+      - !type:MovementSpeedModifier
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
       - !type:HealthChange
@@ -240,7 +240,7 @@
         time: 10
         type: Add
         refresh: false
-      - !type:ChemVomit # Vomiting is a symptom of brain damage
+      - !type:Vomit # Vomiting is a symptom of brain damage
         probability: 0.05
       - !type:Drunk # Headaches and slurring are major symptoms of brain damage, this is close enough
         boozePower: 5
@@ -412,7 +412,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 4
-      - !type:MovespeedModifier
+      - !type:MovementSpeedModifier
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
         statusLifetime: 1.5
@@ -437,6 +437,7 @@
         probability: 0.1
         conditions:
         - !type:ReagentThreshold
+          reagent: Happiness
           max: 20
       - !type:Emote
         emote: Whistle
@@ -444,6 +445,7 @@
         probability: 0.1
         conditions:
         - !type:ReagentThreshold
+          reagent: Happiness
           max: 20
       - !type:Emote
         emote: Crying
@@ -451,6 +453,7 @@
         probability: 0.1
         conditions:
         - !type:ReagentThreshold
+          reagent: Happiness
           min: 20
       - !type:PopupMessage # we dont have sanity/mood so this will have to do
         type: Local
@@ -462,6 +465,7 @@
         probability: 0.2
         conditions:
         - !type:ReagentThreshold
+          reagent: Happiness
           max: 20
       - !type:ModifyStatusEffect
         effectProto: StatusEffectSeeingRainbow

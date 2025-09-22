@@ -14,7 +14,8 @@ public sealed partial class VomitEntityEffectSystem : EntityEffectSystem<MetaDat
     }
 }
 
-public sealed class Vomit : EntityEffectBase<Vomit>
+[DataDefinition]
+public sealed partial class Vomit : EntityEffectBase<Vomit>
 {
     /// How many units of thirst to add each time we vomit
     [DataField]

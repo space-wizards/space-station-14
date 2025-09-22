@@ -14,7 +14,7 @@
       effects:
       - !type:SatiateHunger
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Plant
 
 - type: reagent
@@ -38,14 +38,14 @@
       effects:
       - !type:SatiateHunger
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Plant
       - !type:HealthChange
         damage:
           types:
             Poison: 1
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Plant
 
 - type: reagent
@@ -69,7 +69,7 @@
           types:
             Poison: 3
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Plant
 
 - type: reagent
@@ -100,7 +100,7 @@
             Slash: 1
             Piercing: 1
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Plant
 
 - type: reagent
@@ -132,13 +132,14 @@
             Slash: -3
             Piercing: -3
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Plant
       - !type:HealthChange
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Plant
         - !type:ReagentThreshold
+          reagent: RobustHarvest
           min: 30
         damage:
           types:
@@ -150,9 +151,10 @@
       - !type:Polymorph
         prototype: TreeMorph
         conditions:
-          - !type:OrganType
+          - !type:MetabolizerType
             type: Plant
           - !type:ReagentThreshold
+            reagent: RobustHarvest
             min: 80
 
 - type: reagent
@@ -192,7 +194,7 @@
           types:
             Poison: 4
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Plant
 
 - type: reagent
@@ -221,7 +223,7 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Rat
           shouldHave: false
         - !type:ReagentThreshold
@@ -231,13 +233,13 @@
         damage:
           types:
             Poison: 0.25
-      - !type:ChemVomit
+      - !type:Vomit
         probability: 0.12
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Rat
           shouldHave: false
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Vox
           shouldHave: false
         - !type:ReagentThreshold
@@ -254,7 +256,7 @@
           min: 0.25
       - !type:HealthChange
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Rat
         - !type:ReagentThreshold
           reagent: Ammonia
@@ -269,7 +271,7 @@
             Bloodloss: -5
       - !type:Oxygenate # ammonia displaces nitrogen in vox blood
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Vox
         factor: -4
 

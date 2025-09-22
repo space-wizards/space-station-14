@@ -14,6 +14,7 @@ public sealed partial class AdjustTemperatureEntityEffectSystem : EntityEffectSy
     }
 }
 
+[DataDefinition]
 public sealed partial class AdjustTemperature : EntityEffectBase<AdjustTemperature>
 {
     /// <summary>

@@ -5,6 +5,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Solution;
 
+// TODO: This should be removed and changed to an "AbsorbentSolutionComponent"
 public sealed class AddReagentToSolutionEntityEffectSystem : EntityEffectSystem<SolutionContainerManagerComponent, AddReagentToSolution>
 {
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
@@ -22,6 +23,7 @@ public sealed class AddReagentToSolutionEntityEffectSystem : EntityEffectSystem<
     }
 }
 
+[DataDefinition]
 public sealed partial class AddReagentToSolution : EntityEffectBase<AddReagentToSolution>
 {
     /// <summary>

@@ -4,7 +4,8 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions;
 
-public sealed class MetabolizerType : EntityConditionBase<MetabolizerType>
+[DataDefinition]
+public sealed partial class MetabolizerType : EntityConditionBase<MetabolizerType>
 {
     [DataField(required: true)]
     public ProtoId<MetabolizerTypePrototype> Type = default!;

@@ -274,7 +274,7 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Slime
           shouldHave: false
         damage:

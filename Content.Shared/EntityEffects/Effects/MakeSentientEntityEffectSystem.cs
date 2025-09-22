@@ -8,7 +8,8 @@ public abstract partial class SharedMakeSentientEntityEffectSystem : EntityEffec
     }
 }
 
-public sealed class MakeSentient : EntityEffectBase<MakeSentient>
+[DataDefinition]
+public sealed partial class MakeSentient : EntityEffectBase<MakeSentient>
 {
     /// <summary>
     /// Description for the ghost role created by this effect.

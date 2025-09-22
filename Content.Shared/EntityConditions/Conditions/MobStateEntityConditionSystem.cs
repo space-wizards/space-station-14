@@ -16,7 +16,8 @@ public sealed partial class MobStateEntityConditionSystem : EntityConditionSyste
     }
 }
 
-public sealed class IsMobState : EntityConditionBase<IsMobState>
+[DataDefinition]
+public sealed partial class IsMobState : EntityConditionBase<IsMobState>
 {
     [DataField]
     public MobState Mobstate = MobState.Alive;

@@ -20,7 +20,7 @@
       - !type:SatiateThirst
         factor: 1.0
         conditions:
-          - !type:OrganType
+          - !type:MetabolizerType
             type: Human
             shouldHave: false
     Food:
@@ -32,7 +32,7 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Bloodsucker
         damage:
           groups:
@@ -148,7 +148,7 @@
         damage:
           types:
             Poison: 4
-      - !type:ChemVomit
+      - !type:Vomit
         probability: 0.25
 
 - type: reagent
@@ -176,7 +176,7 @@
             Toxin: -2
           types:
             Bloodloss: -5
-      - !type:ModifyBleedAmount
+      - !type:ModifyBleed
         amount: -1.5
   # Just in case you REALLY want to water your plants
   plantMetabolism:

@@ -10,7 +10,8 @@ public abstract partial class SharedCreateGasEntityEffectSystem : EntityEffectSy
     }
 }
 
-public sealed class CreateGas : EntityEffectBase<CreateGas>
+[DataDefinition]
+public sealed partial class CreateGas : EntityEffectBase<CreateGas>
 {
     /// <summary>
     ///     The gas we're creating

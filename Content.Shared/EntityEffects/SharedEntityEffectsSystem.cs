@@ -4,7 +4,6 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Database;
 using Content.Shared.Localizations;
-using Robust.Shared.Random;
 
 namespace Content.Shared.EntityEffects;
 
@@ -124,6 +123,7 @@ public interface IEntityEffectRaiser
     void RaiseEffectEvent<T>(EntityUid target, T effect) where T : EntityEffectBase<T>;
 }
 
+[DataDefinition]
 public abstract partial class EntityEffectBase<T> : AnyEntityEffect where T : EntityEffectBase<T>
 {
     public override void RaiseEvent(EntityUid target, IEntityEffectRaiser raiser)
@@ -136,6 +136,7 @@ public abstract partial class EntityEffectBase<T> : AnyEntityEffect where T : En
 }
 
 // This exists so we can store entity effects in list and raise events without type erasure.
+[DataDefinition]
 public abstract partial class AnyEntityEffect
 {
     public abstract void RaiseEvent(EntityUid target, IEntityEffectRaiser raiser);
@@ -148,10 +149,10 @@ public abstract partial class AnyEntityEffect
     public float Probability = 1.0f;
 
     [DataField]
-    public readonly string EntityEffectFormat = "guidebook-reagent-effect-description";
+    public string EntityEffectFormat = "guidebook-reagent-effect-description";
 
     [DataField]
-    public readonly string? EntityEffectGuidebookText;
+    public string? EntityEffectGuidebookText;
 
     public string? GuidebookEffectDescription()
     {
@@ -193,12 +194,4 @@ public readonly record struct EntityEffectEvent<T>(T Effect, float Scale = 1f) w
     /// The Scale modifier of this Effect.
     /// </summary>
     public readonly float Scale = Scale;
-}
-
-public enum StatusEffectMetabolismType
-{
-    Refresh,
-    Add,
-    Remove,
-    Set,
 }

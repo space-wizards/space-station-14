@@ -23,7 +23,8 @@ public sealed partial class SolutionTemperatureEntityConditionSystem : EntityCon
     }
 }
 
-public sealed class Temperature : EntityConditionBase<Temperature>
+[DataDefinition]
+public sealed partial class Temperature : EntityConditionBase<Temperature>
 {
     /// <summary>
     /// Minimum allowed temperature

@@ -60,7 +60,7 @@
         emote: Yawn
         showInChat: true
         probability: 0.1
-      - !type:MovespeedModifier
+      - !type:MovementSpeedModifier
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
       - !type:ModifyStatusEffect
@@ -92,7 +92,7 @@
           damage:
             types:
               Poison: 2
-        - !type:ChemVomit
+        - !type:Vomit
           conditions:
           - !type:ReagentThreshold
             min: 2
@@ -365,6 +365,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Histamine
           min: 45
         damage:
           groups:
@@ -379,6 +380,7 @@
       - !type:PopupMessage
         conditions:
         - !type:ReagentThreshold
+          reagent: Histamine
           min: 45
         type: Local
         visualType: Medium
@@ -400,15 +402,15 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Animal # Applying damage to the mobs with lower metabolism capabilities
         damage:
           types:
             Poison: 0.4
-      - !type:ChemVomit
+      - !type:Vomit
         probability: 0.04 #Scaled for time, not metabolismrate.
         conditions:
-          - !type:OrganType
+          - !type:MetabolizerType
             type: Animal
 
 - type: reagent
@@ -473,31 +475,31 @@
       effects:
       - !type:PopupMessage
         conditions:
-          - !type:OrganType
+          - !type:MetabolizerType
             type: Animal
             shouldHave: false
-          - !type:OrganType
+          - !type:MetabolizerType
             type: Vox
             shouldHave: false
         type: Local
         visualType: MediumCaution
         messages: [ "generic-reagent-effect-sick" ]
         probability: 0.5
-      - !type:ChemVomit
+      - !type:Vomit
         probability: 0.1
         conditions:
-          - !type:OrganType
+          - !type:MetabolizerType
             type: Animal
             shouldHave: false
-          - !type:OrganType
+          - !type:MetabolizerType
             type: Vox
             shouldHave: false
       - !type:HealthChange
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Animal
           shouldHave: false
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Vox
           shouldHave: false
         damage:
@@ -505,13 +507,13 @@
             Poison: 1
       - !type:AdjustReagent
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Animal
         reagent: Protein
         amount: 0.5
       - !type:AdjustReagent
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Vox
         reagent: Protein
         amount: 0.25
@@ -532,7 +534,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 1
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Animal
         damage:
           types:
@@ -576,7 +578,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 1
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Animal
         damage:
           types:
@@ -630,7 +632,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 5
-      - !type:MovespeedModifier
+      - !type:MovementSpeedModifier
         walkSpeedModifier: 0.8
         sprintSpeedModifier: 0.8
       - !type:HealthChange
@@ -665,7 +667,7 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:Hunger
+        - !type:TotalHunger
           max: 50
         damage:
           types:
@@ -689,28 +691,28 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Arachnid
           shouldHave: false
         damage:
           types:
             Poison: 1.6
-      - !type:MovespeedModifier
+      - !type:MovementSpeedModifier
         conditions:
         - !type:ReagentThreshold
           reagent: Mechanotoxin
           min: 2
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Arachnid
           shouldHave: false
         walkSpeedModifier: 0.8
         sprintSpeedModifier: 0.8
-      - !type:MovespeedModifier
+      - !type:MovementSpeedModifier
         conditions:
         - !type:ReagentThreshold
           reagent: Mechanotoxin
           min: 4
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Arachnid
           shouldHave: false
         walkSpeedModifier: 0.4
@@ -729,5 +731,5 @@
       - !type:SatiateHunger
         factor: 1
         conditions:
-        - !type:OrganType
+        - !type:MetabolizerType
           type: Vox

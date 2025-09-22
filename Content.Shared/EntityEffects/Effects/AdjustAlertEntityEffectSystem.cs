@@ -32,7 +32,8 @@ public sealed partial class AdjustAlertEntityEffectSysten : EntityEffectSystem<A
     }
 }
 
-public sealed class AdjustAlert : EntityEffectBase<AdjustAlert>
+[DataDefinition]
+public sealed partial class AdjustAlert : EntityEffectBase<AdjustAlert>
 {
     /// <summary>
     /// The specific Alert that will be adjusted

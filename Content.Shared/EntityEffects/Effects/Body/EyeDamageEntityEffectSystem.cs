@@ -2,17 +2,18 @@
 
 namespace Content.Shared.EntityEffects.Effects.Body;
 
-public sealed partial class EyeDamageEntityEffectSystem : EntityEffectSystem<MetaDataComponent, Template>
+public sealed partial class EyeDamageEntityEffectSystem : EntityEffectSystem<MetaDataComponent, EyeDamage>
 {
     [Dependency] private readonly BlindableSystem _blindable = default!;
 
-    protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<Template> args)
+    protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<EyeDamage> args)
     {
         _blindable.AdjustEyeDamage(entity.Owner, args.Effect.Amount);
     }
 }
 
-public sealed class Template : EntityEffectBase<Template>
+[DataDefinition]
+public sealed partial class EyeDamage : EntityEffectBase<EyeDamage>
 {
     /// <summary>
     /// The amount of eye damage we're adding or removing
