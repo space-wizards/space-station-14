@@ -52,7 +52,7 @@ public abstract class SharedStationRecordsSystem : EntitySystem
     /// <param name="entry">The resulting entry.</param>
     /// <param name="records">Station record component.</param>
     /// <typeparam name="T">Type to get from the record set.</typeparam>
-    /// <returns>True if the record was obtained, false otherwise.</returns>
+    /// <returns>True if the record was obtained, false otherwise. Always false on client.</returns>
     public bool TryGetRecord<T>(StationRecordKey key, [NotNullWhen(true)] out T? entry, StationRecordsComponent? records = null)
     {
         entry = default;
@@ -69,7 +69,7 @@ public abstract class SharedStationRecordsSystem : EntitySystem
     /// <param name="station">The station to get the records from.</param>
     /// <param name="records">Station records component.</param>
     /// <typeparam name="T">Type of record to fetch</typeparam>
-    /// <returns>Enumerable of pairs with a station record key, and the entry in question of type T.</returns>
+    /// <returns>Enumerable of pairs with a station record key, and the entry in question of type T. Always empty on client.</returns>
     public IEnumerable<(uint, T)> GetRecordsOfType<T>(EntityUid station, StationRecordsComponent? records = null)
     {
         if (!Resolve(station, ref records))
@@ -84,6 +84,7 @@ public abstract class SharedStationRecordsSystem : EntitySystem
     /// <remarks>
     /// Linear search so O(n) time complexity.
     /// </remarks>
+    /// <returns>Returns a station record id. Always null on client.</returns>
     public uint? GetRecordByName(EntityUid station, string name, StationRecordsComponent? records = null)
     {
         if (!Resolve(station, ref records, false))

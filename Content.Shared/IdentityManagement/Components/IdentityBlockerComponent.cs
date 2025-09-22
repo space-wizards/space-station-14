@@ -1,5 +1,6 @@
 using Content.Shared.Inventory;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.IdentityManagement.Components;
 
@@ -17,6 +18,7 @@ public sealed partial class IdentityBlockerComponent : Component
 }
 
 [Flags]
+[Serializable, NetSerializable]
 public enum IdentityBlockerCoverage
 {
     NONE  = 0,

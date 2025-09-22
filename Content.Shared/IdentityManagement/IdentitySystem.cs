@@ -40,11 +40,12 @@ public sealed class IdentitySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<IdentityComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<IdentityComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<IdentityBlockerComponent, SeeIdentityAttemptEvent>(OnSeeIdentity);
         SubscribeLocalEvent<IdentityBlockerComponent, InventoryRelayedEvent<SeeIdentityAttemptEvent>>(OnRelaySeeIdentity);
         SubscribeLocalEvent<IdentityBlockerComponent, ItemMaskToggledEvent>(OnMaskToggled);
+
+        SubscribeLocalEvent<IdentityComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<IdentityComponent, ComponentInit>(OnComponentInit);
 
         SubscribeLocalEvent<IdentityComponent, DidEquipEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, DidEquipHandEvent>((uid, _, _) => QueueIdentityUpdate(uid));
@@ -95,7 +96,7 @@ public sealed class IdentitySystem : EntitySystem
         if (ent.Comp.Enabled)
         {
             args.TotalCoverage |= ent.Comp.Coverage;
-            if(args.TotalCoverage == IdentityBlockerCoverage.FULL)
+            if (args.TotalCoverage == IdentityBlockerCoverage.FULL)
                 args.Cancel();
         }
     }
@@ -112,6 +113,8 @@ public sealed class IdentitySystem : EntitySystem
         Dirty(ent);
     }
 
+    #endregion
+
     /// <summary>
     /// Queues an identity update to the start of the next tick.
     /// </summary>
@@ -122,8 +125,6 @@ public sealed class IdentitySystem : EntitySystem
 
         _queuedIdentityUpdates.Add(uid);
     }
-
-    #endregion
     #region Private API
 
     /// <summary>
