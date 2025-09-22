@@ -7,8 +7,6 @@ namespace Content.Shared.Administration.Managers;
 /// </summary>
 public interface ISharedAdminManager
 {
-    void Initialize();
-
     /// <summary>
     ///     Gets the admin data for a player, if they are an admin.
     /// </summary>
@@ -94,7 +92,4 @@ public interface ISharedAdminManager
     {
         return GetAdminData(session, includeDeAdmin) != null;
     }
-
-    void ReloadCommandPermissions();
-    void ReloadToolshedPermissions();
 }

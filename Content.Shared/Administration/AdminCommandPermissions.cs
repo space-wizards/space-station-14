@@ -13,12 +13,6 @@ public sealed class AdminCommandPermissions
     // Commands only executable by admins with one of the given flag masks.
     public readonly Dictionary<string, AdminFlags[]> AdminCommands = new();
 
-    public void Clear()
-    {
-        AnyCommands.Clear();
-        AdminCommands.Clear();
-    }
-
     public void LoadPermissionsFromStream(Stream fs)
     {
         using var reader = new StreamReader(fs, EncodingHelpers.UTF8);

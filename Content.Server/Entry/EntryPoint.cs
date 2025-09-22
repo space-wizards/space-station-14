@@ -15,6 +15,8 @@ using Content.Server.Info;
 using Content.Server.IoC;
 using Content.Server.Maps;
 using Content.Server.NodeContainer.NodeGroups;
+using Content.Server.Objectives;
+using Content.Server.Players;
 using Content.Server.Players.JobWhitelist;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Players.RateLimiting;
@@ -44,14 +46,10 @@ namespace Content.Server.Entry
         private IVoteManager _voteManager = default!;
         private ServerUpdateManager _updateManager = default!;
         private PlayTimeTrackingManager? _playTimeTracking;
+        private IEntitySystemManager? _sysMan;
         private IServerDbManager? _dbManager;
         private IWatchlistWebhookManager _watchlistWebhookManager = default!;
         private IConnectionManager? _connectionManager;
-
-        public override void PreInit()
-        {
-            ServerContentIoC.Register();
-        }
 
         /// <inheritdoc />
         public override void Init()
@@ -77,6 +75,8 @@ namespace Content.Server.Entry
 
             prototypes.RegisterIgnore("parallax");
 
+            ServerContentIoC.Register();
+
             foreach (var callback in TestingCallbacks)
             {
                 var cast = (ServerModuleTestingCallbacks) callback;
@@ -95,6 +95,7 @@ namespace Content.Server.Entry
                 _updateManager = IoCManager.Resolve<ServerUpdateManager>();
                 _playTimeTracking = IoCManager.Resolve<PlayTimeTrackingManager>();
                 _connectionManager = IoCManager.Resolve<IConnectionManager>();
+                _sysMan = IoCManager.Resolve<IEntitySystemManager>();
                 _dbManager = IoCManager.Resolve<IServerDbManager>();
                 _watchlistWebhookManager = IoCManager.Resolve<IWatchlistWebhookManager>();
 
@@ -143,6 +144,7 @@ namespace Content.Server.Entry
             else
             {
                 IoCManager.Resolve<RecipeManager>().Initialize();
+                IoCManager.Resolve<IAdminManager>().Initialize();
                 IoCManager.Resolve<IAfkManager>().Initialize();
                 IoCManager.Resolve<RulesManager>().Initialize();
 

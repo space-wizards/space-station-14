@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using Content.Shared.Administration.Managers;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.IoC;
 using Content.Shared.Maps;
@@ -22,12 +21,12 @@ namespace Content.Shared.Entry
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IResourceManager _resMan = default!;
-        [Dependency] private readonly ISharedAdminManager _adminManager = default!;
 
         private readonly ResPath _ignoreFileDirectory = new("/IgnoredPrototypes/");
 
         public override void PreInit()
         {
+            IoCManager.InjectDependencies(this);
             SharedContentIoC.Register();
         }
 
@@ -38,8 +37,6 @@ namespace Content.Shared.Entry
 
         public override void Init()
         {
-            IoCManager.BuildGraph();
-            IoCManager.InjectDependencies(this);
             IgnorePrototypes();
         }
 
@@ -47,7 +44,6 @@ namespace Content.Shared.Entry
         {
             base.PostInit();
 
-            _adminManager.Initialize();
             InitTileDefinitions();
             IoCManager.Resolve<MarkingManager>().Initialize();
 

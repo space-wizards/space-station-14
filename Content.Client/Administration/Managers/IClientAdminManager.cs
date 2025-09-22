@@ -59,6 +59,8 @@ namespace Content.Client.Administration.Managers
         /// </summary>
         bool CanAdminMenu();
 
+        void Initialize();
+
         /// <summary>
         ///     Checks if the client is an admin.
         /// </summary>
