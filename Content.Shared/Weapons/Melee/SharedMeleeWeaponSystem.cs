@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
+using Content.Shared._Starlight.Weapons.Melee.Events; // Starlight-edit
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions.Events;
 using Content.Shared.Administration.Components;
@@ -533,9 +534,9 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         RaiseLocalEvent(target.Value, attackedEvent);
 
         var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage + attackedEvent.BonusDamage, hitEvent.ModifiersList);
-        var damageResult = Damageable.TryChangeDamage(target, modifiedDamage, origin:user, ignoreResistances:resistanceBypass);
+        var damageResult = Damageable.TryChangeDamage(target, modifiedDamage, origin: user, ignoreResistances: resistanceBypass);
 
-        if (damageResult is {Empty: false})
+        if (damageResult is { Empty: false })
         {
             // If the target has stamina and is taking blunt damage, they should also take stamina damage based on their blunt to stamina factor
             if (damageResult.DamageDict.TryGetValue("Blunt", out var bluntDamage))
@@ -564,6 +565,14 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         {
             DoDamageEffect(targets, user, targetXform);
         }
+
+        // Starlight-start
+        if (damageResult != null)
+        {
+            var afterHitEvent = new AfterMeleeHitEvent(new List<EntityUid> { target.Value }, user, meleeUid, damageResult, null);
+            RaiseLocalEvent(meleeUid, afterHitEvent);
+        }
+        // Starlight-end
     }
 
     protected abstract void DoDamageEffect(List<EntityUid> targets, EntityUid? user,  TransformComponent targetXform);
@@ -726,6 +735,14 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         {
             DoDamageEffect(targets, user, Transform(targets[0]));
         }
+
+        // Starlight-start
+        if (appliedDamage.GetTotal() > FixedPoint2.Zero)
+        {
+            var afterHitEvent = new AfterMeleeHitEvent(targets, user, meleeUid, appliedDamage, direction);
+            RaiseLocalEvent(meleeUid, afterHitEvent);
+        }
+        // Starlight-end
 
         return true;
     }

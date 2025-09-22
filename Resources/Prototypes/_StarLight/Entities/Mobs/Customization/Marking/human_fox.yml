@@ -40,6 +40,26 @@
         - FoxlikeEarFennec
         - FoxlikeEarFox
         - FoxlikeEarShock
+    - emotePrototype: Howl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Growl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FopsEar
@@ -94,13 +114,33 @@
         - FoxlikeEarFennec
         - FoxlikeEarFox
         - FoxlikeEarShock
+    - emotePrototype: Howl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Growl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FopsTailWag
   bodyPart: Tail
   markingCategory: Tail
   staticId: FopsTail
-  speciesRestriction: []
+  speciesRestriction: [Human]
   sprites:
     - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
       state: tail_fox_waggin
@@ -137,13 +177,33 @@
         - FoxlikeEarFennec
         - FoxlikeEarFox
         - FoxlikeEarShock
+    - emotePrototype: Howl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Growl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: PuppyTailWag
   bodyPart: Tail
   markingCategory: Tail
   staticId: PuppyTail
-  speciesRestriction: []
+  speciesRestriction: [Human]
   sprites:
     - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
       state: tail_wolf_waggin
@@ -171,6 +231,26 @@
         - FoxlikeEarFox
         - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Howl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Growl
       requiredMarkingsAny:
         - FopsEar
         - FoxlikeEar
@@ -297,6 +377,26 @@
         - FoxlikeEarFennec
         - FoxlikeEarFox
         - FoxlikeEarShock
+    - emotePrototype: Howl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Growl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailTip
@@ -331,6 +431,26 @@
         - FoxlikeEarFox
         - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Howl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Growl
       requiredMarkingsAny:
         - FopsEar
         - FoxlikeEar
@@ -383,6 +503,26 @@
         - FoxlikeEarFennec
         - FoxlikeEarFox
         - FoxlikeEarShock
+    - emotePrototype: Howl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Growl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailTipWag
@@ -417,6 +557,26 @@
         - FoxlikeEarFox
         - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Howl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Growl
       requiredMarkingsAny:
         - FopsEar
         - FoxlikeEar
@@ -468,6 +628,26 @@
         - FoxlikeEarFennec
         - FoxlikeEarFox
         - FoxlikeEarShock
+    - emotePrototype: Howl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Growl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailAltTip
@@ -510,6 +690,26 @@
         - FoxlikeEarFennec
         - FoxlikeEarFox
         - FoxlikeEarShock
+    - emotePrototype: Howl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Growl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailLong
@@ -543,6 +743,26 @@
         - FoxlikeEarFox
         - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Howl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Growl
       requiredMarkingsAny:
         - FopsEar
         - FoxlikeEar
@@ -595,6 +815,26 @@
         - FoxlikeEarFennec
         - FoxlikeEarFox
         - FoxlikeEarShock
+    - emotePrototype: Howl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Growl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailFoxTip
@@ -629,6 +869,26 @@
         - FoxlikeEarFox
         - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Howl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Growl
       requiredMarkingsAny:
         - FopsEar
         - FoxlikeEar
@@ -681,6 +941,26 @@
         - FoxlikeEarFennec
         - FoxlikeEarFox
         - FoxlikeEarShock
+    - emotePrototype: Howl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Growl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailFoxTipWag
@@ -715,6 +995,26 @@
         - FoxlikeEarFox
         - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Howl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Growl
       requiredMarkingsAny:
         - FopsEar
         - FoxlikeEar
@@ -765,6 +1065,26 @@
         - FoxlikeEarFennec
         - FoxlikeEarFox
         - FoxlikeEarShock
+    - emotePrototype: Howl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Growl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailBushyWag
@@ -806,6 +1126,26 @@
         - FoxlikeEarFennec
         - FoxlikeEarFox
         - FoxlikeEarShock
+    - emotePrototype: Howl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Growl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailFox2
@@ -837,6 +1177,26 @@
         - FoxlikeEarFox
         - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Howl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Growl
       requiredMarkingsAny:
         - FopsEar
         - FoxlikeEar
@@ -888,6 +1248,26 @@
         - FoxlikeEarFennec
         - FoxlikeEarFox
         - FoxlikeEarShock
+    - emotePrototype: Howl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Growl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailFennec
@@ -928,6 +1308,26 @@
         - FoxlikeEarFennec
         - FoxlikeEarFox
         - FoxlikeEarShock
+    - emotePrototype: Howl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Growl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailFluffy
@@ -959,6 +1359,26 @@
         - FoxlikeEarFox
         - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Howl
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
+    - emotePrototype: Growl
       requiredMarkingsAny:
         - FopsEar
         - FoxlikeEar

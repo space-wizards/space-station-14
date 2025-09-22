@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Client._Starlight.Access.UI; // Starlight-edit
 using Content.Shared.Access;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
@@ -28,6 +29,7 @@ namespace Content.Client.Access.UI
         private int _maxIdJobLength;
 
         private AccessLevelControl _accessButtons = new();
+        private AccessGroupControl _accessGroups = new(); // Starlight-edit: Access Groups
         private readonly List<string> _jobPrototypeIds = new();
 
         private string? _lastFullName;
@@ -37,8 +39,11 @@ namespace Content.Client.Access.UI
         // The job that will be picked if the ID doesn't have a job on the station.
         private static ProtoId<JobPrototype> _defaultJob = "Assistant";
 
+        private ProtoId<AccessGroupPrototype>? _selectedAccessGroup = null; // Starlight-edit
+        public Action<ProtoId<AccessGroupPrototype>>? OnGroupSelected; // Starlight-edit
+
         public IdCardConsoleWindow(IdCardConsoleBoundUserInterface owner, IPrototypeManager prototypeManager,
-            List<ProtoId<AccessLevelPrototype>> accessLevels)
+            List<ProtoId<AccessGroupPrototype>> accessGroups) // Starlight-edit
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
@@ -80,8 +85,29 @@ namespace Content.Client.Access.UI
             }
 
             JobPresetOptionButton.OnItemSelected += SelectJobPreset;
-            _accessButtons.Populate(accessLevels, prototypeManager);
+            // Starlight-start: Access Groups
+            var currentAccessGroup = _selectedAccessGroup ?? accessGroups.FirstOrDefault();
+            _accessGroups.Populate(accessGroups, currentAccessGroup, prototypeManager);
+
+            List<ProtoId<AccessLevelPrototype>> accessLevels = new();
+            if (prototypeManager.TryIndex(currentAccessGroup, out var accessGroup))
+            {
+                accessLevels.AddRange(accessGroup.Tags);
+                _accessButtons.Populate(accessLevels, prototypeManager);
+            }
+            else
+                _logMill.Error($"Unable to find accessgroup for {accessGroup}");
+                
+            AccessGroupControlContainer.AddChild(_accessGroups);
+
+            // Starlight-end
+
             AccessLevelControlContainer.AddChild(_accessButtons);
+
+            // Starlight-start: Access Groups
+            foreach (var (id, button) in _accessGroups.ButtonsList)
+                button.OnPressed += _ => OnGroupSelected?.Invoke(id);
+            // Starlight-end
 
             foreach (var (id, button) in _accessButtons.ButtonsList)
             {
@@ -123,7 +149,7 @@ namespace Content.Client.Access.UI
 
             foreach (var group in job.AccessGroups)
             {
-                if (!_prototypeManager.TryIndex(group, out AccessGroupPrototype? groupPrototype))
+                if (!_prototypeManager.Resolve(group, out AccessGroupPrototype? groupPrototype))
                 {
                     continue;
                 }
@@ -180,10 +206,25 @@ namespace Content.Client.Access.UI
 
             JobPresetOptionButton.Disabled = !interfaceEnabled;
 
+            // Starlight-start: Access Groups
+
+            _selectedAccessGroup = state.CurrentAccessGroup;
+
+            _accessGroups.UpdateState(state.CurrentAccessGroup);
+
+            // Starlight-end
+
             _accessButtons.UpdateState(state.TargetIdAccessList?.ToList() ??
                                        new List<ProtoId<AccessLevelPrototype>>(),
+                                       state.CurrentAccessGroup, // Starlight-edit
+                                       _prototypeManager, // Starlight-edit
                                        state.AllowedModifyAccessList?.ToList() ??
                                        new List<ProtoId<AccessLevelPrototype>>());
+
+            // Starlight-start: Access Groups
+            foreach (var (id, button) in _accessButtons.ButtonsList)
+                button.OnPressed += _ => SubmitData();
+            // Starlight-end
 
             var jobIndex = _jobPrototypeIds.IndexOf(state.TargetIdJobPrototype);
             // If the job index is < 0 that means they don't have a job registered in the station records

@@ -1,3 +1,10 @@
+## Static Recipes
+
+- type: latheRecipePack
+  id: StarlightMedicalStatic
+  recipes:
+    - PatchPack # Starlight
+
 ## Dynamic recipes
 
 - type: latheRecipePack

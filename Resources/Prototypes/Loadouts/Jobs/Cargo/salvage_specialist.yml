@@ -14,6 +14,29 @@
   equipment:
     back: ClothingBackpackDuffelSalvage
 
+# afterlight start
+# Jumpsuit
+- type: loadout
+  id: ClothingUniformJumpsuitMiningSpecialist
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMiningSpecialist
+
+- type: loadout
+  id: ClothingUniformJumpskirtCargoSalvage
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCargoSalvage
+
+- type: loadout
+  id: ClothingUniformJumpskirtCargoSalvageFormal
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCargoSalvageFormal
+
+- type: loadout
+  id: ClothingUniformJumpsuitSalvageFormal
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSalvageFormal
+# afterlight end
+
 # OuterClothing
 - type: loadout
   id: SalvageSpecialistWintercoat

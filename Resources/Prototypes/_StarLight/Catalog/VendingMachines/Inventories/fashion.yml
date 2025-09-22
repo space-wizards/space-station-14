@@ -2,519 +2,279 @@
   id: ClothingUniformJumpskirtGothic
   productEntity: ClothingUniformJumpskirtGothic
   cost:
-    NTCredit: 180
+    NTCredit: 990
   categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSkirt
 - type: listing
   id: ClothingUniformJumpskirtMaid
   productEntity: ClothingUniformJumpskirtMaid
   cost:
-    NTCredit: 400
+    NTCredit: 990
   categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSkirt
 - type: listing
   id: ClothingUniformJumpskirtDressRed
   productEntity: ClothingUniformJumpskirtDressRed
   cost:
-    NTCredit: 345
+    NTCredit: 990
   categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSkirt
 - type: listing
   id: ClothingUniformJumpskirtTango
   productEntity: ClothingUniformJumpskirtTango
   cost:
-    NTCredit: 475
+    NTCredit: 990
   categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSkirt
 - type: listing
   id: ClothingUniformJumpskirtVictorianBlack
   productEntity: ClothingUniformJumpskirtVictorianBlack
   cost:
-    NTCredit: 130
+    NTCredit: 990
   categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
-- type: listing
-  id: ClothingUniformJumpskirtReporter
-  productEntity: ClothingUniformJumpskirtReporter
-  cost:
-    NTCredit: 165
-  categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
-- type: listing
-  id: ClothingUniformJumpskirtJournalist
-  productEntity: ClothingUniformJumpskirtJournalist
-  cost:
-    NTCredit: 290
-  categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSkirt
 - type: listing
   id: ClothingUniformJumpskirtVictorianrRed
   productEntity: ClothingUniformJumpskirtVictorianrRed
   cost:
-    NTCredit: 360
+    NTCredit: 990
   categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
-- type: listing
-  id: ClothingUniformJumpskirtSuitNurse
-  productEntity: ClothingUniformJumpskirtSuitNurse
-  cost:
-    NTCredit: 205
-  categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSkirt
 - type: listing
   id: ClothingUniformJumpskirtPencilTan
   productEntity: ClothingUniformJumpskirtPencilTan
   cost:
-    NTCredit: 445
+    NTCredit: 990
   categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSkirt
 - type: listing
   id: ClothingUniformJumpskirtPencilCentcomOfficial
   productEntity: ClothingUniformJumpskirtPencilCentcomOfficial
   cost:
-    NTCredit: 170
+    NTCredit: 2000
   categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSkirt
 - type: listing
   id: ClothingUniformJumpskirtPencilSpecialOperationsOfficer
   productEntity: ClothingUniformJumpskirtPencilSpecialOperationsOfficer
   cost:
-    NTCredit: 220
+    NTCredit: 2000
   categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
-- type: listing
-  id: ClothingUniformJumpskirtCargoSalvage
-  productEntity: ClothingUniformJumpskirtCargoSalvage
-  cost:
-    NTCredit: 115
-  categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
-- type: listing
-  id: ClothingUniformJumpskirtCargoSalvageFormal
-  productEntity: ClothingUniformJumpskirtCargoSalvageFormal
-  cost:
-    NTCredit: 90
-  categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
-- type: listing
-  id: ClothingUniformJumpskirtCargoFormal
-  productEntity: ClothingUniformJumpskirtCargoFormal
-  cost:
-    NTCredit: 95
-  categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
-- type: listing
-  id: ClothingUniformJumpskirtScientistFormal
-  productEntity: ClothingUniformJumpskirtScientistFormal
-  cost:
-    NTCredit: 85
-  categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
-- type: listing
-  id: ClothingUniformJumpskirtCoroner
-  productEntity: ClothingUniformJumpskirtCoroner
-  cost:
-    NTCredit: 140
-  categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSkirt
 - type: listing
   id: ClothingUniformJumpskirtCentcomOfficial
   productEntity: ClothingUniformJumpskirtCentcomOfficial
   cost:
-    NTCredit: 395
+    NTCredit: 2000
   categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSkirt
 - type: listing
   id: ClothingUniformJumpskirtCentcomOfficer
   productEntity: ClothingUniformJumpskirtCentcomOfficer
   cost:
-    NTCredit: 350
+    NTCredit: 2000
   categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSkirt
 - type: listing
   id: ClothingUniformJumpskirtElegantMaid
   productEntity: ClothingUniformJumpskirtElegantMaid
   cost:
-    NTCredit: 495
+    NTCredit: 990
   categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSkirt
 - type: listing
   id: ClothingUniformColorJumpskirtRainbow
   productEntity: ClothingUniformColorJumpskirtRainbow
   cost:
-    NTCredit: 240
+    NTCredit: 200
   categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSkirt
 - type: listing
   id: ClothingUniformJumpskirtSchool
   productEntity: ClothingUniformJumpskirtSchool
   cost:
-    NTCredit: 355
+    NTCredit: 990
   categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
-- type: listing
-  id: ClothingUniformJumpskirtCapTurtleneck
-  productEntity: ClothingUniformJumpskirtCapTurtleneck
-  cost:
-    NTCredit: 125
-  categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
-- type: listing
-  id: ClothingUniformJumpskirtHoPTurtleneck
-  productEntity: ClothingUniformJumpskirtHoPTurtleneck
-  cost:
-    NTCredit: 215
-  categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
-- type: listing
-  id: ClothingUniformJumpskirtHoSBlack
-  productEntity: ClothingUniformJumpskirtHoSBlack
-  cost:
-    NTCredit: 265
-  categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
-- type: listing
-  id: ClothingUniformJumpskirtRDClassical
-  productEntity: ClothingUniformJumpskirtRDClassical
-  cost:
-    NTCredit: 265
-  categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSkirt
 - type: listing
   id: LilacDressUniformSuit
   productEntity: LilacDressUniformSuit
   cost:
-    NTCredit: 200
+    NTCredit: 990
   categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSkirt
 - type: listing
   id: LittleBlackDressUniformSuit
   productEntity: LittleBlackDressUniformSuit
   cost:
-    NTCredit: 200
+    NTCredit: 990
   categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSkirt
 - type: listing
   id: SundressUniformSuit
   productEntity: SundressUniformSuit
   cost:
-    NTCredit: 200
+    NTCredit: 990
   categories:
-    - SLFahsionSkirt
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSkirt
+- type: listing
+  id: ClothingUniformElegantLadyDress
+  productEntity: ClothingUniformElegantLadyDress
+  cost:
+    NTCredit: 990
+  categories:
+    - SLFashionSkirt
 - type: listing
   id: ClothingUniformJumpsuitSuitCheckered
   productEntity: ClothingUniformJumpsuitSuitCheckered
   cost:
-    NTCredit: 440
+    NTCredit: 990
   categories:
-    - SLFahsionSuit
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSuit
 - type: listing
   id: ClothingUniformJumpsuitSuitTan
   productEntity: ClothingUniformJumpsuitSuitTan
   cost:
-    NTCredit: 450
+    NTCredit: 990
   categories:
-    - SLFahsionSuit
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSuit
 - type: listing
   id: ClothingUniformJumpsuitSuitWaiter
   productEntity: ClothingUniformJumpsuitSuitWaiter
   cost:
-    NTCredit: 455
+    NTCredit: 990
   categories:
-    - SLFahsionSuit
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSuit
 - type: listing
   id: ClothingUniformJumpsuitMimeSexyWhite
   productEntity: ClothingUniformJumpsuitMimeSexyWhite
   cost:
-    NTCredit: 290
+    NTCredit: 400
   categories:
-    - SLFahsionSuit
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSuit
 - type: listing
   id: ClothingUniformJumpsuitMimeSexyBlack
   productEntity: ClothingUniformJumpsuitMimeSexyBlack
   cost:
-    NTCredit: 115
+    NTCredit: 400
   categories:
-    - SLFahsionSuit
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
-- type: listing
-  id: ClothingUniformJumpsuitCargoAlt
-  productEntity: ClothingUniformJumpsuitCargoAlt
-  cost:
-    NTCredit: 290
-  categories:
-    - SLFahsionSuit
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
-- type: listing
-  id: ClothingUniformJumpsuitCargoFormal
-  productEntity: ClothingUniformJumpsuitCargoFormal
-  cost:
-    NTCredit: 320
-  categories:
-    - SLFahsionSuit
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
-- type: listing
-  id: ClothingUniformJumpsuitSalvageFormal
-  productEntity: ClothingUniformJumpsuitSalvageFormal
-  cost:
-    NTCredit: 255
-  categories:
-    - SLFahsionSuit
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
-- type: listing
-  id: ClothingUniformJumpsuitCoroner
-  productEntity: ClothingUniformJumpsuitCoroner
-  cost:
-    NTCredit: 230
-  categories:
-    - SLFahsionSuit
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
-- type: listing
-  id: ClothingUniformJumpsuitCoronerAlt
-  productEntity: ClothingUniformJumpsuitCoronerAlt
-  cost:
-    NTCredit: 440
-  categories:
-    - SLFahsionSuit
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSuit
 - type: listing
   id: ClothingUniformJumpsuitSuperstarCop
   productEntity: ClothingUniformJumpsuitSuperstarCop
   cost:
-    NTCredit: 220
+    NTCredit: 990
   categories:
-    - SLFahsionSuit
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSuit
 - type: listing
   id: ClothingUniformJumpsuitAerostatic
   productEntity: ClothingUniformJumpsuitAerostatic
   cost:
-    NTCredit: 195
+    NTCredit: 990
   categories:
-    - SLFahsionSuit
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSuit
 - type: listing
   id: ClothingUniformJumpsuitCentcomOfficerBlack
   productEntity: ClothingUniformJumpsuitCentcomOfficerBlack
   cost:
-    NTCredit: 90
+    NTCredit: 2000
   categories:
-    - SLFahsionSuit
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSuit
 - type: listing
   id: ClothingUniformJumpsuitCentcomAdmiral
   productEntity: ClothingUniformJumpsuitCentcomAdmiral
   cost:
-    NTCredit: 390
+    NTCredit: 2000
   categories:
-    - SLFahsionSuit
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionSuit
 - type: listing
-  id: ClothingUniformJumpsuitCapTurtleneck
-  productEntity: ClothingUniformJumpsuitCapTurtleneck
+  id: ClothingHeadHelmetSilverMusician
+  productEntity: ClothingHeadHelmetSilverMusician
   cost:
-    NTCredit: 150
+    NTCredit: 2500
   categories:
-    - SLFahsionSuit
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionHead
 - type: listing
-  id: ClothingUniformJumpsuitHoPTurtleneck
-  productEntity: ClothingUniformJumpsuitHoPTurtleneck
+  id: ClothingMaskGeneralBorg
+  productEntity: ClothingMaskGeneralBorg
   cost:
-    NTCredit: 190
+    NTCredit: 990
   categories:
-    - SLFahsionSuit
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionHead
 - type: listing
-  id: ClothingUniformJumpsuitHoSBlack
-  productEntity: ClothingUniformJumpsuitHoSBlack
+  id: ClothingMaskCargoBorg
+  productEntity: ClothingMaskCargoBorg
   cost:
-    NTCredit: 450
+    NTCredit: 990
   categories:
-    - SLFahsionSuit
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionHead
 - type: listing
-  id: ClothingUniformJumpsuitRDClassical
-  productEntity: ClothingUniformJumpsuitRDClassical
+  id: ClothingMaskEngiBorg
+  productEntity: ClothingMaskEngiBorg
   cost:
-    NTCredit: 75
+    NTCredit: 990
   categories:
-    - SLFahsionSuit
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionHead
 - type: listing
-  id: ClothingUniformJumpsuitFormalBlueShield
-  productEntity: ClothingUniformJumpsuitFormalBlueShield
+  id: ClothingMaskJanitorBorg
+  productEntity: ClothingMaskJanitorBorg
   cost:
-    NTCredit: 115
+    NTCredit: 990
   categories:
-    - SLFahsionSuit
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionHead
+- type: listing
+  id: ClothingMaskSecBorg
+  productEntity: ClothingMaskSecBorg
+  cost:
+    NTCredit: 990
+  categories:
+    - SLFashionHead
 - type: listing
   id: ClothingNeckCloakCentcomBlack
   productEntity: ClothingNeckCloakCentcomBlack
   cost:
-    NTCredit: 145
+    NTCredit: 2000
   categories:
-    - SLFahsionOther
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionOther
 - type: listing
   id: ClothingNeckCloakCentcomAdmiral
   productEntity: ClothingNeckCloakCentcomAdmiral
   cost:
-    NTCredit: 235
+    NTCredit: 2000
   categories:
-    - SLFahsionOther
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionOther
 - type: listing
   id: ClothingNeckMantleERTLeader
   productEntity: ClothingNeckMantleERTLeader
   cost:
-    NTCredit: 285
+    NTCredit: 2000
   categories:
-    - SLFahsionOther
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionOther
 - type: listing
   id: ClothingNeckHorrific
   productEntity: ClothingNeckHorrific
   cost:
-    NTCredit: 190
+    NTCredit: 9500
   categories:
-    - SLFahsionOther
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+    - SLFashionOther
+- type: listing
+  id: ClothingUniformDama0965
+  productEntity: ClothingUniformDama0965
+  cost:
+    NTCredit: 2500
+  categories:
+    - SLFashionOther
+- type: listing
+  id: PlushieBBC
+  productEntity: PlushieBBC
+  cost:
+    NTCredit: 4500
+  categories:
+    - SLFashionOther
+- type: listing
+  id: BoxPancakes
+  productEntity: BoxPancakes
+  cost:
+    NTCredit: 990
+  categories:
+    - SLFashionOther

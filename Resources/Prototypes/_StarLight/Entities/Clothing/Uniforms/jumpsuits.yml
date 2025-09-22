@@ -351,6 +351,28 @@
 
 # Fashion-O-Mat END
 
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSquidTheseGames
+  name: these games uniform
+  description: I PLAYED THESE GAMES B4!!! I said i play-GET OUT!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/squid_prisoner.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/squid_prisoner.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSquidDangerous
+  name: dangerous uniform
+  description: Please, no, i will give yo-POW POW POW!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/squid.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/squid.rsi
+
 # USSP
 - type: entity
   parent: [ UnsensoredClothingUniformBase, BaseSovietContraband ]

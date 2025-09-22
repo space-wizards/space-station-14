@@ -1,12 +1,29 @@
+# Fashion-O-Mat-Start
+- type: entity
+  name: sweet pastry set bag
+  parent: ClothingBackpackDuffel
+  id: BoxPancakes
+  description: Look like someone who cares more about pancakes than what others think of her. Look like-A ROBOT??!
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHoney
+      - id: ClothingUniformPastryDress
+      - id: ClothingUniformApron
+      - id: FoodBakedPancake
+        amount: 2
+# Fashion-O-Mat-End
+
+# Expedition Encryption Keys
 - type: entity
   name: expedition encryption key box
   parent: BoxEncryptionKeyAssistant
   id: BoxEncryptionKeyExpedition
   components:
-  - type: StorageFill
-    contents:
-    - id: EncryptionKeyExpedition
-      amount: 4
+    - type: StorageFill
+      contents:
+        - id: EncryptionKeyExpedition
+          amount: 4
 
 - type: entity
   name: salvage encryption key box

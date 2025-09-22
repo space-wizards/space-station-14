@@ -15,5 +15,7 @@ Alert levels represent the danger that is currently directed towards the station
 
 [color=#acb20c]Code Yellow[/color]: There is an atmospheric or structural threat to the station.
 
+[color=#ff8119]Code Orange[/color]: The station has taken critical structural damage, and is unlikely to recover.
+
 [color=#8d1d75]Code Violet[/color]: There is a biohazard threat on board the station.
 </Document>

@@ -2,6 +2,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Storage;
 using Robust.Shared.Serialization;
+using Robust.Shared.Prototypes; // Starlight-edit
 
 namespace Content.Shared.Chemistry
 {
@@ -67,11 +68,11 @@ namespace Content.Shared.Chemistry
     [Serializable, NetSerializable]
     public sealed class ReagentDispenserDispenseReagentMessage : BoundUserInterfaceMessage
     {
-        public readonly ItemStorageLocation StorageLocation;
+        public readonly ReagentDispenseData Data; // Starlight-edit
 
-        public ReagentDispenserDispenseReagentMessage(ItemStorageLocation storageLocation)
+        public ReagentDispenserDispenseReagentMessage(ReagentDispenseData data) // Starlight-edit
         {
-            StorageLocation = storageLocation;
+            Data = data; // Starlight-edit
         }
     }
 
@@ -109,12 +110,13 @@ namespace Content.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public sealed class ReagentInventoryItem(ItemStorageLocation storageLocation, string reagentLabel, FixedPoint2 quantity, Color reagentColor)
+    public sealed class ReagentInventoryItem(ReagentDispenseData data, string reagentLabel, FixedPoint2 quantity, Color reagentColor, bool generatable) // Starlight-edit
     {
-        public ItemStorageLocation StorageLocation = storageLocation;
+        public ReagentDispenseData Data = data; // Starlight-edit
         public string ReagentLabel = reagentLabel;
         public FixedPoint2 Quantity = quantity;
         public Color ReagentColor = reagentColor;
+        public bool Generatable = generatable; // Starlight-edit
     }
 
     [Serializable, NetSerializable]
@@ -139,6 +141,15 @@ namespace Content.Shared.Chemistry
             SelectedDispenseAmount = selectedDispenseAmount;
         }
     }
+    
+    // Starlight-start: Generatable reagents
+    [Serializable, NetSerializable]
+    public sealed class ReagentDispenseData(ItemStorageLocation? storageLocation, ProtoId<ReagentPrototype>? reagentID)
+    {
+        public ItemStorageLocation? StorageLocation = storageLocation;
+        public ProtoId<ReagentPrototype>? ReagentID = reagentID;
+    }
+    // Starlight-end
 
     [Serializable, NetSerializable]
     public enum ReagentDispenserUiKey

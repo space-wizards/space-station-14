@@ -14,10 +14,10 @@
     stockLimit: 1
 
 - type: listing
-  id: StolenImplanterConversion
-  name: stolen-implanter-name
-  description: stolen-implanter-desc
-  productEntity: Implanter
+  id: SKBImplanterConversion
+  name: SKB-implanter-name
+  description: SKB-implanter-desc
+  productEntity: USSPUplinkImplanterEmpty
   cost:
     Conversion: 13
   categories:
@@ -74,19 +74,6 @@
     Conversion: 20
   categories:
   - RevUplinkPassive
-
-- type: listing
-  id: SNKVDAPS
-  name: aps-name
-  description: aps-desc
-  productEntity: WeaponPistolAPS
-  cost:
-    Conversion: 28
-  categories:
-  - RevUplinkPassive
-  conditions:
-  - !type:StockLimitedListingCondition
-    stockLimit: 1
 
 ### Telebonds category
 # Weapons, some modern some discontinued like the PPSH
@@ -147,11 +134,25 @@
     stockLimit: 6
 
 - type: listing
+  id: SNKVDAPS
+  name: aps-name
+  description: aps-desc
+  productEntity: ClothingBackpackDuffelStechkinAPS
+  icon: { sprite: _Starlight/Objects/Weapons/Guns/Pistols/aps.rsi, state: icon }
+  cost:
+    Telebond: 15
+  categories:
+  - RevUplinkWeaponry
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 1
+
+- type: listing
   id: SKBDP28
   name: dp-name
   description: dp-desc
   icon: { sprite: _Starlight/Objects/Weapons/Guns/LMGs/DP28.rsi, state: icon }
-  productEntity: WeaponLightMachineGunDP28
+  productEntity: ClothingBackpackDuffelDP28Bundle
   cost:
     Telebond: 20
   categories:
@@ -165,7 +166,7 @@
   name: ppsh-name
   description: ppsh-desc
   icon: { sprite: _Starlight/Objects/Weapons/Guns/SMGs/PPSh59.rsi, state: icon }
-  productEntity: WeaponSubMachineGunPPSH
+  productEntity: ClothingBackpackDuffelPPShBundle
   cost:
     Telebond: 27
   categories:
@@ -258,10 +259,10 @@
 # Implants
 
 - type: listing
-  id: StolenImplanter
-  name: stolen-implanter-name
-  description: stolen-implanter-desc
-  productEntity: Implanter
+  id: SKBImplanter
+  name: SKB-implanter-name
+  description: SKB-implanter-desc
+  productEntity: USSPUplinkImplanterEmpty
   cost:
     Telebond: 5
   categories:

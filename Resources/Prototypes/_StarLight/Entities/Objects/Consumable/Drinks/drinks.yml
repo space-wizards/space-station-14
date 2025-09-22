@@ -13,3 +13,17 @@
   - type: Icon
     sprite: _Starlight/Objects/Consumable/Drinks/dragan_special.rsi
     state: icon
+
+- type: entity
+  parent: DrinkWaterBottleFull
+  id: DrinkWaterBottleEmpty
+  name: water bottle
+  description: Simple clean water of unknown origin. You think that maybe you dont want to know it.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: Construction
+    graph: DrinkWaterBottleEmpty
+    node: waterbottle

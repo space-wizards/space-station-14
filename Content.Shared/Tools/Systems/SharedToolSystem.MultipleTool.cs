@@ -11,7 +11,7 @@ public abstract partial class SharedToolSystem
 {
     public void InitializeMultipleTool()
     {
-        SubscribeLocalEvent<MultipleToolComponent, ComponentStartup>(OnMultipleToolStartup);
+        SubscribeLocalEvent<MultipleToolComponent, MapInitEvent>(OnMultipleToolStartup); //starlight, map init instead of comp init
         SubscribeLocalEvent<MultipleToolComponent, ActivateInWorldEvent>(OnMultipleToolActivated);
         SubscribeLocalEvent<MultipleToolComponent, AfterAutoHandleStateEvent>(OnMultipleToolHandleState);
     }
@@ -21,7 +21,7 @@ public abstract partial class SharedToolSystem
         SetMultipleTool(uid, component);
     }
 
-    private void OnMultipleToolStartup(EntityUid uid, MultipleToolComponent multiple, ComponentStartup args)
+    private void OnMultipleToolStartup(EntityUid uid, MultipleToolComponent multiple, MapInitEvent args)
     {
         // Only set the multiple tool if we have a tool component.
         if (TryComp(uid, out ToolComponent? tool))

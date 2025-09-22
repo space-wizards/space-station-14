@@ -42,7 +42,8 @@
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/corpsman.rsi
 
-# Fashion-O-Mat, not obtainable any other way, unless mapped
+# Fashion-O-Mat-Start, not obtainable any other way, unless mapped
+# All CC/Synd stuff in Fashion-O-Mat is replica
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -353,7 +354,40 @@
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/rd_classical.rsi
 
-# Fashion-O-Mat-END
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJulianneVA11HALLA
+  name: smoke-scented bartender uniform
+  description: Smoke clings to it, heavy and suffocating. Somehow, it makes you want to cry. Care for another round, sir?
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/alt_purplebartender.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/alt_purplebartender.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformElegantLadyDress
+  name: elegant lady's dress
+  description: "A voluminous white blouse with a black skirt-perfect for highlighting your beauty, darling!"
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/lady.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/lady.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformPastryDress
+  name: sweet pastry dress
+  description: A delicate pastry dress made from light, comfortable fabric with an elegant cut.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Clothing/Uniforms/Jumpskirt/pastry.rsi
+    - type: Clothing
+      sprite: _Starlight/Clothing/Uniforms/Jumpskirt/pastry.rsi
+
+# Fashion-O-Mat-End
 
 - type: entity
   parent: [ ClothingUniformSkirtBase, BaseCentcommContraband ]

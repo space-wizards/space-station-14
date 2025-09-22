@@ -29,7 +29,7 @@
 - type: storeCategory
   id: SLClown
   name: store-category-service-clown
-
+  
 - type: storeCategory
   id: SLSecurity
   name: store-category-security-main
@@ -39,15 +39,19 @@
   name: Medical
 
 - type: storeCategory
-  id: SLFahsionSkirt
-  name: Luxury dresses
+  id: SLFashionSkirt
+  name: Luxury dresses 
 
 - type: storeCategory
-  id: SLFahsionSuit
+  id: SLFashionSuit
   name: Elegant suits
 
 - type: storeCategory
-  id: SLFahsionOther
+  id: SLFashionHead
+  name: Hats & Helmets
+
+- type: storeCategory
+  id: SLFashionOther
   name: Other
 
 # shuttle build uplink
@@ -96,16 +100,17 @@
 - type: storeCategory
   id: UplinkCybernetics
   name: Cybernetics
-
+  
 # salvage
+
 - type: storeCategory
   id: SalvageEquipment
   name: Equipment
-
+  
 - type: storeCategory
   id: SalvageWeapons
   name: Weapons
-
+  
 - type: storeCategory
   id: SalvageConsumeables
   name: Consumeables

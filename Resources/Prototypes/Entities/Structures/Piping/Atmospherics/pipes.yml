@@ -68,6 +68,7 @@
   - type: ContainerContainer
     containers:
       VentCrawTube: !type:Container
+  - type: ChildBlockVision # Starlight-edit
 
 - type: entity
   id: VentCrawHolder
@@ -144,7 +145,6 @@
         nodeGroupID: Pipe
         pipeDirection: Longitudinal
   - type: VentCrawTube
-    containerId: VentCrawTube
   - type: VentCrawTransit
   - type: ContainerContainer
     containers:
@@ -193,7 +193,6 @@
         nodeGroupID: Pipe
         pipeDirection: SWBend
   - type: VentCrawTube
-    containerId: VentCrawTube
   - type: VentCrawBend
   - type: ContainerContainer
     containers:
@@ -274,7 +273,6 @@
     soundHit:
       collection: MetalThud
   - type: VentCrawTube
-    containerId: VentCrawTube
   - type: VentCrawJunction
     degrees:
       - 0
@@ -316,7 +314,6 @@
     graph: GasPipe
     node: fourway
   - type: VentCrawTube
-    containerId: VentCrawTube
   - type: VentCrawJunction
     degrees:
       - 0

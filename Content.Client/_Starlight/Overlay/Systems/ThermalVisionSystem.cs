@@ -30,7 +30,6 @@ public sealed class ThermalVisionSystem : SharedThermalVisionSystem
 
     [ViewVariables]
     private EntityUid? _effect = null;
-    private readonly EntProtoId _effectPrototype = "EffectThermalVision";
     protected override bool IsPredict() => !_timing.IsFirstTimePredicted;
     public override void Initialize()
     {
@@ -95,7 +94,7 @@ public sealed class ThermalVisionSystem : SharedThermalVisionSystem
         
         _overlayMan.AddOverlay(_throughWallsOverlay);
         _overlayMan.AddOverlay(_overlay);
-        _effect = SpawnAttachedTo(_effectPrototype, Transform(uid).Coordinates);
+        _effect = SpawnAttachedTo(thermalVision.EffectPrototype, Transform(uid).Coordinates);
         _xformSys.SetParent(_effect.Value, uid);
     }
 

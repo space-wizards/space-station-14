@@ -19,7 +19,8 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Content.Shared.Chat; // Starlight
+using Content.Shared.Chat; // Starlight-edit
+using Content.Shared._Starlight.Access; // Starlight
 
 namespace Content.Server.Access.Systems;
 
@@ -44,6 +45,8 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
         SubscribeLocalEvent<IdCardConsoleComponent, WriteToTargetIdMessage>(OnWriteToTargetIdMessage);
 
+        SubscribeLocalEvent<IdCardConsoleComponent, AccessGroupSelectedMessage>(OnAccessGroupSelected); // Starlight-edit
+
         // one day, maybe bound user interfaces can be shared too.
         SubscribeLocalEvent<IdCardConsoleComponent, ComponentStartup>(UpdateUserInterface);
         SubscribeLocalEvent<IdCardConsoleComponent, EntInsertedIntoContainerMessage>(UpdateUserInterface);
@@ -64,6 +67,17 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
         UpdateUserInterface(uid, component, args);
     }
+
+    // Starlight-start
+
+    private void OnAccessGroupSelected(EntityUid uid, IdCardConsoleComponent component, AccessGroupSelectedMessage args)
+    {
+        component.CurrentAccessGroup = args.SelectedGroup;
+
+        UpdateUserInterface(uid, component, args);
+    }
+
+    // Starlight-end
 
     private void UpdateUserInterface(EntityUid uid, IdCardConsoleComponent component, EntityEventArgs args)
     {
@@ -92,14 +106,15 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
                 possibleAccess,
                 string.Empty,
                 privilegedIdName,
-                string.Empty);
+                string.Empty,
+                component.CurrentAccessGroup ?? component.AccessGroups.FirstOrDefault()); // Starlight-edit
         }
         else
         {
             var targetIdComponent = Comp<IdCardComponent>(targetId);
             var targetAccessComponent = Comp<AccessComponent>(targetId);
 
-            var jobProto = targetIdComponent.JobPrototype ?? new ProtoId<AccessLevelPrototype>(string.Empty);
+            var jobProto = targetIdComponent.JobPrototype ?? new ProtoId<JobPrototype>(string.Empty);
             if (TryComp<StationRecordKeyStorageComponent>(targetId, out var keyStorage)
                 && keyStorage.Key is { } key
                 && _record.TryGetRecord<GeneralStationRecord>(key, out var record))
@@ -117,7 +132,8 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
                 possibleAccess,
                 jobProto,
                 privilegedIdName,
-                Name(targetId));
+                Name(targetId),
+                component.CurrentAccessGroup ?? component.AccessGroups.FirstOrDefault()); // Starlight-edit
         }
 
         _userInterface.SetUiState(uid, IdCardConsoleUiKey.Key, newState);
@@ -131,7 +147,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         string newFullName,
         string newJobTitle,
         List<ProtoId<AccessLevelPrototype>> newAccessList,
-        ProtoId<AccessLevelPrototype> newJobProto,
+        ProtoId<JobPrototype> newJobProto,
         EntityUid player,
         IdCardConsoleComponent? component = null)
     {
@@ -145,7 +161,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         _idCard.TryChangeJobTitle(targetId, newJobTitle, player: player);
 
         if (_prototype.TryIndex<JobPrototype>(newJobProto, out var job)
-            && _prototype.TryIndex(job.Icon, out var jobIcon))
+            && _prototype.Resolve(job.Icon, out var jobIcon))
         {
             _idCard.TryChangeJobIcon(targetId, jobIcon, player: player);
             _idCard.TryChangeJobDepartment(targetId, job);
@@ -160,23 +176,51 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             Comp<IdCardComponent>(targetId).JobPrototype = newJobProto;
         }
 
-        if (!newAccessList.TrueForAll(x => component.AccessLevels.Contains(x)))
+        // Starlight-start
+
+        var currentGroup = component.CurrentAccessGroup ?? component.AccessGroups.FirstOrDefault();
+        if (!_prototype.TryIndex<AccessGroupPrototype>(currentGroup, out var currentGroupPrototype))
+        {
+            _sawmill.Warning($"Current access group {currentGroup} not found!");
+            return;
+        }
+
+       var oldTags = _access.TryGetTags(targetId)?.ToHashSet() ?? new HashSet<ProtoId<AccessLevelPrototype>>();
+
+        var groupTags = currentGroupPrototype.Tags.ToHashSet();
+
+        var oldGroupTags = oldTags.Intersect(groupTags).ToHashSet();
+        var newGroupTags = newAccessList.Intersect(groupTags).ToHashSet();
+
+        // Starlight-end
+
+        // Ensure the user isn't trying to add access they shouldn't be able to.
+        // Starlight-start: Change to access groups
+        List<ProtoId<AccessLevelPrototype>> Accesses = new();
+        foreach (var group in component.AccessGroups)
+        {
+            if (!_prototype.TryIndex<AccessGroupPrototype>(group, out var groupPrototype))
+                continue;
+
+            Accesses.AddRange(groupPrototype.Tags.ToList());
+        }
+        // Starlight-end
+        if (!newAccessList.TrueForAll(x => Accesses.Contains(x)))
         {
             _sawmill.Warning($"User {ToPrettyString(uid)} tried to write unknown access tag.");
             return;
         }
 
-        var oldTags = _access.TryGetTags(targetId) ?? new List<ProtoId<AccessLevelPrototype>>();
-        oldTags = oldTags.ToList();
-
         var privilegedId = component.PrivilegedIdSlot.Item;
 
-        if (oldTags.SequenceEqual(newAccessList))
+        var finalTags = oldTags.Except(groupTags).Union(newGroupTags); // Starlight-edit
+
+        if (oldTags.SetEquals(finalTags)) // Starlight-edit
             return;
 
         // I hate that C# doesn't have an option for this and don't desire to write this out the hard way.
         // var difference = newAccessList.Difference(oldTags);
-        var difference = newAccessList.Union(oldTags).Except(newAccessList.Intersect(oldTags)).ToHashSet();
+        var difference = finalTags.Union(oldTags).Except(finalTags.Intersect(oldTags)).ToHashSet(); // Starlight-edit
         // NULL SAFETY: PrivilegedIdIsAuthorized checked this earlier.
         var privilegedPerms = _accessReader.FindAccessTags(privilegedId!.Value).ToHashSet();
         if (!difference.IsSubsetOf(privilegedPerms))
@@ -185,9 +229,9 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             return;
         }
 
-        var addedTags = newAccessList.Except(oldTags).Select(tag => "+" + tag).ToList();
-        var removedTags = oldTags.Except(newAccessList).Select(tag => "-" + tag).ToList();
-        _access.TrySetTags(targetId, newAccessList);
+        var addedTags = finalTags.Except(oldTags).Select(tag => "+" + tag).ToList(); // Starlight-edit
+        var removedTags = oldTags.Except(finalTags).Select(tag => "-" + tag).ToList(); // Starlight-edit
+        _access.TrySetTags(targetId, finalTags); // Starlight-edit
 
         /*TODO: ECS SharedIdCardConsoleComponent and then log on card ejection, together with the save.
         This current implementation is pretty shit as it logs 27 entries (27 lines) if someone decides to give themselves AA*/

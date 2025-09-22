@@ -1,5 +1,30 @@
 # Reports
 
+doc-text-printer-report-morgue =
+   ⠀[logo]            [cclogo] 
+
+                             [head=3]NT-CC Consortium Services[/head]
+
+                  [center][color=#1f75bb][italic][bold]   OFFICIAL CENTCOMM DOCUMENTATION[/bold][/italic][/color][/center]
+    ────────────────────────────────────────
+   ⠀⠀                              [bold]MORGUE REPORT[/bold]
+    ────────────────────────────────────────
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
+    
+    Name: [form]
+
+    Job/Occupation: [form]
+
+    Approximate time of death/DNR approval: [form]
+
+    Reason for DNR status: [form]
+    
+    ────────────────────────────────────────
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
+   
+
+
 doc-text-printer-report-station =
    ⠀[logo]            [cclogo] 
 
@@ -9,24 +34,23 @@ doc-text-printer-report-station =
     ────────────────────────────────────────
    ⠀⠀                            [bold]SITUATION REPORT[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    Purpose:
+    Purpose: [form]
 
-    Threat Level Code:
+    Threat Level Code: [form]
 
-    Reason for establishing the code:
+    Reason for establishing the code: [form]
 
-    Active threats:
+    Active threats: [form]
 
-    Crew casualties:
+    Crew casualties: [form]
 
-    Current situation:
+    Current situation: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
  
@@ -39,22 +63,21 @@ doc-text-printer-report-on-elimination-of-violations =
     ────────────────────────────────────────
    ⠀⠀            [bold]ELIMINATION OF VIOLATIONS REPORT[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    Report on work violations identified by:
+    Report on work violations identified by: [form]
     
-    In the position of:
+    In the position of: [form]
 
-    Presented violations:
+    Presented violations: [form]
     
-    Cause of violations:
+    Cause of violations: [form]
     
-    Measures taken to eliminate violations:
+    Measures taken to eliminate violations: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 doc-text-printer-report-department =
@@ -66,24 +89,24 @@ doc-text-printer-report-department =
     ────────────────────────────────────────
    ⠀⠀                           [bold]DEPARTMENT REPORT[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    Number of employees in the department:
+    Number of employees in the department: [form]
 
-    Number of trainees:
+    Number of trainees: [form]
 
     Inactive employees in the department:
-    ⠀[bullet] (Name, position, reason)
-    ⠀[bullet] ...
+    ⠀• (Name, position, reason)
+    ⠀• [form]
+     • [form]
 
-    Degree of target readiness:
+    Degree of target readiness: [form]
 
-    General condition of the department:
+    General condition of the department: [form]
     
     ─────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 doc-text-printer-report-employee-performance =
@@ -95,18 +118,17 @@ doc-text-printer-report-employee-performance =
     ─────────────────────────────────────────
    ⠀⠀                 [bold]EMPLOYEE PERFORMANCE REPORT[/bold]
     ─────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
    
-    In the course of my duties, I have performed the required amount of work.
+    In the course of my duties, I, [signature] have performed the required amount of work.
     
-    I request that the result of the work be accepted by the Head of the following Department:
+    I request that the result of the work be accepted by the Head of the following Department: [form]
 
-    Work performed:
+    Work performed: [form]
     
     ─────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 doc-text-printer-report-on-the-chapters-meeting =
@@ -118,28 +140,30 @@ doc-text-printer-report-on-the-chapters-meeting =
     ─────────────────────────────────────────
    ⠀⠀                     [bold]CHAPTERS MEETING REPORT[/bold]
     ─────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    Reason for calling the Chapters' Meeting:
+    Reason for calling the Chapters' Meeting: [form]
 
-    The wording of the question put to the Chapters:
+    The wording of the question put to the Chapters: [form]
 
 
-    Number of votes [italic]in favor[/italic]:
+    Number of votes [italic]in favor[/italic]: [form]
     Those voting [italic]in favor[/italic]:
-    
-    Number of votes [italic]against[/italic]:
+    • [signature]
+    • [signature]
+    Number of votes [italic]against[/italic]: [form]
     Those voting [italic]against[/italic]:
-    
-    Number of [italic]abstentions[/italic] from voting:
+    • [signature]
+    • [signature]
+    Number of [italic]abstentions[/italic] from voting: [form]
     Those voting [italic]abstain[italic]:
-    
-    Resolution of the Meeting of Heads:
+    • [signature]
+    • [signature]    
+    Resolution of the Meeting of Heads: [form]
     
     ─────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 doc-text-printer-internal-affairs-agents-report =
@@ -151,15 +175,15 @@ doc-text-printer-internal-affairs-agents-report =
     ─────────────────────────────────────────
    ⠀⠀               [bold]INTERNAL AFFAIRS AGENT REPORT[/bold]
     ─────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    I, (full name), in the position of Internal Affairs Agent, in the course of an internal audit requested by (full name), in the position of (full job title) for the reason of (reason for audit), found the following irregularities:
+    I, [signature], in my position, during the course of an internal audit requested by [form], in the position of [form] for the reason of [form], found the following irregularities: [form]
     
-    I also wish to report the following:
+    I also wish to report the following: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 doc-text-printer-condition-report =
@@ -171,20 +195,19 @@ doc-text-printer-condition-report =
     ────────────────────────────────────────
    ⠀⠀                               [bold]CONDITION REPORT[/bold]
     ─────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    The (name of the system or object) was inspected, the results of the inspection were analyzed, and the causes of unstable operation of the object were analyzed.
+    The (name of the system or object)[form] was inspected, the results of the inspection were analyzed, and the causes of unstable operation of the object were analyzed.
     
-    Cause of object failure:
+    Cause of object failure: [form]
     
-    Identified damage to the facility:
+    Identified damage to the facility: [form]
     
-    Facility repairs performed:
+    Facility repairs performed: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 doc-text-printer-object-investigation-report =
@@ -196,18 +219,17 @@ doc-text-printer-object-investigation-report =
     ────────────────────────────────────────
    ⠀⠀                    [bold]OBJECT INVESTIGATION REPORT[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    A device with unexplored properties was submitted for expert examination by (who or what department handed over the object). In the course of the expertise the object was studied, the properties of the object and its species affiliation were established.
+    A device with unexplored properties was submitted for expert examination by (who or what department handed over the object)[form]. In the course of research, the properties of the object and its species affiliation were established.
     
-    External description of the object:
+    External description of the object: [form]
     
-    Identified properties of the object:
+    Identified properties of the object: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 doc-text-printer-experiment-report =
@@ -219,25 +241,24 @@ doc-text-printer-experiment-report =
     ────────────────────────────────────────
    ⠀⠀                              [bold]EXPERIMENT REPORT[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    External description of the object of the experiment:
+    External description of the object of the experiment: [form]
     
-    Experimenter(s):
+    Experimenter(s): [signature]
     
-    Experiment №...
-    Description of experiment:
+    Experiment № [form]
+    Description of experiment: [form]
     
-    Expected result:
+    Expected result: [form]
     
-    Equipment used:
+    Equipment used: [form]
     
-    Actual result:
+    Actual result: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 doc-text-printer-disposal-report =
@@ -249,15 +270,15 @@ doc-text-printer-disposal-report =
     ─────────────────────────────────────────
    ⠀⠀                                [bold]DISPOSAL REPORT[/bold]
     ─────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    The Supplies Department disposed of the objects at (method of disposal). During the disposal valuable items and things were found, valuable items were handed over to the appropriate departments for their use.
-    List of items found:
-    
+    The Supplies Department disposed of the objects at [form]. During the disposal process, there were valuable items/materials that were moved to departments for appropriate usage/care.
+    List of items/materials found:
+    • [form] - Given to [form] Department
+    • [form] - Given to [form] Department
     ─────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 doc-text-printer-arrest-report =
@@ -269,22 +290,21 @@ doc-text-printer-arrest-report =
     ─────────────────────────────────────────
    ⠀⠀                            [bold]SECURITY ARREST REPORT[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
 
-    Arrested person:
+    Arrested person: [form]
 
-    Arrest reason:
+    Arrest reason: [form]
 
-    Time of arrest (estimated):
+    Time of arrest (estimated): [form]
 
-    Duration of detention:
+    Duration of detention: [form]
 
-    Additional punishments:
+    Additional punishments: [form]
     
     ─────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 # Statements
@@ -298,21 +318,20 @@ doc-text-printer-statement-appointment-interim-chapter =
     ────────────────────────────────────────
    ⠀⠀          [bold]STATEMENT APPOINTMENT INTERIM CHAPTER[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
      
-    I request approval of my appointment to the position of Acting (HoS/Captain/HoP/...).
+    I, [signature], request approval of my appointment to the position of (Acting [form]).
     Upon assuming the position, I agree to follow Standard Operating Procedures and, 
-    until the arrival of the (HoS/Captain/HoP/...) from Central Command, 
-    to ensure the order and management of the division, 
-    and to ensure the safety of particularly valuable items and equipment entrusted to me.
+    until the arrival of the [form] from Central Command, 
+    shall ensure the order and management of the division, 
+    and the safety of particularly valuable items and equipment entrusted to me.
     
-    Upon arrival of the (HoS/Captain/HoP/...) from Central Command, 
-    I undertake to surrender the increased access, especially valuable items and equipment.
+    Upon arrival of the [form] from Central Command, 
+    I shall surrender the increased access, especially valuable items and equipment.
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 doc-text-printer-employment-statement =
@@ -324,20 +343,20 @@ doc-text-printer-employment-statement =
     ────────────────────────────────────────
    ⠀⠀                           [bold]EMPLOYMENT STATEMENT[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    I formally request to be appointed as an employee of the following department and position.
+    I, [signature], formally request to be appointed as an employee of the following department and position.
     
-    Name of department:
+    Name of department: [form]
 
-    Name of position:
+    Name of position: [form]
 
-    I agree to follow the department's Standard Operating Procedures. I agree to surrender my current department work gear and equipment upon transfer.
+    I agree to follow the department's Standard Operating Procedures. [check]
+    I agree to surrender my current department work gear and equipment upon transfer. [check]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 doc-text-printer-resignation-statement =
@@ -349,17 +368,16 @@ doc-text-printer-resignation-statement =
     ────────────────────────────────────────
    ⠀⠀                          [bold]RESIGNATION STATEMENT[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    I, (full name), in the current position of (full job title), wish to resign from (name of department) for (reason).
-    I undertake to pay the penalty established by the terms of termination of fixed-term/permanent contract at the Central Command station.
-
-    I agree to surrender my department work gear and equipment upon resignation.
+    I, [signature], wish to resign from the [form] department for the reason of [form].
+    
+    I undertake to pay the penalty established by the terms of termination of fixed-term/permanent contract at the Central Command station. [check]
+    I agree to surrender my department work gear and equipment upon resignation. [check]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 doc-text-printer-access-request-statement =
@@ -371,16 +389,17 @@ doc-text-printer-access-request-statement =
     ────────────────────────────────────────
    ⠀⠀                       [bold]ACCESS REQUEST STATEMENT[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    Request the following accesses:
-    
-    Reason for gaining elevated access:
+    I, [signature], request the following accesses: 
+    • [form]
+    • [form]
+
+    Reason for gaining elevated access: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 doc-text-printer-equipment-request-statement =
@@ -392,16 +411,16 @@ doc-text-printer-equipment-request-statement =
     ────────────────────────────────────────
    ⠀⠀                    [bold]EQUIPMENT REQUEST STATEMENT[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    I request the following equipment be issued to me:
-    
-    Reason for obtaining the equipment:
+    I, [signature], request the following equipment be issued to me:
+    • [form]
+    • [form]
+    Reason for obtaining the equipment: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -417,20 +436,19 @@ doc-text-printer-invocation =
     ────────────────────────────────────────
    ⠀⠀                                    [bold]INVOCATION[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
        
-    I request to deliver the following person my invocation;
+    I, [signature], request to deliver the following person my invocation;
 
-    Name of the invoked person:
+    Name of the invoked person: [form]
 
-    Content of the invocation:
+    Content of the invocation: [form]
     
-    Reasons for writing it:
+    Reasons for writing it: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -443,18 +461,17 @@ doc-text-printer-evacuation-shuttle-request =
     ────────────────────────────────────────
    ⠀⠀                    [bold]EVACUATION SHUTTLE REQUEST[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
     Dear Central Command,
     
-    I write to request that you authorise evacuation protocols and send an evacuation shuttle and thereby also authorise the early end of our work shift.
+    I, [signature], write to request that you authorise evacuation protocols and send an evacuation shuttle and thereby also authorise the early end of our work shift.
 
-    Reason for evacuation request:
+    Reason for evacuation request: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -467,22 +484,21 @@ doc-text-printer-shuttle-registration-request =
     ────────────────────────────────────────
    ⠀⠀                  [bold]SHUTTLE REGISTRATION REQUEST[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    I request that the following shuttle be registered in the NanoTrasen system for identification.
+    I,  request that the following shuttle be registered in the NanoTrasen system for identification.
     
-    Shuttle size:
+    Shuttle size: [form]
     
-    Shuttle class:
+    Shuttle class: [form]
     
-    Construction responsible:
+    Construction responsible: [form]
     
-    Requested title:
+    Requested title: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -495,16 +511,15 @@ doc-text-printer-request-call-centcomm-members =
     ────────────────────────────────────────
    ⠀⠀              [bold]REQUEST TO CALL CENTCOMM MEMBERS[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    I request to be considered for a call with CentComm administrative officers.
+    I, [signature], request to be considered for a call with CentComm administrative officers.
     
-    Reason for the call:
+    Reason for the call: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -517,16 +532,15 @@ doc-text-printer-request-establish-threat-level =
     ────────────────────────────────────────
    ⠀⠀             [bold]REQUEST TO ESTABLISH THREAT LEVEL[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    I hereby formally request to consider establishing the follow threat level:
+    I, [signature], hereby formally request to consider establishing the follow threat level:
     
-    Reason for establishing the code:
+    Reason for establishing the code: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -539,20 +553,19 @@ doc-text-printer-request-change-salary =
     ────────────────────────────────────────
    ⠀⠀                         [bold]REQUEST CHANGE SALARY[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    I hereby request consideration for a salary increase/decrease of (amount or number of percent)
+    I, [signature], hereby request consideration for a salary increase/decrease of (amount or number of percent)[form]
     
-    Employee recieving salary change:
+    Employee recieving salary change: [form]
 
-    Employees job title:
+    Employees job title: [form]
     
-    Reason for salary increase/decrease:
+    Reason for salary increase/decrease: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -565,26 +578,25 @@ doc-text-printer-request-for-non-listed-employment =
     ────────────────────────────────────────
    ⠀⠀             [bold]REQUEST FOR NON-LISTED EMPLOYMENT[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    I request consideration for acceptance into the current shift workforce of the following person in a non-listed position.
+    I, [signature], request consideration for acceptance into the current shift workforce of the following person in a non-listed position.
 
-    Name of applicant:
+    Name of applicant: [form]
 
-    Full job title:
+    Full job title: [form]
     
-    Responsible for the employee's head or coworker:
+    Responsible for the employee's head or coworker: [form]
     
-    Position work performed (SOP):
+    Position work performed (SOP): [form]
     
-    Access provided to the employee:
+    Access provided to the employee: [form]
     
-    Reason for employment:
+    Reason for employment: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -597,22 +609,21 @@ doc-text-printer-request-for-promotion =
     ────────────────────────────────────────
    ⠀⠀                         [bold]REQUEST FOR PROMOTION[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    I assert that the following employee has obtained the necessary qualifications and experience to be promoted.
+    I, [signature], assert that the following employee has obtained the necessary qualifications and experience to be promoted.
 
-    Employee to be promoted:
+    Employee to be promoted: [form]
     
-    Requested position:
+    Requested position: [form]
     
-    Persons responsible for the employee's chapter or officer:
+    Persons responsible for the employee's chapter or officer: [form]
     
-    Reason for promotion:
+    Reason for promotion: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -625,14 +636,15 @@ doc-text-printer-request-documents =
     ────────────────────────────────────────
    ⠀⠀                         [bold]REQUEST FOR DOCUMENTS[/bold]
     ──────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
  
-    I, (full name), in the capacity of Internal Affairs Agent, request a copy/original of the following document(s) for verification of compliance with the Corporate Act:
-    ⠀[bullet] ...
+    I, [signature], in the capacity of my position, request a copy/original of the following document(s) for verification of compliance with the Corporate Act:
+    ⠀• [form]
+     • [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -645,20 +657,18 @@ doc-text-printer-request-euthanasia =
     ────────────────────────────────────────
    ⠀⠀                        [bold]REQUEST FOR EUTHANASIA[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    I formally request the assistance of the medical department in performing euthanasia as a medical treatment for the reason of: (specify reason for request). 
+    I, [signature], formally request the assistance of the medical department in performing euthanasia as a medical treatment for the reason of: (specify reason for request)[form]. 
 
-    I am familiar with the implications of this decision, and the rationality and humanity of this decision has been established by the medical staff.
+    I am familiar with the implications of this decision, and the rationality and humanity of this decision has been established by the medical staff. [check]
+    I have no claims against the medical department in their adherence to euthanasia protocols. [check]
 
-    I have no claims against the medical department in their adherence to euthanasia protocols.
-
-    At the end of the procedure, I ask to dispose of the body by (method of disposal) if possible.
+    At the end of the procedure, I ask to dispose of the body by (method of disposal)[form] if possible.
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -671,18 +681,17 @@ doc-text-printer-request-construction-work =
     ────────────────────────────────────────
    ⠀⠀                     [bold]CONSTRUCTION WORK REQUEST[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    I formally request construction work at:
+    I, [signature] formally request construction work at: [form]
 
-    Reason for request:
+    Reason for request: [form]
 
-    List of construction work:
+    List of construction work: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -695,18 +704,18 @@ doc-text-printer-request-modernization =
     ────────────────────────────────────────
    ⠀⠀                         [bold]MODERNIZATION REQUEST[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    I request to upgrade the instrumentation in the following department:
+    I, [signature], request to upgrade the instrumentation in the following department: [form]
 
-    Reason for request:
+    Reason for request: [form]
 
     List of upgrades:
-    
+    • [form]
+    • [form]
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -719,22 +728,24 @@ doc-text-printer-request-ert =
     ────────────────────────────────────────
    ⠀⠀           [bold]EMERGENCY RESPONSE TEAM REQUEST[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
+
+    I, [signature], request an ERT team to be sent to the station to assist with an ongoing problem that we can't face without outside help.
 
     Threat(s) to the station:
-    ⠀[bullet] ...
+    ⠀• [form]
+     • [form]
 
-    Type of ERT requested:
+    Type of ERT requested: [form]
     (Security / Engineering / Janitorial / Medical / ...)
 
-    Fatalities (approximate number):
+    Fatalities (approximate number): [form]
 
    ⠀ [italic]Warning, abuse of this form may lead to immediate termination[/italic]
    ⠀ [italic]of the contract of the person(s) involved in this request.[/italic]
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -747,18 +758,19 @@ doc-text-printer-product-order =
     ────────────────────────────────────────
    ⠀⠀                                 [bold]PRODUCT ORDER[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    Request to produce products by the following department:
+    Request to produce products by the following department: [form]
 
     List of products required:
+    • [form]
+    • [form]
     
-    Reason for order:
+    Reason for order: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -774,20 +786,21 @@ doc-text-printer-complaint-violation-labor-rules =
     ────────────────────────────────────────
     ⠀⠀[bold]COMPLAINT FOR VIOLATION OF LABOUR REGULATIONS[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    I believe that the violations were committed by the follow:
+    I, [signature], believe that the violations were committed by the following:
     
-    Department committing violations:
+    Department committing violations: [form]
     
     Violations committed:
-
+    • [form]
+    • [form]
+    
     I thereby formally request an internal review of these violations.
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -800,20 +813,21 @@ doc-text-printer-offense-complaint =
     ────────────────────────────────────────
    ⠀⠀                             [bold]OFFENSE COMPLAINT[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    I believe that the following person has breached corporate law.
+    I, [signature], believe that the following person has breached corporate law.
 
-    Name of violator:
+    Name of violator: [form]
 
     Corporate law(s) breached:
-    
-    What happened from my point of view:
+    • [form]
+    • [form]
+
+    What happened from my point of view: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -829,24 +843,23 @@ doc-text-printer-permission-equipment =
     ────────────────────────────────────────
    ⠀⠀                           [bold]EQUIPMENT PERMISSION[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
 
-    Authorize the use of departmental work equipment of the following department:
+    I, [signature], authorize the use of departmental work equipment of the following department: [form]
 
-    Equipment subject to authorisation:
+    Equipment subject to authorisation: [form]
     
-    Authorised person:
+    Authorised person: [form]
 
-    Position of authorised person:
+    Position of authorised person: [form]
 
-    Reason for equipment permission:
+    Reason for equipment permission: [form]
 
-    Terms of use:
+    Terms of use: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -859,20 +872,19 @@ doc-text-printer-search-permission =
     ────────────────────────────────────────
    ⠀⠀                             [bold]SEARCH PERMISSION[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    I authorize the search of the following person due to the suspiscion(s) they are carrying contraband.
+    I, [signature], authorize the search of the following person due to the suspiscion(s) they are carrying contraband.
 
-    Name of searched person:
+    Name of searched person: [form]
 
-    Position of searched person:
+    Position of searched person: [form]
 
-    Reason for search:
+    Reason for search: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -885,25 +897,24 @@ doc-text-printer-permission-to-carry-weapons =
     ────────────────────────────────────────
    ⠀⠀                             [bold]WEAPON PERMISSION[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    I authorize the carrying of the weapon by the named person, as long as it is used for its intended purpose.
+    I, [signature], authorize the carrying of the weapon by the named person, as long as it is used for its intended purpose.
     In the event of a violation, the authorization will be revoked and the weapon will be confiscated by Security.
 
-    Named of authorised person:
+    Named of authorised person: [form]
 
-    Position of authorised person:
+    Position of authorised person: [form]
     
-    The weapon and, if applicable, the type of ammunition for it:
+    The weapon and, if applicable, the type of ammunition for it: [form]
     
-    The method of obtaining the weapon and, if applicable, the ammunition for it:
+    The method of obtaining the weapon and, if applicable, the ammunition for it: [form]
     
-    Reason for authorization:
+    Reason for authorization: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -916,20 +927,19 @@ doc-text-printer-permission-dispose-body =
     ────────────────────────────────────────
    ⠀⠀                      [bold]BODY DISPOSAL PERMISSION[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    I authorize the disposal of the body of the following person: 
+    I, [signature], authorize the disposal of the body of the following person: [form]
 
-    In the position of:
+    In the position of: [form]
     
-    Reason for disposal:
+    Reason for disposal: [form]
 
-    Method of disposal:
+    Method of disposal: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -942,18 +952,17 @@ doc-text-printer-construction-permit =
     ────────────────────────────────────────
    ⠀⠀                           [bold]CONSTRUCTION PERMIT[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    I authorize the redevelopment of the following part of the station:
+    I, [signature], authorize the redevelopment of the following part of the station: [form]
     
-    Reason for redevelopment:
+    Reason for redevelopment: [form]
 
-    Agreed scope of redevelopment:
+    Agreed scope of redevelopment: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -967,18 +976,18 @@ doc-text-printer-surgery-consent-permit =
     ────────────────────────────────────────
    ⠀⠀                           [bold]SURGERY CONSENT WAIVER[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    In sound mind I authorise (name of Surgeon/CMO) to perform surgery upon me.
+    In sound mind I, [signature], authorise (name of Surgeon/CMO)[signature] to perform surgery upon me.
     
-    Reason for Surgery:
+    Reason for Surgery: [form]
 
-    Surgical modifications provided:
+    Surgical modification(s) provided:
+    • [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -994,18 +1003,17 @@ doc-text-printer-dismissal-order =
     ────────────────────────────────────────
    ⠀⠀                               [bold]DISMISSAL ORDER[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    I order a dismissal of employement to the following person:
+    I, [signature], order a dismissal of employement to the following person: [form]
     
-    In the position of:
+    In the position of: [form]
 
-    Reason for dismissal:
+    Reason for dismissal: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -1018,14 +1026,13 @@ doc-text-printer-access-revocation-order =
     ────────────────────────────────────────
    ⠀⠀                       [bold]ACCESS REVOCATION ORDER[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    I am ordering the revocation of the following access from employee (full name) in the position of (full job title).
+    I, [signature], am ordering the revocation of the following access from employee [form] in the position of [form].
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -1038,14 +1045,13 @@ doc-text-printer-incentive-order =
     ────────────────────────────────────────
    ⠀⠀                               [bold]INCENTIVE ORDER[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    I award the following person a medal/citation/memorial/award for the following services:
+    I, [signature], award the following person a medal/citation/memorial/award for the following services: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -1058,18 +1064,17 @@ doc-text-printer-prisoner-parole-order =
     ────────────────────────────────────────
    ⠀⠀                         [bold]PRISONER PAROLE ORDER[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    I authorize the release of following detainee:
+    I, [signature], authorize the release of following detainee: [form]
     
     Upon issuance of parole, the detainee will be issued a civilian occupation with mandatory work until the end of the shift.
 
-    Issued occupation:
+    Issued occupation: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -1082,22 +1087,21 @@ doc-text-printer-order-recognizing-reasonableness-creature =
     ────────────────────────────────────────
    ⠀[bold]ORDER RECOGNIZING THE REASONABLENESS OF THE CREATURE[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    In the course of testing the creature, signs of higher brain activity and reasonableness of this creature, its ability to think, learn, understanding of morality, presence of common sense in its actions were revealed. 
+    I, [signature], in the course of testing the creature, detected signs of higher brain activity and reasonableness involving its ability to think, learn, understanding of morality, and presence of common sense.
     
     Thus based on the principles of equality of rights of all reasonable beings established by the OPRA, recognize this creature as reasonable.
     
-    Appearance of the being:
+    Appearance of the being: [form]
     
-    The established full name of the creature:
+    The established full name of the creature: [form]
     
     The creature is accepted as an assistant of the station until the end of the shift.
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -1110,18 +1114,17 @@ doc-text-printer-medical-intervention-order =
     ────────────────────────────────────────
    ⠀⠀                    [bold]MEDICAL INTERVENTION ORDER[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    I, in my professional opinion, order a medical intervention effective immediately.
+    I, [signature], in my professional opinion, order a medical intervention effective immediately.
     
-    Person to receive intervention:
+    Person to receive intervention: [form]
 
-    Grounds for the intervention:
+    Grounds for the intervention: [form]
     
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
 
 
 
@@ -1134,20 +1137,19 @@ doc-text-printer-execution-dnr-order =
     ────────────────────────────────────────
    ⠀⠀             [bold]EXECUTION AND DO NOT REVIVE ORDER[/bold]
     ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
     
-    Name of Prisoner: 
-    Former position of Prisoner:
+    Name of Prisoner:  [form]
+    Former position of Prisoner: [form]
 
     Crimes committed:
-    ⠀[bullet] ...
+    ⠀• [form]
 
     Reason for the execution and DNR:
-    ⠀[bullet] ...
+    ⠀• [form]
 
-    Authority ordering the Execution (Name + Position): 
+    Authority ordering the Execution (Name + Position): [signature]
 
    ⠀ [italic]This order can only be issued by the (Acting) Captain of the[/italic]
    ⠀ [italic]station. If a Magistrate is present, they can overrule the Captain[/italic]
@@ -1156,4 +1158,27 @@ doc-text-printer-execution-dnr-order =
    ⠀ [italic]The execution method is to be chosen by the prisoner, to a[/italic]
    ⠀ [italic]lawful extent, and must be as humane as possible.[/italic]
     ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]
+
+# Communications
+
+doc-text-printer-centcomm-communication =
+   ⠀[logo]            [cclogo] 
+
+                             [head=3]NT-CC Consortium Services[/head]
+
+                  [center][color=#1f75bb][italic][bold]   OFFICIAL CENTCOMM DOCUMENTATION[/bold][/italic][/color][/center]
+    ────────────────────────────────────────
+   ⠀⠀                         [bold]CentComm Communication[/bold]
+    ────────────────────────────────────────
+    Time and Date: [form]
+    Document Compiler Name and Occupation: [signature]
+    
+    Greetings CentComm,
+
+
+
+    Sincerely,
+            - [signature]
+    ────────────────────────────────────────
+   ⠀                      [italic]Place for Stamps and/or Signatures[/italic]

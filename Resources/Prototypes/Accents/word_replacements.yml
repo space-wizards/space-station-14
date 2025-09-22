@@ -263,6 +263,65 @@
     accent-pirate-replaced-30: accent-pirate-replacement-30
     accent-pirate-replaced-31: accent-pirate-replacement-31
     accent-pirate-replaced-32: accent-pirate-replacement-32
+    accent-pirate-replaced-33: accent-pirate-replacement-33
+    accent-pirate-replaced-34: accent-pirate-replacement-34
+    accent-pirate-replaced-35: accent-pirate-replacement-35
+    accent-pirate-replaced-36: accent-pirate-replacement-36
+    accent-pirate-replaced-37: accent-pirate-replacement-37
+    accent-pirate-replaced-38: accent-pirate-replacement-38
+    accent-pirate-replaced-39: accent-pirate-replacement-39
+    accent-pirate-replaced-40: accent-pirate-replacement-40
+    accent-pirate-replaced-41: accent-pirate-replacement-41
+    accent-pirate-replaced-42: accent-pirate-replacement-42
+    accent-pirate-replaced-43: accent-pirate-replacement-43
+    accent-pirate-replaced-44: accent-pirate-replacement-44
+    accent-pirate-replaced-45: accent-pirate-replacement-45
+    accent-pirate-replaced-46: accent-pirate-replacement-46
+    accent-pirate-replaced-47: accent-pirate-replacement-47
+    accent-pirate-replaced-48: accent-pirate-replacement-48
+    accent-pirate-replaced-49: accent-pirate-replacement-49
+    accent-pirate-replaced-50: accent-pirate-replacement-50
+    accent-pirate-replaced-51: accent-pirate-replacement-51
+    accent-pirate-replaced-52: accent-pirate-replacement-52
+    accent-pirate-replaced-53: accent-pirate-replacement-53
+    accent-pirate-replaced-54: accent-pirate-replacement-54
+    accent-pirate-replaced-55: accent-pirate-replacement-55
+    accent-pirate-replaced-56: accent-pirate-replacement-56
+    accent-pirate-replaced-57: accent-pirate-replacement-57
+    accent-pirate-replaced-58: accent-pirate-replacement-58
+    accent-pirate-replaced-59: accent-pirate-replacement-59
+    accent-pirate-replaced-60: accent-pirate-replacement-60
+    accent-pirate-replaced-61: accent-pirate-replacement-61
+    accent-pirate-replaced-62: accent-pirate-replacement-62
+    accent-pirate-replaced-63: accent-pirate-replacement-63
+    accent-pirate-replaced-64: accent-pirate-replacement-64
+    accent-pirate-replaced-65: accent-pirate-replacement-65
+    accent-pirate-replaced-66: accent-pirate-replacement-66
+    accent-pirate-replaced-67: accent-pirate-replacement-67
+    accent-pirate-replaced-68: accent-pirate-replacement-68
+    accent-pirate-replaced-69: accent-pirate-replacement-69
+    accent-pirate-replaced-70: accent-pirate-replacement-70
+    accent-pirate-replaced-71: accent-pirate-replacement-71
+    accent-pirate-replaced-72: accent-pirate-replacement-72
+    accent-pirate-replaced-73: accent-pirate-replacement-73
+    accent-pirate-replaced-74: accent-pirate-replacement-74
+    accent-pirate-replaced-75: accent-pirate-replacement-75
+    accent-pirate-replaced-76: accent-pirate-replacement-76
+    accent-pirate-replaced-77: accent-pirate-replacement-77
+    accent-pirate-replaced-78: accent-pirate-replacement-78
+    accent-pirate-replaced-79: accent-pirate-replacement-79
+    accent-pirate-replaced-80: accent-pirate-replacement-80
+    accent-pirate-replaced-81: accent-pirate-replacement-81
+    accent-pirate-replaced-82: accent-pirate-replacement-82
+    accent-pirate-replaced-83: accent-pirate-replacement-83
+    accent-pirate-replaced-84: accent-pirate-replacement-84
+    accent-pirate-replaced-85: accent-pirate-replacement-85
+    accent-pirate-replaced-86: accent-pirate-replacement-86
+    accent-pirate-replaced-87: accent-pirate-replacement-87
+    accent-pirate-replaced-88: accent-pirate-replacement-88
+    accent-pirate-replaced-89: accent-pirate-replacement-89
+    accent-pirate-replaced-90: accent-pirate-replacement-90
+    accent-pirate-replaced-91: accent-pirate-replacement-91
 
 - type: accent
   id: cowboy
@@ -447,6 +506,7 @@
     chatsan-word-65: chatsan-replacement-65
     chatsan-word-66: chatsan-replacement-66
     chatsan-word-67: chatsan-replacement-67
+    chatsan-word-68: chatsan-replacement-68
 
 - type: accent
   id: liar
