@@ -115,11 +115,8 @@ public sealed class ContrabandSystem : EntitySystem
         var jobs = allowedJobs.Select(p => _proto.Index(p).LocalizedName).ToArray();
         var localizedJobs = jobs.Select(p => Loc.GetString("contraband-job-plural", ("job", p)));
 
-        //creating a combined list of jobs and departments for the restricted text
-        var list = ContentLocalizationManager.FormatList(localizedDepartments.Concat(localizedJobs).ToList());
-
         // department restricted text
-        return Loc.GetString("contraband-examine-text-Restricted-department", ("departments", list), ("type", itemType));
+        return Loc.GetString("contraband-examine-text-Restricted-department", ("departments", localizedDepartments.Concat(localizedJobs)), ("type", itemType));
     }
 
     private FormattedMessage GetContrabandExamine(String deptMessage, String carryMessage)

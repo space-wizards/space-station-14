@@ -191,13 +191,10 @@ public sealed partial class GuideReagentReaction : BoxContainer, ISearchableCont
             MixTexture.Texture = sysMan.GetEntitySystem<SpriteSystem>().Frame0(primaryCategory.Icon);
         }
 
-        var mixingVerb = ContentLocalizationManager.FormatList(mixingCategories
-            .Select(p => Loc.GetString(p.VerbText)).ToList());
-
         var minTemp = prototype?.MinimumTemperature ?? 0;
         var maxTemp = prototype?.MaximumTemperature ?? float.PositiveInfinity;
         var text = Loc.GetString("guidebook-reagent-recipes-mix-info",
-            ("verb", mixingVerb),
+            ("verb", mixingCategories.Select(p => p.VerbText)),
             ("minTemp", minTemp),
             ("maxTemp", maxTemp),
             ("hasMax", !float.IsPositiveInfinity(maxTemp)));

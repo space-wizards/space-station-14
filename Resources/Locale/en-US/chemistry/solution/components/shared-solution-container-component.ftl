@@ -3,7 +3,7 @@ shared-solution-container-component-on-examine-main-text = It contains {INDEFINI
    *[other] mixture of chemicals.
     }
 
-examinable-solution-has-recognizable-chemicals = You can recognize {$recognizedString} in the solution.
+examinable-solution-has-recognizable-chemicals = You can recognize {LIST($recognizedString)} in the solution.
 examinable-solution-recognized = [color={$color}]{$chemical}[/color]
 
 examinable-solution-on-examine-volume = The contained solution is { $fillLevel ->

@@ -224,9 +224,7 @@ public sealed class ReflectSystem : EntitySystem
             typeList.Add(type);
         }
 
-        var msg = ContentLocalizationManager.FormatList(typeList);
-
-        args.PushMarkup(Loc.GetString("reflect-component-examine", ("value", value), ("type", msg)));
+        args.PushMarkup(Loc.GetString("reflect-component-examine", ("value", value), ("type", typeList)));
     }
     #endregion
 }

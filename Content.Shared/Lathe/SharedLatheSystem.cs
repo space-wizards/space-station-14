@@ -18,6 +18,7 @@ namespace Content.Shared.Lathe;
 public abstract class SharedLatheSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly ILocalizationManager _localization = default!;
     [Dependency] private readonly SharedMaterialStorageSystem _materialStorage = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
 
@@ -160,7 +161,7 @@ public abstract class SharedLatheSystem : EntitySystem
 
         if (proto.ResultReagents is { } resultReagents)
         {
-            return ContentLocalizationManager.FormatList(resultReagents
+            return _localization.FormatList(resultReagents
                 .Select(p => Loc.GetString("lathe-menu-result-reagent-display", ("reagent", _proto.Index(p.Key).LocalizedName), ("amount", p.Value)))
                 .ToList());
         }
