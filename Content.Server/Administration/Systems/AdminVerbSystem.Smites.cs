@@ -5,7 +5,6 @@ using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.GhostKick;
-using Content.Server.Medical;
 using Content.Server.Pointing.Components;
 using Content.Server.Polymorph.Systems;
 using Content.Server.Popups;
@@ -50,7 +49,6 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly SuperBonkSystem _superBonkSystem = default!;
     [Dependency] private readonly TabletopSystem _tabletopSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly VomitSystem _vomitSystem = default!;
 
 
     private readonly EntProtoId _actionViewLawsProtoId = "ActionViewLaws";
@@ -114,30 +112,6 @@ public sealed partial class AdminVerbSystem
             PopupType.LargeCaution);
         _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-set-alight-others", ("name", target)),
             xform.Coordinates,
-            Filter.PvsExcept(target),
-            true,
-            PopupType.MediumCaution);
-    }
-
-    protected override void SmiteVomitOrgansVerb(EntityUid target, BodyComponent body)
-    {
-        _vomitSystem.Vomit(target, -1000, -1000); // You feel hollow!
-        var organs = _bodySystem.GetBodyOrganEntityComps<TransformComponent>((target, body));
-        var baseXform = Transform(target);
-        foreach (var organ in organs)
-        {
-            if (HasComp<BrainComponent>(organ.Owner) || HasComp<EyeComponent>(organ.Owner))
-                continue;
-
-            _transformSystem.PlaceNextTo((organ.Owner, organ.Comp1), (target, baseXform));
-        }
-
-        _popupSystem.PopupEntity(Loc.GetString("admin-smite-vomit-organs-self"),
-            target,
-            target,
-            PopupType.LargeCaution);
-        _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-vomit-organs-others", ("name", target)),
-            baseXform.Coordinates,
             Filter.PvsExcept(target),
             true,
             PopupType.MediumCaution);

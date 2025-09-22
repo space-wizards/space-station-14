@@ -10,6 +10,7 @@ using Content.Shared.Electrocution;
 using Content.Shared.Gravity;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Medical;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -41,13 +42,14 @@ public abstract partial class SharedAdminVerbSystem
     [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
+    [Dependency] private readonly SlipperySystem _slipperySystem = default!;
     [Dependency] private readonly SharedBodySystem _bodySystem = default!;
     [Dependency] private readonly SharedBloodstreamSystem _bloodstreamSystem = default!;
     [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
     [Dependency] private readonly SharedCreamPieSystem _creamPieSystem = default!;
     [Dependency] private readonly SharedElectrocutionSystem _electrocutionSystem = default!;
     [Dependency] private readonly SharedEntityStorageSystem _entityStorageSystem = default!;
-    [Dependency] private readonly SlipperySystem _slipperySystem = default!;
+    [Dependency] private readonly VomitSystem _vomitSystem = default!;
     [Dependency] private readonly WeldableSystem _weldableSystem = default!;
 
     private void AddSmiteVerbs(GetVerbsEvent<Verb> args)
@@ -230,7 +232,29 @@ public abstract partial class SharedAdminVerbSystem
                 Text = vomitOrgansName,
                 Category = VerbCategory.Smite,
                 Icon = new SpriteSpecifier.Rsi(new("/Textures/Fluids/vomit_toxin.rsi"), "vomit_toxin-1"),
-                Act = () => SmiteVomitOrgansVerb(args.Target, body),
+                Act = () =>
+                {
+                    _vomitSystem.Vomit(args.Target, -1000, -1000); // You feel hollow!
+                    var organs = _bodySystem.GetBodyOrganEntityComps<TransformComponent>((args.Target, body));
+                    var baseXform = Transform(args.Target);
+                    foreach (var organ in organs)
+                    {
+                        if (HasComp<BrainComponent>(organ.Owner) || HasComp<EyeComponent>(organ.Owner))
+                            continue;
+
+                        _transformSystem.PlaceNextTo((organ.Owner, organ.Comp1), (args.Target, baseXform));
+                    }
+
+                    _popupSystem.PopupEntity(Loc.GetString("admin-smite-vomit-organs-self"),
+                        args.Target,
+                        args.Target,
+                        PopupType.LargeCaution);
+                    _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-vomit-organs-others", ("name", args.Target)),
+                        baseXform.Coordinates,
+                        Filter.PvsExcept(args.Target),
+                        true,
+                        PopupType.MediumCaution);
+                },
                 Impact = LogImpact.Extreme,
                 Message = string.Join(": ", vomitOrgansName, Loc.GetString("admin-smite-vomit-organs-description"))
             };
@@ -811,10 +835,6 @@ public abstract partial class SharedAdminVerbSystem
     }
 
     protected virtual void SmiteSetAlightVerb(EntityUid user, EntityUid target, FlammableComponent flammable)
-    {
-    }
-
-    protected virtual void SmiteVomitOrgansVerb(EntityUid target, BodyComponent body)
     {
     }
 
