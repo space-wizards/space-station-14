@@ -695,7 +695,7 @@ public abstract partial class SharedAdminVerbSystem
         {
             Text = superSpeedName,
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/AdminActions/super_speed.png")),
+            Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/AdminActions/super_speed.png")),
             Act = () =>
             {
                 var movementSpeed = EnsureComp<MovementSpeedModifierComponent>(args.Target);
@@ -717,7 +717,7 @@ public abstract partial class SharedAdminVerbSystem
         {
             Text = superBonkLiteName,
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Rsi(new("Structures/Furniture/Tables/glass.rsi"), "full"),
+            Icon = new SpriteSpecifier.Rsi(new ResPath("Structures/Furniture/Tables/glass.rsi"), "full"),
             Act = () => SmiteSuperBonkLiteVerb(args.Target),
             Impact = LogImpact.Extreme,
             Message = string.Join(": ", superBonkLiteName, Loc.GetString("admin-smite-super-bonk-lite-description"))
@@ -729,7 +729,7 @@ public abstract partial class SharedAdminVerbSystem
         {
             Text = superBonkName,
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Rsi(new("Structures/Furniture/Tables/generic.rsi"), "full"),
+            Icon = new SpriteSpecifier.Rsi(new ResPath("Structures/Furniture/Tables/generic.rsi"), "full"),
             Act = () => SmiteSuperBonkVerb(args.Target),
             Impact = LogImpact.Extreme,
             Message = string.Join(": ", superBonkName, Loc.GetString("admin-smite-super-bonk-description"))
@@ -741,7 +741,7 @@ public abstract partial class SharedAdminVerbSystem
         {
             Text = superslipName,
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Rsi(new("Objects/Specific/Janitorial/soap.rsi"), "omega-4"),
+            Icon = new SpriteSpecifier.Rsi(new ResPath("Objects/Specific/Janitorial/soap.rsi"), "omega-4"),
             Act = () =>
             {
                 var hadSlipComponent = EnsureComp(args.Target, out SlipperyComponent slipComponent);
@@ -766,7 +766,7 @@ public abstract partial class SharedAdminVerbSystem
         {
             Text = omniaccentName,
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Rsi(new("Interface/Actions/voice-mask.rsi"), "icon"),
+            Icon = new SpriteSpecifier.Rsi(new ResPath("Interface/Actions/voice-mask.rsi"), "icon"),
             Act = () => SmiteOmniAccentVerb(args.Target),
             Impact = LogImpact.Extreme,
             Message = string.Join(": ", omniaccentName, Loc.GetString("admin-smite-omni-accent-description"))
@@ -778,13 +778,25 @@ public abstract partial class SharedAdminVerbSystem
         {
             Text = crawlerName,
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Rsi(new("Mobs/Animals/snake.rsi"), "icon"),
+            Icon = new SpriteSpecifier.Rsi(new ResPath("Mobs/Animals/snake.rsi"), "icon"),
             Act = () => EnsureComp<WormComponent>(args.Target),
             Impact = LogImpact.Extreme,
             Message = string.Join(": ", crawlerName, Loc.GetString("admin-smite-crawler-description"))
         };
         args.Verbs.Add(crawler);
-    }
+
+        var siliconName = Loc.GetString("admin-smite-silicon-laws-bound-name").ToLowerInvariant();
+        Verb silicon = new()
+        {
+            Text = siliconName,
+            Category = VerbCategory.Smite,
+            Icon = new SpriteSpecifier.Rsi(new ResPath("Interface/Actions/actions_borg.rsi"), "state-laws"),
+            Act = () => SmiteSiliconLawsVerb(args.Target),
+            Impact = LogImpact.Extreme,
+            Message = string.Join(": ", siliconName, Loc.GetString("admin-smite-silicon-laws-bound-description"))
+        };
+        args.Verbs.Add(silicon);
+}
 
     protected virtual void PolymorphEntity(EntityUid uid, ProtoId<PolymorphPrototype> protoId)
     {
@@ -843,6 +855,10 @@ public abstract partial class SharedAdminVerbSystem
     }
 
     protected virtual void SmiteOmniAccentVerb(EntityUid target)
+    {
+    }
+
+    protected virtual void SmiteSiliconLawsVerb(EntityUid target)
     {
     }
 }

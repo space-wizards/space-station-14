@@ -9,9 +9,11 @@ using Content.Server.Medical;
 using Content.Server.Pointing.Components;
 using Content.Server.Polymorph.Systems;
 using Content.Server.Popups;
+using Content.Server.Roles;
 using Content.Server.Speech.Components;
 using Content.Server.Tabletop;
 using Content.Server.Tabletop.Components;
+using Content.Shared.Actions;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Clumsy;
@@ -20,7 +22,10 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Polymorph;
 using Content.Shared.Popups;
+using Content.Shared.Silicons.Laws;
+using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Tabletop.Components;
+using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -36,13 +41,23 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
     [Dependency] private readonly FlammableSystem _flammableSystem = default!;
     [Dependency] private readonly GhostKickManager _ghostKickManager = default!;
-    [Dependency] private readonly SharedGodmodeSystem _sharedGodmodeSystem = default!;
     [Dependency] private readonly PolymorphSystem _polymorphSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly TabletopSystem _tabletopSystem = default!;
-    [Dependency] private readonly VomitSystem _vomitSystem = default!;
+    [Dependency] private readonly RoleSystem _roleSystem = default!;
+    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+    [Dependency] private readonly SharedGodmodeSystem _sharedGodmodeSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SuperBonkSystem _superBonkSystem = default!;
+    [Dependency] private readonly TabletopSystem _tabletopSystem = default!;
+    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly VomitSystem _vomitSystem = default!;
+
+
+    private readonly EntProtoId _actionViewLawsProtoId = "ActionViewLaws";
+    private readonly ProtoId<SiliconLawsetPrototype> _crewsimovLawset = "Crewsimov";
+
+    private readonly EntProtoId _siliconMindRole = "MindRoleSiliconBrain";
+    private const string SiliconLawBoundUserInterface = "SiliconLawBoundUserInterface";
 
     protected override void PolymorphEntity(EntityUid uid, ProtoId<PolymorphPrototype> protoId)
     {
@@ -205,5 +220,30 @@ public sealed partial class AdminVerbSystem
 
         if (_random.Next(0, 8) == 0)
             EnsureComp<BackwardsAccentComponent>(target); // was asked to make this at a low chance idk
+    }
+
+    protected override void SmiteSiliconLawsVerb(EntityUid target)
+    {
+        var userInterfaceComp = EnsureComp<UserInterfaceComponent>(target);
+        _uiSystem.SetUi((target, userInterfaceComp),
+            SiliconLawsUiKey.Key,
+            new InterfaceData(SiliconLawBoundUserInterface));
+
+        if (!HasComp<SiliconLawBoundComponent>(target))
+        {
+            EnsureComp<SiliconLawBoundComponent>(target);
+            _actionsSystem.AddAction(target, _actionViewLawsProtoId);
+        }
+
+        EnsureComp<SiliconLawProviderComponent>(target);
+        _siliconLawSystem.SetLaws(_siliconLawSystem.GetLawset(_crewsimovLawset).Laws, target);
+
+        if (_mindSystem.TryGetMind(target, out var mindId, out _))
+            _roleSystem.MindAddRole(mindId, _siliconMindRole);
+
+        _popupSystem.PopupEntity(Loc.GetString("admin-smite-silicon-laws-bound-self"),
+            target,
+            target,
+            PopupType.LargeCaution);
     }
 }
