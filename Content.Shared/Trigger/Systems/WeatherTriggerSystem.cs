@@ -1,15 +1,15 @@
 using Content.Shared.Trigger.Components.Effects;
 using Content.Shared.Weather;
 using Robust.Shared.Prototypes;
-
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Trigger.Systems;
 
 public sealed class WeatherTriggerSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedWeatherSystem _weather = default!;
-
 
     public override void Initialize()
     {
@@ -23,10 +23,12 @@ public sealed class WeatherTriggerSystem : EntitySystem
         if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
             return;
 
-        if (args.User == null)
+        var target = ent.Comp.TargetUser ? args.User : ent.Owner;
+
+        if (target == null)
             return;
 
-        var xform = Transform(args.User.Value);
+        var xform = Transform(target.Value);
 
         if (ent.Comp.Weather == null) //Clear weather if nothing is set
         {
@@ -34,6 +36,9 @@ public sealed class WeatherTriggerSystem : EntitySystem
             return;
         }
 
-        _weather.SetWeather(xform.MapID, _prototypeManager.Index(ent.Comp.Weather), null);
+        var endTime = ent.Comp.Duration == null ? null : ent.Comp.Duration + _timing.CurTime;
+
+        if (_prototypeManager.Resolve(ent.Comp.Weather, out var weatherPrototype))
+            _weather.SetWeather(xform.MapID, weatherPrototype, endTime);
     }
 }
