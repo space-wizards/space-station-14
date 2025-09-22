@@ -218,8 +218,9 @@
     - Service
     - Engineering
     - Misc
-    - Centcomm
+    - CentralCommand
     - Syndicate
+    - Silicon
     privilegedIdSlot:
       name: UniversalIdConsole-privilegedId
       ejectSound: /Audio/Machines/id_swipe.ogg
@@ -254,12 +255,30 @@
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
+      sprite: Structures/Machines/computers.rsi
       state: computer
     - map: ["computerLayerKeyboard"]
+      sprite: Structures/Machines/computers.rsi
       state: generic_keyboard
     - map: ["computerLayerScreen"]
-      state: id
+      sprite: _Starlight/Structures/Machines/computers.rsi
+      state: universal_id
     - map: ["computerLayerKeys"]
-      state: id_key
+      sprite: _Starlight/Structures/Machines/computers.rsi
+      state: universal_id_key
     - map: ["enum.WiresVisualLayers.MaintenancePanel"]
-      state:
+      sprite: Structures/Machines/computers.rsi
+      state: generic_panel_open
+  - type: Computer
+    board: UniversalIdConsoleCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#3c5eb5"
+  - type: Tag
+    tags:
+    - EmagImmune
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      board: !type:Container

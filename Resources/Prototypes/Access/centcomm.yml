@@ -1,3 +1,10 @@
 - type: accessLevel
   id: CentralCommand
   name: id-card-access-level-central-command
+  
+  # Starlight-edit: Start
+- type: accessGroup
+  id: CentralCommand
+  tags:
+  - CentralCommand
+  # Starlight-edit: End

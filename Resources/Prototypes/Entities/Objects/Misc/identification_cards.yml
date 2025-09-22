@@ -870,7 +870,7 @@
     - AllAccess
     - Silicon
     - Misc
-    - Centcomm
+    - CentralCommand
     - Syndicate
     # Starlight-edit: End
   - type: Tag #  Ignore Chameleon tags

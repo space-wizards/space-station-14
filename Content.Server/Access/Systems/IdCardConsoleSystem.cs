@@ -109,7 +109,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             
             isHighPrivilege = possibleAccess.Count >= allPossibleAccess.Count * 0.8f;
 
-            foreach (var groupId in component.AccessGroups)
+            foreach (var groupId in component.AccessGroups.ToList())
             {
                 if (!_prototype.TryIndex<AccessGroupPrototype>(groupId, out var groupPrototype))
                     continue;
@@ -267,7 +267,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         // Ensure the user isn't trying to add access they shouldn't be able to.
         // Starlight-start: Change to access groups
         List<ProtoId<AccessLevelPrototype>> Accesses = new();
-        foreach (var group in component.AccessGroups)
+        foreach (var group in component.AccessGroups.ToList())
         {
             if (!_prototype.TryIndex<AccessGroupPrototype>(group, out var groupPrototype))
                 continue;
@@ -301,6 +301,12 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
         /*TODO: ECS SharedIdCardConsoleComponent and then log on card ejection, together with the save.
         This current implementation is pretty shit as it logs 27 entries (27 lines) if someone decides to give themselves AA*/
+        // Starlight-edit: Start
+        var addedTags = finalTags.Except(oldTags).Select(tag => "+" + tag).ToList();
+        var removedTags = oldTags.Except(finalTags).Select(tag => "-" + tag).ToList();
+        _access.TrySetTags(targetId, finalTags);
+        // Starlight-edit: End
+
         _adminLogger.Add(LogType.Action, LogImpact.Medium,
             $"{ToPrettyString(player):player} has modified {ToPrettyString(targetId):entity} with the following accesses: [{string.Join(", ", addedTags.Union(removedTags))}] [{string.Join(", ", newAccessList)}]");
     }

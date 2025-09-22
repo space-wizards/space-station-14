@@ -29,7 +29,6 @@
       - Medical
       - Service
       - Engineering
-      - Centcomm
       # Starlight-edit: End
       privilegedIdSlot:
         name: AccessOverrider-privilegedId
@@ -82,7 +81,7 @@
       - Service
       - Engineering
       - Misc
-      - Centcomm
+      - CentralCommand
       - Syndicate
       # Starlight-edit: End
       privilegedIdSlot:

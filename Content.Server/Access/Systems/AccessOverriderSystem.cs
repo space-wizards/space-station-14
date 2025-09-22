@@ -178,19 +178,16 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
 
         var groupsArray = component.AccessGroups?.ToArray();
         var newState = new AccessOverriderBoundUserInterfaceState(
-        // Starlight-edit: End
             component.PrivilegedIdSlot.HasItem,
             PrivilegedIdIsAuthorized(uid, component),
             currentAccess,
+            possibleAccess, // Starlight
             missingAccess,
             privilegedIdName,
             targetLabel,
-            // Starlight-edit: Start
             targetLabelColor,
-            possibleAccess,
             groupsArray,
-            component.CurrentAccessGroup);
-            // Starlight-edit: End
+            component.CurrentAccessGroup); // Starlight
 
         _userInterface.SetUiState(uid, AccessOverriderUiKey.Key, newState);
     }

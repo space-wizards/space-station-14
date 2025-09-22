@@ -37,14 +37,8 @@
   - Freelance
   - Commie
   - Wizard
-  - Xenoborg
 
-  - type: accessGroup
-  id: Centcomm
-  tags:
-  - CentralCommand
-
-  - type: accessGroup
+- type: accessGroup
   id: Syndicate
   tags:
   - SyndicateAgent

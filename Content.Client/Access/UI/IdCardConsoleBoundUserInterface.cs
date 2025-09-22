@@ -85,7 +85,7 @@ namespace Content.Client.Access.UI
 
         public void OnGroupSelected(ProtoId<AccessGroupPrototype> group)
         {
-            SendMessage(new AccessGroupSelectedMessage(group));
+            SendMessage(new IdCardConsoleComponent.AccessGroupSelectedMessage(group)); // Starlight-edit
         }
         // Starlight-edit: End
     }
