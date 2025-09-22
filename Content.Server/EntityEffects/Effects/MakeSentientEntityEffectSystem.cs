@@ -2,7 +2,6 @@
 using Content.Server.Speech.Components;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects;
-using Content.Shared.EntityEffects.NewEffects;
 using Content.Shared.Mind.Components;
 
 namespace Content.Server.EntityEffects.Effects;

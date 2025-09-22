@@ -1,10 +1,8 @@
-﻿using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects.Effects.Body;
-using Content.Shared.EntityEffects.NewEffects;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
 using Content.Shared.Nutrition.Components;

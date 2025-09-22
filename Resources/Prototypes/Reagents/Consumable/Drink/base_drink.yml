@@ -60,7 +60,7 @@
     Flammable:
       methods: [ Touch ]
       effects:
-      - !type:FlammableReaction
+      - !type:Flammable
   tileReactions:
   - !type:FlammableTileReaction
     temperatureMultiplier: 1.35

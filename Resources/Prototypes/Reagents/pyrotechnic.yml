@@ -6,7 +6,7 @@
     Flammable:
       methods: [ Touch ]
       effects:
-        - !type:FlammableReaction
+        - !type:Flammable
   plantMetabolism:
     - !type:PlantAdjustWeeds
       amount: -2
@@ -50,7 +50,7 @@
     Flammable:
       methods: [ Touch ]
       effects:
-      - !type:FlammableReaction
+      - !type:Flammable
         multiplier: 0.4
   metabolisms:
     Poison:
@@ -61,7 +61,7 @@
             Heat: 2
             Poison: 1
             Caustic: 0.5 # based off napalm being an irritant
-      - !type:FlammableReaction
+      - !type:Flammable
         multiplier: 0.4
 
 - type: reagent
@@ -80,7 +80,7 @@
           types:
             Heat: 3
             Poison: 1
-      - !type:FlammableReaction
+      - !type:Flammable
         multiplier: 0.1
       - !type:AdjustTemperature
         amount: 6000
@@ -89,7 +89,7 @@
     Flammable:
       methods: [ Touch ]
       effects:
-      - !type:FlammableReaction
+      - !type:Flammable
         multiplier: 0.2
       - !type:Ignite
 
@@ -112,7 +112,7 @@
             Heat: 2
             Poison: 1
             Caustic: 0.5 # CLF3 is corrosive
-      - !type:FlammableReaction
+      - !type:Flammable
         multiplier: 0.2
       - !type:AdjustTemperature
         amount: 6000
@@ -120,7 +120,7 @@
     Flammable:
       methods: [ Touch ]
       effects:
-      - !type:FlammableReaction
+      - !type:Flammable
         multiplier: 0.3
       - !type:Ignite
       - !type:Emote
@@ -178,7 +178,7 @@
         damage:
           types:
             Poison: 1
-      - !type:FlammableReaction
+      - !type:Flammable
         multiplier: 0.4
 
 - type: reagent

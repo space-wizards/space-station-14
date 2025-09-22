@@ -6,7 +6,6 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
-using Content.Shared.EntityEffects.Effects;
 using Content.Shared.EntityEffects.Effects.Solution;
 using Content.Shared.EntityEffects.Effects.Transform;
 using Content.Shared.FixedPoint;
