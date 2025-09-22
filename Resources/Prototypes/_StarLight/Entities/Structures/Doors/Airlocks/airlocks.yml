@@ -39,3 +39,24 @@
     sprite: _Starlight/Structures/Doors/Airlocks/Glass/surgery.rsi
   - type: Paintable
     group: null
+
+# Paramedic
+- type: entity
+  parent: Airlock
+  id: AirlockParamedic
+  suffix: Paramedic
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Doors/Airlocks/Standard/paramedic.rsi
+  - type: Paintable
+    group: null
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockParamedicGlass
+  suffix: Paramedic
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Doors/Airlocks/Glass/paramedic.rsi
+  - type: Paintable
+    group: null

@@ -42,6 +42,7 @@
     - Ntrep
     - Brigmedic
     - Surgery
+    - Paramedic
   special:
     - !type:AddImplantSpecial
       implants: [MindShieldImplant]

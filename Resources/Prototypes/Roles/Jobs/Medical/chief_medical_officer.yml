@@ -29,6 +29,7 @@
   - Brig
   - Cryogenics
   - Surgery # Starlight
+  - Paramedic # Starlight
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

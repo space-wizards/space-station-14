@@ -40,6 +40,7 @@
   - BlueShield # Starlight Job
   - Robotics # Starlight Job
   - Surgery # Starlight Job
+  - Paramedic # Starlight Job
 
 - type: accessGroup
   id: General

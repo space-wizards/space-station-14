@@ -174,3 +174,22 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+
+# Paramedic
+- type: entity
+  parent: AirlockParamedic
+  id: AirlockParamedicLocked
+  suffix: Paramedic, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsParamedic ]
+
+- type: entity
+  parent: AirlockParamedicGlass
+  id: AirlockParamedicGlassLocked
+  suffix: Paramedic, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsParamedic ]

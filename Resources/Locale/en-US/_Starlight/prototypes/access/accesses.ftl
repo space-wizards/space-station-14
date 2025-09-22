@@ -10,6 +10,8 @@ id-card-access-level-freelance = Freelance
 
 id-card-access-level-surgery = Surgery
 
+id-card-access-level-paramedic = Paramedic
+
 id-card-access-level-debug1 = Debug1
 id-card-access-level-debug2 = Debug2
 id-card-access-level-debug3 = Debug3
