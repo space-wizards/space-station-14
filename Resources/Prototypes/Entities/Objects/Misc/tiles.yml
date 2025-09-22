@@ -735,7 +735,7 @@
   - type: Stack
     stackType: FloorTileMiningLight
 
-# Departamental
+# Departmental
 - type: entity
   name: freezer tile
   parent: FloorTileItemBase
