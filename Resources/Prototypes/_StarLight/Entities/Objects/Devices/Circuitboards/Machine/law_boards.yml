@@ -10,7 +10,7 @@
     laws: SyndimovLawset
     lawUploadSound: /Audio/Ambience/Antag/silicon_lawboard_antimov.ogg
   - type: StaticPrice 
-    price: 5000
+    price: 1000
 
 - type: entity
   id: PanicmovCircuitBoard

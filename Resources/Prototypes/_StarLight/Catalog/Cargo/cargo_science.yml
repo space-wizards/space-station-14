@@ -1,9 +1,0 @@
-- type: cargoProduct
-  id: Crewsimov
-  icon:
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  product: CrateLawboards
-  cost: 25000   
-  category: cargoproduct-category-name-science
-  group: market    
