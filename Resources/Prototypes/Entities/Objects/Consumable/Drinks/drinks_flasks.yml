@@ -1,12 +1,37 @@
 - type: entity
-  parent: DrinkBase
-  id: FlaskBase
   abstract: true
+  parent: [DrinkBaseMaterialStrongMetal, DrinkBase, DrinkBaseOpenable, DrinkVisualsOpenable]
+  id: FlaskBase
   components:
-  - type: Drink
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 300
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/flask.rsi
+  - type: FitsInDispenser
+    solution: drink
+  - type: Openable
+    sound:
+      collection: flaskOpenSounds
+    closeable: true
+    closeSound:
+      collection: flaskCloseSounds
+
+# Flasks
+
+- type: entity
+  parent: [DrinkBaseMaterialStrongMetal, DrinkBase]
+  id: DrinkFlaskOld
+  name: old flask
+  description: A decrepit old flask, its lid seems to be missing.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/flask_old.rsi
   - type: FitsInDispenser
     solution: drink
 
@@ -22,6 +47,7 @@
 - type: entity
   parent: FlaskBase
   id: DrinkMREFlask
+  suffix: Full
   name: MRE flask
   description: An old military flask, filled with the finest contents for soldiers.
   components:
@@ -74,15 +100,6 @@
 
 - type: entity
   parent: FlaskBase
-  id: DrinkFlaskOld
-  name: flask
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/flask_old.rsi
-
-- type: entity
-  parent: FlaskBase
   id: DrinkLithiumFlask
   name: lithium flask
   description: A flask with a Lithium Atom symbol on it.
@@ -98,28 +115,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vacuumflask.rsi
-
-- type: entity
-  parent: FlaskBase
-  id: Pitcher
-  name: metal pitcher
-  description: A stainless steel insulated pitcher. Everyone's best friend in the morning.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 60
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/pitcher.rsi
-    layers:
-      - state: icon
-        map: ["enum.SolutionContainerLayers.Base"]
-      - state: fill-6
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
-  - type: Appearance
-  - type: SolutionContainerVisuals
-    maxFillLevels: 6
-    fillBaseName: fill-
-    inHandsMaxFillLevels: 2
-    inHandsFillBaseName: -fill-
+  - type: Tool
+    qualities:
+    - Rolling # Perfectly cylindrical flask
+    speedModifier: 0.75

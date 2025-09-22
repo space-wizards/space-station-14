@@ -35,7 +35,7 @@ public sealed partial class NymphSystem : EntitySystem
 
         // Get the organs' position & spawn a nymph there
         var coords = Transform(uid).Coordinates;
-        var nymph = EntityManager.SpawnAtPosition(entityProto.ID, coords);
+        var nymph = SpawnAtPosition(entityProto.ID, coords);
 
         if (HasComp<ZombieComponent>(args.OldBody)) // Zombify the new nymph if old one is a zombie
             _zombie.ZombifyEntity(nymph);
