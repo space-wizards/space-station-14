@@ -194,6 +194,8 @@
         - yellow
         - red
         - gamma
+        - psi
+        - orange
     - proto: RedLaserBeam
       fireCost: 66.6
       magState: lethal
@@ -204,6 +206,8 @@
         - yellow
         - red
         - gamma
+        - psi
+        - orange
 
 - type: entity
   name: X-01 multiphase energy gun
