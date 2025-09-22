@@ -1380,5 +1380,62 @@ Entries:
   id: 167
   time: '2025-09-04T13:03:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40053
+- author: UpAndLeaves
+  changes:
+  - message: Added 8 new storage and inventory toolshed commands
+    type: Add
+  id: 168
+  time: '2025-09-11T22:07:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39046
+- author: slarticodefast
+  changes:
+  - message: The listplayers command now requires PII permissions due to showing IP
+      addresses.
+    type: Tweak
+  id: 169
+  time: '2025-09-13T15:53:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40324
+- author: slarticodefast
+  changes:
+  - message: The listplayers command now requires PII permissions due to showing IP
+      addresses.
+    type: Tweak
+  id: 170
+  time: '2025-09-16T07:59:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40395
+- author: Errant, beck-thompson, FairlySadPanda
+  changes:
+  - message: 'Antag bans can now be placed on players through the Roleban GUI. Antag
+      bans can lock all roundstart antag options individually, and block all antag
+      ghostroles (though some of the  more "generic" antag ghostroles are grouped
+      together and cannot be banned individually). Zombie conversion forcibly ghosts
+      a rolebanned player. Some antag types are not yet supported: Being converted
+      into a Revolutionary, players who are only banned from antagonist borgs specifically,
+      getting ion stormed or emagged, and the effects of the wizard gun spell.'
+    type: Add
+  id: 171
+  time: '2025-09-17T21:59:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35966
+- author: Kowlin
+  changes:
+  - message: The "unbanned by" message in the admin notes now formats its date properly.
+    type: Tweak
+  id: 172
+  time: '2025-09-21T15:26:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40484
+- author: Samuka
+  changes:
+  - message: Added Silicon Smite that makes anything follow silicon laws.
+    type: Add
+  id: 173
+  time: '2025-09-22T02:39:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40452
+- author: Princess-Cheeseballs
+  changes:
+  - message: Added vulpkanin smite.
+    type: Add
+  id: 174
+  time: '2025-09-22T06:22:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40360
 Name: Admin
 Order: 2
