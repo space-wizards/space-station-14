@@ -1902,13 +1902,8 @@
   description: uplink-clothing-outer-hardsuit-juggernaut-desc
   icon: { sprite: /Textures/Structures/Storage/Crates/syndicate.rsi, state: icon }
   productEntity: CrateCybersunJuggernautBundle
-  # DS14-start
-  discountCategory: veryRareDiscounts
-  discountDownTo:
-    Telecrystal: 35 # DS14-value
-  # DS14-end
   cost:
-    Telecrystal: 40 # DS14-value
+    Telecrystal: 45 # DS14-value
   categories:
   - UplinkWearables
   conditions:
