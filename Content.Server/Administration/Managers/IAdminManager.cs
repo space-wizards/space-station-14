@@ -64,8 +64,6 @@ namespace Content.Server.Administration.Managers
         /// <seealso cref="ReloadAdmin"/>
         void ReloadAdminsWithRank(int rankId);
 
-        void Initialize();
-
         void PromoteHost(ICommonSession player);
 
         bool TryGetCommandFlags(CommandSpec command, out AdminFlags[]? flags);

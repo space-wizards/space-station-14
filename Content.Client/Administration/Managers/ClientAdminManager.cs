@@ -1,32 +1,46 @@
 using Content.Shared.Administration;
-using Content.Shared.Administration.Managers;
 using Robust.Client.Console;
-using Robust.Client.Player;
 using Robust.Client.UserInterface;
-using Robust.Shared.ContentPack;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Administration.Managers
 {
-    public sealed class ClientAdminManager : IClientAdminManager, IClientConGroupImplementation, IPostInjectInit, ISharedAdminManager
+    public sealed class ClientAdminManager : SharedAdminManager, IClientAdminManager, IClientConGroupImplementation
     {
-        [Dependency] private readonly IPlayerManager _player = default!;
         [Dependency] private readonly IClientNetManager _netMgr = default!;
         [Dependency] private readonly IClientConGroupController _conGroup = default!;
-        [Dependency] private readonly IClientConsoleHost _host = default!;
-        [Dependency] private readonly IResourceManager _res = default!;
-        [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterface = default!;
 
+        private readonly AdminCommandPermissions _serverCommands = new();
         private AdminData? _adminData;
-        private readonly HashSet<string> _availableCommands = new();
-
-        private readonly AdminCommandPermissions _localCommandPermissions = new();
-        private ISawmill _sawmill = default!;
 
         public event Action? AdminStatusUpdated;
+        public event Action? ConGroupUpdated;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            _netMgr.RegisterNetMessage<MsgUpdateAdminStatus>(UpdateMessageRx);
+            _conGroup.Implementation = this;
+        }
+
+        public override void ReloadCommandPermissions()
+        {
+            base.ReloadCommandPermissions();
+
+            if (ResMan.TryContentFileRead(new ResPath("/clientCommandPerms.yml"), out var efs))
+                CommandPermissions.LoadPermissionsFromStream(efs);
+        }
+
+        public override void ReloadToolshedPermissions()
+        {
+            // base.ReloadToolshedPermissions();
+
+            if (ResMan.TryContentFileRead(new ResPath("/clientToolshedEngineCommandPerms.yml"), out var f))
+                ToolshedCommandPermissions.LoadPermissionsFromStream(f);
+        }
 
         public bool IsActive()
         {
@@ -38,19 +52,20 @@ namespace Content.Client.Administration.Managers
             return _adminData?.HasFlag(flag) ?? false;
         }
 
+        public override bool CanCommand(ICommonSession session, string cmdName)
+        {
+            return PlayerMan.LocalUser == session.UserId
+                ? CanCommand(cmdName)
+                : base.CanCommand(session, cmdName);
+        }
+
         public bool CanCommand(string cmdName)
         {
             if (_adminData != null && _adminData.HasFlag(AdminFlags.Host))
-            {
-                // Host can execute all commands when connected.
-                // Kind of a shortcut to avoid pains during development.
-                return true;
-            }
-
-            if (_localCommandPermissions.CanCommand(cmdName, _adminData))
                 return true;
 
-            return _availableCommands.Contains(cmdName);
+            return CommandPermissions.CanCommand(cmdName, _adminData)
+                   || _serverCommands.CanCommand(cmdName, _adminData);
         }
 
         public bool CanViewVar()
@@ -73,69 +88,37 @@ namespace Content.Client.Administration.Managers
             return _adminData?.CanAdminMenu() ?? false;
         }
 
-        public void Initialize()
-        {
-            _netMgr.RegisterNetMessage<MsgUpdateAdminStatus>(UpdateMessageRx);
-
-            // Load flags for engine commands, since those don't have the attributes.
-            if (_res.TryContentFileRead(new ResPath("/clientCommandPerms.yml"), out var efs))
-            {
-                _localCommandPermissions.LoadPermissionsFromStream(efs);
-            }
-        }
-
         private void UpdateMessageRx(MsgUpdateAdminStatus message)
         {
-            _availableCommands.Clear();
-
-            // Anything marked as Any we'll just add even if the server doesn't know about it.
-            foreach (var (command, instance) in _host.AvailableCommands)
-            {
-                if (Attribute.GetCustomAttribute(instance.GetType(), typeof(AnyCommandAttribute)) == null)
-                    continue;
-                _availableCommands.Add(command);
-            }
-
-            _availableCommands.UnionWith(message.AvailableCommands);
-            _sawmill.Debug($"Have {message.AvailableCommands.Length} commands available");
+            // The server sends us a list of commands we are currently allowed to execute.
+            // It doesn't provide the full set of permission information.
+            // Hence, we just bodge it and pretend that the server-side commands we are allowed to run actually have no
+            // restrictions at all.
+            _serverCommands.Clear();
+            _serverCommands.AnyCommands.UnionWith(message.AvailableCommands);
 
             _adminData = message.Admin;
             if (_adminData != null)
             {
                 var flagsText = string.Join("|", AdminFlagsHelper.FlagsToNames(_adminData.Flags));
-                _sawmill.Info($"Updated admin status: {_adminData.Active}/{_adminData.Title}/{flagsText}");
+                Log.Info($"Updated admin status: {_adminData.Active}/{_adminData.Title}/{flagsText}");
 
                 if (_adminData.Active)
                     _userInterface.DebugMonitors.SetMonitor(DebugMonitor.Coords, true);
             }
             else
             {
-                _sawmill.Info("Updated admin status: Not admin");
+                Log.Info("Updated admin status: Not admin");
             }
 
+            Log.Debug($"Have {_serverCommands.AnyCommands.Count} server-side commands available");
             AdminStatusUpdated?.Invoke();
             ConGroupUpdated?.Invoke();
         }
 
-        public event Action? ConGroupUpdated;
-
-        void IPostInjectInit.PostInject()
+        public override AdminData? GetAdminData(ICommonSession session, bool includeDeAdmin = false)
         {
-            _conGroup.Implementation = this;
-            _sawmill = _logManager.GetSawmill("admin");
-        }
-
-        public AdminData? GetAdminData(EntityUid uid, bool includeDeAdmin = false)
-        {
-            if (uid == _player.LocalEntity && (_adminData?.Active ?? includeDeAdmin))
-                return _adminData;
-
-            return null;
-        }
-
-        public AdminData? GetAdminData(ICommonSession session, bool includeDeAdmin = false)
-        {
-            if (_player.LocalUser == session.UserId && (_adminData?.Active ?? includeDeAdmin))
+            if (PlayerMan.LocalUser == session.UserId && (_adminData?.Active ?? includeDeAdmin))
                 return _adminData;
 
             return null;
@@ -143,7 +126,7 @@ namespace Content.Client.Administration.Managers
 
         public AdminData? GetAdminData(bool includeDeAdmin = false)
         {
-            if (_player.LocalSession is { } session)
+            if (PlayerMan.LocalSession is { } session)
                 return GetAdminData(session, includeDeAdmin);
 
             return null;
