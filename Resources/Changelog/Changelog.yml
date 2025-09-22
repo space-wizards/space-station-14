@@ -1,64 +1,4 @@
 ﻿Entries:
-- author: BigfootBravo
-  changes:
-  - message: Cargo acquisition slips can now fit into folders, clipboards, and envelopes,
-      like other papers can.
-    type: Fix
-  id: 8477
-  time: '2025-05-14T04:42:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37439
-- author: Hitlinemoss
-  changes:
-  - message: The chef's closet no longer contains an emergency crowbar.
-    type: Remove
-  id: 8478
-  time: '2025-05-14T05:16:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37403
-- author: BigfootBravo
-  changes:
-  - message: No more spammed error message when trying to write on a acquisition slip.
-    type: Fix
-  id: 8479
-  time: '2025-05-14T05:56:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37442
-- author: ToastEnjoyer
-  changes:
-  - message: Removed the high value target status on certain computer boards, replacing
-      them with command restricted status.
-    type: Tweak
-  id: 8480
-  time: '2025-05-14T17:47:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37452
-- author: LevitatingTree
-  changes:
-  - message: Changed the names of the neurodivergent pins to more accurately reflect
-      their meanings.
-    type: Tweak
-  id: 8481
-  time: '2025-05-14T18:03:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37416
-- author: metalgearsloth
-  changes:
-  - message: Predict gas valves.
-    type: Tweak
-  id: 8482
-  time: '2025-05-14T18:06:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33836
-- author: MisterImp
-  changes:
-  - message: A new recipe has been added for dracos (dragon meat tacos).
-    type: Add
-  id: 8483
-  time: '2025-05-14T19:33:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37212
-- author: LaCumbiaDelCoronavirus
-  changes:
-  - message: Maximum radius (not diameter) of atmos tank explosions has been increased
-      to 10 tiles, however the scale of their increase in size has been decreased.
-    type: Tweak
-  id: 8484
-  time: '2025-05-14T19:49:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36780
 - author: qwerltaz
   changes:
   - message: Snipping the panic wire in an air alarm now forces panic mode until the
@@ -3953,3 +3893,64 @@
   id: 8987
   time: '2025-09-18T20:09:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39867
+- author: IProduceWidgets
+  changes:
+  - message: The Experimental Lecter 8 (XL8) has been added as an admin event weapon
+      for roles such as ERT.
+    type: Add
+  id: 8988
+  time: '2025-09-19T19:30:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40372
+- author: Absotively
+  changes:
+  - message: Air alarms will not replace the number you're currently typing
+    type: Tweak
+  id: 8989
+  time: '2025-09-20T18:55:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40338
+- author: Absotively
+  changes:
+  - message: Hand labeler's set text now displays on examine.
+    type: Tweak
+  id: 8990
+  time: '2025-09-20T19:00:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40334
+- author: PJB3005
+  changes:
+  - message: Fixed stuff like camera views causing your computer to melt, explode,
+      and then collapse into a black hole.
+    type: Fix
+  id: 8991
+  time: '2025-09-21T05:16:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40181
+- author: cmorley191
+  changes:
+  - message: Improved reliability of cleanade/grenade launcher rounds and other collision-triggered
+      devices and spells.
+    type: Fix
+  id: 8992
+  time: '2025-09-21T15:23:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40428
+- author: ToastEnjoyer
+  changes:
+  - message: Changed the description to the corpsman antagonist.
+    type: Tweak
+  id: 8993
+  time: '2025-09-21T19:27:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40486
+- author: Nyxilath
+  changes:
+  - message: Posters now have proper damage resistances and values, instead of acting
+      like they were made out of metal.
+    type: Fix
+  id: 8994
+  time: '2025-09-21T20:40:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40489
+- author: beck-thompson
+  changes:
+  - message: Shuttle UI is now fixed. You won't go into pilot mode when not having
+      access
+    type: Fix
+  id: 8995
+  time: '2025-09-22T06:40:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40491
