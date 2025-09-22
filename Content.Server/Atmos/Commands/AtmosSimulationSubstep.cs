@@ -90,13 +90,14 @@ public sealed class AtmosSimulationSubstep : LocalizedEntityCommands
 
         if (gridAtmos.Simulated)
         {
-            shell.WriteLine(Loc.GetString("info-implicitly-paused-simulation") + " " + EntityManager.ToPrettyString(grid));
+            shell.WriteLine(Loc.GetString("info-implicitly-paused-simulation",
+                ("grid", EntityManager.ToPrettyString(grid))));
         }
 
         atmosSys.SetAtmosphereSimulation(newEnt, false);
         atmosSys.RunProcessingFull(newEnt, xform.MapUid.Value, atmosSys.AtmosTickRate);
 
-        shell.WriteLine(Loc.GetString("info-substepped-grid") + " " + EntityManager.ToPrettyString(grid));
+        shell.WriteLine(Loc.GetString("info-substepped-grid", ("grid", EntityManager.ToPrettyString(grid))));
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)

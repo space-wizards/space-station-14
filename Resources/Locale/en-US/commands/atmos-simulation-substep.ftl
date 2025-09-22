@@ -8,7 +8,7 @@ error-no-mapgrid = Entity provided doesn't have a MapGridComponent.
 error-no-xform = Entity provided doesn't have a TransformComponent?
 error-no-valid-map = The grid provided is not on a valid map?
 
-info-implicitly-paused-simulation = Implicitly paused atmospherics simulation on
-info-substepped-grid = Substepped atmospherics simulation by one atmostick on
+info-implicitly-paused-simulation = Implicitly paused atmospherics simulation on {grid}.
+info-substepped-grid = Substepped atmospherics simulation by one atmostick on {grid}.
 
 completion-grid-substep = GridUid of the grid you want to substep. Automatically uses the grid you're standing on if empty.

@@ -56,8 +56,9 @@ public sealed class AtmosSimulationPauseUnpause : LocalizedEntityCommands
         var atmosSys = EntityManager.System<AtmosphereSystem>();
 
         atmosSys.SetAtmosphereSimulation(newEnt, !newEnt.Comp.Simulated);
-        shell.WriteLine(Loc.GetString("set-atmos-simulation") + " " + EntityManager.ToPrettyString(grid) +
-                        Loc.GetString("to-state") + " " + newEnt.Comp.Simulated);
+        shell.WriteLine(Loc.GetString("set-atmos-simulation",
+            ("grid", EntityManager.ToPrettyString(grid)),
+            ("state", newEnt.Comp.Simulated)));
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
