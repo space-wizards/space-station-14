@@ -1,5 +1,6 @@
 ﻿using Content.Server.Chat.Systems;
 using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Effects;
 using Content.Shared.EntityEffects.NewEffects;
 
 namespace Content.Server.EntityEffects.Effects;

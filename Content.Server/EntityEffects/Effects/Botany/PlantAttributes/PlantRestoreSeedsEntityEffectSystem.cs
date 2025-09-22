@@ -2,6 +2,7 @@ using Content.Server.Botany.Components;
 using Content.Server.Botany.Systems;
 using Content.Server.Popups;
 using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 using Content.Shared.EntityEffects.NewEffects.Botany.PlantAttributes;
 
 namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;

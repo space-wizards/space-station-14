@@ -1,6 +1,6 @@
 ﻿using Content.Server.Explosion.EntitySystems;
 using Content.Shared.EntityEffects;
-using Content.Shared.EntityEffects.NewEffects.Transform;
+using Content.Shared.EntityEffects.Effects.Transform;
 
 namespace Content.Server.EntityEffects.Effects.Transform;
 

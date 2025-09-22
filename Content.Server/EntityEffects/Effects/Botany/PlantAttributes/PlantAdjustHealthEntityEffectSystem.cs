@@ -5,11 +5,11 @@ using Content.Shared.EntityEffects.NewEffects.Botany.PlantAttributes;
 
 namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 
-public sealed partial class PlantAdjustHealthEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantAdjustHealth>
+public sealed partial class PlantAdjustHealthEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, Shared.EntityEffects.Effects.Botany.PlantAttributes.PlantAdjustHealth>
 {
     [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantAdjustHealth> args)
+    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<Shared.EntityEffects.Effects.Botany.PlantAttributes.PlantAdjustHealth> args)
     {
         if (entity.Comp.Seed == null || entity.Comp.Dead)
             return;

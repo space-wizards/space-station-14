@@ -3,7 +3,7 @@ using Content.Server.Spreader;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.EntityEffects;
-using Content.Shared.EntityEffects.NewEffects.Solution;
+using Content.Shared.EntityEffects.Effects.Solution;
 using Content.Shared.Maps;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;

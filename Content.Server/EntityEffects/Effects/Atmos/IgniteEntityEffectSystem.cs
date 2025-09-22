@@ -1,7 +1,7 @@
 ﻿using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos.Components;
 using Content.Shared.EntityEffects;
-using Content.Shared.EntityEffects.NewEffects.Atmos;
+using Content.Shared.EntityEffects.Effects.Atmos;
 
 namespace Content.Server.EntityEffects.Effects.Atmos;
 

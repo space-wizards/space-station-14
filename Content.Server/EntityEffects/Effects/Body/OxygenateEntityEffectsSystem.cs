@@ -1,7 +1,7 @@
 ﻿using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Shared.EntityEffects;
-using Content.Shared.EntityEffects.NewEffects.Body;
+using Content.Shared.EntityEffects.Effects.Body;
 
 namespace Content.Server.EntityEffects.Effects.Body;
 

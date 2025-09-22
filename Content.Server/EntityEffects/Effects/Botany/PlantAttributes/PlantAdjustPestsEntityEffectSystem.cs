@@ -4,9 +4,9 @@ using Content.Shared.EntityEffects.NewEffects.Botany.PlantAttributes;
 
 namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 
-public sealed partial class PlantAdjustPestsEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantAdjustPests>
+public sealed partial class PlantAdjustPestsEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, Shared.EntityEffects.Effects.Botany.PlantAttributes.PlantAdjustPests>
 {
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantAdjustPests> args)
+    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<Shared.EntityEffects.Effects.Botany.PlantAttributes.PlantAdjustPests> args)
     {
         if (entity.Comp.Seed == null || entity.Comp.Dead)
             return;

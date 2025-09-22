@@ -21,7 +21,7 @@
     - name: ChangeSpecies
       baseOdds: 0.036
       appliesToProduce: false
-      effect: !type:PlantSpeciesChange
+      effect: !type:PlantMutateSpeciesChange
       persists: false
     - name: Unviable
       baseOdds: 0.109
