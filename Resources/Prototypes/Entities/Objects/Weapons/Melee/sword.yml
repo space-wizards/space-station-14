@@ -107,6 +107,8 @@
     weight: 0.0002 # 5,000 times less likely than 1 regular animal
   - type: PirateAccent
     # not putting a BlockMovement component here cause that's funny.
+  - type: StealTarget
+    stealGroup: CaptainSword
 
 - type: entity
   name: katana
@@ -144,6 +146,8 @@
   id: EnergyKatana
   description: A katana infused with strong energy.
   components:
+  - type: Contraband
+    severity: HighlyIllegal
   - type: Sprite
     sprite: Objects/Weapons/Melee/energykatana.rsi
   - type: MeleeWeapon
