@@ -58,5 +58,6 @@ public sealed class DisposalUnitBoundUserInterface : BoundUserInterface
         _disposalUnitWindow.Power.Pressed = EntMan.System<PowerReceiverSystem>().IsPowered(Owner);
         _disposalUnitWindow.Engage.Pressed = entity.Comp.Engaged;
         _disposalUnitWindow.FullPressure = disposalUnit.EstimatedFullPressure(entity);
+        _disposalUnitWindow.PressurePerSecond = entity.Comp.PressurePerSecond;
     }
 }

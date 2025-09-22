@@ -465,7 +465,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (!_containers.Insert(toInsert, ent.Comp.Container))
             return;
 
-        _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):player} inserted {ToPrettyString(toInsert)} into {ToPrettyString(uid)}");
+        _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):player} inserted {ToPrettyString(toInsert)} into {ToPrettyString(ent)}");
         AfterInsert(ent, toInsert, user);
     }
 

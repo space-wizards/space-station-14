@@ -58,10 +58,12 @@ public sealed class MailingUnitBoundUserInterface : BoundUserInterface
 
             var disposalState = disposalSystem.GetState((Owner, disposals));
             var fullPressure = disposalSystem.EstimatedFullPressure((Owner, disposals));
+            var pressurePerSecond = disposals.PressurePerSecond;
 
             MailingUnitWindow.UnitState.Text = Loc.GetString($"disposal-unit-state-{disposalState}");
             MailingUnitWindow.FullPressure = fullPressure;
-            MailingUnitWindow.PressureBar.UpdatePressure(fullPressure);
+            MailingUnitWindow.PressurePerSecond = pressurePerSecond;
+            MailingUnitWindow.PressureBar.UpdatePressure(fullPressure, pressurePerSecond);
             MailingUnitWindow.Power.Pressed = EntMan.System<PowerReceiverSystem>().IsPowered(Owner);
             MailingUnitWindow.Engage.Pressed = disposals.Engaged;
         }
