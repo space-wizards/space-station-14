@@ -667,6 +667,18 @@
     exactVolume: true
   - type: Hypospray
     onlyAffectsMobs: false
+    requireReset: true
+    resetTime: 2.5
+    resetSoundStart:
+      path: /Audio/Items/Handcuffs/cuff_end.ogg
+      params:
+        volume: -4
+        maxDistance: 2
+    resetSoundEnd:
+      path: /Audio/Items/pen_click.ogg
+      params:
+        volume: -4
+        maxDistance: 2
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice # A new shitcurity meta

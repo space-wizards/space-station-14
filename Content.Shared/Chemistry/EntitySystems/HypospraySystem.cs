@@ -5,6 +5,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Hypospray.Events;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Forensics;
 using Content.Shared.IdentityManagement;
@@ -16,6 +17,7 @@ using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
@@ -27,6 +29,7 @@ public sealed class HypospraySystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainers = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
 
     public override void Initialize()
     {
@@ -35,7 +38,10 @@ public sealed class HypospraySystem : EntitySystem
         SubscribeLocalEvent<HyposprayComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<HyposprayComponent, MeleeHitEvent>(OnAttack);
         SubscribeLocalEvent<HyposprayComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<HyposprayComponent, MapInitEvent>(OnMapInit, after: [typeof(SharedSolutionContainerSystem)]);
+        SubscribeLocalEvent<HyposprayComponent, ResetHyposprayDoAfterEvent>(OnResetDoAfter);
         SubscribeLocalEvent<HyposprayComponent, GetVerbsEvent<AlternativeVerb>>(AddToggleModeVerb);
+        SubscribeLocalEvent<HyposprayComponent, GetVerbsEvent<InteractionVerb>>(AddResetVerb);
     }
 
     #region Ref events
@@ -43,6 +49,19 @@ public sealed class HypospraySystem : EntitySystem
     {
         if (args.Handled)
             return;
+
+        // Try to reset the hypospray if it supports it; takes priority if the volume is zero and the max volume is below the reset amount.
+        if (entity.Comp.RequireReset &&
+            _solutionContainers.TryGetSolution(entity.Owner, entity.Comp.SolutionName, out var hypoSpraySoln) &&
+            hypoSpraySoln.Value.Comp.Solution.Volume == FixedPoint2.Zero &&
+            hypoSpraySoln.Value.Comp.Solution.MaxVolume != entity.Comp.ResetAmount)
+        {
+            if (StartReset(entity, args.User))
+            {
+                args.Handled = true;
+                return;
+            }
+        }
 
         args.Handled = TryDoInject(entity, args.User, args.User);
     }
@@ -61,6 +80,29 @@ public sealed class HypospraySystem : EntitySystem
             return;
 
         TryDoInject(entity, args.HitEntities[0], args.User);
+    }
+
+    private void OnMapInit(Entity<HyposprayComponent> entity, ref MapInitEvent args)
+    {
+        if (!entity.Comp.RequireReset ||
+            !_solutionContainers.TryGetSolution(entity.Owner, entity.Comp.SolutionName, out var hypoSpraySoln))
+            return;
+
+        entity.Comp.ResetAmount = hypoSpraySoln.Value.Comp.Solution.MaxVolume;
+        Dirty(entity);
+    }
+
+    private void OnResetDoAfter(Entity<HyposprayComponent> entity, ref ResetHyposprayDoAfterEvent args)
+    {
+        if (args.Cancelled)
+            return;
+        if (!entity.Comp.RequireReset || entity.Comp.ResetAmount == null)
+            return;
+        if (!_solutionContainers.TryGetSolution(entity.Owner, entity.Comp.SolutionName, out var hypoSpraySoln))
+            return;
+
+        _audio.PlayPredicted(entity.Comp.ResetSoundEnd, Transform(entity).Coordinates, args.User);
+        _solutionContainers.SetCapacity(hypoSpraySoln.Value, entity.Comp.ResetAmount.Value);
     }
 
     #endregion
@@ -180,6 +222,9 @@ public sealed class HypospraySystem : EntitySystem
         var ev = new TransferDnaEvent { Donor = target, Recipient = uid };
         RaiseLocalEvent(target, ref ev);
 
+        if (component.RequireReset)
+            _solutionContainers.SetCapacity(hypoSpraySoln.Value, hypoSpraySolution.MaxVolume - removedSolution.Volume);
+
         // same LogType as syringes...
         _adminLogger.Add(LogType.ForceFeed, $"{ToPrettyString(user):user} injected {ToPrettyString(target):target} with a solution {SharedSolutionContainerSystem.ToPrettyString(removedSolution):removedSolution} using a {ToPrettyString(uid):using}");
 
@@ -236,6 +281,30 @@ public sealed class HypospraySystem : EntitySystem
     #region Verbs
 
     // <summary>
+    // Adds a verb to reset the hypospray injection amount, if the hypospray supports that behavior.
+    // Only shows if the volume is below the reset amount.
+    // </summary>
+    private void AddResetVerb(Entity<HyposprayComponent> entity, ref GetVerbsEvent<InteractionVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null || !entity.Comp.RequireReset)
+            return;
+        if (!_solutionContainers.TryGetSolution(entity.Owner, entity.Comp.SolutionName, out var hypoSpraySoln) ||
+            hypoSpraySoln.Value.Comp.Solution.MaxVolume == entity.Comp.ResetAmount)
+            return;
+
+        var user = args.User;
+        var verb = new InteractionVerb
+        {
+            Text = Loc.GetString("hypospray-verb-reset-label"),
+            Act = () =>
+            {
+                StartReset(entity, user);
+            }
+        };
+        args.Verbs.Add(verb);
+    }
+
+    // <summary>
     // Uses the OnlyMobs field as a check to implement the ability
     // to draw from jugs and containers with the hypospray
     // Toggleable to allow people to inject containers if they prefer it over drawing
@@ -273,5 +342,23 @@ public sealed class HypospraySystem : EntitySystem
         Dirty(entity);
     }
 
+    public bool StartReset(Entity<HyposprayComponent> entity, EntityUid user)
+    {
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, entity.Comp.ResetTime, new ResetHyposprayDoAfterEvent(), entity, entity, null)
+        {
+            BreakOnDamage = true,
+            BreakOnMove = true,
+            NeedHand = true,
+            Hidden = true,
+        };
+
+        _audio.PlayPredicted(entity.Comp.ResetSoundStart, Transform(entity).Coordinates, user);
+        _popup.PopupClient(Loc.GetString("hypospray-component-reset-volume"), entity, user);
+
+        return _doAfter.TryStartDoAfter(doAfterArgs, out _);
+    }
     #endregion
 }
+
+[Serializable, NetSerializable]
+public sealed partial class ResetHyposprayDoAfterEvent : SimpleDoAfterEvent;

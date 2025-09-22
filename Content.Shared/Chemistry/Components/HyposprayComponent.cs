@@ -20,8 +20,7 @@ public sealed partial class HyposprayComponent : Component
     /// <summary>
     ///     Amount of the units that will be transfered.
     /// </summary>
-    [AutoNetworkedField]
-    [DataField]
+    [DataField, AutoNetworkedField]
     public FixedPoint2 TransferAmount = FixedPoint2.New(5);
 
     /// <summary>
@@ -33,15 +32,13 @@ public sealed partial class HyposprayComponent : Component
     /// <summary>
     /// Decides whether you can inject everything or just mobs.
     /// </summary>
-    [AutoNetworkedField]
-    [DataField(required: true)]
+    [DataField(required: true), AutoNetworkedField]
     public bool OnlyAffectsMobs = false;
 
     /// <summary>
     /// If this can draw from containers in mob-only mode.
     /// </summary>
-    [AutoNetworkedField]
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool CanContainerDraw = true;
 
     /// <summary>
@@ -50,4 +47,34 @@ public sealed partial class HyposprayComponent : Component
     /// </summary>
     [DataField]
     public bool InjectOnly = false;
+
+    /// <summary>
+    /// If this container requires a doafter to reset its injection volume.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool RequireReset = false;
+
+    /// <summary>
+    /// The amount the hypospray will reset to; set by SolutionContainerManager's hypospray solution when initialized.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public FixedPoint2? ResetAmount = null;
+
+    /// <summary>
+    /// The reset doafter duration.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float ResetTime = 3f;
+
+    /// <summary>
+    /// The sound that will play when the hypospray is reset.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public SoundSpecifier? ResetSoundStart;
+
+    /// <summary>
+    /// The sound that will play when the hypospray is reset.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public SoundSpecifier? ResetSoundEnd;
 }

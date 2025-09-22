@@ -15,8 +15,8 @@ public sealed class HyposprayStatusControl : Control
     private readonly RichTextLabel _label;
     private readonly SharedSolutionContainerSystem _solutionContainers;
 
-    private FixedPoint2 PrevVolume;
-    private FixedPoint2 PrevMaxVolume;
+    private FixedPoint2? PrevVolume;
+    private FixedPoint2? PrevMaxVolume;
     private bool PrevOnlyAffectsMobs;
 
     public HyposprayStatusControl(Entity<HyposprayComponent> parent, SharedSolutionContainerSystem solutionContainers)

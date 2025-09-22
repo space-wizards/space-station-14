@@ -14,7 +14,10 @@ hypospray-component-empty-message = Nothing to inject.
 hypospray-component-feel-prick-message = You feel a tiny prick!
 hypospray-component-transfer-already-full-message = {$owner} is already full!
 hypospray-cant-inject = Can't inject into {$target}!
+hypospray-component-reset-volume = You start pulling back the storage spring.
 
 hypospray-verb-mode-label = Toggle Container Draw
 hypospray-verb-mode-inject-all = You cannot draw from containers anymore.
 hypospray-verb-mode-inject-mobs-only = You can now draw from containers.
+
+hypospray-verb-reset-label = Reset Storage
