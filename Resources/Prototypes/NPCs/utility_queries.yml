@@ -100,6 +100,26 @@
       curve: !type:BoolCurve
 
 - type: utilityQuery
+  id: NearbyCriminalTargets
+  query:
+    - !type:NearbyCriminalsQuery
+      statuses:
+        - Wanted
+  considerations:
+    - !type:TargetIsAliveCon
+      curve: !type:BoolCurve
+    - !type:TargetDistanceCon
+      curve: !type:PresetCurve
+        preset: TargetDistance
+    - !type:TargetHealthCon
+      curve: !type:PresetCurve
+        preset: TargetHealth
+    - !type:TargetAccessibleCon
+      curve: !type:BoolCurve
+    - !type:TargetInLOSOrCurrentCon
+      curve: !type:BoolCurve
+
+- type: utilityQuery
   id: NearbyColdMeleeTargets
   query:
   - !type:NearbyHostilesQuery

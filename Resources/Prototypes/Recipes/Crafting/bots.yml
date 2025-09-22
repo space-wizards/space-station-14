@@ -53,3 +53,11 @@
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
+
+- type: construction
+  id: secbot
+  graph: SecBot
+  startNode: start
+  targetNode: bot
+  category: construction-category-utilities
+  objectType: Item

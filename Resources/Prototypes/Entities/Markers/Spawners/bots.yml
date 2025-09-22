@@ -56,6 +56,20 @@
 
 - type: entity
   parent: MarkerBase
+  id: SpawnMobSecuritron
+  name: securitron spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/Bots/secbot.rsi
+      state: secbot
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSecuritron
+
+- type: entity
+  parent: MarkerBase
   id: SpawnMobHonkBot
   name: honkbot spawner
   components:

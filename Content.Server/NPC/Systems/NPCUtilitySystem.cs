@@ -16,6 +16,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Security.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Tools.Systems;
@@ -480,6 +481,24 @@ public sealed class NPCUtilitySystem : EntitySystem
                 {
                     entities.Add(ent);
                 }
+                break;
+            }
+            case NearbyCriminalsQuery criminalsQuery:
+            {
+                foreach (var ent in _lookup.GetEntitiesInRange(owner, vision))
+                {
+                    if (ent == owner)
+                        continue;
+
+                    if (!TryComp(ent, out CriminalRecordComponent? record))
+                        continue;
+
+                    if (criminalsQuery.Statuses.Count > 0 && !criminalsQuery.Statuses.Contains(record.Status))
+                        continue;
+
+                    entities.Add(ent);
+                }
+
                 break;
             }
             default:

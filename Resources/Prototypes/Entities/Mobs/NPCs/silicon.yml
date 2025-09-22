@@ -360,6 +360,49 @@
   - type: DoAfter
 
 - type: entity
+  parent: MobSiliconBase
+  id: MobSecuritron
+  name: securitron
+  description: A tireless security robot dedicated to upholding station law.
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/Bots/secbot.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: secbot
+  - type: Securitron
+  - type: CombatMode
+  - type: HTN
+    rootTask:
+      task: SecuritronCompound
+  - type: Construction
+    graph: SecBot
+    node: bot
+  - type: Access
+    tags:
+    - BasicSilicon
+    - Security
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Security
+  - type: MeleeWeapon
+    angle: 60
+    animation: WeaponArcThrust
+    damage:
+      types:
+        Blunt: 7
+    bluntStaminaDamageFactor: 2.0
+  - type: StaminaDamageOnHit
+    damage: 35
+    sound: /Audio/Weapons/egloves.ogg
+  - type: InteractionPopup
+    interactSuccessString: petting-success-securitron
+    interactFailureString: petting-failure-securitron
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+
+- type: entity
   parent:
   - MobSiliconBase
   - StripableInventoryBase

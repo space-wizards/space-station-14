@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation/blob/750ca9d2ecc8ffccf5e89070d28857d03f6ea0a4/icons/mob/silicon/aibots.dmi",
+  "states": [
+    {
+      "name": "secbot-off",
+      "directions": 4
+    },
+    {
+      "name": "secbot-on",
+      "directions": 4
+    },
+    {
+      "name": "secbot-combat",
+      "directions": 4,
+      "delays": [
+        [
+          0.125,
+          0.125
+        ],
+        [
+          0.125,
+          0.125
+        ],
+        [
+          0.125,
+          0.125
+        ],
+        [
+          0.125,
+          0.125
+        ]
+      ]
+    }
+  ]
+}

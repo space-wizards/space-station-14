@@ -1,3 +1,4 @@
+using Content.Shared.Security;
 using Content.Shared.StatusIcon;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -12,4 +13,10 @@ public sealed partial class CriminalRecordComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public ProtoId<SecurityIconPrototype> StatusIcon = "SecurityIconWanted";
+
+    /// <summary>
+    ///     The criminal status that this entity currently has.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public SecurityStatus Status = SecurityStatus.Wanted;
 }

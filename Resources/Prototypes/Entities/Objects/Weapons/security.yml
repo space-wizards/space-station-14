@@ -54,6 +54,9 @@
   - type: Item
     heldPrefix: off
     size: Normal
+  - type: Tag
+    tags:
+    - Stunbaton
   - type: Clothing
     sprite: Objects/Weapons/Melee/stunbaton.rsi
     quickEquip: false

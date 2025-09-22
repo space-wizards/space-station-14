@@ -1434,6 +1434,9 @@
   id: Truncheon
 
 - type: Tag
+  id: Stunbaton
+
+- type: Tag
   id: TurretCompatibleWeapon # Used in the construction of sentry turrets
 
 - type: Tag

@@ -1,0 +1,39 @@
+- type: constructionGraph
+  id: SecBot
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: bot
+      steps:
+      - tag: SecurityHelmet
+        icon:
+          sprite: Clothing/Head/Helmets/security.rsi
+          state: icon
+        name: construction-graph-tag-security-helmet
+      - tag: RemoteSignaller
+        icon:
+          sprite: Objects/Devices/signaller.rsi
+          state: signaller
+        name: construction-graph-tag-remote-signaller
+        doAfter: 2
+      - tag: ProximitySensor
+        icon:
+          sprite: Objects/Misc/proximity_sensor.rsi
+          state: icon
+        name: construction-graph-tag-proximity-sensor
+        doAfter: 2
+      - tag: BorgArm
+        icon:
+          sprite: Mobs/Silicon/drone.rsi
+          state: l_hand
+        name: construction-graph-tag-borg-arm
+        doAfter: 2
+      - tag: Stunbaton
+        icon:
+          sprite: Objects/Weapons/Melee/stunbaton.rsi
+          state: stunbaton_off
+        name: construction-graph-tag-stunbaton
+        doAfter: 2
+  - node: bot
+    entity: MobSecuritron
