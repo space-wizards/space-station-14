@@ -70,7 +70,7 @@ public abstract partial class SharedAdminVerbSystem
         }
 
         // Make Sentient verb
-        if (CanCommandOverride(player, "makesentient") && args.User != args.Target && !HasComp<MindContainerComponent>(args.Target))
+        if (_adminManager.CanCommand(player, "makesentient") && args.User != args.Target && !HasComp<MindContainerComponent>(args.Target))
         {
             Verb makeSentientVerb = new()
             {
@@ -86,7 +86,7 @@ public abstract partial class SharedAdminVerbSystem
         if (TryComp<InventoryComponent>(args.Target, out var inventoryComponent))
         {
             // Strip all verb
-            if (CanCommandOverride(player, "stripall"))
+            if (_adminManager.CanCommand(player, "stripall"))
             {
                 Verb stripAllVerb = new()
                 {
@@ -100,7 +100,7 @@ public abstract partial class SharedAdminVerbSystem
             }
 
             // set outfit verb
-            if (CanCommandOverride(player, "setoutfit"))
+            if (_adminManager.CanCommand(player, "setoutfit"))
             {
                 Verb setOutfitVerb = new()
                 {
@@ -115,7 +115,7 @@ public abstract partial class SharedAdminVerbSystem
         }
 
         // In range unoccluded verb
-        if (CanCommandOverride(player, "inrangeunoccluded"))
+        if (_adminManager.CanCommand(player, "inrangeunoccluded"))
         {
             Verb inRangeUnoccludedVerb = new()
             {
@@ -136,7 +136,7 @@ public abstract partial class SharedAdminVerbSystem
         }
 
         // Make ghost role verb
-        if (CanCommandOverride(player, "makeghostrole") &&
+        if (_adminManager.CanCommand(player, "makeghostrole") &&
             !(EntityManager.GetComponentOrNull<MindContainerComponent>(args.Target)?.HasMind ?? false))
         {
             Verb makeGhostRoleVerb = new()
@@ -167,7 +167,7 @@ public abstract partial class SharedAdminVerbSystem
         }
 
         // Add verb to open Solution Editor
-        if (CanCommandOverride(player, "addreagent") && HasComp<SolutionContainerManagerComponent>(args.Target))
+        if (_adminManager.CanCommand(player, "addreagent") && HasComp<SolutionContainerManagerComponent>(args.Target))
         {
             Verb addReagentVerb = new()
             {

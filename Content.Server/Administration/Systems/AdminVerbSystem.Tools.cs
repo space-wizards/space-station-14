@@ -1,40 +1,21 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Numerics;
 using Content.Server.Administration.Components;
 using Content.Server.Cargo.Components;
-using Content.Server.Doors.Systems;
-using Content.Server.Hands.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Server.Station.Systems;
 using Content.Server.Weapons.Ranged.Systems;
-using Content.Shared.Access;
-using Content.Shared.Access.Components;
-using Content.Shared.Access.Systems;
 using Content.Shared.Administration;
-using Content.Shared.Atmos;
-using Content.Shared.Atmos.Components;
-using Content.Shared.Construction.Components;
-using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.Database;
-using Content.Shared.Doors.Components;
-using Content.Shared.Hands.Components;
-using Content.Shared.Inventory;
-using Content.Shared.PDA;
 using Content.Shared.Stacks;
 using Content.Shared.Station.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
-using Robust.Server.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Systems;
@@ -58,7 +39,7 @@ public sealed partial class AdminVerbSystem
 
         var player = actor.PlayerSession;
 
-        if (!_adminManager.HasAdminFlag(player, AdminFlags.Admin))
+        if (!_sharedAdmin.HasAdminFlag(player, AdminFlags.Admin))
             return;
 
         if (TryComp<BatteryComponent>(args.Target, out var battery))

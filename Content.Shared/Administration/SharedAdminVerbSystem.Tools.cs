@@ -52,7 +52,7 @@ public abstract partial class SharedAdminVerbSystem
 
         var player = actor.PlayerSession;
 
-        if (!_adminManager.HasAdminFlag(player, AdminFlags.Admin))
+        if (!_sharedAdmin.HasAdminFlag(player, AdminFlags.Admin))
             return;
 
         if (TryComp<DoorBoltComponent>(args.Target, out var bolts))
@@ -370,7 +370,7 @@ public abstract partial class SharedAdminVerbSystem
 
         if (HasComp<StationDataComponent>(args.Target))
         {
-            if (_adminManager.HasAdminFlag(player, AdminFlags.Round))
+            if (_sharedAdmin.HasAdminFlag(player, AdminFlags.Round))
             {
                 Verb barJobSlots = new()
                 {
@@ -419,7 +419,7 @@ public abstract partial class SharedAdminVerbSystem
 
         if (TryComp<MapComponent>(args.Target, out var map))
         {
-            if (_adminManager.HasAdminFlag(player, AdminFlags.Mapping))
+            if (_sharedAdmin.HasAdminFlag(player, AdminFlags.Mapping))
             {
                 if (_mapSystem.IsPaused(map.MapId))
                 {

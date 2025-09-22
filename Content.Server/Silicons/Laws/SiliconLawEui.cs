@@ -11,13 +11,13 @@ public sealed class SiliconLawEui : BaseEui
 {
     private readonly SiliconLawSystem _siliconLawSystem;
     private readonly EntityManager _entityManager;
-    private readonly IAdminManager _adminManager;
+    private readonly SharedAdminManager _adminManager;
 
     private List<SiliconLaw> _laws = new();
     private ISawmill _sawmill = default!;
     private EntityUid _target;
 
-    public SiliconLawEui(SiliconLawSystem siliconLawSystem, EntityManager entityManager, IAdminManager manager)
+    public SiliconLawEui(SiliconLawSystem siliconLawSystem, EntityManager entityManager, SharedAdminManager manager)
     {
         _siliconLawSystem = siliconLawSystem;
         _adminManager = manager;

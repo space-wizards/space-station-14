@@ -1,5 +1,4 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Administration.Managers;
 using Content.Server.Administration.UI;
 using Content.Server.Disposal.Tube;
 using Content.Server.EUI;
@@ -9,19 +8,14 @@ using Content.Server.Prayer;
 using Content.Server.Silicons.Laws;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
+using Content.Shared.Administration.Managers;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Popups;
 using Content.Shared.Silicons.Laws.Components;
-using Robust.Server.Console;
-using Robust.Server.GameObjects;
-using Robust.Shared.Console;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using Robust.Shared.Toolshed;
 using Robust.Shared.Network;
 
 namespace Content.Server.Administration.Systems;
@@ -31,9 +25,8 @@ namespace Content.Server.Administration.Systems;
 /// </summary>
 public sealed partial class AdminVerbSystem : SharedAdminVerbSystem
 {
-    [Dependency] private readonly IConGroupController _groupController = default!;
-    [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly ISharedAdminManager _sharedAdmin = default!;
     [Dependency] private readonly AdminSystem _adminSystem = default!;
     [Dependency] private readonly DisposalTubeSystem _disposalTubes = default!;
     [Dependency] private readonly EuiManager _euiManager = default!;
@@ -41,6 +34,7 @@ public sealed partial class AdminVerbSystem : SharedAdminVerbSystem
     [Dependency] private readonly PrayerSystem _prayerSystem = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
+    [Dependency] private readonly SharedAdminManager _adminManager = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly StationSystem _stations = default!;
     [Dependency] private readonly StationSpawningSystem _spawning = default!;
@@ -54,13 +48,6 @@ public sealed partial class AdminVerbSystem : SharedAdminVerbSystem
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
         SubscribeLocalEvent<SolutionContainerManagerComponent, SolutionContainerChangedEvent>(OnSolutionChanged);
-    }
-
-    // This is a solution to deal with the fact theres no shared way to check command perms.
-    // Should the ConGroupControllers be unified and shared, this should be replaced with that instead.
-    public override bool CanCommandOverride(ICommonSession player, string command)
-    {
-        return _groupController.CanCommand(player, command);
     }
 
     public override void AdminPrayerVerb(ICommonSession player, ICommonSession target)

@@ -17,9 +17,10 @@ namespace Content.Shared.Administration;
 
 public abstract partial class SharedAdminVerbSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminManager _adminManager = default!;
     [Dependency] private readonly IConsoleHost _consoleHost = default!;
+    [Dependency] private readonly ISharedAdminManager _sharedAdmin = default!;
     [Dependency] private readonly AdminFrozenSystem _freezeSystem = default!;
+    [Dependency] private readonly SharedAdminManager _adminManager = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly ToolshedManager _toolshedManager = default!;
@@ -199,9 +200,7 @@ public abstract partial class SharedAdminVerbSystem : EntitySystem
             args.Verbs.Add(unfreezeVerb);
         }
 
-
-        // Admin Logs
-        if (_adminManager.HasAdminFlag(player, AdminFlags.Logs))
+        if (_sharedAdmin.HasAdminFlag(player, AdminFlags.Logs))
         {
             Verb entityLogsVerb = new()
             {
@@ -275,7 +274,7 @@ public abstract partial class SharedAdminVerbSystem : EntitySystem
         else if (TryComp<MovementRelayTargetComponent>(args.Target, out var relay) && TryComp(relay.Source, out lawBoundComponent))
             target = relay.Source;
 
-        if (lawBoundComponent != null && target != null && _adminManager.HasAdminFlag(player, AdminFlags.Moderator))
+        if (lawBoundComponent != null && target != null && _sharedAdmin.HasAdminFlag(player, AdminFlags.Moderator))
         {
             Verb siliconLawVerb = new()
             {
@@ -299,14 +298,6 @@ public abstract partial class SharedAdminVerbSystem : EntitySystem
             Impact = LogImpact.Low,
         };
         args.Verbs.Add(cameraVerb);
-    }
-
-
-    // This is a solution to deal with the fact theres no shared way to check command perms.
-    // Should the ConGroupControllers be unified and shared, this should be replaced with that instead.
-    public virtual bool CanCommandOverride(ICommonSession player, string command)
-    {
-        return false;
     }
 
     public virtual void AdminPrayerVerb(ICommonSession player, ICommonSession target)
