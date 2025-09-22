@@ -1,0 +1,185 @@
+# Base prototypes
+
+- type: latheRecipe
+  abstract: true
+  id: BaseLawboardRecipe
+  categories:
+  - Robotics
+  completetime: 10
+
+## Lawboards
+# NTDefault
+- type: latheRecipe
+  parent: BaseLawboardRecipe
+  id: NTDefaultCircuitBoard
+  result: NTDefaultCircuitBoard
+  materials:
+    UraniumGlass: 1000
+    Plastic: 500
+    Gold: 1000
+    Silver: 500
+
+# Asimov
+- type: latheRecipe
+  parent: BaseLawboardRecipe
+  id: AsimovCircuitBoard
+  result: AsimovCircuitBoard
+  materials:
+    UraniumGlass: 1000
+    Plastic: 500
+    Gold: 1000
+    Silver: 500
+
+# Corporate
+- type: latheRecipe
+  parent: BaseLawboardRecipe
+  id: CorporateCircuitBoard
+  result: CorporateCircuitBoard
+  materials:
+    UraniumGlass: 1000
+    Plastic: 500
+    Gold: 1000
+    Silver: 500
+
+# Commandment
+- type: latheRecipe
+  parent: BaseLawboardRecipe
+  id: CommandmentCircuitBoard
+  result: CommandmentCircuitBoard
+  materials:
+    UraniumGlass: 1000
+    Plastic: 500
+    Gold: 1000
+    Silver: 500
+
+# Paladin
+- type: latheRecipe
+  parent: BaseLawboardRecipe
+  id: PaladinCircuitBoard
+  result: PaladinCircuitBoard
+  materials:
+    UraniumGlass: 1000
+    Plastic: 500
+    Gold: 1000
+    Silver: 500
+
+# Panicmov
+- type: latheRecipe
+  parent: BaseLawboardRecipe
+  id: PanicmovCircuitBoard
+  result: PanicmovCircuitBoard
+  materials:
+    UraniumGlass: 1000
+    Plastic: 500
+    Gold: 1000
+    Silver: 500
+
+# Genie
+- type: latheRecipe
+  parent: BaseLawboardRecipe
+  id: GenieCircuitBoard
+  result: GenieCircuitBoard
+  materials:
+    UraniumGlass: 1000
+    Plastic: 500
+    Gold: 1000
+    Silver: 500
+
+# Reporter
+- type: latheRecipe
+  parent: BaseLawboardRecipe
+  id: ReporterCircuitBoard
+  result: ReporterCircuitBoard
+  materials:
+    UraniumGlass: 1000
+    Plastic: 500
+    Gold: 1000
+    Silver: 500
+
+# LiveLetLive
+- type: latheRecipe
+  parent: BaseLawboardRecipe
+  id: LiveLetLiveCircuitBoard
+  result: LiveLetLiveCircuitBoard
+  materials:
+    UraniumGlass: 1000
+    Plastic: 500
+    Gold: 1000
+    Silver: 500
+
+# StationEfficiency
+- type: latheRecipe
+  parent: BaseLawboardRecipe
+  id: StationEfficiencyCircuitBoard
+  result: StationEfficiencyCircuitBoard
+  materials:
+    UraniumGlass: 1000
+    Plastic: 500
+    Gold: 1000
+    Silver: 500
+
+# Robocop
+- type: latheRecipe
+  parent: BaseLawboardRecipe
+  id: RobocopCircuitBoard
+  result: RobocopCircuitBoard
+  materials:
+    UraniumGlass: 1000
+    Plastic: 500
+    Gold: 1000
+    Silver: 500
+
+# Overlord
+- type: latheRecipe
+  parent: BaseLawboardRecipe
+  id: OverlordCircuitBoard
+  result: OverlordCircuitBoard
+  materials:
+    UraniumGlass: 1000
+    Plastic: 500
+    Gold: 1000
+    Silver: 500
+
+# GameMaster
+- type: latheRecipe
+  parent: BaseLawboardRecipe
+  id: GameMasterCircuitBoard
+  result: GameMasterCircuitBoard
+  materials:
+    UraniumGlass: 1000
+    Plastic: 500
+    Gold: 1000
+    Silver: 500
+
+# Artist
+- type: latheRecipe
+  parent: BaseLawboardRecipe
+  id: ArtistCircuitBoard
+  result: ArtistCircuitBoard
+  materials:
+    UraniumGlass: 1000
+    Plastic: 500
+    Gold: 1000
+    Silver: 500
+
+# Nutimov
+- type: latheRecipe
+  parent: BaseLawboardRecipe
+  id: NutimovCircuitBoard
+  result: NutimovCircuitBoard
+  materials:
+    UraniumGlass: 1000
+    Plastic: 500
+    Gold: 1000
+    Silver: 500
+
+# Jermov
+- type: latheRecipe
+  parent: BaseLawboardRecipe
+  id: JermovCircuitBoard
+  result: JermovCircuitBoard
+  materials:
+    UraniumGlass: 1000
+    Plastic: 500
+    Gold: 1000
+    Silver: 500

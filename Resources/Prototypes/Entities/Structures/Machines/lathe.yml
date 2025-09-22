@@ -112,6 +112,8 @@
         - Sheet
         - RawMaterial
         - Ingot
+      names:
+        - UraniumGlass
   - type: OreSiloClient
   - type: Lathe
     idleState: icon
@@ -187,6 +189,8 @@
         - Sheet
         - RawMaterial
         - Ingot
+      names:
+        - UraniumGlass
   - type: OreSiloClient
   - type: Lathe
     idleState: icon
@@ -275,15 +279,19 @@
     - MechBoards
     - ShuttleBoards
     - StarlightMechBoards
+    - StarlightLawboards
   - type: EmagLatheRecipes
     emagDynamicPacks:
     - StarlightSecurityBoards
+    - StarlightDangerousLawboards
   - type: MaterialStorage
     whitelist:
       tags:
         - Sheet
         - RawMaterial
         - Ingot
+      names:
+        - UraniumGlass
   - type: OreSiloClient
   - type: RequireProjectileTarget
 
@@ -297,6 +305,18 @@
     sprite: Structures/Machines/circuit_imprinter_hypercon.rsi
   - type: Machine
     board: CircuitImprinterHyperConvectionMachineCircuitboard
+  - type: MaterialStorage
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+        - Ingot
+      names:
+        - UraniumGlass
+  - type: EmagLatheRecipes
+    emagDynamicPacks:
+    - StarlightSecurityBoards
+    - StarlightDangerousLawboards
 
 - type: entity
   id: ExosuitFabricator
@@ -341,6 +361,8 @@
       - Sheet
       - RawMaterial
       - Ingot
+      names:
+      - UraniumGlass
   - type: OreSiloClient
   - type: GuideHelp
     guides:
@@ -432,6 +454,8 @@
         - Sheet
         - RawMaterial
         - Ingot
+      names:
+        - UraniumGlass
   - type: OreSiloClient
 
 - type: entity
@@ -466,6 +490,8 @@
           - Sheet
           - RawMaterial
           - Ingot
+        names:
+          - UraniumGlass
     - type: OreSiloClient
 
 - type: entity
@@ -555,6 +581,8 @@
         - Sheet
         - RawMaterial
         - Ingot
+      names:
+        - UraniumGlass
   - type: OreSiloClient
 
 - type: entity

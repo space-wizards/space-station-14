@@ -1,0 +1,28 @@
+# Tier 2
+- type: technology
+  id: Lawboards
+  name: research-technology-lawboards
+  icon:
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  discipline: Experimental
+  tier: 2
+  cost: 7000
+  recipeUnlocks:
+  - NTDefaultCircuitBoard
+  - AsimovCircuitBoard
+  - CorporateCircuitBoard
+  - CommandmentCircuitBoard
+  - PaladinCircuitBoard
+  - PanicmovCircuitBoard
+  - GenieCircuitBoard
+  - ReporterCircuitBoard
+  - LiveLetLiveCircuitBoard
+  - StationEfficiencyCircuitBoard
+  - RobocopCircuitBoard
+  - GameMasterCircuitBoard
+  - ArtistCircuitBoard
+  - NutimovCircuitBoard
+  - JermovCircuitBoard
+  radioChannels:
+  - Binary
