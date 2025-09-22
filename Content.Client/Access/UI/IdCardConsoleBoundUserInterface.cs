@@ -4,11 +4,14 @@ using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.CrewManifest;
-using Content.Shared._Starlight.Access; // Starlight-edit
 using Content.Shared.Roles;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using static Content.Shared.Access.Components.IdCardConsoleComponent;
+// Starlight-edit: Start
+using Robust.Client.UserInterface;
+using Content.Shared._Starlight.Access; 
+// Starlight-edit: End
 
 namespace Content.Client.Access.UI
 {
@@ -28,31 +31,18 @@ namespace Content.Client.Access.UI
         {
             _idCardConsoleSystem = EntMan.System<SharedIdCardConsoleSystem>();
 
-            _maxNameLength =_cfgManager.GetCVar(CCVars.MaxNameLength);
+            _maxNameLength = _cfgManager.GetCVar(CCVars.MaxNameLength);
             _maxIdJobLength = _cfgManager.GetCVar(CCVars.MaxIdJobLength);
         }
 
         protected override void Open()
         {
             base.Open();
-            List<ProtoId<AccessGroupPrototype>> accessGroups; // Starlight-edit
-
-            if (EntMan.TryGetComponent<IdCardConsoleComponent>(Owner, out var idCard))
-            {
-                accessGroups = idCard.AccessGroups; // Starlight-edit
-            }
-            else
-            {
-                accessGroups = new List<ProtoId<AccessGroupPrototype>>(); // Starlight-edit
-                _idCardConsoleSystem.Log.Error($"No IdCardConsole component found for {EntMan.ToPrettyString(Owner)}!");
-            }
-
-            _window = new IdCardConsoleWindow(this, _prototypeManager, accessGroups) // Starlight-edit
-            {
-                Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName
-            };
-
-            _window.OnGroupSelected += group => SendMessage(new AccessGroupSelectedMessage(group)); // Starlight-edit
+            // Starlight-edit: Start
+            _window = this.CreateWindow<IdCardConsoleWindow>();
+            _window.Initialize(this);
+            _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+            // Starlight-edit: End
             _window.CrewManifestButton.OnPressed += _ => SendMessage(new CrewManifestOpenUiMessage());
             _window.PrivilegedIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(PrivilegedIdCardSlotId));
             _window.TargetIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(TargetIdCardSlotId));
@@ -73,7 +63,7 @@ namespace Content.Client.Access.UI
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            var castState = (IdCardConsoleBoundUserInterfaceState) state;
+            var castState = (IdCardConsoleBoundUserInterfaceState)state;
             _window?.UpdateState(castState);
         }
 
@@ -91,5 +81,12 @@ namespace Content.Client.Access.UI
                 newAccessList,
                 newJobPrototype));
         }
+        // Starlight-edit: Start
+
+        public void OnGroupSelected(ProtoId<AccessGroupPrototype> group)
+        {
+            SendMessage(new AccessGroupSelectedMessage(group));
+        }
+        // Starlight-edit: End
     }
 }

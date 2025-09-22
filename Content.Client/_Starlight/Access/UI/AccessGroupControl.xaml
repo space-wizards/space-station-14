@@ -1,6 +1,14 @@
-<BoxContainer xmlns="https://spacestation14.io"
-                 VerticalExpand="True"
-                 HorizontalExpand="True"
-                 HorizontalAlignment="Center"
-                 Orientation="Vertical">
-</BoxContainer>
+<!-- Starlight-edit: Start-->
+<GridContainer xmlns="https://spacestation14.io"
+               Columns="1"
+               HorizontalExpand="True"
+               VerticalExpand="False">
+    <BoxContainer Name="GroupButtons"
+                  Orientation="Horizontal"
+                  HorizontalExpand="True"
+                  VerticalExpand="False"
+                  SeparationOverride="4">
+        <!-- Buttons are added in code-behind -->
+    </BoxContainer>
+</GridContainer>
+<!-- Starlight-edit: End-->

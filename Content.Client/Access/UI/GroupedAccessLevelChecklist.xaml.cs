@@ -99,8 +99,10 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
 
     private bool TryRebuildAccessGroupControls()
     {
-        AccessGroupList.DisposeAllChildren();
-        AccessLevelChecklist.DisposeAllChildren();
+        // Starlight-edit: Start
+        AccessGroupList.RemoveAllChildren();
+        AccessLevelChecklist.RemoveAllChildren();
+        // Starlight-edit: End
 
         // No access level prototypes were assigned to any of the access level groups.
         // Either the turret controller has no assigned access levels or their names were invalid.
@@ -165,7 +167,7 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
     /// </summary>
     public void RebuildAccessLevelsControls()
     {
-        AccessLevelChecklist.DisposeAllChildren();
+        AccessLevelChecklist.RemoveAllChildren(); // Starlight
         _accessLevelEntries.Clear();
 
         // No access level prototypes were assigned to any of the access level groups

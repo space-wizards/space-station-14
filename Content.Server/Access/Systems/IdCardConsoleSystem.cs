@@ -20,7 +20,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.Chat; // Starlight-edit
-using Content.Shared._Starlight.Access; // Starlight
 
 namespace Content.Server.Access.Systems;
 
@@ -70,7 +69,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
     // Starlight-start
 
-    private void OnAccessGroupSelected(EntityUid uid, IdCardConsoleComponent component, AccessGroupSelectedMessage args)
+    private void OnAccessGroupSelected(EntityUid uid, IdCardConsoleComponent component, IdCardConsoleComponent.AccessGroupSelectedMessage args)
     {
         component.CurrentAccessGroup = args.SelectedGroup;
 
@@ -85,12 +84,77 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             return;
 
         var privilegedIdName = string.Empty;
-        List<ProtoId<AccessLevelPrototype>>? possibleAccess = null;
+        List<ProtoId<AccessLevelPrototype>> possibleAccess = new(); // Starlight
         if (component.PrivilegedIdSlot.Item is { Valid: true } item)
         {
             privilegedIdName = Comp<MetaDataComponent>(item).EntityName;
-            possibleAccess = _accessReader.FindAccessTags(item).ToList();
+        // Starlight-edit: Start
+            var privilegedTags = _accessReader.FindAccessTags(item).ToHashSet();
+            possibleAccess = privilegedTags.ToList();
         }
+        else
+        {
+            privilegedIdName = string.Empty;
+        }
+
+        List<ProtoId<AccessGroupPrototype>> availableGroups = new();
+        bool isHighPrivilege = false;
+        
+        if (possibleAccess.Count > 0)
+        {
+            var allPossibleAccess = _prototype.EnumeratePrototypes<AccessLevelPrototype>()
+                .Where(a => a.CanAddToIdCard)
+                .Select(a => a.ID)
+                .ToHashSet();
+            
+            isHighPrivilege = possibleAccess.Count >= allPossibleAccess.Count * 0.8f;
+
+            foreach (var groupId in component.AccessGroups)
+            {
+                if (!_prototype.TryIndex<AccessGroupPrototype>(groupId, out var groupPrototype))
+                    continue;
+
+                var groupTags = groupPrototype.Tags.Where(tag => 
+                    _prototype.TryIndex<AccessLevelPrototype>(tag, out var accessProto) && 
+                    accessProto.CanAddToIdCard).ToList();
+                
+                if (groupTags.Count == 0)
+                    continue;
+                
+                var matchingTags = groupTags.Count(tag => possibleAccess.Contains(tag));
+                var threshold = Math.Max(1, Math.Min(3, groupTags.Count / 2));
+                
+                if (matchingTags >= threshold)
+                {
+                    availableGroups.Add(groupId);
+                }
+            }
+        }
+
+        var currentGroup = component.CurrentAccessGroup;
+
+        if (currentGroup == null || !availableGroups.Contains(currentGroup.Value))
+        {
+            if (availableGroups.Count > 0)
+            {
+                // Start on group selected
+                var preferredGroups = new[] { "Command", "Security", "Engineering", "Medical" };
+                var selectedGroup = preferredGroups
+                    .Select(name => (ProtoId<AccessGroupPrototype>)name)
+                    .FirstOrDefault(group => availableGroups.Contains(group));
+                
+                currentGroup = availableGroups.Contains(selectedGroup) ? selectedGroup : availableGroups.First();
+            }
+            else
+            {
+                currentGroup = component.AccessGroups.FirstOrDefault();
+            }
+            
+            component.CurrentAccessGroup = currentGroup;
+        }
+
+        var showGroups = availableGroups.Count > 1;
+        // Starlight-edit: End
 
         IdCardConsoleBoundUserInterfaceState newState;
         // this could be prettier
@@ -107,7 +171,10 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
                 string.Empty,
                 privilegedIdName,
                 string.Empty,
-                component.CurrentAccessGroup ?? component.AccessGroups.FirstOrDefault()); // Starlight-edit
+                // Starlight-edit: Start
+                currentGroup.HasValue ? currentGroup.Value : component.AccessGroups.FirstOrDefault(),
+                availableGroups); 
+                // Starlight-edit: End
         }
         else
         {
@@ -133,7 +200,10 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
                 jobProto,
                 privilegedIdName,
                 Name(targetId),
-                component.CurrentAccessGroup ?? component.AccessGroups.FirstOrDefault()); // Starlight-edit
+                // Starlight-edit: Start
+                currentGroup.HasValue ? currentGroup.Value : component.AccessGroups.FirstOrDefault(),
+                availableGroups);
+                // Starlight-edit: End
         }
 
         _userInterface.SetUiState(uid, IdCardConsoleUiKey.Key, newState);
@@ -228,10 +298,6 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             _sawmill.Warning($"User {ToPrettyString(uid)} tried to modify permissions they could not give/take!");
             return;
         }
-
-        var addedTags = finalTags.Except(oldTags).Select(tag => "+" + tag).ToList(); // Starlight-edit
-        var removedTags = oldTags.Except(finalTags).Select(tag => "-" + tag).ToList(); // Starlight-edit
-        _access.TrySetTags(targetId, finalTags); // Starlight-edit
 
         /*TODO: ECS SharedIdCardConsoleComponent and then log on card ejection, together with the save.
         This current implementation is pretty shit as it logs 27 entries (27 lines) if someone decides to give themselves AA*/

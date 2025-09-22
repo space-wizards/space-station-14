@@ -22,7 +22,7 @@ namespace Content.Client.Access.UI
         [Dependency] private readonly ILogManager _logManager = default!;
         private readonly ISawmill _logMill = default!;
 
-        private readonly IdCardConsoleBoundUserInterface _owner;
+        private IdCardConsoleBoundUserInterface? _owner; // Starlight edit
 
         // CCVar.
         private int _maxNameLength;
@@ -42,14 +42,13 @@ namespace Content.Client.Access.UI
         private ProtoId<AccessGroupPrototype>? _selectedAccessGroup = null; // Starlight-edit
         public Action<ProtoId<AccessGroupPrototype>>? OnGroupSelected; // Starlight-edit
 
-        public IdCardConsoleWindow(IdCardConsoleBoundUserInterface owner, IPrototypeManager prototypeManager,
-            List<ProtoId<AccessGroupPrototype>> accessGroups) // Starlight-edit
+        public IdCardConsoleWindow() // Starlight edit
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
             _logMill = _logManager.GetSawmill(SharedIdCardConsoleSystem.Sawmill);
 
-            _owner = owner;
+            // Starlight _owner = owner;
 
             _maxNameLength = _cfgManager.GetCVar(CCVars.MaxNameLength);
             _maxIdJobLength = _cfgManager.GetCVar(CCVars.MaxIdJobLength);
@@ -85,34 +84,20 @@ namespace Content.Client.Access.UI
             }
 
             JobPresetOptionButton.OnItemSelected += SelectJobPreset;
-            // Starlight-start: Access Groups
-            var currentAccessGroup = _selectedAccessGroup ?? accessGroups.FirstOrDefault();
-            _accessGroups.Populate(accessGroups, currentAccessGroup, prototypeManager);
-
-            List<ProtoId<AccessLevelPrototype>> accessLevels = new();
-            if (prototypeManager.TryIndex(currentAccessGroup, out var accessGroup))
-            {
-                accessLevels.AddRange(accessGroup.Tags);
-                _accessButtons.Populate(accessLevels, prototypeManager);
-            }
-            else
-                _logMill.Error($"Unable to find accessgroup for {accessGroup}");
-                
+            // Starlight-edit: Start
+            _accessGroups = new AccessGroupControl();
+            _accessButtons = new AccessLevelControl();
+            
             AccessGroupControlContainer.AddChild(_accessGroups);
-
-            // Starlight-end
-
             AccessLevelControlContainer.AddChild(_accessButtons);
+        }
 
-            // Starlight-start: Access Groups
-            foreach (var (id, button) in _accessGroups.ButtonsList)
-                button.OnPressed += _ => OnGroupSelected?.Invoke(id);
-            // Starlight-end
+        public void Initialize(IdCardConsoleBoundUserInterface owner)
+        {
+            _owner = owner;
 
-            foreach (var (id, button) in _accessButtons.ButtonsList)
-            {
-                button.OnPressed += _ => SubmitData();
-            }
+            OnGroupSelected += group => _owner.OnGroupSelected(group);
+            // Starlight-edit: End
         }
 
         private void ClearAllAccess()
@@ -206,22 +191,91 @@ namespace Content.Client.Access.UI
 
             JobPresetOptionButton.Disabled = !interfaceEnabled;
 
-            // Starlight-start: Access Groups
+            // Starlight-edit: Start
+            AccessGroupControlContainer.RemoveAllChildren();
+            AccessLevelControlContainer.RemoveAllChildren();
 
-            _selectedAccessGroup = state.CurrentAccessGroup;
+            var allowedAccess = interfaceEnabled && state.AllowedModifyAccessList != null
+                ? state.AllowedModifyAccessList.ToList()
+                : new List<ProtoId<AccessLevelPrototype>>();
 
-            _accessGroups.UpdateState(state.CurrentAccessGroup);
+            var allPossibleAccess = _prototypeManager.EnumeratePrototypes<AccessLevelPrototype>()
+                .Where(a => a.CanAddToIdCard)
+                .Select(a => a.ID)
+                .ToHashSet();
 
-            // Starlight-end
+            var isHighPrivilege = allowedAccess.Count >= allPossibleAccess.Count * 0.8f;
 
-            _accessButtons.UpdateState(state.TargetIdAccessList?.ToList() ??
-                                       new List<ProtoId<AccessLevelPrototype>>(),
-                                       state.CurrentAccessGroup, // Starlight-edit
-                                       _prototypeManager, // Starlight-edit
-                                       state.AllowedModifyAccessList?.ToList() ??
-                                       new List<ProtoId<AccessLevelPrototype>>());
+            var groupsWithCoverage = new List<ProtoId<AccessGroupPrototype>>();
+            if (allowedAccess.Count > 0)
+            {
+                List<ProtoId<AccessGroupPrototype>> groupsToCheck;
+                if (state.AvailableAccessGroups != null)
+                {
+                    groupsToCheck = state.AvailableAccessGroups;
+                }
+                else
+                {
+                    groupsToCheck = _prototypeManager.EnumeratePrototypes<AccessGroupPrototype>()
+                        .Select(p => (ProtoId<AccessGroupPrototype>)p.ID)
+                        .ToList();
+                }
 
-            // Starlight-start: Access Groups
+                foreach (var groupId in groupsToCheck)
+                {
+                    if (!_prototypeManager.TryIndex(groupId, out var proto))
+                        continue;
+
+                    var groupTags = proto.Tags.Where(tag => 
+                        _prototypeManager.TryIndex<AccessLevelPrototype>(tag, out var accessProto) && 
+                        accessProto.CanAddToIdCard).ToList();
+                    
+                    if (groupTags.Count == 0)
+                        continue;
+                        
+                    var matchingTags = groupTags.Count(tag => allowedAccess.Contains(tag));
+                    var threshold = Math.Max(1, Math.Min(3, groupTags.Count / 2));
+                    
+                    if (matchingTags >= threshold)
+                        groupsWithCoverage.Add(groupId);
+                }
+            }
+
+            var showGroups = state.AvailableAccessGroups != null && groupsWithCoverage.Count > 1;
+
+            // Groups control
+            if (showGroups)
+            {
+                ProtoId<AccessGroupPrototype> selectedGroup =
+                    groupsWithCoverage.Contains(state.CurrentAccessGroup)
+                        ? state.CurrentAccessGroup
+                        : groupsWithCoverage.First();
+
+                _accessGroups.Populate(groupsWithCoverage, selectedGroup, _prototypeManager);
+                AccessGroupControlContainer.Visible = true;
+                AccessGroupControlContainer.AddChild(_accessGroups);
+
+                foreach (var (id, button) in _accessGroups.ButtonsList)
+                {
+                    var groupId = id;
+                    button.OnPressed += _ => _owner?.OnGroupSelected(groupId);
+                }
+            }
+            else
+            {
+                AccessGroupControlContainer.Visible = false;
+            }
+
+            ProtoId<AccessGroupPrototype>? effectiveGroup =
+                showGroups ? (ProtoId<AccessGroupPrototype>?)state.CurrentAccessGroup : null;
+
+            _accessButtons.UpdateState(
+                state.TargetIdAccessList?.ToList() ?? new List<ProtoId<AccessLevelPrototype>>(),
+                effectiveGroup,
+                _prototypeManager,
+                allowedAccess);
+            AccessLevelControlContainer.AddChild(_accessButtons);
+
             foreach (var (id, button) in _accessButtons.ButtonsList)
                 button.OnPressed += _ => SubmitData();
             // Starlight-end
@@ -248,7 +302,7 @@ namespace Content.Client.Access.UI
             var jobProtoDirty = _lastJobProto != null &&
                                 _jobPrototypeIds[JobPresetOptionButton.SelectedId] != _lastJobProto;
 
-            _owner.SubmitData(
+            _owner?.SubmitData( // Starlight-edit
                 FullNameLineEdit.Text,
                 JobTitleLineEdit.Text,
                 // Iterate over the buttons dictionary, filter by `Pressed`, only get key from the key/value pair

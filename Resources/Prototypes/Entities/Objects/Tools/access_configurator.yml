@@ -19,7 +19,7 @@
       slots:
         - Belt
     - type: AccessOverrider
-    # Starlight-edit: Start
+      # Starlight-edit: Start
       accessGroups:
       - General
       - Security
@@ -29,7 +29,8 @@
       - Medical
       - Service
       - Engineering
-    # Starlight-edit: End
+      - Centcomm
+      # Starlight-edit: End
       privilegedIdSlot:
         name: AccessOverrider-privilegedId
         ejectSound: /Audio/Machines/id_swipe.ogg
@@ -80,7 +81,10 @@
       - Medical
       - Service
       - Engineering
-      - Admin
+      - Misc
+      - Centcomm
+      - Syndicate
+      # Starlight-edit: End
       privilegedIdSlot:
         name: AccessOverrider-privilegedId # Starlight-edit
         startingItem: UniversalIDCard

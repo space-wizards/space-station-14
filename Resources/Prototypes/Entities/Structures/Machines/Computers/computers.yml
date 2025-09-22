@@ -568,6 +568,18 @@
   description: Terminal for programming Nanotrasen employee ID cards to access parts of the station.
   components:
   - type: IdCardConsole
+  # Starlight-edit: Start
+    accessGroups:
+    - General
+    - Security
+    - Cargo
+    - Command
+    - Research
+    - Medical
+    - Service
+    - Engineering
+    - CentComm
+  # Starlight-edit: End
     privilegedIdSlot:
       name: id-card-console-privileged-id
       ejectSound: /Audio/Machines/id_swipe.ogg

@@ -28,6 +28,13 @@ public sealed partial class AccessLevelControl : GridContainer
 
     public void Populate(List<ProtoId<AccessLevelPrototype>> accessLevels, IPrototypeManager prototypeManager)
     {
+        // Starlight-edit: Start
+        RemoveAllChildren();
+        ButtonsList.Clear();
+
+        if (accessLevels.Count == 0)
+            return;
+        // Starlight-edit: End
         foreach (var access in accessLevels)
         {
             if (!prototypeManager.TryIndex(access, out var accessLevel))
@@ -45,27 +52,48 @@ public sealed partial class AccessLevelControl : GridContainer
             ButtonsList.Add(accessLevel.ID, newButton);
         }
     }
-
+    // Starlight-edit: Start
     public void UpdateState(
         List<ProtoId<AccessLevelPrototype>> pressedList,
-        ProtoId<AccessGroupPrototype>? currentGroup, // Starlight-edit: access groups
-        IPrototypeManager? prototypeManager = null, // Starlight-edit: access groups
+        ProtoId<AccessGroupPrototype>? currentGroup,
+        IPrototypeManager? prototypeManager = null,
         List<ProtoId<AccessLevelPrototype>>? enabledList = null)
     {
-        // Starlight-start: Access groups
-        if (currentGroup != null && prototypeManager != null && prototypeManager.TryIndex(currentGroup.Value, out var group))
+        if (enabledList == null || enabledList.Count == 0)
         {
             RemoveAllChildren();
             ButtonsList.Clear();
-
-            Populate(group.Tags.ToList(), prototypeManager);
+            return;
         }
-        // Starlight-end
+
+        if (prototypeManager == null)
+        {
+            RemoveAllChildren();
+            ButtonsList.Clear();
+            return;
+        }
+
+        RemoveAllChildren();
+        ButtonsList.Clear();
+
+        List<ProtoId<AccessLevelPrototype>> accessesToShow;
+
+        if (currentGroup != null && prototypeManager.TryIndex(currentGroup.Value, out var group))
+        {
+            accessesToShow = group.Tags.Where(tag => enabledList.Contains(tag)).ToList();
+        }
+        else
+        {
+            accessesToShow = enabledList;
+        }
+
+        Populate(accessesToShow, prototypeManager);
+        // Starlight-edit: End
 
         foreach (var (accessName, button) in ButtonsList)
         {
             button.Pressed = pressedList.Contains(accessName);
-            button.Disabled = !(enabledList?.Contains(accessName) ?? true);
+            button.Disabled = false; // Starlight
         }
     }
 }

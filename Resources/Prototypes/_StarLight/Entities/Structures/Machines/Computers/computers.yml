@@ -217,7 +217,9 @@
     - Medical
     - Service
     - Engineering
-    - Admin
+    - Misc
+    - Centcomm
+    - Syndicate
     privilegedIdSlot:
       name: UniversalIdConsole-privilegedId
       ejectSound: /Audio/Machines/id_swipe.ogg

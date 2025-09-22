@@ -27,7 +27,7 @@
   name: id-card-access-level-commie
 
 - type: accessGroup
-  id: Admin
+  id: Misc
   tags:
   - Debug1
   - Debug2
@@ -36,11 +36,16 @@
   - Debug5
   - Freelance
   - Commie
-  - SyndicateAgent
-  - NuclearOperative
   - Wizard
   - Xenoborg
+
+  - type: accessGroup
+  id: Centcomm
+  tags:
   - CentralCommand
-  - StationAi
-  - Borg
-  - BasicSilicon
+
+  - type: accessGroup
+  id: Syndicate
+  tags:
+  - SyndicateAgent
+  - NuclearOperative

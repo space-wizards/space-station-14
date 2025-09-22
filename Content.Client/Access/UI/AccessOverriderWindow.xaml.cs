@@ -29,9 +29,12 @@ namespace Content.Client.Access.UI
         }
 
         // Starlight-edit: Start
-        // Populate both groups and levels. currentGroup may be null.
         public void SetAccess(IPrototypeManager protoManager, List<ProtoId<AccessGroupPrototype>> accessGroups, ProtoId<AccessGroupPrototype>? currentGroup, List<ProtoId<AccessLevelPrototype>> accessLevels)
         {
+            // Clear existing containers
+            AccessGroupControlContainer.RemoveAllChildren();
+            AccessLevelControlContainer.RemoveAllChildren();
+
             // Groups
             _accessGroups.Populate(accessGroups, currentGroup ?? accessGroups.FirstOrDefault(), protoManager);
             AccessGroupControlContainer.AddChild(_accessGroups);
@@ -40,21 +43,10 @@ namespace Content.Client.Access.UI
             _accessButtons.Populate(accessLevels, protoManager);
             AccessLevelControlContainer.AddChild(_accessButtons);
 
-            foreach (var access in accessLevels)
-            {
-                if (!protoManager.Resolve(access, out var accessLevel))
-                {
-                    continue;
-                }
-
-            // Wire up group selection -> notify
+            // Wire up group selection events
             foreach (var (id, button) in _accessGroups.ButtonsList)
             {
-                button.OnPressed += _ =>
-        // Starlight-edit: End
-                {
-                    OnGroupSelected?.Invoke(id);
-                };
+                button.OnPressed += _ => OnGroupSelected?.Invoke(id);
             }
 
             // Wire up level presses -> submit list
@@ -63,11 +55,10 @@ namespace Content.Client.Access.UI
                 button.OnPressed += _ =>
                 {
                     OnSubmit?.Invoke(
-                        // Starlight-edit: Start
                         _accessButtons.ButtonsList.Where(x => x.Value.Pressed)
                             .Select(x => new ProtoId<AccessLevelPrototype>(x.Key))
                             .ToList());
-                        // Starlight-edit: End
+                    // Starlight-edit: End
                 };
             }
         }
@@ -105,41 +96,73 @@ namespace Content.Client.Access.UI
             var interfaceEnabled = state.IsPrivilegedIdPresent && state.IsPrivilegedIdAuthorized;
 
             // Starlight-edit: Start
-            // Update group control
-            if (state.AccessGroups != null)
+            var allowedAccess = interfaceEnabled && state.AllowedModifyAccessList != null
+                ? state.AllowedModifyAccessList.ToList()
+                : new List<ProtoId<AccessLevelPrototype>>();
+
+            var groupsWithCoverage = new List<ProtoId<AccessGroupPrototype>>();
+            if (allowedAccess.Count > 0 && state.AccessGroups != null)
             {
-                _accessGroups.UpdateState(state.CurrentAccessGroup ?? state.AccessGroups.FirstOrDefault());
-            }
-
-
-            // Update levels control
-            _accessButtons.UpdateState(state.TargetAccessReaderIdAccessList?.ToList() ??
-                                       new List<ProtoId<AccessLevelPrototype>>(),
-                                       state.CurrentAccessGroup, // Starlight-edit: influence levels by current group
-                                       protoManager, // Starlight-edit
-                                       state.AllowedModifyAccessList?.ToList() ??
-                                       new List<ProtoId<AccessLevelPrototype>>());
-
-            // Ensure buttons enable/disable
-            foreach (var (id, button) in _accessButtons.ButtonsList)
-            // Starlight-edit: End
-            {
-                button.Disabled = !interfaceEnabled;
-                if (interfaceEnabled)
+                foreach (var g in state.AccessGroups)
                 {
-                    // Starlight-edit: Start
-                    button.Disabled = (!state.AllowedModifyAccessList?.Contains((ProtoId<AccessLevelPrototype>) id)) ?? true;
+                    if (!protoManager.TryIndex(g, out AccessGroupPrototype? gp))
+                        continue;
+                    
+                    var groupTags = gp.Tags.Where(tag => 
+                        protoManager.TryIndex<AccessLevelPrototype>(tag, out var accessProto) && 
+                        accessProto.CanAddToIdCard).ToList();
+                    
+                    if (groupTags.Count == 0)
+                        continue;
+                        
+                    var matchingTags = groupTags.Count(tag => allowedAccess.Contains(tag));
+                    var threshold = Math.Max(1, Math.Min(3, groupTags.Count / 2));
+                    
+                    if (matchingTags >= threshold)
+                        groupsWithCoverage.Add(gp.ID);
                 }
             }
 
-            // Wire events (ensure not doubly-wired)
-            foreach (var (id, button) in _accessGroups.ButtonsList)
+            var showGroups = groupsWithCoverage.Count > 1;
+
+            AccessGroupControlContainer.RemoveAllChildren();
+            AccessLevelControlContainer.RemoveAllChildren();
+
+            if (showGroups)
             {
-                button.OnPressed -= _ => { }; // noop attempt to avoid duplicate subscription (safe)
+                ProtoId<AccessGroupPrototype> selectedGroup =
+                    state.CurrentAccessGroup.HasValue && groupsWithCoverage.Contains(state.CurrentAccessGroup.Value)
+                        ? state.CurrentAccessGroup.Value
+                        : groupsWithCoverage.First();
+
+                _accessGroups.Populate(groupsWithCoverage, selectedGroup, protoManager);
+                AccessGroupControlContainer.Visible = true;
+                AccessGroupControlContainer.AddChild(_accessGroups);
+
+                foreach (var (id, button) in _accessGroups.ButtonsList)
+                    button.OnPressed += _ => OnGroupSelected?.Invoke(id);
             }
+            else
+            {
+                AccessGroupControlContainer.Visible = false;
+            }
+
+            ProtoId<AccessGroupPrototype>? effectiveGroup =
+                showGroups ? state.CurrentAccessGroup : null;
+
+            _accessButtons.UpdateState(
+                state.TargetAccessReaderIdAccessList?.ToList() ?? new List<ProtoId<AccessLevelPrototype>>(),
+                effectiveGroup,
+                protoManager,
+                allowedAccess);
+            AccessLevelControlContainer.AddChild(_accessButtons);
+
             foreach (var (id, button) in _accessButtons.ButtonsList)
             {
-                button.OnPressed -= _ => { };
+                button.OnPressed += _ => OnSubmit?.Invoke(
+                    _accessButtons.ButtonsList.Where(x => x.Value.Pressed)
+                        .Select(x => new ProtoId<AccessLevelPrototype>(x.Key))
+                        .ToList());
             // Starlight-edit: End
             }
         }

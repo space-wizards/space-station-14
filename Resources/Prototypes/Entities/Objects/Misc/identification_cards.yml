@@ -865,22 +865,14 @@
     jobTitle: job-title-universal
     jobIcon: JobIconAdmin
   - type: Access
+    # Starlight-edit: Start
     groups:
     - AllAccess
     - Silicon
-    tags:
-    - CentralCommand
-    - NuclearOperative
-    - SyndicateAgent
-    - Wizard
-    - Xenoborg
-    - Commie
-    - Freelance
-    - Debug1
-    - Debug2
-    - Debug3
-    - Debug4
-    - Debug5
+    - Misc
+    - Centcomm
+    - Syndicate
+    # Starlight-edit: End
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
