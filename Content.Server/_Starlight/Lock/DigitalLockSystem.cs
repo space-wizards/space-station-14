@@ -133,7 +133,12 @@ public sealed class DigitalLockSystem : EntitySystem
     {
         component.LastPlayedKeypadSemitones = PlayKeypadSound(uid, args.Value, component.LastPlayedKeypadSemitones, component.KeypadPressSound);
 
-        if (!IsAwaitingInput(component.Status)
+        if (component.Status == DigitalLockStatus.OPENED)
+        {
+            UpdateStatus(uid, component);
+            UpdateUserInterface(uid, component);
+        }
+        else if (!IsAwaitingInput(component.Status)
             || component.EnteredCode.Length >= component.MaxCodeLength)
             return;
 
@@ -159,7 +164,7 @@ public sealed class DigitalLockSystem : EntitySystem
                 UpdateUserInterface(uid, component);
                 break;
             case DigitalLockStatus.CHANGE_MODE_CANCEL_CONFIRMATION:
-                component.Status = DigitalLockStatus.CHANGE_MODE_CANCEL_CONFIRMATION;
+                component.Status = DigitalLockStatus.CHANGE_MODE_CODE;
                 UpdateUserInterface(uid, component);
                 break;
             case DigitalLockStatus.AWAIT_CODE:
@@ -168,6 +173,10 @@ public sealed class DigitalLockSystem : EntitySystem
                     component.Status = DigitalLockStatus.CHANGE_MODE_CONFIRMATION;
                 else
                     component.EnteredCode = "";
+                UpdateUserInterface(uid, component);
+                break;
+            case DigitalLockStatus.OPENED:
+                UpdateStatus(uid, component);
                 UpdateUserInterface(uid, component);
                 break;
         }
@@ -189,28 +198,9 @@ public sealed class DigitalLockSystem : EntitySystem
         switch (component.Status)
         {
             case DigitalLockStatus.AWAIT_CODE:
-                if (component.Code == "" && component.EnteredCode != "")
-                {
-                    component.Code = component.EnteredCode;
-                    component.EnteredCode = "";
-                    component.Status = DigitalLockStatus.AWAIT_CONFIRMATION;
-                    break;
-                }
-
-                if (component.EnteredCode == component.Code && component.Code != "")
-                {
-                    component.Status = DigitalLockStatus.OPENED;
-                    _audio.PlayPvs(component.AccessGrantedSound, uid);
-                    if (_lock.IsLocked(uid))
-                        _lock.Unlock(uid, null, lockComponent);
-                }
-                else if (component.EnteredCode != "")
-                {
-                    component.EnteredCode = "";
-                    _audio.PlayPvs(component.AccessDeniedSound, uid);
-                }
-
+                CheckCode(uid, component, lockComponent);
                 break;
+
             case DigitalLockStatus.AWAIT_CONFIRMATION:
                 if (component.EnteredCode == component.Code)
                 {
@@ -219,6 +209,7 @@ public sealed class DigitalLockSystem : EntitySystem
                     _audio.PlayPvs(component.AccessGrantedSound, uid);
                 }
                 break;
+
             case DigitalLockStatus.OPENED:
                 component.EnteredCode = "";
                 if (!_lock.IsLocked(uid))
@@ -235,20 +226,58 @@ public sealed class DigitalLockSystem : EntitySystem
                 break;
 
             case DigitalLockStatus.CHANGE_MODE_CODE:
-                if (component.EnteredCode == component.Code && component.Code != "")
-                {
-                    component.Code = "";
-                    component.EnteredCode = "";
-                    component.Status = DigitalLockStatus.AWAIT_CODE;
-                    _audio.PlayPvs(component.AccessGrantedSound, uid);
-
-                }
-                else if (component.EnteredCode != "")
-                {
-                    component.EnteredCode = "";
-                    _audio.PlayPvs(component.AccessDeniedSound, uid);
-                }
+                CheckChangeCode(uid, component);
                 break;
+        }
+    }
+
+    /// <summary>
+    /// Checks the entered code, when we setup it or trying to unlock digital lock
+    /// </summary>
+    /// <param name="uid">Entity with <see cref="DigitalLockComponent"/></param>
+    /// <param name="component"><see cref="DigitalLockComponent"/> of Entity</param>
+    /// <param name="lockComponent"><see cref="LockComponent"/> of Entity</param>
+    private void CheckCode(EntityUid uid, DigitalLockComponent component, LockComponent lockComponent)
+    {
+        if (component.Code == "" && component.EnteredCode != "")
+        {
+            component.Code = component.EnteredCode;
+            component.EnteredCode = "";
+            component.Status = DigitalLockStatus.AWAIT_CONFIRMATION;
+        }
+        else if (component.EnteredCode == component.Code && component.Code != "")
+        {
+            component.Status = DigitalLockStatus.OPENED;
+            _audio.PlayPvs(component.AccessGrantedSound, uid);
+            if (_lock.IsLocked(uid))
+                _lock.Unlock(uid, null, lockComponent);
+        }
+        else if (component.EnteredCode != "")
+        {
+            component.EnteredCode = "";
+            _audio.PlayPvs(component.AccessDeniedSound, uid);
+        }
+    }
+
+    /// <summary>
+    /// Checks the entered code at the moment of changing the current one
+    /// </summary>
+    /// <param name="uid">Entity with <see cref="DigitalLockComponent"/></param>
+    /// <param name="component"><see cref="DigitalLockComponent"/> of Entity</param>
+    private void CheckChangeCode(EntityUid uid, DigitalLockComponent component)
+    {
+        if (component.EnteredCode == component.Code && component.Code != "")
+        {
+            component.Code = "";
+            component.EnteredCode = "";
+            component.Status = DigitalLockStatus.AWAIT_CODE;
+            _audio.PlayPvs(component.AccessGrantedSound, uid);
+
+        }
+        else if (component.EnteredCode != "")
+        {
+            component.EnteredCode = "";
+            _audio.PlayPvs(component.AccessDeniedSound, uid);
         }
     }
 
