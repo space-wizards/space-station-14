@@ -34,6 +34,8 @@ public sealed class DigitalLockBoundUserInterface : BoundUserInterface
         {
             SendMessage(new DigitalLockKeypadClearMessage());
         };
+
+        _menu.FillKeypadGrid();
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

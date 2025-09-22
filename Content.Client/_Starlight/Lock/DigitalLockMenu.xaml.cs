@@ -19,13 +19,12 @@ public sealed partial class DigitalLockMenu : DefaultWindow
     public DigitalLockMenu()
     {
         RobustXamlLoader.Load(this);
-        FillKeypadGrid();
     }
 
     /// <summary>
     ///     Fill keypad buttons in keypad grid
     /// </summary>
-    private void FillKeypadGrid()
+    public void FillKeypadGrid()
     {
         // add 3 rows of keypad buttons (1-9)
         for (var i = 1; i <= 9; i++)
