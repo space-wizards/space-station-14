@@ -722,18 +722,6 @@
 
 - type: entity
   parent: IDCardStandard
-  id: BoxerIDCard
-  name: boxer ID card
-  components:
-  - type: Sprite
-    layers:
-    - state: default
-    - state: idboxer
-  - type: PresetIdCard
-    job: Boxer
-
-- type: entity
-  parent: IDCardStandard
   id: ZookeeperIDCard
   name: zookeeper ID card
   components:
