@@ -46,9 +46,9 @@ public sealed class GasMixerSystem : SharedGasMixerSystem
         var generalTransfer = (ent.Comp.TargetPressure - outputStartingPressure) * outlet.Air.Volume / Atmospherics.R;
 
         var transferMolesOne = inletOne.Air.Temperature > 0 ? ent.Comp.InletOneConcentration * generalTransfer / inletOne.Air.Temperature : 0f;
-        var transferMolesTwo = inletTwo.Air.Temperature > 0 ? ent.Comp.InletTwoConcentration * generalTransfer / inletTwo.Air.Temperature : 0f;
+        var transferMolesTwo = inletTwo.Air.Temperature > 0 ? (1.0f - ent.Comp.InletOneConcentration) * generalTransfer / inletTwo.Air.Temperature : 0f;
 
-        if (ent.Comp.InletTwoConcentration <= 0f)
+        if (ent.Comp.InletOneConcentration >= 1f)
         {
             if (inletOne.Air.Temperature <= 0f)
                 return;

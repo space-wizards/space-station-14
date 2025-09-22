@@ -30,7 +30,4 @@ public sealed partial class GasMixerComponent : Component
 
     [DataField, AutoNetworkedField]
     public float InletOneConcentration = 0.5f;
-
-    [DataField, AutoNetworkedField]
-    public float InletTwoConcentration = 0.5f;
 }

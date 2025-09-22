@@ -1,4 +1,3 @@
-
 using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping;
@@ -8,7 +7,6 @@ using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
-
 
 namespace Content.Server.Atmos.Piping.Trinary.EntitySystems;
 
@@ -78,9 +76,8 @@ public abstract class SharedGasMixerSystem : EntitySystem
         var nodeOne = Math.Clamp(args.NodeOne, 0f, 1f);
         _adminLogger.Add(LogType.Unknown, LogImpact.Extreme, $"DEBUG {args.NodeOne} {nodeOne}");
         ent.Comp.InletOneConcentration = nodeOne;
-        ent.Comp.InletTwoConcentration = 1.0f - nodeOne;
         _adminLogger.Add(LogType.AtmosRatioChanged, LogImpact.Medium,
-            $"{ToPrettyString(args.Actor):player} set the ratio on {ToPrettyString(ent):device} to {ent.Comp.InletOneConcentration}:{ent.Comp.InletTwoConcentration}");
+            $"{ToPrettyString(args.Actor):player} set the ratio on {ToPrettyString(ent):device} to {ent.Comp.InletOneConcentration}:{1f - ent.Comp.InletOneConcentration}");
         Dirty(ent);
         UpdateUi(ent);
     }
@@ -104,7 +101,7 @@ public abstract class SharedGasMixerSystem : EntitySystem
                 ("statusColor", "lightblue"), // TODO: change with pressure?
                 ("pressure", ent.Comp.TargetPressure),
                 ("inletOneConcentration", ent.Comp.InletOneConcentration),
-                ("inletTwoConcentration", ent.Comp.InletTwoConcentration)
+                ("inletTwoConcentration", 1f - ent.Comp.InletOneConcentration)
             ))
         {
             args.PushMarkup(str);
