@@ -18,7 +18,7 @@ public sealed class CCCCVars
     /// </summary>
 
     public static readonly CVarDef<bool> GCFEnabled =
-        CVarDef.Create("gcf_auto.enabled", true);
+        CVarDef.Create("gcf_auto.enabled", false);
 
     /// <summary>
     ///     Notify for admin about GCF Clean.
