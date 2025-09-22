@@ -50,7 +50,6 @@ namespace Content.Server.Database
                 .Include(p => p.Profiles).ThenInclude(h => h.Jobs)
                 .Include(p => p.Profiles).ThenInclude(h => h.Antags)
                 .Include(p => p.Profiles).ThenInclude(h => h.Traits)
-                .Include(p => p.Profiles).ThenInclude(h => h.Pronouns)
                 .Include(p => p.Profiles)
                     .ThenInclude(h => h.Loadouts)
                     .ThenInclude(l => l.Groups)
@@ -110,7 +109,6 @@ namespace Content.Server.Database
                 .Include(p => p.Loadouts)
                     .ThenInclude(l => l.Groups)
                     .ThenInclude(group => group.Loadouts)
-                .Include(p => p.Pronouns)
                 .AsSplitQuery()
                 .SingleOrDefault(h => h.Slot == slot);
 
@@ -238,6 +236,16 @@ namespace Content.Server.Database
                 }
             }
 
+            Dictionary<ProtoId<PronounTensePrototype>, string> pronouns = [];
+            foreach (var pronoun in profile.Pronouns)
+            {
+                var parsed = PronounTensePrototype.ParseFromDbString(pronoun.Tense);
+
+                if (parsed is not { } tense) continue;
+
+                pronouns.Add(tense, pronoun.Pronoun);
+            }
+
             var loadouts = new Dictionary<string, RoleLoadout>();
 
             foreach (var role in profile.Loadouts)
@@ -269,17 +277,7 @@ namespace Content.Server.Database
                 profile.Age,
                 sex,
                 gender,
-                new Pronoun(
-                   profile.Pronouns?.Subject,
-                   profile.Pronouns?.Object,
-                   profile.Pronouns?.DatObj,
-                   profile.Pronouns?.Genitive,
-                   profile.Pronouns?.PossAdj,
-                   profile.Pronouns?.PossPronoun,
-                   profile.Pronouns?.Reflexive,
-                   profile.Pronouns?.Counter,
-                   profile.Pronouns?.Plural
-                ),
+                pronouns,
                 new HumanoidCharacterAppearance
                 (
                     profile.HairName,
@@ -292,7 +290,7 @@ namespace Content.Server.Database
                 ),
                 spawnPriority,
                 jobs,
-                (PreferenceUnavailableMode) profile.PreferenceUnavailable,
+                (PreferenceUnavailableMode)profile.PreferenceUnavailable,
                 antags.ToHashSet(),
                 traits.ToHashSet(),
                 loadouts
@@ -327,17 +325,15 @@ namespace Content.Server.Database
             profile.Slot = slot;
             profile.PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable;
 
-            var pronoun = humanoid.Pronoun;
-            profile.Pronouns ??= new Pronouns();
-            profile.Pronouns.Subject = pronoun?.Subject;
-            profile.Pronouns.Object = pronoun?.Object;
-            profile.Pronouns.DatObj = pronoun?.DatObj;
-            profile.Pronouns.Genitive = pronoun?.Genitive;
-            profile.Pronouns.PossAdj = pronoun?.PossAdj;
-            profile.Pronouns.PossPronoun = pronoun?.PossPronoun;
-            profile.Pronouns.Reflexive = pronoun?.Reflexive;
-            profile.Pronouns.Counter = pronoun?.Counter;
-            profile.Pronouns.Plural = pronoun?.Plural;
+            profile.Pronouns.Clear();
+            profile.Pronouns.AddRange(
+                humanoid.Pronouns
+                    .Select(p => new PronounSet
+                    {
+                        Tense = p.Key,
+                        Pronoun = p.Value
+                    })
+            );
 
             profile.Jobs.Clear();
             profile.Jobs.AddRange(

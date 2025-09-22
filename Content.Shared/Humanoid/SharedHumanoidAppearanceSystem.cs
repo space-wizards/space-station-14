@@ -282,15 +282,15 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     /// <summary>
     ///     Sets pronouns in the entity's HumanoidAppearanceComponent and GrammarComponent.
     /// </summary>
-    public void SetPronouns(Entity<HumanoidAppearanceComponent?> ent, Pronoun? pronouns)
+    public void SetPronouns(Entity<HumanoidAppearanceComponent?> ent, Dictionary<ProtoId<PronounTensePrototype>, string> pronouns)
     {
-        if (!Resolve(ent, ref ent.Comp) || pronouns == null)
+        if (!Resolve(ent, ref ent.Comp))
             return;
         ent.Comp.Pronouns = pronouns;
         Dirty(ent);
 
         if (TryComp<GrammarComponent>(ent, out var grammar))
-            grammar.Pronoun = pronouns;
+            grammar.Pronouns = pronouns;
 
         _identity.QueueIdentityUpdate(ent);
     }
@@ -470,11 +470,11 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         EnsureDefaultMarkings(uid, humanoid);
 
         humanoid.Gender = profile.Gender;
-        humanoid.Pronouns = profile.Pronoun;
+        humanoid.Pronouns = profile.Pronouns;
         if (TryComp<GrammarComponent>(uid, out var grammar))
         {
             _grammarSystem.SetGender((uid, grammar), profile.Gender);
-            grammar.Pronoun = profile.Pronoun;
+            grammar.Pronouns = profile.Pronouns;
         }
 
         humanoid.Age = profile.Age;

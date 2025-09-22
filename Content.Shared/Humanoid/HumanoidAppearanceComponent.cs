@@ -31,7 +31,7 @@ public sealed partial class HumanoidAppearanceComponent : Component
     public Gender Gender;
 
     [DataField, AutoNetworkedField]
-    public Pronoun? Pronouns;
+    public Dictionary<ProtoId<PronounTensePrototype>, string> Pronouns = [];
 
     [DataField, AutoNetworkedField]
     public int Age = 18;

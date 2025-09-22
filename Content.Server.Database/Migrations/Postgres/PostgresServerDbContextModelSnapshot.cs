@@ -1001,62 +1001,36 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("profile_role_loadout", (string)null);
                 });
 
-            modelBuilder.Entity("Content.Server.Database.Pronouns", b =>
+            modelBuilder.Entity("Content.Server.Database.PronounSet", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("pronouns_id");
+                        .HasColumnName("pronoun_set_id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Counter")
-                        .HasColumnType("text")
-                        .HasColumnName("counter");
-
-                    b.Property<string>("DatObj")
-                        .HasColumnType("text")
-                        .HasColumnName("dat_obj");
-
-                    b.Property<string>("Genitive")
-                        .HasColumnType("text")
-                        .HasColumnName("genitive");
-
-                    b.Property<string>("Object")
-                        .HasColumnType("text")
-                        .HasColumnName("object");
-
-                    b.Property<bool?>("Plural")
-                        .HasColumnType("boolean")
-                        .HasColumnName("plural");
-
-                    b.Property<string>("PossAdj")
-                        .HasColumnType("text")
-                        .HasColumnName("poss_adj");
-
-                    b.Property<string>("PossPronoun")
-                        .HasColumnType("text")
-                        .HasColumnName("poss_pronoun");
 
                     b.Property<int>("ProfileId")
                         .HasColumnType("integer")
                         .HasColumnName("profile_id");
 
-                    b.Property<string>("Reflexive")
+                    b.Property<string>("Pronoun")
+                        .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("reflexive");
+                        .HasColumnName("pronoun");
 
-                    b.Property<string>("Subject")
+                    b.Property<string>("Tense")
+                        .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("subject");
+                        .HasColumnName("tense");
 
                     b.HasKey("Id")
-                        .HasName("PK_pronouns");
+                        .HasName("PK_pronoun_set");
 
-                    b.HasIndex("ProfileId")
+                    b.HasIndex("ProfileId", "Tense")
                         .IsUnique();
 
-                    b.ToTable("pronouns", (string)null);
+                    b.ToTable("pronoun_set", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.RoleWhitelist", b =>
@@ -1849,14 +1823,14 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("Profile");
                 });
 
-            modelBuilder.Entity("Content.Server.Database.Pronouns", b =>
+            modelBuilder.Entity("Content.Server.Database.PronounSet", b =>
                 {
                     b.HasOne("Content.Server.Database.Profile", "Profile")
-                        .WithOne("Pronouns")
-                        .HasForeignKey("Content.Server.Database.Pronouns", "ProfileId")
+                        .WithMany("Pronouns")
+                        .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK_pronouns_profile_profile_id");
+                        .HasConstraintName("FK_pronoun_set_profile_profile_id");
 
                     b.Navigation("Profile");
                 });

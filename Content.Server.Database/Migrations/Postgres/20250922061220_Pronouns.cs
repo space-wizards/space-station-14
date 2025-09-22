@@ -12,27 +12,20 @@ namespace Content.Server.Database.Migrations.Postgres
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "pronouns",
+                name: "pronoun_set",
                 columns: table => new
                 {
-                    pronouns_id = table.Column<int>(type: "integer", nullable: false)
+                    pronoun_set_id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     profile_id = table.Column<int>(type: "integer", nullable: false),
-                    subject = table.Column<string>(type: "text", nullable: true),
-                    @object = table.Column<string>(name: "object", type: "text", nullable: true),
-                    dat_obj = table.Column<string>(type: "text", nullable: true),
-                    genitive = table.Column<string>(type: "text", nullable: true),
-                    poss_adj = table.Column<string>(type: "text", nullable: true),
-                    poss_pronoun = table.Column<string>(type: "text", nullable: true),
-                    reflexive = table.Column<string>(type: "text", nullable: true),
-                    counter = table.Column<string>(type: "text", nullable: true),
-                    plural = table.Column<bool>(type: "boolean", nullable: true)
+                    tense = table.Column<string>(type: "text", nullable: false),
+                    pronoun = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_pronouns", x => x.pronouns_id);
+                    table.PrimaryKey("PK_pronoun_set", x => x.pronoun_set_id);
                     table.ForeignKey(
-                        name: "FK_pronouns_profile_profile_id",
+                        name: "FK_pronoun_set_profile_profile_id",
                         column: x => x.profile_id,
                         principalTable: "profile",
                         principalColumn: "profile_id",
@@ -40,9 +33,9 @@ namespace Content.Server.Database.Migrations.Postgres
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_pronouns_profile_id",
-                table: "pronouns",
-                column: "profile_id",
+                name: "IX_pronoun_set_profile_id_tense",
+                table: "pronoun_set",
+                columns: new[] { "profile_id", "tense" },
                 unique: true);
         }
 
@@ -50,7 +43,7 @@ namespace Content.Server.Database.Migrations.Postgres
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "pronouns");
+                name: "pronoun_set");
         }
     }
 }

@@ -57,11 +57,9 @@ namespace Content.Server.Database
                 .HasIndex(p => new {p.Slot, PrefsId = p.PreferenceId})
                 .IsUnique();
 
-            modelBuilder.Entity<Pronouns>()
-                .HasOne(pronoun => pronoun.Profile)
-                .WithOne(profile => profile.Pronouns)
-                .HasForeignKey<Pronouns>(pronoun => pronoun.ProfileId)
-                .IsRequired();
+            modelBuilder.Entity<PronounSet>()
+                .HasIndex(p => new { HumanoidProfileId = p.ProfileId, p.Tense })
+                .IsUnique();
 
             modelBuilder.Entity<Antag>()
                 .HasIndex(p => new {HumanoidProfileId = p.ProfileId, p.AntagName})
@@ -411,7 +409,7 @@ namespace Content.Server.Database
         public int Age { get; set; }
         public string Sex { get; set; } = null!;
         public string Gender { get; set; } = null!;
-        public Pronouns? Pronouns { get; set; }
+        public List<PronounSet> Pronouns { get; set; } = [];
         public string Species { get; set; } = null!;
         [Column(TypeName = "jsonb")] public JsonDocument? Markings { get; set; } = null!;
         public string HairName { get; set; } = null!;
@@ -433,43 +431,14 @@ namespace Content.Server.Database
         public Preference Preference { get; set; } = null!;
     }
 
-    public class Pronouns
+    public class PronounSet
     {
         public int Id { get; set; }
         public Profile Profile { get; set; } = null!;
         public int ProfileId { get; set; }
-        public string? Subject { get; set; } = null!;
-        public string? Object { get; set; } = null!;
-        public string? DatObj { get; set; } = null!;
-        public string? Genitive { get; set; } = null!;
-        public string? PossAdj { get; set; } = null!;
-        public string? PossPronoun { get; set; } = null!;
-        public string? Reflexive { get; set; } = null!;
-        public string? Counter { get; set; } = null!;
-        public bool? Plural { get; set; }
 
-        public Pronouns(string? subject,
-            string? @object,
-            string? datObj,
-            string? genitive,
-            string? possAdj,
-            string? possPronoun,
-            string? reflexive,
-            string? counter,
-            bool? plural)
-        {
-            Subject = subject;
-            Object = @object;
-            DatObj = datObj;
-            Genitive = genitive;
-            PossAdj = possAdj;
-            PossPronoun = possPronoun;
-            Reflexive = reflexive;
-            Counter = counter;
-            Plural = plural;
-        }
-
-        public Pronouns() { }
+        public string Tense { get; set; } = null!;
+        public string Pronoun { get; set; } = null!;
     }
 
     public class Job
