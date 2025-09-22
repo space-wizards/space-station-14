@@ -27,13 +27,13 @@ public sealed class VariantizeCommand : IConsoleCommand
 
         if (!NetEntity.TryParse(args[0], out var euidNet) || !_entManager.TryGetEntity(euidNet, out var euid))
         {
-            shell.WriteError($"Failed to parse euid '{args[0]}'.");
+            shell.WriteError(Loc.GetString("variantize-command-parse-failed", ("arg", args[0])));
             return;
         }
 
         if (!_entManager.TryGetComponent(euid, out MapGridComponent? gridComp))
         {
-            shell.WriteError($"Euid '{euid}' does not exist or is not a grid.");
+            shell.WriteError(Loc.GetString("variantize-command-not-grid", ("euid", euid)));
             return;
         }
 

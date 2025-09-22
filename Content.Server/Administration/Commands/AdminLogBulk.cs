@@ -19,7 +19,7 @@ public sealed class AdminLogBulk : IConsoleCommand
     {
         if (shell.Player?.AttachedEntity is not { } entity)
         {
-            shell.WriteError("This command can only be ran by a player with an attached entity.");
+            shell.WriteError(Loc.GetString("cmd-adminlogbulk-player-only"));
             return;
         }
 
@@ -57,7 +57,7 @@ public sealed class AdminLogBulk : IConsoleCommand
             }
         }
 
-        shell.WriteLine($"Added {amount} logs in {stopwatch.Elapsed.TotalMilliseconds} ms");
+        shell.WriteLine(Loc.GetString("cmd-adminlogbulk-added", ("amount", amount), ("ms", stopwatch.Elapsed.TotalMilliseconds)));
     }
 }
 #endif

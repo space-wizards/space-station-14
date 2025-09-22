@@ -16,20 +16,20 @@ public sealed class NPCDomainCommand : IConsoleCommand
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
     public string Command => "npcdomain";
-    public string Description => "Lists the domain of a particular HTN compound task";
-    public string Help => $"{Command} <htncompoundtask>";
+    public string Description => Loc.GetString("cmd-npcdomain-desc");
+    public string Help => Loc.GetString("cmd-npcdomain-help");
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
         {
-            shell.WriteError("shell-need-exactly-one-argument");
+            shell.WriteError(Loc.GetString("shell-need-exactly-one-argument"));
             return;
         }
 
         if (!_protoManager.HasIndex<HTNCompoundPrototype>(args[0]))
         {
-            shell.WriteError($"Unable to find HTN compound task for '{args[0]}'");
+            shell.WriteError(Loc.GetString("cmd-npcdomain-unknown-task", ("task", args[0])));
             return;
         }
 

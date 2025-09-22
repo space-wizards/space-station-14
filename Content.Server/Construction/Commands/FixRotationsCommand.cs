@@ -20,8 +20,8 @@ public sealed class FixRotationsCommand : IConsoleCommand
 
     // ReSharper disable once StringLiteralTypo
     public string Command => "fixrotations";
-    public string Description => "Sets the rotation of all occluders, low walls and windows to south.";
-    public string Help => $"Usage: {Command} <gridId> | {Command}";
+    public string Description => Loc.GetString("cmd-fixrotations-desc");
+    public string Help => Loc.GetString("cmd-fixrotations-help");
 
     public void Execute(IConsoleShell shell, string argsOther, string[] args)
     {
@@ -34,7 +34,7 @@ public sealed class FixRotationsCommand : IConsoleCommand
             case 0:
                 if (player?.AttachedEntity is not { Valid: true } playerEntity)
                 {
-                    shell.WriteError("Only a player can run this command.");
+                    shell.WriteError(Loc.GetString("cmd-fixrotations-only-player"));
                     return;
                 }
 
@@ -43,7 +43,7 @@ public sealed class FixRotationsCommand : IConsoleCommand
             case 1:
                 if (!NetEntity.TryParse(args[0], out var idNet) || !_entManager.TryGetEntity(idNet, out var id))
                 {
-                    shell.WriteError($"{args[0]} is not a valid entity.");
+                    shell.WriteError(Loc.GetString("cmd-fixrotations-invalid-entity", ("entity", args[0])));
                     return;
                 }
 
@@ -56,13 +56,13 @@ public sealed class FixRotationsCommand : IConsoleCommand
 
         if (!_entManager.TryGetComponent(gridId, out MapGridComponent? grid))
         {
-            shell.WriteError($"No grid exists with id {gridId}");
+            shell.WriteError(Loc.GetString("cmd-fixrotations-no-grid", ("gridId", (gridId?.ToString() ?? string.Empty))));
             return;
         }
 
         if (!_entManager.EntityExists(gridId))
         {
-            shell.WriteError($"Grid {gridId} doesn't have an associated grid entity.");
+            shell.WriteError(Loc.GetString("cmd-fixrotations-grid-no-entity", ("gridId", (gridId?.ToString() ?? string.Empty))));
             return;
         }
 
@@ -109,6 +109,6 @@ public sealed class FixRotationsCommand : IConsoleCommand
             }
         }
 
-        shell.WriteLine($"Changed {changed} entities. If things seem wrong, reconnect.");
+        shell.WriteLine(Loc.GetString("cmd-fixrotations-changed", ("changed", changed)));
     }
 }
