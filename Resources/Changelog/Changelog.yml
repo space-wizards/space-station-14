@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: LaCumbiaDelCoronavirus
-  changes:
-  - message: Maximum radius (not diameter) of atmos tank explosions has been increased
-      to 10 tiles, however the scale of their increase in size has been decreased.
-    type: Tweak
-  id: 8484
-  time: '2025-05-14T19:49:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36780
 - author: qwerltaz
   changes:
   - message: Snipping the panic wire in an air alarm now forces panic mode until the
@@ -3954,3 +3946,11 @@
   id: 8994
   time: '2025-09-21T20:40:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40489
+- author: beck-thompson
+  changes:
+  - message: Shuttle UI is now fixed. You won't go into pilot mode when not having
+      access
+    type: Fix
+  id: 8995
+  time: '2025-09-22T06:40:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40491
