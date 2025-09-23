@@ -253,6 +253,17 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
                         applyUndergarmentTop = false;
                     else if (markingPrototype.BodyPart == HumanoidVisualLayers.UndergarmentBottom)
                         applyUndergarmentBottom = false;
+
+//Allows tails to pull from another layer
+                    if (markingPrototype.BodyPart == HumanoidVisualLayers.Tail)
+                    {
+                        Log.Debug(marking.MarkingId);
+                        Marking secondaryTailMarking = new Marking(marking.MarkingId + "Behind", marking.MarkingColors);
+                        if (_markingManager.TryGetMarking(secondaryTailMarking, out var prototypeB))
+                        {
+                            ApplyMarking(prototypeB, secondaryTailMarking.MarkingColors, marking.Visible, entity);
+                        }
+                    }
                 }
             }
         }
@@ -272,6 +283,17 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
             foreach (var marking in markingList)
             {
                 RemoveMarking(marking, (entity, sprite));
+            }
+        }
+
+//in place so wag animations work correctly on the B layer
+        if (humanoid.ClientOldMarkings.Markings.TryGetValue(MarkingCategories.Tail, out var tailMarkings))
+        {
+            foreach (var marking in tailMarkings)
+            {
+                Log.Debug(marking.MarkingId);
+                Marking secondaryTailMarking = new Marking(marking.MarkingId + "Behind", marking.MarkingColors);
+                RemoveMarking(secondaryTailMarking, (entity, sprite));
             }
         }
 
