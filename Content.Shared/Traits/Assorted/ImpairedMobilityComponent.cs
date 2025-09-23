@@ -22,4 +22,36 @@ public sealed partial class ImpairedMobilityComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float StandUpTimeModifier = 1.4f;
+
+    /// <summary>
+    /// The last time this entity tripped due to a makeshift mobility aid.
+    /// Used to prevent repeated tripping and infinite recursion.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public TimeSpan? LastTripTime = null;
+
+    /// <summary>
+    /// The next time a trip chance roll can occur when using a makeshift mobility aid.
+    /// Used to limit rolling to every 2-5 seconds instead of every movement input.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public TimeSpan? NextTripRollTime = null;
+
+    /// <summary>
+    /// Minimum time between trip chance rolls (in seconds).
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float MinTripRollInterval = 2.0f;
+
+    /// <summary>
+    /// Maximum time between trip chance rolls (in seconds).
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float MaxTripRollInterval = 5.0f;
+
+    /// <summary>
+    /// Cooldown time after tripping before next roll can occur (in seconds).
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float TripCooldownTime = 10.0f;
 }

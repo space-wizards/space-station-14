@@ -71,3 +71,6 @@ trait-hemophilia-desc = Your body fails to make blood clots.
 
 trait-impaired-mobility-name = Impaired Mobility
 trait-impaired-mobility-desc = You have difficulty moving without a mobility aid.
+
+mobility-aid-trait-trip-self = You trip and fall over your {ITEM($mobilityAid)}!
+mobility-aid-trait-trip-others = {SUBJECT($target)} trips and falls over {POSS($target)} {ITEM($mobilityAid)}!
