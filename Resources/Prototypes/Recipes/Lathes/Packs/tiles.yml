@@ -77,7 +77,7 @@
   - FloorRedCircuit
 
 - type: latheRecipePack
-  id: MarbleFloorsStatic
+  id: FloorMarbleTilesStatic
   recipes:
   - FloorTileItemWhiteMarble
   - FloorTileItemDarkMarble
