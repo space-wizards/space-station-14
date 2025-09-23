@@ -10,6 +10,7 @@
     utensil: Spoon
     solution: bucket
     destroyOnEmpty: false
+    utensil: Spoon
   - type: Sprite
     sprite: Objects/Tools/bucket.rsi
     layers:
