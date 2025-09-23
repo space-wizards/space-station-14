@@ -317,7 +317,6 @@
     - HEAD
   - type: Edible
     edible: Drink
-    utensil: Spoon
     solution: drink
     delay: 0.5
     forceFeedDelay: 1.5
