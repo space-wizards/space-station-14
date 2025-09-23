@@ -6,6 +6,7 @@
   setPreference: false
   startingGear: CentcomOperatorGear
   icon: "JobIconCentCommOperator"
+  rules: job-rules-corporate-aligned
   supervisors: job-supervisors-hos
   canBeAntag: false
   accessGroups:

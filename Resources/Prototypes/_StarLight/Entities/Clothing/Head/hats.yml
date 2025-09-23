@@ -128,3 +128,54 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+
+# Fashion-O-Mat-Start
+- type: entity
+  parent: ClothingHeadBase # Hat, not an actual helmet
+  id: ClothingHeadHelmetSilverMusician
+  name: legendary silver helm
+  description: The old silver helm of the famous musician duo. One more time?
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hats/daft_punk_silver.rsi
+  - type: Clothing
+    quickEquip: false
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+  - type: Instrument
+    program: 27
+  - type: SwappableInstrument
+    instrumentList:
+      "Clean": {27: 0}
+      "Jazz": {25: 0}
+      "Muted": {28: 0}
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide
+  - type: ActivatableUI
+    inHandsOnly: false
+    singleUser: true
+    verbText: verb-instrument-openui
+    key: enum.InstrumentUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.InstrumentUiKey.Key:
+        type: InstrumentBoundUserInterface
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHoney
+  name: honey pancake hat
+  description: Hat shaped like golden pancakes drizzled with honey, creating a warm and delightful look.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Clothing/Head/Hats/pancake.rsi
+    - type: Clothing
+      sprite: _Starlight/Clothing/Head/Hats/pancake.rsi
+# Fashion-O-Mat-End
