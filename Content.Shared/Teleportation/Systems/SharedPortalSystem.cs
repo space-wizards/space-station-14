@@ -93,7 +93,7 @@ public abstract class SharedPortalSystem : EntitySystem
         if (Transform(subject).Anchored)
             return;
 
-        // break pulls before portal enter so we dont break shit
+        // break pulls before portal enter so we don't break shit
         if (TryComp<PullableComponent>(subject, out var pullable) && pullable.BeingPulled)
         {
             _pulling.TryStopPull(subject, pullable);
@@ -125,7 +125,7 @@ public abstract class SharedPortalSystem : EntitySystem
 
             if (HasComp<PortalComponent>(target))
             {
-                // if target is a portal, signal that they shouldn't be immediately portaled back
+                // if target is a portal, signal that they shouldn't be immediately teleported back
                 var timeout = EnsureComp<PortalTimeoutComponent>(subject);
                 timeout.EnteredPortal = ent;
                 Dirty(subject, timeout);
@@ -150,7 +150,7 @@ public abstract class SharedPortalSystem : EntitySystem
 
         var subject = args.OtherEntity;
 
-        // if they came from (not us), remove the timeout
+        // if they came from a different portal, remove the timeout
         if (TryComp<PortalTimeoutComponent>(subject, out var timeout) && timeout.EnteredPortal != ent)
         {
             RemCompDeferred<PortalTimeoutComponent>(subject);
@@ -170,12 +170,12 @@ public abstract class SharedPortalSystem : EntitySystem
     }
 
     /// <summary>
-    /// Checks if the the client is able to predict the teleport.
-    /// Client can't predict outside of 1-to-1 portal-to-portal interactions due to randomness involved.
+    /// Checks if the client is able to predict the teleport.
+    /// Client can't predict outside 1-to-1 portal-to-portal interactions due to randomness involved.
     /// </summary>
     /// <returns>
     /// False if the linked entity count isn't 1.
-    /// False if the linked entity doesn't exist on the client / is outside of PVS.
+    /// False if the linked entity doesn't exist on the client / is outside PVS.
     /// </returns>
     private bool CanPredictTeleport(Entity<LinkedEntityComponent> portal)
     {
@@ -209,7 +209,7 @@ public abstract class SharedPortalSystem : EntitySystem
         // Early out if this is an invalid configuration
         if (!onSameMap && !ent.Comp.CanTeleportToOtherMaps || distanceInvalid)
         {
-            if (!_netMan.IsServer)
+            if (_netMan.IsClient)
                 return;
 
             _popup.PopupCoordinates(Loc.GetString("portal-component-invalid-configuration-fizzle"),
@@ -268,7 +268,7 @@ public abstract class SharedPortalSystem : EntitySystem
                 // newCoords is not a wall
                 break;
             }
-            /// after <see cref="MaxRandomTeleportAttempts"> attempts, end up in the walls
+            // after "MaxRandomTeleportAttempts" attempts, end up in the walls
         }
 
         TeleportEntity(ent, subject, newCoords);
