@@ -8,128 +8,252 @@
   },
   "states": [
     {
-      "name": "default",
+      "name": "default_front",
+      "directions": 4
+    },
+      {
+          "name": "default_behind",
+          "directions": 4
+      },
+    {
+      "name": "charred_front",
+      "directions": 4
+    },
+      {
+          "name": "charred_behind",
+          "directions": 4
+      },
+    {
+      "name": "dbushy_primary_front",
       "directions": 4
     },
     {
-      "name": "charred",
+      "name": "dbushy_secondary_front",
+      "directions": 4
+    },
+      {
+          "name": "dbushy_primary_behind",
+          "directions": 4
+      },
+      {
+          "name": "dbushy_secondary_behind",
+          "directions": 4
+      },
+    {
+      "name": "deathhead_primary_front",
       "directions": 4
     },
     {
-      "name": "dbushy_primary",
+      "name": "deathhead_secondary_front",
+      "directions": 4
+    },
+      {
+          "name": "deathhead_primary_behind",
+          "directions": 4
+      },
+      {
+          "name": "deathhead_secondary_behind",
+          "directions": 4
+      },
+    {
+      "name": "fan_front",
+      "directions": 4
+    },
+      {
+          "name": "fan_behind",
+          "directions": 4
+      },
+    {
+      "name": "dfan_front",
+      "directions": 4
+    },
+      {
+          "name": "dfan_behind",
+          "directions": 4
+      },
+    {
+      "name": "feathery_front",
+      "directions": 4
+    },
+      {
+          "name": "feathery_behind",
+          "directions": 4
+      },
+    {
+      "name": "firewatch_primary_front",
       "directions": 4
     },
     {
-      "name": "dbushy_secondary",
+      "name": "firewatch_secondary_front",
+      "directions": 4
+    },
+      {
+          "name": "firewatch_primary_behind",
+          "directions": 4
+      },
+      {
+          "name": "firewatch_secondary_behind",
+          "directions": 4
+      },
+    {
+      "name": "gothic_front",
+      "directions": 4
+    },
+      {
+          "name": "gothic_behind",
+          "directions": 4
+      },
+    {
+      "name": "jungle_front",
+      "directions": 4
+    },
+      {
+          "name": "jungle_behind",
+          "directions": 4
+      },
+    {
+      "name": "ladybug_front",
+      "directions": 4
+    },
+      {
+          "name": "ladybug_behind",
+          "directions": 4
+      },
+    {
+      "name": "maple_primary_front",
       "directions": 4
     },
     {
-      "name": "deathhead_primary",
+      "name": "maple_secondary_front",
+      "directions": 4
+    },
+      {
+          "name": "maple_primary_behind",
+          "directions": 4
+      },
+      {
+          "name": "maple_secondary_behind",
+          "directions": 4
+      },
+    {
+      "name": "moffra_primary_front",
       "directions": 4
     },
     {
-      "name": "deathhead_secondary",
+      "name": "moffra_secondary_front",
+      "directions": 4
+    },
+      {
+          "name": "moffra_primary_behind",
+          "directions": 4
+      },
+      {
+          "name": "moffra_secondary_behind",
+          "directions": 4
+      },
+    {
+      "name": "oakworm_front",
+      "directions": 4
+    },
+      {
+          "name": "oakworm_behind",
+          "directions": 4
+      },
+    {
+      "name": "plasmafire_primary_front",
       "directions": 4
     },
     {
-      "name": "fan",
+      "name": "plasmafire_secondary_front",
+      "directions": 4
+    },
+      {
+          "name": "plasmafire_primary_behind",
+          "directions": 4
+      },
+      {
+          "name": "plasmafire_secondary_behind",
+          "directions": 4
+      },
+    {
+      "name": "pointy_front",
+      "directions": 4
+    },
+      {
+          "name": "pointy_behind",
+          "directions": 4
+      },
+    {
+      "name": "royal_primary_front",
       "directions": 4
     },
     {
-      "name": "dfan",
+      "name": "royal_secondary_front",
+      "directions": 4
+    },
+      {
+          "name": "royal_primary_behind",
+          "directions": 4
+      },
+      {
+          "name": "royal_secondary_behind",
+          "directions": 4
+      },
+    {
+      "name": "stellar_front",
+      "directions": 4
+    },
+      {
+          "name": "stellar_behind",
+          "directions": 4
+      },
+    {
+      "name": "striped_front",
+      "directions": 4
+    },
+      {
+          "name": "striped_behind",
+          "directions": 4
+      },
+    {
+      "name": "swirly_front",
+      "directions": 4
+    },
+      {
+          "name": "swirly_behind",
+          "directions": 4
+      },
+    {
+      "name": "whitefly_front",
+      "directions": 4
+    },
+      {
+          "name": "whitefly_behind",
+          "directions": 4
+      },
+    {
+      "name": "witchwing_front",
+      "directions": 4
+    },
+      {
+          "name": "witchwing_behind",
+          "directions": 4
+      },
+    {
+      "name": "underwing_primary_front",
       "directions": 4
     },
     {
-      "name": "feathery",
+      "name": "underwing_secondary_front",
       "directions": 4
     },
-    {
-      "name": "firewatch_primary",
-      "directions": 4
-    },
-    {
-      "name": "firewatch_secondary",
-      "directions": 4
-    },
-    {
-      "name": "gothic",
-      "directions": 4
-    },
-    {
-      "name": "jungle",
-      "directions": 4
-    },
-    {
-      "name": "ladybug",
-      "directions": 4
-    },
-    {
-      "name": "maple_primary",
-      "directions": 4
-    },
-    {
-      "name": "maple_secondary",
-      "directions": 4
-    },
-    {
-      "name": "moffra_primary",
-      "directions": 4
-    },
-    {
-      "name": "moffra_secondary",
-      "directions": 4
-    },
-    {
-      "name": "oakworm",
-      "directions": 4
-    },
-    {
-      "name": "plasmafire_primary",
-      "directions": 4
-    },
-    {
-      "name": "plasmafire_secondary",
-      "directions": 4
-    },
-    {
-      "name": "pointy",
-      "directions": 4
-    },
-    {
-      "name": "royal_primary",
-      "directions": 4
-    },
-    {
-      "name": "royal_secondary",
-      "directions": 4
-    },
-    {
-      "name": "stellar",
-      "directions": 4
-    },
-    {
-      "name": "striped",
-      "directions": 4
-    },
-    {
-      "name": "swirly",
-      "directions": 4
-    },
-    {
-      "name": "whitefly",
-      "directions": 4
-    },
-    {
-      "name": "witchwing",
-      "directions": 4
-    },
-    {
-      "name": "underwing_primary",
-      "directions": 4
-    },
-    {
-      "name": "underwing_secondary",
-      "directions": 4
-    }
+      {
+          "name": "underwing_primary_behind",
+          "directions": 4
+      },
+      {
+          "name": "underwing_secondary_behind",
+          "directions": 4
+      }
   ]
 }

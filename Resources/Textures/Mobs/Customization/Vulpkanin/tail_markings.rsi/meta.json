@@ -8,55 +8,99 @@
             "name": "tail-wag-icon"
         },
         {
-            "name": "fennec",
+            "name": "fennec_front",
             "directions": 4
         },
         {
-            "name": "fennec-tip",
+            "name": "fennec-tip_front",
             "directions": 4
         },
         {
-            "name": "fluffy",
+            "name": "fennec_behind",
             "directions": 4
         },
         {
-            "name": "fluffy-tip",
+            "name": "fennec-tip_behind",
             "directions": 4
         },
         {
-            "name": "husky",
+            "name": "fluffy_front",
             "directions": 4
         },
         {
-            "name": "husky-inner",
+            "name": "fluffy-tip_front",
             "directions": 4
         },
         {
-            "name": "husky-outer",
+            "name": "fluffy_behind",
             "directions": 4
         },
         {
-            "name": "long",
+            "name": "fluffy-tip_behind",
             "directions": 4
         },
         {
-            "name": "long-tip",
+            "name": "husky-inner_front",
             "directions": 4
         },
         {
-            "name": "vulp",
+            "name": "husky-outer_front",
             "directions": 4
         },
         {
-            "name": "vulp-fade",
+            "name": "husky-inner_behind",
             "directions": 4
         },
         {
-            "name": "vulp-tip",
+            "name": "husky-outer_behind",
             "directions": 4
         },
         {
-            "name": "coyote",
+            "name": "long_front",
+            "directions": 4
+        },
+        {
+            "name": "long-tip_front",
+            "directions": 4
+        },
+        {
+            "name": "long_behind",
+            "directions": 4
+        },
+        {
+            "name": "long-tip_behind",
+            "directions": 4
+        },
+        {
+            "name": "vulp_front",
+            "directions": 4
+        },
+        {
+            "name": "vulp_behind",
+            "directions": 4
+        },
+        {
+            "name": "vulp-fade_front",
+            "directions": 4
+        },
+        {
+            "name": "vulp-fade_behind",
+            "directions": 4
+        },
+        {
+            "name": "vulp-tip_front",
+            "directions": 4
+        },
+        {
+            "name": "vulp-tip_behind",
+            "directions": 4
+        },
+        {
+            "name": "coyote_front",
+            "directions": 4
+        },
+        {
+            "name": "coyote_behind",
             "directions": 4
         }
     ]

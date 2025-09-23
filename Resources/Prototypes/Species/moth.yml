@@ -23,6 +23,7 @@
     HeadTop: MobHumanoidAnyMarking
     HeadSide: MobHumanoidAnyMarking
     Tail: MobHumanoidAnyMarking
+    TailBehind: MobHumanoidAnyMarking
     Eyes: MobMothEyes
     LArm: MobMothLArm
     RArm: MobMothRArm

@@ -180,7 +180,17 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: default
+    state: default_front
+
+- type: marking
+  id: MothWingsDefaultBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: default_behind
+
 
 - type: marking
   id: MothWingsCharred
@@ -189,7 +199,16 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: charred
+    state: charred_front
+
+- type: marking
+  id: MothWingsCharredBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: charred_behind
 
 - type: marking
   id: MothWingsDbushy
@@ -198,9 +217,20 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: dbushy_primary
+    state: dbushy_primary_front
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: dbushy_secondary
+    state: dbushy_secondary_front
+
+- type: marking
+  id: MothWingsDbushyBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: dbushy_primary_behind
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: dbushy_secondary_behind
 
 - type: marking
   id: MothWingsDeathhead
@@ -209,9 +239,21 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: deathhead_primary
+    state: deathhead_primary_front
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: deathhead_secondary
+    state: deathhead_secondary_front
+
+- type: marking
+  id: MothWingsDeathheadBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: deathhead_primary_behind
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: deathhead_secondary_behind
+
 
 - type: marking
   id: MothWingsFan
@@ -220,7 +262,16 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: fan
+    state: fan_front
+
+- type: marking
+  id: MothWingsFanBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: fan_behind
 
 - type: marking
   id: MothWingsDfan
@@ -229,7 +280,16 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: dfan
+    state: dfan_front
+
+- type: marking
+  id: MothWingsDfanBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: dfan_behind
 
 - type: marking
   id: MothWingsFeathery
@@ -238,7 +298,16 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: feathery
+    state: feathery_front
+
+- type: marking
+  id: MothWingsFeatheryBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: feathery_behind
 
 - type: marking
   id: MothWingsFirewatch
@@ -247,9 +316,20 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: firewatch_primary
+    state: firewatch_primary_front
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: firewatch_secondary
+    state: firewatch_secondary_front
+
+- type: marking
+  id: MothWingsFirewatchBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: firewatch_primary_behind
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: firewatch_secondary_behind
 
 - type: marking
   id: MothWingsGothic
@@ -258,7 +338,16 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: gothic
+    state: gothic_front
+
+- type: marking
+  id: MothWingsGothicBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: gothic_behind
 
 - type: marking
   id: MothWingsJungle
@@ -267,7 +356,16 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: jungle
+    state: jungle_front
+
+- type: marking
+  id: MothWingsJungleBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: jungle_behind
 
 - type: marking
   id: MothWingsLadybug
@@ -276,7 +374,16 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: ladybug
+    state: ladybug_front
+
+- type: marking
+  id: MothWingsLadybugBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: ladybug_behind
 
 - type: marking
   id: MothWingsMaple
@@ -285,9 +392,20 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: maple_primary
+    state: maple_primary_front
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: maple_secondary
+    state: maple_secondary_front
+
+- type: marking
+  id: MothWingsMapleBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: maple_primary_behind
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: maple_secondary_behind
 
 - type: marking
   id: MothWingsMoffra
@@ -296,9 +414,20 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: moffra_primary
+    state: moffra_primary_front
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: moffra_secondary
+    state: moffra_secondary_front
+
+- type: marking
+  id: MothWingsMoffraBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: moffra_primary_behind
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: moffra_secondary_behind
 
 - type: marking
   id: MothWingsOakworm
@@ -307,7 +436,17 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: oakworm
+    state: oakworm_front
+
+- type: marking
+  id: MothWingsOakwormBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: oakworm_behind
+
 
 - type: marking
   id: MothWingsPlasmafire
@@ -316,9 +455,20 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: plasmafire_primary
+    state: plasmafire_primary_front
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: plasmafire_secondary
+    state: plasmafire_secondary_front
+
+- type: marking
+  id: MothWingsPlasmafireBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: plasmafire_primary_behind
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: plasmafire_secondary_behind
 
 - type: marking
   id: MothWingsPointy
@@ -327,7 +477,16 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: pointy
+    state: pointy_front
+
+- type: marking
+  id: MothWingsPointyBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: pointy_behind
 
 - type: marking
   id: MothWingsRoyal
@@ -336,9 +495,20 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: royal_primary
+    state: royal_primary_front
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: royal_secondary
+    state: royal_secondary_front
+
+- type: marking
+  id: MothWingsRoyalBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: royal_primary_behind
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: royal_secondary_behind
 
 - type: marking
   id: MothWingsStellar
@@ -347,7 +517,16 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: stellar
+    state: stellar_front
+
+- type: marking
+  id: MothWingsStellarBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: stellar_behind
 
 - type: marking
   id: MothWingsStriped
@@ -356,7 +535,16 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: striped
+    state: striped_front
+
+- type: marking
+  id: MothWingsStripedBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: striped_behind
 
 - type: marking
   id: MothWingsSwirly
@@ -365,7 +553,16 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: swirly
+    state: swirly_front
+
+- type: marking
+  id: MothWingsSwirlyBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: swirly_behind
 
 - type: marking
   id: MothWingsWhitefly
@@ -374,7 +571,16 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: whitefly
+    state: whitefly_front
+
+- type: marking
+  id: MothWingsWhiteflyBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: whitefly_behind
 
 - type: marking
   id: MothWingsWitchwing
@@ -383,7 +589,16 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: witchwing
+    state: witchwing_front
+
+- type: marking
+  id: MothWingsWitchwingBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: witchwing_behind
 
 - type: marking
   id: MothWingsUnderwing
@@ -392,9 +607,20 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: underwing_primary
+    state: underwing_primary_front
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: underwing_secondary
+    state: underwing_secondary_front
+
+- type: marking
+  id: MothWingsUnderwingBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: underwing_primary_behind
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: underwing_secondary_behind
 
 # Body markings:
 # Charred

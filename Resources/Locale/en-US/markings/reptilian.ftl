@@ -22,23 +22,23 @@ marking-LizardHornsShort = Lizard Horns (Short)
 marking-LizardHornsSimple-horns_simple = Lizard Horns
 marking-LizardHornsSimple = Lizard Horns
 
-marking-LizardTailSmooth-tail_smooth_primary = Lizard Tail
-marking-LizardTailSmooth-tail_smooth_secondary = Under Tone
+marking-LizardTailSmooth-tail_smooth_primary_front = Lizard Tail
+marking-LizardTailSmooth-tail_smooth_secondary_front = Under Tone
 marking-LizardTailSmooth = Lizard Tail (Smooth)
 
-marking-LizardTailLarge-tail_large = Lizard Tail (Large)
+marking-LizardTailLarge-tail_large_front = Lizard Tail (Large)
 marking-LizardTailLarge = Lizard Tail (Large)
 
-marking-LizardTailSpikes-tail_spikes = Lizard Tail (Spiky)
+marking-LizardTailSpikes-tail_spikes_front = Lizard Tail (Spiky)
 marking-LizardTailSpikes = Lizard Tail (Spiky)
 
-marking-LizardTailLTiger-tail_ltiger = Lizard Tail (Light Tiger Stripes)
+marking-LizardTailLTiger-tail_ltiger_front = Lizard Tail (Light Tiger Stripes)
 marking-LizardTailLTiger = Lizard Tail (Light Tiger Stripes)
 
-marking-LizardTailDTiger-tail_dtiger = Lizard Tail (Dark Tiger Stripes)
+marking-LizardTailDTiger-tail_dtiger_front = Lizard Tail (Dark Tiger Stripes)
 marking-LizardTailDTiger = Lizard Tail (Dark Tiger Stripes)
 
-marking-LizardTailAquatic-tail_aquatic = Lizard Tail (Aquatic)
+marking-LizardTailAquatic-tail_aquatic_front = Lizard Tail (Aquatic)
 marking-LizardTailAquatic = Lizard Tail (Aquatic)
 
 marking-LizardSnoutRound-snout_round = Lizard Snout (Round)
