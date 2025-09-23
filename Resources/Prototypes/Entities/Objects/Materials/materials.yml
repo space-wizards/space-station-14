@@ -147,6 +147,7 @@
       - ClothMade
       - Gauze
       - RawMaterial
+      - ConstructionMaterial
   - type: Construction
     graph: WebObjects # not sure if I should either keep this here or just make another prototype. Will keep it here just in case.
     node: cloth
@@ -212,6 +213,7 @@
     tags:
       - ClothMade
       - RawMaterial
+      - ConstructionMaterial
   - type: Item
     heldPrefix: durathread
 
@@ -224,13 +226,6 @@
     state: durathread
   - type: Stack
     count: 1
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
-        reagents: #Hell if I know what durathread is made out of.
-        - ReagentId: Fiber
-          Quantity: 6
 
 - type: entity
   parent: MaterialBase
@@ -261,6 +256,7 @@
     tags:
     - Wooden
     - RawMaterial
+    - ConstructionMaterial
   - type: Extractable
     grindableSolutionName: wood
   - type: SolutionContainerManager
