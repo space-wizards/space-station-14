@@ -112,6 +112,7 @@
       - !type:ArtifactDurabilityRestore
         conditions:
         - !type:ReagentThreshold
+          reagent: ArtifactGlue
           min: 5
 
 - type: reagent

@@ -31,6 +31,7 @@
         effectProto: StatusEffectSeeingRainbow
         conditions:
         - !type:ReagentThreshold
+          reagent: Absinthe
           min: 10
         type: Add
         time: 5
@@ -43,6 +44,7 @@
         probability: 0.02
         conditions:
         - !type:ReagentThreshold
+          reagent: Absinthe
           min: 10
 
 - type: reagent

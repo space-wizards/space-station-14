@@ -2,13 +2,7 @@
 
 namespace Content.Shared.EntityEffects.Effects.Atmos;
 
-public abstract partial class SharedCreateGasEntityEffectSystem : EntityEffectSystem<TransformComponent, CreateGas>
-{
-    protected override void Effect(Entity<TransformComponent> entity, ref EntityEffectEvent<CreateGas> args)
-    {
-        // Server side effect
-    }
-}
+// Server side system
 
 [DataDefinition]
 public sealed partial class CreateGas : EntityEffectBase<CreateGas>

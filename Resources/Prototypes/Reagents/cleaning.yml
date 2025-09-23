@@ -57,6 +57,7 @@
       - !type:Vomit
         conditions:
         - !type:ReagentThreshold
+          reagent: SoapReagent
           min: 6
         probability: 0.20
     Drink:

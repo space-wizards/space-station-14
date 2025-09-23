@@ -297,6 +297,7 @@
       - !type:HealthChange
         conditions:
           - !type:ReagentThreshold
+            reagent: DexalinPlus
             min: 25
         damage:
           types:
@@ -948,6 +949,7 @@
       - !type:ResetNarcolepsy
         conditions:
         - !type:ReagentThreshold
+          reagent: Ethyloxyephedrine
           min: 10
       - !type:PopupMessage
         visualType: Medium
@@ -973,6 +975,7 @@
       - !type:ResetNarcolepsy
         conditions:
         - !type:ReagentThreshold
+          reagent: Diphenylmethylamine
           min: 5
       - !type:PopupMessage
         visualType: Medium
@@ -999,6 +1002,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Sigynate
           min: 16
         damage:
           types:
@@ -1006,10 +1010,12 @@
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
+          reagent: Sigynate
           min: 20
       - !type:PopupMessage
         conditions:
         - !type:ReagentThreshold
+          reagent: Sigynate
           min: 20
         type: Local
         visualType: Medium
@@ -1018,6 +1024,7 @@
       - !type:Vomit
         conditions:
         - !type:ReagentThreshold
+          reagent: Sigynate
           min: 30
         probability: 0.02
       - !type:Vomit
@@ -1082,6 +1089,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Puncturase
           min: 12
         damage:
           types:
@@ -1108,6 +1116,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Bruizine
           min: 10.5
         damage:
           types:

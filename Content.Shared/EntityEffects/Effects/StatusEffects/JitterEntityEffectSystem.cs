@@ -7,11 +7,11 @@ namespace Content.Shared.EntityEffects.Effects.StatusEffects;
 /// <summary>
 /// This is used for...
 /// </summary>
-public sealed partial class JitterEntityEffectSystem : EntityEffectSystem<StatusEffectsComponent, JitterEffect>
+public sealed partial class JitterEntityEffectSystem : EntityEffectSystem<StatusEffectsComponent, Jitter>
 {
     [Dependency] private readonly SharedJitteringSystem _jittering = default!;
 
-    protected override void Effect(Entity<StatusEffectsComponent> entity, ref EntityEffectEvent<JitterEffect> args)
+    protected override void Effect(Entity<StatusEffectsComponent> entity, ref EntityEffectEvent<Jitter> args)
     {
         var time = args.Effect.Time * args.Scale;
 
@@ -20,7 +20,7 @@ public sealed partial class JitterEntityEffectSystem : EntityEffectSystem<Status
 }
 
 [DataDefinition]
-public sealed partial class JitterEffect : EntityEffectBase<JitterEffect>
+public sealed partial class Jitter : EntityEffectBase<Jitter>
 {
     [DataField]
     public float Amplitude = 10.0f;

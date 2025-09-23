@@ -24,27 +24,21 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
 
     private void OnReactive(Entity<ReactiveComponent> entity, ref ReactionEntityEvent args)
     {
+        if (args.Reagent.ReactiveEffects == null || entity.Comp.ReactiveGroups == null)
+            return;
 
-        // TODO: Check if the effect should apply first!
-
-        if (args.Reagent.ReactiveEffects != null && entity.Comp.ReactiveGroups != null)
+        foreach (var (key, val) in args.Reagent.ReactiveEffects)
         {
-            foreach (var (key, val) in args.Reagent.ReactiveEffects)
-            {
-                if (!val.Methods.Contains(args.Method))
-                    continue;
+            if (!val.Methods.Contains(args.Method))
+                continue;
 
-                if (!entity.Comp.ReactiveGroups.TryGetValue(key, out var group))
-                    continue;
+            if (!entity.Comp.ReactiveGroups.TryGetValue(key, out var group))
+                continue;
 
-                if (!group.Contains(args.Method))
-                    continue;
+            if (!group.Contains(args.Method))
+                continue;
 
-                foreach (var effect in val.Effects)
-                {
-                    effect.RaiseEvent(entity, this);
-                }
-            }
+            ApplyEffects(entity, val.Effects);
         }
     }
 

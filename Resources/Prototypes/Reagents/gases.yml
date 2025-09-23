@@ -49,6 +49,7 @@
         alertType: Toxins
         conditions:
           - !type:ReagentThreshold
+            reagent: Oxygen
             min: 0.5
           - !type:MetabolizerType
             type: Vox
@@ -95,6 +96,7 @@
         alertType: Toxins
         conditions:
           - !type:ReagentThreshold
+            reagent: Oxygen
             min: 0.5
           - !type:MetabolizerType
             type: Vox
@@ -138,6 +140,7 @@
         alertType: Toxins
         conditions:
           - !type:ReagentThreshold
+            reagent: Plasma
             min: 1.5
         clear: True
         time: 5
@@ -184,6 +187,7 @@
         alertType: Toxins
         conditions:
           - !type:ReagentThreshold
+            reagent: Tritium
             min: 1.5
         clear: True
         time: 5
@@ -239,6 +243,7 @@
         # Don't want people to get toxin damage from the gas they just
         # exhaled, right?
         - !type:ReagentThreshold
+          reagent: CarbonDioxide
           min: 0.5
         scaleByQuantity: true
         ignoreResistances: true

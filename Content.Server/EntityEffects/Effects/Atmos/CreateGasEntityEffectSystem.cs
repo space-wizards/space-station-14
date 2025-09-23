@@ -4,7 +4,7 @@ using Content.Shared.EntityEffects.Effects.Atmos;
 
 namespace Content.Server.EntityEffects.Effects.Atmos;
 
-public sealed partial class CreateGasEntityEffectSystem : SharedCreateGasEntityEffectSystem
+public sealed partial class CreateGasEntityEffectSystem : EntityEffectSystem<TransformComponent, CreateGas>
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
 

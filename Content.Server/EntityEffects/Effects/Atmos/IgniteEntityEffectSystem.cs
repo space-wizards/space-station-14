@@ -5,11 +5,11 @@ using Content.Shared.EntityEffects.Effects.Atmos;
 
 namespace Content.Server.EntityEffects.Effects.Atmos;
 
-public sealed partial class IngiteEntityEffectSystem : SharedIgniteEntityEffectSystem
+public sealed partial class IngiteEntityEffectSystem : EntityEffectSystem<FlammableComponent, Ignite>
 {
     [Dependency] private readonly FlammableSystem _flammable = default!;
 
-    protected override void Effect(Entity<FlammableComponent> entity, ref EntityEffectEvent<Ingite> args)
+    protected override void Effect(Entity<FlammableComponent> entity, ref EntityEffectEvent<Ignite> args)
     {
         // TODO: This no longer allows for you to set your organs on fire, but that didn't do anything anywas.
         // TODO: Metabolism just needs to properly relay effects to their organs for this to work.

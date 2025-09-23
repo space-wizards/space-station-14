@@ -5,7 +5,7 @@ using Content.Shared.EntityEffects.Effects.Atmos;
 
 namespace Content.Server.EntityEffects.Effects.Atmos;
 
-public sealed partial class FlammableEntityEffectSystem : SharedFlammableEntityEffectSystem
+public sealed partial class FlammableEntityEffectSystem : EntityEffectSystem<FlammableComponent, Flammable>
 {
     [Dependency] private readonly FlammableSystem _flammable = default!;
 

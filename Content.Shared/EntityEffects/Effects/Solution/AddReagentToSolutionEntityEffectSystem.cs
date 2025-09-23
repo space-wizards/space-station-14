@@ -41,6 +41,6 @@ public sealed partial class AddReagentToSolution : EntityEffectBase<AddReagentTo
     ///<summary>
     ///     A modifier for how much reagent we're creating.
     /// </summary>
-    [DataField(required: true)]
+    [DataField]
     public float StrengthModifier = 1.0f;
 }

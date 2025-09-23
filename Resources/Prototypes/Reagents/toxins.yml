@@ -631,6 +631,7 @@
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
+          reagent: Vestine
           min: 5
       - !type:MovementSpeedModifier
         walkSpeedModifier: 0.8
