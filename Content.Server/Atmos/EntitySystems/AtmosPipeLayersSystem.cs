@@ -38,7 +38,7 @@ public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
         if (ent.Comp.PipeLayersLocked)
             return;
 
-        base.SetPipeLayer(ent, layer);
+        base.SetPipeLayer(ent, layer, user, used);
 
         if (!TryComp<NodeContainerComponent>(ent, out var nodeContainer))
             return;

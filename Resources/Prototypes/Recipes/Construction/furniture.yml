@@ -156,6 +156,18 @@
     - !type:TileNotBlocked
 
 - type: construction
+  id: StoolCard
+  graph: Seat
+  startNode: start
+  targetNode: stoolCard
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
   id: ChairWoodBench
   graph: Seat
   startNode: start
@@ -169,6 +181,7 @@
 
 - type: construction
   id: RedComfBench
+  name: construction-recipe-red-comf-bench
   graph: Seat
   startNode: start
   targetNode: redComfBench
@@ -181,6 +194,7 @@
 
 - type: construction
   id: BlueComfBench
+  name: construction-recipe-blue-comf-bench
   graph: Seat
   startNode: start
   targetNode: blueComfBench
@@ -227,6 +241,18 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+
+- type: construction
+  id: TableCard
+  graph: Table
+  startNode: start
+  targetNode: TableCard
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
 
 - type: construction
   id: TableReinforcedGlass
@@ -290,6 +316,7 @@
 
 - type: construction
   id: TableFancyBlack
+  name: construction-recipe-table-fancy-black
   graph: Table
   startNode: start
   targetNode: TableFancyBlack
@@ -302,6 +329,7 @@
 
 - type: construction
   id: TableFancyBlue
+  name: construction-recipe-table-fancy-blue
   graph: Table
   startNode: start
   targetNode: TableFancyBlue
@@ -314,6 +342,7 @@
 
 - type: construction
   id: TableFancyCyan
+  name: construction-recipe-table-fancy-cyan
   graph: Table
   startNode: start
   targetNode: TableFancyCyan
@@ -326,6 +355,7 @@
 
 - type: construction
   id: TableFancyGreen
+  name: construction-recipe-table-fancy-green
   graph: Table
   startNode: start
   targetNode: TableFancyGreen
@@ -338,6 +368,7 @@
 
 - type: construction
   id: TableFancyOrange
+  name: construction-recipe-table-fancy-orange
   graph: Table
   startNode: start
   targetNode: TableFancyOrange
@@ -350,6 +381,7 @@
 
 - type: construction
   id: TableFancyPurple
+  name: construction-recipe-table-fancy-purple
   graph: Table
   startNode: start
   targetNode: TableFancyPurple
@@ -362,6 +394,7 @@
 
 - type: construction
   id: TableFancyPink
+  name: construction-recipe-table-fancy-pink
   graph: Table
   startNode: start
   targetNode: TableFancyPink
@@ -374,6 +407,7 @@
 
 - type: construction
   id: TableFancyRed
+  name: construction-recipe-table-fancy-red
   graph: Table
   startNode: start
   targetNode: TableFancyRed
@@ -386,6 +420,7 @@
 
 - type: construction
   id: TableFancyWhite
+  name: construction-recipe-table-fancy-white
   graph: Table
   startNode: start
   targetNode: TableFancyWhite
