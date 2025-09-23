@@ -9,6 +9,7 @@ using Content.Shared.Implants.Components;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Players;
+using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Starlight.CCVar;
 using Content.Shared.Trigger.Components.Effects;
@@ -52,8 +53,13 @@ public abstract class SLSharedCharacterInfoSystem : EntitySystem
 
     private void OnPlayerSpawned(PlayerSpawnCompleteEvent ev)
     {
-        var character = ev.Profile;
-        var newMind = _mindSystem.GetMind(ev.Mob);
+        ApplyCharacterInfo(ev.Mob, ev.Profile);
+    }
+
+    public void ApplyCharacterInfo(EntityUid Mob, HumanoidCharacterProfile Profile)
+    {
+        var character = Profile;
+        var newMind = _mindSystem.GetMind(Mob);
         if (newMind != null && TryComp(newMind, out MindComponent? mindComp))
         {
             mindComp.Voice = character.Voice;
@@ -81,20 +87,20 @@ public abstract class SLSharedCharacterInfoSystem : EntitySystem
         if (_configManager.GetCVar(CCVars.FlavorText))
         {
             var charDescription = new CharacterDescriptionComponent { Description = character.PhysicalDescription, };
-            AddComp(ev.Mob, charDescription, true);
+            AddComp(Mob, charDescription, true);
         }
 
         if (_configManager.GetCVar(StarlightCCVars.ExploitableSecrets))
         {
             var exploitable = new ExploitableInfoComponent() { Info = character.ExploitableInfo, };
-            AddComp(ev.Mob, exploitable, true);
+            AddComp(Mob, exploitable, true);
         }
 
         if (_configManager.GetCVar(StarlightCCVars.ICSecrets))
         {
             //Setup playermob info
             var charSecrets = new CharacterSecretsComponent { Secrets = character.Secrets };
-            AddComp(ev.Mob, charSecrets, true);
+            AddComp(Mob, charSecrets, true);
         }
     }
 

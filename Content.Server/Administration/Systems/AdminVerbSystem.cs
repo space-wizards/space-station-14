@@ -39,7 +39,9 @@ using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
 using static Content.Shared.Configurable.ConfigurationComponent;
 using Content.Shared._Starlight.Thaven.Components; //Starlight
-using Content.Server._Starlight.Thaven; //Starlight
+using Content.Server._Starlight.Thaven;
+using Content.Server.Traits; // Starlight
+using Content.Shared._Starlight.Character.Info; //Starlight
 
 namespace Content.Server.Administration.Systems
 {
@@ -73,6 +75,8 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidAppearance = default!;
         [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
         [Dependency] private readonly ThavenMoodsSystem _moods = default!; //Starlight
+        [Dependency] private readonly TraitSystem _traitSystem = default!; //Starlight
+        [Dependency] private readonly SLSharedCharacterInfoSystem _sLSharedCharacterInfoSystem = default!; //Starlight
 
         private readonly Dictionary<ICommonSession, List<EditSolutionsEui>> _openSolutionUis = new();
 
@@ -159,6 +163,9 @@ namespace Content.Server.Administration.Systems
 
                                 var mobUid = _spawning.SpawnPlayerMob(coords.Value, null, humanoid, stationUid);
 
+                                _traitSystem.ApplyTraits(mobUid, humanoid); // Starlight
+                                _sLSharedCharacterInfoSystem.ApplyCharacterInfo(mobUid, humanoid); // Starlight
+
                                 if (_mindSystem.TryGetMind(args.Target, out var mindId, out var mindComp))
                                     _mindSystem.TransferTo(mindId, mobUid, true, mind: mindComp);
 
@@ -183,7 +190,12 @@ namespace Content.Server.Administration.Systems
 
                             var stationUid = _stations.GetOwningStation(args.Target);
                             var profile = _humanoidAppearance.GetBaseProfile(args.Target);
-                            _spawning.SpawnPlayerMob(coords.Value, null, profile, stationUid);
+                            var mobUid = _spawning.SpawnPlayerMob(coords.Value, null, profile, stationUid);
+                            if (profile is HumanoidCharacterProfile humanoid) // Starlight
+                            {
+                                _traitSystem.ApplyTraits(mobUid, humanoid);
+                                _sLSharedCharacterInfoSystem.ApplyCharacterInfo(mobUid, humanoid);
+                            }
                         },
                         ConfirmationPopup = true,
                         Impact = LogImpact.High,
@@ -458,7 +470,7 @@ namespace Content.Server.Administration.Systems
                 {
                     Text = Loc.GetString("delete-verb-get-data-text"),
                     Category = VerbCategory.Debug,
-                    Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png")),
+                    Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png")),
                     Act = () => Del(args.Target),
                     Impact = LogImpact.Medium,
                     ConfirmationPopup = true
@@ -508,7 +520,7 @@ namespace Content.Server.Administration.Systems
                 {
                     Text = Loc.GetString("make-sentient-verb-get-data-text"),
                     Category = VerbCategory.Debug,
-                    Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/sentient.svg.192dpi.png")),
+                    Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/sentient.svg.192dpi.png")),
                     Act = () => _mindSystem.MakeSentient(args.Target),
                     Impact = LogImpact.Medium
                 };
