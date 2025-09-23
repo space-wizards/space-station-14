@@ -76,6 +76,9 @@
     access: [["Security"]]
     loggingDisabled: true
     breakOnAccessBreaker: false
+  # - type: ActivatableUI
+  #   key: enum.HandLabelerUiKey.Key
+  #   inHandsOnly: true
   - type: UserInterface
     interfaces:
       enum.HailerUiKey.Key:

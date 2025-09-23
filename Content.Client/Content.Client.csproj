@@ -25,17 +25,4 @@
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
-  <ItemGroup>
-    <EmbeddedResource Remove="Clothing\UI\HailerRadialMenu.xaml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AdditionalFiles Update="Clothing\UI\HailerRadialMenu.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </AdditionalFiles>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Clothing\UI\HailerRadialMenu.xaml.cs">
-      <DependentUpon>HailerRadialMenu.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
 </Project>
