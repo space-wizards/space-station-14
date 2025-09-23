@@ -1,7 +1,7 @@
 - type: gameMap
   id: demirage
   mapName: 'de_mirage'
-  mapPath: /Maps/mirage.yml
+  mapPath: /Maps/MirageRemake.yml
   minPlayers: 0
   stations:
    demirage:
