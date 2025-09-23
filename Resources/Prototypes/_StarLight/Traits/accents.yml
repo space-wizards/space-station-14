@@ -1,0 +1,41 @@
+# 0 Cost Accent
+
+- type: trait
+  id: PoliteAccent
+  name: trait-polite-accent-name
+  description: trait-polite-accent-desc
+  category: SpeechTraits
+  cost: 0
+  components:
+    - type: PoliteAccent
+
+# 1 Cost Accents
+
+- type: trait
+  id: NerdAccent
+  name: trait-nerd-accent-name
+  description: trait-nerd-accent-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+    - type: NerdAccent
+
+# 2 Cost Accents
+
+- type: trait
+  id: ArchaicAccent
+  name: trait-archaic-accent-name
+  description: trait-archaic-accent-desc
+  category: SpeechTraits
+  cost: 2
+  components:
+    - type: ArchaicAccent
+
+- type: trait
+  id: ScottishAccent
+  name: trait-scottish-accent-name
+  description: trait-scottish-accent-desc
+  category: SpeechTraits
+  cost: 2
+  components:
+    - type: ScottishAccent

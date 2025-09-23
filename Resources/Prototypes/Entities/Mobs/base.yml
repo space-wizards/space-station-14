@@ -5,7 +5,10 @@
   id: BaseMob
   abstract: true
   components:
-  - type: LanguageSpeaker # Starlight
+  # Starlight-start
+  - type: LanguageSpeaker
+  - type: ParentCanBlockVision
+  # Starlight-end
   - type: Sprite
     noRot: true
     drawdepth: Mobs
