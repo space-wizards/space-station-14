@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: qwerltaz
-  changes:
-  - message: Snipping the panic wire in an air alarm now forces panic mode until the
-      wire is mended.
-    type: Tweak
-  id: 8485
-  time: '2025-05-14T20:39:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36439
 - author: IProduceWidgets
   changes:
   - message: more wizard name variety
@@ -3954,3 +3946,10 @@
   id: 8995
   time: '2025-09-22T06:40:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40491
+- author: hoshizora-sayo
+  changes:
+  - message: Fixed fire helmets alone giving you full temperature protection
+    type: Fix
+  id: 8996
+  time: '2025-09-23T17:02:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40481
