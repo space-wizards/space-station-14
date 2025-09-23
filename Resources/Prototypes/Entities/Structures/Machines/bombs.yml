@@ -23,9 +23,11 @@
       intensitySlope: 5
       maxIntensity: 4
     - type: ExplodeOnTrigger
+      keysIn:
+      - timer
     # If you nerf the syndicate bomb in any major way, this should probably drop down to at least 100s (not 90s to compensate for slower movement speed & less lag in SS14)
     # Unless, of course, you want the 90 seconds regardless. I can't stop you.
-    - type: OnUseTimerTrigger
+    - type: TimerTrigger
       delay: 180
       delayOptions: [180, 240, 300, 600, 900]
       initialBeepDelay: 0
@@ -150,6 +152,6 @@
   components:
     - type: Defusable
       disposable: true
-    - type: OnUseTimerTrigger
+    - type: TimerTrigger
       delay: 10
       delayOptions: [10, 20, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300]
