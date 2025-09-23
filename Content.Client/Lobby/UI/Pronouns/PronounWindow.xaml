@@ -1,0 +1,75 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         Title="{Loc humanoid-profile-editor-pronouns-title}"
+         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+         xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+         MinSize="800 300">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal">
+            <Label Name="PronounDescription" />
+        </BoxContainer>
+        <!-- Top Line -->
+        <BoxContainer Orientation="Horizontal">
+            <!-- Subject -->
+            <BoxContainer Name ="SubjectContainer" Orientation="Vertical">
+                <Label Name="SubjectLabel" />
+                <Label Name="SubjectExample" />
+                <LineEdit Name="SubjectLine" />
+            </BoxContainer>
+            <!-- Object -->
+            <BoxContainer Name ="ObjectContainer" Orientation="Vertical">
+                <Label Name="ObjectLabel" />
+                <Label Name="ObjectExample" />
+                <LineEdit Name="ObjectLine" />
+            </BoxContainer>
+            <!-- Reflexive -->
+            <BoxContainer Name ="ReflexiveContainer" Orientation="Vertical">
+                <Label Name="ReflexiveLabel" />
+                <Label Name="ReflexiveExample" />
+                <LineEdit Name="ReflexiveLine" />
+            </BoxContainer>
+        </BoxContainer>
+        <!-- Middle Line -->
+        <BoxContainer Orientation="Horizontal">
+            <!-- Possessive Pronoun -->
+            <BoxContainer Name ="PossPronounContainer" Orientation="Vertical">
+                <Label Name="PossPronounLabel" />
+                <Label Name="PossPronounExample" />
+                <LineEdit Name="PossPronounLine" />
+            </BoxContainer>
+            <!-- Possessive Determiner -->
+            <BoxContainer Name ="PossAdjContainer" Orientation="Vertical">
+                <Label Name="PossAdjLabel" />
+                <Label Name="PossAdjExample" />
+                <LineEdit Name="PossAdjLine" />
+            </BoxContainer>
+            <!-- Conjugation -->
+            <BoxContainer Name ="PluralContainer" Orientation="Vertical">
+                <Label Name="PluralLabel" />
+                <Label Name="PluralExample" />
+                <OptionButton Name="PluralOption" />
+            </BoxContainer>
+        </BoxContainer>
+        <!-- Bottom Line (toggled in ccvars) -->
+        <BoxContainer Name="OptionalParams" Orientation="Horizontal">
+            <!-- Dative -->
+            <BoxContainer Name ="DatObjContainer" Orientation="Vertical">
+                <Label Name="DatObjLabel" />
+                <Label Name="DatObjExample" />
+                <LineEdit Name="DatObjLine" />
+            </BoxContainer>
+            <!-- Genitive -->
+            <BoxContainer Name ="GenitiveContainer" Orientation="Vertical">
+                <Label Name="GenitiveLabel" />
+                <Label Name="GenitiveExample" />
+                <LineEdit Name="GenitiveLine" />
+            </BoxContainer>
+            <!-- Counter -->
+            <BoxContainer Name ="CounterContainer" Orientation="Vertical">
+                <Label Name="CounterLabel" />
+                <Label Name="CounterExample" />
+                <LineEdit Name="CounterLine" />
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>
