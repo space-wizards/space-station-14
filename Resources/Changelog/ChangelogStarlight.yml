@@ -15609,5 +15609,26 @@ Entries:
   id: 171830
   time: '2025-09-23T15:46:17.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: Rinary
+  changes:
+  - message: Added digital locks.
+    type: Add
+  id: 137800
+  time: '2025-09-23T16:25:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1378
+- author: Rinary
+  changes:
+  - message: Added secure briefcase with digital lock.
+    type: Add
+  id: 137801
+  time: '2025-09-23T16:25:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1378
+- author: Rinary
+  changes:
+  - message: Added wall safe with digital lock.
+    type: Add
+  id: 137802
+  time: '2025-09-23T16:25:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1378
 Order: -1
 
