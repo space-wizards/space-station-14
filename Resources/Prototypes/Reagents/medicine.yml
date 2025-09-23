@@ -589,7 +589,7 @@
     - !type:PlantPhalanximine
       conditions:
       - !type:ReagentThreshold
-        reaction: Phalanximine
+        reagent: Phalanximine
         min: 4
   metabolisms:
     Medicine:
@@ -604,7 +604,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          reaction: Phalanximine
+          reagent: Phalanximine
           min: 11
         damage:
           types:
@@ -638,6 +638,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: PolypyryliumOligomers
           min: 30
         damage:
           types:
@@ -795,6 +796,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: TranexamicAcid
           min: 15
         damage:
           types:

@@ -132,6 +132,7 @@
       - !type:HealthChange
         conditions:
           - !type:ReagentThreshold
+            reagent: Stimulants
             min: 80 #please wait 3 minutes before using another stimpack
         damage:
           types:
@@ -408,6 +409,7 @@
         probability: 0.08
         conditions:
         - !type:ReagentThreshold
+          reagent: TearGas
           min: 4
       - !type:Emote
         emote: Cough
@@ -417,6 +419,7 @@
         component: TemporaryBlindness
         conditions:
         - !type:ReagentThreshold
+          reagent: TearGas
           min: 4
       - !type:MovementSpeedModifier
         walkSpeedModifier: 0.65
@@ -424,6 +427,7 @@
         statusLifetime: 1.5
         conditions: # because of the remainding after effect, threshold is given so the effects ends simultaniously
         - !type:ReagentThreshold
+          reagent: TearGas
           min: 4
 
 - type: reagent

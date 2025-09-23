@@ -224,7 +224,7 @@
     Sulfur:
       amount: 1
   effects:
-    - !type:FlashReactionEffect
+    - !type:Flash
 
 - type: reaction
   id: TableSalt

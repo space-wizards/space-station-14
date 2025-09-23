@@ -120,9 +120,9 @@
         emote: Cough
         showInGuidebook: true
         conditions:
-        - !type:Breathing
-        - !type:Internals
-          usingInternals: false
+        - !type:IsBreathing
+        - !type:InternalsOn
+          condition: false
 
 - type: reagent
   id: Vinegar
