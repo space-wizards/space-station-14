@@ -1,0 +1,63 @@
+# Head Markings (Head)
+- type: marking
+  id: VulpHeadBlaze
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/head_markings.rsi
+      state: blaze
+
+- type: marking
+  id: VulpHeadMask
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/head_markings.rsi
+      state: mask
+
+- type: marking
+  id: VulpPatch
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/head_markings.rsi
+      state: patch
+
+- type: marking
+  id: VulpSlash
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/head_markings.rsi
+      state: slash
+
+- type: marking
+  id: VulpStripes1
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/head_markings.rsi
+      state: stripes_1
+
+- type: marking
+  id: VulpStripes2
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/head_markings.rsi
+      state: stripes_2
+
+- type: marking
+  id: VulpVulpine
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/head_markings.rsi
+      state: vulpine
