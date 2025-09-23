@@ -32,6 +32,7 @@ public sealed class UserOpenActivatableUIAttemptEvent : CancellableEntityEventAr
         Target = target;
     }
 }
+
 /// <summary>
 /// Raised on the user when trying adding verbs, can be canceled and not show verbs.
 /// </summary>
