@@ -414,8 +414,9 @@
     - type: WithAttachedBodyParts
       parts:
         left hand: LeftHandCyber
-    - type: RoundstartImplantable
-      cost: 2
+    - type: Construction
+      graph: RipperLeftGraph
+      node: left
 
 - type: entity
   id: RightArmCyberRipper
@@ -448,5 +449,6 @@
     - type: WithAttachedBodyParts
       parts:
         right hand: RightHandCyber
-    - type: RoundstartImplantable
-      cost: 2
+    - type: Construction
+      graph: RipperRightGraph
+      node: right

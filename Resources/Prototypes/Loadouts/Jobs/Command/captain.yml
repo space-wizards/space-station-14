@@ -19,6 +19,16 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtCaptain
 
+- type: loadout # afterlight start
+  id: CapTurtleneckJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCapTurtleneck
+
+- type: loadout
+  id: CapTurtleneckJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCapTurtleneck # afterlight end
+
 - type: loadout
   id: CaptainFormalSuit
   equipment:

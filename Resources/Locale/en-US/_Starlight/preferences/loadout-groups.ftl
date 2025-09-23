@@ -41,3 +41,6 @@ loadout-group-iia-shoes = Lawyer shoes
 
 # Civilian
 loadout-group-civilian-shoes = Shoes
+
+# Cargo
+loadout-group-salvage-specialist-jumpsuit = Salvage Specialist jumpsuit

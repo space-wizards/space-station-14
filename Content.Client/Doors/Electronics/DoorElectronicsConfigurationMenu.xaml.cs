@@ -37,6 +37,6 @@ public sealed partial class DoorElectronicsConfigurationMenu : FancyWindow
 
     public void UpdateState(DoorElectronicsConfigurationState state)
     {
-        _buttonsList.UpdateState(state.AccessList);
+        _buttonsList.UpdateState(state.AccessList, null); // Starlight-edit
     }
 }
