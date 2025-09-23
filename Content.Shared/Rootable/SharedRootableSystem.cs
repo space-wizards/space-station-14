@@ -2,7 +2,6 @@
 using Content.Shared.Actions.Components;
 using Content.Shared.Alert;
 using Content.Shared.Cloning.Events;
-using Content.Shared.Coordinates;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Gravity;
 using Content.Shared.Mobs;
