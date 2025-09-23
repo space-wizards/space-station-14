@@ -46,13 +46,8 @@
         doAfter: 1
     - to: memory_cell
       steps:
-      - tag: MicroManipulatorStockPart
-        icon:
-          sprite: Objects/Misc/stock_parts.rsi
-          state: micro_mani
-        name: construction-graph-tag-manipulator
       - material: Manipulator
-        amount: 1
+        amount: 2
       - material: Cable
         amount: 2
         doAfter: 1

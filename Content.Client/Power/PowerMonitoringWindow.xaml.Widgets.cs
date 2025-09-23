@@ -6,7 +6,6 @@ using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
-using Vector4 = Robust.Shared.Maths.Vector4;
 
 namespace Content.Client.Power;
 
@@ -54,8 +53,8 @@ public sealed partial class PowerMonitoringWindow
             // Selection action
             windowEntry.Button.OnButtonUp += args =>
             {
-                windowEntry.SourcesContainer.DisposeAllChildren();
-                windowEntry.LoadsContainer.DisposeAllChildren();
+                windowEntry.SourcesContainer.RemoveAllChildren();
+                windowEntry.LoadsContainer.RemoveAllChildren();
                 ButtonAction(windowEntry, masterContainer);
             };
         }

@@ -5,7 +5,6 @@ using Content.Shared.CCVar;
 using Content.Shared.Construction.Components;
 using Content.Shared.Database;
 using Content.Shared.Friction;
-using Content.Shared.Gravity;
 using Content.Shared.Projectiles;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -30,7 +29,6 @@ public sealed class ThrowingSystem : EntitySystem
     private float _airDamping;
 
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ThrownItemSystem _thrownSystem = default!;
@@ -192,8 +190,6 @@ public sealed class ThrowingSystem : EntitySystem
             }
         }
 
-        var throwEvent = new ThrownEvent(user, uid);
-        RaiseLocalEvent(uid, ref throwEvent, true);
         if (user != null)
             _adminLogger.Add(LogType.Throw, LogImpact.Low, $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):entity}");
 
@@ -205,6 +201,14 @@ public sealed class ThrowingSystem : EntitySystem
         var throwSpeed = compensateFriction ? direction.Length() / (flyTime + 1 / tileFriction) : baseThrowSpeed;
         var impulseVector = direction.Normalized() * throwSpeed * physics.Mass;
         _physics.ApplyLinearImpulse(uid, impulseVector, body: physics);
+
+        var thrownEvent = new ThrownEvent(user, uid);
+        RaiseLocalEvent(uid, ref thrownEvent, true);
+        if (user != null)
+        {
+            var throwEvent = new ThrowEvent(user, uid);
+            RaiseLocalEvent(user.Value, ref throwEvent, true);
+        }
 
         if (comp.LandTime == null || comp.LandTime <= TimeSpan.Zero)
         {
@@ -222,17 +226,21 @@ public sealed class ThrowingSystem : EntitySystem
             _recoil.KickCamera(user.Value, -direction * 0.04f);
 
         // Give thrower an impulse in the other direction
-        if (pushbackRatio != 0.0f &&
-            physics.Mass > 0f &&
-            TryComp(user.Value, out PhysicsComponent? userPhysics) &&
-            _gravity.IsWeightless(user.Value, userPhysics))
-        {
-            var msg = new ThrowPushbackAttemptEvent();
-            RaiseLocalEvent(uid, msg);
-            const float massLimit = 5f;
+        if (pushbackRatio == 0.0f ||
+            physics.Mass == 0f ||
+            !TryComp(user.Value, out PhysicsComponent? userPhysics))
+            return;
+        var msg = new ThrowPushbackAttemptEvent();
+        RaiseLocalEvent(uid, msg);
 
-            if (!msg.Cancelled)
-                _physics.ApplyLinearImpulse(user.Value, -impulseVector / physics.Mass * pushbackRatio * MathF.Min(massLimit, physics.Mass), body: userPhysics);
-        }
+        if (msg.Cancelled)
+            return;
+
+        var pushEv = new ThrowerImpulseEvent();
+        RaiseLocalEvent(user.Value, ref pushEv);
+        const float massLimit = 5f;
+
+        if (pushEv.Push)
+            _physics.ApplyLinearImpulse(user.Value, -impulseVector / physics.Mass * pushbackRatio * MathF.Min(massLimit, physics.Mass), body: userPhysics);
     }
 }

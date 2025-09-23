@@ -98,9 +98,12 @@
   - FauxTileAstroGrass
   - FauxTileMowedAstroGrass
   - FauxTileJungleAstroGrass
+  - FauxTileDarkAstroGrass
+  - FauxTileLightAstroGrass
   - FauxTileAstroIce
   - FauxTileAstroSnow
   - FauxTileAstroAsteroidSand
+  - FauxTileDesertAstroSand
 
 - type: technology
   id: BiochemicalStasis
@@ -199,6 +202,7 @@
   cost: 4000
   recipeUnlocks:
   - PushHorn
+  - BorgModuleAdvancedClowning
 
 # Tier 3
 
