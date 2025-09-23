@@ -50,8 +50,8 @@ public sealed partial class AgentIDCardWindow : FancyWindow
     /// </summary>
     public void SetAllowedIcons(List<ProtoId<JobIconGroupPrototype>> jobGroups)
     {
-        JobGroupGrid.DisposeAllChildren();
-        IconGrid.DisposeAllChildren();
+        JobGroupGrid.RemoveAllChildren();
+        IconGrid.RemoveAllChildren();
 
         var jobGroupButtonGroup = new ButtonGroup();
 
