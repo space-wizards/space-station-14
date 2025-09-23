@@ -74,6 +74,14 @@
     selectedBorgType: medical
 
 - type: entity
+  id: BorgChassisScience
+  parent: BorgChassisSelectable
+  name: science cyborg
+  components:
+  - type: BorgSwitchableType
+    selectedBorgType: science
+
+- type: entity
   id: BorgChassisService
   parent: BorgChassisSelectable
   name: service cyborg

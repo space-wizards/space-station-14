@@ -10,13 +10,10 @@
   moduleWhitelist:
     tags:
     - BorgModuleGeneric
-    - BorgModuleScience #until sciborgs are added
 
   defaultModules:
   - BorgModuleTool
-  - BorgModuleInflatable
-  - BorgModuleArtifact
-  - BorgModuleAnomaly
+
   radioChannels:
   - Science
 
@@ -189,6 +186,40 @@
   # Sounds
   footstepCollection:
     collection: FootstepHoverBorg
+
+
+# science borg
+- type: borgType
+  id: science
+
+  # Description
+  dummyPrototype: BorgChassisScience
+
+  # Functional
+  extraModuleCount: 5
+  moduleWhitelist:
+    tags:
+    - BorgModuleGeneric
+    - BorgModuleScience
+
+  defaultModules:
+  - BorgModuleTool
+  - BorgModuleInflatable
+  - BorgModuleArtifact
+  - BorgModuleAnomaly
+  radioChannels:
+  - Science
+
+  # Visual
+  inventoryTemplateId: borgShort
+  spriteBodyState: science
+  spriteHasMindState: science_e
+  spriteNoMindState: science_e_r
+  spriteToggleLightState: science_l
+
+  # Pet
+  petSuccessString: petting-success-generic-cyborg
+  petFailureString: petting-failure-generic-cyborg
 
 
 # Service borg
