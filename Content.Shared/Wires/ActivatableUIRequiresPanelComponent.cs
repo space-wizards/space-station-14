@@ -14,4 +14,7 @@ public sealed partial class ActivatableUIRequiresPanelComponent : Component
     /// </summary>
     [DataField]
     public bool RequireOpen = true;
+
+    [DataField]
+    public LocId? PanelClosedPopup = "activatable-ui-requires-panel-panel-closed-popup";
 }
