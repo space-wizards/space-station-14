@@ -97,7 +97,7 @@
     interfaces:
       enum.DisposalUnitUiKey.Key:
         type: DisposalUnitBoundUserInterface
-  - type: RatKingRummageable
+  - type: Rummageable
   - type: RequireProjectileTarget
 
 - type: entity
