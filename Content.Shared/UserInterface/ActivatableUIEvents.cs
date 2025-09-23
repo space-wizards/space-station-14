@@ -14,7 +14,7 @@ public sealed class ActivatableUIOpenAttemptEvent : CancellableEntityEventArgs
 }
 
 /// <summary>
-/// Event raised before adding verb, which can be canceled to stop adding the verb.
+/// Event raised on the entity itself before adding verb, which can be canceled to stop adding the verb.
 /// </summary>
 public sealed class ActivatableUIAddVerbAttemptEvent : CancellableEntityEventArgs
 {
@@ -32,7 +32,9 @@ public sealed class UserOpenActivatableUIAttemptEvent : CancellableEntityEventAr
         Target = target;
     }
 }
-
+/// <summary>
+/// Raised on the user when trying adding verbs, can be canceled and not show verbs.
+/// </summary>
 public sealed class UserAddVerbActivatableUIAttemptEvent : CancellableEntityEventArgs
 {
     public EntityUid User { get; }
