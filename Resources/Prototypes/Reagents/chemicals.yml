@@ -79,6 +79,8 @@
   desc: reagent-desc-artifexium
   flavor: metallic
   physicalDesc: reagent-physical-desc-crystalline
+  allowedDepartments:
+  - Science
   color: "#776291"
   metabolisms:
     Poison:
@@ -118,6 +120,8 @@
   name: reagent-name-benzene
   desc: reagent-desc-benzene
   physicalDesc: reagent-physical-desc-acidic
+  allowedJobs:
+  - Chemist
   color: "#E7EA91"
   boilingPoint: 353.2
   meltingPoint: 278.7

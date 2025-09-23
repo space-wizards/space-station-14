@@ -1,9 +1,9 @@
 - type: entity
-  name: toilet
-  id: BaseToilet
-  parent: [ DisposalUnitBase, SeatBase ]
-  description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
   abstract: true
+  parent: [ DisposalUnitBase, SeatBase ]
+  id: BaseToilet
+  name: toilet
+  description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
   components:
   - type: Sprite
     sprite: Structures/Furniture/toilet.rsi
@@ -24,8 +24,6 @@
       map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
     - state: dispover-handle
       map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
-    - map: [ "DoorVisualState.DoorOpen" ]
-    - map: [ "SeatVisualState.SeatUp" ]
   - type: Rotatable
   - type: Transform
     noRot: false
@@ -107,32 +105,32 @@
     utensil: Spoon
   - type: GenericVisualizer
     visuals:
-      enum.ToiletVisuals.SeatVisualState:
-        SeatVisualState.SeatUp:
-          SeatUp: { state: disposal-up }
-          SeatDown: { state: disposal-down }
       enum.ToolOpenableVisuals.ToolOpenableVisualState:
         ToolOpenableVisualState.StashOpen:
           Open: { state: disposal-open }
           Closed: { state: disposal-closed }
+      enum.ToiletVisuals.SeatVisualState:
+        SeatVisualState.SeatUp:
+          SeatUp: { state: disposal-up }
+          SeatDown: { state: disposal-down }
 
 - type: entity
+  parent: BaseToilet
+  id: ToiletEmpty
   name: toilet
   description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
-  id: ToiletEmpty
-  parent: BaseToilet
   suffix: Empty
   components:
   - type: Construction
     graph: Toilet
     node: toilet
 
-# so theres not actually any way to replenish the gastrotoxin / gold in these. 
+# so theres not actually any way to replenish the gastrotoxin / gold in these.
 # I wouldn't add it to the solutionregeneration comp because that doesn't make a lot of sense imo.
 # I guess we just need to add shitting?
 - type: entity
-  id: ToiletDirtyWater
   parent: ToiletEmpty
+  id: ToiletDirtyWater
   suffix: Dirty Water
   components:
   - type: SolutionContainerManager
@@ -148,8 +146,8 @@
           Quantity: 20
 
 - type: entity
-  id: ToiletGoldenEmpty
   parent: BaseToilet
+  id: ToiletGoldenEmpty
   name: golden toilet
   description: The HT-451G is the gold version of the device. It says on the side that it is made of the purest Mercurian gold and a real leather seat.
   suffix: Empty
@@ -184,8 +182,8 @@
             max: 5
 
 - type: entity
-  id: ToiletGoldenDirtyWater
   parent: ToiletGoldenEmpty
+  id: ToiletGoldenDirtyWater
   suffix: Dirty Water, StealTarget
   components:
   - type: StealTarget
