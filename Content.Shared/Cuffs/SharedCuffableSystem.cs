@@ -119,17 +119,15 @@ namespace Content.Shared.Cuffs
                     return;
                 }
 
-                // We temporarily allow interactions so the cuffable system does not block itself.
-                // It's assumed that this will always be false.
-                // Otherwise they would not be trying to uncuff themselves.
-                bool OldCanStillInteract = cuffable.CanStillInteract;
+                // We temporarily allow interactions so the cuffable system does not block itself..
+                bool oldCanStillInteract = cuffable.CanStillInteract;
                 cuffable.CanStillInteract = true;
                 Dirty(args.User, cuffable);
 
                 if (!_actionBlocker.CanInteract(args.User, args.User))
                     args.Cancelled = true;
 
-                cuffable.CanStillInteract = OldCanStillInteract;
+                cuffable.CanStillInteract = oldCanStillInteract;
                 Dirty(args.User, cuffable);
             }
             else
