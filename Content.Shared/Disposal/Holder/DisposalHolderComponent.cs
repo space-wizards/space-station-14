@@ -14,10 +14,22 @@ public sealed partial class DisposalHolderComponent : Component, IGasMixtureHold
     public Container? Container;
 
     /// <summary>
-    /// Sets how fast the holder traverses the pipe net.
+    /// Sets how fast the holder traverses pipes.
     /// </summary>
     [DataField]
     public float TraversalSpeed { get; set; } = 5f;
+
+    /// <summary>
+    /// Multiplier for how fast contained entities are ejected from pipes.
+    /// </summary>
+    [DataField]
+    public float ExitSpeedMultiplier { get; set; } = 1f;
+
+    /// <summary>
+    /// Multiplier for how far contained entities are ejected from pipes.
+    /// </summary>
+    [DataField]
+    public float ExitDistanceMultiplier { get; set; } = 1f;
 
     /// <summary>
     /// The disposal tube the holder is currently exiting.

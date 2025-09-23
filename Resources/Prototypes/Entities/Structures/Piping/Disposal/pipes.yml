@@ -68,6 +68,9 @@
   name: disposal holder
   components:
   - type: DisposalHolder
+    traversalSpeed: 5
+    exitDistanceMultiplier: 2
+    exitSpeedMultiplier: 2
   - type: ContainerContainer
     containers:
       DisposalHolderComponent: !type:Container

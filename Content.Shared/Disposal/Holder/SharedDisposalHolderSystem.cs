@@ -4,6 +4,7 @@ using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Tube;
 using Content.Shared.Disposal.Unit;
 using Content.Shared.Eye;
+using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -32,10 +33,14 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedEyeSystem _eye = default!;
+    [Dependency] private readonly SharedStunSystem _stun = default!;
 
     private EntityQuery<DisposalUnitComponent> _disposalUnitQuery;
     private EntityQuery<MetaDataComponent> _metaQuery;
     private EntityQuery<TransformComponent> _xformQuery;
+
+    // Sets how many seconds stunable entities will be knocked down for after being ejected from a pipe
+    private const float DisposalExitStunDuration = 1.5f;
 
     public static readonly Regex TagRegex = new("^[a-zA-Z0-9, ]*$", RegexOptions.Compiled);
 
@@ -138,9 +143,10 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
 
                 if (direction != Direction.Invalid && _xformQuery.TryGetComponent(gridUid, out var gridXform))
                 {
-                    var directionAngle = direction.ToAngle();
-                    directionAngle += _xformSystem.GetWorldRotation(gridXform);
-                    _throwing.TryThrow(held, directionAngle.ToWorldVec() * 3f, 10f);
+                    _stun.TryKnockdown(held, TimeSpan.FromSeconds(DisposalExitStunDuration), force: true);
+
+                    var directionAngle = direction.ToAngle() + _xformSystem.GetWorldRotation(gridXform);
+                    _throwing.TryThrow(held, directionAngle.ToWorldVec() * ent.Comp.ExitDistanceMultiplier, ent.Comp.TraversalSpeed * ent.Comp.ExitSpeedMultiplier);
                 }
             }
         }
@@ -355,7 +361,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         var originDestDiff = destination.Position - origin.Position;
         var originEntDiff = entCoords.Position - origin.Position;
 
-        if (originEntDiff.Length() <= originDestDiff.Length())
+        if (originEntDiff.Length() < originDestDiff.Length())
             return;
 
         // If it should update its route, attempt to enter the next tube
