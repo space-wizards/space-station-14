@@ -1,6 +1,5 @@
 namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
-[ImplicitDataDefinitionForInheritors]
 public abstract partial class BasePlantAdjustAttribute<T> : EntityEffectBase<T> where T : BasePlantAdjustAttribute<T>
 {
     [DataField]

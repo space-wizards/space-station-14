@@ -56,7 +56,6 @@ public sealed partial class MovementSpeedModifierEntityEffectSystem : EntityEffe
     }
 }
 
-[DataDefinition]
 public sealed partial class MovementSpeedModifier : BaseStatusEntityEffect<MovementSpeedModifier>
 {
     /// <summary>

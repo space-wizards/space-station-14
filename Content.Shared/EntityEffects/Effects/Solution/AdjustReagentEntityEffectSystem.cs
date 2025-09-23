@@ -20,7 +20,6 @@ public sealed partial class AdjustReagentEntityEffectSystem : EntityEffectSystem
     }
 }
 
-[DataDefinition]
 public sealed partial class AdjustReagent : EntityEffectBase<AdjustReagent>
 {
     /// <summary>

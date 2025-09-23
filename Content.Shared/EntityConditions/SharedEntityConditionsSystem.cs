@@ -72,6 +72,7 @@ public abstract partial class EntityConditionBase<T> : AnyEntityCondition where 
 }
 
 // This exists so we can store entity effects in list and raise events without type erasure.
+[ImplicitDataDefinitionForInheritors]
 public abstract partial class AnyEntityCondition
 {
     public abstract bool RaiseEvent(EntityUid target, IEntityConditionRaiser raiser);
@@ -81,7 +82,7 @@ public abstract partial class AnyEntityCondition
     public bool Condition = true;
 
     [DataField]
-    public readonly string EntityConditionGuidebookText = String.Empty;
+    public string EntityConditionGuidebookText = String.Empty;
 }
 
 /// <summary>

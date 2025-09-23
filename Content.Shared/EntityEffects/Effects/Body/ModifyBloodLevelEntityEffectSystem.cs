@@ -14,7 +14,6 @@ public sealed partial class ModifyBloodLevelEntityEffectSystem : EntityEffectSys
     }
 }
 
-[DataDefinition]
 public sealed partial class ModifyBloodLevel : EntityEffectBase<ModifyBloodLevel>
 {
     /// <summary>

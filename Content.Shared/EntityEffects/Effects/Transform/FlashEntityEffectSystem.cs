@@ -31,7 +31,6 @@ public sealed partial class FlashEntityEffectSystem : EntityEffectSystem<Transfo
     }
 }
 
-[DataDefinition]
 public sealed partial class Flash : EntityEffectBase<Flash>
 {
     /// <summary>

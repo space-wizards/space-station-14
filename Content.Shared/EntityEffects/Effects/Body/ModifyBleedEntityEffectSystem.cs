@@ -13,7 +13,6 @@ public sealed partial class ModifyBleedEntityEffectSystem : EntityEffectSystem<B
     }
 }
 
-[DataDefinition]
 public sealed partial class ModifyBleed : EntityEffectBase<ModifyBleed>
 {
     /// <summary>

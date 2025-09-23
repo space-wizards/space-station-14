@@ -11,7 +11,6 @@ public abstract partial class SharedEmoteEntityEffectSystem : EntityEffectSystem
     }
 }
 
-[DataDefinition]
 public sealed partial class Emote : EntityEffectBase<Emote>
 {
     /// <summary>

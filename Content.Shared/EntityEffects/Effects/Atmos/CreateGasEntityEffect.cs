@@ -4,7 +4,6 @@ namespace Content.Shared.EntityEffects.Effects.Atmos;
 
 // Server side system
 
-[DataDefinition]
 public sealed partial class CreateGas : EntityEffectBase<CreateGas>
 {
     /// <summary>

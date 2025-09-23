@@ -34,6 +34,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Dylovene
           min: 20
         damage:
           groups:
@@ -41,10 +42,12 @@
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
+          reagent: Dylovene
           min: 20
       - !type:PopupMessage
         conditions:
         - !type:ReagentThreshold
+          reagent: Dylovene
           min: 20
         type: Local
         visualType: Medium
@@ -53,11 +56,13 @@
       - !type:Vomit
         conditions:
         - !type:ReagentThreshold
+          reagent: Dylovene
           min: 20
         probability: 0.02
       - !type:Drunk
         conditions:
         - !type:ReagentThreshold
+          reagent: Dylovene
           min: 15
   plantMetabolism:
   - !type:PlantAdjustToxins
@@ -148,6 +153,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Bicaridine
           min: 15
         damage:
           types:
@@ -156,11 +162,13 @@
       - !type:Vomit
         conditions:
         - !type:ReagentThreshold
+          reagent: Bicaridine
           min: 30
         probability: 0.02
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
+          reagent: Bicaridine
           min: 15
       - !type:Drunk
 
@@ -233,6 +241,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Dermaline
           min: 10
         damage:
           types:
@@ -243,6 +252,7 @@
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
+          reagent: Dermaline
           min: 10
 
 - type: reagent
@@ -326,10 +336,10 @@
       - !type:HealthChange
         conditions:
           # they gotta be in crit first
-        - !type:MobStateCondition
+        - !type:IsMobState
           mobstate: Critical
         - !type:ReagentThreshold
-          min: 0
+          reagent: Epinephrine
           max: 20
         damage:
           types:
@@ -341,6 +351,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Epinephrine
           min: 20
         damage:
           types:
@@ -441,7 +452,7 @@
       - !type:HealthChange
         conditions:
           # they gotta be in crit first
-        - !type:MobStateCondition
+        - !type:IsMobState
           mobstate: Critical
         damage:
           types:
@@ -578,6 +589,7 @@
     - !type:PlantPhalanximine
       conditions:
       - !type:ReagentThreshold
+        reaction: Phalanximine
         min: 4
   metabolisms:
     Medicine:
@@ -592,6 +604,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reaction: Phalanximine
           min: 11
         damage:
           types:
@@ -646,6 +659,7 @@
         - !type:CureZombieInfection
           conditions:
             - !type:ReagentThreshold
+              reagent: Ambuzol
               min: 10
 
 - type: reagent
@@ -663,6 +677,7 @@
           innoculate: true
           conditions:
             - !type:ReagentThreshold
+              reagent: AmbuzolPlus
               min: 5
 
 - type: reagent
@@ -857,6 +872,7 @@
       - !type:EvenHealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Ultravasculine
           min: 0
           max: 20
         damage:
@@ -864,6 +880,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Ultravasculine
           min: 0
           max: 20
         damage:
@@ -872,12 +889,14 @@
       - !type:EvenHealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Ultravasculine
           min: 20
         damage:
           Toxin: -2
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Ultravasculine
           min: 20
         damage:
           groups:
@@ -1187,6 +1206,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Pyrazine
           min: 20
         damage:
           types:
@@ -1195,11 +1215,13 @@
       - !type:Vomit
         conditions:
         - !type:ReagentThreshold
+          reagent: Pyrazine
           min: 15
         probability: 0.1
       - !type:Emote
         conditions:
         - !type:ReagentThreshold
+          reagent: Pyrazine
           min: 20
         emote: Scream
         probability: 0.2
@@ -1234,6 +1256,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Insuzine
           min: 12
         damage:
           types:
@@ -1241,11 +1264,13 @@
       - !type:AdjustTemperature
         conditions:
         - !type:ReagentThreshold
+          reagent: Insuzine
           min: 12
         amount: -30000
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
+          reagent: Insuzine
           min: 12
 
 - type: reagent
@@ -1266,7 +1291,8 @@
           #Patient must be dead and in a cryo tube (or something cold)
           - !type:Temperature
             max: 150.0
-          - !type:MobStateCondition
+          - !type:IsMobState
+            reagent: Opporozidone
             mobstate: Dead
 
 - type: reagent
@@ -1335,6 +1361,7 @@
       - !type:PopupMessage
         conditions:
         - !type:ReagentThreshold
+          reagent: Mannitol
           min: 15
         type: Local
         visualType: Medium
@@ -1355,6 +1382,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Psicodine
           min: 30
         damage:
           types:
@@ -1363,6 +1391,7 @@
         effectProto: StatusEffectSeeingRainbow
         conditions:
         - !type:ReagentThreshold
+          reagent: Psicodine
           min: 30
         type: Add
         time: 8
@@ -1404,6 +1433,7 @@
       - !type:HealthChange
         conditions:
           - !type:ReagentThreshold
+            reagent: PotassiumIodide
             min: 20
         damage:
           types:

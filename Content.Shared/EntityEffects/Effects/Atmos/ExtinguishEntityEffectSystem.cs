@@ -19,7 +19,6 @@ public sealed partial class ExtinguishEntityEffectSystem : EntityEffectSystem<Fl
     }
 }
 
-[DataDefinition]
 public sealed partial class Extinguish : EntityEffectBase<Extinguish>
 {
     /// <summary>

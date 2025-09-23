@@ -407,6 +407,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: CorgiJuice
           min: 15
         damage:
           types:

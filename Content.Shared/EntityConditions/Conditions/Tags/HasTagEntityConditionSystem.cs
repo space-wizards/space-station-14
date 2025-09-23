@@ -17,7 +17,7 @@ public sealed partial class HasTagEntityConditionSystem : EntityConditionSystem<
     }
 }
 
-public sealed class HasTag : EntityConditionBase<HasTag>
+public sealed partial class HasTag : EntityConditionBase<HasTag>
 {
     [DataField(required: true)]
     public ProtoId<TagPrototype> Tag;

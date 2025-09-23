@@ -22,7 +22,7 @@ public sealed partial class ModifyLungGasEntityEffectSystem : EntityEffectSystem
     }
 }
 
-public sealed class ModifyLungGas : EntityEffectBase<ModifyLungGas>
+public sealed partial class ModifyLungGas : EntityEffectBase<ModifyLungGas>
 {
     [DataField(required: true)]
     public Dictionary<Gas, float> Ratios = default!;

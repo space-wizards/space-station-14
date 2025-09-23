@@ -11,7 +11,6 @@ public abstract partial class SharedExplosionEntityEffectSystem : EntityEffectSy
     }
 }
 
-[DataDefinition]
 public sealed partial class ExplosionEffect : EntityEffectBase<ExplosionEffect>
 {
     /// <summary>

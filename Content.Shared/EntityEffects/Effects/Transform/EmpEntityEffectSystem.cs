@@ -15,7 +15,6 @@ public sealed partial class EmpEntityEffectSystem : EntityEffectSystem<Transform
     }
 }
 
-[DataDefinition]
 public sealed partial class Emp : EntityEffectBase<Emp>
 {
     /// <summary>

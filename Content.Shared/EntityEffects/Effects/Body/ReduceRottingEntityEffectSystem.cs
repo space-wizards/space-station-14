@@ -14,7 +14,6 @@ public sealed partial class ReduceRottingEntityEffectSystem : EntityEffectSystem
     }
 }
 
-[DataDefinition]
 public sealed partial class ReduceRotting : EntityEffectBase<ReduceRotting>
 {
     [DataField]

@@ -27,7 +27,6 @@ public sealed partial class GenericStatusEffectEntityEffectSystem : EntityEffect
     }
 }
 
-[DataDefinition]
 public sealed partial class GenericStatusEffect : EntityEffectBase<GenericStatusEffect>
 {
     [DataField(required: true)]

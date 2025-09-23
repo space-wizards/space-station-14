@@ -117,7 +117,6 @@ public interface IEntityEffectRaiser
     void RaiseEffectEvent<T>(EntityUid target, T effect) where T : EntityEffectBase<T>;
 }
 
-[DataDefinition]
 public abstract partial class EntityEffectBase<T> : AnyEntityEffect where T : EntityEffectBase<T>
 {
     public override void RaiseEvent(EntityUid target, IEntityEffectRaiser raiser)
@@ -130,7 +129,7 @@ public abstract partial class EntityEffectBase<T> : AnyEntityEffect where T : En
 }
 
 // This exists so we can store entity effects in list and raise events without type erasure.
-[DataDefinition]
+[ImplicitDataDefinitionForInheritors]
 public abstract partial class AnyEntityEffect
 {
     public abstract void RaiseEvent(EntityUid target, IEntityEffectRaiser raiser);

@@ -61,7 +61,6 @@ public sealed partial class EvenHealthChangeEntityEffectSystem : EntityEffectSys
     }
 }
 
-[DataDefinition]
 public sealed partial class EvenHealthChange : EntityEffectBase<EvenHealthChange>
 {
     /// <summary>

@@ -45,7 +45,6 @@ public sealed partial class HasJobEntityConditionSystem : EntityConditionSystem<
     }
 }
 
-[DataDefinition]
 public sealed partial class HasJob : EntityConditionBase<HasJob>
 {
     [DataField(required: true)] public List<ProtoId<JobPrototype>> Jobs = [];

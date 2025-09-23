@@ -30,7 +30,6 @@ public sealed partial class SlipifyEntityEffectSystem : EntityEffectSystem<Fixtu
     }
 }
 
-[DataDefinition]
 public sealed partial class Slipify : EntityEffectBase<Slipify>
 {
     [DataField]

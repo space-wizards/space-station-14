@@ -8,7 +8,6 @@ public sealed partial class TemplateEntityEffectSystem : EntityEffectSystem<Meta
     }
 }
 
-[DataDefinition]
 public sealed partial class Template : EntityEffectBase<Template>
 {
     // Datafields go here.

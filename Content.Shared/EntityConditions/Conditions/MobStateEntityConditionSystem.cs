@@ -16,7 +16,6 @@ public sealed partial class MobStateEntityConditionSystem : EntityConditionSyste
     }
 }
 
-[DataDefinition]
 public sealed partial class IsMobState : EntityConditionBase<IsMobState>
 {
     [DataField]

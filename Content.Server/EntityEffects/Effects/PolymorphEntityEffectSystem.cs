@@ -16,7 +16,7 @@ public sealed partial class PolymorphEntityEffectSystem : EntityEffectSystem<Pol
     }
 }
 
-public sealed class Polymorph : EntityEffectBase<Polymorph>
+public sealed partial class Polymorph : EntityEffectBase<Polymorph>
 {
     /// <summary>
     ///     What polymorph prototype is used on effect

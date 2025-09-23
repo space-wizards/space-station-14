@@ -8,7 +8,6 @@ public abstract partial class SharedMakeSentientEntityEffectSystem : EntityEffec
     }
 }
 
-[DataDefinition]
 public sealed partial class MakeSentient : EntityEffectBase<MakeSentient>
 {
     /// <summary>

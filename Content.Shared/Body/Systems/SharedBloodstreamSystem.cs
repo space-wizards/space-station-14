@@ -151,7 +151,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             switch (effect)
             {
                 // TODO: Kill this hardcoded cringe!
-                case SpawnEntity: // Prevent entities from spawning in the bloodstream
+                case EntityEffects.Effects.EntitySpawning.SpawnEntity: // Prevent entities from spawning in the bloodstream
                 case AreaReactionEffect: // No spontaneous smoke or foam leaking out of blood vessels.
                     args.Cancelled = true;
                     return;

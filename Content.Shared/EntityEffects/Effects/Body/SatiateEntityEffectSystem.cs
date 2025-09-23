@@ -25,7 +25,6 @@ public sealed partial class SatiateHungerEntityEffectsSystem : EntityEffectSyste
     }
 }
 
-[DataDefinition]
 public sealed partial class SatiateThirst : EntityEffectBase<SatiateThirst>
 {
     /// <summary>
@@ -35,7 +34,6 @@ public sealed partial class SatiateThirst : EntityEffectBase<SatiateThirst>
     public float HydrationFactor = -1.5f;
 }
 
-[DataDefinition]
 public sealed partial class SatiateHunger : EntityEffectBase<SatiateHunger>
 {
     /// <summary>

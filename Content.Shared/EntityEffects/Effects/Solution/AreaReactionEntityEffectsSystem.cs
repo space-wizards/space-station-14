@@ -16,7 +16,6 @@ public abstract partial class SharedAreaReactionEntityEffectsSystem : EntityEffe
     }
 }
 
-[DataDefinition]
 public sealed partial class AreaReactionEffect : EntityEffectBase<AreaReactionEffect>
 {
     /// <summary>

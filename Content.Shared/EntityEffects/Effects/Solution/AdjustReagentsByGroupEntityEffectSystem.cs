@@ -31,7 +31,6 @@ public sealed partial class AdjustReagentsByGroupEntityEffectSystem : EntityEffe
     }
 }
 
-[DataDefinition]
 public sealed partial class AdjustReagentsByGroup : EntityEffectBase<AdjustReagentsByGroup>
 {
 

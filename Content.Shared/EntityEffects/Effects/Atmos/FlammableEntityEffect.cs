@@ -2,7 +2,6 @@
 
 // Server side system
 
-[DataDefinition]
 public sealed partial class Flammable : EntityEffectBase<Flammable>
 {
     [DataField]

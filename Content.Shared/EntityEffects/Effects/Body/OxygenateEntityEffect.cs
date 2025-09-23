@@ -3,7 +3,6 @@
 /// <remarks>
 /// Both Component and System are serverside.
 /// </remarks>
-[DataDefinition]
 public sealed partial class Oxygenate : EntityEffectBase<Oxygenate>
 {
     [DataField]

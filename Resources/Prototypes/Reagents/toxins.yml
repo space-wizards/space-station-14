@@ -95,6 +95,7 @@
         - !type:Vomit
           conditions:
           - !type:ReagentThreshold
+            reagent: GastroToxin
             min: 2
           probability: 0.2
 
@@ -460,6 +461,7 @@
         - !type:CauseZombieInfection
           conditions:
             - !type:ReagentThreshold
+              reagent: Romerol
               min: 5
 
 - type: reagent
@@ -533,6 +535,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Allicin
           min: 1
         - !type:MetabolizerType
           type: Animal
@@ -577,6 +580,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Honk
           min: 1
         - !type:MetabolizerType
           type: Animal

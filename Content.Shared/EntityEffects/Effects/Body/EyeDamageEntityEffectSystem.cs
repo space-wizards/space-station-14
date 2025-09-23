@@ -12,7 +12,6 @@ public sealed partial class EyeDamageEntityEffectSystem : EntityEffectSystem<Met
     }
 }
 
-[DataDefinition]
 public sealed partial class EyeDamage : EntityEffectBase<EyeDamage>
 {
     /// <summary>

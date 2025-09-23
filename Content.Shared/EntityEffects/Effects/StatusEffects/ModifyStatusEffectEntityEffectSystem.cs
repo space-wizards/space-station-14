@@ -31,7 +31,6 @@ public sealed partial class ModifyStatusEffectEntityEffectSystem : EntityEffectS
     }
 }
 
-[DataDefinition]
 public sealed partial class ModifyStatusEffect : BaseStatusEntityEffect<ModifyStatusEffect>
 {
     /// <summary>

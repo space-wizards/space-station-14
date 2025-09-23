@@ -17,7 +17,7 @@ public sealed partial class HasAllTagsEntityConditionSystem : EntityConditionSys
     }
 }
 
-public sealed class HasAllTags : EntityConditionBase<HasAllTags>
+public sealed partial class HasAllTags : EntityConditionBase<HasAllTags>
 {
     [DataField(required: true)]
     public ProtoId<TagPrototype>[] Tags = [];

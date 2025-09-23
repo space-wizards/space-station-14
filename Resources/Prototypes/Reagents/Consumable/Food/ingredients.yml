@@ -225,6 +225,7 @@
         - !type:HealthChange
           conditions:
             - !type:ReagentThreshold
+              reagent: CapsaicinOil
               min: 5
           damage:
             types:

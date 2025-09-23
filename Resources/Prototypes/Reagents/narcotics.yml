@@ -18,6 +18,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Desoxyephedrine
           min: 30
         damage:
           types:
@@ -53,6 +54,7 @@
       - !type:ResetNarcolepsy
         conditions:
         - !type:ReagentThreshold
+          reagent: Desoxyephedrine
           min: 20
 
 - type: reagent
@@ -74,6 +76,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Ephedrine
           min: 20
         damage:
           types:
@@ -106,6 +109,7 @@
       - !type:ResetNarcolepsy
         conditions:
         - !type:ReagentThreshold
+          reagent: Ephedrine
           min: 30
 
 - type: reagent
@@ -354,6 +358,7 @@
         - norepinephricacid-effect-blindness
         conditions:
         - !type:ReagentThreshold
+          reagent: NorepinephricAcid
           min: 20
         probability: 0.03
         #If anyone wants to add a light dimming or grayscale effect when under 20u, be my guest
@@ -362,6 +367,7 @@
         component: TemporaryBlindness
         conditions:
         - !type:ReagentThreshold
+          reagent: NorepinephricAcid
           min: 20
 
 - type: reagent

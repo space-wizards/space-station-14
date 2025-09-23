@@ -10,7 +10,7 @@ public sealed class SetSolutionTemperatureEntityEffectSystem : EntityEffectSyste
     }
 }
 
-public sealed class SetSolutionTemperature : EntityEffectBase<SetSolutionTemperature>
+public sealed partial class SetSolutionTemperature : EntityEffectBase<SetSolutionTemperature>
 {
     /// <summary>
     ///     The temperature to set the solution to.
@@ -30,7 +30,6 @@ public sealed class AdjustSolutionTemperatureEntityEffectSystem : EntityEffectSy
     }
 }
 
-[DataDefinition]
 public sealed partial class AdjustSolutionTemperature : EntityEffectBase<AdjustSolutionTemperature>
 {
     /// <summary>

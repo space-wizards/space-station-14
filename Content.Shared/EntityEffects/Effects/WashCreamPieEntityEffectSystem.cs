@@ -13,5 +13,4 @@ public sealed partial class WashCreamPieEntityEffectSystem : EntityEffectSystem<
     }
 }
 
-[DataDefinition]
 public sealed partial class WashCreamPie : EntityEffectBase<WashCreamPie>;

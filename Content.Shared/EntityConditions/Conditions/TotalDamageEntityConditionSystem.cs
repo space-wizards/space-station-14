@@ -13,7 +13,6 @@ public sealed partial class TotalDamageEntityConditionSystem : EntityConditionSy
     }
 }
 
-[DataDefinition]
 public sealed partial class TotalDamage : EntityConditionBase<TotalDamage>
 {
     [DataField]

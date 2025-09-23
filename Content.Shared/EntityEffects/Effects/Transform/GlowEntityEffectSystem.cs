@@ -35,7 +35,6 @@ public sealed partial class GlowEntityEffectSystem : EntityEffectSystem<MetaData
     };
 }
 
-[DataDefinition]
 public sealed partial class Glow : EntityEffectBase<Glow>
 {
     [DataField]

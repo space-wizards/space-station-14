@@ -14,7 +14,6 @@ public sealed partial class DrunkEntityEffectSystem : EntityEffectSystem<MetaDat
     }
 }
 
-[DataDefinition]
 public sealed partial class Drunk : EntityEffectBase<Drunk>
 {
     /// <summary>

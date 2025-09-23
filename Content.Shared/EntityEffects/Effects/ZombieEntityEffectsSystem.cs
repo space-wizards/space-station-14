@@ -34,10 +34,8 @@ public sealed partial class CureZombieInfectionEntityEffectsSystem : EntityEffec
     }
 }
 
-[DataDefinition]
 public sealed partial class CauseZombieInfection : EntityEffectBase<CauseZombieInfection>;
 
-[DataDefinition]
 public sealed partial class CureZombieInfection : EntityEffectBase<CureZombieInfection>
 {
     /// <summary>

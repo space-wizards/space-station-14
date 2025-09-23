@@ -16,7 +16,6 @@ public sealed partial class ReagentThresholdEntityConditionSystem : EntityCondit
     }
 }
 
-[DataDefinition]
 public sealed partial class ReagentThreshold : EntityConditionBase<ReagentThreshold>
 {
     [DataField]

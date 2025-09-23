@@ -167,6 +167,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Ethanol
           min: 15
         - !type:MetabolizerType
           type: Dwarf
@@ -178,6 +179,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Ethanol
           min: 15
         - !type:MetabolizerType
           type: Dwarf
@@ -187,6 +189,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Ethanol
           min: 15
         - !type:MetabolizerType
           type: Dwarf
@@ -2524,6 +2527,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: BacchusBlessing
           min: 6
         - !type:MetabolizerType
           type: Dwarf
@@ -2534,6 +2538,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: BacchusBlessing
           min: 6
         - !type:MetabolizerType
           type: Dwarf

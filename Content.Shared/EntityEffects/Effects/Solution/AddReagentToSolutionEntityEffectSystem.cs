@@ -23,7 +23,6 @@ public sealed class AddReagentToSolutionEntityEffectSystem : EntityEffectSystem<
     }
 }
 
-[DataDefinition]
 public sealed partial class AddReagentToSolution : EntityEffectBase<AddReagentToSolution>
 {
     /// <summary>

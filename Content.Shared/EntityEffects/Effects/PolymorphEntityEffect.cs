@@ -3,7 +3,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;
 
-[DataDefinition]
 public sealed partial class Polymorph : EntityEffectBase<Polymorph>
 {
     /// <summary>

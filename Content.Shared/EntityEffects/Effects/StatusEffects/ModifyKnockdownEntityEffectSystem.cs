@@ -37,7 +37,6 @@ public sealed partial class ModifyKnockdownEntityEffectSystem : EntityEffectSyst
     }
 }
 
-[DataDefinition]
 public sealed partial class ModifyKnockdown : BaseStatusEntityEffect<ModifyKnockdown>
 {
     /// <summary>

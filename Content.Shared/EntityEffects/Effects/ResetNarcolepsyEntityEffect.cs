@@ -1,6 +1,5 @@
 ﻿namespace Content.Shared.EntityEffects.Effects;
 
-[DataDefinition]
 public sealed partial class ResetNarcolepsy : EntityEffectBase<ResetNarcolepsy>
 {
     /// <summary>

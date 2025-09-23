@@ -23,7 +23,6 @@ public sealed partial class SolutionTemperatureEntityConditionSystem : EntityCon
     }
 }
 
-[DataDefinition]
 public sealed partial class Temperature : EntityConditionBase<Temperature>
 {
     /// <summary>

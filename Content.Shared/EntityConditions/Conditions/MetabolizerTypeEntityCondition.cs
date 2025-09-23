@@ -4,7 +4,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions;
 
-[DataDefinition]
 public sealed partial class MetabolizerType : EntityConditionBase<MetabolizerType>
 {
     [DataField(required: true)]

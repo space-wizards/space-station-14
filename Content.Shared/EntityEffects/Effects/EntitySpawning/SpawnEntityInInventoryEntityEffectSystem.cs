@@ -1,22 +1,22 @@
 ﻿using Content.Shared.Inventory;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.EntityEffects.Effects;
+namespace Content.Shared.EntityEffects.Effects.EntitySpawning;
 
-public sealed partial class CreateWearableEntityEffectSystem : EntityEffectSystem<InventoryComponent, CreateWearable>
+public sealed partial class CreateWearableEntityEffectSystem : EntityEffectSystem<InventoryComponent, SpawnEntityInInventory>
 {
     [Dependency] private readonly InventorySystem _inventory = default!;
 
-    protected override void Effect(Entity<InventoryComponent> entity, ref EntityEffectEvent<CreateWearable> args)
+    protected override void Effect(Entity<InventoryComponent> entity, ref EntityEffectEvent<SpawnEntityInInventory> args)
     {
-        _inventory.SpawnItemInSlot(entity, args.Effect.Slot, args.Effect.PrototypeId);
+        _inventory.SpawnItemInSlot(entity, args.Effect.Slot, args.Effect.Entity);
 
         // TODO: Reactive needs to handle deleting reagents for this.
+        // TODO: Maybe not?
     }
 }
 
-[DataDefinition]
-public sealed partial class CreateWearable : EntityEffectBase<CreateWearable>
+public sealed partial class SpawnEntityInInventory : EntityEffectBase<SpawnEntityInInventory>
 {
     /// <summary>
     /// Name of the slot we're spawning the item into.
@@ -28,5 +28,5 @@ public sealed partial class CreateWearable : EntityEffectBase<CreateWearable>
     /// Prototype ID of item to spawn.
     /// </summary>
     [DataField(required: true)]
-    public EntProtoId PrototypeId;
+    public EntProtoId Entity;
 }

@@ -2,7 +2,6 @@
 
 namespace Content.Shared.EntityConditions.Conditions;
 
-[DataDefinition]
 public sealed partial class IsBreathing : EntityConditionBase<IsBreathing>
 {
     /*
