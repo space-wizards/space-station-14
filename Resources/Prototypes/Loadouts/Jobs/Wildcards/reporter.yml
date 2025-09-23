@@ -2,9 +2,25 @@
 - type: loadout
   id: ReporterJumpsuit
   equipment:
-    jumpsuit: ClothingUniformJumpsuitReporter
+    jumpsuit: ClothingUniformJumpsuitTheraCT
+
+# Head
 
 - type: loadout
-  id: JournalistJumpsuit
+  id: ReporterHead
   equipment:
-    jumpsuit: ClothingUniformJumpsuitJournalist
+    head: ClothingHeadHatBeretMerc
+
+# Belt
+
+- type: loadout
+  id: ReporterBelt
+  equipment:
+    belt: ClothingBeltMilitaryWebbing
+
+# Shoes
+
+- type: loadout
+  id: ReporterBoots
+  equipment:
+    shoes: ClothingShoesBootsCombatFilled

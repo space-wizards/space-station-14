@@ -6,27 +6,25 @@
   requirements:
   - !type:DepartmentTimeRequirement
     department: Civilian
-    time: 1800 #0.5 hr
+    time: 0 #0.5 hr
   startingGear: ServiceWorkerGear
   icon: "JobIconServiceWorker"
   supervisors: job-supervisors-service
+  accessGroups:
+  - AllAccess
   access:
-  - Service
-  - Maintenance
-  - Bar
-  - Kitchen
-  extendedAccess:
-  - Hydroponics
+  - CentralCommand
 
 - type: startingGear
   id: ServiceWorkerGear
   equipment:
-    shoes: ClothingShoesColorBlack
-    id: ServiceWorkerPDA
+    jumpsuit: ClothingUniformJumpsuitTheraT
+    id: PassengerPDA
     ears: ClothingHeadsetService
-  #storage:
-    #back:
-    #- Stuff
+    pocket1: BaseUplinkRadioT
+    belt: ClothingBeltSecurityWebbing
+    head: ClothingHeadHatKufiaHat
+    shoes: ClothingShoesBootsCombatFilled
 
 - type: chameleonOutfit
   id: ServiceWorkerChameleonOutfit

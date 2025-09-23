@@ -19,3 +19,26 @@
     sprite: Objects/counterstrike/Clothing/Uniform/mojahed.rsi
   - type: Clothing
     sprite: Objects/counterstrike/Clothing/Uniform/mojahed.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitTheraT
+  name: KFC's mercenaries uniform
+  description: KFC's mercenaries
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Uniform/theraPirates.rsi
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Uniform/theraPirates.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitTheraCT
+  name: Greek Army uniform
+  description: Greek Army
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Uniform/theraCT.rsi
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Uniform/theraCT.rsi
+

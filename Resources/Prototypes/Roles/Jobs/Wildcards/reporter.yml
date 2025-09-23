@@ -6,16 +6,19 @@
   startingGear: ReporterGear
   icon: "JobIconReporter"
   supervisors: job-supervisors-hop
+  accessGroups:
+  - AllAccess
   access:
-  - Service
-  - Maintenance
+  - CentralCommand
 
 - type: startingGear
   id: ReporterGear
   equipment:
-    shoes: ClothingShoesColorWhite
-    id: ReporterPDA
-    ears: ClothingHeadsetService
+    shoes: ClothingShoesBootsJackFilled
+    id: LibrarianPDA
+    ears: ClothingHeadsetSecurity
+    pocket1: BaseUplinkRadioCT # for BATTLE
+    belt: ClothingBeltMilitaryWebbing
   #storage:
     #back:
     #- Stuff

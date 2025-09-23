@@ -1,0 +1,26 @@
+# Shoes
+- type: loadout
+  id: TheraBoots
+  equipment:
+    shoes: ClothingShoesBootsCombatFilled
+
+# Head
+
+- type: loadout
+  id: TheraHead
+  equipment:
+    head: ClothingHeadHatKufiaHat
+
+# Jumpsuit
+
+- type: loadout
+  id: TheraJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitTheraT
+
+# Belt
+
+- type: loadout
+  id: TheraBelt
+  equipment:
+    belt: ClothingBeltSecurityWebbing

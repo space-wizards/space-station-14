@@ -61,13 +61,10 @@
 - type: roleLoadout
   id: JobServiceWorker
   groups:
-  - GroupTankHarness
-  - BartenderJumpsuit
-  - CommonBackpack
-  - Glasses
-  - Survival
-  - Trinkets
-  - GroupSpeciesBreathTool
+  - TheraJumpsuit
+  - TheraBoots
+  - TheraBelt
+  - TheraHead
 
 - type: roleLoadout
   id: JobChef
@@ -438,13 +435,10 @@
 - type: roleLoadout
   id: JobReporter
   groups:
-  - GroupTankHarness
   - ReporterJumpsuit
-  - CommonBackpack
-  - Glasses
-  - Survival
-  - Trinkets
-  - GroupSpeciesBreathTool
+  - ReporterHead
+  - ReporterBelt
+  - ReporterBoots
 
 - type: roleLoadout
   id: JobPsychologist
