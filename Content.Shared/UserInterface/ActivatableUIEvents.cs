@@ -10,13 +10,13 @@ public sealed class ActivatableUIOpenAttemptEvent : CancellableEntityEventArgs
     }
 }
 
+/// <summary>
+/// Event raised before adding verb, which can be canceled to stop adding the verb.
+/// </summary>
 public sealed class ActivatableUIAddVerbAttemptEvent : CancellableEntityEventArgs
 {
     public EntityUid User { get; }
-    public ActivatableUIAddVerbAttemptEvent(EntityUid who)
-    {
-        User = who;
-    }
+    public ActivatableUIAddVerbAttemptEvent(EntityUid who) => User = who;
 }
 
 public sealed class UserOpenActivatableUIAttemptEvent : CancellableEntityEventArgs //have to one-up the already stroke-inducing name

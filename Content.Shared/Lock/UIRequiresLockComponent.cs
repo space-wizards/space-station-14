@@ -29,6 +29,16 @@ public sealed partial class UIRequiresLockComponent : Component
     [DataField]
     public SoundSpecifier? AccessDeniedSound = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
 
+    /// <summary>
+    /// Popup which appears when ui locked and entity trying to open ui.
+    /// </summary>
     [DataField]
     public LocId? Popup = "entity-storage-component-locked-message";
+
+    /// <summary>
+    /// TRUE: the lock must be locked to add the verb.
+    /// FALSE: the lock must be unlocked to add the verb.
+    /// </summary>
+    [DataField]
+    public bool ShowVerbOnLocked = false;
 }

@@ -433,14 +433,10 @@ public sealed class LockSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        if (!TryComp<LockComponent>(uid, out var lockComp) || lockComp.Locked == component.RequireLocked)
+        if (!TryComp<LockComponent>(uid, out var lockComp) || lockComp.Locked == component.ShowVerbOnLocked)
             return;
 
         args.Cancel();
-        if (lockComp.Locked && component.Popup != null)
-            _sharedPopupSystem.PopupClient(Loc.GetString(component.Popup), uid, args.User);
-
-        _audio.PlayPredicted(component.AccessDeniedSound, uid, args.User);
     }
 
     private void LockToggled(EntityUid uid, UIRequiresLockComponent component, LockToggledEvent args)
