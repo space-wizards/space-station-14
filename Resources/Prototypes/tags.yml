@@ -25,6 +25,9 @@
   id: Ambrosia
 
 - type: Tag
+  id: AnomalyCore
+
+- type: Tag
   id: AnomalyHost
 
 - type: Tag

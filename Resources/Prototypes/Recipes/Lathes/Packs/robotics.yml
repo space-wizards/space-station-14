@@ -36,11 +36,12 @@
 - type: latheRecipePack
   id: BorgModules
   recipes:
-  - BorgModuleAdvancedCleaning
-  - BorgModuleAdvancedTool
-  - BorgModuleAdvancedClowning
+  - BorgModuleAdvancedAnomaly
   - BorgModuleAdvancedChemical
+  - BorgModuleAdvancedCleaning
+  - BorgModuleAdvancedClowning
   - BorgModuleAdvancedMining
+  - BorgModuleAdvancedTool
 
 - type: latheRecipePack
   id: MechParts

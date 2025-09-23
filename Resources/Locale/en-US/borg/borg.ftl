@@ -38,7 +38,7 @@ borg-select-type-menu-guidebook = Guidebook
 ## Borg type information
 
 borg-type-generic-name = Generic
-borg-type-generic-desc = Jack of all trades, master of none. Do various random station tasks, or maybe help out the science department that built you.
+borg-type-generic-desc = Jack of all trades, master of none. Help out with various random tasks around the station.
 borg-type-generic-transponder = generic cyborg
 
 borg-type-engineering-name = Engineering
@@ -56,6 +56,10 @@ borg-type-janitor-transponder = janitor cyborg
 borg-type-medical-name = Medical
 borg-type-medical-desc = Provide medical attention to crew who need it, either in medbay or in hazardous areas conventional paramedics cannot reach.
 borg-type-medical-transponder = medical cyborg
+
+borg-type-science-name = Science
+borg-type-science-desc = Help out the science department that built you, discover anomalies in maintenance, and explode the xenoarcheology lab.
+borg-type-science-transponder = science cyborg
 
 borg-type-service-name = Service
 borg-type-service-desc = Help out with a wide range of crew services, ranging from serving snacks and drinks to botany to entertainment.
