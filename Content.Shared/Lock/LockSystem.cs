@@ -431,10 +431,10 @@ public sealed class LockSystem : EntitySystem
 
     private void OnUIAddVerbAttempt(EntityUid uid, UIRequiresLockComponent component, ActivatableUIAddVerbAttemptEvent args)
     {
-        if (args.Cancelled)
+        if (args.Cancelled || component.AlwaysShowUIVerb)
             return;
 
-        if (!TryComp<LockComponent>(uid, out var lockComp) || lockComp.Locked == component.ShowVerbOnLocked)
+        if (!TryComp<LockComponent>(uid, out var lockComp) || lockComp.Locked == component.RequireLocked)
             return;
 
         args.Cancel();

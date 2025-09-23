@@ -36,9 +36,9 @@ public sealed partial class UIRequiresLockComponent : Component
     public LocId? Popup = "entity-storage-component-locked-message";
 
     /// <summary>
-    /// TRUE: the lock must be locked to add the verb.
-    /// FALSE: the lock must be unlocked to add the verb.
+    /// TRUE: The verb is always shown
+    /// FALSE: The verb is only shown when the UI can be activated from the lock state see <see cref="RequireLocked"/>.
     /// </summary>
     [DataField]
-    public bool ShowVerbOnLocked = false;
+    public bool AlwaysShowUIVerb = true;
 }
