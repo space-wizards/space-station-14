@@ -171,7 +171,12 @@ namespace Content.Shared.Cuffs
 
         public void UpdateCuffState(EntityUid uid, CuffableComponent component)
         {
-            Dirty(uid, component);
+            if (component.CuffedHandCount == 0)
+                _alerts.ClearAlert(uid, component.CuffedAlert);
+            else
+                _alerts.ShowAlert(uid, component.CuffedAlert);
+
+            //Dirty(uid, component);
 
             var canInteract = TryComp(uid, out HandsComponent? hands) && hands.Hands.Count > component.CuffedHandCount;
 
@@ -180,11 +185,6 @@ namespace Content.Shared.Cuffs
 
             component.CanStillInteract = canInteract;
             _actionBlocker.UpdateCanMove(uid);
-
-            if (component.CanStillInteract)
-                _alerts.ClearAlert(uid, component.CuffedAlert);
-            else
-                _alerts.ShowAlert(uid, component.CuffedAlert);
 
             var ev = new CuffedStateChangeEvent();
             RaiseLocalEvent(uid, ref ev);
