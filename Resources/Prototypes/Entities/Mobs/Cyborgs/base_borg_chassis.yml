@@ -420,7 +420,7 @@
 
 - type: entity
   id: BaseBorgChassisSyndicateDerelict #For assault borg and maybe others in time
-  parent: BaseBorgChassisSyndicate # We don't want them to see Nukies or have syndi comms, their database is out of date
+  parent: BaseBorgChassisSyndicate # Starlight
   abstract: true
   components:
   - type: SiliconLawProvider
