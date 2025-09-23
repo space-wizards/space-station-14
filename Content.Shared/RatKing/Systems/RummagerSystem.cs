@@ -11,9 +11,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.RatKing.Systems;
 
-/// <summary>
-/// This handles...
-/// </summary>
 public sealed class RummagerSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
