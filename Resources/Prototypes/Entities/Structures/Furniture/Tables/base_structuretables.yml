@@ -57,4 +57,4 @@
         mask:
         - TableMask
         layer:
-        - CounterLayer
+        - TableLayer
