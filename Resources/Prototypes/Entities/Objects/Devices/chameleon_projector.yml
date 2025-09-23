@@ -15,7 +15,7 @@
       tags:
       - Bot # for funny bot moments
     blacklist:
-      components:
+      components: # TODO: This blacklist should be cut down by a lot once Chameleon Projector code is less buggy.
       - ChameleonDisguise # no becoming kleiner
       - Door # no faking doors
       - MindContainer # no
