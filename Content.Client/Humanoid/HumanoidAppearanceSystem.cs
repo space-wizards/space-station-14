@@ -254,7 +254,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
                     else if (markingPrototype.BodyPart == HumanoidVisualLayers.UndergarmentBottom)
                         applyUndergarmentBottom = false;
 
-//Allows tails to pull from another layer
+                    // Allows tails to pull from another layer
                     if (markingPrototype.BodyPart == HumanoidVisualLayers.Tail)
                     {
                         Log.Debug(marking.MarkingId);
@@ -286,7 +286,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
             }
         }
 
-//in place so wag animations work correctly on the B layer
+        // in place so wag animations work correctly on the B layer
         if (humanoid.ClientOldMarkings.Markings.TryGetValue(MarkingCategories.Tail, out var tailMarkings))
         {
             foreach (var marking in tailMarkings)
