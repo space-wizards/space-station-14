@@ -1,6 +1,8 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class NewsReaderCartridgeComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]

@@ -1,12 +1,10 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Containers.ItemSlots;
+﻿using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.CartridgeLoader;
 
-public partial class CartridgeLoaderSystem : EntitySystem
+public sealed partial class CartridgeLoaderSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;

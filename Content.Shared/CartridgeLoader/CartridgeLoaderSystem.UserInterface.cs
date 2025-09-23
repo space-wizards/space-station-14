@@ -2,7 +2,7 @@ using System.Linq;
 
 namespace Content.Shared.CartridgeLoader;
 
-public partial class CartridgeLoaderSystem : EntitySystem
+public sealed partial class CartridgeLoaderSystem
 {
     private void OnLoaderUiMessage(Entity<CartridgeLoaderComponent> ent, ref CartridgeLoaderUiMessage message)
     {

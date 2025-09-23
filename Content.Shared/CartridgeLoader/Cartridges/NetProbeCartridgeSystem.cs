@@ -4,20 +4,19 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Random;
 
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
 public sealed class NetProbeCartridgeSystem : EntitySystem
 {
     [Dependency] private readonly CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<NetProbeCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
         SubscribeLocalEvent<NetProbeCartridgeComponent, CartridgeRelayedEvent<AfterInteractEvent>>(AfterInteract);
     }
@@ -31,27 +30,25 @@ public sealed class NetProbeCartridgeSystem : EntitySystem
             return;
 
         var target = args.Args.Target.Value;
-        DeviceNetworkComponent? networkComponent = default;
 
-        if (!Resolve(target, ref networkComponent, false))
+        if (!TryComp<DeviceNetworkComponent>(target, out var networkComponent))
             return;
 
-        //Ceck if device is already present in list
+        // Check if device is already present in list
         foreach (var probedDevice in component.ProbedDevices)
         {
             if (probedDevice.Address == networkComponent.Address)
                 return;
         }
 
-        //Play scanning sound with slightly randomized pitch
-        //Why is there no NextFloat(float min, float max)???
-        var audioParams = AudioParams.Default.WithVolume(-2f).WithPitchScale((float)_random.Next(12, 21) / 10);
+        // Play scanning sound with slightly randomized pitch
+        // Why is there no NextFloat(float min, float max)???
+        var audioParams = AudioParams.Default.WithVolume(-2f).WithVariation(0.2f);
         _audioSystem.PlayPredicted(component.SoundScan, target, args.Args.User, audioParams);
         _popupSystem.PopupPredictedCursor(Loc.GetString("net-probe-scan", ("device", target)), args.Args.User);
 
-
-        //Limit the amount of saved probe results to 9
-        //This is hardcoded because the UI doesn't support a dynamic number of results
+        // Limit the amount of saved probe results to 9
+        // This is hardcoded because the UI doesn't support a dynamic number of results
         if (component.ProbedDevices.Count >= component.MaxSavedDevices)
             component.ProbedDevices.RemoveAt(0);
 
