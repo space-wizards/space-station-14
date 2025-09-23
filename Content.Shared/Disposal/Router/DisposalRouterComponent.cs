@@ -25,40 +25,6 @@ public sealed partial class DisposalRouterComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class DisposalRouterUserInterfaceState : BoundUserInterfaceState
-{
-    public readonly string Tags;
-
-    public DisposalRouterUserInterfaceState(string tags)
-    {
-        Tags = tags;
-    }
-}
-
-[Serializable, NetSerializable]
-public sealed class DisposalRouterUiActionMessage : BoundUserInterfaceMessage
-{
-    public readonly DisposalRouterUiAction Action;
-    public readonly string Tags = string.Empty;
-
-    public DisposalRouterUiActionMessage(DisposalRouterUiAction action, string tags)
-    {
-        Action = action;
-
-        if (Action == DisposalRouterUiAction.Ok)
-        {
-            Tags = tags.Substring(0, Math.Min(tags.Length, 150));
-        }
-    }
-}
-
-[Serializable, NetSerializable]
-public enum DisposalRouterUiAction
-{
-    Ok
-}
-
-[Serializable, NetSerializable]
 public enum DisposalRouterUiKey
 {
     Key

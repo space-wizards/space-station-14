@@ -6,13 +6,11 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Disposal.Unit;
 
-/// <summary>
-/// Initializes a <see cref="MailingUnitWindow"/> or a <see cref="_disposalUnitWindow"/> and updates it when new server messages are received.
-/// </summary>
 [UsedImplicitly]
 public sealed class DisposalUnitBoundUserInterface : BoundUserInterface
 {
-    [ViewVariables] private DisposalUnitWindow? _disposalUnitWindow;
+    [ViewVariables]
+    private DisposalUnitWindow? _disposalUnitWindow;
 
     public DisposalUnitBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
@@ -21,8 +19,6 @@ public sealed class DisposalUnitBoundUserInterface : BoundUserInterface
     private void ButtonPressed(DisposalUnitUiButton button)
     {
         SendPredictedMessage(new DisposalUnitUiButtonPressedMessage(button));
-        // If we get client-side power stuff then we can predict the button presses but for now we won't as it stuffs
-        // the pressure lerp up.
     }
 
     protected override void Open()
@@ -30,7 +26,6 @@ public sealed class DisposalUnitBoundUserInterface : BoundUserInterface
         base.Open();
 
         _disposalUnitWindow = this.CreateWindow<DisposalUnitWindow>();
-
         _disposalUnitWindow.OpenCenteredRight();
 
         _disposalUnitWindow.Eject.OnPressed += _ => ButtonPressed(DisposalUnitUiButton.Eject);
@@ -48,16 +43,21 @@ public sealed class DisposalUnitBoundUserInterface : BoundUserInterface
         if (_disposalUnitWindow == null)
             return;
 
-        var disposalUnit = EntMan.System<DisposalUnitSystem>();
-
         _disposalUnitWindow.Title = EntMan.GetComponent<MetaDataComponent>(entity.Owner).EntityName;
 
-        var state = disposalUnit.GetState(entity);
+        if (!EntMan.TryGetComponent(entity.Owner, out DisposalUnitComponent? disposals))
+            return;
 
-        _disposalUnitWindow.UnitState.Text = Loc.GetString($"disposal-unit-state-{state}");
-        _disposalUnitWindow.Power.Pressed = EntMan.System<PowerReceiverSystem>().IsPowered(Owner);
-        _disposalUnitWindow.Engage.Pressed = entity.Comp.Engaged;
+        var disposalUnit = EntMan.System<DisposalUnitSystem>();
+        var disposalState = disposalUnit.GetState(entity);
+        var fullPressure = disposalUnit.EstimatedFullPressure((Owner, disposals));
+        var pressurePerSecond = disposals.PressurePerSecond;
+
+        _disposalUnitWindow.UnitState.Text = Loc.GetString($"disposal-unit-state-{disposalState}");
         _disposalUnitWindow.FullPressure = disposalUnit.EstimatedFullPressure(entity);
         _disposalUnitWindow.PressurePerSecond = entity.Comp.PressurePerSecond;
+        _disposalUnitWindow.PressureBar.UpdatePressure(fullPressure, pressurePerSecond);
+        _disposalUnitWindow.Power.Pressed = EntMan.System<PowerReceiverSystem>().IsPowered(Owner);
+        _disposalUnitWindow.Engage.Pressed = entity.Comp.Engaged;
     }
 }

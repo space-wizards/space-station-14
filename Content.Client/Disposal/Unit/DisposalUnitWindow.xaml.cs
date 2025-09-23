@@ -16,7 +16,6 @@ namespace Content.Client.Disposal.Unit
 
         public DisposalUnitWindow()
         {
-            IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
         }
 

@@ -5,6 +5,8 @@ namespace Content.Client.Disposal.Mailing;
 
 public sealed class MailingUnitSystem : SharedMailingUnitSystem
 {
+    [Dependency] private readonly SharedUserInterfaceSystem _userInterface = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -13,7 +15,7 @@ public sealed class MailingUnitSystem : SharedMailingUnitSystem
 
     private void OnMailingState(Entity<MailingUnitComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        if (UserInterfaceSystem.TryGetOpenUi<MailingUnitBoundUserInterface>(ent.Owner, MailingUnitUiKey.Key, out var bui))
+        if (_userInterface.TryGetOpenUi<MailingUnitBoundUserInterface>(ent.Owner, MailingUnitUiKey.Key, out var bui))
         {
             bui.Refresh(ent);
         }

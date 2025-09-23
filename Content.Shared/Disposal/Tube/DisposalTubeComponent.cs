@@ -3,7 +3,6 @@ using Content.Shared.Disposal.Unit;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using System.Text.RegularExpressions;
 
 namespace Content.Shared.Disposal.Tube;
 
@@ -75,23 +74,4 @@ public enum DisposalTubeType
 {
     Disposals,
     Transit
-}
-
-[Serializable, NetSerializable]
-public enum DisposalTubeVisuals
-{
-    VisualState
-}
-
-[Serializable, NetSerializable]
-public enum DisposalUiAction
-{
-    Ok
-}
-
-[Serializable, NetSerializable]
-public enum DisposalTubeVisualState
-{
-    Free = 0,
-    Anchored,
 }

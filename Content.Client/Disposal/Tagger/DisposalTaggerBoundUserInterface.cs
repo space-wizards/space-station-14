@@ -30,7 +30,7 @@ namespace Content.Client.Disposal.Tagger
         private void ButtonPressed(DisposalTaggerUiAction action, string tag)
         {
             // TODO: This looks copy-pasted with the other mailing stuff...
-            SendMessage(new DisposalTaggerUiActionMessage(action, tag));
+            SendMessage(new DisposalTaggerUiActionMessage(action, tag, 30));
             Close();
         }
 

@@ -28,6 +28,6 @@ public sealed partial class DisposalTaggerWindow : DefaultWindow
 
     public void UpdateState(DisposalTaggerUserInterfaceState state)
     {
-        TagInput.Text = state.Tag;
+        TagInput.Text = state.Tags;
     }
 }

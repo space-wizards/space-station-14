@@ -21,7 +21,7 @@ public sealed partial class DisposalRouterSystem : EntitySystem
 
         Subs.BuiEvents<DisposalRouterComponent>(DisposalRouterUiKey.Key, subs =>
         {
-            subs.Event<DisposalRouterUiActionMessage>(OnUiAction);
+            subs.Event<DisposalTaggerUiActionMessage>(OnUiAction);
         });
     }
 
@@ -46,13 +46,13 @@ public sealed partial class DisposalRouterSystem : EntitySystem
     /// which interact with the world and require server action.
     /// </summary>
     /// <param name="msg">A user interface message from the client.</param>
-    private void OnUiAction(Entity<DisposalRouterComponent> ent, ref DisposalRouterUiActionMessage msg)
+    private void OnUiAction(Entity<DisposalRouterComponent> ent, ref DisposalTaggerUiActionMessage msg)
     {
         if (!Exists(msg.Actor))
             return;
 
         // Check for correct message and ignore maleformed strings
-        if (msg.Action == DisposalRouterUiAction.Ok && SharedDisposalHolderSystem.TagRegex.IsMatch(msg.Tags))
+        if (msg.Action == DisposalTaggerUiAction.Ok && SharedDisposalHolderSystem.TagRegex.IsMatch(msg.Tags))
         {
             ent.Comp.Tags.Clear();
 

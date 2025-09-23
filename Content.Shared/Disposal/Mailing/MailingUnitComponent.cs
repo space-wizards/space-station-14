@@ -29,6 +29,12 @@ public sealed partial class MailingUnitComponent : Component
 }
 
 /// <summary>
+/// Message sent from the server to the client to update the UI of mailing units.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class MailingUnitBoundUserInterfaceState : BoundUserInterfaceState;
+
+/// <summary>
 /// Sent before the disposal unit flushes it's contents.
 /// Allows adding tags for sorting and preventing the disposal unit from flushing.
 /// </summary>

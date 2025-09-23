@@ -39,9 +39,9 @@ public sealed partial class DisposalTaggerSystem : EntitySystem
             return;
 
         // Check for correct message and ignore maleformed strings
-        if (msg.Action == DisposalTaggerUiAction.Ok && SharedDisposalHolderSystem.TagRegex.IsMatch(msg.Tag))
+        if (msg.Action == DisposalTaggerUiAction.Ok && SharedDisposalHolderSystem.TagRegex.IsMatch(msg.Tags))
         {
-            ent.Comp.Tag = msg.Tag.Trim();
+            ent.Comp.Tag = msg.Tags.Trim();
             Dirty(ent);
 
             _audio.PlayPredicted(ent.Comp.ClickSound, ent, msg.Actor, AudioParams.Default.WithVolume(-2f));

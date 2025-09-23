@@ -27,30 +27,30 @@ public sealed partial class DisposalTaggerComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class DisposalTaggerUserInterfaceState : BoundUserInterfaceState
-{
-    public readonly string Tag;
-
-    public DisposalTaggerUserInterfaceState(string tag)
-    {
-        Tag = tag;
-    }
-}
-
-[Serializable, NetSerializable]
 public sealed class DisposalTaggerUiActionMessage : BoundUserInterfaceMessage
 {
     public readonly DisposalTaggerUiAction Action;
-    public readonly string Tag = "";
+    public readonly string Tags = string.Empty;
 
-    public DisposalTaggerUiActionMessage(DisposalTaggerUiAction action, string tag)
+    public DisposalTaggerUiActionMessage(DisposalTaggerUiAction action, string tags, int tagLength)
     {
         Action = action;
 
         if (Action == DisposalTaggerUiAction.Ok)
         {
-            Tag = tag.Substring(0, Math.Min(tag.Length, 30));
+            Tags = tags.Substring(0, Math.Min(tags.Length, tagLength));
         }
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class DisposalTaggerUserInterfaceState : BoundUserInterfaceState
+{
+    public readonly string Tags;
+
+    public DisposalTaggerUserInterfaceState(string tags)
+    {
+        Tags = tags;
     }
 }
 

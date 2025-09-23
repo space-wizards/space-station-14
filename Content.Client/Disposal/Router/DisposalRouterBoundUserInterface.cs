@@ -23,13 +23,13 @@ namespace Content.Client.Disposal.Router
 
             _window = this.CreateWindow<DisposalRouterWindow>();
 
-            _window.Confirm.OnPressed += _ => ButtonPressed(DisposalRouterUiAction.Ok, _window.TagInput.Text);
-            _window.TagInput.OnTextEntered += args => ButtonPressed(DisposalRouterUiAction.Ok, args.Text);
+            _window.Confirm.OnPressed += _ => ButtonPressed(DisposalTaggerUiAction.Ok, _window.TagInput.Text);
+            _window.TagInput.OnTextEntered += args => ButtonPressed(DisposalTaggerUiAction.Ok, args.Text);
         }
 
-        private void ButtonPressed(DisposalRouterUiAction action, string tag)
+        private void ButtonPressed(DisposalTaggerUiAction action, string tag)
         {
-            SendMessage(new DisposalRouterUiActionMessage(action, tag));
+            SendMessage(new DisposalTaggerUiActionMessage(action, tag, 150));
             Close();
         }
 
@@ -37,7 +37,7 @@ namespace Content.Client.Disposal.Router
         {
             base.UpdateState(state);
 
-            if (state is not DisposalRouterUserInterfaceState cast)
+            if (state is not DisposalTaggerUserInterfaceState cast)
             {
                 return;
             }

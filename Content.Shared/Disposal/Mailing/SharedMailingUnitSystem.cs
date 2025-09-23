@@ -13,9 +13,9 @@ namespace Content.Shared.Disposal.Mailing;
 
 public abstract class SharedMailingUnitSystem : EntitySystem
 {
-    [Dependency] private readonly SharedDeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private readonly SharedDeviceNetworkSystem _deviceNetwork = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
-    [Dependency] protected readonly SharedUserInterfaceSystem UserInterfaceSystem = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _userInterface = default!;
 
     private const string MailTag = "mail";
 
@@ -77,7 +77,7 @@ public abstract class SharedMailingUnitSystem : EntitySystem
             [NetTag] = tag
         };
 
-        _deviceNetworkSystem.QueuePacket(uid, args.Address, payload, args.Frequency);
+        _deviceNetwork.QueuePacket(uid, args.Address, payload, args.Frequency);
     }
 
     /// <summary>
@@ -113,7 +113,7 @@ public abstract class SharedMailingUnitSystem : EntitySystem
             [NetTarget] = ent.Comp.Target
         };
 
-        _deviceNetworkSystem.QueuePacket(ent, null, payload, null, null, device);
+        _deviceNetwork.QueuePacket(ent, null, payload, null, null, device);
     }
 
     /// <summary>
@@ -131,7 +131,7 @@ public abstract class SharedMailingUnitSystem : EntitySystem
         };
 
         ent.Comp.TargetList.Clear();
-        _deviceNetworkSystem.QueuePacket(ent, null, payload, null, null, device);
+        _deviceNetwork.QueuePacket(ent, null, payload, null, null, device);
     }
 
     /// <summary>
@@ -156,18 +156,22 @@ public abstract class SharedMailingUnitSystem : EntitySystem
             return;
 
         if (!TryComp(args.User, out ActorComponent? actor))
-        {
             return;
-        }
 
         args.Handled = true;
         UpdateTargetList(ent);
-        UserInterfaceSystem.OpenUi(ent.Owner, MailingUnitUiKey.Key, actor.PlayerSession);
+
+        _userInterface.OpenUi(ent.Owner, MailingUnitUiKey.Key, actor.PlayerSession);
     }
 
     private void OnTargetSelected(Entity<MailingUnitComponent> ent, ref TargetSelectedMessage args)
     {
         ent.Comp.Target = args.Target;
         Dirty(ent);
+
+        if (_userInterface.TryGetOpenUi(ent.Owner, MailingUnitUiKey.Key, out var bui))
+        {
+            bui.Update<MailingUnitBoundUserInterfaceState>();
+        }
     }
 }

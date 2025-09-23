@@ -27,7 +27,7 @@ public sealed partial class DisposalRouterWindow : DefaultWindow
     }
 
 
-    public void UpdateState(DisposalRouterUserInterfaceState state)
+    public void UpdateState(DisposalTaggerUserInterfaceState state)
     {
         TagInput.Text = state.Tags;
     }
