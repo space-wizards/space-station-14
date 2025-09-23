@@ -1551,7 +1551,7 @@
   id: VisitorZookeeper
   equipment:
     jumpsuit: ClothingUniformJumpsuitSafari
-    shoes: ClothingShoesBootsSalvage
+    shoes: ClothingShoesBootsWork
     head: ClothingHeadSafari
     id: VisitorPDA
     belt: ClothingBeltUtility
