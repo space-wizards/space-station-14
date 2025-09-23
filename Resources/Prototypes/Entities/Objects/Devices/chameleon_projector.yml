@@ -16,9 +16,13 @@
       - Bot # for funny bot moments
     blacklist:
       components:
+      - SubFloorHide # no hiding under the floor
       - ChameleonDisguise # no becoming kleiner
       - MindContainer # no
       - Pda # PDAs currently make you invisible /!\
+      tags:
+      - Wall # Walls make you invisible
+      - Catwalk # Catwalks make you invisible
     disguiseProto: ChameleonDisguise
   - type: StaticPrice
     price: 5000
