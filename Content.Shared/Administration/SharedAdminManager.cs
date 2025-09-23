@@ -82,12 +82,8 @@ public abstract class SharedAdminManager : ISharedAdminManager, IConGroupControl
             ToolshedCommandPermissions.LoadPermissionsFromStream(toolshedPerms);
     }
 
-    public bool IsAdmin(ICommonSession session, bool includeDeAdmin = false)
-    {
-        return GetAdminData(session, includeDeAdmin) != null;
-    }
-
     public abstract AdminData? GetAdminData(ICommonSession session, bool includeDeAdmin = false);
+
 
     public AdminData? GetAdminData(EntityUid uid, bool includeDeAdmin = false)
     {
@@ -202,6 +198,8 @@ public abstract class SharedAdminManager : ISharedAdminManager, IConGroupControl
         return (attribs.Length != 0, attribs);
     }
 
+    #region Public Helpers
+
     public bool CanViewVar(ICommonSession session)
     {
         return CanCommand(session, "vv");
@@ -226,6 +224,30 @@ public abstract class SharedAdminManager : ISharedAdminManager, IConGroupControl
     {
         return GetAdminData(session)?.CanAdminReloadPrototypes() ?? false;
     }
+
+    public bool IsAdmin(EntityUid uid, bool includeDeAdmin = false)
+    {
+        return GetAdminData(uid, includeDeAdmin) != null;
+    }
+
+    public bool IsAdmin(ICommonSession session, bool includeDeAdmin = false)
+    {
+        return GetAdminData(session, includeDeAdmin) != null;
+    }
+
+    public bool HasAdminFlag(EntityUid player, AdminFlags flag, bool includeDeAdmin = false)
+    {
+        var data = GetAdminData(player, includeDeAdmin);
+        return data != null && data.HasFlag(flag, includeDeAdmin);
+    }
+
+    public bool HasAdminFlag(ICommonSession player, AdminFlags flag, bool includeDeAdmin = false)
+    {
+        var data = GetAdminData(player, includeDeAdmin);
+        return data != null && data.HasFlag(flag, includeDeAdmin);
+    }
+
+    #endregion
 }
 
 public sealed class CommandPermissionsUnassignedError(CommandSpec cmd) : ConError
