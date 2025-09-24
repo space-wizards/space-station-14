@@ -39,10 +39,10 @@
   id: StationBorgiChassis
   components:
     - type: LanguageKnowledge
-    speaks:
+      speaks:
       - Machine
       - Dog
-    understands:
+      understands:
       - GalacticCommon
       - Machine
       - Dog
@@ -96,10 +96,10 @@
   description: A smart dog, with an obsession for sick bass beats and stating laws.
   components:
     - type: LanguageKnowledge
-    speaks:
+      speaks:
       - Machine
       - Dog
-    understands:
+      understands:
       - GalacticCommon
       - Machine
       - Dog
