@@ -1300,12 +1300,6 @@
     - type: ItemBorgModule
       hands:
       - item: SelfDestructSeq
-        hand:
-          emptyRepresentative: ExGrenade
-          emptyLabel: borg-slot-martyr-bomb-empty
-          whitelist:
-            tags:
-            - BorgGrenade
     - type: BorgModuleIcon
       icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-martyr-module }
     - type: Item
