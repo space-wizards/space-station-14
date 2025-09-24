@@ -56,9 +56,6 @@ public sealed partial class XenoborgSystem : EntitySystem
     /// <summary>
     /// Makes sure the player has the xenoborg mindrole and also sends the briefing text and sound
     /// </summary>
-    /// <param name="mindId"></param>
-    /// <param name="ent"></param>
-    /// <param name="xenoborgComp"></param>
     public void EnsureXenoborgRole(EntityUid mindId, EntityUid ent, XenoborgComponent xenoborgComp)
     {
         if (_roles.MindHasRole<XenoborgRoleComponent>(mindId))
@@ -79,7 +76,6 @@ public sealed partial class XenoborgSystem : EntitySystem
     /// <summary>
     /// Remove the xenoborg mind role
     /// </summary>
-    /// <param name="mindId"></param>
     public void RemoveXenoborgRole(EntityUid mindId)
     {
         if (_roles.MindHasRole<XenoborgRoleComponent>(mindId))
@@ -89,9 +85,6 @@ public sealed partial class XenoborgSystem : EntitySystem
     /// <summary>
     /// Makes sure the player has the xenoborg core mindrole and also sends the briefing text and sound
     /// </summary>
-    /// <param name="mindId"></param>
-    /// <param name="ent"></param>
-    /// <param name="xenoborgComp"></param>
     public void EnsureXenoborgCoreRole(EntityUid mindId, EntityUid ent, MothershipCoreComponent mothershipComp)
     {
         if (_roles.MindHasRole<XenoborgCoreRoleComponent>(mindId))
@@ -112,7 +105,6 @@ public sealed partial class XenoborgSystem : EntitySystem
     /// <summary>
     /// Remove the xenoborg core mind role
     /// </summary>
-    /// <param name="mindId"></param>
     public void RemoveXenoborgCoreRole(EntityUid mindId)
     {
         if (_roles.MindHasRole<XenoborgCoreRoleComponent>(mindId))
