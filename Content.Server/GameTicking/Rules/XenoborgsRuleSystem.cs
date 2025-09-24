@@ -18,6 +18,9 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+
+    private static readonly Color ANNOUNCMENT_COLOR = Color.Gold;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -43,14 +46,14 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
 
         _chatSystem.DispatchGlobalAnnouncement(
             Loc.GetString($"xenoborgs-no-more-threat-mothership-core-{status}-announcement"),
-            colorOverride: Color.Gold);
+            colorOverride: ANNOUNCMENT_COLOR);
     }
 
     public void SendMothershipDeathAnnouncement()
     {
         _chatSystem.DispatchGlobalAnnouncement(
             Loc.GetString("mothership-destroyed-announcement"),
-            colorOverride: Color.Gold);
+            colorOverride: ANNOUNCMENT_COLOR);
     }
 
     protected override void AppendRoundEndText(EntityUid uid,
