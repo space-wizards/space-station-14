@@ -19,7 +19,7 @@ public sealed partial class XenoborgSystem : EntitySystem
     [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly XenoborgsRuleSystem _xenoborgsRule = default!;
 
-    private readonly Color XENOBORG_BRIEFING_COLOR = Color.BlueViolet;
+    private static readonly Color XENOBORG_BRIEFING_COLOR = Color.BlueViolet;
 
     public override void Initialize()
     {
