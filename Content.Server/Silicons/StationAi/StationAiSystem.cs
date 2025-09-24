@@ -19,6 +19,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Power;
 using Content.Shared.Power.Components;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Roles;
