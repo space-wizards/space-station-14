@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Hands.Components;
@@ -69,15 +70,16 @@ public sealed class ImpairedMobilitySystem : EntitySystem
         args.ModifySpeed(finalSpeed);
     }
 
-    // Returns the highest effectiveness, its aid component, and the entity ID of any non-wielded mobility aid held
+    // Returns the best mobility aid held according to the following logic:
+    // 1. Prefer any non-makeshift (proper) aid with highest effectiveness.
+    // 2. If only makeshift aids are held, prefer safe (no damage) aids with highest effectiveness.
+    // 3. If only dangerous makeshift aids are held, pick the one with highest effectiveness and least damage.
     private (float, MobilityAidComponent?, EntityUid?) GetBestMobilityAid(Entity<HandsComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp, false))
             return (0f, null, null);
 
-        float maxEffectiveness = 0f;
-        MobilityAidComponent? bestAid = null;
-        EntityUid? bestAidEntity = null;
+        var aids = new List<(MobilityAidComponent aid, EntityUid ent, int priority, float effectiveness, float damage)>();
 
         foreach (var held in _hands.EnumerateHeld(entity))
         {
@@ -85,14 +87,46 @@ public sealed class ImpairedMobilitySystem : EntitySystem
                 continue;
             if (TryComp<WieldableComponent>(held, out var wieldable) && wieldable.Wielded)
                 continue;
-            if (aid.Effectiveness > maxEffectiveness)
-            {
-                maxEffectiveness = aid.Effectiveness;
-                bestAid = aid;
-                bestAidEntity = held;
-            }
+
+            int priority;
+            float damage = aid.TripDamage?.GetTotal().Float() ?? 0f;
+            if (!aid.IsMakeshift)
+                priority = 2; // Proper
+            else if (aid.TripDamage == null)
+                priority = 1; // Safe
+            else
+                priority = 0; // Dangerous
+
+            aids.Add((aid, held, priority, aid.Effectiveness, damage));
         }
-        return (maxEffectiveness, bestAid, bestAidEntity);
+
+        if (aids.Count == 0)
+            return (0f, null, null);
+
+        // Split dangerous aids from proper/safe aids
+        var dangerousAids = aids.Where(x => x.priority == 0).ToList();
+        var safeOrProperAids = aids.Where(x => x.priority > 0).ToList();
+
+        if (safeOrProperAids.Count > 0)
+        {
+            // Prefer highest priority (proper > safe), then highest effectiveness
+            var best = safeOrProperAids
+                .OrderByDescending(x => x.priority)
+                .ThenByDescending(x => x.effectiveness)
+                .First();
+            return (best.effectiveness, best.aid, best.ent);
+        }
+        else if (dangerousAids.Count > 0)
+        {
+            // If dangerous prefer least damage, then highest effectiveness
+            var best = dangerousAids
+                .OrderBy(x => x.damage)
+                .ThenByDescending(x => x.effectiveness)
+                .First();
+            return (best.effectiveness, best.aid, best.ent);
+        }
+
+        return (0f, null, null);
     }
 
     // Increases the time it takes for entities to stand up from being knocked down. This is intentionally NOT affected by mobility aids.
@@ -181,7 +215,7 @@ public sealed class ImpairedMobilitySystem : EntitySystem
 
     private void OnMobilityAidExamined(EntityUid uid, MobilityAidComponent component, ExaminedEvent args)
     {
-        // Only show mobility aid examine text to users with impaired mobility
+        // Only show mobility aid examine text to entities with impaired mobility
         if (!HasComp<ImpairedMobilityComponent>(args.Examiner))
             return;
 
