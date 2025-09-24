@@ -13,25 +13,25 @@ public sealed partial class ModifyKnockdownEntityEffectSystem : EntityEffectSyst
         {
             case StatusEffectMetabolismType.Refresh:
                 if (args.Effect.Crawling)
-                    _stun.TryCrawling(entity.Owner, args.Effect.Duration * args.Scale, drop: args.Effect.Drop);
+                    _stun.TryCrawling(entity.Owner, args.Effect.Time * args.Scale, drop: args.Effect.Drop);
                 else
-                    _stun.TryKnockdown(entity.Owner, args.Effect.Duration * args.Scale, drop: args.Effect.Drop);
+                    _stun.TryKnockdown(entity.Owner, args.Effect.Time * args.Scale, drop: args.Effect.Drop);
                 break;
             case StatusEffectMetabolismType.Add:
                 if (args.Effect.Crawling)
-                    _stun.TryCrawling(entity.Owner, args.Effect.Duration * args.Scale, false, drop: args.Effect.Drop);
+                    _stun.TryCrawling(entity.Owner, args.Effect.Time * args.Scale, false, drop: args.Effect.Drop);
                 else
-                    _stun.TryKnockdown(entity.Owner, args.Effect.Duration * args.Scale, false, drop: args.Effect.Drop);
+                    _stun.TryKnockdown(entity.Owner, args.Effect.Time * args.Scale, false, drop: args.Effect.Drop);
                 break;
             case StatusEffectMetabolismType.Remove:
-                _stun.AddKnockdownTime(entity.Owner, - args.Effect.Duration * args.Scale ?? TimeSpan.Zero);
+                _stun.AddKnockdownTime(entity.Owner, - args.Effect.Time * args.Scale ?? TimeSpan.Zero);
                 break;
             case StatusEffectMetabolismType.Set:
                 if (args.Effect.Crawling)
                     _stun.TryCrawling(entity.Owner, drop: args.Effect.Drop);
                 else
-                    _stun.TryKnockdown(entity.Owner, args.Effect.Duration * args.Scale, drop: args.Effect.Drop);
-                _stun.SetKnockdownTime(entity.Owner, args.Effect.Duration * args.Scale ?? TimeSpan.Zero);
+                    _stun.TryKnockdown(entity.Owner, args.Effect.Time * args.Scale, drop: args.Effect.Drop);
+                _stun.SetKnockdownTime(entity.Owner, args.Effect.Time * args.Scale ?? TimeSpan.Zero);
                 break;
         }
     }

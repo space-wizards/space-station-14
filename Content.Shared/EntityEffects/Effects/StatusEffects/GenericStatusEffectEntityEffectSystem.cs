@@ -13,9 +13,13 @@ public sealed partial class GenericStatusEffectEntityEffectSystem : EntityEffect
 
         switch (args.Effect.Type)
         {
+            case StatusEffectMetabolismType.Refresh:
+                if (args.Effect.Component != String.Empty)
+                    _status.TryAddStatusEffect(entity, args.Effect.Key, TimeSpan.FromSeconds(time), true, args.Effect.Component);
+                break;
             case StatusEffectMetabolismType.Add:
                 if (args.Effect.Component != String.Empty)
-                    _status.TryAddStatusEffect(entity, args.Effect.Key, TimeSpan.FromSeconds(time), args.Effect.Refresh, args.Effect.Component);
+                    _status.TryAddStatusEffect(entity, args.Effect.Key, TimeSpan.FromSeconds(time), false, args.Effect.Component);
                 break;
             case StatusEffectMetabolismType.Remove:
                 _status.TryRemoveTime(entity, args.Effect.Key, TimeSpan.FromSeconds(time));
@@ -38,15 +42,9 @@ public sealed partial class GenericStatusEffect : EntityEffectBase<GenericStatus
     [DataField]
     public float Time = 2.0f;
 
-    /// <remarks>
-    ///     true - refresh status effect time,  false - accumulate status effect time
-    /// </remarks>
-    [DataField]
-    public bool Refresh = true;
-
     /// <summary>
     ///     Should this effect add the status effect, remove time from it, or set its cooldown?
     /// </summary>
     [DataField]
-    public StatusEffectMetabolismType Type = StatusEffectMetabolismType.Add;
+    public StatusEffectMetabolismType Type = StatusEffectMetabolismType.Refresh;
 }

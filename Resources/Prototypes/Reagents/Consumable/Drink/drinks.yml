@@ -458,7 +458,6 @@
         conditions:
         - !type:MetabolizerType
           type: Slime
-          shouldHave: true
         damage:
           types:
             Heat: 3

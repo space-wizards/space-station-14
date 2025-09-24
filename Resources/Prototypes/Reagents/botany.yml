@@ -225,7 +225,7 @@
         conditions:
         - !type:MetabolizerType
           type: Rat
-          shouldHave: false
+          condition: false
         - !type:ReagentThreshold
           reagent: Ammonia
           min: 1
@@ -236,12 +236,11 @@
       - !type:Vomit
         probability: 0.12
         conditions:
-        - !type:MetabolizerType
-          type: Rat
-          shouldHave: false
-        - !type:MetabolizerType
-          type: Vox
-          shouldHave: false
+        - !type:MetabolizerTypes
+          types:
+          - Rat
+          - Vox
+          condition: false
         - !type:ReagentThreshold
           reagent: Ammonia
           min: 0.8

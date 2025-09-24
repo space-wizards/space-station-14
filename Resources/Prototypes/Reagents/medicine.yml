@@ -92,7 +92,6 @@
         effectProto: StatusEffectDrowsiness
         time: 1.5
         type: Add
-        refresh: false
       - !type:HealthChange
         damage:
           types:
@@ -1294,7 +1293,6 @@
           - !type:Temperature
             max: 150.0
           - !type:IsMobState
-            reagent: Opporozidone
             mobstate: Dead
 
 - type: reagent
@@ -1397,7 +1395,6 @@
           min: 30
         type: Add
         time: 8
-        refresh: false
       - !type:GenericStatusEffect
         key: Jitter
         time: 2.0
@@ -1431,7 +1428,6 @@
         component: RadiationProtection
         time: 2
         type: Add
-        refresh: false
       - !type:HealthChange
         conditions:
           - !type:ReagentThreshold
@@ -1460,7 +1456,6 @@
         effectProto: StatusEffectDrowsiness
         time: 4
         type: Add
-        refresh: false
       - !type:GenericStatusEffect
         key: Jitter
         time: 4.0

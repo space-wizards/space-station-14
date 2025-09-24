@@ -11,13 +11,13 @@ public abstract partial class BaseStatusEntityEffect<T> : EntityEffectBase<T> wh
     /// Is scaled by reagent amount if used with an EntityEffectReagentArgs.
     /// </summary>
     [DataField]
-    public TimeSpan? Duration = TimeSpan.FromSeconds(2);
+    public TimeSpan? Time = TimeSpan.FromSeconds(2);
 
     /// <summary>
     /// Should this effect add the status effect, remove time from it, or set its cooldown?
     /// </summary>
     [DataField]
-    public StatusEffectMetabolismType Type = StatusEffectMetabolismType.Add;
+    public StatusEffectMetabolismType Type = StatusEffectMetabolismType.Refresh;
 }
 
 public enum StatusEffectMetabolismType

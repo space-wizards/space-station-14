@@ -65,7 +65,7 @@
         conditions:
         - !type:MetabolizerType
           type: Arachnid
-          shouldHave: false
+          condition: false
         damage:
           types:
             Poison: 0.1
@@ -75,7 +75,6 @@
         conditions:
         - !type:MetabolizerType
           type: Arachnid
-          shouldHave: true
         amount: 0.4
 
 - type: reagent
@@ -156,7 +155,6 @@
         conditions:
         - !type:MetabolizerType
           type: Arachnid
-          shouldHave: true
         damage:
           types:
             Poison: 0.1
@@ -166,7 +164,7 @@
         conditions:
         - !type:MetabolizerType
           type: Arachnid
-          shouldHave: false
+          condition: false
         amount: 0.4
 
 - type: reagent

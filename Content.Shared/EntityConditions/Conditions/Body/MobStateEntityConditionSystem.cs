@@ -2,7 +2,7 @@
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 
-namespace Content.Shared.EntityConditions.Conditions;
+namespace Content.Shared.EntityConditions.Conditions.Body;
 
 /// <summary>
 /// Returns true if current mob state matches given mob state.

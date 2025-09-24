@@ -66,8 +66,7 @@
       - !type:ModifyStatusEffect
         effectProto: StatusEffectDrowsiness
         time: 4
-        type: Add
-        refresh: false
+        type: Refresh
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -344,7 +343,6 @@
         effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 10
-        refresh: false
   # TODO: PROPER hallucinations
 
 - type: reagent
@@ -477,12 +475,11 @@
       effects:
       - !type:PopupMessage
         conditions:
-          - !type:MetabolizerType
-            type: Animal
-            shouldHave: false
-          - !type:MetabolizerType
-            type: Vox
-            shouldHave: false
+        - !type:MetabolizerTypes
+          types:
+          - Animal
+          - Vox
+          condition: false
         type: Local
         visualType: MediumCaution
         messages: [ "generic-reagent-effect-sick" ]
@@ -490,20 +487,18 @@
       - !type:Vomit
         probability: 0.1
         conditions:
-          - !type:MetabolizerType
-            type: Animal
-            shouldHave: false
-          - !type:MetabolizerType
-            type: Vox
-            shouldHave: false
+        - !type:MetabolizerTypes
+          types:
+          - Animal
+          - Vox
+          condition: false
       - !type:HealthChange
         conditions:
-        - !type:MetabolizerType
-          type: Animal
-          shouldHave: false
-        - !type:MetabolizerType
-          type: Vox
-          shouldHave: false
+        - !type:MetabolizerTypes
+          types:
+          - Animal
+          - Vox
+          condition: false
         damage:
           types:
             Poison: 1
@@ -556,7 +551,6 @@
       - !type:GenericStatusEffect
         key: Pacified
         component: Pacified
-        type: Add
         time: 4
 
 - type: reagent
@@ -698,7 +692,7 @@
         conditions:
         - !type:MetabolizerType
           type: Arachnid
-          shouldHave: false
+          condition: false
         damage:
           types:
             Poison: 1.6
@@ -709,7 +703,7 @@
           min: 2
         - !type:MetabolizerType
           type: Arachnid
-          shouldHave: false
+          condition: false
         walkSpeedModifier: 0.8
         sprintSpeedModifier: 0.8
       - !type:MovementSpeedModifier
@@ -719,7 +713,7 @@
           min: 4
         - !type:MetabolizerType
           type: Arachnid
-          shouldHave: false
+          condition: false
         walkSpeedModifier: 0.4
         sprintSpeedModifier: 0.4
 

@@ -78,7 +78,7 @@
           max: 0
           reagent: Histamine
         - !type:HasTag
-          invert: true
+          condition: false
           tag: Bee
       - !type:PopupMessage
         type: Local
@@ -95,7 +95,7 @@
           min: 0.01
           reagent: Histamine
         - !type:HasTag
-          invert: true
+          condition: false
           tag: Bee
       - !type:PopupMessage
         type: Local
@@ -108,7 +108,7 @@
         probability: 0.05
         conditions:
         - !type:HasTag
-          invert: true
+          condition: false
           tag: Bee
         - !type:ReagentThreshold
           min: 0.01
@@ -121,7 +121,7 @@
         probability: 0.05
         conditions:
         - !type:HasTag
-          invert: true
+          condition: false
           tag: Bee
         - !type:ReagentThreshold
           min: 0.01
@@ -133,7 +133,7 @@
             Piercing: 2
         conditions:
         - !type:HasTag
-          invert: true
+          condition: false
           tag: Bee
 
 - type: reagent
@@ -345,7 +345,7 @@
         conditions:
         - !type:MetabolizerType
           type: Animal
-          shouldHave: false
+          condition: false
         - !type:ReagentThreshold
           reagent: JuiceThatMakesYouWeh
           min: 50
@@ -380,7 +380,7 @@
         conditions:
         - !type:MetabolizerType
           type: Animal
-          shouldHave: false
+          condition: false
         - !type:ReagentThreshold
           reagent: JuiceThatMakesYouHew
           min: 50

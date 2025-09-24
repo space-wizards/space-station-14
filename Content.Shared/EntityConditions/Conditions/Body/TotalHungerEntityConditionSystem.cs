@@ -2,7 +2,7 @@
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 
-namespace Content.Shared.EntityConditions.Conditions;
+namespace Content.Shared.EntityConditions.Conditions.Body;
 
 public sealed partial class TotalHungerEntityConditionSystem : EntityConditionSystem<HungerComponent, TotalHunger>
 {

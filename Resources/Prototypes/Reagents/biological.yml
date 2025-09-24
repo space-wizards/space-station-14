@@ -22,7 +22,7 @@
         conditions:
           - !type:MetabolizerType
             type: Human
-            shouldHave: false
+            condition: false
     Food:
       effects:
         - !type:AdjustReagent

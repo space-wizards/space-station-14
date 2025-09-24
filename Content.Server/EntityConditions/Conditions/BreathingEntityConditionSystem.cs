@@ -5,10 +5,10 @@ using Content.Shared.EntityEffects;
 
 namespace Content.Server.EntityConditions.Conditions;
 
-public sealed partial class BreathingEntityConditionSystem : EntityConditionSystem<RespiratorComponent, IsBreathing>
+public sealed partial class BreathingEntityConditionSystem : EntityConditionSystem<RespiratorComponent, Shared.EntityConditions.Conditions.Body.IsBreathing>
 {
     [Dependency] private readonly RespiratorSystem _respirator = default!;
-    protected override void Condition(Entity<RespiratorComponent> entity, ref EntityConditionEvent<IsBreathing> args)
+    protected override void Condition(Entity<RespiratorComponent> entity, ref EntityConditionEvent<Shared.EntityConditions.Conditions.Body.IsBreathing> args)
     {
         var breathingState = _respirator.IsBreathing(entity.AsNullable());
         args.Result = breathingState;

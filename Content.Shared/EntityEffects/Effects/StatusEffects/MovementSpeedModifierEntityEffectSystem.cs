@@ -22,17 +22,17 @@ public sealed partial class MovementSpeedModifierEntityEffectSystem : EntityEffe
                 _movementModStatus.TryUpdateMovementSpeedModDuration(
                     entity,
                     proto,
-                    args.Effect.Duration * args.Scale,
+                    args.Effect.Time * args.Scale,
                     sprintMod,
                     walkMod);
                 break;
             case StatusEffectMetabolismType.Add:
-                if (args.Effect.Duration != null)
+                if (args.Effect.Time != null)
                 {
                     _movementModStatus.TryAddMovementSpeedModDuration(
                         entity,
                         proto,
-                        args.Effect.Duration.Value * args.Scale,
+                        args.Effect.Time.Value * args.Scale,
                         sprintMod,
                         walkMod);
                 }
@@ -41,16 +41,16 @@ public sealed partial class MovementSpeedModifierEntityEffectSystem : EntityEffe
                     _movementModStatus.TryUpdateMovementSpeedModDuration(
                         entity,
                         proto,
-                        args.Effect.Duration * args.Scale,
+                        args.Effect.Time * args.Scale,
                         sprintMod,
                         walkMod);
                 }
                 break;
             case StatusEffectMetabolismType.Remove:
-                _status.TryRemoveTime(entity, args.Effect.EffectProto, args.Effect.Duration * args.Scale);
+                _status.TryRemoveTime(entity, args.Effect.EffectProto, args.Effect.Time * args.Scale);
                 break;
             case StatusEffectMetabolismType.Set:
-                _status.TrySetStatusEffectDuration(entity, proto, args.Effect.Duration * args.Scale);
+                _status.TrySetStatusEffectDuration(entity, proto, args.Effect.Time * args.Scale);
                 break;
         }
     }

@@ -1,7 +1,7 @@
 ﻿using Content.Shared.Body.Components;
 using Content.Shared.EntityEffects;
 
-namespace Content.Shared.EntityConditions.Conditions;
+namespace Content.Shared.EntityConditions.Conditions.Body;
 
 /// <summary>
 /// Returns true if the entity is using internals. False if they are not or cannot use internals.
@@ -14,7 +14,4 @@ public sealed partial class InternalsOnEntityConditionSystem : EntityConditionSy
     }
 }
 
-public sealed partial class InternalsOn : EntityConditionBase<InternalsOn>
-{
-    // Datafields go here.
-}
+public sealed partial class InternalsOn : EntityConditionBase<InternalsOn>;

@@ -14,16 +14,16 @@ public sealed partial class ModifyParalysisEntityEffectSystem : EntityEffectSyst
         switch (args.Effect.Type)
         {
             case StatusEffectMetabolismType.Refresh:
-                _stun.TryUpdateParalyzeDuration(entity, args.Effect.Duration * args.Scale);
+                _stun.TryUpdateParalyzeDuration(entity, args.Effect.Time * args.Scale);
                 break;
             case StatusEffectMetabolismType.Add:
-                _stun.TryAddParalyzeDuration(entity, args.Effect.Duration * args.Scale);
+                _stun.TryAddParalyzeDuration(entity, args.Effect.Time * args.Scale);
                 break;
             case StatusEffectMetabolismType.Remove:
-                _status.TryRemoveTime(entity, SharedStunSystem.StunId, args.Effect.Duration * args.Scale);
+                _status.TryRemoveTime(entity, SharedStunSystem.StunId, args.Effect.Time * args.Scale);
                 break;
             case StatusEffectMetabolismType.Set:
-                _status.TrySetStatusEffectDuration(entity, SharedStunSystem.StunId, args.Effect.Duration * args.Scale);
+                _status.TrySetStatusEffectDuration(entity, SharedStunSystem.StunId, args.Effect.Time * args.Scale);
                 break;
         }
     }

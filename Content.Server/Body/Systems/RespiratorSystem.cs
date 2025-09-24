@@ -349,7 +349,7 @@ public sealed class RespiratorSystem : EntitySystem
 
             foreach (var cond in effect.Conditions)
             {
-                if (cond is MetabolizerType organ && !_entityConditions.TryCondition(lung, organ))
+                if (cond is Shared.EntityConditions.Conditions.Body.MetabolizerType organ && !_entityConditions.TryCondition(lung, organ))
                     return false;
             }
 

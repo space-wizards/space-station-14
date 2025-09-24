@@ -156,7 +156,6 @@
         key: StaminaModifier
         component: StaminaModifier
         time: 3
-        type: Add
       - !type:ModifyStatusEffect
         effectProto: StatusEffectForcedSleeping
         time: 3
@@ -207,7 +206,6 @@
         effectProto: StatusEffectSeeingRainbow
         time: 16
         type: Add
-        refresh: false
 
 - type: reagent
   id: Nicotine
@@ -244,7 +242,6 @@
         effectProto: StatusEffectSeeingRainbow
         time: 10
         type: Add
-        refresh: false
       - !type:Vomit # Vomiting is a symptom of brain damage
         probability: 0.05
       - !type:Drunk # Headaches and slurring are major symptoms of brain damage, this is close enough
@@ -265,7 +262,6 @@
         effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 5
-        refresh: false
 
 - type: reagent
   id: Bananadine
@@ -282,7 +278,6 @@
         effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 5
-        refresh: false
 
 # Probably replace this one with sleeping chem when putting someone in a comatose state is easier
 - type: reagent
@@ -304,7 +299,6 @@
           min: 8
         effectProto: StatusEffectForcedSleeping
         time: 3
-        type: Add
 
 - type: reagent
   id: MuteToxin
@@ -323,7 +317,6 @@
         component: Muted
         type: Add
         time: 10
-        refresh: false
 
 - type: reagent
   id: NorepinephricAcid
@@ -424,7 +417,7 @@
       - !type:MovementSpeedModifier
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
-        statusLifetime: 1.5
+        time: 1.5
         conditions: # because of the remainding after effect, threshold is given so the effects ends simultaniously
         - !type:ReagentThreshold
           reagent: TearGas
@@ -481,4 +474,3 @@
         effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 5
-        refresh: false

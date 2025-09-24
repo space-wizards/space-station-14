@@ -227,7 +227,7 @@ public sealed partial class IngestionSystem
                     // ignores any effect conditions, just cares about how much it can hydrate
                     if (effect is SatiateHunger hunger)
                     {
-                        total += hunger.NutritionFactor * quantity.Quantity.Float();
+                        total += hunger.Factor * quantity.Quantity.Float();
                     }
                 }
             }
@@ -278,7 +278,7 @@ public sealed partial class IngestionSystem
                     // ignores any effect conditions, just cares about how much it can hydrate
                     if (effect is SatiateThirst thirst)
                     {
-                        total += thirst.HydrationFactor * quantity.Quantity.Float();
+                        total += thirst.Factor * quantity.Quantity.Float();
                     }
                 }
             }

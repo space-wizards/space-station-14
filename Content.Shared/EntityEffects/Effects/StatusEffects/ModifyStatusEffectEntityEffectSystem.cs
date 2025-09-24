@@ -13,19 +13,19 @@ public sealed partial class ModifyStatusEffectEntityEffectSystem : EntityEffectS
         switch (args.Effect.Type)
         {
             case StatusEffectMetabolismType.Refresh:
-                _status.TryUpdateStatusEffectDuration(entity, args.Effect.EffectProto, args.Effect.Duration * args.Scale);
+                _status.TryUpdateStatusEffectDuration(entity, args.Effect.EffectProto, args.Effect.Time * args.Scale);
                 break;
             case StatusEffectMetabolismType.Add:
-                if (args.Effect.Duration != null)
-                    _status.TryAddStatusEffectDuration(entity, args.Effect.EffectProto, args.Effect.Duration.Value * args.Scale);
+                if (args.Effect.Time != null)
+                    _status.TryAddStatusEffectDuration(entity, args.Effect.EffectProto, args.Effect.Time.Value * args.Scale);
                 else
                     _status.TryUpdateStatusEffectDuration(entity, args.Effect.EffectProto);
                 break;
             case StatusEffectMetabolismType.Remove:
-                _status.TryRemoveTime(entity, args.Effect.EffectProto, args.Effect.Duration * args.Scale);
+                _status.TryRemoveTime(entity, args.Effect.EffectProto, args.Effect.Time * args.Scale);
                 break;
             case StatusEffectMetabolismType.Set:
-                _status.TrySetStatusEffectDuration(entity, args.Effect.EffectProto, args.Effect.Duration * args.Scale);
+                _status.TrySetStatusEffectDuration(entity, args.Effect.EffectProto, args.Effect.Time * args.Scale);
                 break;
         }
     }

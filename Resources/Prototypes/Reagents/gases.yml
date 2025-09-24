@@ -31,7 +31,7 @@
         conditions:
         - !type:MetabolizerType
           type: Vox
-          shouldHave: false
+          condition: false
         ratios:
           CarbonDioxide: 1.0
           Oxygen: -1.0
@@ -78,7 +78,7 @@
         conditions:
         - !type:MetabolizerType
           type: Vox
-          shouldHave: false
+          condition: false
         ratios:
           CarbonDioxide: 1.0
           Oxygen: -1.0
@@ -208,12 +208,11 @@
           type: Plant
       - !type:HealthChange
         conditions:
-        - !type:MetabolizerType
-          type: Plant
-          shouldHave: false
-        - !type:MetabolizerType
-          type: Vox
-          shouldHave: false
+        - !type:MetabolizerTypes
+          types:
+          - Plant
+          - Vox
+          condition: false
         scaleByQuantity: true
         ignoreResistances: true
         damage:
@@ -224,7 +223,7 @@
         conditions:
         - !type:MetabolizerType
           type: Plant
-          shouldHave: false
+          condition: false
         factor: -4
     Gas:
       effects:
@@ -234,12 +233,11 @@
           type: Plant
       - !type:HealthChange
         conditions:
-        - !type:MetabolizerType
-          type: Plant
-          shouldHave: false
-        - !type:MetabolizerType
-          type: Vox
-          shouldHave: false
+        - !type:MetabolizerTypes
+          types:
+          - Plant
+          - Vox
+          condition: false
         # Don't want people to get toxin damage from the gas they just
         # exhaled, right?
         - !type:ReagentThreshold
@@ -255,7 +253,7 @@
         conditions:
         - !type:MetabolizerType
           type: Plant
-          shouldHave: false
+          condition: false
         factor: -4
       # We need a metabolism effect on reagent removal
       #- !type:AdjustAlert
@@ -328,7 +326,7 @@
           min: 0.2
         - !type:MetabolizerType
           type: Slime
-          shouldHave: false
+          condition: false
         emote: Laugh
         showInChat: true
         probability: 0.1
@@ -339,7 +337,7 @@
           min: 0.2
         - !type:MetabolizerType
           type: Slime
-          shouldHave: false
+          condition: false
         emote: Scream
         showInChat: true
         probability: 0.01
@@ -350,7 +348,7 @@
           min: 0.5
         - !type:MetabolizerType
           type: Slime
-          shouldHave: false
+          condition: false
         type: Local
         visualType: Medium
         messages: [ "effect-sleepy" ]
@@ -362,7 +360,7 @@
           min: 1
         - !type:MetabolizerType
           type: Slime
-          shouldHave: false
+          condition: false
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
       - !type:ModifyStatusEffect
@@ -372,10 +370,10 @@
           min: 1.8
         - !type:MetabolizerType
           type: Slime
-          shouldHave: false
+          condition: false
         effectProto: StatusEffectForcedSleeping
         time: 3
-        type: Add
+        type: Refresh
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -383,7 +381,7 @@
           min: 3.5
         - !type:MetabolizerType
           type: Slime
-          shouldHave: false
+          condition: false
         ignoreResistances: true
         damage:
           types:
@@ -411,7 +409,6 @@
         effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 15
-        refresh: false
       - !type:Drunk
         boozePower: 15
       - !type:PopupMessage
@@ -451,7 +448,6 @@
         effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 500
-        refresh: false
       - !type:Drunk
         boozePower: 500
         conditions:

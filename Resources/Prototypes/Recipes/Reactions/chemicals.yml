@@ -206,7 +206,7 @@
       amount: 1
   effects:
     - !type:Emp
-      rangePerUnit: 0.2
+      rangeModifier: 0.2
       maxRange: 6
       energyConsumption: 12500
       duration: 15
