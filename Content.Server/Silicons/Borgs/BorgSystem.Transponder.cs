@@ -118,6 +118,10 @@ public sealed partial class BorgSystem
         ent.Comp1.NextDisable = _timing.CurTime + ent.Comp1.DisableDelay;
     }
 
+    /// <summary>
+    /// Makes a borg with <see cref="BorgTransponderComponent"/> explode
+    /// </summary>
+    /// <param name="ent">the entity of the borg</param>
     public void Destroy(Entity<BorgTransponderComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp))
