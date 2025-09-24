@@ -2,6 +2,8 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Server.GameTicking;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.ContentPack;
 using Robust.Shared.EntitySerialization;
@@ -15,6 +17,7 @@ namespace Content.Server.Mapping
     [AdminCommand(AdminFlags.Server | AdminFlags.Mapping)]
     public sealed class MappingCommand : LocalizedEntityCommands
     {
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IResourceManager _resourceMgr = default!;
         [Dependency] private readonly SharedMapSystem _mapSystem = default!;
         [Dependency] private readonly MappingSystem _mappingSystem = default!;
@@ -151,9 +154,12 @@ namespace Content.Server.Mapping
                 shell.ExecuteCommand("aghost");
             }
 
-            // don't interrupt mapping with events or auto-shuttle
-            shell.ExecuteCommand("changecvar events.enabled false");
-            shell.ExecuteCommand("changecvar shuttle.auto_call_time 0");
+            if (_cfg.GetCVar(CCVars.GameMappingDisableEventCommands))
+            {
+                // don't interrupt mapping with events or auto-shuttle
+                shell.ExecuteCommand("changecvar events.enabled false");
+                shell.ExecuteCommand("changecvar shuttle.auto_call_time 0");
+            }
 
             if (grid != null)
                 _mappingSystem.ToggleAutosave(grid.Value.Owner, toLoad ?? "NEWGRID");

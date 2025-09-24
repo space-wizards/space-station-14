@@ -409,4 +409,20 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> GameHostnameInTitlebar =
         CVarDef.Create("game.hostname_in_titlebar", true, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
+    ///     Should the mapping command disable events/the shuttle?
+    /// </summary>
+    /// <remarks>
+    ///     This is enabled automatically on any server that is not full release.
+    ///     Since you probably don't want admins disabling events and the shuttle on a live server.
+    ///
+    ///     Also, these should probably not run commands like this in the first place.
+    /// </remarks>
+    public static readonly CVarDef<bool> GameMappingDisableEventCommands =
+        # if !FULL_RELEASE
+        CVarDef.Create("game.mapping_event_commands", true, CVar.SERVERONLY);
+        # else
+        CVarDef.Create("game.mapping_event_commands", false, CVar.SERVERONLY);
+        #endif
 }
