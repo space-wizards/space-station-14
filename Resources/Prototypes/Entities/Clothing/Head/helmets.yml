@@ -191,7 +191,7 @@
 
 #Space Ninja Helmet
 - type: entity
-  parent: [ClothingHeadEVAHelmetBase, BaseMajorContraband]
+  parent: [ClothingHeadEVAHelmetBase, BaseHighlyIllegalContraband]
   id: ClothingHeadHelmetSpaceNinja
   name: space ninja helmet
   description: What may appear to be a simple black garment is in fact a highly sophisticated nano-weave helmet. Standard issue ninja gear.
@@ -273,8 +273,8 @@
     quickEquip: true
   - type: IngestionBlocker
   - type: TemperatureProtection
-    heatingCoefficient: 0.01
-    coolingCoefficient: 0.2
+    heatingCoefficient: 0.5
+    coolingCoefficient: 0.8
   - type: FireProtection
     reduction: 0.15 # not fully sealed so less protection
   - type: IdentityBlocker
@@ -301,8 +301,8 @@
     quickEquip: true
   - type: IngestionBlocker
   - type: TemperatureProtection
-    heatingCoefficient: 0.01
-    coolingCoefficient: 0.2
+    heatingCoefficient: 0.3
+    coolingCoefficient: 0.8
   - type: FireProtection
     reduction: 0.2
   - type: PressureProtection
