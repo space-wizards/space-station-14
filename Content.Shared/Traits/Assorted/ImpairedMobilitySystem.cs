@@ -164,16 +164,19 @@ public sealed class ImpairedMobilitySystem : EntitySystem
             // Dangerous
             selfMessage = Loc.GetString("mobility-aid-trait-trip-self-dangerous", ("mobilityAid", makeshiftAidEntity!.Value));
             othersMessage = Loc.GetString("mobility-aid-trait-trip-others-dangerous", ("user", ent.Owner), ("mobilityAid", makeshiftAidEntity!.Value));
+
+            _popup.PopupEntity(selfMessage, ent.Owner, ent.Owner, PopupType.SmallCaution);
+            _popup.PopupEntity(othersMessage, ent.Owner, Filter.PvsExcept(ent.Owner), true, PopupType.SmallCaution);
         }
         else
         {
             // Safe
             selfMessage = Loc.GetString("mobility-aid-trait-trip-self", ("mobilityAid", makeshiftAidEntity!.Value));
             othersMessage = Loc.GetString("mobility-aid-trait-trip-others", ("user", ent.Owner), ("mobilityAid", makeshiftAidEntity!.Value));
-        }
 
-        _popup.PopupEntity(selfMessage, ent.Owner, ent.Owner);
-        _popup.PopupEntity(othersMessage, ent.Owner, Filter.PvsExcept(ent.Owner), true);
+            _popup.PopupEntity(selfMessage, ent.Owner, ent.Owner);
+            _popup.PopupEntity(othersMessage, ent.Owner, Filter.PvsExcept(ent.Owner), true);
+        }
     }
 
     private void OnMobilityAidExamined(EntityUid uid, MobilityAidComponent component, ExaminedEvent args)
