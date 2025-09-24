@@ -91,6 +91,8 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
         SubscribeLocalEvent<DisposalUnitComponent, GetDumpableVerbEvent>(OnGetDumpableVerb);
         SubscribeLocalEvent<DisposalUnitComponent, DumpEvent>(OnDump);
+
+        SubscribeLocalEvent<DisposalUnitComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
     }
 
     private void OnDestruction(Entity<DisposalUnitComponent> ent, ref DestructionEventArgs args)
@@ -143,7 +145,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (!_actionBlockerSystem.CanDrop(args.User))
             return;
 
-        if (!CanInsert(ent, args.Using.Value))
+        if (!_containers.CanInsert(args.Using.Value, ent.Comp.Container))
             return;
 
         var verbData = args;
@@ -175,7 +177,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
     private void OnThrowInsert(Entity<DisposalUnitComponent> ent, ref BeforeThrowInsertEvent args)
     {
-        if (!CanInsert(ent, args.ThrownEntity))
+        if (!_containers.CanInsert(args.ThrownEntity, ent.Comp.Container))
             args.Cancelled = true;
     }
 
@@ -228,7 +230,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             return;
         }
 
-        if (!CanInsert(ent, args.Used) || !_handsSystem.TryDropIntoContainer(args.User, args.Used, ent.Comp.Container))
+        if (!_containers.CanInsert(args.Used, ent.Comp.Container) || !_handsSystem.TryDropIntoContainer(args.User, args.Used, ent.Comp.Container))
         {
             return;
         }
@@ -414,7 +416,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (args.Handled)
             return;
 
-        args.CanDrop = CanInsert(ent, args.Dragged);
+        args.CanDrop = _containers.CanInsert(args.Dragged, ent.Comp.Container);
         args.Handled = true;
     }
 
@@ -424,33 +426,33 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         args.Handled = true;
     }
 
-    /// <summary>
-    /// Check if an entity can be inserted into a disposal unit.
-    /// </summary>
-    /// <param name="ent">The disposal unit.</param>
-    /// <param name="toInsert">The entity to insert.</param>
-    /// <returns>True if the entity can be inserted.</returns>
-    public bool CanInsert(Entity<DisposalUnitComponent> ent, EntityUid toInsert)
+    private void OnInsertAttempt(Entity<DisposalUnitComponent> ent, ref ContainerIsInsertingAttemptEvent args)
     {
-        // TODO: All of the below should be using the EXISTING EVENT
-        if (!_containers.CanInsert(toInsert, ent.Comp.Container))
-            return false;
+        if (args.Cancelled)
+            return;
+
+        if (ent.Comp.Container.Count >= ent.Comp.MaxCapacity)
+        {
+            // TODO: If ContainerIsInsertingAttemptEvent ever ends up having the user
+            // attached to the event, we'll be able to predict the pop up
+            _popupSystem.PopupPredicted(Loc.GetString("disposal-unit-is-full"), ent, null);
+
+            args.Cancel();
+            return;
+        }
 
         if (!Transform(ent).Anchored)
-            return false;
+        {
+            args.Cancel();
+            return;
+        }
 
-        var storable = HasComp<ItemComponent>(toInsert);
-        if (!storable && !HasComp<MobStateComponent>(toInsert))
-            return false;
-
-        if (_whitelistSystem.IsBlacklistPass(ent.Comp.Blacklist, toInsert) ||
-            _whitelistSystem.IsWhitelistFail(ent.Comp.Whitelist, toInsert))
-            return false;
-
-        if (TryComp<PhysicsComponent>(toInsert, out var physics) && (physics.CanCollide) || storable)
-            return true;
-        else
-            return false;
+        if (_whitelistSystem.IsBlacklistPass(ent.Comp.Blacklist, args.EntityUid) ||
+            _whitelistSystem.IsWhitelistFail(ent.Comp.Whitelist, args.EntityUid))
+        {
+            args.Cancel();
+            return;
+        }
     }
 
     /// <summary>
@@ -511,7 +513,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             return false;
         }
 
-        if (!CanInsert(ent, toInsertId))
+        if (!_containers.CanInsert(toInsertId, ent.Comp.Container))
             return false;
 
         bool insertingSelf = userId == toInsertId;
@@ -792,7 +794,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             return;
         }
 
-        if (!CanInsert(ent, args.User))
+        if (!_containers.CanInsert(args.User, ent.Comp.Container))
             return;
 
         var verbData = args;

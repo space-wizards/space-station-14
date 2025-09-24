@@ -141,6 +141,12 @@ public sealed partial class DisposalUnitComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField, AutoPausedField]
     public TimeSpan? NextFlush;
+
+    /// <summary>
+    /// The max number of entities that can be inserted in the unit before it needs to be flushed.
+    /// </summary>
+    [DataField]
+    public int MaxCapacity = 10;
 }
 
 /// <summary>
