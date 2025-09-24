@@ -4,6 +4,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitNtrep
 
+- type: loadout  
   id: NanoTrasenRepresentativeTurtleneck
   equipment:
     jumpsuit: ClothingUniformJumpsuitNtrepTurtleNeck
