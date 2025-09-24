@@ -195,17 +195,23 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         }
 
         // Attempt to damage entities when changing direction
-        if (ent.Comp.Container != null && ent.Comp.CurrentDirection != ev.Next)
+        if (ent.Comp.Container != null &&
+            ent.Comp.CurrentDirection != ev.Next &&
+            ent.Comp.AccumulatedDamage < ent.Comp.MaxAllowedDamage)
         {
+            var damage = tube.Comp.DamageOnTurn;
+
             foreach (var held in ent.Comp.Container.ContainedEntities)
             {
-                _damageable.TryChangeDamage(held, tube.Comp.DamageOnTurn);
+                _damageable.TryChangeDamage(held, damage);
             }
 
             if (_net.IsServer)
             {
                 _audio.PlayPvs(tube.Comp.ClangSound, tube);
             }
+
+            ent.Comp.AccumulatedDamage += damage.GetTotal();
         }
 
         // Update trajectory

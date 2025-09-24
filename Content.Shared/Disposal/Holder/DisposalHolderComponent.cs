@@ -1,6 +1,7 @@
 using Content.Shared.Atmos;
 using Content.Shared.Disposal.Holder;
 using Content.Shared.Disposal.Tube;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 
@@ -96,4 +97,18 @@ public sealed partial class DisposalHolderComponent : Component, IGasMixtureHold
     /// </summary>
     [DataField]
     public TimeSpan DisposalExitStunDuration = TimeSpan.FromSeconds(1.5f);
+
+    /// <summary>
+    /// The amount of damage that has been accumulated from being bounced around
+    /// the disposals system.
+    /// </summary>
+    [DataField]
+    public FixedPoint2 AccumulatedDamage = 0;
+
+    /// <summary>
+    /// Sets the maximum amount of damage that contained entities can suffer
+    /// from being bounced around the disposals system.
+    /// </summary>
+    [DataField]
+    public FixedPoint2 MaxAllowedDamage = 50;
 }
