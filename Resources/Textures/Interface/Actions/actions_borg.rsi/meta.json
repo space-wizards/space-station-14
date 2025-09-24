@@ -62,6 +62,9 @@
             "name":"adv-cleaning-module"
         },
         {
+            "name":"launcher-module"
+        },
+        {
             "name":"diagnosis-module"
         },
         {

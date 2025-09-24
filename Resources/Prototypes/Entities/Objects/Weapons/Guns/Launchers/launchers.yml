@@ -124,8 +124,8 @@
     proto: GrenadeCleanade
     fireCost: 100
   - type: Battery
-    maxCharge: 200
-    startingCharge: 200
+    maxCharge: 300
+    startingCharge: 300
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 1

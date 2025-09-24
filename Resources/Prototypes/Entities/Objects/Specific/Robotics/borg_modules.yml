@@ -774,7 +774,6 @@
     - item: AdvMopItem
     - item: BorgMegaSprayBottle
     - item: HoloprojectorBorg
-    - item: BorgLauncherHydra
     - item: BorgDropper
     - item: Beaker
       hand:
@@ -785,6 +784,22 @@
           - GlassBeaker
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-cleaning-module }
+
+- type: entity
+  id: BorgModuleCleanadeLauncher
+  parent: [ BaseBorgModuleJanitor, BaseProviderBorgModule ]
+  name: cleanade launcher cyborg module
+  description: A state of the art janitorial module that gives the unit access to a slowly self-recharging version of the cleanade launcher used by the feared ERT Janitorial squad
+  components:
+  - type: Sprite
+    layers:
+    - state: janitor
+    - state: icon-launcher
+  - type: ItemBorgModule
+    hands:
+    - item: BorgLauncherHydra
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: launcher-module }
 
 # medical modules
 - type: entity

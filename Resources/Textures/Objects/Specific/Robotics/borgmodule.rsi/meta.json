@@ -70,6 +70,9 @@
         {
             "name": "icon-harvesting"
         },
+		{
+			"name": "icon-launcher"
+		},
         {
             "name": "icon-light-replacer"
         },
