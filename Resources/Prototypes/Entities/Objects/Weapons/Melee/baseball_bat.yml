@@ -50,7 +50,7 @@
   - type: MobilityAid # theoretically you could use it to help you walk
     isMakeshift: true
     effectiveness: 0.5 # its not great good though
-    tripChance: 0.10
+    tripChance: 0.25
 
 - type: entity
   name: incomplete baseball bat

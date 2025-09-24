@@ -120,7 +120,7 @@
   - type: MobilityAid #sure can try
     isMakeshift: true
     effectiveness: 0.5
-    tripChance: 0.25
+    tripChance: 0.4
     tripDamage:
       types:
         Pierce: 5
