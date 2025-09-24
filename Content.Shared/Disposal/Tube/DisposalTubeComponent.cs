@@ -7,7 +7,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Disposal.Tube;
 
 /// <summary>
-/// Basic component for disposal pipes.
+/// Basic component required by all disposal pipes.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedDisposalTubeSystem))]
@@ -63,12 +63,20 @@ public sealed partial class DisposalTubeComponent : Component
     public DisposalTubeType DisposalTubeType = DisposalTubeType.Disposals;
 }
 
+/// <summary>
+/// Event raised when determining which direction a disposal holder should head next.
+/// </summary>
+/// <param name="Holder">The disposal holder.</param>
 [ByRefEvent]
 public record struct GetDisposalsNextDirectionEvent(Entity<DisposalHolderComponent> Holder)
 {
     public Direction Next;
 }
 
+/// <summary>
+/// The type of disposal tube.
+/// </summary>
+/// <remarks>Only disposal tubes of same type may connect with each other.</remarks>
 [Serializable, NetSerializable]
 public enum DisposalTubeType
 {

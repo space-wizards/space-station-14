@@ -18,7 +18,7 @@ namespace Content.Shared.Disposal.Holder;
 
 /// <summary>
 /// This sytem handles the insertion, movement, and exiting of entities
-/// through the disposals system
+/// through the disposals system.
 /// </summary>
 public abstract partial class SharedDisposalHolderSystem : EntitySystem
 {
@@ -39,6 +39,9 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
     private EntityQuery<MetaDataComponent> _metaQuery;
     private EntityQuery<TransformComponent> _xformQuery;
 
+    /// <summary>
+    /// Allowed characters for tagging disposed entities.
+    /// </summary>
     public static readonly Regex TagRegex = new("^[a-zA-Z0-9, ]*$", RegexOptions.Compiled);
 
     public override void Initialize()
@@ -376,10 +379,20 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
     }
 
     /// <summary>
-    /// Expels the atmos of a disposal holder into its surrounding environment.
+    /// Expels the atmos of a disposal holder back into its surrounding environment.
     /// </summary>
     /// <param name="ent">The disposal holder.</param>
     protected virtual void ExpelAtmos(Entity<DisposalHolderComponent> ent)
+    {
+        // Handled by the server
+    }
+
+    /// <summary>
+    /// Transfer the atmos of a disposal unit into the disposal holder it is launching.
+    /// </summary>
+    /// <param name="ent">The disposal holder.</param>
+    /// <param name="unit">The disposal unit.</param>
+    public virtual void TransferAtmos(Entity<DisposalHolderComponent> ent, Entity<DisposalUnitComponent> unit)
     {
         // Handled by the server
     }

@@ -3,6 +3,10 @@ using Content.Shared.Disposal.Tube;
 
 namespace Content.Shared.Disposal.SignalRouter;
 
+/// <summary>
+/// This handles the emission of signals when entities in disposals
+/// pass through a disposal tube with a <see cref="DisposalSignallerComponent"/>.
+/// </summary>
 public sealed class DisposalSignallerSystem : EntitySystem
 {
     [Dependency] private readonly SharedDeviceLinkSystem _link = default!;

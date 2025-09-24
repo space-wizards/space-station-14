@@ -7,6 +7,10 @@ using System.Linq;
 
 namespace Content.Shared.Disposal.Router;
 
+/// <summary>
+/// This system handles the routing of entities in disposals
+/// based on what tags they possess.
+/// </summary>
 public sealed partial class DisposalRouterSystem : EntitySystem
 {
     [Dependency] private readonly SharedDisposalHolderSystem _disposalHolder = default!;

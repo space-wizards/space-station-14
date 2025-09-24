@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Disposal.Tube;
 
 /// <summary>
-/// Attached to entities that are used to insert others into the disposal system.
+/// Attached to entities that are used as an entrance into the disposal system.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedDisposalTubeSystem), typeof(SharedDisposalUnitSystem))]

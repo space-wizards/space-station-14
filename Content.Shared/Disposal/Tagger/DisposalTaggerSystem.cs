@@ -6,6 +6,9 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Disposal.Tagger;
 
+/// <summary>
+/// Handles the tagging of entities moving through disposals.
+/// </summary>
 public sealed partial class DisposalTaggerSystem : EntitySystem
 {
     [Dependency] private readonly SharedDisposalHolderSystem _disposalHolder = default!;

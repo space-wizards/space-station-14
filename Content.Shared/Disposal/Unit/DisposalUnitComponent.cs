@@ -107,14 +107,21 @@ public sealed partial class DisposalUnitComponent : Component
     [DataField]
     public TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
 
+    /// <summary>
+    /// Sets whether the unit should automatically flush
+    /// after something is inserted into it.
+    /// </summary>
     [DataField]
     public bool AutomaticEngage = true;
 
+    /// <summary>
+    /// Delay for automatic flushing of the disposal unit.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public TimeSpan AutomaticEngageTime = TimeSpan.FromSeconds(30);
 
     /// <summary>
-    /// Delay from trying to enter disposals ourselves.
+    /// Delay for entities trying to enter disposals themselves.
     /// </summary>
     [DataField]
     public float EntryDelay = 0.5f;
@@ -240,7 +247,7 @@ public sealed class DisposalUnitUiButtonPressedMessage : BoundUserInterfaceMessa
 }
 
 /// <summary>
-/// UI key for disposal units.
+/// Key for the disposal unit UI.
 /// </summary>
 [Serializable, NetSerializable]
 public enum DisposalUnitUiKey : byte

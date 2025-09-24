@@ -6,8 +6,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Disposal.Components;
 
 /// <summary>
-/// Disposal holders that pass through this pipe will be marked with the specified tag.
-/// specified by <see cref="Tag"/>.
+/// Entities that pass through disposal tubes with this component can be marked with a tag.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(DisposalTaggerSystem))]
@@ -26,6 +25,9 @@ public sealed partial class DisposalTaggerComponent : Component
     public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 }
 
+/// <summary>
+/// Sends tag data from disposal tagger UIs to the server.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class DisposalTaggerUiActionMessage : BoundUserInterfaceMessage
 {
@@ -43,6 +45,9 @@ public sealed class DisposalTaggerUiActionMessage : BoundUserInterfaceMessage
     }
 }
 
+/// <summary>
+/// Sends tag data to disposal tagger UIs.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class DisposalTaggerUserInterfaceState : BoundUserInterfaceState
 {
@@ -54,12 +59,18 @@ public sealed class DisposalTaggerUserInterfaceState : BoundUserInterfaceState
     }
 }
 
+/// <summary>
+/// Type of UI action for the disposal taggers to take.
+/// </summary>
 [Serializable, NetSerializable]
 public enum DisposalTaggerUiAction
 {
     Ok
 }
 
+/// <summary>
+/// Key for opening disposal tagger UIs.
+/// </summary>
 [Serializable, NetSerializable]
 public enum DisposalTaggerUiKey
 {

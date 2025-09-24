@@ -11,6 +11,10 @@ namespace Content.Shared.Disposal.Unit;
 [Access(new[] { typeof(SharedDisposalTubeSystem), typeof(SharedDisposalHolderSystem) })]
 public sealed partial class DisposalHolderComponent : Component, IGasMixtureHolder
 {
+    /// <summary>
+    /// The container that holds any entities being moved through
+    /// the disposals system.
+    /// </summary>
     [DataField]
     public Container? Container;
 

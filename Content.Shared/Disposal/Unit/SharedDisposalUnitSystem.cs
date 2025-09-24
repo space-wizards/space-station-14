@@ -6,6 +6,7 @@ using Content.Shared.Containers;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.Disposal.Components;
+using Content.Shared.Disposal.Holder;
 using Content.Shared.Disposal.Tube;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
@@ -16,7 +17,6 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Content.Shared.Power;
@@ -28,7 +28,6 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
@@ -53,7 +52,8 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly SharedJointSystem _joints = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
-    [Dependency] private readonly SharedDisposalTubeSystem _disposalTubeSystem = default!;
+    [Dependency] private readonly SharedDisposalTubeSystem _disposalTube = default!;
+    [Dependency] private readonly SharedDisposalHolderSystem _disposalHolder = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
@@ -641,7 +641,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
         IntakeAir(ent, xform);
 
-        _disposalTubeSystem.TryInsert((entry.Value, entryComp, tubeComp), ent, beforeFlushArgs.Tags);
+        _disposalTube.TryInsert((entry.Value, entryComp, tubeComp), ent, beforeFlushArgs.Tags);
 
         ent.Comp.NextPressurized = _timing.CurTime;
         if (!ent.Comp.DisablePressure)
@@ -833,10 +833,10 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     }
 
     /// <summary>
-    /// Intakes the atmos surrounding the disposal unit into itself.
+    /// Takes the atmos surrounding the disposal unit into itself.
     /// </summary>
-    /// <param name="ent">The disposal holder.</param>
-    /// /// <param name="ent">The disposal unit.</param>
+    /// <param name="ent">The disposal unit.</param>
+    /// <param name="xform">The disposal unit's transform.</param>
     protected virtual void IntakeAir(Entity<DisposalUnitComponent> ent, TransformComponent xform)
     {
         // Handled by the server

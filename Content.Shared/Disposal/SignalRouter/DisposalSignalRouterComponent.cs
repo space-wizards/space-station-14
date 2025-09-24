@@ -6,9 +6,8 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Disposal.Tube;
 
 /// <summary>
-/// Disposal pipes with this component can switched to route entities in
+/// Disposal tubes with this component can switched to route entities in
 /// different directions by receiving signals from other devices.
-/// Requires a <see cref="DisposalTransitComponent"/> to function.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(DisposalSignalRouterSystem))]

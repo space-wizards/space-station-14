@@ -10,11 +10,15 @@ using System.Linq;
 
 namespace Content.Shared.Disposal.Tube;
 
+/// <summary>
+/// Handles the basic logic for determining which disposal tubes are connected
+/// and which direction entities inside the tubes should move next.
+/// </summary>
 public abstract partial class SharedDisposalTubeSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
-    [Dependency] private readonly SharedDisposalHolderSystem _disposableSystem = default!;
+    [Dependency] private readonly SharedDisposalHolderSystem _disposalHolder = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
@@ -194,7 +198,7 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
             }
         }
 
-        IntakeAtmos(holderEnt, unit);
+        _disposalHolder.TransferAtmos(holderEnt, unit);
 
         if (tags != null)
         {
@@ -202,17 +206,7 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
             Dirty(holderEnt);
         }
 
-        return _disposableSystem.TryEnterTube(holderEnt, (ent, ent.Comp2));
-    }
-
-    /// <summary>
-    /// Intakes the atmos of disposal unit into a disposal holder.
-    /// </summary>
-    /// <param name="ent">The disposal holder.</param>
-    /// /// <param name="ent">The disposal unit.</param>
-    protected virtual void IntakeAtmos(Entity<DisposalHolderComponent> ent, Entity<DisposalUnitComponent> unit)
-    {
-        // Handled by the server
+        return _disposalHolder.TryEnterTube(holderEnt, (ent, ent.Comp2));
     }
 
     /// <summary>

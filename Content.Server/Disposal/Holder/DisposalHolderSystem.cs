@@ -1,4 +1,5 @@
 using Content.Server.Atmos.EntitySystems;
+using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Holder;
 using Content.Shared.Disposal.Tube;
 using Content.Shared.Disposal.Unit;
@@ -16,6 +17,13 @@ public sealed partial class DisposalHolderSystem : SharedDisposalHolderSystem
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly TileSystem _tile = default!;
+
+    /// <inheritdoc/>
+    public override void TransferAtmos(Entity<DisposalHolderComponent> ent, Entity<DisposalUnitComponent> unit)
+    {
+        _atmos.Merge(ent.Comp.Air, unit.Comp.Air);
+        unit.Comp.Air.Clear();
+    }
 
     /// <inheritdoc/>
     protected override void ExpelAtmos(Entity<DisposalHolderComponent> ent)

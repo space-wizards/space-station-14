@@ -5,6 +5,10 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Disposal.Components;
 
+/// <summary>
+/// Attached to dipsoal tubes that can direct entities down different
+/// paths depending on what tags they both possess.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(DisposalRouterSystem))]
 public sealed partial class DisposalRouterComponent : Component
@@ -24,6 +28,9 @@ public sealed partial class DisposalRouterComponent : Component
     public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 }
 
+/// <summary>
+/// Key for opening the disposal router UI.
+/// </summary>
 [Serializable, NetSerializable]
 public enum DisposalRouterUiKey
 {

@@ -69,8 +69,11 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     }
 
     /// <summary>
-    /// Update visuals and tick animation
+    /// Updates the animation of a disposal unit.
     /// </summary>
+    /// <param name="ent">The disposal unit.</param>
+    /// <param name="sprite">The disposal unit's sprite.</param>
+    /// <param name="appearance">The disposal unit's appearance.</param>
     private void UpdateState(Entity<DisposalUnitComponent> ent, SpriteComponent sprite, AppearanceComponent appearance)
     {
         if (!_appearanceSystem.TryGetData<bool>(ent, DisposalUnitVisuals.IsFlushing, out var isFlushing, appearance))

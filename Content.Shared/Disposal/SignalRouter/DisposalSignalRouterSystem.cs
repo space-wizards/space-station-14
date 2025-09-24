@@ -6,7 +6,7 @@ using System.Linq;
 namespace Content.Shared.Disposal.SignalRouter;
 
 /// <summary>
-/// Handles signals and the routing get next direction event.
+/// Handles signal-based routing for entities in the disposal system.
 /// </summary>
 public sealed class DisposalSignalRouterSystem : EntitySystem
 {
