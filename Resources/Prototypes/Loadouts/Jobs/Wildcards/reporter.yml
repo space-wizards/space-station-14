@@ -8,14 +8,3 @@
   id: JournalistJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitJournalist
-
-# Jumpskirt
-- type: loadout
-  id: ReporterJumpskirt
-  equipment:
-    Jumpskirt : ClothingUniformJumpskirtReporter
-
-- type: loadout
-  id: JournalistJumpskirt
-  equipment:
-    Jumpskirt : ClothingUniformJumpskirtJournalist
