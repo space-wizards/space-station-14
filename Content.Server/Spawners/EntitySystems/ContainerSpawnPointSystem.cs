@@ -22,7 +22,7 @@ public sealed class ContainerSpawnPointSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<PlayerSpawningEvent>(HandlePlayerSpawning, before: new []{ typeof(SpawnPointSystem) });
+        SubscribeLocalEvent<PlayerSpawningEvent>(HandlePlayerSpawning, before: new[] { typeof(SpawnPointSystem) });
     }
 
     public void HandlePlayerSpawning(PlayerSpawningEvent args)

@@ -469,6 +469,7 @@
   components:
   - type: SpawnPoint
     job_id: SecurityOfficer
+
   - type: Sprite
     layers:
       - state: green
