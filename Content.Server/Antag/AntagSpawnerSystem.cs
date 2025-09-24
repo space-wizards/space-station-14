@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Antag.Components;
 
 namespace Content.Server.Antag;
