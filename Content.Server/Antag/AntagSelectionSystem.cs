@@ -608,6 +608,7 @@ public record struct AntagSelectEntityEvent(ICommonSession? Session, Entity<Anta
 {
     public readonly ICommonSession? Session = Session;
 
+    /// list of antag role prototypes associated with a entity. used by the <see cref="AntagMultipleRoleSpawnerComponent"/>
     public readonly List<ProtoId<AntagPrototype>> AntagRoles = AntagRoles;
 
     public bool Handled => Entity != null;
