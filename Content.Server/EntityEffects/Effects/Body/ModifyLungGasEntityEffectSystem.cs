@@ -6,8 +6,8 @@ namespace Content.Server.EntityEffects.Effects.Body;
 
 public sealed partial class ModifyLungGasEntityEffectSystem : EntityEffectSystem<LungComponent, ModifyLungGas>
 {
-    // TODO: KILL KILL KILL KILL KILL KILL KILL KILL KILL KILL KILL KILL KILL KILL KILL
-    // TODO: It might be time to bite the bullet and implement gas entity effects...
+    // TODO: I hate it here...
+    // TODO: This currently doesn't work don't forget to fix it!
     protected override void Effect(Entity<LungComponent> entity, ref EntityEffectEvent<ModifyLungGas> args)
     {
         var amount = args.Scale;

@@ -24,7 +24,7 @@ public sealed partial class AreaReactionEntityEffectsSystem : SharedAreaReaction
     [Dependency] private readonly SpreaderSystem _spreader = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
 
-    // TODO: WHAT IF WE WANT TO MAKE SMOKE WITHOUT REAGENTS???
+    // TODO: A sane way to make Smoke without a solution.
     protected override void Effect(Entity<SolutionComponent> entity, ref EntityEffectEvent<AreaReactionEffect> args)
     {
         var xform = Transform(entity);
@@ -41,10 +41,8 @@ public sealed partial class AreaReactionEntityEffectsSystem : SharedAreaReaction
         var coords = _map.MapToGrid(gridUid, mapCoords);
         var ent = Spawn(args.Effect.PrototypeId, coords.SnapToGrid());
 
-        // TODO: TEMP CHANGE FOR MY SANITY CHANGE THIS LATER!!!
         _smoke.StartSmoke(ent, entity.Comp.Solution, args.Effect.Duration, spreadAmount);
 
         _audio.PlayPvs(args.Effect.Sound, entity, AudioParams.Default.WithVariation(0.25f));
-
     }
 }

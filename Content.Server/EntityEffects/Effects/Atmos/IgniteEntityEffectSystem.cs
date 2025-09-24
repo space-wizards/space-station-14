@@ -11,8 +11,7 @@ public sealed partial class IngiteEntityEffectSystem : EntityEffectSystem<Flamma
 
     protected override void Effect(Entity<FlammableComponent> entity, ref EntityEffectEvent<Ignite> args)
     {
-        // TODO: This no longer allows for you to set your organs on fire, but that didn't do anything anywas.
-        // TODO: Metabolism just needs to properly relay effects to their organs for this to work.
+        // TODO: Proper BodySystem Metabolism Effect relay...
         // TODO: If this fucks over downstream shitmed, I give you full approval to use whatever shitcode method you need to fix it. Metabolism is awful.
         _flammable.Ignite(entity, entity, flammable: entity.Comp);
     }
