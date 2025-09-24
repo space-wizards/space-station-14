@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Antag.Components;
 
 /// <summary>
-///
+/// Spawns multiple prototypes for each antag prototype selected by the <see cref="AntagSelectionSystem"/>
 /// </summary>
 [RegisterComponent]
 public sealed partial class AntagMultipleRoleSpawnerComponent : Component
