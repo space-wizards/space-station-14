@@ -42,7 +42,7 @@ public sealed class ChemistryJsonGenerator
             Converters =
             {
                 new UniversalJsonConverter<AnyEntityEffect>(),
-                new UniversalJsonConverter<EntityEffectCondition>(),
+                new UniversalJsonConverter<AnyEntityCondition>(),
                 new UniversalJsonConverter<ReagentEffectsEntry>(),
                 new UniversalJsonConverter<DamageSpecifier>(),
                 new FixedPointJsonConverter()
