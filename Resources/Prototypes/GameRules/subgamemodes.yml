@@ -104,8 +104,7 @@
       mindRoles:
       - MindRoleXenoborg
       min: 4
-      max: 6
-      playerRatio: 20
+      max: 4
       briefing:
         text: xenoborgs-welcome
         color: blueViolet
