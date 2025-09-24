@@ -22,7 +22,7 @@ public sealed partial class XenoborgComponent : Component
     /// The text that is sent when you become a xenoborg
     /// </summary>
     [DataField]
-    public string BriefingText = "xenoborgs-welcome";
+    public LocId BriefingText = "xenoborgs-welcome";
 
     /// <summary>
     /// Briefing sound when you become a xenoborg
