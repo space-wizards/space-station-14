@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: archee1
-  changes:
-  - message: Bike horns of all varieties have had their textures updated slightly.
-    type: Tweak
-  id: 8487
-  time: '2025-05-14T22:05:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37413
 - author: slarticodefast
   changes:
   - message: Fixed paradox clones not copying the mute, snoring and frontal lisp traits.
@@ -3953,3 +3946,10 @@
   id: 8997
   time: '2025-09-24T00:12:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37982
+- author: Kittygyat
+  changes:
+  - message: Added 4 diagnostic huds to the engi-vend
+    type: Add
+  id: 8998
+  time: '2025-09-24T04:19:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40461
