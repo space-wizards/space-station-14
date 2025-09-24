@@ -23,10 +23,11 @@
   <Box>
     <GuideEntityEmbed Entity="BorgChassisGeneric" Caption="Generic"/>
     <GuideEntityEmbed Entity="BorgChassisEngineer" Caption="Engineering"/>
-    <GuideEntityEmbed Entity="BorgChassisMining" Caption="Salvage"/>
     <GuideEntityEmbed Entity="BorgChassisJanitor" Caption="Janitor"/>
-    <GuideEntityEmbed Entity="BorgChassisService" Caption="Service"/>
     <GuideEntityEmbed Entity="BorgChassisMedical" Caption="Medical"/>
+    <GuideEntityEmbed Entity="BorgChassisMining" Caption="Salvage"/>
+    <GuideEntityEmbed Entity="BorgChassisScience" Caption="Science"/>
+    <GuideEntityEmbed Entity="BorgChassisService" Caption="Service"/>
   </Box>
   <Box>
     [italic]Examples of various cyborg types[/italic]
@@ -48,7 +49,7 @@
     [italic]Examples of generic modules[/italic]
   </Box>
 
-  For more specific needs, [color=#a4885c]specialized[/color] modules are available, granting capabilities like scanning anomalies, constructing walls, reviving crew mates, or cleaning a space lube spill. These modules are typically colored with the same palette as the department [italic](or occupation)[/italic] they relate to. These modules [italic](with exception to [color=#D381C9]science[/color] modules, which can fit any chassis,)[/italic] can only be fitted in their associated borg chassis. [bold]The specialized borg chassis, being the engineering, janitorial, service, medical, and mining chassis, can fit up to three additional modules.[/bold]
+  For more specific needs, [color=#a4885c]specialized[/color] modules are available, granting capabilities like scanning anomalies, constructing walls, reviving crew mates, or cleaning a space lube spill. These modules are typically colored with the same palette as the department [italic](or occupation)[/italic] they relate to. These modules can only be fitted in their associated borg chassis. [bold]The specialized borg chassis, being the engineering, janitorial, medical, salvage, science, and service chassis, can fit up to three additional modules.[/bold]
   <Box>
     <GuideEntityEmbed Entity="BorgModuleAnomaly" Caption="Anomaly"/>
     <GuideEntityEmbed Entity="BorgModuleRCD" Caption="RCD"/>

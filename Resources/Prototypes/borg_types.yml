@@ -196,7 +196,7 @@
   dummyPrototype: BorgChassisScience
 
   # Functional
-  extraModuleCount: 5
+  extraModuleCount: 3
   moduleWhitelist:
     tags:
     - BorgModuleGeneric

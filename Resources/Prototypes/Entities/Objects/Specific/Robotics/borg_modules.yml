@@ -1009,7 +1009,7 @@
   - type: Sprite
     layers:
     - state: science
-    - state: icon-anomalies
+    - state: icon-anomalies-adv
   - type: ItemBorgModule
     hands:
     - item: AnomalyScanner
@@ -1022,7 +1022,7 @@
           tags:
           - AnomalyCore
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: anomaly-module }
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-anomaly-module }
 
 # service modules
 - type: entity
