@@ -571,7 +571,7 @@ public sealed partial class ClimbSystem : VirtualController
 
         _damageableSystem.TryChangeDamage(args.Climber, component.ClimberDamage, origin: args.Climber);
         _damageableSystem.TryChangeDamage(uid, component.TableDamage, origin: args.Climber);
-        _stunSystem.TryParalyze(args.Climber, TimeSpan.FromSeconds(component.StunTime), true);
+        _stunSystem.TryUpdateParalyzeDuration(args.Climber, TimeSpan.FromSeconds(component.StunTime));
 
         // Not shown to the user, since they already get a 'you climb on the glass table' popup
         _popupSystem.PopupEntity(

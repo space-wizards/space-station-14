@@ -1479,3 +1479,17 @@
   flavorType: Base
   description: flavor-base-trashy
 
+- type: flavor
+  id: artifactglue
+  flavorType: Complex
+  description: flavor-complex-artifact-glue
+
+- type: flavor
+  id: alkaline
+  flavorType: Base
+  description: flavor-base-alkaline
+
+- type: flavor
+  id: motivating
+  flavorType: Base
+  description: flavor-base-motivating
