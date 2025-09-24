@@ -10,7 +10,7 @@ namespace Content.Server.Antag.Components;
 public sealed partial class AntagMultipleRoleSpawnerComponent : Component
 {
     /// <summary>
-    ///     Antag prototype -> List of entities to spawn for that prototype
+    ///     antag prototype -> list of possible entities to spawn for that antag prototype. Will choose from the list randomly once with replacement unless <see cref="PickAndTake"/> is set to true
     /// </summary>
     [DataField]
     public Dictionary<ProtoId<AntagPrototype>, List<EntProtoId>> AntagRoleToPrototypes;
