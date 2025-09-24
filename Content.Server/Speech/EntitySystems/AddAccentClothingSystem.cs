@@ -1,5 +1,6 @@
 using Content.Server.Speech.Components;
 using Content.Shared.Clothing;
+using Content.Shared.Traits.Assorted;
 
 namespace Content.Server.Speech.EntitySystems;
 
@@ -16,6 +17,9 @@ public sealed class AddAccentClothingSystem : EntitySystem
 //  TODO: Turn this into a relay event.
     private void OnGotEquipped(EntityUid uid, AddAccentClothingComponent component, ref ClothingGotEquippedEvent args)
     {
+        if (HasComp<AccentlessComponent>(args.Wearer))
+            return;
+
         // does the user already has this accent?
         var componentType = Factory.GetRegistration(component.Accent).Type;
         if (HasComp(args.Wearer, componentType))
