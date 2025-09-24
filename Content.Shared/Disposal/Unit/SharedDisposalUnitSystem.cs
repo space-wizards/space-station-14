@@ -646,11 +646,11 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             ent.Comp.NextPressurized += TimeSpan.FromSeconds(1f / ent.Comp.PressurePerSecond);
 
         ent.Comp.Engaged = false;
-        // stop queuing NOW
         ent.Comp.NextFlush = null;
 
-        UpdateVisualState(ent);
         Dirty(ent);
+
+        UpdateVisualState(ent);
         UpdateUI(ent);
 
         return true;
