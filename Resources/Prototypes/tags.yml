@@ -980,9 +980,6 @@
   id: MopBasic
 
 - type: Tag
-  id: MothershipCore
-
-- type: Tag
   id: MothershipModule
 
 - type: Tag
@@ -1546,9 +1543,6 @@
 
 - type: Tag
   id: WriteIgnoreStamps
-
-- type: Tag
-  id: Xenoborg
 
 - type: Tag
   id: XenoborgModuleEngi

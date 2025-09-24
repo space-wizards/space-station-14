@@ -20,12 +20,6 @@ public sealed partial class SpawnPointComponent : Component, ISpawnPoint
     [DataField("spawn_type"), ViewVariables(VVAccess.ReadWrite)]
     public SpawnPointType SpawnType { get; set; } = SpawnPointType.Unset;
 
-    /// <summary>
-    /// Whitelist of entities that can be spawned at this SpawnPoint
-    /// </summary>
-    [DataField]
-    public EntityWhitelist? SpawnWhitelist;
-
     public override string ToString()
     {
         return $"{Job} {SpawnType}";

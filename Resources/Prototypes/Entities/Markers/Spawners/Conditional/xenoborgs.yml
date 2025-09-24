@@ -3,12 +3,14 @@
   parent: MarkerBase
   name: mothership core
   components:
-  - type: SpawnPoint
-    spawnWhitelist:
+  - type: GridSpawnPointWhitelist
+    whitelist:
       components:
       - Xenoborg
-      tags:
-      - Xenoborg
+    blacklist:
+      components:
+      - MothershipCore
+  - type: SpawnPoint
   - type: Sprite
     layers:
     - state: green
@@ -20,12 +22,11 @@
   parent: MarkerBase
   name: xenoborgs
   components:
-  - type: SpawnPoint
-    spawnWhitelist:
+  - type: GridSpawnPointWhitelist
+    whitelist:
       components:
       - MothershipCore
-      tags:
-      - MothershipCore
+  - type: SpawnPoint
   - type: Sprite
     layers:
     - state: green
