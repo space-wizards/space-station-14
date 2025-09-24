@@ -65,7 +65,7 @@ public sealed class RuleGridsSystem : GameRuleSystem<RuleGridsComponent>
             if (_whitelist.IsWhitelistFail(ent.Comp.SpawnerWhitelist, uid))
                 continue;
 
-            if (args.Entity != null && _whitelist.IsBlacklistFail(spawnPointComp.SpawnWhitelist, args.Entity.Value))
+            if (_whitelist.IsWhitelistFail(spawnPointComp.SpawnWhitelist, args.Entity))
                 continue;
 
             args.Coordinates.Add(_transform.GetMapCoordinates(xform));

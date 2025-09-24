@@ -81,11 +81,11 @@
     minPlayers: 40
   - type: LoadMapRule
     gridPath: /Maps/Shuttles/mothership.yml
-  - type: AntagSpawner
-    prototype: XenoborgEngi
-    prototypes:
+  - type: AntagMultipleRoleSpawner
+    antagRoleToPrototypes:
       MothershipCore: [ MothershipCore ]
       Xenoborg: [ XenoborgEngi, XenoborgHeavy, XenoborgScout, XenoborgStealth ]
+    pickAndTake: true
   - type: AntagSelection
     selectionTime: PrePlayerSpawn
     definitions:
@@ -94,7 +94,6 @@
       spawnerPrototype: SpawnPointGhostRoleMothershipCore
       mindRoles:
       - MindRoleMothershipCore
-      # entityPrototype: MothershipCore
       briefing:
         text: mothership-welcome
         color: blueViolet
