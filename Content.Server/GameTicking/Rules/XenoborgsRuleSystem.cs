@@ -140,5 +140,4 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
 
         return numberMothershipCores;
     }
-
 }
