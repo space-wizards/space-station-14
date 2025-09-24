@@ -41,6 +41,10 @@
     size: Normal
     shape:
     - 0,0,0,1
+  - type: MobilityAid
+    isMakeshift: true
+    effectiveness: 0.65
+    tripChance: 0.15 # too short to realistically let you use it to walk without tripping
 
 # Standard (grey) Crowbar
 - type: entity

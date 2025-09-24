@@ -117,6 +117,13 @@
     inHandsMaxFillLevels: 1
     equippedFillBaseName: -fill-
     equippedMaxFillLevels: 1
+  - type: MobilityAid #sure can try
+    isMakeshift: true
+    effectiveness: 0.5
+    tripChance: 0.25
+    tripDamage:
+      types:
+        Pierce: 5
 
 
 - type: entity
