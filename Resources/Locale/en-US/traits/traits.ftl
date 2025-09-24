@@ -79,5 +79,5 @@ mobility-aid-trait-trip-self-dangerous = You trip over your {$mobilityAid} and i
 mobility-aid-trait-trip-others-dangerous = {CAPITALIZE(SUBJECT($user))} trips and falls over {POSS-ADJ($user)} {$mobilityAid}, injuring themselves!
 
 mobility-aid-examine-proper = [color=lightblue]This can be used as a mobility aid.[/color]
-mobility-aid-examine-makeshift = [color=yellow]This could work as an improvised mobility aid, though its not very effective and may cause you to trip.[/color]
-mobility-aid-examine-makeshift-dangerous = [color=red]This could work as an improvised mobility aid, but its not very effective and could seriously injure you if you trip![/color]
+mobility-aid-examine-makeshift = [color=yellow]This could work as an improvised mobility aid, though it's not very effective and may cause you to trip.[/color]
+mobility-aid-examine-makeshift-dangerous = [color=red]This could work as an improvised mobility aid, but it's not very effective and could seriously injure you if you trip![/color]
