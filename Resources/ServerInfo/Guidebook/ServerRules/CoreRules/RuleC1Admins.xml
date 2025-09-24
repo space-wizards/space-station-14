@@ -1,6 +1,6 @@
 ﻿<Document>
   # Core Rule 1 - Listen to admins and use ahelp
-  Admin help ("ahelp") is a system for admins to communicate with players, log issues, and provide in-game interventions. All ahelps are relayed to Discord.
+  Admin help ("ahelp") is a system for admins to communicate with players, log issues, and provide in-game interventions. All ahelps are relayed privately to admins to Discord.
 
   Players must listen to admins without debating rules. Admins may intervene, make final interpretations, and override rules to improve overall community experience, but are held accountable when exercising this privilege. (Server rules are not perfect and may not fit every situation.)
 
