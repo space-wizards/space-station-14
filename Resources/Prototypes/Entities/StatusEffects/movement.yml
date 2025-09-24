@@ -20,6 +20,11 @@
 
 - type: entity
   parent: StatusEffectSlowdown
+  id: DiseaseSlowdownStatusEffect
+  name: disease slowdown
+
+- type: entity
+  parent: StatusEffectSlowdown
   id: TaserSlowdownStatusEffect
   name: shot by taser slowdown
 

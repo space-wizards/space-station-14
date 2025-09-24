@@ -1,0 +1,100 @@
+- type: diseaseSymptom
+  id: SymptomCough
+  name: disease-symptom-name-SymptomCough
+  onlyWhenAlive: true
+  airborneBurst:
+    rangeMultiplier: 1.75
+    chanceMultiplier: 1.5
+  cureDuration: 120
+  cureSteps:
+  - !type:CureReagent
+    requirements:
+    - reagentId: Salbutamol
+      quantity: 2
+    - reagentId: Perfluorodecalin
+      quantity: 2
+  behaviors:
+  - !type:SymptomEmote
+    emoteId: Cough
+
+- type: diseaseSymptom
+  id: SymptomSneeze
+  name: disease-symptom-name-SymptomSneeze
+  onlyWhenAlive: true
+  airborneBurst:
+    rangeMultiplier: 2.5
+    chanceMultiplier: 2.5
+  cureDuration: 120
+  cureSteps:
+  - !type:CureReagent
+    requirements:
+    - reagentId: Salbutamol
+      quantity: 2
+    - reagentId: Perfluorodecalin
+      quantity: 2
+  behaviors:
+  - !type:SymptomEmote
+    emoteId: Sneeze
+
+- type: diseaseSymptom
+  id: SymptomGasp
+  name: disease-symptom-name-SymptomGasp
+  onlyWhenAlive: true
+  behaviors:
+  - !type:SymptomEmote
+    emoteId: Gasp
+
+- type: diseaseSymptom
+  id: SymptomEmoteHonk
+  name: disease-symptom-name-SymptomEmoteCat
+  onlyWhenAlive: true
+  behaviors:
+  - !type:SymptomEmote
+    emoteId: Honk
+
+- type: diseaseSymptom
+  id: SymptomEmoteCat
+  name: disease-symptom-name-SymptomEmoteCat
+  singleBehavior: true
+  onlyWhenAlive: true
+  behaviors:
+  - !type:SymptomEmote
+    emoteId: CatMeow
+  - !type:SymptomEmote
+    emoteId: CatHisses
+
+- type: diseaseSymptom
+  id: SymptomEmoteGroan
+  name: disease-symptom-name-SymptomEmoteGroan
+  onlyWhenAlive: true
+  behaviors:
+  - !type:SymptomEmote
+    emoteId: Groan
+
+- type: diseaseSymptom
+  id: SymptomEmoteMoan
+  name: disease-symptom-name-SymptomEmoteMoan
+  onlyWhenAlive: true
+  behaviors:
+  - !type:SymptomEmote
+    emoteId: Moan
+
+# Shout
+
+- type: diseaseSymptom
+  id: SymptomHonkShout
+  name: disease-symptom-name-SymptomHonkShout
+  probability: 0.05
+  onlyWhenAlive: true
+  behaviors:
+  - !type:SymptomShout
+    pack: DiseaseHonkShouts
+
+- type: diseaseSymptom
+  id: SymptomMonkeyShout
+  name: disease-symptom-name-SymptomMonkeyShout
+  probability: 0.05
+  onlyWhenAlive: true
+  behaviors:
+  - !type:SymptomShout
+    pack: DiseaseMonkeyShouts

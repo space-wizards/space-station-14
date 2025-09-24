@@ -19,7 +19,7 @@
   chatTriggers:
     - cough
     - coughs
-    - coughed 
+    - coughed
     - cough.
     - coughs.
     - coughed.
@@ -72,3 +72,15 @@
   name: chat-emote-name-snore
   category: Vocal
   chatMessages: ["chat-emote-msg-snore"]
+
+- type: emote
+  id: Moan
+  name: chat-emote-name-moan
+  category: Vocal
+  chatMessages: ["chat-emote-msg-moan"]
+
+- type: emote
+  id: Groan
+  name: chat-emote-name-groan
+  category: Vocal
+  chatMessages: ["chat-emote-msg-groan"]

@@ -1,0 +1,36 @@
+- type: diseaseSymptom
+  id: SymptomTransitionToFlu
+  name: disease-symptom-name-SymptomTransitionToFlu
+  probability: 0.005
+  behaviors:
+  - !type:SymptomTransitionDisease
+    disease: DiseaseFlu
+
+- type: diseaseSymptom
+  id: SymptomVomiting
+  name: disease-symptom-name-SymptomVomiting
+  probability: 0.05
+  cureDuration: 120
+  cureSteps:
+  - !type:CureReagent
+    requirements:
+    - reagentId: Charcoal
+      quantity: 5
+  behaviors:
+  - !type:SymptomVomit
+
+- type: diseaseSymptom
+  id: SymptomNarcolepsy
+  name: disease-symptom-name-SymptomNarcolepsy
+  cureDuration: 400
+  cureSteps:
+  - !type:CureReagent
+    requirements:
+    - reagentId: Ethyloxyephedrine
+      quantity: 5
+  - !type:CureReagent
+    requirements:
+    - reagentId: Diphenylmethylamine
+      quantity: 3
+  behaviors:
+  - !type:SymptomNarcolepsy

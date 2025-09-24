@@ -1,0 +1,11 @@
+- type: localizedDataset
+  id: DiseaseHonkShouts
+  values:
+    prefix: disease-honk-
+    count: 3
+
+- type: localizedDataset
+  id: DiseaseMonkeyShouts
+  values:
+    prefix: disease-monkey-
+    count: 10

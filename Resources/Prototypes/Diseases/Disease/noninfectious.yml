@@ -1,0 +1,35 @@
+- type: disease
+  id: DiseaseFoodPoisoning
+  name: disease-name-DiseaseFoodPoisoning
+  desc: disease-desc-DiseaseFoodPoisoning
+  spreadFlags: [NonContagious]
+  stageProb: 0.03
+  cureSteps:
+  - !type:CureReagent
+    cureChance: 0.1
+    requirements:
+    - reagentId: ChickenSoup # TODO: need to add a dish.
+  - !type:CureWait
+    requiredTicks: 300
+  stages:
+  - stage: 1
+    sensations:
+    - sensation: disease-sensation-queasy
+    - sensation: disease-sensation-stomach-weird
+  - stage: 2
+    sensations:
+    - sensation: disease-sensation-stomach-ache
+    - sensation: disease-sensation-nausea
+    symptoms:
+    - symptom: SymptomEmoteGroan
+      probability: 0.1
+  - stage: 3
+    sensations:
+    - sensation: disease-sensation-stomach-hurt
+    - sensation: disease-sensation-sick
+    symptoms:
+    - symptom: SymptomVomiting
+    - symptom: SymptomEmoteGroan
+      probability: 0.1
+    - symptom: SymptomEmoteMoan
+      probability: 0.1

@@ -18,6 +18,7 @@
     - id: MouseMigration
     - id: PowerGridCheck
     - id: RandomSentience
+    - id: RandomDisease
     - id: SlimesSpawn
     - id: SolarFlare
     - id: SnakeSpawn
@@ -694,6 +695,31 @@
     weight: 10
   - type: RandomSpawnRule
     prototype: RandomSatchelSpawner
+
+- type: entity
+  id: DiseaseOutbreak
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-disease-outbreak-announcement
+    startAudio:
+      path: /Audio/Announcements/outbreak7.ogg
+      params:
+        volume: -4
+    weight: 5
+    duration: 1
+    earliestStart: 15
+  - type: RandomDiseaseRule
+    disease:
+    - DiseaseCold
+    - DiseaseCold9
+    - DiseaseFlu
+    - DiseaseFakeGBS
+    - DiseaseNarcolepsySyndrome
+    - DiseaseAMIV
+    minInfections: 2
+    maxInfections: 5
 
 - type: entity
   parent: BaseGameRule

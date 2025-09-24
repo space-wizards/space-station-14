@@ -758,6 +758,38 @@
         type: Remove
 
 - type: reagent
+  id: Salbutamol
+  name: reagent-name-salbutamol
+  group: Medicine
+  desc: reagent-desc-salbutamol
+  physicalDesc: reagent-physical-desc-odorless
+  flavor: medicine
+  color: "#7EC8E3"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Asphyxiation: -0.5
+
+- type: reagent
+  id: Perfluorodecalin
+  name: reagent-name-perfluorodecalin
+  group: Medicine
+  desc: reagent-desc-perfluorodecalin
+  physicalDesc: reagent-physical-desc-clear
+  flavor: medicine
+  color: "#AEE6FF"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Asphyxiation: -1
+
+- type: reagent
   id: TranexamicAcid
   name: reagent-name-tranexamic-acid
   group: Medicine
@@ -976,6 +1008,24 @@
         messages: ["ethyloxyephedrine-effect-feeling-awake", "ethyloxyephedrine-effect-clear-mind"]
         type: Local
         probability: 0.1
+
+- type: reagent
+  id: Spaceacillin
+  name: reagent-name-spaceacillin
+  group: Medicine
+  desc: reagent-desc-spaceacillin
+  physicalDesc: reagent-physical-desc-cloudy
+  flavor: bitter
+  color: "#A6D1FF"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -0.5
+      - !type:ChemCleanBloodstream
+        cleanseRate: 1
 
 - type: reagent
   id: Sigynate

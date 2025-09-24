@@ -19,6 +19,7 @@ using Content.Server.Spreader;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Server.Zombies;
+using Content.Server.Medical.Disease.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Body.Components;
@@ -26,6 +27,7 @@ using Content.Shared.Coordinates.Helpers;
 using Content.Shared.EntityEffects.EffectConditions;
 using Content.Shared.EntityEffects.Effects.PlantMetabolism;
 using Content.Shared.EntityEffects.Effects;
+using Content.Shared.Medical.Disease;
 using Content.Shared.EntityEffects;
 using Content.Shared.Flash;
 using Content.Shared.Maps;
@@ -75,6 +77,7 @@ public sealed class EntityEffectSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly VomitSystem _vomit = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private readonly DiseaseSystem _diseaseSystem = default!;
 
     public override void Initialize()
     {
@@ -126,6 +129,8 @@ public sealed class EntityEffectSystem : EntitySystem
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantSpeciesChange>>(OnExecutePlantSpeciesChange);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PolymorphEffect>>(OnExecutePolymorph);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<ResetNarcolepsy>>(OnExecuteResetNarcolepsy);
+        SubscribeLocalEvent<ExecuteEntityEffectEvent<CauseDisease>>(OnExecuteCauseDisease);
+        SubscribeLocalEvent<ExecuteEntityEffectEvent<CauseRandomDisease>>(OnExecuteCauseRandomDisease);
     }
 
     private void OnCheckTemperature(ref CheckEntityEffectConditionEvent<TemperatureCondition> args)
@@ -972,5 +977,44 @@ public sealed class EntityEffectSystem : EntitySystem
                 return;
 
         _narcolepsy.AdjustNarcolepsyTimer(args.Args.TargetEntity, args.Effect.TimerReset);
+    }
+
+    private void OnExecuteCauseDisease(ref ExecuteEntityEffectEvent<CauseDisease> args)
+    {
+        if (args.Args is EntityEffectReagentArgs reagentArgs)
+        {
+            if (args.Effect.RequireFullScale && reagentArgs.Scale != 1f)
+                return;
+        }
+
+        if (!TryComp<DiseaseCarrierComponent>(args.Args.TargetEntity, out var carrier))
+            return;
+
+        if (args.Effect.SkipIfAlreadyDiseased && carrier.ActiveDiseases.Count > 0)
+            return;
+
+        var disease = args.Effect.Disease;
+        _diseaseSystem.TryInfectWithChance(args.Args.TargetEntity, disease, 1f);
+    }
+
+    private void OnExecuteCauseRandomDisease(ref ExecuteEntityEffectEvent<CauseRandomDisease> args)
+    {
+        if (args.Effect.Diseases.Count == 0)
+            return;
+
+        if (args.Args is EntityEffectReagentArgs reagentArgs)
+        {
+            if (args.Effect.RequireFullScale && reagentArgs.Scale != 1f)
+                return;
+        }
+
+        if (!TryComp<DiseaseCarrierComponent>(args.Args.TargetEntity, out var carrier))
+            return;
+
+        if (args.Effect.SkipIfAlreadyDiseased && carrier.ActiveDiseases.Count > 0)
+            return;
+
+        var id = _random.Pick(args.Effect.Diseases);
+        _diseaseSystem.TryInfectWithChance(args.Args.TargetEntity, id, 1f);
     }
 }

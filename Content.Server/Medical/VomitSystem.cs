@@ -106,7 +106,7 @@ namespace Content.Server.Medical
 
             // Force sound to play as spill doesn't work if solution is empty.
             _audio.PlayPvs(_vomitSound, uid);
-            _popup.PopupEntity(Loc.GetString("disease-vomit", ("person", Identity.Entity(uid, EntityManager))), uid);
+            _popup.PopupEntity(Loc.GetString("disease-condition-vomit", ("person", Identity.Entity(uid, EntityManager))), uid);
         }
     }
 }

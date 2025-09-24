@@ -1,0 +1,39 @@
+- type: diseaseSymptom
+  id: SymptomToxin
+  name: disease-symptom-name-SymptomToxin
+  probability: 0.05
+  behaviors:
+  - !type:SymptomDamage
+    damage:
+      types:
+        Poison: 9
+
+- type: diseaseSymptom
+  id: SymptomToxinLight
+  name: disease-symptom-name-SymptomToxinLight
+  probability: 0.05
+  behaviors:
+  - !type:SymptomDamage
+    damage:
+      types:
+        Poison: 3
+
+- type: diseaseSymptom
+  id: SymptomGeneticDamage
+  name: disease-symptom-name-SymptomGeneticDamage
+  probability: 0.05
+  behaviors:
+  - !type:SymptomDamage
+    damage:
+      types:
+        Genetic: 1
+
+- type: diseaseSymptom
+  id: SymptomGib
+  name: disease-symptom-name-SymptomGib
+  probability: 0.05
+  behaviors:
+  - !type:SymptomDamage
+    damage:
+      types:
+        Blunt: 9999

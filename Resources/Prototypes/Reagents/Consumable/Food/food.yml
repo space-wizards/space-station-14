@@ -11,6 +11,11 @@
     Food:
       effects:
       - !type:SatiateHunger
+      - !type:CauseRandomDisease
+        probability: 0.002
+        diseases:
+        - DiseaseCold
+        - DiseaseFoodPoisoning
   plantMetabolism:
   - !type:PlantAdjustNutrition
     amount: 1.5

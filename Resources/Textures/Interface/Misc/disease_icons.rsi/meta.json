@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "size": {
+        "x": 8,
+        "y": 8
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from /tg/station at commit https://github.com/tgstation/tgstation/commit/20ae083f140ac5b4da7e8bc40f95349001b6c086",
+    "states": [
+        {
+            "name": "buff"
+        },
+        {
+            "name": "ill"
+        }
+    ]
+}

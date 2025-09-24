@@ -1,0 +1,32 @@
+- type: diseaseSymptom
+  id: SymptomFever
+  name: disease-symptom-name-SymptomFever
+  probability: 1.0
+  cureDuration: 180
+  cureSteps:
+  - !type:CureReagent
+    requirements:
+    - reagentId: Haloperidol
+      quantity: 2
+    - reagentId: Synaptizine
+      quantity: 2
+  behaviors:
+  - !type:SymptomTemperature
+
+- type: diseaseSymptom
+  id: SymptomFreezeLight
+  name: disease-symptom-name-SymptomFreezeLight
+  probability: 1.0
+  behaviors:
+  - !type:SymptomTemperature
+    targetTemperature: 233.15 # -40.0 °C
+    stepTemperature: 7.5
+
+- type: diseaseSymptom
+  id: SymptomFreeze
+  name: disease-symptom-name-SymptomFreeze
+  probability: 1.0
+  behaviors:
+  - !type:SymptomTemperature
+    targetTemperature: 213.15 # -60.0 °C
+    stepTemperature: 15.0

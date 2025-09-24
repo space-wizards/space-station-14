@@ -276,6 +276,7 @@
   - type: FireVisuals
     alternateState: Standing
   - type: StunVisuals
+  - type: DiseaseCarrier
 
 - type: entity
   save: false

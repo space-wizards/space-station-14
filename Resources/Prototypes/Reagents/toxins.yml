@@ -533,6 +533,9 @@
           type: Vox
         reagent: Protein
         amount: 0.25
+      - !type:CauseDisease
+        probability: 0.05
+        disease: DiseaseFoodPoisoning
 
 - type: reagent
   id: Allicin

@@ -9,6 +9,7 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/mouth_swab.rsi
     state: icon
+  - type: DiseaseSample
   - type: Tag
     tags:
     - Recyclable
@@ -16,7 +17,7 @@
   - type: BotanySwab
   - type: GuideHelp
     guides:
-  # - Virology (when it's back)
+  # - Virology (when it will be written)
     - Botany
     - Chemicals
 
@@ -38,7 +39,7 @@
     capacity: 30
   - type: GuideHelp
     guides:
-  # - Virology (when it's back)
+  # - Virology (when it will be written)
     - Botany
     - Chemicals
 

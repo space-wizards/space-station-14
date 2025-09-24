@@ -1,0 +1,15 @@
+- type: diseaseSymptom
+  id: SymptomTransformClown
+  name: disease-symptom-name-SymptomTransformClown
+  probability: 0.5
+  behaviors:
+  - !type:SymptomAddComponent
+    component: Cluwne
+
+- type: diseaseSymptom
+  id: SymptomOwOAccent
+  name: disease-symptom-name-SymptomOwOAccent
+  probability: 1
+  behaviors:
+  - !type:SymptomAddComponent
+    component: OwOAccent
