@@ -81,15 +81,15 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
     private void OnLawProviderMindAdded(Entity<SiliconLawProviderComponent> ent, ref MindAddedMessage args)
     {
-        if (TryComp<XenoborgComponent>(ent, out var xenoborgComp))
+        if (TryComp<XenoborgComponent>(ent, out _))
         {
-            _xenoborgs.EnsureXenoborgRole(args.Mind, ent, xenoborgComp);
+            _xenoborgs.EnsureXenoborgRole(args.Mind, ent);
             return;
         }
 
-        if (TryComp<MothershipCoreComponent>(ent, out var mothershipComp))
+        if (TryComp<MothershipCoreComponent>(ent, out _))
         {
-            _xenoborgs.EnsureXenoborgCoreRole(args.Mind, ent, mothershipComp);
+            _xenoborgs.EnsureXenoborgCoreRole(args.Mind, ent);
             return;
         }
 
