@@ -1,11 +1,9 @@
-using System.Linq;
 using Content.Shared.DoAfter;
 using Content.Shared.EntityTable;
 using Content.Shared.RatKing.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.RatKing.Systems;
@@ -14,7 +12,6 @@ public sealed class RummagerSystem : EntitySystem
 {
     [Dependency] private readonly EntityTableSystem _entityTable =  default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
 
