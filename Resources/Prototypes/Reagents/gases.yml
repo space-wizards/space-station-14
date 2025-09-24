@@ -12,20 +12,12 @@
       effects:
       - !type:Oxygenate
         conditions:
-        - !type:MetabolizerType
-          type: Human
-      - !type:Oxygenate
-        conditions:
-        - !type:MetabolizerType
-          type: Animal
-      - !type:Oxygenate
-        conditions:
-        - !type:MetabolizerType
-          type: Rat
-      - !type:Oxygenate
-        conditions:
-        - !type:MetabolizerType
-          type: Plant
+        - !type:MetabolizerTypes
+          types:
+          - Human
+          - Animal
+          - Rat
+          - Plant
       # Convert Oxygen into CO2.
       - !type:ModifyLungGas
         conditions:
@@ -56,20 +48,12 @@
       effects:
       - !type:Oxygenate
         conditions:
-        - !type:MetabolizerType
-          type: Human
-      - !type:Oxygenate
-        conditions:
-        - !type:MetabolizerType
-          type: Animal
-      - !type:Oxygenate
-        conditions:
-        - !type:MetabolizerType
-          type: Rat
-      - !type:Oxygenate
-        conditions:
-        - !type:MetabolizerType
-          type: Plant
+        - !type:MetabolizerTypes
+          types:
+          - Human
+          - Animal
+          - Rat
+          - Plant
       # Convert Oxygen into CO2.
       - !type:ModifyLungGas
         conditions:
@@ -267,13 +251,11 @@
       effects:
       - !type:Oxygenate
         conditions:
-        - !type:MetabolizerType
-          type: Vox
-      - !type:Oxygenate
-        conditions:
-        - !type:MetabolizerType
-          type: Slime
-      # Converts Nitrogen into CO2
+        - !type:MetabolizerTypes
+          types:
+          - Vox
+          - Slime
+      # Converts Nitrogen into Ammonia
       - !type:ModifyLungGas
         conditions:
         - !type:MetabolizerType

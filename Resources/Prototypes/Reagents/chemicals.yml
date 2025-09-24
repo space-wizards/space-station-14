@@ -92,7 +92,9 @@
   reactiveEffects:
     Acidic:
       methods: [ Touch ]
-      minScale: 5
+      effects:
+      - !type:ArtifactUnlock
+        minScale: 5
 
 - type: reagent
   parent: Artifexium

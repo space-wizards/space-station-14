@@ -209,15 +209,22 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
                         switch (condition)
                         {
                             // Need specific handling of specific conditions since Metabolism is funny like that.
-                            case MetabolizerType when !_entityConditions.TryCondition(ent, condition):
-                            case MetabolizerTypes when !_entityConditions.TryCondition(ent, condition):
-                            case ReagentThreshold when !_entityConditions.TryCondition(soln.Value, condition):
-                                return false;
+                            case MetabolizerType:
+                            case MetabolizerTypes:
+                                if (_entityConditions.TryCondition(ent, condition))
+                                    continue;
+                                break;
+                            case ReagentThreshold:
+                                if (_entityConditions.TryCondition(soln.Value, condition))
+                                    continue;
+                                break;
                             default:
-                                if (!_entityConditions.TryCondition(actualEntity, condition))
-                                    return false;
+                                if (_entityConditions.TryCondition(actualEntity, condition))
+                                    continue;
                                 break;
                         }
+
+                        return false;
                     }
 
                     return true;
