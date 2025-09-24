@@ -27,9 +27,13 @@ public sealed class HailerSystem : SharedHailerSystem
         {
             bui.Update();
         }
-        else
+        else if (TryComp<MaskComponent>(ent, out var mask))
         {
-            _ui.TryOpenUi(ent.Owner, HailerUiKey.Key, ev.Performer, predicted: true);
+
+            if (!mask.IsToggled && ent.Comp.CurrentState == SecMaskState.Functional)
+            {
+                _ui.TryOpenUi(ent.Owner, HailerUiKey.Key, ev.Performer, predicted: true);
+            }
         }
     }
     #endregion

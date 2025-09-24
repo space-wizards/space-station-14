@@ -46,8 +46,7 @@ public abstract class SharedHailerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HailerComponent, ClothingGotEquippedEvent>(OnEquip);
-        SubscribeLocalEvent<HailerComponent, ClothingGotUnequippedEvent>(OnUnequip);
+        SubscribeLocalEvent<HailerComponent, ItemMaskToggledEvent>(OnMaskToggle);
         //SubscribeLocalEvent<HailerComponent, ExaminedEvent>(OnExamine);
         //SubscribeLocalEvent<HailerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
         //SubscribeLocalEvent<HailerComponent, GotEmaggedEvent>(OnEmagging);
@@ -57,39 +56,10 @@ public abstract class SharedHailerSystem : EntitySystem
         //SubscribeLocalEvent<HailerComponent, ToggleMaskEvent>(OnToggleMask);
     }
 
-    public List<HailOrder> GetOrders(Entity<HailerComponent> ent, EntityUid user)
+    private void OnMaskToggle(Entity<HailerComponent> ent, ref ItemMaskToggledEvent args)
     {
-        
-
-        //if (HasComp<EmaggedComponent>(ent))
-        //    return ent.Comp.Emagged;
-
-        //if (_combatMode.IsInCombatMode(user))
-        //    return ent.Comp.Combat;
-
-        return [];
-    }
-
-    private void OnEquip(Entity<HailerComponent> ent, ref ClothingGotEquippedEvent args)
-    {
-        var (uid, comp) = ent;
-
-        ent.Comp.User = args.Wearer;
-
-        if (comp.CurrentState != SecMaskState.Functional)
-            return;
-
-        //_actions.AddAction(args.Wearer, ref comp.ActionEntity, comp.Action, uid);
-    }
-
-    private void OnUnequip(Entity<HailerComponent> ent, ref ClothingGotUnequippedEvent args)
-    {
-        var (uid, comp) = ent;
-
-        if (comp.CurrentState != SecMaskState.Functional || !ent.Comp.User.HasValue)
-            return;
-        //_actions.RemoveAction(ent.Comp.User.Value, comp.ActionEntity);
-        ent.Comp.User = null;
+        if (TryComp<MaskComponent>(ent, out var mask) && mask.IsToggled)
+            _ui.CloseUi(ent.Owner, HailerUiKey.Key);
     }
 
     ////In case someone spawns with it ?
