@@ -38,20 +38,20 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
             if (!group.Contains(args.Method))
                 continue;
 
-            ApplyEffects(entity, val.Effects);
+            ApplyEffects(entity, val.Effects, args.ReagentQuantity.Quantity.Float());
         }
     }
 
-    public void ApplyEffects(EntityUid target, AnyEntityEffect[] effects)
+    public void ApplyEffects(EntityUid target, AnyEntityEffect[] effects, float scale = 1f)
     {
         // do all effects, if conditions apply
         foreach (var effect in effects)
         {
-            ApplyEffect(target, effect);
+            ApplyEffect(target, effect, scale);
         }
     }
 
-    public void ApplyEffect(EntityUid target, AnyEntityEffect effect)
+    public void ApplyEffect(EntityUid target, AnyEntityEffect effect, float scale = 1f)
     {
         // See if conditions apply
         if (!_condition.TryConditions(target, effect.Conditions))
@@ -71,12 +71,12 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
             );
         }*/
 
-        effect.RaiseEvent(target, this);
+        effect.RaiseEvent(target, this, scale);
     }
 
-    public void RaiseEffectEvent<T>(EntityUid target, T effect) where T : EntityEffectBase<T>
+    public void RaiseEffectEvent<T>(EntityUid target, T effect, float scale) where T : EntityEffectBase<T>
     {
-        var effectEv = new EntityEffectEvent<T>(effect);
+        var effectEv = new EntityEffectEvent<T>(effect, scale);
         RaiseLocalEvent(target, ref effectEv);
     }
 }
@@ -114,17 +114,17 @@ public abstract partial class EntityEffectSystem<T, TEffect> : EntitySystem wher
 
 public interface IEntityEffectRaiser
 {
-    void RaiseEffectEvent<T>(EntityUid target, T effect) where T : EntityEffectBase<T>;
+    void RaiseEffectEvent<T>(EntityUid target, T effect, float scale) where T : EntityEffectBase<T>;
 }
 
 public abstract partial class EntityEffectBase<T> : AnyEntityEffect where T : EntityEffectBase<T>
 {
-    public override void RaiseEvent(EntityUid target, IEntityEffectRaiser raiser)
+    public override void RaiseEvent(EntityUid target, IEntityEffectRaiser raiser, float scale)
     {
         if (this is not T type)
             return;
 
-        raiser.RaiseEffectEvent(target, type);
+        raiser.RaiseEffectEvent(target, type, scale);
     }
 }
 
@@ -132,7 +132,7 @@ public abstract partial class EntityEffectBase<T> : AnyEntityEffect where T : En
 [ImplicitDataDefinitionForInheritors]
 public abstract partial class AnyEntityEffect
 {
-    public abstract void RaiseEvent(EntityUid target, IEntityEffectRaiser raiser);
+    public abstract void RaiseEvent(EntityUid target, IEntityEffectRaiser raiser, float scale);
 
     [DataField]
     public AnyEntityCondition[]? Conditions;

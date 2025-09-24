@@ -187,10 +187,9 @@ namespace Content.Server.Body.Systems
                     }
 
                     var actualEntity = ent.Comp2?.Body ?? solutionEntityUid.Value;
-                    var args = new EntityEffectReagentArgs(actualEntity, EntityManager, ent, solution, mostToRemove, proto, null, scale);
 
                     // do all effects, if conditions apply
-                    _entityEffects.ApplyEffects(actualEntity, entry.Effects);
+                    _entityEffects.ApplyEffects(actualEntity, entry.Effects, scale);
                 }
 
                 // remove a certain amount of reagent
