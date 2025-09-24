@@ -53,3 +53,8 @@
 - type: lobbyBackground
   id: TritfireDragon
   background: /Textures/_Starlight/LobbyScreens/tritfire_dragon.webp
+
+- type: lobbyBackground
+  id: SecurityShowdown
+  background: /Textures/_Starlight/LobbyScreens/securityshowdown.webp
+  
