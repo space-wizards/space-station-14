@@ -23,7 +23,7 @@
 - type: entity
   parent: [ClothingHeadBase, BaseSecurityContraband]
   id: ClothingHeadHatBeretCorpsman
-  name: Corpsman's Beret
+  name: corpsman's beret
   description: Losing this hat is considered grounds for demotion.. Kidding, though you will be ridiculed by your fellow corpsmans.
   components:
   - type: Sprite
