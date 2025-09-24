@@ -65,7 +65,7 @@
     effectiveness: 0.9
     tripChance: 0.08
   - type: Construction
-    graph: offsetcaneMakeshift
+    graph: OffsetCaneMakeshift
     node: offsetcaneMakeshift
 
 - type: entity
