@@ -59,6 +59,17 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/ntrepformal.rsi
 
 - type: entity
+  parent: [ ClothingUniformBase, BaseCommandContraband ]
+  id: ClothingUniformJumpsuitNtrepTurtleNeck
+  name: NT Representive's turtleneck
+  description: For a more casual yet elegant look.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/ntrep_turtle.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/ntrep_turtle.rsi
+
+- type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpsuitBlueShield
   name: blueshield officer's suit
