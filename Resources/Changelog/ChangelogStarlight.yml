@@ -15637,5 +15637,26 @@ Entries:
   id: 171500
   time: '2025-09-24T00:16:27.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1715
+- author: Vonte
+  changes:
+  - message: Added NanoTrasen representative tophat.
+    type: Add
+  id: 161800
+  time: '2025-09-24T00:17:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1618
+- author: Vonte
+  changes:
+  - message: Added NanoTrasen representative elite tophat.
+    type: Add
+  id: 161801
+  time: '2025-09-24T00:17:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1618
+- author: Vonte
+  changes:
+  - message: Added ability to choose headwear for NanoTrasen representative.
+    type: Add
+  id: 161802
+  time: '2025-09-24T00:17:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1618
 Order: -1
 
