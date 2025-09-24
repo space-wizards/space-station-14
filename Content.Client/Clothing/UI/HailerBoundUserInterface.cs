@@ -1,5 +1,6 @@
 
 using Content.Client.Clothing.Systems;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
@@ -26,15 +27,15 @@ public sealed class HailerBoundUserInterface : BoundUserInterface
 
         if (_menu == null)
         {
-            _menu = new(); // Owner, EntMan, _player, _hailer, _sprite);
+            _menu = new(Owner, EntMan, _player, _hailer, _sprite);
 
-            //_menu.OnLinePicked += index =>
-            //{
-            //    //SendPredictedMessage(new HailerPlayLineMessage(index));
-            //    Close();
-            //};
+            _menu.OnLinePicked += index =>
+            {
+                SendPredictedMessage(new HailerOrderMessage(index));
+                Close();
+            };
 
-            //_menu.OnClose += () => Close();
+            _menu.OnClose += () => Close();
         }
 
         _menu.OpenCentered();
@@ -42,11 +43,10 @@ public sealed class HailerBoundUserInterface : BoundUserInterface
 
     protected override void Dispose(bool disposing)
     {
-        //base.Dispose(disposing);
-        //if (!disposing)
-        //    return;
+        base.Dispose(disposing);
+        if (!disposing)
+            return;
 
-        //_menu?.Close();
-        //_menu?.Dispose();
+        _menu?.Close();
     }
 }

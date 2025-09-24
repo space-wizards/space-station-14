@@ -3,6 +3,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Utility;
 
 
 namespace Content.Shared.Clothing.Components;
@@ -106,10 +107,10 @@ public sealed partial class HailerComponent : Component
     public List<HailLevel> HailLevels = new();
 
     /// <summary>
-    /// Aggression level of the hailer, how aggressive is it ?
+    /// Index for HailsLevels
     /// </summary>
     [DataField, AutoNetworkedField]
-    public HailLevel? CurrentHailLevel;
+    public int HailLevelIndex;
 
     [DataField]
     public List<HailOrder> Orders = new();
@@ -151,6 +152,9 @@ public record struct HailOrder
 
     [DataField]
     public string? Description;
+
+    [DataField, AutoNetworkedField]
+    public SpriteSpecifier? Icon; //= new SpriteSpecifier.Texture(new("Interface/Actions/scream.png"));
 
     [DataField]
     public string? SoundCollection;

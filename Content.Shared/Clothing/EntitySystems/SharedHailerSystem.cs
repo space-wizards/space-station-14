@@ -57,6 +57,19 @@ public abstract class SharedHailerSystem : EntitySystem
         //SubscribeLocalEvent<HailerComponent, ToggleMaskEvent>(OnToggleMask);
     }
 
+    public List<HailOrder> GetOrders(Entity<HailerComponent> ent, EntityUid user)
+    {
+        
+
+        //if (HasComp<EmaggedComponent>(ent))
+        //    return ent.Comp.Emagged;
+
+        //if (_combatMode.IsInCombatMode(user))
+        //    return ent.Comp.Combat;
+
+        return [];
+    }
+
     private void OnEquip(Entity<HailerComponent> ent, ref ClothingGotEquippedEvent args)
     {
         var (uid, comp) = ent;
@@ -66,7 +79,7 @@ public abstract class SharedHailerSystem : EntitySystem
         if (comp.CurrentState != SecMaskState.Functional)
             return;
 
-        _actions.AddAction(args.Wearer, ref comp.ActionEntity, comp.Action, uid);
+        //_actions.AddAction(args.Wearer, ref comp.ActionEntity, comp.Action, uid);
     }
 
     private void OnUnequip(Entity<HailerComponent> ent, ref ClothingGotUnequippedEvent args)
@@ -75,7 +88,7 @@ public abstract class SharedHailerSystem : EntitySystem
 
         if (comp.CurrentState != SecMaskState.Functional || !ent.Comp.User.HasValue)
             return;
-        _actions.RemoveAction(ent.Comp.User.Value, comp.ActionEntity);
+        //_actions.RemoveAction(ent.Comp.User.Value, comp.ActionEntity);
         ent.Comp.User = null;
     }
 

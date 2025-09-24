@@ -53,32 +53,49 @@
     - name: high
     - name: emag
       cyclable: false
+    hailLevelIndex: 0
     orders:
     - name: attention
       description: blah blah blah
       soundCollection: hailsec-attention
       localePrefix: hailsec-attention
+      icon:
+        sprite: Actions/Implants/implants.rsi
+        state: freedom
     - name: oneliner
       description: blah blah blah
       soundCollection: hailsec-oneliner
       localePrefix: hailsec-oneliner
+      icon:
+        sprite: Clothing/Eyes/Glasses/sunglasses.rsi
+        state: icon
     - name: compliance
       description: blah blah blah
       soundCollection: hailsec-compliance
       localePrefix: hailsec-compliance
+      icon:
+        sprite: Objects/Weapons/Melee/stunbaton.rsi
+        state: stunbaton_on
     - name: aggression
       description: blah blah blah
       soundCollection: hailsec-aggression
       localePrefix: hailsec-aggression
+      icon:
+        sprite: Actions/Implants/implants.rsi
+        state: explosive
     chatName: "Security Hailer"
     distance: 5
   - type: AccessReader
     access: [["Security"]]
     loggingDisabled: true
     breakOnAccessBreaker: false
-  # - type: ActivatableUI
-  #   key: enum.HandLabelerUiKey.Key
-  #   inHandsOnly: true
+  - type: ActionGrant
+    actions:
+    - ActionSecHailer
+  - type: ItemActionGrant
+    actions:
+    - ActionSecHailer
+    activeIfWorn: true
   - type: UserInterface
     interfaces:
       enum.HailerUiKey.Key:

@@ -59,7 +59,84 @@
     - /Audio/Voice/SecurityHails/robocop.ogg
 
 - type: soundCollection
-  id: SecHailEmag
+  id: SecHailERT
+  files:
+    - /Audio/Voice/SecurityHails/ERT/centcom.ogg
+    - /Audio/Voice/SecurityHails/ERT/dangerous.ogg
+    - /Audio/Voice/SecurityHails/ERT/dimwit.ogg
+    - /Audio/Voice/SecurityHails/ERT/mandatory.ogg
+    - /Audio/Voice/SecurityHails/ERT/obey.ogg
+    - /Audio/Voice/SecurityHails/ERT/fucked_up.ogg
+-
+## NEW LINES BELOW, OLD TO BE DELETED
+
+##  ATTENTION ! ##
+- type: soundCollection
+  id: hailsec-attention-low
+  files:
+    - /Audio/Voice/SecurityHails/citizen.ogg
+
+- type: soundCollection
+  id: hailsec-attention-med
+  files:
+    - /Audio/Voice/SecurityHails/freeze.ogg
+
+- type: soundCollection
+  id: hailsec-attention-high
+  files:
+    - /Audio/Voice/SecurityHails/justice.ogg
+
+##  ONE LINERS ##
+- type: soundCollection
+  id: hailsec-oneliner-low
+  files:
+    - /Audio/Voice/SecurityHails/batong.ogg
+
+- type: soundCollection
+  id: hailsec-oneliner-med
+  files:
+    - /Audio/Voice/SecurityHails/drop.ogg
+
+- type: soundCollection
+  id: hailsec-oneliner-high
+  files:
+    - /Audio/Voice/SecurityHails/safeword.ogg
+
+##  COMPLIANCE ##
+- type: soundCollection
+  id: hailsec-compliance-low
+  files:
+    - /Audio/Voice/SecurityHails/compliance.ogg
+
+- type: soundCollection
+  id: hailsec-compliance-med
+  files:
+    - /Audio/Voice/SecurityHails/authoritah.ogg
+
+- type: soundCollection
+  id: hailsec-compliance-high
+  files:
+    - /Audio/Voice/SecurityHails/right.ogg
+
+##  AGGRESSION ##
+- type: soundCollection
+  id: hailsec-aggression-low
+  files:
+    - /Audio/Voice/SecurityHails/running.ogg
+
+- type: soundCollection
+  id: hailsec-aggression-med
+  files:
+    - /Audio/Voice/SecurityHails/scumbag.ogg
+
+- type: soundCollection
+  id: hailsec-aggression-high
+  files:
+    - /Audio/Voice/SecurityHails/mald.ogg
+
+##  EMAG ##
+- type: soundCollection
+  id: hailsec-emag
   files:
     - /Audio/Voice/SecurityHails/cybersun.ogg
     - /Audio/Voice/SecurityHails/can.ogg
@@ -73,12 +150,3 @@
     - /Audio/Voice/SecurityHails/meow.ogg
     - /Audio/Voice/SecurityHails/f_you.ogg
 
-- type: soundCollection
-  id: SecHailERT
-  files:
-    - /Audio/Voice/SecurityHails/ERT/centcom.ogg
-    - /Audio/Voice/SecurityHails/ERT/dangerous.ogg
-    - /Audio/Voice/SecurityHails/ERT/dimwit.ogg
-    - /Audio/Voice/SecurityHails/ERT/mandatory.ogg
-    - /Audio/Voice/SecurityHails/ERT/obey.ogg
-    - /Audio/Voice/SecurityHails/ERT/fucked_up.ogg

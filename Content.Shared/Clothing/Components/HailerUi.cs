@@ -12,11 +12,11 @@ public enum HailerUiKey : byte
 /// Message to try play a hailer line.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class HailerPlayLineMessage : BoundUserInterfaceMessage
+public sealed class HailerOrderMessage : BoundUserInterfaceMessage
 {
     public readonly uint Index;
 
-    public HailerPlayLineMessage(uint index)
+    public HailerOrderMessage(uint index)
     {
         Index = index;
     }
