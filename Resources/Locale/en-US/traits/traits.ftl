@@ -72,5 +72,12 @@ trait-hemophilia-desc = Your body fails to make blood clots.
 trait-impaired-mobility-name = Impaired Mobility
 trait-impaired-mobility-desc = You have difficulty moving without a mobility aid.
 
-mobility-aid-trait-trip-self = You trip and fall over your {ITEM($mobilityAid)}!
-mobility-aid-trait-trip-others = {SUBJECT($target)} trips and falls over {POSS($target)} {ITEM($mobilityAid)}!
+mobility-aid-trait-trip-self = You trip over your {$mobilityAid}!
+mobility-aid-trait-trip-others = {CAPITALIZE(SUBJECT($user))} trips and falls over {POSS-ADJ($user)} {$mobilityAid}!
+
+mobility-aid-trait-trip-self-dangerous = You trip over your {$mobilityAid} and injure yourself!
+mobility-aid-trait-trip-others-dangerous = {CAPITALIZE(SUBJECT($user))} trips and falls over {POSS-ADJ($user)} {$mobilityAid}, injuring themselves!
+
+mobility-aid-examine-proper = [color=lightblue]This can be used as a mobility aid.[/color]
+mobility-aid-examine-makeshift = [color=yellow]This could work as an improvised mobility aid, though its not very effective and may cause you to trip.[/color]
+mobility-aid-examine-makeshift-dangerous = [color=red]This could work as an improvised mobility aid, but its not very effective and could seriously injure you if you trip![/color]
