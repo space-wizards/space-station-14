@@ -19,7 +19,7 @@
 - type: startingGear
   id: CentcomGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitCentcomOfficial
+    jumpsuit: ClothingAltUniformJumpsuitCentcomOfficial # alt version
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHatCentcom
     eyes: ClothingEyesGlassesCentComm

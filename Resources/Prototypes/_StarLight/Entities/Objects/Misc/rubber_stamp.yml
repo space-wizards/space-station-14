@@ -41,7 +41,7 @@
       state: stamp-iaa
 
 - type: entity
-  name: Blueshield Officer's rubber stamp
+  name: blueshield officer's rubber stamp
   parent: RubberStampBase
   id: RubberStampBSO
   suffix: DO NOT MAP
@@ -55,7 +55,7 @@
     state: stamp-bso
 
 - type: entity
-  name: Brigmedic's rubber stamp
+  name: brigmedic's rubber stamp
   parent: RubberStampBase
   id: RubberStampBrigmedic
   suffix: DO NOT MAP

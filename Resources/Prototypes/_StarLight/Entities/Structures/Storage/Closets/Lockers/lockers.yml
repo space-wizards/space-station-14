@@ -58,7 +58,7 @@
 - type: entity
   id: LockerBlueshield
   parent: LockerBaseSecure
-  name: BlueShield officer's locker
+  name: blueshield officer's locker
   components:
   - type: Appearance
   - type: Sprite

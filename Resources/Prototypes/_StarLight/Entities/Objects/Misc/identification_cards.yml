@@ -51,7 +51,7 @@
 - type: entity
   parent: [ IDCardStandard, BaseCommandContraband ]
   id: NanoTrasenRepresentativeIDCard
-  name: NanoTrasen representative ID Card
+  name: NanoTrasen Representative ID Card
   components:
   - type: Sprite
     layers:
@@ -150,7 +150,7 @@
 - type: entity
   parent: [ IDCardStandard, BaseSyndicateContraband ]
   id: CommanderIDCard
-  name: Commander ID Card
+  name: syndicate commander ID card
   components:
     - type: Sprite
       sprite: _Starlight/Objects/Misc/id_cards.rsi
@@ -174,7 +174,7 @@
 - type: entity
   parent: [ IDCardStandard, BaseSyndicateContraband ]
   id: SyndicateAgentIDCard
-  name: Syndicate Agent ID Card
+  name: syndicate agent ID card
   components:
     - type: Sprite
       sprite: _Starlight/Objects/Misc/id_cards.rsi
@@ -198,7 +198,7 @@
 - type: entity
   parent: [ IDCardStandard, BaseSyndicateContraband ]
   id: OperativeIDCard
-  name: Operative ID Card
+  name: syndicate operative ID card
   components:
     - type: Sprite
       sprite: _Starlight/Objects/Misc/id_cards.rsi

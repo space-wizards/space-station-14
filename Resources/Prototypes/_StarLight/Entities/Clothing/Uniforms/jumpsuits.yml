@@ -72,8 +72,8 @@
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpsuitEliteBlueShield
-  name: Elite Blueshield Officer's Suit
-  description: Suit of an Elite Blueshield. To reach such a level, you must have protected command from a [REDACTED] threat.
+  name: elite blueshield officer's suit
+  description: Suit of an elite blueshield. To reach such a level, you must have protected command from a [REDACTED] threat.
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/eliteblueshield.rsi
@@ -83,8 +83,8 @@
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpsuitBlueShieldCaptain
-  name: Blueshield Officer's shirt
-  description: A classic suit in theme with a blueshield.
+  name: blueshield officer's shirt
+  description: A classic suit in theme with a blueshield. 
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/blueshieldshirt.rsi
@@ -118,7 +118,7 @@
 - type: entity
   parent: [ClothingUniformBase, BaseSecurityContraband]
   id: ClothingUniformJumpsuitCorpsman
-  name: Corpsman's Suit
+  name: corpsman's suit
   description: Die in style on the front lines!
   components:
   - type: Sprite
@@ -406,3 +406,14 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/sovietuniform.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/sovietuniform.rsi
+
+- type: entity
+  parent: [ ClothingUniformBase, BaseCentcommContraband ]
+  id: ClothingAltUniformJumpsuitCentcomOfficial
+  name: CentComm officer's jumpsuit
+  description: It's a jumpsuit worn by CentComm officers.
+  components: 
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/centcom_official.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/centcom_official.rsi
