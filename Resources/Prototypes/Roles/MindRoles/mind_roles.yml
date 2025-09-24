@@ -303,7 +303,7 @@
     exclusiveAntag: true
     roleType: Silicon
     subtype: role-subtype-xenoborg-core
-  - type: XenoborgCoreRole
+  - type: XenoborgRole
 
 - type: entity
   parent: BaseMindRoleAntag
