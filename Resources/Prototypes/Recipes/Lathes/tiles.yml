@@ -13,6 +13,7 @@
   parent: BaseTileRecipe
   id: BaseSteelTileRecipe
   categories:
+  - Tiles
   - Steel
   materials:
     Steel: 25
@@ -22,6 +23,7 @@
   parent: BaseSteelTileRecipe
   id: BaseDarkTileRecipe
   categories:
+  - Tiles
   - Dark
 
 - type: latheRecipe
@@ -29,6 +31,7 @@
   parent: BaseSteelTileRecipe
   id: BaseWhiteTileRecipe
   categories:
+  - Tiles
   - White
 
 - type: latheRecipe
@@ -36,13 +39,23 @@
   parent: BaseSteelTileRecipe
   id: BaseMaintTileRecipe
   categories:
+  - Tiles
   - Maints
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseSteelTileRecipe
+  id: BaseCircuitTileRecipe
+  categories:
+  - Tiles
+  - Circuit
 
 - type: latheRecipe
   abstract: true
   parent: BaseTileRecipe
   id: BaseWoodTileRecipe
   categories:
+  - Tiles
   - Wood
   materials:
     Wood: 25
@@ -52,6 +65,7 @@
   parent: BaseTileRecipe
   id: BaseConcreteTileRecipe
   categories:
+  - Tiles
   - Concrete
   materials:
     Steel: 25
@@ -60,8 +74,19 @@
 - type: latheRecipe
   abstract: true
   parent: BaseTileRecipe
+  id: BaseFauxTileRecipe
+  categories:
+  - Tiles
+  - Faux
+  materials:
+    Plastic: 100
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseTileRecipe
   id: BaseMarbleTileRecipe
   categories:
+  - Tiles
   - Marble
   materials:
     Steel: 25
@@ -222,7 +247,7 @@
   id: FloorTileItemWhitePavementVertical
   result: FloorTileItemWhitePavementVertical
 
-# Other steel
+# Maints
 - type: latheRecipe
   parent: BaseMaintTileRecipe
   id: FloorTileItemGratingMaint
@@ -242,6 +267,22 @@
   parent: BaseMaintTileRecipe
   id: FloorTileItemTechmaintDark
   result: FloorTileItemTechmaintDark
+
+# Circuit
+- type: latheRecipe
+  parent: BaseCircuitTileRecipe
+  id: FloorGreenCircuit
+  result: FloorTileItemGCircuit
+
+- type: latheRecipe
+  parent: BaseCircuitTileRecipe
+  id: FloorBlueCircuit
+  result: FloorTileItemBCircuit
+
+- type: latheRecipe
+  parent: BaseCircuitTileRecipe
+  id: FloorRedCircuit
+  result: FloorTileItemRCircuit
 
 # Wood
 - type: latheRecipe
@@ -304,6 +345,57 @@
   parent: BaseConcreteTileRecipe
   id: FloorTileItemOldConcreteSmooth
   result: FloorTileItemOldConcreteSmooth
+
+# Faux
+- type: latheRecipe
+  parent: BaseFauxTileRecipe
+  id: FauxTileAstroGrass
+  result: FloorTileItemAstroGrass
+
+- type: latheRecipe
+  parent: BaseFauxTileRecipe
+  id: FauxTileMowedAstroGrass
+  result: FloorTileItemMowedAstroGrass
+
+- type: latheRecipe
+  parent: BaseFauxTileRecipe
+  id: FauxTileJungleAstroGrass
+  result: FloorTileItemJungleAstroGrass
+
+- type: latheRecipe
+  parent: BaseFauxTileRecipe
+  id: FauxTileDarkAstroGrass
+  result: FloorTileItemDarkAstroGrass
+
+- type: latheRecipe
+  parent: BaseFauxTileRecipe
+  id: FauxTileLightAstroGrass
+  result: FloorTileItemLightAstroGrass
+
+- type: latheRecipe
+  parent: BaseFauxTileRecipe
+  id: FauxTileAstroIce
+  result: FloorTileItemAstroIce
+
+- type: latheRecipe
+  parent: BaseFauxTileRecipe
+  id: FauxTileAstroSnow
+  result: FloorTileItemAstroSnow
+
+- type: latheRecipe
+  parent: BaseFauxTileRecipe
+  id: FauxTileAstroAsteroidSand
+  result: FloorTileItemAstroAsteroidSand
+
+- type: latheRecipe
+  parent: BaseFauxTileRecipe
+  id: FauxTileAstroAsteroidSandBorderless
+  result: FloorTileItemAstroAsteroidSandBorderless
+
+- type: latheRecipe
+  parent: BaseFauxTileRecipe
+  id: FauxTileDesertAstroSand
+  result: FloorTileItemDesertAstroSand
 
 # Marble
 - type: latheRecipe

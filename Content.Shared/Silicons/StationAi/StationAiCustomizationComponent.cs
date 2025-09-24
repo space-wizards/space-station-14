@@ -15,6 +15,12 @@ public sealed partial class StationAiCustomizationComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public Dictionary<ProtoId<StationAiCustomizationGroupPrototype>, ProtoId<StationAiCustomizationPrototype>> ProtoIds = new();
+
+    /// <summary>
+    /// The current visual state of the associated entity.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public StationAiState State = StationAiState.Occupied;
 }
 
 /// <summary>
@@ -32,6 +38,12 @@ public sealed class StationAiCustomizationMessage : BoundUserInterfaceMessage
         CustomizationProtoId = customizationProtoId;
     }
 }
+
+/// <summary>
+/// Event raised when the station AI customization visual state changes
+/// </summary>
+[ByRefEvent]
+public record StationAiCustomizationStateChanged(StationAiState NewState);
 
 /// <summary>
 /// Key for opening the station AI customization UI

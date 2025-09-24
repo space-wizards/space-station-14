@@ -11,10 +11,11 @@ public sealed class ExplodeOnTriggerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(OnTrigger);
+        SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(OnExplodeTrigger);
+        SubscribeLocalEvent<ExplosionOnTriggerComponent, TriggerEvent>(OnQueueExplosionTrigger);
     }
 
-    private void OnTrigger(Entity<ExplodeOnTriggerComponent> ent, ref TriggerEvent args)
+    private void OnExplodeTrigger(Entity<ExplodeOnTriggerComponent> ent, ref TriggerEvent args)
     {
         if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
             return;
@@ -25,6 +26,29 @@ public sealed class ExplodeOnTriggerSystem : EntitySystem
             return;
 
         _explosion.TriggerExplosive(target.Value, user: args.User);
+        args.Handled = true;
+    }
+
+    private void OnQueueExplosionTrigger(Entity<ExplosionOnTriggerComponent> ent, ref TriggerEvent args)
+    {
+        var (uid, comp) = ent;
+        if (args.Key != null && !comp.KeysIn.Contains(args.Key))
+            return;
+
+        var target = comp.TargetUser ? args.User : uid;
+
+        if (target == null)
+            return;
+
+        _explosion.QueueExplosion(target.Value,
+                                    comp.ExplosionType,
+                                    comp.TotalIntensity,
+                                    comp.IntensitySlope,
+                                    comp.MaxTileIntensity,
+                                    comp.TileBreakScale,
+                                    comp.MaxTileBreak,
+                                    comp.CanCreateVacuum,
+                                    args.User);
         args.Handled = true;
     }
 }
