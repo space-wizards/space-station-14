@@ -1,12 +1,12 @@
 ﻿using Content.Server.Body.Components;
-using Content.Shared.EntityConditions.Conditions;
+using Content.Shared.EntityConditions.Conditions.Body;
 using Content.Shared.EntityEffects;
 
 namespace Content.Server.EntityConditions.Conditions;
 
-public sealed partial class MetabolizerTypeEntityConditionSystem : EntityConditionSystem<MetabolizerComponent, Shared.EntityConditions.Conditions.Body.MetabolizerType>
+public sealed partial class MetabolizerTypeEntityConditionSystem : EntityConditionSystem<MetabolizerComponent, MetabolizerType>
 {
-    protected override void Condition(Entity<MetabolizerComponent> entity, ref EntityConditionEvent<Shared.EntityConditions.Conditions.Body.MetabolizerType> args)
+    protected override void Condition(Entity<MetabolizerComponent> entity, ref EntityConditionEvent<MetabolizerType> args)
     {
         if (entity.Comp.MetabolizerTypes == null || !entity.Comp.MetabolizerTypes.Contains(args.Condition.Type))
             return;

@@ -13,6 +13,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.EntityConditions.Conditions;
+using Content.Shared.EntityConditions.Conditions.Body;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects;
 using Content.Shared.EntityEffects.Effects.Body;
@@ -349,7 +350,7 @@ public sealed class RespiratorSystem : EntitySystem
 
             foreach (var cond in effect.Conditions)
             {
-                if (cond is Shared.EntityConditions.Conditions.Body.MetabolizerType organ && !_entityConditions.TryCondition(lung, organ))
+                if (cond is MetabolizerType organ && !_entityConditions.TryCondition(lung, organ))
                     return false;
             }
 
