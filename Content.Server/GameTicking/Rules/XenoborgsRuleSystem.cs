@@ -25,14 +25,6 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
         SubscribeLocalEvent<XenoborgComponent, DestructionEventArgs>(OnXenoborgDestroyed);
     }
 
-    protected override void Started(EntityUid uid,
-        XenoborgsRuleComponent component,
-        GameRuleComponent gameRule,
-        GameRuleStartedEvent args)
-    {
-        base.Started(uid, component, gameRule, args);
-    }
-
     private void OnXenoborgDestroyed(EntityUid ent, XenoborgComponent component, DestructionEventArgs args)
     {
         // if a xenoborg is destroyed, it will check if other xenoborgs are destroyed
