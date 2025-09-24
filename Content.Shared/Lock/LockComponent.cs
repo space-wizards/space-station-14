@@ -19,7 +19,7 @@ public sealed partial class LockComponent : Component
     /// </summary>
     [DataField("locked"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public bool Locked  = true;
+    public bool Locked = true;
 
     /// <summary>
     /// If true, will show verbs to lock and unlock the item. Otherwise, it will not.
@@ -39,7 +39,7 @@ public sealed partial class LockComponent : Component
     [DataField("lockOnClick"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public bool LockOnClick;
-    
+
     [DataField("mindShieldLock"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public bool MindShieldLock = false;
@@ -106,6 +106,18 @@ public sealed partial class LockComponent : Component
     
     [DataField]
     public bool PowerNeeded = false; // Starlight-edit
+
+    /// <summary>
+    ///  Whether or not the lock can be auto unlocked when pickuped.
+    /// </summary>
+    [DataField]
+    public bool AutoUnlock = true; // Starlight-edit
+
+    /// <summary>
+    ///  Whether or not the lock can be auto locked when placed.
+    /// </summary>
+    [DataField]
+    public bool AutoLock = true; // Starlight-edit
 }
 
 /// <summary>
