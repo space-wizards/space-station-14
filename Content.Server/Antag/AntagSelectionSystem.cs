@@ -625,6 +625,7 @@ public record struct AntagSelectLocationEvent(ICommonSession? Session, Entity<An
 
     public bool Handled => Coordinates.Any();
 
+    // the entity of the antagonist
     public EntityUid Entity = Entity;
 
     public List<MapCoordinates> Coordinates = new();
