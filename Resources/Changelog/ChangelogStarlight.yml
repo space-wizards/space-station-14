@@ -15630,5 +15630,12 @@ Entries:
   id: 137802
   time: '2025-09-23T16:25:32.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1378
+- author: TheKillerDumb & Bukkataro
+  changes:
+  - message: New Lobby Art "Security Showdown"
+    type: Add
+  id: 171500
+  time: '2025-09-24T00:16:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1715
 Order: -1
 
