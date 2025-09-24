@@ -17,9 +17,13 @@
       food:
         maxVol: 55 # flavored cakes have less room for spiking
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 40
-        - ReagentId: Vitamin
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Sugar
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
+        - ReagentId: Fat
           Quantity: 10
   - type: Item
     size: Normal
@@ -55,9 +59,13 @@
       food:
         maxVol: 12
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 8
-        - ReagentId: Vitamin
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: Sugar
+          Quantity: 1
+        - ReagentId: Protein
+          Quantity: 1
+        - ReagentId: Fat
           Quantity: 2
   - type: Item
     size: Tiny
@@ -135,15 +143,6 @@
     state: plain
   - type: SliceableFood
     slice: FoodCakePlainSlice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 55
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 20
-        - ReagentId: Vitamin
-          Quantity: 5
   - type: Item
     heldPrefix: plain
 
@@ -156,15 +155,6 @@
   components:
   - type: Sprite
     state: plain-slice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 4
-        - ReagentId: Vitamin
-          Quantity: 1
   - type: Item
     heldPrefix: plain-slice
 # Tastes like sweetness, cake.
@@ -182,14 +172,18 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 55
         reagents:
-        - ReagentId: JuiceCarrot
-          Quantity: 15
+        - ReagentId: Carbohydrate
+          Quantity: 20
         - ReagentId: Sugar
           Quantity: 5
-        - ReagentId: Vitamin
+        - ReagentId: Protein
           Quantity: 5
+        - ReagentId: Fat
+          Quantity: 10
+        - ReagentId: JuiceCarrot
+          Quantity: 15
   - type: Tag
     tags:
     - Cake
@@ -218,14 +212,18 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 11
         reagents:
-        - ReagentId: JuiceCarrot
-          Quantity: 3
+        - ReagentId: Carbohydrate
+          Quantity: 4
         - ReagentId: Sugar
           Quantity: 1
-        - ReagentId: Vitamin
+        - ReagentId: Protein
           Quantity: 1
+        - ReagentId: Fat
+          Quantity: 2
+        - ReagentId: JuiceCarrot
+          Quantity: 3
   - type: Tag
     tags:
     - Cake
@@ -256,6 +254,17 @@
     state: brain
   - type: SliceableFood
     slice: FoodCakeBrainSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 55
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Sugar
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 15
   - type: Tag
     tags:
     - Cake
@@ -281,6 +290,17 @@
   components:
   - type: Sprite
     state: brain-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: Sugar
+          Quantity: 1
+        - ReagentId: Protein
+          Quantity: 3
   - type: Tag
     tags:
     - Cake
@@ -310,6 +330,17 @@
     state: cheese
   - type: SliceableFood
     slice: FoodCakeCheeseSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 55
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Sugar
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 15
   - type: Item
     inhandVisuals:
       left:
@@ -329,6 +360,17 @@
   components:
   - type: Sprite
     state: cheese-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: Sugar
+          Quantity: 1
+        - ReagentId: Protein
+          Quantity: 3
   - type: Item
     inhandVisuals:
       left:
@@ -354,6 +396,17 @@
       color: "#ff9900"
   - type: SliceableFood
     slice: FoodCakeOrangeSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Sugar
+          Quantity: 15
+        - ReagentId: Protein
+          Quantity: 5
   - type: Tag
     tags:
     - Cake
@@ -379,6 +432,17 @@
     - state: plain-slice
     - state: alpha-slice-filling
       color: "#ff9900"
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: Sugar
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 1
   - type: Tag
     tags:
     - Cake
@@ -398,7 +462,7 @@
 
 - type: entity
   name: lime cake
-  parent: FoodCakeBase
+  parent: FoodCakeOrange
   id: FoodCakeLime
   description: A cake with added lime.
   components:
@@ -426,7 +490,7 @@
 
 - type: entity
   name: slice of lime cake
-  parent: FoodCakeSliceBase
+  parent: FoodCakeOrangeSlice
   id: FoodCakeLimeSlice
   components:
   - type: Sprite
@@ -453,7 +517,7 @@
 
 - type: entity
   name: lemon cake
-  parent: FoodCakeBase
+  parent: FoodCakeOrange
   id: FoodCakeLemon
   description: A cake with added lemon.
   components:
@@ -481,7 +545,7 @@
 
 - type: entity
   name: slice of lemon cake
-  parent: FoodCakeSliceBase
+  parent: FoodCakeOrangeSlice
   id: FoodCakeLemonSlice
   components:
   - type: Sprite
@@ -525,10 +589,14 @@
       food:
         maxVol: 70
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 40
-        - ReagentId: Vitamin
+        - ReagentId: Carbohydrate
           Quantity: 20
+        - ReagentId: Sugar
+          Quantity: 15
+        - ReagentId: Protein
+          Quantity: 10
+        - ReagentId: Fat
+          Quantity: 15
         - ReagentId: Milk
           Quantity: 10
   - type: Tag
@@ -553,12 +621,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 14
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 8
-        - ReagentId: Vitamin
+        - ReagentId: Carbohydrate
           Quantity: 4
+        - ReagentId: Sugar
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 2
+        - ReagentId: Fat
+          Quantity: 3
         - ReagentId: Milk
           Quantity: 2
   - type: Tag
@@ -596,11 +668,15 @@
       food:
         maxVol: 55
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 40
-        - ReagentId: Theobromine
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Sugar
+          Quantity: 10
+        - ReagentId: Protein
           Quantity: 5
-        - ReagentId: Vitamin
+        - ReagentId: Fat
+          Quantity: 10
+        - ReagentId: Theobromine
           Quantity: 5
   - type: Item
     inhandVisuals:
@@ -625,12 +701,16 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 8
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: Sugar
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 1
+        - ReagentId: Fat
+          Quantity: 2
         - ReagentId: Theobromine
           Quantity: 1
-        - ReagentId: Vitamin
-          Quantity: 2
   - type: Item
     inhandVisuals:
       left:
@@ -643,7 +723,7 @@
 
 - type: entity
   name: apple cake
-  parent: FoodCakeBase
+  parent: FoodCakeOrange
   id: FoodCakeApple
   description: A cake centred with apple.
   components:
@@ -671,7 +751,7 @@
 
 - type: entity
   name: slice of apple cake
-  parent: FoodCakeSliceBase
+  parent: FoodCakeOrangeSlice
   id: FoodCakeAppleSlice
   description: A slice of heavenly cake.
   components:
@@ -708,6 +788,19 @@
     state: slime
   - type: SliceableFood
     slice: FoodCakeSlimeSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 55
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Sugar
+          Quantity: 10
+        - ReagentId: Protein
+          Quantity: 5
+        - ReagentId: Fat
+          Quantity: 10
   - type: Tag
     tags:
     - Cake
@@ -733,6 +826,19 @@
   components:
   - type: Sprite
     state: slime-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 11
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: Sugar
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 1
+        - ReagentId: Fat
+          Quantity: 2
   - type: Tag
     tags:
     - Cake
@@ -767,9 +873,15 @@
       food:
         maxVol: 60
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 35
-        - ReagentId: Vitamin
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Sugar
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
+        - ReagentId: Fat
+          Quantity: 10
+        - ReagentId: PumpkinFlesh
           Quantity: 15
   - type: Tag
     tags:
@@ -799,9 +911,15 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 7
-        - ReagentId: Vitamin
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: Sugar
+          Quantity: 1
+        - ReagentId: Protein
+          Quantity: 1
+        - ReagentId: Fat
+          Quantity: 2
+        - ReagentId: PumpkinFlesh
           Quantity: 3
   - type: Tag
     tags:
@@ -822,7 +940,7 @@
 
 - type: entity
   name: christmas cake
-  parent: FoodCakeBase
+  parent: FoodCakeOrange
   id: FoodCakeChristmas
   description: A cake made of christmas.
   components:
@@ -845,7 +963,7 @@
 
 - type: entity
   name: slice of christmas cake
-  parent: FoodCakeSliceBase
+  parent: FoodCakeOrangeSlice
   id: FoodCakeChristmasSlice
   components:
   - type: Sprite
@@ -875,6 +993,21 @@
     state: birthday
   - type: SliceableFood
     slice: FoodCakeBirthdaySlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Sugar
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
+        - ReagentId: Fat
+          Quantity: 10
+        - ReagentId: Cream
+          Quantity: 5
   - type: Item
     heldPrefix: birthday
 
@@ -886,6 +1019,21 @@
   components:
   - type: Sprite
     state: birthday-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: Sugar
+          Quantity: 1
+        - ReagentId: Protein
+          Quantity: 1
+        - ReagentId: Fat
+          Quantity: 2
+        - ReagentId: Cream
+          Quantity: 1
   - type: Item
     heldPrefix: birthday-slice
 # Tastes like sweetness, cake, christmas.
@@ -905,12 +1053,14 @@
       food:
         maxVol: 55
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 25
-        - ReagentId: Vitamin
-          Quantity: 5
+        - ReagentId: Carbohydrate
+          Quantity: 20
         - ReagentId: Sugar
           Quantity: 15
+        - ReagentId: Protein
+          Quantity: 5
+        - ReagentId: Fat
+          Quantity: 10
   - type: Item
     heldPrefix: vanilla
 
@@ -927,12 +1077,14 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 2
+        - ReagentId: Carbohydrate
+          Quantity: 4
         - ReagentId: Sugar
-          Quantity: 5
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 1
+        - ReagentId: Fat
+          Quantity: 2
   - type: Item
     inhandVisuals:
       left:
@@ -958,12 +1110,14 @@
       food:
         maxVol: 55
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 30
-        - ReagentId: Vitamin
-          Quantity: 5
+        - ReagentId: Carbohydrate
+          Quantity: 20
         - ReagentId: Sugar
           Quantity: 15
+        - ReagentId: Protein
+          Quantity: 5
+        - ReagentId: Fat
+          Quantity: 10
   - type: Item
     heldPrefix: clown
 
@@ -980,12 +1134,14 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 8
-        - ReagentId: Vitamin
-          Quantity: 1
+        - ReagentId: Carbohydrate
+          Quantity: 4
         - ReagentId: Sugar
-          Quantity: 5
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 1
+        - ReagentId: Fat
+          Quantity: 2
   - type: Item
     heldPrefix: clown-slice
 # Tastes like sweetness, cake, clown.
@@ -1005,10 +1161,14 @@
       food:
         maxVol: 55
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 30
-        - ReagentId: Vitamin
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Sugar
           Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
+        - ReagentId: Fat
+          Quantity: 10
         - ReagentId: PolypyryliumOligomers
           Quantity: 15
   - type: Item
@@ -1027,10 +1187,14 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 8
-        - ReagentId: Vitamin
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: Sugar
           Quantity: 1
+        - ReagentId: Protein
+          Quantity: 1
+        - ReagentId: Fat
+          Quantity: 2
         - ReagentId: PolypyryliumOligomers
           Quantity: 3
   - type: Item
@@ -1053,12 +1217,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 55
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 20
-        - ReagentId: Vitamin
+        - ReagentId: Sugar
+          Quantity: 15
+        - ReagentId: Protein
           Quantity: 5
+        - ReagentId: Fat
+          Quantity: 10
   - type: Sprite
     noRot: true
     drawdepth: Mobs
@@ -1144,9 +1312,13 @@
       food:
         maxVol: 125 # SUPER dense cake
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 80
+        - ReagentId: Carbohydrate
+          Quantity: 60
         - ReagentId: Sugar
+          Quantity: 45
+        - ReagentId: Protein
+          Quantity: 15
+        - ReagentId: Fat
           Quantity: 30
   - type: Food
     transferAmount: 12
@@ -1171,10 +1343,14 @@
       food:
         maxVol: 25
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
+        - ReagentId: Carbohydrate
+          Quantity: 12
         - ReagentId: Sugar
-          Quantity: 5
+          Quantity: 9
+        - ReagentId: Protein
+          Quantity: 3
+        - ReagentId: Fat
+          Quantity: 6
   - type: Food
     transferAmount: 3
   - type: PointLight
@@ -1210,10 +1386,14 @@
       food:
         maxVol: 55
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 30
-        - ReagentId: Vitamin
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Sugar
           Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
+        - ReagentId: Fat
+          Quantity: 10
         - ReagentId: Fiber
           Quantity: 10
   - type: Item
@@ -1237,10 +1417,14 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 8
-        - ReagentId: Vitamin
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: Sugar
           Quantity: 1
+        - ReagentId: Protein
+          Quantity: 1
+        - ReagentId: Fat
+          Quantity: 2
         - ReagentId: Fiber
           Quantity: 2
   - type: Item
@@ -1266,10 +1450,12 @@
       food:
         maxVol: 55
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 40
-        - ReagentId: Vitamin
-          Quantity: 10
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Sugar
+          Quantity: 15
+        - ReagentId: Protein
+          Quantity: 5
         - ReagentId: Milk
           Quantity: 10
   - type: SliceableFood
@@ -1307,10 +1493,12 @@
       food:
         maxVol: 12
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 8
-        - ReagentId: Vitamin
-          Quantity: 2
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: Sugar
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 1
         - ReagentId: Milk
           Quantity: 2
   - type: Tag
