@@ -82,14 +82,6 @@
         shape:
           !type:PhysShapeCircle
           radius: 0.25
-  - type: Sprite
-    overrideContainerOcclusion: true
-    drawdepth: BlastDoors
-    sprite: Structures/Piping/transit_tubes.rsi
-    layers:
-    - map: [ "pod" ]
-      state: occupied_pod
-      shader: unshaded
 
 # Pipes
 
