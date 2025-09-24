@@ -30,10 +30,4 @@ public partial record struct RandomSpawnLootEntry() : IBudgetEntry
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("prob")]
     public float Prob { get; set; } = 1f;
-
-    /// <summary>
-    /// Starlight - Guarantees that this loot spawns once, at no cost.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("guaranteed")]
-    public bool SpawnGuaranteed { get; set; } = false;
 }

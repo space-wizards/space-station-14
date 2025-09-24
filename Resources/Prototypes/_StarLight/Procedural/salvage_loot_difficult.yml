@@ -5,11 +5,6 @@
   loots:
     - !type:RandomSpawnsLoot
       entries:
-        - proto: SheetPlasma10
-          guaranteed: true
-        - proto: SheetUranium10
-          guaranteed: true
-
         - proto: AmmoTechFabCircuitboard
           cost: 2
           prob: 0.2

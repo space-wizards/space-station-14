@@ -59,14 +59,10 @@
             - type: TradeStation
           paths:
             - /Maps/Shuttles/trading_outpost.yml
-#        mining: !type:GridSpawnGroup # Starlight begin
-#          paths:
-#            - /Maps/Shuttles/mining.yml
-#          nameGrid: false # Starlight - honors entityName in mining.yml
-        cargo_salvage_pioneer: !type:GridSpawnGroup
+        mining: !type:GridSpawnGroup # Starlight begin
           paths:
-            - /Maps/_Starlight/Shuttles/Salvage/pioneer.yml
-          nameGrid: false
+            - /Maps/Shuttles/mining.yml
+          nameGrid: false # Starlight - honors entityName in mining.yml
         cargo_mining_breaker: !type:GridSpawnGroup
           paths:
             - /Maps/_Starlight/Shuttles/Mining/breaker.yml

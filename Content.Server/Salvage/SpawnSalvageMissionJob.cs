@@ -266,20 +266,9 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
                     foreach (var entry in randomLoot.Entries)
                     {
-                        // Starlight - begin
-                        // Guarantees that this loot spawns once, at no cost.
-                        // Otherwise, proceeds as normal.
-                        if (entry.SpawnGuaranteed)
-                        {
-                            _sawmill.Debug($"Spawning guaranteed dungeon loot {entry.Proto}");
-                            await SpawnRandomEntry((mapUid, grid), entry, dungeon, random);
-                        }
-                        else
-                        {
-                            budgetEntries.Add(entry);
-                        }
+                        budgetEntries.Add(entry);
                     }
-                    // Starlight - end
+
                     probSum = budgetEntries.Sum(x => x.Prob);
 
                     while (lootBudget > 0f)
