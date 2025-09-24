@@ -141,6 +141,7 @@
     - Snout
     - HeadTop
     - HeadSide
+    - FacialHair
 
 - type: entity
   abstract: true
@@ -189,6 +190,7 @@
     - Snout
     - HeadTop
     - HeadSide
+    - FacialHair
 
 - type: entity
   abstract: true

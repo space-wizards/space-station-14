@@ -169,7 +169,7 @@
   id: PinpointerMothership
   name: core pinpointer
   suffix: Mothership
-  description: A handheld tracking device that leads to the direction of the mothership core.
+  description: A handheld tracking device that leads to the direction of the Mothership core.
   components:
   - type: Sprite
     layers:
@@ -197,4 +197,4 @@
     state: pinpointer-station
   - type: Pinpointer
     component: XenoborgMothership
-    targetName: the mothership
+    targetName: the Mothership

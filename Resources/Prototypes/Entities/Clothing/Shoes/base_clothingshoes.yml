@@ -55,6 +55,7 @@
           tags:
           - Knife
           - Sidearm
+        priority: 4
 
 - type: entity
   abstract: true
