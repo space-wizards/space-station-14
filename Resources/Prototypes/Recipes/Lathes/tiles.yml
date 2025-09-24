@@ -86,6 +86,7 @@
   parent: BaseTileRecipe
   id: BaseMarbleTileRecipe
   categories:
+  - Tiles
   - Marble
   materials:
     Steel: 25
