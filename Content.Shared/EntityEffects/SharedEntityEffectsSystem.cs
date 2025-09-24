@@ -27,6 +27,8 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
         if (args.Reagent.ReactiveEffects == null || entity.Comp.ReactiveGroups == null)
             return;
 
+        var scale = args.ReagentQuantity.Quantity.Float();
+
         foreach (var (key, val) in args.Reagent.ReactiveEffects)
         {
             if (!val.Methods.Contains(args.Method))
@@ -38,7 +40,19 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
             if (!group.Contains(args.Method))
                 continue;
 
-            ApplyEffects(entity, val.Effects, args.ReagentQuantity.Quantity.Float());
+            ApplyEffects(entity, val.Effects, scale);
+        }
+
+        if (entity.Comp.Reactions == null)
+            return;
+
+        foreach (var entry in entity.Comp.Reactions)
+        {
+            if (!entry.Methods.Contains(args.Method))
+                continue;
+
+            if (entry.Reagents == null || entry.Reagents.Contains(args.Reagent.ID))
+                ApplyEffects(entity, entry.Effects, scale);
         }
     }
 
