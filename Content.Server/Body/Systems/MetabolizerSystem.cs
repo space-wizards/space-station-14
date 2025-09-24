@@ -198,7 +198,10 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
 
                     // See if conditions apply
                     if (effect.Conditions == null || CanMetabolizeEffect(effect.Conditions))
+                    {
                         _entityEffects.ApplyEffect(actualEntity, effect, scale);
+                    }
+
                 }
 
                 // This allows us to check certain conditions on organs themselves!
