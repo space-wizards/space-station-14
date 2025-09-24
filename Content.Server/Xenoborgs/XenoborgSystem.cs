@@ -18,6 +18,9 @@ public sealed partial class XenoborgSystem : EntitySystem
     [Dependency] private readonly BorgSystem _borg = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly XenoborgsRuleSystem _xenoborgsRule = default!;
+
+    private readonly Color XENOBORG_BRIEFING_COLOR = Color.BlueViolet;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -68,7 +71,7 @@ public sealed partial class XenoborgSystem : EntitySystem
 
         _antag.SendBriefing(actorComp.PlayerSession,
             Loc.GetString("xenoborgs-welcome"),
-            Color.BlueViolet,
+            XENOBORG_BRIEFING_COLOR,
             new SoundPathSpecifier("/Audio/Ambience/Antag/xenoborg_start.ogg")
         );
     }
@@ -101,7 +104,7 @@ public sealed partial class XenoborgSystem : EntitySystem
 
         _antag.SendBriefing(actorComp.PlayerSession,
             Loc.GetString("mothership-welcome"),
-            Color.BlueViolet,
+            XENOBORG_BRIEFING_COLOR,
             new SoundPathSpecifier("/Audio/Ambience/Antag/xenoborg_start.ogg")
         );
     }
