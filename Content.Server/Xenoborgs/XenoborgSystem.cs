@@ -3,6 +3,7 @@ using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Silicons.Borgs;
 using Content.Shared.Destructible;
+using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
@@ -28,8 +29,6 @@ public sealed partial class XenoborgSystem : EntitySystem
         SubscribeLocalEvent<MothershipCoreComponent, DestructionEventArgs>(OnDestroyed);
         SubscribeLocalEvent<XenoborgComponent, MindAddedMessage>(OnXenoborgMindAdded);
         SubscribeLocalEvent<XenoborgComponent, MindRemovedMessage>(OnXenoborgMindRemoved);
-        SubscribeLocalEvent<MothershipCoreComponent, MindAddedMessage>(OnXenoborgCoreMindAdded);
-        SubscribeLocalEvent<MothershipCoreComponent, MindRemovedMessage>(OnXenoborgCoreMindRemoved);
     }
 
     private void OnDestroyed(EntityUid ent, MothershipCoreComponent component, DestructionEventArgs args)
@@ -52,6 +51,9 @@ public sealed partial class XenoborgSystem : EntitySystem
         var xenoborgQuery = AllEntityQuery<XenoborgComponent, BorgTransponderComponent>();
         while (xenoborgQuery.MoveNext(out var xenoborgEnt, out _, out _))
         {
+            if (TryComp<MothershipCoreComponent>(xenoborgEnt, out _))
+                continue;
+
             // I got tired to trying to make this work via the device network.
             // so brute force it is...
             _borg.Destroy(xenoborgEnt);
@@ -60,33 +62,13 @@ public sealed partial class XenoborgSystem : EntitySystem
 
     private void OnXenoborgMindAdded(EntityUid ent, XenoborgComponent comp, MindAddedMessage args)
     {
-        if (_roles.MindHasRole<XenoborgRoleComponent>(args.Mind))
-            return;
-
         _roles.MindAddRole(args.Mind, comp.MindRole, silent: true);
 
         if (!TryComp<ActorComponent>(ent, out var actorComp))
             return;
 
         _antag.SendBriefing(actorComp.PlayerSession,
-            Loc.GetString("xenoborgs-welcome"),
-            XENOBORG_BRIEFING_COLOR,
-            comp.BriefingSound
-        );
-    }
-
-    private void OnXenoborgCoreMindAdded(EntityUid ent, MothershipCoreComponent comp, MindAddedMessage args)
-    {
-        if (_roles.MindHasRole<XenoborgCoreRoleComponent>(args.Mind))
-            return;
-
-        _roles.MindAddRole(args.Mind, comp.MindRole, silent: true);
-
-        if (!TryComp<ActorComponent>(ent, out var actorComp))
-            return;
-
-        _antag.SendBriefing(actorComp.PlayerSession,
-            Loc.GetString("mothership-welcome"),
+            Loc.GetString(comp.BriefingText),
             XENOBORG_BRIEFING_COLOR,
             comp.BriefingSound
         );
@@ -94,13 +76,6 @@ public sealed partial class XenoborgSystem : EntitySystem
 
     private void OnXenoborgMindRemoved(EntityUid ent, XenoborgComponent comp, MindRemovedMessage args)
     {
-        if (_roles.MindHasRole<XenoborgRoleComponent>(args.Mind))
-            _roles.MindRemoveRole<XenoborgRoleComponent>(args.Mind.Owner);
-    }
-
-    private void OnXenoborgCoreMindRemoved(EntityUid ent, MothershipCoreComponent comp, MindRemovedMessage args)
-    {
-        if (_roles.MindHasRole<XenoborgCoreRoleComponent>(args.Mind))
-            _roles.MindRemoveRole<XenoborgCoreRoleComponent>(args.Mind.Owner);
+        _roles.MindRemoveRole(args.Mind.Owner, comp.MindRole);
     }
 }

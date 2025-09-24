@@ -145,6 +145,9 @@
     - Mothership
     - Xenoborg
     - Binary
+  - type: Xenoborg
+    mindRole: MindRoleMothershipCore
+    briefingText: mothership-welcome
   - type: MothershipCore
   - type: Tag
     tags:

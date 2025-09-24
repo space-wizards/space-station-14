@@ -34,6 +34,9 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
         var xenoborgQuery = AllEntityQuery<XenoborgComponent>();
         while (xenoborgQuery.MoveNext(out var xenoborgEnt, out _))
         {
+            if (TryComp<MothershipCoreComponent>(xenoborgEnt, out _))
+                continue;
+
             // if it finds another xenoborg that is different from the one just destroyed,
             // it means there are still more xenoborgs.
             if (xenoborgEnt != ent)
@@ -112,6 +115,9 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
         var query = AllEntityQuery<XenoborgComponent>();
         while (query.MoveNext(out var xenoborg, out _))
         {
+            if (TryComp<MothershipCoreComponent>(xenoborg, out _))
+                continue;
+
             if (playerControlled && !_mindSystem.TryGetMind(xenoborg, out _, out _))
                 continue;
 
