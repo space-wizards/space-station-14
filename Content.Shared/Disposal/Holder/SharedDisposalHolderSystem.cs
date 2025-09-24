@@ -208,7 +208,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
 
             if (_net.IsServer)
             {
-                _audio.PlayPvs(tube.Comp.ClangSound, tube);
+                _audio.PlayPvs(tube.Comp.ClangSound, ent);
             }
 
             ent.Comp.AccumulatedDamage += damage.GetTotal();

@@ -182,6 +182,9 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
         var xform = Transform(ent);
         var holder = Spawn(ent.Comp1.HolderPrototypeId, _transform.GetMapCoordinates(ent, xform: xform));
         var holderComponent = Comp<DisposalHolderComponent>(holder);
+        var holderEnt = new Entity<DisposalHolderComponent>(holder, holderComponent);
+
+        AddPVSOverride(holderEnt);
 
         if (holderComponent.Container != null)
         {
@@ -191,15 +194,15 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
             }
         }
 
-        IntakeAtmos((holder, holderComponent), unit);
+        IntakeAtmos(holderEnt, unit);
 
         if (tags != null)
         {
             holderComponent.Tags.UnionWith(tags);
-            Dirty(holder, holderComponent);
+            Dirty(holderEnt);
         }
 
-        return _disposableSystem.TryEnterTube((holder, holderComponent), (ent, ent.Comp2));
+        return _disposableSystem.TryEnterTube(holderEnt, (ent, ent.Comp2));
     }
 
     /// <summary>
@@ -208,6 +211,15 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
     /// <param name="ent">The disposal holder.</param>
     /// /// <param name="ent">The disposal unit.</param>
     protected virtual void IntakeAtmos(Entity<DisposalHolderComponent> ent, Entity<DisposalUnitComponent> unit)
+    {
+        // Handled by the server
+    }
+
+    /// <summary>
+    /// Adds a PVS override to a specified disposal holder.
+    /// </summary>
+    /// <param name="ent">The disposal holder.</param>
+    protected virtual void AddPVSOverride(Entity<DisposalHolderComponent> ent)
     {
         // Handled by the server
     }
