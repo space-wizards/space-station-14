@@ -196,6 +196,9 @@
             "name": "ai_dead"
         },
         {
+            "name": "ai_unpowered"
+        },
+        {
             "name": "ai_empty",
             "delays": [
                 [
@@ -205,11 +208,51 @@
             ]
         },
         {
+            "name": "ai_error",
+            "delays": [
+                [
+                    0.7,
+                    0.7
+                ]
+            ]
+        },
+        {
+            "name": "ai_fuzz",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
             "name": "default",
             "directions": 4
         },
         {
             "name": "base"
+        },
+        {
+            "name": "frame_0"
+        },
+        {
+            "name": "frame_1"
+        },
+        {
+            "name": "frame_2"
+        },
+        {
+            "name": "frame_3"
+        },
+        {
+            "name": "frame_3b"
+        },
+        {
+            "name": "frame_4"
         }
     ]
 }

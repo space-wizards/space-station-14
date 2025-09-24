@@ -665,4 +665,56 @@
   id: 79
   time: '2025-09-11T01:46:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40199
+- author: ToastEnjoyer
+  changes:
+  - message: On bagel, fixed some unlinked radiation shutters at engineering.
+    type: Fix
+  id: 80
+  time: '2025-09-14T23:46:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40358
+- author: SlamBamActionman
+  changes:
+  - message: The Nukie Infiltrator now has a locker containing 5 jetpacks.
+    type: Tweak
+  id: 81
+  time: '2025-09-15T00:36:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39887
+- author: ToastEnjoyer
+  changes:
+  - message: On bagel, replaced the mapped incendiary AK47 ammo for normal AK ammo.
+    type: Remove
+  id: 82
+  time: '2025-09-15T01:13:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40359
+- author: F1restar4
+  changes:
+  - message: On Fland, Fixed evac's air storage cell instantly shattering due to delta
+      pressure
+    type: Fix
+  id: 83
+  time: '2025-09-17T04:47:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40413
+- author: F1restar4
+  changes:
+  - message: On Plasma, added tropico to atmos
+    type: Add
+  id: 84
+  time: '2025-09-18T07:15:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40436
+- author: IProduceWidgets
+  changes:
+  - message: Updates Oasis TEG
+    type: Add
+  - message: Oasis AI Restoration Console
+    type: Add
+  id: 85
+  time: '2025-09-20T18:10:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40463
+- author: ToastEnjoyer
+  changes:
+  - message: On Amber, added the AI restoration console to the RD's room.
+    type: Add
+  id: 86
+  time: '2025-09-20T18:37:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40393
 Order: 1

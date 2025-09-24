@@ -10,13 +10,6 @@
     Steel: 50
     Glass: 50
 
-- type: latheRecipe
-  abstract: true
-  id: BaseFauxTileRecipe
-  completetime: 1
-  materials:
-    Plastic: 100
-
 # Recipes
 
 ## Lights
@@ -184,60 +177,6 @@
   materials:
     Steel: 750
     Plastic: 100
-
-- type: latheRecipe
-  parent: BaseFauxTileRecipe
-  id: FauxTileAstroGrass
-  result: FloorTileItemAstroGrass
-
-- type: latheRecipe
-  parent: BaseFauxTileRecipe
-  id: FauxTileMowedAstroGrass
-  result: FloorTileItemMowedAstroGrass
-
-- type: latheRecipe
-  parent: BaseFauxTileRecipe
-  id: FauxTileJungleAstroGrass
-  result: FloorTileItemJungleAstroGrass
-
-- type: latheRecipe
-  parent: BaseFauxTileRecipe
-  id: FauxTileAstroIce
-  result: FloorTileItemAstroIce
-
-- type: latheRecipe
-  parent: BaseFauxTileRecipe
-  id: FauxTileAstroSnow
-  result: FloorTileItemAstroSnow
-
-- type: latheRecipe
-  parent: BaseFauxTileRecipe
-  id: FauxTileAstroAsteroidSand
-  result: FloorTileItemAstroAsteroidSand
-
-- type: latheRecipe
-  parent: BaseFauxTileRecipe
-  id: FauxTileAstroAsteroidSandBorderless
-  result: FloorTileItemAstroAsteroidSandBorderless
-
-- type: latheRecipe
-  id: FloorGreenCircuit
-  result: FloorTileItemGCircuit4
-  completetime: 2
-  materials:
-    Steel: 100
-
-- type: latheRecipe
-  parent: FloorGreenCircuit
-  id: FloorBlueCircuit
-  result: FloorTileItemBCircuit4
-
-- type: latheRecipe
-  id: FloorRedCircuit
-  result: FloorTileItemRCircuit4
-  completetime: 2
-  materials:
-    Steel: 100
 
 - type: latheRecipe
   id: HandheldStationMap

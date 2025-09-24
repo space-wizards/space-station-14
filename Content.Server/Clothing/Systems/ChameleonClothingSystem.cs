@@ -1,7 +1,7 @@
-using Content.Server.IdentityManagement;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Emp;
+using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Prototypes;
 using Robust.Shared.Prototypes;

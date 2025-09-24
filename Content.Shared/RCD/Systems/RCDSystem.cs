@@ -111,7 +111,7 @@ public sealed class RCDSystem : EntitySystem
             var name = Loc.GetString(prototype.SetName);
 
             if (prototype.Prototype != null &&
-                _protoManager.Resolve(prototype.Prototype, out var proto))
+                _protoManager.TryIndex(prototype.Prototype, out var proto)) // don't use Resolve because this can be a tile
                 name = proto.Name;
 
             msg = Loc.GetString("rcd-component-examine-build-details", ("name", name));
