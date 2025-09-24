@@ -63,7 +63,7 @@ public sealed partial class XenoborgSystem : EntitySystem
         if (_roles.MindHasRole<XenoborgRoleComponent>(args.Mind))
             return;
 
-        _roles.MindAddRole(args.Mind, "MindRoleXenoborg", silent: true);
+        _roles.MindAddRole(args.Mind, comp.MindRole, silent: true);
 
         if (!TryComp<ActorComponent>(ent, out var actorComp))
             return;
@@ -71,7 +71,7 @@ public sealed partial class XenoborgSystem : EntitySystem
         _antag.SendBriefing(actorComp.PlayerSession,
             Loc.GetString("xenoborgs-welcome"),
             XENOBORG_BRIEFING_COLOR,
-            new SoundPathSpecifier("/Audio/Ambience/Antag/xenoborg_start.ogg")
+            comp.BriefingSound
         );
     }
 
@@ -80,7 +80,7 @@ public sealed partial class XenoborgSystem : EntitySystem
         if (_roles.MindHasRole<XenoborgCoreRoleComponent>(args.Mind))
             return;
 
-        _roles.MindAddRole(args.Mind, "MindRoleMothershipCore", silent: true);
+        _roles.MindAddRole(args.Mind, comp.MindRole, silent: true);
 
         if (!TryComp<ActorComponent>(ent, out var actorComp))
             return;
@@ -88,7 +88,7 @@ public sealed partial class XenoborgSystem : EntitySystem
         _antag.SendBriefing(actorComp.PlayerSession,
             Loc.GetString("mothership-welcome"),
             XENOBORG_BRIEFING_COLOR,
-            new SoundPathSpecifier("/Audio/Ambience/Antag/xenoborg_start.ogg")
+            comp.BriefingSound
         );
     }
 
