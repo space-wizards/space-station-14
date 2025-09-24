@@ -58,44 +58,58 @@ public sealed partial class XenoborgSystem : EntitySystem
     /// <param name="xenoborgComp"></param>
     public void EnsureXenoborgRole(EntityUid mindId, EntityUid ent, XenoborgComponent xenoborgComp)
     {
-        if (!_roles.MindHasRole<XenoborgRoleComponent>(mindId))
-        {
-            _roles.MindAddRole(mindId, "MindRoleXenoborg", silent: true);
+        if (_roles.MindHasRole<XenoborgRoleComponent>(mindId))
+            return;
 
-            if (TryComp<ActorComponent>(ent, out var actorComp))
-            {
-                _antag.SendBriefing(actorComp.PlayerSession,
-                    Loc.GetString("xenoborgs-welcome"),
-                    Color.BlueViolet,
-                    new SoundPathSpecifier("/Audio/Ambience/Antag/xenoborg_start.ogg")
-                );
-            }
-        }
+        _roles.MindAddRole(mindId, "MindRoleXenoborg", silent: true);
+
+        if (!TryComp<ActorComponent>(ent, out var actorComp))
+            return;
+
+        _antag.SendBriefing(actorComp.PlayerSession,
+            Loc.GetString("xenoborgs-welcome"),
+            Color.BlueViolet,
+            new SoundPathSpecifier("/Audio/Ambience/Antag/xenoborg_start.ogg")
+        );
     }
 
+    /// <summary>
+    /// Remove the xenoborg mind role
+    /// </summary>
+    /// <param name="mindId"></param>
     public void RemoveXenoborgRole(EntityUid mindId)
     {
         if (_roles.MindHasRole<XenoborgRoleComponent>(mindId))
             _roles.MindRemoveRole<XenoborgRoleComponent>(mindId);
     }
 
+    /// <summary>
+    /// Makes sure the player has the xenoborg core mindrole and also sends the briefing text and sound
+    /// </summary>
+    /// <param name="mindId"></param>
+    /// <param name="ent"></param>
+    /// <param name="xenoborgComp"></param>
     public void EnsureXenoborgCoreRole(EntityUid mindId, EntityUid ent, MothershipCoreComponent mothershipComp)
     {
-        if (!_roles.MindHasRole<XenoborgCoreRoleComponent>(mindId))
-        {
-            _roles.MindAddRole(mindId, "MindRoleMothershipCore", silent: true);
+        if (_roles.MindHasRole<XenoborgCoreRoleComponent>(mindId))
+            return;
 
-            if (TryComp<ActorComponent>(ent, out var actorComp))
-            {
-                _antag.SendBriefing(actorComp.PlayerSession,
-                    Loc.GetString("mothership-welcome"),
-                    Color.BlueViolet,
-                    new SoundPathSpecifier("/Audio/Ambience/Antag/xenoborg_start.ogg")
-                );
-            }
-        }
+        _roles.MindAddRole(mindId, "MindRoleMothershipCore", silent: true);
+
+        if (!TryComp<ActorComponent>(ent, out var actorComp))
+            return;
+
+        _antag.SendBriefing(actorComp.PlayerSession,
+            Loc.GetString("mothership-welcome"),
+            Color.BlueViolet,
+            new SoundPathSpecifier("/Audio/Ambience/Antag/xenoborg_start.ogg")
+        );
     }
 
+    /// <summary>
+    /// Remove the xenoborg core mind role
+    /// </summary>
+    /// <param name="mindId"></param>
     public void RemoveXenoborgCoreRole(EntityUid mindId)
     {
         if (_roles.MindHasRole<XenoborgCoreRoleComponent>(mindId))
