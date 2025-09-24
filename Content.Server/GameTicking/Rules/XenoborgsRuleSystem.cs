@@ -61,7 +61,7 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
         base.AppendRoundEndText(uid, component, gameRule, ref args);
 
         var numXenoborgs = GetNumberXenoborgs();
-        var numHumans = GetNumberHumans();
+        var numHumans = _mindSystem.GetAliveHumans().Count;
 
         if (numXenoborgs < 5)
             args.AddLine(Loc.GetString("xenoborgs-crewmajor"));
@@ -100,7 +100,7 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
     /// </summary>
     /// <param name="playerControlled">if it should only include xenoborgs with a mind</param>
     /// <param name="alive">if it should only include xenoborgs that are alive</param>
-    /// <returns></returns>
+    /// <returns>the number of xenoborgs</returns>
     private int GetNumberXenoborgs(bool playerControlled = true, bool alive = true)
     {
         var numberXenoborgs = 0;
@@ -121,29 +121,9 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
     }
 
     /// <summary>
-    /// Gets the number of humans who are alive
-    /// </summary>
-    /// <returns></returns>
-    private int GetNumberHumans()
-    {
-        var humans = 0;
-
-        var players = AllEntityQuery<HumanoidAppearanceComponent, ActorComponent, MobStateComponent>();
-        while (players.MoveNext(out var uid, out _, out _, out var mob))
-        {
-            if (!_mobState.IsAlive(uid, mob))
-                continue;
-
-            humans++;
-        }
-
-        return humans;
-    }
-
-    /// <summary>
     /// Gets the number of xenoborg cores
     /// </summary>
-    /// <returns></returns>
+    /// <returns>the number of xenoborg cores</returns>
     private int GetNumberMothershipCores()
     {
         var numberMothershipCores = 0;
