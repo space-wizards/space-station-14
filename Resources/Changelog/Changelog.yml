@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: IProduceWidgets
-  changes:
-  - message: more wizard name variety
-    type: Add
-  id: 8486
-  time: '2025-05-14T21:06:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36437
 - author: archee1
   changes:
   - message: Bike horns of all varieties have had their textures updated slightly.
@@ -3953,3 +3946,10 @@
   id: 8996
   time: '2025-09-23T17:02:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40481
+- author: aada
+  changes:
+  - message: Circuit tiles and faux tiles have been moved to the cutter machine.
+    type: Tweak
+  id: 8997
+  time: '2025-09-24T00:12:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37982
