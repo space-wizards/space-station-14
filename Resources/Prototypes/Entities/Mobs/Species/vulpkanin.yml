@@ -58,11 +58,6 @@
         pitch: 1.33
         volume: -5
         variation: 0.05
-  - type: InteractionPopup # Crucial detail.
-    successChance: 1
-    interactSuccessString: petting-success-soft-floofy-vulp
-    messagePerceivedByOthers: petting-success-soft-floofy-vulp-others
-    interactFailureString: petting-failure-generic
   - type: Sprite # Drawlayers. Top to bottom in order I believe.
     netsync: false
     layers:
@@ -111,6 +106,8 @@
       visible: false
   - type: HumanoidAppearance
     species: Vulpkanin
+    undergarmentTop: UndergarmentTopTanktopVulpkanin
+    undergarmentBottom: UndergarmentBottomBoxersVulpkanin
     hideLayersOnEquip:
     - Snout
     - SnoutCover
