@@ -34,7 +34,7 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
         var xenoborgQuery = AllEntityQuery<XenoborgComponent>();
         while (xenoborgQuery.MoveNext(out var xenoborgEnt, out _))
         {
-            if (TryComp<MothershipCoreComponent>(xenoborgEnt, out _))
+            if (HasComp<MothershipCoreComponent>(xenoborgEnt))
                 continue;
 
             // if it finds another xenoborg that is different from the one just destroyed,
