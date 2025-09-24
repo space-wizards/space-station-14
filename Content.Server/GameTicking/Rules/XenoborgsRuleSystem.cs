@@ -56,6 +56,7 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
             colorOverride: ANNOUNCMENT_COLOR);
     }
 
+    // TODO: Refactor the end of round text
     protected override void AppendRoundEndText(EntityUid uid,
         XenoborgsRuleComponent component,
         GameRuleComponent gameRule,
