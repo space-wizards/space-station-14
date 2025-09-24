@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: kosticia
-  changes:
-  - message: Hamsters, mice, butterflies, mothroaches, bees, bats, snails, rats, ticks
-      and cockroaches now don't leave organs on gibbing.
-    type: Fix
-  id: 8489
-  time: '2025-05-15T03:45:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37080
 - author: EmoGarbage404
   changes:
   - message: Goliath tentacles no longer miss if you stand still.
@@ -3953,3 +3945,12 @@
   id: 8999
   time: '2025-09-24T20:33:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38138
+- author: Nox38, BurgerMoth
+  changes:
+  - message: Added descriptions to .20 ammo boxes, magazines, and cartridges.
+    type: Add
+  - message: Changed the descriptions of the Lecter, Estoc DMR, and M90GL.
+    type: Tweak
+  id: 9000
+  time: '2025-09-24T21:48:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36496
