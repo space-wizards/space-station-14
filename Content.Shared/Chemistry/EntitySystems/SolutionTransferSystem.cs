@@ -2,12 +2,12 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Robust.Shared.Network;
-using Robust.Shared.Player;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
@@ -21,6 +21,7 @@ public sealed class SolutionTransferSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
 
     /// <summary>
     ///     Default transfer amounts for the set-transfer verb.
@@ -34,6 +35,8 @@ public sealed class SolutionTransferSystem : EntitySystem
         SubscribeLocalEvent<SolutionTransferComponent, GetVerbsEvent<AlternativeVerb>>(AddSetTransferVerbs);
         SubscribeLocalEvent<SolutionTransferComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<SolutionTransferComponent, TransferAmountSetValueMessage>(OnTransferAmountSetValueMessage);
+        SubscribeLocalEvent<SolutionTransferComponent, SolutionDrainTransferDoAfterEvent>(OnSolutionDrainTransferDoAfter);
+        SubscribeLocalEvent<SolutionTransferComponent, SolutionFillTransferDoAfterEvent>(OnSolutionFillTransferDoAfter);
     }
 
     private void OnTransferAmountSetValueMessage(Entity<SolutionTransferComponent> ent, ref TransferAmountSetValueMessage message)
@@ -47,6 +50,42 @@ public sealed class SolutionTransferSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("comp-solution-transfer-set-amount", ("amount", newTransferAmount)), uid, user);
 
         Dirty(uid, comp);
+    }
+
+    private void OnSolutionDrainTransferDoAfter(Entity<SolutionTransferComponent> ent, ref SolutionDrainTransferDoAfterEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        var (uid, comp) = ent;
+
+        if (comp.CanSend
+            && args.Target.HasValue
+            && TryComp<RefillableSolutionComponent>(args.Target, out var targetRefill)
+            && TryComp<DrainableSolutionComponent>(uid, out var drainComp)
+            && _solution.TryGetRefillableSolution((args.Target.Value, targetRefill, null), out var targetSoln, out _)
+            && _solution.TryGetDrainableSolution((uid, drainComp), out var ownerSoln, out _))
+        {
+            DrainTransfer(args.User, uid, ownerSoln.Value, args.Target.Value, targetSoln.Value, args.Amount);
+        }
+    }
+
+    private void OnSolutionFillTransferDoAfter(Entity<SolutionTransferComponent> ent, ref SolutionFillTransferDoAfterEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        var (uid, comp) = ent;
+
+        if (comp.CanReceive
+            && args.Target.HasValue
+            && !HasComp<RefillableSolutionComponent>(args.Target.Value) // target must not be refillable (e.g. Reagent Tanks)
+            && _solution.TryGetDrainableSolution(args.Target.Value, out var targetSoln, out _) // target must be drainable
+            && TryComp<RefillableSolutionComponent>(uid, out var refill)
+            && _solution.TryGetRefillableSolution((uid, refill, null), out var ownerSoln, out var ownerRefill))
+        {
+            FillTransfer(args.User, args.Target.Value, targetSoln.Value, uid, ownerSoln.Value, ownerRefill, args.Amount);
+        }
     }
 
     private void AddSetTransferVerbs(Entity<SolutionTransferComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
@@ -119,46 +158,133 @@ public sealed class SolutionTransferSystem : EntitySystem
             if (refill?.MaxRefill is {} maxRefill)
                 transferAmount = FixedPoint2.Min(transferAmount, maxRefill);
 
-            var transferred = Transfer(args.User, target, targetSoln.Value, uid, ownerSoln.Value, transferAmount);
-            args.Handled = true;
-            if (transferred > 0)
+            var transferTime = refill?.RefillTime;
+            if (transferTime > 0)
             {
-                var toTheBrim = ownerRefill.AvailableVolume == 0;
-                var msg = toTheBrim
-                    ? "comp-solution-transfer-fill-fully"
-                    : "comp-solution-transfer-fill-normal";
+                if (!CanTransfer(args.User, target, targetSoln.Value, uid, ownerSoln.Value, transferAmount))
+                    return;
 
-                _popup.PopupClient(Loc.GetString(msg, ("owner", args.Target), ("amount", transferred), ("target", uid)), uid, args.User);
+                var doAfterArgs = new DoAfterArgs(EntityManager, args.User, transferTime.Value, new SolutionFillTransferDoAfterEvent(transferAmount), uid, target, null)
+                {
+                    BreakOnDamage = true,
+                    BreakOnMove = true,
+                    NeedHand = true,
+                    Hidden = true,
+                };
+                _doAfter.TryStartDoAfter(doAfterArgs, null);
+                args.Handled = true;
                 return;
+            }
+            else
+            {
+                var transferred = FillTransfer(args.User, target, targetSoln.Value, uid, ownerSoln.Value, ownerRefill, transferAmount);
+                if (transferred > 0)
+                {
+                    args.Handled = true;
+                    return;
+                }
             }
         }
 
         // if target is refillable, and owner is drainable
         if (comp.CanSend
             && TryComp<RefillableSolutionComponent>(target, out var targetRefill)
+            && TryComp<DrainableSolutionComponent>(uid, out var drainComp)
             && _solution.TryGetRefillableSolution((target, targetRefill, null), out targetSoln, out _)
-            && _solution.TryGetDrainableSolution(uid, out ownerSoln, out _))
+            && _solution.TryGetDrainableSolution((uid, drainComp), out ownerSoln, out _))
         {
             var transferAmount = comp.TransferAmount;
 
             if (targetRefill?.MaxRefill is {} maxRefill)
                 transferAmount = FixedPoint2.Min(transferAmount, maxRefill);
 
-            var transferred = Transfer(args.User, uid, ownerSoln.Value, target, targetSoln.Value, transferAmount);
-            args.Handled = true;
-            if (transferred > 0)
+            var transferTime = targetRefill?.RefillTime + drainComp.DrainTime;
+            if (transferTime > 0)
             {
-                var message = Loc.GetString("comp-solution-transfer-transfer-solution", ("amount", transferred), ("target", target));
-                _popup.PopupClient(message, uid, args.User);
+                if (!CanTransfer(args.User, uid, ownerSoln.Value, target, targetSoln.Value, transferAmount))
+                    return;
+
+                var doAfterArgs = new DoAfterArgs(EntityManager, args.User, transferTime.Value, new SolutionDrainTransferDoAfterEvent(transferAmount), uid, target, null)
+                {
+                    BreakOnDamage = true,
+                    BreakOnMove = true,
+                    NeedHand = true,
+                    Hidden = true,
+                };
+                _doAfter.TryStartDoAfter(doAfterArgs, null);
             }
+            else
+            {
+                DrainTransfer(args.User, uid, ownerSoln.Value, target, targetSoln.Value, transferAmount);
+            }
+            args.Handled = true;
         }
     }
 
     /// <summary>
-    /// Transfer from a solution to another, allowing either entity to cancel it and show a popup.
+    /// Attempt to drain a solution into another, such as pouring a bottle into a glass.
     /// </summary>
-    /// <returns>The actual amount transferred.</returns>
-    public FixedPoint2 Transfer(EntityUid user,
+    /// <param name="user">The user performing the action.</param>
+    /// <param name="sourceEntity">The entity being filled.</param>
+    /// <param name="source">The solution entity being filled.</param>
+    /// <param name="targetEntity">The entity being drained from.</param>
+    /// <param name="target">The solution entity being drained from.</param>
+    /// <param name="amount">The amount being transferred.</param>
+    /// <returns>The amount that finally got transferred.</returns>
+    private FixedPoint2 DrainTransfer(EntityUid user,
+        EntityUid sourceEntity,
+        Entity<SolutionComponent> source,
+        EntityUid targetEntity,
+        Entity<SolutionComponent> target,
+        FixedPoint2 amount)
+    {
+        var transferred = Transfer(user, sourceEntity, source, targetEntity, target, amount);
+        if (transferred > 0)
+        {
+            var message = Loc.GetString("comp-solution-transfer-transfer-solution", ("amount", transferred), ("target", targetEntity));
+            _popup.PopupClient(message, sourceEntity, user);
+        }
+
+        return transferred;
+    }
+
+    /// <summary>
+    /// Attempt to fill a solution from another container, such as tanks.
+    /// </summary>
+    /// <param name="user">The user performing the action.</param>
+    /// <param name="sourceEntity">The entity being drained from.</param>
+    /// <param name="source">The solution entity being drained from.</param>
+    /// <param name="targetEntity">The entity being filled.</param>
+    /// <param name="target">The solution entity being filled.</param>
+    /// <param name="targetSolution">The solution being filled.</param>
+    /// <param name="amount">The amount being transferred.</param>
+    /// <returns>The amount that finally got transferred.</returns>
+    private FixedPoint2 FillTransfer(EntityUid user,
+        EntityUid sourceEntity,
+        Entity<SolutionComponent> source,
+        EntityUid targetEntity,
+        Entity<SolutionComponent> target,
+        Solution targetSolution,
+        FixedPoint2 amount)
+    {
+        var transferred = Transfer(user, sourceEntity, source, targetEntity, target, amount);
+        if (transferred > 0)
+        {
+            var toTheBrim = targetSolution.AvailableVolume == 0;
+            var msg = toTheBrim
+                ? "comp-solution-transfer-fill-fully"
+                : "comp-solution-transfer-fill-normal";
+
+            _popup.PopupClient(Loc.GetString(msg, ("owner", sourceEntity), ("amount", transferred), ("target", targetEntity)), targetEntity, user);
+        }
+
+        return transferred;
+    }
+
+    /// <summary>
+    /// Check if the source solution can transfer the amount to the target solution, and display a pop-up if it fails.
+    /// </summary>
+    public bool CanTransfer(EntityUid user,
         EntityUid sourceEntity,
         Entity<SolutionComponent> source,
         EntityUid targetEntity,
@@ -172,14 +298,14 @@ public sealed class SolutionTransferSystem : EntitySystem
         if (transferAttempt.CancelReason is {} reason)
         {
             _popup.PopupClient(reason, sourceEntity, user);
-            return FixedPoint2.Zero;
+            return false;
         }
 
         var sourceSolution = source.Comp.Solution;
         if (sourceSolution.Volume == 0)
         {
             _popup.PopupClient(Loc.GetString("comp-solution-transfer-is-empty", ("target", sourceEntity)), sourceEntity, user);
-            return FixedPoint2.Zero;
+            return false;
         }
 
         // Check if the target is cancelling the transfer
@@ -187,15 +313,35 @@ public sealed class SolutionTransferSystem : EntitySystem
         if (transferAttempt.CancelReason is {} targetReason)
         {
             _popup.PopupClient(targetReason, targetEntity, user);
-            return FixedPoint2.Zero;
+            return false;
         }
 
         var targetSolution = target.Comp.Solution;
         if (targetSolution.AvailableVolume == 0)
         {
             _popup.PopupClient(Loc.GetString("comp-solution-transfer-is-full", ("target", targetEntity)), targetEntity, user);
-            return FixedPoint2.Zero;
+            return false;
         }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Transfer from a solution to another, allowing either entity to cancel it and show a popup.
+    /// </summary>
+    /// <returns>The actual amount transferred.</returns>
+    public FixedPoint2 Transfer(EntityUid user,
+        EntityUid sourceEntity,
+        Entity<SolutionComponent> source,
+        EntityUid targetEntity,
+        Entity<SolutionComponent> target,
+        FixedPoint2 amount)
+    {
+        var sourceSolution = source.Comp.Solution;
+        var targetSolution = target.Comp.Solution;
+
+        if (!CanTransfer(user, sourceEntity, source, targetEntity, target, amount))
+            return FixedPoint2.Zero;
 
         var actualAmount = FixedPoint2.Min(amount, FixedPoint2.Min(sourceSolution.Volume, targetSolution.AvailableVolume));
 
@@ -234,3 +380,35 @@ public record struct SolutionTransferAttemptEvent(EntityUid From, EntityUid To, 
 /// </summary>
 [ByRefEvent]
 public record struct SolutionTransferredEvent(EntityUid From, EntityUid To, EntityUid User, FixedPoint2 Amount);
+
+/// <summary>
+/// Doafter event for solution transfers where the held item is drained into the target. Checks for validity both when initiating and when finishing the event.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed partial class SolutionDrainTransferDoAfterEvent : DoAfterEvent
+{
+    public FixedPoint2 Amount;
+
+    public SolutionDrainTransferDoAfterEvent(FixedPoint2 amount)
+    {
+        Amount = amount;
+    }
+
+    public override DoAfterEvent Clone() => this;
+}
+
+/// <summary>
+/// Doafter event for solution transfers where the held item is filled from the target. Checks for validity both when initiating and when finishing the event.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed partial class SolutionFillTransferDoAfterEvent : DoAfterEvent
+{
+    public FixedPoint2 Amount;
+
+    public SolutionFillTransferDoAfterEvent(FixedPoint2 amount)
+    {
+        Amount = amount;
+    }
+
+    public override DoAfterEvent Clone() => this;
+}
