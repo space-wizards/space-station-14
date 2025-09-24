@@ -6,6 +6,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.EntityConditions.Conditions;
 using Content.Shared.EntityConditions.Conditions.Body;
 using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
@@ -190,7 +191,37 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
                 var actualEntity = ent.Comp2?.Body ?? solutionEntityUid.Value;
 
                 // do all effects, if conditions apply
-                MetabolizeEffects(actualEntity, entry.Effects, scale, ent);
+                foreach (var effect in entry.Effects)
+                {
+                    if (scale < effect.MinScale)
+                        return;
+
+                    // See if conditions apply
+                    if (effect.Conditions == null || CanMetabolizeEffect(effect.Conditions))
+                        _entityEffects.ApplyEffect(actualEntity, effect, scale);
+                }
+
+                // This allows us to check certain conditions on organs themselves!
+                bool CanMetabolizeEffect(AnyEntityCondition[] conditions)
+                {
+                    foreach (var condition in conditions)
+                    {
+                        switch (condition)
+                        {
+                            // Need specific handling of specific conditions since Metabolism is funny like that.
+                            case MetabolizerType when !_entityConditions.TryCondition(ent, condition):
+                            case MetabolizerTypes when !_entityConditions.TryCondition(ent, condition):
+                            case ReagentThreshold when !_entityConditions.TryCondition(soln.Value, condition):
+                                return false;
+                            default:
+                                if (!_entityConditions.TryCondition(actualEntity, condition))
+                                    return false;
+                                break;
+                        }
+                    }
+
+                    return true;
+                }
             }
 
             // remove a certain amount of reagent
@@ -204,36 +235,6 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
         }
 
         _solutionContainerSystem.UpdateChemicals(soln.Value);
-    }
-
-    private void MetabolizeEffects(EntityUid target, AnyEntityEffect[] effects, float scale, EntityUid metabolizer)
-    {
-        foreach (var effect in effects)
-        {
-            // See if conditions apply
-            if (effect.Conditions == null || CanMetabolizeEffect(effect.Conditions))
-                _entityEffects.ApplyEffect(target, effect, scale);
-        }
-
-        // This allows us to check certain conditions on organs themselves!
-        bool CanMetabolizeEffect(AnyEntityCondition[] conditions)
-        {
-            foreach (var condition in conditions)
-            {
-                if (condition is MetabolizerType)
-                {
-                    if (!_entityConditions.TryCondition(metabolizer, condition))
-                        return false;
-
-                    continue;
-                }
-
-                if (!_entityConditions.TryCondition(target, condition))
-                    return false;
-            }
-
-            return true;
-        }
     }
 }
 

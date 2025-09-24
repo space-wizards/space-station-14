@@ -53,6 +53,9 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
 
     public bool TryApplyEffect(EntityUid target, AnyEntityEffect effect, float scale = 1f)
     {
+        if (scale < effect.MinScale)
+            return false;
+
         // See if conditions apply
         if (!_condition.TryConditions(target, effect.Conditions))
             return false;
@@ -142,6 +145,12 @@ public abstract partial class AnyEntityEffect
 
     [DataField]
     public AnyEntityCondition[]? Conditions;
+
+    /// <summary>
+    /// If our scale is less than this value, the effect fails.
+    /// </summary>
+    [DataField]
+    public float MinScale;
 
     // TODO: This should be an entity condition
     [DataField]

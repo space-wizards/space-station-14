@@ -46,10 +46,8 @@
             Poison: 3
       - !type:AdjustAlert
         alertType: Toxins
+        minScale: 1
         conditions:
-          - !type:ReagentThreshold
-            reagent: Oxygen
-            min: 0.5
           - !type:MetabolizerType
             type: Vox
         clear: true
@@ -89,13 +87,11 @@
         ignoreResistances: true
         damage:
           types:
-            Poison: 7
+            Poison: 0.7
       - !type:AdjustAlert
         alertType: Toxins
+        minScale: 1
         conditions:
-          - !type:ReagentThreshold
-            reagent: Oxygen
-            min: 0.5
           - !type:MetabolizerType
             type: Vox
         clear: true
@@ -132,14 +128,11 @@
         damage:
           types:
             Poison:
-              1
+              0.1
       # We need a metabolism effect on reagent removal
       - !type:AdjustAlert
         alertType: Toxins
-        conditions:
-          - !type:ReagentThreshold
-            reagent: Plasma
-            min: 1.5
+        minScale: 3
         clear: True
         time: 5
   reactiveEffects:
@@ -183,10 +176,7 @@
       # We need a metabolism effect on reagent removal
       - !type:AdjustAlert
         alertType: Toxins
-        conditions:
-          - !type:ReagentThreshold
-            reagent: Tritium
-            min: 1.5
+        minScale: 3
         clear: True
         time: 5
 
@@ -230,6 +220,7 @@
         - !type:MetabolizerType
           type: Plant
       - !type:HealthChange
+        minScale: 1
         conditions:
         - !type:MetabolizerTypes
           types:
@@ -238,9 +229,6 @@
           condition: false
         # Don't want people to get toxin damage from the gas they just
         # exhaled, right?
-        - !type:ReagentThreshold
-          reagent: CarbonDioxide
-          min: 0.5
         scaleByQuantity: true
         ignoreResistances: true
         damage:
@@ -318,10 +306,8 @@
     Gas:
       effects:
       - !type:Emote
+        minScale: 1
         conditions:
-        - !type:ReagentThreshold
-          reagent: NitrousOxide
-          min: 0.2
         - !type:MetabolizerType
           type: Slime
           condition: false
@@ -329,10 +315,8 @@
         showInChat: true
         probability: 0.1
       - !type:Emote
+        minScale: 0.4
         conditions:
-        - !type:ReagentThreshold
-          reagent: NitrousOxide
-          min: 0.2
         - !type:MetabolizerType
           type: Slime
           condition: false
@@ -340,10 +324,8 @@
         showInChat: true
         probability: 0.01
       - !type:PopupMessage
+        minScale: 1
         conditions:
-        - !type:ReagentThreshold
-          reagent: NitrousOxide
-          min: 0.5
         - !type:MetabolizerType
           type: Slime
           condition: false
@@ -352,20 +334,16 @@
         messages: [ "effect-sleepy" ]
         probability: 0.1
       - !type:MovementSpeedModifier
+        minScale: 2
         conditions:
-        - !type:ReagentThreshold
-          reagent: NitrousOxide
-          min: 1
         - !type:MetabolizerType
           type: Slime
           condition: false
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
       - !type:ModifyStatusEffect
+        minScale: 3.6
         conditions:
-        - !type:ReagentThreshold
-          reagent: NitrousOxide
-          min: 1.8
         - !type:MetabolizerType
           type: Slime
           condition: false
@@ -373,10 +351,8 @@
         time: 3
         type: Refresh
       - !type:HealthChange
+        minScale: 7
         conditions:
-        - !type:ReagentThreshold
-          reagent: NitrousOxide
-          min: 3.5
         - !type:MetabolizerType
           type: Slime
           condition: false
@@ -413,59 +389,39 @@
         type: Local
         messages: [ "frezon-lungs-cold" ]
         probability: 0.1
-        conditions:
-        - !type:ReagentThreshold
-          reagent: Frezon
-          min: 0.5
+        minScale: 1
       - !type:PopupMessage
         type: Local
         visualType: Medium
         messages: [ "frezon-euphoric" ]
         probability: 0.1
         conditions:
-        - !type:ReagentThreshold
-          reagent: Frezon
-          min: 1
+        minScale: 2
     Gas:
       effects:
       - !type:HealthChange
-        conditions:
-        - !type:ReagentThreshold
-          reagent: Frezon
-          min: 0.5
+        minScale: 1
         scaleByQuantity: true
         ignoreResistances: true
         damage:
           types:
-            Cellular: 0.5
+            Cellular: 0.05
       - !type:ModifyStatusEffect
-        conditions:
-        - !type:ReagentThreshold
-          reagent: Frezon
-          min: 1
+        minScale: 2
         effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 500
       - !type:Drunk
         boozePower: 500
-        conditions:
-        - !type:ReagentThreshold
-          reagent: Frezon
-          min: 1
+        minScale: 2
       - !type:PopupMessage
         type: Local
         messages: [ "frezon-lungs-cold" ]
         probability: 0.1
-        conditions:
-        - !type:ReagentThreshold
-          reagent: Frezon
-          min: 0.5
+        minScale: 2
       - !type:PopupMessage
         type: Local
         visualType: Medium
         messages: [ "frezon-euphoric" ]
         probability: 0.1
-        conditions:
-        - !type:ReagentThreshold
-          reagent: Frezon
-          min: 1
+        minScale: 2

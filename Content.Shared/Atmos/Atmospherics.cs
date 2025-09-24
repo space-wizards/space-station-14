@@ -338,7 +338,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     I hereby decree. This is Arbitrary Suck my Dick
         /// </summary>
-        public const float BreathMolesToReagentMultiplier = 1144;
+        public const float BreathMolesToReagentMultiplier = 572;
 
         #region Pipes
 
