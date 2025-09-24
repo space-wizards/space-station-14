@@ -47,16 +47,22 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
         // do all effects, if conditions apply
         foreach (var effect in effects)
         {
-            ApplyEffect(target, effect, scale);
+            TryApplyEffect(target, effect, scale);
         }
+    }
+
+    public bool TryApplyEffect(EntityUid target, AnyEntityEffect effect, float scale = 1f)
+    {
+        // See if conditions apply
+        if (!_condition.TryConditions(target, effect.Conditions))
+            return false;
+
+        ApplyEffect(target, effect, scale);
+        return true;
     }
 
     public void ApplyEffect(EntityUid target, AnyEntityEffect effect, float scale = 1f)
     {
-        // See if conditions apply
-        if (!_condition.TryConditions(target, effect.Conditions))
-            return;
-
         // TODO: Logging
         /*
         if (effect.ShouldLog)

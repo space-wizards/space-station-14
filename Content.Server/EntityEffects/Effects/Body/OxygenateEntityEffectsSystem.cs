@@ -13,8 +13,6 @@ public sealed partial class OxygenateEntityEffectsSystem : EntityEffectSystem<Re
     [Dependency] private readonly RespiratorSystem _respirator = default!;
     protected override void Effect(Entity<RespiratorComponent> entity, ref EntityEffectEvent<Oxygenate> args)
     {
-        var multiplier = 1f;
-
-        _respirator.UpdateSaturation(entity, multiplier * args.Effect.Factor, entity.Comp);
+        _respirator.UpdateSaturation(entity, args.Scale * args.Effect.Factor, entity.Comp);
     }
 }

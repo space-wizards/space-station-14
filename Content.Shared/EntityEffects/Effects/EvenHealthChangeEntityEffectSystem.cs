@@ -13,10 +13,7 @@ public sealed partial class EvenHealthChangeEntityEffectSystem : EntityEffectSys
 
     protected override void Effect(Entity<DamageableComponent> entity, ref EntityEffectEvent<EvenHealthChange> args)
     {
-        var universalReagentDamageModifier = _damageable.UniversalReagentDamageModifier;
-        var universalReagentHealModifier = _damageable.UniversalReagentHealModifier;
-
-        var dspec = new DamageSpecifier();
+        var damageSpec = new DamageSpecifier();
 
         foreach (var (group, amount) in args.Effect.Damage)
         {
@@ -32,29 +29,17 @@ public sealed partial class EvenHealthChangeEntityEffectSystem : EntityEffectSys
             var sum = groupDamage.Values.Sum();
             foreach (var (damageId, damageAmount) in groupDamage)
             {
-                var existing = dspec.DamageDict.GetOrNew(damageId);
-                dspec.DamageDict[damageId] = existing + damageAmount / sum * amount;
+                var existing = damageSpec.DamageDict.GetOrNew(damageId);
+                damageSpec.DamageDict[damageId] = existing + damageAmount / sum * amount;
             }
         }
 
-        if (MathHelper.CloseTo(universalReagentDamageModifier, 1f) || MathHelper.CloseTo(universalReagentHealModifier, 1f))
-        {
-            foreach (var (type, val) in dspec.DamageDict)
-            {
-                if (val < 0f)
-                {
-                    dspec.DamageDict[type] = val * universalReagentHealModifier;
-                }
-                if (val > 0f)
-                {
-                    dspec.DamageDict[type] = val * universalReagentDamageModifier;
-                }
-            }
-        }
+        // TODO: This incorrectly scaled parabolically before, so we need adjust every effect that has this set to true.
+        damageSpec *= args.Effect.ScaleByQuantity ? args.Scale : float.Min(1f, args.Scale);
 
         _damageable.TryChangeDamage(
             entity,
-            dspec * args.Scale,
+            damageSpec,
             args.Effect.IgnoreResistances,
             interruptsDoAfters: false,
             damageable: entity.Comp);

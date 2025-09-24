@@ -43,8 +43,7 @@
         ignoreResistances: true
         damage:
           types:
-            Poison:
-              3
+            Poison: 3
       - !type:AdjustAlert
         alertType: Toxins
         conditions:
@@ -90,8 +89,7 @@
         ignoreResistances: true
         damage:
           types:
-            Poison:
-              7
+            Poison: 7
       - !type:AdjustAlert
         alertType: Toxins
         conditions:

@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Damage;
-using Content.Shared.FixedPoint;
 
 namespace Content.Shared.EntityEffects.Effects;
 
@@ -12,26 +11,10 @@ public sealed partial class HealthChangeEntityEffectSystem : EntityEffectSystem<
 
     protected override void Effect(Entity<DamageableComponent> entity, ref EntityEffectEvent<HealthChange> args)
     {
-        var scale = FixedPoint2.New(1);
         var damageSpec = new DamageSpecifier(args.Effect.Damage);
 
-        // TODO: Reagents need to determine scale by quantity and modify the scale value BEFORE starting the entity effect.
-        damageSpec *= args.Effect.ScaleByQuantity ? args.Scale : scale;
-
-        if (!MathHelper.CloseTo(_damageable.UniversalReagentDamageModifier, 1f) || !MathHelper.CloseTo(_damageable.UniversalReagentHealModifier, 1f))
-        {
-            foreach (var (type, val) in damageSpec.DamageDict)
-            {
-                if (val < 0f)
-                {
-                    damageSpec.DamageDict[type] = val * _damageable.UniversalReagentHealModifier;
-                }
-                if (val > 0f)
-                {
-                    damageSpec.DamageDict[type] = val * _damageable.UniversalReagentDamageModifier;
-                }
-            }
-        }
+        // TODO: This incorrectly scaled parabolically before, so we need adjust every effect that has this set to true.
+        damageSpec *= args.Effect.ScaleByQuantity ? args.Scale : float.Min(1f, args.Scale);
 
         _damageable.TryChangeDamage(
                 entity,
