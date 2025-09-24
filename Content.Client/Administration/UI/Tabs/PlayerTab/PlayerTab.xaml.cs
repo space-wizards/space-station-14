@@ -48,6 +48,11 @@ public sealed partial class PlayerTab : Control
         _adminSystem.OverlayEnabled += OverlayEnabled;
         _adminSystem.OverlayDisabled += OverlayDisabled;
 
+        _config.OnValueChanged(CCVars.AdminPlayerTabRoleSetting, RoleSettingChanged, true);
+        _config.OnValueChanged(CCVars.AdminPlayerTabColorSetting, ColorSettingChanged, true);
+        _config.OnValueChanged(CCVars.AdminPlayerTabSymbolSetting, SymbolSettingChanged, true);
+
+
         OverlayButton.OnPressed += OverlayButtonPressed;
         ShowDisconnectedButton.OnPressed += ShowDisconnectedPressed;
 
@@ -59,15 +64,8 @@ public sealed partial class PlayerTab : Control
         SearchList.DataFilterCondition += DataFilterCondition;
         SearchList.ItemKeyBindDown += (args, data) => OnEntryKeyBindDown?.Invoke(args, data);
 
-        // It's important these values are changed *after* SearchList.GenerateItem is hooked
-        // up - changing these values can trigger a RefreshPlayerList(), and if GenerateItem
-        // is not hooked up, we the SearchList will calculate incorrect sizes for it's child
-        // items and scrollbars will break.
-        _config.OnValueChanged(CCVars.AdminPlayerTabRoleSetting, RoleSettingChanged, true);
-        _config.OnValueChanged(CCVars.AdminPlayerTabColorSetting, ColorSettingChanged, true);
-        _config.OnValueChanged(CCVars.AdminPlayerTabSymbolSetting, SymbolSettingChanged, true);
-
         RefreshPlayerList(_adminSystem.PlayerList);
+
     }
 
     #region Antag Overlay
