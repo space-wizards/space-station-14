@@ -622,6 +622,8 @@
   noun: seeds-noun-seeds
   displayName: seeds-killertomato-display-name
   plantRsi: Objects/Specific/Hydroponics/tomatokiller.rsi
+  plantLogImpact: High
+  harvestLogImpact: High
   packetPrototype: KillerTomatoSeeds
   productPrototypes:
     - MobTomatoKiller
@@ -664,6 +666,7 @@
   production: 6
   yield: 2
   potency: 20
+  growthStages: 3
   idealLight: 9
   idealHeat: 298
   chemicals:
@@ -829,6 +832,7 @@
     - FoodOnion
   mutationPrototypes:
     - onionred
+    - bloonion
   lifespan: 25
   maturation: 8
   production: 6
@@ -929,8 +933,8 @@
   idealHeat: 298
   chemicals:
     Egg:
-      Min: 1
-      Max: 10
+      Min: 4
+      Max: 12
       PotencyDivisor: 10
 
 - type: seed
@@ -1063,6 +1067,8 @@
   displayName: seeds-deathnettle-display-name
   plantRsi: Objects/Specific/Hydroponics/death_nettle.rsi
   packetPrototype: DeathNettleSeeds
+  plantLogImpact: High
+  harvestLogImpact: High
   productPrototypes:
     - DeathNettle
   lifespan: 25
@@ -1397,8 +1403,8 @@
   chemicals:
     Amatoxin:
       Min: 1
-      Max: 25
-      PotencyDivisor: 4
+      Max: 10
+      PotencyDivisor: 12
     Nutriment: ## yumby :)
       Min: 1
       Max: 5
@@ -1989,3 +1995,38 @@
       Min: 1
       Max: 2
       PotencyDivisor: 40
+
+- type: seed
+  id: bloonion
+  name: seeds-bloonion-name
+  noun: seeds-noun-seeds
+  displayName: seeds-bloonion-display-name
+  plantRsi: Objects/Specific/Hydroponics/bloonion.rsi
+  packetPrototype: BloonionSeeds
+  productPrototypes:
+  - FoodBloonion
+  lifespan: 25
+  maturation: 15
+  production: 3
+  yield: 3
+  potency: 10
+  growthStages: 4
+  waterConsumption: 0.60
+  nutrientConsumption: 0.50
+  chemicals:
+    Potassium:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Phosphorus:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Sugar:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Allicin:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10

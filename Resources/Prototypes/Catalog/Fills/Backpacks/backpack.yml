@@ -1,0 +1,20 @@
+- type: entity
+  parent: ClothingBackpackSyndicate
+  id: ClothingBackpackSyndicateBundle
+  abstract: true
+  components:
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+- type: entity
+  parent: ClothingBackpackSyndicateBundle
+  id: ClothingBackpackSyndicateRaidBundle
+  name: syndicate raid suit bundle
+  description: "Contains the Syndicate's durable raid armor suit."
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingOuterArmorRaid
+    - id: ClothingHeadHelmetRaid
+    - id: ClothingMaskGasSyndicate
+    - id: ClothingHandsGlovesCombat

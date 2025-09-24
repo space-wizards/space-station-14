@@ -6,7 +6,7 @@ namespace Content.Shared.Parallax.Biomes.Markers;
 /// <summary>
 /// Spawns entities inside of the specified area with the minimum specified radius.
 /// </summary>
-[Prototype("biomeMarkerLayer")]
+[Prototype]
 public sealed partial class BiomeMarkerLayerPrototype : IBiomeMarkerLayer
 {
     [IdDataField] public string ID { get; private set; } = default!;

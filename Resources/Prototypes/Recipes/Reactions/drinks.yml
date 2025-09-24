@@ -9,6 +9,18 @@
     AcidSpit: 3
 
 - type: reaction
+  id: AlienBrainHemorrhage
+  reactants:
+    IrishCream:
+      amount: 1
+    BlueCuracao:
+      amount: 1
+    Grenadine:
+      amount: 1
+  products:
+    AlienBrainHemorrhage: 3
+
+- type: reaction
   id: AlliesCocktail
   requiredMixerCategories:
   - Shake
@@ -78,7 +90,7 @@
     Uranium:
       amount: 1
   products:
-    AtomicBomb: 11
+    AtomicBomb: 10
 
 - type: reaction
   id: B52
@@ -239,6 +251,20 @@
     BraveBull: 3
 
 - type: reaction
+  id: Bronx
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Gin:
+      amount: 1
+    Vermouth:
+      amount: 1
+    JuiceOrange:
+      amount: 1
+  products:
+    Bronx: 3
+
+- type: reaction
   id: CafeLatte
   reactants:
     Coffee:
@@ -283,6 +309,16 @@
     CreamOfCoconut: 3
 
 - type: reaction
+  id: CrushDepth
+  reactants:
+    RootBeerFloat:
+      amount: 1
+    Rum:
+      amount: 1
+  products:
+    CrushDepth: 2
+
+- type: reaction
   id: CubaLibre
   reactants:
     Cola:
@@ -291,6 +327,16 @@
       amount: 1
   products:
     CubaLibre: 3
+
+- type: reaction
+  id: DarkandStormy
+  reactants:
+    SolDry:
+      amount: 1
+    Rum:
+      amount: 1
+  products:
+    DarkandStormy: 2
 
 - type: reaction
   id: DemonsBlood
@@ -351,6 +397,34 @@
       amount: 1
   products:
     DriestMartini: 2
+
+- type: reaction
+  id: Eggnog
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Egg:
+      amount: 1
+    Milk:
+      amount: 4
+    Rum:
+      amount: 5
+  products:
+    Eggnog: 10
+
+- type: reaction
+  id: ElectricShark
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    DarkandStormy:
+      amount: 4
+    BlueCuracao:
+      amount: 1
+    JuicePineapple:
+      amount: 1
+  products:
+    ElectricShark: 6
 
 - type: reaction
   id: ErikaSurprise
@@ -573,6 +647,8 @@
       amount: 1
   products:
     IrishSlammer: 2
+  sound:
+    path: /Audio/Animals/penguin_squawk.ogg # Cocktail is called grenade penguin in localisation
 
 - type: reaction
   id: IrishCoffee
@@ -595,6 +671,48 @@
       amount: 2
   products:
     IrishCream: 3
+
+- type: reaction
+  id: JackRose
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    JuiceApple:
+      amount: 1
+    Cognac:
+      amount: 1
+    Grenadine:
+      amount: 1
+    JuiceLemon:
+      amount: 1
+  products:
+    JackRose: 4
+
+- type: reaction
+  id: JungleBird
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Rum:
+      amount: 3
+    JuicePineapple:
+      amount: 1
+    Grenadine:
+      amount: 1
+    JuiceLime:
+      amount: 1
+  products:
+    JungleBird: 6
+
+- type: reaction
+  id: Kalimotxo
+  reactants:
+    Cola:
+      amount: 1
+    Wine:
+      amount: 1
+  products:
+    Kalimotxo: 2
 
 - type: reaction
   id: KiraSpecial
@@ -736,6 +854,22 @@
     Mojito: 4
 
 - type: reaction
+  id: MonkeyBusiness
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Gin:
+      amount: 1
+    JuiceOrange:
+      amount: 1
+    Grenadine:
+      amount: 1
+    Absinthe:
+      amount: 1
+  products:
+    MonkeyBusiness: 4
+
+- type: reaction
   id: Moonshine
   reactants:
     Tequila:
@@ -835,6 +969,16 @@
       amount: 1
   products:
     Posca: 3
+
+- type: reaction
+  id: Radler
+  reactants:
+    Lemonade:
+      amount: 1
+    Beer:
+      amount: 1
+  products:
+    Radler: 2
 
 - type: reaction
   id: RedMead
@@ -1040,6 +1184,18 @@
     ThreeMileIsland: 10
 
 - type: reaction
+  id: Tortuga
+  requiredMixerCategories:
+  - Stir
+  reactants:
+    IcedTea:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    Tortuga: 2
+
+- type: reaction
   id: ToxinsSpecial
   requiredMixerCategories:
   - Shake
@@ -1052,6 +1208,22 @@
       amount: 2
   products:
     ToxinsSpecial: 5
+
+- type: reaction
+  id: Vampiro
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    TequilaSunrise:
+      amount: 3
+    BloodyMary:
+      amount: 1
+    Hotsauce:
+      amount: 1
+    LemonLime:
+      amount: 1
+  products:
+    Vampiro: 6
 
 - type: reaction
   id: VodkaMartini
@@ -1219,7 +1391,7 @@
       amount: 1
   products:
     Cola: 4
-    
+
 - type: reaction
   id: Caipirinha
   requiredMixerCategories:

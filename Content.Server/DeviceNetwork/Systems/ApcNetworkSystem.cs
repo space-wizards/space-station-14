@@ -4,6 +4,8 @@ using Content.Server.NodeContainer.EntitySystems;
 using JetBrains.Annotations;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Nodes;
+using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.NodeContainer;
 
 namespace Content.Server.DeviceNetwork.Systems
 {
@@ -27,7 +29,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// </summary>
         private void OnBeforePacketSent(EntityUid uid, ApcNetworkComponent receiver, BeforePacketSentEvent args)
         {
-            if (!EntityManager.TryGetComponent(args.Sender, out ApcNetworkComponent? sender)) return;
+            if (!TryComp(args.Sender, out ApcNetworkComponent? sender)) return;
 
             if (sender.ConnectedNode?.NodeGroup == null || !sender.ConnectedNode.NodeGroup.Equals(receiver.ConnectedNode?.NodeGroup))
             {
@@ -37,7 +39,7 @@ namespace Content.Server.DeviceNetwork.Systems
 
         private void OnProviderConnected(EntityUid uid, ApcNetworkComponent component, ExtensionCableSystem.ProviderConnectedEvent args)
         {
-            if (!EntityManager.TryGetComponent(args.Provider.Owner, out NodeContainerComponent? nodeContainer)) return;
+            if (!TryComp(args.Provider.Owner, out NodeContainerComponent? nodeContainer)) return;
 
             if (_nodeContainer.TryGetNode(nodeContainer, "power", out CableNode? node))
             {

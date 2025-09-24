@@ -13,8 +13,9 @@ public sealed partial class NestedSelector : EntityTableSelector
 
     protected override IEnumerable<EntProtoId> GetSpawnsImplementation(System.Random rand,
         IEntityManager entMan,
-        IPrototypeManager proto)
+        IPrototypeManager proto,
+        EntityTableContext ctx)
     {
-        return proto.Index(TableId).Table.GetSpawns(rand, entMan, proto);
+        return proto.Index(TableId).Table.GetSpawns(rand, entMan, proto, ctx);
     }
 }

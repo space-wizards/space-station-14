@@ -1,5 +1,4 @@
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Implants.Components;
 
@@ -12,6 +11,6 @@ public sealed partial class AutoImplantComponent : Component
     /// <summary>
     /// List of implants to inject.
     /// </summary>
-    [DataField("implants", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-    public List<string> Implants = new();
+    [DataField(required: true)]
+    public List<EntProtoId> Implants = new();
 }

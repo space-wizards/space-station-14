@@ -10,8 +10,9 @@ thief-role-greeting-animal =
     Steal things that you like.
 
 thief-role-greeting-equipment =
-    You have a toolbox of thieves'
-    tools and chameleon thieves' gloves.
+    You have a satchel of thieves'
+    tools and possess the innate
+    ability to steal without notice.
     Choose your starting equipment,
     and do your work stealthily.
 

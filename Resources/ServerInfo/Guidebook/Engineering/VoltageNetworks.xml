@@ -16,7 +16,7 @@
 
   <Box>
     <GuideEntityEmbed Entity="PoweredSmallLight" Caption=""/>
-    <GuideEntityEmbed Entity="ComputerCargoShuttle" Caption=""/>
+    <GuideEntityEmbed Entity="ComputerShuttleCargo" Caption=""/>
     <GuideEntityEmbed Entity="ComputerComms" Caption=""/>
     <GuideEntityEmbed Entity="Autolathe" Caption=""/>
     <GuideEntityEmbed Entity="VendingMachineEngivend" Caption=""/>
