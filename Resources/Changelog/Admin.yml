@@ -1430,5 +1430,12 @@ Entries:
   id: 173
   time: '2025-09-22T02:39:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40452
+- author: Princess-Cheeseballs
+  changes:
+  - message: Added vulpkanin smite.
+    type: Add
+  id: 174
+  time: '2025-09-22T06:22:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40360
 Name: Admin
 Order: 2
