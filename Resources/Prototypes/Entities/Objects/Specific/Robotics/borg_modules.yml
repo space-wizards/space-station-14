@@ -789,7 +789,7 @@
   id: BorgModuleCleanadeLauncher
   parent: [ BaseBorgModuleJanitor, BaseProviderBorgModule ]
   name: cleanade launcher cyborg module
-  description: A state of the art janitorial module that gives the unit access to a slowly self-recharging version of the cleanade launcher used by the feared ERT Janitorial squad
+  description: A state of the art janitorial module that gives the unit access to a slowly self-recharging version of the cleanade launcher used by the feared ERT Janitorial squad.
   components:
   - type: Sprite
     layers:
