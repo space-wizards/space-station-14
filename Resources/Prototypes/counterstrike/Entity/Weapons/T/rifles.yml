@@ -1,6 +1,6 @@
 - type: entity
   name: AK-47
-  parent: [BaseWeaponRifle, BaseSecurityContraband]
+  parent: [BaseWeaponRifle, BaseSecurityContraband, BaseRiffleCS]
   id: WeaponRifleAk47
   description: ak47 from csgo.
   components:
@@ -13,10 +13,10 @@
         map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
     fireRate: 6
-    minAngle: 8
+    minAngle: 3
     maxAngle: 70
     angleIncrease: 6
-    angleDecay: 30
+    angleDecay: 15
     selectedMode: FullAuto
     availableModes:
       - FullAuto
@@ -61,7 +61,7 @@
 
 - type: entity
   name: MAC-10
-  parent: [BaseWeaponPistol, BaseSecurityContraband]
+  parent: [BaseWeaponPistol, BaseSecurityContraband, BaseRiffleCS]
   id: WeaponRifleMac10
   description: mac10 from csgo.
   components:
@@ -74,10 +74,10 @@
         map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
     fireRate: 8
-    minAngle: 7
-    maxAngle: 80
+    minAngle: 8
+    maxAngle: 65
     angleIncrease: 10
-    angleDecay: 30
+    angleDecay: 15
     selectedMode: FullAuto
     availableModes:
       - FullAuto
@@ -119,7 +119,7 @@
 
 - type: entity
   name: SG553
-  parent: [BaseWeaponRifle, BaseSecurityContraband]
+  parent: [BaseWeaponRifle, BaseSecurityContraband, BaseRiffleCS]
   id: WeaponRifleSg553
   description: sg553.
   components:
@@ -133,9 +133,9 @@
   - type: Gun
     fireRate: 6
     minAngle: 9
-    maxAngle: 72
-    angleIncrease: 6
-    angleDecay: 30
+    maxAngle: 70
+    angleIncrease: 8
+    angleDecay: 15
     selectedMode: FullAuto
     availableModes:
       - FullAuto
@@ -168,9 +168,6 @@
         whitelist:
           tags:
             - CartridgeLightRifle
-  - type: SpeedModifiedOnWield
-    walkModifier: 0.85
-    sprintModifier: 0.85
   - type: CursorOffsetRequiresWield
   - type: EyeCursorOffset
     maxOffset: 2

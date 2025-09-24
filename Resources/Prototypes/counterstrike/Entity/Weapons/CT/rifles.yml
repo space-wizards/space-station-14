@@ -13,10 +13,10 @@
         map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
     fireRate: 7
-    minAngle: 5
+    minAngle: 3
     maxAngle: 65
     angleIncrease: 6
-    angleDecay: 30
+    angleDecay: 15
     selectedMode: FullAuto
     availableModes:
       - FullAuto
@@ -74,10 +74,10 @@
         map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
     fireRate: 11
-    minAngle: 8
-    maxAngle: 85
-    angleIncrease: 10
-    angleDecay: 30
+    minAngle: 10
+    maxAngle: 70
+    angleIncrease: 15
+    angleDecay: 15
     selectedMode: FullAuto
     availableModes:
       - FullAuto
@@ -135,10 +135,10 @@
         map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
     fireRate: 6
-    minAngle: 8
+    minAngle: 9
     maxAngle: 70
     angleIncrease: 6
-    angleDecay: 30
+    angleDecay: 15
     selectedMode: FullAuto
     availableModes:
       - FullAuto
@@ -171,9 +171,6 @@
         whitelist:
           tags:
             - CartridgeLightRifle
-  - type: SpeedModifiedOnWield
-    walkModifier: 0.85
-    sprintModifier: 0.85
   - type: CursorOffsetRequiresWield
   - type: EyeCursorOffset
     maxOffset: 2

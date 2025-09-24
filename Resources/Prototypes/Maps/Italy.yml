@@ -1,0 +1,15 @@
+- type: gameMap
+  id: deItaly
+  mapName: 'de_Italy'
+  mapPath: /Maps/Italy.yml
+  minPlayers: 0
+  stations:
+   deItaly:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: "deItaly"
+        - type: StationJobs
+          availableJobs:
+            Reporter: [ -1, -1 ]
+            ServiceWorker: [-1, -1 ]
