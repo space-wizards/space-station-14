@@ -90,4 +90,10 @@ public sealed partial class DisposalHolderComponent : Component, IGasMixtureHold
     /// </summary>
     [DataField]
     public float TubeEscapeChance = 0.2f;
+
+    /// <summary>
+    /// Sets how many seconds mobs will be stunned after being ejected from a pipe.
+    /// </summary>
+    [DataField]
+    public TimeSpan DisposalExitStunDuration = TimeSpan.FromSeconds(1.5f);
 }

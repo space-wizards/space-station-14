@@ -39,9 +39,6 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
     private EntityQuery<MetaDataComponent> _metaQuery;
     private EntityQuery<TransformComponent> _xformQuery;
 
-    // Sets how many seconds stunable entities will be knocked down for after being ejected from a pipe
-    private const float DisposalExitStunDuration = 1.5f;
-
     public static readonly Regex TagRegex = new("^[a-zA-Z0-9, ]*$", RegexOptions.Compiled);
 
     public override void Initialize()
@@ -143,7 +140,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
 
                 if (direction != Direction.Invalid && _xformQuery.TryGetComponent(gridUid, out var gridXform))
                 {
-                    _stun.TryKnockdown(held, TimeSpan.FromSeconds(DisposalExitStunDuration), force: true);
+                    _stun.TryKnockdown(held, ent.Comp.DisposalExitStunDuration, force: true);
 
                     var directionAngle = direction.ToAngle() + _xformSystem.GetWorldRotation(gridXform);
                     _throwing.TryThrow(held, directionAngle.ToWorldVec() * ent.Comp.ExitDistanceMultiplier, ent.Comp.TraversalSpeed * ent.Comp.ExitSpeedMultiplier);
