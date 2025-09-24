@@ -43,17 +43,17 @@ public sealed partial class DisposalTubeComponent : Component
     /// <remarks>
     /// The direction that entities will exit preferentially follows the order the list (from most to least).
     /// A direction will be skipped if it is the opposite to the direction the entity entered,
-    /// or if the angular difference between the entry and potential exit is less than <see cref="MinDeltaAngle"/>.
+    /// or if the angular difference between the entry and potential exit is less than <see cref="MaxDeltaAngle"/>.
     /// </remarks>
     [DataField]
     public Direction[] Exits = { Direction.South };
 
     /// <summary>
-    /// The smallest angle that entities can turn while traveling through the conduit.
-    /// Only applies when there are more than two potential exits.
+    /// The largest angle that entities can turn while traveling through the conduit.
+    /// This only applies when there are more than two potential exits.
     /// </summary>
     [DataField]
-    public Angle MinDeltaAngle = 0;
+    public Angle MaxDeltaAngle = 180;
 
     /// <summary>
     /// Determines the type of disposal pipe -

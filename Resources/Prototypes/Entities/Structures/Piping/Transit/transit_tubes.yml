@@ -149,8 +149,8 @@
       shader: unshaded
   - type: DisposalTube
     exits:
-    - NorthWest
-    - SouthEast
+    - SouthWest
+    - NorthEast
   - type: GenericVisualizer
     visuals:
       enum.AnchorVisuals.Anchored:
@@ -184,10 +184,10 @@
       shader: unshaded
   - type: DisposalTube
     exits:
-    - NorthEast
     - NorthWest
+    - NorthEast
     - South
-    minDeltaAngle: 135
+    maxDeltaAngle: 45
   - type: GenericVisualizer
     visuals:
       enum.AnchorVisuals.Anchored:
@@ -220,10 +220,10 @@
       shader: unshaded
   - type: DisposalTube
     exits:
-    - NorthWest
     - NorthEast
+    - NorthWest
     - South
-    minDeltaAngle: 135
+    minDeltaAngle: 45
   - type: GenericVisualizer
     visuals:
       enum.AnchorVisuals.Anchored:
@@ -256,7 +256,7 @@
       shader: unshaded      
   - type: DisposalTube
     exits:
-    - NorthWest
+    - NorthEast
     - South
   - type: GenericVisualizer
     visuals:
@@ -288,7 +288,7 @@
       shader: unshaded
   - type: DisposalTube
     exits:
-    - NorthEast
+    - NorthWest
     - South
   - type: GenericVisualizer
     visuals:

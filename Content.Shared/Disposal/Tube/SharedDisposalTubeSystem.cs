@@ -84,12 +84,12 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
 
                 // Check that the default exit is valid
                 if (args.Next.GetOpposite() == currentDirection ||
-                    Math.Abs(Angle.ShortestDistance(currentDirection.ToAngle(), args.Next.ToAngle())) < ent.Comp.MinDeltaAngle)
+                    Math.Abs(Angle.ShortestDistance(currentDirection.ToAngle(), args.Next.ToAngle())) > ent.Comp.MaxDeltaAngle)
                 {
                     // If it isn't, remove it from the list, along with any other invalid exits
                     var directions = exits.Skip(1).
                         Where(direction => direction != currentDirection &&
-                        Math.Abs(Angle.ShortestDistance(currentDirection.ToAngle(), direction.ToAngle())) >= ent.Comp.MinDeltaAngle).ToArray();
+                        Math.Abs(Angle.ShortestDistance(currentDirection.ToAngle(), direction.ToAngle())) <= ent.Comp.MaxDeltaAngle).ToArray();
 
                     // If no exits were valid, just use the default
                     if (directions.Length == 0)
