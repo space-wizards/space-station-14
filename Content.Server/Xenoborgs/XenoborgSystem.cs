@@ -3,6 +3,7 @@ using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Silicons.Borgs;
 using Content.Shared.Destructible;
+using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
 using Content.Shared.Silicons.Borgs.Components;
@@ -25,6 +26,10 @@ public sealed partial class XenoborgSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<MothershipCoreComponent, DestructionEventArgs>(OnDestroyed);
+        SubscribeLocalEvent<XenoborgComponent, MindAddedMessage>(OnXenoborgMindAdded);
+        SubscribeLocalEvent<XenoborgComponent, MindRemovedMessage>(OnXenoborgMindRemoved);
+        SubscribeLocalEvent<MothershipCoreComponent, MindAddedMessage>(OnXenoborgCoreMindAdded);
+        SubscribeLocalEvent<MothershipCoreComponent, MindRemovedMessage>(OnXenoborgCoreMindRemoved);
     }
 
     private void OnDestroyed(EntityUid ent, MothershipCoreComponent component, DestructionEventArgs args)
@@ -53,15 +58,12 @@ public sealed partial class XenoborgSystem : EntitySystem
         }
     }
 
-    /// <summary>
-    /// Makes sure the player has the xenoborg mindrole and also sends the briefing text and sound
-    /// </summary>
-    public void EnsureXenoborgRole(EntityUid mindId, EntityUid ent)
+    private void OnXenoborgMindAdded(EntityUid ent, XenoborgComponent comp, MindAddedMessage args)
     {
-        if (_roles.MindHasRole<XenoborgRoleComponent>(mindId))
+        if (_roles.MindHasRole<XenoborgRoleComponent>(args.Mind))
             return;
 
-        _roles.MindAddRole(mindId, "MindRoleXenoborg", silent: true);
+        _roles.MindAddRole(args.Mind, "MindRoleXenoborg", silent: true);
 
         if (!TryComp<ActorComponent>(ent, out var actorComp))
             return;
@@ -73,24 +75,12 @@ public sealed partial class XenoborgSystem : EntitySystem
         );
     }
 
-    /// <summary>
-    /// Remove the xenoborg mind role
-    /// </summary>
-    public void RemoveXenoborgRole(EntityUid mindId)
+    private void OnXenoborgCoreMindAdded(EntityUid ent, MothershipCoreComponent comp, MindAddedMessage args)
     {
-        if (_roles.MindHasRole<XenoborgRoleComponent>(mindId))
-            _roles.MindRemoveRole<XenoborgRoleComponent>(mindId);
-    }
-
-    /// <summary>
-    /// Makes sure the player has the xenoborg core mindrole and also sends the briefing text and sound
-    /// </summary>
-    public void EnsureXenoborgCoreRole(EntityUid mindId, EntityUid ent)
-    {
-        if (_roles.MindHasRole<XenoborgCoreRoleComponent>(mindId))
+        if (_roles.MindHasRole<XenoborgCoreRoleComponent>(args.Mind))
             return;
 
-        _roles.MindAddRole(mindId, "MindRoleMothershipCore", silent: true);
+        _roles.MindAddRole(args.Mind, "MindRoleMothershipCore", silent: true);
 
         if (!TryComp<ActorComponent>(ent, out var actorComp))
             return;
@@ -102,12 +92,19 @@ public sealed partial class XenoborgSystem : EntitySystem
         );
     }
 
-    /// <summary>
-    /// Remove the xenoborg core mind role
-    /// </summary>
-    public void RemoveXenoborgCoreRole(EntityUid mindId)
+    private void OnXenoborgMindRemoved(EntityUid ent, XenoborgComponent comp, MindRemovedMessage args)
     {
-        if (_roles.MindHasRole<XenoborgCoreRoleComponent>(mindId))
-            _roles.MindRemoveRole<XenoborgCoreRoleComponent>(mindId);
+        EntityUid mind = args.Mind;
+
+        if (_roles.MindHasRole<XenoborgRoleComponent>(mind))
+            _roles.MindRemoveRole<XenoborgRoleComponent>(mind);
+    }
+
+    private void OnXenoborgCoreMindRemoved(EntityUid ent, MothershipCoreComponent comp, MindRemovedMessage args)
+    {
+        EntityUid mind = args.Mind;
+
+        if (_roles.MindHasRole<XenoborgCoreRoleComponent>(mind))
+            _roles.MindRemoveRole<XenoborgCoreRoleComponent>(mind);
     }
 }

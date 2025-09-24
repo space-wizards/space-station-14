@@ -81,18 +81,6 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
     private void OnLawProviderMindAdded(Entity<SiliconLawProviderComponent> ent, ref MindAddedMessage args)
     {
-        if (TryComp<XenoborgComponent>(ent, out _))
-        {
-            _xenoborgs.EnsureXenoborgRole(args.Mind, ent);
-            return;
-        }
-
-        if (TryComp<MothershipCoreComponent>(ent, out _))
-        {
-            _xenoborgs.EnsureXenoborgCoreRole(args.Mind, ent);
-            return;
-        }
-
         if (!ent.Comp.Subverted)
             return;
         EnsureSubvertedSiliconRole(args.Mind);
@@ -100,22 +88,9 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
     private void OnLawProviderMindRemoved(Entity<SiliconLawProviderComponent> ent, ref MindRemovedMessage args)
     {
-        if (TryComp<XenoborgComponent>(ent, out _))
-        {
-            _xenoborgs.RemoveXenoborgRole(args.Mind);
-            return;
-        }
-
-        if (TryComp<MothershipCoreComponent>(ent, out _))
-        {
-            _xenoborgs.RemoveXenoborgCoreRole(args.Mind);
-            return;
-        }
-
         if (!ent.Comp.Subverted)
             return;
         RemoveSubvertedSiliconRole(args.Mind);
-
     }
 
 
