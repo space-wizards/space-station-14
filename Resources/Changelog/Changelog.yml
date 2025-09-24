@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed paradox clones not copying the mute, snoring and frontal lisp traits.
-    type: Fix
-  id: 8488
-  time: '2025-05-15T01:45:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37467
 - author: kosticia
   changes:
   - message: Hamsters, mice, butterflies, mothroaches, bees, bats, snails, rats, ticks
@@ -3953,3 +3946,10 @@
   id: 8998
   time: '2025-09-24T04:19:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40461
+- author: RedBookcase
+  changes:
+  - message: Rechargers can now charge power cells again.
+    type: Tweak
+  id: 8999
+  time: '2025-09-24T20:33:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38138
