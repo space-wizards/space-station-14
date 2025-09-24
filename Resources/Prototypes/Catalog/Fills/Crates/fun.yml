@@ -246,6 +246,31 @@
       - id: ReverseCymbalsInstrument
 
 - type: entity
+  id: CrateFunInstrumentsRandom
+  parent: CrateGenericSteel
+  name: random instrument collection
+  description: A box containing several randomly curated instruments, hand picked by Centcomm's top musicians!
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: VarietyInstrumentTable
+        - !type:NestedSelector
+          tableId: BrassInstrumentTable
+        - !type:NestedSelector
+          tableId: StringInstrumentTable
+        - !type:NestedSelector
+          tableId: WoodwindInstrumentTable
+        - !type:NestedSelector
+          tableId: KeyedPercussionInstrumentTable
+        - !type:NestedSelector
+          tableId: SpecialInstrumentTable
+        - !type:NestedSelector
+          tableId: SpecialInstrumentTable
+      
+- type: entity
   id: CrateFunArtSupplies
   parent: CrateGenericSteel
   name: art supplies
