@@ -13,7 +13,7 @@ public sealed class WebPlacerSystem : SharedWebPlacerSystem
 
     // TODO NPCs using actions from HTN.
     /// <summary>
-    ///     NPC spiders will occasionally spawn webs.
+    /// NPC spiders will occasionally spawn webs.
     /// </summary>
     public override void Update(float frameTime)
     {

@@ -2504,7 +2504,7 @@
     needsHands: false
   - type: NoSlip
   - type: WebPlacer
-    spawnId: SpiderWeb
+    spawn: SpiderWeb
     destinationBlacklist:
       components:
       - SpiderWebObject
@@ -2640,7 +2640,7 @@
         0: Alive
         180: Dead
     - type: WebPlacer
-      spawnId: SpiderWebClown
+      spawn: SpiderWebClown
       webSound:
         collection: BikeHorn
         params:

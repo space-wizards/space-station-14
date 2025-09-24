@@ -60,7 +60,7 @@
         density: 7
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5" # full tile, otherwise you can stack webs
+          bounds: "-0.45,-0.45,0.45,0.45" # slightly less than a full tile so it doesn't peak out
         layer:
         - MidImpassable
   - type: Destructible
@@ -112,10 +112,10 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5" # full tile, otherwise you can stack webs
+          bounds: "-0.45,-0.45,0.45,0.45" # slightly less than a full tile so it doesn't peak out
         hard: false # a hard fixture will confuse mob pathing
         density: 1000 # dense because funny? idk
-        mask:
+        layer:
         - MidImpassable
   - type: Destructible
     thresholds:

@@ -3,8 +3,8 @@ using Content.Shared.StepTrigger.Systems;
 namespace Content.Shared.SpiderWeb;
 
 /// <summary>
-///     Cancels step triggers between <see cref="SpiderWebObjectComponent"/> and <see cref="IgnoreSpiderWebComponent"/>.
-///     Collide triggers must be ignored elsewhere.
+/// Cancels step triggers between <see cref="SpiderWebObjectComponent"/> and <see cref="IgnoreSpiderWebComponent"/>.
+/// Collide triggers must be ignored elsewhere.
 /// </summary>
 public sealed class SpiderWebSystem : EntitySystem
 {

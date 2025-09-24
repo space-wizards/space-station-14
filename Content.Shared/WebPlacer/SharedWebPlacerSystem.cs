@@ -9,7 +9,7 @@ using Robust.Shared.Map.Components;
 namespace Content.Shared.WebPlacer;
 
 /// <summary>
-///     System for giving the component owner (probably a spider) an action to spawn entities around itself.
+/// System for giving the component owner (probably a spider) an action to spawn entities around itself.
 /// </summary>
 public abstract class SharedWebPlacerSystem : EntitySystem
 {
@@ -21,7 +21,7 @@ public abstract class SharedWebPlacerSystem : EntitySystem
     [Dependency] private readonly TurfSystem _turf = default!;
 
     /// <summary>
-    ///     A recycled hashset used to check turfs for spiderwebs.
+    /// A recycled hashset used to check turfs for spiderwebs.
     /// </summary>
     private readonly HashSet<EntityUid> _webs = [];
 
@@ -35,7 +35,7 @@ public abstract class SharedWebPlacerSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Give the entity its spawning action.
+    /// Give the entity its spawning action.
     /// </summary>
     private void OnInit(Entity<WebPlacerComponent> ent, ref MapInitEvent args)
     {
@@ -43,19 +43,17 @@ public abstract class SharedWebPlacerSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Spawn webs when using an action.
+    /// Spawn webs when using an action.
     /// </summary>
-    /// <param name="args">Raised when a spider uses their action.</param>
     private void OnSpawnWeb(Entity<WebPlacerComponent> ent, ref SpiderWebActionEvent args)
     {
         if (args.Handled)
             return;
 
         var xform = Transform(args.Performer);
-        var grid = xform.GridUid;
 
         // Instantly fail in space.
-        if (!HasComp<MapGridComponent>(grid))
+        if (!HasComp<MapGridComponent>(xform.GridUid))
         {
             _popup.PopupClient(Loc.GetString(ent.Comp.MessageOffGrid), args.Performer, args.Performer);
             return;
@@ -75,10 +73,10 @@ public abstract class SharedWebPlacerSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Spawns webs around a location.
+    /// Spawns webs around a location.
     /// </summary>
     /// <param name="ent">The spider.</param>
-    /// <param name="coords">Location webs spawn around.</param>
+    /// <param name="coords">Center location webs spawn around.</param>
     /// <returns>True if any webs spawned.</returns>
     protected bool TrySpawnWebs(Entity<WebPlacerComponent> ent, EntityCoordinates coords)
     {
@@ -112,7 +110,7 @@ public abstract class SharedWebPlacerSystem : EntitySystem
         _webs.Clear();
         _lookup.GetEntitiesInTile(tileRef.Value, _webs, LookupFlags.Uncontained);
 
-        // Invalid if failing whitelist
+        // Invalid if anything fails the whitelist
         foreach (var ent in _webs)
         {
             if (!_whitelist.CheckBoth(ent, comp.DestinationBlacklist, comp.DestinationWhitelist))
