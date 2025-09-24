@@ -1,0 +1,124 @@
+- type: entity
+  parent: BaseStructureComputer
+  id: SyndBath
+  name: netrunner bathroom
+  description: A netrunner bathroom manufactured by CyberSun—about 50%, with the rest cobbled together from whatever was lying around.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.05"
+        density: 190
+        mask:
+        - TableMask
+  - type: Animateable
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        collection: WaterHit
+  - type: EmitSoundOnUIOpen
+    sound:
+      collection: IntoWater
+  - type: LightningTarget
+    priority: 1
+  - type: RequireProjectileTarget
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
+  - type: HealOnBuckle
+    damage:
+      types:
+        Heat: -0.1
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/netbath.rsi
+    layers:
+    - state: base
+    - state: enabled
+      shader: unshaded
+    noRot: true
+  - type: Strap
+    position: Down
+    rotation: -60
+    xformRotation: -90
+    loweredDrawdepthDirections: 15 # 1111
+    loweredDrawdepth: BelowMobs
+    buckleSound:
+      collection: IntoWater
+    unbuckleSound:
+      collection: IntoWater
+    buckleOffset: "0.05,-0.15"
+  - type: RemoteEyeConsole
+    remoteEntityProto: SyndrunnerConsoleEye
+    color: "#650000"
+    actions:
+    - SyntrunnerActionExitConsole
+  - type: UserInterface
+    interfaces:
+     enum.RemoteEyeUIKey.Key:
+        type: RemoteEyeConsoleBui
+  - type: ActivateUiOnStrapped
+    key: enum.RemoteEyeUIKey.Key
+  - type: ChildEntities
+    childPrototypes:
+      - prototype: SyndBathOverlay
+        
+- type: entity
+  id: SyndBathOverlay
+  name: netrunner bathroom
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _Starlight/Structures/Machines/netbath.rsi
+    layers:
+    - state: overlay
+    noRot: true
+  - type: Tag
+    tags:
+      - HideContextMenu
+
+- type: entity
+  parent:
+  - Incorporeal
+  - BaseMob
+  id: SyndrunnerConsoleEye
+  name: "???"
+  description: "ERROR"
+  categories: [ HideSpawnMenu ]
+  suffix: DO NOT MAP
+  components:
+  - type: NoFTL
+  - type: WarpPoint
+    follow: true
+  - type: Eye
+    pvsScale: 1.5
+  - type: StationAiOverlay
+    allowCrossGrid: true
+  - type: Visibility
+    layer: 32768
+  - type: Sprite
+    sprite: _Starlight/Mobs/Net/net_eye.rsi
+    layers:
+    - map: ["base"]
+      state: enemy
+      shader: unshaded
+  - type: SpriteWhitelisted
+    localEntityWhitelist:
+      tags:
+        - Syndicate
+        - Ghost
+    passedLayers:
+      base:
+        state: syndrunner
+    failedLayers:
+      base:
+        state: enemy
+  - type: Tag
+    tags:
+    - CantInteract

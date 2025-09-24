@@ -57,7 +57,7 @@ internal sealed class BuckleSystem : SharedBuckleSystem
 
         var angle = _xformSystem.GetWorldRotation(uid) + _eye.CurrentEye.Rotation; // Get true screen position, or close enough
 
-        var isNorth = angle.GetCardinalDir() == Direction.North;
+        var isLowered = (angle.GetCardinalDir().AsFlag() & component.LoweredDrawdepthDirections) != 0; //Starlight
         foreach (var buckledEntity in component.BuckledEntities)
         {
             if (!TryComp<BuckleComponent>(buckledEntity, out var buckle))
@@ -66,11 +66,11 @@ internal sealed class BuckleSystem : SharedBuckleSystem
             if (!TryComp<SpriteComponent>(buckledEntity, out var buckledSprite))
                 continue;
 
-            if (isNorth)
+            if (isLowered) // starlight
             {
                 // This will only assign if empty, it won't get overwritten by new depth on multiple calls, which do happen easily
                 buckle.OriginalDrawDepth ??= buckledSprite.DrawDepth;
-                _sprite.SetDrawDepth((buckledEntity, buckledSprite), strapSprite.DrawDepth - 1);
+                _sprite.SetDrawDepth((buckledEntity, buckledSprite), component.LoweredDrawdepth ?? (strapSprite.DrawDepth - 1)); // Starlight
             }
             else if (buckle.OriginalDrawDepth.HasValue)
             {
@@ -89,16 +89,20 @@ internal sealed class BuckleSystem : SharedBuckleSystem
         if (!TryComp<SpriteComponent>(args.Strap, out var strapSprite))
             return;
 
+        if (!TryComp<StrapComponent>(args.Strap, out var strapComp)) //Starlight
+            return;
+
         if (!TryComp<SpriteComponent>(ent.Owner, out var buckledSprite))
             return;
 
         var angle = _xformSystem.GetWorldRotation(args.Strap) + _eye.CurrentEye.Rotation; // Get true screen position, or close enough
+        var isLowered = (angle.GetCardinalDir().AsFlag() & strapComp.LoweredDrawdepthDirections) != 0; //Starlight
 
-        if (angle.GetCardinalDir() != Direction.North)
+        if (!isLowered)  //Starlight
             return;
 
         ent.Comp.OriginalDrawDepth ??= buckledSprite.DrawDepth;
-        _sprite.SetDrawDepth((ent.Owner, buckledSprite), strapSprite.DrawDepth - 1);
+        _sprite.SetDrawDepth((ent.Owner, buckledSprite), strapComp.LoweredDrawdepth ?? (strapSprite.DrawDepth - 1)); // Starlight
     }
 
     /// <summary>
