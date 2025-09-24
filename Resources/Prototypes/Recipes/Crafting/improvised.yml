@@ -141,6 +141,14 @@
   targetNode: rollingpin
   category: construction-category-tools
   objectType: Item
+  
+- type: construction
+  id: OffsetCaneMakeshift
+  graph: OffsetCaneMakeshift
+  startNode: start
+  targetNode: offsetcaneMakeshift
+  category: construction-category-tools
+  objectType: Item
 
 - type: construction
   id: PetCarrier
@@ -181,3 +189,4 @@
   targetNode: bagPet
   category: construction-category-clothing
   objectType: Item
+  

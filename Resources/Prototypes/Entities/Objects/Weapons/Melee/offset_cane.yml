@@ -51,6 +51,25 @@
 
 - type: entity
   parent: OffsetCane
+  id: OffsetCaneMakeshift
+  name: makeshift cane
+  description: A steel pipe with a bent handle, fashioned into a makeshift cane. It's not the most comfortable, but it's better than nothing.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/offset_canes/makeshift.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Weapons/Melee/offset_canes/makeshift.rsi
+  - type: MobilityAid
+    isMakeshift: true
+    effectiveness: 0.9
+    tripChance: 0.08
+  - type: Construction
+    graph: offsetcaneMakeshift
+    node: offsetcaneMakeshift
+
+- type: entity
+  parent: OffsetCane
   id: OffsetCaneMime
   name: striped offset cane
   description: A black and white striped cane, perfect for silent performances.
