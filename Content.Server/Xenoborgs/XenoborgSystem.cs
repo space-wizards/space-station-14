@@ -94,17 +94,13 @@ public sealed partial class XenoborgSystem : EntitySystem
 
     private void OnXenoborgMindRemoved(EntityUid ent, XenoborgComponent comp, MindRemovedMessage args)
     {
-        EntityUid mind = args.Mind;
-
-        if (_roles.MindHasRole<XenoborgRoleComponent>(mind))
-            _roles.MindRemoveRole<XenoborgRoleComponent>(mind);
+        if (_roles.MindHasRole<XenoborgRoleComponent>(args.Mind))
+            _roles.MindRemoveRole<XenoborgRoleComponent>(args.Mind.Owner);
     }
 
     private void OnXenoborgCoreMindRemoved(EntityUid ent, MothershipCoreComponent comp, MindRemovedMessage args)
     {
-        EntityUid mind = args.Mind;
-
-        if (_roles.MindHasRole<XenoborgCoreRoleComponent>(mind))
-            _roles.MindRemoveRole<XenoborgCoreRoleComponent>(mind);
+        if (_roles.MindHasRole<XenoborgCoreRoleComponent>(args.Mind))
+            _roles.MindRemoveRole<XenoborgCoreRoleComponent>(args.Mind.Owner);
     }
 }
