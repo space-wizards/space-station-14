@@ -15658,5 +15658,19 @@ Entries:
   id: 161802
   time: '2025-09-24T00:17:29.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1618
+- author: Miracula
+  changes:
+  - message: Cloud emotes are smooth now
+    type: Fix
+  id: 157900
+  time: '2025-09-24T00:18:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1579
+- author: Miracula
+  changes:
+  - message: Portals, cc icons, brigmedic battery resprites
+    type: Tweak
+  id: 157901
+  time: '2025-09-24T00:18:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1579
 Order: -1
 
