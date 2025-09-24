@@ -1,4 +1,4 @@
 namespace Content.Server.GameTicking.Rules.Components;
 
-[RegisterComponent, Access(typeof(NukeopsRuleSystem))]
+[RegisterComponent, Access(typeof(XenoborgsRuleSystem))]
 public sealed partial class XenoborgsRuleComponent : Component;
