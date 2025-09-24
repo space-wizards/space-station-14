@@ -65,12 +65,15 @@ public sealed class RummagerSystem : EntitySystem
         Dirty(ent, ent.Comp);
         _audio.PlayPredicted(ent.Comp.Sound, ent, args.User);
 
+        if (_net.IsClient)
+            return;
+
         var spawns = _entityTable.GetSpawns(ent.Comp.Table);
+        var coordinates = Transform(ent).Coordinates;
 
         foreach (var spawn in spawns)
         {
-            if (_net.IsServer)
-                Spawn(spawn, Transform(ent).Coordinates);
+                Spawn(spawn, coordinates);
         }
     }
 }
