@@ -1,7 +1,5 @@
 using System.Numerics;
 using Content.Server.Ghost;
-using Content.Server.GhostTypes;
-using Content.Server.Body.Components;
 using Content.Server.Humanoid;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
@@ -106,9 +104,6 @@ public sealed class BodySystem : SharedBodySystem
         SoundSpecifier? gibSoundOverride = null
     )
     {
-        //var beforeEvent = new BeforeBodyDestructionEvent();
-        //RaiseLocalEvent(bodyId, ref beforeEvent);
-
         if (!Resolve(bodyId, ref body, logMissing: false)
             || TerminatingOrDeleted(bodyId)
             || EntityManager.IsQueuedForDeletion(bodyId))
