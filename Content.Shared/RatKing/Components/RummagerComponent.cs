@@ -8,7 +8,4 @@ namespace Content.Shared.RatKing.Components;
 /// </summary>
 ///
 [RegisterComponent, NetworkedComponent]
-public sealed partial class RummagerComponent : Component
-{
-
-}
+public sealed partial class RummagerComponent : Component;
