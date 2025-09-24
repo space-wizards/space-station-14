@@ -56,7 +56,7 @@ public sealed partial class XenoborgSystem : EntitySystem
     /// <summary>
     /// Makes sure the player has the xenoborg mindrole and also sends the briefing text and sound
     /// </summary>
-    public void EnsureXenoborgRole(EntityUid mindId, EntityUid ent, XenoborgComponent xenoborgComp)
+    public void EnsureXenoborgRole(EntityUid mindId, EntityUid ent)
     {
         if (_roles.MindHasRole<XenoborgRoleComponent>(mindId))
             return;
@@ -85,7 +85,7 @@ public sealed partial class XenoborgSystem : EntitySystem
     /// <summary>
     /// Makes sure the player has the xenoborg core mindrole and also sends the briefing text and sound
     /// </summary>
-    public void EnsureXenoborgCoreRole(EntityUid mindId, EntityUid ent, MothershipCoreComponent mothershipComp)
+    public void EnsureXenoborgCoreRole(EntityUid mindId, EntityUid ent)
     {
         if (_roles.MindHasRole<XenoborgCoreRoleComponent>(mindId))
             return;
