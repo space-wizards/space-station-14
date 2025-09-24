@@ -115,7 +115,7 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
         var query = AllEntityQuery<XenoborgComponent>();
         while (query.MoveNext(out var xenoborg, out _))
         {
-            if (TryComp<MothershipCoreComponent>(xenoborg, out _))
+            if (HasComp<MothershipCoreComponent>(xenoborg))
                 continue;
 
             if (playerControlled && !_mindSystem.TryGetMind(xenoborg, out _, out _))
