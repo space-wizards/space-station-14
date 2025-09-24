@@ -11,11 +11,11 @@
         borg_module:
           - BorgModuleTool
           - BorgModuleFireExtinguisher
-        ears: 
+        ears:
           - ClothingHeadsetAssistant
-        head: 
+        head:
           - ClothingHeadHelmetEVALarge
-        outerClothing: 
+        outerClothing:
           - ClothingOuterHardsuitEVA
         mask:
           - ClothingMaskBreath
@@ -38,8 +38,28 @@
   description: A smart dog, loves stating it's laws.
   id: StationBorgiChassis
   components:
-    - type: ReplacementAccent
-      accent: dog
+    - type: LanguageKnowledge
+    speaks:
+      - Machine
+      - Dog
+    understands:
+      - GalacticCommon
+      - Machine
+      - Dog
+      - Canilunzt
+      - Sign
+      - Bubblish
+      - Chittin
+      - Draconic
+      - Marish
+      - Moffic
+      - Nekomimetic
+      - Sylvan
+      - Terrum
+      - VoxPidgin
+      - Scratch
+      - Thaveyan
+      - SolCommon
     - type: ItemSlots
       slots:
         cell_slot:
@@ -75,8 +95,28 @@
   name: SubWoofer
   description: A smart dog, with an obsession for sick bass beats and stating laws.
   components:
-    - type: ReplacementAccent
-      accent: dog
+    - type: LanguageKnowledge
+    speaks:
+      - Machine
+      - Dog
+    understands:
+      - GalacticCommon
+      - Machine
+      - Dog
+      - Canilunzt
+      - Sign
+      - Bubblish
+      - Chittin
+      - Draconic
+      - Marish
+      - Moffic
+      - Nekomimetic
+      - Sylvan
+      - Terrum
+      - VoxPidgin
+      - Scratch
+      - Thaveyan
+      - SolCommon
     - type: ItemSlots
       slots:
         cell_slot:
@@ -253,11 +293,11 @@
           - XenoborgModuleTool
           - BorgModuleSyndicateWeapon
           - BorgModuleTopicals
-        ears: 
+        ears:
           - ClothingHeadsetAssistant
-        head: 
+        head:
           - ClothingHeadHelmetEVALarge
-        outerClothing: 
+        outerClothing:
           - ClothingOuterHardsuitEVA
         mask:
           - ClothingMaskBreath
@@ -295,11 +335,11 @@
           - XenoborgModuleTool
           - BorgModuleSyndicateWeapon
           - BorgModuleTopicals
-        ears: 
+        ears:
           - ClothingHeadsetAssistant
-        head: 
+        head:
           - ClothingHeadHelmetEVALarge
-        outerClothing: 
+        outerClothing:
           - ClothingOuterHardsuitEVA
         mask:
           - ClothingMaskBreath
