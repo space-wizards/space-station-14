@@ -87,7 +87,7 @@
         ignoreResistances: true
         damage:
           types:
-            Poison: 0.35
+            Poison: 0.7
       - !type:AdjustAlert
         alertType: Toxins
         minScale: 1
@@ -128,7 +128,7 @@
         damage:
           types:
             Poison:
-              0.05
+              0.1
       # We need a metabolism effect on reagent removal
       - !type:AdjustAlert
         alertType: Toxins
@@ -172,7 +172,7 @@
         damage:
           types:
             Radiation:
-              0.5
+              1
       # We need a metabolism effect on reagent removal
       - !type:AdjustAlert
         alertType: Toxins
@@ -234,7 +234,7 @@
         damage:
           types:
             Poison:
-              0.4
+              0.8
       - !type:Oxygenate # carbon dioxide displaces oxygen from the bloodstream, causing asphyxiation
         conditions:
         - !type:MetabolizerType
