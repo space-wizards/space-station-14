@@ -12,4 +12,3 @@ borg-slot-instruments-empty = Instruments
 borg-slot-beakers-empty = Beakers
 borg-slot-inflatable-door-empty = Inflatable Door
 borg-slot-inflatable-wall-empty = Inflatable Wall
-borg-slot-martyr-bomb-empty = Self Destruct
