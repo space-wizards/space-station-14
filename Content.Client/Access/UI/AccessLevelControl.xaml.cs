@@ -87,6 +87,7 @@ public sealed partial class AccessLevelControl : GridContainer
             accessesToShow = enabledList;
         }
 
+        // Only show access levels that are allowed by the privileged ID
         Populate(accessesToShow, prototypeManager);
         // Starlight-edit: End
 

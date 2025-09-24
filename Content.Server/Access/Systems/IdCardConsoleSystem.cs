@@ -246,53 +246,45 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             Comp<IdCardComponent>(targetId).JobPrototype = newJobProto;
         }
 
-        // Starlight-start
+        // Starlight-edit: Start
+        // Instead of only updating the currently selected group, update all groups.
+        var oldTags = _access.TryGetTags(targetId)?.ToHashSet() ?? new HashSet<ProtoId<AccessLevelPrototype>>();
 
-        var currentGroup = component.CurrentAccessGroup ?? component.AccessGroups.FirstOrDefault();
-        if (!_prototype.TryIndex<AccessGroupPrototype>(currentGroup, out var currentGroupPrototype))
-        {
-            _sawmill.Warning($"Current access group {currentGroup} not found!");
-            return;
-        }
-
-       var oldTags = _access.TryGetTags(targetId)?.ToHashSet() ?? new HashSet<ProtoId<AccessLevelPrototype>>();
-
-        var groupTags = currentGroupPrototype.Tags.ToHashSet();
-
-        var oldGroupTags = oldTags.Intersect(groupTags).ToHashSet();
-        var newGroupTags = newAccessList.Intersect(groupTags).ToHashSet();
-
-        // Starlight-end
-
-        // Ensure the user isn't trying to add access they shouldn't be able to.
-        // Starlight-start: Change to access groups
-        List<ProtoId<AccessLevelPrototype>> Accesses = new();
+        // Collect all access tags from all groups
+        var allGroupTags = new HashSet<ProtoId<AccessLevelPrototype>>();
         foreach (var group in component.AccessGroups.ToList())
         {
-            if (!_prototype.TryIndex<AccessGroupPrototype>(group, out var groupPrototype))
-                continue;
-
-            Accesses.AddRange(groupPrototype.Tags.ToList());
+            if (_prototype.TryIndex<AccessGroupPrototype>(group, out var groupPrototype))
+                allGroupTags.UnionWith(groupPrototype.Tags);
         }
-        // Starlight-end
-        if (!newAccessList.TrueForAll(x => Accesses.Contains(x)))
+
+        if (!newAccessList.TrueForAll(x => allGroupTags.Contains(x)))
+        // Starlight-edit: End
         {
             _sawmill.Warning($"User {ToPrettyString(uid)} tried to write unknown access tag.");
             return;
         }
 
         var privilegedId = component.PrivilegedIdSlot.Item;
+        // Starlight-edit: Start
+        var privilegedPerms = _accessReader.FindAccessTags(privilegedId!.Value).ToHashSet();
 
-        var finalTags = oldTags.Except(groupTags).Union(newGroupTags); // Starlight-edit
+        // For each group, update the tags for that group with the ones from newAccessList
+        var finalTags = oldTags.Except(allGroupTags).ToHashSet(); // preserve tags not in any group
+        foreach (var group in component.AccessGroups.ToList())
+        {
+            if (!_prototype.TryIndex<AccessGroupPrototype>(group, out var groupPrototype))
+                continue;
+            var groupTags = groupPrototype.Tags.ToHashSet();
+            var newGroupTags = newAccessList.Intersect(groupTags).ToHashSet();
+            finalTags.UnionWith(newGroupTags);
+        }
 
-        if (oldTags.SetEquals(finalTags)) // Starlight-edit
+        if (oldTags.SetEquals(finalTags))
             return;
 
-        // I hate that C# doesn't have an option for this and don't desire to write this out the hard way.
-        // var difference = newAccessList.Difference(oldTags);
-        var difference = finalTags.Union(oldTags).Except(finalTags.Intersect(oldTags)).ToHashSet(); // Starlight-edit
-        // NULL SAFETY: PrivilegedIdIsAuthorized checked this earlier.
-        var privilegedPerms = _accessReader.FindAccessTags(privilegedId!.Value).ToHashSet();
+        var difference = finalTags.Union(oldTags).Except(finalTags.Intersect(oldTags)).ToHashSet();
+        // Starlight-edit: End
         if (!difference.IsSubsetOf(privilegedPerms))
         {
             _sawmill.Warning($"User {ToPrettyString(uid)} tried to modify permissions they could not give/take!");
