@@ -1,7 +1,7 @@
 - type: entity
   id: SpawnPointXenoborg
   parent: MarkerBase
-  name: mothership core
+  name: xenoborgs
   components:
   - type: GridSpawnPointWhitelist
     whitelist:
@@ -24,7 +24,7 @@
 - type: entity
   id: SpawnPointMothershipCore
   parent: MarkerBase
-  name: xenoborgs
+  name: mothership core
   components:
   - type: GridSpawnPointWhitelist
     whitelist:
