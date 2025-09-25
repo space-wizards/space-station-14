@@ -67,7 +67,7 @@ public sealed class RuleGridsSystem : GameRuleSystem<RuleGridsComponent>
 
             if (TryComp<GridSpawnPointWhitelistComponent>(ent, out var gridSpawnPointWhitelistComponent))
             {
-                if (_whitelist.CheckBoth(args.Entity, gridSpawnPointWhitelistComponent.Blacklist, gridSpawnPointWhitelistComponent.Whitelist))
+                if (!_whitelist.CheckBoth(args.Entity, gridSpawnPointWhitelistComponent.Blacklist, gridSpawnPointWhitelistComponent.Whitelist))
                     continue;
             }
 
