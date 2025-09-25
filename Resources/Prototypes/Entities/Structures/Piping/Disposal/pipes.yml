@@ -71,6 +71,10 @@
     traversalSpeed: 10
     exitDistanceMultiplier: 2
     exitSpeedMultiplier: 2
+    container:
+      occludes: true
+      showEnts: false
+      ents: []
   - type: ContainerContainer
     containers:
       DisposalHolderComponent: !type:Container
