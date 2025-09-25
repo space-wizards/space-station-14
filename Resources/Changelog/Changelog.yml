@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Chartman95
-  changes:
-  - message: Soaked Smokes retain their 40u max capacity.
-    type: Tweak
-  id: 8494
-  time: '2025-05-15T14:47:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37482
 - author: lzk228
   changes:
   - message: Recycler can shred clothing that can be butchered.
@@ -3957,3 +3950,10 @@
   id: 9004
   time: '2025-09-25T21:53:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40160
+- author: SirWarock
+  changes:
+  - message: Rollerbed sprites now don't stack when a patient is buckled to it!
+    type: Fix
+  id: 9005
+  time: '2025-09-25T23:57:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40550
