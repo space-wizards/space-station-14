@@ -73,25 +73,15 @@
   table: !type:GroupSelector
     children:
     - id: AirCanister
-      orGroup: Canister
     - id: AmmoniaCanister
-      orGroup: Canister
     - id: CarbonDioxideCanister
-      orGroup: Canister
     - id: FrezonCanister
-      orGroup: Canister
     - id: NitrogenCanister
-      orGroup: Canister
     - id: NitrousOxideCanister
-      orGroup: Canister
     - id: OxygenCanister
-      orGroup: Canister
     - id: PlasmaCanister
-      orGroup: Canister
     - id: TritiumCanister
-      orGroup: Canister
     - id: WaterVaporCanister
-      orGroup: Canister
 
 - type: entityTable # 0.01
   id: RandomWeapon
