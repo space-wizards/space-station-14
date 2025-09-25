@@ -35,22 +35,17 @@ public sealed class ReplayMainScreen : State
     [Dependency] private readonly ContentReplayPlaybackManager _replayMan = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
 
-    private readonly ISawmill _sawmill = default!;
+    private ISawmill _sawmill = default!;
     private ReplayMainMenuControl _mainMenuControl = default!;
     private SelectReplayWindow? _selectWindow;
     private ResPath _directory;
     private List<(string Name, ResPath Path)> _replays = new();
     private ResPath? _selected;
 
-    public ReplayMainScreen()
-    {
-        IoCManager.InjectDependencies(this);
-
-        _sawmill = _logManager.GetSawmill("replay.screen");
-    }
-
     protected override void Startup()
     {
+        _sawmill = _logManager.GetSawmill("replay.screen");
+
         _mainMenuControl = new(_resourceCache);
         _userInterfaceManager.StateRoot.AddChild(_mainMenuControl);
 

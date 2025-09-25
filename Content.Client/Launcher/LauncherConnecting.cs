@@ -22,7 +22,7 @@ namespace Content.Client.Launcher
         [Dependency] private readonly IClipboardManager _clipboard = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
 
-        private readonly ISawmill _sawmill = default!;
+        private ISawmill _sawmill = default!;
         private LauncherConnectingGui? _control;
 
         private Page _currentPage;
@@ -59,15 +59,10 @@ namespace Content.Client.Launcher
         public event Action<ClientConnectionState>? ConnectionStateChanged;
         public event Action<NetConnectFailArgs>? ConnectFailed;
 
-        public LauncherConnecting()
-        {
-            IoCManager.InjectDependencies(this);
-
-            _sawmill = _logManager.GetSawmill("launcher-ui");
-        }
-
         protected override void Startup()
         {
+            _sawmill = _logManager.GetSawmill("launcher-ui");
+
             _control = new LauncherConnectingGui(this, _random, _prototypeManager, _cfg, _clipboard);
 
             _userInterfaceManager.StateRoot.AddChild(_control);
