@@ -18,7 +18,6 @@ using Content.Server.Speech.Components;
 using Content.Server.Spreader;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
-using Content.Server.Traits.Assorted;
 using Content.Server.Zombies;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
@@ -33,6 +32,7 @@ using Content.Shared.Maps;
 using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
 using Content.Shared.Random;
+using Content.Shared.Traits.Assorted;
 using Content.Shared.Zombies;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -949,9 +949,7 @@ public sealed class EntityEffectSystem : EntitySystem
             return;
 
         var targetProto = _random.Pick(plantholder.Seed.MutationPrototypes);
-        _protoManager.TryIndex(targetProto, out SeedPrototype? protoSeed);
-
-        if (protoSeed == null)
+        if (!_protoManager.TryIndex(targetProto, out SeedPrototype? protoSeed))
         {
             Log.Error($"Seed prototype could not be found: {targetProto}!");
             return;

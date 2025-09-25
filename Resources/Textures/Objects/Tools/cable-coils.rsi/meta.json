@@ -32,6 +32,14 @@
       "directions": 4
     },
     {
+      "name": "coilex-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "coilex-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "coil-30"
     },
     {
@@ -71,6 +79,15 @@
       "name": "coilall-30"
     },
     {
+      "name": "coilex-30"
+    },
+    {
+      "name": "coilex-20"
+    },
+    {
+      "name": "coilex-10"
+    },
+    {
       "name": "coil-equipped-BELT",
       "directions": 4
     },
@@ -84,6 +101,10 @@
     },
     {
       "name": "coilhv-equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "coilex-equipped-BELT",
       "directions": 4
     }
   ]

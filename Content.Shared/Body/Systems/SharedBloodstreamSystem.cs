@@ -191,7 +191,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         }
 
         // TODO probably cache this or something. humans get hurt a lot
-        if (!_prototypeManager.TryIndex(ent.Comp.DamageBleedModifiers, out var modifiers))
+        if (!_prototypeManager.Resolve(ent.Comp.DamageBleedModifiers, out var modifiers))
             return;
 
         // some reagents may deal and heal different damage types in the same tick, which means DamageIncreased will be true
