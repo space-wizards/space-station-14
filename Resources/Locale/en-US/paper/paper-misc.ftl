@@ -70,3 +70,9 @@ book-text-combat-bakery-kit = Thank you for choosing our combat bakery kit!
       Butter Slice x 1
       Glass Shard x 1
       Cook Time: 5 seconds
+
+book-text-gambling-receipt = {"["}bold]The Grand Lottery! ©[/bold]
+      {"["}head=1][bold][color=gold]==================[/color][/bold]
+      {"  ["}color=red]T[/color][color=blue]h[/color][color=green]a[/color][color=red]n[/color][color=blue]k[/color][color=green]s[/color] [color=red]f[/color][color=blue]o[/color][color=green]r[/color] [color=red]P[/color][color=blue]l[/color][color=green]a[/color][color=red]y[/color][color=blue]i[/color][color=green]n[/color][color=red]g[/color]
+      {"["}color=gold]==================[/color][/bold][/head]
+      {"["}size=3][italic]NanoTrasen nor its subsidiary companies including but not limited to The Grand Lottery LLC are not responsible for damages, losses incurred, bodily injury, or change of mental state as a consequence of purchase.[/itallic][/size]

@@ -236,10 +236,13 @@
   id: LetsGoGambling
   table: !type:AllSelector
     children:
+    - id: PaperGamblingReceipt
     - !type:GroupSelector
       rolls: !type:ExplodingDiceNumberSelector
         dieSize: 6
       children:
+      - !type:NoneSelector
+        weight: 0.5
       - !type:NestedSelector
         weight: 0.1
         rolls: !type:ExplodingDiceNumberSelector

@@ -1,0 +1,7 @@
+- type: entity
+  id: PaperGamblingReceipt
+  name: receipt
+  parent: PaperAccessLogs
+  components:
+  - type: Paper
+    content: book-text-gambling-receipt
