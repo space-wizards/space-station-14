@@ -15672,5 +15672,13 @@ Entries:
   id: 157901
   time: '2025-09-24T00:18:16.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1579
+- author: CawsForConcern
+  changes:
+  - message: (Starboard) Poster overlapping a fire alarm just northwest of the Warden's
+      office
+    type: Fix
+  id: 173400
+  time: '2025-09-25T16:24:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1734
 Order: -1
 
