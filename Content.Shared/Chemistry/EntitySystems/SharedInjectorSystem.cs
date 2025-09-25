@@ -306,6 +306,15 @@ public abstract class SharedInjectorSystem : EntitySystem
             return false;
         }
 
+        // Give the target a chance to cancel (e.g., whitelist).
+        var transferAttempt = new SolutionTransferAttemptEvent(injector.Owner, target);
+        RaiseLocalEvent(target, ref transferAttempt);
+        if (transferAttempt.CancelReason is { } reason)
+        {
+            _popup.PopupClient(reason, target, user);
+            return false;
+        }
+
         // Move units from attackSolution to targetSolution
         Solution removedSolution;
         if (TryComp<StackComponent>(target, out var stack))
