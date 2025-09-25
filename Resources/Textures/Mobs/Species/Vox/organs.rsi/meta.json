@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "made by mubururu_ (github)",
+    "copyright": "made by mubururu_ (github), edited by MissKay1994 (github)",
     "size": {
         "x": 32,
         "y": 32
@@ -20,6 +20,60 @@
         },
         {
             "name": "lung-r"
+        },
+		{
+            "name": "heart-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "heart-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "heart-on",
+            "delays": [
+                [
+                    0.6,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+		{
+            "name": "liver"
+        },
+        {
+            "name": "liver-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "liver-inhand-right",
+            "directions": 4
+        },
+		{
+            "name": "stomach"
+        },
+        {
+            "name": "stomach-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "stomach-inhand-right",
+            "directions": 4
+        },
+		{
+            "name": "kidneys-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "kidneys-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "kidney-l"
+        },
+        {
+            "name": "kidney-r"
         }
     ]
 }
