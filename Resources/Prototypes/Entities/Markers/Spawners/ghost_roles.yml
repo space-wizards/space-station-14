@@ -249,7 +249,7 @@
   - type: Tag
     tags:
     - ForceFixRotations
-    - MothershipCore
+    - MothershipCoreGhostrole
   - type: GhostRole
     name: ghost-role-information-mothership-core-name
     description: ghost-role-information-mothership-core-desc
@@ -271,7 +271,7 @@
   - type: Tag
     tags:
     - ForceFixRotations
-    - Xenoborg
+    - XenoborgGhostrole
   - type: GhostRole
     name: ghost-role-information-xenoborg-name
     description: ghost-role-information-xenoborg-desc

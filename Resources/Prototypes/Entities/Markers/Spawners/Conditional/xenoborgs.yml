@@ -7,9 +7,13 @@
     whitelist:
       components:
       - Xenoborg
+      tags:
+      - XenoborgGhostrole
     blacklist:
       components:
       - MothershipCore
+      tags:
+      - MothershipCoreGhostrole
   - type: SpawnPoint
   - type: Sprite
     layers:
@@ -26,6 +30,8 @@
     whitelist:
       components:
       - MothershipCore
+      tags:
+      - MothershipCoreGhostrole
   - type: SpawnPoint
   - type: Sprite
     layers:
