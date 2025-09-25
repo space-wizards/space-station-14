@@ -1416,5 +1416,26 @@ Entries:
   id: 171
   time: '2025-09-17T21:59:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35966
+- author: Kowlin
+  changes:
+  - message: The "unbanned by" message in the admin notes now formats its date properly.
+    type: Tweak
+  id: 172
+  time: '2025-09-21T15:26:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40484
+- author: Samuka
+  changes:
+  - message: Added Silicon Smite that makes anything follow silicon laws.
+    type: Add
+  id: 173
+  time: '2025-09-22T02:39:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40452
+- author: Princess-Cheeseballs
+  changes:
+  - message: Added vulpkanin smite.
+    type: Add
+  id: 174
+  time: '2025-09-22T06:22:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40360
 Name: Admin
 Order: 2
