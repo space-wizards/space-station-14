@@ -1,48 +1,4 @@
 ﻿Entries:
-- author: qwerltaz
-  changes:
-  - message: Snipping the panic wire in an air alarm now forces panic mode until the
-      wire is mended.
-    type: Tweak
-  id: 8485
-  time: '2025-05-14T20:39:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36439
-- author: IProduceWidgets
-  changes:
-  - message: more wizard name variety
-    type: Add
-  id: 8486
-  time: '2025-05-14T21:06:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36437
-- author: archee1
-  changes:
-  - message: Bike horns of all varieties have had their textures updated slightly.
-    type: Tweak
-  id: 8487
-  time: '2025-05-14T22:05:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37413
-- author: slarticodefast
-  changes:
-  - message: Fixed paradox clones not copying the mute, snoring and frontal lisp traits.
-    type: Fix
-  id: 8488
-  time: '2025-05-15T01:45:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37467
-- author: kosticia
-  changes:
-  - message: Hamsters, mice, butterflies, mothroaches, bees, bats, snails, rats, ticks
-      and cockroaches now don't leave organs on gibbing.
-    type: Fix
-  id: 8489
-  time: '2025-05-15T03:45:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37080
-- author: EmoGarbage404
-  changes:
-  - message: Goliath tentacles no longer miss if you stand still.
-    type: Fix
-  id: 8490
-  time: '2025-05-15T03:55:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37168
 - author: K-Dynamic
   changes:
   - message: Industrial advanced welders may be found in welding supplies lockers.
@@ -3954,3 +3910,48 @@
   id: 8995
   time: '2025-09-22T06:40:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40491
+- author: hoshizora-sayo
+  changes:
+  - message: Fixed fire helmets alone giving you full temperature protection
+    type: Fix
+  id: 8996
+  time: '2025-09-23T17:02:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40481
+- author: aada
+  changes:
+  - message: Circuit tiles and faux tiles have been moved to the cutter machine.
+    type: Tweak
+  id: 8997
+  time: '2025-09-24T00:12:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37982
+- author: Kittygyat
+  changes:
+  - message: Added 4 diagnostic huds to the engi-vend
+    type: Add
+  id: 8998
+  time: '2025-09-24T04:19:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40461
+- author: RedBookcase
+  changes:
+  - message: Rechargers can now charge power cells again.
+    type: Tweak
+  id: 8999
+  time: '2025-09-24T20:33:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38138
+- author: Nox38, BurgerMoth
+  changes:
+  - message: Added descriptions to .20 ammo boxes, magazines, and cartridges.
+    type: Add
+  - message: Changed the descriptions of the Lecter, Estoc DMR, and M90GL.
+    type: Tweak
+  id: 9000
+  time: '2025-09-24T21:48:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36496
+- author: Keer-Sar
+  changes:
+  - message: Added two new markings for lizard snouts, "Lizard Visage (Round)" & "Lizard
+      Visage (Sharp)."
+    type: Add
+  id: 9001
+  time: '2025-09-24T23:13:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35294
