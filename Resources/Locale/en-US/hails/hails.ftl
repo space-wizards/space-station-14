@@ -62,7 +62,7 @@
 ## Tools interaction
 
 sec-gas-mask-verb = Change level
-sec-gas-mask-screwed = Changed to {$level} aggression
+sechail-gas-mask-screwed = Changed to {$level} aggression
 sec-gas-mask-emagged = Changed to ERROR aggression
 sec-gas-mask-wrong_access = You don't have succifient access.
 ert-gas-mask-impossible = It seems impervious to external change.
@@ -79,25 +79,21 @@ sec-gas-mask-alert-owner-post-emag = {CAPITALIZE(THE($user))} has emagged your m
 -sec-gas-mask-aggresion-level =
     { $level ->
         [low] Low
-        [medium] Medium
+        [med] Medium
         [high] High
        *[other] Unknown
     }
 
-sec-gas-mask-examined = The aggression setting is set to { $level ->
-    [low] [color=green]{ -sec-gas-mask-aggresion-level(level: "low") }[/color]
-    [medium] [color=yellow]{ -sec-gas-mask-aggresion-level(level: "medium") }[/color]
+sechail-ert-mask-examined = The aggression setting is set to [color=red]High[/color] and doesn't seem capable of being switched.
+
+sechail-gas-mask-examined = The aggression setting is set to { $level ->
+    *[low] [color=green]{ -sec-gas-mask-aggresion-level(level: "low") }[/color]
+    [med] [color=yellow]{ -sec-gas-mask-aggresion-level(level: "med") }[/color]
     [high] [color=red]{ -sec-gas-mask-aggresion-level(level: "high") }[/color]
-   *[other] [color=purple]{ -sec-gas-mask-aggresion-level(level: "other") }[/color]
 }.
 
-sec-gas-mask-examined-ert = The aggression setting is set to [color=red]High[/color] and doesn't seem capable of being switched.
-sec-gas-mask-examined-emagged = The aggression setting is set to [color=red]ERROR[/color]. Weird.
-sec-gas-mask-examined-wires-cut = The hailer seems to have its wires cut off.
-
-## Misc
-
-sec-hailer-default-chat-name = Security hailer
+sechail-gas-mask-emag = The aggression setting is set to [color=red]ERROR[/color]. Weird.
+sechail-gas-mask-wires-cut = The hailer seems to have its wires cut off.
 
 ## VOICE LINES 	##
 

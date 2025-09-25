@@ -48,14 +48,25 @@ public abstract class SharedHailerSystem : EntitySystem
     {
         base.Initialize();
 
-        //SubscribeLocalEvent<HailerComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<HailerComponent, ClothingGotEquippedEvent>(OnEquip);
+        SubscribeLocalEvent<HailerComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<HailerComponent, ClothingGotUnequippedEvent>(OnUnequip);
         //SubscribeLocalEvent<HailerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
         //SubscribeLocalEvent<HailerComponent, GotEmaggedEvent>(OnEmagging);
-        //SubscribeLocalEvent<HailerComponent, InteractUsingEvent>(OnInteractUsing);
-        //SubscribeLocalEvent<HailerComponent, SecHailerToolDoAfterEvent>(OnToolDoAfter);
-        //SubscribeLocalEvent<HailerComponent, ToggleMaskEvent>(OnToggleMask);
+        SubscribeLocalEvent<HailerComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<HailerComponent, SecHailerToolDoAfterEvent>(OnToolDoAfter);
 
         SubscribeLocalEvent<HailerComponent, HailerOrderMessage>(OnHailOrder);
+    }
+
+
+    private void OnEquip(Entity<HailerComponent> ent, ref ClothingGotEquippedEvent args)
+    {
+        ent.Comp.User = args.Wearer;
+    }
+    private void OnUnequip(Entity<HailerComponent> ent, ref ClothingGotUnequippedEvent args)
+    {
+        ent.Comp.User = null;
     }
 
     private void OnHailOrder(EntityUid uid, HailerComponent comp, HailerOrderMessage args)
@@ -65,7 +76,7 @@ public abstract class SharedHailerSystem : EntitySystem
         string localeText;
 
         var orderUsed = comp.Orders[args.Index];
-        var hailLevel = comp.HailLevels[comp.HailLevelIndex].Name;
+        var hailLevel = comp.CurrentHailLevel.Name;
         soundCollection = orderUsed.SoundCollection + "-" + hailLevel;
         localeText = orderUsed.LocalePrefix + "-" + hailLevel;
 
@@ -90,175 +101,141 @@ public abstract class SharedHailerSystem : EntitySystem
 
     protected virtual void SubmitChatMessage(Entity<HailerComponent> ent, string localeText, int index)
     {
-
     }
 
-    ///// <summary>
-    ///// Put an exclamation mark around humanoid standing at the distance specified in the component.
-    ///// </summary>
-    ///// <param name="ent"></param>
-    ///// <returns>Is it handled succesfully ?</returns>
-    //protected bool ExclamateHumanoidsAround(Entity<HailerComponent> ent) //Put in shared for predictions purposes
-    //{
-    //    var (uid, comp) = ent;
-    //    if (!Resolve(uid, ref comp, false) || comp.Distance <= 0)
-    //        return false;
+    /// <summary>
+    /// Put an exclamation mark around humanoid standing at the distance specified in the component.
+    /// </summary>
+    /// <param name="ent"></param>
+    /// <returns>Is it handled succesfully ?</returns>
+    protected void ExclamateHumanoidsAround(Entity<HailerComponent> ent)
+    {
+        var (uid, comp) = ent;
+        if (!Resolve(uid, ref comp, false) || comp.Distance <= 0)
+            return;
 
-    //    StealthComponent? stealth = null;
-    //    foreach (var iterator in
-    //        _entityLookup.GetEntitiesInRange<HumanoidAppearanceComponent>(_transform.GetMapCoordinates(uid), comp.Distance))
-    //    {
-    //        //Avoid pinging invisible entities
-    //        if (TryComp(iterator, out stealth) && stealth.Enabled)
-    //            continue;
+        StealthComponent? stealth = null;
+        foreach (var iterator in
+            _entityLookup.GetEntitiesInRange<HumanoidAppearanceComponent>(_transform.GetMapCoordinates(uid), comp.Distance))
+        {
+            //Avoid pinging invisible entities
+            if (TryComp(iterator, out stealth) && stealth.Enabled)
+                continue;
 
-    //        //We don't want to ping user of the mask
-    //        if (iterator.Owner == ent.Comp.User)
-    //            continue;
+            //We don't want to ping user of the mask
+            if (iterator.Owner == ent.Comp.User)
+                continue;
 
-    //        SpawnAttachedTo(comp.ExclamationEffect, iterator.Owner.ToCoordinates());
-    //    }
+            SpawnAttachedTo(comp.ExclamationEffect, iterator.Owner.ToCoordinates());
+        }
+    }
 
-    //    return true;
-    //}
+    private void OnInteractUsing(Entity<HailerComponent> ent, ref InteractUsingEvent args)
+    {
+        if (args.Handled)
+            return;
 
-    //private void OnInteractUsing(Entity<HailerComponent> ent, ref InteractUsingEvent args)
-    //{
-    //    if (args.Handled)
-    //        return;
+        //If someone else is wearing it and someone use a tool on it, ignore it
+        //Strip system takes over
+        if (ent.Comp.User.HasValue && ent.Comp.User != args.User)
+            return;
 
-    //    //If someone else is wearing it and someone use a tool on it, ignore it
-    //    //Strip system takes over
-    //    if (ent.Comp.User.HasValue && ent.Comp.User != args.User)
-    //        return;
+        //Is it a wirecutter, a screwdriver or an EMAG ?
+        if (_tool.HasQuality(args.Used, SharedToolSystem.CutQuality))
+            OnInteractCutting(ent, ref args);
+        else if (_tool.HasQuality(args.Used, SharedToolSystem.ScrewQuality))
+            OnInteractScrewing(ent, ref args);
+        else
+            return;
+    }
+    private void OnInteractCutting(Entity<HailerComponent> ent, ref InteractUsingEvent args)
+    {
+        ProtoId<ToolQualityPrototype> quality = CUTTING_QUALITY;
+        StartADoAfter(ent, args, quality);
+    }
 
-    //    //If ERT, can't be messed with
-    //    if (ent.Comp.IsERT)
-    //    {
-    //        _popup.PopupEntity(Loc.GetString("ert-gas-mask-impossible"), ent.Owner);
-    //        args.Handled = true;
-    //        return;
-    //    }
+    private void OnInteractScrewing(Entity<HailerComponent> ent, ref InteractUsingEvent args)
+    {
+        //If it's emagged we don't change it
+        if (HasComp<EmaggedComponent>(ent) || ent.Comp.AreWiresCut)
+            return;
+        ProtoId<ToolQualityPrototype> quality = SCREWING_QUALITY;
+        StartADoAfter(ent, args, quality);
+    }
 
-    //    //Is it a wirecutter, a screwdriver or an EMAG ?
-    //    if (_tool.HasQuality(args.Used, SharedToolSystem.CutQuality))
-    //        OnInteractCutting(ent, ref args);
-    //    else if (_tool.HasQuality(args.Used, SharedToolSystem.ScrewQuality))
-    //        OnInteractScrewing(ent, ref args);
-    //    else
-    //        return;
-    //}
-    //private void OnInteractCutting(Entity<HailerComponent> ent, ref InteractUsingEvent args)
-    //{
-    //    ProtoId<ToolQualityPrototype> quality = CUTTING_QUALITY;
-    //    StartADoAfter(ent, args, quality);
-    //}
+    private void StartADoAfter(Entity<HailerComponent> ent, InteractUsingEvent args, ProtoId<ToolQualityPrototype> quality)
+    {
+        float? time = null;
+        //What delay to use ?
+        if (quality == SCREWING_QUALITY)
+        {
+            time = ent.Comp.ScrewingDoAfterDelay;
+        }
+        else if (quality == CUTTING_QUALITY)
+        {
+            time = ent.Comp.CuttingDoAfterDelay;
+        }
 
-    //private void OnInteractScrewing(Entity<HailerComponent> ent, ref InteractUsingEvent args)
-    //{
-    //    //If it's emagged we don't change it
-    //    if (HasComp<EmaggedComponent>(ent) || ent.Comp.CurrentState != SecMaskState.Functional)
-    //        return;
-    //    ProtoId<ToolQualityPrototype> quality = SCREWING_QUALITY;
-    //    StartADoAfter(ent, args, quality);
-    //}
+        if (!time.HasValue)
+        {
+            Log.Error("SharedHailerSystem couldn't get a time for a tool doAfter !");
+            return;
+        }
 
-    //private void StartADoAfter(Entity<HailerComponent> ent, InteractUsingEvent args, ProtoId<ToolQualityPrototype> quality)
-    //{
-    //    float? time = null;
-    //    //What delay to use ?
-    //    if (quality == SCREWING_QUALITY)
-    //    {
-    //        time = ent.Comp.ScrewingDoAfterDelay;
-    //    }
-    //    else if (quality == CUTTING_QUALITY)
-    //    {
-    //        time = ent.Comp.CuttingDoAfterDelay;
-    //    }
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, time.Value, new SecHailerToolDoAfterEvent(quality), ent.Owner, target: args.Target, used: args.Used)
+        {
+            Broadcast = true,
+            BreakOnMove = true,
+            NeedHand = true,
+        });
 
-    //    if (!time.HasValue)
-    //    {
-    //        Log.Error("Security hailer system couldn't get a time for a tool doAfter !");
-    //        return;
-    //    }
+        args.Handled = true;
+    }
 
-    //    _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, time.Value, new SecHailerToolDoAfterEvent(quality), ent.Owner, target: args.Target, used: args.Used)
-    //    {
-    //        Broadcast = true,
-    //        BreakOnMove = true,
-    //        NeedHand = true,
-    //    });
+    private void OnToolDoAfter(Entity<HailerComponent> ent, ref SecHailerToolDoAfterEvent args)
+    {
+        if (args.Cancelled || args.Handled || !HasComp<HailerComponent>(args.Args.Target))
+            return;
 
-    //    args.Handled = true;
-    //}
+        switch (args.ToolQuality)
+        {
+            case CUTTING_QUALITY:
+                OnCuttingDoAfter(ent, ref args);
+                break;
+            case SCREWING_QUALITY:
+                OnScrewingDoAfter(ent, ref args);
+                break;
+        }
 
-    //private void OnToolDoAfter(Entity<HailerComponent> ent, ref SecHailerToolDoAfterEvent args)
-    //{
-    //    if (args.Cancelled || args.Handled)
-    //        return;
+        Dirty(ent);
+    }
 
-    //    switch (args.ToolQuality)
-    //    {
-    //        case CUTTING_QUALITY:
-    //            OnCuttingDoAfter(ent, ref args);
-    //            break;
-    //        case SCREWING_QUALITY:
-    //            OnScrewingDoAfter(ent, ref args);
-    //            break;
-    //    }
+    private void OnCuttingDoAfter(Entity<HailerComponent> ent, ref SecHailerToolDoAfterEvent args)
+    {
+        _sharedAudio.PlayPvs(ent.Comp.CutSounds, ent.Owner);
 
-    //    Dirty(ent);
-    //}
+        var (uid, comp) = ent;
 
-    //private void OnCuttingDoAfter(Entity<HailerComponent> ent, ref SecHailerToolDoAfterEvent args)
-    //{
-    //    // Snip, snip !
-    //    _sharedAudio.PlayPvs(ent.Comp.CutSounds, ent.Owner);
+        comp.AreWiresCut = !comp.AreWiresCut;
+        Dirty(ent);
+        var state = comp.AreWiresCut ? "icon-wires-cut" : "icon";
+        _appearance.SetData(ent, SecMaskVisuals.State, 1);
+        Dirty(ent);
+        args.Handled = true;
+    }
 
-    //    var (uid, comp) = ent;
-    //    if (comp.CurrentState == SecMaskState.Functional)
-    //    {
-    //        comp.CurrentState = SecMaskState.WiresCut;
-    //        if (ent.Comp.User.HasValue)
-    //        {
-    //            _actions.RemoveAction(ent.Comp.User.Value, comp.ActionEntity);
-    //            Dirty(ent);
-    //        }
-    //    }
-    //    else if (comp.CurrentState == SecMaskState.WiresCut)
-    //    {
-    //        comp.CurrentState = SecMaskState.Functional;
-    //        if (ent.Comp.User.HasValue)
-    //        {
-    //            _actions.AddAction(ent.Comp.User.Value, ref comp.ActionEntity, comp.Action, uid);
-    //            Dirty(ent);
-    //        }
-    //    }
-    //    _appearance.SetData(ent, SecMaskVisuals.State, comp.CurrentState);
-    //    args.Handled = true;
-    //}
+    private void OnScrewingDoAfter(Entity<HailerComponent> ent, ref SecHailerToolDoAfterEvent args)
+    {
+        _sharedAudio.PlayPvs(ent.Comp.ScrewedSounds, ent.Owner);
 
-    //private void OnScrewingDoAfter(Entity<HailerComponent> ent, ref SecHailerToolDoAfterEvent args)
-    //{
-    //    if (args.Cancelled || args.Handled || !TryComp<HailerComponent>(args.Args.Target, out var plant))
-    //        return;
+        IncreaseAggressionLevel(ent);
+        args.Handled = true;
+    }
 
-    //    _sharedAudio.PlayPvs(ent.Comp.ScrewedSounds, ent.Owner);
-
-    //    IncreaseAggressionLevel(ent);
-    //    args.Handled = true;
-    //}
-
-    //private void IncreaseAggressionLevel(Entity<HailerComponent> ent)
-    //{
-    //    //Up the aggression level by one or back to one
-    //    if (ent.Comp.AggresionLevel == AggresionState.High)
-    //        ent.Comp.AggresionLevel = AggresionState.Low;
-    //    else
-    //        ent.Comp.AggresionLevel++;
-
-    //    _popup.PopupEntity(Loc.GetString("sec-gas-mask-screwed", ("level", ent.Comp.AggresionLevel.ToString().ToLower())), ent.Owner);
-    //}
+    protected virtual void IncreaseAggressionLevel(Entity<HailerComponent> ent)
+    {
+       
+    }
 
     //private void OnEmagging(Entity<HailerComponent> ent, ref GotEmaggedEvent args)
     //{
@@ -277,17 +254,15 @@ public abstract class SharedHailerSystem : EntitySystem
 
     //}
 
-    //private void OnExamine(Entity<HailerComponent> ent, ref ExaminedEvent args)
-    //{
-    //    if (ent.Comp.IsERT)
-    //        args.PushMarkup(Loc.GetString("sec-gas-mask-examined-ert"));
-    //    else if (HasComp<EmaggedComponent>(ent))
-    //        args.PushMarkup(Loc.GetString("sec-gas-mask-examined-emagged"));
-    //    else if (ent.Comp.CurrentState == SecMaskState.WiresCut)
-    //        args.PushMarkup(Loc.GetString("sec-gas-mask-examined-wires-cut"));
-    //    else
-    //        args.PushMarkup(Loc.GetString($"sec-gas-mask-examined", ("level", ent.Comp.AggresionLevel)));
-    //}
+    private void OnExamine(Entity<HailerComponent> ent, ref ExaminedEvent args)
+    {
+        if (HasComp<EmaggedComponent>(ent))
+            args.PushMarkup(Loc.GetString("sechail-gas-mask-emag"));
+        else if (ent.Comp.AreWiresCut)
+            args.PushMarkup(Loc.GetString("sechail-gas-mask-wires-cut"));
+        else
+            args.PushMarkup(Loc.GetString($"sechail-gas-mask-examined", ("level", ent.Comp.CurrentHailLevel.Name)));
+    }
 
     //private void OnGetVerbs(Entity<HailerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     //{

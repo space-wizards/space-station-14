@@ -1,7 +1,9 @@
 using Content.Server.Chat.Systems;
+using Content.Server.Popups;
 using Content.Shared.Clothing.ActionEvent;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.Popups;
 using JetBrains.FormatRipper.Elf;
 
 namespace Content.Server.Clothing.Systems;
@@ -9,6 +11,7 @@ namespace Content.Server.Clothing.Systems;
 public sealed class HailerSystem : SharedHailerSystem
 {
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -20,7 +23,7 @@ public sealed class HailerSystem : SharedHailerSystem
 
         //Put the exclamations mark around people at the distance specified in the comp side
         //Just like a whistle
-        //bool exclamationHandled = base.ExclamateHumanoidsAround(ent);
+        ExclamateHumanoidsAround(ent);
 
         //Make a chat line with the sec hailer as speaker, in bold and UPPERCASE for added impact
         string sentence = Loc.GetString(localeText + "-" + index);
@@ -34,5 +37,18 @@ public sealed class HailerSystem : SharedHailerSystem
                                     checkRadioPrefix: false,
                                     ignoreActionBlocker: true,
                                     skipTransform: true);
+    }
+
+    protected override void IncreaseAggressionLevel(Entity<HailerComponent> ent)
+    {
+        //Up the aggression level or reset it
+        do
+        {
+            ent.Comp.HailLevelIndex++;
+            if (ent.Comp.HailLevelIndex >= ent.Comp.HailLevels.Count)
+                ent.Comp.HailLevelIndex = 0;
+        } while (!ent.Comp.CurrentHailLevel.Cyclable);
+
+        _popup.PopupEntity(Loc.GetString("sechail-gas-mask-screwed", ("level", ent.Comp.CurrentHailLevel.Name.ToLower())), ent.Owner);
     }
 }

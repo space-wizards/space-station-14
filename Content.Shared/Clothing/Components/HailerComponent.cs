@@ -32,6 +32,12 @@ public sealed partial class HailerComponent : Component
     public bool CanCutWires = true;
 
     /// <summary>
+    /// Locale for the description when examined
+    /// </summary>
+    [DataField]
+    public string DescriptionLocale;
+
+    /// <summary>
     /// Range value for the exclamation effect on humanoids
     /// </summary>
     [DataField]
@@ -120,6 +126,9 @@ public sealed partial class HailerComponent : Component
 
     [DataField]
     public List<HailOrder> Orders = [];
+
+    public HailLevel CurrentHailLevel => HailLevels[HailLevelIndex];
+
 }
 
 [Serializable, NetSerializable]

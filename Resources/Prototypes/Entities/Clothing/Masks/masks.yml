@@ -85,6 +85,7 @@
         state: explosive
     chatName: "Security Hailer"
     distance: 5
+    descriptionLocale: sechail-gas-mask-examined
   - type: AccessReader
     access: [["Security"]]
     loggingDisabled: true
