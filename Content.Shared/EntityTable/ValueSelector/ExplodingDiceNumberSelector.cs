@@ -18,7 +18,7 @@ public sealed partial class ExplodingDiceNumberSelector : NumberSelector
     /// Whether our die includes a zero value.
     /// </summary>
     /// <remarks>
-    /// Look, I know. but the standrad formula for exploding dice is meant for tabeltop games where a value of zero does not exist.
+    /// Look, I know. but the standard formula for exploding dice is meant for tabeltop games where a value of zero does not exist.
     /// However, exploding dice with no zero is a very spikey distribution because you can never get a value of exacly a multiple of DieSize.
     /// Including zero is better for this reason, but is not *strictly expected*
     /// </remarks>
@@ -38,7 +38,7 @@ public sealed partial class ExplodingDiceNumberSelector : NumberSelector
         if (DieSize <= lowerBound)
         {
             var log = IoCManager.Resolve<ISawmill>(); //cursed I hate it.
-            log.Warning($"ExplodingDiceNumberSelector was attempted with a die of size <= {lowerBound}. Attmpted die size: {DieSize}");
+            log.Warning($"ExplodingDiceNumberSelector was attempted with a die of size <= {lowerBound}. Attempted die size: {DieSize}");
             return 1;
         }
 
