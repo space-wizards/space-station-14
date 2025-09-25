@@ -1,4 +1,5 @@
 using Content.Shared.Changeling.Systems;
+using Content.Shared.Clothing;
 using Content.Shared.Clothing.ActionEvent;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
@@ -15,9 +16,9 @@ public sealed class HailerSystem : SharedHailerSystem
         base.Initialize();
 
         SubscribeLocalEvent<HailerComponent, SecHailerActionEvent>(OnHailAction);
+        SubscribeLocalEvent<HailerComponent, ItemMaskToggledEvent>(OnMaskToggle);
     }
 
-    #region Testing
     private void OnHailAction(Entity<HailerComponent> ent, ref SecHailerActionEvent ev)
     {
         if (ev.Handled)
@@ -30,11 +31,16 @@ public sealed class HailerSystem : SharedHailerSystem
         else if (TryComp<MaskComponent>(ent, out var mask))
         {
 
-            if (!mask.IsToggled && ent.Comp.CurrentState == SecMaskState.Functional)
+            if (!mask.IsToggled && !ent.Comp.AreWiresCut)
             {
                 _ui.TryOpenUi(ent.Owner, HailerUiKey.Key, ev.Performer, predicted: true);
             }
         }
     }
-    #endregion
+
+    private void OnMaskToggle(Entity<HailerComponent> ent, ref ItemMaskToggledEvent args)
+    {
+        if (TryComp<MaskComponent>(ent, out var mask) && mask.IsToggled)
+            _ui.CloseUi(ent.Owner, HailerUiKey.Key);
+    }
 }

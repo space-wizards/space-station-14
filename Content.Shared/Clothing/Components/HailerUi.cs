@@ -14,9 +14,9 @@ public enum HailerUiKey : byte
 [Serializable, NetSerializable]
 public sealed class HailerOrderMessage : BoundUserInterfaceMessage
 {
-    public readonly uint Index;
+    public readonly int Index;
 
-    public HailerOrderMessage(uint index)
+    public HailerOrderMessage(int index)
     {
         Index = index;
     }

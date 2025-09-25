@@ -4,6 +4,8 @@ using Content.Shared.Clothing.ActionEvent;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.Event;
 using Content.Shared.Coordinates;
+using Content.Shared.Disposal;
+using Content.Shared.Disposal.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
@@ -46,33 +48,50 @@ public abstract class SharedHailerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HailerComponent, ItemMaskToggledEvent>(OnMaskToggle);
         //SubscribeLocalEvent<HailerComponent, ExaminedEvent>(OnExamine);
         //SubscribeLocalEvent<HailerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
         //SubscribeLocalEvent<HailerComponent, GotEmaggedEvent>(OnEmagging);
         //SubscribeLocalEvent<HailerComponent, InteractUsingEvent>(OnInteractUsing);
-        //SubscribeLocalEvent<HailerComponent, MapInitEvent>(OnMapInit);
         //SubscribeLocalEvent<HailerComponent, SecHailerToolDoAfterEvent>(OnToolDoAfter);
         //SubscribeLocalEvent<HailerComponent, ToggleMaskEvent>(OnToggleMask);
+
+        SubscribeLocalEvent<HailerComponent, HailerOrderMessage>(OnHailOrder);
     }
 
-    private void OnMaskToggle(Entity<HailerComponent> ent, ref ItemMaskToggledEvent args)
+    private void OnHailOrder(EntityUid uid, HailerComponent comp, HailerOrderMessage args)
     {
-        if (TryComp<MaskComponent>(ent, out var mask) && mask.IsToggled)
-            _ui.CloseUi(ent.Owner, HailerUiKey.Key);
+        Entity<HailerComponent> ent = (uid, comp);
+        string soundCollection;
+        string localeText;
+
+        var orderUsed = comp.Orders[args.Index];
+        var hailLevel = comp.HailLevels[comp.HailLevelIndex].Name;
+        soundCollection = orderUsed.SoundCollection + "-" + hailLevel;
+        localeText = orderUsed.LocalePrefix + "-" + hailLevel;
+
+        //Play voice etc...
+        var index = PlayVoiceLineSound(ent, soundCollection);
+        SubmitChatMessage(ent, localeText, index);
     }
 
-    ////In case someone spawns with it ?
-    //private void OnMapInit(Entity<HailerComponent> ent, ref MapInitEvent args)
-    //{
-    //    var (uid, comp) = ent;
 
-    //    if (comp.CurrentState == SecMaskState.Functional)
-    //        _actions.AddAction(uid, ref comp.ActionEntity, comp.Action);
+    private int PlayVoiceLineSound(Entity<HailerComponent> ent, string soundCollection)
+    {
+        var specifier = new SoundCollectionSpecifier(soundCollection);
+        var resolver = _sharedAudio.ResolveSound(specifier);
+        if (resolver is ResolvedCollectionSpecifier collectionResolver)
+        {
+            _sharedAudio.PlayPvs(resolver, ent.Owner, audioParams: new AudioParams().WithVolume(-3f));
+            return collectionResolver.Index;
+        }
+        else
+            return 0;
+    }
 
-    //    ent.Comp.ChatName ??= Loc.GetString("sec-hailer-default-chat-name");
-    //    Dirty(uid, comp);
-    //}
+    protected virtual void SubmitChatMessage(Entity<HailerComponent> ent, string localeText, int index)
+    {
+
+    }
 
     ///// <summary>
     ///// Put an exclamation mark around humanoid standing at the distance specified in the component.
@@ -270,25 +289,6 @@ public abstract class SharedHailerSystem : EntitySystem
     //        args.PushMarkup(Loc.GetString($"sec-gas-mask-examined", ("level", ent.Comp.AggresionLevel)));
     //}
 
-    //private void OnToggleMask(Entity<HailerComponent> ent, ref ToggleMaskEvent args)
-    //{
-    //    if (args.Handled)
-    //        return;
-
-    //    if (TryComp(ent.Owner, out MaskComponent? mask)
-    //        && mask != null
-    //        && ent.Comp.User.HasValue)
-    //    {
-    //        if (mask.IsToggled)
-    //            _actions.RemoveAction(ent.Comp.User.Value, ent.Comp.ActionEntity);
-    //        else if (ent.Comp.CurrentState == SecMaskState.Functional && ent.Comp.User.HasValue)
-    //        {
-    //            _actions.AddAction(ent.Comp.User.Value, ref ent.Comp.ActionEntity, ent.Comp.Action, ent.Owner);
-    //        }
-    //        Dirty(ent);
-    //    }
-    //}
-
     //private void OnGetVerbs(Entity<HailerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     //{
     //    //Cooldown to prevent spamming
@@ -356,7 +356,7 @@ public abstract class SharedHailerSystem : EntitySystem
     //            _ => comp.LowAggressionSounds,
     //        };
     //    }
-
+    //    = new SoundCollectionSpecifier("Screwdriver");
     //    var resolver = _sharedAudio.ResolveSound(currentSpecifier);
     //    if (resolver is not ResolvedCollectionSpecifier collectionResolver)
     //        return -1;

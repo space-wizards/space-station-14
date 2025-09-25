@@ -17,13 +17,19 @@ public sealed partial class HailerComponent : Component
     /// <summary>
     /// The person wearing the mask
     /// </summary>
-    public EntityUid? User = null;
+    public EntityUid? User;
 
     /// <summary>
-    /// State of the sec mask to check if it can hail
+    /// Can the wires of the hailer be cut ?
     /// </summary>
     [DataField, AutoNetworkedField]
-    public SecMaskState CurrentState = SecMaskState.Functional;
+    public bool AreWiresCut = false;
+
+    /// <summary>
+    /// Can the wires be cut ?
+    /// </summary>
+    [DataField]
+    public bool CanCutWires = true;
 
     /// <summary>
     /// Range value for the exclamation effect on humanoids
@@ -35,7 +41,7 @@ public sealed partial class HailerComponent : Component
     /// The name displayed as the speaker when hailing orders
     /// </summary>
     [DataField]
-    public string? ChatName;
+    public string ChatName;
 
     /// <summary>
     /// Delay when the hailer is screwed to change aggression level
@@ -104,7 +110,7 @@ public sealed partial class HailerComponent : Component
     public EntProtoId ExclamationEffect = "WhistleExclamation";
 
     [DataField]
-    public List<HailLevel> HailLevels = new();
+    public List<HailLevel> HailLevels = [];
 
     /// <summary>
     /// Index for HailsLevels
@@ -113,20 +119,13 @@ public sealed partial class HailerComponent : Component
     public int HailLevelIndex;
 
     [DataField]
-    public List<HailOrder> Orders = new();
+    public List<HailOrder> Orders = [];
 }
 
 [Serializable, NetSerializable]
 public enum SecMaskVisuals : byte
 {
     State
-}
-
-[Serializable, NetSerializable]
-public enum SecMaskState : byte
-{
-    Functional,
-    WiresCut
 }
 
 /// <summary>

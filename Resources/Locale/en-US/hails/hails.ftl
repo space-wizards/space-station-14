@@ -1,57 +1,57 @@
 # Low aggro
 
-# hail-low-0 = You are in violation of Nanotrasen's laws!!
-# hail-low-1 = Game over, criminal!!
-# hail-low-2 = Attention, citizen!!
-# hail-low-3 = You're coming with me!!
-# hail-low-4 = Compliance is in your best interests!!
-# hail-low-5 = FREEZE! SECURITY!!
-# hail-low-6 = HALT! HALT! HALT!!
-# hail-low-7 = Stop in the name of the law!!
-# hail-low-8 = Resistance is futile!!
-# hail-low-9 = Running will only increase your sentence!!
-# hail-low-10 = Prepare for justice!!
+# hailsec-low-0 = You are in violation of Nanotrasen's laws!!
+# hailsec-low-1 = Game over, criminal!!
+# hailsec-low-2 = Attention, citizen!!
+# hailsec-low-3 = You're coming with me!!
+# hailsec-low-4 = Compliance is in your best interests!!
+# hailsec-low-5 = FREEZE! SECURITY!!
+# hailsec-low-6 = HALT! HALT! HALT!!
+# hailsec-low-7 = Stop in the name of the law!!
+# hailsec-low-8 = Resistance is futile!!
+# hailsec-low-9 = Running will only increase your sentence!!
+# hailsec-low-10 = Prepare for justice!!
 
 # Medium aggro
 
-# hail-medium-0 = Stop breaking the law asshole!!
-# hail-medium-1 = My batong is itching!!
-# hail-medium-2 = Respect my authoritah!!
-# hail-medium-3 = Comply or I'll bash you!!
-# hail-medium-4 = I AM THE SPACE LAW!!
-# hail-medium-5 = Go ahead, make my day!!
-# hail-medium-6 = Do you feel lucky punk ?!!
-# hail-medium-7 = This is your last chance, get on your knees!!
-# hail-medium-8 = You just brought a toolbox to a gunfight!!
-# hail-medium-9 = Stop right there criminal scum!!
-# hail-medium-10 = Down on the floor, scumbag!!
+# hailsec-medium-0 = Stop breaking the law asshole!!
+# hailsec-medium-1 = My batong is itching!!
+# hailsec-medium-2 = Respect my authoritah!!
+# hailsec-medium-3 = Comply or I'll bash you!!
+# hailsec-medium-4 = I AM THE SPACE LAW!!
+# hailsec-medium-5 = Go ahead, make my day!!
+# hailsec-medium-6 = Do you feel lucky punk ?!!
+# hailsec-medium-7 = This is your last chance, get on your knees!!
+# hailsec-medium-8 = You just brought a toolbox to a gunfight!!
+# hailsec-medium-9 = Stop right there criminal scum!!
+# hailsec-medium-10 = Down on the floor, scumbag!!
 
 # High aggro
 
-# hail-high-0 = Go on, mald about it!!
-# hail-high-1 = You have the right to shut the fuck up!!
-# hail-high-2 = You think you're bad ? I've buried guys like you!!
-# hail-high-3 = Drop the weapon or I drop you!!
-# hail-high-4 = Stop hitting yourself! Stop hitting yourself!!
-# hail-high-5 = Tell it to the HOS... if you make it that far!!
-# hail-high-6 = Judge, jury, executioner!!
-# hail-high-7 = You have the right to get beat down!!
-# hail-high-8 = The safeword is "police brutality"!!
-# hail-high-9 = Let me show you shitsec!!
-# hail-high-10 = Dead or alive, you're coming with me!!
+# hailsec-high-0 = Go on, mald about it!!
+# hailsec-high-1 = You have the right to shut the fuck up!!
+# hailsec-high-2 = You think you're bad ? I've buried guys like you!!
+# hailsec-high-3 = Drop the weapon or I drop you!!
+# hailsec-high-4 = Stop hitting yourself! Stop hitting yourself!!
+# hailsec-high-5 = Tell it to the HOS... if you make it that far!!
+# hailsec-high-6 = Judge, jury, executioner!!
+# hailsec-high-7 = You have the right to get beat down!!
+# hailsec-high-8 = The safeword is "police brutality"!!
+# hailsec-high-9 = Let me show you shitsec!!
+# hailsec-high-10 = Dead or alive, you're coming with me!!
 
 # ERT
 
-# hail-ERT-0 = By central command's authority, you are to comply!!
-# hail-ERT-1 = Dangerous element sighted!!
-# hail-ERT-2 = Don't mess with us, dimwit!!
-# hail-ERT-3 = Your compliance is mandatory!!
-# hail-ERT-4 = You shall obey or you shall die!!
-# hail-ERT-5 = Now you've really fucked up!!
+# hailsec-ERT-0 = By central command's authority, you are to comply!!
+# hailsec-ERT-1 = Dangerous element sighted!!
+# hailsec-ERT-2 = Don't mess with us, dimwit!!
+# hailsec-ERT-3 = Your compliance is mandatory!!
+# hailsec-ERT-4 = You shall obey or you shall die!!
+# hailsec-ERT-5 = Now you've really fucked up!!
 
 # Special cases
 
-# hail-high-HOS = Tell it to centcom... if you make it that far!!
+# hailsec-high-HOS = Tell it to centcom... if you make it that far!!
 
 
 
@@ -102,34 +102,34 @@ sec-hailer-default-chat-name = Security hailer
 ## VOICE LINES 	##
 
 ##  ATTENTION ! ##
-hail-attention-low-1 = Attention, citizen!!
-hail-attention-med-1 = FREEZE! SECURITY!!
-hail-attention-high-1 = Prepare for justice!!
+hailsec-attention-low-0 = Attention, citizen!!
+hailsec-attention-med-0 = FREEZE! SECURITY!!
+hailsec-attention-high-0 = Prepare for justice!!
 
 ##  ONE LINERS ##
-hail-oneliner-low-1 = My batong is itching!!
-hail-oneliner-med-1 = Drop the weapon or I drop you!!
-hail-oneliner-high-1 = The safeword is "police brutality"!!
+hailsec-oneliner-low-0 = My batong is itching!!
+hailsec-oneliner-med-0 = Drop the weapon or I drop you!!
+hailsec-oneliner-high-0 = The safeword is "police brutality"!!
 
 ##  COMPLIANCE ##
-hail-compliance-low-1 = Compliance is in your best interests!!
-hail-compliance-med-1 = Respect my authoritah!!
-hail-compliance-high-1 = You have the right to get beat down!!
+hailsec-compliance-low-0 = Compliance is in your best interests!!
+hailsec-compliance-med-0 = Respect my authoritah!!
+hailsec-compliance-high-0 = You have the right to get beat down!!
 
 ##  AGGRESSION ##
-hail-aggression-low-1 = Running will only increase your sentence!!
-hail-aggression-med-1 = Down on the floor, scumbag!!
-hail-aggression-high-1 = Go on, mald about it!!
+hailsec-aggression-low-0 = Running will only increase your sentence!!
+hailsec-aggression-med-0 = Down on the floor, scumbag!!
+hailsec-aggression-high-0 = Go on, mald about it!!
 
 ##  EMAG ##
-hail-emag-0 = Glory to cybersun!!
-hail-emag-1 = Pick up that can!!
-hail-emag-2 = DEATH DEATH DEATH!!
-hail-emag-3 = You have the right to remain silent... forever!!
-hail-emag-4 = You're a disease... and I'm the cure!!
-hail-emag-5 = Death to the tide!!
-hail-emag-6 = Ever wondered why my uniform is red ?!!
-hail-emag-7 = Viva la revolution!!
-hail-emag-8 = Whiskey. Echo. Whiskey!!
-hail-emag-9 = Mrrow. Meow. Mrrrp!!
-hail-emag-10 = FUCKYOUFUCKYOUFUCKYOUFUCKYOUFUCKYOUFUCKYOUFU-!!
+hailsec-emag-0 = Glory to cybersun!!
+hailsec-emag-1 = Pick up that can!!
+hailsec-emag-2 = DEATH DEATH DEATH!!
+hailsec-emag-3 = You have the right to remain silent... forever!!
+hailsec-emag-4 = You're a disease... and I'm the cure!!
+hailsec-emag-5 = Death to the tide!!
+hailsec-emag-6 = Ever wondered why my uniform is red ?!!
+hailsec-emag-7 = Viva la revolution!!
+hailsec-emag-8 = Whiskey. Echo. Whiskey!!
+hailsec-emag-9 = Mrrow. Meow. Mrrrp!!
+hailsec-emag-10 = FUCKYOUFUCKYOUFUCKYOUFUCKYOUFUCKYOUFUCKYOUFU-!!

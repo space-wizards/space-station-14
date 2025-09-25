@@ -13,7 +13,7 @@ namespace Content.Client.Clothing.UI;
 [GenerateTypedNameReferences]
 public sealed partial class HailerRadialMenu : RadialMenu
 {
-    public event Action<uint>? OnLinePicked;
+    public event Action<int>? OnOrderPicked;
 
     public HailerRadialMenu(EntityUid owner, IEntityManager entMan, IPlayerManager playerMan, SharedHailerSystem hailer, SpriteSystem sprite)
     {
@@ -47,8 +47,8 @@ public sealed partial class HailerRadialMenu : RadialMenu
 
                 button.AddChild(tex);
             }
-            var index = (uint)i;
-            button.OnButtonUp += _ => OnLinePicked?.Invoke(index);
+            var orderIndex = i;
+            button.OnButtonUp += _ => OnOrderPicked?.Invoke(orderIndex);
 
             Container.AddChild(button);
         }

@@ -29,7 +29,7 @@ public sealed class HailerBoundUserInterface : BoundUserInterface
         {
             _menu = new(Owner, EntMan, _player, _hailer, _sprite);
 
-            _menu.OnLinePicked += index =>
+            _menu.OnOrderPicked += index =>
             {
                 SendPredictedMessage(new HailerOrderMessage(index));
                 Close();
