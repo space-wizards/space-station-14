@@ -12,6 +12,8 @@ using Content.Shared.StationRecords;
 using Content.Shared._CD.Records;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Localization;
+using Content.Shared.Preferences; // Loc.TryGetString
 
 namespace Content.Server._CD.Records;
 
@@ -24,10 +26,15 @@ public sealed class CharacterRecordsSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly StationRecordsSystem _records = default!;
 
+    /// <summary>
+    /// Used when no usable species information is available.
+    /// Prefer a stable constant over an empty string to keep UIs predictable.
+    /// </summary>
+    private const string UnknownSpeciesDisplay = "Unknown";
+
     public override void Initialize()
     {
         base.Initialize();
-
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawn, after: new[] { typeof(StationRecordsSystem) });
     }
 
@@ -35,16 +42,22 @@ public sealed class CharacterRecordsSystem : EntitySystem
     {
         if (!HasComp<StationRecordsComponent>(args.Station))
         {
-            Log.Error("Tried to add CharacterRecords on a station without StationRecords");
+            Log.Error("Tried to add CharacterRecords on a station without StationRecords.");
             return;
         }
 
         if (!HasComp<CharacterRecordsComponent>(args.Station))
             AddComp<CharacterRecordsComponent>(args.Station);
 
+        if (args.Profile is null)
+        {
+            Log.Error($"Null Profile in CharacterRecordsSystem::OnPlayerSpawn for player {args.Player?.Name ?? "<unknown>"}.");
+            return;
+        }
+
         if (string.IsNullOrEmpty(args.JobId))
         {
-            Log.Error($"Null JobId in CharacterRecordsSystem::OnPlayerSpawn for character {args.Profile.Name} played by {args.Player.Name}");
+            Log.Error($"Null/Empty JobId in CharacterRecordsSystem::OnPlayerSpawn for character {args.Profile.Name} played by {args.Player.Name}.");
             return;
         }
 
@@ -52,7 +65,8 @@ public sealed class CharacterRecordsSystem : EntitySystem
             return;
 
         var profile = args.Profile;
-        // Use the player's saved records when available, otherwise seed with the default template.
+
+        // Use the player's saved records when available; otherwise seed with the default template.
         var profileRecords = profile.CDCharacterRecords ?? PlayerProvidedCharacterRecords.DefaultRecords();
 
         if (!_prototype.TryIndex(args.JobId, out JobPrototype? jobPrototype))
@@ -67,6 +81,7 @@ public sealed class CharacterRecordsSystem : EntitySystem
         TryComp<DnaComponent>(player, out var dnaComponent);
 
         var jobTitle = jobPrototype.LocalizedName;
+
         // Cross-reference the station data so we can keep the runtime record in sync.
         var stationRecordsKey = FindStationRecordsKey(player);
 
@@ -76,26 +91,10 @@ public sealed class CharacterRecordsSystem : EntitySystem
             jobTitle = stationRecord.JobTitle;
         }
 
-        // Resolve a human readable species name so consoles stay legible even when the
-        // profile only stores a prototype id. This mirrors Cosmatic Drift's behaviour
-        // while also supporting custom species names defined in preferences.
-        var speciesName = profile.CustomSpecieName;
-        if (string.IsNullOrWhiteSpace(speciesName))
-        {
-            if (_prototype.TryIndex<SpeciesPrototype>(profile.Species, out var species))
-            {
-                // Species prototypes store their display name as a localization key, so attempt to
-                // resolve it. If we fail to find a localized string fall back to the raw prototype
-                // value to avoid crashing the server, matching the behaviour on Cosmatic Drift.
-                speciesName = Loc.TryGetString(species.Name, out var localized)
-                    ? localized
-                    : species.Name;
-            }
-            else
-            {
-                speciesName = profile.Species;
-            }
-        }
+        // Resolve a readable species display name:
+        // - If a custom species name is set and differs from the base, show "Custom (Base)".
+        // - Otherwise show only the base display (localized if possible).
+        var speciesName = GetReadableSpeciesName(profile);
 
         // Build the composite record that consoles consume, mixing profile data with live round metadata.
         var records = new FullCharacterRecords(
@@ -115,12 +114,60 @@ public sealed class CharacterRecordsSystem : EntitySystem
         AddRecord(args.Station, player, records);
     }
 
+    /// <summary>
+    /// Resolves a localized, human-readable base species display name.
+    /// Fallback order:
+    /// - Localization of prototype display name (proto.Name as loc key)
+    /// - Raw prototype display name (proto.Name)
+    /// - Raw prototype ID (speciesId)
+    /// - Constant "Unknown" if everything else is empty
+    /// </summary>
+    private string ResolveBaseSpeciesDisplayName(string? speciesId)
+    {
+        if (string.IsNullOrWhiteSpace(speciesId))
+            return UnknownSpeciesDisplay;
+
+        if (_prototype.TryIndex<SpeciesPrototype>(speciesId, out var proto))
+        {
+            // proto.Name is typically a localization key
+            if (Loc.TryGetString(proto.Name, out var localized) && !string.IsNullOrWhiteSpace(localized))
+                return localized;
+
+            if (!string.IsNullOrWhiteSpace(proto.Name))
+                return proto.Name;
+        }
+
+        // Fallback to the raw prototype ID, or "Unknown" if even that is unusable.
+        return !string.IsNullOrWhiteSpace(speciesId) ? speciesId : UnknownSpeciesDisplay;
+    }
+
+    /// <summary>
+    /// Returns "Custom (Base)" when a differing custom name exists; otherwise only the base display.
+    /// Robust against null/whitespace and avoids duplicates like "X (X)".
+    /// </summary>
+    private string GetReadableSpeciesName(HumanoidCharacterProfile profile)
+    {
+        var baseDisplay = ResolveBaseSpeciesDisplayName(profile?.Species);
+        var custom = profile?.CustomSpecieName;
+
+        if (!string.IsNullOrWhiteSpace(custom))
+        {
+            // Avoid duplication (case-insensitive compare); trim to avoid cosmetic whitespace issues.
+            var customTrimmed = custom.Trim();
+            if (!customTrimmed.Equals(baseDisplay, StringComparison.OrdinalIgnoreCase))
+                return $"{customTrimmed} ({baseDisplay})";
+        }
+
+        return baseDisplay;
+    }
+
     private StationRecordKey? FindStationRecordsKey(EntityUid uid)
     {
         if (!_inventory.TryGetSlotEntity(uid, "id", out var idUid))
             return null;
 
         var keyStorageEntity = idUid;
+
         // Many ID cards live inside PDAs; follow the chain to the actual card that stores the key.
         if (TryComp<PdaComponent>(idUid, out var pda) && pda.ContainedId is { } id)
             keyStorageEntity = id;
@@ -180,6 +227,9 @@ public sealed class CharacterRecordsSystem : EntitySystem
                 if (index >= 0 && index < playerRecords.AdminEntries.Count)
                     playerRecords.AdminEntries.RemoveAt(index);
                 break;
+            default:
+                // Unknown type: no-op by design (defensive behavior).
+                break;
         }
 
         RaiseLocalEvent(station, new CharacterRecordsModifiedEvent());
@@ -199,6 +249,7 @@ public sealed class CharacterRecordsSystem : EntitySystem
 
         // Replace the player-authored information with a clean template.
         var records = PlayerProvidedCharacterRecords.DefaultRecords();
+
         if (TryComp(player, out MetaDataComponent? meta))
             value.Name = meta.EntityName;
 
@@ -216,14 +267,14 @@ public sealed class CharacterRecordsSystem : EntitySystem
         if (!Resolve(station, ref records))
             return;
 
-        // Remove the entire record entry for this player, e.g. when the entity is deleted mid-round.
+        // Remove the entire record entry for this player, e.g., when the entity is deleted mid-round.
         records.Records.Remove(key.Key.Index);
         RaiseLocalEvent(station, new CharacterRecordsModifiedEvent());
     }
 
     public IDictionary<uint, FullCharacterRecords> QueryRecords(EntityUid station, CharacterRecordsComponent? recordsDb = null)
     {
-        // Give callers a safe empty map when the station lacks runtime record state.
+        // Provide a safe empty map when the station lacks runtime record state.
         return !Resolve(station, ref recordsDb)
             ? new Dictionary<uint, FullCharacterRecords>()
             : recordsDb.Records;
