@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Industrial advanced welders may be found in welding supplies lockers.
-    type: Tweak
-  id: 8491
-  time: '2025-05-15T03:55:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36977
 - author: BlitzTheSquishy
   changes:
   - message: You're no longer allowed to fire the Hristov or Mosin one handed anymore.
@@ -3955,3 +3948,12 @@
   id: 9001
   time: '2025-09-24T23:13:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35294
+- author: SignalSender
+  changes:
+  - message: 'Added new purchasable crate: "random instrument collection" a crate
+      containing 7 random instruments, each of different variety, with the chance
+      for rare instruments'
+    type: Add
+  id: 9002
+  time: '2025-09-25T19:55:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40532
