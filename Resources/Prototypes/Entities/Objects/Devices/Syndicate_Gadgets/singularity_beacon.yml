@@ -10,6 +10,10 @@
     - state: icon
   - type: Item
     size: Huge
+  - type: MultiHandedItem #huge device
+  - type: HeldSpeedModifier
+    walkModifier: 0.75
+    sprintModifier: 0.75
   - type: Fixtures
     fixtures:
       fix1:
@@ -36,4 +40,4 @@
   - type: ApcPowerReceiver
     powerLoad: 15000
   - type: StaticPrice
-    price: 1500
+    price: 7500

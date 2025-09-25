@@ -16,20 +16,26 @@
     maxDifficulty: 2.5
   - type: AntagSelection
     agentName: thief-round-end-agent-name
+    selectionTime: IntraPlayerSpawn
     definitions:
     - prefRoles: [ Thief ]
       max: 3
-      playerRatio: 15
+      playerRatio: 20
       lateJoinAdditional: true
       allowNonHumans: true
       multiAntagSetting: NotExclusive
       startingGear: ThiefGear
       components:
       - type: Pacified
+      - type: Thieving
+        stripTimeReduction: 2
+        stealthy: true
       mindRoles:
       - MindRoleThief
       briefing:
         sound: "/Audio/Misc/thief_greeting.ogg"
+  - type: DynamicRuleCost
+    cost: 75
 
 # Needs testing
 - type: entity
@@ -59,7 +65,8 @@
         - Wizard
       - type: RandomMetadata
         nameSegments:
-        - names_wizard_first
-        - names_wizard_last
+        - NamesWizardFirst
+        - NamesWizardLast
+        nameFormat: name-format-wizard
       mindRoles:
       - MindRoleWizard

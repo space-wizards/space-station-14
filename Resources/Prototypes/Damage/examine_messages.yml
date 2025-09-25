@@ -1,9 +1,5 @@
-﻿- type: examinableDamage
+﻿- type: localizedDataset
   id: WindowMessages
-  messages:
-    - comp-window-damaged-1
-    - comp-window-damaged-2
-    - comp-window-damaged-3
-    - comp-window-damaged-4
-    - comp-window-damaged-5
-    - comp-window-damaged-6
+  values:
+    prefix: comp-window-damaged-
+    count: 6

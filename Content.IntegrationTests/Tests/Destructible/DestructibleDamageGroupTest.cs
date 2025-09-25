@@ -54,8 +54,8 @@ namespace Content.IntegrationTests.Tests.Destructible
 
             await server.WaitAssertion(() =>
             {
-                var bruteDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>("TestBrute");
-                var burnDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>("TestBurn");
+                var bruteDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>(TestBruteDamageGroupId);
+                var burnDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>(TestBurnDamageGroupId);
 
                 DamageSpecifier bruteDamage = new(bruteDamageGroup, FixedPoint2.New(5));
                 DamageSpecifier burnDamage = new(burnDamageGroup, FixedPoint2.New(5));

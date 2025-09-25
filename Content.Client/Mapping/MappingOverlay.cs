@@ -11,9 +11,13 @@ namespace Content.Client.Mapping;
 
 public sealed class MappingOverlay : Overlay
 {
+    private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
+
     [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
+
+    private readonly SpriteSystem _sprite;
 
     // 1 off in case something else uses these colors since we use them to compare
     private static readonly Color PickColor = new(1, 255, 0);
@@ -30,8 +34,10 @@ public sealed class MappingOverlay : Overlay
     {
         IoCManager.InjectDependencies(this);
 
+        _sprite = _entities.System<SpriteSystem>();
+
         _state = state;
-        _shader = _prototypes.Index<ShaderPrototype>("unshaded").Instance();
+        _shader = _prototypes.Index(UnshadedShader).Instance();
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -42,7 +48,7 @@ public sealed class MappingOverlay : Overlay
                 continue;
 
             if (sprite.Color == DeleteColor || sprite.Color == PickColor)
-                sprite.Color = color;
+                _sprite.SetColor((id, sprite), color);
         }
 
         _oldColors.Clear();
@@ -61,7 +67,7 @@ public sealed class MappingOverlay : Overlay
                     _entities.TryGetComponent(entity, out SpriteComponent? sprite))
                 {
                     _oldColors[entity] = sprite.Color;
-                    sprite.Color = PickColor;
+                    _sprite.SetColor((entity, sprite), PickColor);
                 }
 
                 break;
@@ -72,7 +78,7 @@ public sealed class MappingOverlay : Overlay
                     _entities.TryGetComponent(entity, out SpriteComponent? sprite))
                 {
                     _oldColors[entity] = sprite.Color;
-                    sprite.Color = DeleteColor;
+                    _sprite.SetColor((entity, sprite), DeleteColor);
                 }
 
                 break;

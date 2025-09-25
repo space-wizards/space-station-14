@@ -34,7 +34,7 @@
 - type: entity
   parent: AmmoProviderShotgunShell
   id: BoxBeanbag
-  name: shell box (beanbag)
+  name: ammunition box (.50 beanbag)
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunBeanbag
@@ -51,7 +51,7 @@
       - state: beanbag
 
 - type: entity
-  name: shell box (lethal)
+  name: ammunition box (.50 pellet)
   parent: AmmoProviderShotgunShell
   id: BoxLethalshot
   components:
@@ -66,7 +66,7 @@
       - state: lethal
 
 - type: entity
-  name: shell box (slug)
+  name: ammunition box (.50 slug)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunSlug
   components:
@@ -85,7 +85,7 @@
       - state: slug
 
 - type: entity
-  name: shell box (flare)
+  name: ammunition box (.50 flare)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunFlare
   components:
@@ -104,7 +104,7 @@
       - state: flare
 
 - type: entity
-  name: shell box (incendiary)
+  name: ammunition box (.50 incendiary)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunIncendiary
   components:
@@ -123,7 +123,7 @@
       - state: incendiary
 
 - type: entity
-  name: shell box (uranium)
+  name: ammunition box (.50 uranium)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunUranium
   components:
@@ -142,7 +142,7 @@
       - state: uranium
 
 - type: entity
-  name: shell box (practice)
+  name: ammunition box (.50 practice)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunPractice
   components:
@@ -161,7 +161,7 @@
       - state: practice
 
 - type: entity
-  name: shell box (tranquilizer)
+  name: ammunition box (.50 tranquilizer)
   parent: AmmoProviderShotgunShell
   id: BoxShellTranquilizer
   components:

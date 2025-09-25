@@ -1,8 +1,9 @@
 - type: entity
-  id: CargoPallet
+  id: BaseCargoPallet
+  parent: BaseStructure
   name: cargo pallet
   description: Common fixture of logistics and cargo. Subtle reminder where crates go during transport to avoid bruised shins.
-  parent: BaseStructure
+  abstract: true
   components:
   - type: InteractionOutline
   - type: Anchorable
@@ -19,7 +20,7 @@
           bounds: "-0.45,-0.45,0.45,0.45"
         density: 15
         mask:
-          - MachineMask
+        - MachineMask
   - type: StaticPrice
     price: 100
   - type: Sprite
@@ -27,42 +28,46 @@
     layers:
     - sprite: Structures/catwalk.rsi
       state: catwalk_preview
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: Metallic
-  - type: Destructible
-    thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 500
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 200
-        behaviors:
-          - !type:SpawnEntitiesBehavior
-            spawn:
-              PartRodMetal: # takes two to construct, so drop less than that
-                min: 0
-                max: 1
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
   - type: GuideHelp
     guides:
     - Cargo
 
 - type: entity
+  id: CargoPallet
+  parent: BaseCargoPallet
+  components:
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PartRodMetal: # takes two to construct, so drop less than that
+            min: 0
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
   id: CargoPalletSell
   name: cargo selling pallet
-  description: Designates valid items to sell.
-  parent: CargoPallet
+  description: Designates valid items to sell. Made of plastitanium to discourage pesky vandals.
+  parent: BaseCargoPallet
   components:
   - type: CargoPallet
     palletType: sell
   - type: Sprite
-    drawdepth: FloorTiles
     sprite: Structures/cargo_pallets.rsi
   - type: Icon
     sprite: Structures/cargo_pallets.rsi
@@ -74,13 +79,12 @@
 - type: entity
   id: CargoPalletBuy
   name: cargo buying pallet
-  description: Designates where orders will appear when purchased.
-  parent: CargoPallet
+  description: Designates where orders will appear when purchased. Made of plastitanium to discourage pesky vandals.
+  parent: BaseCargoPallet
   components:
   - type: CargoPallet
     palletType: buy
   - type: Sprite
-    drawdepth: FloorTiles
     sprite: Structures/cargo_pallets.rsi
   - type: Icon
     sprite: Structures/cargo_pallets.rsi

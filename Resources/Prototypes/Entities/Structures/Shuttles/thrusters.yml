@@ -46,7 +46,7 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 100  # Considering we need a lot of thrusters didn't want to make an individual one too tanky
+          damage: 300  # Changed 100->300 because impact damage is real
         behaviors:
           - !type:DoActsBehavior
             acts: ["Destruction"]
@@ -72,13 +72,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
+        damage: 600
       behaviors:
         - !type:DoActsBehavior
           acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 300
       behaviors:
         - !type:DoActsBehavior
           acts: ["Destruction"]
@@ -237,3 +237,47 @@
       map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
       shader: unshaded
       visible: false
+
+- type: entity
+  id: RustedThruster
+  parent: BaseStructureDynamic
+  name: rusted thruster
+  description: An unrepairable thruster, broken down from wear and tear. Only useful for scrapping.
+  components:
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.45,-0.45,0.45,0.45"
+          density: 60
+          mask:
+          - MachineMask
+          layer:
+          - MachineLayer
+    - type: Transform
+      anchored: true
+    - type: Physics
+      bodyType: Static
+    - type: Rotatable
+      rotateWhileAnchored: true
+    - type: Sprite
+      sprite: Structures/Shuttles/old_thruster.rsi
+      state: base
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Electronic
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100  # Considering we need a lot of thrusters didn't want to make an individual one too tanky
+        behaviors:
+          - !type:DoActsBehavior
+            acts: ["Destruction"]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalBreak
+    - type: PhysicalComposition
+      materialComposition:
+        Steel: 1200 # 12 sheets

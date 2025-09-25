@@ -45,9 +45,9 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly VisibilitySystem _visibility = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
 
-    [ValidatePrototypeId<EntityPrototype>]
-    private const string RevenantShopId = "ActionRevenantShop";
+    private static readonly EntProtoId RevenantShopId = "ActionRevenantShop";
 
     public override void Initialize()
     {
@@ -63,7 +63,14 @@ public sealed partial class RevenantSystem : EntitySystem
         SubscribeLocalEvent<RevenantComponent, StatusEffectEndedEvent>(OnStatusEnded);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
 
+        SubscribeLocalEvent<RevenantComponent, GetVisMaskEvent>(OnRevenantGetVis);
+
         InitializeAbilities();
+    }
+
+    private void OnRevenantGetVis(Entity<RevenantComponent> ent, ref GetVisMaskEvent args)
+    {
+        args.VisibilityMask |= (int)VisibilityFlags.Ghost;
     }
 
     private void OnStartup(EntityUid uid, RevenantComponent component, ComponentStartup args)
@@ -84,10 +91,7 @@ public sealed partial class RevenantSystem : EntitySystem
         }
 
         //ghost vision
-        if (TryComp(uid, out EyeComponent? eye))
-        {
-            _eye.SetVisibilityMask(uid, eye.VisibilityMask | (int) (VisibilityFlags.Ghost), eye);
-        }
+        _eye.RefreshVisibilityMask(uid);
     }
 
     private void OnMapInit(EntityUid uid, RevenantComponent component, MapInitEvent args)
@@ -160,7 +164,7 @@ public sealed partial class RevenantSystem : EntitySystem
             return false;
         }
 
-        var tileref = Transform(uid).Coordinates.GetTileRef();
+        var tileref = _turf.GetTileRef(Transform(uid).Coordinates);
         if (tileref != null)
         {
             if(_physics.GetEntitiesIntersectingBody(uid, (int) CollisionGroup.Impassable).Count > 0)
@@ -173,7 +177,7 @@ public sealed partial class RevenantSystem : EntitySystem
         ChangeEssenceAmount(uid, -abilityCost, component, false);
 
         _statusEffects.TryAddStatusEffect<CorporealComponent>(uid, "Corporeal", TimeSpan.FromSeconds(debuffs.Y), false);
-        _stun.TryStun(uid, TimeSpan.FromSeconds(debuffs.X), false);
+        _stun.TryAddStunDuration(uid, TimeSpan.FromSeconds(debuffs.X));
 
         return true;
     }

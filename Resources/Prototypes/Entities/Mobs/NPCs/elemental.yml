@@ -35,10 +35,6 @@
     bodyType: KinematicController # Same for all inheritors
   - type: StatusEffects
     allowed:
-    - Stun
-    - KnockedDown
-    - SlowedDown
-    - Stutter
     - Electrocution
   - type: Pullable
   - type: Tag
@@ -56,11 +52,6 @@
     critThreshold: 120
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:TriggerBehavior
     - trigger:
         !type:DamageTrigger
         damage: 120
@@ -106,6 +97,7 @@
   parent: MobOreCrab
   id: MobQuartzCrab
   description: An ore crab made from Quartz.
+  suffix: Quartz
   components:
   - type: Sprite
     state: quartz_crab
@@ -130,6 +122,7 @@
   parent: MobOreCrab
   id: MobIronCrab
   description: An ore crab made from iron.
+  suffix: Iron
   components:
   - type: Sprite
     state: iron_crab
@@ -159,8 +152,41 @@
 
 - type: entity
   parent: MobOreCrab
+  id: MobCoalCrab
+  description: An ore crab made from coal.
+  suffix: Coal
+  components:
+  - type: Sprite
+    state: coal_crab
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 2.5
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 1.0
+    baseSprintSpeed : 1.5
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Coal1:
+            min: 2
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: MobOreCrab
   id: MobUraniumCrab
   description: An ore crab made from uranium.
+  suffix: Uranium
   components:
   - type: FactionException
   - type: NPCRetaliation
@@ -194,9 +220,65 @@
 
 - type: entity
   parent: MobOreCrab
+  id: MobBananiumCrab
+  description: An ore crab made from bananium.
+  suffix: Bananium
+  components:
+  - type: Sprite
+    state: bananium_crab
+  - type: FactionException
+  - type: NPCRetaliation
+    attackMemoryLength: 10
+  - type: NpcFactionMember
+    factions:
+      - SimpleNeutral
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          BananiumOre1:
+            min: 1
+            max: 3
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Slippery
+    slipData:
+      launchForwardsMultiplier: 2
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        hard: false
+        layer:
+          - SlipLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 20
+        mask:
+        - MobMask
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 3
+
+- type: entity
+  parent: MobOreCrab
   id: MobSilverCrab
-  name: ore crab
   description: An ore crab made from silver.
+  suffix: Silver
   components:
   - type: Sprite
     state: silver_crab
@@ -216,6 +298,35 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           SilverOre1:
+            min: 1
+            max: 3
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: MobOreCrab
+  id: MobGoldCrab
+  description: An ore crab made from gold.
+  suffix: Gold
+  components:
+  - type: Sprite
+    state: gold_crab
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 5
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 70
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          GoldOre1:
             min: 1
             max: 3
       - !type:DoActsBehavior
@@ -266,7 +377,6 @@
     chemicalMaxVolume: 100
   - type: StatusEffects
     allowed:
-    - SlowedDown
     - Electrocution
   - type: MeleeWeapon
     soundHit:
@@ -279,7 +389,6 @@
     solution: bloodstream
     transferAmount: 5
   - type: DamageStateVisuals
-    rotate: true
     states:
       Alive:
         Base: alive
@@ -290,6 +399,7 @@
       - FootstepSound
       - CannotSuicide
       - DoorBumpOpener
+      - StunImmune
   - type: NoSlip
   - type: ZombieImmune
   - type: ExaminableSolution

@@ -48,6 +48,15 @@
   equipment:
     jumpsuit: ClothingUniformColorRainbow
 
+# Rainbow Jumpskirt
+- type: loadout
+  id: RainbowJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: GreyTider
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorRainbow
+
 # Ancient
 - type: loadout
   id: AncientJumpsuit

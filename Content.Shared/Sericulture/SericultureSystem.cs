@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Cloning.Events;
 using Content.Shared.DoAfter;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.Serialization;
@@ -32,6 +33,21 @@ public abstract partial class SharedSericultureSystem : EntitySystem
         SubscribeLocalEvent<SericultureComponent, ComponentShutdown>(OnCompRemove);
         SubscribeLocalEvent<SericultureComponent, SericultureActionEvent>(OnSericultureStart);
         SubscribeLocalEvent<SericultureComponent, SericultureDoAfterEvent>(OnSericultureDoAfter);
+        SubscribeLocalEvent<SericultureComponent, CloningEvent>(OnClone);
+    }
+
+    private void OnClone(Entity<SericultureComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        var comp = EnsureComp<SericultureComponent>(args.CloneUid);
+        comp.PopupText = ent.Comp.PopupText;
+        comp.ProductionLength = ent.Comp.ProductionLength;
+        comp.HungerCost = ent.Comp.HungerCost;
+        comp.EntityProduced = ent.Comp.EntityProduced;
+        comp.MinHungerThreshold = ent.Comp.MinHungerThreshold;
+        Dirty(args.CloneUid, comp);
     }
 
     /// <summary>
