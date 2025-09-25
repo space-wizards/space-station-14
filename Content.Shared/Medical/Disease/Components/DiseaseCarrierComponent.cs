@@ -6,7 +6,7 @@ namespace Content.Shared.Medical.Disease;
 /// <summary>
 /// Networked component storing active diseases and immunity tokens.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class DiseaseCarrierComponent : Component
 {
     /// <summary>
@@ -31,7 +31,8 @@ public sealed partial class DiseaseCarrierComponent : Component
     /// <summary>
     /// Time when the next disease processing tick occurs.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    [AutoPausedField]
     public TimeSpan NextTick;
 
     /// <summary>

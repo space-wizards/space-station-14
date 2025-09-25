@@ -9,7 +9,7 @@ diagnoser-disease-report-desc = [bold]Disease Description:[/bold]
 
 diagnoser-no-cures = [bold]The disease has no cures.[/bold]
 diagnoser-cure-has = [bold]The disease has cures:[/bold]
-diagnoser-cure-bedrest = Resting while lying down [color=orange]{$chance}%[/color] per second to cure; sleeping multiplies by [color=orange]{$sleepMult}x[/color].
+diagnoser-cure-bedrest = Resting while lying down has [color=orange]{$chance}%[/color] per second to cure; sleeping multiplies by [color=orange]{$sleepMult}x[/color].
 diagnoser-cure-reagent-item = {$units}u [color=orange]{$reagent}[/color]
 diagnoser-cure-reagents-all = Consume all of: [color=orange]{$list}[/color].
 diagnoser-cure-time = It will go away on its own after [color=orange]{$time}[/color] seconds.

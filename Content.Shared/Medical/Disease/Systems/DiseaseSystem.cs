@@ -44,6 +44,7 @@ public sealed partial class SharedDiseaseSystem : EntitySystem
                 continue;
 
             carrier.NextTick = now + carrier.TickDelay;
+            Dirty(uid, carrier);
             carriersToProcess.Add((uid, carrier));
         }
 
