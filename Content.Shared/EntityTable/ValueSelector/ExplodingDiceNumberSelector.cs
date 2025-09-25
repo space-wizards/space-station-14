@@ -44,7 +44,9 @@ public sealed partial class ExplodingDiceNumberSelector : NumberSelector
 
         while (success)
         {
-            var firstRollShift = firstRoll ? 1 : 0; // guaruntees at least one entry returns. Use Prob for zero returns.
+            var firstRollShift = firstRoll ? // guaruntees at least one entry returns. Use Prob for zero returns.
+                (ZeroInclusive ? 1 : 0) :
+                0;
 
             var roll = random.Next(lowerBound + firstRollShift, DieSize + 1);
             count += roll;
