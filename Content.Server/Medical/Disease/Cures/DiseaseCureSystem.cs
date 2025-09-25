@@ -178,9 +178,6 @@ public sealed partial class DiseaseCureSystem : EntitySystem
 
     private readonly Dictionary<(EntityUid, string, CureStep), CureState> _cureStates = new();
 
-    /// <summary>
-    /// Retrieves the runtime state for the given (entity, disease, cure), creating it if missing.
-    /// </summary>
     internal CureState GetState(EntityUid uid, string diseaseId, CureStep step)
     {
         var key = (uid, diseaseId, step);

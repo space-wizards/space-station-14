@@ -180,7 +180,7 @@ public sealed partial class DiseaseSystem : EntitySystem
 
         if (TryComp<DiseaseCarrierComponent>(uid, out var carrier) && carrier.Immunity.TryGetValue(diseaseId, out var immunityStrength))
         {
-            // roll against immunity strength: immunityStrength of 1.0 blocks infection always, 0.0 never.
+            // Roll against immunity strength.
             if (_random.Prob(immunityStrength))
                 return false;
         }
