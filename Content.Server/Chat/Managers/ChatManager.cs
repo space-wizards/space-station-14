@@ -1,6 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Runtime.InteropServices;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Systems;
@@ -14,10 +11,14 @@ using Content.Shared.Database;
 using Content.Shared.Mind;
 using Content.Shared.Players.RateLimiting;
 using Robust.Shared.Configuration;
+using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace Content.Server.Chat.Managers;
 
@@ -45,6 +46,7 @@ internal sealed partial class ChatManager : IChatManager
     [Dependency] private readonly PlayerRateLimitManager _rateLimitManager = default!;
     [Dependency] private readonly ISharedPlayerManager _player = default!;
     [Dependency] private readonly DiscordChatLink _discordLink = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
 
     /// <summary>
     /// The maximum length a player-sent message can be sent
@@ -54,7 +56,15 @@ internal sealed partial class ChatManager : IChatManager
     private bool _oocEnabled = true;
     private bool _adminOocEnabled = true;
 
+    private readonly ISawmill _sawmill = default!;
     private readonly Dictionary<NetUserId, ChatUser> _players = new();
+
+    public ChatManager()
+    {
+        IoCManager.InjectDependencies(this);
+
+        _sawmill = _logManager.GetSawmill("SERVER");
+    }
 
     public void Initialize()
     {
@@ -111,7 +121,7 @@ internal sealed partial class ChatManager : IChatManager
     {
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", FormattedMessage.EscapeText(message)));
         ChatMessageToAll(ChatChannel.Server, message, wrappedMessage, EntityUid.Invalid, hideChat: false, recordReplay: true, colorOverride: colorOverride);
-        Logger.InfoS("SERVER", message);
+        _sawmill.Info(message);
 
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server announcement: {message}");
     }

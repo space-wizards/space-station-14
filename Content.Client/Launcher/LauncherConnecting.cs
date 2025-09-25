@@ -20,7 +20,9 @@ namespace Content.Client.Launcher
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IClipboardManager _clipboard = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
 
+        private readonly ISawmill _sawmill = default!;
         private LauncherConnectingGui? _control;
 
         private Page _currentPage;
@@ -56,6 +58,13 @@ namespace Content.Client.Launcher
         public event Action<string?>? ConnectFailReasonChanged;
         public event Action<ClientConnectionState>? ConnectionStateChanged;
         public event Action<NetConnectFailArgs>? ConnectFailed;
+
+        public LauncherConnecting()
+        {
+            IoCManager.InjectDependencies(this);
+
+            _sawmill = _logManager.GetSawmill("launcher-ui");
+        }
 
         protected override void Startup()
         {
@@ -115,12 +124,12 @@ namespace Content.Client.Launcher
                 }
                 else
                 {
-                    Logger.InfoS("launcher-ui", $"Redial not possible, no Ss14Address");
+                    _sawmill.Info($"Redial not possible, no Ss14Address");
                 }
             }
             catch (Exception ex)
             {
-                Logger.ErrorS("launcher-ui", $"Redial exception: {ex}");
+                _sawmill.Error($"Redial exception: {ex}");
             }
             return false;
         }
