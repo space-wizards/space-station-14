@@ -893,7 +893,7 @@
   - type: EmitSoundOnActivate
     sound: *PlushieSlimeSound
   - type: EmitSoundOnCollide
-    sound: *BasePlushieSound
+    sound: *PlushieSlimeSound
   - type: EmitSoundOnTrigger
     sound: *PlushieSlimeSound
   - type: MeleeWeapon
@@ -1110,34 +1110,22 @@
     sprite: Objects/Fun/Plushies/human.rsi
     state: icon
   - type: EmitSoundOnUse
-    sound:
-      path: /Audio/Voice/Human/malescream_1.ogg
-      params: &VolumeMinus8
+    sound: &PlushieHumanSounds
+      collection: MaleScreams
+      params:
         volume: -8
   - type: EmitSoundOnLand
-    sound:
-      path: /Audio/Voice/Human/malescream_2.ogg
-      params: *VolumeMinus8
+    sound: *PlushieHumanSounds
   - type: EmitSoundOnActivate
-    sound:
-      path: /Audio/Voice/Human/malescream_3.ogg
-      params: *VolumeMinus8
+    sound: *PlushieHumanSounds
   - type: EmitSoundOnCollide
-    sound:
-      path: /Audio/Voice/Human/malescream_4.ogg
-      params: *VolumeMinus8
+    sound: *PlushieHumanSounds
   - type: Edible
-    useSound:
-      path: /Audio/Voice/Human/malescream_1.ogg
-      params: *VolumeMinus8
+    useSound: *PlushieHumanSounds
   - type: MeleeWeapon
-    soundHit:
-      path: /Audio/Voice/Human/malescream_4.ogg
-      params: *VolumeMinus8
+    soundHit: *PlushieHumanSounds
   - type: EmitSoundOnTrigger
-    sound:
-      path: /Audio/Voice/Human/malescream_5.ogg
-      params: *VolumeMinus8
+    sound: *PlushieHumanSounds
   - type: Clothing
     quickEquip: false
     sprite: Objects/Fun/Plushies/human.rsi
