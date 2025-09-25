@@ -1,5 +1,4 @@
 using Robust.Shared.Random;
-using Serilog;
 
 namespace Content.Shared.EntityTable.ValueSelector;
 
@@ -14,12 +13,13 @@ public sealed partial class ExplodingDiceNumberSelector : NumberSelector
     public override int Get(System.Random rand)
     {
         var random = IoCManager.Resolve<IRobustRandom>();
+        var log = IoCManager.Resolve<ISawmill>(); //cursed I hate it.
         int count = 0;
         bool success = true;
 
         if (DieSize <= 1)
         {
-            Log.Warning($"ExplodingDiceNumberSelector was attempted with a die of size <= 1. Attmpted die size: {DieSize}");
+            log.Warning($"ExplodingDiceNumberSelector was attempted with a die of size <= 1. Attmpted die size: {DieSize}");
             return 1;
         }
 
