@@ -273,7 +273,6 @@
     - sensation: disease-sensation-clown
     symptoms:
     - symptom: SymptomHonkShout
-    - symptom: SymptomStutter
     - symptom: SymptomTransformClown
 
 - type: disease

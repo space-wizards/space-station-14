@@ -18,7 +18,7 @@
     - id: MouseMigration
     - id: PowerGridCheck
     - id: RandomSentience
-    - id: RandomDisease
+    - id: DiseaseOutbreak
     - id: SlimesSpawn
     - id: SolarFlare
     - id: SnakeSpawn
@@ -697,9 +697,8 @@
     prototype: RandomSatchelSpawner
 
 - type: entity
-  id: DiseaseOutbreak
   parent: BaseGameRule
-  noSpawn: true
+  id: DiseaseOutbreak
   components:
   - type: StationEvent
     startAnnouncement: station-event-disease-outbreak-announcement
