@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: BlitzTheSquishy
-  changes:
-  - message: You're no longer allowed to fire the Hristov or Mosin one handed anymore.
-    type: Tweak
-  id: 8492
-  time: '2025-05-15T04:12:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33708
 - author: metalgearsloth
   changes:
   - message: Predict bed action when you buckle to a sleepable entity.
@@ -3957,3 +3950,10 @@
   id: 9002
   time: '2025-09-25T19:55:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40532
+- author: IProduceWidgets
+  changes:
+  - message: Explosive cord and detonators have been added for precise demolition!
+    type: Add
+  id: 9003
+  time: '2025-09-25T21:33:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25875
