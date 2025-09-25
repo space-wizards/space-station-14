@@ -47,6 +47,7 @@
 - type: diseaseSymptom
   id: SymptomEmoteHonk
   name: disease-symptom-name-SymptomEmoteCat
+  probability: 0.05
   onlyWhenAlive: true
   behaviors:
   - !type:SymptomEmote
@@ -55,6 +56,7 @@
 - type: diseaseSymptom
   id: SymptomEmoteCat
   name: disease-symptom-name-SymptomEmoteCat
+  probability: 0.05
   singleBehavior: true
   onlyWhenAlive: true
   behaviors:

@@ -9,7 +9,7 @@ namespace Content.Shared.Medical.Disease;
 public sealed partial class DiseaseResidueComponent : Component
 {
     /// <summary>
-    /// Per-disease intensity map for this residue. Each disease ID maps to its current intensity [0..1].
+    /// Per-disease intensity map for this residue. Each disease ID maps to its current intensity (0-1).
     /// </summary>
     [DataField]
     public Dictionary<string, float> Diseases = [];
@@ -19,7 +19,7 @@ public sealed partial class DiseaseResidueComponent : Component
     /// TODO: Must be removed in the future. The premises must be disinfected, not cleaned. (like it was in SS13)
 	/// </summary>
 	[DataField]
-    public float DecayPerTick = 0.08f;
+    public float DecayPerTick = 0.005f;
 
     /// <summary>
     /// Amount to reduce per-disease intensity after a contact interaction.

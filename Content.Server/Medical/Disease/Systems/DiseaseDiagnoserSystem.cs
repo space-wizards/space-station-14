@@ -91,8 +91,8 @@ public sealed class DiseaseDiagnoserSystem : EntitySystem
             var stage = sample.Stages.TryGetValue(id, out var s) ? s : 1;
             lines.Add(Loc.GetString("diagnoser-disease-report-name", ("name", displayName), ("stage", stage)));
 
-            var description = Loc.GetString(diseaseProto.Description);
-            lines.Add(Loc.GetString("diagnoser-disease-report-desc", ("desc", description)));
+            lines.Add(Loc.GetString("diagnoser-disease-report-desc"));
+            lines.Add(Loc.GetString(diseaseProto.Description));
 
             DiseaseStage? stageCfg = null;
             foreach (var stCfg in diseaseProto.Stages)

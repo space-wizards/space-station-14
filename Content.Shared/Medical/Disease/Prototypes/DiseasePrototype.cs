@@ -47,54 +47,10 @@ public sealed partial class DiseasePrototype : IPrototype
     public float StageProb { get; private set; } = 0.02f;
 
     /// <summary>
-    /// Stage configurations in ascending order (1-indexed semantics).
-    /// Each stage can define stealth/resistance and symptom activations.
-    /// </summary>
-    [DataField(required: true)]
-    public List<DiseaseStage> Stages { get; private set; } = [];
-
-    /// <summary>
-    /// Optional list of cure steps for the disease. Each entry is a specific cure action.
-    /// </summary>
-    [DataField(serverOnly: true)]
-    public List<CureStep> CureSteps { get; private set; } = [];
-
-    /// <summary>
     /// Default immunity strength granted after curing this disease (0-1).
     /// </summary>
     [DataField]
     public float PostCureImmunity { get; private set; } = 0.7f;
-
-    /// <summary>
-    /// Base per-contact infection probability for this disease (0-1). Used when two entities make contact.
-    /// </summary>
-    [DataField]
-    public float ContactInfect { get; private set; } = 0.1f;
-
-    /// <summary>
-    /// Amount of residue intensity deposited when a carrier with this disease contacts a surface.
-    /// Expressed as (0-1) fraction added to per-disease residue intensity.
-    /// </summary>
-    [DataField]
-    public float ContactDeposit { get; private set; } = 0.1f;
-
-    /// <summary>
-    /// Base per-target airborne infection probability (0-1) before PPE adjustments.
-    /// </summary>
-    [DataField]
-    public float AirborneInfect { get; private set; } = 0.2f;
-
-    /// <summary>
-    /// Airborne infection radius in world units, used when <see cref="SpreadFlags"/> contains Airborne.
-    /// </summary>
-    [DataField]
-    public float AirborneRange { get; private set; } = 2f;
-
-    /// <summary>
-    /// Per-tick chance (0-1) to attempt airborne spread from each carrier of this disease.
-    /// </summary>
-    [DataField]
-    public float AirborneTickChance { get; private set; } = 0.3f;
 
     /// <summary>
     /// Optional incubation time in seconds before symptoms/spread begin after infection.
@@ -108,6 +64,44 @@ public sealed partial class DiseasePrototype : IPrototype
     /// </summary>
     [DataField]
     public float PermeabilityMod { get; private set; } = 1.0f;
+
+    /// <summary>
+    /// Base per-contact infection probability for this disease (0-1). Used when two entities make contact.
+    /// </summary>
+    [DataField]
+    public float ContactInfect { get; private set; } = 0.05f;
+
+    /// <summary>
+    /// Amount of residue intensity deposited when a carrier with this disease contacts a surface.
+    /// Expressed as (0-1) fraction added to per-disease residue intensity.
+    /// </summary>
+    [DataField]
+    public float ContactDeposit { get; private set; } = 0.2f;
+
+    /// <summary>
+    /// Base per-target airborne infection probability (0-1) before PPE adjustments.
+    /// </summary>
+    [DataField]
+    public float AirborneInfect { get; private set; } = 0.1f;
+
+    /// <summary>
+    /// Airborne infection radius in world units, used when <see cref="SpreadFlags"/> contains Airborne.
+    /// </summary>
+    [DataField]
+    public float AirborneRange { get; private set; } = 2f;
+
+    /// <summary>
+    /// Stage configurations in ascending order (1-indexed semantics).
+    /// Each stage can define stealth/resistance and symptom activations.
+    /// </summary>
+    [DataField(required: true)]
+    public List<DiseaseStage> Stages { get; private set; } = [];
+
+    /// <summary>
+    /// Optional list of cure steps for the disease. Each entry is a specific cure action.
+    /// </summary>
+    [DataField(serverOnly: true)]
+    public List<CureStep> CureSteps { get; private set; } = [];
 }
 
 /// <summary>

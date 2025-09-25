@@ -5,7 +5,7 @@ diagnoser-disease-report-none = [bold]Bill of Good Health[/bold]
 diagnoser-disease-report-subject = [bold]Subject:[/bold] {$name}
 diagnoser-disease-report-subject-dna = [bold]DNA:[/bold] {$dna}
 diagnoser-disease-report-name = [bold]Disease Name:[/bold] {$name} (stage {$stage})
-diagnoser-disease-report-desc = [bold]Disease Description:[/bold] {$desc}
+diagnoser-disease-report-desc = [bold]Disease Description:[/bold]
 
 diagnoser-no-cures = [bold]The disease has no cures.[/bold]
 diagnoser-cure-has = [bold]The disease has cures:[/bold]

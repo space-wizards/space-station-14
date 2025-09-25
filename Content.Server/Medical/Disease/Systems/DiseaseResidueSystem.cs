@@ -3,12 +3,14 @@ using System.Linq;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Medical.Disease;
-using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Hands.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
+using Content.Shared.StepTrigger.Systems;
+using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 
 namespace Content.Server.Medical.Disease.Systems;
@@ -24,17 +26,16 @@ public sealed class DiseaseResidueSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DiseaseResidueComponent, ContactInteractionEvent>(OnResidueContact);
         SubscribeLocalEvent<DiseaseCarrierComponent, ContactInteractionEvent>(OnCarrierContact);
-        SubscribeLocalEvent<DiseaseCarrierComponent, MeleeHitEvent>(OnMeleeHit);
-
-        SubscribeLocalEvent<DiseaseCarrierComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
+        SubscribeLocalEvent<DiseaseResidueComponent, ContactInteractionEvent>(OnResidueContact);
+        SubscribeLocalEvent<MeleeWeaponComponent, MeleeHitEvent>(OnMeleeHit);
     }
 
     public override void Update(float frameTime)
@@ -66,124 +67,20 @@ public sealed class DiseaseResidueSystem : EntitySystem
             }
         }
 
-        // Adjacent contact spread around carriers each tick.
+        // Residue processing each disease tick.
         var carriers = EntityQueryEnumerator<DiseaseCarrierComponent>();
+        var now = _timing.CurTime;
         while (carriers.MoveNext(out var cuid, out var carrier))
         {
-            TryAdjacentContactSpread(cuid, carrier);
-            DepositFootResidue(cuid, carrier);
-        }
-    }
-
-    /// <summary>
-    /// Handles contact spread when a user uses an item on a diseased target (or vice versa).
-    /// </summary>
-    private void OnAfterInteractUsing(Entity<DiseaseCarrierComponent> target, ref AfterInteractUsingEvent args)
-    {
-        if (!args.CanReach || args.User == args.Target)
-            return;
-
-        var user = args.User;
-        var other = target.Owner;
-
-        var userHas = TryComp<DiseaseCarrierComponent>(user, out var userCarrier) && userCarrier.ActiveDiseases.Count > 0;
-        var targetHas = target.Comp.ActiveDiseases.Count > 0;
-
-        if (!userHas && !targetHas)
-            return;
-
-        if (userHas)
-        {
-            foreach (var (id, _) in userCarrier!.ActiveDiseases)
-            {
-                var proto = _prototypes.Index<DiseasePrototype>(id);
-                if (proto.SpreadFlags.Contains(DiseaseSpreadFlags.Contact))
-                    InfectByContactChance(other, id, 1f);
-            }
-        }
-
-        if (targetHas)
-        {
-            foreach (var (id, _) in target.Comp.ActiveDiseases)
-            {
-                var proto = _prototypes.Index<DiseasePrototype>(id);
-                if (proto.SpreadFlags.Contains(DiseaseSpreadFlags.Contact))
-                    InfectByContactChance(user, id, 1f);
-            }
-        }
-    }
-
-    /// <summary>
-    /// Attempts infection on melee hit in both directions for contact-spread diseases.
-    /// </summary>
-    private void OnMeleeHit(Entity<DiseaseCarrierComponent> attacker, ref MeleeHitEvent args)
-    {
-        if (attacker.Comp.ActiveDiseases.Count == 0 && args.HitEntities.Count == 0)
-            return;
-
-        // Attacker -> Targets
-        if (attacker.Comp.ActiveDiseases.Count > 0)
-        {
-            foreach (var target in args.HitEntities)
-            {
-                foreach (var (id, _) in attacker.Comp.ActiveDiseases)
-                {
-                    if (!_prototypes.TryIndex<DiseasePrototype>(id, out var proto))
-                        continue;
-
-                    if (!proto.SpreadFlags.Contains(DiseaseSpreadFlags.Contact))
-                        continue;
-
-                    InfectByContactChance(target, id, 1f);
-                }
-            }
-        }
-
-        // Targets -> Attacker
-        foreach (var target in args.HitEntities)
-        {
-            if (!TryComp<DiseaseCarrierComponent>(target, out var tcar) || tcar.ActiveDiseases.Count == 0)
+            if (carrier.NextTick > now)
                 continue;
 
-            foreach (var (id, _) in tcar.ActiveDiseases)
-            {
-                if (!_prototypes.TryIndex<DiseasePrototype>(id, out var proto))
-                    continue;
-
-                if (!proto.SpreadFlags.Contains(DiseaseSpreadFlags.Contact))
-                    continue;
-
-                InfectByContactChance(attacker.Owner, id, 1f);
-            }
+            TryAdjacentContactSpread(cuid, carrier);
         }
     }
 
     /// <summary>
-    /// Attempts contact-based infection and reduces residue intensity per contact.
-    /// </summary>
-    private void OnResidueContact(EntityUid uid, DiseaseResidueComponent residue, ContactInteractionEvent args)
-    {
-        var toRemove = new ValueList<string>();
-        foreach (var kv in residue.Diseases.ToArray())
-        {
-            var id = kv.Key;
-            var intensity = kv.Value;
-            InfectByContactChance(args.Other, id, intensity);
-
-            // reduce intensity after contact
-            var newVal = intensity - residue.ContactReduction;
-            if (newVal <= 0f)
-                toRemove.Add(id);
-            else
-                residue.Diseases[id] = newVal;
-        }
-
-        foreach (var k in toRemove)
-            residue.Diseases.Remove(k);
-    }
-
-    /// <summary>
-    /// Deposits per-disease residue intensity onto contacted entity/tile.
+    /// Deposits per-disease residue intensity onto contacted entity.
     /// </summary>
     private void OnCarrierContact(EntityUid uid, DiseaseCarrierComponent carrier, ContactInteractionEvent args)
     {
@@ -196,6 +93,9 @@ public sealed class DiseaseResidueSystem : EntitySystem
             if (!_prototypes.TryIndex<DiseasePrototype>(id, out var proto))
                 continue;
 
+            if (!proto.SpreadFlags.Contains(DiseaseSpreadFlags.Contact))
+                continue;
+
             var deposit = proto.ContactDeposit;
             if (residue.Diseases.TryGetValue(id, out var cur))
                 residue.Diseases[id] = MathF.Min(1f, cur + deposit);
@@ -205,19 +105,21 @@ public sealed class DiseaseResidueSystem : EntitySystem
     }
 
     /// <summary>
-    /// Tries to infect a target via contact, scaling chance by residue intensity and disease ContactInfect.
+    /// Attempts infection from residue to the contacting entity and reduces residue on contact.
     /// </summary>
-    private void InfectByContactChance(EntityUid target, string diseaseId, float intensity = 1f)
+    private void OnResidueContact(EntityUid uid, DiseaseResidueComponent residue, ContactInteractionEvent args)
     {
-        if (!_prototypes.TryIndex<DiseasePrototype>(diseaseId, out var proto))
+        if (residue.Diseases.Count == 0)
             return;
 
-        if (!proto.SpreadFlags.Contains(DiseaseSpreadFlags.Contact))
-            return;
+        foreach (var (id, intensity) in residue.Diseases.ToArray())
+        {
+            InfectByContactChance(args.Other, id);
 
-        var chance = Math.Clamp(proto.ContactInfect * intensity, 0f, 1f);
-        chance = _disease.AdjustContactChanceForProtection(target, chance, proto);
-        _disease.TryInfectWithChance(target, diseaseId, chance);
+            var newIntensity = MathF.Max(0f, intensity - residue.ContactReduction);
+            if (newIntensity > 0f)
+                residue.Diseases[id] = newIntensity;
+        }
     }
 
     /// <summary>
@@ -239,68 +141,60 @@ public sealed class DiseaseResidueSystem : EntitySystem
             if (other == source)
                 continue;
 
-            if (!_interaction.InRangeUnobstructed(source, other, 1.1f))
+            if (!_interaction.InRangeUnobstructed(source, other, 0.8f))
                 continue;
 
             foreach (var (id, _) in carrier.ActiveDiseases)
             {
-                if (!_prototypes.TryIndex<DiseasePrototype>(id, out var proto))
-                    continue;
-
-                if (!proto.SpreadFlags.Contains(DiseaseSpreadFlags.Contact))
-                    continue;
-
-                InfectByContactChance(other, id, 1f);
+                InfectByContactChance(other, id);
             }
         }
     }
 
     /// <summary>
-    /// Leaves a small residue on the tile under the carrier to emulate footprints.
-    /// Shoes reduce the deposit amount.
+    /// Attempts infection on melee hit in both directions for contact-spread diseases.
     /// </summary>
-    private void DepositFootResidue(EntityUid source, DiseaseCarrierComponent carrier)
+    private void OnMeleeHit(Entity<MeleeWeaponComponent> weapon, ref MeleeHitEvent args)
     {
-        if (carrier.ActiveDiseases.Count == 0)
+        if (args.HitEntities.Count == 0)
             return;
 
-        var coords = _xform.GetMapCoordinates(source);
-        if (coords.MapId == MapId.Nullspace)
-            return;
+        var attackerUid = args.User;
 
-        // Checks if there is already a residue tile in the carrier range.
-        EntityUid? residueEnt = null;
-        foreach (var ent in _lookup.GetEntitiesInRange(coords, 0.2f, LookupFlags.Sundries))
+        // Attacker -> Targets
+        if (TryComp<DiseaseCarrierComponent>(attackerUid, out var attackerCar) && attackerCar.ActiveDiseases.Count > 0)
         {
-            if (TryComp<DiseaseResidueComponent>(ent, out _))
+            foreach (var target in args.HitEntities)
             {
-                residueEnt = ent;
-                break;
+                foreach (var (id, _) in attackerCar.ActiveDiseases)
+                    InfectByContactChance(target, id);
             }
         }
 
-        if (residueEnt is null)
-            residueEnt = EntityManager.SpawnEntity("DiseaseResidueTile", coords);
-
-        // Adds the residue to the tile.
-        var residue = EnsureComp<DiseaseResidueComponent>(residueEnt.Value);
-        foreach (var (id, _) in carrier.ActiveDiseases)
+        // Targets -> Attacker
+        foreach (var target in args.HitEntities)
         {
-            if (!_prototypes.TryIndex<DiseasePrototype>(id, out var proto))
+            if (!TryComp<DiseaseCarrierComponent>(target, out var targetCar) || targetCar.ActiveDiseases.Count == 0)
                 continue;
 
-            // Adjusts the deposit amount based on clothing items.
-            var deposit = proto.ContactDeposit;
-            foreach (var (slot, mult) in DiseaseEffectiveness.FootResidueSlots)
-            {
-                if (_inventory.TryGetSlotEntity(source, slot, out _))
-                    deposit *= mult;
-            }
-
-            if (residue.Diseases.TryGetValue(id, out var cur))
-                residue.Diseases[id] = MathF.Min(1f, cur + deposit);
-            else
-                residue.Diseases[id] = MathF.Min(1f, deposit);
+            foreach (var (id, _) in targetCar.ActiveDiseases)
+                InfectByContactChance(attackerUid, id);
         }
+    }
+
+    /// <summary>
+    /// Tries to infect a target via contact using fixed per-disease chance.
+    /// </summary>
+    private void InfectByContactChance(EntityUid target, string diseaseId)
+    {
+        if (!_prototypes.TryIndex<DiseasePrototype>(diseaseId, out var proto))
+            return;
+
+        if (!proto.SpreadFlags.Contains(DiseaseSpreadFlags.Contact))
+            return;
+
+        var chance = Math.Clamp(proto.ContactInfect, 0f, 1f);
+        chance = _disease.AdjustContactChanceForProtection(target, chance, proto);
+        _disease.TryInfectWithChance(target, diseaseId, chance);
     }
 }

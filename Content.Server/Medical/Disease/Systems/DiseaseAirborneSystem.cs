@@ -34,7 +34,6 @@ public sealed class AirborneDiseaseSystem : EntitySystem
             if (carrier.ActiveDiseases.Count == 0)
                 continue;
 
-            // Piggyback on the disease tick cadence to avoid extra scheduling overhead.
             if (carrier.NextTick > now)
                 continue;
 
@@ -44,9 +43,6 @@ public sealed class AirborneDiseaseSystem : EntitySystem
                     continue;
 
                 if (!disease.SpreadFlags.Contains(DiseaseSpreadFlags.Airborne))
-                    continue;
-
-                if (!_random.Prob(disease.AirborneTickChance))
                     continue;
 
                 TryAirborneSpread(uid, disease);
