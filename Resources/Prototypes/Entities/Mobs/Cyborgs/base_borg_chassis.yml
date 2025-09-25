@@ -449,7 +449,6 @@
     stunTime: 5
   - type: SiliconLawProvider
     laws: XenoborgLawset # custom laws here
-    subverted: true
   - type: IntrinsicRadioTransmitter # can only use binary and xenoborg channel
     channels:
     - Xenoborg
