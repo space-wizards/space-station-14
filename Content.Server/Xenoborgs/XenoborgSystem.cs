@@ -51,7 +51,7 @@ public sealed partial class XenoborgSystem : EntitySystem
         var xenoborgQuery = AllEntityQuery<XenoborgComponent, BorgTransponderComponent>();
         while (xenoborgQuery.MoveNext(out var xenoborgEnt, out _, out _))
         {
-            if (TryComp<MothershipCoreComponent>(xenoborgEnt, out _))
+            if (HasComp<MothershipCoreComponent>(xenoborgEnt))
                 continue;
 
             // I got tired to trying to make this work via the device network.
