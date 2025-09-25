@@ -276,7 +276,7 @@
         conditions:
         - !type:MetabolizerType
           type: Slime
-          condition: false
+          inverted: true
         damage:
           types:
             Poison: 1

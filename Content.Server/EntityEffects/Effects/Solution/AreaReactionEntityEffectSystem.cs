@@ -12,9 +12,9 @@ using Robust.Shared.Map;
 namespace Content.Server.EntityEffects.Effects.Solution;
 
 /// <summary>
-/// This is used for...
+/// This is used for creating smoke in an area.
 /// </summary>
-public sealed partial class AreaReactionEntityEffectsSystem : SharedAreaReactionEntityEffectsSystem
+public sealed partial class AreaReactionEntityEffectsSystem : EntityEffectSystem<SolutionComponent, AreaReactionEffect>
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;

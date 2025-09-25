@@ -178,7 +178,7 @@
         conditions:
         - !type:MetabolizerType
           type: Vox
-          condition: false
+          inverted: true
         damage:
           types:
             Poison: 1

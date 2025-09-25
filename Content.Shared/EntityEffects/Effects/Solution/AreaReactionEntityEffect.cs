@@ -1,20 +1,8 @@
-﻿using Content.Shared.Chemistry.Components;
-using Content.Shared.Database;
+﻿using Content.Shared.Database;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Solution;
-
-/// <summary>
-/// This is used for...
-/// </summary>
-public abstract partial class SharedAreaReactionEntityEffectsSystem : EntityEffectSystem<SolutionComponent, AreaReactionEffect>
-{
-    protected override void Effect(Entity<SolutionComponent> entity, ref EntityEffectEvent<AreaReactionEffect> args)
-    {
-        // Server side effect
-    }
-}
 
 public sealed partial class AreaReactionEffect : EntityEffectBase<AreaReactionEffect>
 {

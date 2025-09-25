@@ -23,7 +23,7 @@
         conditions:
         - !type:MetabolizerType
           type: Vox
-          condition: false
+          inverted: true
         ratios:
           CarbonDioxide: 1.0
           Oxygen: -1.0
@@ -59,7 +59,7 @@
         conditions:
         - !type:MetabolizerType
           type: Vox
-          condition: false
+          inverted: true
         ratios:
           CarbonDioxide: 1.0
           Oxygen: -1.0
@@ -186,7 +186,7 @@
           types:
           - Plant
           - Vox
-          condition: false
+          inverted: true
         scaleByQuantity: true
         ignoreResistances: true
         damage:
@@ -197,7 +197,7 @@
         conditions:
         - !type:MetabolizerType
           type: Plant
-          condition: false
+          inverted: true
         factor: -4
     Gas:
       effects:
@@ -212,7 +212,7 @@
           types:
           - Plant
           - Vox
-          condition: false
+          inverted: true
         # Don't want people to get toxin damage from the gas they just
         # exhaled, right?
         scaleByQuantity: true
@@ -225,7 +225,7 @@
         conditions:
         - !type:MetabolizerType
           type: Plant
-          condition: false
+          inverted: true
         factor: -4
       # We need a metabolism effect on reagent removal
       #- !type:AdjustAlert
@@ -294,7 +294,7 @@
         conditions:
         - !type:MetabolizerType
           type: Slime
-          condition: false
+          inverted: true
         emote: Laugh
         showInChat: true
         probability: 0.1
@@ -303,7 +303,7 @@
         conditions:
         - !type:MetabolizerType
           type: Slime
-          condition: false
+          inverted: true
         emote: Scream
         showInChat: true
         probability: 0.01
@@ -312,7 +312,7 @@
         conditions:
         - !type:MetabolizerType
           type: Slime
-          condition: false
+          inverted: true
         type: Local
         visualType: Medium
         messages: [ "effect-sleepy" ]
@@ -322,7 +322,7 @@
         conditions:
         - !type:MetabolizerType
           type: Slime
-          condition: false
+          inverted: true
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
       - !type:ModifyStatusEffect
@@ -330,7 +330,7 @@
         conditions:
         - !type:MetabolizerType
           type: Slime
-          condition: false
+          inverted: true
         effectProto: StatusEffectForcedSleeping
         time: 3
         type: Refresh
@@ -339,7 +339,7 @@
         conditions:
         - !type:MetabolizerType
           type: Slime
-          condition: false
+          inverted: true
         ignoreResistances: true
         damage:
           types:

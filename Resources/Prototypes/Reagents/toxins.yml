@@ -497,7 +497,7 @@
           types:
           - Animal
           - Vox
-          condition: false
+          inverted: true
         type: Local
         visualType: MediumCaution
         messages: [ "generic-reagent-effect-sick" ]
@@ -509,14 +509,14 @@
           types:
           - Animal
           - Vox
-          condition: false
+          inverted: true
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypes
           types:
           - Animal
           - Vox
-          condition: false
+          inverted: true
         damage:
           types:
             Poison: 1
@@ -721,7 +721,7 @@
         conditions:
         - !type:MetabolizerType
           type: Arachnid
-          condition: false
+          inverted: true
         damage:
           types:
             Poison: 1.6
@@ -732,7 +732,7 @@
           min: 2
         - !type:MetabolizerType
           type: Arachnid
-          condition: false
+          inverted: true
         walkSpeedModifier: 0.8
         sprintSpeedModifier: 0.8
       - !type:MovementSpeedModifier
@@ -742,7 +742,7 @@
           min: 4
         - !type:MetabolizerType
           type: Arachnid
-          condition: false
+          inverted: true
         walkSpeedModifier: 0.4
         sprintSpeedModifier: 0.4
 

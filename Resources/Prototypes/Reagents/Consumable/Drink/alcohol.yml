@@ -170,7 +170,7 @@
           min: 15
         - !type:MetabolizerType
           type: Dwarf
-          condition: false
+          inverted: true
         damage:
           types:
             Poison: 1
@@ -204,7 +204,7 @@
         # dwarves immune to vomiting from alcohol
         - !type:MetabolizerType
           type: Dwarf
-          condition: false
+          inverted: true
       - !type:Drunk
         boozePower: 2
 
@@ -2530,7 +2530,7 @@
           min: 6
         - !type:MetabolizerType
           type: Dwarf
-          condition: false
+          inverted: true
         damage:
           types:
             Poison: 2 # TODO: Figure out poison amount. Ethanol does 1, this does 2 but also metabolises almost 3 to 4 times as fast as ethanol. This would be more Liver damage when that time arrives.
@@ -2552,4 +2552,4 @@
           min: 8
         - !type:MetabolizerType
           type: Dwarf
-          condition: false
+          inverted: true

@@ -28,7 +28,7 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
 
     public bool TryCondition(EntityUid target, AnyEntityCondition condition)
     {
-        return condition.RaiseEvent(target, this);
+        return condition.Inverted != condition.RaiseEvent(target, this);
     }
 
     public bool RaiseConditionEvent<T>(EntityUid target, T effect) where T : EntityConditionBase<T>
@@ -67,7 +67,7 @@ public abstract partial class EntityConditionBase<T> : AnyEntityCondition where 
             return false;
 
         // If the result of the event matches the result we're looking for then we pass.
-        return type.Condition == raiser.RaiseConditionEvent(target, type);
+        return raiser.RaiseConditionEvent(target, type);
     }
 }
 
@@ -77,9 +77,11 @@ public abstract partial class AnyEntityCondition
 {
     public abstract bool RaiseEvent(EntityUid target, IEntityConditionRaiser raiser);
 
-    // TODO: Rename this shit it's ass.
+    /// <summary>
+    /// If true, invert the result. So false returns true and true returns false!
+    /// </summary>
     [DataField]
-    public bool Condition = true;
+    public bool Inverted;
 
     [DataField]
     public string EntityConditionGuidebookText = String.Empty;

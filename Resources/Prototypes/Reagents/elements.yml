@@ -65,7 +65,7 @@
         conditions:
         - !type:MetabolizerType
           type: Arachnid
-          condition: false
+          inverted: true
         damage:
           types:
             Poison: 0.1
@@ -164,7 +164,7 @@
         conditions:
         - !type:MetabolizerType
           type: Arachnid
-          condition: false
+          inverted: true
         amount: 0.4
 
 - type: reagent
