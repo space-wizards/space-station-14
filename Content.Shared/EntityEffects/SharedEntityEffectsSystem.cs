@@ -4,6 +4,7 @@ using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Database;
+using Content.Shared.EntityConditions;
 using Content.Shared.Localizations;
 
 namespace Content.Shared.EntityEffects;
@@ -169,7 +170,7 @@ public abstract partial class AnyEntityEffect
     public abstract void RaiseEvent(EntityUid target, IEntityEffectRaiser raiser, float scale);
 
     [DataField]
-    public AnyEntityCondition[]? Conditions;
+    public EntityConditions.AnyEntityCondition[]? Conditions;
 
     /// <summary>
     /// If our scale is less than this value, the effect fails.

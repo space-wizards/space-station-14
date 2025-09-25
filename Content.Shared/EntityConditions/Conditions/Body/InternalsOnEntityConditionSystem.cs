@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Body.Components;
-using Content.Shared.EntityEffects;
 
 namespace Content.Shared.EntityConditions.Conditions.Body;
 

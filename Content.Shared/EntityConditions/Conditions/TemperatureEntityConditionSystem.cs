@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Chemistry.Components;
-using Content.Shared.EntityEffects;
 using Content.Shared.Temperature.Components;
 
 namespace Content.Shared.EntityConditions.Conditions;

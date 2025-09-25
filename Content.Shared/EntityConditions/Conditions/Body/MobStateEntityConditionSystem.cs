@@ -1,5 +1,4 @@
-﻿using Content.Shared.EntityEffects;
-using Content.Shared.Mobs;
+﻿using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 
 namespace Content.Shared.EntityConditions.Conditions.Body;

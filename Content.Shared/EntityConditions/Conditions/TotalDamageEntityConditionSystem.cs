@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Damage;
-using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
 
 namespace Content.Shared.EntityConditions.Conditions;

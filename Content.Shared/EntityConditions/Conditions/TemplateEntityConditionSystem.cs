@@ -1,6 +1,4 @@
-﻿using Content.Shared.EntityEffects;
-
-namespace Content.Shared.EntityConditions.Conditions;
+﻿namespace Content.Shared.EntityConditions.Conditions;
 
 public sealed partial class TemplateEntityConditionSystem : EntityConditionSystem<MetaDataComponent, Template>
 {

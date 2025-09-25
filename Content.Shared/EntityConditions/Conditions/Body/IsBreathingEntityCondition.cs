@@ -1,6 +1,4 @@
-﻿using Content.Shared.EntityEffects;
-
-namespace Content.Shared.EntityConditions.Conditions.Body;
+﻿namespace Content.Shared.EntityConditions.Conditions.Body;
 
 public sealed partial class IsBreathing : EntityConditionBase<IsBreathing>
 {

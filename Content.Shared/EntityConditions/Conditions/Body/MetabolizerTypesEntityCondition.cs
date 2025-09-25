@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Body.Prototypes;
-using Content.Shared.EntityEffects;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Body;

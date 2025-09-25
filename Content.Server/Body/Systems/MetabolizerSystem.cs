@@ -6,6 +6,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.EntityConditions;
 using Content.Shared.EntityConditions.Conditions;
 using Content.Shared.EntityConditions.Conditions.Body;
 using Content.Shared.EntityEffects;
@@ -205,7 +206,7 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
                 }
 
                 // This allows us to check certain conditions on organs themselves!
-                bool CanMetabolizeEffect(AnyEntityCondition[] conditions)
+                bool CanMetabolizeEffect(Shared.EntityConditions.AnyEntityCondition[] conditions)
                 {
                     foreach (var condition in conditions)
                     {

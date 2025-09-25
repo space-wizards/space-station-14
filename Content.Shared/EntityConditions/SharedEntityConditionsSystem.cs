@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.EntityEffects;
+﻿namespace Content.Shared.EntityConditions;
 
 /// <summary>
 /// This handles entity effects.

@@ -1,5 +1,4 @@
-﻿using Content.Shared.EntityEffects;
-using Content.Shared.Tag;
+﻿using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Tags;
