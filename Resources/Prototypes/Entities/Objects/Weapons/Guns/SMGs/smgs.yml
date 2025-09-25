@@ -300,7 +300,7 @@
     - state: base
       map: ["enum.GunVisualLayers.Base"]
   - type: Gun
-    fireRate: 10
+    fireRate: 9
     minAngle: 25
     maxAngle: 32
     availableModes:
