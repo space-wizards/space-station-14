@@ -65,9 +65,9 @@
   description: For a more casual yet elegant look.
   components:
   - type: Sprite
-    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/ntrep_turtle.rsi
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/ntrepturtleneck.rsi
   - type: Clothing
-    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/ntrep_turtle.rsi
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/ntrepturtleneck.rsi
 
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
