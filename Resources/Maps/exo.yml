@@ -4,8 +4,8 @@ meta:
   engineVersion: 267.1.0
   forkId: ""
   forkVersion: ""
-  time: 09/25/2025 05:10:49
-  entityCount: 19959
+  time: 09/25/2025 21:06:16
+  entityCount: 19960
 maps:
 - 1
 grids:
@@ -8826,9 +8826,9 @@ entities:
       invokeCounter: 1
     - type: DeviceLinkSource
       linkedPorts:
-        18305:
+        18143:
         - - DoorStatus
-          - DoorBolt
+          - InputB
 - proto: AirlockExternalGlass
   entities:
   - uid: 543
@@ -9062,9 +9062,9 @@ entities:
       invokeCounter: 1
     - type: DeviceLinkSource
       linkedPorts:
-        18305:
+        18143:
         - - DoorStatus
-          - DoorBolt
+          - InputA
   - uid: 16699
     components:
     - type: Transform
@@ -10078,7 +10078,7 @@ entities:
       pos: 11.5,-30.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -245251.58
+      secondsUntilStateChange: -245383
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10434,7 +10434,7 @@ entities:
       pos: 34.5,-36.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -20749.275
+      secondsUntilStateChange: -20880.693
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -88133,6 +88133,22 @@ entities:
       parent: 2
 - proto: LogicGateOr
   entities:
+  - uid: 18143
+    components:
+    - type: Transform
+      anchored: True
+      pos: -14.5,-70.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        18305:
+        - - Output
+          - DoorBolt
+    - type: Physics
+      canCollide: False
+      bodyType: Static
   - uid: 18350
     components:
     - type: Transform
