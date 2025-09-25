@@ -94,10 +94,6 @@
       spawnerPrototype: SpawnPointGhostRoleMothershipCore
       mindRoles:
       - MindRoleMothershipCore
-      briefing:
-        text: mothership-welcome
-        color: blueViolet
-        sound: /Audio/Ambience/Antag/xenoborg_start.ogg
     - prefRoles: [ Xenoborg ]
       fallbackRoles: [ MothershipCore ]
       spawnerPrototype: SpawnPointGhostRoleXenoborg
@@ -105,9 +101,5 @@
       - MindRoleXenoborg
       min: 4
       max: 4
-      briefing:
-        text: xenoborgs-welcome
-        color: blueViolet
-        sound: /Audio/Ambience/Antag/xenoborg_start.ogg
   - type: DynamicRuleCost
     cost: 200
