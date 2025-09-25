@@ -1,40 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed paradox clones not copying the mute, snoring and frontal lisp traits.
-    type: Fix
-  id: 8488
-  time: '2025-05-15T01:45:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37467
-- author: kosticia
-  changes:
-  - message: Hamsters, mice, butterflies, mothroaches, bees, bats, snails, rats, ticks
-      and cockroaches now don't leave organs on gibbing.
-    type: Fix
-  id: 8489
-  time: '2025-05-15T03:45:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37080
-- author: EmoGarbage404
-  changes:
-  - message: Goliath tentacles no longer miss if you stand still.
-    type: Fix
-  id: 8490
-  time: '2025-05-15T03:55:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37168
-- author: K-Dynamic
-  changes:
-  - message: Industrial advanced welders may be found in welding supplies lockers.
-    type: Tweak
-  id: 8491
-  time: '2025-05-15T03:55:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36977
-- author: BlitzTheSquishy
-  changes:
-  - message: You're no longer allowed to fire the Hristov or Mosin one handed anymore.
-    type: Tweak
-  id: 8492
-  time: '2025-05-15T04:12:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33708
 - author: metalgearsloth
   changes:
   - message: Predict bed action when you buckle to a sleepable entity.
@@ -3953,3 +3917,43 @@
   id: 8998
   time: '2025-09-24T04:19:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40461
+- author: RedBookcase
+  changes:
+  - message: Rechargers can now charge power cells again.
+    type: Tweak
+  id: 8999
+  time: '2025-09-24T20:33:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38138
+- author: Nox38, BurgerMoth
+  changes:
+  - message: Added descriptions to .20 ammo boxes, magazines, and cartridges.
+    type: Add
+  - message: Changed the descriptions of the Lecter, Estoc DMR, and M90GL.
+    type: Tweak
+  id: 9000
+  time: '2025-09-24T21:48:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36496
+- author: Keer-Sar
+  changes:
+  - message: Added two new markings for lizard snouts, "Lizard Visage (Round)" & "Lizard
+      Visage (Sharp)."
+    type: Add
+  id: 9001
+  time: '2025-09-24T23:13:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35294
+- author: SignalSender
+  changes:
+  - message: 'Added new purchasable crate: "random instrument collection" a crate
+      containing 7 random instruments, each of different variety, with the chance
+      for rare instruments'
+    type: Add
+  id: 9002
+  time: '2025-09-25T19:55:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40532
+- author: IProduceWidgets
+  changes:
+  - message: Explosive cord and detonators have been added for precise demolition!
+    type: Add
+  id: 9003
+  time: '2025-09-25T21:33:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25875
