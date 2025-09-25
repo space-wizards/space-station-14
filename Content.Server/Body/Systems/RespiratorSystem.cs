@@ -292,6 +292,8 @@ public sealed class RespiratorSystem : EntitySystem
 
         foreach (var (organUid, lung, _) in organs)
         {
+            _lungSystem.MetabolizeGasses((organUid, lung));
+
             _atmosSys.Merge(outGas, lung.Air);
             lung.Air.Clear();
 

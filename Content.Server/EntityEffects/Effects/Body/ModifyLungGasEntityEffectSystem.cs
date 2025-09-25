@@ -1,6 +1,7 @@
 ﻿using Content.Server.Body.Components;
 using Content.Shared.Atmos;
 using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Effects.Body;
 
 namespace Content.Server.EntityEffects.Effects.Body;
 
@@ -20,10 +21,4 @@ public sealed partial class ModifyLungGasEntityEffectSystem : EntityEffectSystem
             entity.Comp.Air.AdjustMoles(gas, quantity);
         }
     }
-}
-
-public sealed partial class ModifyLungGas : EntityEffectBase<ModifyLungGas>
-{
-    [DataField(required: true)]
-    public Dictionary<Gas, float> Ratios = default!;
 }

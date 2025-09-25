@@ -199,7 +199,7 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
                     // See if conditions apply
                     if (effect.Conditions == null || CanMetabolizeEffect(effect.Conditions))
                     {
-                        _entityEffects.ApplyEffect(actualEntity, effect, scale);
+                        _entityEffects.ApplyEffect(ent, effect, scale);
                     }
 
                 }
@@ -212,6 +212,7 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
                         switch (condition)
                         {
                             // Need specific handling of specific conditions since Metabolism is funny like that.
+                            // TODO: MetabolizerTypes should be handled well before this stage by metabolism itself.
                             case MetabolizerType:
                             case MetabolizerTypes:
                                 if (_entityConditions.TryCondition(ent, condition))

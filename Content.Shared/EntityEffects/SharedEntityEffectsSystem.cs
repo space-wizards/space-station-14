@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Database;
@@ -115,8 +116,18 @@ public abstract partial class EntityEffectSystem<T, TEffect> : EntitySystem wher
     public override void Initialize()
     {
         SubscribeLocalEvent<T, EntityEffectEvent<TEffect>>(Effect);
+        // TODO: Temporary relay until Metabolism can properly separate effects/conditions for organs and bodies
+        SubscribeLocalEvent<OrganComponent, EntityEffectEvent<TEffect>>(RelayEffect);
     }
     protected abstract void Effect(Entity<T> entity, ref EntityEffectEvent<TEffect> args);
+
+    private void RelayEffect(Entity<OrganComponent> entity, ref EntityEffectEvent<TEffect> args)
+    {
+        if (entity.Comp.Body is not { } body)
+            return;
+
+        RaiseLocalEvent(body, ref args);
+    }
 
     public string? GuidebookEffectDescription(TEffect effect)
     {

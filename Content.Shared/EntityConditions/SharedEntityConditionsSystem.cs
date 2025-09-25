@@ -67,7 +67,7 @@ public abstract partial class EntityConditionBase<T> : AnyEntityCondition where 
             return false;
 
         // If the result of the event matches the result we're looking for then we pass.
-        return type.Condition = raiser.RaiseConditionEvent(target, type);
+        return type.Condition == raiser.RaiseConditionEvent(target, type);
     }
 }
 

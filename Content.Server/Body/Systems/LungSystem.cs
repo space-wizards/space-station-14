@@ -2,9 +2,17 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Clothing;
+using Content.Shared.EntityConditions.Conditions;
+using Content.Shared.EntityConditions.Conditions.Body;
+using Content.Shared.EntityEffects;
+using Content.Shared.FixedPoint;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Mobs.Components;
+using Robust.Shared.Prototypes;
 using BreathToolComponent = Content.Shared.Atmos.Components.BreathToolComponent;
 using InternalsComponent = Content.Shared.Body.Components.InternalsComponent;
 
@@ -12,11 +20,13 @@ namespace Content.Server.Body.Systems;
 
 public sealed class LungSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly InternalsSystem _internals = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
     public static string LungSolutionName = "Lung";
+    public static ProtoId<MetabolismGroupPrototype> GasPrototype = "Gas";
 
     public override void Initialize()
     {
@@ -51,6 +61,15 @@ public sealed class LungSystem : EntitySystem
         {
             solution.MaxVolume = 100.0f;
             solution.CanReact = false; // No dexalin lungs
+        }
+    }
+
+    // TODO: Once we can metabolize gasses directly we don't need this stupid conversion bullshit.
+    public void MetabolizeGasses(Entity<LungComponent> ent)
+    {
+        foreach (var gas in ent.Comp.Air)
+        {
+
         }
     }
 

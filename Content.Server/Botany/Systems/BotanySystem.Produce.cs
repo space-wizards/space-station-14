@@ -17,7 +17,7 @@ public sealed partial class BotanySystem
         foreach (var mutation in seed.Mutations)
         {
             if (mutation.AppliesToProduce)
-                _entityEffects.ApplyEffect(uid, mutation.Effect);
+                _entityEffects.TryApplyEffect(uid, mutation.Effect);
         }
 
         if (!_solutionContainerSystem.EnsureSolution(uid,
