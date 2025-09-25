@@ -15,7 +15,7 @@ public sealed partial class ExplodingDiceNumberSelector : NumberSelector
     public int DieSize = 6;
 
     /// <summary>
-    /// Whether our die includes a zero value.
+    /// Whether our die includes a zero. Always returns a value of at least 1.
     /// </summary>
     /// <remarks>
     /// Look, I know. but the standard formula for exploding dice is meant for tabeltop games where a value of zero does not exist.
