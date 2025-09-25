@@ -70,7 +70,7 @@ public sealed class RummagerSystem : EntitySystem
 
         foreach (var spawn in spawns)
         {
-                Spawn(spawn, coordinates);
+            Spawn(spawn, coordinates);
         }
     }
 }
