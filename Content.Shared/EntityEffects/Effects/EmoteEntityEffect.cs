@@ -3,14 +3,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;
 
-public abstract partial class SharedEmoteEntityEffectSystem : EntityEffectSystem<MetaDataComponent, Emote>
-{
-    protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<Emote> args)
-    {
-        // Server side system
-    }
-}
-
 public sealed partial class Emote : EntityEffectBase<Emote>
 {
     /// <summary>

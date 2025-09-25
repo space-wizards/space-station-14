@@ -4,7 +4,7 @@ using Content.Shared.EntityEffects.Effects;
 
 namespace Content.Server.EntityEffects.Effects;
 
-public sealed partial class EmoteEntityEffectSystem : SharedEmoteEntityEffectSystem
+public sealed partial class EmoteEntityEffectSystem : EntityEffectSystem<MetaDataComponent, Emote>
 {
     [Dependency] private readonly ChatSystem _chat = default!;
 

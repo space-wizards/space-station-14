@@ -4,7 +4,7 @@ using Content.Shared.EntityEffects.Effects.Transform;
 
 namespace Content.Server.EntityEffects.Effects.Transform;
 
-public sealed partial class ExplosionEntityEffectSystem : SharedExplosionEntityEffectSystem
+public sealed partial class ExplosionEntityEffectSystem : EntityEffectSystem<TransformComponent, ExplosionEffect>
 {
     [Dependency] private readonly ExplosionSystem _explosion = default!;
 

@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.EntitySpawning;
 
-public sealed partial class CreateWearableEntityEffectSystem : EntityEffectSystem<InventoryComponent, SpawnEntityInInventory>
+public sealed partial class SpawnEntityInInventoryEntityEffectSystem : EntityEffectSystem<InventoryComponent, SpawnEntityInInventory>
 {
     [Dependency] private readonly InventorySystem _inventory = default!;
 

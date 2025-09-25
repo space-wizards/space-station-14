@@ -3,14 +3,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Transform;
 
-public abstract partial class SharedExplosionEntityEffectSystem : EntityEffectSystem<TransformComponent, ExplosionEffect>
-{
-    protected override void Effect(Entity<TransformComponent> entity, ref EntityEffectEvent<ExplosionEffect> args)
-    {
-        // Server side system
-    }
-}
-
 public sealed partial class ExplosionEffect : EntityEffectBase<ExplosionEffect>
 {
     /// <summary>

@@ -1,13 +1,5 @@
 ﻿namespace Content.Shared.EntityEffects.Effects;
 
-public abstract partial class SharedMakeSentientEntityEffectSystem : EntityEffectSystem<MetaDataComponent, MakeSentient>
-{
-    protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<MakeSentient> args)
-    {
-        // Serverside effect
-    }
-}
-
 public sealed partial class MakeSentient : EntityEffectBase<MakeSentient>
 {
     /// <summary>

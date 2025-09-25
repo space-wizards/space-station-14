@@ -6,7 +6,7 @@ using Content.Shared.Mind.Components;
 
 namespace Content.Server.EntityEffects.Effects;
 
-public sealed partial class MakeSentientEntityEffectSystem : SharedMakeSentientEntityEffectSystem
+public sealed partial class MakeSentientEntityEffectSystem : EntityEffectSystem<MetaDataComponent, MakeSentient>
 {
     protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<MakeSentient> args)
     {

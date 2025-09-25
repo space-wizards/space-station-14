@@ -1,4 +1,5 @@
-﻿using Content.Shared.Physics;
+﻿using System.Linq;
+using Content.Shared.Physics;
 using Content.Shared.Slippery;
 using Content.Shared.StepTrigger.Components;
 using Robust.Shared.Physics;
@@ -6,6 +7,9 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.EntityEffects.Effects;
 
+/// <summary>
+/// This effect creates a slippery fixture for an entity and then makes that entity slippery like soap.
+/// </summary>
 public sealed partial class SlipifyEntityEffectSystem : EntityEffectSystem<FixturesComponent, Slipify>
 {
     [Dependency] private readonly CollisionWakeSystem _collisionWake = default!;
@@ -20,8 +24,9 @@ public sealed partial class SlipifyEntityEffectSystem : EntityEffectSystem<Fixtu
 
         EnsureComp<StepTriggerComponent>(entity);
 
-        // TODO: This is fucking cursed but it's worked fine for now. Someone else needs to make this not hot ass.
-        var shape = entity.Comp.Fixtures["fix1"].Shape;
+        if (entity.Comp.Fixtures.FirstOrDefault(x => x.Value.Hard).Value.Shape is not { } shape)
+            return;
+
         _fixture.TryCreateFixture(entity, shape, "slips", 1, false, (int)CollisionGroup.SlipLayer, manager: entity.Comp);
 
         // Need to disable collision wake so that mobs can collide with and slip on it
