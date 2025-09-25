@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Predict bed action when you buckle to a sleepable entity.
-    type: Tweak
-  id: 8493
-  time: '2025-05-15T12:52:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37414
 - author: Chartman95
   changes:
   - message: Soaked Smokes retain their 40u max capacity.
@@ -3957,3 +3950,10 @@
   id: 9003
   time: '2025-09-25T21:33:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25875
+- author: Hitlinemoss
+  changes:
+  - message: The autolathe and uniform printer can now produce towels.
+    type: Add
+  id: 9004
+  time: '2025-09-25T21:53:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40160
