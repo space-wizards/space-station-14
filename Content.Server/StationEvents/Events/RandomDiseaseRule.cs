@@ -1,4 +1,3 @@
-using Content.Server.Medical.Disease.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Humanoid;
@@ -14,7 +13,7 @@ namespace Content.Server.StationEvents.Events;
 /// </summary>
 public sealed class RandomDiseaseRule : StationEventSystem<RandomDiseaseRuleComponent>
 {
-    [Dependency] private readonly DiseaseSystem _disease = default!;
+    [Dependency] private readonly SharedDiseaseSystem _disease = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
     protected override void Started(EntityUid uid, RandomDiseaseRuleComponent comp, GameRuleComponent gameRule, GameRuleStartedEvent args)
@@ -28,7 +27,7 @@ public sealed class RandomDiseaseRule : StationEventSystem<RandomDiseaseRuleComp
             return;
 
         // Choose disease uniformly from pool.
-        var chosenDisease = _random.Pick(comp.Disease);
+        var chosenDisease = _random.Pick(comp.Disease).Id;
 
         // Collect eligible humanoids with carrier component on the chosen station.
         var candidates = new List<EntityUid>();

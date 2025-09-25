@@ -1,4 +1,5 @@
 using Content.Server.StationEvents.Events;
+using Content.Shared.Medical.Disease;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.StationEvents.Components;
@@ -13,7 +14,7 @@ public sealed partial class RandomDiseaseRuleComponent : Component
     ///     Pool of diseases to choose from. One will be picked uniformly at random.
     /// </summary>
     [DataField(required: true)]
-    public List<string> Disease = new();
+    public List<ProtoId<DiseasePrototype>> Disease = [];
 
     /// <summary>
     ///     Minimum number of players to infect.

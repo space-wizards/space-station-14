@@ -19,7 +19,7 @@ public sealed class VaccinateCommand : LocalizedEntityCommands
 
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+    [Dependency] private readonly SharedDiseaseCureSystem _cure = default!;
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -54,13 +54,12 @@ public sealed class VaccinateCommand : LocalizedEntityCommands
         if (!_entMan.TryGetComponent(targetUid, out DiseaseCarrierComponent? comp))
             comp = _entMan.AddComponent<DiseaseCarrierComponent>(targetUid);
 
-        var cureSystem = _sysMan.GetEntitySystem<DiseaseCureSystem>();
         if (_proto.TryIndex(diseaseId, out DiseasePrototype? disease))
         {
             if (comp.ActiveDiseases.TryGetValue(diseaseId, out var stageNum))
             {
                 var stageSymptoms = Array.Empty<ProtoId<DiseaseSymptomPrototype>>();
-                cureSystem.ApplyCureDisease((targetUid, comp), disease, stageSymptoms);
+                _cure.ApplyCureDisease((targetUid, comp), disease, stageSymptoms);
             }
         }
         shell.WriteLine(Loc.GetString("cmd-vaccinate-ok", ("target", targetUid.ToString()), ("disease", diseaseId)));

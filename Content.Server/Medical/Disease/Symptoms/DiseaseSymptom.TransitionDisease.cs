@@ -1,4 +1,3 @@
-using Content.Server.Medical.Disease.Systems;
 using Content.Shared.Medical.Disease;
 
 namespace Content.Server.Medical.Disease.Symptoms;
@@ -22,7 +21,7 @@ public sealed partial class SymptomTransitionDisease : SymptomBehavior
 public sealed partial class SymptomTransitionDisease
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly DiseaseSystem _diseaseSystem = default!;
+    [Dependency] private readonly SharedDiseaseSystem _diseaseSystem = default!;
 
     /// <summary>
     /// Replaces the current disease with another disease prototype, starting at a given stage.

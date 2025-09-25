@@ -28,7 +28,7 @@ public sealed partial class CureBedrest : CureStep
 public sealed partial class CureBedrest
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly DiseaseCureSystem _cureSystem = default!;
+    [Dependency] private readonly SharedDiseaseCureSystem _cureSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
     /// <summary>

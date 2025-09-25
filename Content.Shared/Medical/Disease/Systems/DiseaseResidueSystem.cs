@@ -1,31 +1,26 @@
-using System;
-using System.Linq;
+using System.Runtime.InteropServices;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Medical.Disease;
-using Content.Shared.Inventory;
-using Content.Shared.Hands.Components;
+using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Melee.Events;
+using System.Collections.Generic;
 using Robust.Shared.Map;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using Content.Shared.StepTrigger.Systems;
-using Content.Shared.Weapons.Melee;
-using Content.Shared.Weapons.Melee.Events;
 
-namespace Content.Server.Medical.Disease.Systems;
+namespace Content.Shared.Medical.Disease;
 
 /// <summary>
 /// Decays disease residue on tiles/items and infects entities on direct contact.
 /// </summary>
 public sealed class DiseaseResidueSystem : EntitySystem
 {
-    [Dependency] private readonly DiseaseSystem _disease = default!;
+    [Dependency] private readonly SharedDiseaseSystem _disease = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
     /// <inheritdoc/>
@@ -42,19 +37,21 @@ public sealed class DiseaseResidueSystem : EntitySystem
     {
         base.Update(frameTime);
 
+        var toRemoveAfterDecay = new ValueList<string>();
         var query = EntityQueryEnumerator<DiseaseResidueComponent>();
         while (query.MoveNext(out var uid, out var residue))
         {
             // Decay per-disease intensities.
             var decay = residue.DecayPerTick * (float)frameTime;
-            var toRemoveAfterDecay = new ValueList<string>();
-            foreach (var kv in residue.Diseases.ToArray())
+            toRemoveAfterDecay.Clear();
+
+            foreach (var (id, value) in residue.Diseases)
             {
-                var newVal = kv.Value - decay;
+                var newVal = value - decay;
                 if (newVal <= 0f)
-                    toRemoveAfterDecay.Add(kv.Key);
+                    toRemoveAfterDecay.Add(id);
                 else
-                    residue.Diseases[kv.Key] = newVal;
+                    residue.Diseases[id] = newVal;
             }
 
             foreach (var k in toRemoveAfterDecay)
@@ -62,7 +59,7 @@ public sealed class DiseaseResidueSystem : EntitySystem
 
             if (residue.Diseases.Count == 0)
             {
-                RemComp<DiseaseResidueComponent>(uid);
+                RemCompDeferred<DiseaseResidueComponent>(uid);
                 continue;
             }
         }
@@ -90,10 +87,10 @@ public sealed class DiseaseResidueSystem : EntitySystem
         var residue = EnsureComp<DiseaseResidueComponent>(args.Other);
         foreach (var (id, _) in carrier.ActiveDiseases)
         {
-            if (!_prototypes.TryIndex<DiseasePrototype>(id, out var proto))
+            if (!_prototypes.TryIndex(id, out DiseasePrototype? proto))
                 continue;
 
-            if (!proto.SpreadFlags.Contains(DiseaseSpreadFlags.Contact))
+            if ((proto.SpreadFlags & DiseaseSpreadFlags.Contact) == 0)
                 continue;
 
             var deposit = proto.ContactDeposit;
@@ -112,7 +109,7 @@ public sealed class DiseaseResidueSystem : EntitySystem
         if (residue.Diseases.Count == 0)
             return;
 
-        foreach (var (id, intensity) in residue.Diseases.ToArray())
+        foreach (var (id, intensity) in residue.Diseases)
         {
             InfectByContactChance(args.Other, id);
 
@@ -187,10 +184,10 @@ public sealed class DiseaseResidueSystem : EntitySystem
     /// </summary>
     private void InfectByContactChance(EntityUid target, string diseaseId)
     {
-        if (!_prototypes.TryIndex<DiseasePrototype>(diseaseId, out var proto))
+        if (!_prototypes.TryIndex(diseaseId, out DiseasePrototype? proto))
             return;
 
-        if (!proto.SpreadFlags.Contains(DiseaseSpreadFlags.Contact))
+        if ((proto.SpreadFlags & DiseaseSpreadFlags.Contact) == 0)
             return;
 
         var chance = Math.Clamp(proto.ContactInfect, 0f, 1f);

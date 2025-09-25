@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Generic;
+using Content.Shared.Inventory;
 
 namespace Content.Shared.Medical.Disease;
 
@@ -7,6 +6,7 @@ namespace Content.Shared.Medical.Disease;
 /// Enumeration describing disease transmission vectors.
 /// TODO: only the Contact works and Airborne.
 /// </summary>
+[Flags]
 public enum DiseaseSpreadFlags
 {
     NonContagious = 0,
@@ -37,26 +37,26 @@ public enum DiseaseStealthFlags
 
 /// <summary>
 /// Global configuration for PPE/internals effectiveness used by infection checks.
-/// Centralized here to avoid prototype-level duplication and keep balance consistent.
+/// Multipliers are applied multiplicatively to chance (e.g. 0.6 means 40% reduction.
 /// </summary>
 public static class DiseaseEffectiveness
 {
     // Airborne protection
     public const float InternalsMultiplier = 0.25f;
 
-    public static readonly (string Slot, float Multiplier)[] AirborneSlots = new[]
+    public static readonly (SlotFlags Slot, float Multiplier)[] AirborneSlots =
     {
-        ("mask", 0.6f),
-        ("head", 0.8f),
-        ("eyes", 0.9f),
+        (SlotFlags.MASK, 0.6f),
+        (SlotFlags.HEAD, 0.8f),
+        (SlotFlags.EYES, 0.9f),
     };
 
     // Contact protection
-    public static readonly (string Slot, float Multiplier)[] ContactSlots = new[]
-    {
-        ("gloves", 0.6f),
-        ("shoes", 0.8f),
-        ("outerClothing", 0.8f),
-        ("uniform", 0.9f),
-    };
+    public static readonly (SlotFlags Slot, float Multiplier)[] ContactSlots =
+    [
+        (SlotFlags.GLOVES, 0.6f),
+        (SlotFlags.FEET, 0.8f),
+        (SlotFlags.OUTERCLOTHING, 0.8f),
+        (SlotFlags.INNERCLOTHING, 0.9f),
+    ];
 }

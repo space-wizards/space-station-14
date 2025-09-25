@@ -5,7 +5,7 @@ namespace Content.Shared.Medical.Disease;
 /// <summary>
 /// Describes information about a specific disease symptom.
 /// </summary>
-[Prototype("diseaseSymptom")]
+[Prototype]
 public sealed partial class DiseaseSymptomPrototype : IPrototype
 {
     /// <summary>

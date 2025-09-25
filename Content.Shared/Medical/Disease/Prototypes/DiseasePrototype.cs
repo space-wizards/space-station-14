@@ -6,7 +6,7 @@ namespace Content.Shared.Medical.Disease;
 /// <summary>
 /// Describes information about a specific disease.
 /// </summary>
-[Prototype("disease")]
+[Prototype]
 public sealed partial class DiseasePrototype : IPrototype
 {
     /// <summary>
@@ -31,7 +31,7 @@ public sealed partial class DiseasePrototype : IPrototype
     /// Spread vectors for this disease.
     /// </summary>
     [DataField(required: true)]
-    public List<DiseaseSpreadFlags> SpreadFlags { get; private set; } = [];
+    public DiseaseSpreadFlags SpreadFlags { get; private set; } = DiseaseSpreadFlags.NonContagious;
 
     /// <summary>
     /// If true, this disease is considered beneficial for HUD purposes.

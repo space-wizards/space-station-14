@@ -1,15 +1,12 @@
-using Content.Shared.Medical.Disease;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.DoAfter;
 using Content.Shared.Mobs.Components;
-using Content.Server.Popups;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Localization;
+using Content.Shared.Popups;
 using Content.Shared.Forensics.Components;
 using Content.Shared.IdentityManagement;
+using Robust.Shared.Prototypes;
 
-namespace Content.Server.Medical.Disease.Systems;
+namespace Content.Shared.Medical.Disease;
 
 /// <summary>
 /// Handles using a disease sample swab on mobs to collect their active diseases.
@@ -17,7 +14,7 @@ namespace Content.Server.Medical.Disease.Systems;
 public sealed class DiseaseSwabSystem : EntitySystem
 {
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
     /// <inheritdoc/>
@@ -89,11 +86,11 @@ public sealed class DiseaseSwabSystem : EntitySystem
                 swab.Stages[diseaseId] = stage;
             }
 
-            _popup.PopupEntity(Loc.GetString("diagnoser-disease-swab-collected-popup"), target, args.Args.User);
+            _popup.PopupPredicted(Loc.GetString("swab-disease-collected-popup"), target, args.Args.User);
         }
         else
         {
-            _popup.PopupEntity(Loc.GetString("diagnoser-disease-swab-no-diseases-popup"), target, args.Args.User);
+            _popup.PopupPredicted(Loc.GetString("swab-disease-no-diseases-popup"), target, args.Args.User);
         }
 
         args.Handled = true;

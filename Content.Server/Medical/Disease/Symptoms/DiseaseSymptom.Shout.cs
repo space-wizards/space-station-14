@@ -1,8 +1,8 @@
-using Content.Shared.Dataset;
-using Robust.Shared.Prototypes;
-using Content.Shared.Medical.Disease;
-using Robust.Shared.Random;
 using Content.Server.Chat.Systems;
+using Content.Shared.Dataset;
+using Content.Shared.Medical.Disease;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Medical.Disease.Symptoms;
 

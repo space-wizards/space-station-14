@@ -1,33 +1,30 @@
 using System.Linq;
 using Robust.Shared.Collections;
-using Content.Server.Body.Systems;
-using Content.Server.Medical.Disease.Cures;
-using Content.Server.Medical.Disease.Symptoms;
+using Content.Shared.Body.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory;
-using Content.Shared.Medical.Disease;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Medical.Disease.Systems;
+namespace Content.Shared.Medical.Disease;
 
 /// <summary>
 /// Server system that progresses diseases, triggers symptom behaviors, and handles spread/immunity.
 /// </summary>
-public sealed partial class DiseaseSystem : EntitySystem
+public sealed partial class SharedDiseaseSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly DiseaseSymptomSystem _symptoms = default!;
-    [Dependency] private readonly DiseaseCureSystem _cure = default!;
+    [Dependency] private readonly SharedDiseaseSymptomSystem _symptoms = default!;
+    [Dependency] private readonly SharedDiseaseCureSystem _cure = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly InternalsSystem _internals = default!;
+    [Dependency] private readonly SharedInternalsSystem _internals = default!;
 
     /// <inheritdoc/>
     /// <summary>
@@ -70,7 +67,7 @@ public sealed partial class DiseaseSystem : EntitySystem
 
         foreach (var (diseaseId, stage) in ent.Comp.ActiveDiseases.ToArray())
         {
-            if (!_prototypes.TryIndex<DiseasePrototype>(diseaseId, out var disease))
+            if (!_prototypes.TryIndex(diseaseId, out DiseasePrototype? disease))
             {
                 toRemove.Add(diseaseId);
                 continue;
@@ -137,7 +134,7 @@ public sealed partial class DiseaseSystem : EntitySystem
         foreach (var entry in stageCfg.Symptoms)
         {
             var symptomId = entry.Symptom;
-            if (!_prototypes.TryIndex<DiseaseSymptomPrototype>(symptomId, out var symptom))
+            if (!_prototypes.TryIndex(symptomId, out DiseaseSymptomPrototype? symptom))
                 continue;
 
             // Skip if this symptom is currently suppressed by a symptom-level cure.
@@ -151,6 +148,64 @@ public sealed partial class DiseaseSystem : EntitySystem
 
             _symptoms.TriggerSymptom(ent, disease, symptom);
         }
+    }
+
+    /// <summary>
+    /// Helper: finds an entity in a specific flagged slot if present.
+    /// </summary>
+    private bool TryGetInventoryEntity(EntityUid target, SlotFlags flags, out EntityUid item)
+    {
+        var enumerator = _inventory.GetSlotEnumerator((target, CompOrNull<InventoryComponent>(target)), flags);
+        if (enumerator.NextItem(out item))
+            return true;
+        item = default;
+        return false;
+    }
+
+    /// <summary>
+    /// Adjusts airborne infection chance for PPE/internals on the target.
+    /// </summary>
+    public float AdjustAirborneChanceForProtection(EntityUid target, float baseChance, DiseasePrototype disease)
+    {
+        var chance = baseChance;
+
+        if (_internals.AreInternalsWorking(target))
+            chance *= DiseaseEffectiveness.InternalsMultiplier;
+
+        var permeability = MathF.Max(0f, disease.PermeabilityMod);
+        foreach (var (slot, mult) in DiseaseEffectiveness.AirborneSlots)
+        {
+            if (slot == SlotFlags.MASK)
+            {
+                if (TryGetInventoryEntity(target, SlotFlags.MASK, out var maskUid))
+                {
+                    if (TryComp<MaskComponent>(maskUid, out var mask) && !mask.IsToggled)
+                        chance *= MathF.Min(1f, mult * permeability);
+                }
+                continue;
+            }
+
+            if (TryGetInventoryEntity(target, slot, out _))
+                chance *= MathF.Min(1f, mult * permeability);
+        }
+
+        return MathF.Max(0f, MathF.Min(1f, chance));
+    }
+
+    /// <summary>
+    /// Adjusts contact infection chance for PPE on the target.
+    /// </summary>
+    public float AdjustContactChanceForProtection(EntityUid target, float baseChance, DiseasePrototype disease)
+    {
+        var chance = baseChance;
+        var permeability = MathF.Max(0f, disease.PermeabilityMod);
+        foreach (var (slot, mult) in DiseaseEffectiveness.ContactSlots)
+        {
+            if (TryGetInventoryEntity(target, slot, out _))
+                chance *= MathF.Min(1f, mult * permeability);
+        }
+
+        return MathF.Max(0f, MathF.Min(1f, chance));
     }
 
     /// <summary>
@@ -214,51 +269,5 @@ public sealed partial class DiseaseSystem : EntitySystem
         carrier.NextTick = _timing.CurTime + carrier.TickDelay;
         Dirty(uid, carrier);
         return true;
-    }
-
-    /// <summary>
-    /// Adjusts airborne infection chance for PPE/internals on the target.
-    /// </summary>
-    public float AdjustAirborneChanceForProtection(EntityUid target, float baseChance, DiseasePrototype disease)
-    {
-        var chance = baseChance;
-
-        if (_internals.AreInternalsWorking(target))
-            chance *= DiseaseEffectiveness.InternalsMultiplier;
-
-        var permeability = MathF.Max(0f, disease.PermeabilityMod);
-        foreach (var (slot, mult) in DiseaseEffectiveness.AirborneSlots)
-        {
-            if (slot == "mask")
-            {
-                if (_inventory.TryGetSlotEntity(target, slot, out var maskUid)
-                    && TryComp<MaskComponent>(maskUid, out var mask) && !mask.IsToggled)
-                {
-                    chance *= MathF.Min(1f, mult * permeability);
-                }
-                continue;
-            }
-
-            if (_inventory.TryGetSlotEntity(target, slot, out _))
-                chance *= MathF.Min(1f, mult * permeability);
-        }
-
-        return MathF.Max(0f, MathF.Min(1f, chance));
-    }
-
-    /// <summary>
-    /// Adjusts contact infection chance for PPE on the target.
-    /// </summary>
-    public float AdjustContactChanceForProtection(EntityUid target, float baseChance, DiseasePrototype disease)
-    {
-        var chance = baseChance;
-        var permeability = MathF.Max(0f, disease.PermeabilityMod);
-        foreach (var (slot, mult) in DiseaseEffectiveness.ContactSlots)
-        {
-            if (_inventory.TryGetSlotEntity(target, slot, out _))
-                chance *= MathF.Min(1f, mult * permeability);
-        }
-
-        return MathF.Max(0f, MathF.Min(1f, chance));
     }
 }

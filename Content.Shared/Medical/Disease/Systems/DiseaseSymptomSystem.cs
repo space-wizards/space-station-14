@@ -1,19 +1,17 @@
-using Content.Server.Medical.Disease.Systems;
-using Content.Shared.Medical.Disease;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Random;
 
-namespace Content.Server.Medical.Disease.Symptoms;
+namespace Content.Shared.Medical.Disease;
 
 /// <summary>
 /// Encapsulates symptom-side effects and secondary spread mechanics for diseases.
 /// </summary>
-public sealed partial class DiseaseSymptomSystem : EntitySystem
+public sealed partial class SharedDiseaseSymptomSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly AirborneDiseaseSystem _airborneDisease = default!;
+    [Dependency] private readonly DiseaseAirborneSystem _airborneDisease = default!;
 
     /// <inheritdoc/>
     /// <summary>
@@ -54,7 +52,7 @@ public sealed partial class DiseaseSymptomSystem : EntitySystem
     {
         var cfg = symptom.AirborneBurst;
 
-        if (!disease.SpreadFlags.Contains(DiseaseSpreadFlags.Airborne))
+        if ((disease.SpreadFlags & DiseaseSpreadFlags.Airborne) == 0)
             return;
 
         var range = disease.AirborneRange * MathF.Max(0.1f, cfg.RangeMultiplier);

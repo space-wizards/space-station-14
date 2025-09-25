@@ -1,8 +1,8 @@
 using System;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Medical.Disease;
-using Robust.Shared.Random;
 using Content.Shared.StatusEffectNew;
+using Robust.Shared.Random;
 
 namespace Content.Server.Medical.Disease.Symptoms;
 

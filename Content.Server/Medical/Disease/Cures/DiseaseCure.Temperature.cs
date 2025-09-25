@@ -1,5 +1,5 @@
-using System;
 using Content.Server.Temperature.Components;
+using Content.Server.Medical.Disease.Systems;
 using Content.Shared.Medical.Disease;
 using Robust.Shared.Prototypes;
 

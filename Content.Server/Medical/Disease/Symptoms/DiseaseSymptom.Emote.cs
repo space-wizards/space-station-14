@@ -1,7 +1,7 @@
-using Robust.Shared.Prototypes;
+using Content.Server.Chat.Systems;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Medical.Disease;
-using Content.Server.Chat.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Medical.Disease.Symptoms;
 

@@ -1,13 +1,9 @@
-using Content.Shared.Medical.Disease;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Paper;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
-using Content.Server.Popups;
-using Robust.Shared.Localization;
+using Content.Shared.Popups;
 
-namespace Content.Server.Medical.Disease.Systems;
+namespace Content.Shared.Medical.Disease;
 
 /// <summary>
 /// Handles using a DiseaseSample on the DiseaseDiagnoser to print a report.
@@ -16,7 +12,7 @@ namespace Content.Server.Medical.Disease.Systems;
 public sealed class DiseaseDiagnoserSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly PaperSystem _paper = default!;
 
     /// <inheritdoc/>
@@ -37,7 +33,7 @@ public sealed class DiseaseDiagnoserSystem : EntitySystem
         // Reject if no sample material present
         if (!sample.HasSample)
         {
-            _popup.PopupEntity(Loc.GetString("diagnoser-disease-empty-swab-popup"), uid, args.User);
+            _popup.PopupPredicted(Loc.GetString("diagnoser-disease-empty-swab-popup"), uid, args.User);
             args.Handled = true;
             return;
         }
@@ -48,7 +44,7 @@ public sealed class DiseaseDiagnoserSystem : EntitySystem
         var content = BuildReportContent(sample);
 
         // Spawn paper and set content
-        var paperUid = EntityManager.SpawnAtPosition("DiagnosisReportPaper", Transform(uid).Coordinates);
+        var paperUid = EntityManager.SpawnAtPosition(component.PaperPrototype, Transform(uid).Coordinates);
         if (TryComp<PaperComponent>(paperUid, out var paperComp))
         {
             _paper.SetContent((paperUid, paperComp), content);
@@ -61,7 +57,7 @@ public sealed class DiseaseDiagnoserSystem : EntitySystem
         sample.SubjectDNA = null;
         sample.HasSample = false;
 
-        _popup.PopupEntity(Loc.GetString("diagnoser-disease-printed-popup"), uid, args.User);
+        _popup.PopupPredicted(Loc.GetString("diagnoser-disease-printed-popup"), uid, args.User);
     }
 
     private string BuildReportContent(DiseaseSampleComponent sample)
@@ -84,7 +80,7 @@ public sealed class DiseaseDiagnoserSystem : EntitySystem
         var lines = new List<string>();
         foreach (var id in sample.Diseases)
         {
-            if (!_prototypes.TryIndex<DiseasePrototype>(id, out var diseaseProto))
+            if (!_prototypes.TryIndex(id, out DiseasePrototype? diseaseProto))
                 continue;
 
             var displayName = Loc.GetString(diseaseProto.Name);
@@ -118,9 +114,9 @@ public sealed class DiseaseDiagnoserSystem : EntitySystem
                 foreach (var symptomEntry in stageCfg.Symptoms)
                 {
                     var symptomId = symptomEntry.Symptom;
-                    var symName = "";
-                    if (_prototypes.TryIndex<DiseaseSymptomPrototype>(symptomId, out var symProto))
-                        symName = Loc.GetString(symProto.Name);
+                    var symName = string.Empty;
+                    if (!_prototypes.TryIndex(symptomId, out DiseaseSymptomPrototype? symProto))
+                        symName = Loc.GetString(symProto!.Name);
 
                     lines.Add("- " + symName);
                 }

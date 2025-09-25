@@ -1,6 +1,6 @@
 using System.Globalization;
-using Content.Server.Medical.Disease.Systems;
 using Content.Server.Administration;
+using Content.Shared.Medical.Disease;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
@@ -16,7 +16,7 @@ public sealed class InfectCommand : LocalizedEntityCommands
     public override string Description => Loc.GetString("cmd-infect-desc");
     public override string Help => Loc.GetString("cmd-infect-help");
 
-    [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+    [Dependency] private readonly SharedDiseaseSystem _disease = default!;
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -40,7 +40,6 @@ public sealed class InfectCommand : LocalizedEntityCommands
             return;
         }
 
-        var disease = _sysMan.GetEntitySystem<DiseaseSystem>();
         var targetUid = parsedUid.Value;
         var diseaseId = args[1];
 
@@ -48,7 +47,7 @@ public sealed class InfectCommand : LocalizedEntityCommands
         if (args.Length >= 3 && int.TryParse(args[2], NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedStage))
             stage = Math.Max(1, parsedStage);
 
-        if (!disease.Infect(targetUid, diseaseId, stage))
+        if (!_disease.Infect(targetUid, diseaseId, stage))
         {
             shell.WriteError(Loc.GetString("cmd-infect-fail"));
             return;

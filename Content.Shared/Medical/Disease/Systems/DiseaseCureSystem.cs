@@ -1,19 +1,14 @@
-using System;
 using System.Linq;
-using System.Collections.Generic;
 using Content.Shared.Popups;
-using Content.Shared.Medical.Disease;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Random;
 
-namespace Content.Server.Medical.Disease.Cures;
+namespace Content.Shared.Medical.Disease;
 
-public sealed partial class DiseaseCureSystem : EntitySystem
+public sealed partial class SharedDiseaseCureSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -22,7 +17,7 @@ public sealed partial class DiseaseCureSystem : EntitySystem
     /// <summary>
     /// Executes a configured cure step via its polymorphic OnCure.
     /// </summary>
-    private bool ExecuteCureStep(Entity<DiseaseCarrierComponent> ent, CureStep step, DiseasePrototype disease)
+    private static bool ExecuteCureStep(Entity<DiseaseCarrierComponent> ent, CureStep step, DiseasePrototype disease)
     {
         var deps = IoCManager.Resolve<IEntitySystemManager>().DependencyCollection;
         deps.InjectDependencies(step, oneOff: true);
@@ -72,7 +67,7 @@ public sealed partial class DiseaseCureSystem : EntitySystem
         foreach (var entry in stageCfg.Symptoms)
         {
             var symptomId = entry.Symptom;
-            if (!_prototypeManager.TryIndex<DiseaseSymptomPrototype>(symptomId, out var symptomProto))
+            if (!_prototypes.TryIndex(symptomId, out DiseaseSymptomPrototype? symptomProto))
                 continue;
 
             // If symptom is currently suppressed (recently treated).
@@ -114,7 +109,7 @@ public sealed partial class DiseaseCureSystem : EntitySystem
     /// </summary>
     public void ApplyCureSymptom(Entity<DiseaseCarrierComponent> ent, DiseasePrototype disease, string symptomId)
     {
-        if (!_prototypeManager.TryIndex<DiseaseSymptomPrototype>(symptomId, out var symptomProto))
+        if (!_prototypes.TryIndex(symptomId, out DiseaseSymptomPrototype? symptomProto))
             return;
 
         var duration = symptomProto.CureDuration;
@@ -131,7 +126,7 @@ public sealed partial class DiseaseCureSystem : EntitySystem
     /// <summary>
     /// Writes or raises the immunity strength for the cured disease on the carrier.
     /// </summary>
-    private void ApplyPostCureImmunity(DiseaseCarrierComponent comp, DiseasePrototype disease)
+    private static void ApplyPostCureImmunity(DiseaseCarrierComponent comp, DiseasePrototype disease)
     {
         var strength = disease.PostCureImmunity;
 
@@ -148,7 +143,7 @@ public sealed partial class DiseaseCureSystem : EntitySystem
     {
         foreach (var symptomId in stageSymptoms)
         {
-            if (!_prototypeManager.TryIndex<DiseaseSymptomPrototype>(symptomId, out var symptomProto))
+            if (!_prototypes.TryIndex(symptomId, out DiseaseSymptomPrototype? symptomProto))
                 continue;
 
             foreach (var behavior in symptomProto.Behaviors)
@@ -161,31 +156,10 @@ public sealed partial class DiseaseCureSystem : EntitySystem
     /// </summary>
     private void NotifySymptomCured(Entity<DiseaseCarrierComponent> ent, DiseasePrototype disease, string symptomId)
     {
-        if (!_prototypeManager.TryIndex<DiseaseSymptomPrototype>(symptomId, out var symptomProto))
+        if (!_prototypes.TryIndex(symptomId, out DiseaseSymptomPrototype? symptomProto))
             return;
 
         foreach (var behavior in symptomProto.Behaviors)
             behavior.OnSymptomCured(ent.Owner, disease, symptomId);
-    }
-
-    /// <summary>
-    /// Runtime per-step state stored in the system.
-    /// </summary>
-    internal sealed class CureState
-    {
-        public float Ticker;
-    }
-
-    private readonly Dictionary<(EntityUid, string, CureStep), CureState> _cureStates = new();
-
-    internal CureState GetState(EntityUid uid, string diseaseId, CureStep step)
-    {
-        var key = (uid, diseaseId, step);
-        if (!_cureStates.TryGetValue(key, out var state))
-        {
-            state = new CureState();
-            _cureStates[key] = state;
-        }
-        return state;
     }
 }
