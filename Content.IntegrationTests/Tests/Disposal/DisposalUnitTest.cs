@@ -27,9 +27,7 @@ namespace Content.IntegrationTests.Tests.Disposal
         {
             foreach (var entity in entities)
             {
-                // FIXME Friends
-                //Assert.That(disposalSystem.CanInsert((uid, unit), entity), Is.EqualTo(result));
-                disposalSystem.TryInsert(uid, entity, null);
+                Assert.That(disposalSystem.TryInsert((uid, unit), entity, null), Is.EqualTo(result));
             }
         }
 
@@ -110,6 +108,10 @@ namespace Content.IntegrationTests.Tests.Disposal
     entryDelay: 0
     draggedEntryDelay: 0
     flushTime: 0
+    whitelist:
+      components:
+      - Item
+      - Body
   - type: Anchorable
   - type: ApcPowerReceiver
   - type: Physics
