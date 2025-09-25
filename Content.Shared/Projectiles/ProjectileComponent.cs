@@ -2,6 +2,7 @@ using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Projectiles;
@@ -42,7 +43,8 @@ public sealed partial class ProjectileComponent : Component
     /// <summary>
     ///     The amount of damage the projectile will do.
     /// </summary>
-    [DataField(required: true)] [ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true)]
+    [ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier Damage = new();
 
     /// <summary>
@@ -98,4 +100,16 @@ public sealed partial class ProjectileComponent : Component
     /// </summary>
     [DataField]
     public FixedPoint2 PenetrationAmount = FixedPoint2.Zero;
+
+    [DataField, AutoNetworkedField]
+    public TimeSpan? FireTime;
+
+    [DataField, AutoNetworkedField]
+    public float? FireSpeed;
+
+    /// <summary>
+    /// How much closer to consider the shots from this gun for cover purposes. For scopes.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float CoverRangeBonus = 0;
 }

@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseStructure
+  parent: [ BaseCoverGood, BaseStructure ]
   id: BaseFenceWood
   name: wooden fence
   description: Wooden piece of fencing. I hope there is babushka's garden behind it.
@@ -57,7 +57,7 @@
   - type: Appearance
 
 - type: entity
-  parent: BaseFenceWood
+  parent: [  BaseCoverMild, BaseFenceWood ]
   id: BaseFenceWoodSmall
   name: small wooden fence
   description: Wooden piece of small fence. The best protection for the fencing of a private territory!
@@ -90,7 +90,6 @@
         acts: [ "Destruction" ]
   - type: Climbable
     delay: 2.5
-  - type: RequireProjectileTarget
 
 #High
 - type: entity

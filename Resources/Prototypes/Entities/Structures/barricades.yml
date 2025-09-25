@@ -6,7 +6,7 @@
 - type: entity
   id: BaseBarricade
   description: A barricade made out of wood planks. It looks like it can take a few solid hits.
-  parent: BaseStructure
+  parent: [ BaseCoverGreat, BaseStructure ]
   name: wooden barricade
   abstract: true
   components:
@@ -86,7 +86,7 @@
 #Directional Barricade
 - type: entity
   id: BarricadeDirectional
-  parent: BaseBarricade
+  parent: [ BaseCoverGood, BaseBarricade ]
   placement:
     mode: SnapgridCenter
 #A bunch of this is taken straight from dirwindows and there is a chance that I may have fucked something up. Probably not though
