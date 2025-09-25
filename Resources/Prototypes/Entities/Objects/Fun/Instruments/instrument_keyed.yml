@@ -32,7 +32,6 @@
   - type: Instrument
     allowPercussion: true
     allowProgramChange: true
-    respectMidiLimits: true
   - type: Sprite
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
     state: supersynth
