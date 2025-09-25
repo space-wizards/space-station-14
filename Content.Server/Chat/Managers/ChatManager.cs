@@ -56,15 +56,8 @@ internal sealed partial class ChatManager : IChatManager
     private bool _oocEnabled = true;
     private bool _adminOocEnabled = true;
 
-    private readonly ISawmill _sawmill = default!;
+    private ISawmill _sawmill = default!;
     private readonly Dictionary<NetUserId, ChatUser> _players = new();
-
-    public ChatManager()
-    {
-        IoCManager.InjectDependencies(this);
-
-        _sawmill = _logManager.GetSawmill("SERVER");
-    }
 
     public void Initialize()
     {
@@ -73,6 +66,8 @@ internal sealed partial class ChatManager : IChatManager
 
         _configurationManager.OnValueChanged(CCVars.OocEnabled, OnOocEnabledChanged, true);
         _configurationManager.OnValueChanged(CCVars.AdminOocEnabled, OnAdminOocEnabledChanged, true);
+
+        _sawmill = _logManager.GetSawmill("SERVER");
 
         RegisterRateLimits();
     }
