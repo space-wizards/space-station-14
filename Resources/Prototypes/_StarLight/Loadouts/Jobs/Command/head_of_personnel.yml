@@ -1,0 +1,15 @@
+- type: loadout
+  id: HoPTurtleneckJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoPTurtleneck
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorCommand
+
+- type: loadout
+  id: HoPTurtleneckJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtHoPTurtleneck
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorCommand

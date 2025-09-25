@@ -15630,5 +15630,47 @@ Entries:
   id: 137802
   time: '2025-09-23T16:25:32.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1378
+- author: TheKillerDumb & Bukkataro
+  changes:
+  - message: New Lobby Art "Security Showdown"
+    type: Add
+  id: 171500
+  time: '2025-09-24T00:16:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1715
+- author: Vonte
+  changes:
+  - message: Added NanoTrasen representative tophat.
+    type: Add
+  id: 161800
+  time: '2025-09-24T00:17:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1618
+- author: Vonte
+  changes:
+  - message: Added NanoTrasen representative elite tophat.
+    type: Add
+  id: 161801
+  time: '2025-09-24T00:17:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1618
+- author: Vonte
+  changes:
+  - message: Added ability to choose headwear for NanoTrasen representative.
+    type: Add
+  id: 161802
+  time: '2025-09-24T00:17:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1618
+- author: Miracula
+  changes:
+  - message: Cloud emotes are smooth now
+    type: Fix
+  id: 157900
+  time: '2025-09-24T00:18:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1579
+- author: Miracula
+  changes:
+  - message: Portals, cc icons, brigmedic battery resprites
+    type: Tweak
+  id: 157901
+  time: '2025-09-24T00:18:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1579
 Order: -1
 

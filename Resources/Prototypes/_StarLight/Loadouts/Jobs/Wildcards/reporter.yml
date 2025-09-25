@@ -1,0 +1,25 @@
+- type: loadoutEffectGroup
+  id: SeniorReporter
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobReporter
+      time: 216000 #60 hrs
+
+# Jumpskirt
+- type: loadout
+  id: ReporterJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtReporter
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorReporter
+
+- type: loadout
+  id: JournalistJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtJournalist
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorReporter

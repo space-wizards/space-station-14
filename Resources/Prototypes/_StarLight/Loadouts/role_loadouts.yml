@@ -41,6 +41,7 @@
 - type: roleLoadout
   id: JobNanoTrasenRepresentative
   groups:
+  - NanoTrasenRepresentativeHead
   - NanoTrasenRepresentativeJumpsuit
   - NanoTrasenRepresentativeEyewear
   - CommonBackpack
