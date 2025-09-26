@@ -24,7 +24,6 @@
         density: 50
         mask:
         - SmallMobMask
-        - SpiderlingsImpassable
         layer:
         - SmallMobLayer
   - type: DamageStateVisuals
