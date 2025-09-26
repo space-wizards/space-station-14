@@ -71,6 +71,9 @@
     title: comms-console-announcement-title-station-ai
     color: "#5ed7aa"
   - type: ShowJobIcons
+  - type: DamagedSiliconAccent
+    startPowerCorruptionAtCharIdx: 4
+    maxPowerCorruptionAtCharIdx: 20
 
 - type: entity
   id: AiHeldIntellicard
@@ -174,7 +177,7 @@
   suffix: Empty
   components:
   - type: Anchorable
-    flags: 
+    flags:
     - Anchorable
   - type: Rotatable
   - type: WarpPoint
@@ -213,7 +216,7 @@
         acts: [ "Breakage" ]
     - trigger:
         !type:DamageTrigger
-        damage: 800
+        damage: 2000
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -229,7 +232,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: DamageVisuals
-    thresholds: [25, 50, 75, 100, 125, 150, 175]
+    thresholds: [25, 50, 75, 100, 200, 300, 400]
     damageDivisor: 4
     trackAllDamage: true
     damageOverlay:
@@ -431,9 +434,6 @@
   - type: Speech
     speechVerb: Robotic
     speechSounds: Borg
-  - type: DamagedSiliconAccent
-    startPowerCorruptionAtCharIdx: 4
-    maxPowerCorruptionAtCharIdx: 20
   - type: Tag
     tags:
     - HideContextMenu
@@ -560,6 +560,7 @@
       rules: ghost-role-information-silicon-rules
       raffle:
         settings: default
+      job: Borg
     - type: GhostTakeoverAvailable
 
 - type: entity
@@ -593,6 +594,7 @@
       rules: ghost-role-information-silicon-rules
       raffle:
         settings: default
+      job: Borg
     - type: GhostTakeoverAvailable
 
 - type: entity
@@ -646,6 +648,7 @@
     raffle:
       settings: default
     reregister: false
+    job: Borg
   - type: GhostTakeoverAvailable
 
 - type: entity
@@ -680,6 +683,7 @@
       raffle:
         settings: default
       reregister: false
+      job: Borg
     - type: GhostTakeoverAvailable
 
 - type: entity
@@ -716,6 +720,7 @@
     raffle:
       settings: default
     reregister: false
+    job: Borg
   - type: GhostTakeoverAvailable
 
 - type: entity
@@ -753,6 +758,7 @@
     raffle:
       settings: default
     reregister: false
+    job: Borg
   - type: GhostTakeoverAvailable
 
 - type: entity
@@ -789,6 +795,7 @@
     raffle:
       settings: default
     reregister: false
+    job: Borg
   - type: GhostTakeoverAvailable
 
 - type: entity
@@ -824,4 +831,5 @@
     raffle:
       settings: default
     reregister: false
+    job: Borg
   - type: GhostTakeoverAvailable
