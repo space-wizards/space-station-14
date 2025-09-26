@@ -24,7 +24,6 @@ public sealed partial class AlertsUI : UIWidget
     public AlertsUI()
     {
         RobustXamlLoader.Load(this);
-        IoCManager.InjectDependencies(this);
 
         _sawmill = _logManager.GetSawmill("alertsui");
     }

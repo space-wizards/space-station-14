@@ -14,18 +14,12 @@ public sealed class TextLinkTag : IMarkupTagHandler
 {
     [Dependency] private readonly ILogManager _logManager = default!;
 
-    private readonly ISawmill _sawmill = default!;
+    private ISawmill Sawmill => _sawmillLogger ??= _logManager.GetSawmill(Name);
+    private ISawmill? _sawmillLogger;
 
     public static Color LinkColor => Color.CornflowerBlue;
 
     public string Name => "textlink";
-
-    public TextLinkTag()
-    {
-        IoCManager.InjectDependencies(this);
-
-        _sawmill = _logManager.GetSawmill("textlink");
-    }
 
     /// <inheritdoc/>
     public bool TryCreateControl(MarkupNode node, [NotNullWhen(true)] out Control? control)
@@ -64,7 +58,7 @@ public sealed class TextLinkTag : IMarkupTagHandler
         if (control.TryGetParentHandler<ILinkClickHandler>(out var handler))
             handler.HandleClick(link);
         else
-            _sawmill.Warning("Warning! No valid ILinkClickHandler found.");
+            Sawmill.Warning("Warning! No valid ILinkClickHandler found.");
     }
 }
 

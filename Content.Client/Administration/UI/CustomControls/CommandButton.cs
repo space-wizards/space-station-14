@@ -9,18 +9,10 @@ namespace Content.Client.Administration.UI.CustomControls
     [Virtual]
     public class CommandButton : Button, IDocumentTag
     {
-        [Dependency] private readonly ILogManager _logManager = default!;
-
-        private readonly ISawmill _sawmill = default!;
-
         public string? Command { get; set; }
 
         public CommandButton()
         {
-            IoCManager.InjectDependencies(this);
-
-            _sawmill = _logManager.GetSawmill("command.button");
-
             OnPressed += Execute;
         }
 
@@ -49,7 +41,7 @@ namespace Content.Client.Administration.UI.CustomControls
         {
             if (args.Count != 2 || !args.TryGetValue("Text", out var text) || !args.TryGetValue("Command", out var command))
             {
-                _sawmill.Error($"Invalid arguments passed to {nameof(CommandButton)}");
+                Logger.Error($"Invalid arguments passed to {nameof(CommandButton)}");
                 control = null;
                 return false;
             }

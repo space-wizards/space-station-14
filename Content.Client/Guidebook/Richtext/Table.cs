@@ -14,8 +14,6 @@ public sealed class Table : TableContainer, IDocumentTag
 
     public Table()
     {
-        IoCManager.InjectDependencies(this);
-
         _sawmill = _logManager.GetSawmill("table");
     }
 
