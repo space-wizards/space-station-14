@@ -5,6 +5,10 @@
   id: BaseMob
   abstract: true
   components:
+  - type: FovLimiter
+    enabled: true
+    fovLimit: 120
+    applyToAllPlayers: false
   - type: Sprite
     noRot: true
     drawdepth: Mobs

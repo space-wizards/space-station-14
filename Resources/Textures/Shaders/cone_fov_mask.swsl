@@ -1,0 +1,31 @@
+preset raw;
+
+// Fullscreen black-outside-cone mask.
+// Inputs:
+//  - center: screen-space center in pixels
+//  - angleDeg: cone angle in degrees (total angle, e.g., 120)
+//  - rotation: forward direction in radians (0 = +X to the right in screen space)
+
+uniform highp vec2 center;    // in pixels
+uniform highp float angleDeg; // degrees
+uniform highp float rotation; // radians
+
+void fragment()
+{
+    highp vec2 v = FRAGCOORD.xy - center;
+    highp float len = length(v);
+
+    if (len <= 1e-5)
+    {
+        COLOR = vec4(0.0, 0.0, 0.0, 0.0);
+        return;
+    }
+
+    highp vec2 dir = v / len;
+    highp vec2 fwd = vec2(cos(rotation), sin(rotation));
+
+    highp float cosHalf = cos(angleDeg * 0.017453292519943295 * 0.5);
+    highp float outside = step(dot(dir, fwd), cosHalf);
+
+    COLOR = vec4(0.0, 0.0, 0.0, outside);
+}

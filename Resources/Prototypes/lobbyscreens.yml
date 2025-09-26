@@ -3,9 +3,13 @@
   background: /Textures/LobbyScreens/standoff.webp
 
 - type: lobbyBackground
-  id: zakureyy
+  id: israel
   background: /Textures/LobbyScreens/zakurey.webp
 
 - type: lobbyBackground
-  id: tiktak
-  background: /Textures/LobbyScreens/tiktak.webp
+  id: babatapa
+  background: /Textures/LobbyScreens/babatapa.webp
+
+- type: lobbyBackground
+  id: piretes
+  background: /Textures/LobbyScreens/pirates.webp
