@@ -1,9 +1,9 @@
 - type: entity
   parent: [ClothingEyesBase]
   id: ClothingEyesHudGuard
-  name: Тактические очки
+  name: тактические очки
   description: Защитят от осколков и грязи
-  suffix: WH40K, Гвардия  
+  suffix: WH40K, Гвардия
   components:
   - type: Sprite
     sprite: _WH40K/Clothing/Eyes/guardhud.rsi

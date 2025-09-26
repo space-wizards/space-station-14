@@ -73,7 +73,7 @@
 - type: entity
   parent: UnsensoredClothingUniformBase
   id: ClothingUniformJumpsuitOfficer
-  name: Униформа офицера
+  name: униформа офицера
   description: Обычная униформа офицера Имперской Гвардии
   suffix: WH40K, Гвардия
   components:
@@ -85,7 +85,7 @@
 - type: entity
   parent: UnsensoredClothingUniformBase
   id: ClothingUniformJumpsuitColonel
-  name: Униформа полковника
+  name: униформа полковника
   description: Обычная униформа полковника Имперской Гвардии
   suffix: WH40K, Гвардия
   components:

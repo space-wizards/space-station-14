@@ -58,7 +58,7 @@
 - type: entity
   parent: ClothingHandsGlovesColorBlack
   id: ClothingHandsGlovesCombatColonel
-  name: Перчатки Полковника
+  name: перчатки полковника
   description: филлер
   suffix: WH40K, Гвардия
   components:

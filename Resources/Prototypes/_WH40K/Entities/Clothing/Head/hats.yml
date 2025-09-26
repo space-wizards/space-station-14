@@ -12,7 +12,7 @@
   - type: HideLayerClothing
     slots:
     - Hair
-    
+
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadOfficer
@@ -31,7 +31,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadSgt
-  name: Кепка Сержанта
+  name: кепка сержанта
   description: Самая обыкновенная кепка, принадлежащая кому-то из сержантов.
   suffix: WH40K, Гвардия
   components:
@@ -46,7 +46,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadVet
-  name: Берет
+  name: берет
   description: Берет Гвардейца, что принадлежит ветерану или офицеру
   suffix: WH40K, Гвардия
   components:
@@ -56,4 +56,4 @@
     sprite: _WH40K/Clothing/Head/Hats/beret.rsi
   - type: HideLayerClothing
     slots:
-    - Hair  
+    - Hair

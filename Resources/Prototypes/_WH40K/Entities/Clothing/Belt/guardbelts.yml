@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingBeltStorageBase
   id: Comibelt
-  name: Пояс комиссара
+  name: пояс комиссара
   description: Шикарно вышитый дорогой и прочный пояс комиссара, вместителен.
   suffix: WH40K, Гвардия
   components:
@@ -13,7 +13,7 @@
 - type: entity
   parent: ClothingBeltStorageBase
   id: guardbelt
-  name: Разгрузочный жилет
+  name: разгрузочный жилет
   description: Грубая боевая разгрузка, созданная для гвардейцев
   suffix: WH40K, Гвардия
   components:
@@ -25,7 +25,7 @@
 - type: entity
   parent: ClothingBeltStorageBase
   id: offbelt
-  name: Пояс офицера
+  name: пояс офицера
   description: Качественный пояс для хранения всего необходимого офицеру
   suffix: WH40K, Гвардия
   components:
@@ -37,7 +37,7 @@
 - type: entity
   parent: ClothingBeltStorageBase
   id: psybelt
-  name: Пояс псайкера
+  name: пояс псайкера
   description: Пояс, принадлежащий санкционированному псайкеру
   suffix: WH40K, Гвардия
   components:
@@ -49,7 +49,7 @@
 - type: entity
   parent: ClothingBeltStorageBase
   id: colbelt
-  name: Пояс полковника
+  name: пояс полковника
   description: Шикарно вышитый дорогой и прочный пояс Полковника, вместителен блестит.
   suffix: WH40K, Гвардия
   components:

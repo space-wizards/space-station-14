@@ -206,8 +206,8 @@
     sprite: _WH40K/Objects/Weapons/Battery/meltagun_in-hands.rsi
 
 - type: entity
-  name: лазерный карабин
-  parent: [WeaponLaserPlasmaPistol, BaseGunWieldable]
+  name: лазкарабин
+  parent: [WeaponLaserWH40KEnergy, BaseGunWieldable]
   id: WeaponLaserCarabin
   description:
   suffix: WH40K
@@ -227,17 +227,9 @@
   - type: Gun
     soundGunshot:
       path: /Audio/_WH40K/Weapons/Guns/Gunshots/plasmagun.wav
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: PlasmGunPowerCell
-        whitelist:
-          tags:
-          - PlasmPowerCellGun
 
 - type: entity
-  name: лазерный пистолет
+  name: лазпистолет
   parent: WeaponLaserWH40KEnergy
   id: WeaponLaserPistol
   description:
@@ -252,16 +244,8 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/_WH40K/Weapons/Guns/Gunshots/plasmapist.wav
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: PlasmPistolPowerCell
-        whitelist:
-          tags:
-          - PlasmPowerCellPistol
   - type: Item
-    sprite: _WH40K/Objects/Weapons/Guns/Battery/plasmapistol.rsi
+    sprite: _WH40K/Objects/Weapons/Guns/Battery/laspistol.rsi
     size: Small
   - type: Tag
     tags:

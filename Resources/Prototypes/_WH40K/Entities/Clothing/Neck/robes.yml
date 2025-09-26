@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckRobeTechpriestMars
-  name: Роба техножреца
+  name: роба техножреца
   description: desc-tech-m
   suffix: WH40K, АдМехи, Марс
   components:
@@ -11,7 +11,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckRobeTechpriestAgripinaa
-  name: Роба техножреца
+  name: роба техножреца
   description: desc-tech-a
   suffix: WH40K, АдМехи, Агрипинаа
   components:
@@ -21,7 +21,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckRobeTechpriestGraia
-  name: Роба техножреца
+  name: роба техножреца
   description: desc-tech-g
   suffix: WH40K, АдМехи, Грайя
   components:
@@ -31,7 +31,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckRobeTechpriestLucius
-  name: Роба техножреца
+  name: роба техножреца
   description: desc-tech-l
   suffix: WH40K, АдМехи, Люций
   components:
@@ -41,7 +41,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckRobeTechpriestMetalica
-  name: Роба техножреца
+  name: роба техножреца
   description: desc-tech-me
   suffix: WH40K, АдМехи, Металика
   components:
@@ -51,7 +51,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckRobeTechpriestRiza
-  name: Роба техножреца
+  name: роба техножреца
   description: desc-tech-r
   suffix: WH40K, АдМехи, Риза
   components:
@@ -61,7 +61,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckRobeTechpriestStygiesVIII
-  name: Роба техножреца
+  name: роба техножреца
   description: desc-tech-s
   suffix: WH40K, АдМехи, Стигии VIII
   components:
@@ -71,7 +71,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckRobeGenetorTechpriestMars
-  name: Роба генетуса
+  name: роба генетуса
   description: desc-gen-tech-m
   suffix: WH40K, АдМехи
   components:
