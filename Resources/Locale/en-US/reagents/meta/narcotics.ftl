@@ -23,7 +23,7 @@ reagent-name-impedrezene = impedrezene
 reagent-desc-impedrezene = A narcotic that impedes one's ability by slowing down the higher brain cell functions.
 
 reagent-name-space-drugs = space mirage
-reagent-desc-space-drugs = An illegal compound which induces a number of effects such as loss of balance and visual artefacts.
+reagent-desc-space-drugs = A controlled substance which induces effects such as loss of balance and visual hallucinations.
 
 reagent-name-nocturine = nocturine
 reagent-desc-nocturine = A highly effective sedative and hypnotic, developed by the Syndicate for stealth operations. One-way ticket to honk-shoo town.

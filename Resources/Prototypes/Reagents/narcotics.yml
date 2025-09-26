@@ -255,6 +255,7 @@
   group: Narcotics
   desc: reagent-desc-space-drugs
   physicalDesc: reagent-physical-desc-syrupy
+  contrabandSeverity: Controlled
   flavor: bitter
   color: "#63806e"
   metabolisms:

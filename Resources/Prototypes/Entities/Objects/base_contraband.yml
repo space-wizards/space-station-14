@@ -31,6 +31,14 @@
   - type: Contraband
     severity: Syndicate
 
+# controlled substances - basically for drugs that are generally illegal but have medical/psychological uses that the CMO might elect to approve them for
+- type: entity
+  id: BaseControlledContraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: Controlled
+
 # minor contraband not departmentally restricted -- improvised weapons etc
 - type: entity
   id: BaseMinorContraband

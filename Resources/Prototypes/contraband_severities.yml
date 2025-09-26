@@ -16,6 +16,11 @@
   examineText: contraband-examine-text-Restricted
   showDepartmentsAndJobs: true
 
+# Controlled substances (space mirage, meth, etc). Having these without a prescription, or making these for funsies, might get you yelled at by security.
+- type: contrabandSeverity
+  id: Controlled
+  examineText: contraband-examine-text-Controlled
+
 # Having this as a regular crew member is considered grand theft. (nuke disk, captain's gear, objective items, etc)
 - type: contrabandSeverity
   id: GrandTheft

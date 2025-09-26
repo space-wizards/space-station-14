@@ -16,6 +16,12 @@ contraband-examine-text-Restricted-department =
         [reagent] [color=yellow]This reagent is restricted to {$departments}, and may be considered contraband.[/color]
     }
 
+contraband-examine-text-Controlled =
+    { $type ->
+        *[item] [color=yellow]This item contains a controlled substance.[/color]
+        [reagent] [color=yellow]This reagent is considered a controlled substance.[/color]
+    }
+
 contraband-examine-text-Major =
     { $type ->
         *[item] [color=red]This item is considered major contraband.[/color]
