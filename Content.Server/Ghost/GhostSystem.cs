@@ -523,7 +523,7 @@ namespace Content.Server.Ghost
 
             if (playerEntity != null && !forced)
             {
-                var entityCancelEv = new GhostAttemptEvent(mindId, canReturnGlobal);
+                var entityCancelEv = new GhostAttemptEvent(mindId);
                 RaiseLocalEvent(playerEntity.Value, ref entityCancelEv);
 
                 if (entityCancelEv.Cancelled)

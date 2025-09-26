@@ -206,5 +206,5 @@ namespace Content.Shared.Ghost
     /// Raised on an entity when It's mind is attempting to ghost out.
     /// </summary>
     [ByRefEvent]
-    public record struct GhostAttemptEvent(EntityUid Mind, bool Cancelled);
+    public record struct GhostAttemptEvent(EntityUid Mind, bool Cancelled = false);
 }
