@@ -132,7 +132,7 @@
         orGroup: Guns
       - id: WeaponDisablerSMG
         orGroup: Guns
-      - id: WeaponEnergySMG
+      - id: WeaponEnergySMG # Addition for lizloose
         orGroup: Guns
       - id: WeaponTaser
         orGroup: Guns

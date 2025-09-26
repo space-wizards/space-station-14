@@ -284,6 +284,7 @@
     Glass: 500
     Plastic: 500
 
+# Addition for lizloose
 - type: latheRecipe
   parent: BaseWeaponRecipeSidearm
   id: WeaponEnergySMG
