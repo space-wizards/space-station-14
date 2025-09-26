@@ -215,6 +215,14 @@
   - type: Contraband
     allowedJobs: [ Janitor ]
 
+- type: entity
+  id: BaseSalvageContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedJobs: [ SalvageSpecialist ]
+
 # for ~objective items
 - type: entity
   id: BaseGrandTheftContraband
