@@ -3,30 +3,22 @@
   branches:
     - preconditions:
         - !type:KeyBoolEqualsPrecondition
-          key: SecuritronDetainModeKey
+          key: SecuritronDetainMode
           value: false
       tasks:
         - !type:HTNPrimitiveTask
           operator: !type:UtilityOperator
             proto: NearbyCriminalTargets
-        - !type:HTNPrimitiveTask
-          operator: !type:SpeakOperator
-            speech: securitron-threat-detected
-            hidden: true
         - !type:HTNCompoundTask
-          task: SecuritronMeleeAttackCompound
+          task: SecuritronArrestCompound
     - preconditions:
         - !type:KeyBoolEqualsPrecondition
-          key: SecuritronDetainModeKey
+          key: SecuritronDetainMode
           value: true
       tasks:
         - !type:HTNPrimitiveTask
           operator: !type:UtilityOperator
             proto: NearbyCriminalTargets
-        - !type:HTNPrimitiveTask
-          operator: !type:SpeakOperator
-            speech: securitron-threat-detected
-            hidden: true
         - !type:HTNCompoundTask
           task: SecuritronDetainCompound
     - tasks:
@@ -34,7 +26,7 @@
           task: IdleCompound
 
 - type: htnCompound
-  id: SecuritronMeleeAttackCompound
+  id: SecuritronArrestCompound
   branches:
     - preconditions:
       - !type:KeyExistsPrecondition
@@ -60,6 +52,9 @@
             - !type:TargetInRangePrecondition
               targetKey: Target
               rangeKey: MeleeRange
+            - !type:KeyBoolEqualsPrecondition
+              key: SecuritronTargetSubdued
+              value: false
           services:
             - !type:UtilityService
               id: MeleeService
@@ -72,6 +67,9 @@
     - preconditions:
       - !type:KeyExistsPrecondition
         key: Target
+      - !type:KeyBoolEqualsPrecondition
+        key: SecuritronTargetFleeing
+        value: true
       tasks:
         - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
@@ -84,3 +82,28 @@
         - !type:HTNPrimitiveTask
           operator: !type:JukeOperator
             jukeType: Away
+        - !type:HTNPrimitiveTask
+          operator: !type:MeleeOperator
+            targetKey: Target
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: Target
+            - !type:TargetInRangePrecondition
+              targetKey: Target
+              rangeKey: MeleeRange
+            - !type:KeyBoolEqualsPrecondition
+              key: SecuritronTargetSubdued
+              value: false
+    - preconditions:
+      - !type:KeyExistsPrecondition
+        key: Target
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            shutdownState: PlanFinished
+            pathfindInPlanning: true
+            removeKeyOnFinish: false
+            targetKey: TargetCoordinates
+            pathfindKey: TargetPathfind
+            rangeKey: MeleeRange
+

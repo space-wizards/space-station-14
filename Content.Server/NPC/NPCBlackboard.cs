@@ -17,10 +17,14 @@ public sealed partial class NPCBlackboard : IEnumerable<KeyValuePair<string, obj
     /// <summary>
     /// Global defaults for NPCs
     /// </summary>
-    public const string SecuritronDetainModeKey = "SecuritronOperatingMode";
+    public const string SecuritronDetainModeKey = "SecuritronDetainMode";
+    public const string SecuritronTargetFleeingKey = "SecuritronTargetFleeing";
+    public const string SecuritronTargetSubduedKey = "SecuritronTargetSubdued";
     private static readonly Dictionary<string, object> BlackboardDefaults = new()
     {
         {SecuritronDetainModeKey, false},
+        {SecuritronTargetFleeingKey, false},
+        {SecuritronTargetSubduedKey, false},
         {"BufferRange", 10f},
         {"FollowCloseRange", 3f},
         {"FollowRange", 7f},
@@ -353,4 +357,7 @@ public sealed partial class NPCBlackboard : IEnumerable<KeyValuePair<string, obj
         return GetEnumerator();
     }
 }
+
+
+
 
