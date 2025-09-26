@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation and modified by Swept, potato1234x and deltanedas at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa, snail by IproduceWidgets (github) and Kezu (discord), anomalymeat/cooked by august-sun, dragoncutlet, dragoncutlet_veins, dragoncutlet-cooked and dragon-cooked by JuneSzalkowska (discord), raw and cooked patty taken from tgstation at https://github.com/tgstation/tgstation/commit/b83c7deee4c91df4de130db242facce20308aa8a",
+  "copyright": "Taken from tgstation and modified by Swept, potato1234x and deltanedas at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa, snail by IproduceWidgets (github) and Kezu (discord), anomalymeat/cooked by august-sun, dragoncutlet, dragoncutlet_veins, dragoncutlet-cooked and dragon-cooked by JuneSzalkowska (discord), raw and cooked patty taken from tgstation at https://github.com/tgstation/tgstation/commit/b83c7deee4c91df4de130db242facce20308aa8a. A lot of inhands by Orsoniks.",
   "size": {
     "x": 32,
     "y": 32
@@ -45,6 +45,14 @@
     },
     {
       "name": "corgi"
+    },
+    {
+      "name": "corgi-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "corgi-inhand-left",
+      "directions": 4
     },
     {
       "name": "crab"
@@ -106,7 +114,31 @@
       "name": "plain"
     },
     {
+      "name": "plain-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "plain-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "plain-cooked"
+    },
+    {
+      "name": "plain-cooked-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "plain-cooked-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "generic-pink-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "generic-pink-inhand-left",
+      "directions": 4
     },
     {
       "name": "plant"
@@ -145,13 +177,37 @@
       ]
     },
     {
+      "name": "rotten-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "rotten-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "salami-slice"
     },
     {
       "name": "sausage"
     },
     {
+      "name": "sausage-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "sausage-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "slime"
+    },
+    {
+      "name": "slime-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "slime-inhand-left",
+      "directions": 4
     },
 	{
       "name": "snail"
@@ -163,7 +219,23 @@
       "name": "snake"
     },
     {
+      "name": "snake-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "snake-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "spider"
+    },
+    {
+      "name": "spider-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "spider-inhand-left",
+      "directions": 4
     },
     {
       "name": "spidercutlet"
@@ -181,6 +253,14 @@
       "name": "tomato"
     },
     {
+      "name": "tomato-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "tomato-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "xeno"
     },
     {
@@ -191,6 +271,14 @@
     },
 	{
       "name": "dragon"
+    },
+    {
+      "name": "dragon-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "dragon-inhand-left",
+      "directions": 4
     },
 	{
       "name": "dragon_veins"
@@ -209,6 +297,14 @@
     },
     {
       "name": "dragon-cooked"
+    },
+    {
+      "name": "dragon-cooked-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "dragon-cooked-inhand-left",
+      "directions": 4
     },
     {
       "name": "dragoncutlet"

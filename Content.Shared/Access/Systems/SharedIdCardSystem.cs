@@ -3,7 +3,7 @@ using Content.Shared.Access.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
-using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
@@ -21,6 +21,7 @@ public abstract class SharedIdCardSystem : EntitySystem
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAccessSystem _access = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -83,8 +84,7 @@ public abstract class SharedIdCardSystem : EntitySystem
     public bool TryFindIdCard(EntityUid uid, out Entity<IdCardComponent> idCard)
     {
         // check held item?
-        if (TryComp(uid, out HandsComponent? hands) &&
-            hands.ActiveHandEntity is EntityUid heldItem &&
+        if (_hands.GetActiveItem(uid) is { } heldItem &&
             TryGetIdCard(heldItem, out idCard))
         {
             return true;
@@ -197,6 +197,22 @@ public abstract class SharedIdCardSystem : EntitySystem
         {
             if (department.Roles.Contains(job.ID))
                 id.JobDepartments.Add(department.ID);
+        }
+
+        Dirty(uid, id);
+
+        return true;
+    }
+
+    public bool TryChangeJobDepartment(EntityUid uid, List<ProtoId<DepartmentPrototype>> departments, IdCardComponent? id = null)
+    {
+        if (!Resolve(uid, ref id))
+            return false;
+
+        id.JobDepartments.Clear();
+        foreach (var department in departments)
+        {
+            id.JobDepartments.Add(department);
         }
 
         Dirty(uid, id);

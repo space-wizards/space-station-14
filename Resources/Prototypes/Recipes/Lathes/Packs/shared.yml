@@ -11,8 +11,6 @@
   - Igniter
   - ModularReceiver
   - MicroManipulatorStockPart
-  - MatterBinStockPart
-  - CapacitorStockPart
   - ConveyorBeltAssembly
 
 - type: latheRecipePack
@@ -39,6 +37,12 @@
   - CableStack
   - CableMVStack
   - CableHVStack
+
+- type: latheRecipePack
+  id: PaperworkStatic
+  recipes:
+  - BoxFolderClipboardEmpty
+  - BoxFolderPlasticClipboardEmpty
 
 ## Dynamic
 

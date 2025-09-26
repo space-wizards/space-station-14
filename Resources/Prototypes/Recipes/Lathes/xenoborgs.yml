@@ -1,0 +1,67 @@
+# Base prototypes
+
+- type: latheRecipe
+  abstract: true
+  id: BaseXenoborgRecipe
+  categories:
+  - Robotics
+  completetime: 10
+
+- type: latheRecipe
+  abstract: true
+  id: BaseXenoborgModulesRecipe
+  categories:
+  - Modules
+  completetime: 2
+  materials:
+    Glass: 3000
+
+# xenoborgs
+
+- type: latheRecipe
+  parent: BaseXenoborgRecipe
+  id: XenoborgEngiRecipe
+  result: XenoborgEngiPrinted
+  materials:
+    Steel: 3000
+
+- type: latheRecipe
+  parent: BaseXenoborgRecipe
+  id: XenoborgHeavyRecipe
+  result: XenoborgHeavyPrinted
+  materials:
+    Steel: 2000
+    Plasteel: 1000
+
+- type: latheRecipe
+  parent: BaseXenoborgRecipe
+  id: XenoborgScoutRecipe
+  result: XenoborgScoutPrinted
+  materials:
+    Steel: 2000
+    Plastic: 1000
+
+- type: latheRecipe
+  parent: BaseXenoborgRecipe
+  id: XenoborgStealthRecipe
+  result: XenoborgStealthPrinted
+  materials:
+    Steel: 2000
+    Glass: 1000
+
+# modules
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleHeavyLaserRecipe
+  result: XenoborgModuleHeavyLaser
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleEnergySwordRecipe
+  result: XenoborgModuleEnergySword
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleSuperCloakDeviceRecipe
+  result: XenoborgModuleSuperCloakDevice

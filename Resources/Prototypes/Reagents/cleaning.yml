@@ -3,6 +3,9 @@
   name: reagent-name-bleach
   desc: reagent-desc-bleach
   physicalDesc: reagent-physical-desc-strong-smelling
+  allowedJobs:
+  - Janitor
+  - Chemist
   flavor: bitter
   color: "#a1000b"
   boilingPoint: 111.0
@@ -71,6 +74,7 @@
   id: SpaceLube
   name: reagent-name-space-lube
   desc: reagent-desc-space-lube
+  evaporationSpeed: 0.1
   slipData:
     requiredSlipSpeed: 1
     superSlippery: true
@@ -82,7 +86,7 @@
   meltingPoint: 18.2
   tileReactions:
   - !type:SpillTileReaction
-  friction: 0.0
+  friction: 0.05
 
 - type: reagent
   id: SpaceGlue
@@ -106,11 +110,10 @@
   metabolisms:
     Narcotic:
       effects:
-      - !type:GenericStatusEffect
-        key: SeeingRainbows
-        component: SeeingRainbows
-        type: Add
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
         time: 5
+        type: Add
         refresh: false
     Drink:
       effects:

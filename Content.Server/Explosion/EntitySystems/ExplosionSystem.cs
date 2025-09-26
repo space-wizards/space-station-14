@@ -4,6 +4,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NPC.Pathfinding;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Camera;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
@@ -62,22 +63,11 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
 
     public const int MaxExplosionAudioRange = 30;
 
-    /// <summary>
-    ///     The "default" explosion prototype.
-    /// </summary>
-    /// <remarks>
-    ///     Generally components should specify an explosion prototype via a yaml datafield, so that the yaml-linter can
-    ///     find errors. However some components, like rogue arrows, or some commands like the admin-smite need to have
-    ///     a "default" option specified outside of yaml data-fields. Hence this const string.
-    /// </remarks>
-    [ValidatePrototypeId<ExplosionPrototype>]
-    public const string DefaultExplosionPrototypeId = "Default";
-
     public override void Initialize()
     {
         base.Initialize();
 
-        DebugTools.Assert(_prototypeManager.HasIndex<ExplosionPrototype>(DefaultExplosionPrototypeId));
+        DebugTools.Assert(_prototypeManager.HasIndex(DefaultExplosionPrototypeId));
 
         // handled in ExplosionSystem.GridMap.cs
         SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
@@ -167,7 +157,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
             user);
 
         if (explosive.DeleteAfterExplosion ?? delete)
-            EntityManager.QueueDeleteEntity(uid);
+            QueueDel(uid);
     }
 
     /// <summary>
@@ -222,10 +212,8 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         return r0 * (MathF.Sqrt(12 * totalIntensity / v0 - 3) / 6 + 0.5f);
     }
 
-    /// <summary>
-    ///     Queue an explosions, centered on some entity.
-    /// </summary>
-    public void QueueExplosion(EntityUid uid,
+    /// <inheritdoc />
+    public override void QueueExplosion(EntityUid uid,
         string typeId,
         float totalIntensity,
         float slope,
@@ -306,10 +294,9 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
             return;
         }
 
-        var boom = new QueuedExplosion()
+        var boom = new QueuedExplosion(type)
         {
             Epicenter = epicenter,
-            Proto = type,
             TotalIntensity = totalIntensity,
             Slope = slope,
             MaxTileIntensity = maxTileIntensity,
