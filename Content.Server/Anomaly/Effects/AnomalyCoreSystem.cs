@@ -25,3 +25,4 @@ public sealed class AnomalyCoreSystem : EntitySystem
         args.Price = MathHelper.Lerp(core.Comp.EndPrice, core.Comp.StartPrice, lerp);
     }
 }
+

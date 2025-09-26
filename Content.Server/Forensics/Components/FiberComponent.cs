@@ -14,3 +14,4 @@ namespace Content.Server.Forensics
         public string? FiberColor;
     }
 }
+
