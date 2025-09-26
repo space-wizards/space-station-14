@@ -529,3 +529,10 @@
   name: Auto Round Restart System #by chatgpt (edited by vadim666pro) ДА Я ВАЙБКОДЕР И МНЕ ПОХ
   components:
     - type: AutoRoundRestartRule
+
+- type: entity
+  parent: BaseGameRule
+  id: AutoRoundEnding
+  name: Auto Round Ending System #by vadim666pro
+  components:
+    - type: AutoRoundEndingRule

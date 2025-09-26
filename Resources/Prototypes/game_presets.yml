@@ -6,6 +6,7 @@
   rules:
   - BasicRoundstartVariation
   - AutoRoundRestart
+  - AutoRoundEnding
 
 - type: gamePreset
   id: Sandbox

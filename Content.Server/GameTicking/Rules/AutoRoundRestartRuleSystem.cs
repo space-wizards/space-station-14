@@ -34,7 +34,7 @@ public sealed class AutoRoundRestartRuleSystem : GameRuleSystem<AutoRoundRestart
 
     private void OnRunLevelChanged(GameRunLevelChangedEvent ev)
     {
-        Sawmill.Info($"[AutoRoundRestart] RunLevelChanged: {ev.New}");
+        Sawmill.Info($"[AutoRoundRestart] RunLevelChanged: {ev.New}"); //логирует смену стадии игры
         if (!EntityQuery<AutoRoundRestartRuleComponent>().Any())
             return;
 
@@ -56,7 +56,7 @@ public sealed class AutoRoundRestartRuleSystem : GameRuleSystem<AutoRoundRestart
 
         if (!_notified && secondsLeft <= 30f && secondsLeft > 0f)
         {
-            NotifyPlayers($"Round will restart in {MathF.Ceiling(secondsLeft)} seconds!"); //уведомление
+            NotifyPlayers($"Фракции подписывают договор. Расчетный конец битвы: { MathF.Ceiling(secondsLeft)} секунд."); //уведомление
             _notified = true;
         }
 
@@ -74,7 +74,7 @@ public sealed class AutoRoundRestartRuleSystem : GameRuleSystem<AutoRoundRestart
         _roundStarted = true;
         _roundStartTime = _gameTiming.CurTime;
         _notified = false;
-        NotifyPlayers($"Round started! Restarting in {_restartDelay} seconds...");
+        NotifyPlayers($"Бой фракций начался. Расчетный конец битвы: {_restartDelay} секунд");
     }
 
     private void NotifyPlayers(string message) //уведомление
@@ -85,7 +85,7 @@ public sealed class AutoRoundRestartRuleSystem : GameRuleSystem<AutoRoundRestart
 
     private void RestartRound() //отвечает за перезапуск раунда
     {
-        _gameTicker.RestartRound();
-        Sawmill.Info("[AutoRoundRestart] Restarting round now!");
+        _gameTicker.EndRound();
+        Sawmill.Info("[AutoRoundRestart] changing InRound to PostRound. Using EndRound!");
     }
 }
