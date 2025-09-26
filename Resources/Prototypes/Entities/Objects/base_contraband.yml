@@ -221,7 +221,7 @@
   abstract: true
   components:
   - type: Contraband
-    allowedJobs: [ SalvageSpecialist ]
+    allowedJobs: [ SalvageSpecialist, Quartermaster ]
 
 # for ~objective items
 - type: entity
