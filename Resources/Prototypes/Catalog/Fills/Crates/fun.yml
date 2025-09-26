@@ -256,20 +256,19 @@
       entity_storage: !type:AllSelector
         children:
         - !type:NestedSelector
-          tableId: VarietyInstrumentTable
+          tableId: VarietyInstrumentTable # 200 speso max
         - !type:NestedSelector
-          tableId: BrassInstrumentTable
+          tableId: BrassInstrumentTable # 300 speso max
         - !type:NestedSelector
-          tableId: StringInstrumentTable
+          tableId: StringInstrumentTable # 300 speso max
         - !type:NestedSelector
-          tableId: WoodwindInstrumentTable
+          tableId: WoodwindInstrumentTable # 200 speso max
         - !type:NestedSelector
-          tableId: KeyedPercussionInstrumentTable
+          tableId: KeyedPercussionInstrumentTable # 300 speso max
         - !type:NestedSelector
-          tableId: SpecialInstrumentTable
-        - !type:NestedSelector
-          tableId: SpecialInstrumentTable
-      
+          tableId: SpecialInstrumentTable # x2 200 speso max
+          rolls: 2
+
 - type: entity
   id: CrateFunArtSupplies
   parent: CrateGenericSteel
