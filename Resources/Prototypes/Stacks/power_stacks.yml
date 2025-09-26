@@ -18,3 +18,13 @@
   icon: { sprite: "/Textures/Objects/Tools/cable-coils.rsi", state: coilhv-30 }
   spawn: CableHVStack1
   maxCount: 30
+
+# Explosive cable below
+
+- type: stack
+  id: CableDet
+  name: stack-explosive-cord
+  icon: { sprite: "/Textures/Objects/Tools/cable-coils.rsi", state: coilex-30 }
+  spawn: CableDetStack1
+  maxCount: 30
+
