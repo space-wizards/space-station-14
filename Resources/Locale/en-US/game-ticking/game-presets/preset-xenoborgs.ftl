@@ -5,6 +5,8 @@ xenoborgs-welcome = You're a xenoborg. Protect and help the mothership core to m
 
 mothership-welcome = You're the mothership core. Guide the xenoborgs so they can bring your materials and sentient brains so you can grow the xenoborg army and turn all carbon-based life form into silicon.
 
+xenoborg-shuttle-call = We have detected that Xenoborgs have overtaken the station. Dispatching an emergency shuttle to collect remaining personnel.
+
 xenoborgs-borgsmajor = [color=blue]Xenoborg major victory![/color]
 xenoborgs-borgsminor = [color=blue]Xenoborg minor victory![/color]
 xenoborgs-neutral = [color=white]Neutral outcome![/color]

@@ -1,14 +1,14 @@
 using Content.Server.Antag;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.RoundEnd;
+using Content.Server.Station.Systems;
 using Content.Shared.Destructible;
 using Content.Shared.GameTicking.Components;
-using Content.Shared.Humanoid;
 using Content.Shared.Mind;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Xenoborgs.Components;
-using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -18,6 +18,9 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+    [Dependency] private readonly RoundEndSystem _roundEnd = default!;
+    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     private static readonly Color ANNOUNCMENT_COLOR = Color.Gold;
 
@@ -100,6 +103,30 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
         {
             args.AddLine(Loc.GetString("xenoborgs-list", ("name", name), ("user", sessionData.UserName)));
         }
+    }
+
+    private void CheckRoundEnd(XenoborgsRuleComponent xenoborgsRuleComponent)
+    {
+        var numXenoborgs = GetNumberXenoborgs();
+        var numHumans = _mindSystem.GetAliveHumans().Count;
+
+        if (numXenoborgs / numHumans > xenoborgsRuleComponent.XenoborgShuttleCallPercentage)
+        {
+            foreach (var station in _station.GetStations())
+            {
+                _chatSystem.DispatchStationAnnouncement(station, Loc.GetString("xenoborg-shuttle-call"), colorOverride: Color.BlueViolet);
+            }
+            _roundEnd.RequestRoundEnd(null, false);
+        }
+    }
+
+    protected override void ActiveTick(EntityUid uid, XenoborgsRuleComponent component, GameRuleComponent gameRule, float frameTime)
+    {
+        base.ActiveTick(uid, component, gameRule, frameTime);
+        if (!component.NextRoundEndCheck.HasValue || component.NextRoundEndCheck > _timing.CurTime)
+            return;
+        CheckRoundEnd(component);
+        component.NextRoundEndCheck = _timing.CurTime + component.EndCheckDelay;
     }
 
     /// <summary>
