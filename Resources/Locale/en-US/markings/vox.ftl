@@ -16,6 +16,9 @@ marking-VoxVisageL = Visage (Left)
 marking-VoxVisageR-visage_r = Visage (Right)
 marking-VoxVisageR = Visage (Right)
 
+marking-VoxCheek-cheekblush = Cheeks
+marking-VoxCheek = Cheeks
+
 marking-VoxBeak-beak = Beak (Pointed)
 marking-VoxBeak = Beak (Pointed)
 
