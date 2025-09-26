@@ -58,7 +58,7 @@ public sealed partial class SleepingSystem : EntitySystem
         SubscribeLocalEvent<SleepingComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<SleepingComponent, EntityZombifiedEvent>(OnZombified);
         SubscribeLocalEvent<SleepingComponent, MobStateChangedEvent>(OnMobStateChanged);
-        SubscribeLocalEvent<SleepingComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<SleepingComponent, ComponentInit>(OnCompInit);
         SubscribeLocalEvent<SleepingComponent, ComponentRemove>(OnComponentRemoved);
         SubscribeLocalEvent<SleepingComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<SleepingComponent, SpeakAttemptEvent>(OnSpeakAttempt);
@@ -142,7 +142,7 @@ public sealed partial class SleepingSystem : EntitySystem
         RemComp<SpamEmitSoundComponent>(ent);
     }
 
-    private void OnComponentInit(Entity<SleepingComponent> ent, ref ComponentInit args)
+    private void OnCompInit(Entity<SleepingComponent> ent, ref ComponentInit args)
     {
         var ev = new SleepStateChangedEvent(true);
         RaiseLocalEvent(ent, ref ev);
