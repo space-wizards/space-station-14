@@ -62,7 +62,7 @@ public sealed class ColorPalette
         Element = element ?? Shift(Base, -1); //                        Shift(Base, -1)
         HoveredElement = hoveredElement ?? Shift(Element, 1); //        Shift(Base,  0)
         PressedElement = pressedElement ?? Shift(Element, -1); //       Shift(Base, -2)
-        DisabledElement = disabledElement ?? Shift(Element, 1) //       Shift(Base, -3)
+        DisabledElement = disabledElement ?? Shift(Element, -2) //      Shift(Base, -3)
             .NudgeChroma(-ChromaShift * 2);
 
         Background = background ?? Shift(Base, -3); //                  Shift(Base, -3)

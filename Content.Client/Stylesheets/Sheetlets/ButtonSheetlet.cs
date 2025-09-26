@@ -58,6 +58,7 @@ public sealed class ButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet
 
             // Have disabled button's text be faded
             CButton().PseudoDisabled().ParentOf(E<Label>()).FontColor(Color.FromHex("#E5E5E581")),
+            CButton().PseudoDisabled().ParentOf(E()).ParentOf(E<Label>()).FontColor(Color.FromHex("#E5E5E581")),
         };
         // Texture button modulation
         MakeButtonRules<TextureButton>(rules, Palettes.AlphaModulate, null);
