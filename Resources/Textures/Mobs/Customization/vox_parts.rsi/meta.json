@@ -12,6 +12,10 @@
       "directions": 4
     },
     {
+      "name": "beak_shaved",
+      "directions": 4
+    },
+    {
       "name": "l_arm",
       "directions": 4
     },
