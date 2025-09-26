@@ -31,9 +31,6 @@ marking-VoxBeakCoverStripe = Beak Stripe
 marking-TattooVoxHeartLeftArm-heart_l_arm = Vox Left Arm Tattoo (Heart)
 marking-TattooVoxHeartLeftArm = Vox Left Arm Tattoo (Heart)
 
-marking-TattooVoxHeartLeftArm-heart_l_arm = Vox Left Arm Tattoo (Heart)
-marking-TattooVoxHeartLeftArm = Vox Left Arm Tattoo (Heart)
-
 marking-TattooVoxHeartRightArm-heart_r_arm = Vox Right Arm Tattoo (Heart)
 marking-TattooVoxHeartRightArm = Vox Right Arm Tattoo (Heart)
 
