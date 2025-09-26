@@ -157,8 +157,8 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
             return false;
         }
 
-        // if (_playerManager.LocalSession == null)// Skip role reqs on debug lobby
-        //     return true;
+        if (_playerManager.LocalSession == null)// Skip role reqs on debug lobby
+            return true;
 
         // Check other role requirements
         var reqs = _entManager.System<SharedRoleSystem>().GetRoleRequirements(job);

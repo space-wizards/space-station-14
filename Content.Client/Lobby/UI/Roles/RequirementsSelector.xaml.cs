@@ -53,6 +53,7 @@ public sealed partial class RequirementsSelector : BoxContainer
             StyleClasses = { StyleBase.StyleClassLabelSubText }
         };
         _requirementsLabel.SetMessage(FormattedMessage.FromUnformatted(Loc.GetString("role-timer-locked")));
+
         _lockStripe = new StripeBack()
         {
             Visible = false,
@@ -117,11 +118,6 @@ public sealed partial class RequirementsSelector : BoxContainer
             if (requirements.Count > 0)
             {
                 var firstNode = requirements[0];
-                requiremenets_short.PushTag(new MarkupNode(
-                    name: "font",
-                    value: new MarkupParameter(8),
-                    attributes: null
-                ));
                 var nodeLen = requirements.Count;
                 var idx = 0;
                 foreach (var i in requirements)
@@ -131,21 +127,14 @@ public sealed partial class RequirementsSelector : BoxContainer
                         break;
                     idx++;
                 }
-                requiremenets_short.PushTag(new MarkupNode(
-                    name: "font",
-                    value: null,
-                    attributes: null,
-                    closing: true
-                ));
                 if (idx < nodeLen - 1)
-                    requiremenets_short.PushTag(new MarkupNode("..."));
-                // lss = requirements[0];
-                // requiremenets_short = FormattedMessage.Empty;
-                // requiremenets_short.PushTag(lss);
+                    requiremenets_short.PushTag(new MarkupNode(".."));
             }
         }
-        if (requiremenets_short != null)
+        if (requiremenets_short.Count > 0)
             _requirementsLabel.SetMessage(requiremenets_short);
+        else
+            _requirementsLabel.SetMessage(FormattedMessage.FromUnformatted("ERROR: LOCKED, BUT NO DATA."));
         _lockStripe.TooltipSupplier = _ => tooltip;
         _lockStripe.Visible = true;
         _options.Visible = false;
