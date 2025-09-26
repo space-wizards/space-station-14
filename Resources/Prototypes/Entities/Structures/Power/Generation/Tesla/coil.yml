@@ -164,6 +164,9 @@
     lightningResistance: 10
     lightningExplode: false
     damageFromLightning: 0
+  - type: RandomWalkAttractor
+    component: TeslaEnergyBall
+    baseRange: 80
   - type: Anchorable
   - type: Rotatable
   - type: Pullable

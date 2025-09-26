@@ -25,7 +25,8 @@
         - MachineMask
         layer:
         - MachineLayer
-  - type: SingularityAttractor
+  - type: RandomWalkAttractor
+    component: Singularity
     baseRange: 80
   - type: SinguloFood
     energy: 120

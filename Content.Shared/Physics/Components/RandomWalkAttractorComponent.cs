@@ -1,25 +1,32 @@
-using Content.Server.Singularity.EntitySystems;
+using Content.Shared.Physics.EntitySystems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Singularity.Components;
+namespace Content.Shared.Physics.Components;
 
 /// <summary>
 /// Attracts the singularity.
 /// </summary>
 [RegisterComponent]
-[Access(typeof(SingularityAttractorSystem))]
-public sealed partial class SingularityAttractorComponent : Component
+[Access(typeof(RandomWalkAttractorSystem))]
+public sealed partial class RandomWalkAttractorComponent : Component
 {
+    /// <summary>
+    /// Pair component used to limit the type of random walker we want to attract.
+    /// </summary>
+    [DataField(required: true)]
+    public string Component;
+
     /// <summary>
     /// The range at which singularities will be unable to go away from the attractor.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float BaseRange = 25f;
 
     /// <summary>
     /// The amount of time that should elapse between pulses of this attractor.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField]
     public TimeSpan TargetPulsePeriod = TimeSpan.FromSeconds(2);
 
     /// <summary>
