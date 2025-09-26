@@ -14,4 +14,3 @@ namespace Pow3r
         }
     }
 }
-
