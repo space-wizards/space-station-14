@@ -3,7 +3,7 @@ using Content.Shared.Ghost;
 using Content.Shared.Mind;
 using Robust.Shared.Random;
 
-namespace Content.Server.GhostTypes;
+namespace Content.Shared.GhostTypes;
 
 public sealed class GhostSpriteStateSystem : EntitySystem
 {

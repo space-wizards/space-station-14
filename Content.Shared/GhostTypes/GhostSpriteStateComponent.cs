@@ -1,9 +1,11 @@
-namespace Content.Server.GhostTypes;
+using Robust.Shared.GameStates;
+
+namespace Content.Shared.GhostTypes;
 
 /// <summary>
 /// Changes the entity sprite according to damage taken
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class GhostSpriteStateComponent : Component
 {
     /// <summary>

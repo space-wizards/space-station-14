@@ -126,13 +126,13 @@ public sealed partial class MindComponent : Component
     public LocId? Subtype;
 
     /// <summary>
-    /// Entity damage stored by the MindRememberBodySystem, indexed by the DamageableSystem.
+    /// Entity damage stored by the StoreDamageTakenOnMind, indexed by the DamageableSystem.
     /// </summary>
     [DataField]
     public Dictionary<string, FixedPoint2>? DamagePerGroup;
 
     /// <summary>
-    /// Collection of possible damage types, stored by the MindRememberBodySystem.
+    /// Collection of possible damage types, stored by the StoreDamageTakenOnMind.
     /// </summary>
     [DataField]
     public DamageSpecifier? Damage;
