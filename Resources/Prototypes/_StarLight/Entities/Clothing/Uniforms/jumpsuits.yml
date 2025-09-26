@@ -62,7 +62,7 @@
   parent: [ ClothingUniformBase, BaseCommandContraband ]
   id: ClothingUniformJumpsuitNtrepTurtleNeck
   name: NT Representive's turtleneck
-  description: For a more casual yet elegant look.
+  description: For a more casual look while on the job.
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/ntrepturtleneck.rsi
