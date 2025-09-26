@@ -11,7 +11,7 @@
   - type: LimitedCharges
     maxCharges: 3
   - type: AutoRecharge
-    rechargeDuration: 25
+    rechargeDuration: 15
   # Starlight-end
   - type: InstantAction
     event: !type:SpiderWebActionEvent

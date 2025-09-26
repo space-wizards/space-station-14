@@ -56,6 +56,14 @@
 
 - type: jobIcon
   parent: JobIcon
+  id: JobIconCentCommOperator
+  icon:
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
+    state: CentCommOperator
+  jobName: job-name-centcommoperator
+
+- type: jobIcon
+  parent: JobIcon
   id: JobIconCommander
   icon:
     sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi

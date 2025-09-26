@@ -23,7 +23,7 @@
 - type: entity
   parent: [ClothingHeadBase, BaseSecurityContraband]
   id: ClothingHeadHatBeretCorpsman
-  name: Corpsman's Beret
+  name: corpsman's beret
   description: Losing this hat is considered grounds for demotion.. Kidding, though you will be ridiculed by your fellow corpsmans.
   components:
   - type: Sprite
@@ -179,3 +179,43 @@
     - type: Clothing
       sprite: _Starlight/Clothing/Head/Hats/pancake.rsi
 # Fashion-O-Mat-End
+    
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatNTRTophat
+  name: NT rep tophat
+  description: A fancy black tophat, handmade for the Nanotrasen rep. It looks expensive.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hats/ntr_tophat.rsi
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.09"
+  - type: Tag
+    tags:
+    - PetWearable
+    - CorgiWearable
+    - ClothMade
+    - HamsterWearable
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatNTREliteTophat
+  name: NT rep elite tophat
+  description: An expensive looking black tophat. the gold embossing on the front shows the Nanotrasen logo, fitting for an NT rep.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hats/ntr_elite_tophat.rsi
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.09"
+  - type: Tag
+    tags:
+    - PetWearable
+    - CorgiWearable
+    - ClothMade
+    - HamsterWearable

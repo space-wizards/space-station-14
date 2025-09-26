@@ -20,10 +20,10 @@
     graph: ShotgunRiotSawn
     node: start
     deconstructionTarget: null
-    
+
 - type: entity
   name: sawn-off riot shotgun
-  parent: [BaseWeaponShotgun, BaseGunWieldable, BaseSecurityContraband]
+  parent: [BaseWeaponShotgun, BaseSecurityContraband]
   id: WeaponShotgunRiotSawn
   description: Come with me if you want to live.
   components:
@@ -37,14 +37,13 @@
   - type: Gun
     spread: 30
     pump: true
-  - type: GunRequiresWield
   - type: BallisticAmmoProvider
     capacity: 4
   - type: Construction
     graph: ShotgunRiotSawn
     node: shotgunsawn
     deconstructionTarget: null
-    
+
 - type: entity
   parent: [WeaponShotgunRiotSawn, BaseSecurityContraband]
   id: WeaponShotgunRiotSawnEmpty
@@ -56,12 +55,12 @@
     graph: ShotgunRiotSawn
     node: shotgunsawn
     deconstructionTarget: null
-    
+
 - type: entity
   name: combat shotgun
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseSecurityContraband]
   id: WeaponShotgunCombat
-  description: A semi automatic shotgun with tactical furniture and a six-shell capacity underneath.
+  description: A semi automatic shotgun with tactical furniture and a seven-shell capacity underneath.
   components:
   - type: Item
     sprite: _Starlight/Objects/Weapons/Guns/Shotguns/cshotgun_inhands_64x.rsi
@@ -74,7 +73,7 @@
   - type: GunRequiresWield
   - type: BallisticAmmoProvider
     capacity: 7
-    
+
 - type: entity
   name: cycler shotgun
   parent: [BaseWeaponShotgunAny, BaseGunWieldable, BaseSecuritySalvageContraband]
@@ -166,6 +165,8 @@
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/minotaur.rsi
+  - type: Item
     sprite: _Starlight/Objects/Weapons/Guns/Shotguns/minotaur.rsi
   - type: GunRequiresWield
   - type: Gun

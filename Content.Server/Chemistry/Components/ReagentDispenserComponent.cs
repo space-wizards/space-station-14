@@ -4,6 +4,8 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes; // Starlight-edit
+using Content.Shared.Chemistry.Reagent; // Starlight-edit
 
 namespace Content.Server.Chemistry.Components
 {
@@ -22,5 +24,8 @@ namespace Content.Server.Chemistry.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         public ReagentDispenserDispenseAmount DispenseAmount = ReagentDispenserDispenseAmount.U10;
+        
+        [DataField]
+        public Dictionary<ProtoId<ReagentPrototype>, float> GeneratableReagents = new(); // Starlight-edit
     }
 }

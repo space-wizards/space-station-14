@@ -14,6 +14,7 @@ loadout-group-assistant-backpack = Assistant backpack
 
 # Command
 
+loadout-group-nanotrasenrepresentative-head = NanoTrasen representative head
 loadout-group-nanotrasenrepresentative-outerclothing = NanoTrasen representative outer clothing
 loadout-group-nanotrasenrepresentative-jumpsuit = NanoTrasen representative jumpsuit
 loadout-group-nanotrasenrepresentative-eyewear = NanoTrasen representative eyewear
@@ -41,3 +42,6 @@ loadout-group-iia-shoes = Lawyer shoes
 
 # Civilian
 loadout-group-civilian-shoes = Shoes
+
+# Cargo
+loadout-group-salvage-specialist-jumpsuit = Salvage Specialist jumpsuit

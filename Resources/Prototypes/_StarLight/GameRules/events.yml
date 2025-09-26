@@ -4,7 +4,7 @@
   components:
   - type: StationEvent
     earliestStart: 15
-    weight: 7.5
+    weight: 3
     minimumPlayers: 10
     duration: null
   - type: RuleGrids
@@ -247,3 +247,11 @@
           max: 1
           pickPlayer: false
           
+# Security Shuttle
+- type: entity
+  parent: BaseGameRule
+  id: SecurityShuttleSpawn_KillerTamashi
+  components:
+    - type: RuleGrids
+    - type: LoadMapRule
+      gridPath: /Maps/_Starlight/Shuttles/KillerTamashi-SecShuttle.yml

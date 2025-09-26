@@ -205,6 +205,7 @@
       - VoxPidgin
       - Scratch
       - Dog
+      - Thaveyan
 
 - type: entity
   parent: [ BaseBorgiChassis, BaseBorgTransponder ]

@@ -19,10 +19,11 @@
     - Human
     - Moth
     - Reptilian
-    - Vulpkanin
+    - Vulpkanin # Starlight
     - Felionoid #🌟Starlight🌟
     - Resomi #🌟Starlight🌟
     - Avali #🌟Starlight🌟
+    - Thaven # Starlight
 
 - type: loadoutEffectGroup
   id: EffectSpeciesVox

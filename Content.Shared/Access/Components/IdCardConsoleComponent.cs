@@ -40,43 +40,20 @@ public sealed partial class IdCardConsoleComponent : Component
     // Put this on shared so we just send the state once in PVS range rather than every time the UI updates.
 
     [DataField, AutoNetworkedField]
-    public List<ProtoId<AccessLevelPrototype>> AccessLevels = new()
+    public List<ProtoId<AccessGroupPrototype>> AccessGroups = new() // Starlight-edit: Access Groups
     {
-        "Armory",
-        "Atmospherics",
-        "Bar",
-        "Brig",
-        "Detective",
-        "Captain",
-        "Cargo",
-        "Chapel",
-        "Chemistry",
-        "ChiefEngineer",
-        "ChiefMedicalOfficer",
-        "Command",
-        "Cryogenics",
-        "Engineering",
-        "External",
-        "HeadOfPersonnel",
-        "HeadOfSecurity",
-        "Hydroponics",
-        "Janitor",
-        "Kitchen",
-        "Lawyer",
-        "Maintenance",
-        "Medical",
-        "Quartermaster",
-        "Research",
-        "ResearchDirector",
-        "Salvage",
+        "General",
         "Security",
+        "Cargo",
+        "Command",
+        "Research",
+        "Medical",
         "Service",
-        "Theatre",
-        "Ntrep",
-        "Magistrate",
-        "BlueShield",
-        "Brigmedic"
+        "Engineering"
     };
+
+    [DataField, AutoNetworkedField]
+    public ProtoId<AccessGroupPrototype>? CurrentAccessGroup; // Starlight-edit
 
     [Serializable, NetSerializable]
     public sealed class IdCardConsoleBoundUserInterfaceState : BoundUserInterfaceState
@@ -91,6 +68,7 @@ public sealed partial class IdCardConsoleComponent : Component
         public readonly List<ProtoId<AccessLevelPrototype>>? TargetIdAccessList;
         public readonly List<ProtoId<AccessLevelPrototype>>? AllowedModifyAccessList;
         public readonly ProtoId<JobPrototype> TargetIdJobPrototype;
+        public readonly ProtoId<AccessGroupPrototype> CurrentAccessGroup; // Starlight-edit
 
         public IdCardConsoleBoundUserInterfaceState(bool isPrivilegedIdPresent,
             bool isPrivilegedIdAuthorized,
@@ -101,7 +79,8 @@ public sealed partial class IdCardConsoleComponent : Component
             List<ProtoId<AccessLevelPrototype>>? allowedModifyAccessList,
             ProtoId<JobPrototype> targetIdJobPrototype,
             string privilegedIdName,
-            string targetIdName)
+            string targetIdName,
+            ProtoId<AccessGroupPrototype> currentAccessGroup) // Starlight-edit
         {
             IsPrivilegedIdPresent = isPrivilegedIdPresent;
             IsPrivilegedIdAuthorized = isPrivilegedIdAuthorized;
@@ -113,6 +92,7 @@ public sealed partial class IdCardConsoleComponent : Component
             TargetIdJobPrototype = targetIdJobPrototype;
             PrivilegedIdName = privilegedIdName;
             TargetIdName = targetIdName;
+            CurrentAccessGroup = currentAccessGroup; // Starlight-edit
         }
     }
 

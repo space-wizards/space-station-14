@@ -23,4 +23,17 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+
+- type: listing
+  id: SpellbookEventRandomizeLanguages
+  name: spellbook-event-tower-babel-name
+  description: spellbook-event-tower-babel-description
+  productAction: ActionRandomizeLanguages
+  cost:
+    WizCoin: 5 #half your WC to cause a total and complete communication breakdown on the station? sign me up!
+  categories:
+  - SpellbookUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
   disableRefund: true

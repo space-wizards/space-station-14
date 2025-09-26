@@ -11,11 +11,11 @@
         borg_module:
           - BorgModuleTool
           - BorgModuleFireExtinguisher
-        ears: 
+        ears:
           - ClothingHeadsetAssistant
-        head: 
+        head:
           - ClothingHeadHelmetEVALarge
-        outerClothing: 
+        outerClothing:
           - ClothingOuterHardsuitEVA
         mask:
           - ClothingMaskBreath
@@ -38,8 +38,28 @@
   description: A smart dog, loves stating it's laws.
   id: StationBorgiChassis
   components:
-    - type: ReplacementAccent
-      accent: dog
+    - type: LanguageKnowledge
+      speaks:
+      - Machine
+      - Dog
+      understands:
+      - GalacticCommon
+      - Machine
+      - Dog
+      - Canilunzt
+      - Sign
+      - Bubblish
+      - Chittin
+      - Draconic
+      - Marish
+      - Moffic
+      - Nekomimetic
+      - Sylvan
+      - Terrum
+      - VoxPidgin
+      - Scratch
+      - Thaveyan
+      - SolCommon
     - type: ItemSlots
       slots:
         cell_slot:
@@ -75,8 +95,28 @@
   name: SubWoofer
   description: A smart dog, with an obsession for sick bass beats and stating laws.
   components:
-    - type: ReplacementAccent
-      accent: dog
+    - type: LanguageKnowledge
+      speaks:
+      - Machine
+      - Dog
+      understands:
+      - GalacticCommon
+      - Machine
+      - Dog
+      - Canilunzt
+      - Sign
+      - Bubblish
+      - Chittin
+      - Draconic
+      - Marish
+      - Moffic
+      - Nekomimetic
+      - Sylvan
+      - Terrum
+      - VoxPidgin
+      - Scratch
+      - Thaveyan
+      - SolCommon
     - type: ItemSlots
       slots:
         cell_slot:
@@ -130,7 +170,7 @@
         - BorgModuleSyndicateWeapon
 
 - type: entity
-  parent: [ BaseXenoborgChassis, BaseBorgiChassis ]
+  parent: [ BaseXenoborgChassis, BaseXenoborgTransponder, BaseBorgiChassis ]
   id: XenoBorgiChassis
   name: XenoBorgi
   description:  A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh Xenoborg chassis to grow their army. This one seems to be an borgi type, as it has inferior flesh in exchange for hands to support the other Xenoborgs.
@@ -233,6 +273,11 @@
               state: corgi_head_displacement
     - type: LockingWhitelist
       blacklist: #N/A you are the 2nd in command. if the mothership put you in this spot you are TRUSTED
+    - type: BorgTransponder
+      name: xenoborgi
+      sprite:
+        sprite: Mobs/Pets/corgi.rsi
+        state: corgi
 
 - type: entity
   parent: XenoBorgiChassis
@@ -242,18 +287,31 @@
     - type: ContainerFill
       containers:
         borg_brain:
-        - MMI
+          - MMI
         borg_module:
-        - XenoborgModuleBasic
-        - XenoborgModuleTool
-        - BorgModuleSyndicateWeapon
-        - BorgModuleTopicals
+          - XenoborgModuleBasic
+          - XenoborgModuleTool
+          - BorgModuleSyndicateWeapon
+          - BorgModuleTopicals
+        ears:
+          - ClothingHeadsetAssistant
+        head:
+          - ClothingHeadHelmetEVALarge
+        outerClothing:
+          - ClothingOuterHardsuitEVA
+        mask:
+          - ClothingMaskBreath
+        suitstorage:
+          - OxygenTankFilled
+        id:
+          - BorgiClearPDA
+        back:
+          - ClothingBagPet
     - type: ItemSlots
       slots:
         cell_slot:
           name: power-cell-slot-component-slot-name-default
           startingItem: PowerCellHyper
-
 
 - type: entity
   parent: XenoBorgiPrinted
@@ -271,9 +329,23 @@
     - type: ContainerFill
       containers:
         borg_brain:
-        - MMIFilled
+          - MMIFilled
         borg_module:
-        - XenoborgModuleBasic
-        - XenoborgModuleTool
-        - BorgModuleSyndicateWeapon
-        - BorgModuleTopicals
+          - XenoborgModuleBasic
+          - XenoborgModuleTool
+          - BorgModuleSyndicateWeapon
+          - BorgModuleTopicals
+        ears:
+          - ClothingHeadsetAssistant
+        head:
+          - ClothingHeadHelmetEVALarge
+        outerClothing:
+          - ClothingOuterHardsuitEVA
+        mask:
+          - ClothingMaskBreath
+        suitstorage:
+          - OxygenTankFilled
+        id:
+          - BorgiClearPDA
+        back:
+          - ClothingBagPet

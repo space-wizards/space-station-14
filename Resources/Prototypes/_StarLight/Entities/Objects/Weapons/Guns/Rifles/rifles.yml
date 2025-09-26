@@ -125,20 +125,58 @@
 
 - type: entity
   name: ARG
-  parent: [ WeaponRifleLecter, BaseCentcommContraband ]
+  parent: [ BaseWeaponRifle, BaseSecurityContraband ]
   id: WeaponRifleARG
-  description: A robust assault rile used by Nanotrasen fighting forces.
+  description: An old galactic standard assault rifle, used by various paramilitary groups and former SVS militias ever since. Uses .30 rifle ammo.
   components:
   - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Rifles/arg.rsi
+    layers:
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-0
+      map: [ "enum.GunVisualLayers.Mag" ]
+  - type: Item
     sprite: _Starlight/Objects/Weapons/Guns/Rifles/arg.rsi
   - type: Clothing
     sprite: _Starlight/Objects/Weapons/Guns/Rifles/arg.rsi
   - type: Gun
-    fireRate: 7
+    fireRate: 6
     soundGunshot:
       path: /Audio/_Starlight/Weapons/Guns/Gunshots/m90.ogg
+  - type: ChamberMagazineAmmoProvider
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineLightRifleFMJ
+        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+          - MagazineLightRifle
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeLightRifleFMJ
+        priority: 1
+        whitelist:
+          tags:
+          - CartridgeLightRifle
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot ""
+      gun_chamber: !type:ContainerSlot ""
+  - type: Appearance
   - type: MagazineVisuals
+    magState: mag
     steps: 1
+    zeroVisible: true
+  - type: Contraband
+    allowedDepartments: [ Security ]
 
 - type: entity
   name: Aussec Armory M-52
@@ -150,6 +188,8 @@
     sprite: _Starlight/Objects/Weapons/Guns/Rifles/m-52.rsi
   - type: Clothing
     sprite: _Starlight/Objects/Weapons/Guns/Rifles/m-52.rsi
+  - type: Item
+    sprite: _Starlight/Objects/Weapons/Guns/Rifles/m-52_wielded_x64.rsi
   - type: Gun
     fireRate: 8
     soundGunshot:

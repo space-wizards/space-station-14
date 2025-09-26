@@ -71,12 +71,9 @@
 
 - type: salvageFaction
   id: SovietImpossible
-  desc: salvage-faction-soviet
+  desc: salvage-faction-elder
   biomes:
-    - Lava
-    - Grasslands
-    - Caves
-    - Snow
+    - TrueAbyss
   entries:
     - proto: MobElder
       cost: 463
@@ -98,18 +95,18 @@
   configs:
     DefenseStructure: WeaponTurretSyndicate
 
-- type: salvageFaction
-  id: Elder
-  desc: salvage-faction-elder
-  entries:
-    - proto: MobElder
-      cost: 40000
-  biomes:
-    - Abyss
-  difficulties: 
-    - Difficult
-  configs:
-    DefenseStructure: WeaponTurretSyndicate
+# - type: salvageFaction
+#   id: Elder
+#   desc: salvage-faction-elder
+#   entries:
+#     - proto: MobElder
+#       cost: 40000
+#   biomes:
+#     - Abyss
+#   difficulties: 
+#     - Difficult
+#   configs:
+#     DefenseStructure: WeaponTurretSyndicate
 
 - type: salvageFaction
   id: Xenos

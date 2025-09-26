@@ -51,6 +51,7 @@ public abstract partial class SharedSurgerySystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly StarlightEntitySystem _entitySystem = default!;
+    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
 
     public override void Initialize()
     {

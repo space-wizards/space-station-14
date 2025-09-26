@@ -65,3 +65,16 @@
     - state: large
   - type: Flatpack
     entity: SupermatterCrystal
+
+- type: entity
+  parent: BaseStructureFlatpack
+  id: ReflectorFlatpack
+  name: Reflector Flatpack
+  description: A flatpack used for constructing a Reflector.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/flatpack.rsi
+    layers:
+    - state: reflector
+  - type: Flatpack
+    entity: Reflector

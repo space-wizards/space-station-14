@@ -7,10 +7,18 @@
   defaultSkinTone: "#5a3f2d"
   markingLimits: MobVulpkaninMarkingLimits
   dollPrototype: MobVulpkaninDummy
-  skinColoration: VulpkaninColors
+  skinColoration: Hues # Starlight
   maleFirstNames: names_vulpkanin_male
   femaleFirstNames: names_vulpkanin_female
   lastNames: names_vulpkanin_last
+  # starlight start
+  minHeight: 0.9
+  defaultHeight: 1
+  maxHeight: 1.2
+  standardSize: 170
+  standardWeight: 75
+  standardDensity: 110
+  # starlight end
 
 - type: speciesBaseSprites
   id: MobVulpkaninSprites
@@ -26,7 +34,7 @@
     HeadTop: MobHumanoidAnyMarking
     HeadSide: MobHumanoidAnyMarking
     Tail: MobHumanoidAnyMarking
-    Eyes: MobVulpkaninEyes
+    Eyes: MobHumanoidEyes # Starlight
     LArm: MobVulpkaninLArm
     RArm: MobVulpkaninRArm
     LHand: MobVulpkaninLHand
@@ -49,21 +57,21 @@
     Snout:
       points: 1
       required: true
-      defaultMarkings: [ VulpSnout ]
+      defaultMarkings: [ FoxSnout ] # Starlight
     SnoutCover:
       points: 3
       required: false
     Tail:
       points: 1
       required: true
-      defaultMarkings: [ VulpTailVulp ]
+      defaultMarkings: [ FoxTail ] # Starlight
     Head:
       points: 3
       required: false
     HeadTop:
       points: 1
       required: true
-      defaultMarkings: [ VulpEar ]
+      defaultMarkings: [ FoxEar ] # Starlight
     UndergarmentTop:
       points: 1
       required: false
@@ -77,11 +85,13 @@
       points: 6
       required: false
 
-- type: humanoidBaseSprite
-  id: MobVulpkaninEyes
-  baseSprite:
-    sprite: Mobs/Species/Vulpkanin/parts.rsi
-    state: eyes
+# Starlight start
+#- type: humanoidBaseSprite
+#  id: MobVulpkaninEyes
+#  baseSprite:
+#    sprite: Mobs/Species/Vulpkanin/parts.rsi
+#    state: eyes
+# Starlight end
 
 #region Starlight vulp sprite replacements
 # - type: humanoidBaseSprite

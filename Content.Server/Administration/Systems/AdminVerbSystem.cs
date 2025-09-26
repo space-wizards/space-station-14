@@ -38,6 +38,8 @@ using Robust.Shared.Timing;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
 using static Content.Shared.Configurable.ConfigurationComponent;
+using Content.Shared._Starlight.Thaven.Components; //Starlight
+using Content.Server._Starlight.Thaven; //Starlight
 
 namespace Content.Server.Administration.Systems
 {
@@ -70,6 +72,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly SiliconLawSystem _siliconLawSystem = default!;
         [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidAppearance = default!;
         [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
+        [Dependency] private readonly ThavenMoodsSystem _moods = default!; //Starlight
 
         private readonly Dictionary<ICommonSession, List<EditSolutionsEui>> _openSolutionUis = new();
 
@@ -415,6 +418,29 @@ namespace Content.Server.Administration.Systems
                     },
                     Impact = LogImpact.Low
                 });
+
+                #region Starlight Thaven
+                // Begin Impstation Additions
+                if (TryComp<ThavenMoodsComponent>(args.Target, out var moods))
+                {
+                    args.Verbs.Add(new Verb()
+                    {
+                        Text = Loc.GetString("thaven-moods-ui-verb"),
+                        Category = VerbCategory.Admin,
+                        Act = () =>
+                        {
+                            var ui = new ThavenMoodsEui(_moods, EntityManager, _adminManager);
+                            if (!_playerManager.TryGetSessionByEntity(args.User, out var session))
+                                return;
+
+                            _euiManager.OpenEui(ui, session);
+                            ui.UpdateMoods((args.Target, moods));
+                        },
+                        Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Actions/actions_borg.rsi"), "state-laws"),
+                    });
+                }
+                #endregion
+                // End Impstation Additions
             }
         }
 

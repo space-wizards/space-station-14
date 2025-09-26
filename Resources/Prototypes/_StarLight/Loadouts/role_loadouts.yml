@@ -41,6 +41,7 @@
 - type: roleLoadout
   id: JobNanoTrasenRepresentative
   groups:
+  - NanoTrasenRepresentativeHead
   - NanoTrasenRepresentativeJumpsuit
   - NanoTrasenRepresentativeEyewear
   - CommonBackpack
@@ -78,6 +79,7 @@
   groups:
   - GroupTankHarness
   - SalvageSpecialistBackpack
+  - SalvageSpecialistJumpsuit # afterlight
   - SalvageSpecialistOuterClothing
   - SalvageSpecialistShoes
   - Glasses

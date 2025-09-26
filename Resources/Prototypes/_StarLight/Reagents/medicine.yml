@@ -98,3 +98,25 @@
           type: Resomi
           shouldHave: true
         amount: 3
+
+- type: reagent
+  id: Chronexaline
+  name: reagent-name-chronexaline
+  group: Medicine
+  desc: reagent-desc-chronexaline
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: medicine
+  color: "#850063"
+  worksOnTheDead: true
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:HealthChange
+          conditions:
+          - !type:Temperature
+            max: 213.0
+          - !type:MobStateCondition
+            mobstate: Dead
+          damage:
+            types:
+              Radiation: -5

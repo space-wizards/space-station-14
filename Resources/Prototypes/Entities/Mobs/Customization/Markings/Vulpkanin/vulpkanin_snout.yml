@@ -1,31 +1,33 @@
 # Snout Markings
 
-- type: marking
-  id: VulpSnout
-  bodyPart: Snout
-  markingCategory: Snout
-  speciesRestriction: [ Vulpkanin ]
-  sprites:
-    - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
-      state: snout
+# STARLIGHT START
+# - type: marking
+#   id: VulpSnout
+#   bodyPart: Snout
+#   markingCategory: Snout
+#   speciesRestriction: [ Vulpkanin ]
+#   sprites:
+#     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
+#       state: snout
 
-- type: marking
-  id: VulpSnoutNose
-  bodyPart: Snout
-  markingCategory: SnoutCover
-  speciesRestriction: [ Vulpkanin ]
-  sprites:
-    - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
-      state: snout-nose
+# - type: marking
+#   id: VulpSnoutNose
+#   bodyPart: Snout
+#   markingCategory: SnoutCover
+#   speciesRestriction: [ Vulpkanin ]
+#   sprites:
+#     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
+#       state: snout-nose
 
-- type: marking
-  id: VulpSnoutVulpine
-  bodyPart: Snout
-  markingCategory: SnoutCover
-  speciesRestriction: [ Vulpkanin ]
-  sprites:
-    - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
-      state: vulpine
+# - type: marking
+#   id: VulpSnoutVulpine
+#   bodyPart: Snout
+#   markingCategory: SnoutCover
+#   speciesRestriction: [ Vulpkanin ]
+#   sprites:
+#     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
+#       state: vulpine
+# STARLIGHT END
 
 - type: marking
   id: VulpSnoutVulpineLines
@@ -36,23 +38,25 @@
     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
       state: vulpine-lines
 
-- type: marking
-  id: VulpSnoutBlaze
-  bodyPart: Snout
-  markingCategory: SnoutCover
-  speciesRestriction: [ Vulpkanin ]
-  sprites:
-    - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
-      state: blaze
+# STARLIGHT START
+# - type: marking
+#   id: VulpSnoutBlaze
+#   bodyPart: Snout
+#   markingCategory: SnoutCover
+#   speciesRestriction: [ Vulpkanin ]
+#   sprites:
+#     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
+#       state: blaze
 
-- type: marking
-  id: VulpSnoutMask
-  bodyPart: Snout
-  markingCategory: SnoutCover
-  speciesRestriction: [ Vulpkanin ]
-  sprites:
-    - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
-      state: mask
+# - type: marking
+#   id: VulpSnoutMask
+#   bodyPart: Snout
+#   markingCategory: SnoutCover
+#   speciesRestriction: [ Vulpkanin ]
+#   sprites:
+#     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
+#       state: mask
+# STARLIGHT END
 
 - type: marking
   id: VulpSnoutTop
@@ -63,11 +67,13 @@
     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
       state: snout-top
 
-- type: marking
-  id: VulpSnoutPatch
-  bodyPart: Snout
-  markingCategory: SnoutCover
-  speciesRestriction: [ Vulpkanin ]
-  sprites:
-    - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
-      state: patch
+# STARLIGHT START
+# - type: marking
+#   id: VulpSnoutPatch
+#   bodyPart: Snout
+#   markingCategory: SnoutCover
+#   speciesRestriction: [ Vulpkanin ]
+#   sprites:
+#     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
+#       state: patch
+# STARLIGHT END
