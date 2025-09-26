@@ -1,0 +1,102 @@
+# Welcome to the example configuration file!
+# Remember that if this is in bin/Content.Server or such, it may be overwritten on build.
+# Consider copying it and using the --config-file and --data-dir options.
+
+[log]
+path = "logs"
+format = "log_%(date)s-%(time)s.txt"
+level = 1
+enabled = false
+
+[net]
+tickrate = 30
+port = 1212
+bindto = "::,0.0.0.0"
+max_connections = 256
+# Automatic port forwarding!
+# Disabled by default because you may not want to do this.
+upnp = true
+
+[status]
+# The status server is the TCP side, used by the launcher to determine engine version, etc.
+# To be clear: Disabling it makes the launcher unable to connect!
+enabled = true
+
+# This is the address and port the status server binds to.
+# The port is by default set based on net.port so it will follow what you set there.
+# bind = "*:1212"
+
+# This is the address of the SS14 server as the launcher uses it.
+# This is only needed if you're proxying the status HTTP server -
+#  by default the launcher will assume the address and port match that of the status server.
+# connectaddress = "udp://localhost:1212"
+
+[game]
+hostname = "Shmeeg Station"
+
+[console]
+# If this is true, people connecting from this machine (loopback)
+# will automatically be elevated to full admin privileges.
+# This literally works by checking if address == 127.0.0.1 || address == ::1
+loginlocal = true
+
+[hub]
+# Set to true to show this server on the public server list
+# Before enabling this, read: https://docs.spacestation14.io/hosts/hub-rules
+advertise = false
+# Comma-separated list of tags, useful for categorizing your server.
+# See https://docs.spacestation14.io/hosts/hub-rules for more details on this when it becomes relevant.
+tags = ""
+# URL of your server. Fill this in if you have a domain name,
+# want to use HTTPS (with a reverse proxy), or other advanced scenarios.
+# Must be in the form of an ss14:// or ss14s:// URI pointing to the status API.
+server_url = ""
+# Comma-separated list of URLs of hub servers to advertise to.
+hub_urls = "https://hub.spacestation14.com/"
+
+[build]
+# *Absolutely all of these can be supplied using a "build.json" file*
+# For further information, see https://github.com/space-wizards/space-station-14/blob/master/Tools/gen_build_info.py
+# The main reason you'd want to supply any of these manually is for a custom fork and if you have no tools.
+
+# Useful to override if the existing version is bad.
+# See https://github.com/space-wizards/RobustToolbox/tags for version values, remove the 'v'.
+# The value listed here is almost certainly wrong - it is ONLY a demonstration of format.
+# engine_version = "0.7.6"
+
+# This one is optional, the launcher will delete other ZIPs of the same fork to save space.
+# fork_id = "abacusstation"
+
+# Automatically set if self-hosting client zip, but otherwise use this when updating client build.
+# There is no required format, any change counts as a new version.
+# version = "Example1"
+
+# This is where the launcher will download the client ZIP from.
+# If this isn't supplied, the server will check for a file called "Content.Client.zip",
+#  and will host it on the status server.
+# If that isn't available, the server will attempt to find and use "../../Resources" and
+#  "../../bin/Content.Client" to automatically construct a client zip.
+# It will then host this on the status server.
+# Note that these paths do not work on "FULL_RELEASE" servers.
+# FULL_RELEASE servers expect to be used with a specific "packaged" layout.
+# As such, whatever script you're using to package them is expected to create the ZIP.
+# download_url = "http://example.com/compass.zip"
+
+# Build hash - this is a *capitalized* SHA256 hash of the client ZIP.
+# Optional in any case and automatically set if hosting a client ZIP.
+# This hash is an example only.
+# build = "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+
+[auth]
+# Authentication (accounts):
+# 0 = Optional, 1 = Required, 2 = Disabled
+# Presumably do require authentication on any public server.
+# mode = 0
+
+# If true, even if authentication is required, localhost is still allowed to login directly regardless.
+# allowlocal = true
+
+# You should probably never EVER need to touch this, but if you need a custom auth server,
+# (the auth server being the one which manages Space Station 14 accounts), you change it here.
+# server = https://auth.spacestation14.com/
+
