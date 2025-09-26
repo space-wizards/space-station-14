@@ -15,7 +15,7 @@ public static class Palettes
     public static readonly ColorPalette Neutral = new ColorPalette("#555555");
 
     // status tones
-    public static readonly ColorPalette Red = new ColorPalette("#b62124", chromaShift: 0.2f);
+    public static readonly ColorPalette Red = new ColorPalette("#b62124", chromaShift: 0.02f);
     public static readonly ColorPalette Amber = new ColorPalette("#c18e36");
     public static readonly ColorPalette Green = new ColorPalette("#3c854a");
     public static readonly StatusPalette Status = new([Red.Base, Amber.Base, Green.Base]);
