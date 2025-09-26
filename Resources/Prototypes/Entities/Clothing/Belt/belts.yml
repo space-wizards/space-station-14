@@ -251,6 +251,8 @@
           - TrashBag
   - type: ContainerContainer
     containers:
+      storagebase: !type:Container
+        ents: [ ]
       trashbag_slot: !type:ContainerSlot { }
   - type: ItemMapper
     mapLayers:
