@@ -63,3 +63,15 @@
     metabolizerTypes: [Vox]
   - type: Sprite
     sprite: Mobs/Species/Vox/organs.rsi
+
+- type: entity
+  id: OrganVoxEyes
+  parent: OrganHumanEyes
+  name: eyes
+  description: "I see you!"
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Vox/organs.rsi
+  - type: Item
+    size: Small
+    heldPrefix: eyeballs

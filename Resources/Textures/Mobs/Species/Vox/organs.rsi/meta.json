@@ -74,6 +74,20 @@
         },
         {
             "name": "kidney-r"
+        },
+		{
+            "name": "eyeballs-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "eyeballs-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "eyeball-l"
+        },
+        {
+            "name": "eyeball-r"
         }
     ]
 }
