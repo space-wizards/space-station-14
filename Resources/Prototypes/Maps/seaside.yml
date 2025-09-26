@@ -1,0 +1,15 @@
+- type: gameMap
+  id: deseaside
+  mapName: 'deseaside'
+  mapPath: /Maps/Seaside2.yml
+  minPlayers: 0
+  stations:
+   deseaside:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: "deseaside"
+        - type: StationJobs
+          availableJobs:
+            Musician: [ -1, -1 ]
+            Passenger: [-1, -1 ]

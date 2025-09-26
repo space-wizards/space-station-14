@@ -522,3 +522,10 @@
     - id: BasicDecalDirtMonospaceVariationPass
       prob: 0.50
       orGroup: monospaceDecals
+
+- type: entity
+  parent: BaseGameRule
+  id: AutoRoundRestart
+  name: Auto Round Restart System #by chatgpt (edited by vadim666pro) ДА Я ВАЙБКОДЕР И МНЕ ПОХ
+  components:
+    - type: AutoRoundRestartRule

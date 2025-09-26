@@ -1,10 +1,11 @@
 - type: gamePreset
   id: Secret
-  name: Standart Round
+  name: Counter Strike Round
   showInVote: true
   description: secret-description
   rules:
   - BasicRoundstartVariation
+  - AutoRoundRestart
 
 - type: gamePreset
   id: Sandbox
