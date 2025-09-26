@@ -1117,20 +1117,23 @@
   - type: EmitSoundOnUse
     sound: &PlushieHuman1
       path: /Audio/Voice/Human/malescream_1.ogg
-      params: &VolumeMinus8
+      params:
         volume: -8
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Voice/Human/malescream_2.ogg
-      params: *VolumeMinus8
+      params:
+        volume: -8
   - type: EmitSoundOnActivate
     sound:
       path: /Audio/Voice/Human/malescream_3.ogg
-      params: *VolumeMinus8
+      params:
+        volume: -8
   - type: EmitSoundOnCollide
     sound: &PlushieHuman4
       path: /Audio/Voice/Human/malescream_4.ogg
-      params: *VolumeMinus8
+      params:
+        volume: -8
   - type: Edible
     useSound: *PlushieHuman1
   - type: MeleeWeapon
@@ -1138,7 +1141,8 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Voice/Human/malescream_5.ogg
-      params: *VolumeMinus8
+      params:
+        volume: -8
   - type: Clothing
     quickEquip: false
     sprite: Objects/Fun/Plushies/human.rsi
