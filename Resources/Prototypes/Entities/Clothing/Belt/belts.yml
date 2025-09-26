@@ -249,6 +249,7 @@
         whitelist:
           tags:
           - TrashBag
+        insertOnInteract: false
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
