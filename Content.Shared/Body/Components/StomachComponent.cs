@@ -70,7 +70,7 @@ namespace Content.Shared.Body.Components
         ///     Used to track how long each reagent has been in the stomach
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
-        public readonly List<ReagentDelta> ReagentDeltas = new();
+        public List<ReagentDelta> ReagentDeltas { get; set; } = new();
 
         /// <summary>
         ///     Used to track quantity changes when ingesting & digesting reagents
