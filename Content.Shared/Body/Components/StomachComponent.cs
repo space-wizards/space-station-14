@@ -51,7 +51,7 @@ namespace Content.Shared.Body.Components
         ///     Time between reagents being ingested and them being
         ///     transferred to <see cref="BloodstreamComponent"/>
         /// </summary>
-        [DataField]
+        [DataField("digestionDelay")]
         public TimeSpan DigestionDelay = TimeSpan.FromSeconds(20);
 
         /// <summary>
