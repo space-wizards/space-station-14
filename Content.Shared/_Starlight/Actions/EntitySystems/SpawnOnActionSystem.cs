@@ -8,6 +8,7 @@ namespace Content.Shared._Starlight.Actions.EntitySystems;
 public sealed class SpawnOnActionSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependenxy] private readonly INetManager _net = default!
 
     public override void Initialize()
     {
