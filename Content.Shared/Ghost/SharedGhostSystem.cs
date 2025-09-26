@@ -206,10 +206,5 @@ namespace Content.Shared.Ghost
     /// Raised on an entity when It's mind is attempting to ghost out.
     /// </summary>
     [ByRefEvent]
-    public sealed class EntityGhostAttemptEvent(EntityUid mind, bool canReturnGlobal) : CancellableEntityEventArgs
-    {
-        public EntityUid Mind { get; } = mind;
-        public bool CanReturnGlobal { get; } = canReturnGlobal;
-        public bool Result { get; set; }
-    }
+    public record struct GhostAttemptEvent(EntityUid Mind, bool Cancelled);
 }

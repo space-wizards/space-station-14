@@ -5,12 +5,14 @@ using Content.Shared.Ghost;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Changeling.Systems;
 
 public sealed class ChangelingStasisSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly MobStateSystem _mobs = default!;
@@ -25,7 +27,7 @@ public sealed class ChangelingStasisSystem : EntitySystem
         SubscribeLocalEvent<ChangelingStasisComponent, MobStateChangedEvent>(OnStateChanged);
         SubscribeLocalEvent<ChangelingStasisComponent, ChangelingStasisActionEvent>(OnStasisUse);
 
-        SubscribeLocalEvent<ChangelingStasisComponent, EntityGhostAttemptEvent>(OnMoveGhost);
+        SubscribeLocalEvent<ChangelingStasisComponent, GhostAttemptEvent>(OnMoveGhost);
     }
 
     private void OnMapInit(Entity<ChangelingStasisComponent> ent, ref MapInitEvent args)
@@ -50,12 +52,12 @@ public sealed class ChangelingStasisSystem : EntitySystem
             CancelStasis(ent);
     }
 
-    private void OnMoveGhost(Entity<ChangelingStasisComponent> ent, ref EntityGhostAttemptEvent args)
+    private void OnMoveGhost(Entity<ChangelingStasisComponent> ent, ref GhostAttemptEvent args)
     {
         if (ent.Comp.AllowGhosting || !ent.Comp.IsInStasis)
             return;
 
-        args.Cancel();
+        args.Cancelled = true;
     }
 
     private void OnStasisUse(Entity<ChangelingStasisComponent> ent, ref ChangelingStasisActionEvent args)
@@ -119,7 +121,8 @@ public sealed class ChangelingStasisSystem : EntitySystem
 
         ent.Comp.IsInStasis = false;
 
-        _popup.PopupClient(Loc.GetString("changeling-stasis-exit"), ent.Owner, ent.Owner, PopupType.MediumCaution);
+        _popup.PopupPredicted(Loc.GetString("changeling-stasis-exit"), Loc.GetString("changeling-stasis-exit-others", ("user", ent.Owner)), ent.Owner, ent.Owner, PopupType.MediumCaution);
+        _audio.PlayPredicted(ent.Comp.ExitSound, ent.Owner, ent.Owner);
 
         if (ent.Comp.InitialName != null)
             _metaData.SetEntityName(ent.Comp.RegenStasisActionEntity.Value, ent.Comp.InitialName);

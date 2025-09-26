@@ -1,4 +1,5 @@
 using Content.Shared.Changeling.Systems;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -22,7 +23,6 @@ public sealed partial class ChangelingStasisComponent : Component
 
     /// <summary>
     /// Whether the entity can ghost out during their stasis.
-    /// Only affects ghosting out on movement.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool AllowGhosting;
@@ -56,6 +56,12 @@ public sealed partial class ChangelingStasisComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? RegenStasisActionEntity;
+
+    /// <summary>
+    /// The sound to play when the entity exits stasis.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public SoundSpecifier? ExitSound = new SoundPathSpecifier("/Audio/Magic/rumble.ogg");
 
     /// <summary>
     /// The name this entity's action started with.

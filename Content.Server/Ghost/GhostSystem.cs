@@ -521,9 +521,9 @@ namespace Content.Server.Ghost
                     _adminLog.Add(LogType.Mind, $"{ToPrettyString(playerEntity.Value):player} is attempting to ghost via command");
             }
 
-            if (playerEntity != null)
+            if (playerEntity != null && !forced)
             {
-                var entityCancelEv = new EntityGhostAttemptEvent(mindId, canReturnGlobal);
+                var entityCancelEv = new GhostAttemptEvent(mindId, canReturnGlobal);
                 RaiseLocalEvent(playerEntity.Value, ref entityCancelEv);
 
                 if (entityCancelEv.Cancelled)

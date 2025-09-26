@@ -50,8 +50,8 @@
   description: Enter a regenerative stasis, faking death and allowing to regenerate all damage.
   components:
   - type: Action
-    icon: { sprite : Interface/Actions/changeling.rsi, state: "stasis_enter" }
-    iconOn: { sprite : Interface/Actions/changeling.rsi, state: "stasis_exit" }
+    icon: { sprite : Interface/Actions/changeling.rsi, state: "stasis_enter" } # Placeholder
+    iconOn: { sprite : Interface/Actions/changeling.rsi, state: "stasis_exit" } # Placeholder
     useDelay: 2
     priority: 1
   - type: InstantAction
