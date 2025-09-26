@@ -269,7 +269,7 @@ public abstract class SharedForensicsSystem : EntitySystem
         if (TryComp<ResidueComponent>(args.Used, out var residue))
             targetComp.Residues.Add(string.IsNullOrEmpty(residue.ResidueColor) ? Loc.GetString("forensic-residue", ("adjective", residue.ResidueAdjective)) : Loc.GetString("forensic-residue-colored", ("color", residue.ResidueColor), ("adjective", residue.ResidueAdjective)));
 
-        Dirty(targetComp.Owner, targetComp);
+        Dirty(args.Target.Value, targetComp);
     }
 
     public string GenerateFingerprint()
