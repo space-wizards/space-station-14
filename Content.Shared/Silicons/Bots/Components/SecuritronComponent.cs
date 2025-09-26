@@ -7,7 +7,7 @@ namespace Content.Shared.Silicons.Bots.Components;
 public sealed partial class SecuritronComponent : Component
 {
     [DataField("baseLayer"), AutoNetworkedField]
-    public string BaseLayer = "enum.DamageStateVisualLayers.Base";
+    public string BaseLayer = "base";
 
     [DataField("onlineState"), AutoNetworkedField]
     public string OnlineState = "secbot-on";
@@ -16,5 +16,5 @@ public sealed partial class SecuritronComponent : Component
     public string CombatState = "secbot-combat";
 
     [ViewVariables(VVAccess.ReadOnly)]
-    public SecuritronVisualState CurrentState = SecuritronVisualState.Combat;
+    public SecuritronVisualState CurrentState = SecuritronVisualState.Online;
 }

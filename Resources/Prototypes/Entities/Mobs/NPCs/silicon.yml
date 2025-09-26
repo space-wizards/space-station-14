@@ -368,8 +368,8 @@
   - type: Sprite
     sprite: Mobs/Silicon/Bots/secbot.rsi
     layers:
-    - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: secbot
+    - map: [ "base" ]
+      state: secbot-on
   - type: Securitron
   - type: CombatMode
   - type: HTN
