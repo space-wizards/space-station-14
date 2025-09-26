@@ -329,7 +329,7 @@
 
 - type: entity
   name: terror black
-  parent: MobTerrorGrayUnevolvable
+  parent: MobTerrorBlackUnevolvable
   id: MobTerrorBlack
 
 # Purple

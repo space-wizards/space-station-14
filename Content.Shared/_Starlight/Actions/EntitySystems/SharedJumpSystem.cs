@@ -118,9 +118,9 @@ public abstract class SharedJumpSystem : EntitySystem
 
     public void Jump(Entity<JumpComponent> ent, EntityCoordinates targetCoords, float speed = 15f, bool toPointer = false, SoundSpecifier? sound = null, float? distance = null, bool decreaseCharges = false)
     {
-        if (ent.Comp.ActionEntity != null
-            && TryComp<LimitedChargesComponent>(ent.Comp.ActionEntity, out var limitedCharges)
-            && !_chargesSystem.HasCharges((ent.Comp.ActionEntity.Value, limitedCharges), 1))
+        if (ent.Comp.ActionEntity == null
+            || (TryComp<LimitedChargesComponent>(ent.Comp.ActionEntity, out var limitedCharges)
+            && !_chargesSystem.HasCharges((ent.Comp.ActionEntity.Value, limitedCharges), 1)))
             return;
         else if (ent.Comp.ActionEntity != null && decreaseCharges)
             _chargesSystem.TryUseCharge(ent.Comp.ActionEntity.Value);
@@ -133,8 +133,8 @@ public abstract class SharedJumpSystem : EntitySystem
             && (!toPointer || Vector2.Distance(userMapCoords.Position, targetMapCoords.Position) > distance))
             vector = Vector2.Normalize(vector) * distance.Value;
 
-        if (ent.Comp.ActionEntity != null && !HasComp<LimitedChargesComponent>(ent.Comp.ActionEntity))
-            _action.SetUseDelay(ent.Comp.ActionEntity.Value, TimeSpan.FromSeconds(ent.Comp.Cooldown));
+        if (ent.Comp.ActionEntity != null && (limitedCharges == null || limitedCharges.MaxCharges <= 1))
+            _action.SetCooldown(ent.Comp.ActionEntity.Value, TimeSpan.FromSeconds(ent.Comp.Cooldown));
 
         _throwing.TryThrow(ent.Owner, vector, baseThrowSpeed: speed, doSpin: false);
 
