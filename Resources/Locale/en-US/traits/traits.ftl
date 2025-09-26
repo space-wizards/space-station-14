@@ -31,7 +31,7 @@ trait-pirate-accent-name = Pirate accent
 trait-pirate-accent-desc = You can't stop speaking like a pirate!
 
 trait-accentless-name = Accentless
-trait-accentless-desc = You never speak with an accent.
+trait-accentless-desc = You speak without an accent from your species or job.
 
 trait-frontal-lisp-name = Frontal lisp
 trait-frontal-lisp-desc = You thpeak with a lithp.
