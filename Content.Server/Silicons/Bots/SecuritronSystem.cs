@@ -80,7 +80,7 @@ public sealed partial class SecuritronSystem : EntitySystem
         if (!htn.Blackboard.TryGetValue<EntityUid>("Target", out var target, EntityManager) || Deleted(target))
         {
             if (state.CurrentTarget != null)
-                ResetTarget(state, htn);
+                ResetTarget(uid, state, htn);
             return;
         }
 
@@ -168,7 +168,7 @@ public sealed partial class SecuritronSystem : EntitySystem
         }
 
         var targetSubdued = state.TargetStatus != SecuritronTargetTrackingState.Engaging || targetCuffed || targetDowned;
-        SetTargetSubdued(htn, targetSubdued);
+        SetTargetSubdued(uid, htn, targetSubdued);
     }
 
     private void AcquireTarget(EntityUid uid, SecuritronStateComponent state, EntityUid target, HTNComponent htn, TimeSpan now)
@@ -187,7 +187,7 @@ public sealed partial class SecuritronSystem : EntitySystem
         state.NextCuffAttempt = TimeSpan.Zero;
 
         htn.Blackboard.SetValue(NPCBlackboard.SecuritronTargetFleeingKey, false);
-        SetTargetSubdued(htn, true);
+        SetTargetSubdued(uid, htn, true);
 
         Speak(uid, state, "securitron-say-halt", now);
 
@@ -199,7 +199,7 @@ public sealed partial class SecuritronSystem : EntitySystem
         }
     }
 
-    private void ResetTarget(SecuritronStateComponent state, HTNComponent htn)
+    private void ResetTarget(EntityUid uid, SecuritronStateComponent state, HTNComponent htn)
     {
         state.CurrentTarget = null;
         state.TargetStatus = SecuritronTargetTrackingState.None;
@@ -214,7 +214,7 @@ public sealed partial class SecuritronSystem : EntitySystem
         state.NextCuffAttempt = TimeSpan.Zero;
 
         htn.Blackboard.SetValue(NPCBlackboard.SecuritronTargetFleeingKey, false);
-        SetTargetSubdued(htn, false);
+        SetTargetSubdued(uid, htn, false);
     }
 
     private void AnnounceStandby(EntityUid uid, SecuritronStateComponent state, TimeSpan now)
@@ -223,6 +223,7 @@ public sealed partial class SecuritronSystem : EntitySystem
             return;
 
         state.TargetStatus = SecuritronTargetTrackingState.Standby;
+        StopCombat(uid);
         Speak(uid, state, "securitron-say-standby", now);
     }
 
@@ -333,12 +334,15 @@ public sealed partial class SecuritronSystem : EntitySystem
         state.NextSpeechTime = now + TimeSpan.FromSeconds(2);
     }
 
-    private void SetTargetSubdued(HTNComponent htn, bool value)
+    private void SetTargetSubdued(EntityUid uid, HTNComponent htn, bool value)
     {
         if (htn.Blackboard.TryGetValue<bool>(NPCBlackboard.SecuritronTargetSubduedKey, out var current, EntityManager) && current == value)
             return;
 
         htn.Blackboard.SetValue(NPCBlackboard.SecuritronTargetSubduedKey, value);
+
+        if (value)
+            StopCombat(uid);
     }
 
     private void StopCombat(EntityUid uid)
@@ -401,3 +405,6 @@ public sealed partial class SecuritronSystem : EntitySystem
         };
     }
 }
+
+
+
