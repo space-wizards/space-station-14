@@ -14,3 +14,10 @@ public enum SecuritronVisualState
     Online,
     Combat,
 }
+
+[Serializable, NetSerializable]
+public enum SecuritronOperatingMode
+{
+    Arrest,
+    Detain,
+}

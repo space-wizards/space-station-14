@@ -15,6 +15,9 @@ public sealed partial class SecuritronComponent : Component
     [DataField("combatState"), AutoNetworkedField]
     public string CombatState = "secbot-combat";
 
+    [DataField("operatingMode"), AutoNetworkedField]
+    public SecuritronOperatingMode OperatingMode = SecuritronOperatingMode.Arrest;
+
     [ViewVariables(VVAccess.ReadOnly)]
     public SecuritronVisualState CurrentState = SecuritronVisualState.Online;
 }

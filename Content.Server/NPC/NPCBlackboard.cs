@@ -5,6 +5,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Silicons.Bots;
 using JetBrains.Annotations;
 using Robust.Shared.Utility;
 
@@ -16,8 +17,10 @@ public sealed partial class NPCBlackboard : IEnumerable<KeyValuePair<string, obj
     /// <summary>
     /// Global defaults for NPCs
     /// </summary>
+    public const string SecuritronOperatingModeKey = "SecuritronOperatingMode";
     private static readonly Dictionary<string, object> BlackboardDefaults = new()
     {
+        {SecuritronOperatingModeKey, SecuritronOperatingMode.Arrest},
         {"BufferRange", 10f},
         {"FollowCloseRange", 3f},
         {"FollowRange", 7f},
