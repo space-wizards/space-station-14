@@ -162,3 +162,33 @@
   sprites:
   - sprite: Mobs/Customization/vox_parts.rsi
     state: tail_big
+
+- type: marking
+  id: VoxTailSpikes
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Vox]
+  forcedColoring: true
+  sprites:
+  - sprite: Mobs/Customization/vox_parts.rsi
+    state: tail_spikes
+
+- type: marking
+  id: VoxTailDocked
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Vox]
+  forcedColoring: true
+  sprites:
+  - sprite: Mobs/Customization/vox_parts.rsi
+    state: tail_docked
+
+- type: marking
+  id: VoxTailSplit
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Vox]
+  forcedColoring: true
+  sprites:
+  - sprite: Mobs/Customization/vox_parts.rsi
+    state: tail_split

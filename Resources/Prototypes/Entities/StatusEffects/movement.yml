@@ -1,5 +1,5 @@
 - type: entity
-  parent: MobStatusEffectBase
+  parent: MobStatusEffectDebuff
   id: StatusEffectSlowdown
   abstract: true
   name: slowdown
@@ -35,7 +35,7 @@
 
 # Makes you more slippery, or perhaps less slippery.
 - type: entity
-  parent: MobStatusEffectBase
+  parent: MobStatusEffectDebuff # Debatable if this should be MobStatusEffectBase or not
   id: StatusEffectFriction
   name: friction
   components:
@@ -44,7 +44,7 @@
 # Stunnable Status Effect
 
 - type: entity
-  parent: MobStatusEffectBase
+  parent: MobStatusEffectDebuff
   id: StatusEffectStunned
   name: stunned
   components:
@@ -58,10 +58,3 @@
   - type: StatusEffectAlert
     alert: Stun
   - type: StunnedStatusEffect
-
-- type: entity
-  parent: MobStandStatusEffectBase
-  id: StatusEffectKnockdown
-  name: knocked down
-  components:
-  - type: KnockdownStatusEffect

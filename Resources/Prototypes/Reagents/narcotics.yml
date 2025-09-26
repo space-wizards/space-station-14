@@ -4,6 +4,7 @@
   group: Narcotics
   desc: reagent-desc-desoxyephedrine
   physicalDesc: reagent-physical-desc-translucent
+  contrabandSeverity: Major
   flavor: bitter
   color: "#FAFAFA"
   boilingPoint: 212.0  # Dexosyephedrine vape when?
@@ -61,6 +62,7 @@
   group: Narcotics
   desc: reagent-desc-ephedrine
   physicalDesc: reagent-physical-desc-powdery
+  contrabandSeverity: Minor
   flavor: bitter
   color: "#D2FFFA"
   boilingPoint: 255.0
@@ -114,6 +116,7 @@
   group: Narcotics
   desc: reagent-desc-stimulants
   physicalDesc: reagent-physical-desc-energizing
+  contrabandSeverity: Syndicate
   flavor: sharp
   color: "#9A040E"
   boilingPoint: 212.0
@@ -223,6 +226,7 @@
   group: Narcotics
   desc: reagent-desc-impedrezene
   physicalDesc: reagent-physical-desc-acrid
+  contrabandSeverity: Minor
   flavor: bitter
   color: "#215263"
   metabolisms:
@@ -286,6 +290,7 @@
   group: Narcotics
   desc: reagent-desc-nocturine
   physicalDesc: reagent-physical-desc-powdery
+  contrabandSeverity: Syndicate
   color: "#128e80"
   boilingPoint: 444.0
   meltingPoint: 128.0
@@ -307,6 +312,7 @@
   group: Narcotics
   desc: reagent-desc-mute-toxin
   physicalDesc: reagent-physical-desc-syrupy
+  contrabandSeverity: Syndicate
   color: "#000000"
   boilingPoint: 255.0
   meltingPoint: 36.0
@@ -326,6 +332,7 @@
   group: Narcotics
   desc: reagent-desc-norepinephric-acid
   physicalDesc: reagent-physical-desc-milky
+  contrabandSeverity: Minor
   flavor: salty
   color: "#96a8b5"
   boilingPoint: 255.0
@@ -370,6 +377,8 @@
   group: Narcotics
   desc: reagent-desc-tear-gas
   physicalDesc: reagent-physical-desc-milky
+  allowedDepartments:
+  - Security
   flavor: salty
   color: "#ffffff4d"
   boilingPoint: 255.0

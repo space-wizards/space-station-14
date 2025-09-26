@@ -6083,7 +6083,7 @@ entities:
     - type: Transform
       pos: 9.5,-23.5
       parent: 2
-- proto: StationAnchor
+- proto: StationAnchorIndestructible
   entities:
   - uid: 887
     components:
