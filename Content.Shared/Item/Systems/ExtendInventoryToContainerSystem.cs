@@ -31,7 +31,7 @@ public sealed class ExtendInventoryToContainerSystem : EntitySystem
         foreach (var container in ent.Comp.ConnectedContainer)
         {
             if (!TryComp<StorageComponent>(container, out var storage)
-                || _containers.Insert(args.Used, storage.Container))
+                || !_containers.Insert(args.Used, storage.Container))
                 continue;
 
             _audioSystem.PlayPredicted(storage.StorageInsertSound, args.Target, args.User);
