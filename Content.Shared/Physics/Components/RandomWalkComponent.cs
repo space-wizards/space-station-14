@@ -61,7 +61,7 @@ public sealed partial class RandomWalkComponent : Component
     /// <summary>
     /// The next time this should update its speed.
     /// </summary>
-    [DataField]
+    [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextStepTime = default!;
 
     #endregion Update Timing
