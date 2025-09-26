@@ -1,3 +1,18 @@
+marking-TattooVoxNightlingHead-tattoo_nightling_head = Vox Head Tattoo (Nightling)
+marking-TattooVoxNightlingHead = Vox Head Tattoo (Nightling)
+
+marking-TattooVoxArrowHead-tattoo_arrow_head = Vox Head Tattoo (Arrow)
+marking-TattooVoxArrowHead = Vox Head Tattoo (Arrow)
+
+marking-VoxVisage-visage = Visage (Full)
+marking-VoxVisage = Visage (Full)
+
+marking-VoxVisageL-visage_l = Visage (Left)
+marking-VoxVisageL = Visage (Left)
+
+marking-VoxVisageR-visage_r = Visage (Right)
+marking-VoxVisageR = Visage (Right)
+
 marking-VoxBeak-beak = Beak (Pointed)
 marking-VoxBeak = Beak (Pointed)
 

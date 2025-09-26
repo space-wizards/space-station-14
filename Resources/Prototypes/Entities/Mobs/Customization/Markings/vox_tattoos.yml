@@ -173,6 +173,15 @@
   sprites:
   - sprite: Mobs/Customization/vox_tattoos.rsi
     state: eyeshadow_large
+    
+- type: marking
+  id: VoxTattooEyeliner
+  bodyPart: Eyes
+  markingCategory: Overlay
+  speciesRestriction: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_tattoos.rsi
+    state: eyeliner
 
 - type: marking
   id: VoxBeakCoverStripe
@@ -201,3 +210,73 @@
   sprites:
   - sprite: Mobs/Customization/vox_tattoos.rsi
     state: beakcover_tip
+    
+- type: marking
+  id: TattooVoxNightlingHead
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Vox]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/vox_tattoos.rsi
+    state: tattoo_nightling_head
+
+- type: marking
+  id: TattooVoxArrowHead
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Vox]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/vox_tattoos.rsi
+    state: tattoo_arrow_head
+
+- type: marking
+  id: VoxVisage
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Vox]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/vox_tattoos.rsi
+    state: visage
+
+- type: marking
+  id: VoxVisageL
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Vox]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/vox_tattoos.rsi
+    state: visage_l
+
+- type: marking
+  id: VoxVisageR
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Vox]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/vox_tattoos.rsi
+    state: visage_r
