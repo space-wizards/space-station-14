@@ -1,3 +1,4 @@
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using System.Numerics;
 
 namespace Content.Shared.Physics.Components;
@@ -61,7 +62,7 @@ public sealed partial class RandomWalkComponent : Component
     /// <summary>
     /// The next time this should update its speed.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextStepTime = default!;
 
     #endregion Update Timing
