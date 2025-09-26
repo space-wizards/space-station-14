@@ -1,5 +1,6 @@
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 
 namespace Content.Client.Weapons.Ranged.Systems;
@@ -33,8 +34,17 @@ public sealed partial class GunSystem
             var existing = component.Entities[^1];
             component.Entities.RemoveAt(component.Entities.Count - 1);
 
-            Containers.Remove(existing, component.Container);
-            EnsureShootable(existing);
+            if (EntityManager.EntityExists(existing))
+            {
+                Containers.Remove(existing, component.Container);
+                EnsureShootable(existing);
+            }
+            else
+            {
+                // Prediction can leave a stale uid that the server already deleted.
+                // The list stays trimmed, but we skip resurrection attempts.
+                Log.Debug($"Skipping ballistic cycle for missing cartridge {existing} on {uid}");
+            }
         }
         else if (component.UnspawnedCount > 0)
         {
