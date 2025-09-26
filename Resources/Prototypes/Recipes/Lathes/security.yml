@@ -286,6 +286,16 @@
 
 - type: latheRecipe
   parent: BaseWeaponRecipeSidearm
+  id: WeaponEnergySMG
+  result: WeaponEnergySMG
+  materials:
+    Steel: 1500
+    Glass: 500
+    Plastic: 500
+    Gold: 100
+
+- type: latheRecipe
+  parent: BaseWeaponRecipeSidearm
   id: WeaponLaserSvalinn
   result: WeaponLaserSvalinn
   materials:

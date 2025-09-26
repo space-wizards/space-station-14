@@ -2,7 +2,7 @@
   name: energy gun
   parent: [WeaponDisablerPractice, BaseSecurityCommandContraband]
   id: WeaponEnergyGun
-  description: A self-defense weapon that exhausts organic targets, weakening them until they collapse.
+  description: A weapon with dual fire modes, for non-lethal stun bolts or lethal laser fire.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/disabler.rsi
@@ -26,8 +26,54 @@
     - proto: BulletDisabler
       fireCost: 62.5
     - proto: BulletLaser
-      fireCost: 150
+      fireCost: 125
   - type: GuideHelp
     guides:
     - Security
     - Antagonists
+
+- type: entity
+  name: Energy SMG
+  parent: [BaseWeaponBattery, BaseSecurityContraband]
+  id: WeaponEnergySMG
+  description: Advanced energy weapon that fires rapid bursts of non-lethal disabler bolts, with a secondary lethal laser fire mode.
+  components:
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,2,1
+  - type: Tag
+    tags:
+    - Taser
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/disabler_smg.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Gun
+    selectedMode: FullAuto
+    fireRate: 4.5
+    availableModes:
+    - SemiAuto
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletDisablerSmg
+    fireCost: 25
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: BulletDisablerSmg
+      fireCost: 25
+    - proto: BulletLaser
+      fireCost: 80
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: StaticPrice
+    price: 260
