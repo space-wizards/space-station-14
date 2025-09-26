@@ -8,6 +8,7 @@ public abstract partial class BaseStylesheet
     /// </summary>
     /// <remarks>
     ///     Must be a constant, changes to this after construction will not be reflected.
+    ///     TODO: this type is currently unused. It can be used to, for example, use user-defined fonts or colors.
     /// </remarks>
     public virtual Type StylesheetConfigType => typeof(NoConfig);
 
