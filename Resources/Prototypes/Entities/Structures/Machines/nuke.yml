@@ -127,6 +127,8 @@
     anchored: false
   - type: Physics
     bodyType: Dynamic
+  - type: NukeLabel
+    prefix: "nuke-label-syndicate"
 
 - type: entity
   parent: StorageTank

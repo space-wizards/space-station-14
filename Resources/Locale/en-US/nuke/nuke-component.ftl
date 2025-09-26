@@ -1,4 +1,4 @@
-nuke-component-cant-anchor-floor = The anchoring bolts fail to lock into the floor!
+nuke-component-cant-anchor-floor = The nuclear bomb is too close to space to anchor here!
 nuke-component-cant-anchor-toggle = The nuclear authentication disk is required to toggle the floor bolts!
 nuke-component-announcement-sender = Nuclear Fission Explosive
 nuke-component-announcement-armed = Attention! The station's self-destruct mechanism has been engaged {$location}. {$time} seconds until detonation. If this was made in error, the mechanism may still be disarmed.
@@ -35,6 +35,8 @@ nuke-label-nanotrasen = NT-{$serial}
 
 # do you even need this one? It's more funnier to say that
 # the Syndicate stole a NT nuke
+
+# On further consideration: Yes, we do lmao
 nuke-label-syndicate = SYN-{$serial}
 
 # Codes
