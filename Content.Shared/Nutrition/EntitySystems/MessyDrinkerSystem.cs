@@ -25,7 +25,7 @@ public sealed class MessyDrinkerSystem : EntitySystem
 
     private void OnIngested(Entity<MessyDrinkerComponent> ent, ref IngestingEvent ev)
     {
-        if (_tag.HasTag(ev.Food, ent.Comp.SpillImmuneTag))
+        if (ent.Comp.SpillImmuneTag != null && _tag.HasTag(ev.Food, ent.Comp.SpillImmuneTag.Value))
             return;
 
         // Cannot spill if you're being forced to drink.

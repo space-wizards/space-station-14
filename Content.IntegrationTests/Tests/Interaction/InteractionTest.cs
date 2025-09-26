@@ -7,12 +7,16 @@ using Content.IntegrationTests.Pair;
 using Content.Server.Hands.Systems;
 using Content.Server.Stack;
 using Content.Server.Tools;
+using Content.Shared.CombatMode;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.Mind;
 using Content.Shared.Players;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.Input;
+using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
@@ -21,8 +25,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.UnitTesting;
-using Content.Shared.Item.ItemToggle;
-using Robust.Client.State;
 
 namespace Content.IntegrationTests.Tests.Interaction;
 
@@ -107,6 +109,8 @@ public abstract partial class InteractionTest
     protected SharedMapSystem MapSystem = default!;
     protected ISawmill SLogger = default!;
     protected SharedUserInterfaceSystem SUiSys = default!;
+    protected SharedCombatModeSystem SCombatMode = default!;
+    protected SharedGunSystem SGun = default!;
 
     // CLIENT dependencies
     protected IEntityManager CEntMan = default!;
@@ -124,7 +128,7 @@ public abstract partial class InteractionTest
     protected HandsComponent Hands = default!;
     protected DoAfterComponent DoAfters = default!;
 
-    public float TickPeriod => (float) STiming.TickPeriod.TotalSeconds;
+    public float TickPeriod => (float)STiming.TickPeriod.TotalSeconds;
 
     // Simple mob that has one hand and can perform misc interactions.
     [TestPrototypes]
@@ -149,6 +153,7 @@ public abstract partial class InteractionTest
     tags:
     - CanPilot
   - type: UserInterface
+  - type: CombatMode
 ";
 
     [SetUp]
@@ -163,6 +168,7 @@ public abstract partial class InteractionTest
         ProtoMan = Server.ResolveDependency<IPrototypeManager>();
         Factory = Server.ResolveDependency<IComponentFactory>();
         STiming = Server.ResolveDependency<IGameTiming>();
+        SLogger = Server.ResolveDependency<ILogManager>().RootSawmill;
         HandSys = SEntMan.System<HandsSystem>();
         InteractSys = SEntMan.System<SharedInteractionSystem>();
         ToolSys = SEntMan.System<ToolSystem>();
@@ -173,20 +179,21 @@ public abstract partial class InteractionTest
         SConstruction = SEntMan.System<Server.Construction.ConstructionSystem>();
         STestSystem = SEntMan.System<InteractionTestSystem>();
         Stack = SEntMan.System<StackSystem>();
-        SLogger = Server.ResolveDependency<ILogManager>().RootSawmill;
-        SUiSys = Client.System<SharedUserInterfaceSystem>();
+        SUiSys = SEntMan.System<SharedUserInterfaceSystem>();
+        SCombatMode = SEntMan.System<SharedCombatModeSystem>();
+        SGun = SEntMan.System<SharedGunSystem>();
 
         // client dependencies
         CEntMan = Client.ResolveDependency<IEntityManager>();
         UiMan = Client.ResolveDependency<IUserInterfaceManager>();
         CTiming = Client.ResolveDependency<IGameTiming>();
         InputManager = Client.ResolveDependency<IInputManager>();
+        CLogger = Client.ResolveDependency<ILogManager>().RootSawmill;
         InputSystem = CEntMan.System<Robust.Client.GameObjects.InputSystem>();
         CTestSystem = CEntMan.System<InteractionTestSystem>();
         CConSys = CEntMan.System<ConstructionSystem>();
         ExamineSys = CEntMan.System<ExamineSystem>();
-        CLogger = Client.ResolveDependency<ILogManager>().RootSawmill;
-        CUiSys = Client.System<SharedUserInterfaceSystem>();
+        CUiSys = CEntMan.System<SharedUserInterfaceSystem>();
 
         // Setup map.
         await Pair.CreateTestMap();

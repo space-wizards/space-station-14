@@ -32,7 +32,7 @@ public sealed partial class MessyDrinkerComponent : Component
     /// For example, a spill-immune bottle.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public ProtoId<TagPrototype> SpillImmuneTag = "MessyDrinkerImmune";
+    public ProtoId<TagPrototype>? SpillImmuneTag = "MessyDrinkerImmune";
 
     [DataField, AutoNetworkedField]
     public LocId? SpillMessagePopup;

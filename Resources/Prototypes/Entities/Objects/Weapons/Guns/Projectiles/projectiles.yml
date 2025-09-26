@@ -101,6 +101,7 @@
   components:
   - type: TriggerOnCollide
     fixtureID: projectile
+    maxTriggers: 1
   - type: Projectile
     damage:
       types:
@@ -902,6 +903,7 @@
     containers:
       cluster-payload: !type:Container
   - type: ProjectileGrenade
+    triggerKey: trigger
     fillPrototype: PelletClusterLessLethal
     capacity: 30
 

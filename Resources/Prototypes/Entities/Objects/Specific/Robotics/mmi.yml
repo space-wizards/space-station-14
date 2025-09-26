@@ -118,9 +118,11 @@
       proto: robot
     - type: Speech
       speechSounds: Pai
+    - type: Alerts
     - type: MobState
       allowedStates:
       - Alive
+      - Dead
     - type: Appearance
     - type: Tag
       tags:
