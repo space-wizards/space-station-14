@@ -218,8 +218,8 @@ public abstract class SharedHailerSystem : EntitySystem
 
         comp.AreWiresCut = !comp.AreWiresCut;
         Dirty(ent);
-        var state = comp.AreWiresCut ? "icon-wires-cut" : "icon";
-        _appearance.SetData(ent, SecMaskVisuals.State, 1);
+        var state = comp.AreWiresCut ? "WiresCut" : "Intact";
+        _appearance.SetData(ent, SecMaskVisuals.State, state);
         Dirty(ent);
         args.Handled = true;
     }
