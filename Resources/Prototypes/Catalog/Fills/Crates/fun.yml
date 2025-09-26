@@ -266,8 +266,8 @@
         - !type:NestedSelector
           tableId: KeyedPercussionInstrumentTable # 300 speso max
         - !type:NestedSelector
-          tableId: SpecialInstrumentTable # 200 speso max
-          range: 1, 2
+          tableId: SpecialInstrumentTable # x2 200 speso max
+          rolls: 2
 
 - type: entity
   id: CrateFunArtSupplies
