@@ -1,6 +1,7 @@
 using Content.Shared._Starlight.Actions.Components;
 using Content.Shared._Starlight.Actions.Events;
 using Content.Shared.Actions;
+using Robust.Shared.Network;
 
 namespace Content.Shared._Starlight.Actions.EntitySystems;
 
