@@ -192,7 +192,6 @@
   - type: Edible
     useSound: *PlushieHampterSound
   - type: MeleeWeapon
-    wideAnimationRotation: 180
     soundHit: *PlushieHampterSound
   - type: Clothing
     quickEquip: false
@@ -355,7 +354,6 @@
     useSound: *PlushieLizardSound
     transferAmount: 10
   - type: MeleeWeapon
-    wideAnimationRotation: 180
     soundHit: *PlushieLizardSound
   - type: Extractable
     juiceSolution:
@@ -421,7 +419,6 @@
   - type: Edible
     useSound: *PlushieExperimentSound
   - type: MeleeWeapon
-    wideAnimationRotation: 180
     soundHit: *PlushieExperimentSound
   - type: Clothing
     clothingVisuals:
@@ -504,7 +501,6 @@
   - type: Edible
     useSound: *PlushieSpaceLizardSound
   - type: MeleeWeapon
-    wideAnimationRotation: 180
     soundHit: *PlushieSpaceLizardSound
   - type: Clothing
     sprite: Objects/Fun/Plushies/lizard.rsi
@@ -538,12 +534,13 @@
     sound: *PlushieLizardInversedSound
   - type: EmitSoundOnActivate
     sound: *PlushieLizardInversedSound
+  - type: EmitSoundOnCollide
+    sound: *PlushieLizardInversedSound
   - type: EmitSoundOnTrigger
     sound: *PlushieLizardInversedSound
   - type: Edible
     useSound: *PlushieLizardInversedSound
   - type: MeleeWeapon
-    wideAnimationRotation: 180
     soundHit: *PlushieLizardInversedSound
   - type: Extractable
     juiceSolution:
@@ -597,7 +594,6 @@
   - type: EmitSoundOnCollide
     sound: *PlushieDionaSound
   - type: MeleeWeapon
-    wideAnimationRotation: 180
     soundHit: *PlushieDionaSound
   - type: Edible
     useSound: *PlushieDionaSound
@@ -900,6 +896,8 @@
     sound: *PlushieSlimeSound
   - type: EmitSoundOnActivate
     sound: *PlushieSlimeSound
+  - type: EmitSoundOnCollide
+    sound: *PlushieSlimeSound
   - type: EmitSoundOnTrigger
     sound: *PlushieSlimeSound
   - type: MeleeWeapon
@@ -1012,7 +1010,6 @@
   - type: Edible
     useSound: *PlushieVoxSound
   - type: MeleeWeapon
-    wideAnimationRotation: 180
     soundHit: *PlushieVoxSound
   - type: Clothing
     quickEquip: false
@@ -1076,7 +1073,6 @@
   - type: Edible
     useSound: *PlushieXenoSound
   - type: MeleeWeapon
-    wideAnimationRotation: 180
     soundHit: *PlushieXenoSound
   - type: Clothing
     quickEquip: false
