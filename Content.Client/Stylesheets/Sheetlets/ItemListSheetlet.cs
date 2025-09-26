@@ -22,10 +22,10 @@ public sealed class ItemListSheetlet : Sheetlet<PalettedStylesheet>
 
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        var boxBackground = new StyleBoxFlat { BackgroundColor = sheet.SecondaryPalette.Background };
-        var boxItemBackground = Box(sheet.SecondaryPalette.BackgroundLight);
-        var boxSelected = Box(sheet.SecondaryPalette.Background);
-        var boxDisabled = Box(sheet.SecondaryPalette.BackgroundDark);
+        var boxBackground = new StyleBoxFlat { BackgroundColor = sheet.PrimaryPalette.Background };
+        var boxItemBackground = Box(sheet.PrimaryPalette.Background);
+        var boxSelected = Box(sheet.PrimaryPalette.Element);
+        var boxDisabled = Box(sheet.PrimaryPalette.BackgroundDark);
 
         return
         [
