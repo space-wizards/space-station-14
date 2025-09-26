@@ -129,22 +129,6 @@ public abstract partial class EntityEffectSystem<T, TEffect> : EntitySystem wher
 
         RaiseLocalEvent(body, ref args);
     }
-
-    public string? GuidebookEffectDescription(TEffect effect)
-    {
-        if (effect.EntityEffectGuidebookText is null)
-            return null;
-
-        return Loc.GetString(
-            effect.EntityEffectFormat,
-            ("effect", effect),
-            ("chance", effect.Probability),
-            ("conditionCount", effect.Conditions?.Length ?? 0),
-            ("conditions",
-                ContentLocalizationManager.FormatList(
-                    effect.Conditions?.Select(x => x.EntityConditionGuidebookText).ToList() ?? new List<string>()
-                    )));
-    }
 }
 
 public interface IEntityEffectRaiser
