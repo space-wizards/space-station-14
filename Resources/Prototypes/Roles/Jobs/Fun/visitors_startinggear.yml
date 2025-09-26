@@ -227,8 +227,8 @@
     ears: ClothingHeadsetSecurity
     eyes: ClothingEyesGlassesSecurity
     outerClothing: ClothingOuterArmorBasic
-    pocket1: WeaponPistolMk58
-    pocket2: MagazinePistol
+    pocket1: WeaponEnergyGun # Changed from wizden
+#    pocket2: MagazinePistol
   inhand:
   - FlashlightSeclite
 
@@ -245,8 +245,8 @@
     ears: ClothingHeadsetSecurity
     eyes: ClothingEyesGlassesSecurity
     outerClothing: ClothingOuterArmorBasicSlim
-    pocket1: WeaponPistolMk58
-    pocket2: MagazinePistol
+    pocket1: WeaponEnergyGun # Changed from wizden
+#    pocket2: MagazinePistol
   inhand:
   - FlashlightSeclite
 
@@ -262,8 +262,8 @@
     ears: ClothingHeadsetSecurity
     eyes: ClothingEyesGlassesSecurity
     outerClothing: ClothingOuterArmorBasic
-    pocket1: WeaponPistolMk58
-    pocket2: MagazinePistol
+    pocket1: WeaponEnergyGun # Changed from wizden
+#    pocket2: MagazinePistol
   inhand:
   - FlashlightSeclite
 
@@ -280,8 +280,8 @@
     ears: ClothingHeadsetSecurity
     eyes: ClothingEyesGlassesSecurity
     outerClothing: ClothingOuterArmorBasicSlim
-    pocket1: WeaponPistolMk58
-    pocket2: MagazinePistol
+    pocket1: WeaponEnergyGun # Changed from wizden
+#    pocket2: MagazinePistol
   inhand:
   - FlashlightSeclite
 

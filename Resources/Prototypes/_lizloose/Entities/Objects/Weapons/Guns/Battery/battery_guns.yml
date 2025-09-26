@@ -1,0 +1,33 @@
+- type: entity
+  name: energy gun
+  parent: [WeaponDisablerPractice, BaseSecurityCommandContraband]
+  id: WeaponEnergyGun
+  description: A self-defense weapon that exhausts organic targets, weakening them until they collapse.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/disabler.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/disabler.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletDisabler
+    fireCost: 62.5
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: BulletDisabler
+      fireCost: 62.5
+    - proto: BulletLaser
+      fireCost: 150
+  - type: GuideHelp
+    guides:
+    - Security
+    - Antagonists
