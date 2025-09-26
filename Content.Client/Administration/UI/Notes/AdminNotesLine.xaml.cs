@@ -36,7 +36,6 @@ public sealed partial class AdminNotesLine : BoxContainer
     public AdminNotesLine(SpriteSystem sprites, SharedAdminNote note)
     {
         RobustXamlLoader.Load(this);
-        IoCManager.InjectDependencies(this);
 
         _sawmill = _logManager.GetSawmill("admin.notes");
         _sprites = sprites;

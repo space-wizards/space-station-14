@@ -22,8 +22,6 @@ public sealed class InventoryDisplay : LayoutContainer
 
     public InventoryDisplay()
     {
-        IoCManager.InjectDependencies(this);
-
         _sawmill = _logManager.GetSawmill("inventory.display");
 
         resizer = new Control();
