@@ -14,8 +14,8 @@ public sealed class TextLinkTag : IMarkupTagHandler
 {
     [Dependency] private readonly ILogManager _logManager = default!;
 
-    private ISawmill Sawmill => _sawmillLogger ??= _logManager.GetSawmill(Name);
-    private ISawmill? _sawmillLogger;
+    private ISawmill Sawmill => _sawmill ??= _logManager.GetSawmill(Name);
+    private ISawmill? _sawmill;
 
     public static Color LinkColor => Color.CornflowerBlue;
 
