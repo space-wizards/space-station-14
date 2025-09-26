@@ -39,7 +39,7 @@
     delay: 2
   - type: SolutionContainerManager
     solutions:
-      food: &PlushieFood
+      food:
         maxVol: 10
         reagents:
         - ReagentId: Fiber
@@ -110,6 +110,7 @@
     - ForceableFollow
     - PlushieGhost
     - Payload
+    - ClothMade
 
 - type: entity
   parent: PlushieGhost
@@ -178,20 +179,20 @@
     sprite: Objects/Fun/Plushies/hampter.rsi
     state: icon
   - type: EmitSoundOnUse
-    sound: &PlushieMouseSound
+    sound: &PlushieHampterSound
       path: /Audio/Items/Toys/mousesqueek.ogg
   - type: EmitSoundOnLand
-    sound: *PlushieMouseSound
+    sound: *PlushieHampterSound
   - type: EmitSoundOnActivate
-    sound: *PlushieMouseSound
+    sound: *PlushieHampterSound
   - type: EmitSoundOnTrigger
-    sound: *PlushieMouseSound
+    sound: *PlushieHampterSound
   - type: EmitSoundOnCollide
-    sound: *PlushieMouseSound
+    sound: *PlushieHampterSound
   - type: Edible
-    useSound: *PlushieMouseSound
+    useSound: *PlushieHampterSound
   - type: MeleeWeapon
-    soundHit: *PlushieMouseSound
+    soundHit: *PlushieHampterSound
   - type: Clothing
     quickEquip: false
     sprite: Objects/Fun/Plushies/hampter.rsi
@@ -351,6 +352,7 @@
     sound: *PlushieLizardSound
   - type: Edible
     useSound: *PlushieLizardSound
+    transferAmount: 10
   - type: MeleeWeapon
     soundHit: *PlushieLizardSound
   - type: Extractable
@@ -597,13 +599,15 @@
     useSound: *PlushieDionaSound
   - type: SolutionContainerManager
     solutions:
-      plushie:
-        maxVol: 1
-      food: *PlushieFood
+      food:
+        maxVol: 11
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
   - type: RefillableSolution
-    solution: plushie
+    solution: food
   - type: SolutionContainerVisuals
-    solutionName: plushie
+    solutionName: food
     maxFillLevels: 1
     fillBaseName: plushie_diona
     changeColor: false
@@ -655,12 +659,12 @@
   - type: Sprite
     sprite: Objects/Fun/Plushies/shark.rsi
     state: blue
-  - type: EmitSoundOnLand
+  - type: EmitSoundOnUse
     sound: &PlushieSharkSound
       path: /Audio/Items/Toys/rawr.ogg
-  - type: EmitSoundOnTrigger
+  - type: EmitSoundOnLand
     sound: *PlushieSharkSound
-  - type: EmitSoundOnUse
+  - type: EmitSoundOnTrigger
     sound: *PlushieSharkSound
   - type: EmitSoundOnActivate
     sound: *PlushieSharkSound
@@ -957,7 +961,8 @@
     sprite: Objects/Fun/toy_mouse.rsi
     state: icon
   - type: EmitSoundOnUse
-    sound: *PlushieMouseSound
+    sound: &PlushieMouseSound
+      path: /Audio/Items/Toys/mousesqueek.ogg
   - type: EmitSoundOnLand
     sound: *PlushieMouseSound
   - type: EmitSoundOnActivate
@@ -1110,22 +1115,30 @@
     sprite: Objects/Fun/Plushies/human.rsi
     state: icon
   - type: EmitSoundOnUse
-    sound: &PlushieHumanSounds
-      collection: MaleScreams
-      params:
+    sound: &PlushieHuman1
+      path: /Audio/Voice/Human/malescream_1.ogg
+      params: &VolumeMinus8
         volume: -8
   - type: EmitSoundOnLand
-    sound: *PlushieHumanSounds
+    sound:
+      path: /Audio/Voice/Human/malescream_2.ogg
+      params: *VolumeMinus8
   - type: EmitSoundOnActivate
-    sound: *PlushieHumanSounds
+    sound:
+      path: /Audio/Voice/Human/malescream_3.ogg
+      params: *VolumeMinus8
   - type: EmitSoundOnCollide
-    sound: *PlushieHumanSounds
+    sound: &PlushieHuman4
+      path: /Audio/Voice/Human/malescream_4.ogg
+      params: *VolumeMinus8
   - type: Edible
-    useSound: *PlushieHumanSounds
+    useSound: *PlushieHuman1
   - type: MeleeWeapon
-    soundHit: *PlushieHumanSounds
+    soundHit: *PlushieHuman4
   - type: EmitSoundOnTrigger
-    sound: *PlushieHumanSounds
+    sound:
+      path: /Audio/Voice/Human/malescream_5.ogg
+      params: *VolumeMinus8
   - type: Clothing
     quickEquip: false
     sprite: Objects/Fun/Plushies/human.rsi
