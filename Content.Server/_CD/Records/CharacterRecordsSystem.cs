@@ -69,6 +69,15 @@ public sealed class CharacterRecordsSystem : EntitySystem
         // Use the player's saved records when available; otherwise seed with the default template.
         var profileRecords = profile.CDCharacterRecords ?? PlayerProvidedCharacterRecords.DefaultRecords();
 
+        if (!CharacterRecordSizeHelper.TryCalculateMetrics(profile, _prototype, out var derivedHeight, out var derivedWeight))
+        {
+            // Fall back to whatever the profile already stored if we cannot resolve the species sizing data.
+            Log.Warning($"Failed to resolve species sizing while constructing records for {profile.Name}. Using stored values.");
+        }
+        else
+        {
+            profileRecords = profileRecords.WithHeight(derivedHeight).WithWeight(derivedWeight);
+        }
         if (!_prototype.TryIndex(args.JobId, out JobPrototype? jobPrototype))
         {
             Log.Error($"Invalid job prototype ID '{args.JobId}' while creating records for {profile.Name}.");
@@ -282,3 +291,4 @@ public sealed class CharacterRecordsSystem : EntitySystem
 }
 
 public sealed class CharacterRecordsModifiedEvent : EntityEventArgs;
+

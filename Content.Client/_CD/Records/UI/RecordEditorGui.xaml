@@ -8,13 +8,13 @@
                      <BoxContainer HorizontalExpand="True" SeparationOverride="2">
                          <Label Text="{Loc 'humanoid-profile-editor-cd-records-height'}" />
                          <Control HorizontalExpand="True" MinSize="5 0" />
-                         <LineEdit Name="HeightEdit" HorizontalAlignment="Right" MinSize="60 0" />
+                         <LineEdit Name="HeightEdit" HorizontalAlignment="Right" MinSize="60 0" Editable="False" />
                          <Label Name="HeightImperialLabel" MinWidth="60" />
                      </BoxContainer>
                      <BoxContainer HorizontalExpand="True" SeparationOverride="2">
                          <Label Text="{Loc 'humanoid-profile-editor-cd-records-weight'}" />
                          <Control HorizontalExpand="True" MinSize="5 0" />
-                         <LineEdit Name="WeightEdit" HorizontalAlignment="Right" MinSize="60 0" />
+                         <LineEdit Name="WeightEdit" HorizontalAlignment="Right" MinSize="60 0" Editable="False" />
                          <Label Name="WeightImperialLabel" MinWidth="70"/>
                      </BoxContainer>
                  </GridContainer>
@@ -67,3 +67,4 @@
          </ScrollContainer>
     </BoxContainer>
 </Control>
+
