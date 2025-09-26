@@ -8,7 +8,7 @@ namespace Content.Shared._Starlight.Actions.EntitySystems;
 public sealed class SpawnOnActionSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependenxy] private readonly INetManager _net = default!
+    [Dependency] private readonly INetManager _net = default!;
 
     public override void Initialize()
     {
@@ -35,7 +35,7 @@ public sealed class SpawnOnActionSystem : EntitySystem
 
         args.Handled = true;
 
-        If(_net.IsServer)
+        if (_net.IsServer)
             SpawnAtPosition(component.EntityToSpawn, Transform(uid).Coordinates);
     }
 }
