@@ -22,6 +22,7 @@
       tags:
         - Cartridge
         - Trash
+  - type: ExtendInventoryToContainer
   - type: UseDelay
     delay: 0.5
   - type: Tag
