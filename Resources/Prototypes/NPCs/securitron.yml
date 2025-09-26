@@ -1,7 +1,11 @@
 - type: htnCompound
   id: SecuritronCompound
   branches:
-    - tasks:
+    - preconditions:
+        - !type:KeyBoolEqualsPrecondition
+          key: SecuritronDetainModeKey
+          value: false
+      tasks:
         - !type:HTNPrimitiveTask
           operator: !type:UtilityOperator
             proto: NearbyCriminalTargets
@@ -11,6 +15,20 @@
             hidden: true
         - !type:HTNCompoundTask
           task: SecuritronMeleeAttackCompound
+    - preconditions:
+        - !type:KeyBoolEqualsPrecondition
+          key: SecuritronDetainModeKey
+          value: true
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: NearbyCriminalTargets
+        - !type:HTNPrimitiveTask
+          operator: !type:SpeakOperator
+            speech: securitron-threat-detected
+            hidden: true
+        - !type:HTNCompoundTask
+          task: SecuritronDetainCompound
     - tasks:
         - !type:HTNCompoundTask
           task: IdleCompound
@@ -47,3 +65,22 @@
               id: MeleeService
               proto: NearbyCriminalTargets
               key: Target
+
+- type: htnCompound
+  id: SecuritronDetainCompound
+  branches:
+    - preconditions:
+      - !type:KeyExistsPrecondition
+        key: Target
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            shutdownState: PlanFinished
+            pathfindInPlanning: true
+            removeKeyOnFinish: false
+            targetKey: TargetCoordinates
+            pathfindKey: TargetPathfind
+            rangeKey: MeleeRange
+        - !type:HTNPrimitiveTask
+          operator: !type:JukeOperator
+            jukeType: Away
