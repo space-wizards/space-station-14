@@ -68,7 +68,7 @@
   id: ERTLeaderGearArmed
   equipment:
     pocket2: WeaponDisabler
-    suitstorage: WeaponRifleLecter
+    suitstorage: WeaponRifleLecterXL8
   storage:
     back:
     - WeaponPistolN1984

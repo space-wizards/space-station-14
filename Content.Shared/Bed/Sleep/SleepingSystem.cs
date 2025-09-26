@@ -18,7 +18,6 @@ using Content.Shared.Slippery;
 using Content.Shared.Sound;
 using Content.Shared.Sound.Components;
 using Content.Shared.Speech;
-using Content.Shared.StatusEffect;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.Stunnable;
 using Content.Shared.Traits.Assorted;
@@ -38,8 +37,8 @@ public sealed partial class SleepingSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedEmitSoundSystem _emitSound = default!;
-    [Dependency] private readonly StatusEffect.StatusEffectsSystem _statusEffectOld = default!;
-    [Dependency] private readonly StatusEffectNew.StatusEffectsSystem _statusEffectNew = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
+    [Dependency] private readonly SharedStunSystem _stun = default!;
 
     public static readonly EntProtoId SleepActionId = "ActionSleep";
     public static readonly EntProtoId WakeActionId = "ActionWake";
@@ -67,6 +66,8 @@ public sealed partial class SleepingSystem : EntitySystem
         SubscribeLocalEvent<SleepingComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<SleepingComponent, GetVerbsEvent<AlternativeVerb>>(AddWakeVerb);
         SubscribeLocalEvent<SleepingComponent, InteractHandEvent>(OnInteractHand);
+        SubscribeLocalEvent<SleepingComponent, StunEndAttemptEvent>(OnStunEndAttempt);
+        SubscribeLocalEvent<SleepingComponent, StandUpAttemptEvent>(OnStandUpAttempt);
 
         SubscribeLocalEvent<ForcedSleepingStatusEffectComponent, StatusEffectAppliedEvent>(OnStatusEffectApplied);
         SubscribeLocalEvent<SleepingComponent, UnbuckleAttemptEvent>(OnUnbuckleAttempt);
@@ -106,10 +107,7 @@ public sealed partial class SleepingSystem : EntitySystem
     {
         if (args.FellAsleep)
         {
-            // Expiring status effects would remove the components needed for sleeping
-            _statusEffectOld.TryRemoveStatusEffect(ent.Owner, "Stun");
-            _statusEffectOld.TryRemoveStatusEffect(ent.Owner, "KnockedDown");
-
+            // Just in case we're not using the sleeping status
             EnsureComp<StunnedComponent>(ent);
             EnsureComp<KnockedDownComponent>(ent);
 
@@ -129,8 +127,9 @@ public sealed partial class SleepingSystem : EntitySystem
             return;
         }
 
-        RemComp<StunnedComponent>(ent);
-        RemComp<KnockedDownComponent>(ent);
+        _stun.TryUnstun(ent.Owner);
+        _stun.TryStanding(ent.Owner);
+
         RemComp<SpamEmitSoundComponent>(ent);
     }
 
@@ -175,6 +174,17 @@ public sealed partial class SleepingSystem : EntitySystem
         args.Cancelled = true;
     }
 
+    private void OnStunEndAttempt(Entity<SleepingComponent> ent, ref StunEndAttemptEvent args)
+    {
+        args.Cancelled = true;
+    }
+
+    private void OnStandUpAttempt(Entity<SleepingComponent> ent, ref StandUpAttemptEvent args)
+    {
+        // Shh the Urist McHands is sleeping...
+        args.Cancelled = true;
+    }
+
     private void OnExamined(Entity<SleepingComponent> ent, ref ExaminedEvent args)
     {
         if (args.IsInDetailsRange)
@@ -188,7 +198,6 @@ public sealed partial class SleepingSystem : EntitySystem
         if (!args.CanInteract || !args.CanAccess)
             return;
 
-        var target = args.Target;
         var user = args.User;
         AlternativeVerb verb = new()
         {
@@ -253,7 +262,10 @@ public sealed partial class SleepingSystem : EntitySystem
 
     private void OnStatusEffectApplied(Entity<ForcedSleepingStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
-        TrySleeping(args.Target);
+        // Applying state check needed so we don't add SleepingComp during
+        // entity reset due to the status effect getting inserted
+        if (!_gameTiming.ApplyingState)
+            TrySleeping(args.Target);
     }
 
     private void Wake(Entity<SleepingComponent> ent)
@@ -310,7 +322,7 @@ public sealed partial class SleepingSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
-        if (!force && _statusEffectNew.HasEffectComp<ForcedSleepingStatusEffectComponent>(ent))
+        if (!force && _statusEffect.HasEffectComp<ForcedSleepingStatusEffectComponent>(ent))
         {
             if (user != null)
             {

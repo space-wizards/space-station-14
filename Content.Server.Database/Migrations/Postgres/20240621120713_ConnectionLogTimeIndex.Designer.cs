@@ -18,7 +18,6 @@ namespace Content.Server.Database.Migrations.Postgres
     [Migration("20240621120713_ConnectionLogTimeIndex")]
     partial class ConnectionLogTimeIndex
     {
-#if EF_DESIGNER
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1912,6 +1911,5 @@ namespace Content.Server.Database.Migrations.Postgres
                 });
 #pragma warning restore 612, 618
         }
-#endif
     }
 }

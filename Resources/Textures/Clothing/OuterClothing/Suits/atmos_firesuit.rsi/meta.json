@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation https://github.com/tgstation/tgstation/blob/master/icons/mob/clothing/suit.dmi. equipped-OUTERCLOTHING-dog modified from equipped-OUTERCLOTHING by @Aisfae(facebook).",
+    "copyright": "Taken from tgstation https://github.com/tgstation/tgstation/blob/master/icons/mob/clothing/suit.dmi. equipped-OUTERCLOTHING-dog modified from equipped-OUTERCLOTHING by @Aisfae(facebook). Vox Sprite taken from https://github.com/ParadiseSS13/Paradise/blob/980bbb489d27baa168d30d044d573d017845015b/icons/mob/clothing/species/vox/suit.dmi modified by @areyouconfused(github). Tail sprites by Tiniest Shark (github)",
     "size": {
         "x": 32,
         "y": 32
@@ -12,6 +12,14 @@
         },
         {
             "name": "equipped-OUTERCLOTHING",
+            "directions": 4
+        },
+        {
+            "name": "equipped-OUTERCLOTHING-reptilian",
+            "directions": 4
+        },
+        {
+            "name": "equipped-OUTERCLOTHING-vox",
             "directions": 4
         },
         {
