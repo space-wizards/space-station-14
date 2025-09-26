@@ -195,7 +195,7 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
                 foreach (var effect in entry.Effects)
                 {
                     if (scale < effect.MinScale)
-                        return;
+                        continue;
 
                     // See if conditions apply
                     if (effect.Conditions == null || CanMetabolizeEffect(effect.Conditions))

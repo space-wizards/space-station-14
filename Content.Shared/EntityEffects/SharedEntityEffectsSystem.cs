@@ -170,7 +170,7 @@ public abstract partial class AnyEntityEffect
     public string EntityEffectFormat = "guidebook-reagent-effect-description";
 
     [DataField]
-    public string? EntityEffectGuidebookText;
+    public string? EntityEffectGuidebookText = "entity-effect";
 
     public string? GuidebookEffectDescription()
     {
@@ -179,7 +179,7 @@ public abstract partial class AnyEntityEffect
 
         return Loc.GetString(
             EntityEffectFormat,
-            ("effect", this),
+            ("effect", EntityEffectGuidebookText),
             ("chance", Probability),
             ("conditionCount", Conditions?.Length ?? 0),
             ("conditions",
