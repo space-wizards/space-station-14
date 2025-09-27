@@ -4,8 +4,8 @@ marking-TattooVoxNightlingHead = Vox Head Tattoo (Nightling)
 marking-TattooVoxArrowHead-tattoo_arrow_head = Vox Head Tattoo (Arrow)
 marking-TattooVoxArrowHead = Vox Head Tattoo (Arrow)
 
-marking-VoxEyeliner-eyeliner = Eyeliner
-marking-VoxEyeliner = Eyeliner
+marking-VoxTattooEyeliner-eyeliner = Eyeliner
+marking-VoxTattooEyeliner = Eyeliner
 
 marking-VoxVisage-visage = Visage (Full)
 marking-VoxVisage = Visage (Full)

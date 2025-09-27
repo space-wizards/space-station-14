@@ -175,7 +175,7 @@
     state: eyeshadow_large
     
 - type: marking
-  id: VoxEyeliner
+  id: VoxTattooEyeliner
   bodyPart: Eyes
   markingCategory: Overlay
   speciesRestriction: [Vox]
