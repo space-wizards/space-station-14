@@ -1,4 +1,6 @@
-﻿using Content.Shared.Mind;
+﻿using System.Linq;
+using Content.Shared.Localizations;
+using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
@@ -47,6 +49,10 @@ public sealed partial class HasJob : EntityConditionBase<HasJob>
 {
     [DataField(required: true)] public List<ProtoId<JobPrototype>> Jobs = [];
 
-    public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>
-        Loc.GetString("reagent-effect-condition-guidebook-breathing", ("isBreathing", !Inverted));
+    // TODO: Special LOC for list
+    public override string EntityConditionGuidebookText(IPrototypeManager prototype)
+    {
+        var localizedNames = Jobs.Select(jobId => prototype.Index(jobId).LocalizedName).ToList();
+        return Loc.GetString("reagent-effect-condition-guidebook-job-condition", ("job", ContentLocalizationManager.FormatListToOr(localizedNames)));
+    }
 }

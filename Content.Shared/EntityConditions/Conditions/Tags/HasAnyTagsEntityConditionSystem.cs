@@ -21,6 +21,7 @@ public sealed partial class HasAnyTag : EntityConditionBase<HasAnyTag>
     [DataField(required: true)]
     public ProtoId<TagPrototype>[] Tags = [];
 
+    // TODO: Special LOC for list also combine this with HasTag...
     public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>
         Loc.GetString("reagent-effect-condition-guidebook-has-tag", ("tag", Tags), ("invert", Inverted));
 }

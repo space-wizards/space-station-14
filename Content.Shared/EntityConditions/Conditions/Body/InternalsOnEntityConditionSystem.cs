@@ -17,5 +17,5 @@ public sealed partial class InternalsOnEntityConditionSystem : EntityConditionSy
 public sealed partial class InternalsOn : EntityConditionBase<InternalsOn>
 {
     public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>
-        Loc.GetString("reagent-effect-condition-guidebook-breathing", ("isBreathing", !Inverted));
+        Loc.GetString("reagent-effect-condition-guidebook-internals", ("usingInternals", !Inverted));
 }

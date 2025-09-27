@@ -22,5 +22,5 @@ public sealed partial class IsMobState : EntityConditionBase<IsMobState>
     public MobState Mobstate = MobState.Alive;
 
     public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>
-        Loc.GetString("reagent-effect-condition-guidebook-breathing", ("isBreathing", !Inverted));
+        Loc.GetString("reagent-effect-condition-guidebook-mob-state-condition", ("state", Mobstate));
 }
