@@ -3,18 +3,22 @@
   id: LibrarianJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitLibrarian
+  groupBy: "librarian"
 
 - type: loadout
   id: LibrarianJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtLibrarian
+  groupBy: "librarian"
 
 - type: loadout
   id: CuratorJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitCurator
+  groupBy: "curator"
 
 - type: loadout
   id: CuratorJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtCurator
+  groupBy: "curator"
