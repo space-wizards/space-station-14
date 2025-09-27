@@ -1,14 +1,15 @@
 using System.Numerics;
+using Content.Shared.Decals;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Decals.Overlays;
 
-public sealed class DecalPlacementOverlay : Overlay
+[Virtual]
+public class DecalPlacementOverlay : Overlay
 {
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
@@ -19,6 +20,11 @@ public sealed class DecalPlacementOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities;
 
+    protected DecalPrototype? decal;
+    protected bool snap;
+    protected Angle rotation;
+    protected Color? color;
+
     public DecalPlacementOverlay(DecalPlacementSystem placement, SharedTransformSystem transform, SpriteSystem sprite)
     {
         IoCManager.InjectDependencies(this);
@@ -28,9 +34,14 @@ public sealed class DecalPlacementOverlay : Overlay
         ZIndex = 1000;
     }
 
+    protected virtual void LoadDecal()
+    {
+        (decal, snap, rotation, color) = _placement.GetActiveDecal();
+    }
+
     protected override void Draw(in OverlayDrawArgs args)
     {
-        var (decal, snap, rotation, color) = _placement.GetActiveDecal();
+        LoadDecal();
 
         if (decal == null)
             return;
