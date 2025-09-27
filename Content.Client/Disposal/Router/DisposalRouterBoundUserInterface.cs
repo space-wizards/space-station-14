@@ -1,8 +1,8 @@
-﻿using JetBrains.Annotations;
+using Content.Shared.Disposal.Components;
+using JetBrains.Annotations;
 using Robust.Client.UserInterface;
-using static Content.Shared.Disposal.Components.SharedDisposalRouterComponent;
 
-namespace Content.Client.Disposal.Tube
+namespace Content.Client.Disposal.Router
 {
     /// <summary>
     /// Initializes a <see cref="DisposalRouterWindow"/> and updates it when new server messages are received.
@@ -23,13 +23,13 @@ namespace Content.Client.Disposal.Tube
 
             _window = this.CreateWindow<DisposalRouterWindow>();
 
-            _window.Confirm.OnPressed += _ => ButtonPressed(UiAction.Ok, _window.TagInput.Text);
-            _window.TagInput.OnTextEntered += args => ButtonPressed(UiAction.Ok, args.Text);
+            _window.Confirm.OnPressed += _ => ButtonPressed(DisposalTaggerUiAction.Ok, _window.TagInput.Text);
+            _window.TagInput.OnTextEntered += args => ButtonPressed(DisposalTaggerUiAction.Ok, args.Text);
         }
 
-        private void ButtonPressed(UiAction action, string tag)
+        private void ButtonPressed(DisposalTaggerUiAction action, string tag)
         {
-            SendMessage(new UiActionMessage(action, tag));
+            SendMessage(new DisposalTaggerUiActionMessage(action, tag, 150));
             Close();
         }
 
@@ -37,7 +37,7 @@ namespace Content.Client.Disposal.Tube
         {
             base.UpdateState(state);
 
-            if (state is not DisposalRouterUserInterfaceState cast)
+            if (state is not DisposalTaggerUserInterfaceState cast)
             {
                 return;
             }

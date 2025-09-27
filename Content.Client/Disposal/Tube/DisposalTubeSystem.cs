@@ -1,8 +1,6 @@
-using Content.Shared.Disposal.Unit;
+using Content.Shared.Disposal.Tube;
 
 namespace Content.Client.Disposal.Tube;
 
-public sealed class DisposalTubeSystem : SharedDisposalTubeSystem
-{
-
-}
+/// <inheritdoc/>
+public sealed partial class DisposalTubeSystem : SharedDisposalTubeSystem;
