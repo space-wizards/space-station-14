@@ -56,7 +56,7 @@ public sealed class ThirstSystem : EntitySystem
         DirtyFields(uid, component, null, nameof(ThirstComponent.NextUpdateTime), nameof(ThirstComponent.CurrentThirstThreshold), nameof(ThirstComponent.LastThirstThreshold));
 
         TryComp(uid, out MovementSpeedModifierComponent? moveMod);
-            _movement.RefreshMovementSpeedModifiers(uid, moveMod);
+            _movement.RefreshMovementSpeedModifiers((uid, moveMod));
     }
 
     private void OnRefreshMovespeed(EntityUid uid, ThirstComponent component, RefreshMovementSpeedModifiersEvent args)
@@ -150,7 +150,7 @@ public sealed class ThirstSystem : EntitySystem
         if (IsMovementThreshold(component.LastThirstThreshold) != IsMovementThreshold(component.CurrentThirstThreshold) &&
                 TryComp(uid, out MovementSpeedModifierComponent? movementSlowdownComponent))
         {
-            _movement.RefreshMovementSpeedModifiers(uid, movementSlowdownComponent);
+            _movement.RefreshMovementSpeedModifiers((uid, movementSlowdownComponent));
         }
 
         // Update UI
