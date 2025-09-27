@@ -6,7 +6,7 @@
   flavor: medicine
   color: "#9d42d5"
   metabolisms:
-    Medicine:
+    Food:
       effects:
       - !type:HealthChange
         damage:
