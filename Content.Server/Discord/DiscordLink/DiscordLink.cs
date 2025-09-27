@@ -31,7 +31,7 @@ public sealed class CommandReceivedEventArgs
 /// <summary>
 /// Handles the connection to Discord and provides methods to interact with it.
 /// </summary>
-public sealed class DiscordLink : IPostInjectInit
+public sealed partial class DiscordLink : IPostInjectInit
 {
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IConfigurationManager _configuration = default!;
@@ -77,10 +77,17 @@ public sealed class DiscordLink : IPostInjectInit
 
     #endregion
 
+    public void Update()
+    {
+        UpdateStatus();
+    }
+
     public void Initialize()
     {
         _configuration.OnValueChanged(CCVars.DiscordGuildId, OnGuildIdChanged, true);
         _configuration.OnValueChanged(CCVars.DiscordPrefix, OnPrefixChanged, true);
+        _configuration.OnValueChanged(CCVars.DiscordStatusEnabled, OnStatusChanged, true);
+        _configuration.OnValueChanged(CCVars.DiscordStatusSwapBaseDelay, OnStatusSwapDelayChanged, true);
 
         if (_configuration.GetCVar(CCVars.DiscordToken) is not { } token || token == string.Empty)
         {
@@ -151,6 +158,8 @@ public sealed class DiscordLink : IPostInjectInit
 
         _configuration.UnsubValueChanged(CCVars.DiscordGuildId, OnGuildIdChanged);
         _configuration.UnsubValueChanged(CCVars.DiscordPrefix, OnPrefixChanged);
+        _configuration.UnsubValueChanged(CCVars.DiscordStatusEnabled, OnStatusChanged);
+        _configuration.UnsubValueChanged(CCVars.DiscordStatusSwapBaseDelay, OnStatusSwapDelayChanged);
     }
 
     void IPostInjectInit.PostInject()

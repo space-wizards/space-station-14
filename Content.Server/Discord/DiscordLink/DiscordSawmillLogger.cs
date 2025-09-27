@@ -22,6 +22,12 @@ public sealed class DiscordSawmillLogger(ISawmill sawmill) : IGatewayLogger, IRe
         sawmill.Log(GetLogLevel(logLevel), exception, formatter(state, exception));
     }
 
+    bool IVoiceLogger.IsEnabled(NLogLevel logLevel) => true;
+
+    bool IRestLogger.IsEnabled(NLogLevel logLevel) => true;
+
+    bool IGatewayLogger.IsEnabled(NLogLevel logLevel) => true;
+
     void IRestLogger.Log<TState>(NetCord.Logging.LogLevel logLevel, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
     {
         sawmill.Log(GetLogLevel(logLevel), exception, formatter(state, exception));
