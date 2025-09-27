@@ -40,7 +40,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
     private static void OnCrayonGetState(EntityUid uid, CrayonComponent component, ref ComponentGetState args)
     {
-        args.State = new CrayonComponentState(component.Color, component.SelectedState, component.Charges, component.Capacity);
+        args.State = new CrayonComponentState(component.Color, component.SelectedState, component.Charges, component.Capacity, component.Infinite);
     }
 
     private void OnCrayonAfterInteract(EntityUid uid, CrayonComponent component, AfterInteractEvent args)
@@ -48,7 +48,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
         if (args.Handled || !args.CanReach)
             return;
 
-        if (component.Charges <= 0)
+        if (component.Charges <= 0 && !component.Infinite)
         {
             if (component.DeleteEmpty)
                 UseUpCrayon(uid, args.User);
@@ -73,8 +73,11 @@ public sealed class CrayonSystem : SharedCrayonSystem
             _audio.PlayPvs(component.UseSound, uid, AudioParams.Default.WithVariation(0.125f));
 
         // Decrease "Ammo"
-        component.Charges--;
-        Dirty(uid, component);
+        if (!component.Infinite)
+        {
+            component.Charges--;
+            Dirty(uid, component);
+        }
 
         _adminLogger.Add(LogType.CrayonDraw, LogImpact.Low, $"{ToPrettyString(args.User):user} drew a {component.Color:color} {component.SelectedState}");
         args.Handled = true;

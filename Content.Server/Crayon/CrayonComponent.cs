@@ -24,5 +24,9 @@ namespace Content.Server.Crayon
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("deleteEmpty")]
         public bool DeleteEmpty = true;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("infinite")]
+        public bool Infinite { get; set; }
     }
 }
