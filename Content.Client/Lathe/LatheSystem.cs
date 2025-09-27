@@ -2,7 +2,7 @@ using Robust.Client.GameObjects;
 using Content.Shared.Lathe;
 using Content.Shared.Power;
 using Content.Client.Power;
-using Content.Shared.Research.Prototypes;
+using Content.Shared.Lathe.Components;
 
 namespace Content.Client.Lathe;
 
@@ -15,6 +15,7 @@ public sealed class LatheSystem : SharedLatheSystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<LatheComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
         SubscribeLocalEvent<LatheComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
@@ -49,13 +50,17 @@ public sealed class LatheSystem : SharedLatheSystem
         }
     }
 
-    ///<remarks>
-    /// Whether or not a recipe is available is not really visible to the client,
-    /// so it just defaults to true.
-    ///</remarks>
-    protected override bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component)
+    private void OnAfterAutoHandleState(Entity<LatheComponent> entity, ref AfterAutoHandleStateEvent args)
     {
-        return true;
+        UpdateUI(entity);
+    }
+
+    protected override void UpdateUI(Entity<LatheComponent> entity)
+    {
+        if (UISys.TryGetOpenUi(entity.Owner, LatheUiKey.Key, out var bui))
+        {
+            bui.Update();
+        }
     }
 }
 
