@@ -1,7 +1,9 @@
+using Content.Shared.Clothing.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -28,6 +30,8 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<BallisticAmmoProviderComponent, GetVerbsEvent<Verb>>(OnBallisticVerb);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, InteractUsingEvent>(OnBallisticInteractUsing);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, AfterInteractEvent>(OnBallisticAfterInteract);
+        SubscribeLocalEvent<BallisticAmmoProviderComponent, AfterInteractUsingEvent>(OnBallisticAfterInteractUsing);
+        SubscribeLocalEvent<BallisticAmmoProviderComponent, SmartEquipWithItemAttemptEvent>(OnSmartEquipWithItemAttempt);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, AmmoFillDoAfterEvent>(OnBallisticAmmoFillDoAfter);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, UseInHandEvent>(OnBallisticUse);
     }
@@ -77,8 +81,52 @@ public abstract partial class SharedGunSystem
 
         args.Handled = true;
 
+        ReloadDoAfter(component, args.User, args.Target.Value, args.Used);
+    }
+
+    private void OnBallisticAfterInteractUsing(EntityUid uid, BallisticAmmoProviderComponent component, AfterInteractUsingEvent args)
+    {
+        if (args.Handled ||
+            !Timing.IsFirstTimePredicted ||
+            args.Target == null ||
+            args.Used == args.Target ||
+            Deleted(args.Target) ||
+            !TryComp<BallisticAmmoProviderComponent>(args.Target, out var targetComponent) ||
+            targetComponent.ReloadFromClothing == false)
+            return;
+
+        args.Handled = true;
+
+        if (!TryComp<ClothingComponent>(args.Target, out var clothing)
+            || clothing.InSlot == null
+            || clothing.InSlotFlag == SlotFlags.POCKET)
+            return;
+
+        ReloadDoAfter(component, args.User, args.Used, args.Target.Value);
+    }
+
+    private void OnSmartEquipWithItemAttempt(Entity<BallisticAmmoProviderComponent> ent, ref SmartEquipWithItemAttemptEvent args)
+    {
+        if (!Timing.IsFirstTimePredicted
+            || ent.Comp.ReloadFromClothing == false
+            || !TryComp<ClothingComponent>(args.SlotEntity, out var clothing)
+            || clothing.InSlot == null
+            || clothing.InSlotFlag == SlotFlags.POCKET
+            || !TryComp<BallisticAmmoProviderComponent>(args.SlotEntity, out _))
+            return;
+
+        ReloadDoAfter(ent.Comp, args.user, args.HeldItem, args.SlotEntity);
+    }
+
+    private void ReloadDoAfter(BallisticAmmoProviderComponent component, EntityUid user, EntityUid target, EntityUid used)
+    {
+        var doAfterSpeed = component.FillDelay;
+        // Check if reloader has speed modifier.
+        if (TryComp<IncreaseReloadSpeedContainerComponent>(used, out var reloader))
+            doAfterSpeed *= reloader.Modifier;
+
         // Continuous loading
-        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.FillDelay, new AmmoFillDoAfterEvent(), used: uid, target: args.Target, eventTarget: uid)
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, doAfterSpeed, new AmmoFillDoAfterEvent(), used: used, target: target, eventTarget: used)
         {
             BreakOnMove = true,
             BreakOnDamage = false,

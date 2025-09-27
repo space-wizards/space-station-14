@@ -57,4 +57,10 @@ public sealed partial class BallisticAmmoProviderComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan FillDelay = TimeSpan.FromSeconds(0.5);
+
+    /// <summary>
+    /// Whether the ammo provider can reload a weapon from a clothing slot like belt or backpack.
+    /// </summary>
+    [DataField]
+    public bool ReloadFromClothing;
 }

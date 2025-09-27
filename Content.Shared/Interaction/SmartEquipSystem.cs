@@ -3,6 +3,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
@@ -104,6 +105,13 @@ public sealed class SmartEquipSystem : EntitySystem
         //    - without hand item: try to put the item into your hand
 
         _inventory.TryGetSlotEntity(uid, equipmentSlot, out var slotEntity);
+
+        if (handItem != null && slotEntity != null)
+        {
+            var ev = new SmartEquipWithItemAttemptEvent(uid, handItem.Value, slotEntity.Value);
+            RaiseLocalEvent(slotEntity.Value, ref ev);
+        }
+
         var emptyEquipmentSlotString = Loc.GetString("smart-equip-empty-equipment-slot", ("slotName", equipmentSlot));
 
         // case 1 (no slot item):
