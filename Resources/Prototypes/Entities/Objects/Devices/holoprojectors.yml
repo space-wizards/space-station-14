@@ -110,7 +110,7 @@
   parent: HolofanProjector
   id: HolofanProjectorBorg
   name: integrated holofan
-  description: Stops idiots from causing more crew harm during atmospheric emergencies. Installed directly into an engineering cyborg, it recharges over time.
+  description: Stops idiots from causing more crew harm during atmospheric emergencies. Installed directly into an engineering and science cyborgs, it recharges over time.
   components:
   - type: ItemSlots
     slots:

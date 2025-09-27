@@ -28,6 +28,7 @@
     delay: 2
   - type: Tag
     tags:
+    - AnomalyCore
     - ForceableFollow
   - type: AnomalyCore
     timeToDecay: 600

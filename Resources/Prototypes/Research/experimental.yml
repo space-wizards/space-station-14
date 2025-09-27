@@ -103,9 +103,10 @@
   tier: 2
   cost: 10000
   recipeUnlocks:
-  - WeaponPistolCHIMP
   - AnomalySynchronizerCircuitboard
   - AnomalyVesselExperimentalCircuitboard
+  - BorgModuleAdvancedAnomaly
+  - WeaponPistolCHIMP
   technologyPrerequisites:
   - BasicAnomalousResearch
 

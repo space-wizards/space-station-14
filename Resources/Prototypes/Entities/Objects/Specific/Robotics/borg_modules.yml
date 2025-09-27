@@ -961,16 +961,18 @@
   - type: ItemBorgModule
     hands:
     - item: NodeScanner
-    - item: SprayBottle
     - item: GasAnalyzer
+    - item: HolofanProjectorBorg
     - item: BorgDropper
-    - item: BaseChemistryEmptyVial
+    - item: Beaker
       hand:
-        emptyLabel: borg-slot-small-containers-empty
-        emptyRepresentative: BaseChemistryEmptyVial
+        emptyLabel: borg-slot-chemical-containers-empty
+        emptyRepresentative: Beaker
         whitelist:
           components:
           - FitsInDispenser
+          tags:
+          - ChemDispensable
     - item: GeigerCounter
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: node-scanner-module }
@@ -991,19 +993,36 @@
     - item: AnomalyLocatorWideUnpowered
     - item: HandLabeler
     - hand:
-        emptyRepresentative: SheetRGlass
-        emptyLabel: borg-slot-construction-empty
-        whitelist:
-          tags:
-          - ConstructionMaterial
-    - hand:
-        emptyRepresentative: SheetRPGlass
+        emptyRepresentative: SheetPlasma
         emptyLabel: borg-slot-construction-empty
         whitelist:
           tags:
           - ConstructionMaterial
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: anomaly-module }
+
+- type: entity
+  id: BorgModuleAdvancedAnomaly
+  parent: [ BaseBorgModuleScience, BaseProviderBorgModule ]
+  name: advanced anomaly cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: science
+    - state: icon-anomalies-adv
+  - type: ItemBorgModule
+    hands:
+    - item: AnomalyScanner
+    - item: WeaponPistolCHIMPBorg
+    - item: WeaponGauntletGorilla
+    - hand:
+        emptyRepresentative: AnomalyCoreBluespaceInert
+        emptyLabel: borg-slot-anomaly-core
+        whitelist:
+          tags:
+          - AnomalyCore
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-anomaly-module }
 
 # service modules
 - type: entity

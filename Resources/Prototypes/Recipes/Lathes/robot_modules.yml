@@ -72,6 +72,11 @@
 
 # Science Modules
 
+- type: latheRecipe
+  parent: BaseGoldBorgModuleRecipe
+  id: BorgModuleAdvancedAnomaly
+  result: BorgModuleAdvancedAnomaly
+
 # Service Modules
 
 - type: latheRecipe
