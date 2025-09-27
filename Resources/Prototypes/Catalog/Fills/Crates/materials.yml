@@ -32,16 +32,6 @@
         amount: 3
 
 - type: entity
-  id: CrateMaterialDurathread
-  parent: CrateGenericSteel
-  name: durathread crate
-  description: 30 pieces of durathread.
-  components:
-  - type: StorageFill
-    contents:
-      - id: MaterialDurathread
-
-- type: entity
   id: CrateMaterialPlastic
   parent: CrateGenericSteel
   name: plastic sheet crate

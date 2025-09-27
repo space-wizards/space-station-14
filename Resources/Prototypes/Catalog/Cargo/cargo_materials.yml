@@ -79,16 +79,6 @@
   group: market
 
 - type: cargoProduct
-  id: MaterialDurathread
-  icon:
-    sprite: Objects/Materials/materials.rsi
-    state: durathread_3
-  product: CrateMaterialDurathread
-  cost: 1200
-  category: cargoproduct-category-name-materials
-  group: market
-
-- type: cargoProduct
   id: MaterialPlasma
   icon:
     sprite: Objects/Materials/Sheets/other.rsi
