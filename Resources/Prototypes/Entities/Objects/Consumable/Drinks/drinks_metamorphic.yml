@@ -4,35 +4,23 @@
 
 # Transformable container - normal glass
 - type: entity
-  parent: [DrinkBaseMaterialGlass, DrinkBaseCup] # todo parent to DrinkVisualsFillOverlay after in-hands are added
+  parent: [DrinkBaseMaterialGlass, DrinkBaseCup, DrinkVisualsFillOverlay]
   id: DrinkGlass
   name: metamorphic glass
   description: A metamorphic glass that automagically turns into a glass appropriate for the drink within. There's a sanded off patent number on the bottom.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_clear.rsi
-    layers:
-      - state: icon # TODO add "icon_empty" state to match "DrinkVisualsFillOverlay"
-        map: [ "enum.SolutionContainerLayers.Base" ]
-      - state: fill1
-        map: [ "enum.SolutionContainerLayers.Fill" ]
-        visible: false
-      - state: icon-front
-        map: [ "enum.SolutionContainerLayers.Overlay" ]
-  - type: Appearance
   - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 30
   - type: SolutionContainerVisuals
     maxFillLevels: 9
-    fillBaseName: fill # todo rename to "fill-", add in-hands, then add parent "DrinkVisualsFillOverlay"
     metamorphic: true
     metamorphicDefaultSprite:
       sprite: Objects/Consumable/Drinks/glass_clear.rsi
       state: icon
-    inHandsMaxFillLevels: 3
-    inHandsFillBaseName: -fill-
   - type: Tag
     tags:
     - DrinkCup # Do these tags
@@ -47,14 +35,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/jar.rsi
-    layers:
-    - state: icon
-      map: [ "enum.SolutionContainerLayers.Base" ]
-    - state: fill1
-      map: [ "enum.SolutionContainerLayers.Fill" ]
-      visible: false
-    - state: icon-front
-      map: [ "enum.SolutionContainerLayers.Overlay" ]
   - type: SolutionContainerManager
     solutions:
       drink:
