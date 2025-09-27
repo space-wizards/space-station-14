@@ -96,6 +96,43 @@
   - accent-words-zombie-10
 
 - type: accent
+  id: zombieDwarf
+  fullReplacements:
+  - accent-words-zombie-1
+  - accent-words-zombie-2
+  - accent-words-zombie-3
+  - accent-words-zombie-4
+  - accent-words-zombie-5
+  - accent-words-zombie-6
+  - accent-words-zombie-7
+  - accent-words-zombie-8
+  - accent-words-zombie-9
+  - accent-words-zombie-10
+  - accent-words-zombie-dwarf-1
+  - accent-words-zombie-dwarf-2
+  - accent-words-zombie-dwarf-3
+  - accent-words-zombie-dwarf-4
+  - accent-words-zombie-dwarf-5
+
+- type: accent
+  id: zombieVulpkanin
+  fullReplacements:
+  - accent-words-zombie-1
+  - accent-words-zombie-2
+  - accent-words-zombie-3
+  - accent-words-zombie-4
+  - accent-words-zombie-5
+  - accent-words-zombie-6
+  - accent-words-zombie-7
+  - accent-words-zombie-8
+  - accent-words-zombie-9
+  - accent-words-zombie-10
+  - accent-words-zombie-vulpkanin-1
+  - accent-words-zombie-vulpkanin-2
+  - accent-words-zombie-vulpkanin-3
+  - accent-words-zombie-vulpkanin-4
+
+- type: accent
   id: genericAggressive
   fullReplacements:
   - accent-words-generic-aggressive-1
