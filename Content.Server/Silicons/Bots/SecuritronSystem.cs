@@ -79,9 +79,16 @@ public sealed partial class SecuritronSystem : EntitySystem
     {
         if (!htn.Blackboard.TryGetValue<EntityUid>("Target", out var target, EntityManager) || Deleted(target))
         {
-            if (state.CurrentTarget != null)
-                ResetTarget(uid, state, htn);
-            return;
+            if (state.CurrentTarget != null && !Deleted(state.CurrentTarget.Value))
+            {
+                target = state.CurrentTarget.Value;
+                EnsureTargetOnBlackboard(htn, target);
+            }
+            else
+            {
+                ResetTarget(state, htn);
+                return;
+            }
         }
 
         if (state.CurrentTarget != target)
@@ -167,8 +174,14 @@ public sealed partial class SecuritronSystem : EntitySystem
             TryStartCuff(uid, state, target);
         }
 
-        var targetSubdued = state.TargetStatus != SecuritronTargetTrackingState.Engaging || targetCuffed || targetDowned;
-        SetTargetSubdued(uid, htn, targetSubdued);
+        var targetSubdued = state.TargetStatus switch
+        {
+            SecuritronTargetTrackingState.Downed => true,
+            SecuritronTargetTrackingState.Cuffed => true,
+            SecuritronTargetTrackingState.Standby => !state.TargetFleeing,
+            _ => false,
+        };
+        SetTargetSubdued(htn, targetSubdued);
     }
 
     private void AcquireTarget(EntityUid uid, SecuritronStateComponent state, EntityUid target, HTNComponent htn, TimeSpan now)
@@ -187,7 +200,7 @@ public sealed partial class SecuritronSystem : EntitySystem
         state.NextCuffAttempt = TimeSpan.Zero;
 
         htn.Blackboard.SetValue(NPCBlackboard.SecuritronTargetFleeingKey, false);
-        SetTargetSubdued(uid, htn, true);
+        SetTargetSubdued(htn, false);
 
         Speak(uid, state, "securitron-say-halt", now);
 
@@ -199,7 +212,7 @@ public sealed partial class SecuritronSystem : EntitySystem
         }
     }
 
-    private void ResetTarget(EntityUid uid, SecuritronStateComponent state, HTNComponent htn)
+    private void ResetTarget(SecuritronStateComponent state, HTNComponent htn)
     {
         state.CurrentTarget = null;
         state.TargetStatus = SecuritronTargetTrackingState.None;
@@ -214,7 +227,7 @@ public sealed partial class SecuritronSystem : EntitySystem
         state.NextCuffAttempt = TimeSpan.Zero;
 
         htn.Blackboard.SetValue(NPCBlackboard.SecuritronTargetFleeingKey, false);
-        SetTargetSubdued(uid, htn, false);
+        SetTargetSubdued(htn, false);
     }
 
     private void AnnounceStandby(EntityUid uid, SecuritronStateComponent state, TimeSpan now)
@@ -223,7 +236,6 @@ public sealed partial class SecuritronSystem : EntitySystem
             return;
 
         state.TargetStatus = SecuritronTargetTrackingState.Standby;
-        StopCombat(uid);
         Speak(uid, state, "securitron-say-standby", now);
     }
 
@@ -334,15 +346,12 @@ public sealed partial class SecuritronSystem : EntitySystem
         state.NextSpeechTime = now + TimeSpan.FromSeconds(2);
     }
 
-    private void SetTargetSubdued(EntityUid uid, HTNComponent htn, bool value)
+    private void SetTargetSubdued(HTNComponent htn, bool value)
     {
         if (htn.Blackboard.TryGetValue<bool>(NPCBlackboard.SecuritronTargetSubduedKey, out var current, EntityManager) && current == value)
             return;
 
         htn.Blackboard.SetValue(NPCBlackboard.SecuritronTargetSubduedKey, value);
-
-        if (value)
-            StopCombat(uid);
     }
 
     private void StopCombat(EntityUid uid)
@@ -351,6 +360,13 @@ public sealed partial class SecuritronSystem : EntitySystem
 
         if (HasComp<NPCMeleeCombatComponent>(uid))
             RemComp<NPCMeleeCombatComponent>(uid);
+    }
+
+    private void EnsureTargetOnBlackboard(HTNComponent htn, EntityUid target)
+    {
+        var coords = _transform.GetMoverCoordinates(target);
+        htn.Blackboard.SetValue("Target", target);
+        htn.Blackboard.SetValue("TargetCoordinates", coords);
     }
 
     private string FormatLocation(EntityUid uid)
@@ -405,6 +421,7 @@ public sealed partial class SecuritronSystem : EntitySystem
         };
     }
 }
+
 
 
 
