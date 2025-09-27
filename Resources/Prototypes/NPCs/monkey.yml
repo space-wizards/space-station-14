@@ -1,0 +1,53 @@
+- type: htnCompound
+  id: MonkeyCompound
+  branches:
+  - tasks:
+    - !type:HTNCompoundTask
+      task: DisposalsNearbyCompound
+  - tasks:
+    - !type:HTNCompoundTask
+      task: SimpleHostileCompound
+
+- type: htnCompound
+  id: DisposalsNearbyCompound
+  branches:
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:PickNearbyDisposableOperator
+        rangeKey: VisionRadius
+        targetKey: FlushableTarget
+        disposalTargetKey: DisposalBinTarget
+        targetMoveKey: TargetCoordinates
+
+    - !type:HTNPrimitiveTask
+      operator: !type:MoveToOperator
+        pathfindInPlanning: false
+
+    - !type:HTNPrimitiveTask
+      operator: !type:SetFloatOperator
+        targetKey: IdleTime
+        amount: 1
+
+    - !type:HTNPrimitiveTask
+      operator: !type:WaitOperator
+        key: IdleTime
+      preconditions:
+      - !type:KeyExistsPrecondition
+        key: IdleTime
+
+    - !type:HTNPrimitiveTask
+      operator: !type:DisposalInsertOperator
+        targetKey: FlushableTarget
+        disposalTargetKey: DisposalBinTarget
+
+    - !type:HTNPrimitiveTask
+      operator: !type:SetFloatOperator
+        targetKey: IdleTime
+        amount: 1
+
+    - !type:HTNPrimitiveTask
+      operator: !type:WaitOperator
+        key: IdleTime
+      preconditions:
+      - !type:KeyExistsPrecondition
+        key: IdleTime
