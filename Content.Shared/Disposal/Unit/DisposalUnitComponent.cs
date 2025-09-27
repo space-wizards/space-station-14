@@ -153,7 +153,7 @@ public sealed partial class DisposalUnitComponent : Component
     /// The max number of entities that can be inserted in the unit before it needs to be flushed.
     /// </summary>
     [DataField]
-    public int MaxCapacity = 10;
+    public int MaxCapacity = 30;
 }
 
 /// <summary>
