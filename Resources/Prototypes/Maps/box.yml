@@ -15,7 +15,7 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_box.yml
         - type: StationJobs
-          availableJobs: # 63 jobs total w/o latejoins & interns, 82 jobs total w/ latejoins & interns
+          availableJobs: # 64 jobs total w/o latejoins & interns, 83 jobs total w/ latejoins & interns
             #Command (7)
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -55,11 +55,12 @@
             #Supply (6)
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 3, 3 ]
-            #Civilian (3+)
+            #Civilian (4+)
             Passenger: [ -1, -1 ] #infinite, not counted
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
+            Boxer: [ 1, 1 ]
             #Silicon (3)
             StationAi: [ 1, 1 ]
             Borg: [ 2, 3 ]

@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 266.0.0
+  engineVersion: 267.1.0
   forkId: ""
   forkVersion: ""
-  time: 09/06/2025 03:51:25
-  entityCount: 28793
+  time: 09/21/2025 21:36:40
+  entityCount: 28795
 maps:
 - 780
 grids:
@@ -10936,8 +10936,8 @@ entities:
           id: docking46345
           localAnchorB: -0.5,-1
           localAnchorA: -66.5,22
-          damping: 42.40102
-          stiffness: 380.5907
+          damping: 42.401035
+          stiffness: 380.59082
     - type: OccluderTree
     - type: Shuttle
       dampingModifier: 0.25
@@ -133124,6 +133124,11 @@ entities:
     - type: Transform
       pos: 40.90628,-29.556377
       parent: 8364
+  - uid: 28795
+    components:
+    - type: Transform
+      pos: 22.520903,9.6321945
+      parent: 8364
 - proto: MedkitBurnFilled
   entities:
   - uid: 1822
@@ -133147,11 +133152,6 @@ entities:
     components:
     - type: Transform
       pos: 13.5,11.5
-      parent: 8364
-  - uid: 6923
-    components:
-    - type: Transform
-      pos: 22.595015,9.598176
       parent: 8364
   - uid: 7895
     components:
@@ -149848,6 +149848,13 @@ entities:
     - type: Transform
       pos: 9.439449,-60.01837
       parent: 8364
+- proto: SheetGlass10
+  entities:
+  - uid: 28794
+    components:
+    - type: Transform
+      pos: 21.54999,10.611213
+      parent: 8364
 - proto: SheetPlasma
   entities:
   - uid: 26768
@@ -155324,6 +155331,13 @@ entities:
     components:
     - type: Transform
       pos: 47.5,-4.5
+      parent: 8364
+- proto: SpawnPointBoxer
+  entities:
+  - uid: 6923
+    components:
+    - type: Transform
+      pos: 22.5,12.5
       parent: 8364
 - proto: SpawnPointCaptain
   entities:
