@@ -18,6 +18,9 @@
     solution: drink
   - type: Item
     size: Normal
+  - type: Tag
+    tags:
+    - Ingredient
 
 - type: entity
   abstract: true

@@ -25,6 +25,9 @@
       path: /Audio/Effects/unwrap.ogg
   - type: Sprite
     sprite: Objects/Misc/monkeycube.rsi
+  - type: Tag
+    tags:
+    - WrappedCube
 
 - type: entity
   parent: BaseWrappedCube
@@ -40,6 +43,7 @@
   - type: Tag
     tags:
     - MonkeyCube
+    - WrappedCube
 
 - type: entity
   parent: MonkeyCubeBox

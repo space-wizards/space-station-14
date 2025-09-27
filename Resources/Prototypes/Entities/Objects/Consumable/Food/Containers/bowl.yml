@@ -66,6 +66,7 @@
   - type: Tag
     tags:
     - Trash
+    - Dinnerware
 
 - type: entity
   parent: BaseItem

@@ -21,6 +21,7 @@
   - type: Tag
     tags:
     - Plastic
+    - Dinnerware
     - Trash
   - type: MeleeWeapon
     wideAnimationRotation: 180
@@ -38,6 +39,7 @@
   - type: Tag
     tags:
     - Hoe
+    - Dinnerware
     - Metal
   - type: Sprite
     state: fork
@@ -72,6 +74,7 @@
   - type: Tag
     tags:
     - Metal
+    - Dinnerware
   - type: Sprite
     state: spoon
   - type: Item
@@ -130,6 +133,7 @@
     - Plastic
     - Trash
     - Knife
+    - Dinnerware
 
 - type: entity
   parent: UtensilBase
