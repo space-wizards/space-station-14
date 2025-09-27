@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/26/2025 15:46:55
-  entityCount: 24720
+  time: 09/27/2025 10:27:24
+  entityCount: 24721
 maps:
 - 1
 grids:
@@ -225,7 +225,7 @@ entities:
           version: 7
         -3,1:
           ind: -3,1
-          tiles: DQAAAAAAABIAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAAoAAAAAAAAKAAAAAAAABsAAAAAAAAbAAAAAAAAGwAAAAAAABsAAAAAAAADAAAAAAAAEAAAAAAAAA0AAAAAAAASAAAAAAAAAwAAAAAAAAMAAAAAAAAfAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAASAAAAAAAAEgAAAAAAABIAAAAAAAAmAAAAAAAAHwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAYAAAAAAAADAAAAAAAADQAAAAAAABIAAAAAAAAmAAAAAAAAJgAAAAAAAB8AAAAAAAAfAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAABgAAAAAAAA0AAAAAAAASAAAAAAAAJgAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAAwAAAAAAAAMAAAAAAAANAAAAAAAAEgAAAAAAACYAAAAAAAAmAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAAMAAAAAAAADAAAAAAAAEgAAAAAAABIAAAAAAAASAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAAGAAAAAAAAAwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAHwAAAAAAAB8AAAAAAAADAAAAAAAAAwAAAAAAABEAAAAAAAADAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAAwAAAAAAABEAAAAAAAARAAAAAAAAEQAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAARAAAAAAAAAwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAAGAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAEQAAAAAAAAMAAAAAAAARAAAAAAAAAwAAAAAAAAMAAAAAAAAzAAAAAAAAAwAAAAAAADMAAAAAAAADAAAAAAAACQAAAAAAAAkAAAAAAAAJAAAAAAAACQAAAAAAAAMAAAAAAAAJAAAAAAAACQAAAAAAAAkAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAABgAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAkAAAAAAAAJAAAAAAAACQAAAAAAADMAAAAAAAAzAAAAAAAAMwAAAAAAAAMAAAAAAAAJAAAAAAAAAwAAAAAAAAkAAAAAAAAJAAAAAAAACQAAAAAAAAkAAAAAAAAJAAAAAAAACQAAAAAAAAMAAAAAAAAJAAAAAAAACQAAAAAAAAkAAAAAAAAzAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAYAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAEQAAAAAAABEAAAAAAAADAAAAAAAAEQAAAAAAABEAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAAfAAAAAAAAAwAAAAAAABEAAAAAAAADAAAAAAAAEQAAAAAAAAMAAAAAAAAfAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAA==
+          tiles: DQAAAAAAABIAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAAoAAAAAAAAKAAAAAAAABsAAAAAAAAbAAAAAAAAGwAAAAAAABsAAAAAAAADAAAAAAAAEAAAAAAAAA0AAAAAAAASAAAAAAAAAwAAAAAAAAMAAAAAAAAfAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAASAAAAAAAAEgAAAAAAABIAAAAAAAAmAAAAAAAAHwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAYAAAAAAAADAAAAAAAADQAAAAAAABIAAAAAAAAmAAAAAAAAJgAAAAAAAB8AAAAAAAAfAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAABgAAAAAAAA0AAAAAAAASAAAAAAAAJgAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAAwAAAAAAAAMAAAAAAAANAAAAAAAAEgAAAAAAACYAAAAAAAAmAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAAMAAAAAAAADAAAAAAAAEgAAAAAAABIAAAAAAAASAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAAGAAAAAAAAAwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAHwAAAAAAAB8AAAAAAAADAAAAAAAAAwAAAAAAABEAAAAAAAADAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAAwAAAAAAABEAAAAAAAARAAAAAAAAEQAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAARAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAHwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAAGAAAAAAAAAwAAAAAAAAMAAAAAAAARAAAAAAAAEQAAAAAAABEAAAAAAAARAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAEQAAAAAAAAMAAAAAAAARAAAAAAAAAwAAAAAAAAMAAAAAAAAzAAAAAAAAAwAAAAAAADMAAAAAAAADAAAAAAAACQAAAAAAAAkAAAAAAAAJAAAAAAAACQAAAAAAAAMAAAAAAAAJAAAAAAAACQAAAAAAAAkAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAABgAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAkAAAAAAAAJAAAAAAAACQAAAAAAADMAAAAAAAAzAAAAAAAAMwAAAAAAAAMAAAAAAAAJAAAAAAAAAwAAAAAAAAkAAAAAAAAJAAAAAAAACQAAAAAAAAkAAAAAAAAJAAAAAAAACQAAAAAAAAMAAAAAAAAJAAAAAAAACQAAAAAAAAkAAAAAAAAzAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAYAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAEQAAAAAAABEAAAAAAAADAAAAAAAAEQAAAAAAABEAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAAfAAAAAAAAAwAAAAAAABEAAAAAAAADAAAAAAAAEQAAAAAAAAMAAAAAAAAfAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAA==
           version: 7
         -3,2:
           ind: -3,2
@@ -500,6 +500,7 @@ entities:
           decals:
             4997: 27.016638,18.199966
             4998: 26.995806,16.241632
+            5728: -43.98974,26.878244
         - node:
             angle: 1.5707963267948966 rad
             color: '#FFFFFFFF'
@@ -806,6 +807,7 @@ entities:
             5548: -12,36
             5549: -16,29
             5671: -33,28
+            5714: -42,27
         - node:
             zIndex: 5
             color: '#FFFFFFFF'
@@ -1360,11 +1362,10 @@ entities:
             4211: -9,12
             5158: -20,12
         - node:
-            zIndex: 3
             color: '#CA7EF2BF'
             id: BrickTileSteelCornerSw
           decals:
-            5627: -44,27
+            5725: -44,27
         - node:
             zIndex: 1
             color: '#DE3A3A96'
@@ -2357,13 +2358,17 @@ entities:
           decals:
             4444: 3.7628727,-11.753578
         - node:
+            color: '#CA7EF2BF'
+            id: BrickTileSteelLineS
+          decals:
+            5726: -41,27
+        - node:
             zIndex: 3
             color: '#CA7EF2BF'
             id: BrickTileSteelLineS
           decals:
             5628: -43,27
             5629: -42,27
-            5630: -41,27
             5631: -40,27
             5643: -37,27
             5644: -36,27
@@ -4477,6 +4482,7 @@ entities:
             id: Caution
           decals:
             2344: -1.9856567,33.815464
+            5727: -43.98974,26.789047
         - node:
             zIndex: 5
             color: '#FFFFFFFF'
@@ -5127,6 +5133,13 @@ entities:
             id: LoadingArea
           decals:
             5462: -25,29
+        - node:
+            zIndex: 3
+            angle: 3.141592653589793 rad
+            color: '#E6E6E6FF'
+            id: LoadingArea
+          decals:
+            5723: -41,27
         - node:
             angle: -1.5707963267948966 rad
             color: '#FFFFFFFF'
@@ -7758,7 +7771,7 @@ entities:
           -11,5:
             0: 12544
           -11,6:
-            0: 61490
+            0: 65282
           -11,7:
             0: 29439
           -11,8:
@@ -12317,7 +12330,7 @@ entities:
       pos: -29.5,-12.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -54739.117
+      secondsUntilStateChange: -55488.355
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12329,7 +12342,7 @@ entities:
       pos: 30.5,-28.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -54745.617
+      secondsUntilStateChange: -55494.855
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12341,7 +12354,7 @@ entities:
       pos: 30.5,-24.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -54746.316
+      secondsUntilStateChange: -55495.555
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -13479,7 +13492,7 @@ entities:
       pos: 36.5,0.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -146442.45
+      secondsUntilStateChange: -147191.69
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -22388,16 +22401,6 @@ entities:
     - type: Transform
       pos: -41.5,24.5
       parent: 2
-  - uid: 2337
-    components:
-    - type: Transform
-      pos: -41.5,25.5
-      parent: 2
-  - uid: 2339
-    components:
-    - type: Transform
-      pos: -40.5,25.5
-      parent: 2
   - uid: 2340
     components:
     - type: Transform
@@ -26027,11 +26030,6 @@ entities:
     components:
     - type: Transform
       pos: -38.5,25.5
-      parent: 2
-  - uid: 23474
-    components:
-    - type: Transform
-      pos: -39.5,25.5
       parent: 2
 - proto: ATM
   entities:
@@ -64380,18 +64378,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -52.5,27.5
       parent: 2
-  - uid: 24612
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -42.5,27.5
-      parent: 2
-  - uid: 24615
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -40.5,27.5
-      parent: 2
 - proto: ChairFolding
   entities:
   - uid: 9061
@@ -67915,6 +67901,18 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -30.5,29.5
       parent: 2
+  - uid: 2337
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -40.5,26.5
+      parent: 2
+  - uid: 2339
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -41.5,26.5
+      parent: 2
   - uid: 10259
     components:
     - type: Transform
@@ -68145,6 +68143,18 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -33.5,28.5
+      parent: 2
+  - uid: 24612
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -43.5,26.5
+      parent: 2
+  - uid: 24614
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -42.5,26.5
       parent: 2
 - proto: CorporateCircuitBoard
   entities:
@@ -124212,12 +124222,6 @@ entities:
     - type: Transform
       pos: -28.5,36.5
       parent: 2
-  - uid: 10313
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -41.5,27.5
-      parent: 2
   - uid: 13060
     components:
     - type: Transform
@@ -125334,6 +125338,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -45.5,24.5
       parent: 2
+  - uid: 24721
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -42.5,26.5
+      parent: 2
 - proto: PrinterDoc
   entities:
   - uid: 9170
@@ -126185,6 +126195,11 @@ entities:
       parent: 2
 - proto: Railing
   entities:
+  - uid: 2328
+    components:
+    - type: Transform
+      pos: -41.5,27.5
+      parent: 2
   - uid: 4849
     components:
     - type: Transform
@@ -126897,6 +126912,11 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 35.5,-19.5
       parent: 2
+  - uid: 24615
+    components:
+    - type: Transform
+      pos: -42.5,27.5
+      parent: 2
   - uid: 24702
     components:
     - type: Transform
@@ -127469,11 +127489,6 @@ entities:
     components:
     - type: Transform
       pos: 43.5,-14.5
-      parent: 2
-  - uid: 24616
-    components:
-    - type: Transform
-      pos: -41.5,27.5
       parent: 2
   - uid: 24682
     components:
@@ -128536,6 +128551,12 @@ entities:
     components:
     - type: Transform
       pos: 46.5,-9.5
+      parent: 2
+  - uid: 23474
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -41.5,26.5
       parent: 2
 - proto: Reflector
   entities:
@@ -143596,11 +143617,6 @@ entities:
     - type: Transform
       pos: -51.5,27.5
       parent: 2
-  - uid: 24613
-    components:
-    - type: Transform
-      pos: -41.5,27.5
-      parent: 2
 - proto: TableStone
   entities:
   - uid: 18870
@@ -144532,7 +144548,7 @@ entities:
   - uid: 8205
     components:
     - type: MetaData
-      desc: A one-way conveyor delivery system that delivers stuff to the Cargo Bay.
+      desc: A one-way conveyor delivery system that delivers goods to the Cargo Bay.
       name: material delivery lever
     - type: Transform
       pos: -32.5,28.5
@@ -144616,8 +144632,56 @@ entities:
           - Forward
         - - Middle
           - Off
+  - uid: 10313
+    components:
+    - type: MetaData
+      desc: Turns the salvage recycler on and off.
+      name: salvage recycler lever
+    - type: Transform
+      pos: -41.5,27.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        24612:
+        - - Left
+          - Forward
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        24614:
+        - - Left
+          - Forward
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        2339:
+        - - Left
+          - Forward
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        2337:
+        - - Left
+          - Forward
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        23474:
+        - - Left
+          - Forward
+        - - Right
+          - Forward
+        - - Middle
+          - Off
   - uid: 18987
     components:
+    - type: MetaData
+      desc: Turns the cargo shuttle delivery belts on and off. Useful for loading or unloading.
+      name: conveyor belt lever
     - type: Transform
       pos: -11.5,36.5
       parent: 2
@@ -144653,6 +144717,8 @@ entities:
           - Off
   - uid: 18988
     components:
+    - type: MetaData
+      desc: Turns the cargo shuttle delivery belts on and off. Useful for loading or unloading.
     - type: Transform
       pos: -17.5,36.5
       parent: 2
@@ -144688,6 +144754,9 @@ entities:
           - Off
   - uid: 18989
     components:
+    - type: MetaData
+      desc: Turns the cargo desk's conveyor belt on and off. Useful for passing deliveries through without walking all the way around.
+      name: conveyor belt lever
     - type: Transform
       pos: -15.5,29.5
       parent: 2
@@ -145548,11 +145617,6 @@ entities:
     - type: Transform
       pos: -58.5,27.5
       parent: 2
-  - uid: 2222
-    components:
-    - type: Transform
-      pos: -42.5,26.5
-      parent: 2
   - uid: 2223
     components:
     - type: Transform
@@ -145631,7 +145695,7 @@ entities:
   - uid: 2318
     components:
     - type: Transform
-      pos: -41.5,26.5
+      pos: -43.5,25.5
       parent: 2
   - uid: 2321
     components:
@@ -145648,15 +145712,15 @@ entities:
     - type: Transform
       pos: -44.5,30.5
       parent: 2
+  - uid: 2325
+    components:
+    - type: Transform
+      pos: -41.5,25.5
+      parent: 2
   - uid: 2327
     components:
     - type: Transform
       pos: -37.5,23.5
-      parent: 2
-  - uid: 2328
-    components:
-    - type: Transform
-      pos: -43.5,26.5
       parent: 2
   - uid: 2343
     components:
@@ -153163,6 +153227,11 @@ entities:
     - type: Transform
       pos: -67.5,30.5
       parent: 2
+  - uid: 24579
+    components:
+    - type: Transform
+      pos: -40.5,25.5
+      parent: 2
   - uid: 24580
     components:
     - type: Transform
@@ -153177,6 +153246,11 @@ entities:
     components:
     - type: Transform
       pos: -37.5,25.5
+      parent: 2
+  - uid: 24613
+    components:
+    - type: Transform
+      pos: -42.5,25.5
       parent: 2
   - uid: 24674
     components:
@@ -153451,6 +153525,11 @@ entities:
     - type: Transform
       pos: -34.5,33.5
       parent: 2
+  - uid: 2222
+    components:
+    - type: Transform
+      pos: -39.5,25.5
+      parent: 2
   - uid: 2232
     components:
     - type: Transform
@@ -153490,11 +153569,6 @@ entities:
     components:
     - type: Transform
       pos: -50.5,31.5
-      parent: 2
-  - uid: 2325
-    components:
-    - type: Transform
-      pos: -40.5,26.5
       parent: 2
   - uid: 2346
     components:
@@ -158537,11 +158611,6 @@ entities:
     - type: Transform
       pos: 9.5,-64.5
       parent: 2
-  - uid: 24614
-    components:
-    - type: Transform
-      pos: -43.5,27.5
-      parent: 2
   - uid: 24632
     components:
     - type: Transform
@@ -159124,7 +159193,7 @@ entities:
       parent: 2
     - type: DeltaPressure
       gridUid: 2
-  - uid: 24579
+  - uid: 24616
     components:
     - type: Transform
       rot: 3.141592653589793 rad
