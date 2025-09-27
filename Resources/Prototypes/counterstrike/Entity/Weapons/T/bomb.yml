@@ -3,16 +3,18 @@
   parent: BaseStructureDynamic
   id: BaseCSBomb
   description: Just keep talking and nobody will explode.
-  name: hardbomb
+  name: C14 Charge
   components:
     - type: Sprite
-      sprite: Structures/Machines/bomb.rsi
+      sprite: Objects/counterstrike/Weapons/Bombs/Tbomb.rsi
       layers:
-        - state: syndicate-bomb
-        - state: syndicate-bomb-active
-          visible: false
-          map: [ "primed" ]
+        - state: bomb
+          map: [ "enum.TriggerVisualLayers.Base" ]
+    - type: TimerTriggerVisuals
+      unprimedSprite: bomb
+      primingSprite: bomb-active
     - type: Appearance
+    - type: AnimationPlayer
     - type: InteractionOutline
     - type: Rotatable
     - type: Defusable
@@ -20,10 +22,9 @@
       delay: 5
     - type: Explosive
       explosionType: Default
-      totalIntensity: 40.0
-      intensitySlope: 5
-      maxIntensity: 40
-      canCreateVacuum: false
+      totalIntensity: 1000.0
+      intensitySlope: 30
+      maxIntensity: 500
     - type: ExplodeOnTrigger
       keysIn:
       - timer
@@ -31,6 +32,8 @@
     # Unless, of course, you want the 90 seconds regardless. I can't stop you.
     - type: TimerTrigger
       delay: 60
+      delayOptions:
+        - 60
       initialBeepDelay: 0
       beepSound: /Audio/Machines/timer.ogg
     - type: Item
@@ -38,7 +41,7 @@
       shape:
       - 0,0,2,2
     - type: Clothing
-      sprite: Structures/Machines/bomb.rsi
+      sprite: Objects/counterstrike/Weapons/Bombs/Tbomb.rsi
       quickEquip: false
       slots:
       - Back
@@ -55,7 +58,7 @@
           layer:
             - MachineLayer
     - type: PointLight
-      color: "#0063C7"
+      color: "#FF0000"
       radius: 1.1
       softness: 1
 
@@ -70,12 +73,13 @@
 
 - type: entity
   name: Disarmed Bomb
-  parent: CounterStrikeBomb
+  parent: BaseItem
   id: CounterStrikeBombDisarmed
   components:
-    - type: Explosive
-      explosionType: Default
-      totalIntensity: 5.0
-      intensitySlope: 5
-      maxIntensity: 4
-      canCreateVacuum: false
+    - type: Item
+      size: Huge
+      shape:
+      - 0,0,2,2
+    - type: Sprite
+      sprite: Objects/counterstrike/Weapons/Bombs/Tbomb.rsi
+      state: bomb

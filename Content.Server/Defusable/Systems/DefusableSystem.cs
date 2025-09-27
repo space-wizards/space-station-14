@@ -1,5 +1,4 @@
 using Content.Server.Defusable.Components;
-using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Wires;
 using Content.Shared.Administration.Logs;
@@ -7,17 +6,21 @@ using Content.Shared.Construction.Components;
 using Content.Shared.Database;
 using Content.Shared.Defusable;
 using Content.Shared.Examine;
+using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Trigger.Components;
+using Content.Shared.Trigger;
 using Content.Shared.Trigger.Components.Effects;
 using Content.Shared.Trigger.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
-
+using Robust.Shared.Localization;
+using Robust.Shared.Timing;
+using Content.Server.Chat.Systems;
+using Content.Server.GameTicking;
 namespace Content.Server.Defusable.Systems;
-
 /// <inheritdoc/>
 public sealed class DefusableSystem : SharedDefusableSystem
 {
@@ -29,120 +32,132 @@ public sealed class DefusableSystem : SharedDefusableSystem
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly WiresSystem _wiresSystem = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly ChatSystem _chatSystem = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+/// <inheritdoc/>
+public override void Initialize()
+{
+    base.Initialize();
 
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        base.Initialize();
+    SubscribeLocalEvent<DefusableComponent, ExaminedEvent>(OnExamine);
+    SubscribeLocalEvent<DefusableComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
+    SubscribeLocalEvent<DefusableComponent, AnchorAttemptEvent>(OnAnchorAttempt);
+    SubscribeLocalEvent<DefusableComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
+    SubscribeLocalEvent<DefusableComponent, TriggerEvent>(OnDefusableTriggered);
+}
 
-        SubscribeLocalEvent<DefusableComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<DefusableComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
-        SubscribeLocalEvent<DefusableComponent, AnchorAttemptEvent>(OnAnchorAttempt);
-        SubscribeLocalEvent<DefusableComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
-    }
-
-    #region Subscribed Events
-    /// <summary>
-    ///     Adds a verb allowing for the bomb to be started easily.
-    /// </summary>
+#region Subscribed Events
+/// <summary>
+///     Adds a verb allowing for the bomb to be started easily.
+/// </summary>
     private void OnGetAltVerbs(EntityUid uid, DefusableComponent comp, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess || args.Hands == null)
+        if (!args.CanAccess || !args.CanInteract)
             return;
+
+        // Show remaining time as a disabled verb when active
+        if (comp.Activated)
+        {
+            if (TryComp<TimerTriggerComponent>(uid, out var timerComp))
+            {
+                var remaining = _trigger.GetRemainingTime((uid, timerComp))?.TotalSeconds;
+                if (remaining != null)
+                {
+                    var seconds = Math.Max(0, (int)Math.Ceiling(remaining.Value));
+                    args.Verbs.Add(new AlternativeVerb
+                    {
+                        Category = TriggerSystem.TimerOptions,
+                        Text = Loc.GetString("timer-trigger-verb-set-current", ("time", seconds)),
+                        Disabled = true,
+                        Priority = 1000
+                    });
+                }
+            }
+        }
 
         args.Verbs.Add(new AlternativeVerb
         {
-            Text = Loc.GetString("defusable-verb-begin"),
-            Disabled = comp is { Activated: true, Usable: true },
-            Priority = 10,
-            Act = () =>
-            {
-                TryStartCountdown(uid, args.User, comp);
-            }
+            Act = () => TryStartCountdown(uid, args.User, comp),
+            Text = Loc.GetString("Установить бомбу"),
+            Priority = 1,
         });
     }
 
     private void OnExamine(EntityUid uid, DefusableComponent comp, ExaminedEvent args)
     {
-        if (!args.IsInDetailsRange)
-            return;
-
-        using (args.PushGroup(nameof(DefusableComponent)))
+        // Show activation / timer status
+        if (comp.Activated)
         {
-            if (!comp.Usable)
+            // Remaining time if display is enabled and timer is active
+            if (comp.DisplayTime && TryComp<TimerTriggerComponent>(uid, out var timer)
+                && HasComp<ActiveTimerTriggerComponent>(uid))
             {
-                args.PushMarkup(Loc.GetString("defusable-examine-defused", ("name", uid)));
-            }
-            else if (comp.Activated)
-            {
-                var remaining = _trigger.GetRemainingTime(uid);
-                if (comp.DisplayTime && remaining != null)
+                var remaining = _trigger.GetRemainingTime((uid, timer));
+                if (remaining != null)
                 {
-                    args.PushMarkup(Loc.GetString("defusable-examine-live", ("name", uid),
-                        ("time", Math.Floor(remaining.Value.TotalSeconds))));
-                }
-                else
-                {
-                    args.PushMarkup(Loc.GetString("defusable-examine-live-display-off", ("name", uid)));
+                    var seconds = Math.Max(0, (int)Math.Ceiling(remaining.Value.TotalSeconds));
+                    args.PushText(Loc.GetString("defusable-examine-live", ("name", uid), ("time", seconds)));
                 }
             }
             else
             {
-                args.PushMarkup(Loc.GetString("defusable-examine-inactive", ("name", uid)));
+                args.PushText(Loc.GetString("defusable-examine-live-display-off", ("name", uid)));
             }
         }
-
-        args.PushMarkup(Loc.GetString("defusable-examine-bolts", ("down", comp.Bolted)));
-    }
-
-    private void OnAnchorAttempt(EntityUid uid, DefusableComponent component, AnchorAttemptEvent args)
-    {
-        if (CheckAnchorAttempt(uid, component, args))
-            args.Cancel();
-    }
-
-    private void OnUnanchorAttempt(EntityUid uid, DefusableComponent component, UnanchorAttemptEvent args)
-    {
-        if (CheckAnchorAttempt(uid, component, args))
-            args.Cancel();
-    }
-
-    private bool CheckAnchorAttempt(EntityUid uid, DefusableComponent component, BaseAnchoredAttemptEvent args)
-    {
-        // Don't allow the thing to be anchored if bolted to the ground
-        if (!component.Bolted)
-            return false;
-
-        var msg = Loc.GetString("defusable-popup-cant-anchor", ("name", uid));
-        _popup.PopupEntity(msg, uid, args.User);
-
-        return true;
-    }
-
-    #endregion
-
-    #region Public
-
-    public void TryStartCountdown(EntityUid uid, EntityUid user, DefusableComponent comp)
-    {
-        if (!comp.Usable)
+        else
         {
-            _popup.PopupEntity(Loc.GetString("defusable-popup-fried", ("name", uid)), uid);
-            return;
+            args.PushText(Loc.GetString("defusable-examine-inactive", ("name", uid)));
         }
+
+        // Bolts status
+        args.PushText(Loc.GetString("defusable-examine-bolts", ("down", comp.Bolted)));
+    }
+
+    private void OnAnchorAttempt(EntityUid uid, DefusableComponent comp, AnchorAttemptEvent args)
+    {
+        // Allow anchoring by default.
+    }
+
+    private void OnUnanchorAttempt(EntityUid uid, DefusableComponent comp, UnanchorAttemptEvent args)
+    {
+        // Prevent unanchoring if bolted.
+        if (comp.Bolted)
+            args.Cancel();
+    }
+
+    // When the timer finishes and fires its key ('timer'), ensure announcement and round end happen.
+    private void OnDefusableTriggered(EntityUid uid, DefusableComponent comp, ref TriggerEvent args)
+    {
+        // Only react to the timer output key
+        if (args.Key != null && args.Key != "timer")
+            return;
+
+        _chatSystem.DispatchGlobalAnnouncement("Бомба взорвалась!", sender: "Центральное командование");
+        if (_gameTicker.RunLevel == GameRunLevel.InRound)
+            _gameTicker.EndRound("Бой фракций завершен. Победа за Террористами.");
+    }
+
+    private void TryStartCountdown(EntityUid uid, EntityUid user, DefusableComponent comp)
+    {
+        if (comp.Activated || !comp.Usable)
+            return;
 
         var xform = Transform(uid);
         if (!xform.Anchored)
             _transform.AnchorEntity(uid, xform);
-
         SetBolt(comp, true);
         SetActivated(comp, true);
 
-        _popup.PopupEntity(Loc.GetString("defusable-popup-begun", ("name", uid)), uid);
+        _popup.PopupEntity(Loc.GetString("Установить", ("name", uid)), uid);
+
         if (TryComp<TimerTriggerComponent>(uid, out var timerTrigger))
         {
             _trigger.ActivateTimerTrigger((uid, timerTrigger));
         }
+
+        // Global announcement (Central Command): bomb countdown has started
+        _chatSystem.DispatchGlobalAnnouncement("Бомба установлена.");
 
         RaiseLocalEvent(uid, new BombArmedEvent(uid));
 
@@ -158,11 +173,14 @@ public sealed class DefusableSystem : SharedDefusableSystem
             return;
 
         _popup.PopupEntity(Loc.GetString("defusable-popup-boom", ("name", uid)), uid, PopupType.LargeCaution);
-
         RaiseLocalEvent(uid, new BombDetonatedEvent(uid));
-
         _explosion.TriggerExplosive(uid, user: detonator);
         QueueDel(uid);
+
+        // Global announcement (Central Command): bomb exploded, transition to PostRound
+        _chatSystem.DispatchGlobalAnnouncement("Бомба взорвалась!", sender: "Центральное командование");
+        if (_gameTicker.RunLevel == GameRunLevel.InRound)
+            _gameTicker.EndRound("Бой фракций завершен. Победа за Террористами.");
 
         _appearance.SetData(uid, DefusableVisuals.Active, comp.Activated);
     }
@@ -392,3 +410,5 @@ public sealed class BombDetonatedEvent : EntityEventArgs
         Entity = entity;
     }
 }
+
+

@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using System.Numerics;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Explosion.Components;
@@ -922,3 +922,6 @@ public sealed class QueuedExplosion(ExplosionPrototype proto)
     public bool CanCreateVacuum;
     public EntityUid? Cause; // The entity that exploded, for logging purposes.
 }
+
+
+

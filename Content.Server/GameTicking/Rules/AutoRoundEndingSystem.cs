@@ -79,7 +79,7 @@ public sealed class AutoRoundEndingRuleSystem : GameRuleSystem<AutoRoundEndingRu
 
     private void NotifyPlayers(string message)
     {
-        _chatSystem.DispatchGlobalAnnouncement(message, null);
+        _chatSystem.DispatchGlobalAnnouncement(message, sender: "Центральное командование");
         Sawmill.Info($"[AutoRoundRestart] {message}");
     }
 

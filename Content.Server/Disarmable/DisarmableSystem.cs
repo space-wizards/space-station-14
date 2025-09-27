@@ -1,6 +1,9 @@
 using Content.Shared.DoAfter;
 using Content.Shared.Verbs;
 using Content.Shared.Disarmable; //берём ивент отсюда
+using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
+using Content.Server.GameTicking;
 
 namespace Content.Server.Disarmable;
 
@@ -8,6 +11,9 @@ public sealed class DisarmableSystem : EntitySystem
 {
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
+    [Dependency] private readonly IChatManager _chat = default!;
+    [Dependency] private readonly ChatSystem _chatSystem = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
 
     public override void Initialize()
     {
@@ -50,6 +56,12 @@ public sealed class DisarmableSystem : EntitySystem
         var xform = Transform(uid);
         _entMan.SpawnEntity(comp.ResultPrototype, xform.Coordinates);
         _entMan.DeleteEntity(uid);
+
+        // Глобальное оповещение от Центрального Командования
+        _chatSystem.DispatchGlobalAnnouncement("Бомба обезврежена.", sender: "Центральное командование");
+
+        // Переход раунда в PostRound после обезвреживания
+        _gameTicker.EndRound("Бой фракций завершен. Победа за Контр-Террористами.");
 
         args.Handled = true;
     }
