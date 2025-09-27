@@ -3,6 +3,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
@@ -55,7 +56,7 @@ public sealed partial class CatchableSystem : EntitySystem
             return;
 
         // TODO: Replace with RandomPredicted once the engine PR is merged
-        var seed = HashCode.Combine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
+        var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(ent).Id });
         var rand = new System.Random(seed);
         if (!rand.Prob(ent.Comp.CatchChance))
             return;

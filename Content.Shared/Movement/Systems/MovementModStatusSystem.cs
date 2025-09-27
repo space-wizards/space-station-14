@@ -194,6 +194,16 @@ public sealed class MovementModStatusSystem : EntitySystem
         return TryUpdateMovementStatus(uid, status, speedModifier, speedModifier);
     }
 
+    /// <inheritdoc cref="TryAddFrictionModDuration(EntityUid,TimeSpan,float,float)"/>
+    public bool TryAddFrictionModDuration(
+        EntityUid uid,
+        TimeSpan duration,
+        float friction
+    )
+    {
+        return TryAddFrictionModDuration(uid, duration, friction, friction);
+    }
+
     /// <summary>
     /// Apply friction modifier with provided duration,
     /// or incrementing duration of existing.
@@ -210,8 +220,18 @@ public sealed class MovementModStatusSystem : EntitySystem
         float acceleration
     )
     {
-            return _status.TryAddStatusEffectDuration(uid, StatusEffectFriction, out var status, duration)
-                   && TrySetFrictionStatus(status.Value, friction, acceleration, uid);
+        return _status.TryAddStatusEffectDuration(uid, StatusEffectFriction, out var status, duration)
+               && TrySetFrictionStatus(status.Value, friction, acceleration, uid);
+    }
+
+    /// <inheritdoc cref="TryUpdateFrictionModDuration(EntityUid,TimeSpan,float,float)"/>
+    public bool TryUpdateFrictionModDuration(
+        EntityUid uid,
+        TimeSpan duration,
+        float friction
+    )
+    {
+        return TryUpdateFrictionModDuration(uid,duration, friction, friction);
     }
 
     /// <summary>
