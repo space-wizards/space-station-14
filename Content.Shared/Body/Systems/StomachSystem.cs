@@ -20,7 +20,6 @@ namespace Content.Shared.Body.Systems
         public override void Initialize()
         {
             SubscribeLocalEvent<StomachComponent, MapInitEvent>(OnMapInit);
-            SubscribeLocalEvent<StomachComponent, EntityUnpausedEvent>(OnUnpaused);
             SubscribeLocalEvent<StomachComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
             SubscribeLocalEvent<StomachComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         }
@@ -28,11 +27,6 @@ namespace Content.Shared.Body.Systems
         private void OnMapInit(Entity<StomachComponent> ent, ref MapInitEvent args)
         {
             ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.AdjustedUpdateInterval;
-        }
-
-        private void OnUnpaused(Entity<StomachComponent> ent, ref EntityUnpausedEvent args)
-        {
-            ent.Comp.NextUpdate += args.PausedTime;
         }
 
         private void OnEntRemoved(Entity<StomachComponent> ent, ref EntRemovedFromContainerMessage args)

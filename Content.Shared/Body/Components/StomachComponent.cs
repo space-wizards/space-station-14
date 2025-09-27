@@ -6,15 +6,15 @@ using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.Body.Components
-{
-    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(StomachSystem), typeof(FoodSystem))]
+namespace Content.Shared.Body.Components;
+
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState,AutoGenerateComponentPause, Access(typeof(StomachSystem), typeof(FoodSystem))]
     public sealed partial class StomachComponent : Component
     {
         /// <summary>
         ///     The next time that the stomach will try to digest its contents.
         /// </summary>
-        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
         public TimeSpan NextUpdate;
 
         /// <summary>
@@ -90,4 +90,4 @@ namespace Content.Shared.Body.Components
             public void Increment(TimeSpan delta) => Lifetime += delta;
         }
     }
-}
+
