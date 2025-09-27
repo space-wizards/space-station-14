@@ -61,6 +61,7 @@ public sealed class BanListEui : BaseEui
         s.Bans.Sort((a, b) => a.BanTime.CompareTo(b.BanTime));
         BanControl.SetBans(s.Bans);
         RoleBanControl.SetRoleBans(s.RoleBans);
+        BanWindow.SetPage(s.Page);
     }
 
     public override void Opened()
