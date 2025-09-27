@@ -1,9 +1,11 @@
 using System.Numerics;
+using Content.Client.Light.Components;
 using Content.Shared.Light.Components;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics;
 
 namespace Content.Client.Light;
 
@@ -11,6 +13,7 @@ public sealed class TileEmissionOverlay : Overlay
 {
     public override OverlaySpace Space => OverlaySpace.BeforeLighting;
 
+    private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IOverlayManager _overlay = default!;
 
@@ -20,16 +23,18 @@ public sealed class TileEmissionOverlay : Overlay
     private readonly EntityLookupSystem _lookup;
 
     private readonly EntityQuery<TransformComponent> _xformQuery;
-    private readonly HashSet<Entity<TileEmissionComponent>> _entities = new();
 
     private List<Entity<MapGridComponent>> _grids = new();
 
     public const int ContentZIndex = RoofOverlay.ContentZIndex + 1;
 
+    private List<ComponentTreeEntry<TileEmissionComponent>> _emissions = new();
+
     public TileEmissionOverlay(IEntityManager entManager)
     {
         IoCManager.InjectDependencies(this);
 
+        _entManager = entManager;
         _lookup = entManager.System<EntityLookupSystem>();
         _mapSystem = entManager.System<SharedMapSystem>();
         _xformSystem = entManager.System<SharedTransformSystem>();
@@ -52,6 +57,18 @@ public sealed class TileEmissionOverlay : Overlay
         _grids.Clear();
         _mapManager.FindGridsIntersecting(mapId, bounds, ref _grids, approx: true);
 
+        // Cull any unnecessary grids
+        for (var i = _grids.Count - 1; i >= 0; i--)
+        {
+            var grid = _grids[i];
+
+            if (!_entManager.TryGetComponent(grid.Owner, out TileEmissionTreeComponent? tree) ||
+                tree.Tree.Count == 0)
+            {
+                _grids.RemoveAt(i);
+            }
+        }
+
         if (_grids.Count == 0)
             return;
 
@@ -65,21 +82,25 @@ public sealed class TileEmissionOverlay : Overlay
 
             foreach (var grid in _grids)
             {
+                _emissions.Clear();
+                var tree = _entManager.GetComponent<TileEmissionTreeComponent>(grid.Owner);
+
                 var gridInvMatrix = _xformSystem.GetInvWorldMatrix(grid);
                 var localBounds = gridInvMatrix.TransformBox(bounds);
-                _entities.Clear();
-                _lookup.GetLocalEntitiesIntersecting(grid.Owner, localBounds, _entities);
-
-                if (_entities.Count == 0)
-                    continue;
-
                 var gridMatrix = _xformSystem.GetWorldMatrix(grid.Owner);
+                var state = (_emissions);
 
-                foreach (var ent in _entities)
+                tree.Tree.QueryAabb(ref state,
+                    (ref List<ComponentTreeEntry<TileEmissionComponent>> list,
+                        in ComponentTreeEntry<TileEmissionComponent> value) =>
+                    {
+                        list.Add(value);
+                        return true;
+                    }, aabb: localBounds, approx: true);
+
+                foreach (var ent in _emissions)
                 {
-                    var xform = _xformQuery.Comp(ent);
-
-                    var tile = _mapSystem.LocalToTile(grid.Owner, grid, xform.Coordinates);
+                    var tile = _mapSystem.LocalToTile(grid.Owner, grid, ent.Transform.Coordinates);
                     var matty = Matrix3x2.Multiply(gridMatrix, invMatrix);
 
                     worldHandle.SetTransform(matty);
@@ -87,8 +108,8 @@ public sealed class TileEmissionOverlay : Overlay
                     // Yes I am fully aware this leads to overlap. If you really want to have alpha then you'll need
                     // to turn the squares into polys.
                     // Additionally no shadows so if you make it too big it's going to go through a 1x wall.
-                    var local = _lookup.GetLocalBounds(tile, grid.Comp.TileSize).Enlarged(ent.Comp.Range);
-                    worldHandle.DrawRect(local, ent.Comp.Color);
+                    var local = _lookup.GetLocalBounds(tile, grid.Comp.TileSize).Enlarged(ent.Component.Range);
+                    worldHandle.DrawRect(local, ent.Component.Color);
                 }
             }
         }, null);
