@@ -42,6 +42,14 @@ public sealed class AutoRoundRestartRuleSystem : GameRuleSystem<AutoRoundRestart
         {
             OnRoundStart();
         }
+        else // если стадия сменилась на любую другую (PostRound, PreRound, PreRoundLobby и т.д.) — сбрасываем таймер
+        {
+            if (_roundStarted)
+            {
+                Sawmill.Info("[AutoRoundRestart] RunLevel moved away from InRound, cancelling auto-restart timer.");
+                ResetTimerState();
+            }
+        }
     }
 
     public override void Update(float frameTime) // вызывается каждый кадр
@@ -63,9 +71,7 @@ public sealed class AutoRoundRestartRuleSystem : GameRuleSystem<AutoRoundRestart
         if (timeSinceStart.TotalSeconds >= _restartDelay) // если время с начала раунда больше или равно времени до рестарта.
         {
             RestartRound();
-            _roundStarted = false;
-            _roundStartTime = null;
-            _notified = false;
+            ResetTimerState();
         }
     }
 
@@ -87,5 +93,11 @@ public sealed class AutoRoundRestartRuleSystem : GameRuleSystem<AutoRoundRestart
     {
         _gameTicker.EndRound();
         Sawmill.Info("[AutoRoundRestart] changing InRound to PostRound. Using EndRound!");
+    }
+    private void ResetTimerState()
+    {
+        _roundStarted = false;
+        _roundStartTime = null;
+        _notified = false;
     }
 }
