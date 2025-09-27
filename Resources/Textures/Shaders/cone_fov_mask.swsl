@@ -1,31 +1,60 @@
-preset raw;
+light_mode unshaded;
 
 // Fullscreen black-outside-cone mask.
 // Inputs:
-//  - center: screen-space center in pixels
+//  - centerPx: screen-space center in pixels
 //  - angleDeg: cone angle in degrees (total angle, e.g., 120)
-//  - rotation: forward direction in radians (0 = +X to the right in screen space)
+//  - outsideOpacity: opacity of the outside area
+//  - edgeFeatherPixels: feathering of the cone edge in pixels
+//  - centerClearRadiusPixels: radius of the clear circle in pixels
+//  - centerFeatherPixels: feathering of the clear circle in pixels
 
-uniform highp vec2 center;    // in pixels
+uniform highp vec2 centerPx;  // in pixels
 uniform highp float angleDeg; // degrees
-uniform highp float rotation; // radians
+uniform highp vec2 fwdN; // normalized forward direction in screen space
+uniform highp float outsideOpacity;
+uniform highp float edgeFeatherPixels;
+uniform highp float centerClearRadiusPixels;
+uniform highp float centerFeatherPixels;
+
+const highp float RPD = 0.017453292; // radians per degree
 
 void fragment()
 {
-    highp vec2 v = FRAGCOORD.xy - center;
+    // Align to pixel centers to reduce unevenness on edges
+    highp vec2 frag = FRAGCOORD.xy - vec2(0.5, 0.5);
+    highp vec2 v = frag - centerPx;
     highp float len = length(v);
 
-    if (len <= 1e-5)
+    if (len <= 0.00001)
     {
         COLOR = vec4(0.0, 0.0, 0.0, 0.0);
         return;
     }
 
     highp vec2 dir = v / len;
-    highp vec2 fwd = vec2(cos(rotation), sin(rotation));
+    highp vec2 fwd = normalize(fwdN);
 
-    highp float cosHalf = cos(angleDeg * 0.017453292519943295 * 0.5);
-    highp float outside = step(dot(dir, fwd), cosHalf);
+    // Cone half-angle in radians
+    highp float halfAngle = angleDeg * RPD * 0.5;
 
-    COLOR = vec4(0.0, 0.0, 0.0, outside);
+    // Use cosine space to avoid acos: outside if dot(dir,fwd) < cos(halfAngle)
+    highp float m = dot(dir, fwd);
+    
+    // Feather window in angle derived from desired pixel width: s = r * theta -> theta = s / r
+    highp float featherAng = max(edgeFeatherPixels, 0.0) / max(len, 0.00001);
+    highp float cLow  = cos(halfAngle + featherAng);
+    highp float cHigh = cos(halfAngle - featherAng);
+    // Smooth edge goes from 0 (inside) to 1 (outside)
+    highp float smoothEdge = 1.0 - smoothstep(cLow, cHigh, m);
+
+    // Smooth inner clear circle using desired pixel width
+    highp float centerAA = max(centerFeatherPixels, 0.0);
+    highp float smoothCenter = smoothstep(centerClearRadiusPixels - centerAA,
+                                          centerClearRadiusPixels + centerAA,
+                                          len);
+
+    highp float alpha = outsideOpacity * smoothEdge * smoothCenter;
+
+    COLOR = vec4(0.0, 0.0, 0.0, alpha);
 }

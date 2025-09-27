@@ -11,20 +11,22 @@ using Robust.Shared.IoC;
 namespace Content.Client.Fov.Overlays;
 
 /// <summary>
-/// World-space-below-FOV overlay that draws a fully black mask outside a vision cone.
-/// Implemented using stencil shaders to avoid custom GLSL. Outside is 100% black by default.
+/// World-space-below-FOV overlay that draws and masks a vision cone using the stencil buffer.
+/// Adds soft, feathered outlines for the center circle and cone edges for a smoother look.
 /// </summary>
 public sealed class ConeFovOverlay : Overlay
 {
     private static readonly ProtoId<ShaderPrototype> StencilClearId = "StencilClear";
     private static readonly ProtoId<ShaderPrototype> StencilMaskId = "StencilMask";
     private static readonly ProtoId<ShaderPrototype> StencilDrawId = "StencilDraw";
+    private static readonly ProtoId<ShaderPrototype> StencilEqualDrawId = "StencilEqualDraw";
 
     private readonly IEyeManager _eyeManager;
     private readonly IPrototypeManager _prototypeManager;
     private readonly ShaderInstance _stencilClear;
     private readonly ShaderInstance _stencilMask;
     private readonly ShaderInstance _stencilDraw;
+    private readonly ShaderInstance _stencilEqualDraw;
 
     private readonly IPlayerManager _player;
     private readonly IEntityManager _entManager;
@@ -49,7 +51,17 @@ public sealed class ConeFovOverlay : Overlay
     /// <summary>
     /// Radius of a small clear circle around the eye position that is not affected by the limiter (world units).
     /// </summary>
-    public float CenterClearRadius { get; set; } = 0.75f;
+    public float CenterClearRadius { get; set; } = 0f;
+
+    /// <summary>
+    /// Edge feather in pixels for the cone boundary. Higher values produce a softer transition.
+    /// </summary>
+    public float EdgeFeatherPixels { get; set; } = 8f;
+
+    /// <summary>
+    /// Feather in pixels for the small clear circle around the eye. Higher values produce a softer transition.
+    /// </summary>
+    public float CenterFeatherPixels { get; set; } = 6f;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
@@ -60,6 +72,7 @@ public sealed class ConeFovOverlay : Overlay
         _stencilClear = _prototypeManager.Index(StencilClearId).InstanceUnique();
         _stencilMask = _prototypeManager.Index(StencilMaskId).InstanceUnique();
         _stencilDraw = _prototypeManager.Index(StencilDrawId).InstanceUnique();
+        _stencilEqualDraw = _prototypeManager.Index(StencilEqualDrawId).InstanceUnique();
 
         // Resolve required services without IoC injection to avoid unregistered dependency errors
         _player = IoCManager.Resolve<IPlayerManager>();
@@ -71,55 +84,53 @@ public sealed class ConeFovOverlay : Overlay
     {
         var handle = args.WorldHandle;
 
-        // Validate eye
         var eye = _eyeManager.CurrentEye;
         if (eye == null || eye.Position.MapId != args.MapId)
             return;
 
-        // Eye position and rotation
-        var eyePos = eye.Position.Position;
+        // Center on player world position if available, otherwise eye position.
+        Vector2 centerPos = eye.Position.Position;
         var rotation = (float) eye.Rotation.Theta;
-        // Prefer controlled entity world rotation so the cone matches the player's facing.
         if (_player.LocalEntity is { } player && _entManager.TryGetComponent<TransformComponent>(player, out var xform))
         {
+            centerPos = _transform.GetWorldPosition(xform);
             rotation = (float) _transform.GetWorldRotation(xform).Theta;
         }
 
-        // Apply user-configurable rotation offset (degrees -> radians)
+        // Apply rotation offset (degrees -> radians)
         rotation += RotationOffsetDegrees * (MathF.PI / 180f);
 
-        // Compute cone polygon as triangle fan
+        // Compute a radius large enough to cover current view
         var worldAabb = args.WorldBounds.CalcBoundingBox();
         var diag = worldAabb.Size.Length();
         var radius = diag * 1.2f;
 
+        // Build cone polygon as a triangle fan
         var half = MathF.PI * (AngleDegrees / 180f) * 0.5f;
         const int Segments = 48;
         var verts = new Vector2[Segments + 2];
-        verts[0] = eyePos;
+        verts[0] = centerPos;
         for (var i = 0; i <= Segments; i++)
         {
             var t = i / (float) Segments;
             var ang = rotation - half + (2f * half) * t;
             var dir = new Vector2(MathF.Cos(ang), MathF.Sin(ang));
-            verts[i + 1] = eyePos + dir * radius;
+            verts[i + 1] = centerPos + dir * radius;
         }
 
         // 1) Clear stencil in current world-bounds
         handle.UseShader(_stencilClear);
         handle.DrawRect(args.WorldBounds, Color.White);
 
-        // 2) Write the cone to stencil (ref=1) using a triangle fan
+        // 2) Write the cone to stencil (ref=1)
         handle.UseShader(_stencilMask);
         handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, Color.White);
 
-        // 2b) Also mark a small circle around the eye as inside (ref=1)
+        // 2b) Also mark a small circle around the player as inside (ref=1)
         if (CenterClearRadius > 0f)
-        {
-            handle.DrawCircle(eyePos, CenterClearRadius, Color.White, true);
-        }
+            handle.DrawCircle(centerPos, CenterClearRadius, Color.White, true);
 
-        // 3) Draw transparent black where stencil != 1 (outside the cone)
+        // 3) Draw outside with desired opacity where stencil != 1
         handle.UseShader(_stencilDraw);
         handle.DrawRect(args.WorldBounds, Color.Black.WithAlpha(OutsideOpacity));
 

@@ -102,25 +102,19 @@ public sealed class FovLimiterSystem : EntitySystem
                 continue;
 
             overlayShouldBeOn = true;
-
             // Ensure overlay settings reflect this limiter.
             EnsureConeOverlay();
             if (_coneOverlay != null)
             {
                 _coneOverlay.AngleDegrees = 120f;
                 _coneOverlay.RotationOffsetDegrees = -90f;
+                _coneOverlay.OutsideOpacity = 0.7f;
+                _coneOverlay.CenterClearRadius = 0.75f;
             }
 
             // Apply FOV limitation
             // This is where you would apply the actual FOV limitation
             // The exact implementation depends on how SS14 handles FOV
-            // For example:
-            // var currentFov = eye.Fov;
-            // var limitedFov = Math.Min(currentFov, limiter.FovLimit);
-            // if (Math.Abs(currentFov - limitedFov) > float.Epsilon)
-            // {
-            //     _eyeSystem.SetFov(uid, limitedFov, eye);
-            // }
         }
 
         // Toggle overlay based on state this frame.
@@ -137,7 +131,9 @@ public sealed class FovLimiterSystem : EntitySystem
             _coneOverlay = new ConeFovOverlay(_eyeManager, _prototypeManager)
             {
                 AngleDegrees = 120f,
-                RotationOffsetDegrees = -90f
+                RotationOffsetDegrees = -90f,
+                OutsideOpacity = 0.7f,
+                CenterClearRadius = 0.75f
             };
         }
 
