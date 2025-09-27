@@ -37,8 +37,9 @@ namespace Content.Shared.Body.Components
 
         /// <summary>
         ///     The solution inside of this stomach this transfers reagents to the body.
+        ///     (Not networked! Only used at runtime.)
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
+        [ViewVariables(VVAccess.ReadOnly)]
         public Entity<SolutionComponent>? Solution;
 
         /// <summary>
@@ -67,9 +68,9 @@ namespace Content.Shared.Body.Components
         public bool IsSpecialDigestibleExclusive = true;
 
         /// <summary>
-        ///     Used to track how long each reagent has been in the stomach
+        ///     Used to track how long each reagent has been in the stomach.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
+        [ViewVariables(VVAccess.ReadOnly)]
         public List<ReagentDelta> ReagentDeltas { get; set; } = new();
 
         /// <summary>
