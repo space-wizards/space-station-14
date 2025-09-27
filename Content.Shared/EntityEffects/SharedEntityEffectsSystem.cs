@@ -162,17 +162,16 @@ public abstract partial class AnyEntityEffect
     [DataField]
     public float MinScale;
 
-    // TODO: This should be an entity condition
+    // TODO: This should be an entity condition but guidebook relies on it heavily for formatting...
     [DataField]
     public float Probability = 1.0f;
 
-    [DataField]
-    public string EntityEffectFormat = "guidebook-reagent-effect-description";
+    // TODO: These shouldn't be baked into the base entity effect itself if possible, since entity effects can be used for more than just metabolism...
+    protected virtual string? EntityEffectGuidebookText => null;
 
-    [DataField]
-    public string? EntityEffectGuidebookText = "entity-effect";
+    public virtual string EntityEffectFormat => "guidebook-reagent-effect-description";
 
-    public string? GuidebookEffectDescription()
+    public virtual string? GuidebookEffectDescription()
     {
         if (EntityEffectGuidebookText is null)
             return null;

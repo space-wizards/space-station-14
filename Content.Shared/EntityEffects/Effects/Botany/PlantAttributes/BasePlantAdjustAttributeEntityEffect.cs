@@ -18,17 +18,10 @@ public abstract partial class BasePlantAdjustAttribute<T> : EntityEffectBase<T> 
     public virtual bool GuidebookIsAttributePositive { get; protected set; } = true;
 
     // TODO: For guidebook might want to use this tbqh...
-    /*protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-    {
-        string color;
-        if (GuidebookIsAttributePositive ^ Amount < 0.0)
-        {
-            color = "green";
-        }
-        else
-        {
-            color = "red";
-        }
-        return Loc.GetString("reagent-effect-guidebook-plant-attribute", ("attribute", Loc.GetString(GuidebookAttributeName)), ("amount", Amount.ToString("0.00")), ("colorName", color), ("chance", Probability));
-    }*/
+    protected override string? EntityEffectGuidebookText =>
+        Loc.GetString("entity-effect-guidebook-plant-attribute",
+        ("attribute", Loc.GetString(GuidebookAttributeName)),
+        ("amount", Amount.ToString("0.00")),
+        ("positive", GuidebookIsAttributePositive),
+        ("chance", Probability));
 }
