@@ -13,6 +13,7 @@
     removes:
     - type: LizardAccent
     - type: MothAccent
+    - type: FrenchAccent
     - type: ReplacementAccent
       accent: dwarf
 
