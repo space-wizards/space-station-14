@@ -1,0 +1,9 @@
+light_mode unshaded;
+
+uniform sampler2D OverlayTexture;
+uniform highp vec4 AdditionalColor;
+
+void fragment() {
+    highp vec4 overlayColor = zTextureSpec(OverlayTexture, UV);
+    COLOR = mix(AdditionalColor, overlayColor, overlayColor.a);
+}
