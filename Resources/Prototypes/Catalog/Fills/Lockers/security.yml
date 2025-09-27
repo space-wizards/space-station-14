@@ -28,6 +28,7 @@
     children:
     - id: FlashlightSeclite
     - id: WeaponDisabler
+    - id: WeaponTaser
     - id: ClothingBeltSecurityFilled
     - id: Flash
     - id: ClothingEyesGlassesSecurity
@@ -70,6 +71,7 @@
     children:
     - id: FlashlightSeclite
     - id: WeaponDisabler
+    - id: WeaponTaser
     - id: ClothingHeadHelmetBasic
     - id: ClothingOuterArmorBasic
     - id: ClothingBeltSecurityFilled
@@ -95,6 +97,7 @@
   table: !type:AllSelector
     children:
     - id: ClothingEyesGlassesSecurity
+    - id: WeaponTaser
     - id: WeaponDisabler
     - id: TrackingImplanter
       amount: 2
