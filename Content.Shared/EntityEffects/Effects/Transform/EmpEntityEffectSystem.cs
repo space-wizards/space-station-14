@@ -1,4 +1,6 @@
-﻿using Content.Shared.Emp;
+﻿using Content.Shared.Database;
+using Content.Shared.Emp;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Transform;
 
@@ -41,4 +43,10 @@ public sealed partial class Emp : EntityEffectBase<Emp>
     [DataField]
     public float Duration = 15;
 
+    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("reagent-effect-guidebook-emp-reaction-effect", ("chance", Probability));
+
+    public override bool ShouldLog => true;
+
+    public override LogImpact LogImpact => LogImpact.Medium;
 }

@@ -1,4 +1,5 @@
 ﻿using Content.Shared.StatusEffect;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.StatusEffects;
 
@@ -47,4 +48,11 @@ public sealed partial class GenericStatusEffect : EntityEffectBase<GenericStatus
     /// </summary>
     [DataField]
     public StatusEffectMetabolismType Type = StatusEffectMetabolismType.Refresh;
+
+    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => Loc.GetString(
+        "entity-effect-guidebook-status-effect",
+        ("chance", Probability),
+        ("type", Type),
+        ("time", Time),
+        ("key", $"reagent-effect-status-effect-{Key}"));
 }

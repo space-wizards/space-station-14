@@ -31,4 +31,7 @@ public sealed partial class CleanBloodstream : EntityEffectBase<CleanBloodstream
 
     [DataField]
     public ProtoId<ReagentPrototype>? Excluded;
+
+    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("entity-effect-guidebook-clean-bloodstream", ("chance", Probability));
 }

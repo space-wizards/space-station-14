@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Electrocution;
 using Content.Shared.StatusEffect;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.StatusEffects;
 
@@ -37,4 +38,7 @@ public sealed partial class Electrocute : EntityEffectBase<Electrocute>
     /// Should we by bypassing insulation?
     /// </summary>
     [DataField] public bool BypassInsulation = true;
+
+    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("entity-effect-guidebook-electrocute", ("chance", Probability), ("time", ElectrocuteTime));
 }

@@ -8,7 +8,7 @@ public sealed partial class ReduceRottingEntityEffectSystem : EntityEffectSystem
 
     protected override void Effect(Entity<PerishableComponent> entity, ref EntityEffectEvent<ReduceRotting> args)
     {
-        var amount = args.Effect.Seconds *= args.Scale;
+        var amount = args.Effect.Seconds * args.Scale;
 
         _rotting.ReduceAccumulator(entity, amount);
     }

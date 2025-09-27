@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.EntityEffects.Effects.Atmos;
+﻿using Robust.Shared.Prototypes;
+
+namespace Content.Shared.EntityEffects.Effects.Atmos;
 
 // Server side system
 
@@ -12,4 +14,7 @@ public sealed partial class Flammable : EntityEffectBase<Flammable>
     public float MultiplierOnExisting = -1f;
 
     public override bool ShouldLog => true;
+
+    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("reagent-effect-guidebook-flammable-reaction", ("chance", Probability));
 }

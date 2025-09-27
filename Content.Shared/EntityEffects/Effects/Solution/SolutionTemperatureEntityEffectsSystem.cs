@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Chemistry.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Solution;
 
@@ -17,6 +18,11 @@ public sealed partial class SetSolutionTemperature : EntityEffectBase<SetSolutio
     /// </summary>
     [DataField(required: true)]
     public float Temperature;
+
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("entity-effect-guidebook-set-solution-temperature-effect",
+            ("chance", Probability),
+            ("temperature", Temperature));
 }
 
 public sealed class AdjustSolutionTemperatureEntityEffectSystem : EntityEffectSystem<SolutionComponent, AdjustSolutionTemperature>
@@ -55,6 +61,13 @@ public sealed partial class AdjustSolutionTemperature : EntityEffectBase<AdjustS
     /// </summary>
     [DataField]
     public bool Scaled;
+
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("entity-effect-guidebook-adjust-solution-temperature-effect",
+            ("chance", Probability),
+            ("deltasign", MathF.Sign(Delta)),
+            ("mintemp", MinTemp),
+            ("maxtemp", MaxTemp));
 }
 
 public sealed class AdjustSolutionThermalEnergyEntityEffectSystem : EntityEffectSystem<SolutionComponent, AdjustSolutionThermalEnergy>
@@ -90,7 +103,7 @@ public sealed class AdjustSolutionThermalEnergyEntityEffectSystem : EntityEffect
 public sealed partial class AdjustSolutionThermalEnergy : EntityEffectBase<AdjustSolutionThermalEnergy>
 {
     /// <summary>
-    ///     The change in temperature.
+    ///     The change in thermal energy.
     /// </summary>
     [DataField(required: true)]
     public float Delta;
@@ -112,4 +125,11 @@ public sealed partial class AdjustSolutionThermalEnergy : EntityEffectBase<Adjus
     /// </summary>
     [DataField]
     public bool Scaled;
+
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("entity-effect-guidebook-adjust-solution-temperature-effect",
+            ("chance", Probability),
+            ("deltasign", MathF.Sign(Delta)),
+            ("mintemp", MinTemp),
+            ("maxtemp", MaxTemp));
 }

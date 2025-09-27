@@ -16,7 +16,7 @@
         *[other] satiate
     }
 
-entity-effect-guidebook-create-entity-reaction-effect =
+entity-effect-guidebook-spawn-entity =
     { $chance ->
         [1] Creates
         *[other] create
@@ -25,31 +25,31 @@ entity-effect-guidebook-create-entity-reaction-effect =
         *[other] {$amount} {MAKEPLURAL($entname)}
     }
 
-entity-effect-guidebook-explosion-reaction-effect =
+entity-effect-guidebook-explosion =
     { $chance ->
         [1] Causes
         *[other] cause
     } an explosion
 
-entity-effect-guidebook-emp-reaction-effect =
+entity-effect-guidebook-emp =
     { $chance ->
         [1] Causes
         *[other] cause
     } an electromagnetic pulse
 
-entity-effect-guidebook-flash-reaction-effect =
+entity-effect-guidebook-flash =
     { $chance ->
         [1] Causes
         *[other] cause
     } a blinding flash
 
-entity-effect-guidebook-foam-area-reaction-effect =
+entity-effect-guidebook-foam-area =
     { $chance ->
         [1] Creates
         *[other] create
     } large quantities of foam
 
-entity-effect-guidebook-smoke-area-reaction-effect =
+entity-effect-guidebook-smoke-area =
     { $chance ->
         [1] Creates
         *[other] create
@@ -101,18 +101,21 @@ entity-effect-guidebook-even-health-change =
         }
     } { $changes }
 
-
 entity-effect-guidebook-status-effect =
     { $type ->
-        [add]   { $chance ->
+        [refresh]{ $chance ->
+                     [1] Causes
+                     *[other] cause
+                 } {LOC($key)} for at least {NATURALFIXED($time, 3)} {MANY("second", $time)} without accumulation
+        *[add]   { $chance ->
                     [1] Causes
                     *[other] cause
                 } {LOC($key)} for at least {NATURALFIXED($time, 3)} {MANY("second", $time)} with accumulation
-        *[set]  { $chance ->
+        [set]  { $chance ->
                     [1] Causes
                     *[other] cause
-                } {LOC($key)} for at least {NATURALFIXED($time, 3)} {MANY("second", $time)} without accumulation
-        [remove]{ $chance ->
+                } {LOC($key)} for {NATURALFIXED($time, 3)} {MANY("second", $time)} without accumulation
+        *[remove]{ $chance ->
                     [1] Removes
                     *[other] remove
                 } {NATURALFIXED($time, 3)} {MANY("second", $time)} of {LOC($key)}
@@ -120,19 +123,49 @@ entity-effect-guidebook-status-effect =
 
 entity-effect-guidebook-status-effect-delay =
     { $type ->
-        [add]   { $chance ->
+        [refresh]{ $chance ->
+                    [1] Causes
+                    *[other] cause
+                 } {LOC($key)} for at least {NATURALFIXED($time, 3)} {MANY("second", $time)} without accumulation
+        *[add]   { $chance ->
                     [1] Causes
                     *[other] cause
                 } {LOC($key)} for at least {NATURALFIXED($time, 3)} {MANY("second", $time)} with accumulation
-        *[set]  { $chance ->
+        [set]  { $chance ->
                     [1] Causes
                     *[other] cause
                 } {LOC($key)} for at least {NATURALFIXED($time, 3)} {MANY("second", $time)} without accumulation
-        [remove]{ $chance ->
+        *[remove]{ $chance ->
                     [1] Removes
                     *[other] remove
                 } {NATURALFIXED($time, 3)} {MANY("second", $time)} of {LOC($key)}
-    } after a {NATURALFIXED($delay, 3)} second delay
+    } { $delay ->
+        [0]
+        *[other] after a {NATURALFIXED($delay, 3)} second delay
+    }
+
+entity-effect-guidebook-status-effect-null =
+    { $type ->
+        [refresh]{ $chance ->
+                    [1] Causes
+                    *[other] cause
+                 } permanent {LOC($key)}
+        *[add]   { $chance ->
+                    [1] Causes
+                    *[other] cause
+                } permanent {LOC($key)}
+        [set]  { $chance ->
+                    [1] Causes
+                    *[other] cause
+                } permanent {LOC($key)}
+        *[remove]{ $chance ->
+                    [1] Removes
+                    *[other] remove
+                } {LOC($key)}
+    } { $delay ->
+        [0]
+        *[other] after a {NATURALFIXED($delay, 3)} second delay
+    }
 
 entity-effect-guidebook-set-solution-temperature-effect =
     { $chance ->
@@ -156,7 +189,7 @@ entity-effect-guidebook-adjust-solution-temperature-effect =
                 *[-1] at least {NATURALFIXED($mintemp, 2)}k
             }
 
-entity-effect-guidebook-adjust-entity-entity =
+entity-effect-guidebook-adjust-reagent-reagent =
     { $chance ->
         [1] { $deltasign ->
                 [1] Adds
@@ -167,12 +200,12 @@ entity-effect-guidebook-adjust-entity-entity =
                 [1] add
                 *[-1] remove
             }
-    } {NATURALFIXED($amount, 2)}u of {$entity} { $deltasign ->
+    } {NATURALFIXED($amount, 2)}u of {$reagent} { $deltasign ->
         [1] to
         *[-1] from
     } the solution
 
-entity-effect-guidebook-adjust-entity-group =
+entity-effect-guidebook-adjust-reagent-group =
     { $chance ->
         [1] { $deltasign ->
                 [1] Adds
@@ -183,7 +216,7 @@ entity-effect-guidebook-adjust-entity-group =
                 [1] add
                 *[-1] remove
             }
-    } {NATURALFIXED($amount, 2)}u of entitys in the group {$group} { $deltasign ->
+    } {NATURALFIXED($amount, 2)}u of reagents in the group {$group} { $deltasign ->
             [1] to
             *[-1] from
         } the solution
@@ -222,7 +255,7 @@ entity-effect-guidebook-jittering =
         *[other] cause
     } jittering
 
-entity-effect-guidebook-chem-clean-bloodstream =
+entity-effect-guidebook-clean-bloodstream =
     { $chance ->
         [1] Cleanses
         *[other] cleanse
@@ -234,7 +267,7 @@ entity-effect-guidebook-cure-disease =
         *[other] cure
     } diseases
 
-entity-effect-guidebook-cure-eye-damage =
+entity-effect-guidebook-eye-damage =
     { $chance ->
         [1] { $deltasign ->
                 [1] Deals
@@ -247,7 +280,7 @@ entity-effect-guidebook-cure-eye-damage =
             }
     } eye damage
 
-entity-effect-guidebook-chem-vomit =
+entity-effect-guidebook-vomit =
     { $chance ->
         [1] Causes
         *[other] cause
@@ -392,7 +425,7 @@ entity-effect-guidebook-add-to-solution-reaction =
     { $chance ->
         [1] Causes
         *[other] cause
-    } chemicals applied to an object to be added to its internal solution container
+    } {$reagent} to be added to its internal solution container
 
 entity-effect-guidebook-artifact-unlock =
     { $chance ->

@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Popups;
 using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;
 
@@ -52,6 +53,13 @@ public sealed partial class ArtifactDurabilityRestore : EntityEffectBase<Artifac
     /// </summary>
     [DataField]
     public int RestoredDurability = 1;
+
+    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
+        Loc.GetString("entity-effect-guidebook-artifact-durability-restore", ("restored", RestoredDurability));
 }
 
-public sealed partial class ArtifactUnlock : EntityEffectBase<ArtifactUnlock>;
+public sealed partial class ArtifactUnlock : EntityEffectBase<ArtifactUnlock>
+{
+    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
+        Loc.GetString("entity-effect-guidebook-artifact-unlock", ("chance", Probability));
+}

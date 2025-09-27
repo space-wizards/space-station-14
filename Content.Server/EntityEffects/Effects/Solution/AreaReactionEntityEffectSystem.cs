@@ -12,7 +12,7 @@ using Robust.Shared.Map;
 namespace Content.Server.EntityEffects.Effects.Solution;
 
 /// <summary>
-/// This is used for creating smoke in an area.
+/// This is used for creating smoke or foam in an area.
 /// </summary>
 public sealed partial class AreaReactionEntityEffectsSystem : EntityEffectSystem<SolutionComponent, AreaReactionEffect>
 {
@@ -30,12 +30,13 @@ public sealed partial class AreaReactionEntityEffectsSystem : EntityEffectSystem
         var xform = Transform(entity);
         var mapCoords = _xform.GetMapCoordinates(entity);
         var spreadAmount = (int) Math.Max(0, Math.Ceiling(args.Scale / args.Effect.OverflowThreshold));
+        var effect = args.Effect;
 
         if (!_mapManager.TryFindGridAt(mapCoords, out var gridUid, out var grid) ||
             !_map.TryGetTileRef(gridUid, grid, xform.Coordinates, out var tileRef))
             return;
 
-        if (_spreader.RequiresFloorToSpread(args.Effect.PrototypeId.ToString()) && _turf.IsSpace(tileRef))
+        if (_spreader.RequiresFloorToSpread(effect.PrototypeId.ToString()) && _turf.IsSpace(tileRef))
             return;
 
         var coords = _map.MapToGrid(gridUid, mapCoords);

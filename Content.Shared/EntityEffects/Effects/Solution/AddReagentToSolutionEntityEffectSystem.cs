@@ -6,6 +6,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityEffects.Effects.Solution;
 
 // TODO: This should be removed and changed to an "AbsorbentSolutionComponent"
+/// <summary>
+/// Creates a reagent in a specified solution when this effect occurs.
+/// </summary>
 public sealed class AddReagentToSolutionEntityEffectSystem : EntityEffectSystem<SolutionContainerManagerComponent, AddReagentToSolution>
 {
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
@@ -26,7 +29,7 @@ public sealed class AddReagentToSolutionEntityEffectSystem : EntityEffectSystem<
 public sealed partial class AddReagentToSolution : EntityEffectBase<AddReagentToSolution>
 {
     /// <summary>
-    ///     Amount of firestacks reduced.
+    ///     Prototype of the reagent we're adding.
     /// </summary>
     [DataField(required: true)]
     public ProtoId<ReagentPrototype> Reagent;
@@ -42,4 +45,14 @@ public sealed partial class AddReagentToSolution : EntityEffectBase<AddReagentTo
     /// </summary>
     [DataField]
     public float StrengthModifier = 1.0f;
+
+    /// <remarks>This guidebook isn't used since the effect is for reactive anyways. Not even sure why I updated it tbqh.</remarks>
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    {
+        return prototype.Resolve(Reagent, out ReagentPrototype? proto)
+            ? Loc.GetString("entity-effect-guidebook-add-to-solution-reaction",
+                ("chance", Probability),
+                ("reagent", proto.LocalizedName))
+            : null;
+    }
 }

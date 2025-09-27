@@ -418,7 +418,7 @@
       - !type:HealthChange
         conditions:
         - !type:MetabolizerType
-          type: Animal # Applying damage to the mobs with lower metabolism capabilities
+          type: [Animal] # Applying damage to the mobs with lower metabolism capabilities
         damage:
           types:
             Poison: 0.4
@@ -426,7 +426,7 @@
         probability: 0.04 #Scaled for time, not metabolismrate.
         conditions:
           - !type:MetabolizerType
-            type: Animal
+            type: [Animal]
 
 - type: reagent
   id: Amatoxin
@@ -493,8 +493,8 @@
       effects:
       - !type:PopupMessage
         conditions:
-        - !type:MetabolizerTypes
-          types:
+        - !type:MetabolizerType
+          type:
           - Animal
           - Vox
           inverted: true
@@ -505,15 +505,15 @@
       - !type:Vomit
         probability: 0.1
         conditions:
-        - !type:MetabolizerTypes
-          types:
+        - !type:MetabolizerType
+          type:
           - Animal
           - Vox
           inverted: true
       - !type:HealthChange
         conditions:
-        - !type:MetabolizerTypes
-          types:
+        - !type:MetabolizerType
+          type:
           - Animal
           - Vox
           inverted: true
@@ -523,13 +523,13 @@
       - !type:AdjustReagent
         conditions:
         - !type:MetabolizerType
-          type: Animal
+          type: [Animal]
         reagent: Protein
         amount: 0.5
       - !type:AdjustReagent
         conditions:
         - !type:MetabolizerType
-          type: Vox
+          type: [Vox]
         reagent: Protein
         amount: 0.25
 
@@ -551,7 +551,7 @@
           reagent: Allicin
           min: 1
         - !type:MetabolizerType
-          type: Animal
+          type: [Animal]
         damage:
           types:
             Poison: 0.06
@@ -600,7 +600,7 @@
           reagent: Honk
           min: 1
         - !type:MetabolizerType
-          type: Animal
+          type: [Animal]
         damage:
           types:
             Poison: 0.06
@@ -720,7 +720,7 @@
       - !type:HealthChange
         conditions:
         - !type:MetabolizerType
-          type: Arachnid
+          type: [Arachnid]
           inverted: true
         damage:
           types:
@@ -731,7 +731,7 @@
           reagent: Mechanotoxin
           min: 2
         - !type:MetabolizerType
-          type: Arachnid
+          type: [Arachnid]
           inverted: true
         walkSpeedModifier: 0.8
         sprintSpeedModifier: 0.8
@@ -741,7 +741,7 @@
           reagent: Mechanotoxin
           min: 4
         - !type:MetabolizerType
-          type: Arachnid
+          type: [Arachnid]
           inverted: true
         walkSpeedModifier: 0.4
         sprintSpeedModifier: 0.4
@@ -760,4 +760,4 @@
         factor: 1
         conditions:
         - !type:MetabolizerType
-          type: Vox
+          type: [Vox]

@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Drunk;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Body;
 
@@ -21,4 +22,7 @@ public sealed partial class Drunk : EntityEffectBase<Drunk>
     /// </summary>
     [DataField]
     public TimeSpan BoozePower = TimeSpan.FromSeconds(3f);
+
+    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("entity-effect-guidebook-drunk", ("chance", Probability));
 }

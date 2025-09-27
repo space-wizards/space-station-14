@@ -171,13 +171,13 @@
         factor: 1
         conditions:
         - !type:MetabolizerType
-          type: Vox
+          type: [Vox]
     Poison:
       effects:
       - !type:HealthChange
         conditions:
         - !type:MetabolizerType
-          type: Vox
+          type: [Vox]
           inverted: true
         damage:
           types:

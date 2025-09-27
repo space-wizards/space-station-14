@@ -222,17 +222,17 @@ namespace Content.Shared.Chemistry.Reagent
 
         public List<string>? PlantMetabolisms = null;
 
-        // TODO: Remove these excess dependencies
+        // TODO: Move some of the localization up a level. Metabolism data should not be in the effect itself but instead up here.
         public ReagentGuideEntry(ReagentPrototype proto, IPrototypeManager prototype, IEntitySystemManager entSys)
         {
             ReagentPrototype = proto.ID;
             GuideEntries = proto.Metabolisms?
-                .Select(x => (x.Key, x.Value.MakeGuideEntry()))
+                .Select(x => (x.Key, x.Value.MakeGuideEntry(prototype, entSys)))
                 .ToDictionary(x => x.Key, x => x.Item2);
             if (proto.PlantMetabolisms.Count > 0)
             {
                 PlantMetabolisms = new List<string>(proto.PlantMetabolisms
-                    .Select(x => x.GuidebookEffectDescription())
+                    .Select(x => x.GuidebookEffectDescription(prototype, entSys))
                     .Where(x => x is not null)
                     .Select(x => x!)
                     .ToArray());
@@ -258,11 +258,11 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("effects", required: true)]
         public AnyEntityEffect[] Effects = default!;
 
-        public ReagentEffectsGuideEntry MakeGuideEntry()
+        public ReagentEffectsGuideEntry MakeGuideEntry(IPrototypeManager prototype, IEntitySystemManager entSys)
         {
             return new ReagentEffectsGuideEntry(MetabolismRate,
                 Effects
-                    .Select(x => x.GuidebookEffectDescription()) // hate.
+                    .Select(x => x.GuidebookEffectDescription(prototype, entSys)) // hate.
                     .Where(x => x is not null)
                     .Select(x => x!)
                     .ToArray());

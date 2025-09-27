@@ -215,7 +215,6 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
                             // Need specific handling of specific conditions since Metabolism is funny like that.
                             // TODO: MetabolizerTypes should be handled well before this stage by metabolism itself.
                             case MetabolizerType:
-                            case MetabolizerTypes:
                                 if (_entityConditions.TryCondition(ent, condition))
                                     continue;
                                 break;

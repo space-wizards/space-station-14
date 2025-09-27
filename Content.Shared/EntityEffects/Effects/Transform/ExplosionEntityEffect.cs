@@ -1,4 +1,5 @@
-﻿using Content.Shared.Explosion;
+﻿using Content.Shared.Database;
+using Content.Shared.Explosion;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Transform;
@@ -46,4 +47,11 @@ public sealed partial class ExplosionEffect : EntityEffectBase<ExplosionEffect>
     /// </summary>
     [DataField]
     public float TileBreakScale = 1f;
+
+    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("reagent-effect-guidebook-explosion-reaction-effect", ("chance", Probability));
+
+    public override bool ShouldLog => true;
+
+    public override LogImpact LogImpact => LogImpact.High;
 }

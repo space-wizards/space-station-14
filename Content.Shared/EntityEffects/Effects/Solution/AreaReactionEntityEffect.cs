@@ -18,7 +18,7 @@ public sealed partial class AreaReactionEffect : EntityEffectBase<AreaReactionEf
     [DataField] public float OverflowThreshold = 2.5f;
 
     /// <summary>
-    /// The entity prototype that will be spawned as the effect.
+    /// The entity prototype that is being spread over an area.
     /// </summary>
     [DataField(required: true)]
     public EntProtoId PrototypeId;
@@ -27,6 +27,11 @@ public sealed partial class AreaReactionEffect : EntityEffectBase<AreaReactionEf
     /// Sound that will get played when this reaction effect occurs.
     /// </summary>
     [DataField(required: true)] public SoundSpecifier Sound = default!;
+
+    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("entity-effect-guidebook-area-reaction",
+            ("duration", Duration)
+        );
 
     public override bool ShouldLog => true;
 

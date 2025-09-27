@@ -15,7 +15,7 @@
       - !type:SatiateHunger
         conditions:
         - !type:MetabolizerType
-          type: Plant
+          type: [Plant]
 
 - type: reagent
   id: Left4Zed
@@ -39,14 +39,14 @@
       - !type:SatiateHunger
         conditions:
         - !type:MetabolizerType
-          type: Plant
+          type: [Plant]
       - !type:HealthChange
         damage:
           types:
             Poison: 1
         conditions:
         - !type:MetabolizerType
-          type: Plant
+          type: [Plant]
 
 - type: reagent
   id: PestKiller
@@ -70,7 +70,7 @@
             Poison: 3
         conditions:
         - !type:MetabolizerType
-          type: Plant
+          type: [Plant]
 
 - type: reagent
   id: PlantBGone
@@ -101,7 +101,7 @@
             Piercing: 1
         conditions:
         - !type:MetabolizerType
-          type: Plant
+          type: [Plant]
 
 - type: reagent
   id: RobustHarvest
@@ -133,11 +133,11 @@
             Piercing: -3
         conditions:
         - !type:MetabolizerType
-          type: Plant
+          type: [Plant]
       - !type:HealthChange
         conditions:
         - !type:MetabolizerType
-          type: Plant
+          type: [Plant]
         - !type:ReagentThreshold
           reagent: RobustHarvest
           min: 30
@@ -152,7 +152,7 @@
         prototype: TreeMorph
         conditions:
           - !type:MetabolizerType
-            type: Plant
+            type: [Plant]
           - !type:ReagentThreshold
             reagent: RobustHarvest
             min: 80
@@ -195,7 +195,7 @@
             Poison: 4
         conditions:
         - !type:MetabolizerType
-          type: Plant
+          type: [Plant]
 
 - type: reagent
   id: Ammonia
@@ -224,7 +224,7 @@
       - !type:HealthChange
         conditions:
         - !type:MetabolizerType
-          type: Rat
+          type: [Rat]
           inverted: true
         - !type:ReagentThreshold
           reagent: Ammonia
@@ -236,8 +236,8 @@
       - !type:Vomit
         probability: 0.12
         conditions:
-        - !type:MetabolizerTypes
-          types:
+        - !type:MetabolizerType
+          type:
           - Rat
           - Vox
           inverted: true
@@ -256,7 +256,7 @@
       - !type:HealthChange
         conditions:
         - !type:MetabolizerType
-          type: Rat
+          type: [Rat]
         - !type:ReagentThreshold
           reagent: Ammonia
           min: 1
@@ -271,7 +271,7 @@
       - !type:Oxygenate # ammonia displaces nitrogen in vox blood
         conditions:
         - !type:MetabolizerType
-          type: Vox
+          type: [Vox]
         factor: -4
 
 

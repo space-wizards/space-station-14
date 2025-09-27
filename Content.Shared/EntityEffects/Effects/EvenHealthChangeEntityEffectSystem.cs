@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
+using Content.Shared.Localizations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -34,8 +35,7 @@ public sealed partial class EvenHealthChangeEntityEffectSystem : EntityEffectSys
             }
         }
 
-        // TODO: This incorrectly scaled parabolically before, so we need adjust every effect that has this set to true.
-        damageSpec *= args.Effect.ScaleByQuantity ? args.Scale : float.Min(1f, args.Scale);
+        damageSpec *= args.Scale;
 
         _damageable.TryChangeDamage(
             entity,
@@ -55,16 +55,54 @@ public sealed partial class EvenHealthChange : EntityEffectBase<EvenHealthChange
     public Dictionary<ProtoId<DamageGroupPrototype>, FixedPoint2> Damage = new();
 
     /// <summary>
-    /// Should this effect scale the damage by the amount of chemical in the solution?
-    /// Useful for touch reactions, like styptic powder or acid.
-    /// Only usable if the EntityEffectBaseArgs is an EntityEffectReagentArgs.
-    /// </summary>
-    [DataField]
-    public bool ScaleByQuantity;
-
-    /// <summary>
     /// Should this effect ignore damage modifiers?
     /// </summary>
     [DataField]
     public bool IgnoreResistances = true;
+
+    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    {
+        var damages = new List<string>();
+        var heals = false;
+        var deals = false;
+
+        var damagableSystem = entSys.GetEntitySystem<DamageableSystem>();
+        var universalReagentDamageModifier = damagableSystem.UniversalReagentDamageModifier;
+        var universalReagentHealModifier = damagableSystem.UniversalReagentHealModifier;
+
+        foreach (var (group, amount) in Damage)
+        {
+            var groupProto = prototype.Index(group);
+
+            var sign = FixedPoint2.Sign(amount);
+            float mod;
+
+            switch (sign)
+            {
+                case < 0:
+                    heals = true;
+                    mod = universalReagentHealModifier;
+                    break;
+                case > 0:
+                    deals = true;
+                    mod = universalReagentDamageModifier;
+                    break;
+                default:
+                    continue; // Don't need to show damage types of 0...
+            }
+
+            damages.Add(
+                Loc.GetString("health-change-display",
+                    ("kind", groupProto.LocalizedName),
+                    ("amount", MathF.Abs(amount.Float() * mod)),
+                    ("deltasign", sign)
+                ));
+        }
+
+        var healsordeals = heals ? deals ? "both" : "heals" : deals ? "deals" : "none";
+        return Loc.GetString("reagent-effect-guidebook-even-health-change",
+            ("chance", Probability),
+            ("changes", ContentLocalizationManager.FormatList(damages)),
+            ("healsordeals", healsordeals));
+    }
 }

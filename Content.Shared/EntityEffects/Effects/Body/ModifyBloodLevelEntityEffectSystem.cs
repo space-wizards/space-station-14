@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Body;
 
@@ -21,4 +22,7 @@ public sealed partial class ModifyBloodLevel : EntityEffectBase<ModifyBloodLevel
     /// </summary>
     [DataField]
     public FixedPoint2 Amount = 1.0f;
+
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("reagent-effect-guidebook-modify-blood-level", ("chance", Probability), ("deltasign", MathF.Sign(Amount.Float())));
 }

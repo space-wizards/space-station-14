@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.EntityEffects.Effects.Body;
+﻿using Robust.Shared.Prototypes;
+
+namespace Content.Shared.EntityEffects.Effects.Body;
 
 public sealed partial class VomitEntityEffectSystem : EntityEffectSystem<MetaDataComponent, Vomit>
 {
@@ -19,7 +21,11 @@ public sealed partial class Vomit : EntityEffectBase<Vomit>
     /// How many units of thirst to add each time we vomit
     [DataField]
     public float ThirstAmount = -8f;
+
     /// How many units of hunger to add each time we vomit
     [DataField]
     public float HungerAmount = -8f;
+
+    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("entity-effect-guidebook-vomit", ("chance", Probability));
 }

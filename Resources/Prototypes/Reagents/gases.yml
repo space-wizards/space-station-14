@@ -11,9 +11,10 @@
     Poison:
       effects:
       - !type:Oxygenate
+        scaling: true
         conditions:
-        - !type:MetabolizerTypes
-          types:
+        - !type:MetabolizerType
+          type:
           - Human
           - Animal
           - Rat
@@ -22,7 +23,7 @@
       - !type:ModifyLungGas
         conditions:
         - !type:MetabolizerType
-          type: Vox
+          type: [Vox]
           inverted: true
         ratios:
           CarbonDioxide: 1.0
@@ -30,7 +31,7 @@
       - !type:HealthChange
         conditions:
         - !type:MetabolizerType
-          type: Vox
+          type: [Vox]
         scaleByQuantity: true
         ignoreResistances: true
         damage:
@@ -41,15 +42,16 @@
         minScale: 1
         conditions:
           - !type:MetabolizerType
-            type: Vox
+            type: [Vox]
         clear: true
         time: 5
     Gas:
       effects:
       - !type:Oxygenate
+        scaling: true
         conditions:
-        - !type:MetabolizerTypes
-          types:
+        - !type:MetabolizerType
+          type:
           - Human
           - Animal
           - Rat
@@ -58,7 +60,7 @@
       - !type:ModifyLungGas
         conditions:
         - !type:MetabolizerType
-          type: Vox
+          type: [Vox]
           inverted: true
         ratios:
           CarbonDioxide: 1.0
@@ -66,7 +68,7 @@
       - !type:HealthChange
         conditions:
         - !type:MetabolizerType
-          type: Vox
+          type: [Vox]
         scaleByQuantity: true
         ignoreResistances: true
         damage:
@@ -77,7 +79,7 @@
         minScale: 1
         conditions:
           - !type:MetabolizerType
-            type: Vox
+            type: [Vox]
         clear: true
         time: 5
 
@@ -177,15 +179,14 @@
     Poison:
       effects:
       - !type:Oxygenate
+        scaling: true
         conditions:
         - !type:MetabolizerType
-          type: Plant
+          type: [Plant]
       - !type:HealthChange
         conditions:
-        - !type:MetabolizerTypes
-          types:
-          - Plant
-          - Vox
+        - !type:MetabolizerType
+          type: [Plant, Vox]
           inverted: true
         scaleByQuantity: true
         ignoreResistances: true
@@ -194,24 +195,24 @@
             Poison:
               0.4
       - !type:Oxygenate
+        scaling: true
         conditions:
         - !type:MetabolizerType
-          type: Plant
+          type: [Plant]
           inverted: true
         factor: -4
     Gas:
       effects:
       - !type:Oxygenate
+        scaling: true
         conditions:
         - !type:MetabolizerType
-          type: Plant
+          type: [Plant]
       - !type:HealthChange
         minScale: 1
         conditions:
-        - !type:MetabolizerTypes
-          types:
-          - Plant
-          - Vox
+        - !type:MetabolizerType
+          type: [Plant, Vox]
           inverted: true
         # Don't want people to get toxin damage from the gas they just
         # exhaled, right?
@@ -222,9 +223,10 @@
             Poison:
               0.8
       - !type:Oxygenate # carbon dioxide displaces oxygen from the bloodstream, causing asphyxiation
+        scaling: true
         conditions:
         - !type:MetabolizerType
-          type: Plant
+          type: [Plant]
           inverted: true
         factor: -4
       # We need a metabolism effect on reagent removal
@@ -250,23 +252,24 @@
     Gas:
       effects:
       - !type:Oxygenate
+        scaling: true
         conditions:
-        - !type:MetabolizerTypes
-          types:
+        - !type:MetabolizerType
+          type:
           - Vox
           - Slime
       # Converts Nitrogen into Ammonia
       - !type:ModifyLungGas
         conditions:
         - !type:MetabolizerType
-          type: Vox
+          type: [Vox]
         ratios:
           Ammonia: 1.0
           Nitrogen: -1.0
       - !type:ModifyLungGas
         conditions:
         - !type:MetabolizerType
-          type: Slime
+          type: [Slime]
         ratios:
           NitrousOxide: 1.0
           Nitrogen: -1.0
@@ -293,7 +296,7 @@
         minScale: 1
         conditions:
         - !type:MetabolizerType
-          type: Slime
+          type: [Slime]
           inverted: true
         emote: Laugh
         showInChat: true
@@ -302,7 +305,7 @@
         minScale: 0.4
         conditions:
         - !type:MetabolizerType
-          type: Slime
+          type: [Slime]
           inverted: true
         emote: Scream
         showInChat: true
@@ -311,7 +314,7 @@
         minScale: 1
         conditions:
         - !type:MetabolizerType
-          type: Slime
+          type: [Slime]
           inverted: true
         type: Local
         visualType: Medium
@@ -321,7 +324,7 @@
         minScale: 2
         conditions:
         - !type:MetabolizerType
-          type: Slime
+          type: [Slime]
           inverted: true
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
@@ -329,7 +332,7 @@
         minScale: 3.6
         conditions:
         - !type:MetabolizerType
-          type: Slime
+          type: [Slime]
           inverted: true
         effectProto: StatusEffectForcedSleeping
         time: 3
@@ -338,7 +341,7 @@
         minScale: 7
         conditions:
         - !type:MetabolizerType
-          type: Slime
+          type: [Slime]
           inverted: true
         ignoreResistances: true
         damage:

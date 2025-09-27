@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Atmos;
 
@@ -26,4 +27,7 @@ public sealed partial class Extinguish : EntityEffectBase<Extinguish>
     /// </summary>
     [DataField]
     public float FireStacksAdjustment = -1.5f;
+
+    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("reagent-effect-guidebook-extinguish-reaction", ("chance", Probability));
 }

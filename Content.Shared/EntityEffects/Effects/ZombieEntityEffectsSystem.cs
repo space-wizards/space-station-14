@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Mobs.Components;
 using Content.Shared.Zombies;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;
 
@@ -34,7 +35,11 @@ public sealed partial class CureZombieInfectionEntityEffectsSystem : EntityEffec
     }
 }
 
-public sealed partial class CauseZombieInfection : EntityEffectBase<CauseZombieInfection>;
+public sealed partial class CauseZombieInfection : EntityEffectBase<CauseZombieInfection>
+{
+    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("entity-effect-guidebook-cause-zombie-infection", ("chance", Probability));
+}
 
 public sealed partial class CureZombieInfection : EntityEffectBase<CureZombieInfection>
 {
@@ -43,4 +48,12 @@ public sealed partial class CureZombieInfection : EntityEffectBase<CureZombieInf
     /// </summary>
     [DataField]
     public bool Innoculate;
+
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    {
+        if (Innoculate)
+            return Loc.GetString("entity-effect-guidebook-innoculate-zombie-infection", ("chance", Probability));
+
+        return Loc.GetString("entity-effect-guidebook-cure-zombie-infection", ("chance", Probability));
+    }
 }

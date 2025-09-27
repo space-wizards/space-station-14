@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Jittering;
 using Content.Shared.StatusEffect;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.StatusEffects;
 
@@ -35,4 +36,7 @@ public sealed partial class Jitter : EntityEffectBase<Jitter>
     /// </remarks>
     [DataField]
     public bool Refresh = true;
+
+    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
+        Loc.GetString("reagent-effect-guidebook-jittering", ("chance", Probability));
 }

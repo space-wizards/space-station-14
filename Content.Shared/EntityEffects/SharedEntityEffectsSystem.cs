@@ -6,6 +6,7 @@ using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Database;
 using Content.Shared.EntityConditions;
 using Content.Shared.Localizations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects;
 
@@ -120,6 +121,7 @@ public abstract partial class EntityEffectSystem<T, TEffect> : EntitySystem wher
         // TODO: Temporary relay until Metabolism can properly separate effects/conditions for organs and bodies
         SubscribeLocalEvent<OrganComponent, EntityEffectEvent<TEffect>>(RelayEffect);
     }
+
     protected abstract void Effect(Entity<T> entity, ref EntityEffectEvent<TEffect> args);
 
     private void RelayEffect(Entity<OrganComponent> entity, ref EntityEffectEvent<TEffect> args)
@@ -154,7 +156,7 @@ public abstract partial class AnyEntityEffect
     public abstract void RaiseEvent(EntityUid target, IEntityEffectRaiser raiser, float scale);
 
     [DataField]
-    public EntityConditions.AnyEntityCondition[]? Conditions;
+    public AnyEntityCondition[]? Conditions;
 
     /// <summary>
     /// If our scale is less than this value, the effect fails.
@@ -162,23 +164,30 @@ public abstract partial class AnyEntityEffect
     [DataField]
     public float MinScale;
 
+    /// <summary>
+    /// If true, then it allows the scale multiplier to go above 1.
+    /// </summary>
+    [DataField]
+    public virtual bool Scaling { get; private set; }
+
     // TODO: This should be an entity condition but guidebook relies on it heavily for formatting...
     [DataField]
     public float Probability = 1.0f;
 
     // TODO: These shouldn't be baked into the base entity effect itself if possible, since entity effects can be used for more than just metabolism...
-    protected virtual string? EntityEffectGuidebookText => null;
+    protected virtual string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => null;
 
+    // TODO: Move this to reagent prototype?
     public virtual string EntityEffectFormat => "guidebook-reagent-effect-description";
 
-    public virtual string? GuidebookEffectDescription()
+    public virtual string? GuidebookEffectDescription(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
-        if (EntityEffectGuidebookText is null)
+        if (ReagentEffectGuidebookText(prototype, entSys) is not { } effect)
             return null;
 
         return Loc.GetString(
             EntityEffectFormat,
-            ("effect", EntityEffectGuidebookText),
+            ("effect", effect),
             ("chance", Probability),
             ("conditionCount", Conditions?.Length ?? 0),
             ("conditions",
@@ -199,8 +208,8 @@ public abstract partial class AnyEntityEffect
 /// </summary>
 /// <param name="Effect">The Effect</param>
 /// <param name="Scale">A strength scalar for the effect, defaults to 1 and typically only goes under for incomplete reactions.</param>
-[ByRefEvent]
-public readonly record struct EntityEffectEvent<T>(T Effect, float Scale = 1f) where T : EntityEffectBase<T>
+[ByRefEvent, Access(typeof(SharedEntityEffectsSystem))]
+public readonly record struct EntityEffectEvent<T>(T Effect, float Scale) where T : EntityEffectBase<T>
 {
     /// <summary>
     /// The Condition being raised in this event
@@ -210,5 +219,5 @@ public readonly record struct EntityEffectEvent<T>(T Effect, float Scale = 1f) w
     /// <summary>
     /// The Scale modifier of this Effect.
     /// </summary>
-    public readonly float Scale = Scale;
+    public readonly float Scale = Effect.Scaling ? Scale : Math.Min(Scale, 1f);
 }

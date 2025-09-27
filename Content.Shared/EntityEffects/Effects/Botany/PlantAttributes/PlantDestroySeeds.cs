@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
+﻿using Robust.Shared.Prototypes;
+
+namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
 /// <summary>
 ///     Handles removal of seeds on a plant.
@@ -6,6 +8,6 @@
 
 public sealed partial class PlantDestroySeeds : EntityEffectBase<PlantDestroySeeds>
 {
-    //protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
-        //Loc.GetString("reagent-effect-guidebook-plant-seeds-remove", ("chance", Probability));
+    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
+        Loc.GetString("entity-effect-guidebook-plant-seeds-remove", ("chance", Probability));
 }

@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.EntityEffects.Effects;
+﻿using Robust.Shared.Prototypes;
+
+namespace Content.Shared.EntityEffects.Effects;
 
 public sealed partial class MakeSentient : EntityEffectBase<MakeSentient>
 {
@@ -13,4 +15,7 @@ public sealed partial class MakeSentient : EntityEffectBase<MakeSentient>
     /// </summary>
     [DataField]
     public bool AllowSpeech = true;
+
+    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("reagent-effect-guidebook-make-sentient", ("chance", Probability));
 }
