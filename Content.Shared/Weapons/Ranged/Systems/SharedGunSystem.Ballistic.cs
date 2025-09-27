@@ -31,6 +31,7 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<BallisticAmmoProviderComponent, InteractUsingEvent>(OnBallisticInteractUsing);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, AfterInteractEvent>(OnBallisticAfterInteract);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, AfterInteractUsingEvent>(OnBallisticAfterInteractUsing);
+        SubscribeLocalEvent<BallisticAmmoProviderComponent, SmartEquipWithItemAttemptEvent>(OnSmartEquipWithItemAttempt);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, AmmoFillDoAfterEvent>(OnBallisticAmmoFillDoAfter);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, UseInHandEvent>(OnBallisticUse);
     }
@@ -104,6 +105,18 @@ public abstract partial class SharedGunSystem
         ReloadDoAfter(component, args.User, args.Used, args.Target.Value);
     }
 
+    private void OnSmartEquipWithItemAttempt(Entity<BallisticAmmoProviderComponent> ent, ref SmartEquipWithItemAttemptEvent args)
+    {
+        if (!Timing.IsFirstTimePredicted
+            || ent.Comp.ReloadFromClothing == false
+            || !TryComp<ClothingComponent>(args.SlotEntity, out var clothing)
+            || clothing.InSlot == null
+            || clothing.InSlotFlag == SlotFlags.POCKET
+            || !TryComp<BallisticAmmoProviderComponent>(args.SlotEntity, out _))
+            return;
+
+        ReloadDoAfter(ent.Comp, args.user, args.HeldItem, args.SlotEntity);
+    }
 
     private void ReloadDoAfter(BallisticAmmoProviderComponent component, EntityUid user, EntityUid target, EntityUid used)
     {
