@@ -190,6 +190,7 @@
           whitelist:
             tags:
               - Plunger
+          priority: 8
         goldenplunger_slot:
           name: janitorial-trolley-slot-component-slot-name-goldenplunger
           whitelist:
