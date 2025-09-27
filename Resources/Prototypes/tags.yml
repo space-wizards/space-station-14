@@ -1100,6 +1100,9 @@
   id: PlantSampleTaker
 
 - type: Tag
+  id: PlasmaCell
+
+- type: Tag
   id: PlasmaGlassShard
 
 - type: Tag
