@@ -10,8 +10,6 @@
     - id: CargoShuttleConsoleCircuitboard
     - id: SalvageMagnetMachineCircuitboard
     - id: SalvageJobBoardComputerCircuitboard
-    - id: CigPackGreen
-      prob: 0.50
     - id: ClothingHeadsetAltCargo
     - id: DoorRemoteCargo
     - id: RubberStampApproved
@@ -37,8 +35,6 @@
   table: !type:AllSelector
     children:
     - id: CaptainIDCard
-    - id: CigarGoldCase
-      prob: 0.25
     - id: ClothingBeltSheathFilled
     - id: ClothingHeadsetAltCommand
     - id: ClothingOuterArmorCaptainCarapace
@@ -47,8 +43,6 @@
     - id: MedalCase
     - id: NukeDisk
     - id: PinpointerNuclear
-    - id: PlushieNuke
-      prob: 0.1
     - id: RubberStampCaptain
     - id: SpaceCash1000
     - id: WeaponDisabler
@@ -124,12 +118,6 @@
     - id: BoxHeadset
     - id: BoxID
     - id: BoxPDA
-    - id: CigarGoldCase
-      prob: 0.25
-      # Fuck the HoP they don't deserve fucking cigars.
-      # Yes they do fuck you.
-    - id: ClothingBackpackIan
-      prob: 0.5
     - id: ClothingHeadsetCommand
     - id: ClothingNeckGoldmedal
     - id: DoorRemoteService
@@ -160,8 +148,6 @@
     children:
     - id: AccessConfigurator
     - id: BoxEncryptionKeyEngineering
-    - id: CigarCase
-      prob: 0.15
     - id: ClothingBeltChiefEngineerFilled
     - id: ClothingEyesGlassesMeson
     - id: ClothingHandsGlovesColorYellow
@@ -217,10 +203,8 @@
     children:
     - id: BoxEncryptionKeyMedical
     - id: ClothingBackpackDuffelSurgeryFilled
-    - id: ClothingCloakCmo
     - id: ClothingEyesHudMedical
     - id: ClothingHandsGlovesNitrile
-    - id: ClothingHeadHatBeretCmo
     - id: ClothingHeadsetAltMedical
     - id: ClothingMaskSterile
     - id: DoorRemoteMedical
@@ -328,12 +312,9 @@
     - id: WeaponEnergyShotgun
     - id: BookSpaceLaw
     - id: BoxEncryptionKeySecurity
-    - id: CigarGoldCase
-      prob: 0.50
     - id: ClothingBeltSecurityFilled
     - id: ClothingEyesGlassesSecurity
     - id: ClothingHeadsetAltSecurity
-    - id: ClothingMaskNeckGaiter
     - id: ClothingOuterCoatHoSTrench
     - id: ClothingShoesBootsJack
     - id: DoorRemoteSecurity
@@ -390,6 +371,7 @@
     access: [ [ "Command" ] ]
   - type: StorageFill
     contents:
+    - id: CigarGoldCase
     - id: WeaponRevolverDeckard
     - id: JetpackBlue
     - id: SpaceCash1000
