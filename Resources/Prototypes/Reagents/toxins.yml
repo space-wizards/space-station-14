@@ -67,13 +67,13 @@
         emote: Yawn
         showInChat: true
         probability: 0.1
-      - !type:MovespeedModifier
+      - !type:MovementSpeedModifier
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
       - !type:ModifyStatusEffect
         effectProto: StatusEffectDrowsiness
         time: 4
-        type: Add
+        type: Update
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -98,9 +98,10 @@
           damage:
             types:
               Poison: 2
-        - !type:ChemVomit
+        - !type:Vomit
           conditions:
           - !type:ReagentThreshold
+            reagent: GastroToxin
             min: 2
           probability: 0.2
 
@@ -379,6 +380,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Histamine
           min: 45
         damage:
           groups:
@@ -393,6 +395,7 @@
       - !type:PopupMessage
         conditions:
         - !type:ReagentThreshold
+          reagent: Histamine
           min: 45
         type: Local
         visualType: Medium
@@ -414,16 +417,16 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:OrganType
-          type: Animal # Applying damage to the mobs with lower metabolism capabilities
+        - !type:MetabolizerType
+          type: [Animal] # Applying damage to the mobs with lower metabolism capabilities
         damage:
           types:
             Poison: 0.4
-      - !type:ChemVomit
+      - !type:Vomit
         probability: 0.04 #Scaled for time, not metabolismrate.
         conditions:
-          - !type:OrganType
-            type: Animal
+          - !type:MetabolizerType
+            type: [Animal]
 
 - type: reagent
   id: Amatoxin
@@ -474,6 +477,7 @@
         - !type:CauseZombieInfection
           conditions:
             - !type:ReagentThreshold
+              reagent: Romerol
               min: 5
 
 - type: reagent
@@ -489,46 +493,43 @@
       effects:
       - !type:PopupMessage
         conditions:
-          - !type:OrganType
-            type: Animal
-            shouldHave: false
-          - !type:OrganType
-            type: Vox
-            shouldHave: false
+        - !type:MetabolizerType
+          type:
+          - Animal
+          - Vox
+          inverted: true
         type: Local
         visualType: MediumCaution
         messages: [ "generic-reagent-effect-sick" ]
         probability: 0.5
-      - !type:ChemVomit
+      - !type:Vomit
         probability: 0.1
         conditions:
-          - !type:OrganType
-            type: Animal
-            shouldHave: false
-          - !type:OrganType
-            type: Vox
-            shouldHave: false
+        - !type:MetabolizerType
+          type:
+          - Animal
+          - Vox
+          inverted: true
       - !type:HealthChange
         conditions:
-        - !type:OrganType
-          type: Animal
-          shouldHave: false
-        - !type:OrganType
-          type: Vox
-          shouldHave: false
+        - !type:MetabolizerType
+          type:
+          - Animal
+          - Vox
+          inverted: true
         damage:
           types:
             Poison: 1
       - !type:AdjustReagent
         conditions:
-        - !type:OrganType
-          type: Animal
+        - !type:MetabolizerType
+          type: [Animal]
         reagent: Protein
         amount: 0.5
       - !type:AdjustReagent
         conditions:
-        - !type:OrganType
-          type: Vox
+        - !type:MetabolizerType
+          type: [Vox]
         reagent: Protein
         amount: 0.25
 
@@ -547,9 +548,10 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Allicin
           min: 1
-        - !type:OrganType
-          type: Animal
+        - !type:MetabolizerType
+          type: [Animal]
         damage:
           types:
             Poison: 0.06
@@ -572,7 +574,6 @@
       - !type:GenericStatusEffect
         key: Pacified
         component: Pacified
-        type: Add
         time: 4
 
 - type: reagent
@@ -596,9 +597,10 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
+          reagent: Honk
           min: 1
-        - !type:OrganType
-          type: Animal
+        - !type:MetabolizerType
+          type: [Animal]
         damage:
           types:
             Poison: 0.06
@@ -653,8 +655,9 @@
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
+          reagent: Vestine
           min: 5
-      - !type:MovespeedModifier
+      - !type:MovementSpeedModifier
         walkSpeedModifier: 0.8
         sprintSpeedModifier: 0.8
       - !type:HealthChange
@@ -692,7 +695,7 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:Hunger
+        - !type:TotalHunger
           max: 50
         damage:
           types:
@@ -716,30 +719,30 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:OrganType
-          type: Arachnid
-          shouldHave: false
+        - !type:MetabolizerType
+          type: [Arachnid]
+          inverted: true
         damage:
           types:
             Poison: 1.6
-      - !type:MovespeedModifier
+      - !type:MovementSpeedModifier
         conditions:
         - !type:ReagentThreshold
           reagent: Mechanotoxin
           min: 2
-        - !type:OrganType
-          type: Arachnid
-          shouldHave: false
+        - !type:MetabolizerType
+          type: [Arachnid]
+          inverted: true
         walkSpeedModifier: 0.8
         sprintSpeedModifier: 0.8
-      - !type:MovespeedModifier
+      - !type:MovementSpeedModifier
         conditions:
         - !type:ReagentThreshold
           reagent: Mechanotoxin
           min: 4
-        - !type:OrganType
-          type: Arachnid
-          shouldHave: false
+        - !type:MetabolizerType
+          type: [Arachnid]
+          inverted: true
         walkSpeedModifier: 0.4
         sprintSpeedModifier: 0.4
 
@@ -756,5 +759,5 @@
       - !type:SatiateHunger
         factor: 1
         conditions:
-        - !type:OrganType
-          type: Vox
+        - !type:MetabolizerType
+          type: [Vox]

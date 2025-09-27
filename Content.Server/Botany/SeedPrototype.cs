@@ -1,8 +1,9 @@
 using Content.Server.Botany.Components;
 using Content.Server.Botany.Systems;
-using Content.Server.EntityEffects;
+using Content.Server.EntityEffects.Effects.Botany;
 using Content.Shared.Atmos;
 using Content.Shared.Database;
+using Content.Shared.EntityEffects;
 using Content.Shared.Random;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -80,8 +81,12 @@ public partial struct SeedChemQuantity
 }
 
 // TODO reduce the number of friends to a reasonable level. Requires ECS-ing things like plant holder component.
+/// <remarks>
+/// SeedData is no longer restricted because the number of friends is absolutely unreasonable.
+/// This entire data definition is unreasonable. I felt genuine fear looking at this, this is horrific. Send help.
+/// </remarks>
+// TODO: Hit Botany with hammers
 [Virtual, DataDefinition]
-[Access(typeof(BotanySystem), typeof(PlantHolderSystem), typeof(SeedExtractorSystem), typeof(PlantHolderComponent), typeof(EntityEffectSystem), typeof(MutationSystem))]
 public partial class SeedData
 {
     #region Tracking

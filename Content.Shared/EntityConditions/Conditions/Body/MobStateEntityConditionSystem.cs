@@ -1,0 +1,26 @@
+﻿using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Robust.Shared.Prototypes;
+
+namespace Content.Shared.EntityConditions.Conditions.Body;
+
+/// <summary>
+/// Returns true if current mob state matches given mob state.
+/// </summary>
+public sealed partial class MobStateEntityConditionSystem : EntityConditionSystem<MobStateComponent, IsMobState>
+{
+    protected override void Condition(Entity<MobStateComponent> entity, ref EntityConditionEvent<IsMobState> args)
+    {
+        if (entity.Comp.CurrentState == args.Condition.Mobstate)
+            args.Result = true;
+    }
+}
+
+public sealed partial class IsMobState : EntityConditionBase<IsMobState>
+{
+    [DataField]
+    public MobState Mobstate = MobState.Alive;
+
+    public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>
+        Loc.GetString("reagent-effect-condition-guidebook-mob-state-condition", ("state", Mobstate));
+}

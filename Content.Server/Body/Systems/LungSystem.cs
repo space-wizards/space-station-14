@@ -2,9 +2,10 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Clothing;
 using Content.Shared.Inventory.Events;
+using Robust.Shared.Prototypes;
 using BreathToolComponent = Content.Shared.Atmos.Components.BreathToolComponent;
 using InternalsComponent = Content.Shared.Body.Components.InternalsComponent;
 
@@ -17,6 +18,7 @@ public sealed class LungSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
     public static string LungSolutionName = "Lung";
+    public static ProtoId<MetabolismGroupPrototype> GasPrototype = "Gas";
 
     public override void Initialize()
     {
@@ -54,6 +56,7 @@ public sealed class LungSystem : EntitySystem
         }
     }
 
+    // TODO: JUST METABOLIZE GASES DIRECTLY DON'T CONVERT TO REAGENTS!!! (Needs Metabolism refactor :B)
     public void GasToReagent(EntityUid uid, LungComponent lung)
     {
         if (!_solutionContainerSystem.ResolveSolution(uid, lung.SolutionName, ref lung.Solution, out var solution))

@@ -13,7 +13,6 @@ using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Server.Speech.Components;
-using Content.Server.Temperature.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Chat;
 using Content.Shared.CombatMode;
@@ -44,6 +43,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Content.Shared.NPC.Prototypes;
 using Content.Shared.Roles;
+using Content.Shared.Temperature.Components;
 
 namespace Content.Server.Zombies;
 

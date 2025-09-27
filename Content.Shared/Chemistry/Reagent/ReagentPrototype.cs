@@ -182,7 +182,7 @@ namespace Content.Shared.Chemistry.Reagent
         public List<ITileReaction> TileReactions = new(0);
 
         [DataField("plantMetabolism")]
-        public List<EntityEffect> PlantMetabolisms = new(0);
+        public List<AnyEntityEffect> PlantMetabolisms = new(0);
 
         [DataField]
         public float PricePerUnit;
@@ -190,6 +190,7 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepPuddle");
 
+        // TODO: Reaction tile doesn't work properly and destroys reagents way too quickly
         public FixedPoint2 ReactionTile(TileRef tile, FixedPoint2 reactVolume, IEntityManager entityManager, List<ReagentData>? data)
         {
             var removed = FixedPoint2.Zero;
@@ -210,35 +211,6 @@ namespace Content.Shared.Chemistry.Reagent
 
             return removed;
         }
-
-        public void ReactionPlant(EntityUid? plantHolder,
-            ReagentQuantity amount,
-            Solution solution,
-            EntityManager entityManager,
-            IRobustRandom random,
-            ISharedAdminLogManager logger)
-        {
-            if (plantHolder == null)
-                return;
-
-            var args = new EntityEffectReagentArgs(plantHolder.Value, entityManager, null, solution, amount.Quantity, this, null, 1f);
-            foreach (var plantMetabolizable in PlantMetabolisms)
-            {
-                if (!plantMetabolizable.ShouldApply(args, random))
-                    continue;
-
-                if (plantMetabolizable.ShouldLog)
-                {
-                    var entity = args.TargetEntity;
-                    logger.Add(
-                        LogType.ReagentEffect,
-                        plantMetabolizable.LogImpact,
-                        $"Plant metabolism effect {plantMetabolizable.GetType().Name:effect} of reagent {ID} applied on entity {entity}");
-                }
-
-                plantMetabolizable.Effect(args);
-            }
-        }
     }
 
     [Serializable, NetSerializable]
@@ -250,6 +222,7 @@ namespace Content.Shared.Chemistry.Reagent
 
         public List<string>? PlantMetabolisms = null;
 
+        // TODO: Move some of the localization up a level. Metabolism data should not be in the effect itself but instead up here.
         public ReagentGuideEntry(ReagentPrototype proto, IPrototypeManager prototype, IEntitySystemManager entSys)
         {
             ReagentPrototype = proto.ID;
@@ -283,7 +256,7 @@ namespace Content.Shared.Chemistry.Reagent
         /// </summary>
         [JsonPropertyName("effects")]
         [DataField("effects", required: true)]
-        public EntityEffect[] Effects = default!;
+        public AnyEntityEffect[] Effects = default!;
 
         public ReagentEffectsGuideEntry MakeGuideEntry(IPrototypeManager prototype, IEntitySystemManager entSys)
         {
@@ -317,6 +290,6 @@ namespace Content.Shared.Chemistry.Reagent
         public HashSet<ReactionMethod> Methods = default!;
 
         [DataField("effects", required: true)]
-        public EntityEffect[] Effects = default!;
+        public AnyEntityEffect[] Effects = default!;
     }
 }

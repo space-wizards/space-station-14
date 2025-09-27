@@ -41,8 +41,8 @@ public sealed class ChemistryJsonGenerator
             WriteIndented = true,
             Converters =
             {
-                new UniversalJsonConverter<EntityEffect>(),
-                new UniversalJsonConverter<EntityEffectCondition>(),
+                new UniversalJsonConverter<AnyEntityEffect>(),
+                new UniversalJsonConverter<Shared.EntityConditions.AnyEntityCondition>(),
                 new UniversalJsonConverter<ReagentEffectsEntry>(),
                 new UniversalJsonConverter<DamageSpecifier>(),
                 new FixedPointJsonConverter()

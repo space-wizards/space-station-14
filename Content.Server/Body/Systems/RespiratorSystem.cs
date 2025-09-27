@@ -2,7 +2,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Chat.Systems;
-using Content.Server.EntityEffects;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
@@ -13,9 +12,12 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.EntityConditions;
+using Content.Shared.EntityConditions.Conditions;
+using Content.Shared.EntityConditions.Conditions.Body;
 using Content.Shared.EntityEffects;
-using Content.Shared.EntityEffects.EffectConditions;
 using Content.Shared.EntityEffects.Effects;
+using Content.Shared.EntityEffects.Effects.Body;
 using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -37,7 +39,7 @@ public sealed class RespiratorSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly EntityEffectSystem _entityEffect = default!;
+    [Dependency] private readonly SharedEntityConditionsSystem _entityConditions = default!;
 
     private static readonly ProtoId<MetabolismGroupPrototype> GasId = new("Gas");
 
@@ -342,14 +344,14 @@ public sealed class RespiratorSystem : EntitySystem
         // TODO generalize condition checks
         // this is pretty janky, but I just want to bodge a method that checks if an entity can breathe a gas mixture
         // Applying actual reaction effects require a full ReagentEffectArgs struct.
-        bool CanMetabolize(EntityEffect effect)
+        bool CanMetabolize(AnyEntityEffect effect)
         {
             if (effect.Conditions == null)
                 return true;
 
             foreach (var cond in effect.Conditions)
             {
-                if (cond is OrganType organ && !_entityEffect.OrganCondition(organ, lung))
+                if (cond is MetabolizerType organ && !_entityConditions.TryCondition(lung, organ))
                     return false;
             }
 
