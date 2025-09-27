@@ -127,16 +127,22 @@ public sealed class TegNodeGroup : BaseNodeGroup
 public sealed partial class TegNodeGenerator : Node
 {
     public override IEnumerable<Node> GetReachableNodes(
-        TransformComponent xform,
+        EntityUid uid,
         EntityQuery<NodeContainerComponent> nodeQuery,
         EntityQuery<TransformComponent> xformQuery,
-        MapGridComponent? grid,
-        IEntityManager entMan)
+        EntityQuery<MapGridComponent> gridQuery,
+        IEntityManager entMan,
+        SharedMapSystem mapSystem)
     {
-        if (!xform.Anchored || grid == null)
+        if (!xformQuery.TryGetComponent(uid, out var xform)
+            || !xform.Anchored
+            || xform.GridUid == null)
             yield break;
 
-        var gridIndex = grid.TileIndicesFor(xform.Coordinates);
+        if (!gridQuery.TryGetComponent(xform.GridUid.Value, out var grid))
+            yield break;
+
+        var gridIndex = mapSystem.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates);
 
         var dir = xform.LocalRotation.GetDir();
         var a = FindCirculator(dir);
@@ -152,7 +158,7 @@ public sealed partial class TegNodeGenerator : Node
         {
             var targetIdx = gridIndex.Offset(searchDir);
 
-            foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, grid, targetIdx))
+            foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, xform, grid, targetIdx, mapSystem))
             {
                 if (node is not TegNodeCirculator circulator)
                     continue;
@@ -179,22 +185,28 @@ public sealed partial class TegNodeGenerator : Node
 public sealed partial class TegNodeCirculator : Node
 {
     public override IEnumerable<Node> GetReachableNodes(
-        TransformComponent xform,
+        EntityUid uid,
         EntityQuery<NodeContainerComponent> nodeQuery,
         EntityQuery<TransformComponent> xformQuery,
-        MapGridComponent? grid,
-        IEntityManager entMan)
+        EntityQuery<MapGridComponent> gridQuery,
+        IEntityManager entMan,
+        SharedMapSystem mapSystem)
     {
-        if (!xform.Anchored || grid == null)
+        if (!xformQuery.TryGetComponent(uid, out var xform)
+            || !xform.Anchored
+            || xform.GridUid == null)
             yield break;
 
-        var gridIndex = grid.TileIndicesFor(xform.Coordinates);
+        if (!gridQuery.TryGetComponent(xform.GridUid.Value, out var grid))
+            yield break;
+
+        var gridIndex = mapSystem.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates);
 
         var dir = xform.LocalRotation.GetDir();
         var searchDir = dir.GetClockwise90Degrees();
         var targetIdx = gridIndex.Offset(searchDir);
 
-        foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, grid, targetIdx))
+        foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, xform, grid, targetIdx, mapSystem))
         {
             if (node is not TegNodeGenerator generator)
                 continue;
