@@ -6,7 +6,6 @@ using Content.Shared.Containers;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.Disposal.Components;
-using Content.Shared.Disposal.Holder;
 using Content.Shared.Disposal.Tube;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
@@ -53,7 +52,6 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     [Dependency] private readonly SharedJointSystem _joints = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
     [Dependency] private readonly SharedDisposalTubeSystem _disposalTube = default!;
-    [Dependency] private readonly SharedDisposalHolderSystem _disposalHolder = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
@@ -482,9 +480,14 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         EntityUid? user = null,
         bool doInsert = false)
     {
-        _audio.PlayPredicted(ent.Comp.InsertSound, ent, user: user);
         if (doInsert && !_containers.Insert(inserted, ent.Comp.Container))
             return;
+
+        if (_timing.CurTime >= ent.Comp.NextAllowedInsertSound)
+        {
+            _audio.PlayPredicted(ent.Comp.InsertSound, ent, user: user);
+            ent.Comp.NextAllowedInsertSound = _timing.CurTime + ent.Comp.InsertSoundDelay;
+        }
 
         if (user != inserted && user != null)
             _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user.Value):player} inserted {ToPrettyString(inserted)} into {ToPrettyString(ent)}");
