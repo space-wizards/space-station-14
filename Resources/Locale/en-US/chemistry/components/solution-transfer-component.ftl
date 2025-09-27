@@ -10,6 +10,7 @@ comp-solution-transfer-is-full = {CAPITALIZE(THE($target))} is full!
 
 ## Displayed when a transfer is blocked by a whitelist
 comp-solution-transfer-blocked-default = This won't go in here!
+comp-solution-transfer-blocked-welder-only = I need welding fuel!
 
 ## Displayed in change transfer amount verb's name
 comp-solution-transfer-verb-custom-amount = Custom

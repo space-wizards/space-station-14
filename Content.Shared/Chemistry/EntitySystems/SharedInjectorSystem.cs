@@ -316,7 +316,15 @@ public abstract class SharedInjectorSystem : EntitySystem
         }
 
         // Reusable whitelist enforcement: allow systems to contribute allowed reagents.
-        var whitelist = new GetSolutionTransferWhitelistEvent(injector.Owner, target, targetSolution.Comp.Solution.Name);
+        var targetSolutionName = targetSolution.Comp.Solution.Name;
+        if (targetSolutionName == null)
+        {
+            if (TryComp<RefillableSolutionComponent>(target, out var targetRefillComp))
+                targetSolutionName = targetRefillComp.Solution;
+            else if (TryComp<InjectableSolutionComponent>(target, out var targetInjectComp))
+                targetSolutionName = targetInjectComp.Solution;
+        }
+        var whitelist = new GetSolutionTransferWhitelistEvent(injector.Owner, target, targetSolutionName);
         RaiseLocalEvent(target, ref whitelist);
         RaiseLocalEvent(injector.Owner, ref whitelist);
         if (whitelist.Enforce)

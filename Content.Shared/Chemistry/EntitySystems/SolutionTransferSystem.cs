@@ -182,7 +182,12 @@ public sealed class SolutionTransferSystem : EntitySystem
         }
 
         // Collect and enforce any whitelist from interested systems before proceeding.
-        var whitelist = new GetSolutionTransferWhitelistEvent(sourceEntity, targetEntity, target.Comp.Solution.Name);
+        // Ensure we pass a sensible solution name even if the Solution.Name field is unset.
+        var targetSolutionName = target.Comp.Solution.Name;
+        if (targetSolutionName == null && TryComp<RefillableSolutionComponent>(targetEntity, out var targetRefillComp))
+            targetSolutionName = targetRefillComp.Solution;
+        var whitelist = new GetSolutionTransferWhitelistEvent(sourceEntity, targetEntity, targetSolutionName);
+
         // Allow both source and target to contribute to the whitelist.
         RaiseLocalEvent(targetEntity, ref whitelist);
         RaiseLocalEvent(sourceEntity, ref whitelist);

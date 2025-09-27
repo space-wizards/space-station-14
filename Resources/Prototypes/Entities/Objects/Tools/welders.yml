@@ -85,6 +85,11 @@
         - ReagentId: WeldingFuel
           Quantity: 100
         maxVol: 100
+  - type: RefillReagentWhitelist
+    solution: Welder
+    allowed:
+    - WeldingFuel
+    popup: comp-solution-transfer-blocked-welder-only
   - type: Tool
     useSound:
       collection: Welder
