@@ -1,0 +1,4 @@
+- type: gridPack
+  id: DefaultTradeGridPack
+  gridPaths:
+    - /Maps/Shuttles/trading_outpost.yml
