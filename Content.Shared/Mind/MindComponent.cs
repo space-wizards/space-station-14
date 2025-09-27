@@ -1,3 +1,6 @@
+using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
+using Content.Shared.GameTicking;
 using Content.Shared.Mind.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -121,4 +124,16 @@ public sealed partial class MindComponent : Component
     /// </summary>
     [DataField]
     public LocId? Subtype;
+
+    /// <summary>
+    /// Entity damage stored by the StoreDamageTakenOnMind, indexed by the DamageableSystem.
+    /// </summary>
+    [DataField]
+    public Dictionary<string, FixedPoint2>? DamagePerGroup;
+
+    /// <summary>
+    /// Collection of possible damage types, stored by the StoreDamageTakenOnMind.
+    /// </summary>
+    [DataField]
+    public DamageSpecifier? Damage;
 }
