@@ -66,7 +66,7 @@ public sealed class FaxBoundUi : BoundUserInterface
             }
         }
 
-        SendMessage(new FaxFileMessage(
+        SendPredictedMessage(new FaxFileMessage(
             label?[..Math.Min(label.Length, FaxFileMessageValidation.MaxLabelSize)],
             content[..Math.Min(content.Length, FaxFileMessageValidation.MaxContentSize)],
             _window.OfficePaper));
@@ -74,17 +74,17 @@ public sealed class FaxBoundUi : BoundUserInterface
 
     private void OnSendButtonPressed()
     {
-        SendMessage(new FaxSendMessage());
+        SendPredictedMessage(new FaxSendMessage());
     }
 
     private void OnCopyButtonPressed()
     {
-        SendMessage(new FaxCopyMessage());
+        SendPredictedMessage(new FaxCopyMessage());
     }
 
     private void OnRefreshButtonPressed()
     {
-        SendMessage(new FaxRefreshMessage());
+        SendPredictedMessage(new FaxRefreshMessage());
     }
 
     private void OnPeerSelected(string address)
