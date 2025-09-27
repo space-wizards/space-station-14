@@ -63,6 +63,16 @@
   id: BorgModuleAdvancedCleaning
   result: BorgModuleAdvancedCleaning
 
+- type: latheRecipe
+  parent: BaseGoldBorgModuleRecipe
+  id: BorgModuleCleanadeLauncher
+  result: BorgModuleCleanadeLauncher
+  materials:
+    Steel: 500
+    Glass: 500
+    Plastic: 250
+    Uranium: 375
+
 # Medical Modules
 
 - type: latheRecipe
