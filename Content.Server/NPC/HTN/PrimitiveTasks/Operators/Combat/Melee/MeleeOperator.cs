@@ -4,6 +4,7 @@ using Content.Server.NPC.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.VentCraw;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat.Melee;
 
@@ -90,7 +91,8 @@ public sealed partial class MeleeOperator : HTNOperator, IHtnConditionalShutdown
 
         if (_entManager.TryGetComponent<NPCMeleeCombatComponent>(owner, out var combat) &&
             blackboard.TryGetValue<EntityUid>(TargetKey, out var target, _entManager) &&
-            target != EntityUid.Invalid)
+            target != EntityUid.Invalid &&
+            !(_entManager.TryGetComponent<VentCrawlerComponent>(owner, out var crawlerComponent) && crawlerComponent.InTube)) // Starlight-edit: NPC's can't attack while in vent
         {
             combat.Target = target;
 
