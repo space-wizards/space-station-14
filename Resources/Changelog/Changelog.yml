@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Lanedon
-  changes:
-  - message: Multiple head gear now hides the hair !
-    type: Fix
-  id: 8502
-  time: '2025-05-17T05:05:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36818
 - author: ArtisticRoomba
   changes:
   - message: Metal foam grenades have been added to station engineer lockers.
@@ -3963,3 +3956,11 @@
   id: 9012
   time: '2025-09-27T20:51:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40572
+- author: keronshb
+  changes:
+  - message: 'EXPERIMENTAL: Tasers, a short-ranged gun capable of causing targets
+      to become prone, are now added into Warden, HoS, and Security locker fills.'
+    type: Add
+  id: 9013
+  time: '2025-09-27T21:21:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39087
