@@ -22,6 +22,7 @@ public sealed class PowerChargeSystem : EntitySystem
         SubscribeLocalEvent<PowerChargeComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<PowerChargeComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<PowerChargeComponent, ActivatableUIOpenAttemptEvent>(OnUIOpenAttempt);
+        SubscribeLocalEvent<PowerChargeComponent, VerbUIOpenAttemptEvent>(OnUIVerbOpenAttempt);
         SubscribeLocalEvent<PowerChargeComponent, AfterActivatableUIOpenEvent>(OnAfterUiOpened);
         SubscribeLocalEvent<PowerChargeComponent, AnchorStateChangedEvent>(OnAnchorStateChange);
 
@@ -53,6 +54,12 @@ public sealed class PowerChargeSystem : EntitySystem
     }
 
     private void OnUIOpenAttempt(EntityUid uid, PowerChargeComponent component, ActivatableUIOpenAttemptEvent args)
+    {
+        if (!component.Intact)
+            args.Cancel();
+    }
+
+    private void OnUIVerbOpenAttempt(EntityUid uid, PowerChargeComponent component, VerbUIOpenAttemptEvent args)
     {
         if (!component.Intact)
             args.Cancel();

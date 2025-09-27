@@ -13,6 +13,7 @@ public sealed class ActivatableUIRequiresAnchorSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<ActivatableUIRequiresAnchorComponent, ActivatableUIOpenAttemptEvent>(OnActivatableUIOpenAttempt);
+        SubscribeLocalEvent<ActivatableUIRequiresAnchorComponent, VerbUIOpenAttemptEvent>(OnUIVerbOpenAttempt);
         SubscribeLocalEvent<ActivatableUIRequiresAnchorComponent, BoundUserInterfaceCheckRangeEvent>(OnUICheck);
     }
 
@@ -38,6 +39,20 @@ public sealed class ActivatableUIRequiresAnchorSystem : EntitySystem
             {
                 _popup.PopupClient(Loc.GetString(ent.Comp.Popup), args.User);
             }
+
+            args.Cancel();
+        }
+    }
+
+    private void OnUIVerbOpenAttempt(Entity<ActivatableUIRequiresAnchorComponent> ent, ref VerbUIOpenAttemptEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        if (!Transform(ent.Owner).Anchored)
+        {
+            if (ent.Comp.Popup != null)
+                args.CancelReason = Loc.GetString(ent.Comp.Popup);
 
             args.Cancel();
         }

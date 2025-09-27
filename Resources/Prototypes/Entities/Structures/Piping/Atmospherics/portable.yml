@@ -186,6 +186,7 @@
   - type: GuideHelp
     guides:
     - Thermomachines
+  - type: ActivatableUIRequiresAnchor
 
 - type: entity
   parent: SpaceHeater

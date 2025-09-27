@@ -56,6 +56,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 
         //UI
         SubscribeLocalEvent<NetworkConfiguratorComponent, BoundUIClosedEvent>(OnUiClosed);
+        SubscribeLocalEvent<NetworkConfiguratorComponent, VerbUIOpenAttemptEvent>(OnUIVerbOpenAttempt);
         SubscribeLocalEvent<NetworkConfiguratorComponent, NetworkConfiguratorRemoveDeviceMessage>(OnRemoveDevice);
         SubscribeLocalEvent<NetworkConfiguratorComponent, NetworkConfiguratorClearDevicesMessage>(OnClearDevice);
         SubscribeLocalEvent<NetworkConfiguratorComponent, NetworkConfiguratorLinksSaveMessage>(OnSaveLinks);
@@ -844,6 +845,12 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
     }
 
     private void OnUiOpenAttempt(EntityUid uid, NetworkConfiguratorComponent configurator, ActivatableUIOpenAttemptEvent args)
+    {
+        if (configurator.LinkModeActive)
+            args.Cancel();
+    }
+
+    private void OnUIVerbOpenAttempt(EntityUid uid, NetworkConfiguratorComponent configurator, VerbUIOpenAttemptEvent args)
     {
         if (configurator.LinkModeActive)
             args.Cancel();

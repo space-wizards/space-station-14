@@ -34,6 +34,7 @@ public sealed class GatewaySystem : EntitySystem
 
         SubscribeLocalEvent<GatewayComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<GatewayComponent, ActivatableUIOpenAttemptEvent>(OnGatewayOpenAttempt);
+        SubscribeLocalEvent<GatewayComponent, VerbUIOpenAttemptEvent>(OnUIVerbOpenAttempt);
         SubscribeLocalEvent<GatewayComponent, BoundUIOpenedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<GatewayComponent, GatewayOpenPortalMessage>(OnOpenPortal);
     }
@@ -54,6 +55,12 @@ public sealed class GatewaySystem : EntitySystem
     }
 
     private void OnGatewayOpenAttempt(EntityUid uid, GatewayComponent component, ref ActivatableUIOpenAttemptEvent args)
+    {
+        if (!component.Enabled || !component.Interactable)
+            args.Cancel();
+    }
+
+    private void OnUIVerbOpenAttempt(EntityUid uid, GatewayComponent component, ref VerbUIOpenAttemptEvent args)
     {
         if (!component.Enabled || !component.Interactable)
             args.Cancel();

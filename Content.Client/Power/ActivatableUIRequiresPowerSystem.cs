@@ -21,4 +21,13 @@ public sealed class ActivatableUIRequiresPowerSystem : SharedActivatableUIRequir
         _popup.PopupClient(Loc.GetString("base-computer-ui-component-not-powered", ("machine", ent.Owner)), args.User, args.User);
         args.Cancel();
     }
+
+    protected override void OnActivateVerb(Entity<ActivatableUIRequiresPowerComponent> ent, ref VerbUIOpenAttemptEvent args)
+    {
+        if (args.Cancelled || this.IsPowered(ent.Owner, EntityManager))
+            return;
+
+        args.Cancel();
+        args.CancelReason = Loc.GetString("base-computer-ui-component-not-powered");
+    }
 }

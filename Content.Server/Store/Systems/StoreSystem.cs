@@ -30,6 +30,7 @@ public sealed partial class StoreSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<StoreComponent, ActivatableUIOpenAttemptEvent>(OnStoreOpenAttempt);
+        SubscribeLocalEvent<StoreComponent, VerbUIOpenAttemptEvent>(OnStoreOpenVerbAttempt);
         SubscribeLocalEvent<CurrencyComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<StoreComponent, BeforeActivatableUIOpenEvent>(BeforeActivatableUiOpen);
 
@@ -83,6 +84,24 @@ public sealed partial class StoreSystem : EntitySystem
 
         _popup.PopupEntity(Loc.GetString("store-not-account-owner", ("store", uid)), uid, args.User);
         args.Cancel();
+    }
+
+    private void OnStoreOpenVerbAttempt(EntityUid uid, StoreComponent component, VerbUIOpenAttemptEvent args)
+    {
+        if (!component.OwnerOnly)
+            return;
+
+        if (!_mind.TryGetMind(args.User, out var mind, out _))
+            return;
+
+        component.AccountOwner ??= mind;
+        DebugTools.Assert(component.AccountOwner != null);
+
+        if (component.AccountOwner == mind)
+            return;
+
+        args.Cancel();
+        args.CancelReason = Loc.GetString("store-not-account-owner", ("store", uid));
     }
 
     private void OnAfterInteract(EntityUid uid, CurrencyComponent component, AfterInteractEvent args)

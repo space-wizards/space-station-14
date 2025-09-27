@@ -11,9 +11,16 @@ public abstract class SharedNetworkConfiguratorSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<NetworkConfiguratorComponent, ActivatableUIOpenAttemptEvent>(OnUiOpenAttempt);
+        SubscribeLocalEvent<NetworkConfiguratorComponent, VerbUIOpenAttemptEvent>(OnUiVerbOpenAttempt);
     }
 
     private void OnUiOpenAttempt(EntityUid uid, NetworkConfiguratorComponent configurator, ActivatableUIOpenAttemptEvent args)
+    {
+        if (configurator.LinkModeActive)
+            args.Cancel();
+    }
+
+    private void OnUiVerbOpenAttempt(EntityUid uid, NetworkConfiguratorComponent configurator, VerbUIOpenAttemptEvent args)
     {
         if (configurator.LinkModeActive)
             args.Cancel();
