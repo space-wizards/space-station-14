@@ -1,12 +1,12 @@
 using Content.Server.Body.Systems;
 using Content.Server.Fluids.EntitySystems;
-using Content.Server.Forensics;
 using Content.Server.Popups;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Forensics.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
@@ -24,7 +24,7 @@ namespace Content.Server.Medical
         [Dependency] private readonly AudioSystem _audio = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly BodySystem _body = default!;
-        [Dependency] private readonly ForensicsSystem _forensics = default!;
+        [Dependency] private readonly SharedForensicsSystem _forensics = default!;
         [Dependency] private readonly HungerSystem _hunger = default!;
         [Dependency] private readonly MobStateSystem _mobstate = default!;
         [Dependency] private readonly MovementModStatusSystem _movementMod = default!;
