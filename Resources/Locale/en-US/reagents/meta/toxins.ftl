@@ -84,3 +84,6 @@ reagent-desc-mechanotoxin = A neurotoxin used as venom by some species of spider
 
 reagent-name-toxintrash = trash 
 reagent-desc-toxintrash = An awful-smelling fluid. Deadly to non-vox.
+
+reagent-name-radiatium = radiatium
+reagent-desc-radiatium = An extremely toxic and corrosive goop. Death is not an escape from it, as it metabolises in corpses.
