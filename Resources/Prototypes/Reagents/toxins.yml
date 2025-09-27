@@ -73,7 +73,7 @@
       - !type:ModifyStatusEffect
         effectProto: StatusEffectDrowsiness
         time: 4
-        type: Refresh
+        type: Update
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold

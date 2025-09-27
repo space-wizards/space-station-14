@@ -336,7 +336,7 @@
           inverted: true
         effectProto: StatusEffectForcedSleeping
         time: 3
-        type: Refresh
+        type: Update
       - !type:HealthChange
         minScale: 7
         conditions:
