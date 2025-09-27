@@ -236,3 +236,4 @@
     - type: Grammar
       attributes:
         proper: true
+    - type: MobilityAid # the power of the throngler imbues you with stability

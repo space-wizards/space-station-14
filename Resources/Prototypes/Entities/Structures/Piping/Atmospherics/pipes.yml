@@ -157,6 +157,10 @@
     guides:
     - Pipes
     - PipeNetworks
+  - type: MobilityAid
+    isMakeshift: true
+    effectiveness: 0.85
+    tripChance: 0.5
 
 - type: entity
   parent: GasPipeBase
