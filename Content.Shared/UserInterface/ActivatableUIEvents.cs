@@ -1,6 +1,5 @@
-using Robust.Shared.Player;
-
 namespace Content.Shared.UserInterface;
+
 public sealed class ActivatableUIOpenAttemptEvent : CancellableEntityEventArgs
 {
     public EntityUid User { get; }
@@ -42,6 +41,17 @@ public sealed class BeforeActivatableUIOpenEvent : EntityEventArgs
 {
     public EntityUid User { get; }
     public BeforeActivatableUIOpenEvent(EntityUid who)
+    {
+        User = who;
+    }
+}
+
+public sealed class VerbUIOpenAttemptEvent : CancellableEntityEventArgs
+{
+    public EntityUid User { get; }
+    public string? CancelReason;
+
+    public VerbUIOpenAttemptEvent(EntityUid who)
     {
         User = who;
     }

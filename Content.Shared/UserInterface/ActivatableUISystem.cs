@@ -70,10 +70,14 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (component.VerbOnly || !ShouldAddVerb(uid, component, args))
             return;
 
+        var (canceled, reason) = RaiseCanOpenUiVerbEventChecks(args.User, uid);
+
         args.Verbs.Add(new ActivationVerb
         {
             Act = () => InteractUI(args.User, uid, component),
+            Disabled = canceled,
             Text = Loc.GetString(component.VerbText),
+            Message = reason,
             // TODO VERB ICON find a better icon
             Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
         });
@@ -84,10 +88,14 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (!component.VerbOnly || !ShouldAddVerb(uid, component, args))
             return;
 
+        var (canceled, reason) = RaiseCanOpenUiVerbEventChecks(args.User, uid);
+
         args.Verbs.Add(new Verb
         {
             Act = () => InteractUI(args.User, uid, component),
+            Disabled = canceled,
             Text = Loc.GetString(component.VerbText),
+            Message = reason,
             // TODO VERB ICON find a better icon
             Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
         });
@@ -95,7 +103,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
     private bool ShouldAddVerb<T>(EntityUid uid, ActivatableUIComponent component, GetVerbsEvent<T> args) where T : Verb
     {
-        if (!args.CanAccess)
+        if (!args.CanAccess || !args.CanAccess || !args.CanInteract || HasComp<GhostComponent>(args.User) && !component.BlockSpectators)
             return false;
 
         if (_whitelistSystem.IsWhitelistFail(component.RequiredItems, args.Using ?? default))
@@ -116,7 +124,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
             }
         }
 
-        return (args.CanInteract || HasComp<GhostComponent>(args.User) && !component.BlockSpectators) && !RaiseCanOpenEventChecks(args.User, uid);
+        return true;
     }
 
     private void OnUseInHand(EntityUid uid, ActivatableUIComponent component, UseInHandEvent args)
@@ -292,5 +300,12 @@ public sealed partial class ActivatableUISystem : EntitySystem
         RaiseLocalEvent(user, uae);
         RaiseLocalEvent(uiEntity, oae);
         return oae.Cancelled || uae.Cancelled;
+    }
+
+    private (bool, string?) RaiseCanOpenUiVerbEventChecks(EntityUid user, EntityUid uiEntity)
+    {
+        var ev = new VerbUIOpenAttemptEvent(user);
+        RaiseLocalEvent(uiEntity, ev);
+        return (ev.Cancelled, ev.CancelReason);
     }
 }

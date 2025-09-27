@@ -56,6 +56,7 @@ public sealed class LockSystem : EntitySystem
         SubscribeLocalEvent<LockedStorageComponent, StorageInteractAttemptEvent>(OnStorageInteractAttempt);
 
         SubscribeLocalEvent<UIRequiresLockComponent, ActivatableUIOpenAttemptEvent>(OnUIOpenAttempt);
+        SubscribeLocalEvent<UIRequiresLockComponent, VerbUIOpenAttemptEvent>(OnUIVerbOpenAttempt);
         SubscribeLocalEvent<UIRequiresLockComponent, LockToggledEvent>(LockToggled);
 
         SubscribeLocalEvent<ItemToggleRequiresLockComponent, ItemToggleActivateAttemptEvent>(OnActivateAttempt);
@@ -428,6 +429,19 @@ public sealed class LockSystem : EntitySystem
         }
 
         _audio.PlayPredicted(component.AccessDeniedSound, uid, args.User);
+    }
+
+    private void OnUIVerbOpenAttempt(EntityUid uid, UIRequiresLockComponent component, VerbUIOpenAttemptEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        if (!TryComp<LockComponent>(uid, out var lockComp) || lockComp.Locked == component.RequireLocked)
+            return;
+
+        args.Cancel();
+        if (component.Popup is not null)
+            args.CancelReason = Loc.GetString(component.Popup);
     }
 
     private void LockToggled(EntityUid uid, UIRequiresLockComponent component, LockToggledEvent args)
