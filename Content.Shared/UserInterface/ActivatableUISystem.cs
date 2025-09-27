@@ -95,28 +95,31 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
     private bool ShouldAddVerb<T>(EntityUid uid, ActivatableUIComponent component, GetVerbsEvent<T> args) where T : Verb
     {
-        if (!args.CanAccess)
-            return false;
-
         if (_whitelistSystem.IsWhitelistFail(component.RequiredItems, args.Using ?? default))
             return false;
 
-        if (component.RequiresComplex)
-        {
-            if (args.Hands == null)
-                return false;
+        if (CanSpectatorInteract((uid, component), args.User))
+            return true;
 
-            if (component.InHandsOnly)
-            {
-                if (!_hands.IsHolding((args.User, args.Hands), uid, out var hand ))
-                    return false;
+        if (!args.CanAccess)
+            return false;
 
-                if (component.RequireActiveHand && args.Hands.ActiveHandId != hand)
-                    return false;
-            }
-        }
+        if (!component.RequiresComplex)
+            return args.CanInteract;
 
-        return (args.CanInteract || HasComp<GhostComponent>(args.User) && !component.BlockSpectators) && !RaiseCanOpenEventChecks(args.User, uid);
+        if (args.Hands == null)
+            return false;
+
+        if (!component.InHandsOnly)
+            return args.CanInteract;
+
+        if (!_hands.IsHolding((args.User, args.Hands), uid, out var hand ))
+            return false;
+
+        if (component.RequireActiveHand && args.Hands.ActiveHandId != hand)
+            return false;
+
+        return args.CanInteract && !RaiseCanOpenEventChecks(args.User, uid);
     }
 
     private void OnUseInHand(EntityUid uid, ActivatableUIComponent component, UseInHandEvent args)
@@ -135,7 +138,10 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
     private void OnActivate(EntityUid uid, ActivatableUIComponent component, ActivateInWorldEvent args)
     {
-        if (args.Handled || !args.Complex)
+        if (args.Handled)
+            return;
+
+        if (!args.Complex && !CanSpectatorInteract((uid, component), args.User))
             return;
 
         if (component.VerbOnly)
@@ -188,14 +194,17 @@ public sealed partial class ActivatableUISystem : EntitySystem
             return true;
         }
 
-        if (!_blockerSystem.CanInteract(user, uiEntity) && (!HasComp<GhostComponent>(user) || aui.BlockSpectators))
-            return false;
-
-        if (aui.RequiresComplex)
+        // Interaction checks should be skipped for ghosts on spectator-allowed UIs
+        if (!CanSpectatorInteract((uiEntity, aui), user))
         {
-            if (!_blockerSystem.CanComplexInteract(user))
+            if (!_blockerSystem.CanInteract(user, uiEntity))
+                return false;
+
+            if (aui.RequiresComplex
+                && !_blockerSystem.CanComplexInteract(user))
                 return false;
         }
+
 
         if (aui.InHandsOnly)
         {
@@ -241,6 +250,19 @@ public sealed partial class ActivatableUISystem : EntitySystem
         RaiseLocalEvent(uiEntity, aae);
 
         return true;
+    }
+
+    /// <summary>
+    /// Returns true if it's safe for a non-admin observer to interact with a given UI.
+    /// </summary>
+    public bool CanSpectatorInteract(Entity<ActivatableUIComponent?> ui, EntityUid user)
+    {
+        if (!Resolve(ui, ref ui.Comp, logMissing: false))
+            return false;
+
+        // Ghosts can't use single user UIs since they could then block a poor atmos tech from using their consoles
+        return ui.Comp is { BlockSpectators: false, SingleUser: false, InHandsOnly: false }
+               && HasComp<GhostComponent>(user);
     }
 
     public void SetCurrentSingleUser(EntityUid uid, EntityUid? user, ActivatableUIComponent? aui = null)
