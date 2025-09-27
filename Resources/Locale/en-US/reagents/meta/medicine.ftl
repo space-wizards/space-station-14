@@ -1,3 +1,12 @@
+reagent-name-salbutamol = salbutamol
+reagent-desc-salbutamol = A bronchodilator used to relieve bronchospasm and ease breathing.
+
+reagent-name-perfluorodecalin = perfluorodecalin
+reagent-desc-perfluorodecalin = A perfluorocarbon used as an oxygen carrier in some medical therapies.
+
+reagent-name-spaceacillin = spaceacillin
+reagent-desc-spaceacillin = A broad-spectrum antibiotic used to treat a variety of bacterial infections.
+
 reagent-name-cryptobiolin = cryptobiolin
 reagent-desc-cryptobiolin = Causes confusion and dizziness.
 

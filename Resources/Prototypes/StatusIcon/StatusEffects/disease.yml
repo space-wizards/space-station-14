@@ -1,0 +1,20 @@
+- type: healthIcon
+  id: DiseaseIcon
+  abstract: true
+  priority: 4
+  locationPreference: Left
+  isShaded: true
+
+- type: healthIcon
+  parent: DiseaseIcon
+  id: DiseaseIconIll
+  icon:
+    sprite: /Textures/Interface/Misc/disease_icons.rsi
+    state: ill
+
+- type: healthIcon
+  parent: DiseaseIcon
+  id: DiseaseIconBuff
+  icon:
+    sprite: /Textures/Interface/Misc/disease_icons.rsi
+    state: buff

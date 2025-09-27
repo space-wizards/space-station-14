@@ -1,0 +1,11 @@
+- type: diseaseSymptom
+  id: SymptomJitters
+  name: disease-symptom-name-SymptomJitters
+  probability: 0.1
+  behaviors:
+  - !type:SymptomStatusEffect
+    effects:
+    - !type:Jitter
+      amplitude: 2
+      frequency: 6
+      time: 3

@@ -1,0 +1,9 @@
+- type: diseaseSymptom
+  id: SymptomSpeedBoost
+  name: disease-symptom-name-SymptomSpeedBoost
+  probability: 0.5
+  behaviors:
+  - !type:SymptomAdjustReagent
+    requirements:
+    - reagentId: Ephedrine
+      quantity: 1
