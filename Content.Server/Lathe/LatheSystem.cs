@@ -403,15 +403,8 @@ namespace Content.Server.Lathe
 
             var message =
                 recipeNames.Count > ent.Comp.MaximumItems ?
-                    Loc.GetString(
-                        "lathe-unlock-recipe-radio-broadcast-overflow",
-                        ("items", ContentLocalizationManager.FormatList(recipeNames.GetRange(0, ent.Comp.MaximumItems))),
-                        ("count", recipeNames.Count)
-                    ) :
-                    Loc.GetString(
-                        "lathe-unlock-recipe-radio-broadcast",
-                        ("items", ContentLocalizationManager.FormatList(recipeNames))
-                    );
+                    Loc.GetString("lathe-unlock-recipe-radio-broadcast-overflow", ("items", recipeNames)) :
+                    Loc.GetString("lathe-unlock-recipe-radio-broadcast", ("items", recipeNames));
 
             foreach (var channel in ent.Comp.Channels)
             {

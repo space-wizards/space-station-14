@@ -47,6 +47,6 @@ public sealed partial class JobCondition : EntityEffectCondition
     public override string GuidebookExplanation(IPrototypeManager prototype)
     {
         var localizedNames = Job.Select(jobId => prototype.Index(jobId).LocalizedName).ToList();
-        return Loc.GetString("reagent-effect-condition-guidebook-job-condition", ("job", ContentLocalizationManager.FormatListToOr(localizedNames)));
+        return Loc.GetString("reagent-effect-condition-guidebook-job-condition", ("job", localizedNames));
     }
 }

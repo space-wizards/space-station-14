@@ -77,9 +77,8 @@ public sealed class AccessReaderSystem : EntitySystem
         if (canSeeAccessModification)
         {
             var localizedCurrentNames = GetLocalizedAccessNames(mainAccessReader.Value.Comp.AccessLists);
-            var accessesFormatted = ContentLocalizationManager.FormatListToOr(localizedCurrentNames);
             var currentSettingsMessage = localizedCurrentNames.Count > 0
-                ? Loc.GetString("access-reader-access-settings-modified-message", ("access", accessesFormatted))
+                ? Loc.GetString("access-reader-access-settings-modified-message", ("access", localizedCurrentNames))
                 : Loc.GetString("access-reader-access-settings-removed-message");
 
             args.PushMarkup(currentSettingsMessage);
@@ -93,8 +92,7 @@ public sealed class AccessReaderSystem : EntitySystem
         if (localizedOriginalNames.Count == 0)
             return;
 
-        var originalAccessesFormatted = ContentLocalizationManager.FormatListToOr(localizedOriginalNames);
-        var originalSettingsMessage = Loc.GetString(mainAccessReader.Value.Comp.ExaminationText, ("access", originalAccessesFormatted));
+        var originalSettingsMessage = Loc.GetString(mainAccessReader.Value.Comp.ExaminationText, ("access", localizedOriginalNames));
         args.PushMarkup(originalSettingsMessage);
     }
 
