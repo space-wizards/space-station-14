@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: EmoGarbage404
   changes:
-  - message: The guidebook is now more explicit about how damage/healing from chemicals
-      is split.
-    type: Tweak
-  id: 8499
-  time: '2025-05-16T21:19:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37507
-- author: EmoGarbage404
-  changes:
   - message: Fixed the mining asteroid not having a name.
     type: Fix
   id: 8500
@@ -3963,3 +3955,11 @@
   id: 9009
   time: '2025-09-27T07:21:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40303
+- author: Princess-Cheeseballs
+  changes:
+  - message: Meth, Hyperzine and other stimulants properly reduce Knockdown and Stun
+      durations again.
+    type: Fix
+  id: 9010
+  time: '2025-09-27T10:19:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39547
