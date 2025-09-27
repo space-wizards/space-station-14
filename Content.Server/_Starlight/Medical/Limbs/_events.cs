@@ -1,24 +1,22 @@
 ﻿namespace Content.Server._Starlight.Medical.Limbs;
 
 [ByRefEvent]
-public record struct LimbAttachedEvent<T>
+public record struct LimbAttachedEvent
 {
-    public LimbAttachedEvent(EntityUid limb, T comp)
-    {
-        Limb = limb;
-        Comp = comp;
-    }
-    public readonly EntityUid Limb;
-    public readonly T Comp;
+    public EntityUid Limb;
+    public EntityUid Body;
 }
-    [ByRefEvent]
-public record struct LimbRemovedEvent<T>
+
+[ByRefEvent]
+public record struct LimbPreDetachEvent
 {
-    public LimbRemovedEvent(EntityUid limb, T comp)
-    {
-        Limb = limb;
-        Comp = comp;
-    }
-    public readonly EntityUid Limb;
-    public readonly T Comp;
+    public EntityUid Limb;
+    public EntityUid Body;
+}
+
+[ByRefEvent]
+public record struct LimbDetachedEvent
+{
+    public EntityUid Limb;
+    public EntityUid Body;
 }

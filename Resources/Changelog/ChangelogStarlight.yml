@@ -15672,5 +15672,75 @@ Entries:
   id: 157901
   time: '2025-09-24T00:18:16.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1579
+- author: CawsForConcern
+  changes:
+  - message: (Starboard) Poster overlapping a fire alarm just northwest of the Warden's
+      office
+    type: Fix
+  id: 173400
+  time: '2025-09-25T16:24:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1734
+- author: Fractalflower
+  changes:
+  - message: Non-smart borgis now properly use languages instead of an accent.
+    type: Add
+  id: 172900
+  time: '2025-09-25T16:27:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1729
+- author: STARLIGHT TEAM
+  changes:
+  - message: Cyberlimb slots are now whitelisted to their own items.
+    type: Add
+  id: 173800
+  time: '2025-09-26T00:19:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1738
+- author: Conflee
+  changes:
+  - message: Changed Emergency Response Team Leader sprites from dark blue, to dark
+      green. This is to help distinguish them from roles on station that use a black-blue
+      color scheme, and reinforces that Green = Central Command, Blue = NanoTrasen.
+      Includes the Mantle.
+    type: Tweak
+  id: 173900
+  time: '2025-09-26T00:46:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1739
+- author: Rinary
+  changes:
+  - message: 'Added new tier 3 terorr spider: Mother of terror, It has web which blocks
+      spiderlings and can spawn royal jelly which heals entities who consumed it.'
+    type: Add
+  id: 168900
+  time: '2025-09-27T12:34:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1689
+- author: Rinary
+  changes:
+  - message: Egg hatching time reduced from 180 seconds to 90 seconds for terror spiders
+      eggs.
+    type: Tweak
+  id: 168901
+  time: '2025-09-27T12:34:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1689
+- author: Rinary
+  changes:
+  - message: Now spiderlings hatch from the eggs of terror spiders instead of spiders.
+      And only then they grow into spiders(requires 90 seconds).
+    type: Tweak
+  id: 168902
+  time: '2025-09-27T12:34:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1689
+- author: Rinary
+  changes:
+  - message: Now abductor spider gland spawn spiderlings instead of spider eggs.
+    type: Tweak
+  id: 168903
+  time: '2025-09-27T12:34:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1689
+- author: Rinary
+  changes:
+  - message: Fixed bug when npcs can attack players in vents.
+    type: Fix
+  id: 168904
+  time: '2025-09-27T12:34:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1689
 Order: -1
 
