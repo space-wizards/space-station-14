@@ -164,19 +164,32 @@ public sealed partial class SecuritronSystem : EntitySystem
             OnSuspectCuffed(uid, state);
         }
 
-        if (state.TargetStatus >= SecuritronTargetTrackingState.Downed &&
+        var withinCuffRange = distance <= StandbyRange;
+
+        if (component.OperatingMode == SecuritronOperatingMode.Arrest &&
+            state.TargetStatus >= SecuritronTargetTrackingState.Downed &&
             state.TargetStatus < SecuritronTargetTrackingState.Cuffed &&
             !targetCuffed)
         {
-            if (state.CuffInProgress && now >= state.NextCuffAttempt)
+            if (!withinCuffRange)
+            {
                 state.CuffInProgress = false;
+                state.NextCuffAttempt = now;
+            }
+            else
+            {
+                if (state.CuffInProgress && now >= state.NextCuffAttempt)
+                    state.CuffInProgress = false;
 
-            TryStartCuff(uid, state, target);
+                TryStartCuff(uid, state, target);
+            }
         }
 
         var targetSubdued = state.TargetStatus switch
         {
-            SecuritronTargetTrackingState.Downed => true,
+            SecuritronTargetTrackingState.Downed => targetCuffed || (component.OperatingMode == SecuritronOperatingMode.Arrest
+                ? (withinCuffRange && state.CuffInProgress)
+                : withinCuffRange),
             SecuritronTargetTrackingState.Cuffed => true,
             SecuritronTargetTrackingState.Standby => !state.TargetFleeing,
             _ => false,
@@ -421,6 +434,7 @@ public sealed partial class SecuritronSystem : EntitySystem
         };
     }
 }
+
 
 
 

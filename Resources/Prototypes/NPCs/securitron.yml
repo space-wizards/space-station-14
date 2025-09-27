@@ -40,6 +40,10 @@
             targetKey: TargetCoordinates
             pathfindKey: TargetPathfind
             rangeKey: MeleeRange
+          preconditions:
+            - !type:KeyBoolEqualsPrecondition
+              key: SecuritronTargetSubdued
+              value: false
         - !type:HTNPrimitiveTask
           operator: !type:JukeOperator
             jukeType: Away
@@ -79,6 +83,10 @@
             targetKey: TargetCoordinates
             pathfindKey: TargetPathfind
             rangeKey: MeleeRange
+          preconditions:
+            - !type:KeyBoolEqualsPrecondition
+              key: SecuritronTargetSubdued
+              value: false
         - !type:HTNPrimitiveTask
           operator: !type:JukeOperator
             jukeType: Away
@@ -106,4 +114,7 @@
             targetKey: TargetCoordinates
             pathfindKey: TargetPathfind
             rangeKey: MeleeRange
-
+          preconditions:
+            - !type:KeyBoolEqualsPrecondition
+              key: SecuritronTargetSubdued
+              value: false

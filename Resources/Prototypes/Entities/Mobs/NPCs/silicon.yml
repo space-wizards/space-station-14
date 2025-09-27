@@ -372,6 +372,19 @@
       state: secbot-on
   - type: Securitron
   - type: CombatMode
+  - type: Hands
+    showInHands: false
+    disableExplosionRecursion: true
+    canBeStripped: false
+    hands:
+      hand_left:
+        location: Left
+      hand_right:
+        location: Right
+    sortedHands:
+      - hand_left
+      - hand_right
+  - type: DoAfter
   - type: HTN
     rootTask:
       task: SecuritronCompound
@@ -503,3 +516,4 @@
     - Supply
   - type: Puller
     needsHands: false
+
