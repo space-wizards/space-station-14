@@ -168,23 +168,26 @@ public abstract partial class AnyEntityEffect
     /// If true, then it allows the scale multiplier to go above 1.
     /// </summary>
     [DataField]
-    public virtual bool Scaling { get; private set; }
+    public bool Scaling;
 
     // TODO: This should be an entity condition but guidebook relies on it heavily for formatting...
     [DataField]
     public float Probability = 1.0f;
 
-    // TODO: These shouldn't be baked into the base entity effect itself if possible, since entity effects can be used for more than just metabolism...
-    protected virtual string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => null;
+    /// <summary>
+    /// A general description of the entity effect for guidebooks.
+    /// </summary>
+    protected virtual string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => null;
 
     // TODO: Move this to reagent prototype?
     public virtual string EntityEffectFormat => "guidebook-reagent-effect-description";
 
     public virtual string? GuidebookEffectDescription(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
-        if (ReagentEffectGuidebookText(prototype, entSys) is not { } effect)
+        if (EntityEffectGuidebookText(prototype, entSys) is not { } effect)
             return null;
 
+        // TODO: Min Scale and EntityConditions!!!
         return Loc.GetString(
             EntityEffectFormat,
             ("effect", effect),
@@ -192,7 +195,7 @@ public abstract partial class AnyEntityEffect
             ("conditionCount", Conditions?.Length ?? 0),
             ("conditions",
                 ContentLocalizationManager.FormatList(
-                    Conditions?.Select(x => x.EntityConditionGuidebookText).ToList() ?? new List<string>()
+                    Conditions?.Select(x => x.EntityConditionGuidebookText(prototype)).ToList() ?? new List<string>()
                 )));
     }
 

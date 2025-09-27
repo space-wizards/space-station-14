@@ -29,11 +29,12 @@ public sealed partial class Emote : EntityEffectBase<Emote>
     [DataField]
     public bool Force;
 
-    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    /// <inheritdoc/>
+    protected override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
         if (!ShowInGuidebook || !prototype.Resolve(EmoteId, out var emote))
             return null; // JUSTIFICATION: Emoting is mostly flavor, so same reason popup messages are not in here.
 
-        return Loc.GetString("reagent-effect-guidebook-emote", ("chance", Probability), ("emote", Loc.GetString(emote.Name)));
+        return Loc.GetString("entity-effect-guidebook-emote", ("chance", Probability), ("emote", Loc.GetString(emote.Name)));
     }
 }

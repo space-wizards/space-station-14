@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Body;
 
@@ -25,20 +26,25 @@ public sealed partial class SatiateHungerEntityEffectsSystem : EntityEffectSyste
     }
 }
 
-public sealed partial class SatiateThirst : EntityEffectBase<SatiateThirst>
+public abstract partial class Satiate<T> : EntityEffectBase<T> where T : EntityEffectBase<T>
 {
+    public const float AverageSatiation = 3f; // Magic number. Not sure how it was calculated since I didn't make it.
+
     /// <summary>
-    ///     Amount of firestacks reduced.
+    ///     Change in satiation.
     /// </summary>
     [DataField]
     public float Factor = -1.5f;
 }
 
-public sealed partial class SatiateHunger : EntityEffectBase<SatiateHunger>
+public sealed partial class SatiateThirst : Satiate<SatiateThirst>
 {
-    /// <summary>
-    ///     Amount of firestacks reduced.
-    /// </summary>
-    [DataField]
-    public float Factor = -1.5f;
+    protected override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("entity-effect-guidebook-satiate-thirst", ("chance", Probability), ("relative",  Factor / AverageSatiation));
+}
+
+public sealed partial class SatiateHunger : Satiate<SatiateHunger>
+{
+    protected override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("entity-effect-guidebook-satiate-hunger", ("chance", Probability), ("relative", Factor / AverageSatiation));
 }

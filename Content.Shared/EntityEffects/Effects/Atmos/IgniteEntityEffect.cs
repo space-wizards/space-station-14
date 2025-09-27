@@ -7,7 +7,7 @@ namespace Content.Shared.EntityEffects.Effects.Atmos;
 
 public sealed partial class Ignite : EntityEffectBase<Ignite>
 {
-    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
+    protected override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
         Loc.GetString("entity-effect-guidebook-ignite", ("chance", Probability));
 
     public override bool ShouldLog => true;

@@ -37,7 +37,7 @@ public sealed partial class CureZombieInfectionEntityEffectsSystem : EntityEffec
 
 public sealed partial class CauseZombieInfection : EntityEffectBase<CauseZombieInfection>
 {
-    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    protected override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-cause-zombie-infection", ("chance", Probability));
 }
 
@@ -49,7 +49,7 @@ public sealed partial class CureZombieInfection : EntityEffectBase<CureZombieInf
     [DataField]
     public bool Innoculate;
 
-    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    protected override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
         if (Innoculate)
             return Loc.GetString("entity-effect-guidebook-innoculate-zombie-infection", ("chance", Probability));

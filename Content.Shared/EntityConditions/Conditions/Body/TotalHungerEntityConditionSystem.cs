@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Body;
 
@@ -21,4 +22,7 @@ public sealed partial class TotalHunger : EntityConditionBase<TotalHunger>
 
     [DataField]
     public float Max = float.PositiveInfinity;
+
+    public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>
+        Loc.GetString("reagent-effect-condition-guidebook-breathing", ("isBreathing", !Inverted));
 }

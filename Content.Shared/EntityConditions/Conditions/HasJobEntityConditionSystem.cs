@@ -46,4 +46,7 @@ public sealed partial class HasJobEntityConditionSystem : EntityConditionSystem<
 public sealed partial class HasJob : EntityConditionBase<HasJob>
 {
     [DataField(required: true)] public List<ProtoId<JobPrototype>> Jobs = [];
+
+    public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>
+        Loc.GetString("reagent-effect-condition-guidebook-breathing", ("isBreathing", !Inverted));
 }

@@ -21,6 +21,6 @@ public sealed partial class EyeDamage : EntityEffectBase<EyeDamage>
     [DataField]
     public int Amount = -1;
 
-    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    protected override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-eye-damage", ("chance", Probability), ("deltasign", MathF.Sign(Amount)));
 }

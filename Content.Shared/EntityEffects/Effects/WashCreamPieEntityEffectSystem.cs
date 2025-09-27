@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;
 
@@ -13,4 +14,9 @@ public sealed partial class WashCreamPieEntityEffectSystem : EntityEffectSystem<
     }
 }
 
-public sealed partial class WashCreamPie : EntityEffectBase<WashCreamPie>;
+public sealed partial class WashCreamPie : EntityEffectBase<WashCreamPie>
+{
+    ///<inhereitdoc/>
+    protected override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("entity-effect-guidebook-wash-cream-pie-reaction", ("chance", Probability));
+}

@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.EntityConditions.Conditions;
+﻿using Robust.Shared.Prototypes;
+
+namespace Content.Shared.EntityConditions.Conditions;
 
 public sealed partial class TemplateEntityConditionSystem : EntityConditionSystem<MetaDataComponent, Template>
 {
@@ -10,5 +12,5 @@ public sealed partial class TemplateEntityConditionSystem : EntityConditionSyste
 
 public sealed partial class Template : EntityConditionBase<Template>
 {
-    // Datafields go here.
+    public override string EntityConditionGuidebookText(IPrototypeManager prototype) => String.Empty;
 }

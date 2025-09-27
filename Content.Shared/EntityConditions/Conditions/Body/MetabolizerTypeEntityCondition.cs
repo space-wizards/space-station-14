@@ -10,4 +10,7 @@ public sealed partial class MetabolizerType : EntityConditionBase<MetabolizerTyp
 {
     [DataField(required: true)]
     public ProtoId<MetabolizerTypePrototype>[] Type = default!;
+
+    public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>
+        Loc.GetString("reagent-effect-condition-guidebook-breathing", ("isBreathing", !Inverted));
 }

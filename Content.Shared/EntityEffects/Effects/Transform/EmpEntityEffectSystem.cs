@@ -43,8 +43,9 @@ public sealed partial class Emp : EntityEffectBase<Emp>
     [DataField]
     public float Duration = 15;
 
-    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Loc.GetString("reagent-effect-guidebook-emp-reaction-effect", ("chance", Probability));
+    /// <inheritdoc/>
+    protected override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("entity-effect-guidebook-emp-reaction-effect", ("chance", Probability));
 
     public override bool ShouldLog => true;
 

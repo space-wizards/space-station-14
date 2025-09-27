@@ -23,6 +23,6 @@ public sealed partial class Drunk : EntityEffectBase<Drunk>
     [DataField]
     public TimeSpan BoozePower = TimeSpan.FromSeconds(3f);
 
-    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    protected override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-drunk", ("chance", Probability));
 }

@@ -20,4 +20,7 @@ public sealed partial class HasTag : EntityConditionBase<HasTag>
 {
     [DataField(required: true)]
     public ProtoId<TagPrototype> Tag;
+
+    public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>
+        Loc.GetString("reagent-effect-condition-guidebook-has-tag", ("tag", Tag), ("invert", Inverted));
 }

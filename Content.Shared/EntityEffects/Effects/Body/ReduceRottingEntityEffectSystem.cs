@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Atmos.Rotting;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Body;
 
@@ -18,4 +19,10 @@ public sealed partial class ReduceRotting : EntityEffectBase<ReduceRotting>
 {
     [DataField]
     public TimeSpan Seconds = TimeSpan.FromSeconds(10);
+
+    /// <inheritdoc/>
+    protected override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("entity-effect-guidebook-reduce-rotting",
+            ("chance", Probability),
+            ("time", Seconds));
 }

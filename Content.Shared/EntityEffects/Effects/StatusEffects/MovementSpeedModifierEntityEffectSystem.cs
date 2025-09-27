@@ -75,4 +75,13 @@ public sealed partial class MovementSpeedModifier : BaseStatusEntityEffect<Movem
     /// </summary>
     [DataField]
     public EntProtoId EffectProto = MovementModStatusSystem.ReagentSpeed;
+
+    /// <inheritdoc/>
+    protected override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
+    Time == null
+        ? null // Not gonna make a whole new looc for something that shouldn't ever exist.
+        : Loc.GetString("entity-effect-guidebook-movespeed-modifier",
+            ("chance", Probability),
+            ("sprintspeed", SprintSpeedModifier),
+            ("time", Time));
 }

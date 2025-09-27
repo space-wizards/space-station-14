@@ -16,6 +16,6 @@ public sealed partial class MakeSentient : EntityEffectBase<MakeSentient>
     [DataField]
     public bool AllowSpeech = true;
 
-    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Loc.GetString("reagent-effect-guidebook-make-sentient", ("chance", Probability));
+    protected override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("entity-effect-guidebook-make-sentient", ("chance", Probability));
 }

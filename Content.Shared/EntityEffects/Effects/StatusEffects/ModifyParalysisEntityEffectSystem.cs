@@ -1,6 +1,7 @@
 ﻿using Content.Shared.StatusEffectNew;
 using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Stunnable;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.StatusEffects;
 
@@ -29,4 +30,15 @@ public sealed partial class ModifyParalysisEntityEffectSystem : EntityEffectSyst
     }
 }
 
-public sealed partial class ModifyParalysis : BaseStatusEntityEffect<ModifyParalysis>;
+public sealed partial class ModifyParalysis : BaseStatusEntityEffect<ModifyParalysis>
+{
+    /// <inheritdoc/>
+    protected override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Time == null
+            ? null // Not gonna make a whole new looc for something that shouldn't ever exist.
+            : Loc.GetString(
+            "entity-effect-guidebook-paralyze",
+            ("chance", Probability),
+            ("time", Time)
+        );
+}

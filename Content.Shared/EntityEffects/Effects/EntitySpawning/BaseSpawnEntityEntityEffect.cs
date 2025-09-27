@@ -21,7 +21,7 @@ public abstract partial class BaseSpawnEntityEntityEffect<T> : EntityEffectBase<
     [DataField (required: true)]
     public EntProtoId Entity;
 
-    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    protected override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-spawn-entity",
             ("chance", Probability),
             ("entname", IoCManager.Resolve<IPrototypeManager>().Index<EntityPrototype>(Entity).Name),

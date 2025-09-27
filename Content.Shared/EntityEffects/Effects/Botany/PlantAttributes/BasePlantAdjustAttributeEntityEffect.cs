@@ -20,7 +20,7 @@ public abstract partial class BasePlantAdjustAttribute<T> : EntityEffectBase<T> 
     public virtual bool GuidebookIsAttributePositive { get; protected set; } = true;
 
     // TODO: For guidebook might want to use this tbqh...
-    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
+    protected override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
         Loc.GetString("entity-effect-guidebook-plant-attribute",
         ("attribute", Loc.GetString(GuidebookAttributeName)),
         ("amount", Amount.ToString("0.00")),

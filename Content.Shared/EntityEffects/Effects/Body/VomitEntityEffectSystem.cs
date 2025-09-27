@@ -26,6 +26,6 @@ public sealed partial class Vomit : EntityEffectBase<Vomit>
     [DataField]
     public float HungerAmount = -8f;
 
-    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    protected override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-vomit", ("chance", Probability));
 }

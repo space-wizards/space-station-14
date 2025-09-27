@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Body;
 
@@ -19,4 +20,7 @@ public sealed partial class IsMobState : EntityConditionBase<IsMobState>
 {
     [DataField]
     public MobState Mobstate = MobState.Alive;
+
+    public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>
+        Loc.GetString("reagent-effect-condition-guidebook-breathing", ("isBreathing", !Inverted));
 }

@@ -47,7 +47,8 @@ public sealed partial class HealthChange : EntityEffectBase<HealthChange>
     [DataField]
     public bool IgnoreResistances = true;
 
-    protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    /// <inheritdoc/>
+    protected override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         {
             var damages = new List<string>();
             var heals = false;
@@ -89,7 +90,7 @@ public sealed partial class HealthChange : EntityEffectBase<HealthChange>
 
             var healsordeals = heals ? (deals ? "both" : "heals") : (deals ? "deals" : "none");
 
-            return Loc.GetString("reagent-effect-guidebook-health-change",
+            return Loc.GetString("entity-effect-guidebook-health-change",
                 ("chance", Probability),
                 ("changes", ContentLocalizationManager.FormatList(damages)),
                 ("healsordeals", healsordeals));

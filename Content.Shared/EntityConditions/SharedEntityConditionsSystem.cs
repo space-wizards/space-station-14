@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.EntityConditions;
+﻿using Robust.Shared.Prototypes;
+
+namespace Content.Shared.EntityConditions;
 
 /// <summary>
 /// This handles entity effects.
@@ -7,11 +9,6 @@
 /// </summary>
 public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntityConditionRaiser
 {
-    public override void Initialize()
-    {
-
-    }
-
     public bool TryConditions(EntityUid target, AnyEntityCondition[]? conditions)
     {
         if (conditions == null)
@@ -83,8 +80,10 @@ public abstract partial class AnyEntityCondition
     [DataField]
     public bool Inverted;
 
-    [DataField]
-    public string EntityConditionGuidebookText = String.Empty;
+    /// <summary>
+    /// A basic description of what this condition is looking for.
+    /// </summary>
+    public abstract string EntityConditionGuidebookText(IPrototypeManager prototype);
 }
 
 /// <summary>

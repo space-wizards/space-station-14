@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Chemistry.Components;
 using Content.Shared.Temperature.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions;
 
@@ -36,11 +37,9 @@ public sealed partial class Temperature : EntityConditionBase<Temperature>
     [DataField]
     public float Max = float.PositiveInfinity;
 
-    /*
-    public override string GuidebookExplanation(IPrototypeManager prototype)
-    {
-        return Loc.GetString("reagent-effect-condition-guidebook-body-temperature",
+    ///<inhereitdoc/>
+    public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>
+        Loc.GetString("reagent-effect-condition-guidebook-body-temperature",
             ("max", float.IsPositiveInfinity(Max) ? (float) int.MaxValue : Max),
             ("min", Min));
-    }*/
 }
