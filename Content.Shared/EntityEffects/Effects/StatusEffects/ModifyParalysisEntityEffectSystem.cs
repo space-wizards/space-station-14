@@ -14,7 +14,7 @@ public sealed partial class ModifyParalysisEntityEffectSystem : EntityEffectSyst
     {
         switch (args.Effect.Type)
         {
-            case StatusEffectMetabolismType.Refresh:
+            case StatusEffectMetabolismType.Update:
                 _stun.TryUpdateParalyzeDuration(entity, args.Effect.Time * args.Scale);
                 break;
             case StatusEffectMetabolismType.Add:
@@ -33,12 +33,12 @@ public sealed partial class ModifyParalysisEntityEffectSystem : EntityEffectSyst
 public sealed partial class ModifyParalysis : BaseStatusEntityEffect<ModifyParalysis>
 {
     /// <inheritdoc/>
-    protected override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Time == null
+    protected override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
+        Time == null
             ? null // Not gonna make a whole new looc for something that shouldn't ever exist.
             : Loc.GetString(
             "entity-effect-guidebook-paralyze",
             ("chance", Probability),
-            ("time", Time)
+            ("time", Time.Value.TotalSeconds)
         );
 }

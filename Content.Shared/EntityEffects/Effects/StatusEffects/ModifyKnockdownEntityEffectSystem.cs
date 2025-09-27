@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Standing;
 using Content.Shared.Stunnable;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.StatusEffects;
 
@@ -11,7 +12,7 @@ public sealed partial class ModifyKnockdownEntityEffectSystem : EntityEffectSyst
     {
         switch (args.Effect.Type)
         {
-            case StatusEffectMetabolismType.Refresh:
+            case StatusEffectMetabolismType.Update:
                 if (args.Effect.Crawling)
                     _stun.TryCrawling(entity.Owner, args.Effect.Time * args.Scale, drop: args.Effect.Drop);
                 else
@@ -50,4 +51,15 @@ public sealed partial class ModifyKnockdown : BaseStatusEntityEffect<ModifyKnock
     /// </summary>
     [DataField]
     public bool Drop;
+
+    /// <inheritdoc />
+    protected override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
+        Time == null
+        ? null
+        : Loc.GetString(
+            "entity-effect-guidebook-knockdown",
+            ("chance", Probability),
+            ("type", Type),
+            ("time", Time.Value.TotalSeconds)
+        );
 }

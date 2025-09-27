@@ -14,7 +14,7 @@ public sealed partial class GenericStatusEffectEntityEffectSystem : EntityEffect
 
         switch (args.Effect.Type)
         {
-            case StatusEffectMetabolismType.Refresh:
+            case StatusEffectMetabolismType.Update:
                 if (args.Effect.Component != String.Empty)
                     _status.TryAddStatusEffect(entity, args.Effect.Key, TimeSpan.FromSeconds(time), true, args.Effect.Component);
                 break;
@@ -47,7 +47,7 @@ public sealed partial class GenericStatusEffect : EntityEffectBase<GenericStatus
     ///     Should this effect add the status effect, remove time from it, or set its cooldown?
     /// </summary>
     [DataField]
-    public StatusEffectMetabolismType Type = StatusEffectMetabolismType.Refresh;
+    public StatusEffectMetabolismType Type = StatusEffectMetabolismType.Update;
 
     protected override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => Loc.GetString(
         "entity-effect-guidebook-status-effect-old",

@@ -166,7 +166,7 @@ public abstract partial class SharedStunSystem
         if (!Resolve(entity, ref entity.Comp, false))
             return;
 
-        SetKnockdownNextUpdate(entity, GameTiming.CurTime + time);
+        SetKnockdownNextUpdate((entity, entity.Comp), GameTiming.CurTime + time);
     }
 
     /// <summary>

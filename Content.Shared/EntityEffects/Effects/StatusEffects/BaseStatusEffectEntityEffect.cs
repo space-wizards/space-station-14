@@ -17,7 +17,7 @@ public abstract partial class BaseStatusEntityEffect<T> : EntityEffectBase<T> wh
     /// Should this effect add the status effect, remove time from it, or set its cooldown?
     /// </summary>
     [DataField]
-    public StatusEffectMetabolismType Type = StatusEffectMetabolismType.Refresh;
+    public StatusEffectMetabolismType Type = StatusEffectMetabolismType.Update;
 
     /// <summary>
     /// Delay before the effect starts. If another effect is added with a shorter delay, it takes precedence.
@@ -28,7 +28,7 @@ public abstract partial class BaseStatusEntityEffect<T> : EntityEffectBase<T> wh
 
 public enum StatusEffectMetabolismType
 {
-    Refresh,
+    Update,
     Add,
     Remove,
     Set,

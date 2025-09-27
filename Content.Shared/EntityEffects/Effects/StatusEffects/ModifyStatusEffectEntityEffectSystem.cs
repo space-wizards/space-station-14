@@ -15,7 +15,7 @@ public sealed partial class ModifyStatusEffectEntityEffectSystem : EntityEffectS
 
         switch (args.Effect.Type)
         {
-            case StatusEffectMetabolismType.Refresh:
+            case StatusEffectMetabolismType.Update:
                 _status.TryUpdateStatusEffectDuration(entity, args.Effect.EffectProto, time, delay);
                 break;
             case StatusEffectMetabolismType.Add:

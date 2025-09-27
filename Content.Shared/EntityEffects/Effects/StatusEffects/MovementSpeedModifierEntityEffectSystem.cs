@@ -18,7 +18,7 @@ public sealed partial class MovementSpeedModifierEntityEffectSystem : EntityEffe
 
         switch (args.Effect.Type)
         {
-            case StatusEffectMetabolismType.Refresh:
+            case StatusEffectMetabolismType.Update:
                 _movementModStatus.TryUpdateMovementSpeedModDuration(
                     entity,
                     proto,
@@ -83,5 +83,5 @@ public sealed partial class MovementSpeedModifier : BaseStatusEntityEffect<Movem
         : Loc.GetString("entity-effect-guidebook-movespeed-modifier",
             ("chance", Probability),
             ("sprintspeed", SprintSpeedModifier),
-            ("time", Time));
+            ("time", Time.Value.TotalSeconds));
 }
