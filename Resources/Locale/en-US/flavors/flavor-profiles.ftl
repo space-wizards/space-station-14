@@ -230,6 +230,7 @@ flavor-complex-mopwata = like stagnant, dirty water
 flavor-complex-gin = like fermented grain with juniper berries
 
 ## Cocktails
+flavor-complex-whilk = like yoghurt
 flavor-complex-arnold-palmer = like a hole-in-one
 flavor-complex-blue-hawaiian = like the tropics
 flavor-complex-cosmopolitan = sweet and tangy
