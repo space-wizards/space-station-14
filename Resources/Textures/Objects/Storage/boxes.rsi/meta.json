@@ -208,6 +208,9 @@
         },
         {
             "name": "agrichemkit"
+        },
+        {
+            "name": "chemical"
         }
     ]
 }
