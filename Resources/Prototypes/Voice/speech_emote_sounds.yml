@@ -133,8 +133,6 @@
 
 - type: emoteSounds
   id: MaleSlime
-  params:
-    variation: 0.125
   sounds:
     Squish:
       collection: Squishes
@@ -221,8 +219,6 @@
 
 - type: emoteSounds
   id: UnisexVox
-  params:
-    variation: 0.125
   sounds:
     Scream:
       path: /Audio/Voice/Vox/shriek1.ogg
@@ -244,12 +240,12 @@
       path: /Audio/Effects/Gasp/vox_gasp.ogg
     DefaultDeathgasp:
       path: /Audio/Effects/Gasp/vox_DeathGasp.ogg
+  params:
+    variation: 0.125
     # TODO: We need vox sounds for the other emotes
 
 - type: emoteSounds
   id: UnisexDiona
-  params:
-    variation: 0.125
   sounds:
     Scream:
       path: /Audio/Voice/Diona/diona_scream.ogg
@@ -267,6 +263,8 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: DeathGasp
+  params:
+    variation: 0.125
 
 - type: emoteSounds
   id: UnisexArachnid
@@ -294,9 +292,6 @@
 
 - type: emoteSounds
   id: UnisexDwarf
-  params:
-    variation: 0.125
-    pitch: 0.75
   sounds:
     Scream:
       collection: MaleScreams
@@ -334,12 +329,12 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: MaleDeathGasp
-
-- type: emoteSounds
-  id: FemaleDwarf
   params:
     variation: 0.125
     pitch: 0.75
+
+- type: emoteSounds
+  id: FemaleDwarf
   sounds:
     Scream:
       collection: FemaleScreams
@@ -377,6 +372,9 @@
       collection: FemaleGasp
     DefaultDeathgasp:
       collection: FemaleDeathGasp
+  params:
+    variation: 0.125
+    pitch: 0.75
 
 - type: emoteSounds
   id: UnisexMoth
