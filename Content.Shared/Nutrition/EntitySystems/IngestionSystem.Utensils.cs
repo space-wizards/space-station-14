@@ -37,6 +37,7 @@ public sealed partial class IngestionSystem
         ev.Handled = TryUseUtensil(ev.User, ev.Target.Value, entity);
     }
 
+    /// <returns>True if we are now ingesting an item. False otherwise.</returns>
     public bool TryUseUtensil(EntityUid user, EntityUid target, Entity<UtensilComponent> utensil)
     {
         var ev = new GetUtensilsEvent();
@@ -46,11 +47,11 @@ public sealed partial class IngestionSystem
         if ((ev.Types & utensil.Comp.Types) == 0)
         {
             _popup.PopupClient(Loc.GetString("ingestion-try-use-wrong-utensil", ("verb", GetEdibleVerb(target)), ("food", target), ("utensil", utensil.Owner)), user, user);
-            return true;
+            return false;
         }
 
         if (!_interactionSystem.InRangeUnobstructed(user, target, popup: true))
-            return true;
+            return false;
 
         return TryIngest(user, user, target);
     }
