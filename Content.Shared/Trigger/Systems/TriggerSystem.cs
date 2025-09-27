@@ -1,18 +1,18 @@
-﻿using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking;
 using Content.Shared.EntityTable;
+using Content.Shared.Gravity;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Popups;
 using Content.Shared.Timing;
 using Content.Shared.Trigger.Components;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Timing;
 using Robust.Shared.Random;
-using Robust.Shared.Audio.Systems;
-
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Trigger.Systems;
 
@@ -40,6 +40,9 @@ public sealed partial class TriggerSystem : EntitySystem
     [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
     [Dependency] private readonly SharedDeviceLinkSystem _deviceLink = default!;
     [Dependency] private readonly EntityTableSystem _entityTable = default!;
+    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly SharedGravitySystem _gravity = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
 
     public const string DefaultTriggerKey = "trigger";
 
@@ -48,6 +51,7 @@ public sealed partial class TriggerSystem : EntitySystem
         base.Initialize();
 
         InitializeCollide();
+        InitializeStepTrigger();
         InitializeCondition();
         InitializeInteraction();
         InitializeProximity();
@@ -184,5 +188,6 @@ public sealed partial class TriggerSystem : EntitySystem
         UpdateRepeat();
         UpdateProximity();
         UpdateTimedCollide();
+        UpdateStepTrigger();
     }
 }
