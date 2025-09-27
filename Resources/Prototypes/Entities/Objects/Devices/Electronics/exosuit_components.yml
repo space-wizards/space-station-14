@@ -1,0 +1,71 @@
+- type: entity
+  id: BaseExosuitParts
+  parent: BaseItem
+  name: base components
+  abstract: true
+  components:
+  - type: Item
+    storedRotation: -90
+    size: Ginormous
+  - type: Sprite
+    sprite: Objects/Specific/Mech/mecha_modules.rsi
+    state: mecha_camera
+  - type: StaticPrice
+    price: 100
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 200
+
+- type: entity
+  id: DurandArmorPlate
+  parent: BaseExosuitParts
+  name: durand armor plates
+  description: Armor plates made of plasteel for Durand exosuit.
+  components:
+    - type: Item
+      storedRotation: 0
+    - type: Sprite
+      sprite: Objects/Specific/Mech/durand_construction.rsi
+      state: durand_armor
+    - type: Tag
+      tags:
+      - DurandArmor
+    - type: GuideHelp
+      guides:
+      - Robotics
+
+- type: entity
+  id: GygaxArmorPlate
+  parent: BaseExosuitParts
+  name: gygax armor plates
+  description: Armor plates made of steel for Gygax exosuit.
+  components:
+    - type: Item
+      storedRotation: 0
+    - type: Sprite
+      sprite: Objects/Specific/Mech/gygax_construction.rsi
+      state: gygax_armor
+    - type: Tag
+      tags:
+      - GygaxArmor
+    - type: GuideHelp
+      guides:
+      - Robotics
+
+- type: entity
+  id: RipleyUpgradeKit
+  parent: BaseExosuitParts
+  name: exosuit upgrade kit
+  description: This kit allows you to assemble an exosuit Ripley MK-II.
+  components:
+    - type: Item
+      storedRotation: 0
+    - type: Sprite
+      sprite: Objects/Specific/Mech/mecha_comonets.rsi
+      state: ripleyupgrade
+    - type: Tag
+      tags:
+      - RipleyMKIIUpgradeKit
+    - type: GuideHelp
+      guides:
+      - Robotics
