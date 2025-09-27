@@ -20,7 +20,7 @@
   - type: PowerChargerVisuals
   - type: ApcPowerReceiver
     needsPower: false
-    powerLoad: 0
+    powerLoad: 1
   - type: StaticPrice
     price: 500
   - type: Tag
