@@ -24,3 +24,11 @@
   category: Quirks
   components:
   - type: Snoring
+
+- type: trait
+  id: Touchy
+  name: trait-touchy-name
+  description: trait-touchy-desc
+  category: Quirks
+  components:
+  - type: Touchy
