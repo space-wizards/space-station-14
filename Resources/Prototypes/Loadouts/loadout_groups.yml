@@ -815,6 +815,13 @@
   - SeniorEngineerPDA
 
 - type: loadoutGroup
+  id: AtmosphericTechnicianHead
+  name: loadout-group-atmospheric-technician-head
+  minLimit: 0
+  loadouts:
+  - AtmosphericTechnicianHardhatBlue
+
+- type: loadoutGroup
   id: AtmosphericTechnicianJumpsuit
   name: loadout-group-atmospheric-technician-jumpsuit
   loadouts:
@@ -841,7 +848,7 @@
   id: AtmosphericTechnicianShoes
   name: loadout-group-atmospheric-technician-shoes
   loadouts:
-  - WhiteShoes
+  - WorkBoots
   - EngineeringWinterBoots
 
 - type: loadoutGroup
