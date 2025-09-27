@@ -49,7 +49,7 @@ public sealed class SharedShearableSystem : EntitySystem
     /// <param name="comp">The shearable component (e.g. ent.Comp).</param>
     /// <param name="shearedProduct">An out variable of the resolved sheared product prototype.</param>
     /// <param name="shearingSolutionState">An out variable of the resolved sheared product solution.</param>
-    /// <param name="shearingSolutionEntity">An out variable of the resolved sheared product solution entity.</param>
+    /// <param name="shearingSolutionEnt">An out variable of the resolved sheared product solution entity.</param>
     /// <param name="usedItem">The held item that is being used to shear the target entity.</param>
     /// <param name="checkItem">If false then skip checking for the correct shearing tool.</param>
     /// <returns>
@@ -143,8 +143,7 @@ public sealed class SharedShearableSystem : EntitySystem
                 // ALL SYSTEMS GO!
                 break;
             case CheckShearReturns.WrongTool:
-                // Removed because it would cause excessive popups when e.g. you're feeding the sheep some food.
-                //_popup.PopupClient(Loc.GetString("shearable-system-wrong-tool", ("target", Identity.Entity(ent.Owner, EntityManager)), ("shearVerb", (Loc.GetString(ent.Comp.Verb)).ToLower())), ent.Owner, userUid);
+                // No message because it would cause excessive popups when e.g. you're feeding the sheep some food.
                 return;
             case CheckShearReturns.InsufficientSolution:
                 // NO WOOL LEFT.
@@ -272,23 +271,25 @@ public sealed class SharedShearableSystem : EntitySystem
             toolUsed = args.Using.Value;
         }
 
-        // Check.
-        if (CheckShear(ent.Owner, ent.Comp, out _, out _, out _, toolUsed, true) != CheckShearReturns.Success)
-        {
-            return;
-        }
-
-        var user = args.User;
-
         // Construct verb object.
+        var user = args.User;
         AlternativeVerb verb =
             new()
             {
                 Act = () => AttemptShear(ent, user, toolUsed),
+                Disabled = false,
                 Text = Loc.GetString(ent.Comp.Verb),
                 Icon = ent.Comp.ShearingIcon,
                 Priority = 2
             };
+
+        // Check.
+        if (CheckShear(ent.Owner, ent.Comp, out _, out _, out _, toolUsed, true) != CheckShearReturns.Success)
+        {
+            // Still adds the verb but it's disabled.
+            verb.Disabled = true;
+        }
+
         // Add verb to the player.
         args.Verbs.Add(verb);
     }
