@@ -127,16 +127,25 @@ public abstract partial class SharedPuddleSystem : EntitySystem
                 args.PushMarkup(Loc.GetString("puddle-component-examine-is-slippery-text"));
             }
 
+            var isEvaporationBlocked = TryComp<PreventEvaporationComponent>(entity, out var prevent) && prevent.Active;
+
             if (HasComp<EvaporationComponent>(entity) &&
                 _solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.SolutionName,
                     ref entity.Comp.Solution, out var solution))
             {
-                if (CanFullyEvaporate(solution))
-                    args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating"));
-                else if (solution.GetTotalPrototypeQuantity(GetEvaporatingReagents(solution)) > FixedPoint2.Zero)
-                    args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-partial"));
-                else
+                if (isEvaporationBlocked)
+                {
                     args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-no"));
+                }
+                else
+                {
+                    if (CanFullyEvaporate(solution))
+                        args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating"));
+                    else if (solution.GetTotalPrototypeQuantity(GetEvaporatingReagents(solution)) > FixedPoint2.Zero)
+                        args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-partial"));
+                    else
+                        args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-no"));
+                }
             }
             else
                 args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-no"));
