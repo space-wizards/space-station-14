@@ -8,6 +8,9 @@ comp-solution-transfer-transfer-solution = You transfer {$amount}u to {THE($targ
 comp-solution-transfer-is-empty = {CAPITALIZE(THE($target))} is empty!
 comp-solution-transfer-is-full = {CAPITALIZE(THE($target))} is full!
 
+## Displayed when a transfer is blocked by a whitelist
+comp-solution-transfer-blocked-default = This won't go in here!
+
 ## Displayed in change transfer amount verb's name
 comp-solution-transfer-verb-custom-amount = Custom
 comp-solution-transfer-verb-amount = {$amount}u

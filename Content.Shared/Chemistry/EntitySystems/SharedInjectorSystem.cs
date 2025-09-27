@@ -306,13 +306,36 @@ public abstract class SharedInjectorSystem : EntitySystem
             return false;
         }
 
-        // Give the target a chance to cancel (e.g., whitelist).
+        // Give the target a chance to cancel (legacy) and collect reusable whitelist.
         var transferAttempt = new SolutionTransferAttemptEvent(injector.Owner, target);
         RaiseLocalEvent(target, ref transferAttempt);
         if (transferAttempt.CancelReason is { } reason)
         {
             _popup.PopupClient(reason, target, user);
             return false;
+        }
+
+        // Reusable whitelist enforcement: allow systems to contribute allowed reagents.
+        var whitelist = new GetSolutionTransferWhitelistEvent(injector.Owner, target, targetSolution.Comp.Solution.Name);
+        RaiseLocalEvent(target, ref whitelist);
+        RaiseLocalEvent(injector.Owner, ref whitelist);
+        if (whitelist.Enforce)
+        {
+            // If enforced and empty, block everything.
+            if (whitelist.Allowed.Count == 0)
+            {
+                _popup.PopupClient(Loc.GetString(whitelist.Popup), target, user);
+                return false;
+            }
+
+            foreach (var rq in solution.Contents)
+            {
+                if (!whitelist.Allowed.Contains(rq.Reagent.Prototype))
+                {
+                    _popup.PopupClient(Loc.GetString(whitelist.Popup), target, user);
+                    return false;
+                }
+            }
         }
 
         // Move units from attackSolution to targetSolution

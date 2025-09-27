@@ -19,6 +19,7 @@
       - !type:AddToSolutionReaction
         solution: cube
   - type: Rehydratable
+    EnforceCatalystWhitelist: true
   - type: CollisionWake
     enabled: false
   - type: Fixtures
@@ -66,10 +67,6 @@
   - type: Tag
     tags:
     - Meat
-  - type: RefillReagentWhitelist
-    solution: cube
-    allowed:
-    - Water
 
 - type: entity
   parent: RehydratableAnimalCube
@@ -196,10 +193,6 @@
     catalyst: Blood # blood is fuel
     possibleSpawns:
     - MobAbomination
-  - type: RefillReagentWhitelist
-    solution: cube
-    allowed:
-    - Blood
 
 # It inherits FoodComponent from PlushieCarp, but is de-facto inedible
 # PlushieCarp has requiresSpecialDigestion:true, and this one is not whitelisted anywhere, so it behaves like it's not edible
