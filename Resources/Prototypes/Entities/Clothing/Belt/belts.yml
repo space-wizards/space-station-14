@@ -574,6 +574,7 @@
       tags:
         - ShellShotgun
     capacity: 14
+    reloadFromClothing: true
 
 - type: entity
   parent: ClothingBeltBase
