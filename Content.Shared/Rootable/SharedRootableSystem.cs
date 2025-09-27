@@ -2,7 +2,6 @@
 using Content.Shared.Actions.Components;
 using Content.Shared.Alert;
 using Content.Shared.Cloning.Events;
-using Content.Shared.Coordinates;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Gravity;
 using Content.Shared.Mobs;
@@ -11,6 +10,7 @@ using Content.Shared.Slippery;
 using Content.Shared.Toggleable;
 using Content.Shared.Trigger.Components.Effects;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;

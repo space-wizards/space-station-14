@@ -8,7 +8,6 @@ using Content.Shared.Atmos;
 using Content.Shared.Botany;
 using Content.Shared.Burial.Components;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.Components;
@@ -48,6 +47,7 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public const float HydroponicsSpeedMultiplier = 1f;
     public const float HydroponicsConsumptionMultiplier = 2f;
@@ -424,7 +424,7 @@ public sealed class PlantHolderSystem : EntitySystem
         if (component.Seed != null && component.Seed.TurnIntoKudzu
             && component.WeedLevel >= component.Seed.WeedHighLevelThreshold)
         {
-            Spawn(component.Seed.KudzuPrototype, Transform(uid).Coordinates.SnapToGrid(EntityManager));
+            Spawn(component.Seed.KudzuPrototype, _transform.SnapToGrid(Transform(uid).Coordinates));
             component.Seed.TurnIntoKudzu = false;
             component.Health = 0;
         }

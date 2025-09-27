@@ -6,7 +6,6 @@ using Content.Server.Destructible;
 using Content.Server.Popups;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Charges.Components;
-using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Database;
 using Content.Shared.Decals;
 using Content.Shared.DoAfter;
@@ -64,7 +63,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
 
         var position = args.ClickLocation;
         if (ent.Comp.SnapDecals)
-            position = position.SnapToGrid(EntityManager);
+            position = _transform.SnapToGrid(position);
 
         if (ent.Comp.DecalMode == DecalPaintMode.Add)
         {
