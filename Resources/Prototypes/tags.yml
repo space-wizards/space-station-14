@@ -983,6 +983,12 @@
   id: MopBasic
 
 - type: Tag
+  id: MothershipCoreGhostrole
+
+- type: Tag
+  id: MothershipModule
+
+- type: Tag
   id: Mouse
 
 - type: Tag
@@ -1543,6 +1549,9 @@
 
 - type: Tag
   id: WriteIgnoreStamps
+
+- type: Tag
+  id: XenoborgGhostrole
 
 - type: Tag
   id: XenoborgModuleEngi
