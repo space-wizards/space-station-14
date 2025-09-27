@@ -16,9 +16,9 @@
   description: For a more casual look while on the job.
   components:
   - type: Sprite
-    sprite: _Starlight\Clothing\Uniforms\Jumpskirt\ntrepturtleneckskirt.rsi
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/ntrepturtleneckskirt.rsi
   - type: Clothing
-    sprite: _Starlight\Clothing\Uniforms\Jumpskirt\ntrepturtleneckskirt.rsi
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/ntrepturtleneckskirt.rsi
     
 - type: entity
   parent: [ ClothingUniformSkirtBase, BaseCommandContraband ]
