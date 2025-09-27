@@ -11,7 +11,6 @@ namespace Content.Shared.Physics.EntitySystems;
 /// </summary>
 public sealed class RandomWalkAttractorSystem : EntitySystem
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
