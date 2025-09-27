@@ -108,6 +108,9 @@ public abstract partial class SharedGunSystem
     private void ReloadDoAfter(BallisticAmmoProviderComponent component, EntityUid user, EntityUid target, EntityUid used)
     {
         var doAfterSpeed = component.FillDelay;
+        // Check if reloader has speed modifier.
+        if (TryComp<IncreaseReloadSpeedContainerComponent>(used, out var reloader))
+            doAfterSpeed *= reloader.Modifier;
 
         // Continuous loading
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, doAfterSpeed, new AmmoFillDoAfterEvent(), used: used, target: target, eventTarget: used)

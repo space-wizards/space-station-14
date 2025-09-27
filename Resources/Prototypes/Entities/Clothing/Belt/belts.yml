@@ -573,8 +573,10 @@
     whitelist:
       tags:
         - ShellShotgun
-    capacity: 14
+    capacity: 32 # Two full shell boxes.
     reloadFromClothing: true
+  - type: IncreaseReloadSpeedContainer
+    modifier: 0.75
 
 - type: entity
   parent: ClothingBeltBase
