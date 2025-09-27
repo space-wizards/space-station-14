@@ -935,6 +935,9 @@
   id: Medal
 
 - type: Tag
+  id: Medipen
+
+- type: Tag
   id: Medkit
 
 - type: Tag
