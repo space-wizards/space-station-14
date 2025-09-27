@@ -64,7 +64,7 @@ public sealed class OrbitVisualsSystem : EntitySystem
     {
         base.FrameUpdate(frameTime);
 
-        var query = EntityManager.EntityQueryEnumerator<OrbitVisualsComponent, SpriteComponent>();
+        var query = EntityQueryEnumerator<OrbitVisualsComponent, SpriteComponent>();
         while (query.MoveNext(out var uid, out var orbit, out var sprite))
         {
             var progress = (float)(_timing.CurTime.TotalSeconds / orbit.OrbitLength) % 1;
