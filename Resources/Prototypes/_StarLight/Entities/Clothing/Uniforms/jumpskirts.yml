@@ -12,8 +12,8 @@
 - type: entity
   parent: [ ClothingUniformSkirtBase, BaseCommandContraband ]
   id: ClothingUniformJumpskirtNtrepTurtleneck
-  name: NT Representive's Turtleneck Jumpskirt
-  description: That skirt that is better not to see.
+  name: nt representive's turtleneck jumpskirt
+  description: For a more casual look while on the job.
   components:
   - type: Sprite
     sprite: _Starlight\Clothing\Uniforms\Jumpskirt\ntrepturtleneckskirt.rsi

@@ -61,7 +61,7 @@
 - type: entity
   parent: [ ClothingUniformBase, BaseCommandContraband ]
   id: ClothingUniformJumpsuitNtrepTurtleNeck
-  name: NT Representive's turtleneck
+  name: nt representive's turtleneck jumpsuit
   description: For a more casual look while on the job.
   components:
   - type: Sprite
