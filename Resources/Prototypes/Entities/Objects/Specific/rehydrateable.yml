@@ -188,7 +188,7 @@
       methods: [Touch, Ingestion, Injection]
       effects:
       - !type:AddReagentToSolution
-        reagent: Water
+        reagent: Blood
         solution: cube
   - type: Rehydratable
     catalyst: Blood # blood is fuel
