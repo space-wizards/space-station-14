@@ -26,6 +26,7 @@ public abstract class SharedWiresSystem : EntitySystem
         SubscribeLocalEvent<WiresPanelComponent, ExaminedEvent>(OnExamine);
 
         SubscribeLocalEvent<ActivatableUIRequiresPanelComponent, ActivatableUIOpenAttemptEvent>(OnAttemptOpenActivatableUI);
+        SubscribeLocalEvent<ActivatableUIRequiresPanelComponent, VerbUIOpenAttemptEvent>(OnUIVerbOpenAttempt);
         SubscribeLocalEvent<ActivatableUIRequiresPanelComponent, PanelChangedEvent>(OnActivatableUIPanelChanged);
     }
 
@@ -154,6 +155,15 @@ public abstract class SharedWiresSystem : EntitySystem
     }
 
     private void OnAttemptOpenActivatableUI(EntityUid uid, ActivatableUIRequiresPanelComponent component, ActivatableUIOpenAttemptEvent args)
+    {
+        if (args.Cancelled || !TryComp<WiresPanelComponent>(uid, out var wires))
+            return;
+
+        if (component.RequireOpen != wires.Open)
+            args.Cancel();
+    }
+
+    private void OnUIVerbOpenAttempt(EntityUid uid, ActivatableUIRequiresPanelComponent component, VerbUIOpenAttemptEvent args)
     {
         if (args.Cancelled || !TryComp<WiresPanelComponent>(uid, out var wires))
             return;

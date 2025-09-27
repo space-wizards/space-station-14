@@ -34,6 +34,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<BorgChassisComponent, EntRemovedFromContainerMessage>(OnRemoved);
         SubscribeLocalEvent<BorgChassisComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
         SubscribeLocalEvent<BorgChassisComponent, ActivatableUIOpenAttemptEvent>(OnUIOpenAttempt);
+        SubscribeLocalEvent<BorgChassisComponent, VerbUIOpenAttemptEvent>(OnUIVerbOpenAttempt);
         SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
 
         InitializeRelay();
@@ -97,6 +98,13 @@ public abstract partial class SharedBorgSystem : EntitySystem
     }
 
     private void OnUIOpenAttempt(EntityUid uid, BorgChassisComponent component, ActivatableUIOpenAttemptEvent args)
+    {
+        // borgs can't view their own ui
+        if (args.User == uid)
+            args.Cancel();
+    }
+
+    private void OnUIVerbOpenAttempt(EntityUid uid, BorgChassisComponent component, VerbUIOpenAttemptEvent args)
     {
         // borgs can't view their own ui
         if (args.User == uid)
