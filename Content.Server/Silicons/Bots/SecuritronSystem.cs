@@ -21,6 +21,7 @@ using Content.Shared.Radio;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Shared.Log;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
@@ -31,8 +32,11 @@ namespace Content.Server.Silicons.Bots;
 
 public sealed partial class SecuritronSystem : EntitySystem
 {
+    // Securitrons are expected to stay within baton range (1.5 tiles) when processing suspects.
     private const float StandbyRange = 1.5f;
     private const float FleeRange = 2.75f;
+
+    private readonly ISawmill _sawmill = Logger.GetSawmill("securitron");
 
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -46,13 +50,18 @@ public sealed partial class SecuritronSystem : EntitySystem
     [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
 
     private readonly ProtoId<RadioChannelPrototype> _securityChannelId = "Security";
-    private RadioChannelPrototype _securityChannel = default!;
+    private RadioChannelPrototype? _securityChannel;
+    private bool _loggedMissingSecurityChannel;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        _securityChannel = _prototype.Index(_securityChannelId);
+        if (!_prototype.TryIndex(_securityChannelId, out _securityChannel))
+        {
+            _loggedMissingSecurityChannel = true;
+            _sawmill.Error($"Failed to find security radio channel prototype '{_securityChannelId}'. Securitrons will be unable to send status updates over radio.");
+        }
 
         SubscribeLocalEvent<SecuritronComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerbs);
     }
@@ -77,16 +86,19 @@ public sealed partial class SecuritronSystem : EntitySystem
 
     private void HandleTarget(EntityUid uid, SecuritronComponent component, SecuritronStateComponent state, HTNComponent htn, TimeSpan now)
     {
+        // Keep chasing the same suspect even if the planner clears out the blackboard entry between ticks.
         if (!htn.Blackboard.TryGetValue<EntityUid>("Target", out var target, EntityManager) || Deleted(target))
         {
             if (state.CurrentTarget != null && !Deleted(state.CurrentTarget.Value))
             {
                 target = state.CurrentTarget.Value;
                 EnsureTargetOnBlackboard(htn, target);
+                _sawmill.Debug($"Restored cached target {ToPrettyString(target)} for {ToPrettyString(uid)} after HTN reset.");
             }
             else
             {
-                ResetTarget(state, htn);
+                _sawmill.Debug($"No valid suspect for {ToPrettyString(uid)}; resetting state machine.");
+                ResetTarget(uid, state, htn);
                 return;
             }
         }
@@ -127,6 +139,7 @@ public sealed partial class SecuritronSystem : EntitySystem
                 OnSuspectFleeing(uid, state);
         }
 
+        // Drive audible callouts and movement decisions from the engagement state machine.
         switch (state.TargetStatus)
         {
             case SecuritronTargetTrackingState.Announced when inRange:
@@ -150,6 +163,7 @@ public sealed partial class SecuritronSystem : EntitySystem
         }
         else if (!targetDowned && state.TargetStatus == SecuritronTargetTrackingState.Downed && !targetCuffed)
         {
+            _sawmill.Debug($"Target {ToPrettyString(target)} recovered before cuffing by {ToPrettyString(uid)}; resuming pursuit.");
             state.CuffInProgress = false;
             state.TargetStatus = state.TargetFleeing
                 ? SecuritronTargetTrackingState.Engaging
@@ -164,6 +178,7 @@ public sealed partial class SecuritronSystem : EntitySystem
             OnSuspectCuffed(uid, state);
         }
 
+        // Track whether we are close enough to physically restrain the suspect.
         var withinCuffRange = distance <= StandbyRange;
 
         if (component.OperatingMode == SecuritronOperatingMode.Arrest &&
@@ -185,6 +200,7 @@ public sealed partial class SecuritronSystem : EntitySystem
             }
         }
 
+        // Only mark the target as subdued once they are restrained (or we are actively cuffing them).
         var targetSubdued = state.TargetStatus switch
         {
             SecuritronTargetTrackingState.Downed => targetCuffed || (component.OperatingMode == SecuritronOperatingMode.Arrest
@@ -212,6 +228,8 @@ public sealed partial class SecuritronSystem : EntitySystem
         state.CuffInProgress = false;
         state.NextCuffAttempt = TimeSpan.Zero;
 
+        _sawmill.Debug($"Acquired target {ToPrettyString(target)} for {ToPrettyString(uid)} at {state.LastKnownTargetPosition}.");
+
         htn.Blackboard.SetValue(NPCBlackboard.SecuritronTargetFleeingKey, false);
         SetTargetSubdued(htn, false);
 
@@ -225,7 +243,7 @@ public sealed partial class SecuritronSystem : EntitySystem
         }
     }
 
-    private void ResetTarget(SecuritronStateComponent state, HTNComponent htn)
+    private void ResetTarget(EntityUid uid, SecuritronStateComponent state, HTNComponent htn)
     {
         state.CurrentTarget = null;
         state.TargetStatus = SecuritronTargetTrackingState.None;
@@ -238,6 +256,8 @@ public sealed partial class SecuritronSystem : EntitySystem
         state.LastKnownTargetPosition = null;
         state.CuffInProgress = false;
         state.NextCuffAttempt = TimeSpan.Zero;
+
+        _sawmill.Debug($"Resetting target state for {ToPrettyString(uid)}.");
 
         htn.Blackboard.SetValue(NPCBlackboard.SecuritronTargetFleeingKey, false);
         SetTargetSubdued(htn, false);
@@ -260,11 +280,14 @@ public sealed partial class SecuritronSystem : EntitySystem
         state.ReportedFleeing = true;
         state.TargetStatus = SecuritronTargetTrackingState.Engaging;
 
+        _sawmill.Debug($"Target fleeing from {ToPrettyString(uid)}; switching to Engage state.");
+
         Speak(uid, state, "securitron-say-fleeing", _timing.CurTime);
 
         var location = FormatLocation(uid);
         SendSecurityRadio(uid, "securitron-radio-fleeing", location);
     }
+
 
     private void OnSuspectDowned(EntityUid uid, SecuritronStateComponent state)
     {
@@ -274,6 +297,8 @@ public sealed partial class SecuritronSystem : EntitySystem
 
         if (state.ReportedDowned)
             return;
+
+        _sawmill.Debug($"Target downed for {ToPrettyString(uid)}; preparing to cuff.");
 
         state.ReportedDowned = true;
         var location = FormatLocation(uid);
@@ -287,6 +312,8 @@ public sealed partial class SecuritronSystem : EntitySystem
 
         if (state.ReportedCuffed)
             return;
+
+        _sawmill.Debug($"Target cuffed by {ToPrettyString(uid)}; broadcasting status.");
 
         state.ReportedCuffed = true;
         var location = FormatLocation(uid);
@@ -307,16 +334,33 @@ public sealed partial class SecuritronSystem : EntitySystem
         _appearance.SetData(uid, SecuritronVisuals.State, state, appearance);
     }
 
+    /// <summary>
+    /// Starts (or resumes) the cuffing do-after once the securitron is in range and hands are prepared.
+    /// </summary>
     private void TryStartCuff(EntityUid uid, SecuritronStateComponent state, EntityUid target)
     {
-        if (state.CuffInProgress || _timing.CurTime < state.NextCuffAttempt)
+        var now = _timing.CurTime;
+
+        if (state.CuffInProgress && now < state.NextCuffAttempt)
+        {
+            _sawmill.Debug($"Cuff do-after still pending for {ToPrettyString(uid)} targeting {ToPrettyString(target)}.");
             return;
+        }
+
+        if (state.CuffInProgress && now >= state.NextCuffAttempt)
+            state.CuffInProgress = false;
 
         if (!TryComp(target, out CuffableComponent? cuffable) || cuffable.CuffedHandCount >= 2)
+        {
+            _sawmill.Debug($"Cannot cuff target {ToPrettyString(target)}; valid cuffable component missing or already restrained.");
             return;
+        }
 
         if (!TryComp(uid, out HandsComponent? hands))
+        {
+            _sawmill.Warning($"{ToPrettyString(uid)} attempted to cuff without hands component present.");
             return;
+        }
 
         EntityUid? cuffs = null;
         foreach (var held in _hands.EnumerateHeld((uid, hands)))
@@ -330,24 +374,42 @@ public sealed partial class SecuritronSystem : EntitySystem
 
         if (cuffs == null)
         {
-            cuffs = Spawn("Zipties", Transform(uid).Coordinates);
+            try
+            {
+                cuffs = Spawn("Zipties", Transform(uid).Coordinates);
+                _sawmill.Debug($"Spawned spare zipties for {ToPrettyString(uid)} before cuffing {ToPrettyString(target)}.");
+            }
+            catch (Exception ex)
+            {
+                _sawmill.Error($"Failed to spawn zipties for {ToPrettyString(uid)} while cuffing {ToPrettyString(target)}: {ex}");
+                return;
+            }
 
             if (!_hands.TryPickupAnyHand(uid, cuffs.Value, checkActionBlocker: false, animate: false))
             {
                 QueueDel(cuffs.Value);
+                _sawmill.Warning($"{ToPrettyString(uid)} failed to pick up spawned zipties while cuffing {ToPrettyString(target)}.");
                 return;
             }
         }
 
         state.CuffInProgress = true;
-        state.NextCuffAttempt = _timing.CurTime + TimeSpan.FromSeconds(3);
+        state.NextCuffAttempt = now + TimeSpan.FromSeconds(3);
 
         if (!_cuffable.TryCuffing(uid, target, cuffs.Value))
         {
             state.CuffInProgress = false;
+            _sawmill.Debug($"Cuff do-after could not start for {ToPrettyString(uid)} targeting {ToPrettyString(target)}.");
+        }
+        else
+        {
+            _sawmill.Debug($"Cuff do-after started for {ToPrettyString(uid)} targeting {ToPrettyString(target)}.");
         }
     }
 
+    /// <summary>
+    /// Sends localized speech (or emotes) while throttling repeat lines.
+    /// </summary>
     private void Speak(EntityUid uid, SecuritronStateComponent state, string key, TimeSpan now)
     {
         if (now < state.NextSpeechTime)
@@ -359,6 +421,9 @@ public sealed partial class SecuritronSystem : EntitySystem
         state.NextSpeechTime = now + TimeSpan.FromSeconds(2);
     }
 
+    /// <summary>
+    /// Keeps the HTN blackboard in sync with the server-side perception of whether our suspect is compliant.
+    /// </summary>
     private void SetTargetSubdued(HTNComponent htn, bool value)
     {
         if (htn.Blackboard.TryGetValue<bool>(NPCBlackboard.SecuritronTargetSubduedKey, out var current, EntityManager) && current == value)
@@ -375,6 +440,9 @@ public sealed partial class SecuritronSystem : EntitySystem
             RemComp<NPCMeleeCombatComponent>(uid);
     }
 
+    /// <summary>
+    /// Rebuilds the HTN blackboard state for the current target so subsequent HTN ticks keep pathing correctly.
+    /// </summary>
     private void EnsureTargetOnBlackboard(HTNComponent htn, EntityUid target)
     {
         var coords = _transform.GetMoverCoordinates(target);
@@ -392,6 +460,17 @@ public sealed partial class SecuritronSystem : EntitySystem
 
     private void SendSecurityRadio(EntityUid uid, string key, string location)
     {
+        if (_securityChannel == null)
+        {
+            if (!_loggedMissingSecurityChannel)
+            {
+                _loggedMissingSecurityChannel = true;
+                _sawmill.Warning($"Skipping security radio broadcast from {ToPrettyString(uid)} because channel '{_securityChannelId}' is unavailable.");
+            }
+
+            return;
+        }
+
         var message = Loc.GetString(key, ("location", location));
         _radio.SendRadioMessage(uid, message, _securityChannel, uid);
     }
@@ -434,8 +513,3 @@ public sealed partial class SecuritronSystem : EntitySystem
         };
     }
 }
-
-
-
-
-
