@@ -34,6 +34,11 @@ cmd-roleunban-hint-1 = <role ban id>
 cmd-rolebanlist-desc = Lists the user's role bans
 cmd-rolebanlist-help = Usage: <name or user ID> [include unbanned]
 
+cmd-rolebanlist-invalid-args = Invalid amount of args. {$help}
+cmd-rolebanlist-arg2-not-bool = Argument two ({$arg}) is not a boolean.
+cmd-rolebanlist-player-not-found = Unable to find a player with that name or id.
+cmd-rolebanlist-no-bans = No active bans found for {$user}
+
 ## Completion result hints
 cmd-rolebanlist-hint-1 = <name or user ID>
 cmd-rolebanlist-hint-2 = [include unbanned]

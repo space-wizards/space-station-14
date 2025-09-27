@@ -26,14 +26,14 @@ public sealed class RoleBanListCommand : IConsoleCommand
     {
         if (args.Length != 1 && args.Length != 2)
         {
-            shell.WriteLine($"Invalid amount of args. {Help}");
+            shell.WriteLine(Loc.GetString("cmd-rolebanlist-invalid-args", ("help", Help)));
             return;
         }
 
         var includeUnbanned = true;
         if (args.Length == 2 && !bool.TryParse(args[1], out includeUnbanned))
         {
-            shell.WriteLine($"Argument two ({args[1]}) is not a boolean.");
+            shell.WriteLine(Loc.GetString("cmd-rolebanlist-arg2-not-bool", ("arg", args[1])));
             return;
         }
 
@@ -41,7 +41,7 @@ public sealed class RoleBanListCommand : IConsoleCommand
 
         if (data == null)
         {
-            shell.WriteError("Unable to find a player with that name or id.");
+            shell.WriteError(Loc.GetString("cmd-rolebanlist-player-not-found"));
             return;
         }
 
@@ -52,7 +52,7 @@ public sealed class RoleBanListCommand : IConsoleCommand
 
             if (bans.Count == 0)
             {
-                shell.WriteLine("That user has no bans in their record.");
+                shell.WriteLine(Loc.GetString("cmd-rolebanlist-no-bans", ("user", data.Username)));
                 return;
             }
 

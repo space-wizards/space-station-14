@@ -111,7 +111,7 @@ public record struct OnlyOneStationsError : IConError
 {
     public FormattedMessage DescribeInner()
     {
-        return FormattedMessage.FromMarkupOrThrow("This command doesn't function if there is more than one or no stations, explicitly specify a station with the ent command or similar.");
+        return FormattedMessage.FromMarkupOrThrow(Loc.GetString("cmd-stations-onlyone-error"));
     }
 
     public string? Expression { get; set; }

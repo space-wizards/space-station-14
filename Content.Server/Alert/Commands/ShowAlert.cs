@@ -12,15 +12,15 @@ namespace Content.Server.Alert.Commands
         [Dependency] private readonly IEntityManager _e = default!;
 
         public string Command => "showalert";
-        public string Description => "Shows an alert for a player, defaulting to current player";
-        public string Help => "showalert <alertType> <severity, -1 if no severity> <name or userID, omit for current player>";
+        public string Description => Loc.GetString("cmd-showalert-desc");
+        public string Help => Loc.GetString("cmd-showalert-help");
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
             if (player?.AttachedEntity == null)
             {
-                shell.WriteLine("You cannot run this from the server or without an attached entity.");
+                shell.WriteLine(Loc.GetString("cmd-showalert-server-no-entity"));
                 return;
             }
 
@@ -34,7 +34,7 @@ namespace Content.Server.Alert.Commands
 
             if (!_e.TryGetComponent(attachedEntity, out AlertsComponent? alertsComponent))
             {
-                shell.WriteLine("user has no alerts component");
+                shell.WriteLine(Loc.GetString("cmd-showalert-user-no-alerts"));
                 return;
             }
 
@@ -43,12 +43,12 @@ namespace Content.Server.Alert.Commands
             var alertsSystem = _e.System<AlertsSystem>();
             if (!alertsSystem.TryGet(alertType, out var alert))
             {
-                shell.WriteLine("unrecognized alertType " + alertType);
+                shell.WriteLine(Loc.GetString("cmd-showalert-unrecognized-type", ("type", alertType)));
                 return;
             }
             if (!short.TryParse(severity, out var sevint))
             {
-                shell.WriteLine("invalid severity " + sevint);
+                shell.WriteLine(Loc.GetString("cmd-showalert-invalid-severity", ("severity", sevint)));
                 return;
             }
 

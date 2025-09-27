@@ -14,8 +14,8 @@ public sealed class TileReplaceCommand : IConsoleCommand
 
     // ReSharper disable once StringLiteralTypo
     public string Command => "tilereplace";
-    public string Description => "Replaces one tile with another.";
-    public string Help => $"Usage: {Command} [<gridId>] <src> <dst>";
+    public string Description => Loc.GetString("cmd-tilereplace-desc");
+    public string Help => Loc.GetString("cmd-tilereplace-help");
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -29,7 +29,7 @@ public sealed class TileReplaceCommand : IConsoleCommand
             case 2:
                 if (player?.AttachedEntity is not { Valid: true } playerEntity)
                 {
-                    shell.WriteError("Only a player can run this command without a grid ID.");
+                    shell.WriteError(Loc.GetString("cmd-tilereplace-only-player"));
                     return;
                 }
 
@@ -41,7 +41,7 @@ public sealed class TileReplaceCommand : IConsoleCommand
                 if (!NetEntity.TryParse(args[0], out var idNet) ||
                     !_entManager.TryGetEntity(idNet, out var id))
                 {
-                    shell.WriteError($"{args[0]} is not a valid entity.");
+                    shell.WriteError(Loc.GetString("cmd-tilereplace-invalid-entity", ("entity", args[0])));
                     return;
                 }
 
@@ -59,13 +59,13 @@ public sealed class TileReplaceCommand : IConsoleCommand
 
         if (!_entManager.TryGetComponent(gridId, out MapGridComponent? grid))
         {
-            shell.WriteError($"No grid exists with id {gridId}");
+            shell.WriteError(Loc.GetString("cmd-tilereplace-no-grid", ("gridId", (gridId?.ToString() ?? string.Empty))));
             return;
         }
 
         if (!_entManager.EntityExists(gridId))
         {
-            shell.WriteError($"Grid {gridId} doesn't have an associated grid entity.");
+            shell.WriteError(Loc.GetString("cmd-tilereplace-grid-no-entity", ("gridId", (gridId?.ToString() ?? string.Empty))));
             return;
         }
 
@@ -82,7 +82,7 @@ public sealed class TileReplaceCommand : IConsoleCommand
             }
         }
 
-        shell.WriteLine($"Changed {changed} tiles.");
+        shell.WriteLine(Loc.GetString("cmd-tilereplace-changed", ("changed", changed)));
     }
 }
 

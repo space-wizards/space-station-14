@@ -12,9 +12,9 @@ public sealed class OwoifyCommand : IConsoleCommand
 
     public string Command => "owoify";
 
-    public string Description => "For when you need everything to be cat. Uses OwOAccent's formatting on the name and description of an entity.";
+    public string Description => Loc.GetString("cmd-owoify-desc");
 
-    public string Help => "owoify <id>";
+    public string Help => Loc.GetString("cmd-owoify-help");
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
