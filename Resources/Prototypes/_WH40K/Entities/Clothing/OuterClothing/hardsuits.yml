@@ -207,7 +207,7 @@
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitTechpriestMarsSkitarii
-  name: Роба скитарийца
+  name: роба скитарийца
   description: Священное одеяние.
   suffix: WH40K, АдМехи, Егери
   components:
@@ -245,7 +245,7 @@
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitTechpriestMarsSkitariiAvangard
-  name: Роба скитарийца
+  name: роба скитарийца
   description: Священное одеяние.
   suffix: WH40K, АдМехи, Авангард
   components:

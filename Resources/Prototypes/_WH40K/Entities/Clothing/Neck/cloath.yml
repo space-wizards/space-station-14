@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: Gorjet
-  name: Горжет
+  name: горжет
   description: Отличительный знак офицера со встроенным силовым полем, отталкивающим снаряды. Какое-то там попадание в голову не должно отвлекать офицера от мудрых планов!
   suffix: WH40K, Гвардия
   components:
@@ -14,7 +14,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: Colonelcloak
-  name: Плащ Полковника
+  name: плащ полковника
   description: Великолепно вышитый плащ старшего офицера Имперской Гвардии, одним своим видом показывает авторитет, власть, богатство... и куда стрелять противнику.
   suffix: WH40K, Гвардия
   components:
