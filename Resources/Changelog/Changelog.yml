@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: EmoGarbage404
   changes:
-  - message: Fixed the mining asteroid not having a name.
-    type: Fix
-  id: 8500
-  time: '2025-05-17T01:27:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37513
-- author: EmoGarbage404
-  changes:
   - message: You can now patch holes in the floors of the evac shuttle and ATS.
     type: Fix
   id: 8501
@@ -3963,3 +3956,10 @@
   id: 9010
   time: '2025-09-27T10:19:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39547
+- author: TrixxedHeart
+  changes:
+  - message: Added 5 new Vox sounds, (Death gasp, Cough, Cry, Gasp, and Sigh)
+    type: Add
+  id: 9011
+  time: '2025-09-27T17:01:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39914
