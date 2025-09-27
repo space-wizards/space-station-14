@@ -133,6 +133,8 @@
 
 - type: emoteSounds
   id: MaleSlime
+  params:
+    variation: 0.125
   sounds:
     Squish:
       collection: Squishes
@@ -172,11 +174,11 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: MaleDeathGasp
-  params:
-    variation: 0.125
 
 - type: emoteSounds
   id: FemaleSlime
+  params:
+    variation: 0.125
   sounds:
     Squish:
       collection: Squishes
@@ -216,11 +218,11 @@
       collection: FemaleGasp
     DefaultDeathgasp:
       collection: FemaleDeathGasp
-  params:
-    variation: 0.125
 
 - type: emoteSounds
   id: UnisexVox
+  params:
+    variation: 0.125
   sounds:
     Scream:
       path: /Audio/Voice/Vox/shriek1.ogg
@@ -232,12 +234,16 @@
       collection: Weh
     Hew:
       collection: Hew
-  params:
-    variation: 0.125
-    # We need vox sounds for the other emotes
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: MaleDeathGasp
+    # TODO: We need vox sounds for the other emotes
 
 - type: emoteSounds
   id: UnisexDiona
+  params:
+    variation: 0.125
   sounds:
     Scream:
       path: /Audio/Voice/Diona/diona_scream.ogg
@@ -255,8 +261,6 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: DeathGasp
-  params:
-    variation: 0.125
 
 - type: emoteSounds
   id: UnisexArachnid
@@ -284,6 +288,9 @@
 
 - type: emoteSounds
   id: UnisexDwarf
+  params:
+    variation: 0.125
+    pitch: 0.75
   sounds:
     Scream:
       collection: MaleScreams
@@ -321,12 +328,12 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: MaleDeathGasp
-  params:
-    variation: 0.125
-    pitch: 0.75
 
 - type: emoteSounds
   id: FemaleDwarf
+  params:
+    variation: 0.125
+    pitch: 0.75
   sounds:
     Scream:
       collection: FemaleScreams
@@ -364,9 +371,6 @@
       collection: FemaleGasp
     DefaultDeathgasp:
       collection: FemaleDeathGasp
-  params:
-    variation: 0.125
-    pitch: 0.75
 
 - type: emoteSounds
   id: UnisexMoth
@@ -486,6 +490,10 @@
       collection: VulpkaninWhines
     Howl:
       collection: VulpkaninHowls
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: MaleDeathGasp
 
 - type: emoteSounds
   id: FemaleVulpkanin
@@ -514,6 +522,10 @@
       collection: VulpkaninWhines
     Howl:
       collection: VulpkaninHowls
+    Gasp:
+      collection: FemaleGasp
+    DefaultDeathgasp:
+      collection: FemaleDeathGasp
 
 # body emotes
 - type: emoteSounds
