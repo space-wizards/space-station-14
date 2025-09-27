@@ -98,3 +98,18 @@
     containers:
       item:
       - CaneBlade
+
+- type: entity
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: BoxCaneBlade
+  name: cane blade box
+  description: A box containing a sheathed cane blade. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/boxicons.rsi
+    state: canefake
+  - type: SpawnItemsOnUse
+    items:
+    - id: CaneSheathFilled
+    sound:
+      path: /Audio/Effects/unwrap.ogg
