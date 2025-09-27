@@ -723,6 +723,6 @@ ClothingUniformJumpsuitParamedicNT: ClothingUniformJumpsuitParamedic
 PrefilledSyringe: Syringe
 
 # 2025-09-27
-BoxMime: null
-BoxMimeNitrogen: null
-BoxMimeMoth: null
+BoxMime: BoxSurvival
+BoxMimeNitrogen: BoxSurvivalNitrogen
+BoxMimeMoth: BoxSurvival
