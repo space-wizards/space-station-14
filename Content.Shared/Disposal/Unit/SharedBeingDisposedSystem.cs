@@ -2,6 +2,7 @@ using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Holder;
 using Content.Shared.Follower;
 using Content.Shared.Follower.Components;
+using Content.Shared.Interaction.Events;
 
 namespace Content.Shared.Disposal.Unit;
 
@@ -22,6 +23,9 @@ public abstract class SharedBeingDisposedSystem : EntitySystem
         SubscribeLocalEvent<BeingDisposedComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<BeingDisposedComponent, EntityStartedFollowingEvent>(OnStartedFollowing);
         SubscribeLocalEvent<BeingDisposedComponent, EntityStoppedFollowingEvent>(OnStoppedFollowing);
+
+        SubscribeLocalEvent<BeingDisposedComponent, InteractionAttemptEvent>(OnInteractionAttempt);
+        SubscribeLocalEvent<BeingDisposedComponent, AttackAttemptEvent>(OnAttackAttempt);
     }
 
     private void OnStartup(Entity<BeingDisposedComponent> ent, ref DisposalSystemTransitionEvent args)
@@ -62,5 +66,17 @@ public abstract class SharedBeingDisposedSystem : EntitySystem
     private void OnStoppedFollowing(Entity<BeingDisposedComponent> ent, ref EntityStoppedFollowingEvent args)
     {
         _disposable.DetachEntityFromDisposalHolder(args.Follower);
+    }
+
+    private void OnInteractionAttempt(Entity<BeingDisposedComponent> ent, ref InteractionAttemptEvent args)
+    {
+        // Prevent interactions while travelling through disposals
+        args.Cancelled = true;
+    }
+
+    private void OnAttackAttempt(Entity<BeingDisposedComponent> ent, ref AttackAttemptEvent args)
+    {
+        // Prevent attacking while travelling through disposals
+        args.Cancel();
     }
 }
