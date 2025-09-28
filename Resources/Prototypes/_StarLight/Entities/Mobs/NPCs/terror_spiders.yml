@@ -313,7 +313,8 @@
 - type: entity
   name: terror black
   parent: MobTerrorGrayUnevolvable
-  id: MobTerrorBlack
+  id: MobTerrorBlackUnevolvable
+  abstract: true
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -325,6 +326,11 @@
     knockdownTargetOnCollision: true
   - type: Spider
     webPrototype: SpiderWebPoison
+
+- type: entity
+  name: terror black
+  parent: MobTerrorBlackUnevolvable
+  id: MobTerrorBlack
 
 # Purple
 
@@ -348,7 +354,8 @@
 - type: entity
   name: terror white
   parent: MobTerrorGreenUnevolvable
-  id: MobTerrorWhite
+  id: MobTerrorWhiteUnevolvable
+  abstract: true
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -372,6 +379,11 @@
     availableModes:
       - Burst
     soundGunshot: /Audio/Weapons/Xeno/alien_spitacid.ogg
+
+- type: entity
+  name: terror white
+  parent: MobTerrorWhiteUnevolvable
+  id: MobTerrorWhite
 
 # Tier 3
 
@@ -468,56 +480,21 @@
       enum.EggsLayingUiKey.Key:
         type: EggsLayingBui
 
-- type: entity
-  parent: EggSpider
-  id: TerrorGrayEggSpiderFertilized
-  name: egg spider
-  components:
-  - type: Sprite
-    sprite: _Starlight/Mobs/Animals/Spiders/terror_gray2.rsi
-    state: egg
-  - type: Timer
-  - type: TimedSpawner
-    prototypes:
-    - MobTerrorGray
-    intervalSeconds: 180
-    minimumEntitiesSpawned: 1
-    maximumEntitiesSpawned: 1
-  - type: TimedDespawn 
-    lifetime: 181
+# Mother
 
 - type: entity
-  parent: EggSpider
-  id: TerrorGreenSpiderFertilized
-  name: egg spider
+  name: mother of terror
+  parent: MobTerrorBlackUnevolvable
+  id: MobTerrorMother
   components:
   - type: Sprite
-    sprite: _Starlight/Mobs/Animals/Spiders/terror_green.rsi
-    state: egg
-  - type: Timer
-  - type: TimedSpawner
-    prototypes:
-    - MobTerrorGreen
-    intervalSeconds: 180
-    minimumEntitiesSpawned: 1
-    maximumEntitiesSpawned: 1
-  - type: TimedDespawn 
-    lifetime: 181
-    
-- type: entity
-  parent: EggSpider
-  id: TerrorRedEggSpiderFertilized
-  name: egg spider
-  components:
-  - type: Sprite
-    sprite: _Starlight/Mobs/Animals/Spiders/terror_red.rsi
-    state: egg
-  - type: Timer
-  - type: TimedSpawner
-    prototypes:
-    - MobTerrorRed
-    intervalSeconds: 180
-    minimumEntitiesSpawned: 1
-    maximumEntitiesSpawned: 1
-  - type: TimedDespawn 
-    lifetime: 181
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: alive
+      sprite: _Starlight/Mobs/Animals/Spiders/terror_mother.rsi
+  - type: Spider
+    webPrototype: SpiderWebSpiderlings
+  - type: SpawnOnAction
+    action: ActionRoyalJelly
+    entityToSpawn: SpiderJelly

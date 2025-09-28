@@ -92,7 +92,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
                 if (_time.CurTime - victim.LastActivation < TimeSpan.FromSeconds(240))
                     return;
                 victim.LastActivation = _time.CurTime;
-                SpawnAttachedTo("EggSpiderFertilized", Transform(uid).Coordinates);
+                SpawnAttachedTo("MobSpiderlingSpiderAngry", Transform(uid).Coordinates);
                 break;
             default:
                 break;

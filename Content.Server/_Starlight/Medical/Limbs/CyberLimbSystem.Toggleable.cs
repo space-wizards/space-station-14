@@ -1,28 +1,21 @@
-using System.Linq;
-using Content.Server.Actions;
-using Content.Server.Administration.Systems;
 using Content.Shared._Starlight.Medical.Limbs;
-using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
-using Content.Shared.Body.Components;
-using Content.Shared.Interaction.Components;
-using Content.Shared.Starlight;
-using Content.Shared.Starlight.Medical.Surgery.Effects.Step;
-using Content.Shared.Starlight.Medical.Surgery.Events;
-using Robust.Shared.Prototypes;
+using Content.Shared.Starlight.Abstract.Codegen;
 
 namespace Content.Server._Starlight.Medical.Limbs;
+
+[GenerateLocalSubscriptions<IWithAction>]
 public sealed partial class CyberLimbSystem : EntitySystem
 {
     public void InitializeToggleable()
     {
-        SubscribeLocalEvent<BodyComponent, LimbAttachedEvent<IWithAction>>(IWithActionAttached);
-        SubscribeLocalEvent<BodyComponent, LimbRemovedEvent<IWithAction>>(IWithActionRemoved);
+        SubscribeAllWithAction<LimbAttachedEvent>(IWithActionAttached);
+        SubscribeAllWithAction<LimbDetachedEvent>(IWithActionRemoved);
     }
 
-    private void IWithActionRemoved(Entity<BodyComponent> ent, ref LimbRemovedEvent<IWithAction> args) 
-        => _actions.RemoveProvidedActions(ent.Owner, args.Limb);
+    private void IWithActionRemoved(Entity<IWithAction> _, ref LimbDetachedEvent args) 
+        => _actions.RemoveProvidedActions(args.Body, args.Limb);
 
-    private void IWithActionAttached(Entity<BodyComponent> ent, ref LimbAttachedEvent<IWithAction> args) 
-        => _actions.GrantContainedActions(_slEnt.Entity<ActionsComponent>(ent), _slEnt.Entity<ActionsContainerComponent>(args.Limb));
+    private void IWithActionAttached(Entity<IWithAction> _, ref LimbAttachedEvent args) 
+        => _actions.GrantContainedActions(_slEnt.Entity<ActionsComponent>(args.Body), _slEnt.Entity<ActionsContainerComponent>(args.Limb));
 }

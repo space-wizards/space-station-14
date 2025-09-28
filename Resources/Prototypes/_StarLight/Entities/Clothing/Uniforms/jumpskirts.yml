@@ -11,6 +11,17 @@
 
 - type: entity
   parent: [ ClothingUniformSkirtBase, BaseCommandContraband ]
+  id: ClothingUniformJumpskirtNtrepTurtleneck
+  name: nt representive's turtleneck jumpskirt
+  description: For a more casual look while on the job.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/ntrepturtleneckskirt.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/ntrepturtleneckskirt.rsi
+    
+- type: entity
+  parent: [ ClothingUniformSkirtBase, BaseCommandContraband ]
   id: ClothingUniformJumpskirtBlueShield
   name: blueshield officer's skirt
   description: Skirt of a glorified bodyguard
@@ -147,7 +158,7 @@
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtPencilTan
-  name: beige "pencil" style skirt
+  name: beige "pencil" style skirt 
   description: The beige "pencil" style skirt exudes softness and elegance. The fitted blazer and straight skirt create a refined silhouette, making it suitable for various occasions, from business meetings to evening dinners.
   components:
   - type: Sprite
@@ -158,18 +169,18 @@
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtPencilCentcomOfficial
-  name: centcomm "pencil" style skirt
+  name: centcomm "pencil" style skirt 
   description: A strict green "pencil" skirt exudes authority and poise. The fitted blazer and straight skirt form an elegant silhouette, suitable for various occasions, from business meetings to a captain's dismissal.
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/pencil_centcom_official.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/pencil_centcom_official.rsi
-
+  
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtPencilSpecialOperationsOfficer
-  name: SOC officer "pencil" skirt
+  name: SOC officer "pencil" skirt 
   description: A formal black Special Operations Corps officer's "pencil" skirt embodies authority and sophistication. The tailored blazer and straight skirt create a refined silhouette, suitable for various occasions, from strategic meetings to... well, less conventional operations.
   components:
   - type: Sprite
@@ -265,7 +276,7 @@
       sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcom_official.rsi
     - type: Clothing
       sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcom_official.rsi
-
+  
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtCentcomOfficer
@@ -276,7 +287,7 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcom_officer.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcom_officer.rsi
-
+  
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtElegantMaid
@@ -287,7 +298,7 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/elegantmaid.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/elegantmaid.rsi
-
+  
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformColorJumpskirtRainbow
@@ -298,7 +309,7 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/rainbow.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/rainbow.rsi
-
+  
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtSchool
@@ -309,7 +320,7 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/schoolskirt.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/schoolskirt.rsi
-
+  
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpskirtCapTurtleneck
@@ -320,7 +331,7 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/cap_turtleneck.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/cap_turtleneck.rsi
-
+  
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpskirtHoPTurtleneck
@@ -331,7 +342,7 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/hop_turtleneck.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/hop_turtleneck.rsi
-
+  
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpskirtHoSBlack
@@ -342,7 +353,7 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/hos_black.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/hos_black.rsi
-
+  
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpskirtRDClassical
