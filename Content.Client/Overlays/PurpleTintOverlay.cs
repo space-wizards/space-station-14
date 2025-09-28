@@ -19,8 +19,8 @@ public sealed partial class PurpleTintOverlay : Overlay
 
     // Parameters
     public Color TintColor { get; set; } = Color.FromHex("#7f00e0");
-    public float Strength { get; set; } = 0.60f;
-    public float Saturation { get; set; } = 1.05f;
+    public float Strength { get; set; } = 0.65f;
+    public float Saturation { get; set; } = 1.15f;
     public float Contrast { get; set; } = 1.00f;
 
     public PurpleTintOverlay()
