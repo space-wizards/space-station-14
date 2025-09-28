@@ -5,8 +5,8 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using DrawDepthTag = Robust.Shared.GameObjects.DrawDepth;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom; //Starlight
+using DrawDepthTag = Robust.Shared.GameObjects.DrawDepth; //Starlight
 
 namespace Content.Shared.Buckle.Components;
 
