@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/27/2025 16:48:47
-  entityCount: 25242
+  time: 09/28/2025 12:52:14
+  entityCount: 25243
 maps:
 - 1
 grids:
@@ -9670,6 +9670,7 @@ entities:
       - 16171
       - 602
       - 16004
+      - 25243
     - type: Fixtures
       fixtures: {}
   - uid: 43
@@ -12625,7 +12626,7 @@ entities:
       pos: -29.5,-12.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -72752.516
+      secondsUntilStateChange: -73997.6
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12637,7 +12638,7 @@ entities:
       pos: 30.5,-28.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -72759.016
+      secondsUntilStateChange: -74004.1
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12649,7 +12650,7 @@ entities:
       pos: 30.5,-24.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -72759.71
+      secondsUntilStateChange: -74004.8
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -13787,7 +13788,7 @@ entities:
       pos: 36.5,0.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -164455.83
+      secondsUntilStateChange: -165700.92
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -15225,6 +15226,16 @@ entities:
       deviceLists:
       - 12696
       - 140
+  - uid: 25243
+    components:
+    - type: Transform
+      pos: 34.5,9.5
+      parent: 2
+    - type: DeviceNetwork
+      configurators:
+      - invalid
+      deviceLists:
+      - 42
 - proto: AirSensorFreezer
   entities:
   - uid: 630
@@ -42635,11 +42646,6 @@ entities:
     components:
     - type: Transform
       pos: 40.5,2.5
-      parent: 2
-  - uid: 5926
-    components:
-    - type: Transform
-      pos: 38.5,9.5
       parent: 2
   - uid: 5927
     components:
@@ -123695,6 +123701,13 @@ entities:
       parent: 8798
     - type: Physics
       canCollide: False
+- proto: PinpointerUniversal
+  entities:
+  - uid: 5926
+    components:
+    - type: Transform
+      pos: 1.4085908,-18.401943
+      parent: 2
 - proto: PlasmaCanister
   entities:
   - uid: 18421
