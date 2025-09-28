@@ -24,42 +24,24 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
 
     private static readonly Color AnnouncmentColor = Color.Gold;
 
-    public override void Initialize()
+    public void SendXenoborgDeathAnnouncement(Entity<XenoborgsRuleComponent> ent, bool mothershipCoreAlive)
     {
-        base.Initialize();
+        if (ent.Comp.MothershipCoreDeathAnnouncmentSent)
+            return;
 
-        SubscribeLocalEvent<XenoborgComponent, DestructionEventArgs>(OnXenoborgDestroyed);
-    }
-
-    private void OnXenoborgDestroyed(EntityUid ent, XenoborgComponent component, DestructionEventArgs args)
-    {
-        // if a xenoborg is destroyed, it will check if other xenoborgs are destroyed
-        var xenoborgQuery = AllEntityQuery<XenoborgComponent>();
-        while (xenoborgQuery.MoveNext(out var xenoborgEnt, out _))
-        {
-            if (HasComp<MothershipCoreComponent>(xenoborgEnt))
-                continue;
-
-            // if it finds another xenoborg that is different from the one just destroyed,
-            // it means there are still more xenoborgs.
-            if (xenoborgEnt != ent)
-                return;
-        }
-
-        // all xenoborgs are gone
-        var mothershipCoreQuery = AllEntityQuery<MothershipCoreComponent>();
-        var status = mothershipCoreQuery.MoveNext(out _, out _) ? "alive" : "dead";
-
+        var status = mothershipCoreAlive ? "alive" : "dead";
         _chatSystem.DispatchGlobalAnnouncement(
             Loc.GetString($"xenoborgs-no-more-threat-mothership-core-{status}-announcement"),
             colorOverride: AnnouncmentColor);
     }
 
-    public void SendMothershipDeathAnnouncement()
+    public void SendMothershipDeathAnnouncement(Entity<XenoborgsRuleComponent> ent)
     {
         _chatSystem.DispatchGlobalAnnouncement(
             Loc.GetString("mothership-destroyed-announcement"),
             colorOverride: AnnouncmentColor);
+
+        ent.Comp.MothershipCoreDeathAnnouncmentSent = true;
     }
 
     // TODO: Refactor the end of round text

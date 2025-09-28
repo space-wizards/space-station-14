@@ -24,4 +24,6 @@ public sealed partial class XenoborgsRuleComponent : Component
     /// </summary>
     [DataField]
     public float XenoborgShuttleCallPercentage = 0.7f;
+
+    public bool MothershipCoreDeathAnnouncmentSent = false;
 }

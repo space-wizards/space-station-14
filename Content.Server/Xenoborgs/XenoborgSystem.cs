@@ -26,12 +26,32 @@ public sealed partial class XenoborgSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<MothershipCoreComponent, DestructionEventArgs>(OnDestroyed);
+        SubscribeLocalEvent<XenoborgComponent, DestructionEventArgs>(OnXenoborgDestroyed);
+        SubscribeLocalEvent<MothershipCoreComponent, DestructionEventArgs>(OnCoreDestroyed);
+
         SubscribeLocalEvent<XenoborgComponent, MindAddedMessage>(OnXenoborgMindAdded);
         SubscribeLocalEvent<XenoborgComponent, MindRemovedMessage>(OnXenoborgMindRemoved);
     }
 
-    private void OnDestroyed(EntityUid ent, MothershipCoreComponent component, DestructionEventArgs args)
+    private void OnXenoborgDestroyed(EntityUid uid, XenoborgComponent component, DestructionEventArgs args)
+    {
+        // if a xenoborg is destroyed, it will check to see if it was the last one
+        var xenoborgQuery = AllEntityQuery<XenoborgComponent>();
+        while (xenoborgQuery.MoveNext(out var xenoborg, out _))
+        {
+            if (xenoborg != uid)
+                return;
+        }
+
+        var mothershipCoreQuery = AllEntityQuery<MothershipCoreComponent>();
+        var mothershipCoreAlive = mothershipCoreQuery.MoveNext(out _, out _);
+
+        var xenoborgsRuleQuery = AllEntityQuery<XenoborgsRuleComponent>();
+        if (xenoborgsRuleQuery.MoveNext(out var xenoborgsRuleEnt, out var xenoborgsRuleComp))
+            _xenoborgsRule.SendXenoborgDeathAnnouncement((xenoborgsRuleEnt, xenoborgsRuleComp), mothershipCoreAlive);
+    }
+
+    private void OnCoreDestroyed(EntityUid ent, MothershipCoreComponent component, DestructionEventArgs args)
     {
         // if a mothership core is destroyed, it will see if there are any others
         var mothershipCoreQuery = AllEntityQuery<MothershipCoreComponent>();
@@ -44,8 +64,8 @@ public sealed partial class XenoborgSystem : EntitySystem
         }
 
         var xenoborgsRuleQuery = AllEntityQuery<XenoborgsRuleComponent>();
-        if (xenoborgsRuleQuery.MoveNext(out _, out _))
-            _xenoborgsRule.SendMothershipDeathAnnouncement();
+        if (xenoborgsRuleQuery.MoveNext(out var xenoborgsRuleEnt, out var xenoborgsRuleComp))
+            _xenoborgsRule.SendMothershipDeathAnnouncement((xenoborgsRuleEnt, xenoborgsRuleComp));
 
         // explode all xenoborgs
         var xenoborgQuery = AllEntityQuery<XenoborgComponent, BorgTransponderComponent>();
