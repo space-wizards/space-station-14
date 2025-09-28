@@ -172,11 +172,11 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: MaleDeathGasp
+  params:
+    variation: 0.125
 
 - type: emoteSounds
   id: FemaleSlime
-  params:
-    variation: 0.125
   sounds:
     Squish:
       collection: Squishes
@@ -216,6 +216,8 @@
       collection: FemaleGasp
     DefaultDeathgasp:
       collection: FemaleDeathGasp
+  params:
+    variation: 0.125
 
 - type: emoteSounds
   id: UnisexVox
