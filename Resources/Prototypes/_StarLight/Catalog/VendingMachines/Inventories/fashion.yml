@@ -1,10 +1,21 @@
 - type: listing
+  abstract: true
+  id: FashionBase
+  conditions:
+    - !type:ListingLimitedStockCondition 
+      stock: 1
+
+- type: listing
   id: ClothingUniformJumpskirtGothic
   productEntity: ClothingUniformJumpskirtGothic
   cost:
     NTCredit: 990
   categories:
     - SLFashionSkirt
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingUniformJumpskirtMaid
   productEntity: ClothingUniformJumpskirtMaid
@@ -12,6 +23,10 @@
     NTCredit: 990
   categories:
     - SLFashionSkirt
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingUniformJumpskirtDressRed
   productEntity: ClothingUniformJumpskirtDressRed
@@ -19,6 +34,10 @@
     NTCredit: 990
   categories:
     - SLFashionSkirt
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingUniformJumpskirtTango
   productEntity: ClothingUniformJumpskirtTango
@@ -26,6 +45,21 @@
     NTCredit: 990
   categories:
     - SLFashionSkirt
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
+- type: listing
+  id: ClothingUniformJulianneVA11HALLA
+  productEntity: ClothingUniformJulianneVA11HALLA
+  cost:
+    NTCredit: 990
+  categories:
+    - SLFashionSkirt
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingUniformJumpskirtVictorianBlack
   productEntity: ClothingUniformJumpskirtVictorianBlack
@@ -33,6 +67,10 @@
     NTCredit: 990
   categories:
     - SLFashionSkirt
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingUniformJumpskirtVictorianrRed
   productEntity: ClothingUniformJumpskirtVictorianrRed
@@ -40,6 +78,10 @@
     NTCredit: 990
   categories:
     - SLFashionSkirt
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingUniformJumpskirtPencilTan
   productEntity: ClothingUniformJumpskirtPencilTan
@@ -47,6 +89,10 @@
     NTCredit: 990
   categories:
     - SLFashionSkirt
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingUniformJumpskirtPencilCentcomOfficial
   productEntity: ClothingUniformJumpskirtPencilCentcomOfficial
@@ -54,6 +100,10 @@
     NTCredit: 2000
   categories:
     - SLFashionSkirt
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingUniformJumpskirtPencilSpecialOperationsOfficer
   productEntity: ClothingUniformJumpskirtPencilSpecialOperationsOfficer
@@ -61,6 +111,10 @@
     NTCredit: 2000
   categories:
     - SLFashionSkirt
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingUniformJumpskirtCentcomOfficial
   productEntity: ClothingUniformJumpskirtCentcomOfficial
@@ -68,6 +122,10 @@
     NTCredit: 2000
   categories:
     - SLFashionSkirt
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingUniformJumpskirtCentcomOfficer
   productEntity: ClothingUniformJumpskirtCentcomOfficer
@@ -75,6 +133,10 @@
     NTCredit: 2000
   categories:
     - SLFashionSkirt
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingUniformJumpskirtElegantMaid
   productEntity: ClothingUniformJumpskirtElegantMaid
@@ -82,6 +144,10 @@
     NTCredit: 990
   categories:
     - SLFashionSkirt
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingUniformColorJumpskirtRainbow
   productEntity: ClothingUniformColorJumpskirtRainbow
@@ -89,6 +155,10 @@
     NTCredit: 200
   categories:
     - SLFashionSkirt
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingUniformJumpskirtSchool
   productEntity: ClothingUniformJumpskirtSchool
@@ -96,6 +166,10 @@
     NTCredit: 990
   categories:
     - SLFashionSkirt
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: LilacDressUniformSuit
   productEntity: LilacDressUniformSuit
@@ -103,6 +177,10 @@
     NTCredit: 990
   categories:
     - SLFashionSkirt
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: LittleBlackDressUniformSuit
   productEntity: LittleBlackDressUniformSuit
@@ -110,6 +188,10 @@
     NTCredit: 990
   categories:
     - SLFashionSkirt
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: SundressUniformSuit
   productEntity: SundressUniformSuit
@@ -117,6 +199,10 @@
     NTCredit: 990
   categories:
     - SLFashionSkirt
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingUniformElegantLadyDress
   productEntity: ClothingUniformElegantLadyDress
@@ -124,6 +210,10 @@
     NTCredit: 990
   categories:
     - SLFashionSkirt
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingUniformJumpsuitSuitCheckered
   productEntity: ClothingUniformJumpsuitSuitCheckered
@@ -131,6 +221,10 @@
     NTCredit: 990
   categories:
     - SLFashionSuit
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingUniformJumpsuitSuitTan
   productEntity: ClothingUniformJumpsuitSuitTan
@@ -138,6 +232,10 @@
     NTCredit: 990
   categories:
     - SLFashionSuit
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingUniformJumpsuitSuitWaiter
   productEntity: ClothingUniformJumpsuitSuitWaiter
@@ -145,6 +243,10 @@
     NTCredit: 990
   categories:
     - SLFashionSuit
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingUniformJumpsuitMimeSexyWhite
   productEntity: ClothingUniformJumpsuitMimeSexyWhite
@@ -152,6 +254,10 @@
     NTCredit: 400
   categories:
     - SLFashionSuit
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingUniformJumpsuitMimeSexyBlack
   productEntity: ClothingUniformJumpsuitMimeSexyBlack
@@ -159,6 +265,10 @@
     NTCredit: 400
   categories:
     - SLFashionSuit
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingUniformJumpsuitSuperstarCop
   productEntity: ClothingUniformJumpsuitSuperstarCop
@@ -166,6 +276,10 @@
     NTCredit: 990
   categories:
     - SLFashionSuit
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingUniformJumpsuitAerostatic
   productEntity: ClothingUniformJumpsuitAerostatic
@@ -173,6 +287,10 @@
     NTCredit: 990
   categories:
     - SLFashionSuit
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingUniformJumpsuitCentcomOfficerBlack
   productEntity: ClothingUniformJumpsuitCentcomOfficerBlack
@@ -180,6 +298,10 @@
     NTCredit: 2000
   categories:
     - SLFashionSuit
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingUniformJumpsuitCentcomAdmiral
   productEntity: ClothingUniformJumpsuitCentcomAdmiral
@@ -187,48 +309,76 @@
     NTCredit: 2000
   categories:
     - SLFashionSuit
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingHeadHelmetSilverMusician
   productEntity: ClothingHeadHelmetSilverMusician
   cost:
-    NTCredit: 2500
+    NTCredit: 990
   categories:
     - SLFashionHead
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingMaskGeneralBorg
   productEntity: ClothingMaskGeneralBorg
   cost:
-    NTCredit: 990
+    NTCredit: 400
   categories:
     - SLFashionHead
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingMaskCargoBorg
   productEntity: ClothingMaskCargoBorg
   cost:
-    NTCredit: 990
+    NTCredit: 400
   categories:
     - SLFashionHead
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingMaskEngiBorg
   productEntity: ClothingMaskEngiBorg
   cost:
-    NTCredit: 990
+    NTCredit: 400
   categories:
     - SLFashionHead
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingMaskJanitorBorg
   productEntity: ClothingMaskJanitorBorg
   cost:
-    NTCredit: 990
+    NTCredit: 400
   categories:
     - SLFashionHead
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingMaskSecBorg
   productEntity: ClothingMaskSecBorg
   cost:
-    NTCredit: 990
+    NTCredit: 400
   categories:
     - SLFashionHead
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingNeckCloakCentcomBlack
   productEntity: ClothingNeckCloakCentcomBlack
@@ -236,6 +386,10 @@
     NTCredit: 2000
   categories:
     - SLFashionOther
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingNeckCloakCentcomAdmiral
   productEntity: ClothingNeckCloakCentcomAdmiral
@@ -243,6 +397,10 @@
     NTCredit: 2000
   categories:
     - SLFashionOther
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingNeckMantleERTLeader
   productEntity: ClothingNeckMantleERTLeader
@@ -250,6 +408,10 @@
     NTCredit: 2000
   categories:
     - SLFashionOther
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingNeckHorrific
   productEntity: ClothingNeckHorrific
@@ -257,6 +419,10 @@
     NTCredit: 9500
   categories:
     - SLFashionOther
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: ClothingUniformDama0965
   productEntity: ClothingUniformDama0965
@@ -264,6 +430,10 @@
     NTCredit: 2500
   categories:
     - SLFashionOther
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: PlushieBBC
   productEntity: PlushieBBC
@@ -271,6 +441,10 @@
     NTCredit: 4500
   categories:
     - SLFashionOther
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
 - type: listing
   id: BoxPancakes
   productEntity: BoxPancakes
@@ -278,3 +452,6 @@
     NTCredit: 990
   categories:
     - SLFashionOther
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1

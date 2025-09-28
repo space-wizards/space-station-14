@@ -1,0 +1,9 @@
+# Senior clothes 
+- type: loadoutEffectGroup
+  id: SeniorCommand
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Command
+      time: 216000 # 60 hrs

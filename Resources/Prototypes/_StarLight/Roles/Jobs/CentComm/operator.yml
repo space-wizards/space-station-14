@@ -5,7 +5,7 @@
   playTimeTracker: JobCentralCommandOperator
   setPreference: false
   startingGear: CentcomOperatorGear
-  icon: "JobIconCentComm"
+  icon: "JobIconCentCommOperator"
   rules: job-rules-corporate-aligned
   supervisors: job-supervisors-hos
   canBeAntag: false
@@ -17,12 +17,10 @@
 - type: startingGear
   id: CentcomOperatorGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitCentcomOfficial
+    jumpsuit: ClothingAltUniformJumpsuitCentcomOfficial
     shoes: ClothingShoesBootsCombatFilled
-    head: ClothingHeadHatCentcom
     eyes: ClothingEyesGlassesCentComm
     gloves: ClothingHandsGlovesColorBlack
-    outerClothing: ClothingOuterArmorBasic
     id: CentCommOperatorPDA
     ears: ClothingHeadsetAltCentCom
     belt: WeaponPistolN1984
