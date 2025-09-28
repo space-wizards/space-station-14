@@ -56,7 +56,7 @@ public sealed partial class ShearableComponent : Component
     ///     maximumProductsSpawned: 25
     /// </example>
     [DataField]
-    public float? MaximumProductsSpawned;
+    public int? MaximumProductsSpawned;
 
     /// <summary>
     ///     The "Quality" of the target item that allows this entity to be sheared.
