@@ -203,10 +203,11 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             currentTime < ent.Comp.LastExitAttempt + ent.Comp.ExitAttemptDelay)
             return;
 
-        Dirty(ent);
-        ent.Comp.LastExitAttempt = currentTime;
         Remove(ent, args.Entity);
+        ent.Comp.LastExitAttempt = currentTime;
+
         UpdateUI(ent);
+        Dirty(ent);
     }
 
     private void OnActivate(Entity<DisposalUnitComponent> ent, ref ActivateInWorldEvent args)
@@ -248,13 +249,13 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (!ent.Comp.Running)
             return;
 
-        UpdateUI(ent);
         UpdateVisualState(ent);
 
         if (!args.Powered)
         {
             ent.Comp.NextFlush = null;
             Dirty(ent);
+
             return;
         }
 
@@ -330,15 +331,12 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (!_containers.Remove(toRemove, ent.Comp.Container))
             return;
 
-        if (ent.Comp.Container.ContainedEntities.Count == 0)
+        // If not manually engaged then reset the flushing entirely.
+        if (ent.Comp.Container.ContainedEntities.Count == 0 &&
+            !ent.Comp.Engaged)
         {
-            // If not manually engaged then reset the flushing entirely.
-            if (!ent.Comp.Engaged)
-            {
-                ent.Comp.NextFlush = null;
-                Dirty(ent);
-                UpdateUI(ent);
-            }
+            ent.Comp.NextFlush = null;
+            Dirty(ent);
         }
 
         _climb.Climb(toRemove, toRemove, ent, silent: true);
@@ -551,7 +549,9 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             return;
 
         ent.Comp.State = state;
+
         UpdateVisualState(ent);
+        UpdateUI(ent);
         Dirty(ent);
 
         if (state == DisposalsPressureState.Ready)
@@ -575,7 +575,8 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     }
 
     /// <summary>
-    /// Work out if we can stop updating this disposals component i.e. full pressure and nothing colliding.
+    /// Work out if we can stop updating this disposals component
+    /// (i.e. full pressure and nothing colliding).
     /// </summary>
     private void Update(Entity<DisposalUnitComponent> ent, MetaDataComponent metadata)
     {
@@ -588,12 +589,11 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             return;
         }
 
-        if (ent.Comp.NextFlush != null)
+        // Check if we need to flush
+        if (ent.Comp.NextFlush != null &&
+            ent.Comp.NextFlush.Value < _timing.CurTime)
         {
-            if (ent.Comp.NextFlush.Value < _timing.CurTime)
-            {
-                TryFlush(ent);
-            }
+            TryFlush(ent);
         }
 
         UpdateState(ent, state);
@@ -637,8 +637,11 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (entry == null || entryComp == null || tubeComp == null)
         {
             ent.Comp.Engaged = false;
+
+            UpdateVisualState(ent);
             UpdateUI(ent);
             Dirty(ent);
+
             return false;
         }
 
@@ -653,10 +656,9 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         ent.Comp.Engaged = false;
         ent.Comp.NextFlush = null;
 
-        Dirty(ent);
-
         UpdateVisualState(ent);
         UpdateUI(ent);
+        Dirty(ent);
 
         return true;
     }
@@ -669,9 +671,10 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     public void ManualEngage(Entity<DisposalUnitComponent> ent, MetaDataComponent? metadata = null)
     {
         ent.Comp.Engaged = true;
+
         UpdateVisualState(ent);
-        Dirty(ent);
         UpdateUI(ent);
+        Dirty(ent);
 
         if (!CanFlush(ent))
             return;
@@ -698,8 +701,8 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         }
 
         UpdateVisualState(ent);
-        Dirty(ent);
         UpdateUI(ent);
+        Dirty(ent);
     }
 
     /// <summary>
@@ -732,7 +735,6 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
         ent.Comp.NextFlush = flushTime;
         Dirty(ent);
-        UpdateUI(ent);
     }
 
     private void OnUiButtonPressed(Entity<DisposalUnitComponent> ent, ref DisposalUnitUiButtonPressedMessage args)

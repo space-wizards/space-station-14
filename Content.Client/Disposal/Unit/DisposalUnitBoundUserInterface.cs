@@ -37,6 +37,16 @@ namespace Content.Client.Disposal.Unit
             }
         }
 
+        public override void Update()
+        {
+            base.Update();
+
+            if (EntMan.TryGetComponent(Owner, out DisposalUnitComponent? component))
+            {
+                Refresh((Owner, component));
+            }
+        }
+
         public void Refresh(Entity<DisposalUnitComponent> entity)
         {
             if (_disposalUnitWindow == null)
