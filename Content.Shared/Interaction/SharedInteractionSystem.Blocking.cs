@@ -17,20 +17,14 @@ public partial class SharedInteractionSystem
     private void InitializeBlocking()
     {
         SubscribeLocalEvent<BlockMovementComponent, UpdateCanMoveEvent>(OnMoveAttempt);
-        SubscribeLocalEvent<BlockMovementComponent, UseAttemptEvent>(CancelEvent);
-        SubscribeLocalEvent<BlockMovementComponent, InteractionAttemptEvent>(CancelInteractEvent);
-        SubscribeLocalEvent<BlockMovementComponent, DropAttemptEvent>(CancelEvent);
-        SubscribeLocalEvent<BlockMovementComponent, PickupAttemptEvent>(CancelEvent);
-        SubscribeLocalEvent<BlockMovementComponent, ChangeDirectionAttemptEvent>(CancelEvent);
+        SubscribeLocalEvent<BlockMovementComponent, UseAttemptEvent>(OnUseAttempt);
+        SubscribeLocalEvent<BlockMovementComponent, InteractionAttemptEvent>(OnInteractionAttempt);
+        SubscribeLocalEvent<BlockMovementComponent, DropAttemptEvent>(OnDropAttempt);
+        SubscribeLocalEvent<BlockMovementComponent, PickupAttemptEvent>(OnPickupAttempt);
+        SubscribeLocalEvent<BlockMovementComponent, ChangeDirectionAttemptEvent>(OnChangeDirectionAttempt);
 
         SubscribeLocalEvent<BlockMovementComponent, ComponentStartup>(OnBlockingStartup);
         SubscribeLocalEvent<BlockMovementComponent, ComponentShutdown>(OnBlockingShutdown);
-    }
-
-    private void CancelInteractEvent(Entity<BlockMovementComponent> ent, ref InteractionAttemptEvent args)
-    {
-        if (ent.Comp.BlockInteraction)
-            args.Cancelled = true;
     }
 
     private void OnMoveAttempt(EntityUid uid, BlockMovementComponent component, UpdateCanMoveEvent args)
@@ -42,9 +36,36 @@ public partial class SharedInteractionSystem
         args.Cancel(); // no more scurrying around
     }
 
-    private void CancelEvent(EntityUid uid, BlockMovementComponent component, CancellableEntityEventArgs args)
+    private void OnUseAttempt(EntityUid uid, BlockMovementComponent component, UseAttemptEvent args)
     {
-        args.Cancel();
+        if (component.BlockUse)
+            args.Cancel();
+    }
+
+    private void OnInteractionAttempt(EntityUid uid, BlockMovementComponent component, InteractionAttemptEvent args)
+    {
+        if (component.BlockInteraction)
+            args.Cancelled = true;
+    }
+
+    private void OnDropAttempt(EntityUid uid, BlockMovementComponent component, DropAttemptEvent args)
+    {
+        if (component.BlockDrop)
+            args.Cancel();
+    }
+
+    private void OnPickupAttempt(EntityUid uid, BlockMovementComponent component, PickupAttemptEvent args)
+    {
+        if (component.BlockPickup)
+            args.Cancel();
+    }
+
+    private void OnChangeDirectionAttempt(EntityUid uid,
+        BlockMovementComponent component,
+        ChangeDirectionAttemptEvent args)
+    {
+        if (component.BlockChangeDirection)
+            args.Cancel();
     }
 
     private void OnBlockingStartup(EntityUid uid, BlockMovementComponent component, ComponentStartup args)
