@@ -1,0 +1,23 @@
+- type: loadout
+  id: CargoTechnicianJumpsuitAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCargoAlt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorCargo
+
+- type: loadout
+  id: CargoTechnicianJumpsuitFormal
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCargoFormal
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorCargo
+
+- type: loadout
+  id: CargoTechnicianJumpskirtFormal
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCargoFormal
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorCargo

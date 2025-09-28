@@ -15375,5 +15375,372 @@ Entries:
   id: 170800
   time: '2025-09-21T23:52:35.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1708
+- author: Bukkataro
+  changes:
+  - message: Taser & Laser for Dominator on Orange Alert.
+    type: Add
+  id: 171300
+  time: '2025-09-22T15:48:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1713
+- author: Bukkataro
+  changes:
+  - message: Taser & Laser for Dominator on Psi Alert.
+    type: Add
+  id: 171301
+  time: '2025-09-22T15:48:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1713
+- author: CawsForConcern
+  changes:
+  - message: (Bagel) Heavy Weapons Safe to Armory
+    type: Add
+  id: 171800
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Bagel) Moved turret control panel to just outside of Armory
+    type: Tweak
+  id: 171801
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Barratry) Heavy Weapons Safe to Armory
+    type: Add
+  id: 171802
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Cog) Heavy Weapons Safe to Armory
+    type: Add
+  id: 171803
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Cog) Turret Controls for Armory
+    type: Add
+  id: 171804
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Cog) Swapped 'Tracking Implants' crate in armory for 'Implanter Crate'
+    type: Tweak
+  id: 171805
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Exo) Heavy Weapons Safe to Armory
+    type: Add
+  id: 171806
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Fland) Heavy Weapons Safe to Armory
+    type: Add
+  id: 171807
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Fland) Turret Controls for Armory
+    type: Add
+  id: 171808
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Hotel) Heavy Weapons Safe to Armory
+    type: Add
+  id: 171809
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Hotel) Turret Controls for Armory
+    type: Add
+  id: 171810
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Hotel) Unconnected air vent on the engineering side of Engineering's
+      front desk
+    type: Remove
+  id: 171811
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Lagan) Heavy Weapons Safe to Armory
+    type: Add
+  id: 171812
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Lobster) Heavy Weapons Safe to Armory
+    type: Add
+  id: 171813
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Lobster) Shuffled around the portable flasher, implanter crate, and
+      Paddy's positions a little
+    type: Tweak
+  id: 171814
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Manor) Heavy Weapons Safe to Armory
+    type: Add
+  id: 171815
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Oasis) Heavy Weapons Safe to Armory
+    type: Add
+  id: 171816
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Oasis) Turret Controls to Armory
+    type: Add
+  id: 171817
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Oasis) Shuffled around suit storage and air alarm to make the added
+      Turret Controls easier to reach
+    type: Tweak
+  id: 171818
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Omega) Heavy Weapons Safe to Armory
+    type: Add
+  id: 171819
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Omega) Security Turret to Armory
+    type: Add
+  id: 171820
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Omega) Turret Controls for Armory
+    type: Add
+  id: 171821
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Orwell) Heavy Weapons Safe to Armory
+    type: Add
+  id: 171822
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Saltern) Heavy Weapons Safe to Armory
+    type: Add
+  id: 171823
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Saltern) Contraband storage crate to SEC
+    type: Add
+  id: 171824
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Starboard) Heavy Weapons Safe to Armory
+    type: Add
+  id: 171825
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Starboard) Turret Controls for Armory
+    type: Add
+  id: 171826
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Kiloton) Heavy Weapons Safe to Armory
+    type: Add
+  id: 171827
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Elkridge) Heavy Weapons Safe to Armory
+    type: Add
+  id: 171828
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Silica) Heavy Weapons Safe to Armory
+    type: Add
+  id: 171829
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: CawsForConcern
+  changes:
+  - message: (Cluster) Heavy Weapons Safe to Armory
+    type: Add
+  id: 171830
+  time: '2025-09-23T15:46:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1718
+- author: Rinary
+  changes:
+  - message: Added digital locks.
+    type: Add
+  id: 137800
+  time: '2025-09-23T16:25:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1378
+- author: Rinary
+  changes:
+  - message: Added secure briefcase with digital lock.
+    type: Add
+  id: 137801
+  time: '2025-09-23T16:25:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1378
+- author: Rinary
+  changes:
+  - message: Added wall safe with digital lock.
+    type: Add
+  id: 137802
+  time: '2025-09-23T16:25:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1378
+- author: TheKillerDumb & Bukkataro
+  changes:
+  - message: New Lobby Art "Security Showdown"
+    type: Add
+  id: 171500
+  time: '2025-09-24T00:16:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1715
+- author: Vonte
+  changes:
+  - message: Added NanoTrasen representative tophat.
+    type: Add
+  id: 161800
+  time: '2025-09-24T00:17:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1618
+- author: Vonte
+  changes:
+  - message: Added NanoTrasen representative elite tophat.
+    type: Add
+  id: 161801
+  time: '2025-09-24T00:17:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1618
+- author: Vonte
+  changes:
+  - message: Added ability to choose headwear for NanoTrasen representative.
+    type: Add
+  id: 161802
+  time: '2025-09-24T00:17:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1618
+- author: Miracula
+  changes:
+  - message: Cloud emotes are smooth now
+    type: Fix
+  id: 157900
+  time: '2025-09-24T00:18:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1579
+- author: Miracula
+  changes:
+  - message: Portals, cc icons, brigmedic battery resprites
+    type: Tweak
+  id: 157901
+  time: '2025-09-24T00:18:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1579
+- author: CawsForConcern
+  changes:
+  - message: (Starboard) Poster overlapping a fire alarm just northwest of the Warden's
+      office
+    type: Fix
+  id: 173400
+  time: '2025-09-25T16:24:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1734
+- author: Fractalflower
+  changes:
+  - message: Non-smart borgis now properly use languages instead of an accent.
+    type: Add
+  id: 172900
+  time: '2025-09-25T16:27:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1729
+- author: STARLIGHT TEAM
+  changes:
+  - message: Cyberlimb slots are now whitelisted to their own items.
+    type: Add
+  id: 173800
+  time: '2025-09-26T00:19:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1738
+- author: Conflee
+  changes:
+  - message: Changed Emergency Response Team Leader sprites from dark blue, to dark
+      green. This is to help distinguish them from roles on station that use a black-blue
+      color scheme, and reinforces that Green = Central Command, Blue = NanoTrasen.
+      Includes the Mantle.
+    type: Tweak
+  id: 173900
+  time: '2025-09-26T00:46:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1739
+- author: Rinary
+  changes:
+  - message: 'Added new tier 3 terorr spider: Mother of terror, It has web which blocks
+      spiderlings and can spawn royal jelly which heals entities who consumed it.'
+    type: Add
+  id: 168900
+  time: '2025-09-27T12:34:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1689
+- author: Rinary
+  changes:
+  - message: Egg hatching time reduced from 180 seconds to 90 seconds for terror spiders
+      eggs.
+    type: Tweak
+  id: 168901
+  time: '2025-09-27T12:34:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1689
+- author: Rinary
+  changes:
+  - message: Now spiderlings hatch from the eggs of terror spiders instead of spiders.
+      And only then they grow into spiders(requires 90 seconds).
+    type: Tweak
+  id: 168902
+  time: '2025-09-27T12:34:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1689
+- author: Rinary
+  changes:
+  - message: Now abductor spider gland spawn spiderlings instead of spider eggs.
+    type: Tweak
+  id: 168903
+  time: '2025-09-27T12:34:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1689
+- author: Rinary
+  changes:
+  - message: Fixed bug when npcs can attack players in vents.
+    type: Fix
+  id: 168904
+  time: '2025-09-27T12:34:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1689
 Order: -1
 

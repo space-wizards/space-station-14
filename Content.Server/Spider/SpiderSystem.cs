@@ -102,7 +102,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
         }
 
         // Starlight-start: we spawn only one web in center
-        if (ent.Comp.OneWebSpawn)
+        if (!ent.Comp.OneWebSpawn)
         {
 
             // Spawn web in other directions

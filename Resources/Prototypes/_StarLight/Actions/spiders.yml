@@ -111,3 +111,22 @@
     rechargeDuration: 90
   - type: InstantAction
     event: !type:EggsLayingEvent
+
+- type: entity
+  id: ActionRoyalJelly
+  name: Royal Jelly
+  description: lay royal jelly which can be eaten by spiders and heal them.
+  components:
+  - type: Action
+    useDelay: 3
+    itemIconStyle: BigAction
+    sound: /Audio/Effects/pop.ogg
+    icon:
+      sprite: _Starlight/Objects/Consumable/Food/spiderjelly.rsi
+      state: action
+  - type: LimitedCharges
+    maxCharges: 3
+  - type: AutoRecharge
+    rechargeDuration: 90
+  - type: InstantAction
+    event: !type:SpawnOnActionEvent
