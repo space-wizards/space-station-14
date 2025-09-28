@@ -48,12 +48,6 @@
     enabled: true
     radius: 4
     netsync: false
-  - type: BlockMovement
-    blockUse: false
-    blockInteraction: false
-    blockDrop: false
-    blockPickup: false
-    blockChangeDirection: true
   - type: Anchorable
     flags:
     - Anchorable
