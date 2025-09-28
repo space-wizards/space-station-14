@@ -96,7 +96,7 @@
   - MiningEquipment
   conditions:
   - !type:ListingLimitedStockCondition
-    stock: 2
+    stock: 3
   - !type:BuyerAccessCondition
 
 - type: listing
@@ -120,6 +120,52 @@
   - MiningEquipment
   conditions:
   - !type:BuyerAccessCondition
+
+- type: listing
+  id: VendorMiningMassScanner
+  productEntity: HandHeldMassScanner
+  cost:
+    SalvageTicket: 200
+  categories:
+    - MiningEquipment
+  conditions:
+    - !type:BuyerAccessCondition
+
+- type: listing
+  id: VendorMiningPKAUpgradeDamage
+  productEntity: PKAUpgradeDamage
+  cost:
+    SalvageTicket: 300
+  categories:
+    - MiningEquipment
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 5
+    - !type:BuyerAccessCondition
+
+- type: listing
+  id: VendorMiningPKAUpgradeRange
+  productEntity: PKAUpgradeRange
+  cost:
+    SalvageTicket: 300
+  categories:
+    - MiningEquipment
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 5
+    - !type:BuyerAccessCondition
+
+- type: listing
+  id: VendorMiningPKAUpgradeFireRate
+  productEntity: PKAUpgradeFireRate
+  cost:
+    SalvageTicket: 300
+  categories:
+    - MiningEquipment
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 5
+    - !type:BuyerAccessCondition
 
 - type: listing
   id: VendorMiningWeaponMechMelleDrill

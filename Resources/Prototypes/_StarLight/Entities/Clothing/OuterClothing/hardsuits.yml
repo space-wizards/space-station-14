@@ -465,9 +465,8 @@
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
-  - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
   - type: Pierceable
     level: Metal
   - type: Armor
@@ -475,12 +474,14 @@
       coefficients:
         Blunt: 0.75
         Slash: 0.75
-        Piercing: 0.75
-        Heat: 0.7
-        Radiation: 0.3
-        Caustic: 0.7
-  - type: ExplosionResistance
-    damageCoefficient: 0.2
+        Piercing: 0.85
+        Heat: 0.65
+        Cold: 0.65
+        Radiation: 0.2
+        Caustic: 0.6
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
   - type: TemperatureProtection
     heatingCoefficient: 0.001
     coolingCoefficient: 0.001
@@ -531,9 +532,10 @@
     modifiers:
       coefficients:
         Blunt: 0.85
-        Slash: 0.75
-        Piercing: 0.75
+        Slash: 0.85
+        Piercing: 0.9
         Heat: 0.7
+        Cold: 0.7
         Radiation: 0.3
         Caustic: 0.7
   - type: ClothingSpeedModifier
