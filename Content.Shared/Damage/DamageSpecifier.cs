@@ -20,7 +20,7 @@ namespace Content.Shared.Damage
     [DataDefinition, Serializable, NetSerializable]
     public sealed partial class DamageSpecifier : IEquatable<DamageSpecifier>
     {
-        // For the record I regret so many of the decisions i made when writing rewriting damageable
+        // For the record I regret so many of the decisions i made when rewriting damageable
         // Why is it just shitting out dictionaries left and right
         // One day Arrays, stackalloc spans, and SIMD will save the day.
         // TODO DAMAGEABLE REFACTOR
