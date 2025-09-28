@@ -14,7 +14,7 @@ using Robust.Server.GameObjects;
 using Content.Shared._Starlight.Computers.RemoteEye;
 using System.Linq;
 using Content.Shared.Station.Components;
-using Content.Shared._Starlight.Action;
+using Content.Shared._Starlight.Actions.EntitySystems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Player;
 

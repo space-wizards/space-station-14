@@ -166,6 +166,7 @@
     children:
     - id: ClothingOuterHardsuitAtmos
     - id: OxygenTankFilled
+    - id: NitrogenTankFilled # Starlight - vox gang
     - id: ClothingMaskBreath
 
 - type: entity
@@ -209,6 +210,7 @@
     children:
     - id: ClothingOuterHardsuitEngineering
     - id: OxygenTankFilled
+    - id: NitrogenTankFilled # Starlight - vox gang
     - id: ClothingShoesBootsMag
     - id: ClothingMaskBreath
 
