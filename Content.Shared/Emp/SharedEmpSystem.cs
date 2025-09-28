@@ -33,13 +33,13 @@ public abstract class SharedEmpSystem : EntitySystem
     public static readonly SoundSpecifier EmpSound = new SoundPathSpecifier("/Audio/Effects/Lightning/lightningbolt.ogg");
 
     /// <summary>
-    /// Triggers an EMP pulse at the given location, by first raising an <see cref="EmpAttemptEvent"/>, then a raising <see cref="EmpPulseEvent"/> on all entities in range.
+    /// Triggers an EMP pulse at the given location, by first raising an <see cref="EmpAttemptEvent"/>, then by raising <see cref="EmpPulseEvent"/> on all entities in range.
     /// </summary>
     /// <param name="coordinates">The location to trigger the EMP pulse at.</param>
     /// <param name="range">The range of the EMP pulse.</param>
     /// <param name="energyConsumption">The amount of energy consumed by the EMP pulse. In Joule.</param>
     /// <param name="duration">The duration of the EMP effects.</param>
-    /// <param user="duration">The player that caused the effect. Used for predicted audio.</param>
+    /// <param name="user">The player that caused the effect. Used for predicted audio.</param>
     public void EmpPulse(MapCoordinates mapCoordinates, float range, float energyConsumption, TimeSpan duration, EntityUid? user = null)
     {
         foreach (var uid in _lookup.GetEntitiesInRange(mapCoordinates, range))
@@ -61,7 +61,7 @@ public abstract class SharedEmpSystem : EntitySystem
     /// <param name="range">The range of the EMP pulse.</param>
     /// <param name="energyConsumption">The amount of energy consumed by the EMP pulse.</param>
     /// <param name="duration">The duration of the EMP effects.</param>
-    /// <param user="duration">The player that caused the effect. Used for predicted audio.</param>
+    /// <param name="user">The player that caused the effect. Used for predicted audio.</param>
     public void EmpPulse(EntityCoordinates coordinates, float range, float energyConsumption, TimeSpan duration, EntityUid? user = null)
     {
         _entSet.Clear();
