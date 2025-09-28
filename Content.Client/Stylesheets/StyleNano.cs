@@ -25,12 +25,20 @@ namespace Content.Client.Stylesheets
         {
             var ds = display ? "Display" : "";
             var sv = variation.StartsWith("Bold", StringComparison.Ordinal) ? "Bold" : "Regular";
+            // Map UI font to ShareTechCYR family with variation support, keep symbol fallbacks
+            var primary = variation switch
+            {
+                "Italic" => "/Fonts/ShareTechCYR/Share-Tech-CYR-Italic.otf",
+                "Bold" => "/Fonts/ShareTechCYR/Share-Tech-CYR-Bold.otf",
+                "BoldItalic" => "/Fonts/ShareTechCYR/Share-Tech-CYR-Italic-Bold.otf",
+                _ => "/Fonts/ShareTechCYR/Share-Tech-CYR.otf"
+            };
             return resCache.GetFont
             (
                 // Ew, but ok
                 new[]
                 {
-                    $"/Fonts/NotoSans{ds}/NotoSans{ds}-{variation}.ttf",
+                    primary,
                     $"/Fonts/NotoSans/NotoSansSymbols-{sv}.ttf",
                     "/Fonts/NotoSans/NotoSansSymbols2-Regular.ttf"
                 },
@@ -610,7 +618,7 @@ namespace Content.Client.Stylesheets
             Stylesheet = new Stylesheet(BaseRules.Concat(new[]
             {
                 Element().Class("monospace")
-                    .Prop("font", notoSansMono),
+                    .Prop("font", notoSans12),
                 // Window title.
                 new StyleRule(
                     new SelectorElement(typeof(Label), new[] {DefaultWindow.StyleClassWindowTitle}, null, null),
@@ -781,10 +789,16 @@ namespace Content.Client.Stylesheets
                 // Context Menu window
                 Element<PanelContainer>().Class(ContextMenuPopup.StyleClassContextMenuPopup)
                     .Prop(PanelContainer.StylePropertyPanel, contextMenuBackground),
+                // Force font on the whole context menu container
+                Element<PanelContainer>().Class(ContextMenuPopup.StyleClassContextMenuPopup)
+                    .Prop("font", notoSans12),
 
                 // Context menu buttons
                 Element<ContextMenuElement>().Class(ContextMenuElement.StyleClassContextMenuButton)
                     .Prop(ContainerButton.StylePropertyStyleBox, buttonContext),
+                // Force font on context menu buttons
+                Element<ContextMenuElement>().Class(ContextMenuElement.StyleClassContextMenuButton)
+                    .Prop("font", notoSans12),
 
                 Element<ContextMenuElement>().Class(ContextMenuElement.StyleClassContextMenuButton)
                     .Pseudo(ContainerButton.StylePseudoClassNormal)

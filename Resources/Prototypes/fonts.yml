@@ -45,3 +45,22 @@
 - type: font
   id: Emoji
   path: /Fonts/NotoEmoji.ttf
+
+
+
+# ShareTechCYR family
+- type: font
+  id: ShareTechCYR
+  path: /Fonts/ShareTechCYR/Share-Tech-CYR.otf
+
+- type: font
+  id: ShareTechCYRItalic
+  path: /Fonts/ShareTechCYR/Share-Tech-CYR-Italic.otf
+
+- type: font
+  id: ShareTechCYRBold
+  path: /Fonts/ShareTechCYR/Share-Tech-CYR-Bold.otf
+
+- type: font
+  id: ShareTechCYRBoldItalic
+  path: /Fonts/ShareTechCYR/Share-Tech-CYR-Italic-Bold.otf
