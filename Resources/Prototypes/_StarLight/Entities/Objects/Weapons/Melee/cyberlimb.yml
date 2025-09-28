@@ -52,6 +52,9 @@
     endSound:
       path: /Audio/Weapons/chainsaw.ogg
   # 🌟Starlight-end🌟
+  - type: Tag
+    tags:
+      - CyberHandItem
   - type: Reflect
     reflectProb: 0.1
 
@@ -81,3 +84,6 @@
       path: /Audio/Weapons/punchmiss.ogg
   - type: Item
   - type: Sharp
+  - type: Tag
+    tags:
+      - CyberHandItem

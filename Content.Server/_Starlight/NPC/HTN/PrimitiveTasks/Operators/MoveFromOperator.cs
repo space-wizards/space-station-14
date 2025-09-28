@@ -6,6 +6,8 @@ using Content.Server.NPC.Systems;
 using Content.Server.NPC;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.HTN.PrimitiveTasks;
+using Content.Server._Starlight.Actions.EntitySystems;
+using Content.Shared._Starlight.Actions.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 
@@ -17,6 +19,7 @@ namespace Content.Server._Starlight.NPC.HTN.PrimitiveTasks.Operators;
 public sealed partial class MoveFromOperator : HTNOperator, IHtnConditionalShutdown
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
+    private JumpSystem _jumpSystem = default!;
     private NPCSteeringSystem _steering = default!;
     private PathfindingSystem _pathfind = default!;
     private SharedTransformSystem _transform = default!;
@@ -63,6 +66,9 @@ public sealed partial class MoveFromOperator : HTNOperator, IHtnConditionalShutd
     [DataField("stopOnLineOfSight")]
     public bool StopOnLineOfSight;
 
+    [DataField]
+    public bool UseJump = false;
+
     private const string MovementCancelToken = "MovementCancelToken";
 
     public override void Initialize(IEntitySystemManager sysManager)
@@ -71,6 +77,7 @@ public sealed partial class MoveFromOperator : HTNOperator, IHtnConditionalShutd
         _pathfind = sysManager.GetEntitySystem<PathfindingSystem>();
         _steering = sysManager.GetEntitySystem<NPCSteeringSystem>();
         _transform = sysManager.GetEntitySystem<SharedTransformSystem>();
+        _jumpSystem = sysManager.GetEntitySystem<JumpSystem>();
     }
 
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
@@ -132,6 +139,9 @@ public sealed partial class MoveFromOperator : HTNOperator, IHtnConditionalShutd
         var safeDistance = blackboard.GetValueOrDefault<float>(RangeKey, _entManager);
         var dir = (ownerPos.Position - threatCoords.Position).Normalized();
         var fleePos = threatCoords.Offset(dir * safeDistance * 1.5f);
+
+        if (UseJump && _entManager.TryGetComponent<JumpComponent>(uid, out var jumpComp))
+            _jumpSystem.TryJump(new Entity<JumpComponent?>(uid, jumpComp), fleePos, decreaseCharges: true);
 
         // Re-use the path we may have if applicable.
         var comp = _steering.Register(uid, fleePos);
