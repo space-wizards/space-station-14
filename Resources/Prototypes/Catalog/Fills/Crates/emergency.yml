@@ -33,6 +33,8 @@
         amount: 2
       - id: OxygenTankFilled
         amount: 2
+      - id: EmergencyNitrogenTankFilled # Starlight - vox gang
+        amount: 2
 
 - type: entity
   id: CrateEmergencyInternals

@@ -109,6 +109,8 @@
       children:
       - id: EmergencyOxygenTankFilled
       - id: OxygenTankFilled
+      - id: EmergencyNitrogenTankFilled # Starlight - vox gang
+      - id: NitrogenTankFilled # Starlight - vox gang
     - id: CrowbarRed
     - !type:GroupSelector
       children:
