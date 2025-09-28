@@ -3,6 +3,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
+using Content.Shared.Wieldable.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.DoAfter;
@@ -229,6 +230,9 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (args.RequireCanInteract && !_actionBlocker.CanInteract(args.User, args.Target))
             return true;
 
+        // If the user wields their targeted item, interrupt the do-after.
+        if (args.RequireUnwielded)
+            return TryComp<WieldableComponent>(args.Target, out var wieldableComp) && wieldableComp.Wielded;
 
         return false;
     }

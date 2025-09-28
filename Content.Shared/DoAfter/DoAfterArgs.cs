@@ -141,6 +141,12 @@ public sealed partial class DoAfterArgs
     /// </summary>
     [DataField]
     public bool RequireCanInteract = true;
+
+    /// <summary>
+    ///     If true, this DoAfter will be canceled if the user wields their item, e.g. reloading shotguns.
+    /// </summary>
+    [DataField]
+    public bool RequireUnwielded;
     #endregion
 
     #region Duplicates

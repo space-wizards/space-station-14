@@ -7,6 +7,8 @@ using Content.Shared.Inventory;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared.Wieldable;
+using Content.Shared.Wieldable.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
@@ -17,7 +19,7 @@ public abstract partial class SharedGunSystem
 {
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-
+    [Dependency] private readonly SharedWieldableSystem _wieldable = default!;
 
     protected virtual void InitializeBallistic()
     {
@@ -120,7 +122,14 @@ public abstract partial class SharedGunSystem
 
     private void ReloadDoAfter(BallisticAmmoProviderComponent component, EntityUid user, EntityUid target, EntityUid used)
     {
-        var doAfterSpeed = component.FillDelay;
+         if (TryComp<WieldableComponent>(target, out var targetComponent))
+         {
+             // If the user is wielding their weapon, unwield it to reload.
+             if (targetComponent.Wielded)
+                 _wieldable.TryUnwield(target, targetComponent, user);
+         }
+
+         var doAfterSpeed = component.FillDelay;
         // Check if reloader has speed modifier.
         if (TryComp<IncreaseReloadSpeedContainerComponent>(used, out var reloader))
             doAfterSpeed *= reloader.Modifier;
@@ -131,6 +140,7 @@ public abstract partial class SharedGunSystem
             BreakOnMove = true,
             BreakOnDamage = false,
             NeedHand = true,
+            RequireUnwielded = true,
         });
     }
 
