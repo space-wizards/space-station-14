@@ -8,6 +8,8 @@
   components:
   - type: Appearance
   - type: WiresVisuals
+  - type: Damageable
+    damageContainer: Inorganic
   - type: Physics
     bodyType: Static
   - type: Fixtures
