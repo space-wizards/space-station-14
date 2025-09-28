@@ -27,7 +27,6 @@
       - Command
       - Research
       - Medical
-      - ResearchDirector
       - Security
       - Service
       - Engineering
@@ -85,7 +84,6 @@
       - Misc
       - CentralCommand
       - Syndicate
-      # Starlight-edit: End
       privilegedIdSlot:
         name: AccessOverrider-privilegedId # Starlight-edit
         startingItem: UniversalIDCard
