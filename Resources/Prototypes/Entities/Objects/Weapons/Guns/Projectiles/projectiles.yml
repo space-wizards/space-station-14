@@ -215,6 +215,9 @@
       fly-by: *flybyfixture
   - type: Ammo
   - type: Projectile
+    damage:
+      types:
+        Shock: 0
     soundHit:
       path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
     forceSound: true
