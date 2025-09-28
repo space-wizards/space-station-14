@@ -21,7 +21,6 @@ namespace Content.Client.Communications.UI
 
         public CommunicationsConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
-            IoCManager.InjectDependencies(this); // Starlight
         }
 
         protected override void Open()
