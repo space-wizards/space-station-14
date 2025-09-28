@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/21/2025 10:11:55
-  entityCount: 2302
+  time: 09/28/2025 10:27:15
+  entityCount: 2303
 maps:
 - 1
 grids:
@@ -4811,6 +4811,13 @@ entities:
     - type: Transform
       pos: 85.5,8.5
       parent: 2
+- proto: CounterStrikeBomb
+  entities:
+  - uid: 2303
+    components:
+    - type: Transform
+      pos: 86.5,5.5
+      parent: 2
 - proto: CrateFunBoardGames
   entities:
   - uid: 761
@@ -5037,7 +5044,7 @@ entities:
       pos: 41.5,-0.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -10741.32
+      secondsUntilStateChange: -10758.737
       state: Closing
   - uid: 799
     components:
