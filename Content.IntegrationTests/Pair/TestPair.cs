@@ -27,6 +27,12 @@ public sealed partial class TestPair : RobustIntegrationTest.TestPair
 
     protected override async Task Initialize()
     {
+        await base.Initialize();
+
+        // Prevent info log spam in some tests (particularly SpawnAndDeleteAllEntitiesOnDifferentMaps)
+        Client.System<SharedMapSystem>().Log.Level = LogLevel.Warning;
+        Server.System<SharedMapSystem>().Log.Level = LogLevel.Warning;
+
         var settings = (PoolSettings)Settings;
         if (!settings.DummyTicker)
         {
