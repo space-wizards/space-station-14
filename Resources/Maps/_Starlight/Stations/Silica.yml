@@ -15232,8 +15232,6 @@ entities:
       pos: 34.5,9.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 42
 - proto: AirSensorFreezer
@@ -82138,8 +82136,6 @@ entities:
       pos: 44.5,-16.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 139
 - proto: FirelockEdge
@@ -108088,8 +108084,6 @@ entities:
       pos: 47.5,-17.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 139
     - type: AtmosPipeLayers
@@ -110154,8 +110148,6 @@ entities:
       pos: 46.5,-17.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 139
     - type: AtmosPipeLayers
