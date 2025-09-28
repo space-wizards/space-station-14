@@ -1,26 +1,31 @@
 ﻿<Document>
-  # Core Rule 1 - Listen to admins and use ahelp
-  Admin help ("ahelp") is a system for admins to communicate with players, log issues, and provide in-game interventions. All ahelps are relayed privately to admins to Discord.
+  # Core Rule 1 - Listen to admins and report issues
+  Admin help ("ahelp") is a system for admins to communicate with players, report issues, and provide in-game interventions. All ahelps are relayed privately to admins to Discord.
 
-  Players must listen to admins without debating rules. Admins may intervene, make final interpretations, and override rules to improve overall community experience, but are held accountable when exercising this privilege. (Server rules are not perfect and may not fit every situation.)
+  Players must listen to admins without debating rules. Admins may intervene in-game, finalize rule interpretations, and override rules to improve overall community experience, but are held accountable when exercising this privilege.
 
   If you disagree with admin actions and rule interpretations, submit a staff complaint on the forums at https://forum.spacestation14.com/w/complaint-wizard
 
   ## What and when should I ahelp?
   You should ahelp as soon as you think a player is breaking server rules; it is better to misreport issues than to wait it out or not report at all. (Players often avoid ahelp as they believe they are saving admin time and workload. However, it only take a few seconds for admins to determine if an issue is caused by a raider, and longer ahelp delays causes longer ahelp resolutions.)
 
-  At minimum, ahelps must state what the issue is. An ideal ahelps details the events leading up to the issue and who was involved. During an ahelp session, do not ignore messages or disconnect without notifying the admin. Admins may not always respond if they offline or have resolved the issue.
+  At minimum, ahelps must state what the issue is. An ideal ahelps details events leading up to the issue and who was involved.
 
-  Antagonists may use ahelp for requests, while non-antagonists must use In-Character ("IC") methods like prayers, faxes, and phones.
+  During an ahelp session, do not ignore messages or disconnect without notifying the admin. Admins may not always respond if they offline or have resolved the issue.
+
+  When making requests, antagonists may use ahelp. Living non-antagonists must use In-Character ("IC") methods such as prayers, faxes, and phones. Ghost non-antagonists must use the the death channel.
+
+  You are highly encouraged to notify an admin if a command crewmember has disconnected without entering cryosleep or a team antagonist has disconnected.
 
   ## Examples
   [color=#449944]Appropriate:[/color]
   - Reporting players breaking rules
   - Requesting rule clarification or exemption
-  - Requesting TC trade or item spawn as an antagonist
+  - Requesting TC trade or item spawn as an antagonist through ahelp
+  - Notifying admins that you are disconnecting as a nuclear operative commander
 
   [color=#994444]Prohibited:[/color]
   - Checking for admins by sending unclear messages such as "hello"
-  - Being ignorant, hostile, and lying during ahelp
-  - Requesting events or roles as a non-antagonist
+  - Acting ignorant, hostile, or dishonest during ahelp
+  - Requesting events or roles as a non-antagonist through ahelp
 </Document>
