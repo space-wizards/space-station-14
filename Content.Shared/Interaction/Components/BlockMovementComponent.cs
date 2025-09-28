@@ -9,17 +9,5 @@ namespace Content.Shared.Interaction.Components;
 public sealed partial class BlockMovementComponent : Component
 {
     [DataField]
-    public bool BlockUse = true;
-
-    [DataField]
     public bool BlockInteraction = true;
-
-    [DataField]
-    public bool BlockDrop = true;
-
-    [DataField]
-    public bool BlockPickup = true;
-
-    [DataField]
-    public bool BlockChangeDirection = true;
 }
