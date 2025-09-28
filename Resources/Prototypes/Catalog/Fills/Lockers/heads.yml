@@ -25,6 +25,8 @@
     - id: RadioHandheldExpedition #starlight
     - id: ClothingOuterHardsuitLuxmax #starlight
     - id: SalvageShuttleConsoleCircuitboard #starlight
+    - id: MiningShuttleConsoleCircuitboard #starlight
+    - id: EncryptionKeySalvage #starlight
 
 - type: entity
   id: LockerQuarterMasterFilled
@@ -61,6 +63,7 @@
     - id: ClothingEyesGlassesCommand
     - id: ClothingEyesHudCommand
     - id: HeadSkeleton # A skull to accompany your skeleton crew
+    - id: EncryptionKeyExpedition #starlight
       conditions:
       - !type:PlayerCountCondition
         max: 15

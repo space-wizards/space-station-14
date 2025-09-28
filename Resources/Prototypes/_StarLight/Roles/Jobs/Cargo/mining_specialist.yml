@@ -14,10 +14,10 @@
   supervisors: job-supervisors-qm
   access:
   - Cargo
-  - Salvage
+  - Mining
   - Maintenance
   - External
-#job_id
+
 - type: startingGear
   id: MiningSpecialistGear
   equipment:
