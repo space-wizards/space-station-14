@@ -22,7 +22,7 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    private static readonly Color ANNOUNCMENT_COLOR = Color.Gold;
+    private static readonly Color AnnouncmentColor = Color.Gold;
 
     public override void Initialize()
     {
@@ -52,14 +52,14 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
 
         _chatSystem.DispatchGlobalAnnouncement(
             Loc.GetString($"xenoborgs-no-more-threat-mothership-core-{status}-announcement"),
-            colorOverride: ANNOUNCMENT_COLOR);
+            colorOverride: AnnouncmentColor);
     }
 
     public void SendMothershipDeathAnnouncement()
     {
         _chatSystem.DispatchGlobalAnnouncement(
             Loc.GetString("mothership-destroyed-announcement"),
-            colorOverride: ANNOUNCMENT_COLOR);
+            colorOverride: AnnouncmentColor);
     }
 
     // TODO: Refactor the end of round text
