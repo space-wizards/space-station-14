@@ -127,7 +127,7 @@
     whitelist:
       components:
       - XenoArtifact
-      - Gibbable
+      - Body
   - type: Appearance
   - type: GenericVisualizer
     visuals:
