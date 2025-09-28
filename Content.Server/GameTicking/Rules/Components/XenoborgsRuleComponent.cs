@@ -3,12 +3,14 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Server.GameTicking.Rules.Components;
 
 [RegisterComponent, Access(typeof(XenoborgsRuleSystem))]
+[AutoGenerateComponentPause]
 public sealed partial class XenoborgsRuleComponent : Component
 {
     /// <summary>
     /// When the round will next check for round end.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
     public TimeSpan? NextRoundEndCheck;
 
     /// <summary>
