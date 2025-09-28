@@ -15772,5 +15772,172 @@ Entries:
   id: 141900
   time: '2025-09-28T16:01:41.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1419
+- author: mikeysaurus
+  changes:
+  - message: New Role - Salvage Lead. Guide your salvage specialists to glory! (Thanks
+      Choccy, Bort, deltaVelocity, and itsMaitake for the idea/sprites!)
+    type: Add
+  id: 104400
+  time: '2025-09-28T19:13:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1044
+- author: mikeysaurus
+  changes:
+  - message: New "Mining" access type, granted to mining specialists
+    type: Add
+  id: 104401
+  time: '2025-09-28T19:13:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1044
+- author: mikeysaurus
+  changes:
+  - message: Added new Mining sub-department doors for mappers
+    type: Add
+  id: 104402
+  time: '2025-09-28T19:13:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1044
+- author: mikeysaurus
+  changes:
+  - message: Added new Salvage+Mining sub-department combo doors for mappers
+    type: Add
+  id: 104403
+  time: '2025-09-28T19:13:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1044
+- author: mikeysaurus
+  changes:
+  - message: Added new Mining wall poster, and directional signs for mappers
+    type: Add
+  id: 104404
+  time: '2025-09-28T19:13:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1044
+- author: mikeysaurus
+  changes:
+  - message: Renamed the Wizden salv shuttle's black doors to include "retro" in filename
+    type: Tweak
+  id: 104405
+  time: '2025-09-28T19:13:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1044
+- author: mikeysaurus
+  changes:
+  - message: Removed mining specialist access from salvage ticket vendor
+    type: Remove
+  id: 104406
+  time: '2025-09-28T19:13:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1044
+- author: mikeysaurus
+  changes:
+  - message: Added new miner ticket vendor
+    type: Add
+  id: 104407
+  time: '2025-09-28T19:13:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1044
+- author: mikeysaurus
+  changes:
+  - message: Salvagers and Miners can purchase Floodlights from their respective vendors
+    type: Add
+  id: 104408
+  time: '2025-09-28T19:13:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1044
+- author: mikeysaurus
+  changes:
+  - message: Added Grape's mining shuttle. Mining specialists, report to the "Breaker"
+      for assignment (Thanks Grape for the shuttle!)
+    type: Add
+  id: 104409
+  time: '2025-09-28T19:13:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1044
+- author: mikeysaurus
+  changes:
+  - message: Miners can only access the Breaker mining shuttle, Salvage can only access
+      the Reclaimer salvage shuttle.
+    type: Tweak
+  id: 104410
+  time: '2025-09-28T19:13:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1044
+- author: mikeysaurus
+  changes:
+  - message: New jumpsuit sprites for Salvage and Mining Specialists (thanks itsMaitake
+      for the sprites!)
+    type: Add
+  id: 104411
+  time: '2025-09-28T19:13:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1044
+- author: mikeysaurus
+  changes:
+  - message: Renamed "mining hardsuit" to "salvage hardsuit"
+    type: Tweak
+  id: 104412
+  time: '2025-09-28T19:13:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1044
+- author: mikeysaurus
+  changes:
+  - message: Added a new "mining hardsuit" for miners to purchase. It's an upgrade
+      over their space hazards suit
+    type: Add
+  id: 104413
+  time: '2025-09-28T19:13:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1044
+- author: mikeysaurus
+  changes:
+  - message: Added a new "advanced mining hardsuit" for miners to purchase as a maxim-like
+      goal. Does not possess the same combat bonuses but does have a built-in jetpack!
+    type: Add
+  id: 104414
+  time: '2025-09-28T19:13:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1044
+- author: mikeysaurus
+  changes:
+  - message: Adds mining shuttle console for remote access
+    type: Add
+  id: 104415
+  time: '2025-09-28T19:13:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1044
+- author: mikeysaurus
+  changes:
+  - message: New colors for the cargo department shuttle consoles, so they don't all
+      look the same!
+    type: Add
+  id: 104416
+  time: '2025-09-28T19:13:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1044
+- author: mikeysaurus
+  changes:
+  - message: Mining and Salvage Shuttle Consoles require their department access types!
+    type: Tweak
+  id: 104417
+  time: '2025-09-28T19:13:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1044
+- author: mikeysaurus
+  changes:
+  - message: salvage shuttle console will now, when deconstructed, drop the correct
+      circuitboard
+    type: Fix
+  id: 104418
+  time: '2025-09-28T19:13:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1044
+- author: mikeysaurus
+  changes:
+  - message: Gave QM, Salv Lead, and Captain expedition encryption keys. The radio
+      channel keybind has been updated to ":o". It functions like the freelance channel,
+      except cargo's Expedition Radios also communicate on it.
+    type: Add
+  id: 104419
+  time: '2025-09-28T19:13:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1044
+- author: mikeysaurus
+  changes:
+  - message: Adds a "salvage encryption key", containing both supply and expedition
+      channels. 1 given to QM's locker, otherwise intended for Admeme Salvage training
+      events.
+    type: Add
+  id: 104420
+  time: '2025-09-28T19:13:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1044
+- author: mikeysaurus
+  changes:
+  - message: Adds 2 Salvage/Security crates that spawn on the Reclaimer, intended
+      for Salvage to safely store contra in while they transport it to Security.
+    type: Add
+  id: 104421
+  time: '2025-09-28T19:13:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1044
 Order: -1
 
