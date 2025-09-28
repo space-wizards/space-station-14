@@ -1,7 +1,3 @@
-# This Source Code Form is subject to the terms of the Mozilla Public
-# License, v. 2.0. If a copy of the MPL was not distributed with this
-# file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
 heart-defibrillatable-target-is-dead = Severe neurological decay makes rescuitation impossible. Further attempts futile.
 heart-defibrillatable-target-hypovolemia = Patient is in hypovolemic shock and will require a blood transfuion: rescuitation will likely fail.
 heart-defibrillatable-target-brain-damage = Patient has severe neurological decay: rescuitation will likely fail without epinephrine.

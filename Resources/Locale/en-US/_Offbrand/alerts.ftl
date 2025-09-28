@@ -1,7 +1,3 @@
-# This Source Code Form is subject to the terms of the Mozilla Public
-# License, v. 2.0. If a copy of the MPL was not distributed with this
-# file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
 alerts-heart-rate-name = Heart Rate
 alerts-heart-rate-desc = Slow and [color=green]green[/color] good. Fast and [color=red]red[/color] bad.
 
