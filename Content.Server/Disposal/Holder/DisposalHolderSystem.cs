@@ -3,8 +3,6 @@ using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Holder;
 using Content.Shared.Disposal.Tube;
 using Content.Shared.Disposal.Unit;
-using Content.Shared.Maps;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.Disposal.Holder;
@@ -13,10 +11,8 @@ namespace Content.Server.Disposal.Holder;
 public sealed partial class DisposalHolderSystem : SharedDisposalHolderSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
-    [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly TileSystem _tile = default!;
 
     /// <inheritdoc/>
     public override void TransferAtmos(Entity<DisposalHolderComponent> ent, Entity<DisposalUnitComponent> unit)
@@ -47,16 +43,8 @@ public sealed partial class DisposalHolderSystem : SharedDisposalHolderSystem
         {
             var xform = Transform(tube);
 
-            // Unanchor the pipe
+            // Unanchor the pipe and exit disposals
             _xformSystem.Unanchor(tube, xform);
-
-            // Pry up the tile the pipe was under, if applicable
-            if (TryComp<MapGridComponent>(xform.GridUid, out var mapGrid))
-            {
-                var tileRef = _maps.GetTileRef((xform.GridUid.Value, mapGrid), xform.Coordinates);
-                _tile.PryTile(tileRef);
-            }
-
             ExitDisposals(ent);
 
             return true;

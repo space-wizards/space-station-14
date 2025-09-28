@@ -4,6 +4,7 @@ using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Tube;
 using Content.Shared.Disposal.Unit;
 using Content.Shared.Eye;
+using Content.Shared.Maps;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
@@ -34,6 +35,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedEyeSystem _eye = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private readonly TileSystem _tile = default!;
 
     private EntityQuery<DisposalUnitComponent> _disposalUnitQuery;
     private EntityQuery<MetaDataComponent> _metaQuery;
@@ -97,14 +99,21 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         ent.Comp.IsExitingDisposals = true;
         Dirty(ent);
 
+        // Get the holder and grid transforms
+        var xform = _xformQuery.GetComponent(ent);
+        var gridUid = xform.GridUid;
+        _xformQuery.TryGetComponent(gridUid, out var gridXform);
+
+        // Determine the exit angle of the ejected entities
+        var exitDirection = ent.Comp.CurrentDirection;
+        Angle? exitAngle = exitDirection != Direction.Invalid ? exitDirection.ToAngle() : null;
+
         // Check for a disposal unit to throw them into and then eject them from it.
         // *This ejection also makes the target not collide with the unit.*
         // *This is on purpose.*
 
         EntityUid? disposalId = null;
         DisposalUnitComponent? disposalUnit = null;
-        var xform = Transform(ent);
-        var gridUid = xform.GridUid;
 
         if (TryComp<MapGridComponent>(gridUid, out var grid))
         {
@@ -116,6 +125,27 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
                     break;
                 }
             }
+
+            // If no disposal unit was found, this exit will be a little messy
+            if (disposalUnit == null && _net.IsServer)
+            {
+                // Pry up the tile that the pipe was under
+                var tileRef = _maps.GetTileRef((gridUid.Value, grid), xform.Coordinates);
+                _tile.PryTile(tileRef);
+
+                // Also pry up the tile infront of the pipe
+                if (exitAngle != null)
+                {
+                    tileRef = _maps.GetTileRef((gridUid.Value, grid), xform.Coordinates.Offset(exitAngle.Value.ToWorldVec()));
+                    _tile.PryTile(tileRef);
+                }
+            }
+        }
+
+        // Update the exit angle here to account for the grid's rotation
+        if (exitAngle != null && gridXform != null)
+        {
+            exitAngle += _xformSystem.GetWorldRotation(gridXform);
         }
 
         // We're purposely iterating over all the holder's children
@@ -135,18 +165,20 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
                 continue;
 
             if (disposalUnit != null)
+            {
                 _containerSystem.Insert((held, heldXform, meta), disposalUnit.Container);
+            }
             else
             {
+                // Knockdown the entity emerging from the pipe
+                _stun.TryKnockdown(held, ent.Comp.DisposalExitStunDuration, force: true);
+
+                // Throw the entity out of the pipe
                 _xformSystem.AttachToGridOrMap(held, heldXform);
-                var direction = ent.Comp.CurrentDirection;
 
-                if (direction != Direction.Invalid && _xformQuery.TryGetComponent(gridUid, out var gridXform))
+                if (exitAngle != null)
                 {
-                    _stun.TryKnockdown(held, ent.Comp.DisposalExitStunDuration, force: true);
-
-                    var directionAngle = direction.ToAngle() + _xformSystem.GetWorldRotation(gridXform);
-                    _throwing.TryThrow(held, directionAngle.ToWorldVec() * ent.Comp.ExitDistanceMultiplier, ent.Comp.TraversalSpeed * ent.Comp.ExitSpeedMultiplier);
+                    _throwing.TryThrow(held, exitAngle.Value.ToWorldVec() * ent.Comp.ExitDistanceMultiplier, ent.Comp.TraversalSpeed * ent.Comp.ExitSpeedMultiplier);
                 }
             }
         }
