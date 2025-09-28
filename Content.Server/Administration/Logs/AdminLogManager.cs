@@ -421,9 +421,6 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
                 }
             }
 
-            if (adminLog)
-                continue;
-
             if (impact == LogImpact.Extreme) // Always chat-notify Extreme logs
                 adminLog = true;
 
@@ -439,6 +436,9 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
                     }
                 }
             }
+
+            if (adminLog)
+                break;
         }
 
         if (adminLog)
