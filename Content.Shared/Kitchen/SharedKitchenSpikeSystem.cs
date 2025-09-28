@@ -326,7 +326,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
             _damageableSystem.TryChangeDamage(args.Target, ent.Comp.ButcherDamage, true);
             _logger.Add(LogType.Action,
-                LogImpact.Extreme,
+                LogImpact.High,
                 $"{ToPrettyString(args.User):user} butchered {ToPrettyString(args.Target):target} on the {ToPrettyString(ent):spike}");
         }
 
