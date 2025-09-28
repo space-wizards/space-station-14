@@ -145,60 +145,11 @@
 - type: entity
   parent: AirlockRoboticsLocked
   id: AirlockMaintRoboticsLocked
-
-# Salvage and Mining
-- type: entity
-  parent: AirlockSalvageMining
-  id: AirlockSalvageMiningLocked
-  suffix: Salvage, Mining, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsSalvageMining ]
-
-- type: entity
-  parent: AirlockMiningCargo
-  id: AirlockMiningCargoLocked
-  suffix: Mining, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsMining ]
-
-- type: entity
-  parent: AirlockSalvageMiningGlass
-  id: AirlockSalvageMiningGlassLocked
-  suffix: Salvage, Mining, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsSalvageMining ]
-
-- type: entity
-  parent: AirlockMiningCargoGlass
-  id: AirlockMiningCargoGlassLocked
-  suffix: Mining, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsMining ]
-
-- type: entity
-  parent: AirlockMiningCargoLocked
-  id: AirlockMaintMiningCargoLocked
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
 
-- type: entity
-  parent: AirlockSalvageMiningLocked
-  id: AirlockMaintSalvageMiningLocked
-
-  components:
-  - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
-
-# Surgery
+  # Surgery
 - type: entity
   parent: AirlockSurgery
   id: AirlockSurgeryLocked
@@ -242,17 +193,67 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsParamedic ]
-=======
-## Renamed replacement of Wizden black salvage doors
+
 - type: entity
-  parent: AirlockRetroSalvageMining
-  id: AirlockRetroSalvageMiningLocked
+  parent: AirlockParamedicLocked
+  id: AirlockMaintParamedicLocked
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+
+# Salvage/Mining Shared
+- type: entity
+  parent: AirlockSalvageMining
+  id: AirlockSalvageMiningLocked
   suffix: Salvage, Mining, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsSalvageMining ]
 
+- type: entity
+  parent: AirlockSalvageMiningGlass
+  id: AirlockSalvageMiningGlassLocked
+  suffix: Salvage, Mining, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSalvageMining ]
+
+- type: entity
+  parent: AirlockSalvageMiningLocked
+  id: AirlockMaintSalvageMiningLocked
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+
+# Mining/Cargo Shared
+- type: entity
+  parent: AirlockMiningCargo
+  id: AirlockMiningCargoLocked
+  suffix: Mining, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMining ]
+
+- type: entity
+  parent: AirlockMiningCargoGlass
+  id: AirlockMiningCargoGlassLocked
+  suffix: Mining, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMining ]
+
+- type: entity
+  parent: AirlockMiningCargoLocked
+  id: AirlockMaintMiningCargoLocked
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+
+# Retro Salvage
 - type: entity
   parent: AirlockRetroSalvage
   id: AirlockRetroSalvageLocked
@@ -263,6 +264,16 @@
       board: [ DoorElectronicsSalvage ]
 
 - type: entity
+  parent: AirlockRetroSalvageGlass
+  id: AirlockRetroSalvageGlassLocked
+  suffix: Salvage, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSalvage ]
+  
+# Retro Mining
+- type: entity
   parent: AirlockRetroMining
   id: AirlockRetroMiningLocked
   suffix: Mining, Locked
@@ -272,24 +283,6 @@
       board: [ DoorElectronicsMining ]
 
 - type: entity
-  parent: AirlockRetroSalvageMiningGlass
-  id: AirlockRetroSalvageMiningGlassLocked
-  suffix: Salvage, Mining, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsSalvageMining ]
-
-- type: entity
-  parent: AirlockRetroSalvageGlass
-  id: AirlockRetroSalvageGlassLocked
-  suffix: Salvage, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsSalvage ]
-
-- type: entity
   parent: AirlockRetroMiningGlass
   id: AirlockRetroMiningGlassLocked
   suffix: Mining, Locked
@@ -297,4 +290,22 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsMining ]
-# Salvage and Mining end
+
+# Retro Salvage/Mining Shared
+- type: entity
+  parent: AirlockRetroSalvageMining
+  id: AirlockRetroSalvageMiningLocked
+  suffix: Salvage, Mining, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSalvageMining ]
+
+- type: entity
+  parent: AirlockRetroSalvageMiningGlass
+  id: AirlockRetroSalvageMiningGlassLocked
+  suffix: Salvage, Mining, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSalvageMining ]

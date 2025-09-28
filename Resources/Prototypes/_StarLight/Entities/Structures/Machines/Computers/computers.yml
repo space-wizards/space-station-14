@@ -201,7 +201,7 @@
   - type: StealTarget
     stealGroup: SalvageShuttleConsoleCircuitboard
 
-# Universal ID Computer
+# Universal ID Console
 - type: entity
   parent: BaseComputerAiAccess
   id: UniversalIdConsole
@@ -284,6 +284,7 @@
     containers:
       board: !type:Container
 
+# Mining Shuttle Console
 - type: entity
   parent: BaseComputerShuttle
   id: ComputerShuttleMining
