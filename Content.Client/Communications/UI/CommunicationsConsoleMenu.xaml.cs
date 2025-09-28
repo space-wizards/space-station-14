@@ -113,7 +113,7 @@ namespace Content.Client.Communications.UI
             // Starlight End
             AlertLevelButton.Clear();
 
-            if (alerts == null || !alerts.Any()) // Starlight edit
+            if (alerts?.Any()) // Starlight edit
             {
                 var name = currentAlert;
                 if (_loc.TryGetString($"alert-level-{currentAlert}", out var locName))
@@ -122,7 +122,7 @@ namespace Content.Client.Communications.UI
                 }
                 AlertLevelButton.AddItem(name);
                 AlertLevelButton.SetItemMetadata(AlertLevelButton.ItemCount - 1, currentAlert);
-                // Starlight Start
+            // Starlight-start
                 AlertLevelButton.Select(0);
                 return;
             }
@@ -138,7 +138,10 @@ namespace Content.Client.Communications.UI
                 if (alert == currentAlert)
                     AlertLevelButton.Select(AlertLevelButton.ItemCount - 1);
             }
+            // Starlight-end
         }
+
+        #region Starlight
 
         private void SetLabelMessage(RichTextLabel? label, string? message)
         {
@@ -231,11 +234,9 @@ namespace Content.Client.Communications.UI
                     AlertLevelButton.Disabled = true;
                     AlertLevelButton.ToolTip = _loc.GetString("comms-console-menu-alert-level-button-tooltip");
                 }
-            // Starlight End
             }
             else
             {
-                // Starlight edit Start
                 AlertLevelButton.Disabled = !AlertLevelSelectable;
                 AlertLevelButton.ToolTip = _loc.GetString("comms-console-menu-alert-level-button-tooltip");
             }
@@ -335,7 +336,7 @@ namespace Content.Client.Communications.UI
                 return $"{(int)time.TotalMinutes}:{time.Seconds:D2}";
             else
                 return $"{time.Seconds}";
-        // Starlight edit End
+        #endregion Starlight
         }
     }
 }

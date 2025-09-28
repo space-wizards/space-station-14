@@ -224,15 +224,9 @@ namespace Content.Server.RoundEnd
             }
         }
         // Starlight Start
-        public void SetShuttleCallsEnabled(bool enabled)
-        {
-            _shuttleCallsEnabled = enabled;
-        }
+        public void SetShuttleCallsEnabled(bool enabled) => _shuttleCallsEnabled = enabled;
 
-        public bool GetShuttleCallsEnabled()
-        {
-            return _shuttleCallsEnabled;
-        }
+        public bool GetShuttleCallsEnabled() => _shuttleCallsEnabled;
         // Starlight End
 
         public void CancelRoundEndCountdown(EntityUid? requester = null, bool checkCooldown = true)

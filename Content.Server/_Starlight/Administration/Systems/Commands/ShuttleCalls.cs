@@ -110,8 +110,8 @@ namespace Content.Server.Administration.Commands
             string announcementText = args.Length >= 3 && !string.IsNullOrWhiteSpace(args[2])
                 ? args[2]
                 : allowed
-                    ? "Emergency Shuttle Calls have been enabled."
-                    : "Emergency Shuttle Calls have been disabled.";
+                    ? "Emergency shuttle calls have been enabled."
+                    : "Emergency shuttle calls have been disabled.";
 
             // Sender text (default to Central Command)
             string senderText = args.Length >= 4 && !string.IsNullOrWhiteSpace(args[3])

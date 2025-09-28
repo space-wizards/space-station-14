@@ -72,21 +72,16 @@ namespace Content.Server.Communications
             // Starlight Start
             if (_globalRecallCooldownRemaining > 0f)
                 _globalRecallCooldownRemaining -= frameTime;
-
-            if (_globalRecallCooldownRemaining < 0f)
+            else
                 _globalRecallCooldownRemaining = 0f;
             // Starlight End
             var query = EntityQueryEnumerator<CommunicationsConsoleComponent>();
             while (query.MoveNext(out var uid, out var comp))
             {
                 // TODO refresh the UI in a less horrible way
-                if (comp.AnnouncementCooldownRemaining > 0f) // Starlight edit
+                if (comp.AnnouncementCooldownRemaining > 0f) // Starlight-edit: this can't be lesser than 0.
                 {
-                    // Starlight Start
-                    comp.AnnouncementCooldownRemaining -= frameTime;
-                    if (comp.AnnouncementCooldownRemaining < 0f)
-                        comp.AnnouncementCooldownRemaining = 0f;
-                    // Starlight End
+                    comp.AnnouncementCooldownRemaining = Math.Max(0, comp.AnnouncementCooldownRemaining - frameTime); // Starlight-edit: this can't be lesser than 0.
                 }
 
                 comp.UIUpdateAccumulator += frameTime;
