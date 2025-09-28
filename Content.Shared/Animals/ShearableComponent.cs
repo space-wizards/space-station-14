@@ -76,7 +76,7 @@ public sealed partial class ShearableComponent : Component
     ///     shearableMarkupText: sheep-shearable-examine-markup
     /// </example>
     [DataField]
-    public LocId ShearableMarkupText = string.Empty;
+    public LocId? ShearableMarkupText;
 
     /// <summary>
     ///     A LocID that is added to the description box when the entity is not shearable.
@@ -85,7 +85,7 @@ public sealed partial class ShearableComponent : Component
     ///     unShearableMarkupText: sheep-not-shearable-examine-markup
     /// </example>
     [DataField]
-    public LocId UnShearableMarkupText = string.Empty;
+    public LocId? UnShearableMarkupText;
 
     /// <summary>
     ///     A LocID of the verb used for shearing, this is used in some popups in-game. For example "you can't SHEAR that sheep".
