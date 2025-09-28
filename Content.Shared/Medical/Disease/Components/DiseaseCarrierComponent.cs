@@ -60,6 +60,6 @@ public sealed partial class DiseaseCarrierComponent : Component
     /// <summary>
     /// Prototype ID of the health icon to display for HUDs.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [AutoNetworkedField]
     public ProtoId<HealthIconPrototype> DiseaseIcon = string.Empty;
 }
