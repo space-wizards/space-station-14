@@ -81,6 +81,7 @@
     - MedkitCombatFilled
     - PinpointerNuclear
     - GrenadeShrapnel
+    - SmokeGrenade
     - MagazineRifleIncendiary
     - MagazineRifleUranium
     belt:
@@ -371,10 +372,10 @@
     - CrowbarRed
     - Zipties
     - MedkitCombatFilled
+    - SmokeGrenade
+    - ExGrenade
     - MagazineRifle
     - MagazineRifle
-    - MagazineRifleIncendiary
-    - MagazineRifleUranium
     - Zipties
 
 - type: startingGear
@@ -410,30 +411,28 @@
 
 - type: startingGear
   parent: ERTSecurityGearEVA
-  id: ERTSecurityGearArmedMelee
+  id: ERTSecurityGearArmedMarksman
   equipment:
-    pocket2: EnergySword
-    suitstorage: WeaponSubMachineGunWt550
+    pocket2: WeaponDisabler
+    suitstorage: WeaponRifleLecterXL8
   storage:
     back:
+    - WeaponPistolMk58
+    - MagazinePistol
+    - MagazinePistol
     - CrowbarRed
-    - EnergyShield
-    - SyringeEphedrine
-    - ChemistryBottleEphedrine
-    - ChemistryBottleEphedrine
-    - ChemistryBottleEphedrine
-    - MedkitCombatFilled # End of first line
-    - Handcuffs
-    - Handcuffs
+    - MedkitCombatFilled
+    - MagazineRifleIncendiary
+    - MagazineRifleUranium
+    - EmergencyMedipen
     belt:
-    - SmokeGrenade
+    - Truncheon
+    - Handcuffs
+    - Handcuffs
     - SmokeGrenade
     - ExGrenade
-    - ExGrenade
-    - MagazinePistolSubMachineGunTopMounted
-    - MagazinePistolSubMachineGunTopMounted
-    - MagazinePistolSubMachineGunTopMounted
-    - MagazinePistolSubMachineGunTopMounted
+    - MagazineRifle
+    - MagazineRifle
 
 - type: chameleonOutfit
   id: ERTSecurityChameleonOutfit

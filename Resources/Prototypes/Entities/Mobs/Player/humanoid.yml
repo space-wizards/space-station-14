@@ -418,23 +418,23 @@
 
 - type: entity
   parent: RandomHumanoidSpawnerERTSecurityEVA
-  id: RandomHumanoidSpawnerERTSecurityArmedMelee
-  name: ERT security vanguard
+  id: RandomHumanoidSpawnerERTSecurityArmedMarksman
+  name: ERT security marksman
   suffix: ERTRole, Armed, EVA
   components:
   - type: RandomHumanoidSpawner
-    settings: ERTSecurityArmedMelee
+    settings: ERTSecurityArmedMarksman
 
 - type: randomHumanoidSettings
   parent: ERTSecurityEVA
-  id: ERTSecurityArmedMelee
+  id: ERTSecurityArmedMarksman
   components:
   - type: RandomMetadata
     nameSegments:
     - NamesMilitaryLast
-    nameFormat: name-format-ert-melee
+    nameFormat: name-format-ert-marksman
   - type: Loadout
-    prototypes: [ ERTSecurityGearArmedMelee ]
+    prototypes: [ ERTSecurityGearArmedMarksman ]
     roleLoadout: [ RoleSurvivalMilitaryDouble ]
 
 ## ERT Medic
