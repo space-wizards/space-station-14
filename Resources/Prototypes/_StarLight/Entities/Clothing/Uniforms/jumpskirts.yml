@@ -8,6 +8,17 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/ntrep.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/ntrep.rsi
+
+- type: entity
+  parent: [ ClothingUniformSkirtBase, BaseCommandContraband ]
+  id: ClothingUniformJumpskirtNtrepTurtleneck
+  name: nt representive's turtleneck jumpskirt
+  description: For a more casual look while on the job.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/ntrepturtleneckskirt.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/ntrepturtleneckskirt.rsi
     
 - type: entity
   parent: [ ClothingUniformSkirtBase, BaseCommandContraband ]
