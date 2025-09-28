@@ -264,31 +264,28 @@ public sealed class SharedShearableSystem : EntitySystem
         if (!args.CanInteract)
             return;
 
-        // If we're not using a tool then Using will be null so we need to check it quickly.
-        EntityUid? toolUsed = null;
-        if (args.Using is not null)
-        {
-            toolUsed = args.Using.Value;
-        }
-
-        // Construct verb object.
-        var user = args.User;
-        AlternativeVerb verb =
-            new()
-            {
-                Act = () => AttemptShear(ent, user, toolUsed),
-                Disabled = false,
-                Text = Loc.GetString(ent.Comp.Verb),
-                Icon = ent.Comp.ShearingIcon,
-                Priority = 2
-            };
+        var verbDisabled = false;
+        var toolUsed = args.Using;
 
         // Check.
         if (CheckShear(ent.Owner, ent.Comp, out _, out _, out _, toolUsed, true) != CheckShearReturns.Success)
         {
             // Still adds the verb but it's disabled.
-            verb.Disabled = true;
+            verbDisabled = true;
         }
+
+        // Construct verb object.
+        var user = args.User;
+
+        AlternativeVerb verb =
+            new()
+            {
+                Act = () => AttemptShear(ent, user, toolUsed),
+                Disabled = verbDisabled,
+                Text = Loc.GetString(ent.Comp.Verb),
+                Icon = ent.Comp.ShearingIcon,
+                Priority = 2
+            };
 
         // Add verb to the player.
         args.Verbs.Add(verb);
