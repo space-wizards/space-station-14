@@ -127,9 +127,7 @@
     whitelist:
       components:
       - XenoArtifact
-      tags:
-      - CanPilot # People
-      - VimPilot # Pets
+      - Gibbable
   - type: Appearance
   - type: GenericVisualizer
     visuals:

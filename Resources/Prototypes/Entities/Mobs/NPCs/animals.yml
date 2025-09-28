@@ -77,7 +77,11 @@
         recursive: false
   - type: Tag
     tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
 
 - type: entity
   name: bee
@@ -137,6 +141,9 @@
     size: Tiny
   - type: Tag
     tags:
+    - CannotSuicide
+    - StunImmune
+    - VimPilot
     - Bee
     - Trash
   - type: Bloodstream
@@ -415,6 +422,8 @@
   - type: Tag
     tags:
     - Trash
+    - CannotSuicide
+    - StunImmune
     - VimPilot
   - type: Destructible
     thresholds:
@@ -583,6 +592,7 @@
     tags:
     - Trash
     - CannotSuicide
+    - StunImmune
     - VimPilot
   - type: CanEscapeInventory
   - type: NpcFactionMember
@@ -669,9 +679,12 @@
         - MobLayer
   - type: Tag
     tags:
-    - DoorBumpOpener
     - Duck
+    - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
   - type: Reproductive
     breedChance: 0.05
     birthPopup: reproductive-laid-egg-popup
@@ -830,6 +843,9 @@
     size: Tiny
   - type: Tag
     tags:
+    - CannotSuicide
+    - StunImmune
+    - VimPilot
     - Trash
   - type: Bloodstream
     bloodReagent: InsectBlood
@@ -861,7 +877,11 @@
       sprite: Mobs/Animals/cow.rsi
   - type: Tag
     tags:
+    - CannotSuicide
     - DoorBumpOpener
+    - StunImmune
+    - VimPilot
+    - SimpleMobStorage
     - Cow
   - type: Reproductive
     partnerWhitelist:
@@ -993,7 +1013,11 @@
     bloodReagent: CopperBlood
   - type: Tag
     tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
   - type: HTN
     rootTask:
       task: RuminantCompound
@@ -1027,7 +1051,11 @@
     tags:
     # let moths eat wool directly
     - ClothMade
+    - CannotSuicide
     - DoorBumpOpener
+    - StunImmune
+    - VimPilot
+    - SimpleMobStorage
     - Goat
   - type: Reproductive
     partnerWhitelist:
@@ -1276,7 +1304,10 @@
         Base: kangaroo-dead
   - type: Tag
     tags:
+    - CannotSuicide
     - DoorBumpOpener
+    - VimPilot
+    - SimpleMobStorage
     - FootstepSound
   - type: GhostRole
     prob: 0.25
@@ -1425,8 +1456,8 @@
   - type: IdExaminable
   - type: Tag
     tags:
-    - VimPilot
     - DoorBumpOpener
+    - SimpleMobStorage
     - AnomalyHost
   - type: Reactive
     groups:
@@ -1826,7 +1857,10 @@
   - type: Tag
     tags:
     - Trash
+    - CannotSuicide
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
     - ChefPilot
     - Mouse
     - Meat
@@ -2060,7 +2094,11 @@
     damageModifierSet: Scale
   - type: Tag
     tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
 
 
 - type: entity
@@ -2167,7 +2205,11 @@
     bloodMaxVolume: 50
   - type: Tag
     tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
   - type: Destructible
     thresholds:
     - trigger:
@@ -2308,7 +2350,11 @@
       path: /Audio/Animals/penguin_squawk.ogg
   - type: Tag
     tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
   - type: NpcFactionMember
     factions:
     - Passive
@@ -2521,7 +2567,11 @@
     proto: spider
   - type: Tag
     tags:
+    - CannotSuicide
     - DoorBumpOpener
+    - StunImmune
+    - VimPilot
+    - SimpleMobStorage
     - FootstepSound
   - type: Prying # Open door from xeno.yml.
     pryPowered: true
@@ -2717,7 +2767,11 @@
       gender: epicene
   - type: Tag
     tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
 
 - type: entity
   name: possum
@@ -2791,7 +2845,11 @@
       gender: epicene
   - type: Tag
     tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
 
 - type: entity
   name: fox
@@ -2870,7 +2928,11 @@
   - type: MessyDrinker
   - type: Tag
     tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
 
 - type: entity
   abstract: true
@@ -2936,7 +2998,11 @@
     accent: dog
   - type: Tag
     tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
 
 - type: entity
   name: corrupted corgi
@@ -3093,7 +3159,11 @@
     price: 200
   - type: Tag
     tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 4
@@ -3193,7 +3263,11 @@
     coldDamageThreshold: 0
   - type: Tag
     tags:
-      - DoorBumpOpener
+    - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
+    - VimPilot
+    - SimpleMobStorage
   - type: MovementAlwaysTouching
   - type: PressureImmunity
   - type: ProtectedFromStepTriggers
@@ -3316,7 +3390,11 @@
   - type: SlowAccent
   - type: Tag
     tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
 
 - type: entity
   name: ferret
@@ -3370,7 +3448,11 @@
       gender: epicene
   - type: Tag
     tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
 
 - type: entity
   name: hamster
@@ -3472,7 +3554,10 @@
     accent: mouse
   - type: Tag
     tags:
+    - CannotSuicide
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
     - ChefPilot
     - Trash
     - Hamster
@@ -3552,9 +3637,12 @@
     templateId: pet
   - type: Tag
     tags:
+    - CannotSuicide
     - DoorBumpOpener
-    - Pig
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
+    - Pig
   - type: Reproductive
     partnerWhitelist:
       tags:
@@ -3666,7 +3754,7 @@
   - type: Tag
     tags:
     - DoorBumpOpener
-    - VimPilot
+    - StunImmune
   - type: Emoting
   - type: BodyEmotes
     soundsId: Nymph
@@ -3841,6 +3929,7 @@
     - VimPilot
     - CanPilot
     - DoorBumpOpener
+    - SimpleMobStorage
   - type: StatusIcon # marks them as crew
     bounds: -0.5,-0.5,0.5,0.5
   - type: NpcFactionMember

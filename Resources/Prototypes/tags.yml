@@ -1281,6 +1281,9 @@
   id: SiliconEmotes
 
 - type: Tag
+  id: SimpleMobStorage # for mobs that should be able to go in various entitiy storages, pet carriers, mechs, etc. Specifically *not* humanoids.
+
+- type: Tag
   id: SkeletonMotorcycleKeys
 
 - type: Tag

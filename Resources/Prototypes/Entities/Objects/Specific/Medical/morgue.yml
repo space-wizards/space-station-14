@@ -45,10 +45,9 @@
   - type: EntityStorage
     capacity: 1
     isCollidableWhenOpen: true
-    whitelist: # Use a tag whitelist rather than filtering for PerishableComponent to avoid chefs using body bags for food preservation
-      tags:
-        - VimPilot # Pets
-        - CanPilot # People
+    whitelist: # Use body rather than filtering for PerishableComponent to avoid chefs using body bags for food preservation
+      components:
+      - Body
     closeSound:
       path: /Audio/Misc/zip.ogg
     openSound:

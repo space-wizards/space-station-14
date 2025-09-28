@@ -47,7 +47,10 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
   - type: StealTarget
     stealGroup: AnimalIan
 
@@ -173,7 +176,10 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
   - type: StealTarget
     stealGroup: AnimalNamedCat
 
@@ -193,7 +199,10 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
   - type: StealTarget
     stealGroup: AnimalNamedCat
 
@@ -220,7 +229,10 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
   - type: StealTarget
     stealGroup: AnimalNamedCat
 
@@ -237,7 +249,10 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
 
 - type: entity
   name: Bingus
@@ -292,7 +307,10 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
   - type: StealTarget
     stealGroup: AnimalNamedCat
 
@@ -367,7 +385,10 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
   - type: StealTarget
     stealGroup: AnimalMcGriff
   - type: MessyDrinker
@@ -461,7 +482,10 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
   - type: StealTarget
     stealGroup: AnimalWalter
   - type: Speech
@@ -489,7 +513,10 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
   - type: StealTarget
     stealGroup: AnimalMorty
 
@@ -555,7 +582,10 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
 
 - type: entity
   name: Alexander
@@ -577,7 +607,10 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
 
 - type: entity
   name: Renault
@@ -605,7 +638,10 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
   - type: StealTarget
     stealGroup: AnimalRenault
 
@@ -653,9 +689,12 @@
       gender: male
   - type: Tag
     tags:
-    - CannotSuicide
     - Hamster
+    - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
     - ChefPilot
   - type: FlavorProfile
     flavors:
@@ -739,8 +778,10 @@
   - type: Tag
     tags:
     - CannotSuicide
-    - VimPilot
     - DoorBumpOpener
+    - StunImmune
+    - VimPilot
+    - SimpleMobStorage
     - FootstepSound
   - type: StealTarget
     stealGroup: AnimalShiva
@@ -766,6 +807,9 @@
     tags:
     - CannotSuicide
     - DoorBumpOpener
+    - StunImmune
+    - VimPilot
+    - SimpleMobStorage
     - FootstepSound
   - type: GhostRole
     prob: 0.25
@@ -809,9 +853,11 @@
   - type: Tag
     tags:
     - FootstepSound
-    - DoorBumpOpener
     - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
   - type: DamageStateVisuals
     states:
       Alive:
@@ -883,6 +929,7 @@
     - CannotSuicide
     - DoorBumpOpener
     - VimPilot
+    - SimpleMobStorage
     - AnomalyHost
   - type: Loadout
     prototypes: [ MobMonkeyGear ]
@@ -908,8 +955,11 @@
 #  - type: GhostTakeoverAvailable
   - type: Tag
     tags:
-    - VimPilot
     - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
+    - VimPilot
+    - SimpleMobStorage
   - type: Grammar
     attributes:
       proper: true
