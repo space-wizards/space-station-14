@@ -179,4 +179,13 @@ public abstract partial class BaseActionEvent : HandledEntityEventArgs
     /// Should we toggle the action entity?
     /// </summary>
     public bool Toggle;
+
+
+    // Starlight-start
+
+    /// <summary>
+    /// if not null, use this cooldown instead of UseDelay
+    /// </summary>
+    public TimeSpan? Cooldown = null;
+    // Starlight-end
 }
