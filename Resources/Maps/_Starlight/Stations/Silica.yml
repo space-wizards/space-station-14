@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/28/2025 12:52:14
-  entityCount: 25243
+  time: 09/28/2025 14:10:30
+  entityCount: 25253
 maps:
 - 1
 grids:
@@ -9670,7 +9670,7 @@ entities:
       - 16171
       - 602
       - 16004
-      - 25243
+      - 25244
     - type: Fixtures
       fixtures: {}
   - uid: 43
@@ -12626,7 +12626,7 @@ entities:
       pos: -29.5,-12.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -73997.6
+      secondsUntilStateChange: -78674.57
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12638,7 +12638,7 @@ entities:
       pos: 30.5,-28.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -74004.1
+      secondsUntilStateChange: -78681.07
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12650,7 +12650,7 @@ entities:
       pos: 30.5,-24.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -74004.8
+      secondsUntilStateChange: -78681.766
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -13788,7 +13788,7 @@ entities:
       pos: 36.5,0.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -165700.92
+      secondsUntilStateChange: -170377.89
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -15226,7 +15226,7 @@ entities:
       deviceLists:
       - 12696
       - 140
-  - uid: 25243
+  - uid: 25244
     components:
     - type: Transform
       pos: 34.5,9.5
@@ -16487,6 +16487,11 @@ entities:
           ents:
           - 768
           - 769
+  - uid: 25248
+    components:
+    - type: Transform
+      pos: -39.5723,11.59687
+      parent: 2
 - proto: AsimovCircuitBoard
   entities:
   - uid: 754
@@ -26301,6 +26306,15 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -0.40548134,0.44439065
       parent: 2
+- proto: BarWindow
+  entities:
+  - uid: 25245
+    components:
+    - type: Transform
+      pos: -38.5,14.5
+      parent: 2
+    - type: DeltaPressure
+      gridUid: 2
 - proto: BaseChemistryEmptyVial
   entities:
   - uid: 2713
@@ -27483,6 +27497,11 @@ entities:
     - type: Transform
       pos: 41.804787,-17.646822
       parent: 2
+  - uid: 18265
+    components:
+    - type: Transform
+      pos: -31.033224,13.483604
+      parent: 2
 - proto: ButchCleaver
   entities:
   - uid: 2918
@@ -27729,6 +27748,13 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 44.5,-17.5
+      parent: 2
+  - uid: 25251
+    components:
+    - type: MetaData
+      name: button frame (garage doors)
+    - type: Transform
+      pos: 9.5,23.5
       parent: 2
 - proto: ButtonFrameGrey
   entities:
@@ -77973,11 +77999,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -26.5,9.5
       parent: 2
-  - uid: 12422
-    components:
-    - type: Transform
-      pos: -38.5,13.5
-      parent: 2
   - uid: 12423
     components:
     - type: Transform
@@ -78386,6 +78407,11 @@ entities:
     components:
     - type: Transform
       pos: 34.5,53.5
+      parent: 2
+  - uid: 25246
+    components:
+    - type: Transform
+      pos: -31.5,13.5
       parent: 2
 - proto: EmergencyNitrogenTankFilled
   entities:
@@ -116693,6 +116719,11 @@ entities:
     - type: Transform
       pos: -23.5,36.5
       parent: 2
+  - uid: 24587
+    components:
+    - type: Transform
+      pos: -38.5,14.5
+      parent: 2
 - proto: GrilleDiagonal
   entities:
   - uid: 17499
@@ -119644,6 +119675,30 @@ entities:
           - Toggle
     - type: Fixtures
       fixtures: {}
+  - uid: 25250
+    components:
+    - type: MetaData
+      desc: Allow your bots to roll out by opening the garage doors to the Robotics Department.
+      name: lockable button (garage doors)
+    - type: Transform
+      pos: 9.5,23.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        20480:
+        - - Pressed
+          - Toggle
+        20481:
+        - - Pressed
+          - Toggle
+        20482:
+        - - Pressed
+          - Toggle
+        20483:
+        - - Pressed
+          - Toggle
+    - type: Fixtures
+      fixtures: {}
 - proto: LockableButtonSecurity
   entities:
   - uid: 17974
@@ -122069,6 +122124,13 @@ entities:
     - type: Transform
       pos: 18.719898,-24.447454
       parent: 2
+- proto: MaterialWoodPlank
+  entities:
+  - uid: 24862
+    components:
+    - type: Transform
+      pos: -32.44861,16.531115
+      parent: 2
 - proto: Mattress
   entities:
   - uid: 18206
@@ -122485,10 +122547,10 @@ entities:
       parent: 2
 - proto: MopBucketFull
   entities:
-  - uid: 18265
+  - uid: 12422
     components:
     - type: Transform
-      pos: -30.5,15.5
+      pos: -31.5,13.5
       parent: 2
 - proto: MopItem
   entities:
@@ -122500,7 +122562,7 @@ entities:
   - uid: 18267
     components:
     - type: Transform
-      pos: -30.57747,15.482482
+      pos: -31.511637,13.5760565
       parent: 2
   - uid: 18268
     components:
@@ -124051,12 +124113,22 @@ entities:
     - type: Transform
       pos: 39.5,-19.5
       parent: 2
+  - uid: 25253
+    components:
+    - type: Transform
+      pos: 50.5,25.5
+      parent: 2
 - proto: PortableGeneratorPacman
   entities:
   - uid: 18474
     components:
     - type: Transform
       pos: 41.5,45.5
+      parent: 2
+  - uid: 25252
+    components:
+    - type: Transform
+      pos: 25.5,33.5
       parent: 2
 - proto: PortableGeneratorSuperPacman
   entities:
@@ -129565,6 +129637,11 @@ entities:
     - type: Transform
       pos: 32.71418,-7.066857
       parent: 2
+  - uid: 25247
+    components:
+    - type: Transform
+      pos: -37.638874,11.606781
+      parent: 2
 - proto: Railing
   entities:
   - uid: 19416
@@ -135038,6 +135115,13 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+- proto: RollerBed
+  entities:
+  - uid: 25243
+    components:
+    - type: Transform
+      pos: -57.46213,27.77646
+      parent: 2
 - proto: RollerBedSpawnFolded
   entities:
   - uid: 20277
@@ -148032,6 +148116,11 @@ entities:
     - type: Transform
       pos: 50.412643,20.340109
       parent: 2
+  - uid: 25249
+    components:
+    - type: Transform
+      pos: -30.454334,15.280955
+      parent: 2
 - proto: TowelColorGreen
   entities:
   - uid: 18049
@@ -160904,11 +160993,6 @@ entities:
     - type: Transform
       pos: -33.5,7.5
       parent: 2
-  - uid: 24587
-    components:
-    - type: Transform
-      pos: -38.5,14.5
-      parent: 2
   - uid: 24588
     components:
     - type: Transform
@@ -162285,11 +162369,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -33.5,3.5
-      parent: 2
-  - uid: 24862
-    components:
-    - type: Transform
-      pos: -34.5,9.5
       parent: 2
   - uid: 24863
     components:
