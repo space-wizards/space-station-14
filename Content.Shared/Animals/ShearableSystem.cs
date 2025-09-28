@@ -352,10 +352,6 @@ public sealed class SharedShearableSystem : EntitySystem
     private void UpdateShearingLayer(Entity<ShearableComponent> ent, Solution sol)
     {
 
-        // appearance is used to disable and enable the wool layer.
-        if (!TryComp<AppearanceComponent>(ent.Owner, out var appearance))
-            return;
-
         // The minimum solution required to spawn one product.
         var minimumSol = 1 / ent.Comp.ProductsPerSolution;
 
@@ -363,13 +359,13 @@ public sealed class SharedShearableSystem : EntitySystem
         if (sol.Volume.Value < minimumSol * 100)
         {
             // Remove wool layer
-            _appearance.SetData(ent.Owner, ShearableVisuals.Shearable, false, appearance);
+            _appearance.SetData(ent.Owner, ShearableVisuals.Shearable, false);
         }
-        // If solution is more than the minimum then disable the shearable layer.
+        // If solution is more than the minimum then enable the shearable layer.
         else
         {
             // Add wool layer
-            _appearance.SetData(ent.Owner, ShearableVisuals.Shearable, true, appearance);
+            _appearance.SetData(ent.Owner, ShearableVisuals.Shearable, true);
         }
     }
 
