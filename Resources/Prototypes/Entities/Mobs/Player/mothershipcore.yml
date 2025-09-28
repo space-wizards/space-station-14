@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseControllable, BaseMachinePowered ]
+  parent: [ BaseControllable, BaseMob ]
   id: MothershipCore
   name: mothership core
   description: A sentient machine that can produce Xenoborgs. Without this the Xenoborgs are doomed.
@@ -48,6 +48,12 @@
     enabled: true
     radius: 4
     netsync: false
+  - type: BlockMovement
+    blockUse: false
+    blockInteraction: false
+    blockDrop: false
+    blockPickup: false
+    blockChangeDirection: true
   - type: Anchorable
     flags:
     - Anchorable
