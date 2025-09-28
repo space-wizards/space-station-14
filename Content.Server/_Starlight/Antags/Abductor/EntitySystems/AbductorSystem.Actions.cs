@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server._Starlight.Computers.RemoteEye;
-using Content.Shared._Starlight.Action;
-using Content.Shared.Actions;
+using Content.Shared._Starlight.Actions.EntitySystems;
 using Content.Shared.Actions.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Effects;
@@ -10,7 +9,6 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Starlight.Antags.Abductor;
-using Content.Shared.Starlight.Medical.Surgery;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Player;

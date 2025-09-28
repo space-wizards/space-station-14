@@ -1,29 +1,15 @@
 using Content.Server.Revolutionary.Components;
 using Content.Shared.Revolutionary.Components;
 using Content.Server.Store.Systems;
-using Content.Shared.Actions;
 using Content.Shared.Implants;
-using Content.Shared.Implants.Components;
-using Content.Shared.Store;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 using Content.Shared.Store.Components;
-using Robust.Server.GameObjects;
 using Content.Shared.FixedPoint;
 using Content.Server.Popups;
 using Content.Shared.Popups;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
-using Content.Shared.GameTicking;
-using Content.Server.GameTicking;
+using Content.Shared._Starlight.Actions.Events;
 using Content.Server.RoundEnd;
-using Robust.Shared.Timing;
-using System.Threading;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Content.Server.Implants
 {
@@ -37,7 +23,7 @@ namespace Content.Server.Implants
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<Content.Shared.Actions.OpenUplinkImplantEvent>(OnOpenUplinkImplant);
+        SubscribeLocalEvent<OpenUplinkImplantEvent>(OnOpenUplinkImplant);
         SubscribeLocalEvent<StoreBuyFinishedEvent>(OnStoreBuyFinished);
         SubscribeLocalEvent<USSPUplinkImplantComponent, ImplantImplantedEvent>(OnImplantImplanted);
         SubscribeLocalEvent<RoundEndSystemChangedEvent>(OnRoundEnd);
@@ -687,7 +673,7 @@ namespace Content.Server.Implants
             }
         }
 
-        private void OnOpenUplinkImplant(Content.Shared.Actions.OpenUplinkImplantEvent args)
+        private void OnOpenUplinkImplant(OpenUplinkImplantEvent args)
         {
             var user = args.User;
             if (!_entityManager.TryGetComponent(user, out StoreComponent? store))

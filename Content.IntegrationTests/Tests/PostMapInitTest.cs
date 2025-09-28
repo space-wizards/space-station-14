@@ -98,7 +98,8 @@ namespace Content.IntegrationTests.Tests
             "/Maps/_Starlight/Stations/Lobster.yml",
             "/Maps/_Starlight/Stations/Orwell.yml",
             "/Maps/_Starlight/Stations/Remix.yml",
-            "/Maps/_Starlight/Stations/Starboard.yml"
+            "/Maps/_Starlight/Stations/Starboard.yml",
+            "/Maps/_Starlight/Shuttles/RecluseClassSHC.yml"
             #endregion
         };
 
