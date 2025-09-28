@@ -120,3 +120,9 @@
   id: ConeFovMask
   kind: source
   path: "/Textures/Shaders/cone_fov_mask.swsl"
+
+# Purple tint fullscreen shader (world or screen overlay)
+- type: shader
+  id: PurpleTint
+  kind: source
+  path: "/Textures/Shaders/purple_tint.swsl"

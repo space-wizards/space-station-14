@@ -1,0 +1,40 @@
+// Purple tint fullscreen shader for SS14
+// Tints input screen texture towards a configurable purple color while preserving contrast.
+
+uniform sampler2D SCREEN_TEXTURE;
+
+// Uniforms configurable from C#
+uniform lowp vec3 tintColor;    // e.g., vec3(0.62, 0.22, 0.86) for #9F38DB
+uniform lowp float strength;     // 0.0 = off, 1.0 = full tint
+uniform lowp float saturation;   // 1.0 = unchanged, >1 boosts saturation
+uniform lowp float contrast;     // 1.0 = unchanged
+
+lowp float luma(lowp vec3 c){
+    return dot(c, vec3(0.2126, 0.7152, 0.0722));
+}
+
+// Simple saturation adjust in RGB space
+lowp vec3 adjustSaturation(lowp vec3 c, lowp float sat){
+    lowp float g = luma(c);
+    return mix(vec3(g), c, sat);
+}
+
+lowp vec3 adjustContrast(lowp vec3 c, lowp float cont){
+    // Center at 0.5
+    return (c - 0.5) * cont + 0.5;
+}
+
+void fragment(){
+    lowp vec4 src = zTextureSpec(SCREEN_TEXTURE, UV);
+    lowp vec3 col = src.rgb;
+
+    // Apply saturation & contrast first
+    col = adjustSaturation(col, max(0.0, saturation));
+    col = adjustContrast(col, max(0.0, contrast));
+
+    // Blend towards tint
+    lowp vec3 tinted = col * tintColor; // multiplicative keeps highlights
+    col = mix(col, tinted, clamp(strength, 0.0, 1.0));
+
+    COLOR = vec4(col, src.a);
+}
