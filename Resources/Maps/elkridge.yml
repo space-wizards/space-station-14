@@ -4,7 +4,7 @@ meta:
   engineVersion: 267.2.0
   forkId: ""
   forkVersion: ""
-  time: 09/28/2025 03:33:04
+  time: 09/28/2025 04:03:52
   entityCount: 18692
 maps:
 - 1
@@ -81659,6 +81659,8 @@ entities:
       rot: 3.141592653589793 rad
       pos: 34.5,-46.5
       parent: 2
+    - type: GasPressureRegulator
+      threshold: 95000
 - proto: GasThermoMachineFreezer
   entities:
   - uid: 153
