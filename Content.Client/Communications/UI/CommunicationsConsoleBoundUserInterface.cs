@@ -54,11 +54,6 @@ namespace Content.Client.Communications.UI
 
         public void AnnounceButtonPressed(string message)
         {
-            // Starlight Start
-            var optimisticSeconds = 90;
-            if (_menu != null)
-                _menu.AnnouncementCountdownEnd = _timing.CurTime + TimeSpan.FromSeconds(optimisticSeconds);
-            // Starlight End
             var maxLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementLength);
             var msg = SharedChatSystem.SanitizeAnnouncement(message, maxLength);
             SendMessage(new CommunicationsConsoleAnnounceMessage(msg));
@@ -71,22 +66,11 @@ namespace Content.Client.Communications.UI
 
         public void CallShuttle()
         {
-            // Starlight Start
-            var optimisticRecallSeconds = 30;
-            if (_menu != null)
-                _menu.RecallCountdownEnd = _timing.CurTime + TimeSpan.FromSeconds(optimisticRecallSeconds);
-            // Starlight End
             SendMessage(new CommunicationsConsoleCallEmergencyShuttleMessage());
         }
 
         public void RecallShuttle()
         {
-            // Starlight Start
-            var optimisticRecallSeconds = 30;
-            if (_menu != null)
-                _menu.RecallCountdownEnd = _timing.CurTime + TimeSpan.FromSeconds(optimisticRecallSeconds);
-
-            // Starlight End
             SendMessage(new CommunicationsConsoleRecallEmergencyShuttleMessage());
         }
 
