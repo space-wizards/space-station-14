@@ -4,6 +4,7 @@ id-card-access-level-blueshield = BlueShield
 
 id-card-access-level-brigmedic = Brigmedic
 
+
 id-card-access-level-robotics = Robotics
 
 id-card-access-level-freelance = Freelance
@@ -19,3 +20,6 @@ id-card-access-level-debug5 = Debug5
 id-card-access-level-commie = Commie
 
 id-card-access-level-paramed = Paramedic
+
+id-card-access-level-salvagelead = Salvage Lead
+id-card-access-level-mining = Mining

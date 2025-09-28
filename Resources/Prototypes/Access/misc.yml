@@ -41,6 +41,9 @@
   - Robotics # Starlight Job
   - Surgery # Starlight Job
   - Paramedic # Starlight Job
+  - Mining # Starlight Job
+  - SalvageLead # Starlight Job
+
 
 - type: accessGroup
   id: General

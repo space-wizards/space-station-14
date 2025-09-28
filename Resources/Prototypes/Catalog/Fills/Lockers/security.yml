@@ -55,6 +55,7 @@
     children:
     - id: ClothingOuterHardsuitWarden
     - id: OxygenTankFilled
+    - id: NitrogenTankFilled # Starlight - vox gang
     - id: ClothingMaskBreath
 
 - type: entity

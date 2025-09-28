@@ -13,3 +13,24 @@
       - id: FoodBakedPancake
         amount: 2
 # Fashion-O-Mat-End
+
+# Expedition Encryption Keys
+- type: entity
+  name: expedition encryption key box
+  parent: BoxEncryptionKeyAssistant
+  id: BoxEncryptionKeyExpedition
+  components:
+    - type: StorageFill
+      contents:
+        - id: EncryptionKeyExpedition
+          amount: 4
+
+- type: entity
+  name: salvage encryption key box
+  parent: BoxEncryptionKeyAssistant
+  id: BoxEncryptionKeySalvage
+  components:
+    - type: StorageFill
+      contents:
+        - id: EncryptionKeySalvage
+          amount: 4

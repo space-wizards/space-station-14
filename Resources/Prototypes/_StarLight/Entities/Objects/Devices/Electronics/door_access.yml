@@ -41,3 +41,19 @@
   components:
   - type: AccessReader
     access: [["Paramedic"]]
+
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsMining
+  suffix: Mining, Locked
+  components:
+    - type: AccessReader
+      access: [["Mining"]]
+
+- type: entity # Combination door for salvage and mining access
+  parent: DoorElectronics
+  id: DoorElectronicsSalvageMining
+  suffix: Salvage, Mining, Locked
+  components:
+    - type: AccessReader
+      access: [["Salvage"], ["Mining"]]

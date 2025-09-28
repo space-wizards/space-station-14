@@ -112,7 +112,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
     private void OnGetState(Entity<ActionsComponent> ent, ref ComponentGetState args)
     {
         // starlight start
-        // In that spot, there’s an insane number of errors happening because of actions that have already been deleted.
+        // In that spot, there's an insane number of errors happening because of actions that have already been deleted.
         List<EntityUid>? deletedActions = null;
         foreach (var action in ent.Comp.Actions)
         {
@@ -491,7 +491,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
             return _interaction.InRangeUnobstructed(user, coords, range: comp.Range);
 
         // Starlight start 
-        // I’m writing this for the FIFTH fucking time. If this line disappears again, I’ll find who did it.
+        // I'm writing this for the FIFTH fucking time. If this line disappears again, I'll find who did it.
         if (!comp.CheckMap)
             return true;
         // tarlight end
@@ -622,8 +622,14 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
         _audio.PlayPredicted(action.Comp.Sound, performer, predicted ? performer : null);
 
-        RemoveCooldown((action, action));
-        StartUseDelay((action, action));
+        // Starlight-start: Add support to rewrite UseDelay
+
+        if (ev.Cooldown is { } cooldown)
+            SetCooldown((action, action), cooldown);
+        else if (!IsCooldownActive(action.Comp))
+            StartUseDelay((action, action));
+        
+        // Starlight-end
 
         UpdateAction(action);
 
