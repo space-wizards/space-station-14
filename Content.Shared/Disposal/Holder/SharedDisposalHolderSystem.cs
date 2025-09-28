@@ -185,7 +185,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
 
         if (disposalId != null && disposalUnit != null)
         {
-            _disposalUnitSystem.TryEjectContents((disposalId.Value, disposalUnit));
+            _disposalUnitSystem.EjectContents((disposalId.Value, disposalUnit));
         }
 
         ExpelAtmos(ent);

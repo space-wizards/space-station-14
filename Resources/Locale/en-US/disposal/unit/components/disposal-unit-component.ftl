@@ -12,7 +12,6 @@ ui-disposal-unit-button-power = Power
 
 ## Verbs
 disposal-flush-verb-get-data-text = Flush
-disposal-self-insert-verb-get-data-text = Jump inside
 disposal-eject-verb-get-data-text = Eject contents
 
 ## Errors

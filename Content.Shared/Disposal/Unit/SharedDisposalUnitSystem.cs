@@ -69,7 +69,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         SubscribeLocalEvent<DisposalUnitComponent, CanDropTargetEvent>(OnCanDragDropOn);
         SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<InteractionVerb>>(AddInsertVerb);
         SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<AlternativeVerb>>(AddDisposalAltVerbs);
-        SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<Verb>>(AddClimbInsideVerb);
+        SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<Verb>>(AddEnterOrExitVerb);
 
         SubscribeLocalEvent<DisposalUnitComponent, DisposalDoAfterEvent>(OnDoAfter);
 
@@ -95,7 +95,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
     private void OnDestruction(Entity<DisposalUnitComponent> ent, ref DestructionEventArgs args)
     {
-        TryEjectContents(ent);
+        EjectContents(ent);
     }
 
     private void OnExploded(Entity<DisposalUnitComponent> ent, ref BeforeExplodeEvent args)
@@ -127,7 +127,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             // Verb to eject the contents
             AlternativeVerb ejectVerb = new()
             {
-                Act = () => TryEjectContents(ent),
+                Act = () => EjectContents(ent),
                 Category = VerbCategory.Eject,
                 Text = Loc.GetString("disposal-eject-verb-get-data-text")
             };
@@ -273,7 +273,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         UpdateVisualState(ent);
 
         if (!args.Anchored)
-            TryEjectContents(ent);
+            EjectContents(ent);
     }
 
     private void OnDragDropOn(Entity<DisposalUnitComponent> ent, ref DragDropTargetEvent args)
@@ -706,18 +706,11 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     /// Remove all entities currently in a disposal unit.
     /// </summary>
     /// <param name="ent">The disposal unit.</param>
-    public void TryEjectContents(Entity<DisposalUnitComponent> ent)
+    public void EjectContents(Entity<DisposalUnitComponent> ent)
     {
         foreach (var toRemove in ent.Comp.Container.ContainedEntities.ToArray())
         {
             Remove(ent, toRemove);
-        }
-
-        if (!ent.Comp.Engaged)
-        {
-            ent.Comp.NextFlush = null;
-            Dirty(ent);
-            UpdateUI(ent);
         }
     }
 
@@ -752,7 +745,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         switch (args.Button)
         {
             case DisposalUnitUiButton.Eject:
-                TryEjectContents(ent);
+                EjectContents(ent);
                 _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} hit eject button on {ToPrettyString(ent)}");
                 break;
             case DisposalUnitUiButton.Engage:
@@ -785,34 +778,41 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         }
     }
 
-    private void AddClimbInsideVerb(Entity<DisposalUnitComponent> ent, ref GetVerbsEvent<Verb> args)
+    private void AddEnterOrExitVerb(Entity<DisposalUnitComponent> ent, ref GetVerbsEvent<Verb> args)
     {
         // This is not an interaction, activation, or alternative verb type because unfortunately most users are
         // unwilling to accept that this is where they belong and don't want to accidentally climb inside.
         if (!args.CanAccess ||
             !args.CanInteract ||
-            ent.Comp.Container.ContainedEntities.Contains(args.User) ||
             !_actionBlockerSystem.CanMove(args.User))
         {
             return;
         }
 
-        if (!_containers.CanInsert(args.User, ent.Comp.Container))
-            return;
-
         var verbData = args;
-
-        // Add verb to climb inside of the unit,
-        Verb verb = new()
+        var verb = new Verb()
         {
-            Act = () => TryInsert(ent, verbData.User, verbData.User),
-            DoContactInteraction = true,
-            Text = Loc.GetString("disposal-self-insert-verb-get-data-text")
+            DoContactInteraction = true
         };
-        // TODO VERB ICON
-        // TODO VERB CATEGORY
-        // create a verb category for "enter"?
-        // See also, medical scanner. Also maybe add verbs for entering lockers/body bags?
+
+        if (!ent.Comp.Container.ContainedEntities.Contains(args.User))
+        {
+            if (!_containers.CanInsert(args.User, ent.Comp.Container))
+                return;
+
+            // Verb for climbing in
+            verb.Act = () => TryInsert(ent, verbData.User, verbData.User);
+            verb.Text = Loc.GetString("verb-common-enter");
+            verb.Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/close.svg.192dpi.png"));
+        }
+        else
+        {
+            // Verb for climbing out
+            verb.Act = () => Remove(ent, verbData.User);
+            verb.Text = Loc.GetString("verb-common-exit");
+            verb.Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/open.svg.192dpi.png"));
+        }
+
         args.Verbs.Add(verb);
     }
 
