@@ -1,8 +1,8 @@
 - type: constructionGraph
   id: RipperLeftGraph
-  start: startleft
+  start: start
   graph:
-  - node: startleft
+  - node: start
     edges:
     - to: left
       steps:
@@ -58,9 +58,9 @@
 
 - type: constructionGraph
   id: RipperRightGraph
-  start: startright
+  start: start
   graph:
-  - node: startright
+  - node: start
     edges:
     - to: right
       steps:
