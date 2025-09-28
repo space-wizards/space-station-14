@@ -31,6 +31,7 @@
     damageCoefficient: 0.6
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBlueshield
+
 #NTRep Hardsuit
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseCommandContraband]
@@ -64,6 +65,7 @@
     damageCoefficient: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitNtrep
+
 #Clown Battlesuit
 - type: entity
   parent: [ClothingOuterHardsuitBase]
@@ -98,6 +100,7 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetBattlesuitClown
+
 #Mercenary Hardsuit
 - type: entity
   parent: [ ClothingOuterHardsuitBase, BaseSalvageContraband ]
@@ -353,3 +356,61 @@
     sprintModifier: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitLuxmax
+
+# Experimental Security Hardsuit
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseSecurityContraband]
+  id: ClothingOuterHardsuitSecurityExperimental
+  name: experimental security hardsuit
+  description: A high-tech hardsuit meant to eventually replace the standard security suit, it boasts an ID-Lock and Gun-Lock system. Rumors have it that the first prototype was stolen by the syndicate..
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/experimental_security.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/experimental_security.rsi
+    equipSound: /Audio/Mecha/mechmove03.ogg
+    unequipSound: /Audio/Mecha/mechmove03.ogg
+    equipDelay: 3
+    unequipDelay: 3
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: ZombificationResistance
+    zombificationResistanceCoefficient: 0.50
+  - type: IdClothingBlocker
+    allowedJobs:
+      - SecurityOfficer
+      - Brigmedic
+      - Warden
+      - HeadOfSecurity
+      - Captain
+      - Detective
+  - type: Pierceable
+    level: Metal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 0.6
+        Caustic: 0.7
+    staminaModifier: 0.6
+  - type: ClothingSpeedModifier
+    walkModifier: 0.60
+    sprintModifier: 0.60
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
+      params:
+        volume: -6
+        pitch: 0.7
+        variation: 0.025
+  - type: HeldSpeedModifier
+  - type: Tag
+    tags:
+      - RequiredForLmgTag
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSecurityExperimental

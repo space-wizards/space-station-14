@@ -1,0 +1,31 @@
+- type: loadout
+  id: ClothingUniformJumpsuitMiningSpecialist
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMiningSpecialist
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorCargo
+
+- type: loadout
+  id: ClothingUniformJumpskirtCargoSalvage
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCargoSalvage
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorCargo
+
+- type: loadout
+  id: ClothingUniformJumpskirtCargoSalvageFormal
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCargoSalvageFormal
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorCargo
+
+- type: loadout
+  id: ClothingUniformJumpsuitSalvageFormal
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSalvageFormal
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorCargo

@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Chat.Managers;
-using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Dataset;
 using Content.Shared.Emag.Systems;
@@ -32,6 +31,7 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
 
+    [ViewVariables(VVAccess.ReadOnly)]
     public IReadOnlyList<ThavenMood> SharedMoods => _sharedMoods.AsReadOnly();
     private readonly List<ThavenMood> _sharedMoods = new();
     // cached hashset that never gets modified
@@ -40,9 +40,6 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
     private readonly HashSet<ProtoId<ThavenMoodPrototype>> _moodProtos = new HashSet<ProtoId<ThavenMoodPrototype>>();
 
     private ProtoId<DatasetPrototype> SharedDataset = "ThavenMoodsShared";
-    private ProtoId<DatasetPrototype> YesAndDataset = "ThavenMoodsYesAnd";
-    private ProtoId<DatasetPrototype> NoAndDataset = "ThavenMoodsNoAnd";
-    private ProtoId<DatasetPrototype> WildcardDataset = "ThavenMoodsWildcard";
 
     private EntProtoId ActionViewMoods = "ActionViewMoods";
 
@@ -61,7 +58,7 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
         SubscribeLocalEvent<RoundRestartCleanupEvent>((_) => NewSharedMoods());
     }
 
-    private void NewSharedMoods()
+    public void NewSharedMoods()
     {
         _sharedMoods.Clear();
         for (int i = 0; i < _config.GetCVar(ImpCCVars.ThavenSharedMoodCount); i++)
@@ -126,7 +123,7 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
         _bui.TryToggleUi(ent.Owner, ThavenMoodsUiKey.Key, actor.PlayerSession);
     }
 
-    private bool TryPick(string datasetProto, [NotNullWhen(true)] out ThavenMoodPrototype? proto, IEnumerable<ThavenMood>? currentMoods = null, HashSet<ProtoId<ThavenMoodPrototype>>? conflicts = null)
+    public bool TryPick(ProtoId<DatasetPrototype> datasetProto, [NotNullWhen(true)] out ThavenMoodPrototype? proto, IEnumerable<ThavenMood>? currentMoods = null, HashSet<ProtoId<ThavenMoodPrototype>>? conflicts = null)
     {
         var dataset = _proto.Index<DatasetPrototype>(datasetProto);
         var choices = dataset.Values.ToList();
@@ -249,6 +246,15 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
     }
 
     /// <summary>
+    /// Checks if the given mood prototype conflicts with the current moods, and
+    /// adds the mood if it does not.
+    /// </summary>
+    public bool TryAddMood(Entity<ThavenMoodsComponent> ent, ProtoId<ThavenMoodPrototype> moodProto, bool allowConflict = false, bool notify = true)
+    {
+        return TryAddMood(ent, _proto.Index(moodProto), allowConflict, notify);
+    }
+
+    /// <summary>
     /// Tries to add a random mood using a specific dataset.
     /// </summary>
     public bool TryAddRandomMood(Entity<ThavenMoodsComponent> ent, string datasetProto, bool notify = true)
@@ -269,14 +275,6 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
     {
         var datasetProto = _proto.Index(RandomThavenMoodDataset).Pick();
         return TryAddRandomMood(ent, datasetProto, notify);
-    }
-
-    /// <summary>
-    /// Tries to add a random mood from <see cref="WildcardDataset"/>, which is the same as emagging.
-    /// </summary>
-    public bool AddWildcardMood(Entity<ThavenMoodsComponent> ent, bool notify = true)
-    {
-        return TryAddRandomMood(ent, WildcardDataset, notify);
     }
 
     /// <summary>
@@ -344,15 +342,26 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
         return ent.Comp.Moods;
     }
 
+    public void RemoveMood(Entity<ThavenMoodsComponent> ent, int index, bool notify = true)
+    {
+        var moods = ent.Comp.Moods;
+        if (moods.Count <= index)
+            return;
+
+        ent.Comp.Moods.RemoveAt(index);
+
+        if (notify)
+            NotifyMoodChange(ent);
+    }
+
     private void OnThavenMoodInit(Entity<ThavenMoodsComponent> ent, ref MapInitEvent args)
     {
-        // "Yes, and" moods
-        if (TryPick(YesAndDataset, out var mood, GetActiveMoods(ent)))
-            TryAddMood(ent, mood, true, false);
 
-        // "No, and" moods
-        if (TryPick(NoAndDataset, out mood, GetActiveMoods(ent)))
-            TryAddMood(ent, mood, true, false);
+        foreach (var dataset in ent.Comp.MoodDatasets)
+        {
+            if (TryPick(dataset, out var mood, GetActiveMoods(ent)))
+                TryAddMood(ent, mood, true, false);
+        }
 
         ent.Comp.Action = _actions.AddAction(ent.Owner, ActionViewMoods);
     }
@@ -370,6 +379,6 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
         if (!args.Handled)
             return;
 
-        AddWildcardMood(ent);
+        TryAddRandomMood(ent, ent.Comp.Wildcard);
     }
 }

@@ -48,8 +48,20 @@ public sealed partial class AccessLevelControl : GridContainer
 
     public void UpdateState(
         List<ProtoId<AccessLevelPrototype>> pressedList,
+        ProtoId<AccessGroupPrototype>? currentGroup, // Starlight-edit: access groups
+        IPrototypeManager? prototypeManager = null, // Starlight-edit: access groups
         List<ProtoId<AccessLevelPrototype>>? enabledList = null)
     {
+        // Starlight-start: Access groups
+        if (currentGroup != null && prototypeManager != null && prototypeManager.TryIndex(currentGroup.Value, out var group))
+        {
+            RemoveAllChildren();
+            ButtonsList.Clear();
+
+            Populate(group.Tags.ToList(), prototypeManager);
+        }
+        // Starlight-end
+
         foreach (var (accessName, button) in ButtonsList)
         {
             button.Pressed = pressedList.Contains(accessName);

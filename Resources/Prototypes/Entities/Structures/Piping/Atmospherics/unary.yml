@@ -19,6 +19,7 @@
           nodeGroupID: Pipe
           pipeDirection: South
     - type: CollideOnAnchor
+    - type: ChildBlockVision # Starlight-edit
 
 - type: entity
   parent: [GasUnaryBase, AirSensorBase]

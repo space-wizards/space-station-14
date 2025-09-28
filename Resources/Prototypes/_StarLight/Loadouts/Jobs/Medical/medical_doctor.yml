@@ -1,0 +1,39 @@
+- type: loadout # afterlight start
+  id: CoronerJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCoroner
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorPhysician
+
+- type: loadout
+  id: CoronerJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCoroner
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorPhysician
+
+- type: loadout
+  id: CoronerJumpsuitAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCoronerAlt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorPhysician
+
+- type: loadout
+  id: NurseJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtSuitNurse
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorPhysician
+
+- type: loadout
+  id: MedicalDoctorJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtMedicalDoctor
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorPhysician

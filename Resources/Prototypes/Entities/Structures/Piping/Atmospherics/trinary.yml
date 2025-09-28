@@ -26,6 +26,7 @@
           !type:PipeNode
           nodeGroupID: Pipe
           pipeDirection: South
+    - type: ChildBlockVision # Starlight-edit
 
 - type: entity
   parent: GasTrinaryBase
