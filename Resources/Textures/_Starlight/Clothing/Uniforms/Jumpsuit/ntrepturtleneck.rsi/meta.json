@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Borrowed from QM turtleneck at https://github.com/space-wizards/space-station-14/tree/master/Resources/Textures/Clothing/Uniforms/Jumpskirt/qmturtleskirt.rsi and modified by Hanzdegloekr (github) for space station 14",
+  "copyright": "Borrowed from CMO turtleneck at https://github.com/space-wizards/space-station-14/tree/3572d6b7c8c966c1d16542710e936e2168f14296/Resources/Textures/Clothing/Uniforms/Jumpskirt/cmo_turtle.rsi and modified by wayiscool (github) for Starlight",
   "size": {
     "x": 32,
     "y": 32
