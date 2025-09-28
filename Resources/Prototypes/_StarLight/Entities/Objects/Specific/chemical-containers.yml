@@ -1,0 +1,14 @@
+- type: entity
+  parent: Jug
+  suffix: uranium
+  id: JugUranium
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-uranium
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: Uranium
+          Quantity: 200

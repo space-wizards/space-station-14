@@ -1,0 +1,42 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "by widgetbeck",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "load": {
+        "srgb": false
+    },
+    "states": [
+        {
+            "name": "jumpsuit",
+            "directions": 4
+        },
+        {
+            "name": "outerclothing_hardsuit",
+            "directions": 4
+        },
+        {
+            "name": "eyes",
+            "directions": 4
+        },
+        {
+            "name": "neck",
+            "directions": 4
+        },
+        {
+            "name": "mask",
+            "directions": 4
+        },
+        {
+            "name": "head",
+            "directions": 4
+        },
+        {
+            "name": "hands",
+            "directions": 4
+        }
+    ]
+}

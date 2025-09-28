@@ -1,6 +1,8 @@
 - type: language
   id: SolCommon
   icon: LanguageIconSolCom
+  speech:
+    color: "#ffffff"
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 1

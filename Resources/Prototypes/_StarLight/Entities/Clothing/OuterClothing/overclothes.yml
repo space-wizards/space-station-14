@@ -88,6 +88,18 @@
     tags:
     - WhitelistChameleon
 
+# Fashion-O-Mat-Start
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingUniformApron
+  name: elegant apron
+  description: Apron made from high-quality, smooth fabric with a soft sheen. Fits perfectly.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Clothing/OuterClothing/OverClothes/apron.rsi
+    - type: Clothing
+      sprite: _Starlight/Clothing/OuterClothing/OverClothes/apron.rsi
+# Fashion-O-Mat-End
 
 ## colored
 

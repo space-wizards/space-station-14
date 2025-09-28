@@ -1,5 +1,6 @@
 - type: language
   id: VoxPidgin
+  icon: LanguageIconVox
   speech:
     color: "#aa00aa"
   obfuscation:

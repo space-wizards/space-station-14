@@ -126,6 +126,7 @@
       baseSprintSpeed: 5.5
     - type: Stamina
       critThreshold: 40
+      animationThreshold: 20
     - type: DamageStateVisuals
       states:
         Alive:

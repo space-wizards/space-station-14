@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by Derby, equipped-EYES-arachnid motified from equipped-EYES, inhand-left and inhand-right modified form medsec inhand-left and inhand-right, both by HTMLSystem",
+  "copyright": "Made by Derby, equipped-EYES-arachnid motified from equipped-EYES, inhand-left and inhand-right modified form medsec inhand-left and inhand-right, both by HTMLSystem. equipped-EYES-resomi modified from equipped-EYES by Huaqas (GitHub).",
   "size": {
     "x": 32,
     "y": 32
@@ -16,6 +16,10 @@
     },
     {
       "name": "equipped-EYES-arachnid",
+      "directions": 4
+    },
+    {
+      "name": "equipped-EYES-resomi",
       "directions": 4
     },
     {

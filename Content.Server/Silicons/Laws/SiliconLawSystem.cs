@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Chat.Managers;
-using Content.Server.Radio.Components;
 using Content.Server.Station.Systems;
 using Content.Shared._Starlight.Silicons.Borgs;
 using Content.Shared.Administration;
@@ -10,6 +9,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Content.Shared.Radio.Components;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
 using Content.Shared.Silicons.Laws;
@@ -163,11 +163,11 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         {
             if (TryComp(uid, out ActiveRadioComponent? activeRadio))
             {
-                activeRadio.Channels.UnionWith(emag.ChannelAdd.Select(item => item.Id.ToString()).ToHashSet());
+                activeRadio.Channels.UnionWith(emag.ChannelAdd);
             }
             if (TryComp(uid, out IntrinsicRadioTransmitterComponent? transmitter))
             {
-                transmitter.Channels.UnionWith(emag.ChannelAdd.Select(item => item.Id.ToString()).ToHashSet());
+                transmitter.Channels.UnionWith(emag.ChannelAdd);
             }
             var lawset = emag.Lawset;
             if (lawset != null)
@@ -324,15 +324,16 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     protected override void OnUpdaterInsert(Entity<SiliconLawUpdaterComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
         // TODO: Prediction dump this
-        if (!TryComp(args.Entity, out SiliconLawProviderComponent? provider))
+        if (!TryComp<SiliconLawProviderComponent>(args.Entity, out var provider))
             return;
 
-        var lawset = GetLawset(provider.Laws).Laws;
+        var lawset = provider.Lawset ?? GetLawset(provider.Laws);
+
         var query = EntityManager.CompRegistryQueryEnumerator(ent.Comp.Components);
 
         while (query.MoveNext(out var update))
         {
-            SetLaws(lawset, update, provider.LawUploadSound);
+            SetLaws(lawset.Laws, update, provider.LawUploadSound);
         }
     }
 }

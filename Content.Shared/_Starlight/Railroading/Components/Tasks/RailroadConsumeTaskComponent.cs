@@ -24,4 +24,3 @@ public sealed partial class RailroadConsumeTaskComponent : Component
     [DataField]
     public bool IsCompleted;
 }
-

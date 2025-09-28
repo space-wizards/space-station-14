@@ -42,3 +42,9 @@
     Plastic: 250
     Gold: 50
     Silver: 50
+
+# Custom Generic Borg Modules
+- type: latheRecipe
+  parent: BaseBorgModuleRecipe
+  id: BorgModuleUppies
+  result: BorgModuleUppies

@@ -29,7 +29,6 @@ entities:
       name: Cargo Shuttle
     - type: Transform
       pos: 88.40116,75.02753
-      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
@@ -984,8 +983,6 @@ entities:
       pos: 0.5,4.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 4
 - proto: GasPassiveVent
@@ -1007,8 +1004,6 @@ entities:
     - type: Transform
       pos: 0.5,5.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
 - proto: GasPipeBendAlt1
@@ -1018,8 +1013,6 @@ entities:
     - type: Transform
       pos: 0.5,6.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
 - proto: GasPipeStraight
@@ -1029,8 +1022,6 @@ entities:
     - type: Transform
       pos: 0.5,-0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 148
@@ -1038,8 +1029,6 @@ entities:
     - type: Transform
       pos: 0.5,0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 149
@@ -1047,8 +1036,6 @@ entities:
     - type: Transform
       pos: 0.5,1.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 150
@@ -1056,8 +1043,6 @@ entities:
     - type: Transform
       pos: 0.5,3.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
 - proto: GasPipeStraightAlt1
@@ -1067,8 +1052,6 @@ entities:
     - type: Transform
       pos: 0.5,4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 152
@@ -1076,8 +1059,6 @@ entities:
     - type: Transform
       pos: 0.5,2.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 153
@@ -1085,8 +1066,6 @@ entities:
     - type: Transform
       pos: 0.5,1.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 154
@@ -1094,8 +1073,6 @@ entities:
     - type: Transform
       pos: 0.5,0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 155
@@ -1103,8 +1080,6 @@ entities:
     - type: Transform
       pos: 0.5,-0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 156
@@ -1112,8 +1087,6 @@ entities:
     - type: Transform
       pos: 0.5,-1.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 157
@@ -1122,8 +1095,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -1.5,6.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 158
@@ -1132,8 +1103,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -0.5,6.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
 - proto: GasPipeTJunction
@@ -1144,8 +1113,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 0.5,4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 160
@@ -1154,8 +1121,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 0.5,2.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
 - proto: GasPipeTJunctionAlt1
@@ -1166,8 +1131,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 0.5,3.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 162
@@ -1176,8 +1139,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 0.5,5.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
 - proto: GasPort
@@ -1188,8 +1149,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 1.5,2.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
 - proto: GasVentPump
@@ -1200,8 +1159,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 1.5,4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 4
@@ -1213,8 +1170,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -0.5,5.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 4
@@ -1226,8 +1181,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,-1.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 4
@@ -1241,8 +1194,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,-2.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 4
@@ -1256,8 +1207,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 1.5,3.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 4
@@ -1271,8 +1220,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 1.5,5.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 4
@@ -1391,22 +1338,6 @@ entities:
     - type: Transform
       pos: -0.48522186,7.0128937
       parent: 1
-    - type: HandheldLight
-      toggleActionEntity: 3
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 3
-    - type: Physics
-      canCollide: True
-    - type: ActionsContainer
 - proto: LockableButtonCargo
   entities:
   - uid: 181

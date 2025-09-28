@@ -1,6 +1,12 @@
 <Document>
 # Welcome to Space Station 14!
 
+  <Box>
+    <GuideEntityEmbed Entity="SignSecureMedRed" Caption="Content and Theme Warning"/>
+  </Box>
+[bold]Gameplay includes;[/bold] Kidnapping, Abduction, Murder, Giant Spiders, Pixelated Blood and Gore, Pixelated Nudity
+
+## Introduction
 You've just begun your shift aboard a Nanotrasen space station.
 You and your fellow crewmates are tasked with working together, surviving, and having fun!
 
@@ -38,5 +44,7 @@ SS14 is an [italic]open-source game[/italic] developed by people [bold]just like
 It receives [color=lime]daily updates[/color] and may at times be [color=#EB2D3A][bold]unstable.[/bold][/color]
 
 [italic]If you want to report bugs or help with development, join the discord and learn how to get started.[/italic]
+
+
 
 </Document>

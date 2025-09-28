@@ -1,0 +1,86 @@
+name: Backfill Changelog
+
+on:
+  workflow_dispatch:
+    inputs:
+      commits_count:
+        description: 'Number of recent commits to check'
+        required: false
+        default: '10'
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  backfill-changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch full history
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install Dependencies
+        run: |
+          pip install pyyaml PyGithub
+
+      - name: Find Missing Changelog PRs
+        id: find_prs
+        env:
+          CHANGELOG_FILE_PATH: 'Resources/Changelog/ChangelogStarlight.yml'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          COMMITS_COUNT: ${{ inputs.commits_count }}
+        run: |
+          python ./Tools/_Starlight/backfill_changelog.py
+
+      - name: Process Missing PRs
+        if: steps.find_prs.outputs.missing_prs != '[]'
+        env:
+          CHANGELOG_FILE_PATH: 'Resources/Changelog/ChangelogStarlight.yml'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          missing_prs='${{ steps.find_prs.outputs.missing_prs }}'
+          echo "Processing PRs: $missing_prs"
+          
+          # Parse JSON array and process each PR
+          echo "$missing_prs" | jq -r '.[]' | while read pr_number; do
+            echo "Processing PR #$pr_number"
+            export PR_NUMBER=$pr_number
+            python ./Tools/_Starlight/update_changelog.py
+            if [ $? -eq 0 ]; then
+              echo "Successfully processed PR #$pr_number"
+            else
+              echo "Failed to process PR #$pr_number"
+            fi
+          done
+
+      - name: Display changelog after backfill
+        run: |
+          if [ -f "Resources/Changelog/ChangelogStarlight.yml" ]; then
+            echo "=== Changelog updated ==="
+            git diff --name-only
+          else
+            echo "Changelog file not found"
+          fi
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "Resources/Changelog/ChangelogStarlight.yml"
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git pull origin ${{ github.ref_name }}
+            git commit -m "Backfill changelog entries [skip ci]"
+            git push origin ${{ github.ref_name }}
+          fi

@@ -1,4 +1,4 @@
-﻿name: "Labels: Review"
+﻿name: "Labels: Needs Review"
 
 on:
   pull_request_target:

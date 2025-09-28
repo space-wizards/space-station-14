@@ -20,7 +20,7 @@
       - right leg
       - left leg
       organs:
-        heart: OrganHumanHeart
+        heart: OrganResomiHeart # Starlight
         lungs: OrganHumanLungs
         stomach: OrganHumanStomach
         liver: OrganHumanLiver

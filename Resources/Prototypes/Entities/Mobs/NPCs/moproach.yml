@@ -7,9 +7,10 @@
   # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:
-    - Moffic
+    - Mothroach
     understands:
     - Moffic
+    - Mothroach
     - GalacticCommon
   # Starlight-end
   - type: GhostRole

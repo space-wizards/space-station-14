@@ -105,7 +105,10 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
             return;
 
         EnsureComp<ShuttleComponent>(ev.EntityUid);
-        EnsureComp<ImplicitRoofComponent>(ev.EntityUid);
+        if (HasComp<RoofComponent>(ev.EntityUid))   // 🌟Starlight🌟 Wont add imp roof on grids with no roof, since it bugs lighting on those grids
+        {
+            EnsureComp<ImplicitRoofComponent>(ev.EntityUid);
+        }
     }
 
     private void OnShuttleStartup(EntityUid uid, ShuttleComponent component, ComponentStartup args)

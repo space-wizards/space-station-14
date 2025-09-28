@@ -18,12 +18,12 @@ public abstract class SharedThermalVisionSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ThermalVisionComponent, ComponentInit>(OnVisionInit);
+        SubscribeLocalEvent<ThermalVisionComponent, MapInitEvent>(OnVisionInit);
         SubscribeLocalEvent<ThermalVisionComponent, ComponentShutdown>(OnVisionShutdown);
         SubscribeLocalEvent<ThermalVisionComponent, ToggleThermalVisionEvent>(OnToggleThermalVision);
     }
     
-    private void OnVisionInit(Entity<ThermalVisionComponent> ent, ref ComponentInit args) 
+    private void OnVisionInit(Entity<ThermalVisionComponent> ent, ref MapInitEvent args)
     {
         _actionsSystem.AddAction(ent.Owner, ref ent.Comp.ActionEntity, Action);
     }

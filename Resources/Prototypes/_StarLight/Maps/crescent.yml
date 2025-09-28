@@ -27,10 +27,10 @@
             Chaplain: [ 1, 1 ]
             Reporter: [ 3, 3 ]
             Librarian: [ 1, 1 ]
-            ServiceWorker: [ 3, 3 ]
+            #ServiceWorker: [ 3, 3 ] #MISSING! FIX!
             #engineering
             ChiefEngineer: [ 1, 1 ] 
-            AtmosphericTechnician: [ 3, 3 ]
+            #AtmosphericTechnician: [ 3, 3 ] #MISSING! FIX!
             StationEngineer: [ 4, 4 ]
             TechnicalAssistant: [ 4, 4 ] 
             #medicalw
@@ -40,11 +40,11 @@
             MedicalIntern: [ 4, 4 ] 
             Psychologist: [ 1, 1 ] 
             Paramedic: [ 1, 1 ] 
-            Surgeon: [ 1, 1 ]  
+            #Surgeon: [ 1, 1 ] #MISSING! FIX!
             #science
             ResearchDirector: [ 1, 1 ] 
-            Scientist: [ 5, 5 ] 
-            ResearchAssistant: [ 3, 3 ] 
+            #Scientist: [ 5, 5 ] #MISSING! FIX!
+            #ResearchAssistant: [ 3, 3 ] #MISSING! FIX!
             Roboticist: [ 2, 2 ] 
             #security
             HeadOfSecurity: [ 1, 1 ] 
@@ -57,9 +57,9 @@
             Quartermaster: [ 1, 1 ] 
             SalvageSpecialist: [ 4, 4 ] 
             CargoTechnician: [ 5, 5 ]
-            MailTech: [ 1, 2 ]
+            #MailTech: [ 1, 2 ] #MISSING! FIX!
             #civilian
-            Assistant: [ -1, -1 ]
+            #Assistant: [ -1, -1 ] #MISSING! FIX!
             Clown: [ 1, 1 ] 
             Mime: [ 1, 1 ] 
             Musician: [ 1, 1 ] 

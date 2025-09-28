@@ -3,3 +3,6 @@
   parent: BaseItem
   components:
   - type: BodyPart
+  - type: Sprite
+    sprite: error.rsi
+    state: error

@@ -27,6 +27,7 @@
       Primary: Structures/Piping/Atmospherics/pump.rsi
       Secondary: Structures/Piping/Atmospherics/pump_alt1.rsi
       Tertiary: Structures/Piping/Atmospherics/pump_alt2.rsi
+  - type: ChildBlockVision # Starlight-edit
 
 - type: entity
   parent: GasBinaryBase
@@ -89,7 +90,6 @@
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasFlowRegulator
   - type: VentCrawTube
-    containerId: VentCrawTube
   - type: VentCrawTransit
   - type: ContainerContainer
     containers:
@@ -168,7 +168,6 @@
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasFlowRegulator
     - type: VentCrawTube
-      containerId: VentCrawTube
     - type: VentCrawTransit
     - type: ContainerContainer
       containers:
@@ -277,7 +276,6 @@
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasValve
     - type: VentCrawTube
-      containerId: VentCrawTube
     - type: VentCrawTransit
     - type: ContainerContainer
       containers:
@@ -344,7 +342,6 @@
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasValve
     - type: VentCrawTube
-      containerId: VentCrawTube
     - type: VentCrawTransit
     - type: ContainerContainer
       containers:
@@ -422,7 +419,6 @@
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasValve
   - type: VentCrawTube
-    containerId: VentCrawTube
   - type: VentCrawTransit
   - type: ContainerContainer
     containers:
@@ -467,7 +463,6 @@
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasVentOpening
     - type: VentCrawTube
-      containerId: VentCrawTube
     - type: VentCrawJunction
       degrees:
         - 0

@@ -108,7 +108,7 @@
   name: patch pack
   id: PatchPack
   parent: BaseStorageItem
-  description: Storage of multiple patches efficiently.
+  description: Stores multiple patches efficiently.
   components:
   - type: Item
     size: Tiny

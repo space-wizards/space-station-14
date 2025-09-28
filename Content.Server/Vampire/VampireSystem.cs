@@ -184,7 +184,7 @@ public sealed partial class VampireSystem : EntitySystem
 
     private void OnExamined(EntityUid uid, VampireComponent component, ExaminedEvent args)
     {
-        if (HasComp<VampireFangsExtendedComponent>(uid) && args.IsInDetailsRange && !_ingestion.HasMouthAvailable(args.Examiner, uid))
+        if (HasComp<VampireFangsExtendedComponent>(uid) && args.IsInDetailsRange && _ingestion.HasMouthAvailable(args.Examiner, uid))
             args.AddMarkup($"{Loc.GetString("vampire-fangs-extended-examine")}{Environment.NewLine}");
     }
     private bool AddBloodEssence(Entity<VampireComponent> vampire, FixedPoint2 quantity)

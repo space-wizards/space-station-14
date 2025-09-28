@@ -1,29 +1,15 @@
 using Content.Server.Revolutionary.Components;
 using Content.Shared.Revolutionary.Components;
 using Content.Server.Store.Systems;
-using Content.Shared.Actions;
 using Content.Shared.Implants;
-using Content.Shared.Implants.Components;
-using Content.Shared.Store;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 using Content.Shared.Store.Components;
-using Robust.Server.GameObjects;
 using Content.Shared.FixedPoint;
 using Content.Server.Popups;
 using Content.Shared.Popups;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
-using Content.Shared.GameTicking;
-using Content.Server.GameTicking;
+using Content.Shared._Starlight.Actions.Events;
 using Content.Server.RoundEnd;
-using Robust.Shared.Timing;
-using System.Threading;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Content.Server.Implants
 {
@@ -37,7 +23,7 @@ namespace Content.Server.Implants
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<Content.Shared.Actions.OpenUplinkImplantEvent>(OnOpenUplinkImplant);
+        SubscribeLocalEvent<OpenUplinkImplantEvent>(OnOpenUplinkImplant);
         SubscribeLocalEvent<StoreBuyFinishedEvent>(OnStoreBuyFinished);
         SubscribeLocalEvent<USSPUplinkImplantComponent, ImplantImplantedEvent>(OnImplantImplanted);
         SubscribeLocalEvent<RoundEndSystemChangedEvent>(OnRoundEnd);
@@ -242,18 +228,18 @@ namespace Content.Server.Implants
             }
                 
                 // Check if the implanted entity is a head revolutionary
-            if (HasComp<HeadRevolutionaryComponent>(args.Implanted.Value))
+            if (HasComp<HeadRevolutionaryComponent>(args.Implanted))
             {                
                 // Update the head revolutionary's implant component to point to this implant
-                var implantComponent = EnsureComp<HeadRevolutionaryImplantComponent>(args.Implanted.Value);
+                var implantComponent = EnsureComp<HeadRevolutionaryImplantComponent>(args.Implanted);
                 implantComponent.ImplantUid = uid;
                 
                 // If the uplink doesn't have an owner yet, set this head revolutionary as the owner
                 if (originalOwner == null)
                 {
                     var uplinkOwnerComp = EnsureComp<Content.Shared.Implants.Components.USSPUplinkOwnerComponent>(uid);
-                    uplinkOwnerComp.OwnerUid = args.Implanted.Value;
-                    originalOwner = args.Implanted.Value;
+                    uplinkOwnerComp.OwnerUid = args.Implanted;
+                    originalOwner = args.Implanted;
                 }
                 
                 // Ensure the store component has both currencies initialized
@@ -278,7 +264,7 @@ namespace Content.Server.Implants
                 foreach (var (_, converterComp) in convertedRevs)
                 {
                     // Check if this revolutionary was converted by this head revolutionary
-                    if (converterComp.ConverterUid == args.Implanted.Value)
+                    if (converterComp.ConverterUid == args.Implanted)
                     {
                         convertedCount++;
                         
@@ -308,24 +294,24 @@ namespace Content.Server.Implants
                     
                     var convertedMessage = convertedCount > 0 ? $" (+{convertedCount} from previous conversions)" : "";
                     _popup.PopupEntity(Loc.GetString($"Implanted! Current Telebonds: {telebonds}{convertedMessage}, Conversions: {conversions}"), 
-                        args.Implanted.Value, args.Implanted.Value, PopupType.Medium);
+                        args.Implanted, args.Implanted, PopupType.Medium);
                 }
                 
                 // If the head revolutionary is implanting an uplink that belongs to another head revolutionary,
                 // we need to update the ownership to the current head revolutionary
-                if (originalOwner != null && originalOwner.Value != args.Implanted.Value)
+                if (originalOwner != null && originalOwner.Value != args.Implanted)
                 {
                     // Only change ownership if the implanted entity is a head revolutionary
                     var uplinkOwnerComp = EnsureComp<Content.Shared.Implants.Components.USSPUplinkOwnerComponent>(uid);
-                    uplinkOwnerComp.OwnerUid = args.Implanted.Value;
+                    uplinkOwnerComp.OwnerUid = args.Implanted;
                                         
                     // Notify the original owner that their uplink has been claimed by another head revolutionary
-                    _popup.PopupEntity(Loc.GetString($"Your uplink has been claimed by {Identity.Name(args.Implanted.Value, EntityManager)}"), 
+                    _popup.PopupEntity(Loc.GetString($"Your uplink has been claimed by {Identity.Name(args.Implanted, EntityManager)}"), 
                         originalOwner.Value, originalOwner.Value, PopupType.Medium);
                 }
             }
             // Check if the implanted entity is a regular revolutionary
-            else if (HasComp<RevolutionaryComponent>(args.Implanted.Value))
+            else if (HasComp<RevolutionaryComponent>(args.Implanted))
             {                
                 // If the uplink doesn't have an owner component yet, try to find its owner
                 if (originalOwner == null)
@@ -396,7 +382,7 @@ namespace Content.Server.Implants
                 }
                 
                 // Add HeadRevolutionaryImplantComponent to the revolutionary to track the implant
-                var implantComponent = EnsureComp<HeadRevolutionaryImplantComponent>(args.Implanted.Value);
+                var implantComponent = EnsureComp<HeadRevolutionaryImplantComponent>(args.Implanted);
                 implantComponent.ImplantUid = uid;
                                 
                 // Ensure the store component has the correct currencies
@@ -505,13 +491,13 @@ namespace Content.Server.Implants
                     // Always show +1 telebond and +1 conversion in the popup, regardless of the actual values
                     //var ownerInfo = originalOwner != null ? $" (owned by {Identity.Name(originalOwner.Value, EntityManager)})" : "";
                     //_popup.PopupEntity(Loc.GetString($"Uplink implanted{ownerInfo}. +1 Telebond, +1 Conversion"), 
-                    //    args.Implanted.Value, args.Implanted.Value, PopupType.Medium);
+                    //    args.Implanted, args.Implanted, PopupType.Medium);
                 }
                 
                 // If we have an original owner, notify them that their uplink has been implanted in someone else
-                if (originalOwner != null && originalOwner.Value != args.Implanted.Value)
+                if (originalOwner != null && originalOwner.Value != args.Implanted)
                 {
-                    _popup.PopupEntity(Loc.GetString($"Your uplink has been implanted in {Identity.Name(args.Implanted.Value, EntityManager)}"), 
+                    _popup.PopupEntity(Loc.GetString($"Your uplink has been implanted in {Identity.Name(args.Implanted, EntityManager)}"), 
                         originalOwner.Value, originalOwner.Value, PopupType.Medium);
                     
                     // Call the RevolutionaryRuleSystem to synchronize all uplinks owned by this head revolutionary
@@ -520,7 +506,7 @@ namespace Content.Server.Implants
                     
                     // Special case: If the implanted entity was just converted by the head revolutionary,
                     // we need to make sure the uplink has the latest values
-                    if (HasComp<RevolutionaryComponent>(args.Implanted.Value) && 
+                    if (HasComp<RevolutionaryComponent>(args.Implanted) && 
                         TryComp<HeadRevolutionaryImplantComponent>(originalOwner.Value, out var headRevImplant) && 
                         headRevImplant.ImplantUid != null && 
                         EntityManager.EntityExists(headRevImplant.ImplantUid.Value))
@@ -536,7 +522,7 @@ namespace Content.Server.Implants
                             
                             // Show an additional popup with the updated values
                             _popup.PopupEntity(Loc.GetString($"Uplink synchronized! Current Telebonds: {finalTelebonds}, Conversions: {finalConversions}"), 
-                                args.Implanted.Value, args.Implanted.Value, PopupType.Medium);
+                                args.Implanted, args.Implanted, PopupType.Medium);
                         }
                     }
                 }
@@ -687,7 +673,7 @@ namespace Content.Server.Implants
             }
         }
 
-        private void OnOpenUplinkImplant(Content.Shared.Actions.OpenUplinkImplantEvent args)
+        private void OnOpenUplinkImplant(OpenUplinkImplantEvent args)
         {
             var user = args.User;
             if (!_entityManager.TryGetComponent(user, out StoreComponent? store))

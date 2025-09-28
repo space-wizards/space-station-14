@@ -13,6 +13,11 @@
     understands:
     - GalacticCommon
     - SolCommon
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      110: Critical
+      220: Dead
   # Starlight-end
   - type: Absorbable
   - type: Hunger
@@ -27,8 +32,8 @@
     damageRecovery:
       types:
         Asphyxiation: -1.0
-  - type: ScaleVisuals
-    scale: 1, 0.8
+  #- type: ScaleVisuals # STARLIGHT
+  #  scale: 1, 0.8 # STARLIGHT
   - type: Body
     prototype: Dwarf
     requiredLegs: 2
@@ -77,8 +82,8 @@
   id: MobDwarfDummy
   categories: [ HideSpawnMenu ]
   components:
-  - type: ScaleVisuals
-    scale: 1, 0.8
+  #- type: ScaleVisuals # STARLIGHT
+  #  scale: 1, 0.8 # STARLIGHT
   - type: Inventory
     femaleDisplacements:
       jumpsuit:

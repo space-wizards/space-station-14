@@ -273,7 +273,7 @@ namespace Content.Client.Verbs.UI
 
             if (verbElement.SubMenu == null)
             {
-                var popupElement = new ConfirmationMenuElement(verb, "Confirm");
+                var popupElement = new ConfirmationMenuElement(verb, Loc.GetString("generic-confirm"));
                 verbElement.SubMenu = new ContextMenuPopup(_context, verbElement);
                 _context.AddElement(verbElement.SubMenu, popupElement);
             }

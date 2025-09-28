@@ -2,6 +2,7 @@
   "version": 1,
   "license": "CC-BY-SA-3.0",
   "copyright": "Taken from https://github.com/ParadiseSS13/Paradise/pull/20830",
+  "rsic": false,
   "size": {
     "x": 32,
     "y": 32

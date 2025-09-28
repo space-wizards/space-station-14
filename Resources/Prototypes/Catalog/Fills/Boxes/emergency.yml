@@ -107,7 +107,6 @@
     - id: FoodSnackNutribrick
     - id: FoodSnackNutribrick
     - id: DrinkWaterBottleFull
-    - id: DrinkWaterBottleFull
     - id: Flare
   - type: Sprite
     layers:
@@ -167,7 +166,6 @@
     - id: FoodSnackNutribrick
     - id: FoodSnackNutribrick
     - id: DrinkWaterBottleFull
-    - id: DrinkWaterBottleFull
     - id: Flare
   - type: Sprite
     layers:
@@ -225,7 +223,6 @@
     - id: EmergencyMedipen
     - id: FoodSnackNutribrick
     - id: FoodSnackNutribrick
-    - id: DrinkWaterBottleFull
     - id: DrinkWaterBottleFull
     - id: Flare
   - type: Sprite
@@ -302,7 +299,7 @@
     - id: EmergencyOxygenTankFilled
     - id: EmergencyMedipen
     - id: Flare
-    - id: FoodBreadBaguette
+    - id: FoodSnackNutribrick
     - id: DrinkWaterBottleFull
 
 - type: entity
@@ -316,7 +313,7 @@
     - id: EmergencyNitrogenTankFilled
     - id: EmergencyMedipen
     - id: Flare
-    - id: FoodBreadBaguette
+    - id: FoodSnackNutribrick
     - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
@@ -336,7 +333,7 @@
     - id: EmergencyOxygenTankFilled
     - id: EmergencyMedipen
     - id: Flare
-    - id: FoodBreadBaguetteCotton
+    - id: FoodSnackNutribrick
     - id: DrinkWaterBottleFull
 
 - type: entity #🌟Starlight🌟
@@ -347,7 +344,7 @@
   - type: StorageFill
     contents:
     - id: EmergencyMedipen
-    - id: FoodBreadBaguette
+    - id: FoodSnackNutribrick #Never 4 get. the day wizden took mime's baugettes
     - id: DrinkWaterBottleFull
     - id: Flare
   - type: Sprite

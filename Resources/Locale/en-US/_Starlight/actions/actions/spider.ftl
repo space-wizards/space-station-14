@@ -1,0 +1,1 @@
+spider-web-action-fail-single = You can't place webs here!

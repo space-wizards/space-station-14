@@ -1,4 +1,4 @@
-using System.Numerics;
+﻿using System.Numerics;
 using Content.Shared.Movement.Components;
 using Content.Shared.Silicons.StationAi;
 using Robust.Client.Graphics;
@@ -72,6 +72,10 @@ public sealed class StationAiOverlay : Overlay
         {
             var lookups = _entManager.System<EntityLookupSystem>();
             var xforms = _entManager.System<SharedTransformSystem>();
+
+            var color = Color.White; // 🌟Starlight🌟
+            if (stationAiOverlay is not null) // 🌟Starlight🌟
+                color = color.WithAlpha(stationAiOverlay.Alfa); // 🌟Starlight🌟
 
             if (_accumulator <= 0f)
             {

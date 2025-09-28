@@ -291,3 +291,26 @@
           tags:
           - CrayonWhite
   - type: Appearance
+
+# SL
+- type: entity
+  parent: Crayon
+  id: CrayonMagic
+  name: magic rainbow crayon
+  description: A magical crayon. Looks tasty. Mmmm...
+  components:
+  - type: Sprite
+    state: rainbow
+  - type: Item
+    heldPrefix: magic
+  - type: Crayon
+    color: Red
+    selectableColor: true
+    capacity: 2147483647 # very big number, functionally infinite
+  - type: Tag
+    tags:
+    - Write
+    - Crayon
+    - Recyclable
+    - Trash
+# end SL

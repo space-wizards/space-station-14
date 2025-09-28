@@ -23,3 +23,18 @@
   id: NanoTrasenRepresentativeHud
   equipment:
     eyes: ClothingEyesHudSkills
+
+- type: loadout
+  id: NanoTrasenRepresentativeTophat
+  equipment:
+    head: ClothingHeadHatNTRTophat
+
+- type: loadout
+  id: NanoTrasenRepresentativeEliteTophat
+  equipment:
+    head: ClothingHeadHatNTREliteTophat
+
+- type: loadout
+  id: NanoTrasenRepresentativeCap
+  equipment:
+    head: ClothingHeadHatCapNtrep

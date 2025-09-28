@@ -3,6 +3,7 @@
   id: MobCluwneBeast
   parent: SimpleMobBase
   description: A cluwne beast, nightmare fuel, time to run!
+  categories: [ Spawner ]
   components:
   - type: CombatMode
   - type: InputMover

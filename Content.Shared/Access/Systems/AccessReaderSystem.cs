@@ -16,6 +16,7 @@ using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Content.Shared._Starlight.Access;
 
 namespace Content.Shared.Access.Systems;
 
@@ -114,6 +115,13 @@ public sealed class AccessReaderSystem : EntitySystem
 
         if (!reader.Enabled)
             return true;
+
+        //Starlight start
+        var @event = new AccessReadEvent();
+        RaiseLocalEvent(user, ref @event);
+        if (@event.Denied)
+            return false;
+        //Starlight end
 
         var accessSources = FindPotentialAccessItems(user);
         var access = FindAccessTags(user, accessSources);

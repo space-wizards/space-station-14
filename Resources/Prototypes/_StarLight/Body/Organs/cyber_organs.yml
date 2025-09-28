@@ -45,3 +45,91 @@
   - type: OrganVisualization
     layer: Eyes
     prototype: CyberEyesThermalVision
+
+- type: entity
+  id: BudgetCyberEyes
+  name: Budget CyberEyes
+  description: Cold and soulless. Just as depressing to look out of as to look into.
+  parent: [OrganCyber, BaseOrganEyes]
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/budget_cyber_organs.rsi
+    layers:
+      - state: eyeball-l
+      - state: eyeball-r
+  - type: FunctionalOrgan
+    comps: 
+    - type: NoirOverlay
+  - type: OrganVisualization
+    layer: Eyes
+    prototype: MobHumanoidEyes
+
+- type: entity
+  id: BudgetCyberTongue
+  name: Budget CyberTongue
+  description: An artificial tongue with full range of movement. Taste buds not included.
+  parent: [OrganCyber, BaseOrganTongue]
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/budget_cyber_organs.rsi
+    state: tongue
+  - type: FunctionalOrgan
+    comps: 
+    - type: UnableToTaste
+
+- type: entity
+  id: BudgetCyberLiver
+  name: Budget CyberLiver
+  description: "Design so reliable, it didn't have to be changed for the last 237 years! Warning: This product isn't meant for recreational drinking!"
+  parent: [OrganCyber, OrganHumanLiver]
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/budget_cyber_organs.rsi
+    state: liver
+  - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
+    maxReagents: 1
+    metabolizerTypes: [BudgetCyber]
+    groups:
+    - id: Alcohol
+      rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
+
+- type: entity
+  id: BudgetCyberStomach
+  name: Budget CyberStomach
+  description: An artifical stomach. Its lack of elasticity is a desired feature for those who want to control their eating habits.
+  parent: [OrganCyber, OrganHumanStomach]
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/budget_cyber_organs.rsi
+    state: stomach
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 30
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: Metabolizer
+    maxReagents: 3
+    metabolizerTypes: [BudgetCyber]
+    groups:
+    - id: Food
+    - id: Drink
+
+- type: entity
+  id: BudgetCyberKidneys
+  name: Budget CyberKidneys
+  description: A pair of artificial kidneys. Due to cheap materials used, they waste significantly more water than organic ones.
+  parent: [OrganCyber, OrganHumanKidneys]
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/budget_cyber_organs.rsi
+    layers:
+      - state: kidney-l
+      - state: kidney-r
+  - type: FunctionalOrgan
+    comps: 
+    - type: ThirstRateMultiplier
+      multiplier: 1.25

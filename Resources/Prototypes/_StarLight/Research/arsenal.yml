@@ -156,3 +156,16 @@
   radioChannels:
   - Security
   
+- type: technology
+  id: ScanGateTechnology
+  name: research-technology-scan-gate
+  icon:
+    sprite: _Starlight/Structures/Machines/scan_gate.rsi
+    state: base
+  discipline: Arsenal
+  tier: 4
+  cost: 5000
+  recipeUnlocks:
+  - ScanGateMachineCircuitboard
+  radioChannels:
+  - Security

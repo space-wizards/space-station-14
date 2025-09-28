@@ -531,6 +531,7 @@
   placementMode: SnapgridCenter
   canRotate: false
 
+
 - type: construction
   id: UraniumWindowDiagonal
   name: construction-recipe-uranium-window-diagonal
@@ -559,6 +560,32 @@
   objectType: Structure
   placementMode: SnapgridCenter
 
+- type: construction
+  id: UraniumWindowDirectional
+  graph: WindowDirectional
+  startNode: start
+  targetNode: uraniumWindowDirectional
+  category: construction-category-structures
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  id: UraniumReinforcedWindowDirectional
+  graph: WindowDirectional
+  startNode: start
+  targetNode: uraniumReinforcedWindowDirectional
+  category: construction-category-structures
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
+  
 - type: construction
   id: Firelock
   graph: Firelock

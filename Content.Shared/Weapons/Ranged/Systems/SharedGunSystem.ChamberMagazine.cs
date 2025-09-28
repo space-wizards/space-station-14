@@ -17,7 +17,7 @@ public abstract partial class SharedGunSystem
 
     protected virtual void InitializeChamberMagazine()
     {
-        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, ComponentStartup>(OnChamberStartup);
+        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, MapInitEvent>(OnChamberMapInit);
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, TakeAmmoEvent>(OnChamberMagazineTakeAmmo);
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, GetAmmoCountEvent>(OnChamberAmmoCount);
 
@@ -38,7 +38,7 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, ExaminedEvent>(OnChamberMagazineExamine);
     }
 
-    private void OnChamberStartup(EntityUid uid, ChamberMagazineAmmoProviderComponent component, ComponentStartup args)
+    private void OnChamberMapInit(EntityUid uid, ChamberMagazineAmmoProviderComponent component, MapInitEvent args)
     {
         if (component.SelectedPrefix == null && component.AvailablePrefixes.Count > 1)
         {

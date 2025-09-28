@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Server._Starlight.Physics;
 using Content.Server.Movement.Components;
 using Content.Server.Physics.Controllers;
 using Content.Shared.ActionBlocker;
@@ -92,7 +93,7 @@ public sealed class PullController : VirtualController
         _pullerQuery = GetEntityQuery<PullerComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
 
-        UpdatesAfter.Add(typeof(MoverController));
+        UpdatesAfter.Add(typeof(SLMoverController)); // Starlight
         SubscribeLocalEvent<PullMovingComponent, PullStoppedMessage>(OnPullStop);
         SubscribeLocalEvent<ActivePullerComponent, MoveEvent>(OnPullerMove);
 

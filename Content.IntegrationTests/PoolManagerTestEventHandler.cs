@@ -4,7 +4,7 @@
 public sealed class PoolManagerTestEventHandler
 {
     // This value is completely arbitrary.
-    private static TimeSpan MaximumTotalTestingTimeLimit => TimeSpan.FromMinutes(20);
+    private static TimeSpan MaximumTotalTestingTimeLimit => TimeSpan.FromMinutes(50); //starlight, 50 minutes for local testing purposes
     private static TimeSpan HardStopTimeLimit => MaximumTotalTestingTimeLimit.Add(TimeSpan.FromMinutes(1));
 
     [OneTimeSetUp]

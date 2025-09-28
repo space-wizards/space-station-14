@@ -1,0 +1,258 @@
+- type: decal
+  id: Pipecleaner1
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner1
+
+- type: decal
+  id: Pipecleaner2
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner2
+
+- type: decal
+  id: Pipecleaner3
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner3
+
+- type: decal
+  id: Pipecleaner4
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner4
+
+- type: decal
+  id: Pipecleaner5
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner5
+
+- type: decal
+  id: Pipecleaner6
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner6
+
+- type: decal
+  id: Pipecleaner7
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner7
+
+- type: decal
+  id: Pipecleaner8
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner8
+
+- type: decal
+  id: Pipecleaner9
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner9
+
+- type: decal
+  id: Pipecleaner10
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner10
+
+- type: decal
+  id: Pipecleaner11
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner11
+
+- type: decal
+  id: Pipecleaner12
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner12
+
+- type: decal
+  id: Pipecleaner13
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner13
+
+- type: decal
+  id: Pipecleaner14
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner14
+
+- type: decal
+  id: Pipecleaner15
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner15
+
+- type: decal
+  id: Pipecleaner16
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner16
+
+- type: decal
+  id: Pipecleaner17
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner17
+
+- type: decal
+  id: Pipecleaner18
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner18
+
+- type: decal
+  id: Pipecleaner19
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner19
+
+- type: decal
+  id: Pipecleaner20
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner20
+
+- type: decal
+  id: Pipecleaner21
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner21
+
+- type: decal
+  id: Pipecleaner22
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner22
+
+- type: decal
+  id: Pipecleaner23
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner23
+
+- type: decal
+  id: Pipecleaner24
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner24
+
+- type: decal
+  id: Pipecleaner25
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner25
+
+- type: decal
+  id: Pipecleaner26
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner26
+
+- type: decal
+  id: Pipecleaner27
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner27
+
+- type: decal
+  id: Pipecleaner28
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner28
+
+- type: decal
+  id: Pipecleaner29
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner29
+
+- type: decal
+  id: Pipecleaner30
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner30
+
+- type: decal
+  id: Pipecleaner31
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner31
+
+- type: decal
+  id: Pipecleaner32
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner32
+
+- type: decal
+  id: Pipecleaner33
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner33
+
+- type: decal
+  id: Pipecleaner34
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner34
+
+- type: decal
+  id: Pipecleaner35
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner35
+
+- type: decal
+  id: Pipecleaner36
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner36
+
+- type: decal
+  id: Pipecleaner37
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Starlight/Decals/pipecleaner.rsi
+    state: pipecleaner37

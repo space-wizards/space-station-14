@@ -81,4 +81,28 @@
       color: '#454545'
       emergencyLightColor: '#454545'
       forceEnableEmergencyLights: true
-      shuttleTime: 1200 # end starlight
+      shuttleTime: 1200
+    psi:
+      announcement: alert-level-psi-announcement
+      selectable: false
+      sound:
+        path: /Audio/_Starlight/Misc/psi.ogg
+        params:
+          volume: -2
+      disableSelection: true
+      color: "#2288ff"
+      emergencyLightColor: "#2288ff"
+      forceEnableEmergencyLights: true
+      shuttleTime: 1200
+    orange:
+      announcement: alert-level-orange-announcement
+      selectable: true
+      sound:
+        path: /Audio/_Starlight/Misc/orange.ogg
+        params:
+          volume: -2
+      color: "#ff8119"
+      emergencyLightColor: "#ff8119"
+      forceEnableEmergencyLights: true
+      shuttleTime: 600
+      # end starlight

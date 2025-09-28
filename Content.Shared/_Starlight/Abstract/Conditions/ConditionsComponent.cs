@@ -7,5 +7,5 @@ public sealed partial class ConditionsComponent : Component
 {
     [NonSerialized]
     [DataField(serverOnly: true)]
-    public List<BaseCondition> Conditions;
+    public List<BaseCondition> Conditions = [];
 }

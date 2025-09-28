@@ -2,6 +2,7 @@
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:humanoid="clr-namespace:Content.Client.Humanoid"
          xmlns:ui="clr-namespace:Content.Client.Lobby.UI"
+         xmlns:ui1="clr-namespace:Content.Client._Starlight.Lobby.UI"
          xmlns:profileEditorControls="clr-namespace:Content.Client.Lobby.UI.ProfileEditorControls"
          HorizontalExpand="True">
         <!-- Left side -->
@@ -175,6 +176,18 @@
                         <humanoid:CyberneticsPicker Name="Cybernetics" />
                     </ScrollContainer>
                 </BoxContainer>
+                <!-- Starlight start-->
+                <BoxContainer Name="ICInfoTab" Orientation="Vertical" Margin="10" Visible="False">
+                    <ScrollContainer VerticalExpand="True">
+                        <ui1:CharacterInfoEditor Name="ICInfoEditor"/>
+                    </ScrollContainer>
+                </BoxContainer>
+                <BoxContainer Name="OOCInfoTab" Orientation="Vertical" Margin="10" Visible="False">
+                    <ScrollContainer VerticalExpand="True">
+                        <ui1:OOCInfoEditor Name="OOCInfoEditor"/>
+                    </ScrollContainer>
+                </BoxContainer>
+                <!-- Starlight end-->
             </TabContainer>
         </BoxContainer>
         <!-- Right side -->

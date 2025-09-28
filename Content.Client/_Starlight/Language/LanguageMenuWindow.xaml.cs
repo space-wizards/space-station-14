@@ -21,6 +21,9 @@ public sealed partial class LanguageMenuWindow : DefaultWindow
         RobustXamlLoader.Load(this);
         _clientLanguageSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<LanguageSystem>();
         _clientLanguageSystem.OnLanguagesChanged += UpdateState;
+
+        MasterTabContainer.SetTabTitle((int)TabIndex.Spoken, Loc.GetString("language-menu-spoken-tab"));
+        MasterTabContainer.SetTabTitle((int)TabIndex.Understood, Loc.GetString("language-menu-understood-tab"));
     }
 
     protected override void Dispose(bool disposing)
@@ -42,20 +45,21 @@ public sealed partial class LanguageMenuWindow : DefaultWindow
         if (languageSpeaker == null)
             return;
 
-        UpdateState(languageSpeaker.CurrentLanguage, languageSpeaker.SpokenLanguages);
+        UpdateState(languageSpeaker.CurrentLanguage, languageSpeaker.SpokenLanguages, languageSpeaker.UnderstoodLanguages);
     }
 
-    public void UpdateState(ProtoId<LanguagePrototype> currentLanguage, List<ProtoId<LanguagePrototype>> spokenLanguages)
+    public void UpdateState(ProtoId<LanguagePrototype> currentLanguage, List<ProtoId<LanguagePrototype>> spokenLanguages, List<ProtoId<LanguagePrototype>> understoodLanguages)
     {
         var langName = Loc.GetString($"language-{currentLanguage}-name");
         CurrentLanguageLabel.Text = Loc.GetString("language-menu-current-language", ("language", langName));
 
-        OptionsList.RemoveAllChildren();
+        #region spoken languages
+        SpokenList.RemoveAllChildren();
         _entries.Clear();
 
         foreach (var language in spokenLanguages)
         {
-            AddLanguageEntry(language);
+            AddLanguageEntry(SpokenList, language, true);
         }
 
         // Disable the button for the currently chosen language.
@@ -64,9 +68,19 @@ public sealed partial class LanguageMenuWindow : DefaultWindow
             if (entry.Button != null)
                 entry.Button.Disabled = entry.Language == currentLanguage;
         }
+        #endregion
+
+        #region understood languages
+        UnderstoodList.RemoveAllChildren();
+
+        foreach (var language in understoodLanguages)
+        {
+            AddLanguageEntry(UnderstoodList, language, false);
+        }
+        #endregion
     }
 
-    private void AddLanguageEntry(ProtoId<LanguagePrototype> language)
+    private void AddLanguageEntry(BoxContainer containerin, ProtoId<LanguagePrototype> language, bool addSwitchButton)
     {
         var proto = _clientLanguageSystem.GetLanguagePrototype(language);
         var state = new EntryState { Language = language };
@@ -93,7 +107,8 @@ public sealed partial class LanguageMenuWindow : DefaultWindow
         state.Button = button;
 
         header.AddChild(name);
-        header.AddChild(button);
+        if (addSwitchButton)
+            header.AddChild(button);
 
         container.AddChild(header);
         #endregion
@@ -123,7 +138,7 @@ public sealed partial class LanguageMenuWindow : DefaultWindow
         wrapper.StyleClasses.Add("PdaBorderRect");
 
         wrapper.AddChild(container);
-        OptionsList.AddChild(wrapper);
+        containerin.AddChild(wrapper);
 
         _entries.Add(state);
     }
@@ -133,13 +148,20 @@ public sealed partial class LanguageMenuWindow : DefaultWindow
         _clientLanguageSystem.RequestSetLanguage(id);
 
         // Predict the change
-        if (_clientLanguageSystem.GetLocalSpeaker()?.SpokenLanguages is {} languages)
-            UpdateState(id, languages);
+        if (_clientLanguageSystem.GetLocalSpeaker()?.SpokenLanguages is { } languages &&
+            _clientLanguageSystem.GetLocalSpeaker()?.UnderstoodLanguages is { } understood)
+            UpdateState(id, languages, understood);
     }
 
     private struct EntryState
     {
         public ProtoId<LanguagePrototype> Language;
         public Button? Button;
+    }
+
+    private enum TabIndex
+    {
+        Spoken = 0,
+        Understood,
     }
 }

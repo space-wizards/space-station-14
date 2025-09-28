@@ -4,6 +4,7 @@ lobbyenabled = false
 # Dev map for faster loading & convenience
 map = "Dev"
 role_timers = false
+role_loadout_timers = false
 
 [events]
 enabled = false
@@ -42,3 +43,13 @@ see_own_notes = true
 random_characters = false
 random_species_weights = ""
 ssd_sleep_time = 3600
+
+# Starlight
+
+flavor_text = true
+inspect_windows = true
+secrets_text = true
+secrets_exploitable = true
+
+[ooc]
+rp_notes = true

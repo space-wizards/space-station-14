@@ -217,11 +217,57 @@ namespace Content.Server.Kitchen.EntitySystems
             }
         }
 
-        private void SubtractContents(CookingDeviceComponent component, FoodRecipePrototype recipe) // Starlight-edit
+        private bool SubtractContents(CookingDeviceComponent component, FoodRecipePrototype recipe) // Starlight-edit
         {
             // TODO Turn recipe.IngredientsReagents into a ReagentQuantity[]
 
             var totalReagentsToRemove = new Dictionary<string, FixedPoint2>(recipe.IngredientsReagents);
+
+            // Starlight-start: Check for subsract ability
+            foreach (var (reagent, required) in recipe.IngredientsReagents)
+            {
+                var available = FixedPoint2.Zero;
+
+                foreach (var item in component.Storage.ContainedEntities)
+                {
+                    if (!_solutionContainer.TryGetDrainableSolution(item, out _, out var solution))
+                        continue;
+
+                    available += solution.GetTotalPrototypeQuantity(reagent);
+                }
+
+                if (available < required)
+                    return false;
+            }
+
+            foreach (var recipeSolid in recipe.IngredientsSolids)
+            {
+                var available = 0;
+
+                foreach (var item in component.Storage.ContainedEntities)
+                {
+                    string? itemID = null;
+
+                    if (TryComp<StackComponent>(item, out var stackComp))
+                        itemID = _prototype.Index<StackPrototype>(stackComp.StackTypeId).Spawn;
+                    else
+                    {
+                        var metaData = MetaData(item);
+                        if (metaData.EntityPrototype == null)
+                            continue;
+                        itemID = metaData.EntityPrototype.ID;
+                    }
+
+                    if (itemID == recipeSolid.Key)
+                    {
+                        available += stackComp?.Count ?? 1;
+                    }
+                }
+
+                if (available < recipeSolid.Value)
+                    return false;
+            }
+            // Starlight-end
 
             // this is spaghetti ngl
             foreach (var item in component.Storage.ContainedEntities)
@@ -288,6 +334,8 @@ namespace Content.Server.Kitchen.EntitySystems
                     }
                 }
             }
+
+            return true; // Starlight-edit: Check for subsract ability
         }
 
         private void OnInit(Entity<CookingDeviceComponent> ent, ref ComponentInit args) => ent.Comp.Storage = _container.EnsureContainer<Container>(ent, ent.Comp.ContainerId); // Starlight-edit: this really does have to be in ComponentInit
@@ -766,13 +814,15 @@ namespace Content.Server.Kitchen.EntitySystems
                 foreach (var (recipe, availableAmount) in active.PortionedRecipes) // Starlight-edit
                 {
                     int targetTime = (int)recipe.CookTime; // Starlight-edit
-                    
+
                     if (Math.Abs(targetTime - actualTime) <= 1) // Starlight-edit
                     {
                         for (var i = 0; i < availableAmount; i++) // Starlight-edit
                         {
-                            SubtractContents(cookingDevice, recipe);
-                            Spawn(recipe.Result, coords);
+                            if (SubtractContents(cookingDevice, recipe))
+                                Spawn(recipe.Result, coords);
+                            else
+                                continue;
                         }
                     }
                 }
@@ -795,7 +845,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             foreach (ProtoId<FoodRecipePrototype> recipeId in ent.Comp.ProvidedRecipes)
             {
-                if (_prototype.TryIndex(recipeId, out var recipeProto))
+                if (_prototype.Resolve(recipeId, out var recipeProto))
                 {
                     args.Recipes.Add(recipeProto);
                 }
@@ -824,8 +874,10 @@ namespace Content.Server.Kitchen.EntitySystems
                 {
                     for (var i = 0; i < availableAmount; i++)
                     {
-                        SubtractContents(cookingDevice, recipe);
-                        Spawn(recipe.Result, coords);
+                        if (SubtractContents(cookingDevice, recipe))
+                            Spawn(recipe.Result, coords);
+                        else
+                            continue;
                     }
                 }
             }

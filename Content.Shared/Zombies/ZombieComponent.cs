@@ -43,7 +43,7 @@ public sealed partial class ZombieComponent : Component
     };
 
     [ViewVariables(VVAccess.ReadWrite)]
-    public float ZombieMovementSpeedDebuff = 0.70f;
+    public float ZombieMovementSpeedDebuff = 0.80f; // Starlight-edit
 
     /// <summary>
     /// The skin color of the zombie
@@ -110,11 +110,11 @@ public sealed partial class ZombieComponent : Component
     {
         DamageDict = new ()
         {
-            { "Blunt", -0.4 },
-            { "Slash", -0.2 },
-            { "Piercing", -0.2 },
+            { "Blunt", -0.7 }, // Starlight-edit
+            { "Slash", -0.5 }, // Starlight-edit
+            { "Piercing", -0.6 }, // Starlight-edit
             { "Heat", -0.02 },
-            { "Shock", -0.02 }
+            { "Shock", -0.05 } // Starlight-edit
         }
     };
 
@@ -132,9 +132,9 @@ public sealed partial class ZombieComponent : Component
     {
         DamageDict = new()
         {
-            { "Blunt", -2 },
-            { "Slash", -2 },
-            { "Piercing", -2 }
+            { "Blunt", -3 }, // Starlight-edit
+            { "Slash", -3 }, // Starlight-edit
+            { "Piercing", -3 } // Starlight-edit
         }
     };
 
@@ -148,6 +148,20 @@ public sealed partial class ZombieComponent : Component
         {
             { "Slash", 20 }, // Removed piercing damage because how in the fuck is the best counter to a zombie bite a bullet proof vest
             { "Structural", 10 }
+        }
+    };
+
+    // starlight
+    /// <summary>
+    /// What bite damage should be assigned to this mob if it previously had a 0 damage attack (mice, moproaches, etc)
+    /// </summary>
+    [DataField]
+    public DamageSpecifier MinimumDamageOnBite = new()
+    {
+        DamageDict = new()
+        {
+            { "Slash", 10 },
+            { "Structural", 5 }
         }
     };
 

@@ -13,6 +13,7 @@ namespace Content.Shared.Humanoid.Markings
         HeadSide,
         Eyes, // Starlight
         Snout,
+        SnoutCover,
         Chest,
         UndergarmentTop,
         UndergarmentBottom,

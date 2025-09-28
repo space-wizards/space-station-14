@@ -26,9 +26,7 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
     - type: LoadedMap
@@ -1735,22 +1733,6 @@ entities:
     - type: Transform
       pos: -3.8298845,-19.161654
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 215
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 215
-    - type: Physics
-      canCollide: True
-    - type: ActionsContainer
 - proto: LampGold
   entities:
   - uid: 14128
@@ -1758,22 +1740,6 @@ entities:
     - type: Transform
       pos: -7.928419,-25.061401
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 331
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 331
-    - type: Physics
-      canCollide: True
-    - type: ActionsContainer
 - proto: LauncherCreamPie
   entities:
   - uid: 6674

@@ -316,8 +316,9 @@ public sealed partial class BanPanel : DefaultWindow
         };
 
         // This is adding the icon before the role name
-        // Yeah, this is sus, but having to split the functions up and stuff is worse imo.
-        if (_protoMan.TryIndex<JobPrototype>(role, out var jobPrototype) && _protoMan.TryIndex(jobPrototype.Icon, out var iconProto))
+        // TODO: This should not be using raw strings for prototypes as it means it won't be validated at all.
+        // I know the ban manager is doing the same thing, but that should not leak into UI code.
+        if (_protoMan.TryIndex<JobPrototype>(role, out var jobPrototype) && _protoMan.Resolve(jobPrototype.Icon, out var iconProto))
         {
             var jobIconTexture = new TextureRect
             {

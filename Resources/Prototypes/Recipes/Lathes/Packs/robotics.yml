@@ -19,6 +19,10 @@
   - BorgModuleTool
   - BorgModuleCable
   - BorgModuleFireExtinguisher
+  - BorgModuleInflatable
+  # Starlight-start
+  - BorgModuleUppies
+  # Starlight-end
 
 - type: latheRecipePack
   id: BorgLimbsStatic

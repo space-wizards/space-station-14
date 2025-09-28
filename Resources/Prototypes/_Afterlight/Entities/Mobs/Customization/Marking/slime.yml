@@ -1,0 +1,176 @@
+- type: marking
+  id: SlimeTailSquishyFox
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ SlimePerson ]
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
+  sprites:
+  - sprite: _Afterlight/Mobs/Customization/SlimePerson/tail.rsi
+    state: squishy_fox
+
+- type: marking
+  id: SlimeTailGlassleaf
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ SlimePerson ]
+  sprites:
+  - sprite: _Afterlight/Mobs/Customization/SlimePerson/tail.rsi
+    state: glassleaf
+
+- type: marking
+  id: SlimeTailGooeyDragon
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ SlimePerson ]
+  sprites:
+  - sprite: _Afterlight/Mobs/Customization/SlimePerson/tail.rsi
+    state: gooey_dragon
+
+- type: marking
+  id: SlimeTailGummyCat
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ SlimePerson ]
+  emotes:
+    - emotePrototype: Meow
+    - emotePrototype: Mew
+    - emotePrototype: Trill
+  sprites:
+  - sprite: _Afterlight/Mobs/Customization/SlimePerson/tail.rsi
+    state: gummy_cat
+
+- type: marking
+  id: SlimeTailHoppingSlime
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ SlimePerson ]
+  sprites:
+  - sprite: _Afterlight/Mobs/Customization/SlimePerson/tail.rsi
+    state: hopping_slime
+
+- type: marking
+  id: SlimeTailNudibranchi
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ SlimePerson ]
+  sprites:
+  - sprite: _Afterlight/Mobs/Customization/SlimePerson/tail.rsi
+    state: nudibranchi
+
+- type: marking
+  id: SlimeTailVulpish
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ SlimePerson ]
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
+  sprites:
+  - sprite: _Afterlight/Mobs/Customization/SlimePerson/tail.rsi
+    state: vulpish
+
+- type: marking
+  id: SlimeTailWaggableMass
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ SlimePerson ]
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
+  sprites:
+  - sprite: _Afterlight/Mobs/Customization/SlimePerson/tail.rsi
+    state: waggable_mass
+
+- type: marking
+  id: SlimeTailWaggableMassWag
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ SlimePerson ]
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
+  sprites:
+  - sprite: _Afterlight/Mobs/Customization/SlimePerson/tail.rsi
+    state: waggable_mass_wagging
+
+- type: marking
+  id: SlimeEarsBlades
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ SlimePerson ]
+  sprites:
+  - sprite: _Afterlight/Mobs/Customization/SlimePerson/ears.rsi
+    state: blades
+
+- type: marking
+  id: SlimeEarsBunks
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ SlimePerson ]
+  sprites:
+  - sprite: _Afterlight/Mobs/Customization/SlimePerson/ears.rsi
+    state: bunks
+
+- type: marking
+  id: SlimeEarsCarblunkle
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ SlimePerson ]
+  sprites:
+  - sprite: _Afterlight/Mobs/Customization/SlimePerson/ears.rsi
+    state: carblunkle
+
+- type: marking
+  id: SlimeEarsFoxlike
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ SlimePerson ]
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
+  sprites:
+  - sprite: _Afterlight/Mobs/Customization/SlimePerson/ears.rsi
+    state: foxlike
+
+- type: marking
+  id: SlimeEarsHoppers
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ SlimePerson ]
+  sprites:
+  - sprite: _Afterlight/Mobs/Customization/SlimePerson/ears.rsi
+    state: hoppers
+
+- type: marking
+  id: SlimeEarsStalks
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ SlimePerson ]
+  sprites:
+  - sprite: _Afterlight/Mobs/Customization/SlimePerson/ears.rsi
+    state: stalks
+
+- type: marking
+  id: SlimeEarsStalksSmall
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ SlimePerson ]
+  sprites:
+  - sprite: _Afterlight/Mobs/Customization/SlimePerson/ears.rsi
+    state: stalks_small
+
+- type: marking
+  id: SlimeEarsThorns
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ SlimePerson ]
+  sprites:
+  - sprite: _Afterlight/Mobs/Customization/SlimePerson/ears.rsi
+    state: thorns

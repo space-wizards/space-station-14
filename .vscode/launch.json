@@ -11,7 +11,8 @@
             "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
             "args": [],
             "console": "internalConsole",
-            "stopAtEntry": false
+            "stopAtEntry": false,
+            "preLaunchTask": "build"
         },
         {
             "name": "Client (Compatibility renderer)",
@@ -29,7 +30,8 @@
             "program": "${workspaceFolder}/bin/Content.Server/Content.Server.dll",
             "args": [],
             "console": "integratedTerminal",
-            "stopAtEntry": false
+            "stopAtEntry": false,
+            "preLaunchTask": "build"
         },
         {
             "name": "YAML Linter",

@@ -26,9 +26,7 @@ entities:
     components:
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: MetaData
     - type: Transform
       pos: 0.75,1.3125

@@ -11,4 +11,5 @@ public sealed partial class MarkingEmoteData
     public ProtoId<EmotePrototype> EmotePrototype = default!;
 
     [DataField] public HashSet<ProtoId<MarkingPrototype>>? RequiredMarkings = null;
+    [DataField] public List<ProtoId<MarkingPrototype>>? RequiredMarkingsAny = null;
 }

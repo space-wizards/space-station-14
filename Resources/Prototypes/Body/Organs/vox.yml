@@ -37,6 +37,16 @@
   components:
   - type: Metabolizer
     metabolizerTypes: [Vox]
+  # Starlight start
+  - type: OrganDamage 
+    damage:
+      types:
+        Poison: 280
+        Cellular: 40
+        Bloodloss: 40
+        Caustic: 40
+        Radiation: 60
+  # Starlight end
 
 - type: entity
   parent: OrganHumanHeart

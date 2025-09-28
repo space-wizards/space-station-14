@@ -132,6 +132,9 @@
       - id: GorlexMatchstick
         amount: 24
   - type: Matchbox
+  - type: Tag
+    tags:
+    - Lighters #SL
 
 - type: entity
   name: match stick

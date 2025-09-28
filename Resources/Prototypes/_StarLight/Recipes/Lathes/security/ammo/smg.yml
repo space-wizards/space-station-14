@@ -63,3 +63,17 @@
   result: MagazinePistolSubMachineGunTopMounted
   materials:
     Steel: 300
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolSubMachineGunUzi
+  result: MagazinePistolSubMachineGunUzi
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolSubMachineGunPPSH
+  result: MagazinePistolSubMachineGunPPSH
+  materials:
+    Steel: 350

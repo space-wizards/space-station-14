@@ -12,6 +12,7 @@
     time: 36000 # 10h
   startingGear: IAAGear
   icon: "JobIconIAA"
+  rules: job-rules-corporate-aligned
   supervisors: job-supervisors-magistrate
   canBeAntag: false
   displayWeight: 40
@@ -35,3 +36,9 @@
     belt: BoxFolderNanoTrasenClipboard
   inhand:
     - BriefcaseIAAFilled
+
+- type: chameleonOutfit
+  id: IAAChameleonOutfit
+  job: IAA
+  equipment:
+    eyes: ClothingEyesGlassesSunglasses

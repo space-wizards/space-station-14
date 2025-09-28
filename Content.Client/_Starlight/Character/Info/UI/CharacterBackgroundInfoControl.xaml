@@ -1,0 +1,9 @@
+﻿<ui:CharacterBackgroundInfoControl
+    xmlns="https://spacestation14.io"
+    xmlns:ui="clr-namespace:Content.Client._Starlight.Character.Info.UI"
+    xmlns:ui1="clr-namespace:Content.Client._Starlight.Character.UI">
+    <BoxContainer Orientation="Vertical" VerticalExpand="True">
+        <Label Text="No background." Name="BackgroundLabel"/> 
+        <Label Name="Background" Access="Public"/>
+    </BoxContainer>
+</ui:CharacterBackgroundInfoControl>

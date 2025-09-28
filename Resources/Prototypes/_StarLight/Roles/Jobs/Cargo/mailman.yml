@@ -3,10 +3,6 @@
   name: job-name-mailtech
   description: job-description-mailtech
   playTimeTracker: JobMailTech
-  requirements:
-    - !type:DepartmentTimeRequirement
-      department: Cargo
-      time: 18000 # 5 hours
   startingGear: MailTechGear
   icon: "JobIconMailTech"
   supervisors: job-supervisors-qm
@@ -28,3 +24,14 @@
     back:
     - MailTrolleyFlatpack
     - Multitool #maybe not a good idea? idk makes unpacking it quick
+
+- type: chameleonOutfit
+  id: MailTechChameleonOutfit
+  job: MailTech
+  equipment:
+    head: ClothingHeadHatCargosoft
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskBreath
+    outerClothing: ClothingOuterWinterCargo
+    neck: ClothingNeckScarfStripedBrown
+    gloves: ClothingHandsGlovesFingerless

@@ -3,8 +3,16 @@
   desc: salvage-biome-mod-abyss
   biome: Abyss
   difficulties: 
+    - Moderate
     - Challenging   
  #   - Difficult
+
+- type: salvageBiomeMod
+  id: TrueAbyss
+  desc: salvage-biome-mod-true-abyss
+  biome: TrueAbyss
+  difficulties: 
+    - Impossible
 
 #- type: salvageDungeonMod
 #  id: SyndieStronghold
@@ -47,10 +55,7 @@
   desc: salvage-dungeon-mod-soviet-warehouse
   proto: SovietStrategicResourcesWarehouseDungeon
   biomes:
-    - Lava
-    - Grasslands
-    - Caves
-    - Snow
+    - TrueAbyss
   difficulties: 
     - Impossible
 

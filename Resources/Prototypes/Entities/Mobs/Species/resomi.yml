@@ -35,12 +35,16 @@
         color: "#C048C2"
       Burn:
         sprite: Mobs/Effects/Resomi/burn_damage.rsi
+  - type: Bloodstream # Starlight
+    bloodReagent: ResomiBlood
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Resomi_minor_burning
     alternateState: Resomi_burning
   - type: HumanoidAppearance
     species: Resomi
+    undergarmentTop: UndergarmentTopTanktopResomi
+    undergarmentBottom: UndergarmentBottomBoxersResomi
   - type: Fixtures
     fixtures: 
       fix1:
@@ -63,6 +67,11 @@
   - type: Body
     prototype: Resomi
     requiredLegs: 2
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatChicken
+      amount: 3
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -105,6 +114,11 @@
           32:
             sprite: Mobs/Species/Resomi/displacement.rsi
             state: jumpsuit
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Resomi/displacement.rsi
+            state: head
       eyes:
         sizeMaps:
           32:
@@ -115,11 +129,6 @@
           32:
             sprite: Mobs/Species/Resomi/displacement.rsi
             state: hands
-      head:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Resomi/displacement.rsi
-            state: head
       back:
         sizeMaps:
           32:
@@ -166,6 +175,11 @@
           32:
             sprite: Mobs/Species/Resomi/displacement.rsi
             state: jumpsuit
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Resomi/displacement.rsi
+            state: head
       eyes:
         sizeMaps:
           32:
@@ -176,11 +190,6 @@
           32:
             sprite: Mobs/Species/Resomi/displacement.rsi
             state: hands
-      head:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Resomi/displacement.rsi
-            state: head
       back:
         sizeMaps:
           32:
@@ -228,7 +237,10 @@
       Unsexed: UnisexResomi
   - type: Speech
     speechVerb: Resomi
+    speechSounds: UnisexResomi
     allowedEmotes: ['Chirp', 'Hisses', 'Purr', 'Growl', 'Trill', 'Scree', 'Call', 'Squawk']
+  - type: TypingIndicator
+    proto: resomi
   - type: Tag
     tags:
     - CanPilot

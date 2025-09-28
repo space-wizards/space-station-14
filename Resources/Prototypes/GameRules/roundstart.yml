@@ -22,7 +22,7 @@
     rules:
     - id: Thief
       prob: 0.5
-    - id: Changeling
+    - id: SLChangeling #Starlight lings
       prob: 0.4
     - id: Vampire
       prob: 0.25
@@ -37,7 +37,7 @@
     rules:
     - id: Thief
       prob: 0.5
-    - id: Changeling
+    - id: SLChangeling # StarlightLings
       prob: 0.4
     - id: Vampire
       prob: 0.25
@@ -165,8 +165,8 @@
     - prefRoles: [ Nukeops ]
       fallbackRoles: [ NukeopsCommander, NukeopsMedic ]
       spawnerPrototype: SpawnPointNukeopsOperative
-      max: 3
-      playerRatio: 10
+      max: 4
+      playerRatio: 16
       startingGear: SyndicateOperativeGearFull
       roleLoadout:
       - RoleSurvivalNukie
@@ -181,6 +181,8 @@
         - Syndicate
       mindRoles:
       - MindRoleNukeops
+  - type: DynamicRuleCost
+    cost: 200
 
 - type: entity
   abstract: true
@@ -196,6 +198,8 @@
     maxDifficulty: 5
   - type: AntagSelection
     agentName: traitor-round-end-agent-name
+  - type: DynamicRuleCost
+    cost: 100
 
 - type: entity
   parent: BaseTraitorRule
@@ -215,7 +219,7 @@
       blacklist:
         components:
         - AntagImmune
-      lateJoinAdditional: true
+      lateJoinAdditional: false
       mindRoles:
       - MindRoleTraitor
 
@@ -285,6 +289,8 @@
       - type: HeadRevolutionary
       mindRoles:
       - MindRoleHeadRevolutionary
+  - type: DynamicRuleCost
+    cost: 200
 
 - type: entity
   id: Sandbox
@@ -308,7 +314,7 @@
     - WizardSurviveObjective
     - WizardDemonstrateObjective
   - type: LoadMapRule
-    mapPath: /Maps/_Starlight/Shuttles/WizardShuttle.yml #Starlight. wizard deserves their shuttle. and it had to be re-saved as a map to get it to work.
+    mapPath: /Maps/_Starlight/WizardShuttle.yml #Starlight. wizard deserves their shuttle. and it had to be re-saved as a map to get it to work.
   - type: RuleGrids
   - type: AntagSelection
   - type: AntagLoadProfileRule
@@ -349,6 +355,8 @@
         nameFormat: name-format-wizard
       mindRoles:
       - MindRoleWizard
+  - type: DynamicRuleCost
+    cost: 150
 
 - type: entity
   id: Zombie
@@ -381,6 +389,8 @@
       - type: InitialInfected
       mindRoles:
       - MindRoleInitialInfected
+  - type: DynamicRuleCost
+    cost: 200
 
 # This rule makes the chosen players unable to get other antag rules, as a way to prevent metagaming job rolls.
 # Put this before antags assigned to station jobs, but after non-job antags (NukeOps/Wiz).
@@ -409,11 +419,28 @@
       - !type:NestedSelector
         tableId: BasicAntagEventsTable
       - !type:NestedSelector
+        tableId: ModerateAntagEventsTable
+      - !type:NestedSelector
         tableId: CargoGiftsTable
       - !type:NestedSelector
         tableId: CalmPestEventsTable
       - !type:NestedSelector
         tableId: SpicyPestEventsTable
+
+- type: entityTable
+  id: DynamicGameRulesTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - !type:NestedSelector
+      tableId: BasicCalmEventsTable
+    - !type:NestedSelector
+      tableId: BasicAntagEventsTable
+    - !type:NestedSelector
+      tableId: CargoGiftsTable
+    - !type:NestedSelector
+      tableId: CalmPestEventsTable
+    - !type:NestedSelector
+      tableId: SpicyPestEventsTable
 
 - type: entityTable
   id: SpaceTrafficControlTable
@@ -433,6 +460,14 @@
   - type: BasicStationEventScheduler
     scheduledGameRules: !type:NestedSelector
       tableId: BasicGameRulesTable
+
+- type: entity
+  id: DynamicStationEventScheduler # this isn't the dynamic mode, but rather the station event scheduler used for dynamic
+  parent: BaseGameRule
+  components:
+  - type: BasicStationEventScheduler
+    scheduledGameRules: !type:NestedSelector
+      tableId: DynamicGameRulesTable
 
 - type: entity
   id: RampingStationEventScheduler

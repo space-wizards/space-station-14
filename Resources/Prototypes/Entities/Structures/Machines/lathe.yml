@@ -123,6 +123,7 @@
     - PartsStatic
     - AtmosStatic
     - CablesStatic
+    - PaperworkStatic
     - CargoStatic
     - MaterialsStatic
     - BasicChemistryStatic
@@ -215,6 +216,7 @@
     - StarlightCyberlimbDynamic
     - StarlightCyberOrgansDynamic
     - StarlightImplantDynamic
+    - StarlightBudgetCyberOrgansDynamic
 
     - StarlightSecurityAmmoDynamic
     - StarlightSecurityExplosives
@@ -495,12 +497,14 @@
     - RollerBedsStatic
     - MedicalClothingStatic
     - EmptyMedkitsStatic
+    - StarlightMedicalStatic # Starlight
     dynamicPacks:
     - StarlightSurgeryDynamic
     - StarlightCyberlimbDynamic
     - StarlightCyberOrgansDynamic
     - StarlightImplantDynamic
     - Chemistry
+    - StarlightBudgetCyberOrgansDynamic
   - type: Machine
     board: MedicalTechFabCircuitboard
   - type: StealTarget

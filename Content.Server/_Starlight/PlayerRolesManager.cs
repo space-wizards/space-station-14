@@ -34,7 +34,7 @@ public sealed partial class PlayerRolesManager : IPlayerRolesManager, IPostInjec
         else if (e.NewStatus == SessionStatus.Disconnected)
         {
             if(_players.Remove(e.Session, out var data))
-            _ = _dbManager.SetPlayerDataForAsync(e.Session.UserId, new PlayerDataDTO
+            _ = _dbManager.SetPlayerDataForAsync(e.Session.UserId, new StarLightModel.PlayerDataDTO
             {
                 GhostTheme = data!.Data.GhostTheme,
                 Balance = data!.Data.Balance
@@ -68,7 +68,7 @@ public sealed partial class PlayerRolesManager : IPlayerRolesManager, IPostInjec
 
         if (dbData == null)
         {
-            dbData = new PlayerDataDTO
+            dbData = new StarLightModel.PlayerDataDTO
             {
                 UserId = session.UserId,
                 Balance = 500,

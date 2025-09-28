@@ -236,7 +236,7 @@
     - Metal
   - type: Construction
     graph: SwordForgedGraph
-    node: tool
+    node: sword
 
 - type: entity
   parent: BaseItem
@@ -257,7 +257,7 @@
     - Metal
   - type: Construction
     graph: ClaymoreForgedGraph
-    node: tool
+    node: sword
 
 - type: entity
   parent: BaseItem

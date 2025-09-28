@@ -1,0 +1,7 @@
+- type: latheRecipe
+  parent: BaseXenoborgRecipe
+  id: XenoborgiRecipe
+  result: XenoBorgiPrinted
+  materials:
+    Steel: 2000
+    Biomass: 10

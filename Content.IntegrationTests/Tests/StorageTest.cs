@@ -220,6 +220,7 @@ namespace Content.IntegrationTests.Tests
             return 0;
         }
 
+        //starlight, keep in mind this does NOT account for items that automatically stack into one entry
         private int GetFillSize(StorageFillComponent fill, bool getCount, IPrototypeManager protoMan, SharedItemSystem itemSystem)
         {
             var totalSize = 0;

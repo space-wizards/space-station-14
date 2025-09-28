@@ -6,8 +6,12 @@ using Content.Server.Popups;
 using Content.Shared.Crayon;
 using Content.Shared.Database;
 using Content.Shared.Decals;
+using Content.Shared.Hands;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -25,6 +29,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
     public override void Initialize()
     {
@@ -32,6 +37,14 @@ public sealed class CrayonSystem : SharedCrayonSystem
         SubscribeLocalEvent<CrayonComponent, ComponentInit>(OnCrayonInit);
         SubscribeLocalEvent<CrayonComponent, CrayonSelectMessage>(OnCrayonBoundUI);
         SubscribeLocalEvent<CrayonComponent, CrayonColorMessage>(OnCrayonBoundUIColor);
+        SubscribeLocalEvent<CrayonComponent, CrayonRotationMessage>(OnCrayonBoundUIRotation);
+        SubscribeLocalEvent<CrayonComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
+        SubscribeLocalEvent<CrayonComponent, BoundUIClosedEvent>(OnBoundUIClosed);
+        SubscribeLocalEvent<CrayonComponent, HandSelectedEvent>(OnHandSelected);
+        SubscribeLocalEvent<CrayonComponent, HandDeselectedEvent>(OnHandDeselected);
+        SubscribeLocalEvent<CrayonComponent, GotEquippedEvent>(OnGotEquipped);
+        SubscribeLocalEvent<CrayonComponent, GotUnequippedEvent>(OnGotUnequipped);
+        SubscribeLocalEvent<CrayonComponent, CrayonPreviewToggleMessage>(OnCrayonBoundUIPreviewToggle);
         SubscribeLocalEvent<CrayonComponent, UseInHandEvent>(OnCrayonUse, before: new[] { typeof(FoodSystem) });
         SubscribeLocalEvent<CrayonComponent, AfterInteractEvent>(OnCrayonAfterInteract, after: new[] { typeof(FoodSystem) });
         SubscribeLocalEvent<CrayonComponent, DroppedEvent>(OnCrayonDropped);
@@ -40,7 +53,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
     private static void OnCrayonGetState(EntityUid uid, CrayonComponent component, ref ComponentGetState args)
     {
-        args.State = new CrayonComponentState(component.Color, component.SelectedState, component.Charges, component.Capacity);
+        args.State = new CrayonComponentState(component.Color, component.SelectedState, component.Charges, component.Capacity, component.Rotation, component.PreviewEnabled, component.PreviewVisible, component.OpaqueGhost); // Starlight-edit
     }
 
     private void OnCrayonAfterInteract(EntityUid uid, CrayonComponent component, AfterInteractEvent args)
@@ -66,7 +79,8 @@ public sealed class CrayonSystem : SharedCrayonSystem
             return;
         }
 
-        if (!_decals.TryAddDecal(component.SelectedState, args.ClickLocation.Offset(new Vector2(-0.5f, -0.5f)), out _, component.Color, cleanable: true))
+        uint decalId;
+        if (!_decals.TryAddDecal(component.SelectedState, args.ClickLocation.Offset(new Vector2(-0.5f, -0.5f)), out decalId, component.Color, rotation:-component.Rotation, cleanable: true)) // Starlight-edit
             return;
 
         if (component.UseSound != null)
@@ -98,7 +112,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
         _uiSystem.TryToggleUi(uid, SharedCrayonComponent.CrayonUiKey.Key, args.User);
 
-        _uiSystem.SetUiState(uid, SharedCrayonComponent.CrayonUiKey.Key, new CrayonBoundUserInterfaceState(component.SelectedState, component.SelectableColor, component.Color));
+        SetUIState(uid, component);
         args.Handled = true;
     }
 
@@ -123,6 +137,74 @@ public sealed class CrayonSystem : SharedCrayonSystem
         Dirty(uid, component);
 
     }
+
+    // Starlight-start
+    private void OnCrayonBoundUIRotation(EntityUid uid, CrayonComponent component, CrayonRotationMessage args)
+    {
+        component.Rotation = args.Rotation;
+        Dirty(uid, component);
+    }
+
+    private void OnCrayonBoundUIPreviewToggle(EntityUid uid, CrayonComponent component, CrayonPreviewToggleMessage args)
+    {
+        if(_handsSystem.GetActiveItem(args.Actor)==uid)
+        {
+            component.PreviewEnabled = args.State;
+            Dirty(uid, component);
+        }
+        else SetUIState(uid, component);
+    }
+
+    private void OnBoundUIOpened(EntityUid uid, CrayonComponent component, ref BoundUIOpenedEvent args)
+    {
+        component.OpaqueGhost = false;
+        Dirty(uid, component);
+        SetUIState(uid, component);
+    }
+
+    private void OnBoundUIClosed(EntityUid uid, CrayonComponent component, ref BoundUIClosedEvent args)
+    {
+        component.OpaqueGhost = true;
+        Dirty(uid, component);
+        SetUIState(uid, component);
+    }
+
+    private void OnHandSelected(EntityUid uid, CrayonComponent component, ref HandSelectedEvent args)
+    {
+        if (_handsSystem.GetActiveItem(args.User) != uid)
+            return;
+        SetPreviewVisible(uid, component, true);
+    }
+
+    private void OnGotEquipped(EntityUid uid, CrayonComponent component, ref GotEquippedEvent args)
+    {
+        if (_handsSystem.GetActiveItem(args.Equipee) != uid)
+            return;
+        SetPreviewVisible(uid, component, true);
+    }
+
+    private void OnHandDeselected(EntityUid uid, CrayonComponent component, ref HandDeselectedEvent args)
+    {
+        SetPreviewVisible(uid, component, false);
+    }
+
+    private void OnGotUnequipped(EntityUid uid, CrayonComponent component, ref GotUnequippedEvent args)
+    {
+        SetPreviewVisible(uid, component, false);
+    }
+
+    private void SetUIState(EntityUid uid, CrayonComponent component)
+    {
+        _uiSystem.SetUiState(uid, SharedCrayonComponent.CrayonUiKey.Key, new CrayonBoundUserInterfaceState(component.SelectedState, component.SelectableColor, component.Color, component.Rotation, component.PreviewEnabled, component.PreviewVisible, component.OpaqueGhost));
+    }
+
+    private void SetPreviewVisible(EntityUid uid, CrayonComponent component, bool visible)
+    {
+        component.PreviewVisible = visible;
+        Dirty(uid, component);
+        SetUIState(uid, component);
+    }
+    // Starlight-end
 
     private void OnCrayonInit(EntityUid uid, CrayonComponent component, ComponentInit args)
     {

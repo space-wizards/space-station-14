@@ -28,7 +28,7 @@ public sealed partial class ScatteringGrenadeComponent : Component
     /// If we have a pre-fill how many more can we spawn.
     /// </summary>
     [AutoNetworkedField]
-    [DataField]
+    [ViewVariables(VVAccess.ReadWrite)] //starlight
     public int UnspawnedCount;
 
     /// <summary>

@@ -23,7 +23,7 @@ public abstract partial class SharedInstrumentComponent : Component
     public bool AllowPercussion { get; set; }
 
     [DataField("allowProgramChange"), ViewVariables(VVAccess.ReadWrite)]
-    public bool AllowProgramChange { get ; set; }
+    public bool AllowProgramChange { get; set; }
 
     [DataField("respectMidiLimits"), ViewVariables(VVAccess.ReadWrite)]
     public bool RespectMidiLimits { get; set; } = true;

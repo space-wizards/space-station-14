@@ -6,12 +6,12 @@
   - chat-speech-verb-felionoid-2
   - chat-speech-verb-felionoid-3
   - chat-speech-verb-felionoid-4
-  
+
 - type: speechVerb
-  id: Vulpkanin
-  name: chat-speech-verb-name-vulpkanin
+  id: Thaven
+  name: chat-speech-verb-name-thaven
   speechVerbStrings:
-  - chat-speech-verb-vulpkanin-1
-  - chat-speech-verb-vulpkanin-2
-  - chat-speech-verb-vulpkanin-3
-  - chat-speech-verb-vulpkanin-4
+  - chat-speech-verb-thaven-1
+  - chat-speech-verb-thaven-2
+  - chat-speech-verb-thaven-3
+  - chat-speech-verb-thaven-4

@@ -5,12 +5,3 @@
   materials:
     Biomass: 20
     Steel: 1000
-
-- type: latheRecipe
-  parent: BaseCubeRecipe
-  id: ShadowBorgiCube
-  result: ShadowBorgiCube
-  completetime: 3
-  materials:
-    Biomass: 20
-    Steel: 1000

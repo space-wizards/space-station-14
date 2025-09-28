@@ -22,4 +22,5 @@
     - type: Flippable
       mirrorEntity: GasFilterInline
     - type: Construction
+      graph: GasTrinaryStarlight
       node: inline_filter

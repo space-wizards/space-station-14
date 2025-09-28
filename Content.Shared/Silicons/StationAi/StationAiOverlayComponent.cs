@@ -12,4 +12,7 @@ public sealed partial class StationAiOverlayComponent : Component
 {
     [DataField, AutoNetworkedField]
     public bool AllowCrossGrid;
+
+    [DataField, AutoNetworkedField]
+    public float Alfa = 1f;
 }

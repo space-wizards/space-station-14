@@ -30,6 +30,7 @@ using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Flash.Components;
+using Content.Shared.Storage.Components;
 
 namespace Content.Server.Vampire;
 
@@ -678,7 +679,7 @@ public sealed partial class VampireSystem
         if (!_interaction.InRangeUnobstructed(vampire.Owner, target, popup: true))
             return false;
 
-        if (_ingestion.HasMouthAvailable(vampire, target))
+        if (!_ingestion.HasMouthAvailable(vampire, target))
             return false;
 
         if (_rotting.IsRotten(target))
@@ -712,7 +713,7 @@ public sealed partial class VampireSystem
         if (!HasComp<VampireFangsExtendedComponent>(entity))
             return;
 
-        if (_ingestion.HasMouthAvailable(entity, entity))
+        if (!_ingestion.HasMouthAvailable(entity, entity))
             return;
 
         if (_rotting.IsRotten(args.Target!.Value))

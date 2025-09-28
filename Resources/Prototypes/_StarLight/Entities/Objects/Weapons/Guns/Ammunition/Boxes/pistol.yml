@@ -17,6 +17,7 @@
   parent: BaseItem
   id: BaseMagazineBoxPistol40
   name: ammunition box (.40)
+  abstract: true
   components:
   - type: BallisticAmmoProvider
     mayTransfer: true

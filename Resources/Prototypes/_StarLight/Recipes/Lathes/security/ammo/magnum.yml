@@ -17,6 +17,13 @@
     Steel: 50
 
 - type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: MagazineMagnumEmpty
+  result: MagazineMagnumEmpty
+  materials:
+    Steel: 50
+
+- type: latheRecipe
   parent: BaseAmmoRecipe
   id: SpeedLoaderMagnumSP
   result: SpeedLoaderMagnumSP
@@ -69,6 +76,20 @@
     Steel: 110
     Uranium: 110
     Plastic: 150
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineMagnum
+  result: MagazineMagnum
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineMagnumRifleSP
+  result: MagazineMagnumRifleSP
+  materials:
+    Steel: 250
 
 ############ BOXES ############
 

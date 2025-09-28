@@ -27,8 +27,8 @@
     - BaseStationAllEventsEligible
     - BaseStationNanotrasen
     - BaseStationDeliveries
-    - BaseStationCryoTeleportation
-    - BaseStationGammaWeaponry
+    - BaseStationCryoTeleportation #Starlight
+    - BaseStationAlertArmories #Starlight
   categories: [ HideSpawnMenu ]
   components:
     - type: Transform

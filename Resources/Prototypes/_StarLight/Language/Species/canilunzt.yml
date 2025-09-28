@@ -1,6 +1,6 @@
 - type: language
   id: Canilunzt
-  icon: LanguageIconAnimal
+  icon: LanguageIconVulp
   speech:
     color: "#d69b3dcc"
   obfuscation:

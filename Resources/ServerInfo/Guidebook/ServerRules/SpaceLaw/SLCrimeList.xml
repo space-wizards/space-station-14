@@ -73,13 +73,13 @@
         Possession: Major (2)
       </Box>
     </ColorBox>
-    <ColorBox Color="#2f3832">
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Possession: Syndicate (2)
-      </Box>
-    </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#2f3832">
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        Possession: Significant Syndicate (2)
       </Box>
     </ColorBox>
     <ColorBox>
@@ -388,8 +388,9 @@
         Treason (8)
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#475c7d">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        Enemy of Corporation (8)
       </Box>
     </ColorBox>
     <ColorBox>
@@ -404,7 +405,7 @@
 
   1. Failure to Comply, Breach of Arrest, Breach of Custody, Refusal of Mental Shielding
   
-  2. Possession or Use of Minor Contraband, Major Contraband, or Syndicate Contraband
+  2. Possession or Use of Minor Contraband, Major Contraband, or Significant Syndicate Contraband
   
   3. Petty Theft, Grand Theft, and Armed Robbery
   
@@ -416,10 +417,10 @@
   
   7. Disturbance, Vigilantism, Rioting
   
-  8. Sedition, Conspiracy, Treason
+  8. Sedition, Conspiracy, Treason, Enemy of Corporation
   
   ## Minor Crimes
-  Those who commit a minor crime should be issued a warning for their first offense, however repeat offenses are cumulative and may result in jail time of up to 5 minutes per minor crime committed.
+  Those who commit a minor crime should be issued a warning for their first offense, however repeat offenses are cumulative and should result in jail time of up to 10 minutes per minor crime committed. 
   <Table Columns="2">
     <ColorBox>
       <Box>
@@ -504,7 +505,7 @@
   </Table>
 
   ## Moderate Crimes
-  Those who commit a moderate crime may receive up to a 5 minute sentence per moderate crime committed.
+  Those who commit a moderate crime should receive up to a 10 minute sentence per moderate crime committed.
   <Table Columns="2">
     <ColorBox>
       <Box>
@@ -533,7 +534,7 @@
     </ColorBox>
     <ColorBox Color="#2f3832">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To make, hold, or use major contraband without authorizations. Only the Captain may authorize individual use of major contraband. Any items restricted to Security or Command are deemed as major contraband.
+        To make, hold, or use major contraband without authorizations. Only the Captain may authorize individual use of major contraband. Any items restricted to a Department or Job are considered major contraband.
       </Box>
     </ColorBox>
     <ColorBox Color="#453a59">
@@ -589,7 +590,7 @@
   </Table>
 
   ## Major Crimes
-  Those who commit a major crime may receive up to 10 minutes of jail time per major crime committed. Major assault and manslaughter are linked crimes and do not stack against a suspect. Additionally, reduced sentencing is recommended for compliant suspects.
+  Those who commit a major crime should receive up to 20 minutes of jail time per major crime committed. Major assault and manslaughter are linked crimes and do not stack against a suspect.
   <Table Columns="2">
     <ColorBox>
       <Box>
@@ -671,16 +672,6 @@
     	  To cause massive damage to an area or major station system. This includes major bombings and sabotage of critical station systems like power, medical, chemistry, substations, and atmospherics.
       </Box>
     </ColorBox>
-    <ColorBox Color="#2f3832">
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Possession or Use of Syndicate Contraband
-      </Box>
-    </ColorBox>
-    <ColorBox Color="#2f3832">
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To make, hold, or use Syndicate contraband. Syndicate contraband may only be used in emergencies, and only to prevent death or gross bodily harm.
-      </Box>
-    </ColorBox>
     <ColorBox Color="#2e422e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Grand Theft
@@ -744,7 +735,7 @@
   </Table>
 
   ## Extreme Crimes
-  Those who commit an extreme crime may receive up to 15 minutes of jail time per extreme crime committed. Particularly violent offenders may be placed in perma. Attempted murder and murder are linked crimes and cannot be stacked together. Attempted murderers should be granted lesser sentences than an actual murderer.
+  Those who commit an extreme crime may receive up to 40 minutes of jail time per extreme crime committed. Particularly violent offenders may be placed in perma. Attempted murder and murder are linked crimes and cannot be stacked together.
   <Table Columns="2">
     <ColorBox>
       <Box>
@@ -766,9 +757,21 @@
         To break out of a cell or custody with the intention of escaping. This applies to people breaking others out. \nRepeat offenses may have this charge increased to permanent confinement and later elevated to an execution with the Captain’s authority only if the suspect has repeatedly committed breach of custody. \nBreach of custody for the preservation of life, not including to escape execution, such as to vacate a location made dangerous due to gunfire, fire, spacing, or lack of oxygen- may be reduced or ignored at the Warden or Head of Security’s discretion.
       </Box>
     </ColorBox>
+    <ColorBox Color="#2f3832">
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        Possession or Use of Significant Syndicate Contraband
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#2f3832">
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        To make, hold, or use Significant Syndicate contraband. Significant Syndicate contraband may only be used in emergencies, and only to prevent death or gross bodily harm.
+        
+        Significant Syndicate contraband is any Syndicate contraband that can be used to hinder the station or aid it's enemies in an obvious way. Any syndicate contraband that does not meet this definition is to be considered minor contraband.
+      </Box>
+    </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Unlawful \nDetainment
+        Unlawful Detainment
       </Box>
     </ColorBox>
     <ColorBox>
@@ -819,7 +822,7 @@
   </Table>
 
   ## Capital Crimes
-  Those who commit a capital crime should be detained in perma, or executed with authority from the Captain. Emergency executions may be enacted by the Head of Security with at least 3 other Command as witnesses, but must be reported directly to Central Command afterwards for review.
+  Those who commit a capital crime should be detained in perma with confirmation from Captain. If a capital criminal escapes they are to be executed and transported to CC in a body bag at the end of shift. Emergency executions may be enacted by Captain or the Head of Security with at least 3 other Command as witnesses, but must be reported directly to Central Command afterwards for review.
   <Table Columns="2">
     <ColorBox>
       <Box>
@@ -879,6 +882,16 @@
     <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         To kill three or more sapient beings with malicious intent. Only applies when there have been multiple killings with intention.
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#475c7d">
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        Enemy of Corporation
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#475c7d">
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        To act as or knowingly aid a known enemy of the Station and NT-CC. Only applies beyond a shadow of doubt.
       </Box>
     </ColorBox>
   </Table>

@@ -19,10 +19,10 @@ public sealed class ObjectiveOnSignSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<ObjectiveOnSignComponent, PaperSignedEvent>(OnPaperSigned);
-        SubscribeLocalEvent<ObjectiveOnSignComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<ObjectiveOnSignComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnComponentInit(EntityUid uid, ObjectiveOnSignComponent comp, ComponentInit init)
+    private void OnMapInit(EntityUid uid, ObjectiveOnSignComponent comp, MapInitEvent init)
     {
         if (comp.KeepFaxable)
             return;

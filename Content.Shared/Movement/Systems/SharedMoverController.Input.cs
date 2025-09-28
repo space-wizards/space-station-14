@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 using System.Security.Cryptography;
-using Content.Shared._Starlight.Actions.Jump;
+using Content.Shared._Starlight.Actions.Handlers;
 using Content.Shared.Alert;
 using Content.Shared.CCVar;
 using Content.Shared.Follower.Components;
@@ -197,7 +197,7 @@ namespace Content.Shared.Movement.Systems
             Dirty(uid, mover);
         }
 
-        private bool TryUpdateRelative(EntityUid uid, InputMoverComponent mover, TransformComponent xform)
+        protected bool TryUpdateRelative(EntityUid uid, InputMoverComponent mover, TransformComponent xform)
         {
             // Starlight Start
             if (RelayQuery.TryComp(uid, out var relay)

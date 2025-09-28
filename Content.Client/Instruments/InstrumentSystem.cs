@@ -263,6 +263,13 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         if (!Resolve(uid, ref instrument, false))
             return false;
 
+        // Starlight-start: Input rate limiting
+        if (instrument.NextInputTime > _gameTiming.CurTime)
+            return false;
+
+        instrument.NextInputTime = _gameTiming.CurTime + instrument.InputDelay;
+        // Starlight-end
+
         SetupRenderer(uid, false, instrument);
 
         if (instrument.Renderer == null || !instrument.Renderer.OpenInput())

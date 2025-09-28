@@ -2,6 +2,7 @@
   name: comrade
   parent: BaseMobHuman
   id: MobSovietComrade
+  categories: [ Spawner ]
   components:
     - type: Prying
       pryPowered: true

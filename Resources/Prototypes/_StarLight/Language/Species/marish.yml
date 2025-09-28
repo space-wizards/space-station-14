@@ -1,5 +1,6 @@
 - type: language
   id: Marish
+  icon: LanguageIconShadekin
   speech:
     color: "#be3cc5"
     fontId: Lymphatic

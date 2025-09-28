@@ -282,3 +282,41 @@
     - Smokable
   - type: Item
     size: Tiny
+
+#starlight start
+- type: entity
+  parent: GroundTobacco
+  id: GroundTobacco5
+  suffix: 5
+  components:
+  - type: Stack
+    stackType: GroundTobacco
+    count: 5
+
+- type: entity
+  parent: GroundCannabis
+  id: GroundCannabis5
+  suffix: 5
+  components:
+  - type: Stack
+    stackType: GroundCannabis
+    count: 5
+
+- type: entity
+  parent: GroundCannabis
+  id: GroundCannabis10
+  suffix: 10
+  components:
+  - type: Stack
+    stackType: GroundCannabis
+    count: 10
+
+- type: entity
+  parent: LeavesTobaccoDried
+  id: LeavesTobaccoDried5
+  suffix: 5
+  components:
+  - type: Stack
+    stackType: LeavesTobaccoDried
+    count: 5
+#starlight end

@@ -16,6 +16,7 @@
   id: SuitStorageBlueShieldBluespaced
   suffix: BlueShield, Bluespaced
   parent: SuitStorageBlueShield
+  categories: [ Spawner ]
   components:
   - type: TriggerOnSpawn
   - type: SpawnOnTrigger

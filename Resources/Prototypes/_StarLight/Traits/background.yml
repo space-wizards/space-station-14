@@ -1,0 +1,79 @@
+- type: trait
+  id: Civilian
+  name: trait-background-civilian-name
+  description: trait-background-civilian-description
+  category: BackgroundTraits
+  cost: 1
+  components:
+  - type: Tag
+  background: Civilian
+
+- type: trait
+  id: FormerSoldier
+  name: trait-background-former-soldier-name
+  description: trait-background-former-soldier-description
+  category: BackgroundTraits
+  cost: 1
+  components:
+  - type: Tag
+  background: FormerSoldier
+
+- type: trait
+  id: RomerolDisasterSurvivor
+  name: trait-background-romerol-disaster-survivor-name
+  description: trait-background-romerol-disaster-survivor-description
+  category: BackgroundTraits
+  cost: 1
+  components:
+  - type: Tag
+  background: RomerolDisasterSurvivor
+
+- type: trait
+  id: XenosDisasterSurvivor
+  name: trait-background-xenos-disaster-survivor-name
+  description: trait-background-xenos-disaster-survivor-description
+  category: BackgroundTraits
+  cost: 1
+  components:
+  - type: Tag
+  background: XenosDisasterSurvivor
+
+- type: trait
+  id: DeificEncounter
+  name: trait-background-deific-encounter-name
+  description: trait-background-deific-encounter-description
+  category: BackgroundTraits
+  cost: 1
+  components:
+  - type: Tag
+  background: DeificEncounter
+
+- type: trait
+  id: MagicalEncounter
+  name: trait-background-magical-encounter-name
+  description: trait-background-magical-encounter-description
+  category: BackgroundTraits
+  cost: 1
+  components:
+  - type: Tag
+  background: MagicalEncounter
+
+- type: trait
+  id: Abducted
+  name: trait-background-abducted-name
+  description: trait-background-abducted-description
+  category: BackgroundTraits
+  cost: 1
+  components:
+  - type: Tag
+  background: Abducted
+
+- type: trait
+  id: PettyCriminal
+  name: trait-background-petty-criminal-name
+  description: trait-background-petty-criminal-description
+  category: BackgroundTraits
+  cost: 1
+  components:
+  - type: Tag
+  background: PettyCriminal

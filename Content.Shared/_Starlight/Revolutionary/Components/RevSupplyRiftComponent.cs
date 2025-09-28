@@ -33,5 +33,5 @@ public sealed partial class RevSupplyRiftComponent : Component
     /// The name of the player who placed the rift.
     /// </summary>
     [DataField]
-    public string? PlacedBy = null;
+    public string PlacedBy = "Unknown";
 }

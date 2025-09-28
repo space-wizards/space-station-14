@@ -706,8 +706,6 @@ entities:
     - type: VentCrawTube
       connected: True
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 2
 - proto: GasVentScrubber
@@ -721,8 +719,6 @@ entities:
     - type: VentCrawTube
       connected: True
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 2
 - proto: GeneratorBasic15kW

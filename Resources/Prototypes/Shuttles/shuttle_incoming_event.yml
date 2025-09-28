@@ -98,3 +98,10 @@
   id: Spacebus
   path: /Maps/Shuttles/ShuttleEvent/spacebus.yml
   copies: 1
+
+#Starlight
+
+- type: preloadedGrid
+  id: ShuttleFireResponse
+  path: /Maps/_Starlight/Shuttles/ShuttleEvent/UnknownShuttleFireResponse.yml
+  copies: 1

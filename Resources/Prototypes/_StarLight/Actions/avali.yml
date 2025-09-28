@@ -3,8 +3,8 @@
 
 - type: entity
   id: ActionStasisEnter
-  name: avali-stasis-action-enter-name
-  description: avali-stasis-action-enter-description
+  name: Enter Stasis
+  description: Enter a state of suspended animation, healing damage over time but preventing movement and most actions.
   components:
     - type: Action
       itemIconStyle: BigAction
@@ -16,8 +16,8 @@
 
 - type: entity
   id: ActionStasisExit
-  name: avali-stasis-action-exit-name
-  description: avali-stasis-action-exit-description
+  name: Exit Stasis
+  description: Exit the state of suspended animation.
   components:
     - type: Action
       itemIconStyle: BigAction

@@ -34,3 +34,4 @@
     - type: TriggerOnActivateImplant
     - type: PolymorphOnTrigger
       polymorph: RampagingGorilla
+      targetUser: true

@@ -1,0 +1,42 @@
+- type: construction
+  id: BarWindow
+  name: construction-bar-window
+  graph: BarWindow
+  startNode: start
+  targetNode: barWindow
+  category: construction-category-structures
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
+  id: BarWindowDiagonal
+  name: construction-bar-window-diagonal
+  graph: BarWindowDiagonal
+  startNode: start
+  targetNode: barwindowdiagonal
+  category: construction-category-structures
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  id: BarAltWindowDiagonal
+  name: construction-bar-window-diagonal-alt
+  graph: BarWindowDiagonal
+  startNode: start
+  targetNode: baraltwindowdiagonal
+  category: construction-category-structures
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter

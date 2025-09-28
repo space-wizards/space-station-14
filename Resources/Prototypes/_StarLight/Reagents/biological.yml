@@ -19,3 +19,14 @@
   color: "#6C3BAA"
   recognizable: true
   physicalDesc: reagent-physical-desc-avali
+
+- type: reagent
+  parent: Blood
+  id: ResomiBlood
+  name: reagent-name-resomi-blood
+  group: Biological
+  desc: reagent-desc-resomi-blood
+  flavor: beer
+  color: "#6C3BAA"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-resomi

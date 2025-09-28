@@ -112,3 +112,4 @@
   frequency: 2003
   color: "#ff2222"
   # long range since I don't wanna make a special xenoborg telecomm server
+  longRange: true #Starlight. they forgot to make it longrange!

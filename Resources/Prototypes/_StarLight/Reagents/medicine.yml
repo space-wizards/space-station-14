@@ -49,6 +49,15 @@
           types:
             Asphyxiation: -3.5
             Bloodloss: -3
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Resomi
+          shouldHave: true
+        damage:
+          types:
+            Asphyxiation: -3.5
+            Bloodloss: -3
       - !type:AdjustReagent
         conditions:
         - !type:ReagentThreshold
@@ -69,6 +78,9 @@
         - !type:OrganType
           type: Avali
           shouldHave: false
+        - !type:OrganType
+          type: Resomi
+          shouldHave: false
         damage:
           types:
             Poison: 1.5 #Ammonia is toxic injected directly into bloodstream
@@ -80,3 +92,31 @@
           type: Avali
           shouldHave: true
         amount: 3
+      - !type:ModifyBloodLevel
+        conditions:
+        - !type:OrganType
+          type: Resomi
+          shouldHave: true
+        amount: 3
+
+- type: reagent
+  id: Chronexaline
+  name: reagent-name-chronexaline
+  group: Medicine
+  desc: reagent-desc-chronexaline
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: medicine
+  color: "#850063"
+  worksOnTheDead: true
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:HealthChange
+          conditions:
+          - !type:Temperature
+            max: 213.0
+          - !type:MobStateCondition
+            mobstate: Dead
+          damage:
+            types:
+              Radiation: -5

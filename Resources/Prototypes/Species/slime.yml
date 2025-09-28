@@ -20,6 +20,8 @@
     UndergarmentBottom: MobHumanoidAnyMarking
     Chest: MobSlimeTorso
     Eyes: MobHumanoidAnyMarking # Starlight
+    Tail: MobHumanoidAnyMarking # Starlight
+    HeadTop: MobHumanoidAnyMarking # Starlight
     LArm: MobSlimeLArm
     RArm: MobSlimeRArm
     LHand: MobSlimeLHand
@@ -50,6 +52,12 @@
       required: false
     Arms:
       points: 4
+      required: false
+    Tail: # Starlight
+      points: 1
+      required: false
+    HeadTop: # Starlight
+      points: 1
       required: false
 
 - type: humanoidBaseSprite

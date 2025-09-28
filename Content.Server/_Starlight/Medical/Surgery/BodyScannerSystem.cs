@@ -40,7 +40,7 @@ public sealed partial class BodyScannerSystem : SharedBodyScannerSystem
         if (!TryComp<OperatingTableComponent>(args.Sink, out var table) || !TryComp<StrapComponent>(args.Sink, out var strap))
             return;
 
-        ent.Comp.TableEntity = GetNetEntity(args.Sink);
+        ent.Comp.TableEntity = args.Sink;
         
         // Why one? Because operating table don't have more than one slot, and also Health Analyzer works only with one target.
         if (TryComp<HealthAnalyzerComponent>(ent.Owner, out var analyzer) && strap.BuckledEntities.Count == 1)
@@ -53,11 +53,10 @@ public sealed partial class BodyScannerSystem : SharedBodyScannerSystem
     
     private void OnPortDisconnected(Entity<BodyScannerComponent> ent, ref PortDisconnectedEvent args)
     {
-        var tableNetEntity = ent.Comp.TableEntity;
-        if (args.Port != ent.Comp.LinkingPort || tableNetEntity == null)
+        var tableEntityUid = ent.Comp.TableEntity;
+        if (args.Port != ent.Comp.LinkingPort || tableEntityUid == null)
             return;
-        
-        var tableEntityUid = GetEntity(tableNetEntity);
+
         if (TryComp<OperatingTableComponent>(tableEntityUid, out var table))
         {
             table.Scanner = null;

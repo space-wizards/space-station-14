@@ -115,9 +115,10 @@
   - type: Store
     name: vendor-fashion-o-mat
     categories:
-    - SLFahsionSkirt
-    - SLFahsionSuit
-    - SLFahsionOther
+    - SLFashionSkirt
+    - SLFashionSuit
+    - SLFashionHead
+    - SLFashionOther
         
 - type: entity
   parent: SLVendingMachine

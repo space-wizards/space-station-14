@@ -2064,6 +2064,18 @@
   heatCapacity: 10000
 
 - type: tile
+  id: FloorXenoborg
+  name: tiles-xenoborg-floor
+  sprite: /Textures/Tiles/exoborg.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemXenoborg
+  heatCapacity: 10000
+
+- type: tile
   id: FloorXeno
   name: tiles-xeno-floor
   sprite: /Textures/Tiles/xeno_flooring.png

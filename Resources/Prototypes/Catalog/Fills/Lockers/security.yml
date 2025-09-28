@@ -268,12 +268,6 @@
       amount: 3
     - id: MagazineRifleSP
       amount: 3
-    - id: WeaponLightMachineGunM492
-      amount: 1
-    - id: LightRifleHeavyMagazineSP
-      amount: 1
-    - id: LightRifleHeavyMagazineHP
-      amount: 1
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]

@@ -3,11 +3,3 @@
   name: Urist McRaptor
   parent: BaseMobResomi
   id: MobResomi
-  components:
-  - type: Respirator
-    damage:
-      types:
-        Asphyxiation: 1.5 # This makes space and crit more lethal to arachnids.
-    damageRecovery:
-      types:
-        Asphyxiation: -0.5

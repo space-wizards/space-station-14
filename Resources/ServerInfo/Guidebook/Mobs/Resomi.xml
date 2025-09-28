@@ -4,6 +4,9 @@
   <Box>
     <GuideEntityEmbed Entity="MobResomi" Caption=""/>
   </Box>
+
+  [color=#ffa500]Warning! This species is not recommended for new players due to major gameplay changes![/color]
+
   small, upright, raptor-like creatures with four ears.
   Their thin tail is still strong enough to pull things without needing their hands for assistance.
 
@@ -39,6 +42,8 @@
   ## Health
   Resomi have lower health due to their small stature, falling into a critical state at [color=#ffa500]85[/color] points of damage and dying at [color=#ffa500]170[/color] points of damage.
   Resomi also prefer colder temperatures compared to humans, being roughly akin to Moths.
+  Resomi heal airloss from [color=cyan]Ammonia[/color] and [color=cyan]Amoxla[/color], 
+  but [color=red]Saline[/color], [color=red]Dex[/color], and [color=red]Dex+[/color] are lethal to them. Remember to remind doctors about this!
   
   ## Claw attack
   Resomi are able to slash at others with their claws.

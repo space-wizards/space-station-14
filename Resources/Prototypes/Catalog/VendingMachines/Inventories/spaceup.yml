@@ -3,10 +3,10 @@
   startingInventory:
     DrinkSpaceUpCan: 5
     DrinkSpaceMountainWindCan: 5
-    DrinkGrapeCan: 2
-    DrinkRootBeerCan: 2
-    DrinkIcedTeaCan: 2
-    DrinkSolDryCan: 2
+    DrinkGrapeCan: 3 #Starlight +1
+    DrinkRootBeerCan: 3 #Starlight +1
+    DrinkIcedTeaCan: 3 #Starlight +1
+    DrinkSolDryCan: 3 #Starlight +1
     DrinkFourteenLokoCan: 2
   contrabandInventory:
     DrinkSpaceMountainWindBottleFull: 2

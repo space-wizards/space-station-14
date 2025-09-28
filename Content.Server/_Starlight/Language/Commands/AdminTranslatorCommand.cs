@@ -10,27 +10,25 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Syntax;
 using Robust.Shared.Toolshed.TypeParsers;
+using System.Linq;
 
 namespace Content.Server._Starlight.Language.Commands;
 
 [ToolshedCommand(Name = "translator"), AdminCommand(AdminFlags.Admin)]
 public sealed class AdminTranslatorCommand : ToolshedCommand
 {
-    private LanguageSystem? _languagesField;
-    private ContainerSystem? _containersField;
-
-    private ContainerSystem Containers => _containersField ??= GetSys<ContainerSystem>();
-    private LanguageSystem Languages => _languagesField ??= GetSys<LanguageSystem>();
+    private LanguageSystem? _language;
+    private ContainerSystem? _containers;
 
     [CommandImplementation("addlang")]
     public EntityUid AddLanguage(
-        [CommandInvocationContext] IInvocationContext ctx,
         [PipedArgument] EntityUid input,
         [CommandArgument] ProtoId<LanguagePrototype> language,
         [CommandArgument] bool addSpeak = true,
         [CommandArgument] bool addUnderstand = true
     )
     {
+        _language ??= GetSys<LanguageSystem>();
         if (language == SharedLanguageSystem.UniversalPrototype)
             throw new ArgumentException(Loc.GetString("command-language-error-this-will-not-work"));
 
@@ -47,9 +45,16 @@ public sealed class AdminTranslatorCommand : ToolshedCommand
         return input;
     }
 
+    [CommandImplementation("addlang")]
+    public IEnumerable<EntityUid> AddLanguage(
+        [PipedArgument] IEnumerable<EntityUid> input,
+        [CommandArgument] ProtoId<LanguagePrototype> language,
+        [CommandArgument] bool canSpeak = true,
+        [CommandArgument] bool canUnderstand = true
+    ) => input.Select(x => AddLanguage(x, language, canSpeak, canUnderstand));
+
     [CommandImplementation("rmlang")]
     public EntityUid RemoveLanguage(
-        [CommandInvocationContext] IInvocationContext ctx,
         [PipedArgument] EntityUid input,
         [CommandArgument] ProtoId<LanguagePrototype> language,
         [CommandArgument] bool removeSpeak = true,
@@ -69,9 +74,16 @@ public sealed class AdminTranslatorCommand : ToolshedCommand
         return input;
     }
 
+    [CommandImplementation("rmlang")]
+    public IEnumerable<EntityUid> RemoveLanguage(
+        [PipedArgument] IEnumerable<EntityUid> input,
+        [CommandArgument] ProtoId<LanguagePrototype> language,
+        [CommandArgument] bool canSpeak = true,
+        [CommandArgument] bool canUnderstand = true
+    ) => input.Select(x => RemoveLanguage(x, language, canSpeak, canUnderstand));
+
     [CommandImplementation("addrequired")]
     public EntityUid AddRequiredLanguage(
-        [CommandInvocationContext] IInvocationContext ctx,
         [PipedArgument] EntityUid input,
         [CommandArgument] ProtoId<LanguagePrototype> language)
     {
@@ -87,9 +99,14 @@ public sealed class AdminTranslatorCommand : ToolshedCommand
         return input;
     }
 
+    [CommandImplementation("addrequired")]
+    public IEnumerable<EntityUid> AddRequiredLanguage(
+        [PipedArgument] IEnumerable<EntityUid> input,
+        [CommandArgument] ProtoId<LanguagePrototype> language
+    ) => input.Select(x => AddRequiredLanguage(x, language));
+
     [CommandImplementation("rmrequired")]
     public EntityUid RemoveRequiredLanguage(
-        [CommandInvocationContext] IInvocationContext ctx,
         [PipedArgument] EntityUid input,
         [CommandArgument] ProtoId<LanguagePrototype> language)
     {
@@ -101,6 +118,12 @@ public sealed class AdminTranslatorCommand : ToolshedCommand
 
         return input;
     }
+
+    [CommandImplementation("rmrequired")]
+    public IEnumerable<EntityUid> RemoveRequiredLanguage(
+        [PipedArgument] IEnumerable<EntityUid> input,
+        [CommandArgument] ProtoId<LanguagePrototype> language
+    ) => input.Select(x => RemoveRequiredLanguage(x, language));
 
     [CommandImplementation("lsspoken")]
     public IEnumerable<ProtoId<LanguagePrototype>> ListSpoken([PipedArgument] EntityUid input)
@@ -142,10 +165,12 @@ public sealed class AdminTranslatorCommand : ToolshedCommand
 
     private void UpdateTranslatorHolder(EntityUid translator)
     {
-        if (!Containers.TryGetContainingContainer(translator, out var cont)
+        _language ??= GetSys<LanguageSystem>();
+        _containers ??= GetSys<ContainerSystem>();
+        if (!_containers.TryGetContainingContainer(translator, out var cont)
             || cont.Owner is not { Valid: true } holder)
             return;
 
-        Languages.UpdateEntityLanguages(holder);
+        _language.UpdateEntityLanguages(holder);
     }
 }

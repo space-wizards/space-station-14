@@ -16,10 +16,10 @@ public sealed class GameruleOnSignSytem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<GameruleOnSignComponent, PaperSignedEvent>(OnPaperSigned);
-        SubscribeLocalEvent<GameruleOnSignComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<GameruleOnSignComponent, MapInitEvent>(OnMapInit);
     }
 
-        private void OnComponentInit(EntityUid uid, GameruleOnSignComponent comp, ComponentInit init)
+    private void OnMapInit(EntityUid uid, GameruleOnSignComponent comp, ref MapInitEvent init)
     {
         if (comp.KeepFaxable) 
             return;

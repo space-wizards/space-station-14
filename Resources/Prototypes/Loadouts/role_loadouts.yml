@@ -236,6 +236,7 @@
   - CargoTechnicianBackpack
   - CargoTechnicianOuterClothing
   - CargoTechnicianShoes
+  - CargoTechnicianID
   - Glasses
   - Survival
   - Trinkets
@@ -246,6 +247,7 @@
   groups:
   - GroupTankHarness
   - SalvageSpecialistBackpack
+  - SalvageSpecialistJumpsuit # afterlight
   - SalvageSpecialistOuterClothing
   - SalvageSpecialistShoes
   - Glasses

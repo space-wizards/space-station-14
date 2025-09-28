@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "copyright": "Taken From TG Station at https://github.com/tgstation/tgstation/commit/63e2f45ed3d5a9f736c4b0d23ecf0f33b1afbf1b",
+  "license": "CC-BY-SA-3.0",
+  "states": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "base_black"
+    },
+    {
+      "name": "panel"
+    },
+    {
+      "name": "idle",
+      "delays": [
+        [
+            0.5,
+            0.5
+        ]
+      ]
+    },
+    {
+      "name": "scan_success",
+      "delays": [
+        [
+            0.5,
+            0.5
+        ]
+      ]
+    },
+    {
+      "name": "scan_fail",
+      "delays": [
+        [
+            0.5,
+            0.5
+        ]
+      ]
+    }
+  ]
+}

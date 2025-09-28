@@ -1,0 +1,52 @@
+- type: language
+  id: Thaveyan
+  icon: LanguageIconThaveyan
+  speech:
+    color: "#0390fc"
+    fontId: Thaveyan
+    speechVerbOverrides:
+    - chat-speech-verb-thaven-1
+    - chat-speech-verb-thaven-2
+    - chat-speech-verb-thaven-3
+    - chat-speech-verb-thaven-4
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 5
+    replacement:
+    - blu
+    - ble
+    - blu
+    - plo
+    - ple
+    - pla
+    - yu
+    - ye
+    - ya
+    - he
+    - ha
+    - hu
+    - ma
+    - be
+    - mi
+    - so
+    - mu
+    - mo
+    - li
+    - ba
+    - be
+    - bo
+    - mo
+    - lu
+    - si
+    - sa
+    - ba
+    - be
+    - di
+    - do
+    - du
+    - su
+    - po
+    - bu
+    - pe
+    - le

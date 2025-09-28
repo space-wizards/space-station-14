@@ -179,14 +179,19 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
             if (!TryComp<PullableComponent>(victim, out var pullableComp)
                 || !_pullingSystem.TryStopPull(victim, pullableComp)) return;
         }
-        
+
         if (!HasComp<AbductorComponent>(victim))
         {
             var dispenser = GetEntity(args.Dispencer);
             if (TryComp<VendingMachineComponent>(dispenser, out var vendingComp))
             {
-                _vending.RestockRandom(dispenser,vendingComp);
+                _vending.RestockRandom(dispenser, vendingComp);
             }
+        }
+        else
+        {
+            if (_mobState.IsDead(victim)) //The console can grab em if crit. but nothing less.
+                return;
         }
         
         _xformSys.SetCoordinates(victim, GetCoordinates(args.TargetCoordinates));

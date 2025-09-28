@@ -271,10 +271,16 @@ namespace Content.Server.Connection
                 var bypassAllowed = _cfg.GetCVar(CCVars.BypassBunkerWhitelist) && await _db.GetWhitelistStatusAsync(userId);
 
                 // NullLink Bypass start
-                if (!validAccountAge  
-                    && _roleReqPeacefulBypass is not null
-                    && _actors.TryGetServerGrain(out var serverGrain)) 
-                    validAccountAge = await serverGrain.HasPlayerAnyRole(userId, _roleReqPeacefulBypass.Roles);
+                try
+                {
+                    if (!validAccountAge
+                        && _roleReqPeacefulBypass is not null
+                        && _actors.TryGetServerGrain(out var serverGrain))
+                        validAccountAge = await serverGrain.HasPlayerAnyRole(userId, _roleReqPeacefulBypass.Roles);
+                }
+                catch (Exception)
+                {
+                }
                 // NullLink Bypass end
 
                 // Use the custom reason if it exists & they don't have the minimum account age

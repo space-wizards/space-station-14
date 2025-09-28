@@ -32,22 +32,12 @@ public abstract class SharedItemSwitchSystem : EntitySystem
 
         _query = GetEntityQuery<ItemSwitchComponent>();
 
-        SubscribeLocalEvent<ItemSwitchComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<ItemSwitchComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ItemSwitchComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<ItemSwitchComponent, GetVerbsEvent<ActivationVerb>>(OnActivateVerb);
         SubscribeLocalEvent<ItemSwitchComponent, ActivateInWorldEvent>(OnActivate);
 
         SubscribeLocalEvent<ClothingComponent, ItemSwitchedEvent>(UpdateClothingLayer);
-    }
-
-
-    private void OnStartup(Entity<ItemSwitchComponent> ent, ref ComponentStartup args)
-    {
-        var state = ent.Comp.State;
-        state ??= ent.Comp.States.Keys.FirstOrDefault();
-        if (state != null)
-            Switch((ent, ent.Comp), state, predicted: ent.Comp.Predictable);
     }
 
     private void OnMapInit(Entity<ItemSwitchComponent> ent, ref MapInitEvent args)

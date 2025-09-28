@@ -1,0 +1,27 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by Conflee (GitHub).",
+    "states": [
+        {
+            "name": "borg",
+            "directions": 4
+        },
+        {
+            "name": "borg_e",
+            "directions": 4
+        },
+        {
+            "name": "borg_e_r",
+            "directions": 4
+        },
+        {
+            "name": "borg_l",
+            "directions": 4
+        }
+    ]
+}

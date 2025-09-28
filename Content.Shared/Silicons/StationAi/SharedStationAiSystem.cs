@@ -1,12 +1,13 @@
-using Content.Shared.Starlight;
+using Content.Shared._Starlight.Computers.RemoteEye;
+using Content.Shared._Starlight.Silicons.Borgs;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
-using Content.Shared.Doors.Systems;
 using Content.Shared.DoAfter;
+using Content.Shared.Doors.Systems;
 using Content.Shared.Electrocution;
 using Content.Shared.Intellicard;
 using Content.Shared.Interaction;
@@ -17,6 +18,8 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
+using Content.Shared.Starlight;
+using Content.Shared.Starlight.TextToSpeech;
 using Content.Shared.StationAi;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
@@ -25,12 +28,11 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Shared.Starlight.TextToSpeech;
-using Content.Shared._Starlight.Silicons.Borgs;//Starlight
 
 namespace Content.Shared.Silicons.StationAi;
 
@@ -108,6 +110,9 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         SubscribeLocalEvent<StationAiCoreComponent, ComponentShutdown>(OnAiShutdown);
         SubscribeLocalEvent<StationAiCoreComponent, PowerChangedEvent>(OnCorePower);
         SubscribeLocalEvent<StationAiCoreComponent, GetVerbsEvent<Verb>>(OnCoreVerbs);
+
+        SubscribeLocalEvent<StationAiHeldComponent, GetVisMaskEvent>(OnCoreGetVisMask); // Starlight
+        SubscribeLocalEvent<StationAiHeldComponent, PlayerAttachedEvent>(OnPlayerAttached); // Starlight
     }
 
     private void OnCoreVerbs(Entity<StationAiCoreComponent> ent, ref GetVerbsEvent<Verb> args)
@@ -147,18 +152,17 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     private void OnAiAccessible(Entity<StationAiOverlayComponent> ent, ref AccessibleOverrideEvent args)
     {
+        // We don't want to allow entities to access the AI just because the eye is nearby.
+        // Only let the AI access entities through the eye.
+        if (args.Accessible || args.User != ent.Owner)
+            return;
+
         args.Handled = true;
 
         // Hopefully AI never needs storage
-        if (_containers.TryGetContainingContainer(args.Target, out var targetContainer))
-        {
+        if (_containers.TryGetContainingContainer(args.Target, out var targetContainer) ||
+            !_containers.IsInSameOrTransparentContainer(ent.Owner, args.Target, otherContainer: targetContainer))
             return;
-        }
-
-        if (!_containers.IsInSameOrTransparentContainer(args.User, args.Target, otherContainer: targetContainer))
-        {
-            return;
-        }
 
         args.Accessible = true;
     }
@@ -412,7 +416,10 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         var user = GetInsertedAI(ent);
 
         if (TryComp<EyeComponent>(user, out var eye))
+        {
+            _eye.RefreshVisibilityMask(user.Value); // Starlight
             _eye.SetDrawFov(user.Value, !isRemote);
+        }
     }
 
     private bool SetupEye(Entity<StationAiCoreComponent> ent, EntityCoordinates? coords = null)
@@ -466,6 +473,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
         if (TryComp(user, out EyeComponent? eyeComp))
         {
+            _eye.RefreshVisibilityMask(user); // Starlight
             _eye.SetDrawFov(user, false, eyeComp);
             _eye.SetTarget(user, ent.Comp.RemoteEntity.Value, eyeComp);
         }
@@ -519,6 +527,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
         if (TryComp(args.Entity, out EyeComponent? eyeComp))
         {
+            _eye.RefreshVisibilityMask(args.Entity); // Starlight
             _eye.SetDrawFov(args.Entity, true, eyeComp);
             _eye.SetTarget(args.Entity, null, eyeComp);
         }
@@ -596,6 +605,20 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
         return _blocker.CanComplexInteract(entity.Owner);
     }
+
+    // Starlight
+    private void OnCoreGetVisMask(Entity<StationAiHeldComponent> ent, ref GetVisMaskEvent args)
+    {
+        if (!TryGetCore(ent.Owner, out var core) 
+            || core.Comp?.RemoteEntity is not { Valid: true } eye
+            || !TryComp<VisibilityComponent>(eye, out var visibility))
+            return;
+
+        args.VisibilityMask |= visibility.Layer;
+    }
+    // Starlight
+    private void OnPlayerAttached(Entity<StationAiHeldComponent> ent, ref PlayerAttachedEvent args)
+        => _eye.RefreshVisibilityMask((ent.Owner, null));
 }
 
 public sealed partial class JumpToCoreEvent : InstantActionEvent
