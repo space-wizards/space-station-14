@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: Metal foam grenades have been added to station engineer lockers.
-    type: Add
-  - message: Metal foam grenades have been tweaked to cover more area over a longer
-      period of time.
-    type: Tweak
-  - message: Metal foam grenades now have a 5 second timer.
-    type: Tweak
-  - message: Aluminum foam walls now take one hit to destroy.
-    type: Tweak
-  id: 8503
-  time: '2025-05-17T05:21:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37476
 - author: EmoGarbage404
   changes:
   - message: Fixed tetherguns not having a beam when dragging.
@@ -3964,3 +3950,10 @@
   id: 9013
   time: '2025-09-27T21:21:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39087
+- author: SurrealShibe
+  changes:
+  - message: Vulpkanin now audibly gasp.
+    type: Fix
+  id: 9014
+  time: '2025-09-28T03:25:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40579
