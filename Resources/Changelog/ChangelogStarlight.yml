@@ -15764,5 +15764,13 @@ Entries:
   id: 174800
   time: '2025-09-28T15:22:48.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1748
+- author: Rinary
+  changes:
+  - message: Added vote preset memorizing, so now nukies can't be selected 5 times
+      in row.
+    type: Add
+  id: 141900
+  time: '2025-09-28T16:01:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1419
 Order: -1
 
