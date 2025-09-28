@@ -15939,5 +15939,19 @@ Entries:
   id: 104421
   time: '2025-09-28T19:13:02.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1044
+- author: Trep_Maul
+  changes:
+  - message: (Leth) Heavy Weapon Safe
+    type: Add
+  id: 171600
+  time: '2025-09-28T19:25:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1716
+- author: Trep_Maul
+  changes:
+  - message: (Leth) TEG no longer blows up on default settings.
+    type: Tweak
+  id: 171601
+  time: '2025-09-28T19:25:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1716
 Order: -1
 
