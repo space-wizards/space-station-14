@@ -21,7 +21,7 @@ public sealed partial class XenoborgSystem : EntitySystem
     [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly XenoborgsRuleSystem _xenoborgsRule = default!;
 
-    private static readonly Color XENOBORG_BRIEFING_COLOR = Color.BlueViolet;
+    private static readonly Color XenoborgBriefingColor = Color.BlueViolet;
 
     public override void Initialize()
     {
@@ -69,7 +69,7 @@ public sealed partial class XenoborgSystem : EntitySystem
 
         _antag.SendBriefing(actorComp.PlayerSession,
             Loc.GetString(comp.BriefingText),
-            XENOBORG_BRIEFING_COLOR,
+            XenoborgBriefingColor,
             comp.BriefingSound
         );
     }
