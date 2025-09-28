@@ -317,8 +317,9 @@ public sealed class SharedShearableSystem : EntitySystem
                 }
                 // Default to empty string, if we just can't resolve the tool quality for whatever reason localisation have a blank variable..
                 var toolQuality = string.Empty;
+                var toolQualityProto = _proto.Index(ent.Comp.ToolQuality);
                 // If a ToolQuality has been specified set its name to toolQuality so it appears in localisation.
-                if (_proto.TryIndex(ent.Comp.ToolQuality, out var toolQualityProto, false))
+                if (toolQualityProto is not null)
                 {
                     // Tool quality names are a Loc string so look up that and lower-case it.
                     toolQuality = Loc.GetString(toolQualityProto.Name).ToLower();
