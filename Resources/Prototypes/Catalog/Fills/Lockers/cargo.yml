@@ -3,6 +3,7 @@
   table: !type:AllSelector
     children:
     - id: OxygenTankFilled
+    - id: NitrogenTankFilled # Starlight - vox gang
     - id: ClothingShoesBootsMag
     - id: ClothingOuterHardsuitSpatio
     - id: ClothingMaskGasExplorer
@@ -14,8 +15,8 @@
     - id: ClothingBeltUtilityFilled
     - id: SurvivalKnife
     - id: HandheldGPSBasic
-    - id: RadioHandheld
-    - id: RadioHandheldExpedition #starlight
+#    - id: RadioHandheld # Starlight - radio replaced with expedition radio
+    - id: RadioHandheldExpedition # Starlight
     - id: AppraisalTool
     - id: FireExtinguisher
     - id: Flare
