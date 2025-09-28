@@ -47,7 +47,8 @@ namespace Content.Server.Entry
         [Dependency] private readonly DiscordLink _discordLink = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly GhostKickManager _ghostKick = default!;
-        [Dependency] private readonly IAdminLogManager _admin = default!;
+        [Dependency] private readonly IAdminManager _admin = default!;
+        [Dependency] private readonly IAdminLogManager _adminLog = default!;
         [Dependency] private readonly IAfkManager _afk = default!;
         [Dependency] private readonly IBanManager _ban = default!;
         [Dependency] private readonly IChatManager _chatSan = default!;
@@ -114,7 +115,7 @@ namespace Content.Server.Entry
             _log.GetSawmill("Storage").Level = LogLevel.Info;
             _log.GetSawmill("db.ef").Level = LogLevel.Info;
 
-            _admin.Initialize();
+            _adminLog.Initialize();
             _connection.Initialize();
             _dbManager.Init();
             _preferences.Init();
@@ -152,6 +153,7 @@ namespace Content.Server.Entry
             }
 
             _recipe.Initialize();
+            _admin.Initialize();
             _afk.Initialize();
             _rules.Initialize();
             _discordLink.Initialize();
