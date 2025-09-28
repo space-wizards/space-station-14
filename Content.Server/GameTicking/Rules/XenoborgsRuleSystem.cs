@@ -123,8 +123,10 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
     protected override void ActiveTick(EntityUid uid, XenoborgsRuleComponent component, GameRuleComponent gameRule, float frameTime)
     {
         base.ActiveTick(uid, component, gameRule, frameTime);
+
         if (!component.NextRoundEndCheck.HasValue || component.NextRoundEndCheck > _timing.CurTime)
             return;
+
         CheckRoundEnd(component);
         component.NextRoundEndCheck = _timing.CurTime + component.EndCheckDelay;
     }
