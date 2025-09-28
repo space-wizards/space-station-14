@@ -26,11 +26,11 @@ namespace Content.Server.Administration.Commands
             "  <true|false>   Enables or disables emergency shuttle calls.\n" +
             "  toggle         Switches the current state (enabled/disabled).\n" +
             "  status         Shows whether shuttle calls are currently enabled or disabled.\n" +
-            "  [announce]     (Optional, true/false) Whether to announce the change. Defaults to true.\n" +
+            "  [announce]     (Optional) true/false) Whether to announce the change. Defaults to true.\n" +
             "  [message]      (Optional) Custom announcement message. If omitted, a default message is used.\n" +
             "  [sender]       (Optional) Announcement sender. Defaults to \"Central Command\".\n" +
             "  [color]        (Optional) Announcement color hex (e.g. #FFD700). Defaults to gold.\n" +
-            "  [sound]        (Optional) Announcement sound file path. No sound if omitted.";
+            "  [sound]        (Optional) Announcement sound file path.";
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -160,7 +160,7 @@ namespace Content.Server.Administration.Commands
             if (args.Length == 6)
                 return CompletionResult.FromHintOptions(
                     CompletionHelper.AudioFilePath(args.Length >= 6 ? args[5] : string.Empty, _proto, _res),
-                    "Optional: sound file path for the announcement. Defaults to none.");
+                    "Optional: sound file path for the announcement.");
             return CompletionResult.Empty;
         }
     }

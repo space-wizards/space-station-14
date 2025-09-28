@@ -113,32 +113,32 @@ namespace Content.Client.Communications.UI
             // Starlight End
             AlertLevelButton.Clear();
 
-            if (alerts?.Any()) // Starlight edit
+            // Starlight Start
+            if (alerts != null && alerts.Count > 0)
             {
-                var name = currentAlert;
-                if (_loc.TryGetString($"alert-level-{currentAlert}", out var locName))
+                for (int i = 0; i < alerts.Count; i++)
                 {
-                    name = locName;
+                    var alert = alerts[i];
+                    var name = alert;
+                    if (_loc.TryGetString($"alert-level-{alert}", out var locName))
+                        name = locName;
+                    AlertLevelButton.AddItem(name);
+                    AlertLevelButton.SetItemMetadata(AlertLevelButton.ItemCount - 1, alert);
+                    if (alert == currentAlert)
+                        AlertLevelButton.Select(AlertLevelButton.ItemCount - 1);
                 }
-                AlertLevelButton.AddItem(name);
-                AlertLevelButton.SetItemMetadata(AlertLevelButton.ItemCount - 1, currentAlert);
-            // Starlight-start
-                AlertLevelButton.Select(0);
                 return;
             }
 
-            for (int i = 0; i < alerts.Count; i++)
+            var singleName = currentAlert;
+            if (_loc.TryGetString($"alert-level-{currentAlert}", out var singleLocName))
             {
-                var alert = alerts[i];
-                var name = alert;
-                if (_loc.TryGetString($"alert-level-{alert}", out var locName))
-                    name = locName;
-                AlertLevelButton.AddItem(name);
-                AlertLevelButton.SetItemMetadata(AlertLevelButton.ItemCount - 1, alert);
-                if (alert == currentAlert)
-                    AlertLevelButton.Select(AlertLevelButton.ItemCount - 1);
+                singleName = singleLocName;
             }
-            // Starlight-end
+            AlertLevelButton.AddItem(singleName);
+            AlertLevelButton.SetItemMetadata(AlertLevelButton.ItemCount - 1, currentAlert);
+            AlertLevelButton.Select(0);
+            // Starlight End
         }
 
         #region Starlight
@@ -245,7 +245,7 @@ namespace Content.Client.Communications.UI
             // Shuttle / Call/Recall
             // ---------------------
             var actualShuttleEnd = ShuttleCountdownEnd ?? CountdownEnd;
-            var inbound = CountdownStarted && actualShuttleEnd.HasValue;
+            var inbound = CountdownStarted && (actualShuttleEnd != null);
             var baseCallText = inbound ? _loc.GetString("comms-console-menu-recall-shuttle") : _loc.GetString("comms-console-menu-call-shuttle");
 
             bool recallPastTurningPoint = false;
@@ -270,9 +270,9 @@ namespace Content.Client.Communications.UI
                 EmergencyShuttleButton.Text = $"{baseCallText} (disabled)";
                 EmergencyShuttleButton.Disabled = true;
 
-                if (inbound)
+                if (inbound && actualShuttleEnd.HasValue)
                 {
-                    var diff = actualShuttleEnd!.Value - _timing.CurTime;
+                    var diff = actualShuttleEnd.Value - _timing.CurTime;
                     if (diff < TimeSpan.Zero)
                         diff = TimeSpan.Zero;
                     SetLabelMessage(CountdownLabel, _loc.GetString("comms-console-menu-time-remaining", ("time", FormatShortTime(diff))));
@@ -299,9 +299,9 @@ namespace Content.Client.Communications.UI
                     EmergencyShuttleButton.Text = $"{baseCallText} ({FormatShortTime(recallDiff)})";
                     EmergencyShuttleButton.Disabled = true;
 
-                    if (inbound)
+                    if (inbound && actualShuttleEnd.HasValue) // Fix CS8602
                     {
-                        var diff = actualShuttleEnd!.Value - _timing.CurTime;
+                        var diff = actualShuttleEnd.Value - _timing.CurTime;
                         if (diff < TimeSpan.Zero)
                             diff = TimeSpan.Zero;
                         SetLabelMessage(CountdownLabel, _loc.GetString("comms-console-menu-time-remaining", ("time", FormatShortTime(diff))));
@@ -314,9 +314,9 @@ namespace Content.Client.Communications.UI
                     return;
                 }
             }
-            if (inbound)
+            if (inbound && actualShuttleEnd.HasValue)
             {
-                var diff = actualShuttleEnd!.Value - _timing.CurTime;
+                var diff = actualShuttleEnd.Value - _timing.CurTime;
                 if (diff < TimeSpan.Zero)
                     diff = TimeSpan.Zero;
 
