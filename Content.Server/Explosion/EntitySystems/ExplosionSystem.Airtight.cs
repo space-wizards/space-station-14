@@ -138,7 +138,7 @@ public sealed partial class ExplosionSystem
         {
             // TODO EXPLOSION SYSTEM
             // cache explosion type damage.
-            if (!_prototypeManager.TryIndex<ExplosionPrototype>(id, out var explosionType))
+            if (!_prototypeManager.Resolve(id, out ExplosionPrototype? explosionType))
                 continue;
 
             // evaluate the damage that this damage type would do to this entity

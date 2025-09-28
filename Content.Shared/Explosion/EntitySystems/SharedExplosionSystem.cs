@@ -38,6 +38,9 @@ public abstract class SharedExplosionSystem : EntitySystem
     {
     }
 
+    /// <summary>
+    /// This forces the explosion system to re-calculate the explosion intensity required to destroy all airtight entities.
+    /// </summary>
     public virtual void ReloadMap()
     {
     }
