@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Fixed tetherguns not having a beam when dragging.
-    type: Fix
-  id: 8504
-  time: '2025-05-17T05:22:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37510
 - author: aada
   changes:
   - message: Id cards now have the same max length as character names.
@@ -3957,3 +3950,10 @@
   id: 9014
   time: '2025-09-28T03:25:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40579
+- author: keronshb
+  changes:
+  - message: Tasers can now be used by Pacifists.
+    type: Tweak
+  id: 9015
+  time: '2025-09-28T03:43:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40588
