@@ -15756,5 +15756,13 @@ Entries:
   id: 174700
   time: '2025-09-28T15:19:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1747
+- author: mikeysaurus
+  changes:
+  - message: Adds N2 canister spawns to all job lockerfills alongside existing O2
+      canister spawns
+    type: Add
+  id: 174800
+  time: '2025-09-28T15:22:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1748
 Order: -1
 
