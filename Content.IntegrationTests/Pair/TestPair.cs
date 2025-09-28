@@ -30,8 +30,12 @@ public sealed partial class TestPair : RobustIntegrationTest.TestPair
         await base.Initialize();
 
         // Prevent info log spam in some tests (particularly SpawnAndDeleteAllEntitiesOnDifferentMaps)
-        Client.System<SharedMapSystem>().Log.Level = LogLevel.Warning;
         Server.System<SharedMapSystem>().Log.Level = LogLevel.Warning;
+        Client.EntMan.EntitySysManager.SystemLoaded += (_, e) =>
+        {
+            if (e.System is SharedMapSystem map)
+                map.Log.Level = LogLevel.Warning;
+        };
 
         var settings = (PoolSettings)Settings;
         if (!settings.DummyTicker)
