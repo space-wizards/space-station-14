@@ -15749,5 +15749,12 @@ Entries:
   id: 175100
   time: '2025-09-28T14:24:38.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1751
+- author: KarmaKitsuna
+  changes:
+  - message: Updated Gateway event map. Now with more science and less spacing!
+    type: Tweak
+  id: 174700
+  time: '2025-09-28T15:19:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1747
 Order: -1
 
