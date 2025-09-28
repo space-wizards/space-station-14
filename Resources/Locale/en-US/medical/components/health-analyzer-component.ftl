@@ -7,10 +7,14 @@ health-analyzer-window-entity-alive-text = Alive
 health-analyzer-window-entity-dead-text = Dead
 health-analyzer-window-entity-critical-text = Critical
 
+health-analyzer-window-entity-disease-yes = Infected
+health-analyzer-window-entity-disease-no = Not found
+
 health-analyzer-window-entity-temperature-text = Temperature:
 health-analyzer-window-entity-blood-level-text = Blood Level:
 health-analyzer-window-entity-status-text = Status:
 health-analyzer-window-entity-damage-total-text = Total Damage:
+health-analyzer-window-entity-disease-text = Disease:
 
 health-analyzer-window-damage-group-text = {$damageGroup}: {$amount}
 health-analyzer-window-damage-type-text = {$damageType}: {$amount}

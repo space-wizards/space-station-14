@@ -10,6 +10,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Medical.SuitSensor;
+using Content.Shared.Medical.Disease;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -401,6 +402,10 @@ public abstract class SharedSuitSensorSystem : EntitySystem
                 break;
         }
 
+        // Include disease icon if the wearer has a disease carrier component with an active icon
+        if (TryComp<DiseaseCarrierComponent>(sensor.User.Value, out var carrier) && !string.IsNullOrEmpty(carrier.DiseaseIcon))
+            status.DiseaseIcon = carrier.DiseaseIcon;
+
         return status;
     }
 
@@ -427,6 +432,8 @@ public abstract class SharedSuitSensorSystem : EntitySystem
             payload.Add(SuitSensorConstants.NET_TOTAL_DAMAGE_THRESHOLD, status.TotalDamageThreshold);
         if (status.Coordinates != null)
             payload.Add(SuitSensorConstants.NET_COORDINATES, status.Coordinates);
+        if (!string.IsNullOrEmpty(status.DiseaseIcon))
+            payload.Add(SuitSensorConstants.NET_DISEASE_ICON, status.DiseaseIcon);
 
         return payload;
     }
@@ -463,6 +470,9 @@ public abstract class SharedSuitSensorSystem : EntitySystem
             TotalDamageThreshold = totalDamageThreshold,
             Coordinates = coords,
         };
+
+        if (payload.TryGetValue(SuitSensorConstants.NET_DISEASE_ICON, out string? diseaseIcon))
+            status.DiseaseIcon = diseaseIcon;
         return status;
     }
 }

@@ -16,7 +16,7 @@ public sealed partial class DiseaseResidueComponent : Component
 
     /// <summary>
 	/// Intensity decay per tick.
-    /// TODO: Must be removed in the future. The premises must be disinfected, not cleaned. (like it was in SS13)
+    /// TODO: reduce the value when rooms can be disinfected.
 	/// </summary>
 	[DataField]
     public float DecayPerTick = 0.005f;

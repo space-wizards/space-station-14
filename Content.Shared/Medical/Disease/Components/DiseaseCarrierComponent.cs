@@ -1,5 +1,7 @@
+using Content.Shared.StatusIcon;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Medical.Disease;
 
@@ -54,4 +56,10 @@ public sealed partial class DiseaseCarrierComponent : Component
     /// </summary>
     [DataField]
     public Dictionary<string, HashSet<string>> AddedComponents = [];
+
+    /// <summary>
+    /// Prototype ID of the health icon to display for HUDs.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public ProtoId<HealthIconPrototype> DiseaseIcon = string.Empty;
 }

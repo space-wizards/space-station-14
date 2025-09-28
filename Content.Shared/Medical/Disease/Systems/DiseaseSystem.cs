@@ -9,6 +9,8 @@ using Content.Shared.Mobs.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Shared.Random.Helpers;
+using Robust.Shared.Network;
 
 namespace Content.Shared.Medical.Disease;
 
@@ -61,7 +63,14 @@ public sealed partial class SharedDiseaseSystem : EntitySystem
     private void ProcessCarrier(Entity<DiseaseCarrierComponent> ent)
     {
         if (ent.Comp.ActiveDiseases.Count == 0)
+        {
+            if (!string.IsNullOrEmpty(ent.Comp.DiseaseIcon))
+            {
+                ent.Comp.DiseaseIcon = string.Empty;
+                Dirty(ent);
+            }
             return;
+        }
 
         var dirty = false;
         var toRemove = new ValueList<string>();
@@ -79,7 +88,7 @@ public sealed partial class SharedDiseaseSystem : EntitySystem
                 continue;
 
             // Progression: scale advance chance strictly according to StageProb and time between ticks.
-            var newStage = AdvanceStage(disease, stage);
+            var newStage = AdvanceStage(ent, disease, stage);
 
             if (newStage != stage)
             {
@@ -100,15 +109,21 @@ public sealed partial class SharedDiseaseSystem : EntitySystem
             dirty = true;
         }
 
+        // Update HUD icon.
+        UpdateIcon(ent);
+
         if (dirty)
             Dirty(ent);
     }
 
-    private int AdvanceStage(DiseasePrototype disease, int currentStage)
+    private int AdvanceStage(Entity<DiseaseCarrierComponent> ent, DiseasePrototype disease, int currentStage)
     {
         var perTickAdvance = Math.Clamp(disease.StageProb, 0f, 1f);
         var maxStage = Math.Max(1, disease.Stages.Count);
-        if (_random.Prob(perTickAdvance))
+        // TODO: Replace with RandomPredicted once the engine PR is merged
+        var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(ent).Id, 1, currentStage });
+        var rand = new System.Random(seed);
+        if (rand.Prob(perTickAdvance))
             return Math.Min(currentStage + 1, maxStage);
 
         return currentStage;
@@ -121,19 +136,24 @@ public sealed partial class SharedDiseaseSystem : EntitySystem
             return;
 
         // Stage sensations: each entry has its own per-tick probability.
-        foreach (var entry in stageCfg.Sensations)
+        for (var i = 0; i < stageCfg.Sensations.Count; i++)
         {
-            if (!_random.Prob(entry.Probability))
+            var entry = stageCfg.Sensations[i];
+            // TODO: Replace with RandomPredicted once the engine PR is merged
+            var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(ent).Id, 2, stage, i });
+            var rand = new System.Random(seed);
+            if (!rand.Prob(entry.Probability))
                 continue;
 
             var text = Loc.GetString(entry.Sensation);
-            _popup.PopupEntity(text, ent, ent.Owner, entry.PopupType);
+            _popup.PopupPredicted(text, ent, ent.Owner, entry.PopupType);
             break;
         }
 
         // Symptoms are a list of detailed entries (symptom + optional probability override).
-        foreach (var entry in stageCfg.Symptoms)
+        for (var i = 0; i < stageCfg.Symptoms.Count; i++)
         {
+            var entry = stageCfg.Symptoms[i];
             var symptomId = entry.Symptom;
             if (!_prototypes.TryIndex(symptomId, out DiseaseSymptomPrototype? symptom))
                 continue;
@@ -143,11 +163,41 @@ public sealed partial class SharedDiseaseSystem : EntitySystem
                 continue;
 
             var prob = entry.Probability >= 0f ? entry.Probability : symptom.Probability;
-
-            if (!_random.Prob(prob))
+            // TODO: Replace with RandomPredicted once the engine PR is merged
+            var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(ent).Id, 3, stage, i });
+            var rand = new System.Random(seed);
+            if (!rand.Prob(prob))
                 continue;
 
             _symptoms.TriggerSymptom(ent, disease, symptom);
+        }
+    }
+
+    private void UpdateIcon(Entity<DiseaseCarrierComponent> ent)
+    {
+        // Collect present icon types from active diseases.
+        var present = new HashSet<DiseaseIconType>();
+        foreach (var (id, _) in ent.Comp.ActiveDiseases)
+        {
+            if (_prototypes.TryIndex<DiseasePrototype>(id, out var diseaseProto))
+                present.Add(diseaseProto.IconType);
+        }
+
+        // Choose the first icon by priority defined in DiseaseHud.HudIcons.
+        var selected = string.Empty;
+        foreach (var (type, protoId) in DiseaseHud.HudIcons)
+        {
+            if (present.Contains(type))
+            {
+                selected = protoId;
+                break;
+            }
+        }
+
+        if (ent.Comp.DiseaseIcon != selected)
+        {
+            ent.Comp.DiseaseIcon = selected;
+            Dirty(ent);
         }
     }
 

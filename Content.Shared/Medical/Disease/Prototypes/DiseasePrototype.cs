@@ -1,4 +1,5 @@
 using Content.Shared.Popups;
+using Content.Shared.Medical.Disease;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Medical.Disease;
@@ -34,11 +35,10 @@ public sealed partial class DiseasePrototype : IPrototype
     public DiseaseSpreadFlags SpreadFlags { get; private set; } = DiseaseSpreadFlags.NonContagious;
 
     /// <summary>
-    /// If true, this disease is considered beneficial for HUD purposes.
-    /// Beneficial diseases show a buff icon on med HUD instead of an illness icon.
+    /// Controls how this disease appears on HUDs.
     /// </summary>
     [DataField]
-    public bool IsBeneficial { get; private set; } = false;
+    public DiseaseIconType IconType { get; private set; } = DiseaseIconType.Ill;
 
     /// <summary>
     /// Probability of progression through disease stages per tick.
@@ -88,7 +88,7 @@ public sealed partial class DiseasePrototype : IPrototype
     /// Airborne infection radius in world units, used when <see cref="SpreadFlags"/> contains Airborne.
     /// </summary>
     [DataField]
-    public float AirborneRange { get; private set; } = 2f;
+    public float AirborneRange { get; private set; } = 3f;
 
     /// <summary>
     /// Stage configurations in ascending order (1-indexed semantics).

@@ -49,6 +49,9 @@ public sealed partial class CureTemperature
     {
         var defaultTickSeconds = new DiseaseCarrierComponent().TickDelay.TotalSeconds;
         var seconds = RequiredTicks * defaultTickSeconds;
-        yield return Loc.GetString("diagnoser-cure-temp", ("max", Math.Round(MaxTemperature)), ("time", seconds));
+        var maxK = Math.Round(MaxTemperature);
+        var maxC = Math.Round(MaxTemperature - 273.15f);
+
+        yield return Loc.GetString("diagnoser-cure-temp", ("max", maxK), ("maxC", maxC), ("time", seconds));
     }
 }

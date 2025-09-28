@@ -2,6 +2,9 @@ using Content.Shared.Medical.Disease;
 
 namespace Content.Server.Medical.Disease.Systems;
 
+/// <summary>
+/// Server system that handles disease cures.
+/// </summary>
 public sealed partial class DiseaseCureSystem : EntitySystem
 {
     /// <summary>

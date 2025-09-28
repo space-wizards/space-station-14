@@ -280,7 +280,7 @@
   name: disease-name-DiseaseOwOnavirus
   desc: disease-desc-DiseaseOwOnavirus
   spreadFlags: [Contact]
-  isBeneficial: true
+  iconType: Buff
   cureSteps:
   - !type:CureWait
     requiredTicks: 400

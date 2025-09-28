@@ -11,9 +11,6 @@ public sealed class ShowDiseaseIconsSystem : EquipmentHudSystem<ShowDiseaseIcons
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
-    private static readonly ProtoId<HealthIconPrototype> IllIconId = "DiseaseIconIll";
-    private static readonly ProtoId<HealthIconPrototype> BuffIconId = "DiseaseIconBuff";
-
     public override void Initialize()
     {
         base.Initialize();
@@ -29,23 +26,11 @@ public sealed class ShowDiseaseIconsSystem : EquipmentHudSystem<ShowDiseaseIcons
         if (carrier.ActiveDiseases.Count == 0)
             return;
 
-        var hasHarmful = false;
-        var hasBeneficial = false;
+        var iconId = carrier.DiseaseIcon;
+        if (string.IsNullOrEmpty(iconId))
+            return;
 
-        foreach (var (id, _) in carrier.ActiveDiseases.ToArray())
-        {
-            if (!_prototype.TryIndex<DiseasePrototype>(id, out var disease))
-                continue;
-
-            if (disease.IsBeneficial)
-                hasBeneficial = true;
-            else
-                hasHarmful = true;
-        }
-
-        if (hasHarmful && _prototype.Resolve(IllIconId, out var illIcon))
-            ev.StatusIcons.Add(illIcon);
-        else if (hasBeneficial && _prototype.Resolve(BuffIconId, out var buffIcon))
-            ev.StatusIcons.Add(buffIcon);
+        if (_prototype.Resolve(iconId, out var iconPrototype))
+            ev.StatusIcons.Add(iconPrototype);
     }
 }

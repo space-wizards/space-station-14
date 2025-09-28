@@ -7,11 +7,13 @@ using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
+using Content.Shared.StatusIcon;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.MedicalScanner;
+using Content.Shared.Medical.Disease;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -143,6 +145,28 @@ namespace Content.Client.HealthAnalyzer.UI
             IReadOnlyDictionary<string, FixedPoint2> damagePerType = damageable.Damage.DamageDict;
 
             DrawDiagnosticGroups(damageSortedGroups, damagePerType);
+
+            // Disease
+
+            var infected = false;
+
+            if (_entityManager.TryGetComponent<DiseaseCarrierComponent>(target.Value, out var carrier)
+                && !string.IsNullOrEmpty(carrier.DiseaseIcon)
+                && _prototypes.TryIndex<HealthIconPrototype>(carrier.DiseaseIcon, out var healthIcon))
+            {
+                infected = true;
+                DiseaseIcon.Visible = true;
+                DiseaseIcon.Texture = _spriteSystem.Frame0(healthIcon.Icon);
+            }
+            else
+            {
+                DiseaseIcon.Visible = false;
+                DiseaseIcon.ToolTip = null;
+            }
+
+            DiseaseLabel.Text = infected
+                ? Loc.GetString("health-analyzer-window-entity-disease-yes")
+                : Loc.GetString("health-analyzer-window-entity-disease-no");
         }
 
         private static string GetStatus(MobState mobState)

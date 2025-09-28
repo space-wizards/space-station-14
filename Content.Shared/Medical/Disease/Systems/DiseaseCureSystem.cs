@@ -1,5 +1,7 @@
 using System.Linq;
 using Content.Shared.Popups;
+using Content.Shared.Random.Helpers;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Random;
@@ -39,11 +41,15 @@ public sealed partial class SharedDiseaseCureSystem : EntitySystem
         var applicable = stageCfg.CureSteps.Count > 0 ? stageCfg.CureSteps : disease.CureSteps;
         var simpleSymptoms = stageCfg.Symptoms.Select(s => s.Symptom).ToList();
 
+        // TODO: Replace with RandomPredicted once the engine PR is merged
+        var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(ent).Id });
+        var rand = new System.Random(seed);
+
         // disease-level cures
         foreach (var step in applicable)
         {
             // Calculates the probability of treatment at each tick.
-            if (!_random.Prob(Math.Clamp(step.CureChance, 0f, 1f)))
+            if (!rand.Prob(Math.Clamp(step.CureChance, 0f, 1f)))
                 continue;
 
             if (!ExecuteCureStep(ent, step, disease))
@@ -79,7 +85,7 @@ public sealed partial class SharedDiseaseCureSystem : EntitySystem
 
             foreach (var step in symptomProto.CureSteps)
             {
-                if (!_random.Prob(Math.Clamp(step.CureChance, 0f, 1f)))
+                if (!rand.Prob(Math.Clamp(step.CureChance, 0f, 1f)))
                     continue;
 
                 if (ExecuteCureStep(ent, step, disease))
@@ -99,7 +105,7 @@ public sealed partial class SharedDiseaseCureSystem : EntitySystem
         ent.Comp.ActiveDiseases.Remove(disease.ID);
         ApplyPostCureImmunity(ent.Comp, disease);
 
-        _popup.PopupEntity(Loc.GetString("disease-cured"), ent, ent.Owner);
+        _popup.PopupPredicted(Loc.GetString("disease-cured"), ent, ent.Owner);
 
         NotifyDiseaseCured(ent, disease, stageSymptoms);
     }
@@ -118,7 +124,7 @@ public sealed partial class SharedDiseaseCureSystem : EntitySystem
 
         ent.Comp.SuppressedSymptoms[symptomId] = _timing.CurTime + TimeSpan.FromSeconds(duration);
 
-        _popup.PopupEntity(Loc.GetString("disease-cured-symptom"), ent, ent.Owner);
+        _popup.PopupPredicted(Loc.GetString("disease-cured-symptom"), ent, ent.Owner);
 
         NotifySymptomCured(ent, disease, symptomId);
     }

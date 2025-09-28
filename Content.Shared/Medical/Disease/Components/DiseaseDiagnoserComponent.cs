@@ -6,9 +6,9 @@ namespace Content.Shared.Medical.Disease;
 /// <summary>
 /// Component for entities that can diagnose diseases.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class DiseaseDiagnoserComponent : Component
 {
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntProtoId PaperPrototype = "DiagnosisReportPaper";
 }

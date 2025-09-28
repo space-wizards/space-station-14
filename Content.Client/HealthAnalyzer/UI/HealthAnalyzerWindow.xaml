@@ -42,6 +42,11 @@
                     <Label Name="BloodLabel" />
                     <Label Text="{Loc 'health-analyzer-window-entity-damage-total-text'}" />
                     <Label Name="DamageLabel" />
+                    <Label Text="{Loc 'health-analyzer-window-entity-disease-text'}" />
+                    <BoxContainer>
+                        <Label Name="DiseaseLabel" />
+                        <TextureRect Name="DiseaseIcon" Access="Public" Visible="false" Margin="5 0 0 0" TextureScale="2 2" VerticalAlignment="Center" />
+                    </BoxContainer>
                 </GridContainer>
             </BoxContainer>
 

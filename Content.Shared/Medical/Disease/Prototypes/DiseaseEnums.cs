@@ -1,4 +1,6 @@
 using Content.Shared.Inventory;
+using Robust.Shared.Prototypes;
+using Content.Shared.StatusIcon;
 
 namespace Content.Shared.Medical.Disease;
 
@@ -18,12 +20,7 @@ public enum DiseaseSpreadFlags
 
 /// <summary>
 /// Enumeration describing disease stealth behavior flags.
-/// TODO:
-/// - None: default behavior
-/// - Hidden: do not show in HUD
-/// - VeryHidden: hide from HUD, diagnoser, and health analyzer
-/// - HiddenTreatment: hide treatment steps in diagnoser
-/// - HiddenStage: hide stage in diagnoser and health analyzer
+/// TODO: does not work.
 /// </summary>
 [Flags]
 public enum DiseaseStealthFlags
@@ -37,7 +34,7 @@ public enum DiseaseStealthFlags
 
 /// <summary>
 /// Global configuration for PPE/internals effectiveness used by infection checks.
-/// Multipliers are applied multiplicatively to chance (e.g. 0.6 means 40% reduction.
+/// Multipliers are applied multiplicatively to chance (e.g. 0.6 means 40% reduction).
 /// </summary>
 public static class DiseaseEffectiveness
 {
@@ -58,5 +55,25 @@ public static class DiseaseEffectiveness
         (SlotFlags.FEET, 0.8f),
         (SlotFlags.OUTERCLOTHING, 0.8f),
         (SlotFlags.INNERCLOTHING, 0.9f),
+    ];
+}
+
+/// <summary>
+/// How a disease should be represented on HUDs.
+/// </summary>
+public enum DiseaseIconType
+{
+    Ill,
+    Buff,
+    None,
+}
+
+public static class DiseaseHud
+{
+    public static readonly (DiseaseIconType Type, ProtoId<HealthIconPrototype> PrototypeId)[] HudIcons =
+    [
+        (DiseaseIconType.Ill, "DiseaseIconIll"),
+        (DiseaseIconType.Buff, "DiseaseIconBuff"),
+        (DiseaseIconType.None, string.Empty),
     ];
 }

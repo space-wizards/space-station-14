@@ -261,6 +261,21 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
 
             statusContainer.AddChild(statusIcon);
 
+            // Disease icon
+            if (!string.IsNullOrEmpty(sensor.DiseaseIcon)
+                && _prototypeManager.TryIndex<HealthIconPrototype>(sensor.DiseaseIcon, out var diseaseProto))
+            {
+                var diseaseIcon = new TextureRect
+                {
+                    HorizontalAlignment = HAlignment.Center,
+                    VerticalAlignment = VAlignment.Center,
+                    Margin = new Thickness(0, 1, 3, 0),
+                    TextureScale = new Vector2(2f, 2f),
+                    Texture = _spriteSystem.Frame0(diseaseProto.Icon)
+                };
+                statusContainer.AddChild(diseaseIcon);
+            }
+
             // User name
             var nameLabel = new Label()
             {

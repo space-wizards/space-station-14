@@ -114,11 +114,11 @@ public sealed class DiseaseDiagnoserSystem : EntitySystem
                 foreach (var symptomEntry in stageCfg.Symptoms)
                 {
                     var symptomId = symptomEntry.Symptom;
-                    var symName = string.Empty;
-                    if (!_prototypes.TryIndex(symptomId, out DiseaseSymptomPrototype? symProto))
-                        symName = Loc.GetString(symProto!.Name);
-
-                    lines.Add("- " + symName);
+                    if (_prototypes.TryIndex(symptomId, out DiseaseSymptomPrototype? symProto))
+                    {
+                        var symName = Loc.GetString(symProto.Name);
+                        lines.Add("- " + symName);
+                    }
                 }
             }
 
@@ -135,10 +135,18 @@ public sealed class DiseaseDiagnoserSystem : EntitySystem
                 {
                     foreach (var cureLine in step.BuildDiagnoserLines(_prototypes))
                     {
+                        var finalLine = cureLine;
+                        var chance = Math.Clamp(step.CureChance, 0f, 1f);
+                        if (chance > 0f && chance < 1f)
+                        {
+                            var percent = MathF.Round(chance * 100f);
+                            finalLine += $" ({percent}%)";
+                        }
+
                         if (step.LowerStage)
-                            lines.Add("- " + cureLine + " " + Loc.GetString("diagnoser-cure-lower-stage"));
+                            lines.Add("- " + finalLine + ". " + Loc.GetString("diagnoser-cure-lower-stage"));
                         else
-                            lines.Add("- " + cureLine + " " + Loc.GetString("diagnoser-cure-lower-disease"));
+                            lines.Add("- " + finalLine + ". " + Loc.GetString("diagnoser-cure-lower-disease"));
                     }
                 }
             }
