@@ -22,6 +22,7 @@
     access: [["ResearchDirector"]]
 
 - type: entity
+  parent: CrateBaseSecure
   id: CrateRoboticsSecure
   name: secure robotics crate
   components:
