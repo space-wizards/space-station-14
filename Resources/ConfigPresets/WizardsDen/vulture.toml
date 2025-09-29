@@ -13,4 +13,4 @@ lobby_name = "[EN][Testing] Wizard's Den Vulture [US East 2]"
 force_client_hud_version_watermark = true
 
 [chat]
-motd = "\n########################################################\n\n[font size=17]This is a test server. You can play with the newest changes to the game, but these [color=red]changes may not be final or stable[/color], and may be reverted. Please report bugs via our GitHub, forum, or community Discord.[/font]\n\n########################################################\n"
+motd = "\n########################################################\n\n[font size=17]Welcome to the new medical system playtest, codenamed \"Offbrand\"! Feedback and bug reports are highly welcomed, though due the sheer size of the system, we encourage everyone to give it a few shifts before forming concrete opinions on it. Reading the guidebook is highly advised in order to learn what needs to be done in the new system![/font]\n\n########################################################\n" # Offbrand
