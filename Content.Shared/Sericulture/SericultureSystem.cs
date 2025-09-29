@@ -42,7 +42,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
 
     private void OnClone(Entity<SericultureComponent> ent, ref CloningEvent args)
     {
-        if(!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
             return;
 
         var comp = EnsureComp<SericultureComponent>(args.CloneUid);

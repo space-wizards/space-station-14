@@ -19,8 +19,6 @@
     baseSprintSpeed : 4
   - type: StatusEffects
     allowed:
-    - SlowedDown
-    - Stutter
     - Electrocution
     - TemporaryBlindness
     - Pacified
@@ -32,6 +30,7 @@
   - type: Tag
     tags:
     - DoorBumpOpener
+    - StunImmune
 
 - type: entity
   abstract: true
@@ -83,10 +82,6 @@
         prototype: SimpleMobBaseThirst
   - type: StatusEffects
     allowed:
-    - Stun
-    - KnockedDown
-    - SlowedDown
-    - Stutter
     - Electrocution
     - TemporaryBlindness
     - Pacified

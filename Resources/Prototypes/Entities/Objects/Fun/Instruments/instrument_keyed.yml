@@ -32,12 +32,19 @@
   - type: Instrument
     allowPercussion: true
     allowProgramChange: true
-    respectMidiLimits: false
   - type: Sprite
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
     state: supersynth
   - type: Item
     heldPrefix: super
+
+- type: entity
+  parent: SuperSynthesizerInstrument
+  id: SuperSynthesizerNoLimitInstrument
+  suffix: NoLimits
+  components:
+  - type: Instrument
+    respectMidiLimits: false
 
 - type: entity
   parent: BaseKeyedInstrument
