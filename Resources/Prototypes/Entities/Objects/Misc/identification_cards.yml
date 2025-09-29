@@ -866,15 +866,14 @@
     jobTitle: job-title-universal
     jobIcon: JobIconAdmin
   - type: Access
+    # Starlight-edit: Start
     groups:
     - AllAccess
     - Silicon
-    tags:
+    - Misc
     - CentralCommand
-    - NuclearOperative
-    - SyndicateAgent
-    - Wizard
-    - Xenoborg
+    - Syndicate
+    # Starlight-edit: End
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
