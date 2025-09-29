@@ -16310,5 +16310,12 @@ Entries:
   id: 173600
   time: '2025-09-29T08:39:14.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1736
+- author: RoadTrain
+  changes:
+  - message: Derelict syndie borgs get syndie comms again
+    type: Add
+  id: 172100
+  time: '2025-09-29T19:32:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1721
 Order: -1
 
