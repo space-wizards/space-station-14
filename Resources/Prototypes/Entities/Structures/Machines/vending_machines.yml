@@ -1449,7 +1449,7 @@
     energy: 1.6
     color: "#b89f25"
   - type: AccessReader
-    access: [["Salvage"]]
+    access: [["Salvage"],["Mining"]]
   - type: GuideHelp
     guides:
     - Salvage
