@@ -141,6 +141,7 @@
       200: UnconsciousPain
   - type: ShockGaspThresholds
     messageThresholds:
+      120: DefaultPainslump
       200: DefaultPaingasp
 
 - type: entity
