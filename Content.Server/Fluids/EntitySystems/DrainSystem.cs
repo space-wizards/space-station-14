@@ -216,7 +216,7 @@ public sealed class DrainSystem : SharedDrainSystem
     private void OnInteract(Entity<DrainComponent> entity, ref AfterInteractUsingEvent args)
     {
         if (!args.CanReach || args.Target == null ||
-            !_tagSystem.HasTag(args.Used, DrainComponent.PlungerTag) ||
+            !_tagSystem.HasAnyTag(args.Used, DrainComponent.PlungerTag, DrainComponent.GoldenPlungerTag) ||
             !_solutionContainerSystem.ResolveSolution(args.Target.Value, DrainComponent.SolutionName, ref entity.Comp.Solution, out var drainSolution))
         {
             return;

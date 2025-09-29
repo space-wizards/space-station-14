@@ -19,6 +19,7 @@ public sealed partial class DrainComponent : Component
     public const string SolutionName = "drainBuffer";
 
     public static readonly ProtoId<TagPrototype> PlungerTag = "Plunger";
+    public static readonly ProtoId<TagPrototype> GoldenPlungerTag = "GoldenPlunger";
 
     [ViewVariables]
     public Entity<SolutionComponent>? Solution = null;
