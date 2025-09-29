@@ -363,6 +363,82 @@
         Heat: 0 # no protection
 
 - type: entity
+  parent: [ClothingHandsGlovesSyntheticBase, BaseSyndicateContraband]
+  id: ClothingHandsCatPawsWhite
+  name: white cat paws
+  description: Super-soft white cat paws, made specially for the most brutal agents.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Paws/white.rsi
+    layers:
+    - state: icon
+  - type: Item
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Paws/white.rsi
+    clothingVisuals:
+      gloves:
+      - state: equipped-HAND
+  - type: Fiber
+    fiberColor: fibers-white
+
+- type: entity
+  parent: [ClothingHandsGlovesSyntheticBase, BaseSyndicateContraband]
+  id: ClothingHandsCatPawsBrown
+  name: brown cat paws
+  description: Super-soft brown cat paws, made specially for the most brutal agents.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Paws/brown.rsi
+    layers:
+    - state: icon
+  - type: Item
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Paws/brown.rsi
+    clothingVisuals:
+      gloves:
+      - state: equipped-HAND
+  - type: Fiber
+    fiberColor: fibers-brown
+
+- type: entity
+  parent: [ClothingHandsGlovesSyntheticBase, BaseSyndicateContraband]
+  id: ClothingHandsCatPawsBlack
+  name: black cat paws
+  description: Super-soft white black paws, made specially for the most brutal agents.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Paws/black.rsi
+    layers:
+    - state: icon
+  - type: Item
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Paws/black.rsi
+    clothingVisuals:
+      gloves:
+      - state: equipped-HAND
+  - type: Fiber
+    fiberColor: fibers-black
+
+- type: entity
+  parent: [ClothingHandsGlovesSyntheticBase, BaseSyndicateContraband]
+  id: ClothingHandsCatPawsBlackWhite
+  name: black and white cat paws
+  description: Super-soft black and white cat paws, made specially for the most brutal agents.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Paws/black_white.rsi
+    layers:
+    - state: icon
+  - type: Item
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Paws/black_white.rsi
+    clothingVisuals:
+      gloves:
+      - state: equipped-HAND
+  - type: Fiber
+    fiberColor: fibers-grey
+
+- type: entity
   # Intentionally named after regular gloves, they're meant to be sneaky.
   # This means they can also be butchered if you need to look un-sus before a very thorough search...
   parent: ClothingHandsGlovesColorBlack

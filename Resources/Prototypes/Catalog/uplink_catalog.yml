@@ -1941,6 +1941,16 @@
     - UplinkPointless
 
 - type: listing
+  id: UplinkCatMaidBundle
+  name: uplink-cat-maid-bundle-name
+  description: uplink-cat-maid-bundle-desc
+  productEntity: ClothingBackpackDuffelSyndicateCatMaidBundle
+  cost:
+    Telecrystal: 50
+  categories:
+  - UplinkPointless
+
+- type: listing
   id: UplinkSyndicateBusinessCard
   name: uplink-business-card-name
   description: uplink-business-card-desc
