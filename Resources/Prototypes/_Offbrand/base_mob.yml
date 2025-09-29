@@ -223,11 +223,11 @@
     oxygen: 10
   - type: BrainDamageOxygenation
     oxygenationDamageThresholds:
-      0.10: [1.0, [100, 1]]
-      0.30: [0.9, [ 90, 1]]
-      0.60: [0.8, [ 60, 1]]
-      0.70: [0.6, [ 40, 1]]
-      0.85: [0.5, [ 20, 1]]
+      0.10: [1.0, [100, 0.5]]
+      0.30: [0.9, [ 90, 0.5]]
+      0.60: [0.8, [ 60, 0.5]]
+      0.70: [0.6, [ 40, 0.5]]
+      0.85: [0.5, [ 20, 0.5]]
     oxygenDepletionThresholds:
       0.30: [0.6, 1]
     oxygenRegeneration: 1
