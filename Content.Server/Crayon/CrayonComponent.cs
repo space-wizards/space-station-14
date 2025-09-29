@@ -7,13 +7,13 @@ namespace Content.Server.Crayon
     public sealed partial class CrayonComponent : SharedCrayonComponent
     {
         /// <summary>
-        /// Play a sound when using if specified
+        /// Play a sound when drawing if specified
         /// </summary>
         [DataField]
         public SoundSpecifier? UseSound;
 
         /// <summary>
-        /// Is the color valid for use
+        /// Is the color valid
         /// </summary>
         [DataField]
         public bool SelectableColor;
@@ -24,7 +24,7 @@ namespace Content.Server.Crayon
         public int Charges;
 
         /// <summary>
-        /// Max number of charges
+        /// Max number of charges/drawings
         /// </summary>
         [DataField]
         public int Capacity = 30;
