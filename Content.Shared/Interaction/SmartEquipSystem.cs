@@ -211,7 +211,11 @@ public sealed class SmartEquipSystem : EntitySystem
 
         // case 4 (just an item):
         if (handItem != null)
+        {
+            var ev = new SmartEquipWithItemAttemptEvent(uid, handItem.Value, slotEntity.Value);
+            RaiseLocalEvent(slotEntity.Value, ref ev);
             return;
+        }
 
         if (!_inventory.CanUnequip(uid, equipmentSlot, out var inventoryReason))
         {
