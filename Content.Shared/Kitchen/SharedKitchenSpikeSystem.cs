@@ -32,18 +32,19 @@ namespace Content.Shared.Kitchen;
 /// </summary>
 public sealed class SharedKitchenSpikeSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly ISharedAdminLogManager _logger = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
-    [Dependency] private readonly ISharedAdminLogManager _logger = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedBodySystem _bodySystem = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -76,6 +77,9 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         SubscribeLocalEvent<KitchenSpikeHookedComponent, PickupAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<KitchenSpikeHookedComponent, IsEquippingAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<KitchenSpikeHookedComponent, IsUnequippingAttemptEvent>(OnAttempt);
+
+        // Container Jank
+        SubscribeLocalEvent<KitchenSpikeHookedComponent, AccessibleOverrideEvent>(OnAccessibleOverride);
     }
 
     private void OnInit(Entity<KitchenSpikeComponent> ent, ref ComponentInit args)
@@ -380,6 +384,21 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
     private static void OnAttempt(EntityUid uid, KitchenSpikeHookedComponent component, CancellableEntityEventArgs args)
     {
         args.Cancel();
+    }
+
+    private void OnAccessibleOverride(Entity<KitchenSpikeHookedComponent> ent, ref AccessibleOverrideEvent args)
+    {
+        // Check if the entity is the target to avoid giving the hooked entity access to everything.
+        // If we already have access we don't need to run more code.
+        if (args.Accessible || args.Target != ent.Owner)
+            return;
+
+        var xform = Transform(ent);
+        if (!_interaction.CanAccess(args.User, xform.ParentUid))
+            return;
+
+        args.Accessible = true;
+        args.Handled = true;
     }
 
     public override void Update(float frameTime)
