@@ -16288,5 +16288,20 @@ Entries:
   id: 175800
   time: '2025-09-29T07:21:21.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1758
+- author: mikeysaurus
+  changes:
+  - message: Fixed missing radio channels in salv lead headset
+    type: Fix
+  id: 175700
+  time: '2025-09-29T07:21:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1757
+- author: mikeysaurus
+  changes:
+  - message: Fixed miners not having access to salvage vendor for getting roundstart
+      PKAs etc
+    type: Fix
+  id: 175701
+  time: '2025-09-29T07:21:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1757
 Order: -1
 
