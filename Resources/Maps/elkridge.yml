@@ -4,7 +4,7 @@ meta:
   engineVersion: 267.2.0
   forkId: ""
   forkVersion: ""
-  time: 09/29/2025 01:09:35
+  time: 09/29/2025 02:22:45
   entityCount: 18698
 maps:
 - 1
@@ -11211,6 +11211,7 @@ entities:
       - 1719
       - 1029
       - 9755
+      - 16194
     - type: Fixtures
       fixtures: {}
   - uid: 6106
@@ -12489,6 +12490,7 @@ entities:
       - 13834
       - 13835
       - 13850
+      - 16194
     - type: Fixtures
       fixtures: {}
   - uid: 14605
@@ -64771,6 +64773,10 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 25.5,-29.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 14552
+      - 5980
   - uid: 16465
     components:
     - type: Transform
