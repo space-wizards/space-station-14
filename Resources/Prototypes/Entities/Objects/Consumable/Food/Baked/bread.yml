@@ -1005,7 +1005,7 @@
 - type: entity
   parent: FoodBreadBase
   id: FoodBreadNutriBatard
-  name: nutri-batard
+  name: nutri-bâtard
   description: bon 'pétite!
   components:
   - type: Sprite
@@ -1028,14 +1028,14 @@
 - type: entity
   parent: FoodBreadNutriBatard
   id: FoodBreadCottonNutriBatard
-  name: cotton nutri-batard
+  name: cotton nutri-bâtard
   description: bon 'pétite!
   components:
   - type: Edible
     requiresSpecialDigestion: true
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/bread.rsi
-    state: batard-cotton # change to batard
+    state: batard-cotton
   - type: FlavorProfile
     flavors:
     - peppery
