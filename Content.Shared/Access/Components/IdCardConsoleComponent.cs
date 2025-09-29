@@ -52,9 +52,11 @@ public sealed partial class IdCardConsoleComponent : Component
     // Put this on shared so we just send the state once in PVS range rather than every time the UI updates.
 
     [DataField, AutoNetworkedField]
-    public List<ProtoId<AccessGroupPrototype>> AccessGroups = new(); // Starlight-edit
-    [DataField, AutoNetworkedField]
-    public ProtoId<AccessGroupPrototype>? CurrentAccessGroup; // Starlight-edit
+    // Starlight-edit: Start
+    public List<ProtoId<AccessGroupPrototype>> AccessGroups = new();
+    [AutoNetworkedField]
+    public ProtoId<AccessGroupPrototype>? CurrentAccessGroup;
+    // Starlight-edit: End
 
     [Serializable, NetSerializable]
     public sealed class IdCardConsoleBoundUserInterfaceState : BoundUserInterfaceState

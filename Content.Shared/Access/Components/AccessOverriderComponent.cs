@@ -26,7 +26,7 @@ public sealed partial class AccessOverriderComponent : Component
     [DataField, AutoNetworkedField]
     public List<ProtoId<AccessGroupPrototype>> AccessGroups = new();
 
-    [DataField, AutoNetworkedField]
+    [AutoNetworkedField]
     public ProtoId<AccessGroupPrototype>? CurrentAccessGroup;
 
     // Keep existing AccessLevels (backwards-compatible)
