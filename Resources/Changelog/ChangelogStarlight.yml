@@ -15982,5 +15982,86 @@ Entries:
   id: 174901
   time: '2025-09-29T02:16:15.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1749
+- author: CrazyPhantom
+  changes:
+  - message: Surgery, Paramedic and Robotics access.
+    type: Add
+  id: 152000
+  time: '2025-09-29T03:38:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1520
+- author: CrazyPhantom
+  changes:
+  - message: Surgery, Paramedic and Robotics airlocks.
+    type: Add
+  id: 152001
+  time: '2025-09-29T03:38:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1520
+- author: CrazyPhantom
+  changes:
+  - message: Surgery, Paramedic and Robotics normal/glass Variants to Spray Painter
+    type: Add
+  id: 152002
+  time: '2025-09-29T03:38:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1520
+- author: CrazyPhantom
+  changes:
+  - message: Cyborgs and all variants, Robotics control computer, Robodrobe, Robotech
+      Deluxe and Robotech Deluxe restock crate now all require Robotics access instead
+      of Research.
+    type: Tweak
+  id: 152003
+  time: '2025-09-29T03:38:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1520
+- author: CrazyPhantom
+  changes:
+  - message: Commie and freelance access.
+    type: Add
+  id: 152004
+  time: '2025-09-29T03:38:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1520
+- author: CrazyPhantom
+  changes:
+  - message: 5 Debug access's to be used in admemes.
+    type: Add
+  id: 152005
+  time: '2025-09-29T03:38:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1520
+- author: CrazyPhantom
+  changes:
+  - message: Universal ID Computer (admin only) with access to every access for admemes/events.
+    type: Add
+  id: 152006
+  time: '2025-09-29T03:38:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1520
+- author: CrazyPhantom
+  changes:
+  - message: ID Computers now only show access the Privileged ID and Console have
+      in common.
+    type: Tweak
+  id: 152007
+  time: '2025-09-29T03:38:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1520
+- author: CrazyPhantom
+  changes:
+  - message: Access configurators now only show access the Privileged ID and the configurator
+      have in common.
+    type: Tweak
+  id: 152008
+  time: '2025-09-29T03:38:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1520
+- author: CrazyPhantom
+  changes:
+  - message: New Mining/Salvage/Cargo airlocks can now be spray painted
+    type: Fix
+  id: 152009
+  time: '2025-09-29T03:38:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1520
+- author: CrazyPhantom
+  changes:
+  - message: Added New Mining/Salvage/Cargo airlocks to spray painter
+    type: Add
+  id: 152010
+  time: '2025-09-29T03:38:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1520
 Order: -1
 
