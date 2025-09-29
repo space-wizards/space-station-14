@@ -1,5 +1,6 @@
 using Content.Shared.Damage;
 using Content.Shared.Spreader;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -14,8 +15,7 @@ public sealed class KudzuSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
 
-    [ValidatePrototypeId<EdgeSpreaderPrototype>]
-    private const string KudzuGroup = "Kudzu";
+    private static readonly ProtoId<EdgeSpreaderPrototype> KudzuGroup = "Kudzu";
 
     /// <inheritdoc/>
     public override void Initialize()

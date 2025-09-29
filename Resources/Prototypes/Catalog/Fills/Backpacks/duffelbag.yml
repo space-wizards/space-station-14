@@ -128,7 +128,7 @@
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateAmmoFilled
   name: ammo bundle
-  description: "Reloading! Contains 4 magazines for the C-20r, 5 drums for the Bulldog, and 2 ammo boxes for the L6 SAW."
+  description: "Reloading! Contains 4 magazines for the C-20r, 5 drums for the Bulldog, 3 magazines for the Estoc DMR, and 2 ammo boxes for the L6 SAW."
   components:
   - type: StorageFill
     contents:
@@ -136,6 +136,8 @@
         amount: 4
       - id: MagazineShotgun
         amount: 4
+      - id: MagazineRifle
+        amount: 3
       - id: MagazineShotgunSlug
         amount: 1
       - id: MagazineLightRifleBox
@@ -336,6 +338,19 @@
         amount: 2
       - id: SyndieTrickyBomb
         amount: 2
+
+- type: entity
+  parent: [ ClothingBackpackDuffelBundle, BaseMajorContraband ]
+  id: ClothingBackpackDuffelAcolyteBundle
+  name: acolyte armor bundle
+  description: "Contains the Acolyte Armor, the must have of any cult leader."
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingOuterArmorCult
+    - id: ClothingHeadHelmetCult
+    - id: ClothingShoesCult
+    - id: BedsheetCult
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
