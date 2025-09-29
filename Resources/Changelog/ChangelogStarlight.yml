@@ -16077,5 +16077,187 @@ Entries:
   id: 175500
   time: '2025-09-29T04:54:37.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1755
+- author: CawsForConceren
+  changes:
+  - message: (Silica) Expanded Atmospherics to be larger and easier to work in
+    type: Add
+  id: 175200
+  time: '2025-09-29T05:06:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1752
+- author: CawsForConceren
+  changes:
+  - message: (Silica) More materials for Atmospherics
+    type: Add
+  id: 175201
+  time: '2025-09-29T05:06:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1752
+- author: CawsForConceren
+  changes:
+  - message: (Silica) The TEG now has a protective blow-out break in the event of
+      the windows failing under pressure
+    type: Add
+  id: 175202
+  time: '2025-09-29T05:06:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1752
+- author: CawsForConceren
+  changes:
+  - message: (Silica) Expanded the Cargo Bay to be larger and easier to work in
+    type: Add
+  id: 175203
+  time: '2025-09-29T05:06:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1752
+- author: CawsForConceren
+  changes:
+  - message: (Silica) Added a brand new Salvage Bay for Salvage and Miners, west of
+      Cargo
+    type: Add
+  id: 175204
+  time: '2025-09-29T05:06:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1752
+- author: CawsForConceren
+  changes:
+  - message: (Silica) Added a brand new docking arm with ample space to dock. Salvagers
+      and Miners rejoice, you no longer need to park in Cargo's 'pirate cove'
+    type: Add
+  id: 175205
+  time: '2025-09-29T05:06:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1752
+- author: CawsForConceren
+  changes:
+  - message: (Silica) Recycler in the Salvage Bay
+    type: Add
+  id: 175206
+  time: '2025-09-29T05:06:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1752
+- author: CawsForConceren
+  changes:
+  - message: (Silica) Entirely remade Dorms, which is now east of the Janitor Closet.
+      They look like places you actually wanna live now.
+    type: Add
+  id: 175207
+  time: '2025-09-29T05:06:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1752
+- author: CawsForConceren
+  changes:
+  - message: (Silica) Crew Monitor to SEC in the Warden's Office (AKA Security Reception)
+    type: Add
+  id: 175208
+  time: '2025-09-29T05:06:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1752
+- author: CawsForConceren
+  changes:
+  - message: (Silica) A new external access for getting to the north side of the station
+      on-foot
+    type: Add
+  id: 175209
+  time: '2025-09-29T05:06:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1752
+- author: CawsForConceren
+  changes:
+  - message: (Silica) A pinpointer to the Vault
+    type: Add
+  id: 175210
+  time: '2025-09-29T05:06:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1752
+- author: CawsForConceren
+  changes:
+  - message: (Silica) Randomly generated maints rooms, one in Engineering maints and
+      two on the exterior of the station
+    type: Add
+  id: 175211
+  time: '2025-09-29T05:06:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1752
+- author: CawsForConceren
+  changes:
+  - message: (Silica) The northern exterior has a bit more decoration and tile variation
+      now.
+    type: Tweak
+  id: 175212
+  time: '2025-09-29T05:06:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1752
+- author: CawsForConceren
+  changes:
+  - message: (Silica) Moved the janitor trash car out of the way of the Disposals
+      Hallway
+    type: Tweak
+  id: 175213
+  time: '2025-09-29T05:06:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1752
+- author: CawsForConceren
+  changes:
+  - message: (Silica) Moved Disposals just north of the New Dorms
+    type: Tweak
+  id: 175214
+  time: '2025-09-29T05:06:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1752
+- author: CawsForConceren
+  changes:
+  - message: (Silica) Added new Station Beacons to make it easier to notice there's
+      stuff like a SEC Docking Arm
+    type: Tweak
+  id: 175215
+  time: '2025-09-29T05:06:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1752
+- author: CawsForConceren
+  changes:
+  - message: (Silica) Removed the broken pipes from Atmospherics
+    type: Tweak
+  id: 175216
+  time: '2025-09-29T05:06:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1752
+- author: CawsForConceren
+  changes:
+  - message: (Silica) Pre-placed a singularity beacon at the center of the Main Power
+      Engine chamber
+    type: Tweak
+  id: 175217
+  time: '2025-09-29T05:06:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1752
+- author: CawsForConceren
+  changes:
+  - message: (Silica) Put the Tesla equipment into a small storage area north of the
+      Main Power Engine chamber so it's not just awkwardly on the sides of the chamber
+    type: Tweak
+  id: 175218
+  time: '2025-09-29T05:06:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1752
+- author: CawsForConceren
+  changes:
+  - message: (Silica) Adjusted the Science-Engineering maints area so it's easier
+      to walk through for non-engineers
+    type: Tweak
+  id: 175219
+  time: '2025-09-29T05:06:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1752
+- author: CawsForConceren
+  changes:
+  - message: (Silica) Renamed all of the cameras, again, so they'll sort alphabetically
+      now
+    type: Tweak
+  id: 175220
+  time: '2025-09-29T05:06:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1752
+- author: CawsForConceren
+  changes:
+  - message: (Silica) Replaced the Syndicate Jetpacks in the Armory with SEC Jetpacks
+      (oops)
+    type: Fix
+  id: 175221
+  time: '2025-09-29T05:06:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1752
+- author: CawsForConceren
+  changes:
+  - message: (Silica) Missing firelock on the maints door near Psychology front
+    type: Fix
+  id: 175222
+  time: '2025-09-29T05:06:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1752
+- author: CawsForConceren
+  changes:
+  - message: (Silica) Vents west of the Library were unpowered
+    type: Fix
+  id: 175223
+  time: '2025-09-29T05:06:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1752
 Order: -1
 
