@@ -54,8 +54,6 @@
     enabled: true
     radius: 4
     netsync: false
-  - type: InputMover
-    canMove: false
   - type: Anchorable
     flags:
     - Anchorable
