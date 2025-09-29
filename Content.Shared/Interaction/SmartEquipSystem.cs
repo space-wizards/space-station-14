@@ -212,7 +212,7 @@ public sealed class SmartEquipSystem : EntitySystem
         // case 4 (just an item):
         if (handItem != null)
         {
-            var ev = new SmartEquipWithItemAttemptEvent(uid, handItem.Value, slotEntity.Value);
+            var ev = new SmartEquipWithItemAttemptEvent(uid, handItem.Value);
             RaiseLocalEvent(slotEntity.Value, ref ev);
             return;
         }

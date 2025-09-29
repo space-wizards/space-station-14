@@ -266,6 +266,7 @@ public sealed partial class DoAfterArgs
         BreakOnDamage = other.BreakOnDamage;
         DamageThreshold = other.DamageThreshold;
         RequireCanInteract = other.RequireCanInteract;
+        RequireUnwielded = other.RequireUnwielded;
         AttemptFrequency = other.AttemptFrequency;
         BlockDuplicate = other.BlockDuplicate;
         CancelDuplicate = other.CancelDuplicate;
