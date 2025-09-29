@@ -199,6 +199,9 @@ public sealed partial class BrainDamageSystem : EntitySystem
             return;
         }
 
+        if (ent.Comp1.Oxygen > 0)
+            return;
+
         var evt = new BeforeDealBrainDamage(chance);
         RaiseLocalEvent(ent, ref evt);
 
