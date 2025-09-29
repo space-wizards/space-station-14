@@ -61,6 +61,7 @@ public abstract class SLSharedCharacterInfoSystem : EntitySystem
     {
         var character = Profile;
         var newMind = _mindSystem.GetMind(Mob);
+        #endregion Starlight
         if (newMind != null && TryComp(newMind, out MindComponent? mindComp))
         {
             mindComp.Voice = character.Voice;
