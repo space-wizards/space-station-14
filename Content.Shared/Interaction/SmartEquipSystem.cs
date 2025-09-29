@@ -105,13 +105,6 @@ public sealed class SmartEquipSystem : EntitySystem
         //    - without hand item: try to put the item into your hand
 
         _inventory.TryGetSlotEntity(uid, equipmentSlot, out var slotEntity);
-
-        if (handItem != null && slotEntity != null)
-        {
-            var ev = new SmartEquipWithItemAttemptEvent(uid, handItem.Value, slotEntity.Value);
-            RaiseLocalEvent(slotEntity.Value, ref ev);
-        }
-
         var emptyEquipmentSlotString = Loc.GetString("smart-equip-empty-equipment-slot", ("slotName", equipmentSlot));
 
         // case 1 (no slot item):
