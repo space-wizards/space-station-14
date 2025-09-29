@@ -90,7 +90,7 @@ public sealed class TraitSystem : EntitySystem
             if (traitPrototype.TraitGear == null)
                 continue;
 
-            if (!TryComp(Mob, out HandsComponent? handsComponent))
+            if (!TryComp(Mob, out HandsComponent? handsComponent)) //Starlight
                 continue;
 
             var coords = Transform(Mob).Coordinates;
