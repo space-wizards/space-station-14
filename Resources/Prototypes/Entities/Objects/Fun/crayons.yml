@@ -111,8 +111,8 @@
     deleteEmpty: false
     batteryPowered: true
   - type: Battery
-    startingCharge: 20
-    maxCharge: 20
+    startingCharge: 25
+    maxCharge: 25
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: .2
