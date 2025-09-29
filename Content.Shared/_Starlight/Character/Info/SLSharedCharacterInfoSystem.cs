@@ -102,7 +102,7 @@ public abstract class SLSharedCharacterInfoSystem : EntitySystem
         {
             //Setup playermob info
             var charSecrets = new CharacterSecretsComponent { Secrets = character.Secrets };
-            AddComp(Mob, charSecrets, true);
+            AddComp(Mob, charSecrets, true); //Starlight
         }
     }
 
