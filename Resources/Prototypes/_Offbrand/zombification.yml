@@ -46,13 +46,6 @@
   id: AddOnAnyZombified
   save: false
   components:
-  - type: Bloodstream
-    bloodlossDamage:
-      types:
-        Bloodloss: 0.5
-    bloodlossHealDamage:
-      types:
-        Bloodloss: -1
   - type: SolutionContainerManager
     solutions:
       melee:
@@ -60,6 +53,13 @@
         reagents:
         - ReagentId: Romerol
           Quantity: 30
+  - type: Bloodstream
+    bloodlossDamage:
+      types:
+        Bloodloss: 0.5
+    bloodlossHealDamage:
+      types:
+        Bloodloss: -1
   - type: MeleeChemicalInjector
     solution: melee
     transferAmount: 0.25

@@ -476,7 +476,7 @@
       - statusEffect: StatusEffectHeartStrainRomerol
         conditions:
         - !type:MetaboliteThreshold
-          min: 30
+          min: 15
       effects:
       - !type:AdjustReagentGaussian
         reagent: Romerol
@@ -496,40 +496,40 @@
         probability: 0.05
         conditions:
         - !type:MetaboliteThreshold
-          min: 30
+          min: 15
       - !type:HealthChange
         damage:
           types:
              Poison: 0.15
         conditions:
         - !type:MetaboliteThreshold
-          min: 30
+          min: 15
       - !type:Zombify
         conditions:
         - !type:BrainDamage
           min: 70
         - !type:MetaboliteThreshold
-          min: 30
+          min: 15
       - !type:ModifyHeartDamage
         amount: 0.1
         conditions:
         - !type:MetaboliteThreshold
-          min: 30
+          min: 15
       - !type:AdjustTemperature
         amount: 3000
         conditions:
         - !type:MetaboliteThreshold
-          min: 30
+          min: 15
       - !type:Jitter
         probability: 0.25
         conditions:
         - !type:MetaboliteThreshold
-          min: 60
+          min: 30
       - !type:AdjustTemperature
         amount: 6000
         conditions:
         - !type:MetaboliteThreshold
-          min: 60
+          min: 30
       - !type:PopupMessage
         type: Local
         visualType: MediumCaution
@@ -541,12 +541,12 @@
         probability: 0.05
         conditions:
         - !type:MetaboliteThreshold
-          min: 60
+          min: 30
       - !type:ModifyBrainDamage
         amount: 0.25
         conditions:
         - !type:MetaboliteThreshold
-          min: 90
+          min: 45
       - !type:HealthChange
         damage:
           types:
@@ -555,7 +555,7 @@
              Piercing: 0.15
         conditions:
         - !type:MetaboliteThreshold
-          min: 90
+          min: 45
       - !type:PopupMessage
         type: Local
         visualType: MediumCaution
@@ -567,12 +567,12 @@
         probability: 0.05
         conditions:
         - !type:MetaboliteThreshold
-          min: 90
+          min: 45
       - !type:ModifyBrainDamage
         amount: 0.5
         conditions:
         - !type:MetaboliteThreshold
-          min: 120
+          min: 60
       - !type:PopupMessage
         type: Local
         visualType: MediumCaution
@@ -584,12 +584,12 @@
         probability: 0.05
         conditions:
         - !type:MetaboliteThreshold
-          min: 120
+          min: 60
       - !type:ModifyBrainDamage
         amount: 5
         conditions:
         - !type:MetaboliteThreshold
-          min: 140
+          min: 70
       - !type:Zombify
         conditions:
         - !type:MobStateCondition
