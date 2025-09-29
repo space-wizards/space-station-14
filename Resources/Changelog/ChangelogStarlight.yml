@@ -15967,5 +15967,20 @@ Entries:
   id: 172300
   time: '2025-09-29T01:26:40.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1723
+- author: CrazyPhantom
+  changes:
+  - message: Countdowns in Communication Consoles for the Announcement, Shuttle and
+      Alert level button cooldowns.
+    type: Add
+  id: 174900
+  time: '2025-09-29T02:16:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1749
+- author: CrazyPhantom
+  changes:
+  - message: A way for admins to disable evac being called/recalled
+    type: Add
+  id: 174901
+  time: '2025-09-29T02:16:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1749
 Order: -1
 
