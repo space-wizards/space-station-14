@@ -369,14 +369,14 @@
   description: Super-soft white cat paws, made specially for the most brutal agents.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/Paws/white.rsi
+    sprite: Clothing/Hands/Gloves/paws.rsi
     layers:
-    - state: icon
+    - state: white-icon
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/Paws/white.rsi
+    sprite: Clothing/Hands/Gloves/paws.rsi
     clothingVisuals:
       gloves:
-      - state: equipped-HAND
+      - state: white-equipped-HAND
   - type: Fiber
     fiberColor: fibers-white
 
@@ -387,14 +387,14 @@
   description: Super-soft brown cat paws, made specially for the most brutal agents.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/Paws/brown.rsi
+    sprite: Clothing/Hands/Gloves/paws.rsi
     layers:
-    - state: icon
+    - state: brown-icon
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/Paws/brown.rsi
+    sprite: Clothing/Hands/Gloves/paws.rsi
     clothingVisuals:
       gloves:
-      - state: equipped-HAND
+      - state: brown-equipped-HAND
   - type: Fiber
     fiberColor: fibers-brown
 
@@ -405,14 +405,14 @@
   description: Super-soft white black paws, made specially for the most brutal agents.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/Paws/black.rsi
+    sprite: Clothing/Hands/Gloves/paws.rsi
     layers:
-    - state: icon
+    - state: black-icon
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/Paws/black.rsi
+    sprite: Clothing/Hands/Gloves/paws.rsi
     clothingVisuals:
       gloves:
-      - state: equipped-HAND
+      - state: black-equipped-HAND
   - type: Fiber
     fiberColor: fibers-black
 
@@ -423,14 +423,14 @@
   description: Super-soft black and white cat paws, made specially for the most brutal agents.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/Paws/black_white.rsi
+    sprite: Clothing/Hands/Gloves/paws.rsi
     layers:
-    - state: icon
+    - state: blackwhite-icon
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/Paws/black_white.rsi
+    sprite: Clothing/Hands/Gloves/paws.rsi
     clothingVisuals:
       gloves:
-      - state: equipped-HAND
+      - state: blackwhite-equipped-HAND
   - type: Fiber
     fiberColor: fibers-grey
 
