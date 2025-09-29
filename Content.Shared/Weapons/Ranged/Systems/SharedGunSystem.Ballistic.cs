@@ -129,13 +129,8 @@ public abstract partial class SharedGunSystem
                  _wieldable.TryUnwield(target, targetComponent, user);
          }
 
-         var doAfterSpeed = component.FillDelay;
-        // Check if reloader has speed modifier.
-        if (TryComp<IncreaseReloadSpeedContainerComponent>(used, out var reloader))
-            doAfterSpeed *= reloader.Modifier;
-
-        // Continuous loading
-        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, doAfterSpeed, new AmmoFillDoAfterEvent(), used: used, target: target, eventTarget: used)
+         // Continuous loading
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.FillDelay, new AmmoFillDoAfterEvent(), used: used, target: target, eventTarget: used)
         {
             BreakOnMove = true,
             BreakOnDamage = false,

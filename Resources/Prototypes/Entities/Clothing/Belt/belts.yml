@@ -575,8 +575,7 @@
         - ShellShotgun
     capacity: 32 # Two full shell boxes.
     reloadFromClothing: true
-  - type: IncreaseReloadSpeedContainer
-    modifier: 0.75
+    fillDelay: 0.375 # 25% less than 0.5 = 33% faster reload speed.
 
 - type: entity
   parent: ClothingBeltBase
