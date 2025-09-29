@@ -16303,5 +16303,12 @@ Entries:
   id: 175701
   time: '2025-09-29T07:21:41.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1757
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added the Netrunner bath and the eye.
+    type: Add
+  id: 173600
+  time: '2025-09-29T08:39:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1736
 Order: -1
 
