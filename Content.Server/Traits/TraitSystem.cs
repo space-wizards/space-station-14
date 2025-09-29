@@ -53,7 +53,7 @@ public sealed class TraitSystem : EntitySystem
             }
 
             if (_whitelistSystem.IsWhitelistFail(traitPrototype.Whitelist, Mob) ||
-                _whitelistSystem.IsBlacklistPass(traitPrototype.Blacklist, Mob))
+                _whitelistSystem.IsBlacklistPass(traitPrototype.Blacklist, Mob)) //Starlight
                 continue;
 
             // Add all components required by the prototype
