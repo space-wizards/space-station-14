@@ -93,7 +93,7 @@ public sealed class TraitSystem : EntitySystem
             if (!TryComp(Mob, out HandsComponent? handsComponent)) //Starlight
                 continue;
 
-            var coords = Transform(Mob).Coordinates;
+            var coords = Transform(Mob).Coordinates; //Starlight
             var inhandEntity = Spawn(traitPrototype.TraitGear, coords);
             _sharedHandsSystem.TryPickup(Mob,
                 inhandEntity,
