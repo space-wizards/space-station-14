@@ -76,7 +76,7 @@ public sealed partial class AreaPickupSystem : EntitySystem
         {
             if (entityInRange == args.User ||
                 !_itemQuery.TryGetComponent(entityInRange, out var itemComp) ||
-                !_prototype.TryIndex(itemComp.Size, out var itemSize) ||
+                !_prototype.HasIndex(itemComp.Size) ||
                 !_interaction.InRangeUnobstructed(args.User, entityInRange))
                 continue;
             pickupCandidates.Add((entityInRange, itemComp));
