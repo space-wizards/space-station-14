@@ -1,4 +1,4 @@
-cpr-target-needs-cpr = [color=red]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-BE($target) } has no pulse and is gasping for breath![/color]
+cpr-target-needs-cpr = [color=red]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } no pulse and is gasping for breath![/color]
 
 wound-bleeding-modifier = [color=red]bleeding {$wound}[/color]
 wound-tended-modifier = tended {$wound}
