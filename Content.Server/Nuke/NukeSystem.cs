@@ -207,7 +207,13 @@ public sealed class NukeSystem : EntitySystem
         else
         {
             if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
+            // Starlight-start
+            {
+                var msg = Loc.GetString("nuke-component-cant-anchor-space");
+                _popups.PopupEntity(msg, uid, args.Actor, PopupType.MediumCaution);
                 return;
+            }
+            // Starlight-end
 
             var worldPos = _transform.GetWorldPosition(xform);
 
