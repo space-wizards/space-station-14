@@ -88,7 +88,7 @@ public sealed partial class CargoSystem : SharedCargoSystem
     /// <returns>Whether or not setting the value succeeded.</returns>
     public bool TryAdjustBankAccount(
         Entity<StationBankAccountComponent> station,
-        string accountPrototypeId,
+        ProtoId<CargoAccountPrototype> accountPrototypeId,
         int money,
         bool createAccount = false)
     {
@@ -124,7 +124,7 @@ public sealed partial class CargoSystem : SharedCargoSystem
     /// <returns>Whether or not setting the value succeeded.</returns>
     public bool TrySetBankAccount(
         Entity<StationBankAccountComponent> station,
-        string accountPrototypeId,
+        ProtoId<CargoAccountPrototype> accountPrototypeId,
         int money,
         bool createAccount = false)
     {

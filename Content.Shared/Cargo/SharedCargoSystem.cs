@@ -64,7 +64,7 @@ public abstract class SharedCargoSystem : EntitySystem
     /// <param name="money">The ammount of money in the account</param>
     /// <param name="stationBankAccount">Resolve pattern, station bank account component of the station.</param>
     /// <returns>Whether or not the bank account exists.</returns>
-    public bool TryGetAccount(Entity<StationBankAccountComponent> station, string accountPrototypeId, out int money)
+    public bool TryGetAccount(Entity<StationBankAccountComponent> station, ProtoId<CargoAccountPrototype> accountPrototypeId, out int money)
     {
         return station.Comp.Accounts.TryGetValue(accountPrototypeId, out money);
     }
