@@ -44,3 +44,7 @@ loadout-group-civilian-shoes = Shoes
 
 # Cargo
 loadout-group-salvage-specialist-jumpsuit = Salvage Specialist jumpsuit
+
+# Other
+
+loadout-group-scarves = Scarf

@@ -10,6 +10,7 @@
   - RoboticistShoes
   - Survival
   - Trinkets
+  - Scarves
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -19,6 +20,7 @@
   - MagistrateShoes
   - Survival
   - Trinkets
+  - Scarves
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -36,6 +38,7 @@
   - MedicalEyewear
   - SurvivalMedical
   - Trinkets
+  - Scarves
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -46,6 +49,7 @@
   - CommonBackpack
   - NanotrasenRepresentativeShoes
   - Trinkets
+  - Scarves
   - Survival
   - GroupSpeciesBreathTool
 
@@ -57,6 +61,7 @@
   - CommonBackpack
   - LawyerShoes
   - Trinkets
+  - Scarves
   - Survival
   - GroupSpeciesBreathTool
 
@@ -70,6 +75,7 @@
   - BlueShieldNeck
   - BlueShieldEyewear
   - Trinkets
+  - Scarves
   - SurvivalSecurity
   - GroupSpeciesBreathToolSecurity
 
@@ -84,6 +90,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - Scarves
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -98,6 +105,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - Scarves
   - GroupSpeciesBreathTool
 
 - type: roleLoadout

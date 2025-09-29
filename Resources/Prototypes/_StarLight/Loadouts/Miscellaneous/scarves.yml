@@ -1,0 +1,100 @@
+- type: loadout
+  id: ScarfRed
+  equipment:
+    neck: ClothingNeckScarfStripedRed
+
+- type: loadout
+  id: ScarfGreen
+  equipment:
+    neck: ClothingNeckScarfStripedGreen
+
+- type: loadout
+  id: ScarfBlue
+  equipment:
+    neck: ClothingNeckScarfStripedBlue
+
+- type: loadout
+  id: ScarfBlack
+  equipment:
+    neck: ClothingNeckScarfStripedBlack
+
+- type: loadout
+  id: ScarfBrown
+  equipment:
+    neck: ClothingNeckScarfStripedBrown
+
+- type: loadout
+  id: ScarfLightBlue
+  equipment:
+    neck: ClothingNeckScarfStripedLightBlue
+
+- type: loadout
+  id: ScarfOrange
+  equipment:
+    neck: ClothingNeckScarfStripedOrange
+
+- type: loadout
+  id: ScarfPurple
+  equipment:
+    neck: ClothingNeckScarfStripedPurple
+
+- type: loadout
+  id: ScarfPrideAce
+  equipment:
+    neck: ClothingNeckScarfStripedAce
+
+- type: loadout
+  id: ScarfPrideAro
+  equipment:
+    neck: ClothingNeckScarfStripedAro
+
+- type: loadout
+  id: ScarfPrideAroace
+  equipment:
+    neck: ClothingNeckScarfStripedAroace
+
+- type: loadout
+  id: ScarfPrideBisexual
+  equipment:
+    neck: ClothingNeckScarfStripedBiSexual
+
+- type: loadout
+  id: ScarfPrideGay
+  equipment:
+    neck: ClothingNeckScarfStripedGay
+
+- type: loadout
+  id: ScarfPrideIntersex
+  equipment:
+    neck: ClothingNeckScarfStripedInter
+
+- type: loadout
+  id: ScarfPrideLesbian
+  equipment:
+    neck: ClothingNeckScarfStripedLesbian
+
+- type: loadout
+  id: ScarfPridePansexual
+  equipment:
+    neck: ClothingNeckScarfStripedPan
+
+- type: loadout
+  id: ScarfPrideNonbinary
+  equipment:
+    neck: ClothingNeckScarfStripedNonBinary
+
+- type: loadout
+  id: ScarfPrideRainbow
+  equipment:
+    neck: ClothingNeckScarfStripedRainbow
+
+- type: loadout
+  id: ScarfPrideTrans
+  equipment:
+    neck: ClothingNeckScarfStripedTrans
+
+- type: loadout
+  id: ScarfPrideLongBacon
+  equipment:
+    neck: ClothingNeckScarfStripedLesbianLong
+
