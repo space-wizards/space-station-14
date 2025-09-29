@@ -77,9 +77,7 @@ public abstract partial class SharedGunSystem
             Deleted(args.Target) ||
             !TryComp<BallisticAmmoProviderComponent>(args.Target, out var targetComponent) ||
             targetComponent.Whitelist == null)
-        {
             return;
-        }
 
         args.Handled = true;
 
@@ -114,7 +112,7 @@ public abstract partial class SharedGunSystem
             || !TryComp<ClothingComponent>(args.SlotEntity, out var clothing)
             || clothing.InSlot == null
             || clothing.InSlotFlag == SlotFlags.POCKET
-            || !TryComp<BallisticAmmoProviderComponent>(args.SlotEntity, out _))
+            || !HasComp<BallisticAmmoProviderComponent>(args.SlotEntity))
             return;
 
         ReloadDoAfter(ent.Comp, args.user, args.HeldItem, args.SlotEntity);
