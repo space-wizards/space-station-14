@@ -36,7 +36,7 @@
       Poison: [100, 10]
       Radiation: [100, 10]
       Cellular: [100, 10]
-      Asphyxiation: [100, 10]
+      Asphyxiation: [100, 0]
       Bloodloss: [0, 0]
   - type: UniqueWoundOnDamage
     wounds:
