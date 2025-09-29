@@ -77,6 +77,92 @@ public sealed partial class CargoSystem : SharedCargoSystem
         UpdateBounty();
     }
 
+    /// <summary>
+    /// Attempts to adjust the money of a certain bank account.
+    /// </summary>
+    /// <param name="station">Station where the bank account is from</param>
+    /// <param name="accountPrototypeId">the id of the bank account</param>
+    /// <param name="money">how much money to set the account to</param>
+    /// <param name="createAccount">Whether or not it should create the account if it doesn't exist.</param>
+    /// <param name="stationBankAccount">Resolve pattern, station bank account component of the station.</param>
+    /// <returns>Whether or not setting the value succeeded.</returns>
+    /// <exception cref="ArgumentException">Thrown when the given station is not a station.</exception>
+    public bool TryAdjustBankAccount(
+        EntityUid station,
+        string accountPrototypeId,
+        int money,
+        bool createAccount = false,
+        StationBankAccountComponent? stationBankAccount = null)
+    {
+        if (!Resolve(station, ref stationBankAccount))
+            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
+
+        var ent = (Entity<StationBankAccountComponent>)(station, stationBankAccount);
+
+        var accounts = stationBankAccount.Accounts;
+
+        BankBalanceUpdatedEvent ev;
+
+        if (accounts.ContainsKey(accountPrototypeId))
+        {
+            accounts[accountPrototypeId] += money;
+            ev = new BankBalanceUpdatedEvent(ent, ent.Comp.Accounts);
+            RaiseLocalEvent(ent, ref ev, true);
+            return true;
+        }
+
+        if (!createAccount)
+            return false;
+
+        accounts[accountPrototypeId] = money;
+        ev = new BankBalanceUpdatedEvent(ent, ent.Comp.Accounts);
+        RaiseLocalEvent(ent, ref ev, true);
+        return true;
+    }
+
+    /// <summary>
+    /// Attempts to set the money of a certain bank account.
+    /// </summary>
+    /// <param name="station">Station where the bank account is from</param>
+    /// <param name="accountPrototypeId">the id of the bank account</param>
+    /// <param name="money">how much money to set the account to</param>
+    /// <param name="createAccount">Whether or not it should create the account if it doesn't exist.</param>
+    /// <param name="stationBankAccount">Resolve pattern, station bank account component of the station.</param>
+    /// <returns>Whether or not setting the value succeeded.</returns>
+    /// <exception cref="ArgumentException">Thrown when the given station is not a station.</exception>
+    public bool TrySetBankAccount(
+        EntityUid station,
+        string accountPrototypeId,
+        int money,
+        bool createAccount = false,
+        StationBankAccountComponent? stationBankAccount = null)
+    {
+        if (!Resolve(station, ref stationBankAccount))
+            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
+
+        var ent = (Entity<StationBankAccountComponent>)(station, stationBankAccount);
+
+        var accounts = stationBankAccount.Accounts;
+
+        BankBalanceUpdatedEvent ev;
+
+        if (accounts.ContainsKey(accountPrototypeId))
+        {
+            accounts[accountPrototypeId] = money;
+            ev = new BankBalanceUpdatedEvent(ent, ent.Comp.Accounts);
+            RaiseLocalEvent(ent, ref ev, true);
+            return true;
+        }
+
+        if (!createAccount)
+            return false;
+
+        accounts[accountPrototypeId] = money;
+        ev = new BankBalanceUpdatedEvent(ent, ent.Comp.Accounts);
+        RaiseLocalEvent(ent, ref ev, true);
+        return true;
+    }
+
     public void UpdateBankAccount(
         Entity<StationBankAccountComponent?> ent,
         int balanceAdded,
