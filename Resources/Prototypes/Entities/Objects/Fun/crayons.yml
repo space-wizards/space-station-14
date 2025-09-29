@@ -109,7 +109,14 @@
     color: Red
     selectableColor: true
     deleteEmpty: false
-    infinite: true
+    batteryPowered: true
+    capacity: 20
+  - type: Battery
+    startingCharge: 20
+    maxCharge: 20
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: .2
   - type: Tag
     tags:
     - Write

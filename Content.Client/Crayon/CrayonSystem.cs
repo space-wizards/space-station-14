@@ -29,7 +29,6 @@ public sealed class CrayonSystem : SharedCrayonSystem
         component.SelectedState = state.State;
         component.Charges = state.Charges;
         component.Capacity = state.Capacity;
-        component.Infinite = state.Infinite;
 
         component.UIUpdateNeeded = true;
     }
@@ -58,14 +57,6 @@ public sealed class CrayonSystem : SharedCrayonSystem
             }
 
             _parent.UIUpdateNeeded = false;
-
-            if (_parent.Infinite)
-            {
-                _label.SetMarkup(Robust.Shared.Localization.Loc.GetString("crayon-drawing-label-infinite",
-                    ("color",_parent.Color),
-                    ("state",_parent.SelectedState)));
-                return;
-            }
 
             _label.SetMarkup(Robust.Shared.Localization.Loc.GetString("crayon-drawing-label",
                 ("color",_parent.Color),

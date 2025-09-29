@@ -1,6 +1,4 @@
-using Content.Server.UserInterface;
 using Content.Shared.Crayon;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Crayon
@@ -8,25 +6,24 @@ namespace Content.Server.Crayon
     [RegisterComponent]
     public sealed partial class CrayonComponent : SharedCrayonComponent
     {
-        [DataField("useSound")] public SoundSpecifier? UseSound;
+        [DataField]
+        public SoundSpecifier? UseSound;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("selectableColor")]
-        public bool SelectableColor { get; set; }
+        [DataField]
+        public bool SelectableColor;
 
-        [ViewVariables(VVAccess.ReadWrite)]
         public int Charges { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("capacity")]
+        [DataField]
         public int Capacity { get; set; } = 30;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("deleteEmpty")]
+        [DataField]
         public bool DeleteEmpty = true;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("infinite")]
-        public bool Infinite { get; set; }
+        /// <summary>
+        /// Does the crayon use the battery power system to track charges
+        /// </summary>
+        [DataField]
+        public bool BatteryPowered;
     }
 }
