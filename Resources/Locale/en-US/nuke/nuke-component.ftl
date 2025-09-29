@@ -2,9 +2,6 @@
 nuke-component-cant-anchor-floor = The nuclear bomb is too close to space to anchor here!
 nuke-component-cant-anchor-toggle = The nuclear authentication disk is required to toggle the floor bolts!
 
-# Starlight addition. This one, though, /should/ be fairly obvious.
-nuke-component-cant-anchor-space = You can't deploy the bolts in space, dummy.
-
 nuke-component-announcement-sender = Nuclear Fission Explosive
 nuke-component-announcement-armed = Attention! The station's self-destruct mechanism has been engaged {$location}. {$time} seconds until detonation. If this was made in error, the mechanism may still be disarmed.
 nuke-component-announcement-unarmed = The station's self-destruct was deactivated! Have a nice day!
