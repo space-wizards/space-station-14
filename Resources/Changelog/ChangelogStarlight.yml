@@ -16317,5 +16317,12 @@ Entries:
   id: 172100
   time: '2025-09-29T19:32:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1721
+- author: CrazyPhantom
+  changes:
+  - message: Adds Surgery, Robotics and Paramedic to their respective extended access's
+    type: Fix
+  id: 176000
+  time: '2025-09-29T19:41:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1760
 Order: -1
 
