@@ -8,7 +8,7 @@
     },
     "states": [
         {
-            "name": "icon"
+            "name": "white-icon"
         },
         {
             "name": "black-icon"
@@ -20,7 +20,7 @@
             "name": "blackwhite-icon"
         },
         {
-            "name": "equipped-HAND",
+            "name": "white-equipped-HAND",
             "directions": 4
         },
         {
