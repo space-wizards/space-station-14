@@ -57,7 +57,7 @@ public sealed class TraitSystem : EntitySystem
                 continue;
 
             // Add all components required by the prototype
-            EntityManager.AddComponents(Mob, traitPrototype.Components, false);
+            EntityManager.AddComponents(Mob, traitPrototype.Components, false); //Starlight
 
             // Starlight - start
             var language = EntityManager.System<LanguageSystem>();
