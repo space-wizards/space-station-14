@@ -20,6 +20,10 @@ public sealed class AdminLogsEui : BaseEui
     [Dependency] private readonly IFileDialogManager _dialogManager = default!;
     [Dependency] private readonly ILogManager _log = default!;
 
+    private const char CsvSeparator = ',';
+    private const string CsvQuote = "\"";
+    private const string CsvHeader = "Date,ID,PlayerID,Severity,Type,Message";
+
     private ISawmill _sawmill;
 
     private bool _currentlyExportingLogs = false;
@@ -100,7 +104,9 @@ public sealed class AdminLogsEui : BaseEui
 
         try
         {
-            await using var writer = new StreamWriter(file.Value.fileStream);
+            // Buffer is set to 4KB for performance reasons. As the average export of 1000 logs is ~200KB
+            await using var writer = new StreamWriter(file.Value.fileStream, bufferSize: 4096);
+            await writer.WriteLineAsync(CsvHeader);
             foreach (var child in LogsControl.LogsContainer.Children)
             {
                 if (child is not AdminLogLabel logLabel || !child.Visible)
@@ -108,28 +114,31 @@ public sealed class AdminLogsEui : BaseEui
 
                 var log = logLabel.Log;
 
+                // Date
                 // I swear to god if someone adds ,s or "s to the other fields...
                 await writer.WriteAsync(log.Date.ToString("s", System.Globalization.CultureInfo.InvariantCulture));
-                await writer.WriteAsync(',');
+                await writer.WriteAsync(CsvSeparator);
+                // ID
                 await writer.WriteAsync(log.Id.ToString());
-                await writer.WriteAsync(',');
-                await writer.WriteAsync(log.Impact.ToString());
-                await writer.WriteAsync(',');
-                // Message
-                await writer.WriteAsync('"');
-                await writer.WriteAsync(log.Message.Replace("\"", "\"\""));
-                await writer.WriteAsync('"');
-                // End of message
-                await writer.WriteAsync(',');
-
+                await writer.WriteAsync(CsvSeparator);
+                // PlayerID
                 var players = log.Players;
                 for (var i = 0; i < players.Length; i++)
                 {
                     await writer.WriteAsync(players[i] + (i == players.Length - 1 ? "" : " "));
                 }
-
-                await writer.WriteAsync(',');
+                await writer.WriteAsync(CsvSeparator);
+                // Severity
+                await writer.WriteAsync(log.Impact.ToString());
+                await writer.WriteAsync(CsvSeparator);
+                // Type
                 await writer.WriteAsync(log.Type.ToString());
+                await writer.WriteAsync(CsvSeparator);
+                // Message
+                await writer.WriteAsync(CsvQuote);
+                await writer.WriteAsync(log.Message.Replace(CsvQuote, CsvQuote + CsvQuote));
+                await writer.WriteAsync(CsvQuote);
+
                 await writer.WriteLineAsync();
             }
         }

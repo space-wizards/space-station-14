@@ -7,32 +7,31 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Chemistry.Commands;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class DumpReagentGuideText : IConsoleCommand
+public sealed class DumpReagentGuideText : LocalizedEntityCommands
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IEntitySystemManager _entSys = default!;
 
-    public string Command => "dumpreagentguidetext";
-    public string Description => "Dumps the guidebook text for a reagent to the console";
-    public string Help => "dumpreagentguidetext <reagent>";
+    public override string Command => "dumpreagentguidetext";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
         {
-            shell.WriteError("Must have only 1 argument");
+            shell.WriteError(Loc.GetString($"shell-need-exactly-one-argument"));
             return;
         }
 
         if (!_prototype.TryIndex<ReagentPrototype>(args[0], out var reagent))
         {
-            shell.WriteError($"Invalid prototype: {args[0]}");
+            shell.WriteError(Loc.GetString($"shell-argument-must-be-prototype",
+                ("index", args[0]),
+                ("prototype", nameof(ReagentPrototype))));
             return;
         }
 
         if (reagent.Metabolisms is null)
         {
-            shell.WriteLine("Nothing to dump.");
+            shell.WriteLine(Loc.GetString($"cmd-dumpreagentguidetext-nothing-to-dump"));
             return;
         }
 
@@ -40,7 +39,8 @@ public sealed class DumpReagentGuideText : IConsoleCommand
         {
             foreach (var effect in entry.Effects)
             {
-                shell.WriteLine(effect.GuidebookEffectDescription(_prototype, _entSys) ?? $"[skipped effect of type {effect.GetType()}]");
+                shell.WriteLine(effect.GuidebookEffectDescription(_prototype, EntityManager.EntitySysManager) ??
+                                Loc.GetString($"cmd-dumpreagentguidetext-skipped", ("effect", effect.GetType())));
             }
         }
     }

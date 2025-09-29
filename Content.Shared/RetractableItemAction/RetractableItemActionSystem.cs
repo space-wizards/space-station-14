@@ -1,7 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Cuffs;
 using Content.Shared.Hands;
-using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
@@ -42,7 +41,7 @@ public sealed class RetractableItemActionSystem : EntitySystem
 
     private void OnRetractableItemAction(Entity<RetractableItemActionComponent> ent, ref OnRetractableItemActionEvent args)
     {
-        if (_hands.GetActiveHand(args.Performer) is not { } userHand)
+        if (_hands.GetActiveHand(args.Performer) is not { } activeHand)
             return;
 
         if (_actions.GetAction(ent.Owner) is not { } action)
@@ -55,7 +54,9 @@ public sealed class RetractableItemActionSystem : EntitySystem
             return;
 
         // Don't allow to summon an item if holding an unremoveable item unless that item is summoned by the action.
-        if (userHand.HeldEntity != null && !_hands.IsHolding(args.Performer, ent.Comp.ActionItemUid) && !_hands.CanDropHeld(args.Performer, userHand, false))
+        if (_hands.GetActiveItem(ent.Owner) != null
+            && !_hands.IsHolding(args.Performer, ent.Comp.ActionItemUid)
+            && !_hands.CanDropHeld(args.Performer, activeHand, false))
         {
             _popups.PopupClient(Loc.GetString("retractable-item-hand-cannot-drop"), args.Performer, args.Performer);
             return;
@@ -67,7 +68,7 @@ public sealed class RetractableItemActionSystem : EntitySystem
         }
         else
         {
-            SummonRetractableItem(args.Performer, ent.Comp.ActionItemUid.Value, userHand, ent.Owner);
+            SummonRetractableItem(args.Performer, ent.Comp.ActionItemUid.Value, activeHand, ent.Owner);
         }
 
         args.Handled = true;
@@ -93,7 +94,7 @@ public sealed class RetractableItemActionSystem : EntitySystem
         if (action.Comp.AttachedEntity == null)
             return;
 
-        if (_hands.GetActiveHand(action.Comp.AttachedEntity.Value) is not { } userHand)
+        if (_hands.GetActiveHand(action.Comp.AttachedEntity.Value) is not { })
             return;
 
         RetractRetractableItem(action.Comp.AttachedEntity.Value, ent, action.Owner);
@@ -128,7 +129,7 @@ public sealed class RetractableItemActionSystem : EntitySystem
         _audio.PlayPredicted(action.Comp.RetractSounds, holder, holder);
     }
 
-    private void SummonRetractableItem(EntityUid holder, EntityUid item, Hand hand, Entity<RetractableItemActionComponent?> action)
+    private void SummonRetractableItem(EntityUid holder, EntityUid item, string hand, Entity<RetractableItemActionComponent?> action)
     {
         if (!Resolve(action, ref action.Comp, false))
             return;

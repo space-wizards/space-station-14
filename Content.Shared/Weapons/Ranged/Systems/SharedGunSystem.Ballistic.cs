@@ -142,7 +142,9 @@ public abstract partial class SharedGunSystem
                 Del(ent.Value);
         }
 
-        // repeat if there is more space in the target and more ammo to fill it
+        UpdateBallisticAppearance(args.Target.Value, component);
+        UpdateAmmoCount(args.Target.Value);
+        // repeat if there is more space in the target and more ammo to fill
         var moreSpace = target.Entities.Count + target.UnspawnedCount < target.Capacity;
         var moreAmmo = component.Entities.Count + component.UnspawnedCount > 0;
         args.Repeat = moreSpace && moreAmmo;
@@ -325,6 +327,7 @@ public abstract partial class SharedGunSystem
         }
 
         UpdateBallisticAppearance(entity, entity.Comp);
+        UpdateAmmoCount(entity);
         DirtyField(entity.AsNullable(), nameof(BallisticAmmoProviderComponent.Entities));
 
         return true;

@@ -6,7 +6,6 @@ using BenchmarkDotNet.Attributes;
 using Content.IntegrationTests;
 using Content.IntegrationTests.Pair;
 using Content.Server.Mind;
-using Content.Server.Warps;
 using Content.Shared.Warps;
 using Robust.Shared;
 using Robust.Shared.Analyzers;

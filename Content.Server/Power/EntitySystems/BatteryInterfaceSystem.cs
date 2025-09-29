@@ -1,4 +1,6 @@
-﻿using Content.Server.Power.Components;
+﻿using Content.Server.Administration.Logs;
+using Content.Server.Power.Components;
+using Content.Shared.Database;
 using Content.Shared.Power;
 using Robust.Server.GameObjects;
 
@@ -19,6 +21,7 @@ namespace Content.Server.Power.EntitySystems;
 /// </remarks>
 public sealed class BatteryInterfaceSystem : EntitySystem
 {
+    [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = null!;
 
     public override void Initialize()
@@ -43,12 +46,16 @@ public sealed class BatteryInterfaceSystem : EntitySystem
     {
         var netBattery = Comp<PowerNetworkBatteryComponent>(ent);
         netBattery.CanCharge = args.On;
+
+        _adminLog.Add(LogType.Action,$"{ToPrettyString(args.Actor):actor} set input breaker to {args.On} on {ToPrettyString(ent):target}");
     }
 
     private void HandleSetOutputBreaker(Entity<BatteryInterfaceComponent> ent, ref BatterySetOutputBreakerMessage args)
     {
         var netBattery = Comp<PowerNetworkBatteryComponent>(ent);
         netBattery.CanDischarge = args.On;
+
+        _adminLog.Add(LogType.Action,$"{ToPrettyString(args.Actor):actor} set output breaker to {args.On} on {ToPrettyString(ent):target}");
     }
 
     private void HandleSetChargeRate(Entity<BatteryInterfaceComponent> ent, ref BatterySetChargeRateMessage args)
