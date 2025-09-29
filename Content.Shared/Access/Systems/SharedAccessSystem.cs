@@ -1,3 +1,4 @@
+using System.Linq; // Starlight
 using Content.Shared.Access.Components;
 using Content.Shared.Roles;
 using Robust.Shared.GameStates;
@@ -21,12 +22,12 @@ namespace Content.Shared.Access.Systems
         private void OnAccessInit(EntityUid uid, AccessComponent component, MapInitEvent args)
         {
             // Add all tags in groups to the list of tags.
-            foreach (var group in component.Groups)
+            foreach (var group in component.Groups.ToList()) // Starlight-edit
             {
                 if (!_prototypeManager.Resolve<AccessGroupPrototype>(group, out var proto))
                     continue;
 
-                component.Tags.UnionWith(proto.Tags);
+                component.Tags.UnionWith(proto.Tags.ToList()); // Starlight-edit
                 Dirty(uid, component);
             }
         }
@@ -77,12 +78,12 @@ namespace Content.Shared.Access.Systems
             if (!Resolve(uid, ref access))
                 return false;
 
-            foreach (var group in newGroups)
+            foreach (var group in newGroups.ToList()) // Starlight-edit
             {
                 if (!_prototypeManager.Resolve<AccessGroupPrototype>(group, out var proto))
                     continue;
 
-                access.Tags.UnionWith(proto.Tags);
+                access.Tags.UnionWith(proto.Tags.ToList()); // Starlight-edit
             }
 
             Dirty(uid, access);

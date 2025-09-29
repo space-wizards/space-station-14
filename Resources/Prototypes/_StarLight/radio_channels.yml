@@ -16,9 +16,7 @@
 - type: radioChannel
   id: Expedition
   name: chat-radio-expedition
-  # Not actually functional as a keybind, but 'handheldRadio' uses
-  # the blank/unset keycode so something has to be set
-  keycode: 'p' 
+  keycode: 'o'
   frequency: 1550
   color: "#963dca"
   # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms

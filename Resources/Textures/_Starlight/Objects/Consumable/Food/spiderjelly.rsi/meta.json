@@ -1,0 +1,29 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from Paradise Station at https://github.com/ParadiseSS13/Paradise/commit/bcff26a62e05bcb36c42a4f9b8b4b898c2f17586",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon",
+            "delays": [
+                [
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
+                ]
+            ]
+        },
+        {
+            "name": "action"
+        }
+    ]
+}

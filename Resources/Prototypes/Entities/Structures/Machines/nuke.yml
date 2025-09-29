@@ -127,6 +127,10 @@
     anchored: false
   - type: Physics
     bodyType: Dynamic
+  # Starlight-start
+  - type: NukeLabel
+    prefix: "nuke-label-syndicate"
+  # Starlight-end
 
 - type: entity
   parent: StorageTank

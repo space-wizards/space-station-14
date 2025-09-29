@@ -165,3 +165,27 @@
     blacklist:
       components:
       - IgnoreSpiderWeb
+
+- type: entity
+  id: SpiderWebSpiderlings
+  parent: SpiderWeb
+  name: spiderlings spider web
+  description: It's stringy, sticky. Contains a solution that keeps spiderlings away.
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        hard: false
+        density: 7
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - MidImpassable
+      fix2:
+        density: 7
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - LowImpassable

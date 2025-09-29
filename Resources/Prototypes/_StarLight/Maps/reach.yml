@@ -33,7 +33,7 @@
             ChiefMedicalOfficer: [ 1, 1 ]
             Chemist: [ 1, 1 ]
             MedicalDoctor: [ 1, 2 ]
-            #MedicalIntern: [ 1, 1 ]
+            MedicalIntern: [ 1, 1 ]
             Paramedic: [ 1, 1 ]
             Surgeon: [ 1, 1 ]
             #science

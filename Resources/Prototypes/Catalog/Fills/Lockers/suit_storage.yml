@@ -15,6 +15,7 @@
   table: !type:AllSelector
     children:
     - id: OxygenTankFilled
+    - id: NitrogenTankFilled # Starlight - vox gang
     - id: ClothingOuterHardsuitEVA
     - id: ClothingHeadHelmetEVA
     - id: ClothingMaskBreath
@@ -35,6 +36,7 @@
   table: !type:AllSelector
     children:
     - id: OxygenTankFilled
+    - id: NitrogenTankFilled # Starlight - vox gang
     - id: ClothingOuterHardsuitEVA
     - id: ClothingHeadHelmetEVALarge
     - id: ClothingMaskBreath
@@ -55,6 +57,7 @@
   table: !type:AllSelector
     children:
     - id: OxygenTankFilled
+    - id: NitrogenTankFilled # Starlight - vox gang
     - id: ClothingOuterSuitEmergency
     - id: ClothingMaskBreath
 
@@ -74,6 +77,7 @@
   table: !type:AllSelector
     children:
     - id: OxygenTankFilled
+    - id: NitrogenTankFilled # Starlight - vox gang
     - id: ClothingOuterHardsuitEVAPrisoner
     - id: ClothingHeadHelmetEVALarge
     - id: ClothingMaskBreath
@@ -94,6 +98,7 @@
   table: !type:AllSelector
     children:
     - id: OxygenTankFilled
+    - id: NitrogenTankFilled # Starlight - vox gang
     - id: ClothingOuterEVASuitSyndicate
     - id: ClothingHeadHelmetSyndicate
     - id: ClothingMaskGasSyndicate
@@ -114,6 +119,7 @@
   table: !type:AllSelector
     children:
     - id: OxygenTankFilled
+    - id: NitrogenTankFilled # Starlight - vox gang
     - id: ClothingOuterHardsuitPirateEVA
     - id: ClothingMaskGas
 
@@ -182,6 +188,7 @@
   table: !type:AllSelector
     children:
     - id: OxygenTankFilled
+    - id: NitrogenTankFilled # Starlight - vox gang
     - id: ClothingOuterHardsuitSecurity
     - id: ClothingMaskBreath
     - id: ClothingShoesBootsMagSec
@@ -293,6 +300,7 @@
   table: !type:AllSelector
     children:
     - id: OxygenTankFilled
+    - id: NitrogenTankFilled # Starlight - vox gang
     - id: ClothingOuterHardsuitSyndie
     - id: ClothingShoesBootsMagSyndie
     - id: ClothingMaskGasSyndicate
@@ -313,6 +321,7 @@
   table: !type:AllSelector
     children:
     - id: OxygenTankFilled
+    - id: NitrogenTankFilled # Starlight - vox gang
     - id: ClothingOuterHardsuitPirateCap
     - id: ClothingMaskGas
 
@@ -332,6 +341,7 @@
   table: !type:AllSelector
     children:
     - id: OxygenTankFilled
+    - id: NitrogenTankFilled # Starlight - vox gang
     - id: ClothingMaskBreath
     # TODO: Gone until reworked to have no space protection
     #- id: ClothingOuterHardsuitWizard
