@@ -24,5 +24,7 @@
   - ArtistCircuitBoard
   - NutimovCircuitBoard
   - JermovCircuitBoard
+  hiddenRecipeUnlocks:
+  - OverlordCircuitBoard
   radioChannels:
   - Binary
