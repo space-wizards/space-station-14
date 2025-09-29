@@ -369,11 +369,8 @@
   description: Super-soft white cat paws, made specially for the most brutal agents.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/paws.rsi
-    layers:
-    - state: white-icon
+    state: white-icon
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/paws.rsi
     clothingVisuals:
       gloves:
       - state: white-equipped-HAND
@@ -387,11 +384,8 @@
   description: Super-soft brown cat paws, made specially for the most brutal agents.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/paws.rsi
-    layers:
-    - state: brown-icon
+    state: brown-icon
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/paws.rsi
     clothingVisuals:
       gloves:
       - state: brown-equipped-HAND
@@ -405,11 +399,8 @@
   description: Super-soft white black paws, made specially for the most brutal agents.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/paws.rsi
-    layers:
-    - state: black-icon
+    state: black-icon
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/paws.rsi
     clothingVisuals:
       gloves:
       - state: black-equipped-HAND
@@ -423,11 +414,8 @@
   description: Super-soft black and white cat paws, made specially for the most brutal agents.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/paws.rsi
-    layers:
-    - state: blackwhite-icon
+    state: blackwhite-icon
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/paws.rsi
     clothingVisuals:
       gloves:
       - state: blackwhite-equipped-HAND

@@ -61,12 +61,13 @@
 - type: entity
   parent: [ClothingHandsGlovesSyntheticBase, BaseSyndicateContraband]
   id: ClothingHandsCatPawsBase
+  abstract: true
   components:
   # need to redefine sprites, so game wouldn't cry about icon states
   - type: Sprite
-    state:
+    sprite: Clothing/Hands/Gloves/paws.rsi
   - type: Clothing
-    state: 
+    sprite: Clothing/Hands/Gloves/paws.rsi
   - type: MeleeWeapon
     soundHit:
       collection: ToySqueak
