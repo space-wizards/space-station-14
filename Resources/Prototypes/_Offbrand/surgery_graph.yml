@@ -218,11 +218,13 @@
         guideStep: cavity-slot-insertion-guide
       steps:
       - whitelist:
+          requireAll: true
           components:
           - Item
           sizes:
           - Tiny
           - Small
+        doAfter: 2
         store: cavity_slot
         name: cavity-slot-insertion-small-item
     - to: CavityManipulationRemoval
