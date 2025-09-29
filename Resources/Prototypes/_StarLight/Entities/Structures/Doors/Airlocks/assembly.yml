@@ -1,4 +1,64 @@
-# Salvage and Mining Assembly
+# Robotics
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyRobotics
+  suffix: Robotics
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Doors/Airlocks/Standard/robotics.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyRoboticsGlass
+  suffix: Robotics, Glass
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Doors/Airlocks/Glass/robotics.rsi
+    state: "assembly"
+
+# Surgery
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblySurgery
+  suffix: Surgery
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Doors/Airlocks/Standard/surgery.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblySurgeryGlass
+  suffix: Surgery, Glass
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Doors/Airlocks/Glass/surgery.rsi
+    state: "assembly"
+
+# Paramedic
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyParamedic
+  suffix: Paramedic
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Doors/Airlocks/Standard/paramedic.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyParamedicGlass
+  suffix: Paramedic, Glass
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Doors/Airlocks/Glass/paramedic.rsi
+    state: "assembly"
+
+# ---------------------
+# Salvage/Mining Region
+# ---------------------
+# Salvage/Mining Shared
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblySalvageMining
@@ -6,17 +66,6 @@
   components:
   - type: Sprite
     sprite: _Starlight/Structures/Doors/Airlocks/Standard/salvagemining.rsi
-    state: "assembly"
-
-## AirlockAssemblySalvage is in Wizden assembly.yml
-
-- type: entity
-  parent: AirlockAssembly
-  id: AirlockAssemblyMiningCargo
-  suffix: Mining
-  components:
-  - type: Sprite
-    sprite: _Starlight/Structures/Doors/Airlocks/Standard/mining_cargo.rsi
     state: "assembly"
 
 - type: entity
@@ -28,7 +77,15 @@
     sprite: _Starlight/Structures/Doors/Airlocks/Glass/salvagemining.rsi
     state: "assembly"
 
-## AirlockAssemblySalvageGlass is in Wizden assembly.yml
+# Mining/Cargo Shared
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyMiningCargo
+  suffix: Mining
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Doors/Airlocks/Standard/mining_cargo.rsi
+    state: "assembly"
 
 - type: entity
   parent: AirlockAssembly
@@ -39,16 +96,7 @@
     sprite: _Starlight/Structures/Doors/Airlocks/Glass/mining_cargo.rsi
     state: "assembly"
 
-## Renamed replacement of Wizden black salvage doors
-- type: entity
-  parent: AirlockAssembly
-  id: AirlockAssemblyRetroSalvageMining
-  suffix: Salvage, Mining
-  components:
-  - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/mining.rsi
-    state: "assembly"
-
+# Retro Salvage
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyRetroSalvage
@@ -60,8 +108,37 @@
 
 - type: entity
   parent: AirlockAssembly
+  id: AirlockAssemblyRetroSalvageGlass
+  suffix: Salvage, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/mining.rsi
+    state: "assembly"
+
+# Retro Mining
+- type: entity
+  parent: AirlockAssembly
   id: AirlockAssemblyRetroMining
   suffix: Mining
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/mining.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyRetroMiningGlass
+  suffix: Mining, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/mining.rsi
+    state: "assembly"
+
+# Retro Salvage/Mining Shared
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyRetroSalvageMining
+  suffix: Salvage, Mining
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/mining.rsi
@@ -75,22 +152,3 @@
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/mining.rsi
     state: "assembly"
-
-- type: entity
-  parent: AirlockAssembly
-  id: AirlockAssemblyRetroSalvageGlass
-  suffix: Salvage, Glass
-  components:
-  - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/mining.rsi
-    state: "assembly"
-
-- type: entity
-  parent: AirlockAssembly
-  id: AirlockAssemblyRetroMiningGlass
-  suffix: Mining, Glass
-  components:
-  - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/mining.rsi
-    state: "assembly"
-# Salvage and Mining end

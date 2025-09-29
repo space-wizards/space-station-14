@@ -18,6 +18,16 @@
     science: AirlockScience
     security: AirlockSecurity
     virology: AirlockVirology
+    # Starlight Start
+    robotics: AirlockRobotics
+    surgery: AirlockSurgery
+    paramedic: AirlockParamedic
+    salvagemining: AirlockSalvageMining
+    miningcargo: AirlockMiningCargo
+    retrosalvage: AirlockRetroSalvage
+    retromining: AirlockRetroMining
+    retrosalvagemining: AirlockRetroSalvageMining
+    # Starlight End
 
 - type: paintableGroup
   id: AirlockGlass
@@ -38,3 +48,13 @@
     science: AirlockScienceGlass
     security: AirlockSecurityGlass
     virology: AirlockVirologyGlass
+    # Starlight Start
+    robotics: AirlockRoboticsGlass
+    surgery: AirlockSurgeryGlass
+    paramedic: AirlockParamedicGlass
+    salvagemining: AirlockSalvageMiningGlass
+    miningcargo: AirlockMiningCargoGlass
+    retrosalvage: AirlockRetroSalvageGlass
+    retromining: AirlockRetroMiningGlass
+    retrosalvagemining: AirlockRetroSalvageMiningGlass
+    # Starlight End

@@ -19,7 +19,27 @@ namespace Content.Shared.Communications
         public string CurrentAlert;
         public float CurrentAlertDelay;
 
-        public CommunicationsConsoleInterfaceState(bool canAnnounce, bool canCall, List<string>? alertLevels, string currentAlert, float currentAlertDelay, TimeSpan? expectedCountdownEnd = null)
+        // Starlight edit Start
+        public readonly TimeSpan? AnnouncementCooldownEnd;
+        public readonly TimeSpan? ShuttleCountdownEnd;
+        public readonly TimeSpan? CallRecallCooldownEnd;
+        public readonly bool ShuttleCallsAllowed;
+        public readonly TimeSpan? LastCountdownStart;
+
+        public CommunicationsConsoleInterfaceState(
+            bool canAnnounce,
+            bool canCall,
+            List<string>? alertLevels,
+            string currentAlert,
+            float currentAlertDelay,
+            TimeSpan? expectedCountdownEnd = null,
+            TimeSpan? announcementCooldownEnd = null,
+            TimeSpan? callRecallCooldownEnd = null,
+            TimeSpan? shuttleCountdownEnd = null,
+            bool shuttleCallsAllowed = true,
+            TimeSpan? lastCountdownStart = null
+        )
+        // Starlight edit End
         {
             CanAnnounce = canAnnounce;
             CanCall = canCall;
@@ -28,6 +48,13 @@ namespace Content.Shared.Communications
             AlertLevels = alertLevels;
             CurrentAlert = currentAlert;
             CurrentAlertDelay = currentAlertDelay;
+            // Starlight Start
+            AnnouncementCooldownEnd = announcementCooldownEnd;
+            CallRecallCooldownEnd = callRecallCooldownEnd;
+            ShuttleCountdownEnd = shuttleCountdownEnd;
+            ShuttleCallsAllowed = shuttleCallsAllowed;
+            LastCountdownStart = lastCountdownStart;
+            // Starlight End
         }
     }
 
