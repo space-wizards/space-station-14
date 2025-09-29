@@ -62,6 +62,7 @@
   parent: [ClothingHandsGlovesSyntheticBase, BaseSyndicateContraband]
   id: ClothingHandsCatPawsBase
   components:
+  # need to redefine sprites, so game wouldn't cry about icon states
   - type: Sprite
     state:
   - type: Clothing
