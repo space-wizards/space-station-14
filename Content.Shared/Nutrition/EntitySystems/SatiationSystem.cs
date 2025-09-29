@@ -66,7 +66,7 @@ public sealed class SatiationSystem : EntitySystem
     {
         foreach (var satiation in entity.Comp.Satiations.Values)
         {
-            _alerts.ClearAlertCategory(entity, _prototype.Index(satiation.Prototype).AlertCategory);
+            _alerts.ClearAlertCategory(entity.Owner, _prototype.Index(satiation.Prototype).AlertCategory);
         }
     }
 
@@ -336,11 +336,11 @@ public sealed class SatiationSystem : EntitySystem
             _movementSpeedModifier.RefreshMovementSpeedModifiers(entity);
             if (proto.Alerts.TryGetValue(satiation.CurrentThreshold, out var alertId))
             {
-                _alerts.ShowAlert(entity, alertId);
+                _alerts.ShowAlert(entity.Owner, alertId);
             }
             else
             {
-                _alerts.ClearAlertCategory(entity, proto.AlertCategory);
+                _alerts.ClearAlertCategory(entity.Owner, proto.AlertCategory);
             }
         }
 

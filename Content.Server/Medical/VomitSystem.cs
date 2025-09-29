@@ -32,7 +32,6 @@ namespace Content.Server.Medical
         [Dependency] private readonly PuddleSystem _puddle = default!;
         [Dependency] private readonly SatiationSystem _satiation = default!;
         [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-        [Dependency] private readonly ThirstSystem _thirst = default!;
 
         private static readonly ProtoId<SoundCollectionPrototype> VomitCollection = "Vomit";
 

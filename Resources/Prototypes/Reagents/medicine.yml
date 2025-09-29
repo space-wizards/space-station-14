@@ -1099,7 +1099,8 @@
         damage:
           types:
             Blunt: -2.25 # 9 per u
-      - !type:SatiateHunger
+      - !type:Satiate
+        satiationType: Hunger
         factor: -1
       - !type:HealthChange
         conditions:
