@@ -110,7 +110,6 @@
     selectableColor: true
     deleteEmpty: false
     batteryPowered: true
-    capacity: 20
   - type: Battery
     startingCharge: 20
     maxCharge: 20

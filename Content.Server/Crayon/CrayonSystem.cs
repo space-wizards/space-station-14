@@ -135,6 +135,9 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
     private void OnCrayonInit(EntityUid uid, CrayonComponent component, ComponentInit args)
     {
+        if (component.BatteryPowered && EntityManager.TryGetComponent<BatteryComponent>(uid, out var batteryComponent))
+            component.Capacity = (int)batteryComponent.MaxCharge;
+
         component.Charges = component.Capacity;
 
         // Get the first one from the catalog and set it as default
