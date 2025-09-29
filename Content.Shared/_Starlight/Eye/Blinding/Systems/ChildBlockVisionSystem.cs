@@ -33,6 +33,17 @@ public sealed class ChildBlockVisionSystem : EntitySystem
             return;
 
         var parent = _transform.GetParentUid(ent);
+        // Check for ParentCanBlockVisionComponent being false
+        while (parent.IsValid())
+        {
+            if (TryComp<ParentCanBlockVisionComponent>(parent, out var parentBlock) && !parentBlock.Enabled)
+                return;
+            if (!_transformQuery.TryComp(parent, out var xform))
+                break;
+            parent = xform.ParentUid;
+        }
+
+        parent = _transform.GetParentUid(ent);
         if (parent.IsValid() && HaveBlockVisionParent(parent))
             args.Cancel();
     }
