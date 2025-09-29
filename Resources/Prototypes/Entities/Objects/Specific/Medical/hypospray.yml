@@ -182,12 +182,18 @@
   - type: SolutionContainerManager
     solutions:
       pen:
-        maxVol: 15
+        maxVol: 35 # Offbrand
         reagents:
         - ReagentId: Epinephrine
           Quantity: 12
         - ReagentId: TranexamicAcid
           Quantity: 3
+        # Begin Offbrand
+        - ReagentId: Paracetamol
+          Quantity: 10
+        - ReagentId: Inaprovaline
+          Quantity: 10
+        # End Offbrand
 
 - type: entity
   name: poison auto-injector
