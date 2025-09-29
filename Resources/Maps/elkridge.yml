@@ -15511,8 +15511,6 @@ entities:
       accessListsOriginal:
       - - Atmospherics
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 5566
   - uid: 8623
