@@ -77,7 +77,7 @@ public sealed partial class PainfulWoundComponent : Component
     public Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2> FreshPainCoefficients;
 
     [DataField]
-    public double FreshPainDecreasePerSecond = 0.15d;
+    public double FreshPainDecreasePerSecond = 0.05d;
 }
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
