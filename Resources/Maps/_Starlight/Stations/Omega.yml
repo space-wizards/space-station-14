@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/29/2025 23:22:41
-  entityCount: 14324
+  time: 09/29/2025 23:30:08
+  entityCount: 14325
 maps:
 - 1
 grids:
@@ -42031,7 +42031,7 @@ entities:
   - uid: 6550
     components:
     - type: Transform
-      pos: -1.4420605,35.49948
+      pos: -1.221098,35.56883
       parent: 2
   - uid: 6551
     components:
@@ -66012,7 +66012,7 @@ entities:
       parent: 2
 - proto: PaperBin20
   entities:
-  - uid: 9944
+  - uid: 9945
     components:
     - type: Transform
       pos: 9.5,26.5
@@ -69571,7 +69571,7 @@ entities:
       isDamageActive: False
 - proto: PrinterDoc
   entities:
-  - uid: 9943
+  - uid: 9944
     components:
     - type: Transform
       pos: 8.5,26.5
@@ -91525,6 +91525,11 @@ entities:
       parent: 2
 - proto: WeaponCapacitorRecharger
   entities:
+  - uid: 9943
+    components:
+    - type: Transform
+      pos: -1.5,35.5
+      parent: 2
   - uid: 14148
     components:
     - type: Transform
