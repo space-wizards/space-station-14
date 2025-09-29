@@ -16281,5 +16281,12 @@ Entries:
   id: 175900
   time: '2025-09-29T07:21:02.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1759
+- author: CrazyPhantom
+  changes:
+  - message: Chemistry Bags can no longer take patch packs.
+    type: Fix
+  id: 175800
+  time: '2025-09-29T07:21:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1758
 Order: -1
 
