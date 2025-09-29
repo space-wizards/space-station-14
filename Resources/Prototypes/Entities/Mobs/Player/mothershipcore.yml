@@ -180,8 +180,8 @@
   - type: ContainerFill
     containers:
       borg_module:
-      - BorgModuleAdvancedTool
       - MothershipModule
+      - BorgModuleAdvancedTool
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot { }
