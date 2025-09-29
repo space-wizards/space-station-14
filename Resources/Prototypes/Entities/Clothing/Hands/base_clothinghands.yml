@@ -57,6 +57,20 @@
     fiberMaterial: fibers-synthetic
   - type: FingerprintMask
 
+# needed so paws would be harmless and could squeak when hitting somebody
+- type: entity
+  parent: [ClothingHandsGlovesSyntheticBase, BaseSyndicateContraband]
+  id: ClothingHandsCatPawsBase
+  components:
+  - type: MeleeWeapon
+    soundHit:
+      collection: ToySqueak
+    damage:
+      types:
+        Blunt: 0
+    hidden: true
+    mustBeEquippedToUse: true
+
 - type: entity
   abstract: true
   parent: BaseItem

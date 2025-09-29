@@ -363,7 +363,7 @@
         Heat: 0 # no protection
 
 - type: entity
-  parent: [ClothingHandsGlovesSyntheticBase, BaseSyndicateContraband]
+  parent: ClothingHandsCatPawsBase
   id: ClothingHandsCatPawsWhite
   name: white cat paws
   description: Super-soft white cat paws, made specially for the most brutal agents.
@@ -372,7 +372,6 @@
     sprite: Clothing/Hands/Gloves/Paws/white.rsi
     layers:
     - state: icon
-  - type: Item
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Paws/white.rsi
     clothingVisuals:
@@ -380,16 +379,9 @@
       - state: equipped-HAND
   - type: Fiber
     fiberColor: fibers-white
-  - type: MeleeWeapon
-    soundHit:
-      collection: ToySqueak
-    damage:
-      types:
-        Blunt: 0
-    hidden: true
 
 - type: entity
-  parent: [ClothingHandsGlovesSyntheticBase, BaseSyndicateContraband]
+  parent: ClothingHandsCatPawsBase
   id: ClothingHandsCatPawsBrown
   name: brown cat paws
   description: Super-soft brown cat paws, made specially for the most brutal agents.
@@ -398,7 +390,6 @@
     sprite: Clothing/Hands/Gloves/Paws/brown.rsi
     layers:
     - state: icon
-  - type: Item
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Paws/brown.rsi
     clothingVisuals:
@@ -406,16 +397,9 @@
       - state: equipped-HAND
   - type: Fiber
     fiberColor: fibers-brown
-  - type: MeleeWeapon
-    soundHit:
-      collection: ToySqueak
-    damage:
-      types:
-        Blunt: 0
-    hidden: true
 
 - type: entity
-  parent: [ClothingHandsGlovesSyntheticBase, BaseSyndicateContraband]
+  parent: ClothingHandsCatPawsBase
   id: ClothingHandsCatPawsBlack
   name: black cat paws
   description: Super-soft white black paws, made specially for the most brutal agents.
@@ -424,7 +408,6 @@
     sprite: Clothing/Hands/Gloves/Paws/black.rsi
     layers:
     - state: icon
-  - type: Item
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Paws/black.rsi
     clothingVisuals:
@@ -432,16 +415,9 @@
       - state: equipped-HAND
   - type: Fiber
     fiberColor: fibers-black
-  - type: MeleeWeapon
-    soundHit:
-      collection: ToySqueak
-    damage:
-      types:
-        Blunt: 0
-    hidden: true
 
 - type: entity
-  parent: [ClothingHandsGlovesSyntheticBase, BaseSyndicateContraband]
+  parent: ClothingHandsCatPawsBase
   id: ClothingHandsCatPawsBlackWhite
   name: black and white cat paws
   description: Super-soft black and white cat paws, made specially for the most brutal agents.
@@ -450,7 +426,6 @@
     sprite: Clothing/Hands/Gloves/Paws/black_white.rsi
     layers:
     - state: icon
-  - type: Item
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Paws/black_white.rsi
     clothingVisuals:
@@ -458,13 +433,6 @@
       - state: equipped-HAND
   - type: Fiber
     fiberColor: fibers-grey
-  - type: MeleeWeapon
-    soundHit:
-      collection: ToySqueak
-    damage:
-      types:
-        Blunt: 0
-    hidden: true
 
 - type: entity
   # Intentionally named after regular gloves, they're meant to be sneaky.
