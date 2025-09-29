@@ -136,18 +136,14 @@ public sealed class ImpairedMobilitySystem : EntitySystem
     }
 
     // Handles tripping when moving with makeshift mobility aids
-    // i dont know how to do prediction, pray this works ok?
     private void OnMoveInput(Entity<ImpairedMobilityComponent> ent, ref MoveInputEvent args)
     {
-        if (!_netManager.IsServer)
-            return;
-
         // Only check for tripping if the entity is actually trying to move
         if (!args.HasDirectionalMovement)
             return;
 
         // Get the best mobility aid being used
-        var (effectiveness, makeshiftAid, makeshiftAidEntity) = GetBestMobilityAid(ent.Owner);
+        var (_, makeshiftAid, makeshiftAidEntity) = GetBestMobilityAid(ent.Owner);
 
         // Only trip if using a makeshift mobility aid
         if (makeshiftAid == null || !makeshiftAid.IsMakeshift || makeshiftAid.TripChance <= 0f)
@@ -180,36 +176,43 @@ public sealed class ImpairedMobilitySystem : EntitySystem
         ent.Comp.LastTripTime = currentTime;
         ent.Comp.NextTripRollTime = currentTime + TimeSpan.FromSeconds(ent.Comp.TripCooldownTime);
 
-        // Stun and knock down for 2 seconds
-        _stunSystem.TryAddStunDuration(ent.Owner, TimeSpan.FromSeconds(2));
-        _stunSystem.TryKnockdown(ent.Owner, TimeSpan.FromSeconds(2));
-
-        // Apply damage if the makeshift aid has trip damage
-        if (makeshiftAid.TripDamage != null)
+        // get tripped dork
+        if (_netManager.IsServer)
         {
-            _damageableSystem.TryChangeDamage(ent.Owner, makeshiftAid.TripDamage);
-            _audioSystem.PlayPvs("/Audio/Effects/hit_kick.ogg", ent.Owner);
-        }
+            // Stun and knock down for 2 seconds
+            _stunSystem.TryAddStunDuration(ent.Owner, TimeSpan.FromSeconds(2));
+            _stunSystem.TryKnockdown(ent.Owner, TimeSpan.FromSeconds(2));
 
-        // Trip popups
-        string selfMessage, othersMessage;
-        if (makeshiftAid.TripDamage != null)
-        {
-            // Dangerous
-            selfMessage = Loc.GetString("mobility-aid-trait-trip-self-dangerous", ("mobilityAid", makeshiftAidEntity!.Value));
-            othersMessage = Loc.GetString("mobility-aid-trait-trip-others-dangerous", ("user", ent.Owner), ("mobilityAid", makeshiftAidEntity!.Value));
+            // Apply damage if the makeshift aid has trip damage
+            if (makeshiftAid.TripDamage != null)
+            {
+                _damageableSystem.TryChangeDamage(ent.Owner, makeshiftAid.TripDamage);
+                _audioSystem.PlayPvs("/Audio/Effects/hit_kick.ogg", ent.Owner);
+            }
 
-            _popup.PopupEntity(selfMessage, ent.Owner, ent.Owner, PopupType.SmallCaution);
-            _popup.PopupEntity(othersMessage, ent.Owner, Filter.PvsExcept(ent.Owner), true, PopupType.SmallCaution);
-        }
-        else
-        {
-            // Safe
-            selfMessage = Loc.GetString("mobility-aid-trait-trip-self", ("mobilityAid", makeshiftAidEntity!.Value));
-            othersMessage = Loc.GetString("mobility-aid-trait-trip-others", ("user", ent.Owner), ("mobilityAid", makeshiftAidEntity!.Value));
+            // Trip popups
+            if (makeshiftAidEntity == null)
+                return;
 
-            _popup.PopupEntity(selfMessage, ent.Owner, ent.Owner);
-            _popup.PopupEntity(othersMessage, ent.Owner, Filter.PvsExcept(ent.Owner), true);
+            string selfMessage, othersMessage;
+            if (makeshiftAid.TripDamage != null)
+            {
+                // Dangerous
+                selfMessage = Loc.GetString("mobility-aid-trait-trip-self-dangerous", ("mobilityAid", makeshiftAidEntity.Value));
+                othersMessage = Loc.GetString("mobility-aid-trait-trip-others-dangerous", ("user", ent.Owner), ("mobilityAid", makeshiftAidEntity.Value));
+
+                _popup.PopupEntity(selfMessage, ent.Owner, ent.Owner, PopupType.SmallCaution);
+                _popup.PopupEntity(othersMessage, ent.Owner, Filter.PvsExcept(ent.Owner), true, PopupType.SmallCaution);
+            }
+            else
+            {
+                // Safe
+                selfMessage = Loc.GetString("mobility-aid-trait-trip-self", ("mobilityAid", makeshiftAidEntity.Value));
+                othersMessage = Loc.GetString("mobility-aid-trait-trip-others", ("user", ent.Owner), ("mobilityAid", makeshiftAidEntity.Value));
+
+                _popup.PopupEntity(selfMessage, ent.Owner, ent.Owner);
+                _popup.PopupEntity(othersMessage, ent.Owner, Filter.PvsExcept(ent.Owner), true);
+            }
         }
     }
 
