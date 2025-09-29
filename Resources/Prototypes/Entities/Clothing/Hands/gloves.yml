@@ -380,6 +380,13 @@
       - state: equipped-HAND
   - type: Fiber
     fiberColor: fibers-white
+  - type: MeleeWeapon
+    soundHit:
+      collection: ToySqueak
+    damage:
+      types:
+        Blunt: 0
+    hidden: true
 
 - type: entity
   parent: [ClothingHandsGlovesSyntheticBase, BaseSyndicateContraband]
@@ -399,6 +406,13 @@
       - state: equipped-HAND
   - type: Fiber
     fiberColor: fibers-brown
+  - type: MeleeWeapon
+    soundHit:
+      collection: ToySqueak
+    damage:
+      types:
+        Blunt: 0
+    hidden: true
 
 - type: entity
   parent: [ClothingHandsGlovesSyntheticBase, BaseSyndicateContraband]
@@ -418,6 +432,13 @@
       - state: equipped-HAND
   - type: Fiber
     fiberColor: fibers-black
+  - type: MeleeWeapon
+    soundHit:
+      collection: ToySqueak
+    damage:
+      types:
+        Blunt: 0
+    hidden: true
 
 - type: entity
   parent: [ClothingHandsGlovesSyntheticBase, BaseSyndicateContraband]
@@ -437,6 +458,13 @@
       - state: equipped-HAND
   - type: Fiber
     fiberColor: fibers-grey
+  - type: MeleeWeapon
+    soundHit:
+      collection: ToySqueak
+    damage:
+      types:
+        Blunt: 0
+    hidden: true
 
 - type: entity
   # Intentionally named after regular gloves, they're meant to be sneaky.
