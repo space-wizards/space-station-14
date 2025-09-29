@@ -399,7 +399,6 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
     private void DoAdminAlerts(List<AdminLogPlayer> players, string message, LogImpact impact)
     {
-        var adminLog = false;
         var logMessage = message;
 
         foreach (var player in players)
@@ -422,7 +421,10 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             }
 
             if (impact == LogImpact.Extreme) // Always chat-notify Extreme logs
-                adminLog = true;
+            {
+                _chat.SendAdminAlert(logMessage);
+                return;
+            }
 
             if (impact == LogImpact.High) // Only chat-notify High logs if the player is below a threshold playtime
             {
@@ -432,17 +434,12 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
                     if (playtimes.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out var overallTime) &&
                         overallTime <= TimeSpan.FromHours(_highImpactLogPlaytime))
                     {
-                        adminLog = true;
+                        _chat.SendAdminAlert(logMessage);
+                        return;
                     }
                 }
             }
-
-            if (adminLog)
-                break;
         }
-
-        if (adminLog)
-            _chat.SendAdminAlert(logMessage);
     }
 
     public async Task<List<SharedAdminLog>> All(LogFilter? filter = null, Func<List<SharedAdminLog>>? listProvider = null)
