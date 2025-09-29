@@ -44,6 +44,7 @@ public sealed class TraitSystem : EntitySystem
     public void ApplyTraits(EntityUid Mob, HumanoidCharacterProfile Profile)
     {
         foreach (var traitId in Profile.TraitPreferences)
+        #endregion Starlight Traits on spawn here
         {
             if (!_prototypeManager.TryIndex<TraitPrototype>(traitId, out var traitPrototype))
             {
