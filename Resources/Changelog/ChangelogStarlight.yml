@@ -16063,5 +16063,12 @@ Entries:
   id: 152010
   time: '2025-09-29T03:38:29.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1520
+- author: 'CrazyPhantom:'
+  changes:
+  - message: Adds expedition key to QM's over hear headset
+    type: Fix
+  id: 175400
+  time: '2025-09-29T04:47:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1754
 Order: -1
 
