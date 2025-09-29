@@ -53,6 +53,7 @@ public abstract class SLSharedCharacterInfoSystem : EntitySystem
 
     private void OnPlayerSpawned(PlayerSpawnCompleteEvent ev)
     {
+        #region Starlight
         ApplyCharacterInfo(ev.Mob, ev.Profile);
     }
 
