@@ -16324,5 +16324,31 @@ Entries:
   id: 176000
   time: '2025-09-29T19:41:30.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1760
+- author: Conflee
+  changes:
+  - message: Added Salvage and Mining Shuttle Consoles, Salvage Lead spawn and Locker,
+      Mining Ticket Vender, etc to every Salvage Dept
+    type: Add
+  id: 176100
+  time: '2025-09-29T21:02:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1761
+- author: Conflee
+  changes:
+  - message: Changed Layouts of almost every Salvage/Mining Dept to work with the
+      new Salvage and Mining Rework
+    type: Tweak
+  id: 176101
+  time: '2025-09-29T21:02:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1761
+- author: Conflee
+  changes:
+  - message: Fixed some burn chambers to be less prone to exploding, or to at least
+      do so in a safer way now. I can not idiot proof every Atmos though, so Atmosians
+      will just have to learn how to set up redundancies and safety features into
+      their TEGs and Burn Chambers
+    type: Fix
+  id: 176102
+  time: '2025-09-29T21:02:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1761
 Order: -1
 
