@@ -13,6 +13,8 @@
   access:
   - Research
   - Maintenance
+  extendedAccess:
+  - Robotics
 
 - type: startingGear
   id: ScientistGear
