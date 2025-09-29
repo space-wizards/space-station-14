@@ -869,6 +869,39 @@
     autoRechargePauseTime: 30
 
 - type: entity
+  name: energy magnum
+  parent: [BaseWeaponBatterySmall, BaseSecurityContraband]
+  id: WeaponEnergyMagnum
+  description: A unique energy pistol given to the Head of Security of your station. It has three different firing modes that serve different purposes.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/energy_magnum.rsi
+    layers:
+    - state: icon
+    - state: icon-unshaded
+      shader: unshaded
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletLaserMagnum
+    fireCost: 150
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: BulletLaserMagnum
+      fireCost: 150
+    - proto: BulletLaserWindowPiercingMagnum
+      fireCost: 150
+    - proto: BulletDisabler
+      fireCost: 100
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 48
+    autoRechargePause: true
+    autoRechargePauseTime: 10
+  - type: Appearance
+
+- type: entity
   name: temperature gun
   parent: [BaseWeaponBattery, BaseGunWieldable, BaseSecurityContraband]
   id: WeaponTemperatureGun
