@@ -15960,5 +15960,12 @@ Entries:
   id: 154500
   time: '2025-09-28T19:26:04.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1545
+- author: FoxxoTrystan
+  changes:
+  - message: Vulpkanins custom names!
+    type: Fix
+  id: 172300
+  time: '2025-09-29T01:26:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1723
 Order: -1
 
