@@ -163,7 +163,7 @@ namespace Content.Shared.Damage
 
             // TODO DAMAGE
             // byref struct event.
-            RaiseLocalEvent(uid, new DamageChangedEvent(component, damageDelta, interruptsDoAfters, origin)); // Offbrand
+            RaiseLocalEvent(uid, new DamageChangedEvent(component, damageDelta, interruptsDoAfters, origin, forcedRefresh)); // Offbrand
         }
 
         /// <summary>
