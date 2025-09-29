@@ -815,7 +815,7 @@
 
 - type: entity
   name: energy shotgun
-  parent: [BaseWeaponBattery, BaseGunWieldable, BaseGrandTheftContraband]
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseSecurityContraband]
   id: WeaponEnergyShotgun
   description: A one-of-a-kind prototype energy weapon that uses various shotgun configurations. It offers the possibility of both lethal and non-lethal shots, making it a versatile weapon.
   components:
@@ -853,11 +853,6 @@
     size: Large
     sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
     heldPrefix: energy
-  - type: Tag
-    tags:
-    - HighRiskItem
-  - type: StealTarget
-    stealGroup: WeaponEnergyShotgun
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Battery
     maxCharge: 1200
@@ -870,7 +865,7 @@
 
 - type: entity
   name: energy magnum
-  parent: [BaseWeaponBatterySmall, BaseSecurityContraband]
+  parent: [BaseWeaponBatterySmall, BaseGrandTheftContraband]
   id: WeaponEnergyMagnum
   description: A unique energy pistol given to the Head of Security of your station. It has three different firing modes that serve different purposes.
   components:
@@ -880,6 +875,11 @@
     - state: icon
     - state: icon-unshaded
       shader: unshaded
+  - type: Tag
+    tags:
+    - HighRiskItem
+  - type: StealTarget
+    stealGroup: WeaponEnergyMagnum
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
