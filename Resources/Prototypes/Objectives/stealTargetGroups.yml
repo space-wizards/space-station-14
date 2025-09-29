@@ -85,10 +85,10 @@
     state: icon
 
 - type: stealTargetGroup
-  id: WeaponEnergyShotgun
-  name: steal-target-groups-weapon-energy-shot-gun
+  id: WeaponEnergyMagnum
+  name: steal-target-groups-weapon-energy-magnum
   sprite:
-    sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
+    sprite: Objects/Weapons/Guns/Battery/energy_magnum.rsi
     state: base
 
 # Thief Collection
