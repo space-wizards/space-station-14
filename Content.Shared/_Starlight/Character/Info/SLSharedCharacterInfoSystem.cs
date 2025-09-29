@@ -89,7 +89,7 @@ public abstract class SLSharedCharacterInfoSystem : EntitySystem
         if (_configManager.GetCVar(CCVars.FlavorText))
         {
             var charDescription = new CharacterDescriptionComponent { Description = character.PhysicalDescription, };
-            AddComp(Mob, charDescription, true);
+            AddComp(Mob, charDescription, true); //Starlight
         }
 
         if (_configManager.GetCVar(StarlightCCVars.ExploitableSecrets))
