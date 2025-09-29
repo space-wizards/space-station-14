@@ -95,7 +95,7 @@ public abstract class SLSharedCharacterInfoSystem : EntitySystem
         if (_configManager.GetCVar(StarlightCCVars.ExploitableSecrets))
         {
             var exploitable = new ExploitableInfoComponent() { Info = character.ExploitableInfo, };
-            AddComp(Mob, exploitable, true);
+            AddComp(Mob, exploitable, true); //Starlight
         }
 
         if (_configManager.GetCVar(StarlightCCVars.ICSecrets))
