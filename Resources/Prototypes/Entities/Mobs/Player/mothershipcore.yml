@@ -1,17 +1,13 @@
 - type: entity
-  parent: [ BaseControllable ]
+  parent: [ BaseControllable, BaseStructure ]
   id: MothershipCore
   name: mothership core
   description: A sentient machine that can produce Xenoborgs. Without this the Xenoborgs are doomed.
-  placement:
-    mode: SnapgridCenter
   components:
   - type: Appearance
   - type: WiresVisuals
   - type: Damageable
     damageContainer: Inorganic
-  - type: Physics
-    bodyType: Static
   - type: Fixtures
     fixtures:
       fix1:
@@ -22,7 +18,8 @@
         mask:
         - MachineMask
         layer:
-          - MachineLayer
+        - MidImpassable
+        - LowImpassable
   - type: Sprite
     sprite: Mobs/Silicon/mothership_core.rsi
     layers:
@@ -119,8 +116,6 @@
         type: LatheBoundUserInterface
       enum.ResearchClientUiKey.Key:
         type: ResearchClientBoundUserInterface
-  - type: Transform
-    anchored: true
   - type: Pullable
   - type: StaticPrice
     price: 800
