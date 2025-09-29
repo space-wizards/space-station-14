@@ -94,21 +94,11 @@ public sealed partial class CargoSystem : SharedCargoSystem
     {
         var accounts = station.Comp.Accounts;
 
-        BankBalanceUpdatedEvent ev;
-
-        if (accounts.ContainsKey(accountPrototypeId))
-        {
-            accounts[accountPrototypeId] += money;
-            ev = new BankBalanceUpdatedEvent(station, station.Comp.Accounts);
-            RaiseLocalEvent(station, ref ev, true);
-            return true;
-        }
-
-        if (!createAccount)
+        if (!accounts.ContainsKey(accountPrototypeId) && !createAccount)
             return false;
 
-        accounts[accountPrototypeId] = money;
-        ev = new BankBalanceUpdatedEvent(station, station.Comp.Accounts);
+        accounts[accountPrototypeId] += money;
+        var ev = new BankBalanceUpdatedEvent(station, station.Comp.Accounts);
         RaiseLocalEvent(station, ref ev, true);
         return true;
     }
@@ -130,21 +120,11 @@ public sealed partial class CargoSystem : SharedCargoSystem
     {
         var accounts = station.Comp.Accounts;
 
-        BankBalanceUpdatedEvent ev;
-
-        if (accounts.ContainsKey(accountPrototypeId))
-        {
-            accounts[accountPrototypeId] = money;
-            ev = new BankBalanceUpdatedEvent(station, station.Comp.Accounts);
-            RaiseLocalEvent(station, ref ev, true);
-            return true;
-        }
-
-        if (!createAccount)
+        if (!accounts.ContainsKey(accountPrototypeId) && !createAccount)
             return false;
 
         accounts[accountPrototypeId] = money;
-        ev = new BankBalanceUpdatedEvent(station, station.Comp.Accounts);
+        var ev = new BankBalanceUpdatedEvent(station, station.Comp.Accounts);
         RaiseLocalEvent(station, ref ev, true);
         return true;
     }
