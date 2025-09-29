@@ -1,6 +1,17 @@
 meta:
   format: 7
-  postmapinit: false
+  category: Map
+  engineVersion: 266.0.0
+  forkId: ""
+  forkVersion: ""
+  time: 09/29/2025 04:07:38
+  entityCount: 14338
+maps:
+- 1
+grids:
+- 2
+orphans: []
+nullspace: []
 tilemap:
   0: Space
   7: FloorAsteroidSand

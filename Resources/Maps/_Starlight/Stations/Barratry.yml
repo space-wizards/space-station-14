@@ -1,6 +1,17 @@
 meta:
   format: 7
-  postmapinit: false
+  category: Map
+  engineVersion: 266.0.0
+  forkId: ""
+  forkVersion: ""
+  time: 09/29/2025 02:20:42
+  entityCount: 15752
+maps:
+- 1
+grids:
+- 2
+orphans: []
+nullspace: []
 tilemap:
   0: Space
   2: FloorArcadeBlue2
