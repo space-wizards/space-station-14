@@ -470,7 +470,7 @@ namespace Content.Server.Administration.Systems
                 {
                     Text = Loc.GetString("delete-verb-get-data-text"),
                     Category = VerbCategory.Debug,
-                    Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png")),
+                    Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png")), //Starlight
                     Act = () => Del(args.Target),
                     Impact = LogImpact.Medium,
                     ConfirmationPopup = true
