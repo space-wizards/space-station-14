@@ -62,6 +62,10 @@
   parent: [ClothingHandsGlovesSyntheticBase, BaseSyndicateContraband]
   id: ClothingHandsCatPawsBase
   components:
+  - type: Sprite
+    state:
+  - type: Clothing
+    state: 
   - type: MeleeWeapon
     soundHit:
       collection: ToySqueak
