@@ -86,28 +86,21 @@ public sealed partial class CargoSystem : SharedCargoSystem
     /// <param name="createAccount">Whether or not it should create the account if it doesn't exist.</param>
     /// <param name="stationBankAccount">Resolve pattern, station bank account component of the station.</param>
     /// <returns>Whether or not setting the value succeeded.</returns>
-    /// <exception cref="ArgumentException">Thrown when the given station is not a station.</exception>
     public bool TryAdjustBankAccount(
-        EntityUid station,
+        Entity<StationBankAccountComponent> station,
         string accountPrototypeId,
         int money,
-        bool createAccount = false,
-        StationBankAccountComponent? stationBankAccount = null)
+        bool createAccount = false)
     {
-        if (!Resolve(station, ref stationBankAccount))
-            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
-
-        var ent = (Entity<StationBankAccountComponent>)(station, stationBankAccount);
-
-        var accounts = stationBankAccount.Accounts;
+        var accounts = station.Comp.Accounts;
 
         BankBalanceUpdatedEvent ev;
 
         if (accounts.ContainsKey(accountPrototypeId))
         {
             accounts[accountPrototypeId] += money;
-            ev = new BankBalanceUpdatedEvent(ent, ent.Comp.Accounts);
-            RaiseLocalEvent(ent, ref ev, true);
+            ev = new BankBalanceUpdatedEvent(station, station.Comp.Accounts);
+            RaiseLocalEvent(station, ref ev, true);
             return true;
         }
 
@@ -115,8 +108,8 @@ public sealed partial class CargoSystem : SharedCargoSystem
             return false;
 
         accounts[accountPrototypeId] = money;
-        ev = new BankBalanceUpdatedEvent(ent, ent.Comp.Accounts);
-        RaiseLocalEvent(ent, ref ev, true);
+        ev = new BankBalanceUpdatedEvent(station, station.Comp.Accounts);
+        RaiseLocalEvent(station, ref ev, true);
         return true;
     }
 
@@ -129,28 +122,21 @@ public sealed partial class CargoSystem : SharedCargoSystem
     /// <param name="createAccount">Whether or not it should create the account if it doesn't exist.</param>
     /// <param name="stationBankAccount">Resolve pattern, station bank account component of the station.</param>
     /// <returns>Whether or not setting the value succeeded.</returns>
-    /// <exception cref="ArgumentException">Thrown when the given station is not a station.</exception>
     public bool TrySetBankAccount(
-        EntityUid station,
+        Entity<StationBankAccountComponent> station,
         string accountPrototypeId,
         int money,
-        bool createAccount = false,
-        StationBankAccountComponent? stationBankAccount = null)
+        bool createAccount = false)
     {
-        if (!Resolve(station, ref stationBankAccount))
-            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
-
-        var ent = (Entity<StationBankAccountComponent>)(station, stationBankAccount);
-
-        var accounts = stationBankAccount.Accounts;
+        var accounts = station.Comp.Accounts;
 
         BankBalanceUpdatedEvent ev;
 
         if (accounts.ContainsKey(accountPrototypeId))
         {
             accounts[accountPrototypeId] = money;
-            ev = new BankBalanceUpdatedEvent(ent, ent.Comp.Accounts);
-            RaiseLocalEvent(ent, ref ev, true);
+            ev = new BankBalanceUpdatedEvent(station, station.Comp.Accounts);
+            RaiseLocalEvent(station, ref ev, true);
             return true;
         }
 
@@ -158,8 +144,8 @@ public sealed partial class CargoSystem : SharedCargoSystem
             return false;
 
         accounts[accountPrototypeId] = money;
-        ev = new BankBalanceUpdatedEvent(ent, ent.Comp.Accounts);
-        RaiseLocalEvent(ent, ref ev, true);
+        ev = new BankBalanceUpdatedEvent(station, station.Comp.Accounts);
+        RaiseLocalEvent(station, ref ev, true);
         return true;
     }
 

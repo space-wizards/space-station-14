@@ -2,6 +2,7 @@
 using Content.Server.Administration;
 using Content.Server.Cargo.Systems;
 using Content.Shared.Administration;
+using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
@@ -18,9 +19,14 @@ public sealed class BankCommand : ToolshedCommand
     {
         _cargo ??= GetSys<CargoSystem>();
 
-        foreach (var (account, _) in _cargo.GetAccounts(station))
+        if (!TryComp<StationBankAccountComponent>(station, out var bankAccount))
+            yield break;
+
+        var stationEnt = (Entity<StationBankAccountComponent>)(station, bankAccount);
+
+        foreach (var (account, _) in _cargo.GetAccounts(stationEnt))
         {
-            yield return new BankAccount(account.Id, station, _cargo, EntityManager);
+            yield return new BankAccount(account.Id, stationEnt, _cargo, EntityManager);
         }
     }
 
@@ -29,16 +35,21 @@ public sealed class BankCommand : ToolshedCommand
         => stations.SelectMany(Accounts);
 
     [CommandImplementation("account")]
-    public BankAccount Account([PipedArgument] EntityUid station, ProtoId<CargoAccountPrototype> account)
+    public BankAccount? Account([PipedArgument] EntityUid station, ProtoId<CargoAccountPrototype> account)
     {
         _cargo ??= GetSys<CargoSystem>();
 
-        return new BankAccount(account.Id, station, _cargo, EntityManager);
+        if (!TryComp<StationBankAccountComponent>(station, out var bankAccount))
+            return null;
+
+        var stationEnt = (Entity<StationBankAccountComponent>)(station, bankAccount);
+
+        return new BankAccount(account.Id, stationEnt, _cargo, EntityManager);
     }
 
     [CommandImplementation("account")]
     public IEnumerable<BankAccount> Account([PipedArgument] IEnumerable<EntityUid> stations, ProtoId<CargoAccountPrototype> account)
-        => stations.Select(x => Account(x, account));
+        => stations.Select(x => Account(x, account).GetValueOrDefault());
 
     [CommandImplementation("adjust")]
     public BankAccount Adjust([PipedArgument] BankAccount @ref, int by)
@@ -79,7 +90,7 @@ public sealed class BankCommand : ToolshedCommand
 
 public readonly record struct BankAccount(
     string Account,
-    EntityUid Station,
+    Entity<StationBankAccountComponent> Station,
     CargoSystem Cargo,
     IEntityManager EntityManager)
 {
