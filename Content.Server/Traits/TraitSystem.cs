@@ -37,6 +37,7 @@ public sealed class TraitSystem : EntitySystem
             return;
         }
 
+        #region Starlight Traits on spawn here
         ApplyTraits(args.Mob, args.Profile);
     }
 
