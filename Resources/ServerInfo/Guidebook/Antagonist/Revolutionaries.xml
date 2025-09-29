@@ -14,7 +14,7 @@
 
   ## Objectives
   Your main goal is to [color=cyan]convert[/color], [color=yellow]cuff[/color], or [color=red]kill[/color] all of the [textlink="Command staff" link="Command"].
-  
+
   These roles form the backbone of station authority, and they are always protected by [color=cyan]mindshield implants[/color].
 
   [bold]Converting command and/or security is critical for success.[/bold]
@@ -24,8 +24,7 @@
   In that case, every [color=red]Revolutionary[/color] deconverts immediately.
 
   ## Head Revolutionaries
-  At the start of the shift, several crew are chosen as [bold][color=#5e9cff]Head Revolutionaries[/color][/bold].
-  They begin with a [color=cyan]flash[/color] and a pair of [color=cyan]sunglasses[/color].
+  [bold][color=#5e9cff]Head Revolutionaries[/color][/bold] are chosen at the start of the shift and begin with a [color=cyan]flash[/color] and a pair of [color=cyan]sunglasses[/color].
 
   <Box>
     <GuideEntityEmbed Entity="Flash"/>
