@@ -3,7 +3,7 @@
   mapName: 'Elkridge Depot'
   mapPath: /Maps/_Starlight/Stations/Elkridge.yml
   minPlayers: 15
-  maxPlayers: 65
+  maxPlayers: 75
   stations:
     StarlightElkridge:
       stationProto: StandardNanotrasenStation
@@ -61,6 +61,7 @@
             MiningSpecialist: [ 2, 3 ]
             CargoTechnician: [ 2, 3 ]
             MailTech: [ 1, 2 ]
+            SalvageLead: [ 1, 1 ]
             #civilian
             Assistant: [ -1, -1 ]
             Clown: [ 1, 1 ]
