@@ -74,7 +74,7 @@ public sealed class SithShieldAbilitySystem : EntitySystem
             return;
         }
 
-        if (_hands.GetActiveItem(uid) == null)
+        if (_hands.GetActiveItem(uid) != null)
         {
             _popup.PopupEntity(Loc.GetString("Выберете пустую руку!"), uid, uid);
             return;
