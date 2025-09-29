@@ -68,10 +68,31 @@
   id: OrganVoxEyes
   parent: OrganHumanEyes
   name: eyes
-  description: "I see you!"
   components:
   - type: Sprite
     sprite: Mobs/Species/Vox/organs.rsi
   - type: Item
     size: Small
     heldPrefix: eyeballs
+
+- type: entity
+  id: OrganVoxTongueA
+  parent: OrganHumanTongue
+  name: tongue
+  description: "A fleshy muscle mostly used for screaming."
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Vox/organs.rsi
+  - type: Item
+    size: Small
+
+- type: entity
+  id: OrganVoxTongueB
+  parent: OrganHumanTongue
+  name: tongue
+  description: "A fleshy muscle mostly used for screaming."
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Vox/organs.rsi
+  - type: Item
+    size: Small

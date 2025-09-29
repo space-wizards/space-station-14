@@ -8,20 +8,20 @@
     },
     "states": [
         {
-            "name": "lungs-inhand-left",
+            "name": "eyeballs-inhand-left",
             "directions": 4
         },
         {
-            "name": "lungs-inhand-right",
+            "name": "eyeballs-inhand-right",
             "directions": 4
         },
         {
-            "name": "lung-l"
+            "name": "eyeball-l"
         },
         {
-            "name": "lung-r"
+            "name": "eyeball-r"
         },
-		{
+        {
             "name": "heart-inhand-left",
             "directions": 4
         },
@@ -39,29 +39,7 @@
                 ]
             ]
         },
-		{
-            "name": "liver"
-        },
         {
-            "name": "liver-inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "liver-inhand-right",
-            "directions": 4
-        },
-		{
-            "name": "stomach"
-        },
-        {
-            "name": "stomach-inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "stomach-inhand-right",
-            "directions": 4
-        },
-		{
             "name": "kidneys-inhand-left",
             "directions": 4
         },
@@ -75,19 +53,44 @@
         {
             "name": "kidney-r"
         },
-		{
-            "name": "eyeballs-inhand-left",
+        {
+            "name": "liver"
+        },
+        {
+            "name": "liver-inhand-left",
             "directions": 4
         },
         {
-            "name": "eyeballs-inhand-right",
+            "name": "liver-inhand-right",
             "directions": 4
         },
         {
-            "name": "eyeball-l"
+            "name": "lungs-inhand-left",
+            "directions": 4
         },
         {
-            "name": "eyeball-r"
+            "name": "lungs-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "lung-l"
+        },
+        {
+            "name": "lung-r"
+        },
+        {
+            "name": "stomach"
+        },
+        {
+            "name": "stomach-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "stomach-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "tongue"
         }
     ]
 }
