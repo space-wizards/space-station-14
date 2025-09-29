@@ -324,11 +324,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         {
             _bodySystem.GibBody(args.Target.Value, true);
 
-            var logSeverity = LogImpact.High;
-            if (HasComp<HumanoidAppearanceComponent>(args.Target))
-            {
-                logSeverity = LogImpact.Extreme;
-            }
+            var logSeverity = HasComp<HumanoidAppearanceComponent>(args.Target) ? LogImpact.Extreme : LogImpact.High;
 
             _logger.Add(LogType.Gib,
                 logSeverity,
