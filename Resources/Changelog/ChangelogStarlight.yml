@@ -16259,5 +16259,19 @@ Entries:
   id: 175223
   time: '2025-09-29T05:06:44.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1752
+- author: Fractalflower
+  changes:
+  - message: Nuclear bomb now actually tells you if it's too close to space
+    type: Add
+  id: 174400
+  time: '2025-09-29T05:09:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1744
+- author: Fractalflower
+  changes:
+  - message: The Syndicate now properly label their own damn nukes.
+    type: Add
+  id: 174401
+  time: '2025-09-29T05:09:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1744
 Order: -1
 
