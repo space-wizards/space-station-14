@@ -16070,5 +16070,12 @@ Entries:
   id: 175400
   time: '2025-09-29T04:47:52.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1754
+- author: CrazyPhantom
+  changes:
+  - message: HoP's digiboard now uses access groups
+    type: Fix
+  id: 175500
+  time: '2025-09-29T04:54:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1755
 Order: -1
 
