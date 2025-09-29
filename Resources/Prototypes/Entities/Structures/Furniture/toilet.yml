@@ -115,7 +115,7 @@
         ToolOpenableVisualState.StashOpen:
           Open: { state: disposal-open }
           Closed: { state: disposal-closed }
-  - type: ParentCanBlockVision # Starlight
+  - type: ChildBlockVision # Starlight
     enabled: false # Starlight
 
 - type: entity
