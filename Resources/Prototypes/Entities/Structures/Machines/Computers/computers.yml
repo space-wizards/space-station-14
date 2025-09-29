@@ -222,7 +222,8 @@
     - map: ["computerLayerKeyboard"]
       state: generic_keyboard
     - map: ["computerLayerScreen"]
-      state: shuttle
+      sprite: _Starlight/Structures/Machines/computers.rsi # Starlight
+      state: shuttle-cargo # Starlight
     - map: ["computerLayerKeys"]
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
@@ -235,7 +236,7 @@
   - type: PointLight
     radius: 1.5
     energy: 1.6
-    color: "#43ccb5"
+    color: "#a56d19" # Starlight - matches new computerLayerScreen
   - type: Computer
     board: CargoShuttleConsoleCircuitboard
   - type: StealTarget
@@ -568,6 +569,17 @@
   description: Terminal for programming Nanotrasen employee ID cards to access parts of the station.
   components:
   - type: IdCardConsole
+  # Starlight-edit: Start
+    accessGroups:
+    - General
+    - Security
+    - Cargo
+    - Command
+    - Research
+    - Medical
+    - Service
+    - Engineering
+  # Starlight-edit: End
     privilegedIdSlot:
       name: id-card-console-privileged-id
       ejectSound: /Audio/Machines/id_swipe.ogg
@@ -1584,7 +1596,7 @@
   - type: Computer
     board: RoboticsConsoleCircuitboard
   - type: AccessReader # only used for dangerous things
-    access: [["ResearchDirector"]]
+    access: [["Robotics"]] # Starlight
   - type: Lock
     unlockOnClick: false
 

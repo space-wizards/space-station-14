@@ -21,6 +21,8 @@
   access:
   - Cargo
   - Salvage
+  - SalvageLead # Starlight
+  - Mining # Starlight
   - Quartermaster
   - Maintenance
   - External

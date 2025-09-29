@@ -4,12 +4,17 @@ using Content.Shared.Communications;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
+// Starlight edit: Start
+using Robust.Shared.IoC;
+using Content.Client.Communications.UI;
+// Starlight edit: End
 
 namespace Content.Client.Communications.UI
 {
     public sealed class CommunicationsConsoleBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly IGameTiming _timing = default!; // Starlight
 
         [ViewVariables]
         private CommunicationsConsoleMenu? _menu;
@@ -80,15 +85,24 @@ namespace Content.Client.Communications.UI
                 _menu.CanAnnounce = commsState.CanAnnounce;
                 _menu.CanBroadcast = commsState.CanBroadcast;
                 _menu.CanCall = commsState.CanCall;
+                // Starlight edit Start
+                _menu.ShuttleCallsAllowed = commsState.ShuttleCallsAllowed;
+                _menu.AnnouncementCountdownEnd = commsState.AnnouncementCooldownEnd;
+                _menu.RecallCountdownEnd = commsState.CallRecallCooldownEnd ?? commsState.CallRecallCooldownEnd;
+                _menu.ShuttleCountdownEnd = commsState.ShuttleCountdownEnd ?? commsState.ExpectedCountdownEnd;
+                // Starlight edit End
+
                 _menu.CountdownStarted = commsState.CountdownStarted;
                 _menu.AlertLevelSelectable = commsState.AlertLevels != null && !float.IsNaN(commsState.CurrentAlertDelay) && commsState.CurrentAlertDelay <= 0;
                 _menu.CurrentLevel = commsState.CurrentAlert;
                 _menu.CountdownEnd = commsState.ExpectedCountdownEnd;
+                _menu.SetLastCountdownStart(commsState.LastCountdownStart); // Starlight
 
                 _menu.UpdateCountdown();
+                _menu.UpdateAlertLevelCooldownFromState(commsState.CurrentAlertDelay); // Starlight
                 _menu.UpdateAlertLevels(commsState.AlertLevels, _menu.CurrentLevel);
                 _menu.AlertLevelButton.Disabled = !_menu.AlertLevelSelectable;
-                _menu.EmergencyShuttleButton.Disabled = !_menu.CanCall;
+                _menu.EmergencyShuttleButton.Disabled = !_menu.CanCall || !_menu.ShuttleCallsAllowed; // Starlight edit
                 _menu.AnnounceButton.Disabled = !_menu.CanAnnounce;
                 _menu.BroadcastButton.Disabled = !_menu.CanBroadcast;
             }
