@@ -86,12 +86,14 @@ public abstract class SharedCargoSystem : EntitySystem
     /// <param name="accountPrototypeId">the id of the bank account</param>
     /// <param name="money">how much money to set the account to</param>
     /// <param name="createAccount">Whether or not it should create the account if it doesn't exist.</param>
+    /// <param name="dirty">Whether to mark the bank account component as dirty.</param>
     /// <returns>Whether or not setting the value succeeded.</returns>
     public bool TryAdjustBankAccount(
         Entity<StationBankAccountComponent> station,
         ProtoId<CargoAccountPrototype> accountPrototypeId,
         int money,
-        bool createAccount = false)
+        bool createAccount = false,
+        bool dirty = true)
     {
         var accounts = station.Comp.Accounts;
 
@@ -101,6 +103,11 @@ public abstract class SharedCargoSystem : EntitySystem
         accounts[accountPrototypeId] += money;
         var ev = new BankBalanceUpdatedEvent(station, station.Comp.Accounts);
         RaiseLocalEvent(station, ref ev, true);
+
+        if (!dirty)
+            return true;
+
+        Dirty(station);
         return true;
     }
 
@@ -111,12 +118,14 @@ public abstract class SharedCargoSystem : EntitySystem
     /// <param name="accountPrototypeId">the id of the bank account</param>
     /// <param name="money">how much money to set the account to</param>
     /// <param name="createAccount">Whether or not it should create the account if it doesn't exist.</param>
+    /// <param name="dirty">Whether to mark the bank account component as dirty.</param>
     /// <returns>Whether or not setting the value succeeded.</returns>
     public bool TrySetBankAccount(
         Entity<StationBankAccountComponent> station,
         ProtoId<CargoAccountPrototype> accountPrototypeId,
         int money,
-        bool createAccount = false)
+        bool createAccount = false,
+        bool dirty = true)
     {
         var accounts = station.Comp.Accounts;
 
@@ -126,6 +135,11 @@ public abstract class SharedCargoSystem : EntitySystem
         accounts[accountPrototypeId] = money;
         var ev = new BankBalanceUpdatedEvent(station, station.Comp.Accounts);
         RaiseLocalEvent(station, ref ev, true);
+
+        if (!dirty)
+            return true;
+
+        Dirty(station);
         return true;
     }
 }
