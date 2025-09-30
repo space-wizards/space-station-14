@@ -16324,5 +16324,101 @@ Entries:
   id: 176000
   time: '2025-09-29T19:41:30.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1760
+- author: Conflee
+  changes:
+  - message: Added Salvage and Mining Shuttle Consoles, Salvage Lead spawn and Locker,
+      Mining Ticket Vender, etc to every Salvage Dept
+    type: Add
+  id: 176100
+  time: '2025-09-29T21:02:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1761
+- author: Conflee
+  changes:
+  - message: Changed Layouts of almost every Salvage/Mining Dept to work with the
+      new Salvage and Mining Rework
+    type: Tweak
+  id: 176101
+  time: '2025-09-29T21:02:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1761
+- author: Conflee
+  changes:
+  - message: Fixed some burn chambers to be less prone to exploding, or to at least
+      do so in a safer way now. I can not idiot proof every Atmos though, so Atmosians
+      will just have to learn how to set up redundancies and safety features into
+      their TEGs and Burn Chambers
+    type: Fix
+  id: 176102
+  time: '2025-09-29T21:02:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1761
+- author: CrazyPhantom
+  changes:
+  - message: Syndimov lawset, Available in syndicate uplink.
+    type: Add
+  id: 150700
+  time: '2025-09-30T02:03:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1507
+- author: CrazyPhantom
+  changes:
+  - message: Panicmov lawset.
+    type: Add
+  id: 150701
+  time: '2025-09-30T02:03:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1507
+- author: CrazyPhantom
+  changes:
+  - message: Genie in a Core lawset.
+    type: Add
+  id: 150702
+  time: '2025-09-30T02:03:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1507
+- author: CrazyPhantom
+  changes:
+  - message: Reporter lawset.
+    type: Add
+  id: 150703
+  time: '2025-09-30T02:03:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1507
+- author: CrazyPhantom
+  changes:
+  - message: Jermov lawset.
+    type: Add
+  id: 150704
+  time: '2025-09-30T02:03:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1507
+- author: CrazyPhantom
+  changes:
+  - message: AI lawboards now show what laws are on them dynamically.
+    type: Add
+  id: 150705
+  time: '2025-09-30T02:03:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1507
+- author: CrazyPhantom
+  changes:
+  - message: Genie, Reporter, Jermov and Panicmov lawsets to ION storm pool.
+    type: Add
+  id: 150706
+  time: '2025-09-30T02:03:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1507
+- author: CrazyPhantom
+  changes:
+  - message: AI lawboards to tier 2 experimental research.
+    type: Add
+  id: 150707
+  time: '2025-09-30T02:03:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1507
+- author: CrazyPhantom
+  changes:
+  - message: Most lawboards can now be sold for 1k each.
+    type: Add
+  id: 150708
+  time: '2025-09-30T02:03:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1507
+- author: CrazyPhantom
+  changes:
+  - message: AI no longer has a law 0 to follow itself on crewismov.
+    type: Fix
+  id: 150709
+  time: '2025-09-30T02:03:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1507
 Order: -1
 

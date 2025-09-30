@@ -189,7 +189,7 @@
   components:
   - type: StorageFill
     contents:
-    - id: VendingMachineRestockVendomat
+      - id: VendingMachineRestockVendomat
 
 - type: entity
   id: CrateVendingMachineRestockRoboticsFilled
@@ -199,7 +199,7 @@
   components:
   - type: StorageFill
     contents:
-    - id: VendingMachineRestockRobotics
+      - id: VendingMachineRestockRobotics
 
 - type: entity
   id: CrateVendingMachineRestockTankDispenserFilled

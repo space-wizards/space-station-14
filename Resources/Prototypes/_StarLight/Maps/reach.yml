@@ -51,6 +51,7 @@
             CargoTechnician: [ 1, 2 ]
             MailTech: [ 1, 1 ]
             MiningSpecialist: [ 1, 2 ]
+            SalvageLead: [ 1, 1 ]
             #civilian
             Assistant: [ -1, -1 ]
             Clown: [ 1, 1 ]
