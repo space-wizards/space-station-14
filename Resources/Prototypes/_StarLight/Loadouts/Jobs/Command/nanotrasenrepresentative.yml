@@ -30,6 +30,11 @@
     eyes: ClothingEyesSunGlassesHudSkill
 
 - type: loadout
+  id: NanoTrasenRepresentativeMonocle
+  equipment:
+    eyes: ClothingEyesNTRMonocle
+
+- type: loadout
   id: NanoTrasenRepresentativeHud
   equipment:
     eyes: ClothingEyesHudSkills

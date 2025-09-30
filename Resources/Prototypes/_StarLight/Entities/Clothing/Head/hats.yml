@@ -21,6 +21,20 @@
     sprite: _Starlight/Clothing/Head/Hats/blueshield.rsi
 
 - type: entity
+  parent: [ClothingHeadBase, BaseCommandContraband]
+  id: ClothingHeadHatBlueShieldSheriff
+  name: Blueshield bounty hunter's hat
+  description: for when your given charge do not wish to be tracked down.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hats/BSO_Bounty_Hunter_hat.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hats/BSO_Bounty_Hunter_hat.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+
+- type: entity
   parent: [ClothingHeadBase, BaseSecurityContraband]
   id: ClothingHeadHatBeretCorpsman
   name: corpsman's beret
