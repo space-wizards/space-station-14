@@ -279,7 +279,8 @@
   - type: EmagLatheRecipes
     emagDynamicPacks:
     - StarlightSecurityBoards
-    - StarlightDangerousLawboards
+    emagStaticPacks: # Starlight
+    - StarlightDangerousLawboards # Starlight
   - type: MaterialStorage
     whitelist:
       tags:
@@ -308,7 +309,8 @@
   - type: EmagLatheRecipes
     emagDynamicPacks:
     - StarlightSecurityBoards
-    - StarlightDangerousLawboards
+    emagStaticPacks: # Starlight
+    - StarlightDangerousLawboards # Starlight
 
 - type: entity
   id: ExosuitFabricator
