@@ -16427,5 +16427,12 @@ Entries:
   id: 177200
   time: '2025-09-30T07:47:30.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1772
+- author: CrazyPhantom
+  changes:
+  - message: Toilets no longer blind you when sitting on them.
+    type: Fix
+  id: 175600
+  time: '2025-09-30T09:07:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1756
 Order: -1
 
