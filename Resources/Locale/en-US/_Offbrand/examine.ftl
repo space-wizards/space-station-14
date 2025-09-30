@@ -1,5 +1,9 @@
 cpr-target-needs-cpr = [color=red]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } no pulse and is gasping for breath![/color]
 
+fracture-examine = [color=red]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-BASIC($target, "look", "looks") } like something is shaped wrong under { POSS-ADJ($target) } skin![/color]
+arterial-bleeding-examine = [color=red]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-BE($target) } spurting blood![/color]
+bone-death-examine = [color=red]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-BE($target) } severely mangled![/color]
+
 wound-bleeding-modifier = [color=red]bleeding {$wound}[/color]
 wound-tended-modifier = tended {$wound}
 wound-bandaged-modifier = bandaged {$wound}
@@ -35,6 +39,9 @@ wound-count-modifier =
     [one]{"patch of"}
    *[other]{"patches of"}
 }
+
+wound-incision-examine = [color=yellow]open incision{-wound-plural-modifier-s(count: $count)}[/color]
+wound-ribcage-open-examine = [color=yellow]open ribcage{-wound-plural-modifier-s(count: $count)}[/color]
 
 wound-bruise-80 = [color=crimson]monumental bruise{-wound-plural-modifier-s(count: $count)}[/color]
 wound-bruise-50 = [color=crimson]huge bruise{-wound-plural-modifier-s(count: $count)}[/color]

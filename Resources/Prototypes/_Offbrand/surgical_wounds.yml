@@ -23,6 +23,9 @@
   - type: AnalyzableWound
     descriptions:
       0: wound-incision
+  - type: WoundDescription
+    descriptions:
+      0: wound-incision-examine
 
 - type: entity
   parent: WoundSurgicalBase
@@ -71,3 +74,6 @@
   - type: AnalyzableWound
     descriptions:
       0: wound-ribcage-open
+  - type: WoundDescription
+    descriptions:
+      0: wound-ribcage-open-examine

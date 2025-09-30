@@ -27,6 +27,8 @@
   - type: PopupOnAppliedStatusEffect
     message: fracture-applied
     visualType: MediumCaution
+  - type: ExaminableStatusEffect
+    message: fracture-examine
 
 - type: entity
   parent: WoundInternalBase
@@ -51,6 +53,8 @@
   - type: PopupOnAppliedStatusEffect
     message: arterial-bleeding-applied
     visualType: MediumCaution
+  - type: ExaminableStatusEffect
+    message: arterial-bleeding-examine
 
 - type: entity
   parent: WoundInternalBase
@@ -130,3 +134,5 @@
   - type: KnockdownOnAppliedStatusEffect
     duration: 5
   - type: MovementModStatusEffect
+  - type: ExaminableStatusEffect
+    message: bone-death-examine
