@@ -16511,5 +16511,26 @@ Entries:
   id: 177100
   time: '2025-09-30T13:34:46.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1771
+- author: CawsForConcern
+  changes:
+  - message: (Omega) Fax machine to HOP
+    type: Add
+  id: 176500
+  time: '2025-09-30T13:36:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1765
+- author: CawsForConcern
+  changes:
+  - message: (Omega) Paperbin to HOP
+    type: Add
+  id: 176501
+  time: '2025-09-30T13:36:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1765
+- author: CawsForConcern
+  changes:
+  - message: (Omega) Recharger moved from HOP to Bridge
+    type: Tweak
+  id: 176502
+  time: '2025-09-30T13:36:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1765
 Order: -1
 
