@@ -1,15 +1,15 @@
 <Document>
   # Xenoarchaeology
 
-  Xenoarchaeology is a branch of Science focused on researching alien [color=#5e9cff]artifacts[/color].
+  Xenoarchaeology is a branch of Science focused on researching alien [bold]artifacts[/bold].
 
   Unlocking their secrets grants research points and reveals strange, sometimes dangerous effects.
 
   At round start, Science usually has one or two artifacts in the lab. More can be:
   - Ordered from [color=yellow]Cargo[/color]
   - Found by [color=orange]Salvage[/color]
-  - Assembled from [color=#ff66cc]fragments[/color]
-  - Obtained during certain events
+  - Assembled from [bold]fragments[/bold]
+  - Appear during certain station events
 
   ## Artifacts
   <Box>
@@ -44,7 +44,9 @@
     <GuideEntityEmbed Entity="MachineArtifactCrusher" Caption="Crusher"/>
   </Box>
   - [bold]Artifact Crusher:[/bold] Crushes artifacts into fragments. Four fragments can be rebuilt into a new artifact.
-
+  <Box>
+    <GuideEntityEmbed Entity="ArtifactFragment" Caption="Artifact Fragment"/>
+  </Box>
   ## Unlocking Nodes
   1. Select a node on the [bold]Analysis Console[/bold] to check its trigger and effect.
 
@@ -64,10 +66,10 @@
   - [bold]ID:[/bold] Unique identifier for use with the Node Scanner.
   - [bold]Class:[/bold] The layer name. Nodes on the same layer share it.
   - [bold]Status:[/bold]
-  - [italic]Locked[/italic] by default
-  - [italic]Active[/italic] when first triggered
-  - [italic]Unlocked[/italic] if a deeper node is reached (prevents manual activations)
-  - [bold]Durability:[/bold] Number of manual activations available.
+  - [italic][color=red]Locked[/color][/italic] by default
+  - [italic][color=plum]Active[/color][/italic] when first triggered
+  - [italic][color=lime]Unlocked[/color][/italic] if a deeper node is reached (prevents manual activations)
+  - [bold]Durability:[/bold] Number of manual activations available for that node.
   - [bold]Effect:[/bold] What happens when the node activates or is manually triggered.
   - [bold]Triggers:[/bold] Required actions to activate the node the first time.
   - [bold]Server/Extraction:[/bold] Choose a research server and extract points from unlocked nodes.
