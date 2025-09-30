@@ -133,9 +133,6 @@
   id: ModularBarrel
 
 - type: Tag
-  id: NonlethalMech
-
-- type: Tag
   id: OmniCyberEyes
 
 - type: Tag
