@@ -101,6 +101,15 @@
         - id: Paper
           amount: 10
     - type: IdCardConsole
+      accessGroups:
+      - General
+      - Security
+      - Cargo
+      - Command
+      - Research
+      - Medical
+      - Service
+      - Engineering
       privilegedIdSlot:
         name: id-card-clipboard-priviliged-id
         ejectSound: /Audio/Machines/id_swipe.ogg

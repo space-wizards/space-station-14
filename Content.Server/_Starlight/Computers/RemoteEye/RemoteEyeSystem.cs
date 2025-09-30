@@ -155,6 +155,12 @@ public sealed partial class RemoteEyeSystem : SharedRemoteEyeSystem
         Dirty(ent);
 
         _mover.SetRelay(args.Actor, eye);
+
+        if(TryComp<InputMoverComponent>(args.Actor, out var mover))
+        {
+            mover.CanMove = true;
+            Dirty(args.Actor, mover);
+        }
     }
     private void OnPlayerAttached(Entity<RemoteEyeActorComponent> ent, ref PlayerAttachedEvent args) 
         => _eye.RefreshVisibilityMask((ent.Owner, null));

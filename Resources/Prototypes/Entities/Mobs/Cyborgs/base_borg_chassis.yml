@@ -354,7 +354,7 @@
     tags:
     - Borg
   - type: AccessReader
-    access: [["Command"], ["Research"]]
+    access: [["Command"], ["Robotics"]] # Starlight
   - type: ShowJobIcons
   - type: InteractionPopup
     interactSuccessSound:
@@ -411,7 +411,7 @@
     groups:
     - AllAccess #Randomized access would be fun. AllAccess is the best i can think of right now that does make it too hard for it to enter the station or navigate it..
   - type: AccessReader
-    access: [["Command"], ["Research"]]
+    access: [["Command"], ["Robotics"]] # Starlight
   - type: StartIonStormed
     ionStormAmount: 3
   - type: IonStormTarget
@@ -420,7 +420,7 @@
 
 - type: entity
   id: BaseBorgChassisSyndicateDerelict #For assault borg and maybe others in time
-  parent: BaseBorgChassis # We don't want them to see Nukies or have syndi comms, their database is out of date
+  parent: BaseBorgChassisSyndicate # Starlight
   abstract: true
   components:
   - type: SiliconLawProvider
@@ -430,31 +430,33 @@
   - type: IonStormTarget
     chance: 1
   - type: ShowJobIcons
-  - type: NpcFactionMember # They're still syndicate even if they can't listen to the radio or see icons
-    factions:
-    - Syndicate
-  - type: Access
-    tags:
-    - NuclearOperative
-    - SyndicateAgent
-  - type: AccessReader
-    access: [ [ "SyndicateAgent" ], [ "NuclearOperative" ] ]
-  - type: IntrinsicRadioTransmitter # Copy components from base SyndiBorg but without the stuff we don't want
-    channels:
-    - Binary #1984
-  - type: ActiveRadio
-    channels:
-    - Binary
-  - type: MovementAlwaysTouching
-  - type: Speech
-    speechSounds: SyndieBorg
-    allowedEmotes:
-    - Laugh
-  - type: Vocal
-    sounds:
-      Unsexed: UnisexSiliconSyndicate
-  - type: PointLight
-    color: "#dd200b"
+#  region starlight - reverting syndicate derelict cyborg 1984
+#  - type: NpcFactionMember # They're still syndicate even if they can't listen to the radio or see icons
+#      factions:
+#    - Syndicate
+#  - type: Access
+#    tags:
+#    - NuclearOperative
+#    - SyndicateAgent
+#  - type: AccessReader
+#    access: [ [ "SyndicateAgent" ], [ "NuclearOperative" ] ]
+#  - type: IntrinsicRadioTransmitter # Copy components from base SyndiBorg but without the stuff we don't want
+#    channels:
+#    - Binary #1984
+#  - type: ActiveRadio
+#    channels:
+#    - Binary
+#  - type: MovementAlwaysTouching
+#  - type: Speech
+#    speechSounds: SyndieBorg
+#    allowedEmotes:
+#    - Laugh
+#  - type: Vocal
+#    sounds:
+#      Unsexed: UnisexSiliconSyndicate
+#  - type: PointLight
+#    color: "#dd200b"
+# end region starlight
 
 - type: entity
   parent: BaseBorgChassisNotIonStormable

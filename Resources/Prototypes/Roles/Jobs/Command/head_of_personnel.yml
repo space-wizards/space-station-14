@@ -44,12 +44,15 @@
   - Detective
   - Salvage
   - Security
-  - Brigmedic # Starlight
   - Brig
   - Lawyer
   - Cargo
   - Atmospherics
   - Medical
+  - Robotics # Starlight
+  - Brigmedic # Starlight
+  - Surgery # Starlight
+  - Paramedic # Starlight
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
