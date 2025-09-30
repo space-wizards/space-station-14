@@ -7,7 +7,7 @@
     equipmentWhitelist:
       tags:
       - CombatMech
-      - NonlethalMech
+      - PaddyMech
 
 - type: entity
   id: IndustrialMech
@@ -38,7 +38,7 @@
     equipmentWhitelist:
       tags:
       - SmallMech
-
+      
 - type: entity
   id: NanotrasenMech
   abstract: true
@@ -50,7 +50,7 @@
       path: /Audio/Mecha/lowpowernano.ogg
     nominalSound:
       path: /Audio/Mecha/nominalnano.ogg
-
+      
 - type: entity
   id: SyndieMech
   abstract: true
@@ -302,7 +302,7 @@
       - PowerCellHigh
       mech-gas-tank-slot:
       - MechAirTankFilled
-
+      
 # Paddy
 - type: entity
   id: MechPaddy
@@ -326,7 +326,7 @@
   - type: Mech
     equipmentWhitelist:
       tags:
-      - NonlethalMech
+      - PaddyMech
       - IndustrialMech
     baseState: base
     openState: base-open
@@ -364,7 +364,7 @@
       - PowerCellHigh
       mech-gas-tank-slot:
       - MechAirTankFilled
-
+      
 - type: entity
   id: MechPaddyFilled
   parent: MechPaddyBattery

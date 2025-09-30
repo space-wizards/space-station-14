@@ -92,6 +92,11 @@
     fireCost: 80
   - type: Appearance
   - type: AmmoCounter
+  # region starlight
+  - type: Tag
+    tags:
+    - PaddyMech
+  # end region
 
 - type: entity
   id: WeaponMechCombatTeslaCannon
@@ -142,9 +147,11 @@
     fireCost: 60
   - type: Appearance
   - type: AmmoCounter
+  # region starlight
   - type: Tag
     tags:
-    - NonlethalMech
+    - PaddyMech
+  # end region
 
 - type: entity
   id: WeaponMechCombatTaser
@@ -168,9 +175,11 @@
     fireCost: 40
   - type: Appearance
   - type: AmmoCounter
+  # region starlight
   - type: Tag
     tags:
-    - NonlethalMech
+    - PaddyMech
+  # end region
 
 - type: entity
   id: WeaponMechCombatShotgun
@@ -194,6 +203,11 @@
     fireCost: 100
   - type: Appearance
   - type: AmmoCounter
+  # region starlight
+  - type: Tag
+    tags:
+    - PaddyMech
+  # end region
 
 - type: entity
   id: WeaponMechCombatShotgunIncendiary
@@ -242,7 +256,7 @@
     fireCost: 20
   - type: Appearance
   - type: AmmoCounter
-
+  
 - type: entity
   id: WeaponMechCombatIon
   name: Mk.IV Ion Heavy Cannon
@@ -271,7 +285,7 @@
   - type: Battery
     maxCharge: 400
     startingCharge: 400
-
+    
 - type: entity
   id: WeaponMechCombatAMLG90
   name: AMLG90
@@ -298,7 +312,7 @@
     fireCost: 20
   - type: Appearance
   - type: AmmoCounter
-
+  
 - type: entity
   id: WeaponMechCombatXray
   name: S-1 X-Ray Projector
@@ -398,6 +412,8 @@
     fireCost: 60
   - type: Appearance
   - type: AmmoCounter
+  # region starlight
   - type: Tag
     tags:
-    - NonlethalMech
+    - PaddyMech
+  # end region
