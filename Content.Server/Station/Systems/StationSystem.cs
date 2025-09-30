@@ -343,6 +343,7 @@ public sealed partial class StationSystem : SharedStationSystem
         stationMember.Station = station;
         stationData.Grids.Add(mapGrid);
         Dirty(station, stationData);
+        Dirty(mapGrid, stationMember);
 
         RaiseLocalEvent(station, new StationGridAddedEvent(mapGrid, station, false), true);
 

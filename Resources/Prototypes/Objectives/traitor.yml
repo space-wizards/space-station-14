@@ -17,7 +17,7 @@
   - type: Objective
     icon:
       sprite: Objects/Misc/folders.rsi
-      state: folder-white
+      state: folder-colormap
   - type: MultipleTraitorsRequirement
 
 - type: entity
@@ -150,8 +150,8 @@
     - !type:TargetObjectiveMindFilter
       blacklist:
         components:
-        - RandomTraitorAlive
-        - RandomTraitorProgress
+        - HelpProgressCondition
+        - KeepAliveCondition
 
 - type: entity
   parent: [BaseTraitorSocialObjective, BaseHelpProgressObjective]
@@ -179,8 +179,8 @@
     - !type:TargetObjectiveMindFilter
       blacklist:
         components:
-        - RandomTraitorAlive
-        - RandomTraitorProgress
+        - HelpProgressCondition
+        - KeepAliveCondition
 
 # steal
 
