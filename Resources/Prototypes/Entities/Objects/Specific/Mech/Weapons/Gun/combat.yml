@@ -94,7 +94,7 @@
   - type: AmmoCounter
   # region starlight
   - type: Tag
-    taags:
+    tags:
     - PaddyMech
   # end region
 
@@ -149,7 +149,7 @@
   - type: AmmoCounter
   # region starlight
   - type: Tag
-    taags:
+    tags:
     - PaddyMech
   # end region
 
@@ -177,7 +177,7 @@
   - type: AmmoCounter
   # region starlight
   - type: Tag
-    taags:
+    tags:
     - PaddyMech
   # end region
 
@@ -205,7 +205,7 @@
   - type: AmmoCounter
   # region starlight
   - type: Tag
-    taags:
+    tags:
     - PaddyMech
   # end region
 
@@ -414,6 +414,6 @@
   - type: AmmoCounter
   # region starlight
   - type: Tag
-    taags:
+    tags:
     - PaddyMech
   # end region
