@@ -64,8 +64,13 @@ public abstract class SharedCargoSystem : EntitySystem
     /// <param name="accountPrototypeId">Bank account prototype ID to get info for.</param>
     /// <param name="money">The ammount of money in the account</param>
     /// <returns>Whether or not the bank account exists.</returns>
-    public bool TryGetAccount(Entity<StationBankAccountComponent> station, ProtoId<CargoAccountPrototype> accountPrototypeId, out int money)
+    public bool TryGetAccount(Entity<StationBankAccountComponent?> station, ProtoId<CargoAccountPrototype> accountPrototypeId, out int money)
     {
+        money = 0;
+
+        if (!Resolve(station, ref station.Comp))
+            return false;
+
         return station.Comp.Accounts.TryGetValue(accountPrototypeId, out money);
     }
 
@@ -74,8 +79,11 @@ public abstract class SharedCargoSystem : EntitySystem
     /// </summary>
     /// <param name="station">Station to get bank account info from.</param>
     /// <returns>Whether or not the bank account exists.</returns>
-    public IReadOnlyDictionary<ProtoId<CargoAccountPrototype>, int> GetAccounts(Entity<StationBankAccountComponent> station)
+    public IReadOnlyDictionary<ProtoId<CargoAccountPrototype>, int> GetAccounts(Entity<StationBankAccountComponent?> station)
     {
+        if (!Resolve(station, ref station.Comp))
+            return new Dictionary<ProtoId<CargoAccountPrototype>, int>();
+
         return station.Comp.Accounts;
     }
 
@@ -89,12 +97,15 @@ public abstract class SharedCargoSystem : EntitySystem
     /// <param name="dirty">Whether to mark the bank account component as dirty.</param>
     /// <returns>Whether or not setting the value succeeded.</returns>
     public bool TryAdjustBankAccount(
-        Entity<StationBankAccountComponent> station,
+        Entity<StationBankAccountComponent?> station,
         ProtoId<CargoAccountPrototype> accountPrototypeId,
         int money,
         bool createAccount = false,
         bool dirty = true)
     {
+        if (!Resolve(station, ref station.Comp))
+            return false;
+
         var accounts = station.Comp.Accounts;
 
         if (!accounts.ContainsKey(accountPrototypeId) && !createAccount)
@@ -121,12 +132,15 @@ public abstract class SharedCargoSystem : EntitySystem
     /// <param name="dirty">Whether to mark the bank account component as dirty.</param>
     /// <returns>Whether or not setting the value succeeded.</returns>
     public bool TrySetBankAccount(
-        Entity<StationBankAccountComponent> station,
+        Entity<StationBankAccountComponent?> station,
         ProtoId<CargoAccountPrototype> accountPrototypeId,
         int money,
         bool createAccount = false,
         bool dirty = true)
     {
+        if (!Resolve(station, ref station.Comp))
+            return false;
+
         var accounts = station.Comp.Accounts;
 
         if (!accounts.ContainsKey(accountPrototypeId) && !createAccount)
