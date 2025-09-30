@@ -1,7 +1,7 @@
 - type: entity
   parent: MobStatusEffectBase
   id: StatusEffectPainkillersNegligibleBicaridine
-  name: negligible pain relief
+  name: 10 pain relief
   components:
   - type: PainkillerStatusEffect
     effectiveness: 10
@@ -13,15 +13,15 @@
 - type: entity
   parent: MobStatusEffectBase
   id: StatusEffectPainkillersMildParacetamol
-  name: mild pain relief
+  name: 15 pain relief
   components:
   - type: PainkillerStatusEffect
-    effectiveness: 25
+    effectiveness: 15
 
 - type: entity
   parent: StatusEffectPainkillersMildParacetamol
   id: StatusEffectPainkillersMildEthanol
-  name: mild pain relief and motor control dysfunction
+  name: 15 pain relief and motor control dysfunction
   components:
   - type: MeleeModifiersStatusEffect
     attackRateMultiplier: 0.95
@@ -32,7 +32,7 @@
 - type: entity
   parent: StatusEffectPainkillersMildParacetamolOverdose
   id: StatusEffectPainkillersMildEthanolOverdose
-  name: extra pain relief and worse motor control dysfunction
+  name: extra 10 pain relief and worse motor control dysfunction
   components:
   - type: MeleeModifiersStatusEffect
     attackRateMultiplier: 0.8
@@ -43,7 +43,7 @@
 - type: entity
   parent: MobStatusEffectBase
   id: StatusEffectPainkillersMildParacetamolOverdose
-  name: extra pain relief
+  name: extra 10 pain relief
   components:
   - type: PainkillerStatusEffect
     effectiveness: 10
@@ -51,18 +51,18 @@
 - type: entity
   parent: MobStatusEffectBase
   id: StatusEffectPainkillersTramadol
-  name: pain relief
+  name: 35 pain relief
   components:
   - type: PainkillerStatusEffect
-    effectiveness: 50
+    effectiveness: 35
 
 - type: entity
   parent: MobStatusEffectBase
   id: StatusEffectPainkillersTramadolOverdose
-  name: extra pain relief
+  name: extra 10 pain relief
   components:
   - type: PainkillerStatusEffect
-    effectiveness: 15
+    effectiveness: 10
 
 - type: entity
   parent: StatusEffectHeartStrainDesoxyephedrine
@@ -71,18 +71,18 @@
 - type: entity
   parent: MobStatusEffectBase
   id: StatusEffectPainkillersStrongOxycodone
-  name: strong pain relief
+  name: 50 pain relief
   components:
   - type: PainkillerStatusEffect
-    effectiveness: 75
+    effectiveness: 50
 
 - type: entity
   parent: MobStatusEffectBase
   id: StatusEffectPainkillersStrongOxycodoneOverdose
-  name: extra pain relief
+  name: extra 10 pain relief
   components:
   - type: PainkillerStatusEffect
-    effectiveness: 20
+    effectiveness: 10
 
 - type: entity
   parent: StatusEffectHeartStrainSedin

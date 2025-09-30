@@ -8,9 +8,16 @@
   physicalDesc: reagent-physical-desc-opaque
   metabolisms:
     Medicine:
-      metabolismRate: 0.1
+      metabolismRate: 0.05
       statusEffects:
       - statusEffect: StatusEffectPainkillersMildParacetamol
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Tramadol
+          max: 1
+        - !type:ReagentThreshold
+          reagent: Oxycodone
+          max: 1
       - statusEffect: StatusEffectPainkillersMildParacetamolOverdose
         conditions:
         - !type:ReagentThreshold
@@ -34,13 +41,16 @@
   physicalDesc: reagent-physical-desc-opaque
   metabolisms:
     Medicine:
-      metabolismRate: 0.1
+      metabolismRate: 0.05
       statusEffects:
       - statusEffect: StatusEffectPainkillersTramadol
       - statusEffect: StatusEffectPainkillersTramadolOverdose
         conditions:
         - !type:ReagentThreshold
           min: 15
+        - !type:ReagentThreshold
+          reagent: Oxycodone
+          max: 1
       - statusEffect: StatusEffectHeartStrainTramadolAlcohol
         conditions:
         - !type:ReagentThreshold
@@ -66,7 +76,7 @@
           min: 1
         damage:
           types:
-            Asphyxiation: 1
+            Asphyxiation: 0.75
 
 - type: reagent
   id: Oxycodone
@@ -78,7 +88,7 @@
   physicalDesc: reagent-physical-desc-opaque
   metabolisms:
     Medicine:
-      metabolismRate: 0.1
+      metabolismRate: 0.15
       statusEffects:
       - statusEffect: StatusEffectPainkillersStrongOxycodone
       - statusEffect: StatusEffectPainkillersStrongOxycodoneOverdose
@@ -102,7 +112,7 @@
           min: 15
         damage:
           types:
-            Asphyxiation: 1
+            Asphyxiation: 0.5
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -110,7 +120,7 @@
           min: 1
         damage:
           types:
-            Asphyxiation: 3
+            Asphyxiation: 0.75
 
 - type: reagent
   id: Synthflesh
