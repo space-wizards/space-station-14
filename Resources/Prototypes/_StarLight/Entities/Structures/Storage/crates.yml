@@ -11,6 +11,18 @@
 
 - type: entity
   parent: CrateBaseSecure
+  id: CrateRDSecure
+  name: RD crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/command.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/command.rsi
+  - type: AccessReader
+    access: [["ResearchDirector"]]
+
+- type: entity
+  parent: CrateBaseSecure
   id: CrateRoboticsSecure
   name: secure robotics crate
   components:
@@ -22,7 +34,7 @@
     access: [["Robotics"]]
 
 - type: entity
-  parent: [ CrateBaseSecure ]
+  parent: CrateBaseSecure
   suffix: Salvage, Secure
   id: CrateSalvageContrabandStorageSecure
   name: salvage storage crate
@@ -33,5 +45,4 @@
   - type: Sprite
     sprite: _Starlight/Structures/Storage/Crates/salvagecontra_secure.rsi
   - type: AccessReader
-    access: [["Security"],["Salvage"]]
-
+    access: [["Security"], ["Salvage"]]
