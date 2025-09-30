@@ -16469,5 +16469,26 @@ Entries:
   id: 177300
   time: '2025-09-30T11:14:58.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1773
+- author: Rinary
+  changes:
+  - message: Fixed bug when you can't open store with uplink implant.
+    type: Fix
+  id: 177600
+  time: '2025-09-30T12:13:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1776
+- author: Rinary
+  changes:
+  - message: Fixed bug when you don't have discounts in store of uplink implant.
+    type: Fix
+  id: 177601
+  time: '2025-09-30T12:13:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1776
+- author: Rinary
+  changes:
+  - message: Fixed bug when you don't have job unique items in store of uplink impant.
+    type: Fix
+  id: 177602
+  time: '2025-09-30T12:13:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1776
 Order: -1
 
