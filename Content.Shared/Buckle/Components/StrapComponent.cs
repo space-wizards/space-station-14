@@ -5,6 +5,8 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom; //Starlight
+using DrawDepthTag = Robust.Shared.GameObjects.DrawDepth; //Starlight
 
 namespace Content.Shared.Buckle.Components;
 
@@ -48,6 +50,18 @@ public sealed partial class StrapComponent : Component
     /// </summary>
     [DataField]
     public Angle Rotation;
+
+    // Starlight
+    [DataField]
+    public Angle XformRotation = Angle.Zero;
+
+    // Starlight - Directions with lowered drawdepth. 
+    [DataField]
+    public DirectionFlag LoweredDrawdepthDirections = DirectionFlag.North;
+
+    // Starlight - lowered drawdepth. 
+    [DataField(customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
+    public int? LoweredDrawdepth;
 
     /// <summary>
     /// The size of the strap which is compared against when buckling entities

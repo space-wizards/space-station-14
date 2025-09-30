@@ -2,7 +2,7 @@
   name: crafting-menu-name-RIPRL
   id: ArmRipperLeft
   graph: RipperLeftGraph
-  startNode: startleft
+  startNode: start
   targetNode: left
   category: construction-category-tools
   objectType: Item
@@ -12,7 +12,7 @@
   name: crafting-menu-name-RIPRR
   id: ArmRipperRight
   graph: RipperRightGraph
-  startNode: startright
+  startNode: start
   targetNode: right
   category: construction-category-tools
   objectType: Item

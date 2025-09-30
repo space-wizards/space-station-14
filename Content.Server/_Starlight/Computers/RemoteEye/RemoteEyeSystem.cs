@@ -14,7 +14,7 @@ using Robust.Server.GameObjects;
 using Content.Shared._Starlight.Computers.RemoteEye;
 using System.Linq;
 using Content.Shared.Station.Components;
-using Content.Shared._Starlight.Action;
+using Content.Shared._Starlight.Actions.EntitySystems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Player;
 
@@ -155,6 +155,12 @@ public sealed partial class RemoteEyeSystem : SharedRemoteEyeSystem
         Dirty(ent);
 
         _mover.SetRelay(args.Actor, eye);
+
+        if(TryComp<InputMoverComponent>(args.Actor, out var mover))
+        {
+            mover.CanMove = true;
+            Dirty(args.Actor, mover);
+        }
     }
     private void OnPlayerAttached(Entity<RemoteEyeActorComponent> ent, ref PlayerAttachedEvent args) 
         => _eye.RefreshVisibilityMask((ent.Owner, null));

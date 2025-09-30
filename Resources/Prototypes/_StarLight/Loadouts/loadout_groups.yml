@@ -86,12 +86,22 @@
   - LeatherSatchel
 
 - type: loadoutGroup
+  id: NanoTrasenRepresentativeHead
+  name: loadout-group-nanotrasenrepresentative-head
+  loadouts:
+  - NanoTrasenRepresentativeTophat
+  - NanoTrasenRepresentativeEliteTophat
+  - NanoTrasenRepresentativeCap
+
+- type: loadoutGroup
   id: NanoTrasenRepresentativeJumpsuit
   name: loadout-group-nanotrasenrepresentative-jumpsuit
   loadouts:
   - NanoTrasenRepresentativeJumpsuit
   - NanoTrasenRepresentativeJumpskirt
   - NanoTrasenRepresentativeJumpsuitFormal
+  - NanoTrasenRepresentativeTurtleneck
+  - NanoTrasenRepresentativeTurtleneckSkirt
 
 - type: loadoutGroup
   id: NanoTrasenRepresentativeEyewear

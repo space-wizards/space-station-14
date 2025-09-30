@@ -1,0 +1,15 @@
+- type: entity
+  id: SyntrunnerActionExitConsole
+  name: Exit
+  description: Exit console.
+  components:
+  - type: Action
+    priority: -20
+    itemIconStyle: BigAction
+    checkConsciousness: false
+    checkCanInteract: false
+    icon:
+      sprite: _Starlight/Interface/Actions/actions_syndrunner.rsi
+      state: exit
+  - type: InstantAction
+    event: !type:ExitConsoleEvent

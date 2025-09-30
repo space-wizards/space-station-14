@@ -1317,7 +1317,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
-    access: [["Research"]]
+    access: [["Robotics"]] # Starlight
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -1449,7 +1449,7 @@
     energy: 1.6
     color: "#b89f25"
   - type: AccessReader
-    access: [["Salvage"]]
+    access: [["Salvage"],["Mining"]]
   - type: GuideHelp
     guides:
     - Salvage
@@ -2015,7 +2015,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
-    access: [["Research"]]
+    access: [["Robotics"]] # Starlight
 
 - type: entity
   parent: VendingMachine

@@ -5,3 +5,55 @@
   components:
   - type: AccessReader
     access: [["Ntrep"]]
+
+# Robotics
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsRobotics
+  suffix: Robotics, Locked
+  components:
+  - type: AccessReader
+    access: [["Robotics"]]
+
+# Freelance
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsFreelance
+  suffix: Freelance, Locked
+  components:
+  - type: AccessReader
+    access: [["Freelance"]]
+
+# Surgery
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsSurgery
+  suffix: Surgery, Locked
+  components:
+  - type: AccessReader
+    access: [["Surgery"]]
+
+# Paramedic
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsParamedic
+  suffix: Paramedic, Locked
+  components:
+  - type: AccessReader
+    access: [["Paramedic"]]
+
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsMining
+  suffix: Mining, Locked
+  components:
+    - type: AccessReader
+      access: [["Mining"]]
+
+- type: entity # Combination door for salvage and mining access
+  parent: DoorElectronics
+  id: DoorElectronicsSalvageMining
+  suffix: Salvage, Mining, Locked
+  components:
+    - type: AccessReader
+      access: [["Salvage"], ["Mining"]]

@@ -30,6 +30,7 @@
     - Chemistry
     - Engineering
     - Research
+    - Robotics
     - Detective
     - Salvage
     - Security
@@ -39,6 +40,9 @@
     - Cargo
     - Medical
     - Ntrep
+    - Brigmedic
+    - Surgery
+    - Paramedic
   special:
     - !type:AddImplantSpecial
       implants: [MindShieldImplant]

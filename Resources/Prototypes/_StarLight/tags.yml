@@ -50,6 +50,9 @@
 
 - type: Tag
   id: ClownKudzu
+  
+- type: Tag
+  id: CyberHandItem
 
 - type: Tag
   id: Diona
