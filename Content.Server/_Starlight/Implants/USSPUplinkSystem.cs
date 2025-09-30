@@ -23,7 +23,6 @@ public sealed class USSPUplinkSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<USSPUplinkImplantComponent, OpenUplinkImplantEvent>(OnOpenUplinkImplant);
         SubscribeLocalEvent<StoreBuyFinishedEvent>(OnStoreBuyFinished);
         SubscribeLocalEvent<USSPUplinkImplantComponent, ImplantImplantedEvent>(OnImplantImplanted);
         SubscribeLocalEvent<RoundEndSystemChangedEvent>(OnRoundEnd);
