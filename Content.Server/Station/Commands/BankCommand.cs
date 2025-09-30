@@ -19,14 +19,9 @@ public sealed class BankCommand : ToolshedCommand
     {
         _cargo ??= GetSys<CargoSystem>();
 
-        if (!TryComp<StationBankAccountComponent>(station, out var bankAccount))
-            yield break;
-
-        var stationEnt = (Entity<StationBankAccountComponent>)(station, bankAccount);
-
-        foreach (var (account, _) in _cargo.GetAccounts(stationEnt))
+        foreach (var (account, _) in _cargo.GetAccounts(station))
         {
-            yield return new BankAccount(account.Id, stationEnt, _cargo, EntityManager);
+            yield return new BankAccount(account.Id, station, _cargo, EntityManager);
         }
     }
 
@@ -35,21 +30,16 @@ public sealed class BankCommand : ToolshedCommand
         => stations.SelectMany(Accounts);
 
     [CommandImplementation("account")]
-    public BankAccount? Account([PipedArgument] EntityUid station, ProtoId<CargoAccountPrototype> account)
+    public BankAccount Account([PipedArgument] EntityUid station, ProtoId<CargoAccountPrototype> account)
     {
         _cargo ??= GetSys<CargoSystem>();
 
-        if (!TryComp<StationBankAccountComponent>(station, out var bankAccount))
-            return null;
-
-        var stationEnt = (Entity<StationBankAccountComponent>)(station, bankAccount);
-
-        return new BankAccount(account.Id, stationEnt, _cargo, EntityManager);
+        return new BankAccount(account.Id, station, _cargo, EntityManager);
     }
 
     [CommandImplementation("account")]
     public IEnumerable<BankAccount> Account([PipedArgument] IEnumerable<EntityUid> stations, ProtoId<CargoAccountPrototype> account)
-        => stations.Select(x => Account(x, account).GetValueOrDefault());
+        => stations.Select(x => Account(x, account));
 
     [CommandImplementation("adjust")]
     public BankAccount Adjust([PipedArgument] BankAccount @ref, int by)
@@ -90,7 +80,7 @@ public sealed class BankCommand : ToolshedCommand
 
 public readonly record struct BankAccount(
     string Account,
-    Entity<StationBankAccountComponent> Station,
+    Entity<StationBankAccountComponent?> Station,
     CargoSystem Cargo,
     IEntityManager EntityManager)
 {
