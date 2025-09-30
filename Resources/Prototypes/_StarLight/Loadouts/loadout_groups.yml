@@ -137,6 +137,13 @@
   - NanoTrasenRepresentativeMonocle
 
 - type: loadoutGroup
+  id: BlueShieldHead
+  name: loadout-group-blueshield-head
+  loadouts:
+  - BlueShieldBeret
+  - BlueShieldBountyHat
+
+- type: loadoutGroup
   id: BlueShieldBackpack
   name: loadout-group-blueshield-backpack
   loadouts:
@@ -169,6 +176,7 @@
   loadouts:
   - BlueShieldFormalCloak
   - BlueShieldEliteCloak
+  - BlueShieldPoncho
 
 - type: loadoutGroup
   id: BlueShieldEyewear
