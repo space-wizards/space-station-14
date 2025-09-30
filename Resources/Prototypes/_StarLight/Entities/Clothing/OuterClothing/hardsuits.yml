@@ -490,6 +490,8 @@
   - type: Jump
     action: JumpJet
     isEquipment: true
+  - type: ActivatableUI
+    key: enum.SharedGasTankUiKey.Key
   - type: UserInterface
     interfaces:
       enum.SharedGasTankUiKey.Key:
