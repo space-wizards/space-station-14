@@ -16590,5 +16590,12 @@ Entries:
   id: 176407
   time: '2025-09-30T13:36:56.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1764
+- author: aneyeforsecrets
+  changes:
+  - message: CD Records System
+    type: Add
+  id: 167800
+  time: '2025-09-30T13:38:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1678
 Order: -1
 
