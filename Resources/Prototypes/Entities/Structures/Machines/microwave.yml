@@ -62,6 +62,7 @@
     sprite: Structures/Machines/microwave.rsi
     drawdepth: SmallObjects
     snapCardinals: true
+    offset: "0.0,0.2"
     layers:
     - state: mw0
       map: ["enum.MicrowaveVisualizerLayers.Base"]
