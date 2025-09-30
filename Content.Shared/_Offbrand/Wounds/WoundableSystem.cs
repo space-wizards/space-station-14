@@ -29,6 +29,7 @@ public sealed class WoundableSystem : EntitySystem
         SubscribeLocalEvent<WoundableComponent, BeforeDamageCommitEvent>(OnBeforeDamageCommit);
         SubscribeLocalEvent<WoundableComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<WoundableComponent, HealthBeingExaminedEvent>(OnHealthBeingExamined, before: [typeof(SharedBloodstreamSystem)]);
+        SubscribeLocalEvent<WoundableComponent, MapInitEvent>(OnMapInit);
 
         SubscribeLocalEvent<WoundComponent, StatusEffectRelayedEvent<WoundGetDamageEvent>>(OnWoundGetDamage);
         SubscribeLocalEvent<WoundComponent, StatusEffectRelayedEvent<GetWoundsWithSpaceEvent>>(OnGetWoundsWithSpace);
@@ -134,11 +135,11 @@ public sealed class WoundableSystem : EntitySystem
 
             if (incoming is not null && incoming.DamageDict.TryGetValue(type, out var delta) && delta <= 0)
             {
-                DebugTools.AssertEqual(currentValue + delta, expectedValue, "wounds and damageable after delta don't line up");
+                DebugTools.AssertEqual(currentValue + delta, expectedValue, $"wounds and damageable after delta don't line up for {type}");
             }
             else
             {
-                DebugTools.AssertEqual(currentValue, expectedValue, "wounds and damageable don't line up");
+                DebugTools.AssertEqual(currentValue, expectedValue, $"wounds and damageable don't line up for {type}");
             }
         }
 #endif
@@ -221,6 +222,13 @@ public sealed class WoundableSystem : EntitySystem
         }
     }
 
+    private void OnMapInit(Entity<WoundableComponent> ent, ref MapInitEvent args)
+    {
+        var damageable = Comp<DamageableComponent>(ent);
+        if (damageable.Damage.AnyPositive())
+            OnDamaged(ent, DamageSpecifier.GetPositive(damageable.Damage));
+    }
+
     public void SetHealable(Entity<HealableWoundComponent> ent)
     {
         ent.Comp.CanHeal = true;
@@ -232,10 +240,13 @@ public sealed class WoundableSystem : EntitySystem
         if (unique && _statusEffects.HasStatusEffect(ent, woundToSpawn))
             return false;
 
-        if (!PredictedTrySpawnInContainer(woundToSpawn,
-                ent,
-                StatusEffectContainerComponent.ContainerId,
-                out var wound))
+        PredictedTrySpawnInContainer(woundToSpawn,
+            ent,
+            StatusEffectContainerComponent.ContainerId,
+            out var wound);
+
+        DebugTools.Assert(wound is not null, "could not spawn wound in container");
+        if (wound is null)
             return false;
 
         var comp = Comp<WoundComponent>(wound.Value);
@@ -268,6 +279,8 @@ public sealed class WoundableSystem : EntitySystem
 
         if (delta.AnyPositive())
             OnDamaged(ent, DamageSpecifier.GetPositive(delta));
+
+        ValidateWounds(ent, null);
     }
 
     private void OnHealHealableWounds(Entity<HealableWoundComponent> ent, ref StatusEffectRelayedEvent<HealWoundsEvent> args)
