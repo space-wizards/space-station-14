@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ilya246
-  changes:
-  - message: Shuttles can now deal (weak) collision damage.
-    type: Add
-  id: 8507
-  time: '2025-05-17T17:11:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37422
 - author: VlaDOS1408
   changes:
   - message: Fax UI Menu has been reworked and now behaves better on resizing
@@ -3956,3 +3949,11 @@
   id: 9017
   time: '2025-09-29T10:28:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40568
+- author: BoskiYourk, spanky_spanky
+  changes:
+  - message: Microwaves can now be picked up when unwrenched, and optionally, used
+      as a weapon.
+    type: Tweak
+  id: 9018
+  time: '2025-09-30T21:55:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40618
