@@ -361,22 +361,35 @@
     color: "#1f8c28"
   - type: Computer
     board: MedicalRecordsComputerCircuitboard
-
+  # Cosmatic Drift Record System-start
+  - type: CharacterRecordConsole
+    consoleType: Medical
+  - type: UserInterface
+    interfaces:
+      enum.CharacterRecordConsoleKey.Key:
+        type: CharacterRecordConsoleBoundUserInterface
+  - type: ActivatableUI
+    key: enum.CharacterRecordConsoleKey.Key
+  # Cosmatic Drift Record System-end
 - type: entity
   parent: BaseComputerAiAccess
   id: ComputerCriminalRecords
-  name: criminal records computer
-  description: This can be used to check criminal records. Only security can modify them.
+  # Cosmatic Drift Record System-start: Renamed from "criminal records computer" to "security records computer" to better reflect its purpose.
+  name: security records computer
+  description: This can be used to access security records.
+  # Cosmatic Drift Record System-end
   components:
+    # We need to have both a CriminalRecordsConsole and CharacterRecordConsole
+    # component to be able to set wanted status.
   - type: CriminalRecordsConsole
   - type: UserInterface
     interfaces:
-      enum.CriminalRecordsConsoleKey.Key:
-        type: CriminalRecordsConsoleBoundUserInterface
+    # Cosmatic Drift Record System-start
+      enum.CharacterRecordConsoleKey.Key:
+        type: CharacterRecordConsoleBoundUserInterface
+    # Cosmatic Drift Record System-end
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
-  - type: ActivatableUI
-    key: enum.CriminalRecordsConsoleKey.Key
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -400,22 +413,35 @@
   - type: GuideHelp
     guides:
     - CriminalRecords
-
+  # Cosmatic Drift Record System-start
+  - type: CharacterRecordConsole
+    consoleType: Security
+  - type: ActivatableUI
+    key: enum.CharacterRecordConsoleKey.Key
+  # Cosmatic Drift Record System-end
 - type: entity
   parent: BaseComputerAiAccess
   id: ComputerStationRecords
-  name: station records computer
-  description: This can be used to check station records.
+  # Cosmatic Drift Record System-start: Renamed from "station records computer" to "employment records computer" to better reflect its purpose.
+  name: employment records computer
+  description: This can be used to check employment records.
+  # Cosmatic Drift Record System-end
   components:
   - type: GeneralStationRecordConsole
   - type: UserInterface
     interfaces:
-        enum.GeneralStationRecordConsoleKey.Key:
-          type: GeneralStationRecordConsoleBoundUserInterface
+        # Cosmatic Drift Record System-start
+        enum.CharacterRecordConsoleKey.Key:
+          type: CharacterRecordConsoleBoundUserInterface
+        # Cosmatic Drift Record System-end
         enum.WiresUiKey.Key:
           type: WiresBoundUserInterface
+  # Cosmatic Drift Record System-start
+  - type: CharacterRecordConsole
+    consoleType: Employment
+  # Cosmatic Drift Record System-end
   - type: ActivatableUI
-    key: enum.GeneralStationRecordConsoleKey.Key
+    key: enum.CharacterRecordConsoleKey.Key # Cosmatic Drift Record System
   - type: PointLight
     radius: 1.5
     energy: 1.6

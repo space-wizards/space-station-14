@@ -1,0 +1,117 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:records="clr-namespace:Content.Client._CD.Records.UI"
+                      MinSize="850 750"
+                      SetSize="850 750" >
+    <BoxContainer Orientation="Vertical">
+        <!-- Search bar -->
+        <BoxContainer Margin="5 5 5 10" HorizontalExpand="true" VerticalAlignment="Center">
+            <OptionButton Name="RecordFilterType" MinWidth="200" Margin="0 0 10 0" Visible="False"/>
+            <!-- Yes, we do steal some localizations, should be fine -->
+            <LineEdit Name="RecordFiltersValue"
+                PlaceHolder="{Loc 'general-station-record-for-filter-line-placeholder'}" HorizontalExpand="True"/>
+            <Button Name="RecordFilters" Text="{Loc 'general-station-record-console-search-records'}"/>
+            <Button Name="RecordFiltersReset" Text="{Loc 'general-station-record-console-reset-filters'}"/>
+        </BoxContainer>
+        <BoxContainer VerticalExpand="True">
+            <!-- Character listing -->
+            <BoxContainer Orientation="Vertical" Margin="5" MinWidth="250" MaxWidth="250">
+                <Label Name="CharacterListingStatus" Visible="False" />
+                <ScrollContainer VerticalExpand="True">
+                    <ItemList Name="CharacterListing" />
+                </ScrollContainer>
+            </BoxContainer>
+            <!-- Record box -->
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="5 5 10 10">
+                <Label Name="RecordContainerStatus" Visible="False" Text="{Loc 'cd-record-viewer-no-record-selected'}"/>
+                <BoxContainer Name="RecordContainer" Orientation="Vertical" Visible="False" >
+                    <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                        <!-- Common -->
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                            <Label Name="RecordContainerName" StyleClasses="LabelBig" />
+                            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                                <Label Text="{Loc 'cd-character-records-viewer-record-age'}"/>
+                                <Control HorizontalExpand="True" />
+                                <Label Name="RecordContainerAge" Align="Right" />
+                            </BoxContainer>
+                            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                                <Label Text="{Loc 'cd-character-records-viewer-record-job'}"/>
+                                <Control HorizontalExpand="True" />
+                                <Label Name="RecordContainerJob" Align="Right" />
+                            </BoxContainer>
+                            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                                <Label Text="{Loc 'cd-character-records-viewer-record-gender'}"/>
+                                <Control HorizontalExpand="True" />
+                                <Label Name="RecordContainerGender" Align="Right" />
+                            </BoxContainer>
+                            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                                <Label Text="{Loc 'cd-character-records-viewer-record-species'}"/>
+                                <Control HorizontalExpand="True" />
+                                <Label Name="RecordContainerSpecies" Align="Right" />
+                            </BoxContainer>
+                            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                                <Label Text="{Loc 'humanoid-profile-editor-cd-records-height'}"/>
+                                <Control HorizontalExpand="True" />
+                                <Label Name="RecordContainerHeight" Align="Right" />
+                            </BoxContainer>
+                            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                                <Label Text="{Loc 'humanoid-profile-editor-cd-records-weight'}"/>
+                                <Control HorizontalExpand="True" />
+                                <Label Name="RecordContainerWeight" Align="Right"/>
+                            </BoxContainer>
+                            <records:RecordLongItemDisplay Name="RecordContainerContactName" Title="{Loc 'humanoid-profile-editor-cd-records-contact-name'}"/>
+                        </BoxContainer>
+                        <!-- Employment -->
+                        <BoxContainer Name="RecordContainerEmployment" Orientation="Vertical" HorizontalExpand="True" Visible="False" >
+                            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                                <Label Text="{Loc 'humanoid-profile-editor-cd-records-work-authorization'}"/>
+                                <Control HorizontalExpand="True" />
+                                <Label Name="RecordContainerWorkAuth" Align="Right" />
+                            </BoxContainer>
+                        </BoxContainer>
+                        <!-- Medical -->
+                        <BoxContainer Name="RecordContainerMedical" Orientation="Vertical" HorizontalExpand="True" Visible="False" >
+                            <records:RecordLongItemDisplay Name="RecordContainerAllergies" Title="{Loc 'humanoid-profile-editor-cd-records-allergies'}"/>
+                            <records:RecordLongItemDisplay Name="RecordContainerDrugAllergies" Title="{Loc 'humanoid-profile-editor-cd-records-drug-allergies'}"/>
+                            <records:RecordLongItemDisplay Name="RecordContainerPostmortem" Title="{Loc 'humanoid-profile-editor-cd-records-postmortem'}"/>
+                            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                                <Label Text="{Loc 'cd-character-records-viewer-record-med-sex'}"/>
+                                <Control HorizontalExpand="True" />
+                                <Label Name="RecordContainerSex" Align="Right" />
+                            </BoxContainer>
+                        </BoxContainer>
+                        <!-- Security -->
+                        <BoxContainer Name="RecordContainerSecurity" Orientation="Vertical" HorizontalExpand="True" Visible="False" >
+                            <records:RecordLongItemDisplay Name="RecordContainerIdentFeatures" Title="{Loc 'humanoid-profile-editor-cd-records-identifying-features'}"/>
+                            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                                <Label Text="{Loc 'cd-character-records-viewer-record-sec-fingerprint'}"/>
+                                <Control HorizontalExpand="True" />
+                                <Label Name="RecordContainerFingerprint" Align="Right" />
+                            </BoxContainer>
+                            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                                <Label Text="{Loc 'cd-character-records-viewer-record-sec-dna'}"/>
+                                <Control HorizontalExpand="True" />
+                                <Label Name="RecordContainerDNA" Align="Right" />
+                            </BoxContainer>
+                            <BoxContainer Orientation="Horizontal" Margin="5 5 5 5">
+                                <Label Text="{Loc 'criminal-records-console-status'}" FontColorOverride="DarkGray"/>
+                                <OptionButton Name="StatusOptionButton"/>
+                                <Control MinWidth="5"/>
+                                <Label Name="RecordContainerWantedReason" Visible="False" />
+                            </BoxContainer>
+                        </BoxContainer>
+                    </BoxContainer>
+                    <!-- Entry viewer -->
+                    <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="10" SeparationOverride="5">
+                        <ItemList Name="RecordEntryList" HorizontalExpand="True" MinHeight="200" />
+                        <BoxContainer Orientation="Horizontal">
+                            <Button Name="RecordEntryViewButton" Text="{Loc 'cd-character-records-viewer-view-entry'}"/>
+                            <!-- Admin console entry type selector -->
+                            <OptionButton Name="RecordEntryViewType" />
+                        </BoxContainer>
+                    </BoxContainer>
+                </BoxContainer>
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

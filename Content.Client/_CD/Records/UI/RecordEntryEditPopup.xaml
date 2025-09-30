@@ -1,0 +1,36 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      MinSize="500 700"
+                      SetSize="600 700"
+                      Title="{Loc 'cd-records-entry-edit-popup-title'}">
+    <BoxContainer Margin="5 2 5 5" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="2">
+        <!-- Header section -->
+        <PanelContainer StyleClasses="AngleRect">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="4" SeparationOverride="8">
+                <LineEdit Name="TitleEdit" HorizontalExpand="True" PlaceHolder="{Loc 'cd-records-entry-edit-popup-title-placeholder'}"/>
+                <LineEdit Name="InvolvedEdit" HorizontalExpand="True" PlaceHolder="{Loc 'cd-records-entry-edit-popup-involved-placeholder'}"/>
+            </BoxContainer>
+        </PanelContainer>
+
+        <!-- Content section with styled background -->
+        <PanelContainer Name="ContentPanel" VerticalExpand="True">
+            <TextEdit Name="DescriptionEdit"
+                      HorizontalExpand="True"
+                      VerticalExpand="True"
+                      Margin="8 4 8 8"/>
+        </PanelContainer>
+
+        <!-- Save button and validation section -->
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="4">
+            <PanelContainer StyleClasses="AngleRect">
+                <Button Access="Public"
+                        Name="SaveButton"
+                        Text="{Loc 'cd-records-entry-edit-popup-save'}"
+                        Margin="4"/>
+            </PanelContainer>
+            <Label Name="ValidationLabel"
+                   HorizontalExpand="True"
+                   HorizontalAlignment="Center"/>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>
