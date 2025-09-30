@@ -714,7 +714,7 @@ public abstract partial class InteractionTest
                 tile = MapSystem.GetTileRef(gridUid, grid, serverCoords).Tile;
         });
 
-        Assert.That(tile.TypeId, Is.EqualTo(targetTile.TypeId));
+        Assert.That(tile.TypeId, Is.EqualTo(targetTile.TypeId), $"Expected tile at NetCoordinates {coords}: {TileMan[targetTile.TypeId].Name}. But was: {TileMan[tile.TypeId].Name}");
     }
 
     protected void AssertGridCount(int value)
