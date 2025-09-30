@@ -1,0 +1,12 @@
+Entries:
+- author: sowelipililimute
+  changes:
+  - message: Damages should no longer get decoupled from wounds for brutes and burns.
+    type: Fix
+  - message: More wounds can be seen on visual examination.
+    type: Tweak
+  - message: The crew monitor can give an at-a-glance rating of someone's health again.
+    type: Add
+  id: 1
+  time: '2025-09-29T21:00:00.0000000+00:00'
+Order: 2
