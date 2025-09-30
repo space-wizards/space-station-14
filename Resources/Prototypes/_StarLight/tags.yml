@@ -133,6 +133,9 @@
   id: ModularBarrel
 
 - type: Tag
+  id: PaddyMech
+
+- type: Tag
   id: OmniCyberEyes
 
 - type: Tag

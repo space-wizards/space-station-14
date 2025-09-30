@@ -7,6 +7,7 @@
     equipmentWhitelist:
       tags:
       - CombatMech
+      - PaddyMech
 
 - type: entity
   id: IndustrialMech
@@ -325,7 +326,7 @@
   - type: Mech
     equipmentWhitelist:
       tags:
-      - CombatMech
+      - PaddyMech
       - IndustrialMech
     baseState: base
     openState: base-open
