@@ -16434,5 +16434,33 @@ Entries:
   id: 175600
   time: '2025-09-30T09:07:37.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1756
+- author: CawsForConcern
+  changes:
+  - message: Funding computer to HOP
+    type: Add
+  id: 176800
+  time: '2025-09-30T09:21:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1768
+- author: CawsForConcern
+  changes:
+  - message: Security request console east of Warden
+    type: Add
+  id: 176801
+  time: '2025-09-30T09:21:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1768
+- author: CawsForConcern
+  changes:
+  - message: Bathroom mirrors near Chapel were mapped backwards
+    type: Fix
+  id: 176802
+  time: '2025-09-30T09:21:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1768
+- author: CawsForConcern
+  changes:
+  - message: Central turret in AI Core was not connected to turret panel
+    type: Fix
+  id: 176803
+  time: '2025-09-30T09:21:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1768
 Order: -1
 
