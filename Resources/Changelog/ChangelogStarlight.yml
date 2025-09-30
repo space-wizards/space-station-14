@@ -16420,5 +16420,12 @@ Entries:
   id: 150709
   time: '2025-09-30T02:03:36.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1507
+- author: CrazyPhantom
+  changes:
+  - message: Zombies can no longer bite II's
+    type: Tweak
+  id: 177200
+  time: '2025-09-30T07:47:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1772
 Order: -1
 
