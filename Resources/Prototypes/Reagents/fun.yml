@@ -273,7 +273,7 @@
         type: Local
         visualType: Large
         messages: [ "fresium-effect-stable"]
-        probability: 0.1
+        probability: 0.05
       - !type:PopupMessage
         conditions:
         - !type:ReagentThreshold
@@ -282,7 +282,7 @@
         type: Local
         visualType: LargeCaution
         messages: [ "fresium-effect-freeze-insides"]
-        probability: 0.05
+        probability: 0.1
       - !type:PopupMessage
         conditions:
         - !type:ReagentThreshold
@@ -291,7 +291,7 @@
         type: Local
         visualType: LargeCaution
         messages: [ "fresium-effect-slow"]
-        probability: 0.2
+        probability: 0.1
       - !type:AdjustTemperature
         conditions:
         - !type:Temperature
