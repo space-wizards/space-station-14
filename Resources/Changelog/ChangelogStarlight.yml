@@ -16604,5 +16604,12 @@ Entries:
   id: 176900
   time: '2025-09-30T13:35:01.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1769
+- author: CawsForConcern
+  changes:
+  - message: (Lobster) Mining magnet in Salvage
+    type: Add
+  id: 176700
+  time: '2025-09-30T13:35:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1767
 Order: -1
 
