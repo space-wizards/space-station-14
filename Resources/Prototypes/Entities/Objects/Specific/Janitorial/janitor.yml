@@ -282,6 +282,7 @@
     tags:
     - GoldenPlunger
     - Plunger
+    - WhitelistChameleon
   - type: Sprite
     sprite: Objects/Specific/Janitorial/golden_plunger.rsi
     state: plunger
