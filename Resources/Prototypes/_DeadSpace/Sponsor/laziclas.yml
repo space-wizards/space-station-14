@@ -1,0 +1,207 @@
+- type: sponsorLoadout
+  id: laziclas
+  entity: ClothingBackpacklaziclas
+  sponsorOnly: true
+
+# Backpack
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpacklaziclas
+  name: ранец патрульный
+  description: Многофункциональный тактический ранец объёмом 25 л, предназначен для перевозки боевой и походной выкладки.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/laziclas/backpack.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/laziclas/backpack.rsi
+    clothingVisuals:
+      back:
+      - state: equipped-BACKPACK
+        scale: 0.5, 0.5
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,13,5
+  - type: StorageFill
+    contents:
+    - id: ClothingMasklaziclas
+    - id: ClothingHandsGloveslaziclas
+    - id: ClothingBeltlaziclas
+    - id: ClothingUniformJumpsuitlaziclas
+    - id: ClothingShoesBootsMaglaziclas
+    - id: ClothingHeadsetlaziclas
+    - id: ClothingOuterVestlaziclas
+    - id: ClothingHeadlaziclas
+    - id: PaperLawlaziclas
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Belt
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltlaziclas
+  name: разгрузка 6Ш117
+  description: Современная разгрузочная система с модульным креплением для подсумков.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Storage
+    grid:
+    - 0,0,9,1
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/laziclas/belt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/laziclas/belt.rsi
+  - type: Item
+    size: Huge
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+#Gasmask
+- type: entity
+  parent: ClothingMaskGasSyndicate
+  id: ClothingMasklaziclas
+  name: балаклава, зелёная
+  description: Маскирует лицо и защищает от ветра, пыли и холода.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/laziclas/gasmask.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/laziclas/gasmask.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Gloves
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGloveslaziclas
+  name: перчатки тактические зелёные
+  description: Защищают руки и обеспечивают удобный хват оружия.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/laziclas/gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/laziclas/gloves.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+#Hud
+- type: entity
+  parent: ClothingEyesHudMultiversal
+  id: ClothingEyesHudMedicallaziclas
+  name: тактические очки 6Б50
+  description: Баллистические очки, защищают глаза от осколков и пыли.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/laziclas/hud.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/laziclas/hud.rsi
+  - type: EyeProtection
+  - type: IdentityBlocker
+    coverage: EYES
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+#Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitlaziclas
+  name: ВКПО 3.0
+  description: Всесезонный комплект полевого обмундирования, обеспечивает комфорт и защиту в разных климатических условиях.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/laziclas/jumpsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/laziclas/jumpsuit.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+#magboots
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMaglaziclas
+  name: ботинки специальные «Паритет»
+  description: Армейская обувь с высоким берцем, удобная для длительного ношения.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/laziclas/magboots.rsi
+      layers:
+      - state: icon
+        map: [ "enum.ToggleableVisuals.Layer" ]
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/laziclas/magboots.rsi
+    - type: ClothingSpeedModifier
+      walkModifier: 1
+      sprintModifier: 1
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
+
+#Гарнитура
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetlaziclas
+  name: наушники активные ГСШ-01
+  description: Гарнитура с защитой слуха и функцией усиления звука.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/laziclas/headset.rsi
+  - type: Headset
+    color: "#db313f"
+  - type: EncryptionKeyHolder
+    keySlots: 5
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+#Бронижилет
+- type: entity
+  parent: ClothingOuterVestWebMerc
+  id: ClothingOuterVestlaziclas
+  name: бронежилет 6Б45
+  categories: [ HideSpawnMenu ]
+  description: Модульный бронежилет 5 класса защиты, используется в составе Ратник.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/laziclas/vest.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/laziclas/vest.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+#Шлем
+- type: entity
+  parent: [ ClothingHeadHelmetBase, BaseMajorContraband ]
+  id: ClothingHeadlaziclas
+  name: шлем 6Б47
+  categories: [ HideSpawnMenu ]
+  description: Лёгкий кевларовый защитный шлем, устойчивый к осколкам и пулям.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/laziclas/helmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/laziclas/helmet.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+#Документ
+- type: entity
+  parent: PaperPrintedCentcomm
+  id: PaperLawlaziclas
+  name: распечатанный документ
+  description: Лист бумаги с заголовком центкома. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#006600FF'
+      stampedName: Центральное Командование
+    - stampedColor: '#00BE00FF'
+      stampedName: Одобрено
+    content: paper-law-laziclas
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
