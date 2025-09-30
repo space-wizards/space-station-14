@@ -88,6 +88,21 @@
   - type: EyeProtection
     protectionTime: 5
 
+- type: entity
+  parent: [ClothingEyesBase, BaseCommandContraband]
+  id: ClothingEyesNTRMonocle
+  name: NanoTrasen representative monocle
+  description: A fancy monocle that also functions as a HUD to make sure no functionality is lost for style.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Eyes/Hud/ntrmonocle.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Eyes/Hud/ntrmonocle.rsi
+  - type: ShowJobIcons
+  - type: Tag
+    tags:
+    - PetWearable
+
 #USSP
 - type: entity
   parent: [ClothingEyesBase, ShowSecurityIcons, BaseSovietContraband]

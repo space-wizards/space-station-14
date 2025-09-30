@@ -109,6 +109,7 @@
   loadouts:
   - NanoTrasenRepresentativeGlasses
   - NanoTrasenRepresentativeHud
+  - NanoTrasenRepresentativeMonocle
 
 - type: loadoutGroup
   id: BlueShieldBackpack
