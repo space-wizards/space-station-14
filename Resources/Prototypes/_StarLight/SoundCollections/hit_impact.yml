@@ -1,0 +1,4 @@
+- type: soundCollection
+  id: WaterHit
+  files:
+  - /Audio/_Starlight/Effects/Hit/water_hit.ogg

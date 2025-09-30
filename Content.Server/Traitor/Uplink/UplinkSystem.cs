@@ -60,7 +60,7 @@ public sealed class UplinkSystem : EntitySystem
     /// <summary>
     /// Configure TC for the uplink
     /// </summary>
-    private void SetUplink(EntityUid user, EntityUid uplink, FixedPoint2 balance, bool giveDiscounts)
+    public void SetUplink(EntityUid user, EntityUid uplink, FixedPoint2 balance, bool giveDiscounts) // Starlight - make it public for UplinkImplant
     {
         if (!_mind.TryGetMind(user, out var mind, out _))
             return;

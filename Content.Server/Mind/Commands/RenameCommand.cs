@@ -5,6 +5,7 @@ using Content.Shared.CCVar;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
+using Content.Server._CD.Records; // Cosmatic Drift Record System
 
 namespace Content.Server.Mind.Commands;
 
@@ -15,6 +16,7 @@ public sealed class RenameCommand : LocalizedEntityCommands
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
+    [Dependency] private readonly CharacterRecordsSystem _characterRecords = default!; // Cosmatic Drift Record System
 
     public override string Command => "rename";
 
@@ -37,6 +39,16 @@ public sealed class RenameCommand : LocalizedEntityCommands
             return;
 
         _metaSystem.SetEntityName(entityUid.Value, name);
+
+        // Cosmatic Drift Record System-start
+        // Keep character records up to date when a rename happens via the console.
+        if (_entManager.TryGetComponent<CharacterRecordKeyStorageComponent>(entityUid.Value, out var recordKey))
+        {
+            var stationRecords = _characterRecords.QueryRecords(recordKey.Key.Station);
+            if (stationRecords.TryGetValue(recordKey.Key.Index, out var record))
+                record.Name = name;
+        }
+        // Cosmatic Drift Record System-end
     }
 
     private bool TryParseUid(string str, IConsoleShell shell,

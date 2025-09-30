@@ -181,6 +181,7 @@
     interfaces:
       enum.StoreUiKey.Key:
         type: StoreBoundUserInterface
+  - type: UplinkImplant # Starlight-edit: Uplink Implant discounts
 
 - type: entity
   parent: BaseSubdermalImplant

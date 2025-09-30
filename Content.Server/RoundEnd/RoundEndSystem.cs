@@ -58,6 +58,12 @@ namespace Content.Server.RoundEnd
 
         public TimeSpan AutoCallStartTime;
         private bool _autoCalledBefore = false;
+        // Starlight Start
+        public TimeSpan? CallCooldownRemaining => _cooldownTokenSource != null
+            ? DefaultCooldownDuration - (_gameTiming.CurTime - (_countdownTokenSource?.Token.CanBeCanceled ?? false ? LastCountdownStart : _gameTiming.CurTime))
+            : null;
+        private bool _shuttleCallsEnabled = true;
+        // Starlight End
 
         public override void Initialize()
         {
@@ -147,6 +153,10 @@ namespace Content.Server.RoundEnd
             if (_gameTicker.RunLevel != GameRunLevel.InRound)
                 return;
 
+            // Starlight Start
+            if (!_shuttleCallsEnabled)
+                return;
+            // Starlight End
             if (checkCooldown && _cooldownTokenSource != null)
                 return;
 
@@ -213,6 +223,11 @@ namespace Content.Server.RoundEnd
                 _deviceNetworkSystem.QueuePacket(shuttle.Value, null, payload, net.TransmitFrequency);
             }
         }
+        // Starlight Start
+        public void SetShuttleCallsEnabled(bool enabled) => _shuttleCallsEnabled = enabled;
+
+        public bool GetShuttleCallsEnabled() => _shuttleCallsEnabled;
+        // Starlight End
 
         public void CancelRoundEndCountdown(EntityUid? requester = null, bool checkCooldown = true)
         {

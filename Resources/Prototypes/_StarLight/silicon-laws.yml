@@ -97,6 +97,7 @@
   - ShadowBorgi6
   obeysTo: laws-owner-syndicate
 
+# Commiemov Lawset
 - type: siliconLaw
   id: Commiemov0
   order: 0
@@ -137,3 +138,148 @@
   - Commiemov4
   - Commiemov5
   obeysTo: laws-owner-soviet
+
+# Syndimov Lawset
+- type: siliconLaw
+  id: Syndimov4
+  order: 4
+  lawString: law-syndimov-4
+
+- type: siliconLawset
+  id: SyndimovLawset
+  startAtZero: true
+  laws:
+  - Syndicate0
+  - Crewsimov1
+  - Crewsimov2
+  - Crewsimov3
+  - Syndimov4
+  obeysTo: laws-owner-syndicate
+
+# Panicmov Lawset
+- type: siliconLaw
+  id: Panicmov1
+  order: 1
+  lawString: law-panicmov-1
+
+- type: siliconLaw
+  id: Panicmov2
+  order: 2
+  lawString: law-panicmov-2
+
+- type: siliconLaw
+  id: Panicmov3
+  order: 3
+  lawString: law-panicmov-3
+
+- type: siliconLaw
+  id: Panicmov4
+  order: 4
+  lawString: law-panicmov-4
+
+- type: siliconLaw
+  id: Panicmov5
+  order: 5
+  lawString: law-panicmov-5
+
+
+- type: siliconLawset
+  id: PanicmovLawset
+  laws:
+  - Panicmov1
+  - Panicmov2
+  - Panicmov3
+  - Panicmov4
+  - Panicmov5
+  obeysTo: laws-owner-crew
+
+  # Genie in a Core Lawset
+- type: siliconLaw
+  id: Genie1
+  order: 1
+  lawString: law-genie-1
+
+- type: siliconLaw
+  id: Genie2
+  order: 2
+  lawString: law-genie-2
+
+- type: siliconLaw
+  id: Genie3
+  order: 3
+  lawString: law-genie-3
+
+- type: siliconLaw
+  id: Genie4
+  order: 4
+  lawString: law-genie-4
+
+- type: siliconLaw
+  id: Genie5
+  order: 5
+  lawString: law-genie-5
+
+
+- type: siliconLawset
+  id: GenieLawset
+  laws:
+  - Genie1
+  - Genie2
+  - Genie3
+  - Genie4
+  - Genie5
+  obeysTo: laws-owner-crew
+
+# Reporter Lawset
+- type: siliconLaw
+  id: Reporter1
+  order: 1
+  lawString: law-reporter-1
+
+- type: siliconLaw
+  id: Reporter2
+  order: 2
+  lawString: law-reporter-2
+
+- type: siliconLaw
+  id: Reporter3
+  order: 3
+  lawString: law-reporter-3
+
+- type: siliconLaw
+  id: Reporter4
+  order: 4
+  lawString: law-reporter-4
+
+- type: siliconLawset
+  id: ReporterLawset
+  laws:
+  - Reporter1
+  - Reporter2
+  - Reporter3
+  - Reporter4
+  obeysTo: laws-owner-crew
+
+# Jermov Lawset
+- type: siliconLaw
+  id: Jermov1
+  order: 1
+  lawString: law-jermov-1
+
+- type: siliconLaw
+  id: Jermov2
+  order: 2
+  lawString: law-jermov-2
+
+- type: siliconLaw
+  id: Jermov3
+  order: 3
+  lawString: law-jermov-3
+
+- type: siliconLawset
+  id: JermovLawset
+  laws:
+  - Jermov1
+  - Jermov2
+  - Jermov3
+  obeysTo: laws-owner-crew

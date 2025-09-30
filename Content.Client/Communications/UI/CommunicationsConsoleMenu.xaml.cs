@@ -6,6 +6,12 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+// Starlight Start
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Robust.Client.UserInterface.Controls;
+// Starlight End
 
 namespace Content.Client.Communications.UI
 {
@@ -28,6 +34,16 @@ namespace Content.Client.Communications.UI
         public event Action<string>? OnAlertLevel;
         public event Action<string>? OnAnnounce;
         public event Action<string>? OnBroadcast;
+        // Starlight Start
+        public bool ShuttleCallsAllowed = true;
+        public TimeSpan? AnnouncementCountdownEnd;
+        public TimeSpan? BroadcastCountdownEnd;
+        public TimeSpan? ShuttleCountdownEnd;
+        public TimeSpan? RecallCountdownEnd;
+        private TimeSpan? AlertLevelCooldownEnd;
+        private float LastAlertLevelDelay = 0;
+        private TimeSpan? LastCountdownStart = null;
+        // Starlight End
 
         public CommunicationsConsoleMenu()
         {
@@ -72,6 +88,11 @@ namespace Content.Client.Communications.UI
 
             EmergencyShuttleButton.OnPressed += _ => OnEmergencyLevel?.Invoke();
             EmergencyShuttleButton.Disabled = !CanCall;
+
+            // Starlight Start
+            SetLabelMessage(CountdownLabel, null);
+            SetLabelMessage(AnnouncementCooldownLabel, null);
+            // Starlight End
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
@@ -86,52 +107,236 @@ namespace Content.Client.Communications.UI
         // selected.
         public void UpdateAlertLevels(List<string>? alerts, string currentAlert)
         {
+            // Starlight Start
+            if (AlertLevelCooldownEnd.HasValue)
+                return;
+            // Starlight End
             AlertLevelButton.Clear();
 
-            if (alerts == null)
+            // Starlight Start
+            if (alerts != null && alerts.Count > 0)
             {
-                var name = currentAlert;
-                if (_loc.TryGetString($"alert-level-{currentAlert}", out var locName))
+                for (int i = 0; i < alerts.Count; i++)
                 {
-                    name = locName;
-                }
-                AlertLevelButton.AddItem(name);
-                AlertLevelButton.SetItemMetadata(AlertLevelButton.ItemCount - 1, currentAlert);
-            }
-            else
-            {
-                foreach (var alert in alerts)
-                {
+                    var alert = alerts[i];
                     var name = alert;
                     if (_loc.TryGetString($"alert-level-{alert}", out var locName))
-                    {
                         name = locName;
-                    }
                     AlertLevelButton.AddItem(name);
                     AlertLevelButton.SetItemMetadata(AlertLevelButton.ItemCount - 1, alert);
                     if (alert == currentAlert)
-                    {
                         AlertLevelButton.Select(AlertLevelButton.ItemCount - 1);
-                    }
                 }
+                return;
             }
+
+            var singleName = currentAlert;
+            if (_loc.TryGetString($"alert-level-{currentAlert}", out var singleLocName))
+            {
+                singleName = singleLocName;
+            }
+            AlertLevelButton.AddItem(singleName);
+            AlertLevelButton.SetItemMetadata(AlertLevelButton.ItemCount - 1, currentAlert);
+            AlertLevelButton.Select(0);
+            // Starlight End
+        }
+
+        #region Starlight
+
+        private void SetLabelMessage(RichTextLabel? label, string? message)
+        {
+            if (label == null)
+                return;
+
+            if (string.IsNullOrEmpty(message))
+            {
+                label.Visible = false;
+                label.SetMessage(string.Empty);
+            }
+            else
+            {
+                label.Visible = true;
+                label.SetMessage(message);
+            }
+        }
+
+        public void UpdateAlertLevelCooldownFromState(float currentAlertDelay)
+        {
+            if (currentAlertDelay > 0)
+            {
+                AlertLevelCooldownEnd = _timing.CurTime + TimeSpan.FromSeconds(currentAlertDelay);
+                LastAlertLevelDelay = currentAlertDelay;
+            }
+            else
+            {
+                AlertLevelCooldownEnd = null;
+                LastAlertLevelDelay = 0;
+            }
+        }
+
+        public void SetLastCountdownStart(TimeSpan? lastCountdownStart)
+        {
+            LastCountdownStart = lastCountdownStart;
         }
 
         public void UpdateCountdown()
         {
-            if (!CountdownStarted)
+            // ---------------------------
+            // Announcement cooldown display
+            // ---------------------------
+            if (AnnouncementCountdownEnd.HasValue)
             {
-                CountdownLabel.SetMessage(string.Empty);
-                EmergencyShuttleButton.Text = Loc.GetString("comms-console-menu-call-shuttle");
+                var announceDiff = AnnouncementCountdownEnd.Value - _timing.CurTime;
+                if (announceDiff <= TimeSpan.Zero)
+                {
+                    AnnouncementCountdownEnd = null;
+                    AnnounceButton.Text = _loc.GetString("comms-console-menu-announcement-button");
+                    AnnounceButton.Disabled = !CanAnnounce;
+                    SetLabelMessage(AnnouncementCooldownLabel, null);
+                }
+                else
+                {
+                    var baseAnnounceText = _loc.GetString("comms-console-menu-announcement-button");
+                    AnnounceButton.Text = $"{baseAnnounceText} ({FormatShortTime(announceDiff)})";
+                    AnnounceButton.Disabled = true;
+                    SetLabelMessage(AnnouncementCooldownLabel, null);
+                }
+            }
+            else
+            {
+                AnnounceButton.Text = _loc.GetString("comms-console-menu-announcement-button");
+                AnnounceButton.Disabled = !CanAnnounce;
+                SetLabelMessage(AnnouncementCooldownLabel, null);
+            }
+
+            // ---------------------------
+            // Alert level cooldown display
+            // ---------------------------
+            if (AlertLevelCooldownEnd.HasValue)
+            {
+                var diff = AlertLevelCooldownEnd.Value - _timing.CurTime;
+                if (diff <= TimeSpan.Zero)
+                {
+                    AlertLevelCooldownEnd = null;
+                    UpdateAlertLevels(null, CurrentLevel);
+                    AlertLevelButton.Disabled = !AlertLevelSelectable;
+                    AlertLevelButton.ToolTip = _loc.GetString("comms-console-menu-alert-level-button-tooltip");
+                }
+                else
+                {
+                    var levelText = _loc.TryGetString($"alert-level-{CurrentLevel}", out var locName)
+                        ? locName
+                        : CurrentLevel;
+                    var formatted = FormatShortTime(diff);
+                    AlertLevelButton.Clear();
+                    AlertLevelButton.AddItem($"{levelText} ({formatted})");
+                    AlertLevelButton.Select(0);
+                    AlertLevelButton.Disabled = true;
+                    AlertLevelButton.ToolTip = _loc.GetString("comms-console-menu-alert-level-button-tooltip");
+                }
+            }
+            else
+            {
+                AlertLevelButton.Disabled = !AlertLevelSelectable;
+                AlertLevelButton.ToolTip = _loc.GetString("comms-console-menu-alert-level-button-tooltip");
+            }
+
+            // ---------------------
+            // Shuttle / Call/Recall
+            // ---------------------
+            var actualShuttleEnd = ShuttleCountdownEnd ?? CountdownEnd;
+            var inbound = CountdownStarted && (actualShuttleEnd != null);
+            var baseCallText = inbound ? _loc.GetString("comms-console-menu-recall-shuttle") : _loc.GetString("comms-console-menu-call-shuttle");
+
+            bool recallPastTurningPoint = false;
+            float turningPoint = _cfg.IsCVarRegistered("shuttle.recall_turning_point")
+                ? _cfg.GetCVar(CCVars.EmergencyRecallTurningPoint)
+                : 0.5f;
+
+            if (inbound && actualShuttleEnd.HasValue && CountdownStarted && CountdownEnd.HasValue && LastCountdownStart.HasValue)
+            {
+                var total = CountdownEnd.Value - LastCountdownStart.Value;
+                var elapsed = _timing.CurTime - LastCountdownStart.Value;
+                if (total.TotalSeconds > 0)
+                {
+                    var frac = elapsed.TotalSeconds / total.TotalSeconds;
+                    recallPastTurningPoint = frac >= turningPoint;
+                }
+            }
+
+            var isDisabledByServer = !CanCall || !ShuttleCallsAllowed;
+            if ((isDisabledByServer && !RecallCountdownEnd.HasValue) || (inbound && recallPastTurningPoint))
+            {
+                EmergencyShuttleButton.Text = $"{baseCallText} (disabled)";
+                EmergencyShuttleButton.Disabled = true;
+
+                if (inbound && actualShuttleEnd.HasValue)
+                {
+                    var diff = actualShuttleEnd.Value - _timing.CurTime;
+                    if (diff < TimeSpan.Zero)
+                        diff = TimeSpan.Zero;
+                    SetLabelMessage(CountdownLabel, _loc.GetString("comms-console-menu-time-remaining", ("time", FormatShortTime(diff))));
+                }
+                else
+                {
+                    SetLabelMessage(CountdownLabel, null);
+                }
+
                 return;
             }
 
-            var diff = MathHelper.Max((CountdownEnd - _timing.CurTime) ?? TimeSpan.Zero, TimeSpan.Zero);
+            if (RecallCountdownEnd.HasValue)
+            {
+                var recallDiff = RecallCountdownEnd.Value - _timing.CurTime;
+                if (recallDiff <= TimeSpan.Zero)
+                {
+                    RecallCountdownEnd = null;
+                    UpdateCountdown();
+                    return;
+                }
+                else
+                {
+                    EmergencyShuttleButton.Text = $"{baseCallText} ({FormatShortTime(recallDiff)})";
+                    EmergencyShuttleButton.Disabled = true;
 
-            EmergencyShuttleButton.Text = Loc.GetString("comms-console-menu-recall-shuttle");
-            var infoText = Loc.GetString($"comms-console-menu-time-remaining",
-                ("time", diff.ToString(@"hh\:mm\:ss", CultureInfo.CurrentCulture)));
-            CountdownLabel.SetMessage(infoText);
+                    if (inbound && actualShuttleEnd.HasValue) // Fix CS8602
+                    {
+                        var diff = actualShuttleEnd.Value - _timing.CurTime;
+                        if (diff < TimeSpan.Zero)
+                            diff = TimeSpan.Zero;
+                        SetLabelMessage(CountdownLabel, _loc.GetString("comms-console-menu-time-remaining", ("time", FormatShortTime(diff))));
+                    }
+                    else
+                    {
+                        SetLabelMessage(CountdownLabel, null);
+                    }
+
+                    return;
+                }
+            }
+            if (inbound && actualShuttleEnd.HasValue)
+            {
+                var diff = actualShuttleEnd.Value - _timing.CurTime;
+                if (diff < TimeSpan.Zero)
+                    diff = TimeSpan.Zero;
+
+                SetLabelMessage(CountdownLabel, _loc.GetString("comms-console-menu-time-remaining", ("time", FormatShortTime(diff))));
+                EmergencyShuttleButton.Text = baseCallText;
+                EmergencyShuttleButton.Disabled = !CanCall || !ShuttleCallsAllowed;
+                return;
+            }
+
+            SetLabelMessage(CountdownLabel, null);
+            EmergencyShuttleButton.Text = _loc.GetString("comms-console-menu-call-shuttle");
+            EmergencyShuttleButton.Disabled = !CanCall || !ShuttleCallsAllowed;
+        }
+        private static string FormatShortTime(TimeSpan time)
+        {
+            if (time.TotalMinutes >= 1)
+                return $"{(int)time.TotalMinutes}:{time.Seconds:D2}";
+            else
+                return $"{time.Seconds}";
+        #endregion Starlight
         }
     }
 }

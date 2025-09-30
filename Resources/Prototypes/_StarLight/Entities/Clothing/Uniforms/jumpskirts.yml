@@ -8,6 +8,17 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/ntrep.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/ntrep.rsi
+
+- type: entity
+  parent: [ ClothingUniformSkirtBase, BaseCommandContraband ]
+  id: ClothingUniformJumpskirtNtrepTurtleneck
+  name: nt representive's turtleneck jumpskirt
+  description: For a more casual look while on the job.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/ntrepturtleneckskirt.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/ntrepturtleneckskirt.rsi
     
 - type: entity
   parent: [ ClothingUniformSkirtBase, BaseCommandContraband ]
@@ -180,7 +191,7 @@
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtCargoSalvage
-  name: salvage jumpskirt
+  name: salvage specialist jumpskirt
   description: Perfectly pairs with a pickaxe, this versatile and durable skirt jumpsuit is designed for tough work, offering both practicality and a rugged, stylish appearance.
   components:
   - type: Sprite
@@ -198,6 +209,29 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/salvageformal.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/salvageformal.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtSalvageLead
+  name: salvage leads's jumpskirt
+  description: It's a snappy jumpskirt with a sturdy set of overalls. It's very dirty.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Clothing/Uniforms/Jumpskirt/salvagelead.rsi
+    - type: Clothing
+      sprite: _Starlight/Clothing/Uniforms/Jumpskirt/salvagelead.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtMiningSpecialist
+  name: mining specialist's jumpskirt
+  description: A suit passed down through many generations. a fine layer of dust trails behind it.
+  components:
+  - type: RollUpSleeves
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/mining.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/mining.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase

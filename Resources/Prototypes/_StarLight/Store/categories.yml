@@ -119,6 +119,15 @@
   id: SalvageMercenaryEquipment
   name: Mercenary
 
+# mining
+- type: storeCategory
+  id: MiningEquipment
+  name: Equipment
+
+- type: storeCategory
+  id: MiningConsumeables
+  name: Consumeables
+
 # USSP
 
 - type: storeCategory

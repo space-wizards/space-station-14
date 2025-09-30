@@ -99,9 +99,9 @@ public abstract class SharedJumpSystem : EntitySystem
         var userMapCoords = _transform.GetMapCoordinates(userTransform);
 
         if (args.FromGrid && !_mapMan.TryFindGridAt(userMapCoords, out _, out _)) return;
-        args.Handled = true;
 
         TryJump(args.Performer, args.Target, 15f, args.ToPointer, args.Sound, args.Distance);
+        args.Handled = true;
     }
 
     public bool TryJump(Entity<JumpComponent?> ent, EntityCoordinates targetCoords, float speed = 15f, bool toPointer = false, SoundSpecifier? sound = null, float? distance = null, bool decreaseCharges = false)
@@ -133,8 +133,8 @@ public abstract class SharedJumpSystem : EntitySystem
             && (!toPointer || Vector2.Distance(userMapCoords.Position, targetMapCoords.Position) > distance))
             vector = Vector2.Normalize(vector) * distance.Value;
 
-        if (ent.Comp.ActionEntity != null && (limitedCharges == null || limitedCharges.MaxCharges <= 1))
-            _action.SetCooldown(ent.Comp.ActionEntity.Value, TimeSpan.FromSeconds(ent.Comp.Cooldown));
+        if (ent.Comp.ActionEntity != null && TryComp<ActionComponent>(ent.Comp.ActionEntity, out var action) && (limitedCharges == null || limitedCharges.MaxCharges <= 1))
+            _action.SetCooldown((ent.Comp.ActionEntity.Value, action), TimeSpan.FromSeconds(ent.Comp.Cooldown));
 
         _throwing.TryThrow(ent.Owner, vector, baseThrowSpeed: speed, doSpin: false);
 

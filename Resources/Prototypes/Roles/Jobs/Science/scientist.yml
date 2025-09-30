@@ -13,6 +13,10 @@
   access:
   - Research
   - Maintenance
+  #region Starlight
+  extendedAccess:
+  - Robotics
+  #endregion
 
 - type: startingGear
   id: ScientistGear

@@ -18,6 +18,7 @@
   standardSize: 170
   standardWeight: 75
   standardDensity: 110
+  customName: true
   # starlight end
 
 - type: speciesBaseSprites

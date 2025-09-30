@@ -1,12 +1,13 @@
 - type: entity
   name: expedition radio
   description: A handy expedition radio.
-  parent: [ RadioHandheld, BaseCargoContraband ]
+  parent: [ RadioHandheld, BaseSalvageMiningContraband ]
   id: RadioHandheldExpedition
   components:
   - type: TelecomExempt
   - type: RadioMicrophone
     broadcastChannel: Expedition
+    listenRange: 1
   - type: RadioSpeaker
     channels:
     - Expedition

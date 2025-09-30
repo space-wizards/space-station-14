@@ -29,4 +29,39 @@
       state: crypt_soviet
     - sprite: _Starlight/Objects/Devices/encryption_keys.rsi
       state: soviet_label
-    
+
+- type: entity
+  parent: [ EncryptionKey, BaseCargoContraband ]
+  id: EncryptionKeyExpedition
+  name: expedition encryption key
+  description: An encryption key used by daring explorers.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Expedition
+    defaultChannel: Expedition
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+    - sprite: _Starlight/Objects/Devices/encryption_keys.rsi
+      state: expedition_label
+
+- type: entity
+  parent: [ EncryptionKey, BaseSalvageMiningContraband ]
+  id: EncryptionKeySalvage
+  name: salvage encryption key
+  description: A dual encryption key used by box-loving explorers.
+  components:
+    - type: EncryptionKey
+      channels:
+        - Expedition
+        - Supply
+      defaultChannel: Supply
+    - type: Sprite
+      layers:
+        - state: crypt_gray
+        - sprite: _Starlight/Objects/Devices/encryption_keys.rsi
+          state: salvage_label
+    - type: Tag
+      tags:
+        - EncryptionCargo
