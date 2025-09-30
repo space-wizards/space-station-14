@@ -237,6 +237,12 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             {
                 specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Alerts/human_crew_monitoring.rsi"), "critical");
             }
+            else if (sensor.WoundableData is { } woundableSummary)
+            {
+                var worstRating = Math.Max((byte)woundableSummary.BloodPressureRating, Math.Max((byte)woundableSummary.BloodOxygenationRating, (byte)woundableSummary.HeartRateRating));
+                var index = MathF.Round(4f * ((float)worstRating)/5f);
+                specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Alerts/human_crew_monitoring.rsi"), "health" + index);
+            }
             // End Offbrand Additions
 
             if (!sensor.IsAlive)
