@@ -9,4 +9,14 @@ Entries:
     type: Add
   id: 1
   time: '2025-09-29T21:00:00.0000000+00:00'
+- author: sowelipililimute
+  changes:
+  - message: Brain damage has been re-curved, happening slower in less severe scenarios but faster in worse scenarios.
+    type: Tweak
+  - message: Painkillers have been re-tuned to be less lethal with ethanol, longer-lasting for weaker ones and shorter-lasting for stronger ones.
+    type: Tweak
+  - message: Inaprovaline and dexalin (plus) last twice as long.
+    type: Tweak
+  id: 2
+  time: '2025-09-30T21:00:00.0000000+00:00'
 Order: 2
