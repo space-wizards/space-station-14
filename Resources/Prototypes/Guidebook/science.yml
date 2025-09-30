@@ -36,8 +36,6 @@
   id: Xenoarchaeology
   name: guide-entry-xenoarchaeology
   text: "/ServerInfo/Guidebook/Science/Xenoarchaeology.xml"
-  children:
-  - ArtifactReports
 
 - type: guideEntry
   id: Robotics
