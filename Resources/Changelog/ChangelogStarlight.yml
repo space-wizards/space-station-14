@@ -16504,5 +16504,12 @@ Entries:
   id: 177000
   time: '2025-09-30T11:15:09.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1770
+- author: Vonte
+  changes:
+  - message: Added the NTR Monocle
+    type: Add
+  id: 177100
+  time: '2025-09-30T13:34:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1771
 Order: -1
 
