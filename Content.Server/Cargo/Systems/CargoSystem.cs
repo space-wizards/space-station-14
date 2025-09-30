@@ -77,58 +77,6 @@ public sealed partial class CargoSystem : SharedCargoSystem
         UpdateBounty();
     }
 
-    /// <summary>
-    /// Attempts to adjust the money of a certain bank account.
-    /// </summary>
-    /// <param name="station">Station where the bank account is from</param>
-    /// <param name="accountPrototypeId">the id of the bank account</param>
-    /// <param name="money">how much money to set the account to</param>
-    /// <param name="createAccount">Whether or not it should create the account if it doesn't exist.</param>
-    /// <param name="stationBankAccount">Resolve pattern, station bank account component of the station.</param>
-    /// <returns>Whether or not setting the value succeeded.</returns>
-    public bool TryAdjustBankAccount(
-        Entity<StationBankAccountComponent> station,
-        ProtoId<CargoAccountPrototype> accountPrototypeId,
-        int money,
-        bool createAccount = false)
-    {
-        var accounts = station.Comp.Accounts;
-
-        if (!accounts.ContainsKey(accountPrototypeId) && !createAccount)
-            return false;
-
-        accounts[accountPrototypeId] += money;
-        var ev = new BankBalanceUpdatedEvent(station, station.Comp.Accounts);
-        RaiseLocalEvent(station, ref ev, true);
-        return true;
-    }
-
-    /// <summary>
-    /// Attempts to set the money of a certain bank account.
-    /// </summary>
-    /// <param name="station">Station where the bank account is from</param>
-    /// <param name="accountPrototypeId">the id of the bank account</param>
-    /// <param name="money">how much money to set the account to</param>
-    /// <param name="createAccount">Whether or not it should create the account if it doesn't exist.</param>
-    /// <param name="stationBankAccount">Resolve pattern, station bank account component of the station.</param>
-    /// <returns>Whether or not setting the value succeeded.</returns>
-    public bool TrySetBankAccount(
-        Entity<StationBankAccountComponent> station,
-        ProtoId<CargoAccountPrototype> accountPrototypeId,
-        int money,
-        bool createAccount = false)
-    {
-        var accounts = station.Comp.Accounts;
-
-        if (!accounts.ContainsKey(accountPrototypeId) && !createAccount)
-            return false;
-
-        accounts[accountPrototypeId] = money;
-        var ev = new BankBalanceUpdatedEvent(station, station.Comp.Accounts);
-        RaiseLocalEvent(station, ref ev, true);
-        return true;
-    }
-
     public void UpdateBankAccount(
         Entity<StationBankAccountComponent?> ent,
         int balanceAdded,

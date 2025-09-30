@@ -1,5 +1,6 @@
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -62,7 +63,6 @@ public abstract class SharedCargoSystem : EntitySystem
     /// <param name="station">Station to get bank account info from.</param>
     /// <param name="accountPrototypeId">Bank account prototype ID to get info for.</param>
     /// <param name="money">The ammount of money in the account</param>
-    /// <param name="stationBankAccount">Resolve pattern, station bank account component of the station.</param>
     /// <returns>Whether or not the bank account exists.</returns>
     public bool TryGetAccount(Entity<StationBankAccountComponent> station, ProtoId<CargoAccountPrototype> accountPrototypeId, out int money)
     {
@@ -73,11 +73,60 @@ public abstract class SharedCargoSystem : EntitySystem
     /// Returns a readonly dictionary of all accounts and their money info.
     /// </summary>
     /// <param name="station">Station to get bank account info from.</param>
-    /// <param name="stationBankAccount">Resolve pattern, station bank account component of the station.</param>
     /// <returns>Whether or not the bank account exists.</returns>
     public IReadOnlyDictionary<ProtoId<CargoAccountPrototype>, int> GetAccounts(Entity<StationBankAccountComponent> station)
     {
         return station.Comp.Accounts;
+    }
+
+    /// <summary>
+    /// Attempts to adjust the money of a certain bank account.
+    /// </summary>
+    /// <param name="station">Station where the bank account is from</param>
+    /// <param name="accountPrototypeId">the id of the bank account</param>
+    /// <param name="money">how much money to set the account to</param>
+    /// <param name="createAccount">Whether or not it should create the account if it doesn't exist.</param>
+    /// <returns>Whether or not setting the value succeeded.</returns>
+    public bool TryAdjustBankAccount(
+        Entity<StationBankAccountComponent> station,
+        ProtoId<CargoAccountPrototype> accountPrototypeId,
+        int money,
+        bool createAccount = false)
+    {
+        var accounts = station.Comp.Accounts;
+
+        if (!accounts.ContainsKey(accountPrototypeId) && !createAccount)
+            return false;
+
+        accounts[accountPrototypeId] += money;
+        var ev = new BankBalanceUpdatedEvent(station, station.Comp.Accounts);
+        RaiseLocalEvent(station, ref ev, true);
+        return true;
+    }
+
+    /// <summary>
+    /// Attempts to set the money of a certain bank account.
+    /// </summary>
+    /// <param name="station">Station where the bank account is from</param>
+    /// <param name="accountPrototypeId">the id of the bank account</param>
+    /// <param name="money">how much money to set the account to</param>
+    /// <param name="createAccount">Whether or not it should create the account if it doesn't exist.</param>
+    /// <returns>Whether or not setting the value succeeded.</returns>
+    public bool TrySetBankAccount(
+        Entity<StationBankAccountComponent> station,
+        ProtoId<CargoAccountPrototype> accountPrototypeId,
+        int money,
+        bool createAccount = false)
+    {
+        var accounts = station.Comp.Accounts;
+
+        if (!accounts.ContainsKey(accountPrototypeId) && !createAccount)
+            return false;
+
+        accounts[accountPrototypeId] = money;
+        var ev = new BankBalanceUpdatedEvent(station, station.Comp.Accounts);
+        RaiseLocalEvent(station, ref ev, true);
+        return true;
     }
 }
 
