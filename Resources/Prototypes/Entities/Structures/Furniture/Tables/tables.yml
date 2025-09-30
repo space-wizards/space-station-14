@@ -77,7 +77,7 @@
         mask:
         - TableMask
         layer:
-        - CounterLayer
+        - TableLayer
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Wood
@@ -201,7 +201,7 @@
 
 - type: entity
   id: TableReinforced
-  parent: CounterBase
+  parent: TableBase
   name: reinforced table
   description: A square piece of metal standing on four metal legs. Extra robust.
   components:
@@ -471,7 +471,7 @@
 
 - type: entity
   id: TableBrass
-  parent: CounterBase
+  parent: TableBase
   name: brass table
   description: A shiny, corrosion resistant brass table. Steampunk!
   components:
@@ -615,7 +615,7 @@
 
 - type: entity
   id: TableStone
-  parent: CounterBase
+  parent: TableBase
   name: stone table
   description: Literally the sturdiest thing you have ever seen.
   components:
@@ -675,7 +675,7 @@
       collection: FootstepCarpet
 
 - type: entity
-  parent: CounterBase
+  parent: TableBase
   id: TableXeno
   name: xeno table
   description: I wouldn't put the silverware on it.

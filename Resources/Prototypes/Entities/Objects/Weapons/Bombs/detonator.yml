@@ -1,0 +1,77 @@
+- type: entity
+  parent: [ BaseItem, BaseSecurityContraband ]
+  id: EmptyDetonator
+  name: detonator cap
+  description: A detonator cap. Requires a trigger and wire.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Bombs/detonator.rsi
+    layers:
+    - state: empty
+      map: [ "enum.ConstructionVisuals.Layer" ]
+  - type: Item
+    size: Small
+  - type: PayloadCase
+  - type: Construction
+    graph: DetonatorGraph
+    node: emptyDetonator
+  - type: Damageable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Structural # as close as we can get to only letting explosives trigger it.
+        damage: 120
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger # the idea here is to prevent you from just beating it until it explodes.
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          emptyDetonator: { state: empty }
+          detonatorWithTrigger: { state: addtrigger }
+          wiredDetonator: { state: complete }
+      enum.Trigger.TriggerVisuals.VisualState:
+        enum.ConstructionVisuals.Layer:
+          Primed: { state: primed }
+          Unprimed: { state: complete }
+  - type: StaticPrice
+    price: 25
+
+- type: entity
+  parent: EmptyDetonator
+  id: WiredDetonator
+  name: detonator cap
+  description: A detonator cap.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Explosive # this is the cord, but its a little smaller because I dont want these to be grenades. They need to not really break walls themselves, but do enough to set off the cable. ~125 structural.
+    explosionType: DemolitionCharge
+    totalIntensity: 2.5
+    intensitySlope: 100
+    maxIntensity: 2.5
+    canCreateVacuum: false
+  - type: ExplodeOnTrigger
+  - type: Sticky
+    stickDelay: 2
+    unstickDelay: 2
+    stickPopupStart: comp-sticky-start-stick-bomb
+    stickPopupSuccess: comp-sticky-success-stick-bomb
+    unstickPopupStart: comp-sticky-start-unstick-bomb
+    unstickPopupSuccess: comp-sticky-success-unstick-bomb
+    whitelist:
+      tags:
+      - ExCable
+    blacklist: # can't stick it to other items
+      components:
+      - Item
