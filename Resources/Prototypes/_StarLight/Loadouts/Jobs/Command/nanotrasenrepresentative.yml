@@ -4,6 +4,16 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitNtrep
 
+- type: loadout  
+  id: NanoTrasenRepresentativeTurtleneck
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitNtrepTurtleNeck
+
+- type: loadout  
+  id: NanoTrasenRepresentativeTurtleneckSkirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtNtrepTurtleneck
+
 - type: loadout
   id: NanoTrasenRepresentativeJumpsuitFormal
   equipment:
@@ -20,6 +30,26 @@
     eyes: ClothingEyesSunGlassesHudSkill
 
 - type: loadout
+  id: NanoTrasenRepresentativeMonocle
+  equipment:
+    eyes: ClothingEyesNTRMonocle
+
+- type: loadout
   id: NanoTrasenRepresentativeHud
   equipment:
     eyes: ClothingEyesHudSkills
+
+- type: loadout
+  id: NanoTrasenRepresentativeTophat
+  equipment:
+    head: ClothingHeadHatNTRTophat
+
+- type: loadout
+  id: NanoTrasenRepresentativeEliteTophat
+  equipment:
+    head: ClothingHeadHatNTREliteTophat
+
+- type: loadout
+  id: NanoTrasenRepresentativeCap
+  equipment:
+    head: ClothingHeadHatCapNtrep

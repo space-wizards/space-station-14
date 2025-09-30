@@ -6,7 +6,7 @@
     transferName: true
     transferHumanoidAppearance: false
     inventory: Drop
-    transferDamage: true
+    transferDamage: false
     revertOnDeath: true
     revertOnCrit: false
     polymorphSound: /Audio/_Starlight/Voice/gorilla.ogg

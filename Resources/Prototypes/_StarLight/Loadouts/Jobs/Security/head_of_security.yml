@@ -1,0 +1,17 @@
+- type: loadout
+  id: HeadofSecurityBlackSuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoSBlack
+  groupBy: "jumpsuit"
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorOfficer
+
+- type: loadout
+  id: HeadofSecurityBlackSkirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtHoSBlack
+  groupBy: "jumpskirt"
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorOfficer

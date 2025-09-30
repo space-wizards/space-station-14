@@ -3,7 +3,7 @@
   mapName: 'Barratry'
   mapPath: /Maps/_Starlight/Stations/Barratry.yml
   minPlayers: 40
-  maxPlayers: 80
+  maxPlayers: 130
   stations:
     Barratry:
       stationProto: StandardNanotrasenStation
@@ -57,6 +57,7 @@
             CargoTechnician: [ 4, 4 ]
             MailTech: [ 1, 2 ]
             MiningSpecialist: [ 3, 3 ]
+            SalvageLead: [ 1, 1 ]
             #civilian
             Assistant: [ -1, -1 ]
             Clown: [ 1, 1 ]

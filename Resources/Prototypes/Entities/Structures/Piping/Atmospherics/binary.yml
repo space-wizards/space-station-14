@@ -27,6 +27,7 @@
       Primary: Structures/Piping/Atmospherics/pump.rsi
       Secondary: Structures/Piping/Atmospherics/pump_alt1.rsi
       Tertiary: Structures/Piping/Atmospherics/pump_alt2.rsi
+  - type: ChildBlockVision # Starlight-edit
 
 - type: entity
   parent: GasBinaryBase

@@ -1,0 +1,10 @@
+- type: entity
+  id: OrganThavenBrain
+  parent: [BaseItem, OrganHumanBrain]
+  name: thaven brain
+  description: "An organic positronic brain. Quite remarkable, really."
+  components:
+    - type: BorgBrain
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Thaven/organs.rsi
+      state: brain-thaven

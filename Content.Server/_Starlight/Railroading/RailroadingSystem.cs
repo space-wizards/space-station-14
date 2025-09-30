@@ -116,7 +116,8 @@ public sealed partial class RailroadingSystem : SharedRailroadingSystem
         };
         _euiManager.OpenEui(eui, user);
         eui.StateDirty();
-        _alerts.ClearAlert(ent, AlertProtoId);
+        if (TryComp<AlertsComponent>(ent, out var alerts))
+            _alerts.ClearAlert((ent,alerts), AlertProtoId);
     }
 
     // todo: timer

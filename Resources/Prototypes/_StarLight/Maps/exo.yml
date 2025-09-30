@@ -3,7 +3,7 @@
   mapName: 'Exo'
   mapPath: /Maps/_Starlight/Stations/Exo.yml
   minPlayers: 40
-  maxPlayers: 80
+  maxPlayers: 130
   stations:
     StarlightExo:
       stationProto: StandardNanotrasenStation
@@ -59,6 +59,7 @@
             CargoTechnician: [ 4, 4 ]
             MiningSpecialist: [ 2, 2 ]
             MailTech: [ 1, 1 ]
+            SalvageLead: [ 1, 1 ]
             #civilian
             Assistant: [ -1, -1 ]
             Clown: [ 1, 1 ]

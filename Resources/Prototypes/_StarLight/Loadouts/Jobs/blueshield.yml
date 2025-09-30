@@ -34,10 +34,15 @@
     jumpsuit: ClothingUniformJumpsuitEliteBlueShield
 
 - type: loadout
+  id: FormalBlueShieldJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitFormalBlueShield
+
+- type: loadout
   id: BlueShieldShirt
   equipment:
     jumpsuit: ClothingUniformJumpsuitBlueShieldCaptain
-    
+
 - type: loadout
   id: BlueShieldGlasses
   equipment:
@@ -47,23 +52,23 @@
   id: BlueShieldHud
   equipment:
     eyes: ClothingEyesHudBlueShield
-    
+
 - type: loadout
   id: BlueShieldCoat
   equipment:
     outerClothing: ClothingOuterCoatBlueShield
-    
+
 - type: loadout
   id: BlueShieldVest
   equipment:
     outerClothing: ClothingOuterArmorBlueShield
-    
+
 - type: loadout
   id: BlueShieldFormalCloak
   equipment:
     neck: ClothingNeckCloakBsoCape
-    
+
 - type: loadout
   id: BlueShieldEliteCloak
   equipment:
-    neck: ClothingNeckCloakBsoElite   
+    neck: ClothingNeckCloakBsoElite

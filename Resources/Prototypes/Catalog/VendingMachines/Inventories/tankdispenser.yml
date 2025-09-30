@@ -1,8 +1,8 @@
 - type: vendingMachineInventory
   id: TankDispenserEVAInventory
   startingInventory:
-    OxygenTankFilled: 10
-    NitrogenTankFilled: 10
+    OxygenTankFilled: 13  #Starlight +3
+    NitrogenTankFilled: 13  #Starlight +3
 
 - type: vendingMachineInventory
   id: TankDispenserEngineeringInventory

@@ -19,8 +19,8 @@
 #    - RRCardFoodStew
 #    - RRCardMetabolizeNicotine
 #    - RRCardMetabolizeTest
-#    - RRCardCriminal
-    - RRCardMailOpen
+    - RRCardCriminal
+#    - RRCardMailOpen
     
 - type: entity
   parent: BaseGameRule

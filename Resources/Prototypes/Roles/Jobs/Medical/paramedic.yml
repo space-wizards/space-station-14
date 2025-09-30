@@ -13,8 +13,10 @@
   access:
   - Medical
   - Maintenance
+  - Paramedic # Starlight
   extendedAccess:
   - Chemistry
+  - Surgery # Starlight
 
 - type: startingGear
   id: ParamedicGear

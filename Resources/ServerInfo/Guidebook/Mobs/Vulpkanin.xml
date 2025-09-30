@@ -1,19 +1,19 @@
 <Document>
-  # Vulpkanians
+  # Vulpkanin
 
   <Box>
     <GuideEntityEmbed Entity="MobVulpkanin" Caption=""/>
   </Box>
-  Vulpkanin (Vulpa-Kin) — a species of anthropomorphic intelligent beings vaguely resembling Earth foxes from the canine family. They have a unique leg structure and sharper vision, their fur providing them a better ability to handle the cold and likewise not so easily handle heat.
 
-  ## Racial Features
-  
-  - Receive [color=#ffa500]15% more Heat damage[/color] and [color=#1e90ff]15% less Cold damage[/color].
-  - Need to eat and drink 1.5 times more.
-  - Metabolise chemicals in their bloodstream at a 25% faster rate.
-  - Easily intoxicated.
-  - Animal stomach, takes poison damage from chocolate and allows consuming other creatures' organs.
-  - Deal [color=red]5[/color] slashing damage with claws.
-  - Have their own accent, sometimes rolling the "R".
-  - Have a vision range one tile further.
+  Vulpkanin, due to their dense fur, [color=#1e90ff]prefer colder temperatures[/color] and [color=#ffa500]heat up faster.[/color]
+
+  Their diet allows them to safely eat raw meat but they get poisoned by theobromine.
+
+  Their weirdly shaped muzzle leads to difficulties drinking, making them sometimes spill small amounts of whatever they drank onto the ground.
+
+  They take [color=#1e90ff]15% less Cold damage[/color] but [color=#ffa500]15% more Heat damage.[/color].
+
+  Their eyesight allows them to see slightly further than most species.
+
+  They have a faster metabolism than other species. This makes them hungrier, but it also means that they can process chemicals 25% faster then a standard human.
 </Document>

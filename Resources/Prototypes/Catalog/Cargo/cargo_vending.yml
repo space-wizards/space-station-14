@@ -12,7 +12,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockBoozeFilled
-  cost: 3500
+  cost: 3000 #SL EDIT
   category: cargoproduct-category-name-service
   group: market
 
@@ -22,7 +22,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockChefvendFilled
-  cost: 750 # Starlight-edit
+  cost: 850 # Starlight-edit
   category: cargoproduct-category-name-service
   group: market
 
@@ -32,7 +32,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockClothesFilled
-  cost: 4010 # Starlight-edit
+  cost: 4025 # Starlight-edit
   category: cargoproduct-category-name-service
   group: market
 
@@ -42,7 +42,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockAutoDrobeFilled
-  cost: 4010 # Starlight-edit
+  cost: 4000 # Starlight-edit
   category: cargoproduct-category-name-service
   group: market
 
@@ -92,7 +92,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockHotDrinksFilled
-  cost: 1200
+  cost: 1000 #SL EDIT
   category: cargoproduct-category-name-service
   group: market
 
@@ -102,7 +102,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockMedicalFilled
-  cost: 1750
+  cost: 1800 #SL EDIT
   category: cargoproduct-category-name-medical
   group: market
 
@@ -122,7 +122,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockNutriMaxFilled
-  cost: 2400
+  cost: 2000 #SL EDIT
   category: cargoproduct-category-name-hydroponics
   group: market
 
@@ -142,7 +142,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockRobustSoftdrinksFilled
-  cost: 1200
+  cost: 1000 #SL EDIT
   category: cargoproduct-category-name-service
   group: market
 
@@ -172,7 +172,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockSeedsFilled
-  cost: 3600
+  cost: 3650 #SL EDIT
   category: cargoproduct-category-name-hydroponics
   group: market
 
@@ -192,7 +192,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockVendomatFilled
-  cost: 1200
+  cost: 1000 #SL EDIT
   category: cargoproduct-category-name-service
   group: market
 
@@ -212,7 +212,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockTankDispenserFilled
-  cost: 1000
+  cost: 1100
   category: cargoproduct-category-name-atmospherics
   group: market
 
@@ -222,7 +222,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockHappyHonkFilled
-  cost: 2100
+  cost: 3000 #SL EDIT
   category: cargoproduct-category-name-service
   group: market
 
@@ -242,7 +242,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockChangFilled
-  cost: 1200
+  cost: 1000 #SL EDIT
   category: cargoproduct-category-name-service
   group: market
 
@@ -252,7 +252,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockDiscountDansFilled
-  cost: 1200
+  cost: 1000 #SL EDIT
   category: cargoproduct-category-name-service
   group: market
 
@@ -262,6 +262,6 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockDonutFilled
-  cost: 1200
+  cost: 1000 #SL EDIT
   category: cargoproduct-category-name-service
   group: market

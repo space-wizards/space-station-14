@@ -13,3 +13,6 @@ lathe-category-orders-and-instructions = Orders and instructions
 lathe-category-evidence = Evidence
 lathe-category-conclusions-and-decisions = Conclusions and decisions
 lathe-category-error = Error
+lathe-category-communication = Communication
+
+lathe-category-silicon = Silicon

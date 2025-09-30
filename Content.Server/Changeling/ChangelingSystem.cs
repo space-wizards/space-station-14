@@ -59,6 +59,7 @@ using Content.Server.Stunnable;
 using Content.Shared.Jittering;
 using System.Linq;
 using Content.Shared.Radio;
+using Content.Shared.Zombies;
 
 namespace Content.Server.Changeling;
 

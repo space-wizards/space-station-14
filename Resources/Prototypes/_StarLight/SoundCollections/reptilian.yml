@@ -1,0 +1,6 @@
+- type: soundCollection
+  id: ReptilianHiss
+  files:
+  - /Audio/_Starlight/Voice/Reptilian/lizard_hiss1.ogg
+  - /Audio/_Starlight/Voice/Reptilian/lizard_hiss2.ogg
+  - /Audio/_Starlight/Voice/Reptilian/lizard_hiss3.ogg

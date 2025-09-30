@@ -8,3 +8,14 @@
     stealGroup: SalvageShuttleConsoleCircuitboard
   - type: Objective
     difficulty: 0.7
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: Proto5xStealObjective
+  components:
+  - type: NotJobRequirement
+    job: HeadOfSecurity
+  - type: StealCondition
+    stealGroup: Proto5x
+  - type: Objective
+    difficulty: 1

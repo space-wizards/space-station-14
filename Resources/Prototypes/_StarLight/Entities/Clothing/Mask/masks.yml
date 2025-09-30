@@ -67,6 +67,39 @@
       coefficients:
         Blunt: 0.90
 
+- type: entity
+  parent: ClothingMaskGas
+  id: ClothingSquidOneMask
+  name: circle dangerous mask
+  description: SEE MY EYE?
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Mask/squid_one.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Mask/squid_one.rsi
+
+- type: entity
+  parent: ClothingMaskGas
+  id: ClothingSquidTwoMask
+  name: square dangerous mask
+  description: Glory to square!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Mask/squid_two.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Mask/squid_two.rsi
+
+- type: entity
+  parent: ClothingMaskGas
+  id: ClothingSquidThreeMask
+  name: triangle dangerous mask
+  description: On top. Like always.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Mask/squid_three.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Mask/squid_three.rsi
+
 # Fashion-O-Mat-Start
 - type: entity
   parent: ClothingMaskBase

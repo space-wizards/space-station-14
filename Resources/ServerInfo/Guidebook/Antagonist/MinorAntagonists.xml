@@ -11,7 +11,11 @@
 
   A perfect copy of a random crewmember that was thrown into our universe by a space-time anomaly. To fix the paradox and survive they have to find and kill their original counterpart.
 
-They have no special abilities, but are identical in appearance, DNA, fingerprints, clothing, equipment and IDs, making it hard to figure out who is the original and who is the clone... unless you know your fellow crewmembers well!
+  Both clones are the "real" clone and all other crew has memories that match the history of both clones.
+  Because of this, crew should treat their memory as unreliable and trust that both clones are telling the truth.
+  Additionally, both clones believe they are the original. 
+
+  They have no special abilities, but are identical in appearance, DNA, fingerprints, clothing, equipment and IDs, making it hard to figure out who is the original and who is the clone... unless you know your fellow crewmembers well!
 
   # Revenant
 
@@ -20,6 +24,9 @@ They have no special abilities, but are identical in appearance, DNA, fingerprin
   </Box>
 
   Revenants are ethereal beings made of ectoplasm that haunt the crew and steal [color=#8f63e6]life essence[/color] from them.
+
+  Revenant is allowed to destroy burn chambers or space the station to obtain souls.
+
   - Your essence is your very own [bold]life force[/bold]. Taking damage reduces your essence.
   - Essence is also spent to use [bold]abilities[/bold].
   - To gain essence you first [bold]inspect[/bold] various souls for their worth. More worthy souls grant more essence. Then you must [bold]siphon[/bold] it either when the victim is crit, dead or asleep. All of this is done with [color=yellow][bold][keybind="Use"][/bold][/color].
@@ -36,7 +43,12 @@ They have no special abilities, but are identical in appearance, DNA, fingerprin
     <GuideEntityEmbed Entity="MobRatServant" Caption=""/>
   </Box>
 
-  Rat kings are abnormally large rodents capable of [color=yellow]raising huge rat armies[/color] by eating equally huge amounts of food.
+  Rat kings are abnormally large rodents whose primary goals are [color=yellow]raising huge rat armies[/color] and eating equally huge amounts of food.
+
+  Rat kings are antags, but they may make deals with the crew to further their goals.
+  Rat kings should [color=red]NOT[/color] go out of their way to protect the crew unless it is absolutely necessary.
+  If the crew stands in the way of a Rat King getting food the Rat King is aware that crew are [italic]emergency food[/italic].
+
   - You have several abilities that come at the cost of your [bold]hunger.[/bold]
   - One such ability is [color=yellow][italic]Raise Army[/italic][/color], which summons a [bold]Rat Servant[/bold]. You can [bold]command[/bold] your servants to stay in place, follow you, attack a target of your choice or attack indiscriminately.
   - You can conjure a cloud of [color=#77b58e]ammonia[/color] using [color=purple][italic]Rat King's Domain[/italic][/color]. This purple gas is mildly poisonous to humans but heals rats.
@@ -55,6 +67,9 @@ They have no special abilities, but are identical in appearance, DNA, fingerprin
   </Box>
 
   Space dragons are giant extradimensional fish that can [color=red]eat crew[/color] and create [color=#4b7fcc]carp rifts.[/color]
+
+  Space Dragons are considered a priority threat and command should not make deals with them.
+
   - Dragons have powerful jaws that allow them to [color=red][italic]Devour[/italic][/color] infrastructure such as doors, windows, and walls.
   - They can also heal themselves by using [color=red][italic]Devour[/italic][/color] on crew members that have gone unconscious or have died.
   - Your [color=orange][italic]Dragon's Breath[/italic][/color] is a [bold]flaming projectile[/bold] which travels a straight flight path, exploding multiple times and igniting things along the way. Try not to hit your carps with this!
@@ -71,6 +86,10 @@ They have no special abilities, but are identical in appearance, DNA, fingerprin
   </Box>
 
   Slimes and spiders have no remarkable features, but will [color=cyan]infest the station[/color] from time to time regardless. Both will give chase and attack anything they see.
+
+  Hostile Slimes and Spiders are driven by hunger and territorial aggression, they are not station pets.
+  Clown Spiders are allowed to protect assumed clowns.
+
   - Slimes may [bold]deal extra cellular or poison damage[/bold], based upon their color. Water hurts them just as it would hurt a Laspi. <!--Starlight-->
   - Spiders have a venomous bite and can [bold]create webs[/bold] that are hard to move through, but are easily destroyed with a blade. They can also pry open doors, windoors, and airlocks.
 </Document>

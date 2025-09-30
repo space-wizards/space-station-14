@@ -18,6 +18,7 @@
   - type: ContainerFill
     containers:
       key_slots:
+      - EncryptionKeyExpedition # Starlight
       - EncryptionKeyCargo
       - EncryptionKeyCommand
       - EncryptionKeyCommon

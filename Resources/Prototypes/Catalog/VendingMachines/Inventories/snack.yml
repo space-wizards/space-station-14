@@ -1,12 +1,12 @@
 - type: vendingMachineInventory
   id: GetmoreChocolateCorpInventory
   startingInventory:
-    FoodSnackRaisins: 3
-    FoodSnackChocolate: 3
-    FoodSnackCnDs: 3
-    FoodSnackPistachios: 3
-    FoodSnackSus: 3
-    FoodSnackSemki: 3
+    FoodSnackRaisins: 4 #Starlight +1
+    FoodSnackChocolate: 4 #Starlight +1
+    FoodSnackCnDs: 4 #Starlight +1
+    FoodSnackPistachios: 4 #Starlight +1
+    FoodSnackSus: 4 #Starlight +1
+    FoodSnackSemki: 4 #Starlight +1
   contrabandInventory:
-    FoodSnackSwirlLollipop: 2
-    FoodSnackSyndi: 3
+    FoodSnackSwirlLollipop: 3 #Starlight +1
+    FoodSnackSyndi: 4 #Starlight +1

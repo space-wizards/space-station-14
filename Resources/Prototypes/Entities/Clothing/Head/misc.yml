@@ -198,13 +198,13 @@
     sprite: Clothing/Head/Misc/fancycrown.rsi
   - type: TypingIndicatorClothing
     proto: regal
-  - type: MobPrice
+  - type: StaticPrice
     price: 3000
   - type: AddAccentClothing
     accent: MobsterAccent
 
 - type: entity
-  parent: [ ClothingHeadBase ]
+  parent: [ ClothingHeadBase, BaseSyndicateContraband ]
   id: ClothingHeadHatCatEars
   name: cat ears
   description: "NYAH!"
@@ -213,9 +213,9 @@
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
   - type: Sprite
-    sprite: Clothing/Head/Hats/catears.rsi
+    sprite: _Starlight/Clothing/Head/Hats/blackcatears.rsi # Starlight
   - type: Clothing
-    sprite: Clothing/Head/Hats/catears.rsi
+    sprite: _Starlight/Clothing/Head/Hats/blackcatears.rsi # Starlight
   - type: AddAccentClothing
     accent: OwOAccent
   - type: StaticPrice
@@ -237,9 +237,9 @@
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
   - type: Sprite
-    sprite: Clothing/Head/Hats/catears.rsi
+    sprite: _Starlight/Clothing/Head/Hats/blackcatears.rsi # Starlight
   - type: Clothing
-    sprite: Clothing/Head/Hats/catears.rsi
+    sprite: _Starlight/Clothing/Head/Hats/blackcatears.rsi # Starlight
   - type: AddAccentClothing
     accent: OwOAccent
 

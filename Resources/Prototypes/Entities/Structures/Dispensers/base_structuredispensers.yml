@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  id: ReagentDispenserBase
+  id: ReagentDispenserBaseUnpowered # Starlight-edit: power cell chem dispenser
   parent: SmallConstructibleMachine
   placement:
     mode: SnapgridCenter
@@ -23,11 +23,8 @@
         - TabletopMachineMask
         layer:
         - TabletopMachineLayer
-  - type: ApcPowerReceiver
-  - type: ExtensionCableReceiver
   - type: ActivatableUI
     key: enum.ReagentDispenserUiKey.Key
-  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
       enum.ReagentDispenserUiKey.Key:
@@ -77,3 +74,44 @@
   - type: StaticPrice
     price: 1000
   - type: WiresPanel
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - storagebase
+    - beakerSlot
+  
+# Starlight-start: power cell chem dispenser
+  
+- type: entity
+  abstract: true
+  id: ReagentDispenserBasePowerCell
+  parent: ReagentDispenserBaseUnpowered
+  components:
+  - type: PowerCellDraw
+    drawRate: 0
+    useRate: 5
+  - type: ActivatableUIRequiresPowerCell
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      beakerSlot: !type:ContainerSlot
+      storagebase: !type:Container
+      cell_slot: !type:ContainerSlot { }
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+
+
+- type: entity
+  abstract: true
+  id: ReagentDispenserBase
+  parent: ReagentDispenserBaseUnpowered
+  components:
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: ActivatableUIRequiresPower
+  
+# Starlight-end: power cell chem dispenser

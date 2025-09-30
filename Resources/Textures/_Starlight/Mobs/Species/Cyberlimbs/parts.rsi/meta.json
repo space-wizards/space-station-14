@@ -227,6 +227,22 @@
     {
       "name": "r_mantis_blade_arm_BLADE",
       "directions": 4
+    },
+    {
+      "name": "l_ripper_arm",
+      "directions": 4
+    },
+    {
+      "name": "l_ripper_arm_SURG",
+      "directions": 4
+    },
+    {
+      "name": "r_ripper_arm",
+      "directions": 4
+    },
+    {
+      "name": "r_ripper_arm_SURG",
+      "directions": 4
     }
   ]
 }

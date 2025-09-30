@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by alzore_(Discord) for SS14 using the colors of the blood-red hardsuit",
+  "copyright": "Made by alzore_(Discord) for SS14 using the colors of the blood-red hardsuit. Resomi state created by Huaqas (Github).",
   "size": {
     "x": 32,
     "y": 32
@@ -16,6 +16,10 @@
     },
     {
       "name": "equipped-HELMET-vox",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HELMET-resomi",
       "directions": 4
     },
     {

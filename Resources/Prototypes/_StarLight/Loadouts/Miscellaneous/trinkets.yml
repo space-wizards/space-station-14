@@ -66,7 +66,7 @@
   groupBy: "cat maid"
 
 - type: loadout
-  id: ClothingHeadHatCatEars
+  id: ClothingHeadHatWhiteCatEars
   effects:
     - !type:JobRequirementLoadoutEffect
       requirement:
@@ -74,7 +74,7 @@
         time: 144000 # 40hr
   storage:
     back:
-    - ClothingHeadHatCatEars
+    - ClothingHeadHatWhiteCatEars
   groupBy: "cat maid"
 
 - type: loadout
@@ -435,3 +435,15 @@
   storage:
     back:
       - HappyHonk
+
+- type: loadout
+  id: leftripperarm
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:RoleTimeRequirement
+        role: JobSurgeon
+        time: 72000 # 20 hours of turning her into a papa johns
+  storage:
+    back: 
+      - LeftArmCyberRipper

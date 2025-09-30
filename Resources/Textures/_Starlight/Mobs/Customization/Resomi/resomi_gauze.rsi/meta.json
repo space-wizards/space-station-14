@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "gauze sprites by Huaqas (GitHub)",
+  "size": {
+	"x": 32,
+	"y": 32
+  },
+  "states": [
+    {
+      "name": "gauze_abdomen_resomi",
+      "directions": 4
+    },
+    {
+      "name": "gauze_shoulder_r_resomi",
+      "directions": 4
+    },
+    {
+      "name": "gauze_shoulder_l_resomi",
+      "directions": 4
+    },
+    {
+      "name": "gauze_lefteye_1_resomi",
+      "directions": 4
+    },
+    {
+      "name": "gauze_lefteye_2_resomi",
+      "directions": 4
+    },
+    {
+      "name": "gauze_righteye_1_resomi",
+      "directions": 4
+    },
+    {
+      "name": "gauze_righteye_2_resomi",
+      "directions": 4
+    },
+    {
+      "name": "gauze_rightarm_resomi",
+      "directions": 4
+    },
+    {
+      "name": "gauze_leftarm_resomi",
+      "directions": 4
+    },
+    {
+      "name": "gauze_upperleg_r_resomi",
+      "directions": 4
+    },
+    {
+      "name": "gauze_lowerleg_r_resomi",
+      "directions": 4
+    },
+    {
+      "name": "gauze_upperleg_l_resomi",
+      "directions": 4
+    },
+    {
+      "name": "gauze_lowerleg_l_resomi",
+      "directions": 4
+    },
+    {
+      "name": "gauze_boxerwrap_r_resomi",
+      "directions": 4
+    },
+    {
+      "name": "gauze_boxerwrap_l_resomi",
+      "directions": 4
+    },
+    {
+      "name": "gauze_blindfold_resomi",
+      "directions": 4
+    },
+    {
+      "name": "gauze_head_resomi",
+      "directions": 4
+    }
+  ]
+}

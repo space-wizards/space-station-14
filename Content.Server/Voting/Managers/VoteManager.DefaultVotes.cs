@@ -36,7 +36,9 @@ namespace Content.Server.Voting.Managers
         private RoleSystem? _roleSystem;
         private GameTicker? _gameTicker;
 
-        private readonly Dictionary<string, int> _presetCooldown = new();
+        private RoundVotingChancesPrototype? _roundVotingChances; // Starlight-edit
+
+        private Dictionary<string, int> MemorizedRules = new(); // Starlight-edit
 
         private static readonly Dictionary<StandardVoteType, CVarDef<bool>> VoteTypesToEnableCVars = new()
         {
@@ -222,23 +224,12 @@ namespace Content.Server.Voting.Managers
 
         private void CreatePresetVote(ICommonSession? initiator)
         {
-            //starlight start
-            var presets = GetGamePresets();
-
-            //add the secret prototype
-            if (_prototypeManager.TryIndex<GamePresetPrototype>("Secret", out var secretPreset))
-            {
-                presets.Add(secretPreset, Loc.GetString("ui-vote-secret-map"));
-            }
-            //starlight end
-
-            /* starlight disable
-            var presets = new Dictionary<GamePresetPrototype, string>();
+            var presets = new Dictionary<string, string>();
             presets.Add("Secret", Loc.GetString("ui-vote-secret-map"));
             foreach (var preset in GetGamePresets())
             {
                 presets.Add(preset.Key, preset.Value);
-            } */
+            }
 
             var alone = _playerManager.PlayerCount == 1 && initiator != null;
             var options = new VoteOptions
@@ -265,38 +256,28 @@ namespace Content.Server.Voting.Managers
             vote.OnFinished += (_, args) =>
             {
                 string picked;
-                GamePresetPrototype pickedPreset; //starlight
                 if (args.Winner == null)
                 {
-                    picked = (string)_random.Pick(args.Winners);
-                    pickedPreset = presets.FirstOrDefault(p => p.Key.ID == picked).Key; //starlight
+                    picked = (string) _random.Pick(args.Winners);
                     _chatManager.DispatchServerAnnouncement(
-                        Loc.GetString("ui-vote-gamemode-tie", ("picked", Loc.GetString(pickedPreset.ModeTitle)))); //starlight edit
+                        Loc.GetString("ui-vote-gamemode-tie", ("picked", Loc.GetString(presets[picked]))));
                 }
                 else
                 {
-                    picked = (string)args.Winner;
-                    pickedPreset = presets.FirstOrDefault(p => p.Key.ID == picked).Key; //starlight
+                    picked = (string) args.Winner;
                     _chatManager.DispatchServerAnnouncement(
-                        Loc.GetString("ui-vote-gamemode-win", ("winner", Loc.GetString(pickedPreset.ModeTitle)))); //starlight edit
+                        Loc.GetString("ui-vote-gamemode-win", ("winner", Loc.GetString(presets[picked]))));
                 }
+                // Starlight-start: Memorize Rules
+                if (_roundVotingChances != null)
+                {
+                    var chance = _roundVotingChances.Chances.FirstOrDefault(a => a.ID == picked);
+                    if (chance != null && chance.MemorizeCount > 0)
+                        MemorizedRules.Add(picked, chance.MemorizeCount);
+                }
+                // Starlight-end
                 _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Preset vote finished: {picked}");
                 var ticker = _entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
-                //starlight, keep track of cooldowns
-                //subtract 1 from all keys EXCEPT the one we picked
-                foreach (var key in _presetCooldown.Keys.ToList())
-                {
-                    if (key != picked)
-                    {
-                        _presetCooldown[key]--;
-                        if (_presetCooldown[key] <= 0)
-                            _presetCooldown.Remove(key);
-                    }
-                }
-
-                //add the key we picked to the cooldown list
-                _presetCooldown.Add(picked, pickedPreset.VoteCooldown);
-                //starlight end
                 ticker.SetGamePreset(picked);
             };
         }
@@ -632,13 +613,13 @@ namespace Content.Server.Voting.Managers
             DirtyCanCallVoteAll();
         }
 
-        private Dictionary<GamePresetPrototype, string> GetGamePresets()
+        private Dictionary<string, string> GetGamePresets()
         {
-            var presets = new Dictionary<GamePresetPrototype, string>();
+            var presets = new Dictionary<string, string>();
             
             var prototypeId = _cfg.GetCVar(StarlightCCVars.RoundVotingChancesPrototype);
 
-            if (!_prototypeManager.TryIndex<RoundVotingChancesPrototype>(prototypeId, out var chancesPrototype))
+            if (!_prototypeManager.TryIndex<RoundVotingChancesPrototype>(prototypeId, out _roundVotingChances)) // Starlight-edit
             {
                 Logger.Warning($"Failed to find a chance prototype with ID: {prototypeId}");
                 return presets;
@@ -657,16 +638,23 @@ namespace Content.Server.Voting.Managers
                 if (_playerManager.PlayerCount > (preset.MaxPlayers ?? int.MaxValue))
                     continue;
 
-                //STARLIGHT
-                //check if its on the cooldown list
-                if (_presetCooldown.ContainsKey(preset.ID))
-                    continue;
-                //STARLIGHT END
-
-                if (chancesPrototype.Chances.TryGetValue(preset.ID, out var chance))
+                if (MemorizedRules.ContainsKey(preset.ID)) // Starlight-edit
                 {
-                    validPresets.Add((preset, chance));
+                    // Starlight-start: Memorize Preset
+                    if (MemorizedRules[preset.ID] <= 1)
+                        MemorizedRules.Remove(preset.ID);
+                    else
+                        MemorizedRules[preset.ID] -= 1;
+                    continue;
+                    // Starlight-end
                 }
+
+                // Starlight-start: Memorize Presets
+                var chance = _roundVotingChances.Chances.FirstOrDefault(a => a.ID == preset.ID);
+
+                if (chance != null)
+                    validPresets.Add((preset, chance.Chance));
+                // Starlight-end
             }
 
             if (validPresets.Count == 0)
@@ -678,7 +666,7 @@ namespace Content.Server.Voting.Managers
             var selectedPresets = SelectPresetsByChance(validPresets, _cfg.GetCVar(StarlightCCVars.RoundVotingCount));
             foreach (var preset in selectedPresets)
             {
-                presets[preset.preset] = preset.preset.ModeTitle;
+                presets[preset.preset.ID] = preset.preset.ModeTitle;
             }
 
             return presets;

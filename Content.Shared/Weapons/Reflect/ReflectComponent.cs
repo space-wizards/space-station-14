@@ -44,6 +44,14 @@ public sealed partial class ReflectComponent : Component
     public float ReflectProb = 0.25f;
 
     /// <summary>
+    /// STARLIGHT: Enhanced reflection chances for specific bullet types.
+    /// Key is the bullet/hitscan prototype ID, value is the reflection probability.
+    /// If a bullet type is not in this dictionary, uses ReflectProb instead.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Dictionary<string, float> EnhancedReflection = new();
+
+    /// <summary>
     /// Probability for a projectile to be reflected.
     /// </summary>
     [DataField, AutoNetworkedField]

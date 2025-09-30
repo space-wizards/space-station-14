@@ -180,7 +180,7 @@
     - state: omnilaser
       shader: unshaded
   - type: StaminaDamageOnCollide
-    damage: 12
+    damage: 15
   - type: Projectile
     impactEffect: BulletImpactEffectDisabler
     damage:

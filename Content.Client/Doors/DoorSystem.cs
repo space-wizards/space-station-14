@@ -142,7 +142,7 @@ public sealed class DoorSystem : SharedDoorSystem
 
     private void UpdateSpriteLayers(Entity<SpriteComponent> sprite, string targetProto)
     {
-        if (!_prototypeManager.TryIndex(targetProto, out var target))
+        if (!_prototypeManager.Resolve(targetProto, out var target))
             return;
 
         if (!target.TryGetComponent(out SpriteComponent? targetSprite, _componentFactory))

@@ -28,7 +28,7 @@
 - type: entity
   id: OrganArachnidStomach
   parent: [OrganAnimalStomach, BaseOrganStomach]
-  name: stomach
+  name: animal stomach
   description: "Gross. This is hard to stomach."
   components:
   - type: Sprite

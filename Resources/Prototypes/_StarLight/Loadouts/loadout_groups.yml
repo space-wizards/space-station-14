@@ -84,7 +84,15 @@
   - RoboticistSatchel
   - RoboticistDuffel
   - LeatherSatchel
-  
+
+- type: loadoutGroup
+  id: NanoTrasenRepresentativeHead
+  name: loadout-group-nanotrasenrepresentative-head
+  loadouts:
+  - NanoTrasenRepresentativeTophat
+  - NanoTrasenRepresentativeEliteTophat
+  - NanoTrasenRepresentativeCap
+
 - type: loadoutGroup
   id: NanoTrasenRepresentativeJumpsuit
   name: loadout-group-nanotrasenrepresentative-jumpsuit
@@ -92,6 +100,8 @@
   - NanoTrasenRepresentativeJumpsuit
   - NanoTrasenRepresentativeJumpskirt
   - NanoTrasenRepresentativeJumpsuitFormal
+  - NanoTrasenRepresentativeTurtleneck
+  - NanoTrasenRepresentativeTurtleneckSkirt
 
 - type: loadoutGroup
   id: NanoTrasenRepresentativeEyewear
@@ -99,6 +109,7 @@
   loadouts:
   - NanoTrasenRepresentativeGlasses
   - NanoTrasenRepresentativeHud
+  - NanoTrasenRepresentativeMonocle
 
 - type: loadoutGroup
   id: BlueShieldBackpack
@@ -118,6 +129,7 @@
   - EliteBlueShieldJumpsuit
   - EliteBlueShieldJumpskirt
   - BlueShieldShirt
+  - FormalBlueShieldJumpsuit
 
 - type: loadoutGroup
   id: BlueShieldOuterclothing

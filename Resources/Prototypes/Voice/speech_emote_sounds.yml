@@ -53,6 +53,10 @@
       path: /Audio/_Starlight/Effects/yip.ogg
     Whine:
       collection: Whine
+    Growl:
+      collection: Growl
+    Howl:
+      path: /Audio/_Starlight/Effects/howl.ogg
     #endregion Starlight
 
 - type: emoteSounds
@@ -109,6 +113,10 @@
       path: /Audio/_Starlight/Effects/yip.ogg
     Whine:
       collection: Whine
+    Growl:
+      collection: Growl
+    Howl:
+      path: /Audio/_Starlight/Effects/howl.ogg
     #endregion Starlight
 
 - type: emoteSounds
@@ -134,6 +142,12 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: DeathGasp
+    Liss:
+      collection: ReptilianHiss
+    Lurr:
+      path: /Audio/_Starlight/Voice/Reptilian/lizard_purr.ogg
+    Rattle:
+      path: /Audio/_Starlight/Voice/Reptilian/lizard_rattle.ogg
 
 - type: emoteSounds
   id: FemaleReptilian
@@ -158,6 +172,46 @@
       collection: FemaleGasp
     DefaultDeathgasp:
       collection: FemaleDeathGasp
+    # Starlight-Start
+    Liss:
+      collection: ReptilianHiss
+    Lurr:
+      path: /Audio/_Starlight/Voice/Reptilian/lizard_purr.ogg
+    Rattle:
+      path: /Audio/_Starlight/Voice/Reptilian/lizard_rattle.ogg
+    # Starlight-End
+
+- type: emoteSounds
+  id: UnisexReptilian
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+    Laugh:
+      path: /Audio/Animals/lizard_happy.ogg
+    Honk:
+      collection: BikeHorn
+    Whistle:
+      collection: Whistles
+    Crying:
+      collection: FemaleCry
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: FemaleGasp
+    DefaultDeathgasp:
+      collection: FemaleDeathGasp
+    # Starlight-Start
+    Liss:
+      collection: ReptilianHiss
+    Lurr:
+      path: /Audio/_Starlight/Voice/Reptilian/lizard_purr.ogg
+    Rattle:
+      path: /Audio/_Starlight/Voice/Reptilian/lizard_rattle.ogg
+    # Starlight-End
 
 - type: emoteSounds
   id: MaleSlime
@@ -518,7 +572,7 @@
     Sigh:
       collection: FemaleSigh
     Crying:
-      collection: ResomiCry
+      path: /Audio/Voice/Resomi/resomi_cry.ogg
     Cough:
       collection: FemaleCoughs
     Yawn:
@@ -559,6 +613,99 @@
       collection: XenoborgBikeHorn
     Ping:
       collection: XenoborgPing
+
+# Vulp Sounds
+- type: emoteSounds
+  id: MaleVulpkanin
+  params:
+    variation: 0.125
+  sounds:
+    Laugh:
+      collection: MaleLaugh
+    Sneeze:
+      collection: MaleSneezes
+    Cough:
+      collection: MaleCoughs
+    Whistle:
+      collection: Whistles
+    Sigh:
+      collection: MaleSigh
+    Scream:
+      collection: MaleScreams # Starlight
+    Growl:
+      collection: Growl #Starlight bark
+    Snarl:
+      collection: VulpkaninSnarls
+    Bark:
+      collection: Bark #Starlight bark
+    Whine:
+      collection: Whine #Starlight whine
+    Howl:
+      path: /Audio/_Starlight/Effects/howl.ogg #Starlight howl
+    Yip:
+      path: /Audio/_Starlight/Effects/yip.ogg #Starlight Yip
+    # STARLIGHT START
+    Yawn:
+      collection: MaleYawn
+    Snore:
+      collection: Snores
+    Crying:
+      collection: MaleCry
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: MaleDeathGasp
+    # STARLIGHT END
+
+- type: emoteSounds
+  id: FemaleVulpkanin
+  params:
+    variation: 0.125
+  sounds:
+    Laugh:
+      collection: FemaleLaugh
+    Sneeze:
+      collection: FemaleSneezes
+    Cough:
+      collection: FemaleCoughs
+    Whistle:
+      collection: Whistles
+    Sigh:
+      collection: FemaleSigh
+    Scream:
+      collection: FemaleScreams # Starlight
+    Growl:
+      collection: Growl #Starlight bark
+    Snarl:
+      collection: VulpkaninSnarls
+    Bark:
+      collection: Bark #Starlight bark
+    Whine:
+      collection: Whine #Starlight whine
+    Howl:
+      path: /Audio/_Starlight/Effects/howl.ogg #Starlight howl
+    Yip:
+      path: /Audio/_Starlight/Effects/yip.ogg #Starlight Yip
+    # STARLIGHT START
+    Yawn:
+      collection: FemaleYawn
+    Snore:
+      collection: Snores
+    Crying:
+      collection: FemaleCry
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: FemaleGasp
+    DefaultDeathgasp:
+      collection: FemaleDeathGasp
+    # STARLIGHT END
 
 # body emotes
 - type: emoteSounds

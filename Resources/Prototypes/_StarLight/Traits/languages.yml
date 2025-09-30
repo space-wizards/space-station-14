@@ -161,3 +161,16 @@
     - Sylvan
   languagesUnderstood:
     - Sylvan
+
+- type: trait
+  id: Moffic
+  name: trait-language-moffic-name
+  description: trait-language-moffic-desc
+  category: LanguageTraits
+  cost: 2
+  components:
+    - type: LanguageSpeaker
+  languagesSpoken:
+    - Moffic
+  languagesUnderstood:
+    - Moffic

@@ -1,5 +1,5 @@
 - type: entity
-  name: Brigmedic Defibrillator Battery Cell
+  name: brigmedic defibrillator battery
   description: You are fairly certain this is a AA battery in disguse..
   id: PowerCellTiny
   suffix: Full
@@ -10,9 +10,6 @@
     layers:
     - map: [ "enum.PowerCellVisualLayers.Base" ]
       state: tiny
-    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
-      state: o2
-      shader: unshaded
   - type: Item
     size: Small    
   - type: Battery

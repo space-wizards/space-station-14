@@ -15,3 +15,12 @@
       startAnnouncement: null # It should be silent.
     - type: LoadMapRule
       gridPath: /Maps/_Starlight/Shuttles/NSSV_MetaClass.yml # no preload cause that leads to a warp point in shuttle space
+
+- type: entity
+  parent: BaseGameRule
+  id: ShuttleRecluseClassSyndicateHighCommand
+  components:
+    - type: StationEvent
+      startAnnouncement: null # It should be silent.
+    - type: LoadMapRule
+      gridPath: /Maps/_Starlight/Shuttles/RecluseClassSHC.yml # no preload because its for event use

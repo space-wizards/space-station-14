@@ -51,7 +51,7 @@
         ents: []
   - type: StaticPrice
     price: 500
-    
+
 - type: entity
   parent: BaseWeaponShotgunAny
   id: BaseWeaponShotgun
@@ -162,7 +162,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
   - type: Item
-    sprite: Objects/Weapons/Guns/Shotguns/sentiel_inhands_64x.rsi
+    sprite: Objects/Weapons/Guns/Shotguns/enforcer_inhands_64x.rsi
   - type: BallisticAmmoProvider
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
 

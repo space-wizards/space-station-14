@@ -40,7 +40,7 @@
 
   ## MindShields™
 
-  Another obstacle in your way are those pesky brainwashing [color=cyan]MindShield™ implanters[/color]. 
+  Another obstacle in your way are those pesky brainwashing [color=cyan]MindShield™ implanters[/color].
 
   <Box>
     <GuideEntityEmbed Entity="MindShieldImplanter"/>
@@ -52,12 +52,17 @@
   - [bold]Visibly be destroyed upon being implanted into a [color=#ed7300]Head Revolutionary[/color][/bold], giving you away
   - NOT protect against flash disorientation
 
-  Assume all of [color=#cb0000]Security[/color], [color=#1b67a5]Command[/color] and [color=#a86819]Salvage specialists[/color] to be implanted with [color=cyan]MindShields™[/color] already, [bold]however they can be removed using an empty implanter, obtainable from the Medical department's MedFab, or in your [color=#ed7300]uplink.[/color][/bold]
+  Assume all of [color=#cb0000]Security[/color], [color=#1b67a5]Command[/color], [color=#a86819]Salvage specialists[/color] and [color=#478bff]Internal Affairs Agents[/color] to be implanted with [color=cyan]MindShields™[/color] already, [bold]however they can be removed by using an empty implanter obtainable from the Medical department's MedFab, or by using an [color=#ed7300][bold]SKB Demindshielder[/bold][/color] available in your [color=#ed7300]uplink.[/color][/bold] <!-- Starlight-edit -->
 
   <Box>
     <GuideEntityEmbed Entity="ToyFigurineSecurity" Caption=""/>
-    <GuideEntityEmbed Entity="ToyFigurineCaptain" Caption="'COMMIES!'"/>
+    <GuideEntityEmbed Entity="ToyFigurineCaptain" Caption=""/>  <!-- Starlight-edit -->
     <GuideEntityEmbed Entity="ToyFigurineSalvage" Caption=""/>
+    <GuideEntityEmbed Entity="ToyFigurineLawyer" Caption=""/>
+  </Box>
+
+  <Box>
+    [color=#999999][italic]"COMMIES!"[/italic][/color]  <!-- Starlight-edit -->
   </Box>
 
   ## Svyaz-UZL uplink (Telebonds & Total Conversion)
@@ -75,7 +80,7 @@
   - [bold][color=#e3a736]Total Conversion[/color][/bold], apart from showing how many crew members have been converted, is a [bold]score shared among all [color=#ed7300]Head Revolutionaries[/color][/bold]. Which are mainly used in the [bold]GLOBAL[/bold] section of the uplink, allowing you to place things like the [color=yellow]supply rift[/color].
 
   When a [bold][color=#ed7300]Head Revolutionary[/color][/bold] converts someone, they gain [bold][color=#5c5c5c]1 Telebond[/color][/bold] privately, and [bold][color=#e3a736]1 Total Conversion[/color][/bold] globally.
-  
+
   Remember, [bold][color=#e3a736]Total Conversion[/color][/bold] is a [bold]global progress score, not a currency[/bold], allowing you to gain items for free as soon as you reach certain conversions.
 
   The uplink stocks are shared among all who use the uplink, and additionally it shows who has last purchased the item.
@@ -161,7 +166,7 @@
     <GuideEntityEmbed Entity="DefaultStationBeaconBar"/>
   </Box>
 
-  - If you know where the [color=#ed7300]Head Revolutionaries[/color] will place the [color=yellow]rift[/color] beforehand, you can help reinforcing the area. 
+  - If you know where the [color=#ed7300]Head Revolutionaries[/color] will place the [color=yellow]rift[/color] beforehand, you can help reinforcing the area.
 
   <Box>
     <GuideEntityEmbed Entity="Table" Caption="Cannot jump over if shot"/>
@@ -170,5 +175,5 @@
   </Box>
 
   - And lastly, have fun. As long as it helps the revolution without severly damaging the station.
-  
+
 </Document>

@@ -129,8 +129,11 @@
 - type: entity
   name: terror red
   parent: MobTerrorSpider
-  id: MobTerrorRed
+  id: MobTerrorRedUnevolvable
+  abstract: true
   components:
+  - type: Spider
+    webPrototype: SpiderWebStrong
   - type: VentCrawler
   - type: MobThresholds
     thresholds:
@@ -162,9 +165,21 @@
     baseSprintSpeed : 4.00
 
 - type: entity
+  name: terror red
+  parent: MobTerrorRedUnevolvable
+  id: MobTerrorRed
+  components:
+  - type: Evolving
+    evolveTo: MobTerrorPurple
+    conditions: 
+    - !type:SpiderWebCondition
+      targetWebAmount: 36
+
+- type: entity
   name: terror gray
   parent: MobTerrorSpider
-  id: MobTerrorGray
+  id: MobTerrorGrayUnevolvable
+  abstract: true
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -172,6 +187,9 @@
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: alive
       sprite: _Starlight/Mobs/Animals/Spiders/terror_gray2.rsi
+  - type: Spider
+    webPrototype: SpiderWebStealth
+    webSpawnCooldown: 20
   - type: VentCrawler
   - type: StealthOnWeb
   - type: StaminaDamageOnHit
@@ -209,11 +227,23 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.00
     baseSprintSpeed : 5
+
+- type: entity
+  name: terror gray
+  parent: MobTerrorGrayUnevolvable
+  id: MobTerrorGray
+  components:
+  - type: Evolving
+    evolveTo: MobTerrorBlack
+    conditions: 
+    - !type:SpiderWebCondition
+      targetWebAmount: 36
     
 - type: entity
   name: terror green
   parent: MobTerrorSpider
-  id: MobTerrorGreen
+  id: MobTerrorGreenUnevolvable
+  abstract: true
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -221,6 +251,8 @@
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: alive
       sprite: _Starlight/Mobs/Animals/Spiders/terror_green.rsi
+  - type: Spider
+    webPrototype: SpiderWebSlime
   - type: VentCrawler
   - type: MobThresholds
     thresholds:
@@ -261,6 +293,135 @@
   - type: ActionGrant
     actions:
     - ActionEggInjection
+
+- type: entity
+  name: terror green
+  parent: MobTerrorGreenUnevolvable
+  id: MobTerrorGreen
+  components:
+  - type: Evolving
+    evolveTo: MobTerrorWhite
+    conditions: 
+    - !type:EggsInjectCondition
+
+##########
+# Tier 2 #
+##########
+
+# Black
+
+- type: entity
+  name: terror black
+  parent: MobTerrorGrayUnevolvable
+  id: MobTerrorBlackUnevolvable
+  abstract: true
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: alive
+      sprite: _Starlight/Mobs/Animals/Spiders/terror_widow.rsi
+  - type: Jump
+    knockdownTargetOnCollision: true
+  - type: Spider
+    webPrototype: SpiderWebPoison
+
+- type: entity
+  name: terror black
+  parent: MobTerrorBlackUnevolvable
+  id: MobTerrorBlack
+
+# Purple
+
+- type: entity
+  name: terror purple
+  parent: MobTerrorRedUnevolvable
+  id: MobTerrorPurple
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: alive
+      sprite: _Starlight/Mobs/Animals/Spiders/terror_purple.rsi
+  - type: ActionGrant
+    actions:
+    - ActionSpiderEMPScream
+
+# White
+
+- type: entity
+  name: terror white
+  parent: MobTerrorGreenUnevolvable
+  id: MobTerrorWhiteUnevolvable
+  abstract: true
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: alive
+      sprite: _Starlight/Mobs/Animals/Spiders/terror_white.rsi
+  - type: HitscanBatteryAmmoProvider
+    proto: BulletAcidHitscan
+    fireCost: 50
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 10
+  - type: Battery
+    maxCharge: 150
+    startingCharge: 150
+  - type: Gun
+    fireRate: 0.5
+    useKey: false
+    selectedMode: Burst
+    availableModes:
+      - Burst
+    soundGunshot: /Audio/Weapons/Xeno/alien_spitacid.ogg
+
+- type: entity
+  name: terror white
+  parent: MobTerrorWhiteUnevolvable
+  id: MobTerrorWhite
+
+# Tier 3
+
+# Prince
+
+- type: entity
+  name: prince of terror
+  parent: MobTerrorRedUnevolvable
+  id: MobTerrorPrince
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: alive
+      sprite: _Starlight/Mobs/Animals/Spiders/terror_prince.rsi
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      125: Critical
+      150: Dead
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 25
+  - type: PassiveDamage 
+    allowedStates:
+    - Alive
+    - Critical
+    damageCap: 149
+    damage:
+      types:
+        Poison: -0.1
+      groups:
+        Brute: -0.1
+        Burn: -0.1
+
+# Princess
 
 - type: entity
   name: princess of terror
@@ -319,56 +480,21 @@
       enum.EggsLayingUiKey.Key:
         type: EggsLayingBui
 
-- type: entity
-  parent: EggSpider
-  id: TerrorGrayEggSpiderFertilized
-  name: egg spider
-  components:
-  - type: Sprite
-    sprite: _Starlight/Mobs/Animals/Spiders/terror_gray2.rsi
-    state: egg
-  - type: Timer
-  - type: TimedSpawner
-    prototypes:
-    - MobTerrorGray
-    intervalSeconds: 180
-    minimumEntitiesSpawned: 1
-    maximumEntitiesSpawned: 1
-  - type: TimedDespawn 
-    lifetime: 181
+# Mother
 
 - type: entity
-  parent: EggSpider
-  id: TerrorGreenSpiderFertilized
-  name: egg spider
+  name: mother of terror
+  parent: MobTerrorBlackUnevolvable
+  id: MobTerrorMother
   components:
   - type: Sprite
-    sprite: _Starlight/Mobs/Animals/Spiders/terror_green.rsi
-    state: egg
-  - type: Timer
-  - type: TimedSpawner
-    prototypes:
-    - MobTerrorGreen
-    intervalSeconds: 180
-    minimumEntitiesSpawned: 1
-    maximumEntitiesSpawned: 1
-  - type: TimedDespawn 
-    lifetime: 181
-    
-- type: entity
-  parent: EggSpider
-  id: TerrorRedEggSpiderFertilized
-  name: egg spider
-  components:
-  - type: Sprite
-    sprite: _Starlight/Mobs/Animals/Spiders/terror_red.rsi
-    state: egg
-  - type: Timer
-  - type: TimedSpawner
-    prototypes:
-    - MobTerrorRed
-    intervalSeconds: 180
-    minimumEntitiesSpawned: 1
-    maximumEntitiesSpawned: 1
-  - type: TimedDespawn 
-    lifetime: 181
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: alive
+      sprite: _Starlight/Mobs/Animals/Spiders/terror_mother.rsi
+  - type: Spider
+    webPrototype: SpiderWebSpiderlings
+  - type: SpawnOnAction
+    action: ActionRoyalJelly
+    entityToSpawn: SpiderJelly

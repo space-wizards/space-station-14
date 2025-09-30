@@ -1,0 +1,51 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "undergarments sprites created by Huaqas (GitHub)",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "boxers_resomi",
+        "directions": 4
+      },
+      {
+        "name": "thong_resomi",
+        "directions": 4
+      },
+      {
+        "name": "tanktop_resomi",
+        "directions": 4
+      },
+      {
+        "name": "briefs_avali",
+        "directions": 4
+      },
+      {
+        "name": "satin_avali",
+        "directions": 4
+      },
+      {
+        "name": "boxers_avali",
+        "directions": 4
+      },
+      {
+        "name": "classic_avali",
+        "directions": 4
+      },
+      {
+        "name": "sports_avali",
+        "directions": 4
+      },
+      {
+        "name": "binder_avali",
+        "directions": 4
+      },
+      {
+        "name": "tanktop_avali",
+        "directions": 4
+      }
+    ]
+  }

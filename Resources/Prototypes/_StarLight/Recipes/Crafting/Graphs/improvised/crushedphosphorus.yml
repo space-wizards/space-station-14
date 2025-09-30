@@ -1,0 +1,16 @@
+﻿- type: constructionGraph
+  id: CrushedPhosphorus
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: crushed
+          steps:
+            - tag: Matchstick
+              name: construction-graph-tag-match-stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: match_unlit
+              doAfter: 0.2
+    - node: crushed
+      entity: CrushedPhosphorus1

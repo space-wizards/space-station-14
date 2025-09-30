@@ -27,6 +27,27 @@
 		},
 		{
 			"name": "saw"
+		},
+		{
+			"name": "bonesetterripper"
+		},
+		{
+			"name": "cauteryripper"
+		},
+		{
+			"name": "drillripper"
+		},
+		{
+			"name": "hemostatripper"
+		},
+		{
+			"name": "retractorripper"
+		},
+		{
+			"name": "scalpelripper"
+		},
+		{
+			"name": "sawripper"
 		}
     ]
 }

@@ -9,6 +9,10 @@ using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Sprite;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Systems.Guidebook;
+// Cosmatic Drift Record System-start
+using Content.Client._CD.Records.UI;
+using Content.Shared._CD.Records;
+// Cosmatic Drift Record System-end
 using Content.Shared.CCVar;
 using Content.Shared.Clothing;
 using Content.Shared.Guidebook;
@@ -115,6 +119,10 @@ namespace Content.Client.Lobby.UI
         private List<VoicePrototype> _voices = [];
 
         private List<VoicePrototype> _siliconVoices = []; // 🌟Starlight🌟
+
+        // Cosmatic Drift Record System-start
+        private readonly RecordEditorGui _recordsTab; // Tracks CD records UI state
+        // Cosmatic Drift Record System-end
 
         public HumanoidProfileEditor(
             IClientPreferencesManager preferencesManager,
@@ -268,7 +276,7 @@ namespace Content.Client.Lobby.UI
 
             WidthResetButton.OnPressed += _ =>
             {
-                if(Profile is null) return;
+                if (Profile is null) return;
                 if (_prototypeManager.TryIndex<SpeciesPrototype>(Profile.Species, out var speciesPrototype)) WidthSlider.Value = speciesPrototype.DefaultWidth;
             };
 
@@ -552,6 +560,9 @@ namespace Content.Client.Lobby.UI
                 _ => _entManager.System<TextToSpeechSystem>().RequestPreviewTts(Profile?.SiliconVoice ?? "");
 
             SetupTabs();
+            // Cosmatic Drift Record System-start
+            _recordsTab = CreateRecordEditorTab(); // Instantiate the CD record editor UI
+            // Cosmatic Drift Record System-end
             SetupInfoEditors();
             RefreshCharacterInfo();
             // 🌟Starlight🌟 end
@@ -596,6 +607,23 @@ namespace Content.Client.Lobby.UI
             TabContainer.SetTabTitle(6, Loc.GetString("humanoid-profile-editor-ic-info-tab"));
             TabContainer.SetTabTitle(7, Loc.GetString("humanoid-profile-editor-ooc-info-tab"));
         }
+        // Cosmatic Drift Record System-start: Build the CD record editor tab and hook persistence callbacks
+        private RecordEditorGui CreateRecordEditorTab()
+        {
+            // Create the record editor in code so that we can provide a callback for saving edits back to the profile.
+            var recordEditor = new RecordEditorGui(UpdateProfileRecords)
+            {
+                HorizontalExpand = true,
+                VerticalExpand = true
+            };
+
+            TabContainer.AddChild(recordEditor);
+            TabContainer.SetTabTitle(TabContainer.ChildCount - 1, Loc.GetString("humanoid-profile-editor-cd-records-tab"));
+            recordEditor.Update(Profile);
+            return recordEditor;
+        }
+        // Cosmatic Drift Record System-end
+
         private void UpdateSiliconVoicesControls()
         {
             if (Profile is null)
@@ -942,6 +970,10 @@ namespace Content.Client.Lobby.UI
             RefreshLoadouts();
             RefreshSpecies();
             RefreshTraits();
+            // Ensure the record editor reflects the freshly-loaded profile data.
+            // Cosmatic Drift Record System-start
+            _recordsTab.Update(Profile); // Refresh record editor when a profile is loaded
+            // Cosmatic Drift Record System-end
             RefreshCharacterInfo(); //starlight
             Preview.Initialize(this, _entManager, _preferencesManager, _prototypeManager, _playerManager);
             ReloadPreview();
@@ -960,7 +992,6 @@ namespace Content.Client.Lobby.UI
             _savedProfile = humanoid.Clone();
             SetProfile(humanoid, slot);
         }
-
 
         /// <summary>
         /// A slim reload that only updates the entity itself and not any of the job entities, etc.
@@ -984,7 +1015,7 @@ namespace Content.Client.Lobby.UI
             if (_prototypeManager.HasIndex<GuideEntryPrototype>(species))
                 page = new ProtoId<GuideEntryPrototype>(species.Id); // Gross. See above todo comment.
 
-            if (_prototypeManager.TryIndex(DefaultSpeciesGuidebook, out var guideRoot))
+            if (_prototypeManager.Resolve(DefaultSpeciesGuidebook, out var guideRoot))
             {
                 var dict = new Dictionary<ProtoId<GuideEntryPrototype>, GuideEntry>();
                 dict.Add(DefaultSpeciesGuidebook, guideRoot);
@@ -1291,10 +1322,11 @@ namespace Content.Client.Lobby.UI
             if (Profile is null) return;
 
             var skin = _prototypeManager.Index<SpeciesPrototype>(Profile.Species).SkinColoration;
+            var strategy = _prototypeManager.Index(skin).Strategy;
 
-            switch (skin)
+            switch (strategy.InputType)
             {
-                case HumanoidSkinColor.HumanToned:
+                case SkinColorationStrategyInput.Unary:
                     {
                         if (!Skin.Visible)
                         {
@@ -1302,39 +1334,14 @@ namespace Content.Client.Lobby.UI
                             RgbSkinColorContainer.Visible = false;
                         }
 
-                        var color = SkinColor.HumanSkinTone((int)Skin.Value);
-
-                        Markings.CurrentSkinColor = color;
-                        Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));//
-                        break;
-                    }
-                case HumanoidSkinColor.Hues:
-                    {
-                        if (!RgbSkinColorContainer.Visible)
-                        {
-                            Skin.Visible = false;
-                            RgbSkinColorContainer.Visible = true;
-                        }
-
-                        Markings.CurrentSkinColor = _rgbSkinColorSelector.Color;
-                        Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(_rgbSkinColorSelector.Color));
-                        break;
-                    }
-                case HumanoidSkinColor.TintedHues:
-                    {
-                        if (!RgbSkinColorContainer.Visible)
-                        {
-                            Skin.Visible = false;
-                            RgbSkinColorContainer.Visible = true;
-                        }
-
-                        var color = SkinColor.TintedHues(_rgbSkinColorSelector.Color);
+                        var color = strategy.FromUnary(Skin.Value);
 
                         Markings.CurrentSkinColor = color;
                         Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
+
                         break;
                     }
-                case HumanoidSkinColor.VoxFeathers:
+                case SkinColorationStrategyInput.Color:
                     {
                         if (!RgbSkinColorContainer.Visible)
                         {
@@ -1342,10 +1349,11 @@ namespace Content.Client.Lobby.UI
                             RgbSkinColorContainer.Visible = true;
                         }
 
-                        var color = SkinColor.ClosestVoxColor(_rgbSkinColorSelector.Color);
+                        var color = strategy.ClosestSkinColor(_rgbSkinColorSelector.Color);
 
                         Markings.CurrentSkinColor = color;
                         Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
+
                         break;
                     }
             }
@@ -1354,7 +1362,8 @@ namespace Content.Client.Lobby.UI
         }
 
         // Starlight
-        private void OnCyberneticsUpdated(List<CyberneticImplant> cybernetics) {
+        private void OnCyberneticsUpdated(List<CyberneticImplant> cybernetics)
+        {
             Profile = Profile?.WithCybernetics(cybernetics.Select(p => p.ID).ToList());
             ReloadPreview();
         }
@@ -1406,13 +1415,16 @@ namespace Content.Client.Lobby.UI
         }
 
         //starlight start
-        private void UpdateSizeText() {
-            if(Profile is null) return;
-            if (_prototypeManager.TryIndex<SpeciesPrototype>(Profile.Species, out var speciesPrototype)) {
+        private void UpdateSizeText()
+        {
+            if (Profile is null) return;
+            if (_prototypeManager.TryIndex<SpeciesPrototype>(Profile.Species, out var speciesPrototype))
+            {
                 var height = speciesPrototype.StandardSize * (Profile.Appearance.Height - 1f) * 2f + speciesPrototype.StandardSize;
                 var weight = speciesPrototype.StandardWeight + speciesPrototype.StandardDensity * (Profile.Appearance.Width * Profile.Appearance.Height * Profile.Appearance.Height - 1);
                 HeightDescribeLabel.Text = Loc.GetString("humanoid-profile-editor-height-label", ("height", Math.Round(height)));
                 WidthDescribeLabel.Text = Loc.GetString("humanoid-profile-editor-width-label", ("weight", Math.Round(weight, 1)));
+                _recordsTab?.UpdateComputedMetrics(Profile); // Chromatic Drift Records: Update the records tab with new computed metrics
             }
         }
 
@@ -1472,6 +1484,18 @@ namespace Content.Client.Lobby.UI
             Profile = Profile?.WithSpawnPriorityPreference(newSpawnPriority);
             SetDirty();
         }
+        // Cosmatic Drift Record System-start: Persist in-editor record edits back into the profile model
+        private void UpdateProfileRecords(PlayerProvidedCharacterRecords records)
+        {
+            if (Profile is null)
+                return;
+
+            // Persist the record edits on the working profile so they will be saved later.
+            // Store the freshly edited records back onto the profile blob.
+            Profile = Profile.WithCDCharacterRecords(records);
+            SetDirty();
+        }
+        // Cosmatic Drift Record System-end
 
         public bool IsDirty
         {
@@ -1539,7 +1563,7 @@ namespace Content.Client.Lobby.UI
             var sexes = new List<Sex>();
 
             // add species sex options, default to just none if we are in bizzaro world and have no species
-            if (_prototypeManager.TryIndex<SpeciesPrototype>(Profile.Species, out var speciesProto))
+            if (_prototypeManager.Resolve<SpeciesPrototype>(Profile.Species, out var speciesProto))
             {
                 foreach (var sex in speciesProto.Sexes)
                 {
@@ -1589,10 +1613,11 @@ namespace Content.Client.Lobby.UI
                 return;
 
             var skin = _prototypeManager.Index<SpeciesPrototype>(Profile.Species).SkinColoration;
+            var strategy = _prototypeManager.Index(skin).Strategy;
 
-            switch (skin)
+            switch (strategy.InputType)
             {
-                case HumanoidSkinColor.HumanToned:
+                case SkinColorationStrategyInput.Unary:
                     {
                         if (!Skin.Visible)
                         {
@@ -1600,11 +1625,11 @@ namespace Content.Client.Lobby.UI
                             RgbSkinColorContainer.Visible = false;
                         }
 
-                        Skin.Value = SkinColor.HumanSkinToneFromColor(Profile.Appearance.SkinColor);
+                        Skin.Value = strategy.ToUnary(Profile.Appearance.SkinColor);
 
                         break;
                     }
-                case HumanoidSkinColor.Hues:
+                case SkinColorationStrategyInput.Color:
                     {
                         if (!RgbSkinColorContainer.Visible)
                         {
@@ -1612,31 +1637,7 @@ namespace Content.Client.Lobby.UI
                             RgbSkinColorContainer.Visible = true;
                         }
 
-                        // set the RGB values to the direct values otherwise
-                        _rgbSkinColorSelector.Color = Profile.Appearance.SkinColor;
-                        break;
-                    }
-                case HumanoidSkinColor.TintedHues:
-                    {
-                        if (!RgbSkinColorContainer.Visible)
-                        {
-                            Skin.Visible = false;
-                            RgbSkinColorContainer.Visible = true;
-                        }
-
-                        // set the RGB values to the direct values otherwise
-                        _rgbSkinColorSelector.Color = Profile.Appearance.SkinColor;
-                        break;
-                    }
-                case HumanoidSkinColor.VoxFeathers:
-                    {
-                        if (!RgbSkinColorContainer.Visible)
-                        {
-                            Skin.Visible = false;
-                            RgbSkinColorContainer.Visible = true;
-                        }
-
-                        _rgbSkinColorSelector.Color = SkinColor.ClosestVoxColor(Profile.Appearance.SkinColor);
+                        _rgbSkinColorSelector.Color = strategy.ClosestSkinColor(Profile.Appearance.SkinColor);
 
                         break;
                     }
@@ -1651,7 +1652,7 @@ namespace Content.Client.Lobby.UI
             if (species is null)
                 return;
 
-            if (!_prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesProto))
+            if (!_prototypeManager.Resolve<SpeciesPrototype>(species, out var speciesProto))
                 return;
 
             // Don't display the info button if no guide entry is found
@@ -1799,7 +1800,8 @@ namespace Content.Client.Lobby.UI
         }
 
         // Starlight
-        private void UpdateCybernetics(){
+        private void UpdateCybernetics()
+        {
             if (Profile is null)
             {
                 return;
@@ -1906,3 +1908,4 @@ namespace Content.Client.Lobby.UI
         }
     }
 }
+

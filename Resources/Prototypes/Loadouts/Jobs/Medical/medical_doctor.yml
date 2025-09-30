@@ -79,11 +79,6 @@
     jumpsuit: ClothingUniformJumpsuitMedicalDoctor
 
 - type: loadout
-  id: MedicalDoctorJumpskirt
-  equipment:
-    jumpsuit: ClothingUniformJumpskirtMedicalDoctor
-
-- type: loadout
   id: SeniorPhysicianJumpsuit
   effects:
   - !type:GroupLoadoutEffect

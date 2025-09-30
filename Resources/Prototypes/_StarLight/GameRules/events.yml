@@ -4,7 +4,7 @@
   components:
   - type: StationEvent
     earliestStart: 15
-    weight: 7.5
+    weight: 3
     minimumPlayers: 10
     duration: null
   - type: RuleGrids
@@ -184,15 +184,6 @@
     - type: LoadMapRule
       gridPath: /Maps/_Starlight/Shuttles/CC-NT/CBURN_Q.yml
 
-# Mining Shuttle
-- type: entity
-  parent: BaseGameRule
-  id: MiningShuttleSpawn_GR-4P3
-  components:
-    - type: RuleGrids
-    - type: LoadMapRule
-      gridPath: /Maps/_Starlight/Shuttles/Mining/GR-4P3.yml
-
 # Security Shuttle
 - type: entity
   parent: BaseGameRule
@@ -217,7 +208,9 @@
     - id: SleeperAgents
 #    - id: ZombieOutbreak
     - id: LoneOpsSpawn
-    - id: DerelictCyborgSpawn
+    - !type:NestedSelector
+      tableId: DerelictBorgEventTable
+    - id: DerelictBorgiSpawn
     - id: WizardSpawn
 
     # Starlight gamerules
@@ -245,3 +238,11 @@
           max: 1
           pickPlayer: false
           
+# Security Shuttle
+- type: entity
+  parent: BaseGameRule
+  id: SecurityShuttleSpawn_KillerTamashi
+  components:
+    - type: RuleGrids
+    - type: LoadMapRule
+      gridPath: /Maps/_Starlight/Shuttles/KillerTamashi-SecShuttle.yml

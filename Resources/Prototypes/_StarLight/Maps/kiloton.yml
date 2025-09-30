@@ -3,6 +3,7 @@
   mapName: 'Kiloton Station'
   mapPath: /Maps/_Starlight/Stations/Kiloton.yml
   minPlayers: 50
+  maxPlayers: 200
   stations:
     Kiloton:
       stationProto: StandardNanotrasenStation
@@ -19,9 +20,9 @@
             #service
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
-            Bartender: [ 2, 2 ]
+            Bartender: [ 2, 3 ]
             Botanist: [ 2, 3 ]
-            Chef: [ 2, 2 ]
+            Chef: [ 2, 3 ]
             Janitor: [ 2, 3 ]
             Chaplain: [ 1, 1 ]
             Librarian: [ 1, 2 ]
@@ -58,6 +59,7 @@
             MiningSpecialist: [ 3, 3 ]
             CargoTechnician: [ 5, 6 ]
             MailTech: [ 1, 2 ]
+            SalvageLead: [ 1, 1 ]
             #civilian
             Assistant: [ -1, -1 ]
             Clown: [ 1, 1 ]
