@@ -290,7 +290,7 @@
   metabolisms:
     Medicine:
       # Begin Offbrand
-      metabolismRate: 0.2
+      metabolismRate: 0.1
       statusEffects:
       - statusEffect: StatusEffectMinorOxygenationDexalin
       # End Offbrand
@@ -320,7 +320,7 @@
   metabolisms:
     Medicine:
       # Begin Offbrand
-      metabolismRate: 0.2
+      metabolismRate: 0.1
       statusEffects:
       - statusEffect: StatusEffectMajorOxygenationDexalinPlus
       # End Offbrand
@@ -483,8 +483,8 @@
   color: "#731024"
   metabolisms:
     Medicine:
-      metabolismRate: 0.1 # Smaller doses stabilize critical people for longer. Gives it a specific usecase as to not be entirely outclassed by dex+
       # Begin Offbrand
+      metabolismRate: 0.05
       statusEffects:
       - statusEffect: StatusEffectHeartStabilizationInaprovaline
       - statusEffect: StatusEffectBrainStabilizationInaprovaline
