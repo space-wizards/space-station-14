@@ -64,7 +64,7 @@ public sealed class AutoRoundRestartRuleSystem : GameRuleSystem<AutoRoundRestart
 
         if (!_notified && secondsLeft <= 30f && secondsLeft > 0f)
         {
-            NotifyPlayers($"Фракции подписывают договор. Расчетный конец битвы: { MathF.Ceiling(secondsLeft)} секунд."); //уведомление
+            NotifyPlayers($"Стороны не продвигаются в бою. До сосредоточенного авиаудара: { MathF.Ceiling(secondsLeft)} секунд."); //уведомление
             _notified = true;
         }
 
@@ -80,12 +80,12 @@ public sealed class AutoRoundRestartRuleSystem : GameRuleSystem<AutoRoundRestart
         _roundStarted = true;
         _roundStartTime = _gameTiming.CurTime;
         _notified = false;
-        NotifyPlayers($"Бой фракций начался. Расчетный конец битвы: {_restartDelay} секунд");
+        NotifyPlayers($"Бой начался. До сосредоточенного авиаудара: {_restartDelay} секунд");
     }
 
     private void NotifyPlayers(string message) //уведомление
     {
-        _chatSystem.DispatchGlobalAnnouncement(message, null);
+        _chatSystem.DispatchGlobalAnnouncement(message, sender: "Мировая арена");
         Sawmill.Info($"[AutoRoundRestart] {message}");
     }
 

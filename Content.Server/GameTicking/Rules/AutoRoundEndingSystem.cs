@@ -56,7 +56,7 @@ public sealed class AutoRoundEndingRuleSystem : GameRuleSystem<AutoRoundEndingRu
 
         if (!_notified && secondsLeft <= 5f && secondsLeft > 0f)
         {
-            NotifyPlayers($"Договор подписан. Конец раунда через: {MathF.Ceiling(secondsLeft)} секунд!");
+            NotifyPlayers($"Авиаудар нанесен. Конец боя через: {MathF.Ceiling(secondsLeft)} секунд!");
             _notified = true;
         }
 
@@ -74,12 +74,12 @@ public sealed class AutoRoundEndingRuleSystem : GameRuleSystem<AutoRoundEndingRu
         _roundEnded = true;
         _roundEndTime = _gameTiming.CurTime;
         _notified = false;
-        NotifyPlayers($"Бой окончен. Фракции покинут точку через: {_restartDelay} секунд.");
+        NotifyPlayers($"Сосредоточенный авиаудар через: {_restartDelay} секунд.");
     }
 
     private void NotifyPlayers(string message)
     {
-        _chatSystem.DispatchGlobalAnnouncement(message, sender: "Центральное командование");
+        _chatSystem.DispatchGlobalAnnouncement(message, sender: "Мировая арена");
         Sawmill.Info($"[AutoRoundRestart] {message}");
     }
 

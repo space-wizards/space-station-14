@@ -126,3 +126,9 @@
   id: PurpleTint
   kind: source
   path: "/Textures/Shaders/purple_tint.swsl"
+
+# Bodycam post-process shader
+- type: shader
+  id: Bodycam
+  kind: source
+  path: "/Textures/Shaders/bodycam.swsl"

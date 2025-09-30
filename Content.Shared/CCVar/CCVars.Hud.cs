@@ -1,9 +1,9 @@
-﻿using Robust.Shared.Configuration;
+using Robust.Shared.Configuration;
 
 namespace Content.Shared.CCVar;
 
-public sealed partial class CCVars
-{
+    public sealed partial class CCVars
+    {
     public static readonly CVarDef<int> HudTheme =
         CVarDef.Create("hud.theme", 0, CVar.ARCHIVE | CVar.CLIENTONLY);
 
@@ -30,4 +30,10 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> HudVersionWatermark =
         CVarDef.Create("hud.version_watermark", false, CVar.CLIENTONLY | CVar.ARCHIVE);
-}
+
+    /// <summary>
+    ///     Bodycam post-process toggle
+    /// </summary>
+    public static readonly CVarDef<bool> HudBodycamEnabled =
+        CVarDef.Create("hud.bodycam_enabled", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+    }

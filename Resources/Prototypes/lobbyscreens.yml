@@ -1,6 +1,6 @@
 - type: lobbyBackground
-  id: standoff
-  background: /Textures/LobbyScreens/standoff.webp
+  id: islamikSeparatists
+  background: /Textures/LobbyScreens/separatist.webp
 
 - type: lobbyBackground
   id: israel

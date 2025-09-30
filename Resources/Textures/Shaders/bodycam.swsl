@@ -1,0 +1,81 @@
+// Bodycam post-process shader (SWSL)
+// Applies scanlines, vignette, slight chromatic aberration, subtle distortion, optional grain.
+
+uniform sampler2D SCREEN_TEXTURE;
+
+// Uniforms configurable from C#
+uniform lowp float time;                // seconds
+uniform lowp float scanlineStrength;    // 0..1
+uniform lowp float vignetteStrength;    // 0..1
+uniform lowp float aberrationStrength;  // ~pixels, scaled internally
+uniform lowp float grainStrength;       // 0..1
+uniform lowp float distortionStrength;  // 0..1
+
+// Rounded corners mask controls
+uniform lowp float cornerRadius;        // 0..0.2 in UV, 0 = off
+uniform lowp float cornerFeather;       // 0..0.1 feather for smooth edge
+
+lowp float hash(lowp vec2 co){
+    return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+void fragment(){
+    lowp vec2 uv = UV;
+    lowp vec2 uvScreen = UV; // preserve screen-space UV for straight scanlines
+    lowp vec2 center = vec2(0.5, 0.5);
+
+    // Barrel distortion (very subtle)
+    if (distortionStrength > 0.0){
+        lowp vec2 ruv = uv - center;
+        lowp float r2 = dot(ruv, ruv);
+        lowp float k = distortionStrength * 0.05; // even subtler
+        uv = center + ruv * (1.0 + k * r2);
+    }
+
+    // Chromatic aberration: offset channels slightly in UV space
+    lowp float ab = aberrationStrength * 0.0015; // convert rough pixels to UV scale
+    // Sample with distorted UV to keep world content consistent
+    lowp float r = zTextureSpec(SCREEN_TEXTURE, uv + vec2(+ab, 0.0)).r;
+    lowp float g = zTextureSpec(SCREEN_TEXTURE, uv).g;
+    lowp float b = zTextureSpec(SCREEN_TEXTURE, uv + vec2(-ab, 0.0)).b;
+    lowp vec3 col = vec3(r, g, b);
+
+    // Scanlines (horizontal) in screen space, straight (non-sine) bands
+    if (scanlineStrength > 0.0){
+        // Create alternating bands at roughly 720 rows regardless of resolution
+        lowp float band = step(0.5, fract(uvScreen.y * 720.0)); // 0 or 1
+        lowp float mod = mix(1.0, 0.85, band); // darken every other line
+        col *= mix(1.0, mod, clamp(scanlineStrength, 0.0, 1.0));
+    }
+
+    // Vignette
+    if (vignetteStrength > 0.0){
+        lowp float d = distance(uv, center);
+        lowp float vig = smoothstep(0.6, 0.9, d);
+        col *= mix(1.0, 1.0 - vig * 0.35, clamp(vignetteStrength, 0.0, 1.0));
+    }
+
+    // Grain
+    if (grainStrength > 0.0){
+        lowp float n = hash(uv * vec2(1920.0, 1080.0) + time * 12.345);
+        lowp float g2 = (n - 0.5) * 0.07;
+        col += g2 * clamp(grainStrength, 0.0, 1.0);
+    }
+
+    // Rounded corners mask (darken outside rounded-rect)
+    if (cornerRadius > 0.0){
+        // Map to centered coords
+        lowp vec2 p = uv - vec2(0.5);
+        // Box half extents, leave a tiny margin so frame lines aren't clipped
+        lowp vec2 b = vec2(0.5) - vec2(max(cornerRadius, 0.0) + 0.005);
+        // Signed distance to rounded box (approx)
+        lowp vec2 q = abs(p) - b;
+        lowp float d = length(max(q, 0.0)) - cornerRadius;
+        // d < 0 inside, >0 outside. Build mask with feather falloff at edge.
+        lowp float feath = max(cornerFeather, 0.001);
+        lowp float mask = 1.0 - smoothstep(0.0, feath, d);
+        col *= mask;
+    }
+
+    COLOR = vec4(col, 1.0);
+}
