@@ -21,7 +21,6 @@
 - type: startingGear
   id: MiningSpecialistGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitMiningSpecialist
     id: MiningPDA
     ears: ClothingHeadsetMining
     #storage:
