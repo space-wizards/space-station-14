@@ -127,6 +127,10 @@
     damage:
       types:
         Blunt: 10
+  - type: DamageOnHit
+    damage:
+      types:
+        Blunt: 10
   - type: DamageOnLand
     damage:
       types:
@@ -176,6 +180,10 @@
     damage:
       types:
         Blunt: 15
+  - type: DamageOnHit
+    damage:
+      types:
+        Blunt: 5
   - type: DamageOnLand
     damage:
       types:
