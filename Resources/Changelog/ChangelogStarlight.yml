@@ -16532,5 +16532,63 @@ Entries:
   id: 176502
   time: '2025-09-30T13:36:19.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1765
+- author: CawsForConcern
+  changes:
+  - message: (Cluster) AI Satellite can no longer be disconnected with just wirecutters
+      alone
+    type: Tweak
+  id: 176400
+  time: '2025-09-30T13:36:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1764
+- author: CawsForConcern
+  changes:
+  - message: (Cluster) Removed the pre-placed gas mixers in Atmospherics
+    type: Tweak
+  id: 176401
+  time: '2025-09-30T13:36:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1764
+- author: CawsForConcern
+  changes:
+  - message: (Cluster) Moved the gas filter / waste line right up against the windows
+      in Atmospherics
+    type: Tweak
+  id: 176402
+  time: '2025-09-30T13:36:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1764
+- author: CawsForConcern
+  changes:
+  - message: (Cluster) Atmospherics meteor protection beefed up
+    type: Tweak
+  id: 176403
+  time: '2025-09-30T13:36:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1764
+- author: CawsForConcern
+  changes:
+  - message: (Cluster) Air Alarm hooked up to nothing in Engineering Hallway
+    type: Fix
+  id: 176404
+  time: '2025-09-30T13:36:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1764
+- author: CawsForConcern
+  changes:
+  - message: (Cluster) Missing windoor @ Engineering Front Desk
+    type: Fix
+  id: 176405
+  time: '2025-09-30T13:36:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1764
+- author: CawsForConcern
+  changes:
+  - message: (Cluster) Missing crew monitoring server added to CMO Office
+    type: Fix
+  id: 176406
+  time: '2025-09-30T13:36:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1764
+- author: CawsForConcern
+  changes:
+  - message: (Cluster) Missing Medical Dispenser credit shop to Medbay
+    type: Fix
+  id: 176407
+  time: '2025-09-30T13:36:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1764
 Order: -1
 
