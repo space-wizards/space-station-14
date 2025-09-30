@@ -20,6 +20,6 @@
         Piercing: 15
   # region starlight
   - type: Tag
-    taags:
+    tags:
     - PaddyMech
   # end region
