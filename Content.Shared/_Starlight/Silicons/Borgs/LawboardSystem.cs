@@ -3,6 +3,8 @@ using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Localization;
+using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Silicons.StationAi;
 
 namespace Content.Shared._Starlight.Silicons.Borgs;
 
@@ -19,6 +21,10 @@ public sealed class LawboardSystem : EntitySystem
     private void OnExamined(EntityUid uid, SiliconLawProviderComponent component, ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
+            return;
+
+        // DONT DISPLAY LAWS OF BORGS OR AI CORES LIKE THE MORON I AM
+        if (EntityManager.HasComponent<BorgChassisComponent>(uid) || EntityManager.HasComponent<StationAiCoreComponent>(uid))
             return;
 
         if (!_prototype.TryIndex<SiliconLawsetPrototype>(component.Laws, out var lawsetProto))
