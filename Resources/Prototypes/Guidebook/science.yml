@@ -47,11 +47,6 @@
   - Cyborgs
 
 - type: guideEntry
-  id: ArtifactReports
-  name: guide-entry-artifact-reports
-  text: "/ServerInfo/Guidebook/Science/ArtifactReports.xml"
-
-- type: guideEntry
   id: Cyborgs
   name: guide-entry-cyborgs
   text: "/ServerInfo/Guidebook/Science/Cyborgs.xml"

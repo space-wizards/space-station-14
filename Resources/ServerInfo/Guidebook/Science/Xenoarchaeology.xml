@@ -33,7 +33,7 @@
   </Box>
   - [bold]Artifact Analyzer:[/bold] Scans artifacts, sending data to the Console.
   - [bold]Analysis Console:[/bold] Displays and interacts with the node tree. Must be linked to an Analyzer with a multitool.
-  - [bold]Node Scanner:[/bold] Shows the ID of the currently active node and whether the artifact is ready to trigger.
+  - [bold]Node Scanner:[/bold] Shows the ID of the node currently being activated and whether the artifact is ready to trigger.
 
   <Box>
     <GuideEntityEmbed Entity="CrateArtifactContainer" Caption="Artifact Container"/>
@@ -54,7 +54,7 @@
 
   Artifacts after having their first trigger met will have a window of 5 seconds to meet the remaining triggers, resetting every time a new trigger met.
 
-  If an artifact's activation fails, it will stop resonating with the message: [italic]"It slows down before uneventfully stopping."[/italic].
+  If an artifact's activation fails, it will stop resonating with the message: [italic]"It slows down before uneventfully stopping."[/italic]
 
   Order of trigger activation [bold]does not matter[/bold], [italic]however[/italic], it might in relation to other nodes. If multiple nodes have the same trigger, you may need to start with a trigger not present in other nodes.
 
@@ -80,7 +80,7 @@
   - Exposing it to gases (plasma, tritium, etc.)
   - Changing pressure or temperature
   - Using tools (screwdriver, multitool, crowbar, wrench)
-  - Splashing liquids (blood, water, ammonia, etc.)
+  - Splashing reagents (blood, water, ammonia, etc.)
   - Killing something nearby
 
   ## Effects
