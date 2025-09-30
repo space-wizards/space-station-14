@@ -736,7 +736,6 @@ public abstract partial class InteractionTest
     /// <param name="target">The entity to check the location for. Defaults to <see cref="target"/></param>
     /// <param name="coordinates">The coordinates the entity should be at.</param>
     /// <param name="radius">The maximum allowed distance from the target coords</param>
-
     protected void AssertLocation(NetEntity? target, NetCoordinates coords, float radius = 0.01f)
     {
         target ??= Target;
