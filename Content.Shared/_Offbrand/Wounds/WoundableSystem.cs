@@ -189,6 +189,9 @@ public sealed class WoundableSystem : EntitySystem
 
     private void OnWoundRemoved(Entity<WoundComponent> ent, ref StatusEffectRemovedEvent args)
     {
+        if (_timing.ApplyingState)
+            return;
+
         if (ent.Comp.Damage.Empty)
             return;
 
