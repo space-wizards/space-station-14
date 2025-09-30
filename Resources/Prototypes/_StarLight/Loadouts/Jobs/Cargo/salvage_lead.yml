@@ -1,0 +1,13 @@
+# salv lead shares most loadoutgroups with salvage specialist
+# see Resources/Prototypes/_StarLight/Loadouts/role_loadouts.yml
+
+# Jumpsuit
+- type: loadout
+  id: SalvageLeadJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSalvageLead
+
+- type: loadout
+  id: SalvageLeadJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtSalvageLead
