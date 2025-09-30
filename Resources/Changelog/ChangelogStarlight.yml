@@ -16497,5 +16497,12 @@ Entries:
   id: 177700
   time: '2025-09-30T12:22:04.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1777
+- author: CawsForConcern
+  changes:
+  - message: (Silica) Floating camera in Cargo Bay, moved to north wall of Cargo
+    type: Fix
+  id: 177000
+  time: '2025-09-30T11:15:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1770
 Order: -1
 
