@@ -254,7 +254,16 @@ namespace Content.Server.Zombies
                 if (HasComp<ZombieComponent>(entity))
                 {
                     args.BonusDamage = -args.BaseDamage;
+                    _popup.PopupEntity(Loc.GetString("zombie-bite-zombie-dissuade"), uid, uid); // Starlight
                 }
+                // Starlight Start
+                // Zombies cannot attack initial infected
+                if (HasComp<InitialInfectedComponent>(entity))
+                {
+                    args.BonusDamage = -args.BaseDamage;
+                    _popup.PopupEntity(Loc.GetString("zombie-bite-initialinfected-dissuade"), uid, uid);
+                }
+                // Starlight End
                 else
                 {
                     if (!HasComp<ZombieImmuneComponent>(entity) && !HasComp<NonSpreaderZombieComponent>(args.User) && _random.Prob(GetZombieInfectionChance(entity, component)))
