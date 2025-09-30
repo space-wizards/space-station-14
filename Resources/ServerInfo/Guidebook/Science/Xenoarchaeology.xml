@@ -54,7 +54,7 @@
 
   3. Once all triggers are met, the artifact will trigger its effect with the message: [italic]"It slows down, visibly changed."[/italic] and the node will become [bold][color=green]Active[/color][/bold] on the Console and can be manually activated by interacting with the artifact.
 
-  Artifacts after having their first trigger met will have a window of 5 seconds to meet the remaining triggers, resetting every time a new trigger met.
+  Artifacts after having their first trigger met will have a window of 5 seconds to meet the remaining triggers, resetting every time a new trigger is met.
 
   If an artifact's activation fails, it will stop resonating with the message: [italic]"It slows down before uneventfully stopping."[/italic]
 
