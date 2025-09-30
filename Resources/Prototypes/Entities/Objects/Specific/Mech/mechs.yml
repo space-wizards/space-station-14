@@ -7,6 +7,7 @@
     equipmentWhitelist:
       tags:
       - CombatMech
+      - NonlethalMech
 
 - type: entity
   id: IndustrialMech
