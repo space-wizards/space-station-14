@@ -236,7 +236,7 @@ namespace Content.Shared.Damage
                 damage = ApplyUniversalAllModifiers(damage);
 
             // Begin Offbrand
-            var beforeCommit = new Content.Shared._Offbrand.Wounds.BeforeDamageCommitEvent(damage);
+            var beforeCommit = new Content.Shared._Offbrand.Wounds.BeforeDamageCommitEvent(damage, forceRefresh);
             RaiseLocalEvent(uid.Value, ref beforeCommit);
             damage = beforeCommit.Damage;
             // End Offbrand

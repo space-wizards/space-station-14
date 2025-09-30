@@ -15,7 +15,7 @@ public record struct WoundGetDamageEvent(DamageSpecifier Accumulator);
 /// Raised before damage is applied to a Damageable but after applying modifiers
 /// </summary>
 [ByRefEvent]
-public record struct BeforeDamageCommitEvent(DamageSpecifier Damage);
+public record struct BeforeDamageCommitEvent(DamageSpecifier Damage, bool ForceRefresh);
 
 /// <summary>
 /// Raised when the values for a damage overlay may have changed
