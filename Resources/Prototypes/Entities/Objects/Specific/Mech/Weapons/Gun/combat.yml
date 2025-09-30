@@ -142,6 +142,9 @@
     fireCost: 60
   - type: Appearance
   - type: AmmoCounter
+  - type: Tag
+    tags:
+    - NonlethalMech
 
 - type: entity
   id: WeaponMechCombatTaser
@@ -165,6 +168,9 @@
     fireCost: 40
   - type: Appearance
   - type: AmmoCounter
+  - type: Tag
+    tags:
+    - NonlethalMech
 
 - type: entity
   id: WeaponMechCombatShotgun
@@ -236,7 +242,7 @@
     fireCost: 20
   - type: Appearance
   - type: AmmoCounter
-  
+
 - type: entity
   id: WeaponMechCombatIon
   name: Mk.IV Ion Heavy Cannon
@@ -265,7 +271,7 @@
   - type: Battery
     maxCharge: 400
     startingCharge: 400
-    
+
 - type: entity
   id: WeaponMechCombatAMLG90
   name: AMLG90
@@ -292,7 +298,7 @@
     fireCost: 20
   - type: Appearance
   - type: AmmoCounter
-  
+
 - type: entity
   id: WeaponMechCombatXray
   name: S-1 X-Ray Projector
@@ -392,3 +398,6 @@
     fireCost: 60
   - type: Appearance
   - type: AmmoCounter
+  - type: Tag
+    tags:
+    - NonlethalMech
