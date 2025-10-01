@@ -4,7 +4,6 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Random;
 
 namespace Content.Server.Anomaly.Effects;
-
 public sealed class ShuffleParticlesAnomalySystem : EntitySystem
 {
     [Dependency] private readonly AnomalySystem _anomaly = default!;
@@ -13,10 +12,10 @@ public sealed class ShuffleParticlesAnomalySystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<ShuffleParticlesAnomalyComponent, AnomalyPulseEvent>(OnPulse);
-        SubscribeLocalEvent<ShuffleParticlesAnomalyComponent, EndCollideEvent>(OnEndCollide);
+        SubscribeLocalEvent<ShuffleParticlesAnomalyComponent, StartCollideEvent>(OnStartCollide);
     }
 
-    private void OnEndCollide(Entity<ShuffleParticlesAnomalyComponent> ent, ref EndCollideEvent args)
+    private void OnStartCollide(Entity<ShuffleParticlesAnomalyComponent> ent, ref StartCollideEvent args)
     {
         if (!TryComp<AnomalyComponent>(ent, out var anomaly))
             return;
