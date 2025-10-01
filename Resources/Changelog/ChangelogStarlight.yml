@@ -16706,5 +16706,12 @@ Entries:
   id: 177907
   time: '2025-10-01T03:53:05.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1779
+- author: CrazyPhantom
+  changes:
+  - message: Cyborgs displaying laws like a lawboard
+    type: Fix
+  id: 178400
+  time: '2025-10-01T09:47:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1784
 Order: -1
 
