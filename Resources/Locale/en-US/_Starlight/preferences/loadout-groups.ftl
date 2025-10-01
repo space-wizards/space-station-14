@@ -23,6 +23,7 @@ loadout-group-nanotrasenrepresentative-shoes = NanoTrasen representative shoes
 loadout-group-captain-shoes = Captain shoes
 loadout-group-hop-shoes = Head of Personnel shoes
 
+loadout-group-blueshield-head = Blueshield head
 loadout-group-blueshield-backpack = Blueshield backpack
 loadout-group-blueshield-jumpsuit = Blueshield jumpsuit
 loadout-group-blueshield-eyewear = Blueshield eyewear

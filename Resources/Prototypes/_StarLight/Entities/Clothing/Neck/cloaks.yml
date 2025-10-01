@@ -170,6 +170,18 @@
       - neck
 
 - type: entity
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
+  id: ClothingNeckCloakBsoPoncho
+  name: blueshield officer's poncho
+  description: This type of poncho was the signature garment of a legendary BSO with no name, or so it is said.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/bso_poncho
+  - type: Clothing
+    slots:
+      - neck
+
+- type: entity
   parent: ClothingNeckBase
   id: ClothingNeckOldMantle
   name: old wrap
