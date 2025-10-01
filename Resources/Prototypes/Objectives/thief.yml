@@ -128,6 +128,8 @@
   parent: BaseThiefStealCollectionObjective
   id: IDCardsStealCollectionObjective
   components:
+  - type: NotJobRequirement #Here cause you can buy a personnel crate from cargo which is 8 ID cards. Meaning the ID you start with is number nine and you only need to steal one.
+    job: CargoTechnician #TODO: add salvage specialist
   - type: StealCondition
     stealGroup: IDCard
     minCollectionSize: 5
@@ -135,6 +137,21 @@
     verifyMapExistence: false
   - type: Objective
     difficulty: 0.7
+
+- type: entity
+  parent: BaseThiefStealCollectionObjective
+  id: OfficerHandgunsStealCollectionObjective
+  components:
+  - type: NotJobRequirement
+    job: SecurityOfficer #TODO: Add HoS, Detective, and Warden
+  - type: StealCondition
+    stealGroup: OfficerHandgun
+    minCollectionSize: 2
+    maxCollectionSize: 5
+    verifyMapExistence: false
+    checkStealAreas: false
+  - type: Objective
+    difficulty: 1.2
 
 - type: entity
   parent: BaseThiefStealCollectionObjective
@@ -149,7 +166,7 @@
     maxCollectionSize: 10
     verifyMapExistence: true
   - type: Objective
-    difficulty: 0.5 # just for fun, collectings LAMP on Moth
+    difficulty: 0.1 # just for fun, collecting LAMP on Moth
 
 # steal item
 
@@ -198,7 +215,7 @@
   id: ClothingOuterHardsuitVoidParamedStealObjective
   components:
   - type: NotJobRequirement
-    job: Paramedic
+    job: Paramedic #TODO: make it so this also includes Medical Doctor, Chemist and Psychologist
   - type: StealCondition
     stealGroup: ClothingOuterHardsuitVoidParamed
   - type: Objective
@@ -209,7 +226,7 @@
   id: MedicalTechFabCircuitboardStealObjective
   components:
   - type: NotJobRequirement
-    job: MedicalDoctor
+    job: MedicalDoctor #TODO: make it so this also includes Chemist, Paramedic and Psychologist
   - type: StealCondition
     stealGroup: MedicalTechFabCircuitboard
   - type: Objective
@@ -242,11 +259,22 @@
   id: AmePartFlatpackStealObjective
   components:
   - type: NotJobRequirement
-    job: StationEngineer
+    job: StationEngineer #TODO: make it so this also includes Atmos technician
   - type: StealCondition
     stealGroup: AmePartFlatpack
   - type: Objective
     difficulty: 1
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: ChiefEngineerToolbeltStealObjective
+  components:
+  #- type: NotJobRequirement                      Is this really necessary? it's a pickpocket objective. Only thing is that it would be easier to get to CE
+  #  Job: StationEngineer, AtmosphericTechnician
+  - type: StealCondition
+    stealGroup: ChiefEngineerToolBelt
+  - type: Objective
+    difficulty: .7
 
 - type: entity                                      #Cargo subgroup
   parent: BaseThiefStealObjective
@@ -264,7 +292,7 @@
   id: CargoShuttleCircuitboardStealObjective
   components:
   - type: NotJobRequirement
-    job: CargoTechnician
+    job: CargoTechnician #TODO: make it so this also includes Salvage Specialist
   - type: StealCondition
     stealGroup: CargoShuttleConsoleCircuitboard
   - type: Objective
@@ -275,7 +303,7 @@
   id: ClothingEyesHudBeerStealObjective
   components:
   - type: NotJobRequirement
-    job: Bartender
+    job: Bartender #TODO: make it so this also includes Service worker
   - type: StealCondition
     stealGroup: ClothingEyesHudBeer
   - type: Objective
@@ -314,6 +342,17 @@
   - type: Objective
     difficulty: 1
 
+- type: entity
+  parent: BaseThiefStealObjective
+  id: CaptainSwordStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Captain
+  - type: StealCondition
+    stealGroup: CaptainSword
+  - type: Objective
+    difficulty: 1.5
+
 # Structures
 
 - type: entity
@@ -343,7 +382,7 @@
   id: ChemDispenserStealObjective
   components:
   - type: NotJobRequirement
-    job: Chemist
+    job: Chemist #TODO: make it so this also includes Scientist. It's a roundstart circuit they can construct.
   - type: StealCondition
     stealGroup: ChemDispenser
   - type: Objective
@@ -365,7 +404,7 @@
   id: FreezerHeaterStealObjective
   components:
   - type: NotJobRequirement
-    job: AtmosphericTechnician
+    job: AtmosphericTechnician #TODO: make it so this also includes Engineer, Medical doctor, chemist and maybe also scientist. Medical doc and chemist cause cryogenics, scientist cause it can be built and is sometimes mapped in artisci
   - type: StealCondition
     stealGroup: FreezerHeater
   - type: Objective
@@ -376,7 +415,7 @@
   id: TegStealObjective
   components:
   - type: NotJobRequirement
-    job: AtmosphericTechnician
+    job: AtmosphericTechnician #TODO: make it so this also includes Engineer, Several TEG only maps have TEG accessible by standard Engineers
   - type: StealCondition
     stealGroup: Teg
   - type: Objective
@@ -387,7 +426,7 @@
   id: BoozeDispenserStealObjective
   components:
   - type: NotJobRequirement
-    job: Bartender
+    job: Bartender #TODO: make it so this also includes Service worker
   - type: StealCondition
     stealGroup: BoozeDispenser
   - type: Objective

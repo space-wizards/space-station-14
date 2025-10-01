@@ -1006,3 +1006,17 @@
   canBuildInImpassable: true
   conditions:
   - !type:WallmountCondition
+
+# DEFENSES
+- type: construction
+  id: WeaponEnergyTurretControlPanel
+  graph: WeaponEnergyTurretControlPanel
+  startNode: start
+  targetNode: finish
+  category: construction-category-utilities
+  objectType: Structure
+  canRotate: true
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition
