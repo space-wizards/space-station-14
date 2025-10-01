@@ -23,6 +23,7 @@
   equipment:
     id: MiningPDA
     ears: ClothingHeadsetMining
+    belt: OreBag
     #storage:
     #back:
     #- Stuff
