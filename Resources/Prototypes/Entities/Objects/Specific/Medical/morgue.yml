@@ -45,9 +45,9 @@
   - type: EntityStorage
     capacity: 1
     isCollidableWhenOpen: true
-    whitelist: # Use body rather than filtering for PerishableComponent to avoid chefs using body bags for food preservation
+    whitelist: # Use MobState rather than filtering for PerishableComponent to avoid chefs using body bags for food preservation
       components:
-      - Body
+      - MobState # ToDo: Come up with a way to index mobs that can die. Not using a tage because tag whitelist inhereitance is spoopy silent drop bait
     closeSound:
       path: /Audio/Misc/zip.ogg
     openSound:
