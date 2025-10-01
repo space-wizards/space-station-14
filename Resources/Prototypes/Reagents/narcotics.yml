@@ -15,7 +15,7 @@
       - !type:HealthChange
         damage:
           types:
-            Cellular: 0.5
+            Cellular: 0.25 # Punishment Damage Type, a major problem if you decide to chug it for 6.66666 minutes straight (0 >> Crit).
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
