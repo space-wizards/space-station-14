@@ -352,11 +352,11 @@
     - type: Utensil
       types:
       - Knife
-  - type: Tool # for some reason slicing did not work when in ComponentToggler
-    qualities:
-    - Slicing
-    useSound:
-      path: /Audio/Items/Culinary/chop.ogg
+    - type: Tool
+      qualities:
+      - Slicing
+      useSound:
+        path: /Audio/Items/Culinary/chop.ogg
   - type: Item
     size: Tiny
     sprite: Objects/Weapons/Melee/utility_knife.rsi
