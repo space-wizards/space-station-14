@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Client.Message;
 using Content.Shared.Atmos;
 using Content.Client.UserInterface.Controls;
+using Content.Shared._Offbrand.Wounds; // Offbrand
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -36,6 +37,19 @@ namespace Content.Client.HealthAnalyzer.UI
         private readonly IPrototypeManager _prototypes;
         private readonly IResourceCache _cache;
 
+        // Begin Offbrand
+        private readonly Tooltips.StatusTooltip _statusTooltip = new();
+        private readonly Tooltips.BrainHealthTooltip _brainHealthTooltip = new();
+        private readonly Tooltips.BloodPressureTooltip _bloodPressureTooltip = new();
+        private readonly Tooltips.BloodOxygenationTooltip _bloodOxygenationTooltip = new();
+        private readonly Tooltips.HeartRateTooltip _heartRateTooltip = new();
+        private readonly Tooltips.HeartHealthTooltip _heartHealthTooltip = new();
+        private readonly Tooltips.BloodFlowTooltip _bloodFlowTooltip = new();
+        private readonly Tooltips.BloodTooltip _bloodTooltip = new();
+        private readonly Tooltips.TemperatureTooltip _temperatureTooltip = new();
+        private readonly Tooltips.DamageTooltip _damageTooltip = new();
+        // End Offbrand
+
         public HealthAnalyzerWindow()
         {
             RobustXamlLoader.Load(this);
@@ -45,6 +59,19 @@ namespace Content.Client.HealthAnalyzer.UI
             _spriteSystem = _entityManager.System<SpriteSystem>();
             _prototypes = dependencies.Resolve<IPrototypeManager>();
             _cache = dependencies.Resolve<IResourceCache>();
+
+            // Begin Offbrand
+            StatusButton.TooltipSupplier = _ => _statusTooltip;
+            BrainHealthButton.TooltipSupplier = _ => _brainHealthTooltip;
+            BloodPressureButton.TooltipSupplier = _ => _bloodPressureTooltip;
+            BloodOxygenationButton.TooltipSupplier = _ => _bloodOxygenationTooltip;
+            HeartRateButton.TooltipSupplier = _ => _heartRateTooltip;
+            BloodFlowButton.TooltipSupplier = _ => _bloodFlowTooltip;
+            HeartHealthButton.TooltipSupplier = _ => _heartHealthTooltip;
+            TemperatureButton.TooltipSupplier = _ => _temperatureTooltip;
+            DamageButton.TooltipSupplier = _ => _damageTooltip;
+            BloodButton.TooltipSupplier = _ => _bloodTooltip;
+            // End Offbrand
         }
 
         public void Populate(HealthAnalyzerScannedUserMessage msg)
@@ -59,6 +86,16 @@ namespace Content.Client.HealthAnalyzer.UI
             }
 
             NoPatientDataText.Visible = false;
+
+            // Begin Offbrand Tooltips
+            _brainHealthTooltip.Update(msg);
+            _bloodPressureTooltip.Update(msg);
+            _bloodOxygenationTooltip.Update(msg, (target.Value, damageable));
+            _heartRateTooltip.Update(msg, (target.Value, damageable));
+            _bloodFlowTooltip.Update(msg);
+            _heartHealthTooltip.Update(msg);
+            _temperatureTooltip.Update(msg, (target.Value, _entityManager.GetComponentOrNull<CryostasisFactorComponent>(target)));
+            // End Offbrand Tooltips
 
             // Scan Mode
 
@@ -198,30 +235,37 @@ namespace Content.Client.HealthAnalyzer.UI
                 BrainHealthText.Visible = true;
                 BrainHealthLabel.Visible = true;
                 BrainHealthLabel.Text = Loc.GetString("health-analyzer-window-entity-brain-health-value", ("value", $"{woundable.BrainHealth * 100:F1}"), ("rating", woundable.BrainHealthRating));
+                BrainHealthButton.Visible = true;
 
                 HeartHealthText.Visible = true;
                 HeartHealthLabel.Visible = true;
                 HeartHealthLabel.Text = Loc.GetString("health-analyzer-window-entity-heart-health-value", ("value", $"{woundable.HeartHealth * 100:F1}"), ("rating", woundable.HeartHealthRating));
+                HeartHealthButton.Visible = true;
 
                 HeartRateText.Visible = true;
                 HeartRateLabel.Visible = true;
                 HeartRateLabel.Text = Loc.GetString("health-analyzer-window-entity-heart-rate-value", ("value", woundable.HeartRate), ("rating", woundable.HeartRateRating));
+                HeartRateButton.Visible = true;
 
                 BloodOxygenationText.Visible = true;
                 BloodOxygenationLabel.Visible = true;
                 BloodOxygenationLabel.Text = Loc.GetString("health-analyzer-window-entity-blood-oxygenation-value", ("value", $"{woundable.BloodOxygenation * 100:F1}"), ("rating", woundable.BloodOxygenationRating));
+                BloodOxygenationButton.Visible = true;
 
                 BloodFlowText.Visible = true;
                 BloodFlowLabel.Visible = true;
                 BloodFlowLabel.Text = Loc.GetString("health-analyzer-window-entity-blood-flow-value", ("value", $"{woundable.BloodFlow * 100:F1}"), ("rating", woundable.BloodFlowRating));
+                BloodFlowButton.Visible = true;
 
                 var (systolic, diastolic) = woundable.BloodPressure;
                 BloodPressureText.Visible = true;
                 BloodPressureLabel.Visible = true;
                 BloodPressureLabel.Text = Loc.GetString("health-analyzer-window-entity-blood-pressure-value", ("systolic", systolic), ("diastolic", diastolic), ("rating", woundable.BloodPressureRating));
+                BloodPressureButton.Visible = true;
 
                 BloodLabel.Visible = false;
                 BloodText.Visible = false;
+                BloodButton.Visible = false;
             }
             else
             {
@@ -237,9 +281,16 @@ namespace Content.Client.HealthAnalyzer.UI
                 BloodFlowText.Visible = false;
                 HeartRateText.Visible = false;
                 HeartHealthText.Visible = false;
+                BrainHealthButton.Visible = false;
+                BloodPressureButton.Visible = false;
+                BloodOxygenationButton.Visible = false;
+                BloodFlowButton.Visible = false;
+                HeartRateButton.Visible = false;
+                HeartHealthButton.Visible = false;
 
                 BloodLabel.Visible = true;
                 BloodText.Visible = true;
+                BloodButton.Visible = true;
             }
             // End Offbrand
 
