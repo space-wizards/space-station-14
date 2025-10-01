@@ -47,6 +47,10 @@
       components:
       - HumanoidAppearance
   - type: DisposalUnit
+    container:
+      occludes: true
+      showEnts: false
+      ents: []
     blacklist:
       components:
       - HumanoidAppearance
@@ -62,7 +66,7 @@
   - type: ContainerContainer
     containers:
       stash: !type:ContainerSlot {}
-      disposals: !type:Container
+      DisposalUnitComponent: !type:Container
   - type: Physics
     bodyType: Static
   - type: Fixtures

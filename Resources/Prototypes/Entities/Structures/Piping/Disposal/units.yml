@@ -9,6 +9,10 @@
     - Disposal
   components:
   - type: DisposalUnit
+    container:
+      occludes: true
+      showEnts: false
+      ents: []
     whitelist:
       components:
       - Item
