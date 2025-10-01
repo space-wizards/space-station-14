@@ -1726,10 +1726,10 @@
           Quantity: 3
         - ReagentId: SpaceDrugs
           Quantity: 5
-        - ReagentId: Desoxyephedrine
-          Quantity: 10
         - ReagentId: Nutriment
           Quantity: 2
+        - ReagentId: Desoxyephedrine
+          Quantity: 10
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/ambrosia_deus.rsi
   - type: Item
