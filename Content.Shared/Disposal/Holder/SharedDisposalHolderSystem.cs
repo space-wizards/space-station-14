@@ -189,6 +189,13 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         }
 
         ExpelAtmos(ent);
+
+        if (ent.Comp.DespawnEffect != null)
+        {
+            var effect = Spawn(ent.Comp.DespawnEffect, xform.Coordinates);
+            Transform(effect).LocalRotation = xform.LocalRotation;
+        }
+
         PredictedDel(ent.Owner);
     }
 
@@ -351,12 +358,18 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        var query = EntityQueryEnumerator<DisposalHolderComponent>();
-        while (query.MoveNext(out var uid, out var holder))
+        var query = EntityQueryEnumerator<DisposalHolderComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var holder, out var xform))
         {
-            // Remove any disposal holders that are empty
+            // Remove any disposal holders that were somehow emptied
             if (holder.Container?.Count == 0)
             {
+                if (holder.DespawnEffect != null)
+                {
+                    var effect = Spawn(holder.DespawnEffect, xform.Coordinates);
+                    Transform(effect).LocalRotation = xform.LocalRotation;
+                }
+
                 PredictedQueueDel(uid);
                 continue;
             }
