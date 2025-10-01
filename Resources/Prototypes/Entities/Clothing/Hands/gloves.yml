@@ -364,21 +364,6 @@
 
 - type: entity
   parent: ClothingHandsCatPawsBase
-  id: ClothingHandsCatPawsWhite
-  name: white cat paws
-  description: Super-soft white cat paws, made specially for the most brutal agents.
-  components:
-  - type: Sprite
-    state: white-icon
-  - type: Clothing
-    clothingVisuals:
-      gloves:
-      - state: white-equipped-HAND
-  - type: Fiber
-    fiberColor: fibers-white
-
-- type: entity
-  parent: ClothingHandsCatPawsBase
   id: ClothingHandsCatPawsBrown
   name: brown cat paws
   description: Super-soft brown cat paws, made specially for the most brutal agents.

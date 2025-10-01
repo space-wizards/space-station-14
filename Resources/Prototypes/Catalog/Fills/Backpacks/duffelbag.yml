@@ -376,19 +376,16 @@
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateCatMaidBundle
   name: syndicate cat maid bundle
-  description: "Contains four different colored cat paws, some skirts and cat ears for the cutest syndicate agents"
+  description: "Contains three different colored cat paws, some skirts and cat ears for the cutest syndicate agents"
   components:
   - type: StorageFill
     contents:
       - id: ClothingHandsCatPawsBrown
-      - id: ClothingHandsCatPawsWhite
       - id: ClothingHandsCatPawsBlack
       - id: ClothingHandsCatPawsBlackWhite
       - id: ClothingHeadHatCatEars
       - id: ClothingHeadHatCatEars
       - id: ClothingHeadHatCatEars
-      - id: ClothingHeadHatCatEars
       - id: ClothingUniformJumpskirtJanimaid
       - id: ClothingUniformJumpskirtJanimaid
-      - id: ClothingUniformJumpskirtJanimaidmini
       - id: ClothingUniformJumpskirtJanimaidmini

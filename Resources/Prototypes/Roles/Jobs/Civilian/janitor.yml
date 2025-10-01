@@ -31,7 +31,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtJanimaid
     id: JanitorPDA
-    gloves: ClothingHandsCatPawsWhite
+    gloves: ClothingHandsCatPawsBlack
     head: ClothingHeadHatCatEars
     ears: ClothingHeadsetService
     belt: ClothingBeltJanitorFilled
