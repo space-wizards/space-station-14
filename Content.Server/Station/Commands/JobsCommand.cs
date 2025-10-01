@@ -95,15 +95,10 @@ public readonly record struct JobSlotRef(string Job, EntityUid Station, StationJ
     {
         if (!Jobs.TryGetJobSlot(Station, Job, out var slot))
         {
-            return Loc.GetString("cmd-jobs-slot", ("station", EntityManager.ToPrettyString(Station)), ("job", Job), ("mode", "other"));
+            return $"{EntityManager.ToPrettyString(Station)} job {Job} : (not a slot)";
         }
 
-        if (slot == null)
-        {
-            return Loc.GetString("cmd-jobs-slot", ("station", EntityManager.ToPrettyString(Station)), ("job", Job), ("mode", "infinite"));
-        }
-
-        return Loc.GetString("cmd-jobs-slot", ("station", EntityManager.ToPrettyString(Station)), ("job", Job), ("mode", "slots"), ("slots", slot));
+        return $"{EntityManager.ToPrettyString(Station)} job {Job} : {slot?.ToString() ?? "infinite"}";
     }
 
     public bool Infinite()

@@ -18,8 +18,8 @@ public sealed class TileWallsCommand : IConsoleCommand
 
     // ReSharper disable once StringLiteralTypo
     public string Command => "tilewalls";
-    public string Description => Loc.GetString("cmd-tilewalls-desc");
-    public string Help => Loc.GetString("cmd-tilewalls-help", ("command", Command));
+    public string Description => "Puts an underplating tile below every wall on a grid.";
+    public string Help => $"Usage: {Command} <gridId> | {Command}";
 
     public static readonly ProtoId<ContentTileDefinition> TilePrototypeId = "Plating";
     public static readonly ProtoId<TagPrototype> WallTag = "Wall";
@@ -35,7 +35,7 @@ public sealed class TileWallsCommand : IConsoleCommand
             case 0:
                 if (player?.AttachedEntity is not { Valid: true } playerEntity)
                 {
-                    shell.WriteError(Loc.GetString("cmd-tilewalls-only-player"));
+                    shell.WriteError("Only a player can run this command.");
                     return;
                 }
 
@@ -44,7 +44,7 @@ public sealed class TileWallsCommand : IConsoleCommand
             case 1:
                 if (!NetEntity.TryParse(args[0], out var idNet) || !_entManager.TryGetEntity(idNet, out var id))
                 {
-                    shell.WriteError(Loc.GetString("cmd-tilewalls-invalid-entity", ("entity", args[0])));
+                    shell.WriteError($"{args[0]} is not a valid entity.");
                     return;
                 }
 
@@ -57,13 +57,13 @@ public sealed class TileWallsCommand : IConsoleCommand
 
         if (!_entManager.TryGetComponent(gridId, out MapGridComponent? grid))
         {
-            shell.WriteError(Loc.GetString("cmd-tilewalls-no-grid", ("gridId", (gridId?.ToString() ?? string.Empty))));
+            shell.WriteError($"No grid exists with id {gridId}");
             return;
         }
 
         if (!_entManager.EntityExists(gridId))
         {
-            shell.WriteError(Loc.GetString("cmd-tilewalls-grid-no-entity", ("gridId", (gridId?.ToString() ?? string.Empty))));
+            shell.WriteError($"Grid {gridId} doesn't have an associated grid entity.");
             return;
         }
 
@@ -109,6 +109,6 @@ public sealed class TileWallsCommand : IConsoleCommand
             changed++;
         }
 
-        shell.WriteLine(Loc.GetString("cmd-tilewalls-changed", ("changed", changed)));
+        shell.WriteLine($"Changed {changed} tiles.");
     }
 }
