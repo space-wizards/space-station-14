@@ -1,4 +1,5 @@
-﻿Entries:
+﻿# Do NOT put anything after the Entries section, in order to prevent merge conflict with new CL entries
+Entries:
 - author: EmoGarbage404
   changes:
   - message: You can now patch holes in the floors of the evac shuttle and ATS.

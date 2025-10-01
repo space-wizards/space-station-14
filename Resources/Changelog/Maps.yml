@@ -1,4 +1,6 @@
-﻿Entries:
+﻿Order: 1
+# Do NOT put anything after the Entries section, in order to prevent merge conflict with new CL entries
+Entries:
 - author: ArtisticRoomba
   changes:
   - message: The mapping changelog has been added! This primarily serves as a way
@@ -731,4 +733,3 @@
   id: 88
   time: '2025-09-25T21:36:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40546
-Order: 1
