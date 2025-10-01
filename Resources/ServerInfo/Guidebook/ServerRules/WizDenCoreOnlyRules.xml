@@ -1,13 +1,11 @@
 ﻿<Document>
   # Server Rules
-  This is a Wizard's Den server, one of the official Space Station 14 servers. If you are banned on this server, you will be banned on all official servers.
+  This is a Wizard's Den server, one of the official Space Station 14 servers. A ban in this server is a ban from all Wizard's Den servers, which may be appealed at https://forum.spacestation14.com/c/ban-appeals/appeals-game/40
 
-  [color=#ff0000]Only the Core Rules apply on this server.[/color] This is NOT a medium roleplay (MRP) server, meaning that MRP Amendments do NOT apply.
-
-  Space Station 14 was designed to be a roleplay game. While roleplay is not required on this server, it is highly encouraged in the normal game modes.
+  [color=#ff0000]Only Core Rules apply on this server.[/color] MRP Amendments do NOT apply.
 
   ## Core Rules
-  These rules apply at all times, including between rounds.
+  These rules apply at all times, including between rounds unless otherwise specified.
 
   - [textlink="1. Listen to admins and report issues" link="RuleC1"]
   - [textlink="2. Do not be toxic" link="RuleC2"]
@@ -19,4 +17,8 @@
   - [textlink="8. Do not use exploits or cheats" link="RuleC8"]
   - [textlink="9. Do not share or use multiple accounts" link="RuleC9"]
   - [textlink="10. Players must be at least 16 years old and act mature" link="RuleC12"]
+
+  ## Additional Information
+  - [textlink="Ban types" link="BanTypes"]
+  - [textlink="Ban durations" link="BanDurations"]
 </Document>
