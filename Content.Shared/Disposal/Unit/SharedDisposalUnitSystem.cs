@@ -153,7 +153,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             {
                 _handsSystem.TryDropIntoContainer((verbData.User, verbData.Hands), verbData.Using.Value, ent.Comp.Container, checkActionBlocker: false);
                 _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(verbData.User):player} inserted {ToPrettyString(verbData.Using.Value)} into {ToPrettyString(ent)}");
-                AfterInsert(ent, verbData.Using.Value, verbData.User);
+                Insert(ent, verbData.Using.Value, verbData.User);
             }
         };
 
@@ -165,7 +165,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
             return;
 
-        AfterInsert(ent, args.Args.Target.Value, args.Args.User, doInsert: true);
+        Insert(ent, args.Args.Target.Value, args.Args.User, doInsert: true);
 
         args.Handled = true;
     }
@@ -231,7 +231,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         }
 
         _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} inserted {ToPrettyString(args.Used)} into {ToPrettyString(ent)}");
-        AfterInsert(ent, args.Used, args.User);
+        Insert(ent, args.Used, args.User);
         args.Handled = true;
     }
 
@@ -462,7 +462,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             return;
 
         _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):player} inserted {ToPrettyString(toInsert)} into {ToPrettyString(ent)}");
-        AfterInsert(ent, toInsert, user);
+        Insert(ent, toInsert, user);
     }
 
     /// <summary>
@@ -472,7 +472,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     /// <param name="inserted">The entity inserted.</param>
     /// <param name="user">The one who inserted the entity.</param>
     /// <param name="doInsert">Do the insertion now.</param>
-    public void AfterInsert(Entity<DisposalUnitComponent> ent,
+    public void Insert(Entity<DisposalUnitComponent> ent,
         EntityUid inserted,
         EntityUid? user = null,
         bool doInsert = false)
@@ -502,36 +502,36 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     /// Tries to insert an entity into a disposal unit.
     /// </summary>
     /// <param name="ent">The disposal unit.</param>
-    /// <param name="toInsertId">The entity to insert.</param>
-    /// <param name="userId">The one inserting the entity.</param>
-    /// <returns></returns>
-    public bool TryInsert(Entity<DisposalUnitComponent> ent, EntityUid toInsertId, EntityUid? userId)
+    /// <param name="toInsert">The entity to insert.</param>
+    /// <param name="user">The one inserting the entity.</param>
+    /// <returns>True if the entity can be inserted.</returns>
+    public bool TryInsert(Entity<DisposalUnitComponent> ent, EntityUid toInsert, EntityUid? user)
     {
-        if (userId.HasValue && !HasComp<HandsComponent>(userId) && toInsertId != userId) // Mobs like mouse can Jump inside even with no hands
+        if (user.HasValue && !HasComp<HandsComponent>(user) && toInsert != user) // Mobs like mouse can Jump inside even with no hands
         {
-            _popupSystem.PopupEntity(Loc.GetString("disposal-unit-no-hands"), userId.Value, userId.Value, PopupType.SmallCaution);
+            _popupSystem.PopupEntity(Loc.GetString("disposal-unit-no-hands"), user.Value, user.Value, PopupType.SmallCaution);
             return false;
         }
 
-        if (ent.Comp.Container == null || !_containers.CanInsert(toInsertId, ent.Comp.Container))
+        if (ent.Comp.Container == null || !_containers.CanInsert(toInsert, ent.Comp.Container))
             return false;
 
-        bool insertingSelf = userId == toInsertId;
+        bool insertingSelf = user == toInsert;
 
         var delay = insertingSelf ? ent.Comp.EntryDelay : ent.Comp.DraggedEntryDelay;
 
-        if (userId != null && !insertingSelf)
-            _popupSystem.PopupEntity(Loc.GetString("disposal-unit-being-inserted", ("user", Identity.Entity((EntityUid)userId, EntityManager))), toInsertId, toInsertId, PopupType.Large);
+        if (user != null && !insertingSelf)
+            _popupSystem.PopupEntity(Loc.GetString("disposal-unit-being-inserted", ("user", Identity.Entity((EntityUid)user, EntityManager))), toInsert, toInsert, PopupType.Large);
 
-        if (delay <= 0 || userId == null)
+        if (delay <= 0 || user == null)
         {
-            AfterInsert(ent, toInsertId, userId, doInsert: true);
+            Insert(ent, toInsert, user, doInsert: true);
             return true;
         }
 
         // Can't check if our target AND disposals moves currently so we'll just check target.
         // if you really want to check if disposals moves then add a predicate.
-        var doAfterArgs = new DoAfterArgs(EntityManager, userId.Value, delay, new DisposalDoAfterEvent(), ent, target: toInsertId, used: ent)
+        var doAfterArgs = new DoAfterArgs(EntityManager, user.Value, delay, new DisposalDoAfterEvent(), ent, target: toInsert, used: ent)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
