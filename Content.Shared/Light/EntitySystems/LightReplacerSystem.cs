@@ -105,7 +105,7 @@ public sealed class LightReplacerSystem : EntitySystem
     ///     using light replacer. Light fixture should have <see cref="PoweredLightComponent"/>.
     /// </summary>
     /// <returns>True if successfully replaced light, false otherwise</returns>
-    private bool TryReplaceBulb(EntityUid replacerUid, EntityUid fixtureUid, EntityUid? userUid = null,
+    public bool TryReplaceBulb(EntityUid replacerUid, EntityUid fixtureUid, EntityUid? userUid = null,
         LightReplacerComponent? replacer = null, PoweredLightComponent? fixture = null)
     {
         if (!Resolve(replacerUid, ref replacer)
@@ -159,7 +159,7 @@ public sealed class LightReplacerSystem : EntitySystem
     ///     Try to insert a new bulb inside light replacer
     /// </summary>
     /// <returns>True if successfully inserted light, false otherwise</returns>
-    private bool TryInsertBulb(EntityUid replacerUid, EntityUid bulbUid, EntityUid? userUid = null, bool showTooltip = false,
+    public bool TryInsertBulb(EntityUid replacerUid, EntityUid bulbUid, EntityUid? userUid = null, bool showTooltip = false,
         LightReplacerComponent? replacer = null, LightBulbComponent? bulb = null)
     {
         if (!Resolve(replacerUid, ref replacer))
@@ -198,7 +198,7 @@ public sealed class LightReplacerSystem : EntitySystem
     ///     Returns true if storage contained at least one light bulb
     ///     which was successfully inserted inside light replacer
     /// </returns>
-    private bool TryInsertBulbsFromStorage(EntityUid replacerUid, EntityUid storageUid, EntityUid? userUid = null,
+    public bool TryInsertBulbsFromStorage(EntityUid replacerUid, EntityUid storageUid, EntityUid? userUid = null,
         LightReplacerComponent? replacer = null, StorageComponent? storage = null)
     {
         if (!Resolve(replacerUid, ref replacer))
