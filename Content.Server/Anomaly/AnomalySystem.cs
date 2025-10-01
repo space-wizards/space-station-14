@@ -126,9 +126,6 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
             if (_random.Prob(anomaly.Comp.Continuity))
                 SetBehavior(anomaly, GetRandomBehavior());
         }
-
-        var ev = new AfterAnomalyCollideWithParticleEvent(anomaly, (args.OtherEntity, particle));
-        RaiseLocalEvent(anomaly, ref ev);
     }
 
     /// <summary>
