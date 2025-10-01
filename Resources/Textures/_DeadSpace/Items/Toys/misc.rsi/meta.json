@@ -88,7 +88,7 @@
     },
     {
       "name": "plushie_amaliya"
-    },	
+    },
     {
       "name": "plushie_ralseya"
     },
@@ -205,6 +205,9 @@
     },
     {
       "name": "plushie_moth"
+    },
+    {
+      "name": "plushie_moth_blue"
     }
   ]
-}    
+}

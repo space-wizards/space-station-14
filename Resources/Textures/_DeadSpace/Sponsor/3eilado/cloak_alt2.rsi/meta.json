@@ -11,11 +11,15 @@
       "name": "icon"
     },
     {
-      "name": "equipped-OUTERCLOTHING",
+      "name": "equipped-NECK",
       "directions": 4
     },
     {
-      "name": "equipped-NECK",
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
       "directions": 4
     }
   ]

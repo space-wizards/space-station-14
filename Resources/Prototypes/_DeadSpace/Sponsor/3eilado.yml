@@ -3,22 +3,31 @@
   entity: ClothingBackpack3eilado
   sponsorOnly: true
 
-- type: sponsorLoadout
-  id: 3eiladoBelt
-  entity: ClothingBelt3eiladoFilled
-  sponsorOnly: true
+#Tags
+- type: Tag
+  id: 3eiladoWarhammer
 
 # Backpack
 - type: entity
-  parent: ClothingBackpack
+  parent: [ ClothingBackpack, BaseFoldable]
   id: ClothingBackpack3eilado
   name: карманный демон Ainnetel
   description: Провористый карманный демон, выглядит не особо дружелюбно. На его рожках виднеется гравировка Ван'Астрея.
   categories: [ HideSpawnMenu ]
   components:
+  - type: Appearance
+  - type: Foldable
+    canFoldInsideContainer: true
+    unfoldVerbText: fold-zip-verb
+    foldVerbText: fold-unzip-verb
   - type: Sprite
     sprite: _DeadSpace/Sponsor/3eilado/backpack.rsi
     scale: "0.5, 0.5"
+    layers:
+    - state: icon
+      map: [ "unfoldedLayer" ]
+    - state: icon-open
+      map: ["foldedLayer"]
   - type: Clothing
     sprite: _DeadSpace/Sponsor/3eilado/backpack.rsi
     clothingVisuals:
@@ -31,7 +40,7 @@
   - type: Storage
     maxItemSize: Huge
     grid:
-    - 0,0,15,5
+    - 0,0,19,9
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
@@ -48,6 +57,7 @@
       - id: PaperLaw3eilado
       - id: ToyBall3eilado
       - id: PlushieMoth3eilado
+      - id: PlushieMoth3eiladoBlue
       - id: PDA3eilado
       - id: JetpackVoidFilled3eilado
       - id: DominatorMedkitAdvanced
@@ -56,7 +66,7 @@
       - id: ClothingHeadset3eilado
       - id: ClothingNeckCloak3eiladoBlack
       - id: ClothingNeckCloak3eiladoWhite
-      - id: ClothingHandsRing3eilado
+      - id: ClothingHandsGloves3eilado
       - id: FoodIris3eilado
       - id: ClothingEyesHudMultiversal3eilado
       - id: Hypo3eilado
@@ -67,7 +77,10 @@
       - id: ClothingShoesBoots3eilado
       - id: ClothingNeckCloak3eiladoAlt
       - id: ClothingMaskGas3eilado
-      - id: Warhammer3eilado
+      - id: ClothingBelt3eiladoSheath
+      - id: ClothingOuterCoatLab3eilado
+      - id: ClothingBelt3eiladoFilled
+      - id: ClothingNeckCloak3eiladoAltPurple
 
 # Belt
 - type: entity
@@ -658,7 +671,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/3eilado/CloackBlack/cloak_black.rsi
+    sprite: _DeadSpace/Sponsor/3eilado/CloakBlack/cloak_black.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHood3eiladoBlack
     requiredSlot:
@@ -675,9 +688,9 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/3eilado/CloackBlack/hood.rsi
+    sprite: _DeadSpace/Sponsor/3eilado/CloakBlack/hood.rsi
   - type: Clothing
-    sprite: _DeadSpace/Sponsor/3eilado/CloackBlack/hood.rsi
+    sprite: _DeadSpace/Sponsor/3eilado/CloakBlack/hood.rsi
   - type: HideLayerClothing
     slots:
     - Hair
@@ -691,7 +704,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/3eilado/CloackWhite/cloak_white.rsi
+    sprite: _DeadSpace/Sponsor/3eilado/CloakWhite/cloak_white.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHood3eiladoWhite
     requiredSlot:
@@ -708,29 +721,26 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/3eilado/CloackWhite/hood.rsi
+    sprite: _DeadSpace/Sponsor/3eilado/CloakWhite/hood.rsi
   - type: Clothing
-    sprite: _DeadSpace/Sponsor/3eilado/CloackWhite/hood.rsi
+    sprite: _DeadSpace/Sponsor/3eilado/CloakWhite/hood.rsi
   - type: HideLayerClothing
     slots:
     - Hair
 
-# Ring
+# Gloves
 - type: entity
   parent: ClothingHandsBase
-  id: ClothingHandsRing3eilado
-  name: обсидиановое кольцо 1’А
-  description: Внутри драгоценного камня виден целый космос.
+  id: ClothingHandsGloves3eilado
+  name: черные латексные перчатки
+  description: Перчатки созданные для разного вида работы.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/3eilado/ring.rsi
-    scale: "0.7, 0.7"
+    sprite: _DeadSpace/Sponsor/3eilado/labgloves.rsi
   - type: Clothing
-    sprite: _DeadSpace/Sponsor/3eilado/ring.rsi
+    sprite: _DeadSpace/Sponsor/3eilado/labgloves.rsi
   - type: Insulated
-  - type: Item
-    size: Tiny
 
 # Iris
 - type: entity
@@ -826,6 +836,9 @@
     sprite: _DeadSpace/Sponsor/3eilado/Spicebush/coat.rsi
   - type: Clothing
     sprite: _DeadSpace/Sponsor/3eilado/Spicebush/coat.rsi
+    slots:
+    - neck
+    - outerClothing
   - type: Storage
     grid:
     - 0,0,3,2
@@ -927,6 +940,18 @@
     sprite: _DeadSpace/Sponsor/3eilado/cloak_alt.rsi
 
 - type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloak3eiladoAltPurple
+  name: мантия Виндемиатрикса
+  description: Удобная мантия утерянной коллекции.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/3eilado/cloak_alt2.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/3eilado/cloak_alt2.rsi
+
+- type: entity
   parent: HolofanProjector
   id: HolofanProjector3eilado
   name: ригиль
@@ -967,15 +992,82 @@
   parent: ADTWeaponWarhammer
   id: Warhammer3eilado
   name: миаплацидус
-  description: На костях этого неизвестного животного виднеется надпись гласящая о том, что в былом это был питомец Ловела. Крайне сложное и тяжёлое приспособление родом из Войд Волопаса.
+  description: На рукояти этого клинка виднеется надпись гласящая о том, что в былом этот клинок принадлежал Ловелу. Крайне изящный клинок созданный в Войд Волопаса.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/3eilado/warhammer.rsi
-    scale: 0.8, 0.8
+    sprite: _DeadSpace/Sponsor/3eilado/Blacksword/sword.rsi
+    layers:
+    - state: icon
+    - state: icon-unshaded
+      shader: unshaded
   - type: Item
+    sprite: _DeadSpace/Sponsor/3eilado/Blacksword/sword.rsi
     size: Huge
   - type: PointLight
     enabled: true
     radius: 4
-    color: "#6600CC"
+    color: "#e3b7ff"
+  - type: Tag
+    tags:
+    - 3eiladoWarhammer
+
+- type: entity
+  parent: [ClothingBeltBase, ClothingSlotBase]
+  id: ClothingBelt3eiladoSheath
+  name: ножны миаплацидуса
+  description: Ножны, что хранят в себе лезвия смерти и убийства.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/3eilado/Blacksword/sheath.rsi
+    state: sheath
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/3eilado/Blacksword/sheath.rsi
+  - type: Item
+    size: Huge
+  - type: ItemSlots
+    slots:
+      item:
+        name: Sabre
+        insertVerbText: sheath-insert-verb
+        ejectVerbText: sheath-eject-verb
+        whitelist:
+          tags:
+          - 3eiladoWarhammer
+  - type: ItemMapper
+    mapLayers:
+      sheath-sabre:
+        whitelist:
+          tags:
+          - 3eiladoWarhammer
+  - type: ContainerFill
+    containers:
+      item:
+      - Warhammer3eilado
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 20
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+  - type: Appearance
+
+- type: entity
+  parent: ClothingOuterCoatLab
+  id: ClothingOuterCoatLab3eilado
+  name: черный лабораторный халат
+  description: Халат, защищающий от небольших разливов химикатов.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/3eilado/labcoat.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/3eilado/labcoat.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
+
+- type: entity
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatLab3eilado]
+  id: ClothingOuterCoatLabOpened3eilado
+  name: черный лабораторный халат

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "license": "CC-BY-SA-4.0",
+  "license": "CC-BY-SA-3.0",
   "copyright": "Made by inspector_jeleshka (discord) for Space Station 14 server Мёртвый Космос",
   "size": {
     "x": 32,
@@ -8,15 +8,18 @@
   },
   "states": [
     {
-      "name": "icon"
+        "name": "equipped-BELT",
+        "directions": 4
     },
     {
-      "name": "equipped-OUTERCLOTHING",
-      "directions": 4
+        "name": "sheath-sabre-equipped-BELT",
+        "directions": 4
     },
     {
-      "name": "equipped-NECK",
-      "directions": 4
+        "name": "sheath-sabre"
+    },
+    {
+        "name": "sheath"
     }
   ]
 }

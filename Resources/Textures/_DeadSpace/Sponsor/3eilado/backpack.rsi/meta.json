@@ -35,6 +35,9 @@
     },
     {
       "name": "icon"
+    },
+    {
+      "name": "icon-open"
     }
   ]
 }

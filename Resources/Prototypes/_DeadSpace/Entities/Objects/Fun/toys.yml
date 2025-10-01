@@ -1039,3 +1039,14 @@
   - type: Sprite
     sprite: _DeadSpace/Items/Toys/misc.rsi
     state: plushie_moth
+
+- type: entity
+  parent: PlushieMoth
+  id: PlushieMoth3eiladoBlue
+  name: плюшевый Куафу Ван’Астрея
+  description: Плюшевая игрушка представителя расы ниан. На бирке надпись гласит, что эта игрушка создана корпорацией 1’А. От неё пахнет цветком цинерарии холодной луны.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/misc.rsi
+    state: plushie_moth_blue
