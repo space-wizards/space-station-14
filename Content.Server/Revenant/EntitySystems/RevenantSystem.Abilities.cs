@@ -95,13 +95,6 @@ public sealed partial class RevenantSystem
         args.Handled = true;
     }
 
-    /*
-    private void FlashLight(EntityUid uid, EntityUid target, RevenantComponent revenant)
-    {
-        ChangeEssenceAmount(uid, revenant.LightFlashEssenceAmount, revenant, regenCap: false);
-    }
-    */
-
     private void BeginSoulSearchDoAfter(EntityUid uid, EntityUid target, RevenantComponent revenant)
     {
         var searchDoAfter = new DoAfterArgs(EntityManager, uid, revenant.SoulSearchDuration, new SoulEvent(), uid, target: target)
