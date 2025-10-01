@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: YotaXP
-  changes:
-  - message: Favorites selected in the construction menu will now persist between
-      rounds.
-    type: Tweak
-  id: 8509
-  time: '2025-05-17T17:37:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35867
 - author: perryprog
   changes:
   - message: You can now link cutter machines to material silos.
@@ -3957,3 +3949,10 @@
   id: 9019
   time: '2025-10-01T04:05:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40638
+- author: SignalSender
+  changes:
+  - message: Musicians now have a Stage Name
+    type: Tweak
+  id: 9020
+  time: '2025-10-01T11:46:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40640
