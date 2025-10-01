@@ -3,6 +3,7 @@
   mapName: 'Box Station'
   mapPath: /Maps/_Starlight/Stations/Box.yml
   minPlayers: 50
+  maxPlayers: 120
   stations:
     StarlightBox:
       stationProto: StandardNanotrasenStation
@@ -22,10 +23,10 @@
             Bartender: [ 2, 2 ]
             Botanist: [ 3, 3 ]
             Chef: [ 2, 2 ]
-            Janitor: [ 2, 2 ]
+            Janitor: [ 2, 3 ]
             Chaplain: [ 1, 1 ]
             Librarian: [ 1, 1 ]
-            ServiceWorker: [ 2, 2 ]
+            ServiceWorker: [ 2, 3 ]
             #engineering
             ChiefEngineer: [ 1, 1 ]
             AtmosphericTechnician: [ 3, 3 ]
@@ -34,7 +35,7 @@
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
             Chemist: [ 2, 2 ]
-            MedicalDoctor: [ 4, 4 ]
+            MedicalDoctor: [ 4, 5 ]
             Paramedic: [ 1, 1 ]
             MedicalIntern: [ 4, 4 ]
             Psychologist: [ 1, 1 ]
@@ -43,26 +44,29 @@
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 5, 5 ]
             ResearchAssistant: [ 4, 4 ]
-            Roboticist: [ 2, 2 ]
+            Roboticist: [ 2, 3 ]
             #security
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
-            SecurityOfficer: [ 5, 5 ]
+            SecurityOfficer: [ 7, 8 ]
             Detective: [ 1, 1 ]
-            SecurityCadet: [ 4, 4 ]
+            SecurityCadet: [ 4, 5 ]
+            Brigmedic: [ 1, 1 ]
             #supply
             Quartermaster: [ 1, 1 ]
-            SalvageSpecialist: [ 6, 6 ]
+            SalvageSpecialist: [ 4, 4 ]
             CargoTechnician: [ 3, 3 ]
             MiningSpecialist: [ 3, 3 ]
+            SalvageLead: [ 1, 1 ]
+            MailTech: [ 1, 2 ]
             #civilian
             Assistant: [ -1, -1 ]
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
-            Musician: [ 1, 1 ]
+            Musician: [ 1, 2 ]
             #silicon
             StationAi: [ 1, 1 ]
-            Borg: [ 2, 2 ]
+            Borg: [ 3, 4 ]
             #law
             Magistrate: [ 1, 1 ]
             IAA: [ 2, 2 ]
