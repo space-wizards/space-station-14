@@ -294,7 +294,7 @@
   parent: [ ClothingNeckBase, BaseSalvageContraband ]
   id: ClothingNeckMantleDecoratedSalvager
   name: ceremonial salvage mantle
-  description: A ceremonial purple mantle worn by salvagers that have distinguished themselves.
+  description: A ceremonial mantle worn by salvagers that have distinguished themselves.
   components:
     - type: Sprite
       sprite: _Starlight/Clothing/Neck/Mantles/salvagemantle.rsi

@@ -143,6 +143,16 @@
   conditions:
   - !type:BuyerAccessCondition
 
+- type: listing
+  id: VendorSalvageOreBag
+  productEntity: OreBag
+  cost:
+    SalvageTicket: 25
+  categories:
+    - SalvageEquipment
+  conditions:
+    - !type:BuyerAccessCondition
+
 #- type: listing
 #  id: VendorSalvageExpeditionEncryptionKey
 #  productEntity: EncryptionKeyExpedition

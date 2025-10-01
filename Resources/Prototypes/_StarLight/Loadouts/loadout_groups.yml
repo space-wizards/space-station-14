@@ -260,3 +260,19 @@
   loadouts:
   - CombatBoots
   - HighHeelBootsFilled
+
+# Salvage Lead
+- type: loadoutGroup
+  id: SalvageLeadJumpsuit
+  name: loadout-group-salvage-lead-jumpsuit
+  loadouts:
+    - SalvageLeadJumpsuit
+    - SalvageLeadJumpskirt
+
+# Mining Specialist
+- type: loadoutGroup
+  id: MiningSpecialistJumpsuit
+  name: loadout-group-mining-specialist-jumpsuit
+  loadouts:
+    - MiningSpecialistJumpsuit
+    - MiningSpecialistJumpskirt
