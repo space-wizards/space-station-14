@@ -1683,6 +1683,8 @@
           Quantity: 5
         - ReagentId: Nutriment
           Quantity: 2
+        - ReagentId: Desoxyephedrine
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 2
   - type: Sprite
@@ -1724,6 +1726,8 @@
           Quantity: 3
         - ReagentId: SpaceDrugs
           Quantity: 5
+        - ReagentId: Desoxyephedrine
+          Quantity: 10
         - ReagentId: Nutriment
           Quantity: 2
   - type: Sprite
