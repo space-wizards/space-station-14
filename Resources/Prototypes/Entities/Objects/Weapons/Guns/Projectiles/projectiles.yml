@@ -217,7 +217,7 @@
   - type: Projectile
     damage:
       types:
-        Shock: 1
+        Shock: 0
     soundHit:
       path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
     forceSound: true
@@ -225,7 +225,8 @@
     lifetime: 0.170 # Very short range
   - type: StunOnCollide
     stunAmount: 0
-    knockdownAmount: 2.5 # Enough to subdue and follow up with a stun batong
+    knockdownAmount: 2.5 # Enough to subdue and follow up with a stun baton
+    drop: false #Ranged KD and item drop are too strong in one package
     slowdownAmount: 2.5
     walkSpeedModifier: 0.5
     sprintSpeedModifier: 0.5
@@ -253,6 +254,7 @@
     lifetime: 1.0 # Not so short range
   - type: StunOnCollide
     stunAmount: 5
+    drop: true # this is the evil taser
     knockdownAmount: 10
     slowdownAmount: 10
     walkSpeedModifier: 0.5
