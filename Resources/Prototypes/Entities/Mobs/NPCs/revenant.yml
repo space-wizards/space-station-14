@@ -58,7 +58,7 @@
       - EmagSiliconLaw
   - type: PointLight
     color: MediumPurple
-    radius: 2
+    radius: 6
     softness: 1
   - type: UserInterface
     interfaces:

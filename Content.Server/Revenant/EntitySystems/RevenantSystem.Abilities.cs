@@ -73,6 +73,8 @@ public sealed partial class RevenantSystem
         if (HasComp<PoweredLightComponent>(target))
         {
             args.Handled = _ghost.DoGhostBooEvent(target);
+            if (args.Handled)
+                ChangeEssenceAmount(uid, 1, component, regenCap: false);
             return;
         }
 
