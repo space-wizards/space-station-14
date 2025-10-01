@@ -1437,5 +1437,15 @@ Entries:
   id: 174
   time: '2025-09-22T06:22:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40360
+- author: IProduceWidgets
+  changes:
+  - message: The Homing Rod smite. Does what it says on the tin.
+    type: Add
+  - message: The Slowming Rod smite. Slowly chases the target, and destroys everything
+      on the way.
+    type: Add
+  id: 175
+  time: '2025-09-25T21:43:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40246
 Name: Admin
 Order: 2
