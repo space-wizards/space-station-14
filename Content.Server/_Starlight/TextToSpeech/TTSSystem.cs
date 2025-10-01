@@ -39,7 +39,7 @@ public sealed partial class TTSSystem : EntitySystem
         "The robust salvagers have once again halted the nuclear operatives."
     ];
 
-    private const int DefaultAnnounceVoice = 92;
+    private const int DefaultAnnounceVoice = 510000;
     private const int MaxChars = 200;
     private const float WhisperVoiceVolumeModifier = 0.6f;
     private const int WhisperVoiceRange = 3;
