@@ -105,7 +105,7 @@
         type: DisposalUnitBoundUserInterface
   - type: ContainerContainer
     containers:
-      disposals: !type:Container
+      DisposalUnitComponent: !type:Container
   - type: StaticPrice
     price: 70
   - type: PowerSwitch
@@ -122,7 +122,7 @@
     graph: DisposalMachine
     node: disposal_unit
   - type: ThrowInsertContainer
-    containerId: disposals
+    containerId: DisposalUnitComponent
     probability: 0.67
   - type: UserInterface
     interfaces:

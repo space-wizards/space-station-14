@@ -60,9 +60,9 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         SubscribeLocalEvent<GetVisMaskEvent>(OnGetVisibility);
     }
 
-    private void OnComponentStartup(EntityUid uid, DisposalHolderComponent holder, ComponentStartup args)
+    private void OnComponentStartup(Entity<DisposalHolderComponent> ent, ref ComponentStartup args)
     {
-        holder.Container = _containerSystem.EnsureContainer<Container>(uid, nameof(DisposalHolderComponent));
+        ent.Comp.Container = _containerSystem.EnsureContainer<Container>(ent, nameof(DisposalHolderComponent));
     }
 
     private void OnActorTransition(Entity<ActorComponent> ent, ref DisposalSystemTransitionEvent args)
@@ -164,7 +164,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
             if (heldXform.ParentUid != ent.Owner)
                 continue;
 
-            if (disposalUnit != null)
+            if (disposalUnit != null && disposalUnit.Container != null)
             {
                 _containerSystem.Insert((held, heldXform, meta), disposalUnit.Container);
             }

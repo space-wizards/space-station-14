@@ -14,8 +14,6 @@ namespace Content.Shared.Disposal.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), AutoGenerateComponentPause]
 public sealed partial class DisposalUnitComponent : Component
 {
-    public const string ContainerId = "disposals";
-
     /// <summary>
     /// Air contained in the disposal unit.
     /// </summary>
@@ -148,7 +146,8 @@ public sealed partial class DisposalUnitComponent : Component
     /// <summary>
     /// Container of entities inside this disposal unit.
     /// </summary>
-    [ViewVariables] public Container Container = default!;
+    [DataField]
+    public Container? Container;
 
     /// <summary>
     /// Was the disposals unit engaged for a manual flush.

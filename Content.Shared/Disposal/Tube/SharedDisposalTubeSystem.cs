@@ -19,6 +19,7 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
     [Dependency] private readonly SharedDisposalHolderSystem _disposalHolder = default!;
+    [Dependency] private readonly SharedDisposalUnitSystem _disposalUnit = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
@@ -180,7 +181,7 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
     /// <returns>True if the insertion was successful.</returns>
     public bool TryInsert(Entity<DisposalEntryComponent, DisposalTubeComponent> ent, Entity<DisposalUnitComponent> unit, IEnumerable<string>? tags = default)
     {
-        if (unit.Comp.Container.Count == 0)
+        if (_disposalUnit.GetContainedEntityCount(unit) == 0)
             return false;
 
         var xform = Transform(ent);
@@ -192,7 +193,7 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
 
         if (holderComponent.Container != null)
         {
-            foreach (var entity in unit.Comp.Container.ContainedEntities.ToArray())
+            foreach (var entity in _disposalUnit.GetContainedEntities(unit))
             {
                 _containerSystem.Insert(entity, holderComponent.Container);
             }

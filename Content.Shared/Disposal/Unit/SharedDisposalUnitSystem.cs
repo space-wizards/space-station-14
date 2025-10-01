@@ -100,7 +100,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
     private void OnExploded(Entity<DisposalUnitComponent> ent, ref BeforeExplodeEvent args)
     {
-        args.Contents.AddRange(ent.Comp.Container.ContainedEntities);
+        args.Contents.AddRange(GetContainedEntities(ent));
     }
 
     private void AddDisposalAltVerbs(Entity<DisposalUnitComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
@@ -108,11 +108,8 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract)
             return;
 
-        var uid = ent.Owner;
-        var component = ent.Comp;
-
         // Behavior for if the disposals bin has items in it
-        if (component.Container.ContainedEntities.Count > 0)
+        if (GetContainedEntityCount(ent) > 0)
         {
             // Verbs to flush the unit
             AlternativeVerb flushVerb = new()
@@ -143,7 +140,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (!_actionBlockerSystem.CanDrop(args.User))
             return;
 
-        if (!_containers.CanInsert(args.Using.Value, ent.Comp.Container))
+        if (ent.Comp.Container == null || !_containers.CanInsert(args.Using.Value, ent.Comp.Container))
             return;
 
         var verbData = args;
@@ -175,8 +172,10 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
     private void OnThrowInsert(Entity<DisposalUnitComponent> ent, ref BeforeThrowInsertEvent args)
     {
-        if (!_containers.CanInsert(args.ThrownEntity, ent.Comp.Container))
+        if (ent.Comp.Container == null || !_containers.CanInsert(args.ThrownEntity, ent.Comp.Container))
+        {
             args.Cancelled = true;
+        }
     }
 
     public override void Update(float frameTime)
@@ -224,12 +223,9 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (args.Handled || !args.CanReach)
             return;
 
-        if (!HasComp<HandsComponent>(args.User))
-        {
-            return;
-        }
-
-        if (!_containers.CanInsert(args.Used, ent.Comp.Container) || !_handsSystem.TryDropIntoContainer(args.User, args.Used, ent.Comp.Container))
+        if (ent.Comp.Container == null ||
+            !_containers.CanInsert(args.Used, ent.Comp.Container) ||
+            !_handsSystem.TryDropIntoContainer(args.User, args.Used, ent.Comp.Container))
         {
             return;
         }
@@ -241,7 +237,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
     protected virtual void OnComponentInit(Entity<DisposalUnitComponent> ent, ref ComponentInit args)
     {
-        ent.Comp.Container = _containers.EnsureContainer<Container>(ent, DisposalUnitComponent.ContainerId);
+        ent.Comp.Container = _containers.EnsureContainer<Container>(ent, nameof(DisposalUnitComponent));
     }
 
     private void OnPowerChange(Entity<DisposalUnitComponent> ent, ref PowerChangedEvent args)
@@ -328,7 +324,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (_timing.ApplyingState)
             return;
 
-        if (!_containers.Remove(toRemove, ent.Comp.Container))
+        if (ent.Comp.Container == null || !_containers.Remove(toRemove, ent.Comp.Container))
             return;
 
         // If not manually engaged then reset the flushing entirely.
@@ -367,7 +363,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (!_power.IsPowered(ent.Owner))
             return;
 
-        _appearance.SetData(ent, DisposalUnitVisuals.IsFull, ent.Comp.Container.ContainedEntities.Count > 0, appearance);
+        _appearance.SetData(ent, DisposalUnitVisuals.IsFull, GetContainedEntityCount(ent) > 0, appearance);
         _appearance.SetData(ent, DisposalUnitVisuals.IsCharging, state != DisposalsPressureState.Ready, appearance);
     }
 
@@ -412,6 +408,9 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (args.Handled)
             return;
 
+        if (ent.Comp.Container == null)
+            return;
+
         args.CanDrop = _containers.CanInsert(args.Dragged, ent.Comp.Container);
         args.Handled = true;
     }
@@ -427,7 +426,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        if (ent.Comp.Container.Count >= ent.Comp.MaxCapacity)
+        if (GetContainedEntityCount(ent) >= ent.Comp.MaxCapacity)
         {
             // TODO: If ContainerIsInsertingAttemptEvent ever ends up having the user
             // attached to the event, we'll be able to predict the pop up
@@ -459,7 +458,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     /// <param name="user">The one inserting the entity.</param>
     public void DoInsertDisposalUnit(Entity<DisposalUnitComponent> ent, EntityUid toInsert, EntityUid user)
     {
-        if (!_containers.Insert(toInsert, ent.Comp.Container))
+        if (ent.Comp.Container == null || !_containers.Insert(toInsert, ent.Comp.Container))
             return;
 
         _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):player} inserted {ToPrettyString(toInsert)} into {ToPrettyString(ent)}");
@@ -478,7 +477,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         EntityUid? user = null,
         bool doInsert = false)
     {
-        if (doInsert && !_containers.Insert(inserted, ent.Comp.Container))
+        if (doInsert && (ent.Comp.Container == null || !_containers.Insert(inserted, ent.Comp.Container)))
             return;
 
         if (_timing.CurTime >= ent.Comp.NextAllowedInsertSound)
@@ -514,7 +513,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             return false;
         }
 
-        if (!_containers.CanInsert(toInsertId, ent.Comp.Container))
+        if (ent.Comp.Container == null || !_containers.CanInsert(toInsertId, ent.Comp.Container))
             return false;
 
         bool insertingSelf = userId == toInsertId;
@@ -563,7 +562,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             {
                 ent.Comp.NextFlush = _timing.CurTime + ent.Comp.ManualFlushTime;
             }
-            else if (ent.Comp.Container.ContainedEntities.Count > 0)
+            else if (GetContainedEntityCount(ent) > 0)
             {
                 ent.Comp.NextFlush = _timing.CurTime + ent.Comp.AutomaticEngageTime;
             }
@@ -695,7 +694,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     {
         ent.Comp.Engaged = false;
 
-        if (ent.Comp.Container.ContainedEntities.Count == 0)
+        if (GetContainedEntityCount(ent) == 0)
         {
             ent.Comp.NextFlush = null;
         }
@@ -711,7 +710,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     /// <param name="ent">The disposal unit.</param>
     public void EjectContents(Entity<DisposalUnitComponent> ent)
     {
-        foreach (var toRemove in ent.Comp.Container.ContainedEntities.ToArray())
+        foreach (var toRemove in GetContainedEntities(ent))
         {
             Remove(ent, toRemove);
         }
@@ -724,7 +723,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     /// <param name="metadata">The disposal unit's metadata.</param>
     public void QueueAutomaticEngage(Entity<DisposalUnitComponent> ent, MetaDataComponent? metadata = null)
     {
-        if (ent.Comp.Deleted || !ent.Comp.AutomaticEngage || !_power.IsPowered(ent.Owner) && ent.Comp.Container.ContainedEntities.Count == 0)
+        if (ent.Comp.Deleted || !ent.Comp.AutomaticEngage || !_power.IsPowered(ent.Owner) && GetContainedEntityCount(ent) == 0)
         {
             return;
         }
@@ -782,6 +781,9 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
     private void AddEnterOrExitVerb(Entity<DisposalUnitComponent> ent, ref GetVerbsEvent<Verb> args)
     {
+        if (ent.Comp.Container == null)
+            return;
+
         // This is not an interaction, activation, or alternative verb type because unfortunately most users are
         // unwilling to accept that this is where they belong and don't want to accidentally climb inside.
         if (!args.CanAccess ||
@@ -797,7 +799,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             DoContactInteraction = true
         };
 
-        if (!ent.Comp.Container.ContainedEntities.Contains(args.User))
+        if (!GetContainedEntities(ent).Contains(args.User))
         {
             if (!_containers.CanInsert(args.User, ent.Comp.Container))
                 return;
@@ -816,6 +818,29 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         }
 
         args.Verbs.Add(verb);
+    }
+
+    /// <summary>
+    /// All entities contained in a disposal unit.
+    /// </summary>
+    /// <param name="ent">The disposal unit.</param>
+    /// <returns>A copy of the disposal unit's ContainedEntities list.</returns>
+    public IReadOnlyList<EntityUid> GetContainedEntities(Entity<DisposalUnitComponent> ent)
+    {
+        if (ent.Comp.Container == null)
+            return new List<EntityUid>();
+
+        return ent.Comp.Container.ContainedEntities.ToArray();
+    }
+
+    /// <summary>
+    /// The number of entities contained in a disposal unit.
+    /// </summary>
+    /// <param name="ent">The disposal unit.</param>
+    /// <returns>The entity count.</returns>
+    public int GetContainedEntityCount(Entity<DisposalUnitComponent> ent)
+    {
+        return GetContainedEntities(ent).Count;
     }
 
     private void OnGetDumpableVerb(Entity<DisposalUnitComponent> ent, ref GetDumpableVerbEvent args)

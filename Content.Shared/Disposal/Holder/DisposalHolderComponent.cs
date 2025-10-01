@@ -7,6 +7,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Disposal.Unit;
 
+/// <summary>
+/// Holder for entities being transported through the disposals system.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(new[] { typeof(SharedDisposalTubeSystem), typeof(SharedDisposalHolderSystem) })]
 public sealed partial class DisposalHolderComponent : Component, IGasMixtureHolder
