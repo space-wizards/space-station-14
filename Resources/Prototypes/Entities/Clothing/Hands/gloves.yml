@@ -396,7 +396,7 @@
   parent: ClothingHandsCatPawsBase
   id: ClothingHandsCatPawsBlack
   name: black cat paws
-  description: Super-soft white black paws, made specially for the most brutal agents.
+  description: Super-soft black paws, made specially for the most brutal agents.
   components:
   - type: Sprite
     state: black-icon
