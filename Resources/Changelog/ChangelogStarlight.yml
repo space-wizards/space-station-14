@@ -16778,5 +16778,12 @@ Entries:
   id: 176600
   time: '2025-10-01T15:26:29.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1766
+- author: 'Fractalflower:'
+  changes:
+  - message: Scarves are now available in loadouts!
+    type: Add
+  id: 176300
+  time: '2025-10-01T15:30:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1763
 Order: -1
 
