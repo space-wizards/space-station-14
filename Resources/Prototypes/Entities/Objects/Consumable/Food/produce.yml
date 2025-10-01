@@ -1675,7 +1675,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 24
+        maxVol: 14
         reagents:
         - ReagentId: Bicaridine
           Quantity: 5
@@ -1718,7 +1718,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 10
         reagents:
         - ReagentId: Omnizine
           Quantity: 3
@@ -1795,7 +1795,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 25
         reagents:
         - ReagentId: Razorium
           Quantity: 15
