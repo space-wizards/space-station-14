@@ -278,7 +278,7 @@
   parent: Plunger
   description: A plunger with a plastic suction cup coated in a thin layer of gold given as a token of appreciation for years of service. Still used to unclog drains.
   components:
-  - type: Tag
+  - type: Tag # TODO change Plunger into a tool so we dont got to layer Tags like below.
     tags:
     - GoldenPlunger
     - Plunger
