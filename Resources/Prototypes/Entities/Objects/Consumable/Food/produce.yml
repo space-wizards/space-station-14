@@ -1683,8 +1683,6 @@
           Quantity: 5
         - ReagentId: Nutriment
           Quantity: 2
-        - ReagentId: Desoxyephedrine
-          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 2
   - type: Sprite
@@ -1728,8 +1726,6 @@
           Quantity: 5
         - ReagentId: Nutriment
           Quantity: 2
-        - ReagentId: Desoxyephedrine
-          Quantity: 10
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/ambrosia_deus.rsi
   - type: Item
@@ -1803,6 +1799,8 @@
         reagents:
         - ReagentId: Razorium
           Quantity: 15
+        - ReagentId: Desoxyephedrine
+          Quantity: 10
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/glasstle.rsi
   - type: Produce
