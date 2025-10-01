@@ -229,6 +229,8 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
             }
         }
 
+        var xform = Transform(ent);
+
         // Attempt to damage entities when changing direction
         if (ent.Comp.Container != null &&
             ent.Comp.CurrentDirection != ev.Next &&
@@ -243,7 +245,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
 
             if (_net.IsServer)
             {
-                _audio.PlayPvs(tube.Comp.ClangSound, ent);
+                _audio.PlayPvs(tube.Comp.ClangSound, xform.Coordinates);
             }
 
             ent.Comp.AccumulatedDamage += damage.GetTotal();
@@ -255,7 +257,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         ent.Comp.NextTube = _disposalTubeSystem.NextTubeFor(tube, ent.Comp.CurrentDirection);
 
         // Update rotation
-        Transform(ent).LocalRotation = ent.Comp.CurrentDirection.ToAngle();
+        xform.LocalRotation = ent.Comp.CurrentDirection.ToAngle();
 
         // Check how many times the holder has visited the current pipe
         var visits = 1;
@@ -390,19 +392,26 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         var destination = _xformQuery.GetComponent(nextTube.Value).Coordinates;
         var entCoords = _xformQuery.GetComponent(ent).Coordinates;
 
+        // How far off are we from our destination?
         var entDestDiff = destination.Position - entCoords.Position;
-        var velocity = gridRotation.RotateVec(entDestDiff.Normalized()) * ent.Comp.TraversalSpeed;
-        _physicsSystem.SetLinearVelocity(ent, velocity);
 
-        // Determine whether the disposal holder should update its route,
-        // based on its current position with respect to its target and origin
-        var originDestDiff = destination.Position - origin.Position;
-        var originEntDiff = entCoords.Position - origin.Position;
+        // If we're really close, don't bother updating our velocity
+        if (entDestDiff.Length() > 1e-6)
+        {
+            // Set velocity
+            var velocity = gridRotation.RotateVec(entDestDiff.Normalized() * ent.Comp.TraversalSpeed);
+            _physicsSystem.SetLinearVelocity(ent, velocity);
 
-        if (originEntDiff.Length() < originDestDiff.Length())
-            return;
+            // Determine whether the disposal holder should update its route,
+            // based on its current position with respect to its target and origin
+            var originDestDiff = destination.Position - origin.Position;
+            var originEntDiff = entCoords.Position - origin.Position;
 
-        // If it should update its route, attempt to enter the next tube
+            if (originEntDiff.Length() < originDestDiff.Length())
+                return;
+        }
+
+        // Attempt to enter the next tube
         if (TryComp<DisposalTubeComponent>(nextTube, out var tube) &&
             TryEnterTube(ent, (nextTube.Value, tube)))
         {

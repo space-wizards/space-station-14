@@ -127,7 +127,7 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
             if (!TryComp(entity, out DisposalTubeComponent? tube) || tube.DisposalTubeType != ent.Comp.DisposalTubeType)
                 continue;
 
-            if (!CanConnect((entity, tube), oppositeDirection) && !CanConnect(ent, nextDirection))
+            if (!CanConnect((entity, tube), oppositeDirection))
                 continue;
 
             return entity;
