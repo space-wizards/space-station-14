@@ -347,3 +347,22 @@
   - type: Tag
     tags:
     - CorgiWearable
+
+- type: entity
+  parent: ClothingHeadHelmetHardsuitAtmos
+  id: ClothingHeadHelmetHardsuitAtmosGolden
+  name: atmos hardsuit helmet
+  description: A special hardsuit helmet designed for working in low-pressure, high thermal environments.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hardsuits/atmospherics_golden.rsi
+    layers:
+    - state: icon
+    - state: icon-unshaded
+      shader: unshaded
+    - state: light-overlay
+      visible: false
+      shader: unshaded
+      map: [ "light" ]
+  - type: PointLight
+    color: "#feffad"
