@@ -1,0 +1,34 @@
+# This JobPrototype is specifically granted to any Ghost Role that does not itself have
+# a playtime requirement via other means, but needs one to prevent griefing users with very low
+# playtime from exploiting them to cause issues during rounds.
+
+# If the Ghost Role already has a MindRole or JobPrototype that grants any playtime restriction, DO NOT add this Job.
+
+# A Ghost Role may get this Job if any of the following are true:
+# 1. If the Ghost Role can get access to talk on radio channels without having their words replaced.
+#   - This includes being able to talk over an open intercom, even if the mob has no ability to turn it on.
+#   - This does not include mobs that can have Cognizine or other similar effects applied to them.
+# 2. If the Ghost Role has at least one hand.
+
+# Note that this is not a watertight solution to griefing. When in doubt, ask your friendly neighbourhood admin team.
+
+- type: job
+  id: GhostRoleProtected
+  name: job-name-unknown # Always appear as unknown.
+  description: job-description-unknown
+  playTimeTracker: JobGhostRoleProtected
+  canBeAntag: false
+  icon: JobIconGhostRoleProtected
+  setPreference: false
+  overrideConsoleVisibility: true
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 6000 # 100 minutes.
+
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleGhostRoleProtected
+  name: Ghost Role (Playtime Protected)
+  components:
+  - type: MindRole
+    jobPrototype: GhostRoleProtected

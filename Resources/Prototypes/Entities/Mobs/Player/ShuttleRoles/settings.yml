@@ -15,6 +15,8 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: default
+      mindRoles:
+      - MindRoleGhostRoleProtected # This mob can speak and has hands.
 
 - type: randomHumanoidSettings
   id: VisitorCaptain
@@ -106,6 +108,8 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: default
+      mindRoles:
+      - MindRoleGhostRoleProtected # This mob can speak and has hands.
 
 - type: randomHumanoidSettings
   id: VisitorSecurityCadet
@@ -159,6 +163,8 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      mindRoles:
+      - MindRoleGhostRoleProtected # This mob can speak and has hands.
 
 - type: randomHumanoidSettings
   id: VisitorCargoTechnician
@@ -192,6 +198,8 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      mindRoles:
+      - MindRoleGhostRoleProtected # This mob can speak and has hands.
 
 - type: randomHumanoidSettings
   id: VisitorAtmosTech
@@ -235,6 +243,8 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      mindRoles:
+      - MindRoleGhostRoleProtected # This mob can speak and has hands.
 
 - type: randomHumanoidSettings
   id: VisitorMedicalIntern
@@ -328,6 +338,8 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      mindRoles:
+      - MindRoleGhostRoleProtected # This mob can speak and has hands.
 
 - type: randomHumanoidSettings
   id: VisitorResearchAssistant
@@ -361,6 +373,8 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      mindRoles:
+      - MindRoleGhostRoleProtected # This mob can speak and has hands
 
 - type: randomHumanoidSettings
   id: VisitorBartender
@@ -569,6 +583,8 @@
       rules: ghost-role-information-lost-challenge-commander-rules
       raffle:
         settings: default
+      mindRoles:
+      - MindRoleGhostRoleProtected # This mob can speak and has hands.
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ChallengeVictimCaptain, ChallengeVictimCaptainAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
@@ -590,6 +606,8 @@
       rules: ghost-role-information-lost-challenge-commander-rules
       raffle:
         settings: default
+      mindRoles:
+      - MindRoleGhostRoleProtected # This mob can speak and has hands.
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ChallengeVictimCE, ChallengeVictimCEAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
@@ -611,6 +629,8 @@
       rules: ghost-role-information-lost-challenge-commander-rules
       raffle:
         settings: default
+      mindRoles:
+      - MindRoleGhostRoleProtected # This mob can speak and has hands.
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ChallengeVictimCMO, ChallengeVictimCMOAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
@@ -632,6 +652,8 @@
       rules: ghost-role-information-lost-challenge-commander-rules
       raffle:
         settings: default
+      mindRoles:
+      - MindRoleGhostRoleProtected # This mob can speak and has hands.
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ChallengeVictimHOP, ChallengeVictimHOPAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
@@ -653,6 +675,8 @@
       rules: ghost-role-information-lost-challenge-commander-rules
       raffle:
         settings: default
+      mindRoles:
+      - MindRoleGhostRoleProtected # This mob can speak and has hands.
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ChallengeVictimHOS, ChallengeVictimHOSAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
@@ -674,6 +698,8 @@
       rules: ghost-role-information-lost-challenge-commander-rules
       raffle:
         settings: default
+      mindRoles:
+      - MindRoleGhostRoleProtected # This mob can speak and has hands.
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ChallengeVictimRD, ChallengeVictimRDAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
@@ -695,6 +721,8 @@
       rules: ghost-role-information-lost-challenge-commander-rules
       raffle:
         settings: default
+      mindRoles:
+      - MindRoleGhostRoleProtected # This mob can speak and has hands.
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ChallengeVictimQM, ChallengeVictimQMAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
@@ -720,6 +748,8 @@
       rules: ghost-role-information-lost-disaster-challenge-cargo-technican-rules
       raffle:
         settings: short
+      mindRoles:
+      - MindRoleGhostRoleProtected # This mob can speak and has hands.
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ChallengeCargoTechGearSuit, ChallengeCargoTechGearCoat ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
@@ -756,6 +786,7 @@
       rules: ghost-role-information-rules-team-antagonist
       mindRoles:
       - MindRoleGhostRoleTeamAntagonist
+      - MindRoleGhostRoleProtected # This mob can speak and has hands.
       raffle:
         settings: default
     - type: Loadout
@@ -776,6 +807,7 @@
       rules: ghost-role-information-rules-team-antagonist
       mindRoles:
       - MindRoleGhostRoleTeamAntagonist
+      - MindRoleGhostRoleProtected # This mob can speak and has hands.
       raffle:
         settings: default
     - type: Loadout
@@ -795,6 +827,7 @@
       rules: ghost-role-information-freeagent-rules
       mindRoles:
       - MindRoleGhostRoleFreeAgent
+      - MindRoleGhostRoleProtected # This mob can speak and has hands.
       raffle:
         settings: short
     - type: Loadout
@@ -814,6 +847,7 @@
       rules: ghost-role-information-rules-team-antagonist
       mindRoles:
       - MindRoleGhostRoleTeamAntagonist
+      - MindRoleGhostRoleProtected # This mob can speak and has hands.
       raffle:
         settings: default
     - type: Loadout
@@ -833,6 +867,7 @@
       rules: ghost-role-information-rules-team-antagonist
       mindRoles:
       - MindRoleGhostRoleTeamAntagonist
+      - MindRoleGhostRoleProtected # This mob can speak and has hands.
       raffle:
         settings: default
     - type: Loadout
@@ -851,6 +886,7 @@
       rules: ghost-role-information-freeagent-rules
       mindRoles:
       - MindRoleGhostRoleFreeAgent
+      - MindRoleGhostRoleProtected # This mob can speak and has hands.
       raffle:
         settings: default
     - type: Loadout
@@ -871,6 +907,7 @@
       rules: ghost-role-information-freeagent-rules
       mindRoles:
       - MindRoleGhostRoleFreeAgent
+      - MindRoleGhostRoleProtected # This mob can speak and has hands.
       raffle:
         settings: default
     - type: Loadout

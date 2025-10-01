@@ -28,6 +28,7 @@
     rules: ghost-role-information-syndicate-reinforcement-rules
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
+    - MindRoleGhostRoleProtected # This mob can speak.
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -47,6 +48,7 @@
     rules: ghost-role-information-nukeop-reinforcement-rules
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
+    - MindRoleGhostRoleProtected # This mob can speak.
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -64,6 +66,7 @@
     rules: ghost-role-information-syndicate-reinforcement-rules
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
+    - MindRoleGhostRoleProtected # This mob can speak.
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -115,6 +118,6 @@
       - MindRoleGhostRoleSilicon
       raffle:
         settings: default
-      job: Borg
+      job: Borg # This role has a playtime requirement as it can speak.
     - type: GhostRoleMobSpawner
       prototype: PlayerBorgSyndicateAssaultBattery

@@ -486,3 +486,11 @@
     sprite: *icon-rsi
     state: Unknown
   jobName: job-name-unknown
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconGhostRoleProtected # Boo!
+  icon:
+    sprite: *icon-rsi
+    state: Unknown
+  jobName: job-name-unknown

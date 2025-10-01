@@ -70,6 +70,11 @@
 - type: playTimeTracker
   id: JobCBURN
 
+# TODO: This can be broken out into a set of timers for different kinds of protected ghost roles
+# when needed!
+- type: playTimeTracker
+  id: JobGhostRoleProtected
+
 - type: playTimeTracker
   id: JobHeadOfPersonnel
 
