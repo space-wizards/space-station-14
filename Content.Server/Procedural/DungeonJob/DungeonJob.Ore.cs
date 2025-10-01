@@ -72,7 +72,7 @@ public sealed partial class DungeonJob
             var remapping = new Dictionary<EntProtoId, EntProtoId>();
 
             // TODO: Move this to engine
-            if (_prototype.TryIndex(gen.Entity, out var proto) &&
+            if (_prototype.Resolve(gen.Entity, out var proto) &&
                 proto.Components.TryGetComponent("EntityRemap", out var comps))
             {
                 var remappingComp = (EntityRemapComponent) comps;
