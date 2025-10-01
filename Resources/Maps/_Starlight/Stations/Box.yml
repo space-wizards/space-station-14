@@ -76643,14 +76643,6 @@ entities:
     - type: Transform
       pos: -2.4532552,-76.67424
       parent: 8364
-- proto: CrowbarOrange
-  entities:
-  - uid: 4853
-    components:
-    - type: Transform
-      parent: 5299
-    - type: Physics
-      canCollide: False
 - proto: CrowbarRed
   entities:
   - uid: 19229
@@ -135378,12 +135370,6 @@ entities:
       parent: 8364
 - proto: Multitool
   entities:
-  - uid: 4873
-    components:
-    - type: Transform
-      parent: 5299
-    - type: Physics
-      canCollide: False
   - uid: 5623
     components:
     - type: Transform
@@ -138133,14 +138119,6 @@ entities:
     - type: Transform
       pos: -3.5,-53.5
       parent: 8364
-- proto: PowerDrill
-  entities:
-  - uid: 5298
-    components:
-    - type: Transform
-      parent: 5299
-    - type: Physics
-      canCollide: False
 - proto: PoweredDimSmallLight
   entities:
   - uid: 14747
@@ -185924,14 +185902,6 @@ entities:
     - type: Transform
       pos: 10.537883,-49.512733
       parent: 8364
-- proto: WelderIndustrialAdvanced
-  entities:
-  - uid: 4857
-    components:
-    - type: Transform
-      parent: 5299
-    - type: Physics
-      canCollide: False
 - proto: WeldingFuelTankFull
   entities:
   - uid: 4387
@@ -188764,12 +188734,6 @@ entities:
       gridUid: 8364
 - proto: Wirecutter
   entities:
-  - uid: 4854
-    components:
-    - type: Transform
-      parent: 5299
-    - type: Physics
-      canCollide: False
   - uid: 16303
     components:
     - type: Transform
