@@ -261,3 +261,46 @@
         conditions:
         - !type:ReagentThreshold
           max: 1
+
+- type: reagent
+  id: Coagulant
+  name: reagent-name-coagulant
+  group: Medicine
+  desc: reagent-desc-coagulant
+  physicalDesc: reagent-physical-desc-viscous
+  flavor: metallic
+  color: "#bf0000"
+  contrabandSeverity: Syndicate
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.2
+      effects:
+      - !type:ClampWounds
+        chance: 0.4
+      - !type:RemoveStatusEffect
+        effectProto: WoundArterialBleeding
+        probability: 0.2
+
+- type: reagent
+  id: Osseous
+  name: reagent-name-osseous
+  group: Medicine
+  desc: reagent-desc-osseous
+  physicalDesc: reagent-physical-desc-putrid
+  flavor: meaty
+  color: "#c9abab"
+  contrabandSeverity: Syndicate
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:RemoveStatusEffect
+        effectProto: WoundFracture
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 5
+      - !type:AdjustReagent
+        reagent: Osseous
+        amount: -5
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 5

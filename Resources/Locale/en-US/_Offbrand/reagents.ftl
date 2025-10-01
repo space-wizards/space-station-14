@@ -21,3 +21,9 @@ reagent-desc-peridaxon = A beady medicine that encourages internal organs to rec
 
 reagent-name-synthflesh = synthflesh
 reagent-desc-synthflesh = A resorbable collagen and protein mixture used for synthesizing equivalents to various bodily materials.
+
+reagent-name-coagulant = coagulant
+reagent-desc-coagulant = An experimental medicine that causes internal and external bleeding to clot. Authorities have expressed concern over the lead content.
+
+reagent-name-osseous = osseous reagent
+reagent-desc-osseous = An strange solution of pinkish gel and white shards that can heal internal bone fractures. Authorities have expressed concern over the lead content.

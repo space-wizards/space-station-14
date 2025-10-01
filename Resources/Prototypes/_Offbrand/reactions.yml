@@ -103,3 +103,27 @@
       amount: 1
   products:
     Romerol: 1
+
+- type: reaction
+  id: Coagulant
+  reactants:
+    TranexamicAcid:
+      amount: 1
+    Lead:
+      amount: 1
+      catalyst: true
+  products:
+    Coagulant: 1
+
+- type: reaction
+  id: Osseous
+  reactants:
+    Milk:
+      amount: 1
+    SodaWater:
+      amount: 1
+    Lead:
+      amount: 1
+      catalyst: true
+  products:
+    Osseous: 2

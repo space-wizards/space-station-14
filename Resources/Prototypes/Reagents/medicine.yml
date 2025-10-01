@@ -836,6 +836,7 @@
   color: "#ba7d7d"
   metabolisms:
     Medicine:
+      metabolismRate: 0.2
       effects:
       # Medium-large quantities can hurt you instead,
       # but still technically stop your bleeding.
@@ -848,6 +849,8 @@
         damage:
           types:
             Bloodloss: 3
+      - !type:ClampWounds
+        chance: 0.3
 
 - type: reagent
   id: Tricordrazine

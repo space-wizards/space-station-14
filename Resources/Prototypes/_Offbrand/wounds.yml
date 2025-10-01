@@ -29,6 +29,7 @@
       Cold: 0.2
       Caustic: 0.2
   - type: TendableWound
+  - type: ClampableWound
   - type: BleedingWound
     bleedingCoefficients:
       Blunt: 0.015

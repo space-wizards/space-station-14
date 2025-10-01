@@ -3,6 +3,11 @@ reagent-guidebook-status-effect = Causes { $effect } during metabolism{ $conditi
         *[other] {" "}when { $conditions }.
     }
 
+reagent-effect-guidebook-status-effect-remove = { $chance ->
+        [1] Removes { LOC($key) }
+   *[other] remove { LOC($key) }
+}
+
 reagent-effect-guidebook-modify-brain-damage-heals = { $chance ->
         [1] Heals { $amount } brain damage
    *[other] heal { $amount } brain damage
@@ -18,6 +23,10 @@ reagent-effect-guidebook-modify-heart-damage-heals = { $chance ->
 reagent-effect-guidebook-modify-heart-damage-deals = { $chance ->
         [1] Deals { $amount } heart damage
    *[other] deal { $amount } heart damage
+}
+reagent-effect-guidebook-clamp-wounds = { $probability ->
+        [1] Stops bleeding in wounds with { NATURALPERCENT($chance, 2) } chance per wound
+   *[other] stop bleeding in wounds with { NATURALPERCENT($chance, 2) } chance per wound
 }
 reagent-effect-condition-guidebook-heart-damage = { $max ->
     [2147483648] it has at least {NATURALFIXED($min, 2)} heart damage

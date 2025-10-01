@@ -5,10 +5,12 @@ using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.HealthExaminable;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Random.Helpers;
 using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -38,6 +40,7 @@ public sealed class WoundableSystem : EntitySystem
         SubscribeLocalEvent<PainfulWoundComponent, StatusEffectRelayedEvent<GetPainEvent>>(OnGetPain);
         SubscribeLocalEvent<HealableWoundComponent, StatusEffectRelayedEvent<HealWoundsEvent>>(OnHealHealableWounds);
         SubscribeLocalEvent<BleedingWoundComponent, StatusEffectRelayedEvent<GetBleedLevelEvent>>(OnGetBleedLevel);
+        SubscribeLocalEvent<ClampableWoundComponent, StatusEffectRelayedEvent<ClampWoundsEvent>>(OnClampWounds);
     }
 
     private void OnShutdown(Entity<WoundableComponent> ent, ref ComponentShutdown args)
@@ -312,6 +315,9 @@ public sealed class WoundableSystem : EntitySystem
         if (TryComp<TendableWoundComponent>(ent, out var tendable) && tendable.Tended)
             return 0f;
 
+        if (TryComp<ClampableWoundComponent>(ent, out var clampable) && clampable.Clamped)
+            return 0f;
+
         if (wound.Damage.GetTotal() < ent.Comp.StartsBleedingAbove)
             return 0f;
 
@@ -342,6 +348,27 @@ public sealed class WoundableSystem : EntitySystem
         }
 
         return bleedAddition * ratio;
+    }
+
+    public void ClampWounds(Entity<WoundableComponent?> ent, float probability)
+    {
+        var evt = new ClampWoundsEvent(probability);
+        RaiseLocalEvent(ent, ref evt);
+    }
+
+    private void OnClampWounds(Entity<ClampableWoundComponent> ent, ref StatusEffectRelayedEvent<ClampWoundsEvent> args)
+    {
+        if (ent.Comp.Clamped)
+            return;
+
+        var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(ent).Id });
+        var rand = new System.Random(seed);
+
+        if (!rand.Prob(args.Args.Probability))
+            return;
+
+        ent.Comp.Clamped = true;
+        Dirty(ent);
     }
 
     private void OnGetBleedLevel(Entity<BleedingWoundComponent> ent, ref StatusEffectRelayedEvent<GetBleedLevelEvent> args)

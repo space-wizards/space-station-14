@@ -102,6 +102,17 @@ public sealed partial class TendableWoundComponent : Component
     public bool Tended;
 }
 
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(WoundableSystem))]
+public sealed partial class ClampableWoundComponent : Component
+{
+    /// <summary>
+    /// Whether or not the wound has been clamped
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Clamped;
+}
+
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(WoundableSystem))]
 public sealed partial class BleedingWoundComponent : Component
@@ -166,3 +177,9 @@ public record struct GetBleedLevelEvent(float BleedLevel);
 /// </summary>
 [ByRefEvent]
 public record struct ModifyBleedLevelEvent(float BleedLevel);
+
+/// <summary>
+/// Raised on an entity's wounds to clamp them with the given probability
+/// </summary>
+[ByRefEvent]
+public record struct ClampWoundsEvent(float Probability);

@@ -90,7 +90,7 @@
       damageProbabilityCoefficient: 0.25
       damageProbabilityConstant: 0
     - damageTypes: [Slash, Blunt, Piercing]
-      minimumDamage: 100
+      minimumDamage: 120
       minimumTotalDamage: 0
       woundPrototype: WoundBoneDeath
       woundDamages:
