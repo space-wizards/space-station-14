@@ -14,7 +14,7 @@ namespace Content.Shared.Light.Components;
 [RegisterComponent, NetworkedComponent, Access(typeof(LightReplacerSystem))]
 public sealed partial class LightReplacerComponent : Component
 {
-    [DataField("sound")]
+    [DataField]
     public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Weapons/click.ogg")
     {
         Params = new AudioParams
@@ -27,7 +27,7 @@ public sealed partial class LightReplacerComponent : Component
     /// Bulbs that were inserted inside light replacer
     /// </summary>
     [ViewVariables]
-    public Container InsertedBulbs;
+    public Container InsertedBulbs = default!;
 
     /// <summary>
     /// The default starting bulbs
