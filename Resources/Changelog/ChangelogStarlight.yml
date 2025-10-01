@@ -16640,5 +16640,12 @@ Entries:
   id: 178300
   time: '2025-10-01T03:39:57.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1783
+- author: CawsForConcern
+  changes:
+  - message: (Orwell) Mining ticket machine
+    type: Add
+  id: 178200
+  time: '2025-10-01T03:43:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1782
 Order: -1
 
