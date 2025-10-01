@@ -904,7 +904,7 @@
         emptyLabel: borg-slot-iv-bag-empty
         emptyRepresentative: IVBag
         whitelist:
-          components:
+          tags:
           - IVBag
     # End Offbrand
   - type: BorgModuleIcon
