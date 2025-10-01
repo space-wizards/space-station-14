@@ -20,7 +20,7 @@ public sealed class LawboardSystem : EntitySystem
     {
         if (!args.IsInDetailsRange)
             return;
-        // DONT DISPLAY LAWS OF BORGS OR AI CORES LIKE THE MORON I AM
+        //Starlight: DONT DISPLAY LAWS OF BORGS OR AI CORES LIKE THE MORON I AM
         if (!component.IsLawboard)
             return;
 
