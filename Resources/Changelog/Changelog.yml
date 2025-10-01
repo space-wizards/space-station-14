@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: perryprog
-  changes:
-  - message: You can now link cutter machines to material silos.
-    type: Tweak
-  id: 8510
-  time: '2025-05-18T01:51:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37554
-- author: Spangs04
-  changes:
-  - message: Resprited Telecomms
-    type: Tweak
-  id: 8511
-  time: '2025-05-18T02:10:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35811
 - author: EmoGarbage404
   changes:
   - message: Added the salvage job board! This board allows salvagers to access and
@@ -3956,3 +3942,18 @@
   id: 9020
   time: '2025-10-01T11:46:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40640
+- author: Velcroboy
+  changes:
+  - message: Shutters, blast doors, and lights can now be linked using the "Link Defaults"
+      button.
+    type: Tweak
+  id: 9021
+  time: '2025-10-01T20:22:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37690
+- author: YoungThugSS14
+  changes:
+  - message: The Prisoner Eva Suit now has the same stats as an emergency eva suit.
+    type: Tweak
+  id: 9022
+  time: '2025-10-01T20:23:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36696
