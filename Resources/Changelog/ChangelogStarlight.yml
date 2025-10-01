@@ -16633,5 +16633,12 @@ Entries:
   id: 178600
   time: '2025-10-01T03:27:32.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1786
+- author: CawsForConcern
+  changes:
+  - message: (Bagel) Mining specialist lockers now have hardsuits in them as intended
+    type: Fix
+  id: 178300
+  time: '2025-10-01T03:39:57.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1783
 Order: -1
 
