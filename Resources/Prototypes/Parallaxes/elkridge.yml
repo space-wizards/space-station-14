@@ -1,0 +1,46 @@
+- type: parallax
+  id: ElkridgeStation
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/KettleParallaxBG.png"
+      slowness: 0.995
+      scale: "4, 4"
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars.toml"
+      slowness: 0.994
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars_dim"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim.toml"
+      slowness: 0.993
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/KettleParallaxNeb.png"
+      slowness: 0.973
+      scale: "1, 1"
+      scrolling: "-0.02, 0.0"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/core_planet.png"
+      slowness: 0.998
+      scale: "1.3, 1.3"
+      controlHomePosition: "361, 292"
+      worldHomePosition: "0, 20"
+      scrolling: "0.0, 0.0"
+      tiled: false
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/KettleParallaxNeb.png"
+      slowness: 0.987
+      scale: "1.4, 1.4"
+      scrolling: "-0.03, 0.0"
+  layersLQ:
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: ""
+        configPath: "/Prototypes/Parallaxes/parallax_config.toml"
+      slowness: 0.875
+  layersLQUseHQ: false
