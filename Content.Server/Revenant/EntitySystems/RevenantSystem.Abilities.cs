@@ -73,8 +73,8 @@ public sealed partial class RevenantSystem
         if (HasComp<PoweredLightComponent>(target))
         {
             args.Handled = _ghost.DoGhostBooEvent(target);
-            if (args.Handled)
-                ChangeEssenceAmount(uid, 1, component, regenCap: false);
+            if (!(component.Essence >= component.EssenceRegenCap) && args.Handled)
+                ChangeEssenceAmount(uid, component.LightFlashEssenceAmount, component);
             return;
         }
 
@@ -94,6 +94,13 @@ public sealed partial class RevenantSystem
 
         args.Handled = true;
     }
+
+    /*
+    private void FlashLight(EntityUid uid, EntityUid target, RevenantComponent revenant)
+    {
+        ChangeEssenceAmount(uid, revenant.LightFlashEssenceAmount, revenant, regenCap: false);
+    }
+    */
 
     private void BeginSoulSearchDoAfter(EntityUid uid, EntityUid target, RevenantComponent revenant)
     {

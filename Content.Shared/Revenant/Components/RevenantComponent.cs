@@ -116,6 +116,16 @@ public sealed partial class RevenantComponent : Component
     public float DefileEffectChance = 0.5f;
     #endregion
 
+    //Revenants actually have a good reason to flash the lights and spook the crew now, at the cost of showing themselves briefly
+    //Clicking a light flashes it as if a spectator ghost is using it's haunt ability (existing behavior). Now, it also briefly reveals the revenant and gives them an essence point
+    #region Flash Lights Ability
+    ///<summary>
+    /// The amount that is given to the revenant each time it flashes a light
+    ///</summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("lightFlashEssenceAmount")]
+    public float LightFlashEssenceAmount = 1;
+    #endregion
+
     #region Overload Lights Ability
     /// <summary>
     /// The amount of essence that is needed to use the ability.
