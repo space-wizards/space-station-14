@@ -1,97 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed paradox clones not copying the mute, snoring and frontal lisp traits.
-    type: Fix
-  id: 8488
-  time: '2025-05-15T01:45:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37467
-- author: kosticia
-  changes:
-  - message: Hamsters, mice, butterflies, mothroaches, bees, bats, snails, rats, ticks
-      and cockroaches now don't leave organs on gibbing.
-    type: Fix
-  id: 8489
-  time: '2025-05-15T03:45:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37080
-- author: EmoGarbage404
-  changes:
-  - message: Goliath tentacles no longer miss if you stand still.
-    type: Fix
-  id: 8490
-  time: '2025-05-15T03:55:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37168
-- author: K-Dynamic
-  changes:
-  - message: Industrial advanced welders may be found in welding supplies lockers.
-    type: Tweak
-  id: 8491
-  time: '2025-05-15T03:55:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36977
-- author: BlitzTheSquishy
-  changes:
-  - message: You're no longer allowed to fire the Hristov or Mosin one handed anymore.
-    type: Tweak
-  id: 8492
-  time: '2025-05-15T04:12:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33708
-- author: metalgearsloth
-  changes:
-  - message: Predict bed action when you buckle to a sleepable entity.
-    type: Tweak
-  id: 8493
-  time: '2025-05-15T12:52:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37414
-- author: Chartman95
-  changes:
-  - message: Soaked Smokes retain their 40u max capacity.
-    type: Tweak
-  id: 8494
-  time: '2025-05-15T14:47:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37482
-- author: lzk228
-  changes:
-  - message: Recycler can shred clothing that can be butchered.
-    type: Tweak
-  id: 8495
-  time: '2025-05-15T23:44:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31518
-- author: metalgearsloth
-  changes:
-  - message: Raise shuttle speed cap from 20 to 60m/s.
-    type: Tweak
-  id: 8496
-  time: '2025-05-16T12:04:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37505
-- author: metalgearsloth
-  changes:
-  - message: The pulling hand blocker is now predicted.
-    type: Tweak
-  id: 8497
-  time: '2025-05-16T12:44:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37504
-- author: BigfootBravo
-  changes:
-  - message: Vox can now eat untagged human food again!
-    type: Fix
-  id: 8498
-  time: '2025-05-16T19:05:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37497
-- author: EmoGarbage404
-  changes:
-  - message: The guidebook is now more explicit about how damage/healing from chemicals
-      is split.
-    type: Tweak
-  id: 8499
-  time: '2025-05-16T21:19:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37507
-- author: EmoGarbage404
-  changes:
-  - message: Fixed the mining asteroid not having a name.
-    type: Fix
-  id: 8500
-  time: '2025-05-17T01:27:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37513
 - author: EmoGarbage404
   changes:
   - message: You can now patch holes in the floors of the evac shuttle and ATS.
@@ -3953,3 +3860,106 @@
   id: 8998
   time: '2025-09-24T04:19:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40461
+- author: RedBookcase
+  changes:
+  - message: Rechargers can now charge power cells again.
+    type: Tweak
+  id: 8999
+  time: '2025-09-24T20:33:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38138
+- author: Nox38, BurgerMoth
+  changes:
+  - message: Added descriptions to .20 ammo boxes, magazines, and cartridges.
+    type: Add
+  - message: Changed the descriptions of the Lecter, Estoc DMR, and M90GL.
+    type: Tweak
+  id: 9000
+  time: '2025-09-24T21:48:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36496
+- author: Keer-Sar
+  changes:
+  - message: Added two new markings for lizard snouts, "Lizard Visage (Round)" & "Lizard
+      Visage (Sharp)."
+    type: Add
+  id: 9001
+  time: '2025-09-24T23:13:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35294
+- author: SignalSender
+  changes:
+  - message: 'Added new purchasable crate: "random instrument collection" a crate
+      containing 7 random instruments, each of different variety, with the chance
+      for rare instruments'
+    type: Add
+  id: 9002
+  time: '2025-09-25T19:55:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40532
+- author: IProduceWidgets
+  changes:
+  - message: Explosive cord and detonators have been added for precise demolition!
+    type: Add
+  id: 9003
+  time: '2025-09-25T21:33:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25875
+- author: Hitlinemoss
+  changes:
+  - message: The autolathe and uniform printer can now produce towels.
+    type: Add
+  id: 9004
+  time: '2025-09-25T21:53:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40160
+- author: SirWarock
+  changes:
+  - message: Rollerbed sprites now don't stack when a patient is buckled to it!
+    type: Fix
+  id: 9005
+  time: '2025-09-25T23:57:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40550
+- author: Princess-Cheeseballs
+  changes:
+  - message: You can now put plushies in your cotton burgers.
+    type: Fix
+  id: 9006
+  time: '2025-09-26T04:22:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40276
+- author: CraftyRenter
+  changes:
+  - message: Closet health reduced to 50
+    type: Tweak
+  - message: Locker health increased to 75
+    type: Tweak
+  - message: Secure locker health incresed to 150
+    type: Tweak
+  - message: Secure lockers now make a sound when broken.
+    type: Add
+  id: 9007
+  time: '2025-09-26T20:04:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35671
+- author: SlamBamActionman
+  changes:
+  - message: Nocturine now causes sleep after a 6 second delay.
+    type: Tweak
+  id: 9008
+  time: '2025-09-26T20:05:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40231
+- author: Princess-Cheeseballs
+  changes:
+  - message: Added the Vulpkanin Plushie
+    type: Add
+  id: 9009
+  time: '2025-09-27T07:21:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40303
+- author: Princess-Cheeseballs
+  changes:
+  - message: Meth, Hyperzine and other stimulants properly reduce Knockdown and Stun
+      durations again.
+    type: Fix
+  id: 9010
+  time: '2025-09-27T10:19:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39547
+- author: TrixxedHeart
+  changes:
+  - message: Added 5 new Vox sounds, (Death gasp, Cough, Cry, Gasp, and Sigh)
+    type: Add
+  id: 9011
+  time: '2025-09-27T17:01:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39914

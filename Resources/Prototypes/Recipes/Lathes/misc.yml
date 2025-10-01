@@ -231,3 +231,10 @@
   materials:
     Plastic: 100
     Steel: 25
+
+- type: latheRecipe
+  id: TowelColorWhite
+  result: TowelColorWhite
+  completetime: 2
+  materials:
+    Cloth: 300
