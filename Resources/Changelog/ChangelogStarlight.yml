@@ -16647,5 +16647,64 @@ Entries:
   id: 178200
   time: '2025-10-01T03:43:32.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1782
+- author: mikeysaurus
+  changes:
+  - message: Fixed typos on salvage lead PDA and mantle
+    type: Fix
+  id: 177900
+  time: '2025-10-01T03:53:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1779
+- author: mikeysaurus
+  changes:
+  - message: Fixed Salvage Lead not being in the contra group for their gear
+    type: Fix
+  id: 177901
+  time: '2025-10-01T03:53:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1779
+- author: mikeysaurus
+  changes:
+  - message: Gave Salvage Lead & Mining Specialist PDAs the NanoTask app
+    type: Add
+  id: 177902
+  time: '2025-10-01T03:53:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1779
+- author: mikeysaurus
+  changes:
+  - message: Fixes some jumpsuits not correctly appearing for mining specialists,
+      salvage specialists, and salvage lead
+    type: Fix
+  id: 177903
+  time: '2025-10-01T03:53:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1779
+- author: mikeysaurus
+  changes:
+  - message: Large mining lockers now correctly have 2 loadouts within them
+    type: Fix
+  id: 177904
+  time: '2025-10-01T03:53:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1779
+- author: mikeysaurus
+  changes:
+  - message: fixes advanced mining suit to properly show gastank UI when interacted
+      with
+    type: Fix
+  id: 177905
+  time: '2025-10-01T03:53:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1779
+- author: mikeysaurus
+  changes:
+  - message: Adds Ore bags to mining specialist's roundstart belt slot
+    type: Add
+  id: 177906
+  time: '2025-10-01T03:53:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1779
+- author: mikeysaurus
+  changes:
+  - message: Adds purchasable ore bags to the mining and salvage ticket vendors, costs
+      25 tickets
+    type: Add
+  id: 177907
+  time: '2025-10-01T03:53:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1779
 Order: -1
 
