@@ -13,7 +13,7 @@ namespace Content.Server.Alert.Commands
 
         public string Command => "showalert";
         public string Description => Loc.GetString("cmd-showalert-desc");
-        public string Help => Loc.GetString("cmd-showalert-help");
+        public string Help => Loc.GetString("cmd-showalert-help", ("command", Command));
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {

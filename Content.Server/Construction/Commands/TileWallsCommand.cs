@@ -19,7 +19,7 @@ public sealed class TileWallsCommand : IConsoleCommand
     // ReSharper disable once StringLiteralTypo
     public string Command => "tilewalls";
     public string Description => Loc.GetString("cmd-tilewalls-desc");
-    public string Help => Loc.GetString("cmd-tilewalls-help");
+    public string Help => Loc.GetString("cmd-tilewalls-help", ("command", Command));
 
     public static readonly ProtoId<ContentTileDefinition> TilePrototypeId = "Plating";
     public static readonly ProtoId<TagPrototype> WallTag = "Wall";
@@ -109,6 +109,6 @@ public sealed class TileWallsCommand : IConsoleCommand
             changed++;
         }
 
-        shell.WriteLine(Loc.GetString("cmd-tilewalls-changed", ("changed", (object)changed)));
+        shell.WriteLine(Loc.GetString("cmd-tilewalls-changed", ("changed", changed)));
     }
 }

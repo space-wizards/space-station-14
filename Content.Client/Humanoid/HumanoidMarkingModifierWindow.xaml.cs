@@ -134,7 +134,7 @@ public sealed partial class HumanoidMarkingModifierWindow : DefaultWindow
                 OnStateChanged!();
             };
 
-            var lineEditBox = new BoxContainer();
+            var lineEditBox = new BoxContainer { SeparationOverride = 4 };
             lineEditBox.AddChild(new Label { Text = Loc.GetString("humanoid-marking-modifier-prototype-id") });
 
             // TODO: This line edit should really be an options / dropdown selector, not text.

@@ -21,7 +21,7 @@ public sealed class FixRotationsCommand : IConsoleCommand
     // ReSharper disable once StringLiteralTypo
     public string Command => "fixrotations";
     public string Description => Loc.GetString("cmd-fixrotations-desc");
-    public string Help => Loc.GetString("cmd-fixrotations-help");
+    public string Help => Loc.GetString("cmd-fixrotations-help", ("command", Command));
 
     public void Execute(IConsoleShell shell, string argsOther, string[] args)
     {

@@ -11,7 +11,7 @@ public sealed class ClearBluespaceLockerLinks : IConsoleCommand
 
     public string Command => "clearbluespacelockerlinks";
     public string Description => Loc.GetString("cmd-clearbluespace-desc");
-    public string Help => Loc.GetString("cmd-clearbluespace-help");
+    public string Help => Loc.GetString("cmd-clearbluespace-help", ("command", Command));
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {

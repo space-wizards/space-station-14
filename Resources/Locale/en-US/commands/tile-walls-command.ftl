@@ -1,5 +1,5 @@
 cmd-tilewalls-desc = Puts an underplating tile below every wall on a grid.
-cmd-tilewalls-help = Usage: tilewalls <gridId> | tilewalls
+cmd-tilewalls-help = Usage: {$command} <gridId> | {$command}
 cmd-tilewalls-only-player = Only a player can run this command.
 cmd-tilewalls-invalid-entity = {$entity} is not a valid entity.
 cmd-tilewalls-no-grid = No grid exists with id {$gridId}

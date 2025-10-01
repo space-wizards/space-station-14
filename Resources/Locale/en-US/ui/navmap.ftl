@@ -2,4 +2,4 @@
 navmap-recenter = Recenter
 navmap-toggle-beacons = Show departments
 navmap-location = Location: [x = {$x}, y = {$y}]
-navmap-unknown = Unknown
+navmap-unknown-entity = Unknown

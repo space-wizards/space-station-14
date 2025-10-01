@@ -15,7 +15,7 @@ public sealed class TileReplaceCommand : IConsoleCommand
     // ReSharper disable once StringLiteralTypo
     public string Command => "tilereplace";
     public string Description => Loc.GetString("cmd-tilereplace-desc");
-    public string Help => Loc.GetString("cmd-tilereplace-help");
+    public string Help => Loc.GetString("cmd-tilereplace-help", ("command", Command));
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {

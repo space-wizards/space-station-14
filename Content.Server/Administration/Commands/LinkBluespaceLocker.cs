@@ -11,8 +11,8 @@ public sealed class LinkBluespaceLocker : IConsoleCommand
     [Dependency] private readonly IEntityManager _entManager = default!;
 
     public string Command => "linkbluespacelocker";
-    public string Description => "Links an entity, the target, to another as a bluespace locker target.";
-    public string Help => "Usage: linkbluespacelocker <two-way link> <origin storage uid> <target storage uid>";
+    public string Description => Loc.GetString("cmd-linkbluespacelocker-desc");
+    public string Help => Loc.GetString("cmd-linkbluespacelocker-help", ("command", Command));
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {

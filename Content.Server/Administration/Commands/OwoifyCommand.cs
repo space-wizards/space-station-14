@@ -14,7 +14,7 @@ public sealed class OwoifyCommand : IConsoleCommand
 
     public string Description => Loc.GetString("cmd-owoify-desc");
 
-    public string Help => Loc.GetString("cmd-owoify-help");
+    public string Help => Loc.GetString("cmd-owoify-help", ("command", Command));
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {

@@ -17,7 +17,7 @@ public sealed class NPCDomainCommand : IConsoleCommand
 
     public string Command => "npcdomain";
     public string Description => Loc.GetString("cmd-npcdomain-desc");
-    public string Help => Loc.GetString("cmd-npcdomain-help");
+    public string Help => Loc.GetString("cmd-npcdomain-help", ("command", Command));
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {

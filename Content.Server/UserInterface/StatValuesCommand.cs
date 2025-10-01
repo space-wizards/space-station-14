@@ -26,7 +26,7 @@ public sealed class StatValuesCommand : IConsoleCommand
 
     public string Command => "showvalues";
     public string Description => Loc.GetString("stat-values-desc");
-    public string Help => $"{Command} <cargosell / lathesell / melee / itemsize>";
+    public string Help => Loc.GetString("stat-values-help", ("command", Command));
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player is not { } pSession)
