@@ -19,3 +19,17 @@
     sprite: Objects/counterstrike/Clothing/Hats/kufiamasked.rsi
   - type: Clothing
     sprite: Objects/counterstrike/Clothing/Hats/kufiamasked.rsi
+
+- type: entity
+  parent: ClothingHeadHelmetBase
+  id: ClothingHeadHatBalaklava
+  name: Kufia
+  description: "obormoti syka"
+  components:
+  - type: HideLayerClothing
+    layers:
+      Hair : HEAD
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Hats/balaklava.rsi
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Hats/balaklava.rsi

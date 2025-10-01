@@ -91,14 +91,7 @@
 - type: roleLoadout
   id: JobLawyer
   groups:
-  - GroupTankHarness
-  - LawyerNeck
   - LawyerJumpsuit
-  - CommonBackpack
-  - Glasses
-  - Survival
-  - Trinkets
-  - GroupSpeciesBreathTool
 
 - type: roleLoadout
   id: JobChaplain
@@ -119,17 +112,7 @@
 - type: roleLoadout
   id: JobJanitor
   groups:
-  - GroupTankHarness
-  - JanitorHead
-  - JanitorJumpsuit
-  - JanitorGloves
-  - CommonBackpack
-  - JanitorOuterClothing
-  - Glasses
-  - Survival
-  - Trinkets
-  - JanitorPlunger
-  - GroupSpeciesBreathTool
+  - FSBloadout
 
 - type: roleLoadout
   id: JobBotanist

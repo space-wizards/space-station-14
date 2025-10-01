@@ -42,3 +42,24 @@
   - type: Clothing
     sprite: Objects/counterstrike/Clothing/Uniform/theraCT.rsi
 
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitFSB
+  name: FSB uniform
+  description: russian
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Uniform/fsb.rsi
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Uniform/fsb.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitTrainT
+  name: Siberian Merc's uniform
+  description: separatists
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Uniform/bdsm.rsi
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Uniform/bdsm.rsi

@@ -1,0 +1,16 @@
+- type: gameMap
+  id: deTrain
+  mapName: 'de_train'
+  mapPath: /Maps/train.yml
+  minPlayers: 0
+  stations:
+   deTrain:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: "deTrain"
+        - type: StationJobs
+          availableJobs:
+            Lawyer: [ -1, -1 ]
+            Janitor: [-1, -1 ]
+

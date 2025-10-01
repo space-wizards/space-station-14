@@ -314,15 +314,6 @@
   name: loadout-group-lawyer-jumpsuit
   loadouts:
   - LawyerJumpsuit
-  - LawyerJumpskirt
-  - LawyerJumpsuitBlue
-  - LawyerJumpskirtBlue
-  - LawyerJumpsuitPurple
-  - LawyerJumpskirtPurple
-  - LawyerJumpsuitRed
-  - LawyerJumpskirtRed
-  - LawyerJumpsuitGood
-  - LawyerJumpskirtGood
 
 - type: loadoutGroup
   id: LawyerNeck
@@ -1397,3 +1388,12 @@
   hidden: true
   loadouts:
   - LoadoutSpeciesBreathToolSecurity
+
+- type: loadoutGroup
+  id: FSB
+  name: FSBloadout
+  loadouts:
+  - JanitorWebbing
+  - JanitorJumpsuit
+  - JanitorHead
+  - JanitorBoots

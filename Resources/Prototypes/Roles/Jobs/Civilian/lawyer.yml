@@ -5,36 +5,20 @@
   playTimeTracker: JobLawyer
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 9000 # 2.5 hrs
+      time: 0 # 2.5 hrs
   startingGear: LawyerGear
   icon: "JobIconLawyer"
   supervisors: job-supervisors-hop
+  accessGroups:
+  - AllAccess
   access:
-  - Service
-  - Lawyer
-  - Brig
-  - Maintenance
-
+  - CentralCommand
+  
 - type: startingGear
   id: LawyerGear
   equipment:
-    shoes: ClothingShoesBootsLaceup
     id: LawyerPDA
     ears: ClothingHeadsetSecurity
-  inhand:
-    - BriefcaseBrownFilled
-  storage:
-    back:
-    - RubberStampLawyer
-    - BookSpaceLaw
-
-- type: chameleonOutfit
-  id: LawyerChameleonOutfit
-  job: Lawyer
-  equipment:
-    head: ClothingHeadHatBowlerHat
-    eyes: ClothingEyesGlassesCheapSunglasses
-    mask: ClothingMaskBreath
-    neck: ClothingNeckLawyerbadge
-    outerClothing: ClothingOuterWinterColorBlack
-    gloves: ClothingHandsGlovesColorBlack
+    pocket1: BaseUplinkRadioT # for fucking battle
+    shoes: ClothingShoesBootsJackFilled
+    belt: ClothingBeltMilitaryWebbing

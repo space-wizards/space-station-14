@@ -6,43 +6,19 @@
   startingGear: JanitorGear
   icon: "JobIconJanitor"
   supervisors: job-supervisors-hop
+  accessGroups:
+  - AllAccess
   access:
-  - Service
-  - Janitor
-  - Maintenance
-  special:
-  - !type:GiveItemOnHolidaySpecial
-    holiday: GarbageDay
-    prototype: WeaponRevolverInspector
+  - CentralCommand
 
 - type: startingGear
   id: JanitorGear
   equipment:
-    shoes: ClothingShoesGaloshes
-    id: JanitorPDA
-    ears: ClothingHeadsetService
-    belt: ClothingBeltJanitorFilled
-  #storage:
-    #back:
-    #- Stuff
+    id: LibrarianPDA
+    ears: ClothingHeadsetSecurity
+    pocket1: BaseUplinkRadioCT # for making named bestsellers
+    jumpsuit: ClothingUniformJumpsuitFSB
+    head: ClothingHeadHatBalaklava
+    belt: ClothingBeltMilitaryWebbing
+    shoes: ClothingShoesBootsCombatFilled
 
-- type: startingGear
-  id: JanitorMaidGear
-  equipment:
-    jumpsuit: ClothingUniformJumpskirtJanimaid
-    id: JanitorPDA
-    gloves: ClothingHandsGlovesJanitor
-    head: ClothingHeadHatCatEars
-    ears: ClothingHeadsetService
-    belt: ClothingBeltJanitorFilled
-
-- type: chameleonOutfit
-  id: JanitorChameleonOutfit
-  job: Janitor
-  equipment:
-    head: ClothingHeadHatPurplesoft
-    eyes: ClothingEyesGlassesCheapSunglasses
-    mask: ClothingMaskGas
-    neck: ClothingNeckScarfStripedPurple
-    outerClothing: ClothingOuterWinterJani
-    gloves: ClothingHandsGlovesJanitor
