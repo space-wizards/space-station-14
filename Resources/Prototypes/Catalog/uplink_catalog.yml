@@ -1831,16 +1831,6 @@
   - UplinkPointless
 
 - type: listing
-  id: UplinkCatEars
-  name: uplink-cat-ears-name
-  description: uplink-cat-ears-desc
-  productEntity: ClothingHeadHatCatEars
-  cost:
-    Telecrystal: 26
-  categories:
-  - UplinkPointless
-
-- type: listing
   id: UplinkOutlawHat
   name: uplink-outlaw-hat-name
   description: uplink-outlaw-hat-desc
@@ -1946,7 +1936,7 @@
   description: uplink-cat-maid-bundle-desc
   productEntity: ClothingBackpackDuffelSyndicateCatMaidBundle
   cost:
-    Telecrystal: 40
+    Telecrystal: 26
   categories:
   - UplinkPointless
 
