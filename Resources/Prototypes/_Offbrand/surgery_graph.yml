@@ -148,7 +148,7 @@
         effect: WoundHusking
       steps:
       - material: RegenerativeMesh
-        amount: 10
+        amount: 3
         doAfter: 5
     - to: CavityManipulationOpen
       steps:
@@ -169,7 +169,7 @@
         effect: WoundBoneDeath
       steps:
       - material: MedicatedSuture
-        amount: 10
+        amount: 3
         doAfter: 5
   - node: OpenRibCageSetting
     edges:
