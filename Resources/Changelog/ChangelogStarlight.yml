@@ -16713,5 +16713,54 @@ Entries:
   id: 178400
   time: '2025-10-01T09:47:13.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1784
+- author: CawsForConcern
+  changes:
+  - message: (Cluster) Random roundstart artifacts to Science Xenoarcheology Lab
+    type: Add
+  id: 178000
+  time: '2025-10-01T15:15:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1780
+- author: CawsForConcern
+  changes:
+  - message: (Cluster) Moved medbays defib to the east wall so it's easier to access
+    type: Tweak
+  id: 178001
+  time: '2025-10-01T15:15:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1780
+- author: CawsForConcern
+  changes:
+  - message: (Cluster) New surgery door for surgical theatre
+    type: Tweak
+  id: 178002
+  time: '2025-10-01T15:15:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1780
+- author: CawsForConcern
+  changes:
+  - message: (Cluster) Cryo shouldn't cool the entirety of distro anymore
+    type: Fix
+  id: 178003
+  time: '2025-10-01T15:15:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1780
+- author: CawsForConcern
+  changes:
+  - message: (Cluster) Missing Departmental request computers added
+    type: Fix
+  id: 178004
+  time: '2025-10-01T15:15:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1780
+- author: CawsForConcern
+  changes:
+  - message: (Cluster) Arrivals screens were placed at Evac instead of regular screens
+    type: Fix
+  id: 178005
+  time: '2025-10-01T15:15:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1780
+- author: CawsForConcern
+  changes:
+  - message: (Cluster) Missing LV wires to the North Atmospherics APC
+    type: Fix
+  id: 178006
+  time: '2025-10-01T15:15:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1780
 Order: -1
 
