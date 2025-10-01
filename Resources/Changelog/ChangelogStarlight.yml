@@ -16625,5 +16625,13 @@ Entries:
   id: 150600
   time: '2025-10-01T03:14:23.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1506
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed a bug that could break a player’s state and prevent them from connecting
+      until a DB admin fixes it.
+    type: Fix
+  id: 178600
+  time: '2025-10-01T03:27:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1786
 Order: -1
 
