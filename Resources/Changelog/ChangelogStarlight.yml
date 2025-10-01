@@ -16785,5 +16785,27 @@ Entries:
   id: 176300
   time: '2025-10-01T15:30:49.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1763
+- author: Vonte
+  changes:
+  - message: Added the ability to choose hat your preferred hat in the Blueshield
+      Officer loadout
+    type: Add
+  id: 179000
+  time: '2025-10-01T18:30:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1790
+- author: Vonte
+  changes:
+  - message: Added a new Blueshield bounty hunter's hat
+    type: Add
+  id: 179001
+  time: '2025-10-01T18:30:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1790
+- author: Vonte
+  changes:
+  - message: Added the Blueshield Poncho to the Blue shield officer loadout
+    type: Add
+  id: 179002
+  time: '2025-10-01T18:30:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1790
 Order: -1
 
