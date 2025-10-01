@@ -16618,5 +16618,12 @@ Entries:
   id: 176200
   time: '2025-09-30T13:37:39.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1762
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added the Golden Atmospherics Hardsuit, available for 1140 credits.
+    type: Add
+  id: 150600
+  time: '2025-10-01T03:14:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1506
 Order: -1
 
