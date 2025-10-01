@@ -1,6 +1,9 @@
-using Robust.Shared.Player;
-
 namespace Content.Shared.UserInterface;
+
+/// <summary>
+/// This is raised BEFORE opening a UI! Do not listen and then open / do something use
+/// <see cref="AfterActivatableUIOpenEvent"/> for that.
+/// </summary>
 public sealed class ActivatableUIOpenAttemptEvent : CancellableEntityEventArgs
 {
     public EntityUid User { get; }

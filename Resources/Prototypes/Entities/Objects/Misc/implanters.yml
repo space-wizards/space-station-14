@@ -84,15 +84,16 @@
 - type: entity
   id: Implanter
   parent: BaseImplanter
-  description: A disposable syringe exclusively designed for the injection and extraction of subdermal implants.
+  name: implant extractor
+  description: "A dual-purpose syringe designed for the removal of specific subdermal implants. Once an implant is extracted, it is stored within and can be re-administered.\nWARNING: Operator error, such as selecting a non-present implant type, causes severe genetic trauma to the operator."
   components:
   - type: Tag
     tags:
     - Trash
 
 - type: entity
-  parent: Implanter
   id: ImplanterAdmeme
+  parent: Implanter
   suffix: Admeme
   components:
   - type: Implanter
