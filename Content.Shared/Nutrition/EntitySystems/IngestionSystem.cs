@@ -177,8 +177,10 @@ public sealed partial class IngestionSystem : EntitySystem
     /// </summary>
     /// <param name="food">Entity being eaten</param>
     /// <param name="stomachs">Stomachs available to digest</param>
-    public bool IsDigestibleBy(EntityUid food, List<Entity<StomachComponent, OrganComponent>> stomachs)
+    /// <param name="popup">Should we also display popup text if it exists?</param>
+    public bool IsDigestibleBy(EntityUid food, List<Entity<StomachComponent, OrganComponent>> stomachs, out bool popup)
     {
+        popup = false;
         var ev = new IsDigestibleEvent();
         RaiseLocalEvent(food, ref ev);
 
@@ -210,6 +212,7 @@ public sealed partial class IngestionSystem : EntitySystem
         }
 
         // If we didn't find a stomach that can digest our food then it doesn't exist.
+        popup = true;
         return false;
     }
 
@@ -247,9 +250,9 @@ public sealed partial class IngestionSystem : EntitySystem
             return;
 
         // Can we digest the specific item we're trying to eat?
-        if (!IsDigestibleBy(args.Ingested, stomachs))
+        if (!IsDigestibleBy(args.Ingested, stomachs, out var popup))
         {
-            if (!args.Ingest)
+            if (!args.Ingest || !popup)
                 return;
 
             if (forceFed)
