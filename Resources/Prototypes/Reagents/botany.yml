@@ -224,7 +224,7 @@
       - !type:HealthChange
         conditions:
         - !type:MetabolizerType
-          type: [Rat]
+          type: [ Rat ]
           inverted: true
         - !type:ReagentThreshold
           reagent: Ammonia
@@ -237,9 +237,7 @@
         probability: 0.12
         conditions:
         - !type:MetabolizerType
-          type:
-          - Rat
-          - Vox
+          type: [ Rat, Vox ]
           inverted: true
         - !type:ReagentThreshold
           reagent: Ammonia
@@ -256,7 +254,7 @@
       - !type:HealthChange
         conditions:
         - !type:MetabolizerType
-          type: [Rat]
+          type: [ Rat ]
         - !type:ReagentThreshold
           reagent: Ammonia
           min: 1
@@ -271,7 +269,7 @@
       - !type:Oxygenate # ammonia displaces nitrogen in vox blood
         conditions:
         - !type:MetabolizerType
-          type: [Vox]
+          type: [ Vox ]
         factor: -4
 
 

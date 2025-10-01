@@ -64,7 +64,7 @@
       - !type:HealthChange
         conditions:
         - !type:MetabolizerType
-          type: [Arachnid]
+          type: [ Arachnid ]
           inverted: true
         damage:
           types:
@@ -74,7 +74,7 @@
       - !type:ModifyBloodLevel
         conditions:
         - !type:MetabolizerType
-          type: [Arachnid]
+          type: [ Arachnid ]
         amount: 0.4
 
 - type: reagent
@@ -154,7 +154,7 @@
       - !type:HealthChange
         conditions:
         - !type:MetabolizerType
-          type: [Arachnid]
+          type: [ Arachnid ]
         damage:
           types:
             Poison: 0.1
@@ -163,7 +163,7 @@
       - !type:ModifyBloodLevel
         conditions:
         - !type:MetabolizerType
-          type: [Arachnid]
+          type: [ Arachnid ]
           inverted: true
         amount: 0.4
 

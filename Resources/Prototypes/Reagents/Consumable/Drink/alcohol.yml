@@ -169,7 +169,7 @@
           reagent: Ethanol
           min: 15
         - !type:MetabolizerType
-          type: [Dwarf]
+          type: [ Dwarf ]
           inverted: true
         damage:
           types:
@@ -181,7 +181,7 @@
           reagent: Ethanol
           min: 15
         - !type:MetabolizerType
-          type: [Dwarf]
+          type: [ Dwarf ]
         damage:
           types:
             Poison: 0.2
@@ -191,7 +191,7 @@
           reagent: Ethanol
           min: 15
         - !type:MetabolizerType
-          type: [Dwarf]
+          type: [ Dwarf ]
         damage:
           groups:
             Brute: -1
@@ -203,7 +203,7 @@
           min: 12
         # dwarves immune to vomiting from alcohol
         - !type:MetabolizerType
-          type: [Dwarf]
+          type: [ Dwarf ]
           inverted: true
       - !type:Drunk
         boozePower: 2

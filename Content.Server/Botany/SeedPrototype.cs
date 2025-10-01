@@ -80,7 +80,7 @@ public partial struct SeedChemQuantity
     [DataField("Inherent")] public bool Inherent = true;
 }
 
-// TODO reduce the number of friends to a reasonable level. Requires ECS-ing things like plant holder component.
+// TODO Make Botany ECS and give it a proper API. I removed the limited access of this class because it's egregious how many systems needed access to it due to a lack of an actual API.
 /// <remarks>
 /// SeedData is no longer restricted because the number of friends is absolutely unreasonable.
 /// This entire data definition is unreasonable. I felt genuine fear looking at this, this is horrific. Send help.

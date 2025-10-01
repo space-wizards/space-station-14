@@ -457,7 +457,7 @@
         ignoreResistances: true
         conditions:
         - !type:MetabolizerType
-          type: [Slime]
+          type: [ Slime ]
         damage:
           types:
             Heat: 3

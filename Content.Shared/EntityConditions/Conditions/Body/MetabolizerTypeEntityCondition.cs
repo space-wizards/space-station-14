@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Shared.Body.Prototypes;
+using Content.Shared.Localizations;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Body;
@@ -12,9 +13,22 @@ public sealed partial class MetabolizerType : EntityConditionBase<MetabolizerTyp
     [DataField(required: true)]
     public ProtoId<MetabolizerTypePrototype>[] Type = default!;
 
-    // TODO: Convert to allow lists blah blah blah
-    public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>
-        Loc.GetString("reagent-effect-condition-guidebook-organ-type",
-            ("name", prototype.Index(Type.FirstOrDefault()).LocalizedName),
+    public override string EntityConditionGuidebookText(IPrototypeManager prototype)
+    {
+        var typeList = new List<string>();
+
+        foreach (var type in Type)
+        {
+            if (!prototype.Resolve(type, out var proto))
+                continue;
+
+            typeList.Add(proto.LocalizedName);
+        }
+
+        var names = ContentLocalizationManager.FormatListToOr(typeList);
+
+        return Loc.GetString("reagent-effect-condition-guidebook-organ-type",
+            ("name", names),
             ("shouldhave", !Inverted));
+    }
 }

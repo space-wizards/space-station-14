@@ -40,7 +40,7 @@
       - !type:SatiateHunger
         conditions:
         - !type:MetabolizerType
-          type: [Moth]
+          type: [ Moth ]
 
 - type: reagent
   id: BuzzochloricBees
@@ -383,7 +383,7 @@
         prototype: ArtifactLizard
         conditions:
         - !type:MetabolizerType
-          type: [Animal]
+          type: [ Animal ]
           inverted: true
         - !type:ReagentThreshold
           reagent: JuiceThatMakesYouHew
