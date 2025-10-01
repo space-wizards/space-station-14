@@ -1,21 +1,28 @@
-MIT License
+RU:
 
-Copyright (c) 2017-2025 Space Wizards Federation
+При получении копии лицензируемого объекта любыми способами любое лицо может использовать его только при полном согласии с условиями настоящей Лицензии. Нарушение данных условий предоставляет нам (Лицензиару) право применять меры правовой и технологической защиты в соответствии с DMCA и/или применимым законодательством юрисдикций, в которых расположены хостинг-провайдеры или иные информационные посредники. Принятие условий настоящей Лицензии означает заключение обязательного соглашения между вами и организацией Foundation-14. Данное Соглашение является безвозмездным, простым и неисключительным. Оно не регулирует вопросы, связанные с обработкой персональных данных.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Проект представляет собой результат интеллектуальной деятельности организации авторов. Проект является комплексным объектом интеллектуальной собственности — видеоигрой, основанной на переработке и переводе на русский язык открытой версии Space Station 14, совмещённой с творческим замыслом Организации. В состав Проекта входят, в числе прочего: исходный код, объектный код, инструменты разработки, игровые ресурсы, спецификации, дизайн пользовательского интерфейса, элементы повествования и другие компоненты творческого характера. Любые компоненты, отличные от исходных элементов оригинала, являются самостоятельными объектами авторских и/или смежных прав.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Контрибьют — любое оригинальное произведение авторства Участников, включая любые изменения или дополнения к Проекту, которое намеренно передаётся Организации. Передача включает в себя любую форму электронного, устного или письменного взаимодействия с Организацией или её представителями, включая, но не ограничиваясь, сообщениями в электронных списках рассылки, системах контроля версий или системах отслеживания ошибок, управляемых Организацией или от её имени. Общения, явно обозначенные как “Не является контрибьютом”, не рассматриваются как контрибьют. Передавая Контрибьют, Участник предоставляет Организации простую, бесплатную, безотзывную, неисключительную лицензию на весь срок действия своих прав на данный Контрибьют в соответствии с применимым законодательством его юрисдикции и/или международным правом.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Лицензиар — организация Foundation-14. Для получения разрешений и по вопросам лицензирования обращаться по адресу scpspace@outlook.com
+
+Настоящая Лицензия предоставляет любому количеству лиц право изучать код Проекта и модифицировать его исключительно для личных, некоммерческих целей и только в целях ознакомления и совершенствования. Все модификации должны передаваться обратно Организации на условиях Контрибьюта. Допускается локальный запуск и размещение Проекта исключительно в частных целях для собственного использования и участия в игровом процессе. Создание производных проектов и их публичное размещение, включая публикацию на публичных серверах, допускается только после получения прямого разрешения от Лицензиара. Связь с Лицензиаром осуществляется через приложение “Безопасность” внутри Проекта либо через официальный репозиторий на GitHub. Коммерческое использование Проекта или его производных работ возможно только после получения предварительного явного разрешения от Лицензиара. Без такого разрешения любое коммерческое использование запрещено. Нарушение условий предоставляет Лицензиару право принимать меры, включая обращения к хостинг-провайдерам и другим посредникам с целью блокировки доступа к нарушающим материалам.
+
+Некоторые элементы Проекта, такие как графика, звуковые файлы или сторонний код, могут распространяться на условиях иных лицензий. Большинство ресурсов лицензировано по лицензии CC-BY-SA 3.0, если явно не указано иное. Информация о лицензировании содержится в метаданных соответствующих файлов. При отсутствии указания типа лицензии такие файлы распространяются на условиях настоящей Лицензии.
+
+
+EN:
+
+Upon receiving a copy of the licensed object by any means, any person may use it only if they fully agree with the terms of this License. Violation of these terms grants us (the Licensor) the right to apply legal and technological protection measures in accordance with the DMCA and/or applicable legislation of jurisdictions where hosting providers or other information intermediaries are located. Acceptance of the terms of this License constitutes a binding agreement between you and the Foundation-14 organization. This Agreement is gratuitous, simple, and non-exclusive. It does not regulate issues related to the processing of personal data.
+
+The Project represents the result of the intellectual activity of the organization of authors. The Project is a complex object of intellectual property — a video game based on the revision and translation into Russian of the open version of Space Station 14, combined with the creative vision of the Organization. The Project includes, among other things: source code, object code, development tools, game assets, specifications, UI/UX design, narrative elements, and other creative components. Any components different from the original elements are independent objects of copyright and/or related rights.
+
+A Contribution  —  any original work of authorship by Contributors, including any modifications or additions to the Project, intentionally provided to the Organization. Submission includes any form of electronic, oral, or written communication with the Organization or its representatives, including, but not limited to, messages on mailing lists, version control systems, or issue tracking systems operated by or on behalf of the Organization. Communications explicitly marked as “Not a contribution” are not considered Contributions. By submitting a Contribution, the Contributor grants the Organization a simple, free, irrevocable, non-exclusive license for the entire period of validity of their rights to the Contribution under the applicable law of their jurisdiction and/or international law.
+
+The Licensor is the Foundation-14 organization. For permissions and licensing inquiries, contact scpspace@outlook.com
+
+This License grants any number of persons the right to study the Project’s code and modify it solely for personal, non-commercial purposes and for the purpose of familiarization and improvement. All modifications must be transferred back to the Organization under the terms of a Contribution. Local launching and hosting of the Project are permitted exclusively for private use and participation in the game process. Creation of derivative projects and their public hosting, including on public servers, is allowed only after obtaining direct permission from the Licensor. Communication with the Licensor is conducted through the “Security” application within the Project or through the official repository on GitHub. Commercial use of the Project or its derivative works is allowed only after obtaining prior explicit permission from the Licensor. Without such permission, any commercial use is prohibited. Violation of the terms grants the Licensor the right to take actions, including contacting hosting providers and other intermediaries to block access to violating materials.
+
+Some elements of the Project, such as graphics, sound files, or third-party code, may be distributed under different licenses. Most assets are licensed under CC-BY-SA 3.0 unless otherwise explicitly stated. Licensing information is contained in the metadata files of the corresponding elements. If no license type is specified, such files are distributed under the terms of this License.
