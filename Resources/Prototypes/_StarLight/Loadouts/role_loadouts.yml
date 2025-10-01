@@ -85,7 +85,7 @@
   groups:
   - GroupTankHarness
   - SalvageSpecialistBackpack
-  - SalvageSpecialistJumpsuit # afterlight
+  - MiningSpecialistJumpsuit
   - SalvageSpecialistOuterClothing
   - SalvageSpecialistShoes
   - Glasses
@@ -132,6 +132,7 @@
   groups:
     - GroupTankHarness
     - SalvageSpecialistBackpack
+    - SalvageLeadJumpsuit
     - SalvageSpecialistOuterClothing
     - SalvageSpecialistShoes
     - Glasses

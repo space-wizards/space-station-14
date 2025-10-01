@@ -24,7 +24,6 @@
 - type: startingGear
   id: SalvageLeadGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitSalvageLead
     id: SalvageLeadPDA
     ears: ClothingHeadsetSalvageLead
   #storage:

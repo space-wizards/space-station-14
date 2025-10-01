@@ -787,6 +787,10 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.HasIndex("PreferenceId");
 
+                    b.HasIndex("PreferenceId", "JobName")
+                        .IsUnique()
+                        .HasDatabaseName("UX_JobPriorityEntry_Pref_Job");
+
                     b.HasIndex(new[] { "PreferenceId" }, "IX_job_one_high_priority")
                         .IsUnique()
                         .HasFilter("priority = 3");

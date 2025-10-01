@@ -1,0 +1,13 @@
+# mining shares most loadoutgroups with salvage specialist
+# see Resources/Prototypes/_StarLight/Loadouts/role_loadouts.yml
+
+# Jumpsuit
+- type: loadout
+  id: MiningSpecialistJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMiningSpecialist
+
+- type: loadout
+  id: MiningSpecialistJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtMiningSpecialist

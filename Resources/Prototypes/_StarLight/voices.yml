@@ -1,11 +1,4 @@
 - type: voice
-  id: geraltofrivia
-  name: tts-voice-name-geraltofrivia
-  sex: Male
-  silicon: false
-  voice: 13
-
-- type: voice
   id: invoker
   voice: 282
   name: tts-voice-name-invoker
@@ -1015,3 +1008,18 @@
   silicon: false
   voice: 20014
   
+# -----------------------------------------------------------------------------
+
+- type: voice
+  id: cawsforconcern
+  name: tts-voice-name-cawsforconcern
+  sex: Male
+  silicon: false
+  voice: 510001
+
+- type: voice
+  id: oliveoffender
+  name: tts-voice-name-oliveoffender
+  sex: Male
+  silicon: false
+  voice: 510002
