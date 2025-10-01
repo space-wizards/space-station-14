@@ -121,6 +121,13 @@ namespace Content.Server.Database
                 .IsUnique()
                 .HasFilter("priority = 3");
 
+            //starlight start
+            modelBuilder.Entity<JobPriorityEntry>()
+                .HasIndex(e => new { e.PreferenceId, e.JobName })
+                .HasDatabaseName("UX_JobPriorityEntry_Pref_Job")
+                .IsUnique();
+            //starlight end
+
             modelBuilder.Entity<Job>()
                 .HasIndex(j => j.ProfileId);
 
