@@ -16771,5 +16771,12 @@ Entries:
   id: 178800
   time: '2025-10-01T15:25:59.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1788
+- author: Vonte
+  changes:
+  - message: SP91-RC now has its own wielded inhand instead of the c20 one
+    type: Tweak
+  id: 176600
+  time: '2025-10-01T15:26:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1766
 Order: -1
 
