@@ -1,16 +1,16 @@
 ﻿<Document>
   # Core Rule 3 - No discrimination
-  This is a zero-tolerance rule.
-
-  Prejudice towards race, ethnicity, species, sex, gender, sexual orientation, disability, and other intrinsic attributes is considered discriminatory and prohibited.
-
-  Derogatory terms or phrases are considered prejudicical and prohibited.
+  There is zero tolerance for discriminatory language, actions, and dog whistles based on social groups. (Social groups includes race, ethnicity, species, gender identity, sexual orientation, disability, religious beliefs, and other intrinsic attributes.)
 
   ## Examples
   [color=#449944]Appropriate:[/color]
-  - Using "gay" as a statement
+  - Using common terms such as "gay", "trans", or "disabled"
+  - Using potentially offensive terms such as "retard" within technical and ahelp (admin help) contexts
 
   [color=#994444]Prohibited:[/color]
-  - Using "gay" as a negative attribute
-  - Using derogatory terms such as "homo", "tranny", or "retard" in any context
+  - Misusing common terms as an insult
+  - Misusing potentially offensive terms beyond technical and ahelp contexts
+  - Misusing offensive terms beyond admin context
+  - Giving preferential treatment based on social groups
+  - Expressing hatred or harm against social groups
 </Document>
