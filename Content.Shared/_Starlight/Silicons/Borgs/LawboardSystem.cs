@@ -20,6 +20,9 @@ public sealed class LawboardSystem : EntitySystem
     {
         if (!args.IsInDetailsRange)
             return;
+        //Starlight: DONT DISPLAY LAWS OF BORGS OR AI CORES LIKE THE MORON I AM
+        if (!component.IsLawboard)
+            return;
 
         if (!_prototype.TryIndex<SiliconLawsetPrototype>(component.Laws, out var lawsetProto))
             return;
