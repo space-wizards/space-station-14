@@ -5,7 +5,9 @@ using Content.Shared.Disposal.Unit;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Network;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using System.Linq;
 
 namespace Content.Shared.Disposal.Tube;
@@ -23,6 +25,8 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly INetManager _net = default!;
 
     public override void Initialize()
     {
@@ -182,6 +186,9 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
     public bool TryInsert(Entity<DisposalTubeComponent> ent, Entity<DisposalUnitComponent> unit, IEnumerable<string>? tags = default)
     {
         if (_disposalUnit.GetContainedEntityCount(unit) == 0)
+            return false;
+
+        if (_net.IsClient && !_timing.IsFirstTimePredicted)
             return false;
 
         var xform = Transform(ent);
