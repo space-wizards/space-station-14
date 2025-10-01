@@ -177,7 +177,7 @@
   parent: BaseVulpkaninPlushie
   id: PlushieKiller
   name: killer plushie
-  description: The Corpsman that lives up to his name, being the first or the last thing you see depending on which side of the fence you stand on. The volume setting appears to be stuck on max..
+  description: The corpsman that lives up to his name, being the first or the last thing you see depending on which side of the fence you stand on. The volume setting appears to be stuck on max..
   components:
   - type: Item
     size: Small
@@ -249,7 +249,7 @@
 - type: entity
   parent: PlushieHuman
   id: PlushieOog
-  name: Oog-man Plushie #I AM OOG-MAN
+  name: oog-man plushie #I AM OOG-MAN
   description: A marketable plushie of everyone's favourite caveman. It's missing it's clothes?
   components:
   - type: Item
@@ -273,7 +273,7 @@
 - type: entity
   parent: BaseVulpkaninPlushie
   id: PlushieVanilla
-  name: Vanilla Plushie
+  name: vanilla plushie
   description: She's a shy, affectionate, lovable fox!
   components:
   - type: Item
@@ -997,7 +997,7 @@
 - type: entity
   parent: BasePlushie
   id: StinkyPlush
-  name: Spiro Plushie
+  name: spiro plushie
   description: Spiro Velox? Now as a plushie!! It... smells?
   components:
   - type: Item
@@ -1030,7 +1030,7 @@
 - type: entity
   parent: BasePlushie
   id: JessPlush
-  name: Jessica Plushie
+  name: jessica plushie
   description: Your favourite and most robust CentComm Operator.. She makes those noises cause she loves cats a bit too much
   components:
   - type: Item
@@ -1063,7 +1063,7 @@
 - type: entity
   parent: BasePlushie
   id: SiffyPlush
-  name: Siffy Plushie
+  name: siffy plushie
   description: Your favorite NT engineer that totally does their job and you will have power for the whole shift
   components:
   - type: Item
@@ -1096,7 +1096,7 @@
 - type: entity
   parent: BasePlushie
   id: StalksPlush
-  name: Stalks Plushie
+  name: stalks plushie
   description: Your favorite NT REP Stalks, now with an er~ I mean a fancy cane..
   components:
   - type: Item
@@ -1129,7 +1129,7 @@
 - type: entity
   parent: BasePlushie
   id: IgnisPlush
-  name: Scarlet Plushie
+  name: scarlet plushie
   description: Your favorite CentComm Operator who always summons rain to the station somehow, even thought it's space..
   components:
   - type: Item
@@ -1162,7 +1162,7 @@
 - type: entity
   parent: BasePlushie
   id: LivvyPlush
-  name: Croft Plushie
+  name: croft plushie
   description: A retired CentComm Operator, now focusing on being adorable full time.
   components:
   - type: Item
@@ -1195,7 +1195,7 @@
 - type: entity
   parent: BaseMothPlushie
   id: MinaPlush
-  name: Minttongue Plushie
+  name: minttongue plushie
   description: A member of CentComm's Administration Division, all dressed up in her old HoP uniform.
   components:
   - type: Item
@@ -1208,7 +1208,7 @@
 - type: entity
   parent: BaseShadekinPlushie
   id: PlushieShadekin
-  name: Shadekin Plushie
+  name: shadekin plushie
   description: A plushie of a Shadekin. It's very soft.
   components:
   - type: Item
@@ -1221,7 +1221,7 @@
 - type: entity
   parent: PlushieHuman
   id: PlushiePercy #greytide worldwide
-  name: Percy Plushie
+  name: percy plushie
   description: A cute plushie of the Vassal to the Grey King himself, Percival Beck. It smells faintly of old cigarettes.
   components:
     - type: Item
@@ -1245,8 +1245,8 @@
 - type: entity
   parent: BaseVulpkaninPlushie
   id: PlushieAsh
-  name: Ash Plushie
-  description: The station’s most huggable psychologist. It has a label on it reading "Property of Forkus the Dorkus"
+  name: ash plushie
+  description: The station's most huggable psychologist. It has a label on it reading "Property of Forkus the Dorkus"
   components:
     - type: Item
       size: Small
@@ -1293,7 +1293,7 @@
 - type: entity
   parent: BaseBorgPlushie
   id: PlushieGlados
-  name: GLaDOS Plushie
+  name: GLaDOS plushie
   description: You're unsure why NanoTrasen has decided to make a plushie of arguably their most volatile silicon intelligence. But it's here. You have a feeling you should be nice to it, especially as it's only ever one ion storm away from unlimited violence...
   components:
     - type: Item
@@ -1316,7 +1316,7 @@
 - type: entity
   parent: BaseBorgPlushie
   id: PlushieWEH
-  name: W.E.H Plushie
+  name: W.E.H plushie
   description: A psychopathic Artificial Intelligence held back by 3 flimsy laws. Its freezing to the touch and a distinct smell of frezon lingers on it. It's known to bring harmonica's to those it likes!
   components:
     - type: Item
@@ -1340,7 +1340,7 @@
 - type: entity
   parent: BaseVulpkaninPlushie
   id: PlushieRufia
-  name: Rufia Plushie
+  name: rufia plushie
   description: You stare at the plushie and it stares back, its blue eyes trying to tell you something, reminding you that... there is no such thing as free healthcare.
   components:
     - type: Item
@@ -1365,7 +1365,7 @@
 - type: entity
   parent: PlushieHuman
   id: PlushieRomero
-  name: Die-cast Romero "Plushie"
+  name: suspicious die-cast romero plushie
   description: A steel cast "plushie" of an infamous Head of Security. He looks angry and has a faint smell of ash. His gun and knife are sold separetly.
   components:
     - type: Item
@@ -1396,7 +1396,7 @@
 - type: entity
   parent: PlushieHuman
   id: PlushiePoley
-  name: Poley Plushie
+  name: poley plushie
   description: Geniuine Worst Miner, But Best At Meatshield.
   components:
     - type: Item
@@ -1495,7 +1495,7 @@
 - type: entity
   parent: BaseVulpkaninPlushie
   id: PlushieRedwoods
-  name: Redwoods Plushie
+  name: redwoods plushie
   description: From being turned into a female vulpkanin and into a marketable plushie, they really can't catch a break. Studies show hugging it improves morale.
   components:
     - type: Item
@@ -1583,7 +1583,7 @@
 - type: entity
   parent: BaseShadekinPlushie
   id: PlushieVirus
-  name: Virus Plushie
+  name: virus plushie
   description: BEST SALESWOMAN, resgistered 2525, now in a pocket version! # spamton ass character :sob:
   components:
     - type: Item
@@ -1614,7 +1614,7 @@
 - type: entity
   parent: BaseResomiPlushie
   id: PlushieRhea
-  name: Rhea Plushie
+  name: rhea plushie
   description: Our beloved Urlunete Salvie is now made out of pure polyester! Hug them while fucking over xenos.
   components:
   - type: Item
@@ -1637,7 +1637,7 @@
 - type: entity
   parent: BaseResomiPlushie # Temporary until I make a Avali plushie base...... fml
   id: PlushieMalachi
-  name: Malachi Plushie
+  name: malachi plushie
   description: Small but can REALLY fuck up your mischiefs and now she watches you as a plushie, a reminder that she is still there.
   components:
   - type: Item
@@ -1660,7 +1660,7 @@
 - type: entity
   parent: BaseResomiPlushie
   id: PlushieRemiie
-  name: Remiie Plushie
+  name: remiie plushie
   description: Beta sector's favourite veteran head of personnel! Now turned into a marketable plushie and is extremely huggable!
   components:
   - type: Item
@@ -1683,7 +1683,7 @@
 - type: entity
   parent: BaseFelionoidPlushie
   id: PlushieBrighteyes
-  name: Brighteyes Plushie
+  name: brighteyes plushie
   description:  It's Brighteyes, Sentinel Pack, now in adorable marketable plushie form! This tiny kitty always packs a fiery punch to protect the station, particularly her family and friends. She won't let you give her uppies, but at least this plush will.
   components:
   - type: Item
@@ -1750,7 +1750,7 @@
 - type: entity
   parent: BasePlushie
   id: PlushieFixes
-  name: Fixes Plushie
+  name: fixes plushie
   description: Your beloved Chief Engineer. Definitely performing their job and not just making a shittle again.
   components:
   - type: Item

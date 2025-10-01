@@ -62,7 +62,7 @@ spray-painter-tab-group-wallcloset = Unlocked (Wall)
 spray-painter-tab-group-walllocker = Secure (Wall)
 
 # Airlocks
-spray-painter-style-airlockstandard-atmospherics = Atmospheric
+spray-painter-style-airlockstandard-atmospherics = Atmospherics
 spray-painter-style-airlockstandard-basic = Basic
 spray-painter-style-airlockstandard-cargo = Cargo
 spray-painter-style-airlockstandard-chemistry = Chemistry

@@ -50,6 +50,9 @@
 
 - type: Tag
   id: ClownKudzu
+  
+- type: Tag
+  id: CyberHandItem
 
 - type: Tag
   id: Diona
@@ -128,6 +131,9 @@
 
 - type: Tag
   id: ModularBarrel
+
+- type: Tag
+  id: PaddyMech
 
 - type: Tag
   id: OmniCyberEyes

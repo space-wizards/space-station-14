@@ -13,7 +13,7 @@
     sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
     state: Magistrate
   jobName: job-name-magistrate
-  
+
 - type: jobIcon
   parent: JobIcon
   id: JobIconBlueShield
@@ -40,12 +40,28 @@
 
 - type: jobIcon
   parent: JobIcon
+  id: JobIconSalvageLead
+  icon:
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
+    state: SalvageLead
+  jobName: job-name-salvagelead
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSalvageSpec
+  icon:
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
+    state: SalvageSpecialist
+  jobName: job-name-salvagespec
+
+- type: jobIcon
+  parent: JobIcon
   id: JobIconMailTech
   icon:
     sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
     state: MailTech
   jobName: job-name-mailtech
-  
+
 - type: jobIcon
   parent: JobIcon
   id: JobIconCentComm
@@ -53,6 +69,14 @@
     sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
     state: CentComm
   jobName: job-name-centcomm
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconCentCommOperator
+  icon:
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
+    state: CentCommOperator
+  jobName: job-name-centcommoperator
 
 - type: jobIcon
   parent: JobIcon
@@ -93,7 +117,7 @@
     sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
     state: SyndicateWarden
   jobName: job-name-Syndicate-Warden
-  
+
 - type: jobIcon
   parent: JobIcon
   id: JobIconSyndicate-Science
@@ -101,7 +125,7 @@
     sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
     state: SyndicateScience
   jobName: job-name-Syndicate-Science
-  
+
 - type: jobIcon
   parent: JobIcon
   id: JobIconSyndicate-Chef
@@ -109,7 +133,7 @@
     sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
     state: SyndicateChef
   jobName: job-name-Syndicate-Chef
-  
+
 - type: jobIcon
   parent: JobIcon
   id: JobIconSyndicate-Engineer
@@ -117,7 +141,7 @@
     sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
     state: SyndicateEngineer
   jobName: job-name-Syndicate-Engineer
-  
+
 - type: jobIcon
   parent: JobIcon
   id: JobIconSyndicate-Cargo
@@ -125,7 +149,7 @@
     sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
     state: SyndicateCargo
   jobName: job-name-Syndicate-Cargo
-  
+
 - type: jobIcon
   parent: JobIcon
   id: JobIconSyndicate-Janitor

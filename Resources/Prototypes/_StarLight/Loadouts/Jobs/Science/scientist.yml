@@ -1,0 +1,7 @@
+- type: loadout
+  id: ScientistJumpskirtFormal
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtScientistFormal
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterRD # Yes, intended, for players who played RD, but main regular sci.

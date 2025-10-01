@@ -86,7 +86,7 @@
       announcement: alert-level-psi-announcement
       selectable: false
       sound:
-        path: /Audio/Misc/gamma.ogg
+        path: /Audio/_Starlight/Misc/psi.ogg
         params:
           volume: -2
       disableSelection: true

@@ -9,3 +9,17 @@
   - !type:ListingLimitedStockCondition
     stock: 4
   - !type:BuyerAccessCondition
+    access: Engineering
+
+- type: listing
+  id: VendorClothingOuterHardsuitAtmosGolden
+  productEntity: ClothingOuterHardsuitAtmosGolden
+  cost:
+    NTCredit: 1140
+  categories:
+  - SLEnginery
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+  - !type:BuyerAccessCondition
+    access: Atmospherics

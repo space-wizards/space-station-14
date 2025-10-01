@@ -181,7 +181,8 @@
     - map: ["computerLayerKeyboard"]
       state: generic_keyboard
     - map: ["computerLayerScreen"]
-      state: shuttle
+      sprite: _Starlight/Structures/Machines/computers.rsi
+      state: shuttle-salvage
     - map: ["computerLayerKeys"]
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
@@ -194,8 +195,127 @@
   - type: PointLight
     radius: 1.5
     energy: 1.6
-    color: "#43ccb5"
+    color: "#735ec3"
   - type: Computer
     board: SalvageShuttleConsoleCircuitboard
   - type: StealTarget
     stealGroup: SalvageShuttleConsoleCircuitboard
+
+# Universal ID Console
+- type: entity
+  parent: BaseComputerAiAccess
+  id: UniversalIdConsole
+  name: Universal ID card computer
+  description: A terminal for programming Nanotrasen and non-Nanotrasen ID cards with extended access levels.
+  components:
+  - type: IdCardConsole
+    accessGroups:
+    - General
+    - Security
+    - Cargo
+    - Command
+    - Research
+    - Medical
+    - Service
+    - Engineering
+    - Misc
+    - CentralCommand
+    - Syndicate
+    - Silicon
+    privilegedIdSlot:
+      name: UniversalIdConsole-privilegedId
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: false
+      whitelist:
+        components:
+        - IdCard
+    targetIdSlot:
+      name: UniversalIdConsole-targetId
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: false
+      whitelist:
+        components:
+        - IdCard
+  - type: ActivatableUI
+    key: enum.IdCardConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.IdCardConsoleUiKey.Key:
+        type: IdCardConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: CrewManifestViewer
+    ownerKey: enum.IdCardConsoleUiKey.Key
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Pai
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      sprite: Structures/Machines/computers.rsi
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      sprite: Structures/Machines/computers.rsi
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      sprite: _Starlight/Structures/Machines/computers.rsi
+      state: universal_id
+    - map: ["computerLayerKeys"]
+      sprite: _Starlight/Structures/Machines/computers.rsi
+      state: universal_id_key
+    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      sprite: Structures/Machines/computers.rsi
+      state: generic_panel_open
+  - type: Computer
+    board: UniversalIdConsoleCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#3c5eb5"
+  - type: Tag
+    tags:
+    - AccessBreakerImmune
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+      IdCardConsole-privilegedId: !type:ContainerSlot
+      IdCardConsole-targetId: !type:ContainerSlot
+
+# Mining Shuttle Console
+- type: entity
+  parent: BaseComputerShuttle
+  id: ComputerShuttleMining
+  name: mining shuttle console
+  components:
+    - type: Sprite
+      layers:
+        - map: [ "computerLayerBody" ]
+          state: computer
+        - map: [ "computerLayerKeyboard" ]
+          state: generic_keyboard
+        - map: [ "computerLayerScreen" ]
+          sprite: _Starlight/Structures/Machines/computers.rsi
+          state: shuttle-mining
+        - map: [ "computerLayerKeys" ]
+          state: generic_keys
+        - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+          state: generic_panel_open
+    - type: DroneConsole
+      components:
+        - type: MiningShuttle
+    - type: RadarConsole
+      maxRange: 256
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#2a53b3"
+    - type: Computer
+      board: MiningShuttleConsoleCircuitboard
+    - type: StealTarget
+      stealGroup: MiningShuttleConsoleCircuitboard
+

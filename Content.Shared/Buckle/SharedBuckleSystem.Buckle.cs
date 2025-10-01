@@ -368,7 +368,7 @@ public abstract partial class SharedBuckleSystem
 
         var xform = Transform(buckle);
         var coords = new EntityCoordinates(strap, strap.Comp.BuckleOffset);
-        _transform.SetCoordinates(buckle, xform, coords, rotation: Angle.Zero);
+        _transform.SetCoordinates(buckle, xform, coords, rotation: strap.Comp.XformRotation); // Starlight
 
         _joints.SetRelay(buckle, strap);
 

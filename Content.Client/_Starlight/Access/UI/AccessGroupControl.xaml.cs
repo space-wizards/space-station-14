@@ -3,15 +3,19 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Content.Shared.Access;
+// Starlight Start
+using System.Linq;
+using Robust.Client.UserInterface;
+// Starlight End
 
 namespace Content.Client._Starlight.Access.UI;
 
 [GenerateTypedNameReferences]
-public sealed partial class AccessGroupControl : BoxContainer
+public sealed partial class AccessGroupControl : GridContainer // Starlight edit
 {
     [Dependency] private readonly ILogManager _logManager = default!;
 
-    private readonly ISawmill _sawmill = default!;
+    private ISawmill _sawmill = default!; // Starlight edit
 
     public readonly Dictionary<ProtoId<AccessGroupPrototype>, Button> ButtonsList = new();
 
@@ -22,33 +26,34 @@ public sealed partial class AccessGroupControl : BoxContainer
 
         _sawmill = _logManager.GetSawmill("accessgroupcontrol");
     }
-
-    public void Populate(List<ProtoId<AccessGroupPrototype>> accessGroups, ProtoId<AccessGroupPrototype> currentAccessGroup, IPrototypeManager prototypeManager)
+    // Starlight edit Start
+    public void Populate(List<ProtoId<AccessGroupPrototype>> accessGroups, ProtoId<AccessGroupPrototype> selectedGroup, IPrototypeManager prototypeManager)
     {
-        foreach (var group in accessGroups)
+        RemoveAllChildren();
+        ButtonsList.Clear();
+
+        if (accessGroups.Count == 0)
+            return;
+
+        foreach (var groupId in accessGroups)
         {
-            if (!prototypeManager.TryIndex(group, out var accessGroup))
+            if (!prototypeManager.TryIndex(groupId, out var groupPrototype))
             {
-                _sawmill.Error($"Unable to find accessgroup for {group}");
+                _sawmill.Error($"Unable to find access group for {groupId}");
+                // Starlight edit End
                 continue;
             }
 
             var newButton = new Button
             {
-                Text = accessGroup.Name ?? accessGroup.ID
+            // Starlight edit Start
+                Text = groupPrototype.GetAccessGroupName(),
+                ToggleMode = true,
+                Pressed = groupId == selectedGroup,
             };
-
-            if (group == currentAccessGroup)
-                newButton.Disabled = true;
-                
             AddChild(newButton);
-            ButtonsList.Add(accessGroup.ID, newButton);
+            ButtonsList.Add(groupId, newButton);
+            // Starlight edit End
         }
-    }
-
-    public void UpdateState(ProtoId<AccessGroupPrototype> pressed)
-    {
-        foreach (var (groupName, button) in ButtonsList)
-            button.Disabled = pressed == groupName;
     }
 }

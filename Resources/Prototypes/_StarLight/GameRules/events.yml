@@ -184,15 +184,6 @@
     - type: LoadMapRule
       gridPath: /Maps/_Starlight/Shuttles/CC-NT/CBURN_Q.yml
 
-# Mining Shuttle
-- type: entity
-  parent: BaseGameRule
-  id: MiningShuttleSpawn_GR-4P3
-  components:
-    - type: RuleGrids
-    - type: LoadMapRule
-      gridPath: /Maps/_Starlight/Shuttles/Mining/GR-4P3.yml
-
 # Security Shuttle
 - type: entity
   parent: BaseGameRule
