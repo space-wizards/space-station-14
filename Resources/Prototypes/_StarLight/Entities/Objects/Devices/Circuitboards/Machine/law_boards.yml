@@ -9,6 +9,7 @@
   - type: SiliconLawProvider
     laws: SyndimovLawset
     lawUploadSound: /Audio/Ambience/Antag/silicon_lawboard_antimov.ogg
+    IsLawboard: true 
   - type: StaticPrice 
     price: 1000
 
@@ -22,6 +23,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: PanicmovLawset
+    IsLawboard: true 
   - type: StaticPrice 
     price: 1000
 
@@ -35,6 +37,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: GenieLawset
+    IsLawboard: true 
   - type: StaticPrice 
     price: 1000
 
@@ -48,6 +51,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: ReporterLawset
+    IsLawboard: true 
   - type: StaticPrice 
     price: 1000
 
@@ -61,5 +65,6 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: JermovLawset
+    IsLawboard: true 
   - type: StaticPrice 
     price: 1000

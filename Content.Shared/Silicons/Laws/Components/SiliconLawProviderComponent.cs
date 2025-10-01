@@ -35,4 +35,10 @@ public sealed partial class SiliconLawProviderComponent : Component
     [DataField]
     public bool Subverted = false;
 
+    /// <summary>
+    /// Starlight: Lawboards show laws in description
+    /// Is this a lawboard?
+    /// </summary>
+    [DataField("IsLawboard")]
+    public bool IsLawboard { get; set; } = false;
 }
