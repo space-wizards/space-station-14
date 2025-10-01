@@ -179,13 +179,13 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
     /// <param name="unit">The disposals unit.</param>
     /// <param name="tags">Tags to add to the disposed contents.</param>
     /// <returns>True if the insertion was successful.</returns>
-    public bool TryInsert(Entity<DisposalEntryComponent, DisposalTubeComponent> ent, Entity<DisposalUnitComponent> unit, IEnumerable<string>? tags = default)
+    public bool TryInsert(Entity<DisposalTubeComponent> ent, Entity<DisposalUnitComponent> unit, IEnumerable<string>? tags = default)
     {
         if (_disposalUnit.GetContainedEntityCount(unit) == 0)
             return false;
 
         var xform = Transform(ent);
-        var holder = Spawn(ent.Comp1.HolderPrototypeId, _transform.GetMapCoordinates(ent, xform: xform));
+        var holder = Spawn(unit.Comp.HolderPrototypeId, _transform.GetMapCoordinates(ent, xform: xform));
         var holderComponent = Comp<DisposalHolderComponent>(holder);
         var holderEnt = new Entity<DisposalHolderComponent>(holder, holderComponent);
 
@@ -207,7 +207,7 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
             Dirty(holderEnt);
         }
 
-        return _disposalHolder.TryEnterTube(holderEnt, (ent, ent.Comp2));
+        return _disposalHolder.TryEnterTube(holderEnt, ent);
     }
 
     /// <summary>

@@ -1,10 +1,11 @@
 using Content.Shared.Atmos;
-using Robust.Shared.Audio;
+using Content.Shared.DoAfter;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Content.Shared.DoAfter;
 
 namespace Content.Shared.Disposal.Components;
 
@@ -166,6 +167,13 @@ public sealed partial class DisposalUnitComponent : Component
     /// </summary>
     [DataField]
     public int MaxCapacity = 30;
+
+    /// <summary>
+    /// Proto ID of the holder spawned to contain entities that
+    /// are inserted into the disposals system.
+    /// </summary>
+    [DataField]
+    public EntProtoId HolderPrototypeId = "DisposalHolder";
 }
 
 /// <summary>

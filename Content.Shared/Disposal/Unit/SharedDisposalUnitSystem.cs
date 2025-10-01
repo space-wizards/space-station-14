@@ -626,14 +626,13 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (!TryComp(xform.GridUid, out MapGridComponent? grid))
             return false;
 
-        DisposalEntryComponent? entryComp = null;
         DisposalTubeComponent? tubeComp = null;
 
         var coords = xform.Coordinates;
-        var entry = _map.GetLocal(xform.GridUid.Value, grid, coords)
-            .FirstOrNull(x => TryComp(x, out entryComp) && TryComp(x, out tubeComp));
+        var tubeUid = _map.GetLocal(xform.GridUid.Value, grid, coords)
+            .FirstOrNull(x => HasComp<DisposalEntryComponent>(x) && TryComp(x, out tubeComp));
 
-        if (entry == null || entryComp == null || tubeComp == null)
+        if (tubeUid == null || tubeComp == null)
         {
             ent.Comp.Engaged = false;
 
@@ -646,7 +645,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
         IntakeAir(ent, xform);
 
-        _disposalTube.TryInsert((entry.Value, entryComp, tubeComp), ent, beforeFlushArgs.Tags);
+        _disposalTube.TryInsert((tubeUid.Value, tubeComp), ent, beforeFlushArgs.Tags);
 
         ent.Comp.NextPressurized = _timing.CurTime;
         if (!ent.Comp.DisablePressure)
