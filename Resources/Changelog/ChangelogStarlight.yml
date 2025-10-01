@@ -16762,5 +16762,14 @@ Entries:
   id: 178006
   time: '2025-10-01T15:15:15.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1780
+- author: Conflee
+  changes:
+  - message: Added Box back to the map pool. This is a Starlightified version of the
+      most recent Wizden version, which means all the new updates with Genpop etc
+      are in. Expanded maints in several areas as well, to mix it up.
+    type: Add
+  id: 178800
+  time: '2025-10-01T15:25:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1788
 Order: -1
 
