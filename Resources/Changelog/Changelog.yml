@@ -1,15 +1,6 @@
 ﻿Entries:
 - author: EmoGarbage404
   changes:
-  - message: Added the salvage job board! This board allows salvagers to access and
-      complete a variety of jobs in order to rank up, earn spesos, and unlock new
-      cargo orders. Work hard and you too may become a Supreme Salvager.
-    type: Add
-  id: 8512
-  time: '2025-05-18T04:02:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37549
-- author: EmoGarbage404
-  changes:
   - message: Lathes can no longer connect to research servers on separate grids
     type: Tweak
   id: 8513
@@ -3957,3 +3948,10 @@
   id: 9022
   time: '2025-10-01T20:23:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36696
+- author: K-Dynamic
+  changes:
+  - message: Puddles now spill over at 50u instead of 20u.
+    type: Add
+  id: 9023
+  time: '2025-10-01T20:28:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38044
