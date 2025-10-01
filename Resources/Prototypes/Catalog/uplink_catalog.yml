@@ -1946,7 +1946,7 @@
   description: uplink-cat-maid-bundle-desc
   productEntity: ClothingBackpackDuffelSyndicateCatMaidBundle
   cost:
-    Telecrystal: 50
+    Telecrystal: 40
   categories:
   - UplinkPointless
 
