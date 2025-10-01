@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Lathes can no longer connect to research servers on separate grids
-    type: Tweak
-  id: 8513
-  time: '2025-05-18T04:04:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36821
 - author: 0leshe
   changes:
   - message: Changed max and minimum amount of jigger transfer amount
@@ -3955,3 +3948,15 @@
   id: 9023
   time: '2025-10-01T20:28:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38044
+- author: Mixelz
+  changes:
+  - message: Circuit Totes, a new type of box to compactly carry conspicous chunks
+      of Circuits!
+    type: Add
+  - message: Head Lockers now compact all circuit boards & stamps into boxes for convenience.
+    type: Tweak
+  - message: The Surplus Circuit Crate is now a Tote!
+    type: Tweak
+  id: 9024
+  time: '2025-10-01T23:22:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39868
