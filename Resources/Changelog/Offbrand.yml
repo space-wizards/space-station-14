@@ -19,4 +19,22 @@ Entries:
     type: Tweak
   id: 2
   time: '2025-09-30T21:00:00.0000000+00:00'
+- author: sowelipililimute
+  changes:
+  - message: Cyborgs can use IV bags as expected.
+    type: Fix
+  - message: Doxarubiadone is now more potent to offset the cryostasis speed.
+    type: Tweak
+  - message: Husking and bone death are now cheaper to heal.
+    type: Tweak
+  - message: The health analyzer now includes tooltips that explain the vitals and their relationships.
+    type: Add
+  - message: Nuclear operatives can now synthesize coagulant and osseous reagent to more effectively deal with bleeding and fractures.
+    type: Add
+  - message: Oxandrolone, convermol, and salicylic acid now exist as potent alternatives to medications that can heal some severe internal wounds at high overdoses.
+    type: Add
+  - message: Combat pens now contain coagulant instead of tranexamic acid.
+    type: Tweak
+  id: 3
+  time: '2025-10-01T21:00:00.0000000+00:00'
 Order: 2
