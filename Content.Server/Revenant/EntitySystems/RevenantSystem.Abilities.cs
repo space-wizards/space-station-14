@@ -55,6 +55,7 @@ public sealed partial class RevenantSystem
         SubscribeLocalEvent<RevenantComponent, SoulEvent>(OnSoulSearch);
         SubscribeLocalEvent<RevenantComponent, HarvestEvent>(OnHarvest);
 
+        SubscribeLocalEvent<RevenantComponent, RevenantAppearActionEvent>(OnAppearAction);
         SubscribeLocalEvent<RevenantComponent, RevenantDefileActionEvent>(OnDefileAction);
         SubscribeLocalEvent<RevenantComponent, RevenantOverloadLightsActionEvent>(OnOverloadLightsAction);
         SubscribeLocalEvent<RevenantComponent, RevenantBlightActionEvent>(OnBlightAction);
@@ -220,6 +221,17 @@ public sealed partial class RevenantSystem
         args.Handled = true;
     }
 
+    private void OnAppearAction(EntityUid uid, RevenantComponent component, RevenantAppearActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryUseAbility(uid, component, component.AppearCost, component.AppearDebuffs))
+            return;
+
+        args.Handled = true;
+    }
+
     private void OnDefileAction(EntityUid uid, RevenantComponent component, RevenantDefileActionEvent args)
     {
         if (args.Handled)
@@ -275,7 +287,7 @@ public sealed partial class RevenantSystem
             if (entityStorage.TryGetComponent(ent, out var entstorecomp))
                 _entityStorage.OpenStorage(ent, entstorecomp);
 
-            //chucks shit
+            //chucks shit (this doesnt work!!)
             if (items.HasComponent(ent) &&
                 TryComp<PhysicsComponent>(ent, out var phys) && phys.BodyType != BodyType.Static)
                 _throwing.TryThrow(ent, _random.NextAngle().ToWorldVec());

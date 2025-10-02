@@ -71,6 +71,8 @@
     - RevenantAbilities
     currencyWhitelist:
     - StolenEssence
+    balance:
+      StolenEssence: 0
   - type: RandomMetadata
     nameSegments:
     - NamesRevenantType
