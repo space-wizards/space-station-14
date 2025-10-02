@@ -13,19 +13,13 @@ public sealed class ShuffleParticlesAnomalySystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<ShuffleParticlesAnomalyComponent, AnomalyPulseEvent>(OnPulse);
-        SubscribeLocalEvent<ShuffleParticlesAnomalyComponent, EndCollideEvent>(OnEndCollide);
+        SubscribeLocalEvent<ShuffleParticlesAnomalyComponent, AfterAnomalyCollideWithParticleEvent>(OnAfterCollide);
     }
 
-    private void OnEndCollide(Entity<ShuffleParticlesAnomalyComponent> ent, ref EndCollideEvent args)
+    private void OnAfterCollide(Entity<ShuffleParticlesAnomalyComponent> ent, ref AfterAnomalyCollideWithParticleEvent args)
     {
-        if (!TryComp<AnomalyComponent>(ent, out var anomaly))
-            return;
-
-        if (!HasComp<AnomalousParticleComponent>(args.OtherEntity))
-            return;
-
         if (ent.Comp.ShuffleOnParticleHit && _random.Prob(ent.Comp.Prob))
-            _anomaly.ShuffleParticlesEffect((ent, anomaly));
+            _anomaly.ShuffleParticlesEffect(args.AnomalyEnt);
     }
 
     private void OnPulse(Entity<ShuffleParticlesAnomalyComponent> ent, ref AnomalyPulseEvent args)
