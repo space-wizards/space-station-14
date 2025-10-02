@@ -405,7 +405,7 @@
     sprite: Structures/Doors/MineralDoors/card_door.rsi
   - type: Door
     openSound:
-      path: /Audio/Effects/card_drag.ogg 
+      path: /Audio/Effects/card_drag.ogg
     closeSound:
       path: /Audio/Effects/card_drag.ogg
   - type: Construction
@@ -435,8 +435,7 @@
         acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
-	        path:
-	          "/Audio/Weapons/pierce.ogg"
+          collection: WoodDestroy
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialCardboard:
