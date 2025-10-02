@@ -77,7 +77,7 @@ namespace Content.Client.Entry
 
         public override void PreInit()
         {
-            ClientContentIoC.Register();
+            ClientContentIoC.Register(Dependencies);
 
             // Content.Shared.Entry.EntryPoint.Init() will call BuildGraph() & InjectDependencies()
             // Hence this needs to be called in PreInit, instead of in Init()
@@ -90,8 +90,8 @@ namespace Content.Client.Entry
 
         public override void Init()
         {
-            IoCManager.BuildGraph();
-            IoCManager.InjectDependencies(this);
+            Dependencies.BuildGraph();
+            Dependencies.InjectDependencies(this);
 
             _contentLoc.Initialize();
             _componentFactory.DoAutoRegistrations();
