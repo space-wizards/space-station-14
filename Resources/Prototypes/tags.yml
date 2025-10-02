@@ -1425,6 +1425,9 @@
   id: Torch
 
 - type: Tag
+  id: ToteBase
+
+- type: Tag
   id: ToyRubberDuck
 
 - type: Tag
@@ -1456,6 +1459,9 @@
 
 - type: Tag
   id: UtilityBelt
+
+- type: Tag
+  id: UtilityKnife
 
 - type: Tag
   id: Vegetable
