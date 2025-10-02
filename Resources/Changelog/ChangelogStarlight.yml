@@ -16807,5 +16807,13 @@ Entries:
   id: 179002
   time: '2025-10-01T18:30:18.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1790
+- author: CawsForConcern
+  changes:
+  - message: Criminal card fax was stamped with a 'CentCom' stamp when it should've
+      been a 'CentComm' stamp
+    type: Fix
+  id: 179400
+  time: '2025-10-02T01:06:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1794
 Order: -1
 
