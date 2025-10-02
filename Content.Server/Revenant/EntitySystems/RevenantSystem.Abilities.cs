@@ -287,7 +287,7 @@ public sealed partial class RevenantSystem
             if (entityStorage.TryGetComponent(ent, out var entstorecomp))
                 _entityStorage.OpenStorage(ent, entstorecomp);
 
-            //chucks shit (this doesnt work!!)
+            //chucks shit
             if (items.HasComponent(ent) &&
                 TryComp<PhysicsComponent>(ent, out var phys) && phys.BodyType != BodyType.Static)
                 _throwing.TryThrow(ent, _random.NextAngle().ToWorldVec());
