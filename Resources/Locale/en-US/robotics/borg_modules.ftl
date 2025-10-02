@@ -12,5 +12,6 @@ borg-slot-instruments-empty = Instruments
 borg-slot-beakers-empty = Beakers
 borg-slot-brains-empty = Brains and MMIs
 borg-slot-modules-empty = Modules
+borg-slot-powercell-empty = Powercells
 borg-slot-inflatable-door-empty = Inflatable Door
 borg-slot-inflatable-wall-empty = Inflatable Wall
