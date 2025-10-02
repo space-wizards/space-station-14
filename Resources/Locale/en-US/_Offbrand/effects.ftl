@@ -42,6 +42,13 @@ reagent-effect-condition-guidebook-brain-damage = { $max ->
                 *[other] it has between {NATURALFIXED($min, 2)} and {NATURALFIXED($max, 2)} brain damage
              }
 }
+reagent-effect-condition-guidebook-total-group-damage = { $max ->
+    [2147483648] it has at least {NATURALFIXED($min, 2)} { $name } damage
+    *[other] { $min ->
+                [0] it has at most {NATURALFIXED($max, 2)} { $name } damage
+                *[other] it has between {NATURALFIXED($min, 2)} and {NATURALFIXED($max, 2)} { $name } damage
+             }
+}
 reagent-effect-guidebook-modify-brain-oxygen-heals = { $chance ->
         [1] Replenishes { $amount } brain oxygenation
    *[other] replenish { $amount } brain oxygenation

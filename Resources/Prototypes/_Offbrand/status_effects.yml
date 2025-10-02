@@ -70,6 +70,22 @@
 
 - type: entity
   parent: MobStatusEffectBase
+  id: StatusEffectPainkillersSalicylicAcid
+  name: 30 pain relief
+  components:
+  - type: PainkillerStatusEffect
+    effectiveness: 30
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectPainkillersOxandrolone
+  name: 30 pain relief
+  components:
+  - type: PainkillerStatusEffect
+    effectiveness: 30
+
+- type: entity
+  parent: MobStatusEffectBase
   id: StatusEffectPainkillersStrongOxycodone
   name: 50 pain relief
   components:

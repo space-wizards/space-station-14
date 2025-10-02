@@ -304,3 +304,143 @@
         conditions:
         - !type:MetaboliteThreshold
           min: 5
+
+- type: reagent
+  id: Convermol
+  name: reagent-name-convermol
+  group: Medicine
+  desc: reagent-desc-convermol
+  physicalDesc: reagent-physical-desc-abrasive
+  flavor: chalky
+  color: "#afe1ed"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Asphyxiation: -4
+            Blunt: 1.5
+        conditions:
+        - !type:TotalGroupDamage
+          group: Airloss
+          min: 4
+      - !type:HealthChange
+        damage:
+          types:
+            Asphyxiation: -4
+            Blunt: 1.5
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 10
+        - !type:TotalGroupDamage
+          group: Airloss
+          min: 4
+      - !type:ModifyHeartDamage
+        amount: 0.05
+
+- type: reagent
+  id: SalicylicAcid
+  name: reagent-name-salicylic-acid
+  group: Medicine
+  desc: reagent-desc-salicylic-acid
+  physicalDesc: reagent-physical-desc-putrid
+  flavor: bitter
+  color: "#f7d9c0"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.2
+      statusEffects:
+      - statusEffect: StatusEffectPainkillersSalicylicAcid
+        conditions:
+        - !type:TotalGroupDamage
+          group: Brute
+          min: 35
+      effects:
+      - !type:EvenHealthChange
+        damage:
+          Brute: -2
+        conditions:
+        - !type:TotalGroupDamage
+          group: Brute
+          min: 35
+        - !type:MetaboliteThreshold
+          max: 15
+      - !type:EvenHealthChange
+        damage:
+          Brute: -2
+          Burn: 2
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 15
+      - !type:EvenHealthChange
+        damage:
+          Brute: -0.5
+        conditions:
+        - !type:TotalGroupDamage
+          group: Brute
+          max: 35
+      - !type:RemoveStatusEffect
+        effectProto: WoundBoneDeath
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 50
+      - !type:EvenHealthChange
+        damage:
+          Burn: 1
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 35
+
+- type: reagent
+  id: Oxandrolone
+  name: reagent-name-oxandrolone
+  group: Medicine
+  desc: reagent-desc-oxandrolone
+  physicalDesc: reagent-physical-desc-frosty
+  flavor: bitter
+  color: "#b8e3cb"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.2
+      statusEffects:
+      - statusEffect: StatusEffectPainkillersOxandrolone
+        conditions:
+        - !type:TotalGroupDamage
+          group: Burn
+          min: 35
+      effects:
+      - !type:EvenHealthChange
+        damage:
+          Burn: -3
+        conditions:
+        - !type:TotalGroupDamage
+          group: Burn
+          min: 35
+        - !type:MetaboliteThreshold
+          max: 15
+      - !type:EvenHealthChange
+        damage:
+          Burn: -3
+          Brute: 3
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 15
+      - !type:EvenHealthChange
+        damage:
+          Burn: -0.5
+        conditions:
+        - !type:TotalGroupDamage
+          group: Burn
+          max: 35
+      - !type:RemoveStatusEffect
+        effectProto: WoundHusking
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 50
+      - !type:EvenHealthChange
+        damage:
+          Brute: 1
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 35

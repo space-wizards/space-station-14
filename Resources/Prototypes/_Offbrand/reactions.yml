@@ -127,3 +127,109 @@
       catalyst: true
   products:
     Osseous: 2
+
+- type: reaction
+  id: Convermol
+  reactants:
+    Fluorine:
+      amount: 1
+    Aluminium:
+      amount: 1
+    Dexalin:
+      amount: 1
+  products:
+    Convermol: 3
+
+- type: reaction
+  id: SalicylicAcid
+  reactants:
+    Phenol:
+      amount: 1
+    Bicaridine:
+      amount: 1
+    SulfuricAcid:
+      amount: 1
+  products:
+    SalicylicAcid: 3
+
+- type: reaction
+  id: SalicylicAcidBruizine
+  reactants:
+    SalicylicAcid:
+      amount: 1
+    Bruizine:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: SalicylicAcidLacerinol
+  reactants:
+    SalicylicAcid:
+      amount: 1
+    Lacerinol:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: SalicylicAcidPuncturase
+  reactants:
+    SalicylicAcid:
+      amount: 1
+    Puncturase:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: Oxandrolone
+  reactants:
+    Phenol:
+      amount: 1
+    Dermaline:
+      amount: 1
+    Fluorine:
+      amount: 1
+  products:
+    Oxandrolone: 3
+
+- type: reaction
+  id: OxandrolonePyrazine
+  reactants:
+    Oxandrolone:
+      amount: 1
+    Pyrazine:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: OxandroloneInsuzine
+  reactants:
+    Oxandrolone:
+      amount: 1
+    Insuzine:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: OxandroloneSigynate
+  reactants:
+    Oxandrolone:
+      amount: 1
+    Sigynate:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: OxandroloneLeporazine
+  reactants:
+    Oxandrolone:
+      amount: 1
+    Leporazine:
+      amount: 1
+  products:
+    Razorium: 1
