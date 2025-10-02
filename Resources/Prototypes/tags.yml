@@ -552,6 +552,9 @@
   id: Enzyme
 
 - type: Tag
+  id: ExCable
+
+- type: Tag
   id: ExplosivePassable
 
 - type: Tag
@@ -1422,6 +1425,9 @@
   id: Torch
 
 - type: Tag
+  id: ToteBase
+
+- type: Tag
   id: ToyRubberDuck
 
 - type: Tag
@@ -1453,6 +1459,9 @@
 
 - type: Tag
   id: UtilityBelt
+
+- type: Tag
+  id: UtilityKnife
 
 - type: Tag
   id: Vegetable
