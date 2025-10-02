@@ -32,3 +32,4 @@
   components:
   - type: MindRole
     jobPrototype: GhostRoleProtected
+  - type: JobRole
