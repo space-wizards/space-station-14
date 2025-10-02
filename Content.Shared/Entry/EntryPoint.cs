@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Humanoid.Markings;
-using Content.Shared.IoC;
 using Content.Shared.Maps;
 using Robust.Shared;
 using Robust.Shared.Configuration;
@@ -35,7 +34,7 @@ namespace Content.Shared.Entry
 
         public override void Init()
         {
-            IoCManager.BuildGraph();
+            Dependencies.BuildGraph();
             Dependencies.InjectDependencies(this);
             IgnorePrototypes();
         }
