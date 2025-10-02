@@ -4,9 +4,9 @@
   description: job-description-atmostech
   playTimeTracker: JobAtmosphericTechnician
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Engineering
-      time: 54000 # 15 hrs
+  - !type:DepartmentTimeRequirement
+    department: Engineering
+    time: 9000 #2.5 hrs
   startingGear: AtmosphericTechnicianGear
   icon: "JobIconAtmosphericTechnician"
   supervisors: job-supervisors-ce
@@ -30,3 +30,13 @@
   #storage:
     #back:
     #- Stuff
+
+- type: chameleonOutfit
+  id: AtmosphericTechnicianChameleonOutfit
+  job: AtmosphericTechnician
+  equipment:
+    head: ClothingHeadHelmetAtmosFire
+    mask: ClothingMaskGasAtmos
+    neck: ClothingNeckScarfStripedLightBlue
+    outerClothing: ClothingOuterSuitAtmosFire
+    gloves: ClothingHandsGlovesColorYellow

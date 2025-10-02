@@ -229,10 +229,10 @@ public class RadialMenu : BaseWindow
 /// from interactions.
 /// </summary>
 [Virtual]
-public class RadialMenuTextureButtonBase : TextureButton
+public abstract class RadialMenuButtonBase : BaseButton
 {
     /// <inheritdoc />
-    protected RadialMenuTextureButtonBase()
+    protected RadialMenuButtonBase()
     {
         EnableAllKeybinds = true;
     }
@@ -242,7 +242,9 @@ public class RadialMenuTextureButtonBase : TextureButton
     {
         if (args.Function == EngineKeyFunctions.UIClick
             || args.Function == ContentKeyFunctions.AltActivateItemInWorld)
+        {
             base.KeyBindUp(args);
+        }
     }
 }
 
@@ -253,8 +255,14 @@ public class RadialMenuTextureButtonBase : TextureButton
 /// works only if control have parent, and ActiveContainer property is set.
 /// Also considers all space outside of radial menu buttons as itself for clicking.
 /// </summary>
-public sealed class RadialMenuContextualCentralTextureButton : RadialMenuTextureButtonBase
+public sealed class RadialMenuContextualCentralTextureButton : TextureButton
 {
+    /// <inheritdoc />
+    public RadialMenuContextualCentralTextureButton()
+    {
+        EnableAllKeybinds = true;
+    }
+
     public float InnerRadius { get; set; }
 
     public Vector2? ParentCenter { get; set; }
@@ -271,15 +279,25 @@ public sealed class RadialMenuContextualCentralTextureButton : RadialMenuTexture
 
         var innerRadiusSquared = InnerRadius * InnerRadius;
 
-        // comparing to squared values is faster then making sqrt
+        // comparing to squared values is faster, then making sqrt
         return distSquared < innerRadiusSquared;
+    }
+
+    /// <inheritdoc />
+    protected override void KeyBindUp(GUIBoundKeyEventArgs args)
+    {
+        if (args.Function == EngineKeyFunctions.UIClick
+            || args.Function == ContentKeyFunctions.AltActivateItemInWorld)
+        {
+            base.KeyBindUp(args);
+        }
     }
 }
 
 /// <summary>
 /// Menu button for outer area of radial menu (covers everything 'outside').
 /// </summary>
-public sealed class RadialMenuOuterAreaButton : RadialMenuTextureButtonBase
+public sealed class RadialMenuOuterAreaButton : RadialMenuButtonBase
 {
     public float OuterRadius { get; set; }
 
@@ -303,7 +321,7 @@ public sealed class RadialMenuOuterAreaButton : RadialMenuTextureButtonBase
 }
 
 [Virtual]
-public class RadialMenuTextureButton : RadialMenuTextureButtonBase
+public class RadialMenuButton : RadialMenuButtonBase
 {
     /// <summary>
     /// Upon clicking this button the radial menu will be moved to the layer of this control.
@@ -319,9 +337,8 @@ public class RadialMenuTextureButton : RadialMenuTextureButtonBase
     /// <summary>
     /// A simple texture button that can move the user to a different layer within a radial menu
     /// </summary>
-    public RadialMenuTextureButton()
+    public RadialMenuButton()
     {
-        EnableAllKeybinds = true;
         OnButtonUp += OnClicked;
     }
 
@@ -362,12 +379,12 @@ public interface IRadialMenuItemWithSector
     /// <summary>
     /// Angle in radian where button sector should start.
     /// </summary>
-    public float AngleSectorFrom { set; get; }
+    public float AngleSectorFrom { set; }
 
     /// <summary>
     /// Angle in radian where button sector should end.
     /// </summary>
-    public float AngleSectorTo { set; get; }
+    public float AngleSectorTo { set; }
 
     /// <summary>
     /// Outer radius for drawing segment and pointer detection.
@@ -388,45 +405,10 @@ public interface IRadialMenuItemWithSector
     /// Coordinates of center in parent component - button container.
     /// </summary>
     public Vector2 ParentCenter { set; }
-
-    /// <summary>
-    /// Marker, is menu item hovered currently.
-    /// </summary>
-    public bool IsHovered { get; }
-
-    /// <summary>
-    /// Color for menu item background when it is hovered over.
-    /// </summary>
-    Color HoverBackgroundColor { get; }
-
-    /// <summary>
-    /// Color for menu item default state.
-    /// </summary>
-    Color BackgroundColor { get; }
-
-    /// <summary>
-    /// Color for menu item border when item is hovered over.
-    /// </summary>
-    Color HoverBorderColor { get; }
-
-    /// <summary>
-    /// Color for menu item border default state.
-    /// </summary>
-    Color BorderColor { get; }
-
-    /// <summary>
-    /// Marker, if menu item background should be drawn.
-    /// </summary>
-    public bool DrawBackground { get; }
-
-    /// <summary>
-    /// Marker, if menu item borders should be drawn.
-    /// </summary>
-    public bool DrawBorder { get; }
 }
 
 [Virtual]
-public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadialMenuItemWithSector
+public class RadialMenuButtonWithSector : RadialMenuButton, IRadialMenuItemWithSector
 {
     private Vector2[]? _sectorPointsForDrawing;
 
@@ -448,7 +430,7 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
     /// Marker, that controls if border of segment should be rendered. Is false by default.
     /// </summary>
     /// <remarks>
-    /// Default color of border is same as color of background. Use <see cref="BorderColor"/>
+    /// By default color of border is same as color of background. Use <see cref="BorderColor"/>
     /// and <see cref="HoverBorderColor"/> to change it.
     /// </remarks>
     public bool DrawBorder { get; set; } = false;
@@ -494,6 +476,12 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
         set => _hoverBorderColorSrgb = Color.ToSrgb(value);
     }
 
+    /// <summary>
+    /// Color of separator lines.
+    /// Separator lines are used to visually separate sector of radial menu items.
+    /// </summary>
+    public Color SeparatorColor { get; set; } = new Color(128, 128, 128, 128);
+
     /// <inheritdoc />
     float IRadialMenuItemWithSector.AngleSectorFrom
     {
@@ -502,7 +490,6 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
             _angleSectorFrom = value;
             _isWholeCircle = IsWholeCircle(value, _angleSectorTo);
         }
-        get => _angleSectorFrom;
     }
 
     /// <inheritdoc />
@@ -513,7 +500,6 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
             _angleSectorTo = value;
             _isWholeCircle = IsWholeCircle(_angleSectorFrom, value);
         }
-        get => _angleSectorTo;
     }
 
     /// <inheritdoc />
@@ -531,8 +517,46 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
     /// <summary>
     /// A simple texture button that can move the user to a different layer within a radial menu
     /// </summary>
-    public RadialMenuTextureButtonWithSector()
+    public RadialMenuButtonWithSector()
     {
+    }
+
+    /// <inheritdoc />
+    protected override void Draw(DrawingHandleScreen handle)
+    {
+        base.Draw(handle);
+
+        if (_parentCenter == null)
+        {
+            return;
+        }
+
+        // draw sector where space that button occupies actually is
+        var containerCenter = (_parentCenter.Value - Position) * UIScale;
+
+        var angleFrom = _angleSectorFrom + _angleOffset;
+        var angleTo = _angleSectorTo + _angleOffset;
+        if (DrawBackground)
+        {
+            var segmentColor = DrawMode == DrawModeEnum.Hover
+                ? _hoverBackgroundColorSrgb
+                : _backgroundColorSrgb;
+
+            DrawAnnulusSector(handle, containerCenter, _innerRadius * UIScale, _outerRadius * UIScale, angleFrom, angleTo, segmentColor);
+        }
+
+        if (DrawBorder)
+        {
+            var borderColor = DrawMode == DrawModeEnum.Hover
+                ? _hoverBorderColorSrgb
+                : _borderColorSrgb;
+            DrawAnnulusSector(handle, containerCenter, _innerRadius * UIScale, _outerRadius * UIScale, angleFrom, angleTo, borderColor, false);
+        }
+
+        if (!_isWholeCircle && DrawBorder)
+        {
+            DrawSeparatorLines(handle, containerCenter, _innerRadius * UIScale, _outerRadius * UIScale, angleFrom, angleTo, SeparatorColor);
+        }
     }
 
     /// <inheritdoc />

@@ -1,1 +1,23 @@
-{"version":1,"size":{"x":32,"y":32},"copyright":"Taken from tgstation","license":"CC-BY-SA-3.0","states":[{"name":"mirror"},{"name":"mirror_broke"}]}
+{
+    "version": 1,
+    "copyright": "Taken from /tg/station 13 at https://github.com/tgstation/tgstation/commit/a2c5a0f15bad5c46a828771bbba6ea5752a9d191. mirror and mirror-broke repositioned by K-Dynamic (github), modern-mirror and modern-mirror-broke by K-Dynamic.",
+    "license": "CC-BY-SA-3.0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "mirror"
+        },
+        {
+            "name": "rectangle-mirror"
+        },
+        {
+            "name": "mirror-broke"
+        },
+        {
+            "name": "rectangle-mirror-broke"
+        }
+    ]
+}

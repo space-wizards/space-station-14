@@ -1,4 +1,4 @@
-using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Toggleable;
@@ -23,7 +23,7 @@ public sealed partial class ToggleClothingComponent : Component
     /// This must raise <see cref="ToggleActionEvent"/> to then get handled.
     /// </summary>
     [DataField(required: true)]
-    public EntProtoId<InstantActionComponent> Action = string.Empty;
+    public EntProtoId<InstantActionComponent> Action;
 
     [DataField, AutoNetworkedField]
     public EntityUid? ActionEntity;

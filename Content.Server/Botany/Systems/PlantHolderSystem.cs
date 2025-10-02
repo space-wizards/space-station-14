@@ -1,7 +1,8 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
-using Content.Server.Kitchen.Components;
+using Content.Server.Hands.Systems;
 using Content.Server.Popups;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Botany;
@@ -25,6 +26,7 @@ using Robust.Shared.Timing;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
+using Content.Shared.Kitchen.Components;
 using Content.Shared.Labels.Components;
 
 namespace Content.Server.Botany.Systems;
@@ -37,6 +39,7 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly MutationSystem _mutation = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
@@ -45,7 +48,7 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    
+
     public const float HydroponicsSpeedMultiplier = 1f;
     public const float HydroponicsConsumptionMultiplier = 2f;
 
@@ -116,6 +119,20 @@ public sealed class PlantHolderSystem : EntitySystem
                                 ? "plant-holder-component-plant-old-adjective"
                                 : "plant-holder-component-plant-unhealthy-adjective"))));
                 }
+
+                // For future reference, mutations should only appear on examine if they apply to a plant, not to produce.
+
+                if (component.Seed.Ligneous)
+                    args.PushMarkup(Loc.GetString("mutation-plant-ligneous"));
+
+                if (component.Seed.TurnIntoKudzu)
+                    args.PushMarkup(Loc.GetString("mutation-plant-kudzu"));
+
+                if (component.Seed.CanScream)
+                    args.PushMarkup(Loc.GetString("mutation-plant-scream"));
+
+                if (component.Seed.Viable == false)
+                    args.PushMarkup(Loc.GetString("mutation-plant-unviable"));
             }
             else
             {
@@ -692,9 +709,9 @@ public sealed class PlantHolderSystem : EntitySystem
 
         if (component.Harvest && !component.Dead)
         {
-            if (TryComp<HandsComponent>(user, out var hands))
+            if (_hands.TryGetActiveItem(user, out var activeItem))
             {
-                if (!_botany.CanHarvest(component.Seed, hands.ActiveHandEntity))
+                if (!_botany.CanHarvest(component.Seed, activeItem))
                 {
                     _popup.PopupCursor(Loc.GetString("plant-holder-component-ligneous-cant-harvest-message"), user);
                     return false;
@@ -870,7 +887,7 @@ public sealed class PlantHolderSystem : EntitySystem
             foreach (var entry in _solutionContainerSystem.RemoveEachReagent(component.SoilSolution.Value, amt))
             {
                 var reagentProto = _prototype.Index<ReagentPrototype>(entry.Reagent.Prototype);
-                reagentProto.ReactionPlant(uid, entry, solution);
+                reagentProto.ReactionPlant(uid, entry, solution, EntityManager, _random, _adminLogger);
             }
         }
 

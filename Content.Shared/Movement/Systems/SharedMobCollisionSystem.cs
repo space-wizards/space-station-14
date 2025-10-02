@@ -284,6 +284,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
                 mobMovement *= modifier;
 
                 var speedReduction = 1f - entity.Comp1.MinimumSpeedModifier;
+                speedReduction /= _penCap / penDepth;
                 var speedModifier = Math.Clamp(
                     1f - speedReduction * modifier,
                     entity.Comp1.MinimumSpeedModifier, 1f);

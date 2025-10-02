@@ -17,7 +17,7 @@
               amount: 3
               doAfter: 1
             - tag: GlassShard
-              name: glass shard
+              name: construction-graph-tag-glass-shard
               icon:
                 sprite: Objects/Materials/Shards/shard.rsi
                 state: shard1
@@ -44,7 +44,7 @@
               amount: 3
               doAfter: 1
             - tag: ReinforcedGlassShard
-              name: reinforced glass shard
+              name: construction-graph-tag-reinforced-glass-shard
               icon:
                 sprite: Objects/Materials/Shards/shard.rsi
                 state: shard1
@@ -71,7 +71,7 @@
               amount: 3
               doAfter: 1
             - tag: PlasmaGlassShard
-              name: plasma glass shard
+              name: construction-graph-tag-plasma-glass-shard
               icon:
                 sprite: Objects/Materials/Shards/shard.rsi
                 state: shard1
@@ -98,7 +98,7 @@
               amount: 3
               doAfter: 1
             - tag: UraniumGlassShard
-              name: uranium glass shard
+              name: construction-graph-tag-uranium-glass-shard
               icon:
                 sprite: Objects/Materials/Shards/shard.rsi
                 state: shard1
@@ -126,3 +126,23 @@
               doAfter: 1
     - node: spear
       entity: SpearBone
+
+- type: constructionGraph
+  id: SpearSharkMinnow
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: spear
+      steps:
+      - material: MetalRod
+        amount: 2
+        doAfter: 2
+      - material: Cable
+        amount: 3
+        doAfter: 1
+      - material: SharkMinnowTooth
+        amount: 1
+        doAfter: 1
+  - node: spear
+    entity: SpearSharkMinnow

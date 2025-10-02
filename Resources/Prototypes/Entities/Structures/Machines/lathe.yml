@@ -112,6 +112,7 @@
         - Sheet
         - RawMaterial
         - Ingot
+  - type: OreSiloClient
   - type: Lathe
     idleState: icon
     runningState: building
@@ -122,6 +123,8 @@
     - PartsStatic
     - AtmosStatic
     - CablesStatic
+    - PaperworkStatic
+    - TowelsStatic
     - CargoStatic
     - MaterialsStatic
     - BasicChemistryStatic
@@ -184,6 +187,7 @@
         - Sheet
         - RawMaterial
         - Ingot
+  - type: OreSiloClient
   - type: Lathe
     idleState: icon
     runningState: building
@@ -206,7 +210,6 @@
     - Janitor
     - Instruments
     - Equipment
-    - FauxTiles
   - type: EmagLatheRecipes
     emagDynamicPacks:
     - SecurityAmmo
@@ -254,7 +257,6 @@
     - CargoBoardsStatic
     - MedicalBoardsStatic
     - EngineeringBoardsStatic
-    - CircuitFloorsStatic
     dynamicPacks:
     - EngineeringBoards
     - CargoBoards
@@ -273,6 +275,7 @@
         - Sheet
         - RawMaterial
         - Ingot
+  - type: OreSiloClient
   - type: RequireProjectileTarget
 
 - type: entity
@@ -321,6 +324,7 @@
       - Sheet
       - RawMaterial
       - Ingot
+  - type: OreSiloClient
   - type: GuideHelp
     guides:
     - Robotics
@@ -408,6 +412,9 @@
         - Sheet
         - RawMaterial
         - Ingot
+  - type: OreSiloClient
+  - type: LatheAnnouncing
+    channels: [Security]
 
 - type: entity
   id: AmmoTechFab
@@ -441,6 +448,7 @@
           - Sheet
           - RawMaterial
           - Ingot
+    - type: OreSiloClient
 
 - type: entity
   id: MedicalTechFab
@@ -478,6 +486,9 @@
     board: MedicalTechFabCircuitboard
   - type: StealTarget
     stealGroup: MedicalTechFabCircuitboard
+  - type: OreSiloClient
+  - type: LatheAnnouncing
+    channels: [Medical]
 
 - type: entity
   parent: BaseLathe
@@ -500,6 +511,7 @@
     idleState: icon
     runningState: building
     staticPacks:
+    - TowelsStatic
     - ClothingCivilian
     - ClothingCargo
     - ClothingCommand
@@ -523,6 +535,7 @@
         - Sheet
         - RawMaterial
         - Ingot
+  - type: OreSiloClient
 
 - type: entity
   id: Biogenerator
@@ -642,6 +655,7 @@
       tags:
       - Raw
       - Wooden
+      - Boll
   - type: Lathe
     idleState: base_machine
     runningState: base_machine_processing
@@ -674,7 +688,16 @@
     idleState: icon
     runningState: building
     staticPacks:
-    - FloorTilesStatic
+    - FloorDarkTilesStatic
+    - FloorSteelTilesStatic
+    - FloorWhiteTilesStatic
+    - FloorMaintsTilesStatic
+    - FloorWoodTilesStatic
+    - FloorConcreteTilesStatic
+    - CircuitFloorsStatic
+    - FloorMarbleTilesStatic
+    dynamicPacks:
+    - FauxTiles
   - type: MaterialStorage
     whitelist:
       tags:
@@ -683,3 +706,4 @@
         - Wooden
         - RawMaterial
         - Plastic
+  - type: OreSiloClient

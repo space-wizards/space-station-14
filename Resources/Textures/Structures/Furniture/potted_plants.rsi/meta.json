@@ -1,13 +1,21 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation, plant-26 made by Fazansen(https://github.com/Fazansen)",
+  "copyright": "Taken from tgstation, plant-26 made by Fazansen(https://github.com/Fazansen), inhand-left and right made by Xeri(https://github.com/Xeri7)",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
-  	    {
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
       "name": "random",
       "delays": [
         [

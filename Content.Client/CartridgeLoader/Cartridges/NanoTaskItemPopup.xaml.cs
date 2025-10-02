@@ -90,10 +90,12 @@ public sealed partial class NanoTaskItemPopup : DefaultWindow
     {
         if (item is NanoTaskItem task)
         {
-            var button = task.Priority switch {
+            var button = task.Priority switch
+            {
                 NanoTaskPriority.High => HighButton,
                 NanoTaskPriority.Medium => MediumButton,
                 NanoTaskPriority.Low => LowButton,
+                _ => throw new ArgumentException("Invalid priority"),
             };
             button.Pressed = true;
             DescriptionInput.Text = task.Description;
