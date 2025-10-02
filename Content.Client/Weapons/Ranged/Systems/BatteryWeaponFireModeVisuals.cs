@@ -1,10 +1,8 @@
 using System.Linq;
 using Content.Client.Items.Systems;
-using Content.Shared.Clothing;
 using Content.Shared.Hands;
 using Content.Shared.Item;
 using Content.Shared.Weapons.Ranged.Components;
-using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Weapons.Ranged.Systems;
@@ -15,8 +13,7 @@ public sealed partial class GunSystem
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedItemSystem _item = default!;
 
-    /// <inheritdoc/>
-    public void InitializeBatteryWeaponFireModeVisuals()
+    private void InitializeBatteryWeaponFireModeVisuals()
     {
         SubscribeLocalEvent<BatteryWeaponFireModesComponent, AppearanceChangeEvent>(OnAppearanceChange);
         SubscribeLocalEvent<BatteryWeaponFireModesComponent, GetInhandVisualsEvent>(OnGetHeldVisuals, after: [typeof(ItemSystem)]);
@@ -63,11 +60,5 @@ public sealed partial class GunSystem
             layer.Color =  color;
             args.Layers.Add((key, layer));
         }
-
-    }
-
-    private void UpdateVisuals(Entity<BatteryWeaponFireModesComponent> ent, Color color, SpriteComponent sprite)
-    {
-
     }
 }
