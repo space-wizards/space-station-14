@@ -17,6 +17,9 @@
         - type: StationJobs
           availableJobs: # 63 jobs total w/o latejoins & interns, 82 jobs total w/ latejoins & interns
             #Command (7)
+            CentralCommandOfficial: [ -1, -1 ]
+            NanotrasenRepresentative: [ 2, 2 ]
+            Magistrate: [ 1, 1 ]
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             HeadOfSecurity: [ 1, 1 ]
@@ -24,14 +27,14 @@
             ChiefEngineer: [ 1, 1 ]
             ResearchDirector: [ 1, 1 ]
             Quartermaster: [ 1, 1 ]
-            #Service (14)
+            #Service (18)
             Bartender: [ 2, 2 ]
             Botanist: [ 3, 3 ]
             Chef: [ 2, 2 ]
-            Janitor: [ 2, 2 ]
-            Chaplain: [ 1, 1 ]
-            Librarian: [ 1, 1 ]
-            Reporter: [ 1, 1 ]
+            Janitor: [ 3, 3 ]
+            Chaplain: [ 2, 2 ]
+            Librarian: [ 2, 2 ]
+            Reporter: [ 2, 2 ]
             ServiceWorker: [ 2, 2 ]
             #Engineering (8)
             AtmosphericTechnician: [ 3, 3 ]
@@ -55,11 +58,13 @@
             #Supply (6)
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 3, 3 ]
-            #Civilian (3+)
+            #Civilian (6+)
             Passenger: [ -1, -1 ] #infinite, not counted
-            Clown: [ 1, 1 ]
-            Mime: [ 1, 1 ]
-            Musician: [ 1, 1 ]
+            #Clown: [ 1, 1 ]
+            #Mime: [ 1, 1 ]
+            Boxer: [ 1, 1]
+            Musician: [ 3, 3 ]
+            Zookeeper: [ 2, 2 ]
             #Silicon (3)
             StationAi: [ 1, 1 ]
             Borg: [ 2, 3 ]

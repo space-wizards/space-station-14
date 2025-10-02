@@ -340,7 +340,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = "Grant All Access",
                 Category = VerbCategory.Tricks,
-                Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Misc/id_cards.rsi"), "centcom"),
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Misc/aid_cards.rsi"), "centcom"),
                 Act = () =>
                 {
                     GiveAllAccess(activeId.Value);

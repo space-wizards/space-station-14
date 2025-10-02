@@ -53,3 +53,6 @@ id-card-access-level-borg = Cyborg
 id-card-access-level-basic-silicon = Robot
 
 id-card-access-level-basic-xenoborg = Xenoborg
+
+id-card-access-level-ntr = Nanotrasen Representative
+id-card-access-level-mag = Magistrate

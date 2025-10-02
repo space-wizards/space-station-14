@@ -16,7 +16,7 @@
   supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
-  - BasicAllAccess
+  - AllAccess
   access:
   - CentralCommand
   - NanotrasenRepresentative

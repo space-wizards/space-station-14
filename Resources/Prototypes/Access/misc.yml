@@ -34,7 +34,9 @@
   - Atmospherics
   - GenpopEnter
   - GenpopLeave
-
+  - Magistrate
+  - NanotrasenRepresentative
+  
 - type: accessGroup
   id: General
   tags:

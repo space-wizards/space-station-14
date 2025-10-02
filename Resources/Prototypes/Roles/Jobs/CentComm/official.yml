@@ -12,6 +12,7 @@
   - AllAccess
   access:
   - CentralCommand
+  - NanotrasenRepresentative
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]

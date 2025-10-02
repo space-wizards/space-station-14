@@ -42,6 +42,8 @@
     - ERTSecurity
     - ERTEngineer
     - DeathSquad
+    - Magistrate
+    - NanotrasenRepresentative
   editorHidden: true
   weight: 120
 
@@ -51,8 +53,6 @@
   description: department-Command-description
   color: "#334E6D"
   roles:
-    - Magistrate
-    - NanotrasenRepresentative
     - Captain
     - ChiefEngineer
     - ChiefMedicalOfficer
@@ -60,14 +60,7 @@
     - HeadOfSecurity
     - ResearchDirector
     - Quartermaster
-    - CentralCommandOfficial
-    - CBURN
-    - ERTLeader
-    - ERTMedical
-    - ERTSecurity
-    - ERTEngineer
-    - DeathSquad
-  primary: false
+  primary: true
   weight: 100
 
 - type: department
