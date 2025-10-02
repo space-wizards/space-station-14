@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Various salvage equipment can now be unlocked through the job board and
-      purchased through cargo.
-    type: Add
-  - message: Space debris and the mining asteroid no longer generate salvage equipment
-    type: Tweak
-  id: 8516
-  time: '2025-05-18T06:40:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37561
 - author: mrjajkes
   changes:
   - message: Add Blatantly Nuclear as a Nuke Song.
@@ -3959,3 +3949,14 @@
   id: 9026
   time: '2025-10-02T20:11:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40624
+- author: archee1
+  changes:
+  - message: Material doors now have destruction sounds and will drop a portion of
+      their construction materials when destroyed.
+    type: Add
+  - message: Material doors now have reduced health, resistances, construction time,
+      and construction costs
+    type: Tweak
+  id: 9027
+  time: '2025-10-02T22:47:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36597
