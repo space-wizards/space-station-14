@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
@@ -140,25 +141,35 @@ public sealed partial class IngestionSystem
 
     #region EdibleComponent
 
-    public void SpawnTrash(Entity<EdibleComponent> entity, EntityUid user)
+    public void SpawnTrash(Entity<EdibleComponent> entity, EntityUid? user = null)
     {
         if (entity.Comp.Trash.Count == 0)
             return;
 
         var position = _transform.GetMapCoordinates(entity);
         var trashes = entity.Comp.Trash;
-        var tryPickup = _hands.IsHolding(user, entity, out _);
+        var pickup = user != null && _hands.IsHolding(user.Value, entity, out _);
 
         foreach (var trash in trashes)
         {
             var spawnedTrash = EntityManager.PredictedSpawn(trash, position);
 
             // If the user is holding the item
-            if (tryPickup)
-            {
-                // Put the trash in the user's hand
-                _hands.TryPickupAnyHand(user, spawnedTrash);
-            }
+            if (!pickup)
+                continue;
+
+            // Put the trash in the user's hand
+            // I am 100% confident we don't need this check but rider gets made at me if it's not here.
+            if (user != null)
+                _hands.TryPickupAnyHand(user.Value, spawnedTrash);
+        }
+    }
+
+    public void AddTrash(Entity<EdibleComponent> entity, List<EntProtoId> newTrash)
+    {
+        foreach (var trash in newTrash)
+        {
+            entity.Comp.Trash.Add(trash);
         }
     }
 

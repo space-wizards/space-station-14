@@ -552,6 +552,9 @@
   id: Enzyme
 
 - type: Tag
+  id: ExCable
+
+- type: Tag
   id: ExplosivePassable
 
 - type: Tag
@@ -632,6 +635,9 @@
 # Used for warps
 - type: Tag
   id: GhostOnlyWarp
+
+- type: Tag
+  id: GenderPin
 
 - type: Tag
   id: GlassAirlock
@@ -802,6 +808,9 @@
   id: Ingot
 
 - type: Tag
+  id: Inflatable
+
+- type: Tag
   id: InstantDoAfters
 
 - type: Tag
@@ -927,6 +936,9 @@
 
 - type: Tag
   id: Medkit
+
+- type: Tag
+  id: MessyDrinkerImmune
 
 - type: Tag
   id: Metal
@@ -1335,6 +1347,9 @@
   id: StationAi
 
 - type: Tag
+  id: StationAiCoreElectronics
+
+- type: Tag
   id: StationMapElectronics
 
 - type: Tag
@@ -1410,6 +1425,9 @@
   id: Torch
 
 - type: Tag
+  id: ToteBase
+
+- type: Tag
   id: ToyRubberDuck
 
 - type: Tag
@@ -1441,6 +1459,9 @@
 
 - type: Tag
   id: UtilityBelt
+
+- type: Tag
+  id: UtilityKnife
 
 - type: Tag
   id: Vegetable
