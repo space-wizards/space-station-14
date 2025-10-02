@@ -29,7 +29,7 @@
       map: ["enum.MaterialStorageVisualLayers.Inserting"]
     - state: core-o
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-    - state: core_e
+    - state: core-e
       map: ["enum.BorgVisualLayers.Light"]
       shader: unshaded
   - type: Machine
@@ -171,8 +171,8 @@
   - type: BorgChassis
     canOpenSelfUi: true
     maxModules: 2
-    hasMindState: core_e
-    noMindState: core_e
+    hasMindState: core-e
+    noMindState: core-e
     moduleWhitelist:
       tags:
       - MothershipModule
