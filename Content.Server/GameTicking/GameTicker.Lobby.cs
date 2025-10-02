@@ -12,8 +12,11 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         private readonly Dictionary<NetUserId, PlayerGameStatus> _playerGameStatuses = new();
 
+        /// <summary>
+        /// How long before the round starts
+        /// </summary>
         [ViewVariables]
-        private TimeSpan _roundStartTime;
+        public TimeSpan RoundStartTime { get; private set; }
 
         /// <summary>
         /// How long before RoundStartTime do we load maps.
@@ -94,7 +97,7 @@ namespace Content.Server.GameTicking
         private TickerLobbyStatusEvent GetStatusMsg(ICommonSession session)
         {
             _playerGameStatuses.TryGetValue(session.UserId, out var status);
-            return new TickerLobbyStatusEvent(RunLevel != GameRunLevel.PreRoundLobby, LobbyBackground, status == PlayerGameStatus.ReadyToPlay, _roundStartTime, RoundPreloadTime, RoundStartTimeSpan, Paused);
+            return new TickerLobbyStatusEvent(RunLevel != GameRunLevel.PreRoundLobby, LobbyBackground, status == PlayerGameStatus.ReadyToPlay, RoundStartTime, RoundPreloadTime, RoundStartTimeSpan, Paused);
         }
 
         private void SendStatusToAll()
@@ -130,15 +133,16 @@ namespace Content.Server.GameTicking
             }
             else if (_pauseTime != default)
             {
-                _roundStartTime += _gameTiming.CurTime - _pauseTime;
+                RoundStartTime += _gameTiming.CurTime - _pauseTime;
             }
 
-            RaiseNetworkEvent(new TickerLobbyCountdownEvent(_roundStartTime, Paused));
+            RaiseNetworkEvent(new TickerLobbyCountdownEvent(RoundStartTime, Paused));
 
             _chatManager.DispatchServerAnnouncement(Loc.GetString(Paused
                 ? "game-ticker-pause-start"
                 : "game-ticker-pause-start-resumed"));
 
+            _discordStatusLink.UpdateStatus();
             return true;
         }
 
