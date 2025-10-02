@@ -644,7 +644,7 @@
         reagents:
         - ReagentId: Omnizine
           Quantity: 25
-        - ReagentId: TranexamicAcid
+        - ReagentId: Coagulant # Offbrand
           Quantity: 5
   - type: Hypospray
     solutionName: pen
