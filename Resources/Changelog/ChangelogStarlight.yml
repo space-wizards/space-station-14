@@ -16815,5 +16815,12 @@ Entries:
   id: 179400
   time: '2025-10-02T01:06:40.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1794
+- author: CrazyPhantom
+  changes:
+  - message: Build Error caused by Shadekins not needing to breathe.
+    type: Fix
+  id: 179600
+  time: '2025-10-02T05:41:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1796
 Order: -1
 
