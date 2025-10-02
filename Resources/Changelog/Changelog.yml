@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: Air grenades have been added! These can fill up a spaced room of ~30
-      tiles with fresh air. They can be found in Atmospheric Technician's lockers.
-      Use them wisely!
-    type: Add
-  id: 8515
-  time: '2025-05-18T04:32:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37531
 - author: EmoGarbage404
   changes:
   - message: Various salvage equipment can now be unlocked through the job board and
@@ -3960,3 +3951,11 @@
   id: 9025
   time: '2025-10-02T09:02:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39567
+- author: kosticia
+  changes:
+  - message: Anomalies with inconsistent particles no longer shuffle right before
+      collision with particle.
+    type: Fix
+  id: 9026
+  time: '2025-10-02T20:11:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40624
