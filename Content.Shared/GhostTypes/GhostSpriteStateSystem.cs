@@ -12,21 +12,21 @@ public sealed class GhostSpriteStateSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     /// <summary>
-    /// It goes trough an entity damage and assigns them a sprite according to the highest damage type/s
+    /// It goes through an entity damage and assigns them a sprite according to the highest damage type/s
     /// </summary>
-    public void SetGhostSprite(Entity<GhostSpriteStateComponent> ent, MindComponent mind)
+    public void SetGhostSprite(Entity<GhostSpriteStateComponent> ent, EntityUid mind)
     {
-        if (!TryComp<AppearanceComponent>(ent, out var appearance))
+        if (!TryComp<AppearanceComponent>(ent, out var appearance) || !TryComp<MindComponent>(mind, out var mindComp))
             return;
 
         List<string> highestType;
-        if (TryComp<DamageableComponent>(mind.CurrentEntity, out var damageComp))
+        if (TryComp<DamageableComponent>(mindComp.CurrentEntity, out var damageComp))
         {
             highestType = _damageable.GetHighestDamageTypes(damageComp.DamagePerGroup, damageComp.Damage);
         }
-        else if (mind.DamagePerGroup != null && mind.Damage != null)
+        else if (TryComp<LastBodyDamageComponent>(mind, out var storedDamage) && storedDamage.DamagePerGroup != null && storedDamage.Damage != null)
         {
-            highestType = _damageable.GetHighestDamageTypes(mind.DamagePerGroup, mind.Damage);
+            highestType = _damageable.GetHighestDamageTypes(storedDamage.DamagePerGroup, storedDamage.Damage);
         }
         else
             return;
@@ -34,7 +34,7 @@ public sealed class GhostSpriteStateSystem : EntitySystem
         if (highestType.Count == 0)
             return;
 
-        highestType.Sort();  // sort if alphabetically
+        highestType.Sort();
 
         string spriteState;
         if (highestType is ["Blunt", "Heat", "Piercing"])  // special case for explosions

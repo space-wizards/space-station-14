@@ -483,7 +483,7 @@ namespace Content.Server.Ghost
 
             if (TryComp<GhostSpriteStateComponent>(ghost, out var state))
             {
-                _ghostState.SetGhostSprite((ghost, state), mind.Comp);
+                _ghostState.SetGhostSprite((ghost, state), mind);
             }
 
             // Try setting the ghost entity name to either the character name or the player name.

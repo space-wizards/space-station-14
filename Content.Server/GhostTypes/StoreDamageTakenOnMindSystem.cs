@@ -25,11 +25,12 @@ public sealed class StoreDamageTakenOnMindSystem : EntitySystem
         if (!_container.TryGetContainingContainer(ent.Owner, out var container)
             || !TryComp<DamageableComponent>(container.Owner, out var damageable)
             || !TryComp<MindContainerComponent>(container.Owner, out var mindContainer)
-            || !TryComp<MindComponent>(mindContainer.Mind, out var mind))
+            || !TryComp<MindComponent>(mindContainer.Mind, out _))
             return;
 
-        mind.DamagePerGroup = damageable.DamagePerGroup;
-        mind.Damage = damageable.Damage;
+        EnsureComp<LastBodyDamageComponent>(mindContainer.Mind.Value, out var storedDamage);
+        storedDamage.DamagePerGroup = damageable.DamagePerGroup;
+        storedDamage.Damage = damageable.Damage;
     }
 
     /// <summary>
@@ -39,10 +40,11 @@ public sealed class StoreDamageTakenOnMindSystem : EntitySystem
     {
         if (!TryComp<DamageableComponent>(ent.Owner, out var damageable)
             || !TryComp<MindContainerComponent>(ent.Owner, out var mindContainer)
-            || !TryComp<MindComponent>(mindContainer.Mind, out var mind))
+            || !TryComp<MindComponent>(mindContainer.Mind, out _))
             return;
 
-        mind.DamagePerGroup = damageable.DamagePerGroup;
-        mind.Damage = damageable.Damage;
+        EnsureComp<LastBodyDamageComponent>(mindContainer.Mind.Value, out var storedDamage);
+        storedDamage.DamagePerGroup = damageable.DamagePerGroup;
+        storedDamage.Damage = damageable.Damage;
     }
 }
