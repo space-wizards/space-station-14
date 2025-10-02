@@ -1,8 +1,149 @@
 - type: entity
-  name: circuit tote [QM]
+  abstract: true
+  parent: BoxCardboard
+  id: BoxStamps
+  name: stamp box
+  description: A box filled with stamps.
+  components:
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,1
+  - type: Storage
+    grid:
+    - 0,0,1,1
+    whitelist:
+      components:
+      - Stamp
+  - type: Sprite
+    layers:
+      - state: box
+      - state: stamp
+
+- type: entity
+  name: captain's circuit tote
+  parent: ToteBase
+  id: BoxCaptainCircuitboards
+  description: A tote filled with the captain's circuit boards.
+  components:
+  - type: StorageFill
+    contents:
+      - id: CommsComputerCircuitboard
+      - id: StationRecordsComputerCircuitboard
+
+- type: entity
+  parent: BoxStamps
+  id: BoxCaptainStamps
+  name: captain's stamp box
+  description: A box filled with the captain's stamps.
+  components:
+  - type: StorageFill
+    contents:
+      - id: RubberStampApproved
+      - id: RubberStampDenied
+      - id: RubberStampCaptain
+
+- type: entity
+  name: chief engineer's circuit tote
+  parent: ToteBase
+  id: BoxCECircuitboards
+  description: A tote filled with the chief engineer's circuit boards.
+  components:
+  - type: StorageFill
+    contents:
+      - id: CargoRequestEngineeringComputerCircuitboard
+      - id: AlertsComputerCircuitboard
+      - id: AtmosMonitoringComputerCircuitboard
+      - id: PowerComputerCircuitboard
+      - id: SolarControlComputerCircuitboard
+
+- type: entity
+  parent: BoxStamps
+  id: BoxCEStamps
+  name: chief engineer's stamp box
+  description: A box filled with the chief engineer's stamps.
+  components:
+  - type: StorageFill
+    contents:
+      - id: RubberStampApproved
+      - id: RubberStampDenied
+      - id: RubberStampCE
+
+- type: entity
+  name: chief medical officer's circuit tote
+  parent: ToteBase
+  id: BoxCMOCircuitboards
+  description: A tote filled with the chief medical officer's circuit boards.
+  components:
+  - type: StorageFill
+    contents:
+      - id: MedicalTechFabCircuitboard
+      - id: CargoRequestMedicalComputerCircuitboard
+
+- type: entity
+  parent: BoxStamps
+  id: BoxCMOStamps
+  name: chief medical officer's stamp box
+  description: A box filled with the chief medical officer's stamps.
+  components:
+  - type: StorageFill
+    contents:
+      - id: RubberStampApproved
+      - id: RubberStampDenied
+      - id: RubberStampCMO
+
+- type: entity
+  name: head of personnel's circuit tote
+  parent: ToteBase
+  id: BoxHoPCircuitboards
+  description: A tote filled with the head of personnel's circuit boards.
+  components:
+  - type: StorageFill
+    contents:
+      - id: IDComputerCircuitboard
+      - id: FundingAllocationComputerCircuitboard
+      - id: CargoRequestServiceComputerCircuitboard
+
+- type: entity
+  parent: BoxStamps
+  id: BoxHoPStamps
+  name: head of personnel's stamp box
+  description: A box filled with the head of personnel's stamps.
+  components:
+  - type: StorageFill
+    contents:
+      - id: RubberStampApproved
+      - id: RubberStampDenied
+      - id: RubberStampHop
+
+- type: entity
+  name: head of security's circuit tote
+  parent: ToteBase
+  id: BoxHoSCircuitboards
+  description: A tote filled with the head of security's circuit boards.
+  components:
+  - type: StorageFill
+    contents:
+      - id: SecurityTechFabCircuitboard
+      - id: CargoRequestSecurityComputerCircuitboard
+
+- type: entity
+  parent: BoxStamps
+  id: BoxHoSStamps
+  name: head of security's stamp box
+  description: A box filled with the head of security's stamps.
+  components:
+  - type: StorageFill
+    contents:
+      - id: RubberStampApproved
+      - id: RubberStampDenied
+      - id: RubberStampHos
+
+- type: entity
+  name: quartermaster's circuit tote
   parent: ToteBase
   id: BoxQMCircuitboards
-  description: A Tote filled with QM's Circuit boards.
+  description: A tote filled with the quartermaster's circuit boards.
   components:
   - type: StorageFill
     contents:
@@ -15,110 +156,22 @@
       - id: MailTeleporterMachineCircuitboard
 
 - type: entity
-  name: stamp box [QM]
-  parent: BoxCardboard
+  parent: BoxStamps
   id: BoxQMStamps
-  description: A box filled with QM's Stamps. Stamped of course.
+  name: quartermaster's stamp box
+  description: A box filled with the quartermaster's stamps.
   components:
-  - type: Item
-    size: Small
-    shape:
-    - 0,0,1,1
   - type: StorageFill
     contents:
       - id: RubberStampApproved
       - id: RubberStampDenied
       - id: RubberStampQm
-  - type: Storage
-    grid:
-    - 0,0,1,1
-    whitelist:
-      components:
-      - Stamp
-  - type: Sprite
-    layers:
-      - state: box
-      - state: stamp
 
 - type: entity
-  name: circuit tote [HoP]
-  parent: ToteBase
-  id: BoxHoPCircuitboards
-  description: A Tote filled with HoP's Circuit boards.
-  components:
-  - type: StorageFill
-    contents:
-      - id: IDComputerCircuitboard
-      - id: FundingAllocationComputerCircuitboard
-      - id: CargoRequestServiceComputerCircuitboard
-
-- type: entity
-  name: stamp box [HoP]
-  parent: BoxCardboard
-  id: BoxHoPStamps
-  description: A box filled with HoP's Stamps. Stamped of course.
-  components:
-  - type: Item
-    size: Small
-    shape:
-    - 0,0,1,1
-  - type: StorageFill
-    contents:
-      - id: RubberStampApproved
-      - id: RubberStampDenied
-      - id: RubberStampHop
-  - type: Storage
-    grid:
-    - 0,0,1,1
-    whitelist:
-      components:
-      - Stamp
-  - type: Sprite
-    layers:
-      - state: box
-      - state: stamp
-
-- type: entity
-  name: circuit tote [CE]
-  parent: ToteBase
-  id: BoxCECircuitboards
-  description: A Tote filled with CE's Circuit boards.
-  components:
-  - type: StorageFill
-    contents:
-      - id: CargoRequestEngineeringComputerCircuitboard
-      - id: AlertsComputerCircuitboard
-      - id: AtmosMonitoringComputerCircuitboard
-      - id: PowerComputerCircuitboard
-      - id: SolarControlComputerCircuitboard
-
-- type: entity
-  name: circuit tote [Captain]
-  parent: ToteBase
-  id: BoxCaptainCircuitboards
-  description: A Tote filled with Captain's Circuit boards.
-  components:
-  - type: StorageFill
-    contents:
-      - id: CommsComputerCircuitboard
-      - id: StationRecordsComputerCircuitboard
-
-- type: entity
-  name: circuit tote [CMO]
-  parent: ToteBase
-  id: BoxCMOCircuitboards
-  description: A Tote filled with CMO's Circuit boards.
-  components:
-  - type: StorageFill
-    contents:
-      - id: MedicalTechFabCircuitboard
-      - id: CargoRequestMedicalComputerCircuitboard
-
-- type: entity
-  name: circuit tote [RD]
+  name: research director's circuit tote
   parent: ToteBase
   id: BoxRDCircuitboards
-  description: A Tote filled with RD's Circuit boards.
+  description: A tote filled with the research director's circuit boards.
   components:
   - type: StorageFill
     contents:
@@ -132,12 +185,13 @@
       - id: StationAiFixerCircuitboard
 
 - type: entity
-  name: circuit tote [HoS]
-  parent: ToteBase
-  id: BoxHoSCircuitboards
-  description: A Tote filled with HoS's Circuit boards.
+  parent: BoxStamps
+  id: BoxRDStamps
+  name: research director's stamp box
+  description: A box filled with the research director's stamps.
   components:
   - type: StorageFill
     contents:
-      - id: SecurityTechFabCircuitboard
-      - id: CargoRequestSecurityComputerCircuitboard
+      - id: RubberStampApproved
+      - id: RubberStampDenied
+      - id: RubberStampRd
