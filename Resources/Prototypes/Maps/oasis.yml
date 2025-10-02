@@ -28,19 +28,19 @@
             Magistrate: [ 1, 1 ]
             CentralCommandOfficial: [ 1, 1]
             CBURN: [ 1, 1 ]
-            #service (15 - 16)
+            #service (20)
             Bartender: [ 2, 2 ]
-            Botanist: [ 2, 3 ]
+            Botanist: [ 3, 3 ]
             Chef: [ 2, 2 ]
             Janitor: [ 3, 3 ]
-            Chaplain: [ 1, 1 ]
-            Librarian: [ 1, 1 ]
+            Chaplain: [ 2, 2 ]
+            Librarian: [ 2, 2 ]
             ServiceWorker: [ 2, 2 ]
-            Zookeeper: [ 1, 1 ]
-            Reporter: [ 1, 1 ]
+            Zookeeper: [ 2, 2 ]
+            Reporter: [ 2, 2 ]
             #engineering (8)
-            AtmosphericTechnician: [ 3, 3 ]
-            StationEngineer: [ 5, 5 ]
+            #AtmosphericTechnician: [ 3, 3 ]
+            StationEngineer: [ 8, 8 ]
             TechnicalAssistant: [ 4, 4 ] #intern, not counted
             #medical (11)
             Chemist: [ 2, 2 ]
@@ -60,13 +60,13 @@
             #supply (7)
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 4, 4 ]
-            #civilian (2+)
+            #civilian (6+)
             Passenger: [ -1, -1 ] #infinite, not counted
             Visitor: [ -1, -1] #infinite, not counted
             #Clown: [ 1, 1 ]
             #Mime: [ 1, 1 ]
-            Musician: [ 1, 1 ]
-            Boxer: [ 1, 1 ]
+            Musician: [ 4, 1 ]
+            Boxer: [ 2, 1 ]
             #silicon (3)
             Borg: [ 2, 2 ]
             StationAi: [ 1, 1 ]
