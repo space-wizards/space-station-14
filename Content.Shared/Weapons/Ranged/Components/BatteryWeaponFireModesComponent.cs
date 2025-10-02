@@ -1,3 +1,4 @@
+using Content.Shared.Hands.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -9,7 +10,6 @@ namespace Content.Shared.Weapons.Ranged.Components;
 /// Allows battery weapons to fire different types of projectiles
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(BatteryWeaponFireModesSystem))]
 [AutoGenerateComponentState]
 public sealed partial class BatteryWeaponFireModesComponent : Component
 {
@@ -26,6 +26,19 @@ public sealed partial class BatteryWeaponFireModesComponent : Component
     [DataField]
     [AutoNetworkedField]
     public int CurrentFireMode;
+
+    /// <summary>
+    /// Layers to add to the sprite of the player that is holding this entity (while the component is toggled on).
+    /// </summary>
+    [DataField]
+    public Dictionary<HandLocation, List<PrototypeLayerData>> InhandVisuals = new();
+
+    /// <summary>
+    /// Layers to add to the sprite of the player that is wearing this entity (while the component is toggled on).
+    /// </summary>
+    [DataField]
+    public Dictionary<string, List<PrototypeLayerData>> ClothingVisuals = new();
+
 }
 
 [DataDefinition, Serializable, NetSerializable]
@@ -42,10 +55,21 @@ public sealed partial class BatteryWeaponFireMode
     /// </summary>
     [DataField]
     public float FireCost = 100;
+
+    /// <summary>
+    /// The color that the firemode should show on the gun sprite
+    /// </summary>
+    [DataField]
+    public Color Color = Color.Blue;
 }
 
 [Serializable, NetSerializable]
 public enum BatteryWeaponFireModeVisuals : byte
 {
     State
+}
+[Serializable, NetSerializable]
+public enum BatteryWeaponFireModeProjectile : byte
+{
+    Type,
 }

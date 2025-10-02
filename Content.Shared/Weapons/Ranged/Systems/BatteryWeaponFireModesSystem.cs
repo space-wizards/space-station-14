@@ -120,7 +120,10 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
         if (_prototypeManager.TryIndex<EntityPrototype>(fireMode.Prototype, out var prototype))
         {
             if (TryComp<AppearanceComponent>(uid, out var appearance))
+            {
                 _appearanceSystem.SetData(uid, BatteryWeaponFireModeVisuals.State, prototype.ID, appearance);
+                _appearanceSystem.SetData(uid, BatteryWeaponFireModeProjectile.Type, fireMode.Color, appearance);
+            }
 
             if (user != null)
                 _popupSystem.PopupClient(Loc.GetString("gun-set-fire-mode", ("mode", prototype.Name)), uid, user.Value);

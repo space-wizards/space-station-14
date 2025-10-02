@@ -1,32 +1,59 @@
 - type: entity
   name: energy gun
-  parent: [WeaponDisablerPractice, BaseSecurityCommandContraband]
+  parent: [BaseWeaponBatterySmall]
   id: WeaponEnergyGun
   description: A weapon with dual fire modes, for non-lethal stun bolts or lethal laser fire.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/disabler.rsi
+    sprite: _lizloose/Objects/Weapons/Guns/Battery/energygun.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-unshaded-0
-      map: ["enum.GunVisualLayers.MagUnshaded"]
+      map: ["enum.BatteryWeaponFireModeProjectile.Type", "enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+      color: "#5fcde4"
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.BatteryWeaponFireModeVisuals.State:
+        enum.BatteryWeaponFireModeProjectile.Type:
+          BulletDisabler: {}
+          BulletLaser: {}
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/disabler.rsi
+    sprite: _lizloose/Objects/Weapons/Guns/Battery/energygun.rsi
     quickEquip: false
     slots:
     - suitStorage
     - Belt
+  - type: Gun
+    fireRate: 2
+    projectileSpeed: 35 # any higher and this causes issues in lag
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: BulletDisabler
     fireCost: 62.5
   - type: BatteryWeaponFireModes
+    inhandVisuals:
+      left:
+      - state: inhand-left-color
+      right:
+      - state: inhand-right-color
     fireModes:
     - proto: BulletDisabler
       fireCost: 62.5
+      color: "#5fcde4"
     - proto: BulletLaser
       fireCost: 125
+      color: "#ff0006"
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Item
+    storedOffset: -1,-5
+
   - type: GuideHelp
     guides:
     - Security

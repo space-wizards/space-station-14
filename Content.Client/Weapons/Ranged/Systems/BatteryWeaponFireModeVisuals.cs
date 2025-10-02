@@ -1,0 +1,73 @@
+using System.Linq;
+using Content.Client.Items.Systems;
+using Content.Shared.Clothing;
+using Content.Shared.Hands;
+using Content.Shared.Item;
+using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Client.GameObjects;
+
+namespace Content.Client.Weapons.Ranged.Systems;
+
+/// <inheritdoc/>
+public sealed partial class GunSystem
+{
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!;
+
+    /// <inheritdoc/>
+    public void InitializeBatteryWeaponFireModeVisuals()
+    {
+        SubscribeLocalEvent<BatteryWeaponFireModesComponent, AppearanceChangeEvent>(OnAppearanceChange);
+        SubscribeLocalEvent<BatteryWeaponFireModesComponent, GetInhandVisualsEvent>(OnGetHeldVisuals, after: [typeof(ItemSystem)]);
+        //SubscribeLocalEvent<BatteryWeaponFireModesComponent, GetEquipmentVisualsEvent>(OnGetEquipmentVisuals, after: [typeof(ItemSystem)]);
+    }
+
+    private void OnAppearanceChange(Entity<BatteryWeaponFireModesComponent> ent, ref AppearanceChangeEvent args)
+    {
+        if (args.Sprite == null)
+            return;
+
+        if (!_appearance.TryGetData<Color>(ent.Owner, BatteryWeaponFireModeProjectile.Type, out var color, args.Component))
+            return;
+
+        if (TryComp(ent, out SpriteComponent? sprite))
+            _sprite.LayerSetColor((ent.Owner, sprite), BatteryWeaponFireModeProjectile.Type, color);
+
+        _item.VisualsChanged(ent);
+
+    }
+
+    private void OnGetHeldVisuals(Entity<BatteryWeaponFireModesComponent> ent, ref GetInhandVisualsEvent args)
+    {
+        if (!TryComp(ent, out AppearanceComponent? appearance))
+            return;
+
+        if (!_appearance.TryGetData<Color>(ent.Owner, BatteryWeaponFireModeProjectile.Type, out var color, appearance))
+            return;
+
+        if (!ent.Comp.InhandVisuals.TryGetValue(args.Location, out var layers))
+            return;
+
+        var i = 0;
+        var defaultKey = $"inhand-{args.Location.ToString().ToLowerInvariant()}-toggle";
+        Log.Debug("layer count: " + layers.Count);
+        foreach (var layer in layers)
+        {
+            var key = layer.MapKeys?.FirstOrDefault();
+            if (key == null)
+            {
+                key = i == 0 ? defaultKey : $"{defaultKey}-{i}";
+                i++;
+            }
+            layer.Color =  color;
+            args.Layers.Add((key, layer));
+        }
+
+    }
+
+    private void UpdateVisuals(Entity<BatteryWeaponFireModesComponent> ent, Color color, SpriteComponent sprite)
+    {
+
+    }
+}
