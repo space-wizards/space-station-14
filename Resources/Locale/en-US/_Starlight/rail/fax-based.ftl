@@ -35,4 +35,4 @@ rr-criminal-failed-content = [logo]            [cclogo]
    ⠀                                    [italic]Place for stamps[/italic]
 
 rr-nt-isd = NT ISD
-rr-cc = CentCom
+rr-cc = CentComm
