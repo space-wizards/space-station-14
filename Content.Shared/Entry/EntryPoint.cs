@@ -27,10 +27,6 @@ namespace Content.Shared.Entry
 
         private readonly ResPath _ignoreFileDirectory = new("/IgnoredPrototypes/");
 
-        public override void PreInit()
-        {
-            IoCManager.InjectDependencies(this);
-        }
 
         public override void Shutdown()
         {
@@ -39,8 +35,8 @@ namespace Content.Shared.Entry
 
         public override void Init()
         {
-            IoCManager.BuildGraph();
-            IoCManager.InjectDependencies(this);
+            Dependencies.BuildGraph();
+            Dependencies.InjectDependencies(this);
             IgnorePrototypes();
         }
 
