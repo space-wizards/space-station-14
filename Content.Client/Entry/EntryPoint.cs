@@ -79,8 +79,6 @@ namespace Content.Client.Entry
         {
             ClientContentIoC.Register(Dependencies);
 
-            // Content.Shared.Entry.EntryPoint.Init() will call BuildGraph() & InjectDependencies()
-            // Hence this needs to be called in PreInit, instead of in Init()
             foreach (var callback in TestingCallbacks)
             {
                 var cast = (ClientModuleTestingCallbacks) callback;
