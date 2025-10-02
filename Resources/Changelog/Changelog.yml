@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: 0leshe
-  changes:
-  - message: Changed max and minimum amount of jigger transfer amount
-    type: Tweak
-  id: 8514
-  time: '2025-05-18T04:14:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35962
 - author: ArtisticRoomba
   changes:
   - message: Air grenades have been added! These can fill up a spaced room of ~30
@@ -3960,3 +3953,10 @@
   id: 9024
   time: '2025-10-01T23:22:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39868
+- author: sudobeans
+  changes:
+  - message: utility knife, which can be made in the autolathe.
+    type: Add
+  id: 9025
+  time: '2025-10-02T09:02:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39567
