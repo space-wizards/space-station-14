@@ -325,4 +325,9 @@ public readonly record struct AnomalyHealthChangedEvent(EntityUid Anomaly, float
 [ByRefEvent]
 public readonly record struct AnomalyBehaviorChangedEvent(EntityUid Anomaly, ProtoId<AnomalyBehaviorPrototype>? Old, ProtoId<AnomalyBehaviorPrototype>? New);
 
-[ByRefEvent] public record struct AfterAnomalyCollideWithParticleEvent(Entity<AnomalyComponent> AnomalyEnt, Entity<AnomalousParticleComponent> ParticleEnt);
+/// <summary>
+/// Event of anomaly being affected by exotic particle.
+/// Is raised when particle collides with artifact.
+/// </summary>
+[ByRefEvent]
+public record struct AnomalyAffectedByParticleEvent(EntityUid Anomaly, EntityUid Particle);
