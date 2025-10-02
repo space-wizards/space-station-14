@@ -717,4 +717,18 @@
   id: 86
   time: '2025-09-20T18:37:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40393
+- author: F1restar4
+  changes:
+  - message: On Fland, reworked the TEG room and setup
+    type: Tweak
+  id: 87
+  time: '2025-09-25T19:37:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40534
+- author: F1restar4
+  changes:
+  - message: On Exo, linked the bolts of engineering's airlocks to space
+    type: Tweak
+  id: 88
+  time: '2025-09-25T21:36:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40546
 Order: 1
