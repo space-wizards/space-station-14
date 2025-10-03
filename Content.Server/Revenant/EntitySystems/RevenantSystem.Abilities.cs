@@ -267,7 +267,7 @@ public sealed partial class RevenantSystem
             _tile.PryTile(value);
         }
 
-        var lookup = _lookup.GetEntitiesInRange(uid, component.DefileRadius, LookupFlags.Approximate | LookupFlags.Static);
+        var lookup = _lookup.GetEntitiesInRange(uid, component.DefileRadius, LookupFlags.Approximate | LookupFlags.Sundries);
         var tags = GetEntityQuery<TagComponent>();
         var entityStorage = GetEntityQuery<EntityStorageComponent>();
         var items = GetEntityQuery<ItemComponent>();
