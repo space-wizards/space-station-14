@@ -21,7 +21,7 @@
   [bold]Artifexium:[/bold] This reagent can also be used to unlock nodes directly and randomly, bypassing some or all trigger requirements.
 
   ## Active Nodes
-  Once unlocked, a node is considered active. Only the highest unlocked nodes in a tree’s layer are activatable, lower nodes in the same tree cannot be triggered if a higher node is active.
+  Once unlocked, a node is considered active. Only the highest unlocked nodes in a tree’s layer are activatable, lower nodes in the same tree cannot be triggered anymore once a higher node has been activated.
 
   Artifacts often have multiple trees. Layer precedence applies within each tree, but different trees operate independently. This means nodes in different trees can be activated simultaneously as long as they are the highest unlocked nodes in their respective trees.
 
