@@ -1,4 +1,5 @@
 # PUT YOUR TAGS IN ALPHABETICAL ORDER
+# ALSO DOCUMENT WHAT THE HELL THEY DO
 
 ## A ##
 
@@ -6,16 +7,16 @@
   id: AccessBreakerImmune # This tag marks an entity as immune to emagging.
 
 - type: Tag
-  id: AirAlarm # Used in tandem with AtmosAlarmableComponent
+  id: AirAlarm # Used by AtmosAlarmableComponent for syncing devices
 
 - type: Tag
-  id: AirAlarmElectronics # construction graph: AirAlarm
+  id: AirAlarmElectronics # ConstructionGraph: AirAlarm
 
 - type: Tag
-  id: Airlock # construction graph: Airlock
+  id: Airlock # Used in ConstructionGraph "Airlock" to navigate between regular, glass, and highsec airlocks
 
 - type: Tag
-  id: AirSensor # Used in tandem with AtmosAlarmableComponent
+  id: AirSensor # Used by AtmosAlarmableComponent for syncing devices
 
 - type: Tag
   id: AllowBiomeLoading # Entities with this tag will load terrain, even if a ghost.
@@ -24,22 +25,22 @@
   id: AllowGhostShownByEvent # Used by GhostSystem to show ghosts (usually at round end)
 
 - type: Tag
-  id: Ambrosia # construction graph: flowerwreath
+  id: Ambrosia # ConstructionGraph: flowerwreath
 
 - type: Tag
-  id: AnomalyHost # Whitelisting for BaseAnomalyInjector
+  id: AnomalyHost # Targeting whitelist: BaseAnomalyInjector
 
 - type: Tag
-  id: AppraisalTool # Whitelisting for ClothingBeltUtility
+  id: AppraisalTool # Storage whitelist: ClothingBeltUtility
 
 - type: Tag
-  id: Apron # Construction graph: scraparmor
+  id: Apron # ConstructionGraph: scraparmor
 
 - type: Tag
-  id: Arrow # Whitelisting for ClothingBeltQuiver
+  id: Arrow # Storage whitelist: ClothingBeltQuiver
 
 - type: Tag
-  id: ArtifactFragment # Whitelisting for OreBag, BountyArtifactFragment. Construction graph: Artifact
+  id: ArtifactFragment # Storage whitelist: OreBag, CargoBounty: BountyArtifactFragment, ConstructionGraph: Artifact
 
 - type: Tag
   id: ATVKeys # Unused
@@ -47,166 +48,166 @@
 ## B ##
 
 - type: Tag
-  id: Backpack
+  id: Backpack # ConstructionGraph: ClothingBagPet
 
 - type: Tag
-  id: Balloon
+  id: Balloon # Used by BalloonPopperComponent/System to viciously maim helpless balloons
 
 - type: Tag
-  id: Banana
+  id: Banana # CargoBounty: BountyBanana
 
 - type: Tag
-  id: BananaPeel
+  id: BananaPeel # SpecialDigestible by OrganAnimalRuminantStomach, and several BananaClown ConstructionGraphs
 
 - type: Tag
-  id: Bandana
+  id: Bandana # CargoBounty: BountyBandana
 
 - type: Tag
-  id: BaseballBat
+  id: BaseballBat # CargoBounty: BountyBaseballBat
 
 - type: Tag
-  id: BBQsauce
+  id: BBQsauce # Storage whitelist: ClothingBeltChef and FoodCartHot, ItemMapper: ClothingBeltChef and FoodCartHot
 
 - type: Tag
-  id: Bedsheet
+  id: Bedsheet # CargoBounty: BountyBedsheet
 
 - type: Tag
-  id: Bee
+  id: Bee # Mode switch whitelisting for BuzzochloricBees (only damages non-bees)
 
 - type: Tag
-  id: Beer
+  id: Beer # CargoBounty: BountyBeer
 
 - type: Tag
-  id: BikeHorn
+  id: BikeHorn # ConstructionGraph: HonkBot, BananiumHorn
 
 - type: Tag
-  id: Bloodpack
+  id: Bloodpack # Storage whitelist: ClothingBeltMedical
 
 - type: Tag
-  id: BlueprintAutolathe
+  id: BlueprintAutolathe # Whitelist on BlueprintReceiverComponent on the autolate for linking this entity's BlueprintComponent
 
 - type: Tag
-  id: BodyBag
+  id: BodyBag # Storage whitelist: BoxBodyBag # TODO cardboard boxes shouldn't have whitelisting
 
 - type: Tag
-  id: Boll
+  id: Boll # MaterialStorage whitelist: Sheetifier
 
 - type: Tag
-  id: Book
+  id: Book # Storage whitelist: BorgModuleService, BooksBag, Bookshelf. Blacklisting on various entities whitelisting PaperComponent
 
 - type: Tag
-  id: BorgArm
+  id: BorgArm # ConstructionGraphs for various bots
 
 - type: Tag
-  id: BorgHead
+  id: BorgHead # Used by PartAssemblyComponent on CyborgEndoskeleton. Also in ConstructionGraphs for various bots
 
 - type: Tag
-  id: BorgLArm
+  id: BorgLArm # Used by PartAssemblyComponent on CyborgEndoskeleton
 
 - type: Tag
-  id: BorgLLeg
+  id: BorgLLeg # Used by PartAssemblyComponent on CyborgEndoskeleton
 
 - type: Tag
-  id: BorgRArm
+  id: BorgRArm # Used by PartAssemblyComponent on CyborgEndoskeleton
 
 - type: Tag
-  id: BorgRLeg
+  id: BorgRLeg # Used by PartAssemblyComponent on CyborgEndoskeleton
 
 - type: Tag
-  id: BorgTorso
+  id: BorgTorso # Used by PartAssemblyComponent on CyborgEndoskeleton
 
 - type: Tag
-  id: BorgLeg
+  id: BorgLeg # Used by PartAssemblyComponent on VimHarness
 
 - type: Tag
-  id: BorgModuleCargo
+  id: BorgModuleCargo # Cyborg module category for salvage and cargo
 
 - type: Tag
-  id: BorgModuleEngineering
+  id: BorgModuleEngineering # Cyborg module category for engineers and saboteurs
 
 - type: Tag
-  id: BorgModuleGeneric
+  id: BorgModuleGeneric # Cyborg module category for general purpose
 
 - type: Tag
-  id: BorgModuleJanitor
+  id: BorgModuleJanitor # Cyborg module category for janitors
 
 - type: Tag
-  id: BorgModuleMedical
+  id: BorgModuleMedical # Cyborg module category for doctors
 
 - type: Tag
-  id: BorgModuleScience
+  id: BorgModuleScience # Cyborg module category for scientists
 
 - type: Tag
-  id: BorgModuleService
+  id: BorgModuleService # Cyborg module category for bartenders, botanists, and more
 
 - type: Tag
-  id: BorgModuleSyndicate
+  id: BorgModuleSyndicate # Cyborg module category for evil red robots
 
 - type: Tag
-  id: BorgModuleSyndicateAssault
+  id: BorgModuleSyndicateAssault # Cyborg module category for extra evil red robots (nukies)
 
 - type: Tag
-  id: Bot
+  id: Bot # Unused
 
 - type: Tag
-  id: BotanyHatchet
+  id: BotanyHatchet # Storage whitelist: ClothingBeltPlant, ItemMapper: ClothingBeltPlant
 
 - type: Tag
-  id: BotanyHoe
+  id: BotanyHoe # Storage whitelist: ClothingBeltPlant, ItemMapper: ClothingBeltPlant
 
 - type: Tag
-  id: BotanyShovel
+  id: BotanyShovel # Storage whitelist: ClothingBeltPlant, ItemMapper: ClothingBeltPlant
+
+- type: Tag # Used for specifically chemistry bottles
+  id: Bottle # Storage whitelist: ChemMaster, ChemBag, SmartFridge, ClothingBeltJanitor, ClothingBeltMedical, ClothingBeltPlant
 
 - type: Tag
-  id: Bottle
+  id: BoxCardboard # CargoBounty: BountyCardboardBox
 
 - type: Tag
-  id: BoxCardboard
+  id: BoxHug # Unused
 
 - type: Tag
-  id: BoxHug
+  id: Brain # Storage whitelist: MMI. CargoBounty: BountyBrain. FoodSequenceElement: Brain
 
 - type: Tag
-  id: Brain
+  id: BrassInstrument # MachineBoard construction: DawInstrumentMachineCircuitboard
 
 - type: Tag
-  id: BrassInstrument
+  id: Bread # CargoBounty: BountyBread. Blacklisted in BountyFruit and BountyVegetable
 
 - type: Tag
-  id: Bread
+  id: Briefcase # Unused
 
 - type: Tag
-  id: Briefcase
+  id: BrimFlatcapBrown # ConstructionGraph: BladedFlatcapBrown
 
 - type: Tag
-  id: BrimFlatcapBrown
+  id: BrimFlatcapGrey # ConstructionGraph: BladedFlatcapGrey
 
 - type: Tag
-  id: BrimFlatcapGrey
+  id: Brutepack # Storage whitelist: ClothingBeltMedical
 
 - type: Tag
-  id: Brutepack
+  id: Bucket # Storage whitelist: JanitorialTrolley. ItemMapper: JanitorialTrolley. ConstructionGraph: CleanBot, scraphelmet
 
 - type: Tag
-  id: Bucket
+  id: Burger # Unused x2 (this is the only place burger tag exists)
 
 - type: Tag
-  id: Burger
+  id: BulletFoam # BallisticAmmoProviderComponent whitelist for WeaponRifleFoam, FoamCrossbow, MagazineFoamBox, BoxDonkSoftBox
 
 - type: Tag
-  id: BulletFoam
+  id: Burnt # Storage whitelist: ashtray. Seemingly redundant
 
 - type: Tag
-  id: Burnt
+  id: Bun # FoodSequenceElement: BunTopBurger, CottonBunTopBurger
 
 - type: Tag
-  id: Bun
+  id: BypassDropChecks # Entities with this tag don't care about drop distance or walls (Aghost)
 
 - type: Tag
-  id: BypassDropChecks
-
-- type: Tag
-  id: BypassInteractionRangeChecks
+  id: BypassInteractionRangeChecks # Entities with this tag don't care about distance or walls when touching things (Aghost)
 
 ## C ##
 
