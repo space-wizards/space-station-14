@@ -126,7 +126,6 @@
         effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 2
-        refresh: false
 
 # Ratvar Holy Water
 - type: reagent
