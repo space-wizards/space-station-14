@@ -69,7 +69,7 @@
   - type: RequireProjectileTarget
 
 - type: entity
-  parent: BaseItemRecharger
+  parent: [ BaseItemRecharger, BaseItem ]
   id: PowerCellRecharger
   name: cell recharger
   description: An older model recharger that can recharge power cells.
@@ -155,7 +155,7 @@
     price: 500
 
 - type: entity
-  parent: BaseItemRecharger
+  parent: [ BaseItemRecharger, BaseItem ]
   id: WeaponCapacitorRecharger
   name: recharger
   description: A modern recharging station that can fit both power cells and small electronic devices.
@@ -182,7 +182,7 @@
   - type: MultiHandedItem
 
 - type: entity
-  parent: BaseItemRecharger
+  parent: [ BaseItemRecharger, BaseItem ]
   id: TurboItemRecharger
   name: turbo recharger
   description: An overclocked recharger. Not recommended for use around asthmatics.
