@@ -1,6 +1,13 @@
-<DefaultWindow xmlns="https://spacestation14.io"
-            xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
-    <BoxContainer Orientation="Vertical" SeparationOverride="5">
+<ui:FancyWindow xmlns="https://spacestation14.io"
+                xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                SetSize="450 200">
+    <BoxContainer Margin="4 0" Orientation="Vertical" SeparationOverride="5">
+        <BoxContainer Orientation="Vertical" Margin="5 5 5 0">
+            <Label Name="NowPlayingLabel" Text="Ready to Play" HorizontalAlignment="Center" StyleClasses="LabelBig" />
+            <Label Name="StatusLabel" Text="⏸ Ready" HorizontalAlignment="Center" />
+        </BoxContainer>
+        <PanelContainer StyleClasses="LowDivider" />
         <BoxContainer Orientation="Horizontal" VerticalExpand="True">
             <Button Name="InputButton" ToggleMode="True" Text="{Loc 'instruments-component-menu-input-button'}" TextAlign="Center"
                     HorizontalExpand="True" SizeFlagsStretchRatio="1" />
@@ -11,6 +18,7 @@
             <Button Name="FileButton" Text="{Loc 'instruments-component-menu-play-button'}" TextAlign="Center" HorizontalExpand="True"
                     SizeFlagsStretchRatio="1" />
         </BoxContainer>
+        <PanelContainer StyleClasses="LowDivider" />
         <BoxContainer Orientation="Horizontal" VerticalExpand="True">
             <Button Name="LoopButton" ToggleMode="True" Text="{Loc 'instruments-component-menu-loop-button'}" TextAlign="Center" HorizontalExpand="True"
                     SizeFlagsStretchRatio="1" />
@@ -21,10 +29,9 @@
             <Button Name="StopButton" Text="{Loc 'instruments-component-menu-stop-button'}" TextAlign="Center" HorizontalExpand="True"
                     SizeFlagsStretchRatio="1" />
         </BoxContainer>
-        <BoxContainer Orientation="Horizontal" VerticalExpand="True">
-            <Control HorizontalExpand="True" SizeFlagsStretchRatio="0.125" />
+        <BoxContainer Orientation="Vertical" Margin="5 5 5 5">
             <Slider Name="PlaybackSlider" HorizontalExpand="True" />
-            <Control HorizontalExpand="True" SizeFlagsStretchRatio="0.125" />
+            <Label Name="DurationLabel" Text="00:00 / 00:00" HorizontalAlignment="Center" Margin="0 2 0 0" />
         </BoxContainer>
     </BoxContainer>
     <PanelContainer Name="UnavailableOverlay" Visible="False" MouseFilter="Stop">
@@ -35,4 +42,4 @@
                StyleClasses="LabelBig"
                Text="{Loc instruments-component-menu-no-midi-support}" />
     </PanelContainer>
-</DefaultWindow>
+</ui:FancyWindow>

@@ -322,6 +322,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             return false;
         }
 
+        instrument.MidiSongName = null;
         EndRenderer(uid, fromStateChange, instrument);
         return true;
     }
