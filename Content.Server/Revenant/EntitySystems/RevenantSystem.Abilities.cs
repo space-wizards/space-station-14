@@ -138,7 +138,7 @@ public sealed partial class RevenantSystem
                 break;
         }
         _popup.PopupEntity(Loc.GetString(message, ("target", args.Args.Target)), args.Args.Target.Value, uid, PopupType.Medium);
-
+        _popup.PopupEntity(Loc.GetString("revenant-spine-chill", ("target", args.Args.Target)), args.Args.Target.Value, args.Args.Target.Value, PopupType.Small);
         args.Handled = true;
     }
 
