@@ -43,6 +43,8 @@ public sealed partial class CharacterRecordViewer : FancyWindow
     private CriminalRecord? _currentCriminalRecord;
     private bool _securityHistoryEditable;
     private int? _selectedHistoryIndex;
+    private (SecurityStatus, string?)? _lastSecurityStatus;
+    private int? _lastShiftHistoryCount;
 
     /// <summary>
     /// The key to the record of the currently selected item in the listing.
@@ -259,9 +261,13 @@ public sealed partial class CharacterRecordViewer : FancyWindow
 
         var isSecurityConsole = _type == RecordConsoleType.Security || _type == RecordConsoleType.Admin;
         CurrentShiftContainer.Visible = isSecurityConsole;
+        CurrentShiftDivider.Visible = isSecurityConsole;
         RecordEntryListLabel.Visible = isSecurityConsole;
         if (!isSecurityConsole)
+        {
+            _lastSecurityStatus = null;
             UpdateSecurityHistory(null);
+        }
 
         // Disable listing if we don't have one selected
         if (state.CharacterList == null)
@@ -355,8 +361,12 @@ public sealed partial class CharacterRecordViewer : FancyWindow
 
         // Do not needlessly reload the record if not needed. This is mainly done to prevent a bug in the admin record viewer
         // AND the admin record filter.
-        if (state.SelectedIndex == _openRecordKey && _filtersChanged == false)
+        var sameRecord = state.SelectedIndex == _openRecordKey;
+        var sameStatus = _lastSecurityStatus == state.SelectedSecurityStatus;
+        var sameHistoryCount = _lastShiftHistoryCount == state.SelectedCriminalRecord?.History.Count;
+        if (sameRecord && !_filtersChanged && sameStatus && sameHistoryCount)
             return;
+
         _openRecordKey = state.SelectedIndex;
 
         var record = state.SelectedRecord!;
@@ -465,6 +475,7 @@ public sealed partial class CharacterRecordViewer : FancyWindow
             RecordContainerWantedReason.Visible = reason != null;
         }
 
+        _lastSecurityStatus = criminal;
         UpdateSecurityHistory(criminalRecord);
     }
 
@@ -485,6 +496,7 @@ public sealed partial class CharacterRecordViewer : FancyWindow
         }
 
         CurrentShiftEmpty.Visible = criminalRecord == null || criminalRecord.History.Count == 0;
+        _lastShiftHistoryCount = criminalRecord?.History.Count;
         UpdateHistoryButtons();
     }
 
