@@ -1,5 +1,7 @@
 # PUT YOUR TAGS IN ALPHABETICAL ORDER
 
+## A ##
+
 - type: Tag
   id: AccessBreakerImmune
 
@@ -41,6 +43,8 @@
 
 - type: Tag
   id: ATVKeys
+
+## B ##
 
 - type: Tag
   id: Backpack
@@ -203,6 +207,8 @@
 
 - type: Tag
   id: BypassInteractionRangeChecks
+
+## C ##
 
 - type: Tag
   id: CableCoil
@@ -440,6 +446,8 @@
 - type: Tag
   id: CubanCarp
 
+## D ##
+
 - type: Tag
   id: DeathAcidifier
 
@@ -509,6 +517,8 @@
 - type: Tag
   id: Duck
 
+## E ##
+
 - type: Tag
   id: Ectoplasm
 
@@ -556,6 +566,14 @@
 
 - type: Tag
   id: ExplosivePassable
+
+## F ##
+
+- type: Tag
+  id: FakeMindShieldImplant
+
+- type: Tag
+  id: FakeNukeDisk
 
 - type: Tag
   id: Figurine
@@ -614,6 +632,8 @@
 - type: Tag
   id: Fruit
 
+## G ##
+
 - type: Tag
   id: Galaxythistle
 
@@ -670,12 +690,6 @@
   id: GrenadeFlashBang
 
 - type: Tag
-  id: HudMedical
-
-- type: Tag
-  id: HudSecurity
-
-- type: Tag
   id: GuideEmbeded
 
 - type: Tag
@@ -686,6 +700,8 @@
 
 - type: Tag
   id: GunUpgradeReloadSpeed
+
+## H ##
 
 - type: Tag
   id: Hamster
@@ -793,6 +809,14 @@
   id: Hotsauce
 
 - type: Tag
+  id: HudMedical
+
+- type: Tag
+  id: HudSecurity
+
+## I ##
+
+- type: Tag
   id: Ice
 
 - type: Tag
@@ -822,8 +846,12 @@
 - type: Tag
   id: InvalidForSurvivorAntag
 
+## J ##
+
 - type: Tag
   id: JawsOfLife
+
+## K ##
 
 - type: Tag
   id: Kangaroo
@@ -846,6 +874,8 @@
 - type: Tag
   id: KnockdownImmune
 
+## L ##
+
 - type: Tag
   id: LavaBrig
 
@@ -857,6 +887,8 @@
 
 - type: Tag
   id: Lime
+
+## M ##
 
 - type: Tag
   id: Machete
@@ -956,9 +988,6 @@
   id: MimeHappyHonk
 
 - type: Tag
-  id: FakeMindShieldImplant
-
-- type: Tag
   id: MindTransferTarget
 
 - type: Tag
@@ -991,6 +1020,8 @@
 - type: Tag
   id: Mushroom
 
+## N ##
+
 - type: Tag
   id: NoBlockAnchoring
 
@@ -1004,10 +1035,9 @@
   id: Nugget # for chicken nuggets
 
 - type: Tag
-  id: FakeNukeDisk
-
-- type: Tag
   id: NukeOpsUplink
+
+## O ##
 
 - type: Tag
   id: Ointment
@@ -1029,6 +1059,8 @@
 
 - type: Tag
   id: OreUranium
+
+## P ##
 
 - type: Tag
   id: Packet
@@ -1159,8 +1191,12 @@
 - type: Tag
   id: ProximitySensor
 
+## Q ##
+
 - type: Tag
   id: QuantumSpinInverter
+
+## R ##
 
 - type: Tag
   id: Radio
@@ -1216,6 +1252,8 @@
 
 - type: Tag
   id: Ruminant
+
+## S ##
 
 - type: Tag
   id: SaltShaker
@@ -1391,6 +1429,8 @@
 - type: Tag
   id: Spellbook
 
+## T ##
+
 - type: Tag
   id: TabletopBoard
 
@@ -1448,6 +1488,8 @@
 - type: Tag
   id: TurretControlElectronics # Used in the construction of sentry turret control panels
 
+## U ##
+
 - type: Tag
   id: Unimplantable
 
@@ -1463,6 +1505,8 @@
 - type: Tag
   id: UtilityKnife
 
+## V ##
+
 - type: Tag
   id: Vegetable
 
@@ -1474,6 +1518,8 @@
 
 - type: Tag
   id: VoiceTrigger
+
+## W ##
 
 - type: Tag
   id: Wall
@@ -1550,6 +1596,8 @@
 - type: Tag
   id: WriteIgnoreStamps
 
+## X ##
+
 - type: Tag
   id: XenoborgModuleEngi
 
@@ -1564,4 +1612,7 @@
 
 - type: Tag
   id: XenoborgModuleStealth
+
+## Y ##
+## Z ##
 # ALPHABETICAL
