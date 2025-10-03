@@ -62,8 +62,8 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             RaffleMaxDuration.ValueChanged += OnRaffleDurationChanged;
 
 
-            RaffleButton.AddItem(Loc.GetString("make-ghost-roles-window-raffle-not"), RaffleDontRaffleId);
-            RaffleButton.AddItem(Loc.GetString("make-ghost-roles-window-raffle-custom-settings"), RaffleCustomRaffleId);
+            RaffleButton.AddItem(Loc.GetString("make-ghost-roles-window-raffle-not-button"), RaffleDontRaffleId);
+            RaffleButton.AddItem(Loc.GetString("make-ghost-roles-window-raffle-custom-settings-button"), RaffleCustomRaffleId);
 
             var raffleProtos =
                 _prototypeManager.EnumeratePrototypes<GhostRoleRaffleSettingsPrototype>();

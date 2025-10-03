@@ -11,6 +11,8 @@ credits-window-codebases-section-title = Space Station 13 Codebases
 credits-window-original-remake-team-section-title = Original Space Station 13 Remake Team
 credits-window-immortals-title = In Memoriam
 credits-window-special-thanks-section-title = Special Thanks
+credits-window-previous-page-button = Previous Page
+credits-window-next-page-button = Next Page
 
 credits-window-attributions-directory = [color=white]Directory:[/color] {$directory}
 credits-window-attributions-files = [color=white]Files:[/color] {$files}
@@ -18,5 +20,3 @@ credits-window-attributions-copyright = [color=white]Copyright:[/color] {$copyri
 credits-window-attributions-license = [color=white]License:[/color] {$license}
 credits-window-attributions-source = [color=white]Source:[/color] {$source}
 credits-window-attributions-failed = [color=red]Failed to read file:[/color] {$file}
-credits-window-previous-page = Previous Page
-credits-window-next-page = Next Page
