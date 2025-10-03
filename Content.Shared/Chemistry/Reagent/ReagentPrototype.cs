@@ -9,6 +9,7 @@ using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Contraband;
 using Content.Shared.EntityEffects;
 using Content.Shared.Database;
+using Content.Shared.Localizations;
 using Content.Shared.Nutrition;
 using Content.Shared.Prototypes;
 using Content.Shared.Roles;
@@ -218,11 +219,11 @@ namespace Content.Shared.Chemistry.Reagent
     {
         public string ReagentPrototype;
 
+        // TODO: Kill Metabolism groups!
         public Dictionary<ProtoId<MetabolismGroupPrototype>, ReagentEffectsGuideEntry>? GuideEntries;
 
         public List<string>? PlantMetabolisms = null;
 
-        // TODO: Move some of the localization up a level. Metabolism data should not be in the effect itself but instead up here.
         public ReagentGuideEntry(ReagentPrototype proto, IPrototypeManager prototype, IEntitySystemManager entSys)
         {
             ReagentPrototype = proto.ID;
@@ -232,7 +233,7 @@ namespace Content.Shared.Chemistry.Reagent
             if (proto.PlantMetabolisms.Count > 0)
             {
                 PlantMetabolisms = new List<string>(proto.PlantMetabolisms
-                    .Select(x => x.GuidebookEffectDescription(prototype, entSys))
+                    .Select(x => x.GuidebookEffectDescription(prototype, entSys, "guidebook-reagent-effect-description"))
                     .Where(x => x is not null)
                     .Select(x => x!)
                     .ToArray());
@@ -258,11 +259,13 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("effects", required: true)]
         public EntityEffect[] Effects = default!;
 
+        public string EntityEffectFormat => "guidebook-reagent-effect-description";
+
         public ReagentEffectsGuideEntry MakeGuideEntry(IPrototypeManager prototype, IEntitySystemManager entSys)
         {
             return new ReagentEffectsGuideEntry(MetabolismRate,
                 Effects
-                    .Select(x => x.GuidebookEffectDescription(prototype, entSys)) // hate.
+                    .Select(x => x.GuidebookEffectDescription(prototype, entSys, EntityEffectFormat)) // hate.
                     .Where(x => x is not null)
                     .Select(x => x!)
                     .ToArray());

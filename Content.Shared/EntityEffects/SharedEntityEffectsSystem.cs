@@ -204,17 +204,14 @@ public abstract partial class EntityEffect
     /// </summary>
     protected virtual string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => null;
 
-    // TODO: Move this to reagent prototype?
-    public virtual string EntityEffectFormat => "guidebook-reagent-effect-description";
-
-    public virtual string? GuidebookEffectDescription(IPrototypeManager prototype, IEntitySystemManager entSys)
+    public string? GuidebookEffectDescription(IPrototypeManager prototype, IEntitySystemManager entSys, string locFormat)
     {
         if (EntityEffectGuidebookText(prototype, entSys) is not { } effect)
             return null;
 
-        // TODO: Min Scale and EntityConditions!!!
+        // TODO: Min Scale!!!
         return Loc.GetString(
-            EntityEffectFormat,
+            locFormat,
             ("effect", effect),
             ("chance", Probability),
             ("conditionCount", Conditions?.Length ?? 0),
