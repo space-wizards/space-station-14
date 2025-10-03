@@ -19,7 +19,7 @@
 
   Artifacts contain [bold]nodes[/bold] arranged in [bold]layers[/bold].
   - Unlocking a node unlocks connected nodes on upper layers.
-  - Each node has [bold]triggers[/bold], actions that must be performed near the artifact to unlock a node.
+  - Each node have [bold]triggers[/bold], actions that must be performed near the artifact to unlock a node.
   - When a node is unlocked, its [bold]effect[/bold] will trigger, and the node becomes [bold][color=plum]Active[/color][/bold].
   - Each node has [bold]durability[/bold]: the number of times it can be manually activated after being unlocked.
   - Higher nodes are harder to reach but give more [bold]research points[/bold].
