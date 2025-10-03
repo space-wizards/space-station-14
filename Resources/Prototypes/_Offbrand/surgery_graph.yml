@@ -128,7 +128,7 @@
         min: 1
       completed:
       - !type:ChangeHeartDamage
-        amount: -5
+        amount: -10
       steps:
       - material: Suture
         amount: 1
@@ -137,7 +137,7 @@
       conditions: *heart-damage-conditions
       completed:
       - !type:ChangeHeartDamage
-        amount: -10
+        amount: -20
       steps:
       - material: MedicatedSuture
         amount: 1
@@ -173,7 +173,7 @@
         min: 1
       completed:
       - !type:ChangeLungDamage
-        amount: -5
+        amount: -10
       steps:
       - material: Suture
         amount: 1
@@ -182,7 +182,7 @@
       conditions: *lung-damage-conditions
       completed:
       - !type:ChangeLungDamage
-        amount: -10
+        amount: -20
       steps:
       - material: MedicatedSuture
         amount: 1

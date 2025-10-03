@@ -513,12 +513,12 @@
         - !type:MetaboliteThreshold
           min: 15
       - !type:ModifyHeartDamage
-        amount: 0.1
+        amount: 0.2
         conditions:
         - !type:MetaboliteThreshold
           min: 15
       - !type:ModifyLungDamage
-        amount: 0.1
+        amount: 0.2
         conditions:
         - !type:MetaboliteThreshold
           min: 15

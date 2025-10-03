@@ -165,12 +165,12 @@
       metabolismRate: 0.05
       effects:
       - !type:ModifyHeartDamage
-        amount: -0.2
+        amount: -0.4
         conditions:
         - !type:HeartDamage
-          max: 25
+          max: 50
       - !type:ModifyLungDamage
-        amount: -0.2
+        amount: -0.4
         conditions:
         - !type:LungDamage
           max: 50
@@ -212,7 +212,7 @@
           max: 170.0
       effects:
       - !type:ModifyHeartDamage
-        amount: -0.3
+        amount: -0.6
         conditions:
         - !type:Temperature
           max: 170.0

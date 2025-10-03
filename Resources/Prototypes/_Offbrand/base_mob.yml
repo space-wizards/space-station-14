@@ -151,13 +151,13 @@
   - type: Heartrate
     asphyxiationDamage: Asphyxiation
     asphyxiationThreshold: 100
-    maxDamage: 50
+    maxDamage: 100
     damage: 0
     strainDamageThresholds:
-      1: [0.04, 0.05]
-      2: [0.1, 0.05]
-      3: [0.3, 0.05]
-      4: [0.4, 1]
+      1: [0.04, 0.1]
+      2: [0.1, 0.1]
+      3: [0.3, 0.1]
+      4: [0.4, 2]
     circulationStrainModifierCoefficient: 0.075
     circulationStrainModifierConstant: 1.025
     stoppedBloodCirculationModifier: 0.2
@@ -207,10 +207,10 @@
     thresholds:
     - damageTypes: [Slash, Blunt, Piercing]
       minimumTotalDamage: 200
-      conversionFactor: 0.3
+      conversionFactor: 0.6
     - damageTypes: [Heat, Cold, Caustic, Shock]
       minimumTotalDamage: 200
-      conversionFactor: 0.3
+      conversionFactor: 0.6
 
 - type: entity
   abstract: true

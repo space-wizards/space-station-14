@@ -198,7 +198,7 @@
           max: 213.0
       effects:
       - !type:ModifyHeartDamage
-        amount: -0.15
+        amount: -0.3
         conditions:
         - !type:Temperature
           max: 213.0
