@@ -26,6 +26,7 @@
     tags:
     - Recyclable
     - SalvageScrap
+  - type: StatusIconNonMob
 
 - type: entity
   parent: BaseStructure
@@ -66,6 +67,7 @@
           - MachineMask
         layer:
           - MachineLayer
+  - type: StatusIconNonMob
 
 - type: entity
   parent: BaseScrap

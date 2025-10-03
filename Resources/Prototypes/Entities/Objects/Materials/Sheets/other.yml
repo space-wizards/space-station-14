@@ -27,6 +27,7 @@
     solutions:
       paper:
         canReact: false
+  - type: StatusIconNonMob
 
 - type: entity
   parent: SheetOtherBase

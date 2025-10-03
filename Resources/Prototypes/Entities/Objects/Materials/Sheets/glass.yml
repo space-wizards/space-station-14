@@ -49,6 +49,7 @@
     solutions:
       glass:
         canReact: false
+  - type: StatusIconNonMob
 
 - type: entity
   parent: SheetGlassBase
