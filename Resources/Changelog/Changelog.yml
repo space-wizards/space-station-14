@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: mrjajkes
-  changes:
-  - message: Add Blatantly Nuclear as a Nuke Song.
-    type: Add
-  id: 8517
-  time: '2025-05-18T07:30:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35927
 - author: metalgearsloth
   changes:
   - message: Shuttles now are treated as rooved for daylight.
@@ -3960,3 +3953,10 @@
   id: 9027
   time: '2025-10-02T22:47:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36597
+- author: PJB3005
+  changes:
+  - message: You can stuff the nuke disk in plushies now.
+    type: Tweak
+  id: 9028
+  time: '2025-10-03T09:53:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40674
