@@ -149,7 +149,6 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
 
     private void OnComponentInit(Entity<BatteryWeaponFireModesComponent> ent, ref ComponentInit args)
     {
-
         ent.Comp.CurrentFireMode = 0;
         Dirty(ent);
         var fireMode = ent.Comp.FireModes[ent.Comp.CurrentFireMode];

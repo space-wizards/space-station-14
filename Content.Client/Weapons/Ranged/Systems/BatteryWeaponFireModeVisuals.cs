@@ -67,8 +67,6 @@ public sealed partial class GunSystem
 
     private void OnGetEquipmentVisuals(Entity<BatteryWeaponFireModesComponent> ent, ref GetEquipmentVisualsEvent args)
     {
-        Log.Debug(ent.Comp.ClothingVisuals.Count.ToString());
-
         if (!TryComp(ent.Owner, out AppearanceComponent? appearance))
             return;
 
