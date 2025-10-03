@@ -133,8 +133,6 @@ public sealed partial class RequirementsSelector : BoxContainer
         }
         if (requiremenets_short.Count > 0)
             _requirementsLabel.SetMessage(requiremenets_short);
-        else
-            _requirementsLabel.SetMessage(FormattedMessage.FromUnformatted("ERROR: LOCKED, BUT NO DATA."));
         _lockStripe.TooltipSupplier = _ => tooltip;
         _lockStripe.Visible = true;
         _options.Visible = false;
