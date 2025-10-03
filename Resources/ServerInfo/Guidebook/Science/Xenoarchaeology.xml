@@ -48,21 +48,27 @@
     <GuideEntityEmbed Entity="ArtifactFragment" Caption="Artifact Fragment"/>
   </Box>
   ## Unlocking Nodes
-  1. Select a node on the [bold]Analysis Console[/bold] to check its trigger and effect.
+  - Select a node on the [bold]Analysis Console[/bold] to check its triggers and effects.
+  - Perform the [bold]triggers[/bold] listed in the console. Some require direct interaction with the artifact, while others may only need the correct environment or a specific action performed nearby. When a trigger is successfully performed, the artifact will respond with the message: [italic]"It begins to shift in strange ways..."[/italic]. The [bold]Node Scanner[/bold] will then indicate which specific node was triggered.
 
-  2. Perform the [bold]triggers[/bold] listed in the Analysis Console. Some require direct interaction with the artifact, while others may only need the correct environment or a specific action performed nearby. When a trigger is successfully activated, the artifact will respond with the message: [italic]"It begins to shift in strange ways..."[/italic]. The [bold]Node Scanner[/bold] will then indicate which specific node was triggered.
+  Some nodes require multiple triggers to be performed before they can be unlocked. Once all required triggers are completed, the artifact will respond with the message: [italic]"It slows down, visibly changed."[/italic], and the node will appear as [bold][color=plum]Active[/color][/bold] on the Console.
 
-  3. Some nodes may require multiple triggers to be performed before they activate. Once all required triggers for a node are completed, the artifact will respond with the message: [italic]"It slows down, visibly changed."[/italic]. The node will then appear as [bold][color=plum]Active[/color][/bold] on the Console and can be manually activated by interacting with the artifact.
+  Artifacts enter an unlocking state after the first trigger is met. During this state, remaining triggers must be completed. The unlocking window initially lasts a few seconds and resets each time a new trigger is activated. This window grows longer with each additional node unlocked, giving more time to complete further triggers.
 
-  After an artifact’s first trigger is met, it enters an unlocking state during which remaining triggers must be performed. The initial unlocking window lasts a few seconds and resets each time a new trigger is activated. With each subsequent node unlocked, this window grows longer, giving more time to complete additional triggers.
+  If an artifact fails to activate, it will stop resonating and display the message: [italic]"It slows down before uneventfully stopping."[/italic]. After this, it enters a cooldown period before it can be activated again.
 
-  If an artifact's activation fails, it will stop resonating with the message: [italic]"It slows down before uneventfully stopping."[/italic] After this, the artifact enters a cooldown period before it can be activated again.
+  The order of trigger activation [bold]does not matter[/bold] for individual nodes. [italic]However[/italic], some triggers affect multiple nodes. As a rule of thumb, start with a trigger that is unique to the node you want to unlock. Activating a trigger for a different node during this phase prevents the target node from unlocking until the artifact’s cooldown ends.
 
-  The order of trigger activation [bold]does not matter[/bold] for individual nodes. [italic]However[/italic], some triggers affect multiple nodes. As a rule of thumb, start with a trigger that is unique to the node you want to unlock.
+  [bold]Artifexium:[/bold] This reagent can also be used to unlock nodes directly, bypassing some or all trigger requirements.
 
-  Be aware that if you activate a trigger belonging to a different node during this unlocking phase, the target node cannot be unlocked until the artifact’s cooldown ends.
+  ## Active Nodes
+  Once unlocked, a node is considered active. Only the highest unlocked nodes in a tree’s layer are activatable, lower nodes in the same tree cannot be triggered if a higher node is active.
+
+  Artifacts often have multiple trees. Layer precedence applies within each tree, but different trees operate independently. This means nodes in different trees can be activated simultaneously as long as they are the highest unlocked nodes in their respective trees.
 
   [bold]Manual activation triggers all unlocked nodes at once and consumes durability.[/bold]
+
+  [bold]Artifact Glue:[/bold] Splashing this reagent on an artifact restores the durability of all active nodes, allowing them to be manually activated again.
 
   ## Analysis Console Interface
   Analysis console interface will display data for each node you select in tree, this data includes:
