@@ -129,7 +129,7 @@ public sealed partial class RevenantComponent : Component
     #endregion
 
     //Revenants actually have a good reason to flash the lights and spook the crew now, at the cost of showing themselves briefly
-    //Clicking a light flashes it as if a spectator ghost is using it's haunt ability (existing behavior). Now, it also briefly reveals the revenant and gives them an essence point
+    //Clicking a light flashes it as if a spectator ghost is using it's haunt ability (existing behavior). Now, it also gives them an essence point
     #region Flash Lights Ability
     ///<summary>
     /// The amount that is given to the revenant each time it flashes a light
