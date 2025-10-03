@@ -1,25 +1,44 @@
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Crayon
 {
-
     /// <summary>
     /// Component holding the state of a crayon-like component
     /// </summary>
-    [NetworkedComponent, ComponentProtoName("Crayon"), Access(typeof(SharedCrayonSystem))]
-    public abstract partial class SharedCrayonComponent : Component
+    [RegisterComponent, NetworkedComponent, ComponentProtoName("Crayon"), Access(typeof(SharedCrayonSystem)), AutoGenerateComponentState(fieldDeltas: true)]
+    public sealed partial class CrayonComponent : Component
     {
         /// <summary>
         /// The ID of currently selected decal prototype that will be placed when the crayon is used
         /// </summary>
-        public string SelectedState { get; set; } = string.Empty;
+        [AutoNetworkedField]
+        public string SelectedState;
 
         /// <summary>
         /// Color with which the crayon will draw
         /// </summary>
-        [DataField("color")]
+        [DataField]
         public Color Color;
+
+        /// <summary>
+        /// Play a sound when drawing if specified
+        /// </summary>
+        [DataField]
+        public SoundSpecifier? UseSound;
+
+        /// <summary>
+        /// Is the color valid
+        /// </summary>
+        [DataField]
+        public bool SelectableColor;
+
+        /// <summary>
+        /// Should the crayon be deleted when all charges are consumed
+        /// </summary>
+        [DataField]
+        public bool DeleteEmpty = true;
 
         [Serializable, NetSerializable]
         public enum CrayonUiKey : byte
@@ -78,15 +97,11 @@ namespace Content.Shared.Crayon
     {
         public readonly Color Color;
         public readonly string State;
-        public readonly int Charges;
-        public readonly int Capacity;
 
-        public CrayonComponentState(Color color, string state, int charges, int capacity)
+        public CrayonComponentState(Color color, string state)
         {
             Color = color;
             State = state;
-            Charges = charges;
-            Capacity = capacity;
         }
     }
 
