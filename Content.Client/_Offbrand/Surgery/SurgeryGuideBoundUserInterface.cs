@@ -17,9 +17,14 @@ public sealed class SurgeryGuideBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
+        if (!EntMan.TryGetComponent<SurgeryGuideTargetComponent>(Owner, out var comp))
+            return;
+
         _menu = this.CreateWindow<SurgeryGuideMenu>();
+        _menu.Category = comp.Category;
         _menu.OnSurgerySelected += OnSurgerySelected;
         _menu.OnCleanUp += OnCleanUp;
+        _menu.Populate();
     }
 
     private void OnSurgerySelected(ProtoId<ConstructionPrototype> surgery)

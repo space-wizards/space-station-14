@@ -329,7 +329,7 @@ namespace Content.Shared.Chemistry.Reagent
 
         public string? Describe(IPrototypeManager prototype, IEntitySystemManager entSys)
         {
-            if (!prototype.TryIndex(StatusEffect, out var effectProtoData))
+            if (!prototype.Resolve(StatusEffect, out var effectProtoData))
                 return null;
 
             return Loc.GetString("reagent-guidebook-status-effect", ("effect", effectProtoData.Name ?? string.Empty),

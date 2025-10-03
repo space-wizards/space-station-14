@@ -42,7 +42,7 @@ public sealed partial class BrainDamageSystem : EntitySystem
         var notifDamage = new AfterBrainDamageChanged();
         RaiseLocalEvent(ent, ref notifDamage);
 
-        var overlays = new PotentiallyUpdateDamageOverlay(ent);
+        var overlays = new bPotentiallyUpdateDamageOverlayEventb(ent);
         RaiseLocalEvent(ent, ref overlays, true);
     }
 
@@ -97,7 +97,7 @@ public sealed partial class BrainDamageSystem : EntitySystem
         var notifDamage = new AfterBrainDamageChanged();
         RaiseLocalEvent(ent, ref notifDamage);
 
-        var overlays = new PotentiallyUpdateDamageOverlay(ent);
+        var overlays = new bPotentiallyUpdateDamageOverlayEventb(ent);
         RaiseLocalEvent(ent, ref overlays, true);
     }
 
@@ -112,7 +112,7 @@ public sealed partial class BrainDamageSystem : EntitySystem
         var notif = new AfterBrainDamageChanged();
         RaiseLocalEvent(ent, ref notif);
 
-        var overlays = new PotentiallyUpdateDamageOverlay(ent);
+        var overlays = new bPotentiallyUpdateDamageOverlayEventb(ent);
         RaiseLocalEvent(ent, ref overlays, true);
     }
     public void TryChangeBrainOxygenation(Entity<BrainDamageComponent?> ent, FixedPoint2 amount)
@@ -126,7 +126,7 @@ public sealed partial class BrainDamageSystem : EntitySystem
         var notif = new AfterBrainOxygenChanged();
         RaiseLocalEvent(ent, ref notif);
 
-        var overlays = new PotentiallyUpdateDamageOverlay(ent);
+        var overlays = new bPotentiallyUpdateDamageOverlayEventb(ent);
         RaiseLocalEvent(ent, ref overlays, true);
     }
 
@@ -185,7 +185,7 @@ public sealed partial class BrainDamageSystem : EntitySystem
         var notif = new AfterBrainDamageChanged();
         RaiseLocalEvent(ent, ref notif);
 
-        var overlays = new PotentiallyUpdateDamageOverlay(ent);
+        var overlays = new bPotentiallyUpdateDamageOverlayEventb(ent);
         RaiseLocalEvent(ent, ref overlays, true);
     }
 
@@ -215,7 +215,7 @@ public sealed partial class BrainDamageSystem : EntitySystem
         var notif = new AfterBrainDamageChanged();
         RaiseLocalEvent(ent, ref notif);
 
-        var overlays = new PotentiallyUpdateDamageOverlay(ent);
+        var overlays = new bPotentiallyUpdateDamageOverlayEventb(ent);
         RaiseLocalEvent(ent, ref overlays, true);
     }
 

@@ -3,7 +3,8 @@
   start: Base
   graph:
   - node: Base
-    surgeryName: surgery-cleanup-name
+    header: construction-component-to-perform-header
+    localizedName: surgery-cleanup-name
     edges:
     - to: OpenIncision
       steps:
@@ -102,13 +103,15 @@
       - tool: BoneMending
         doAfter: 1
   - node: WoundFractureTreatment
-    surgeryName: surgery-wound-fracture-treatment-name
+    header: construction-component-to-perform-header
+    localizedName: surgery-wound-fracture-treatment-name
     actions:
     - !type:SetNode
       node: RetractedIncision
       repeatConditions: *fracture-conditions
   - node: WoundArterialTreatment
-    surgeryName: surgery-wound-arterial-treatment-name
+    header: construction-component-to-perform-header
+    localizedName: surgery-wound-arterial-treatment-name
     actions:
     - !type:SetNode
       node: RetractedIncision
@@ -181,25 +184,29 @@
       - tool: BoneMending
         doAfter: 1
   - node: BoneDeathTreatment
-    surgeryName: surgery-bone-death-treatment-name
+    header: construction-component-to-perform-header
+    localizedName: surgery-bone-death-treatment-name
     actions:
     - !type:SetNode
       node: OpenRibCage
       repeatConditions: *bone-death-conditions
   - node: HeartTreatmentSuture
-    surgeryName: surgery-heart-treatment-suture-name
+    header: construction-component-to-perform-header
+    localizedName: surgery-heart-treatment-suture-name
     actions:
     - !type:SetNode
       node: OpenRibCage
       repeatConditions: *heart-damage-conditions
   - node: HeartTreatmentMedicatedSuture
-    surgeryName: surgery-heart-treatment-medicated-suture-name
+    header: construction-component-to-perform-header
+    localizedName: surgery-heart-treatment-medicated-suture-name
     actions:
     - !type:SetNode
       node: OpenRibCage
       repeatConditions: *heart-damage-conditions
   - node: HuskingTreatment
-    surgeryName: surgery-husking-treatment-name
+    header: construction-component-to-perform-header
+    localizedName: surgery-husking-treatment-name
     actions:
     - !type:SetNode
       node: OpenRibCage
@@ -243,12 +250,14 @@
       - tool: Clamping
         doAfter: 2
   - node: CavityManipulationInsert
-    surgeryName: surgery-cavity-manipulation-insert-name
+    header: construction-component-to-perform-header
+    localizedName: surgery-cavity-manipulation-insert-name
     actions:
     - !type:SetNode
       node: CavityManipulationOpen
   - node: CavityManipulationRemoval
-    surgeryName: surgery-cavity-manipulation-removal-name
+    header: construction-component-to-perform-header
+    localizedName: surgery-cavity-manipulation-removal-name
     actions:
     - !type:SetNode
       node: CavityManipulationOpen

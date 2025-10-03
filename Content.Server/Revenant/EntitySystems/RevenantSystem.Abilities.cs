@@ -211,13 +211,7 @@ public sealed partial class RevenantSystem
 
         //KILL THEMMMM
 
-        // Begin Offbrand Removals
-        // if (!_mobThresholdSystem.TryGetThresholdForState(args.Args.Target.Value, MobState.Dead, out var damage))
-        //     return;
-        // End Offbrand Removals
-        DamageSpecifier dspec = new();
-        dspec.DamageDict.Add("Cold", component.HarvestColdDamage); // Offbrand - use a fixed amount of cold
-        _damage.TryChangeDamage(args.Args.Target, dspec, true, origin: uid);
+        _damage.TryChangeDamage(args.Args.Target, component.HarvestDamage, true, origin: uid); // Offbrand - use a fixed amount
 
         args.Handled = true;
     }

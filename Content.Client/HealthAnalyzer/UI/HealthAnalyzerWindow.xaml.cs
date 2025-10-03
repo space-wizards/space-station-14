@@ -90,8 +90,8 @@ namespace Content.Client.HealthAnalyzer.UI
             // Begin Offbrand Tooltips
             _brainHealthTooltip.Update(msg);
             _bloodPressureTooltip.Update(msg);
-            _bloodOxygenationTooltip.Update(msg, (target.Value, damageable));
-            _heartRateTooltip.Update(msg, (target.Value, damageable));
+            _bloodOxygenationTooltip.Update(msg, (target.Value, damageable, _entityManager.GetComponentOrNull<HeartrateComponent>(target)));
+            _heartRateTooltip.Update(msg, (target.Value, damageable, _entityManager.GetComponentOrNull<HeartrateComponent>(target)));
             _bloodFlowTooltip.Update(msg);
             _heartHealthTooltip.Update(msg);
             _temperatureTooltip.Update(msg, (target.Value, _entityManager.GetComponentOrNull<CryostasisFactorComponent>(target)));

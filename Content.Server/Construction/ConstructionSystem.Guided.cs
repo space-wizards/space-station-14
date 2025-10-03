@@ -88,19 +88,13 @@ namespace Content.Server.Construction
                         args.PushMarkup(Loc.GetString("deconstruction-header-text") + "\n");
                     }
                     // Begin Offbrand
-                    else if (target.SurgeryName is { } surgery)
-                    {
-                        args.PushMarkup(Loc.GetString(
-                            "construction-component-to-perform-header",
-                            ("name", Loc.GetString(surgery))) + "\n");
-                    }
-                    // End Offbrand
                     else
                     {
                         args.PushMarkup(Loc.GetString(
-                            "construction-component-to-create-header",
-                            ("targetName", target.Name)) + "\n");
+                            target.Header,
+                            ("targetName", target.LocalizedName is { } name ? Loc.GetString(name) : target.Name)) + "\n");
                     }
+                    // End Offbrand
                 }
 
                 if (component.EdgeIndex == null && GetTargetEdge(uid, component) is {} targetEdge)
@@ -175,7 +169,7 @@ namespace Content.Server.Construction
                 {
                     Localization = construction.Type switch {
                         ConstructionType.Structure => "construction-presenter-to-build",
-                        ConstructionType.Surgery => "construction-presenter-to-surgery",
+                        ConstructionType.NodeToNode => "construction-presenter-to-node-to-node", // Offbrand
                         _ => "construction-presenter-to-craft",
                     },
                     EntryNumber = step,
@@ -194,7 +188,7 @@ namespace Content.Server.Construction
                     return null;
 
                 // First steps are handled specially.
-                if (step == 1 && construction.Category != "Surgery") // Offbrand
+                if (step == 1 && construction.Type != ConstructionType.NodeToNode) // Offbrand
                 {
                     foreach (var graphStep in edge.Steps)
                     {

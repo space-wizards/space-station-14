@@ -12,7 +12,7 @@ public sealed class SurgeryGuideTargetSystem : SharedSurgeryGuideTargetSystem
     protected override void OnStartSurgery(Entity<SurgeryGuideTargetComponent> ent, ref SurgeryGuideStartSurgeryMessage args)
     {
         base.OnStartSurgery(ent, ref args);
-        if (!_prototype.TryIndex(args.Prototype, out var construction))
+        if (!_prototype.Resolve(args.Prototype, out var construction))
             return;
 
         _construction.SetPathfindingTarget(ent, construction.TargetNode);

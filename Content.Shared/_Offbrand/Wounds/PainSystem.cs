@@ -67,7 +67,7 @@ public sealed partial class PainSystem : EntitySystem
             var evt = new AfterShockChangeEvent();
             RaiseLocalEvent(uid, ref evt);
 
-            var overlays = new PotentiallyUpdateDamageOverlay(uid);
+            var overlays = new bPotentiallyUpdateDamageOverlayEventb(uid);
             RaiseLocalEvent(uid, ref overlays, true);
 
             Dirty(uid, pain);
@@ -82,7 +82,7 @@ public sealed partial class PainSystem : EntitySystem
         var evt = new AfterShockChangeEvent();
         RaiseLocalEvent(ent, ref evt);
 
-        var overlays = new PotentiallyUpdateDamageOverlay(ent);
+        var overlays = new bPotentiallyUpdateDamageOverlayEventb(ent);
         RaiseLocalEvent(ent, ref overlays, true);
     }
 

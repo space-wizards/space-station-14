@@ -34,7 +34,7 @@ public sealed class DamageOverlayUiController : UIController
         SubscribeLocalEvent<LocalPlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<MobThresholdChecked>(OnThresholdCheck);
-        SubscribeLocalEvent<PotentiallyUpdateDamageOverlay>(OnPotentiallyUpdateDamageOverlay); // Offbrand
+        SubscribeLocalEvent<bPotentiallyUpdateDamageOverlayEventb>(OnPotentiallyUpdateDamageOverlay); // Offbrand
     }
 
     private void OnPlayerAttach(LocalPlayerAttachedEvent args)
@@ -86,7 +86,7 @@ public sealed class DamageOverlayUiController : UIController
         TryUpdateWoundableOverlays(entity);
     }
 
-    private void OnPotentiallyUpdateDamageOverlay(ref PotentiallyUpdateDamageOverlay args)
+    private void OnPotentiallyUpdateDamageOverlay(ref bPotentiallyUpdateDamageOverlayEventb args)
     {
         if (args.Target != _playerManager.LocalEntity)
             return;

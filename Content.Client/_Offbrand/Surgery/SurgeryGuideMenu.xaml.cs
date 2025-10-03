@@ -26,6 +26,7 @@ public sealed partial class SurgeryGuideMenu : FancyWindow
     public event Action? OnCleanUp;
 
     private ConstructionPrototype? _selectedSurgery;
+    public string Category = string.Empty;
 
     public SurgeryGuideMenu()
     {
@@ -53,8 +54,6 @@ public sealed partial class SurgeryGuideMenu : FancyWindow
 
         PossibleSurgeries.GenerateItem += GenerateButton;
         PossibleSurgeries.ItemKeyBindDown += OnSelectSurgery;
-
-        Populate();
     }
 
     protected override void ExitedTree()
@@ -129,14 +128,22 @@ public sealed partial class SurgeryGuideMenu : FancyWindow
 
         foreach (var proto in _prototypeManager.EnumeratePrototypes<ConstructionPrototype>())
         {
-            if (proto.Category != "Surgery")
+            if (proto.Category != Category)
                 continue;
 
             listData.Add(new SurgeryListData(proto));
         }
 
-        listData.Sort((
-            a, b) => string.Compare(Loc.GetString(a.Construction.SetName!.Value), Loc.GetString(b.Construction.SetName!.Value), StringComparison.InvariantCulture));
+        listData.Sort((a, b) =>
+        {
+            if (a.Construction.SetName is not { } aName)
+                throw new InvalidOperationException($"Construction {a.Construction.ID} does not have a name");
+
+            if (b.Construction.SetName is not { } bName)
+                throw new InvalidOperationException($"Construction {b.Construction.ID} does not have a name");
+
+            return string.Compare(Loc.GetString(aName), Loc.GetString(bName), StringComparison.InvariantCulture);
+        });
 
         PossibleSurgeries.PopulateList(listData);
     }

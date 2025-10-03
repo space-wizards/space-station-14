@@ -146,7 +146,7 @@ public sealed class SolutionInjectOnCollideSystem : EntitySystem
         foreach (var targetBloodstream in targetBloodstreams)
         {
             // Begin Offbrand
-            var beforeInject = new Content.Shared._Offbrand.Chemistry.BeforeInjectOnEventEvent { InjectionAmount = volumePerBloodstream };
+            var beforeInject = new Content.Shared._Offbrand.Chemistry.BeforeInjectOnEventEvent(volumePerBloodstream);
             RaiseLocalEvent(targetBloodstream, ref beforeInject);
             if (beforeInject.InjectionAmount < 0)
                 continue;

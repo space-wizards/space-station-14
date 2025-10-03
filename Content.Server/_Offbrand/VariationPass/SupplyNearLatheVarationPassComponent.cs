@@ -8,9 +8,15 @@ namespace Content.Server._Offbrand.VariationPass;
 [RegisterComponent]
 public sealed partial class SupplyNearLatheVariationPassComponent : Component
 {
+    /// <summary>
+    /// The prototype of the lathe to look for
+    /// </summary>
     [DataField(required: true)]
     public EntProtoId LathePrototype;
 
+    /// <summary>
+    /// The entity to spawn on said lathe
+    /// </summary>
     [DataField(required: true)]
     public EntProtoId EntityToSpawn;
 }

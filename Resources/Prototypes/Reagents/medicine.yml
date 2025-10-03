@@ -870,13 +870,15 @@
         - !type:TotalDamage
           max: 100 # Offbrand
         damage:
+          # Begin Offbrand Changes
           groups:
-            Brute: -0.5 # Offbrand
+            Brute: -0.3 # Offbrand
           types:
-            Poison: -0.5 ##Should be about what it was when it healed the toxin group
-            Heat: -0.33
-            Shock: -0.33
-            Cold: -0.33
+            Poison: -0.2 ##Should be about what it was when it healed the toxin group
+            Heat: -0.2
+            Shock: -0.2
+            Cold: -0.2
+          # End Offbrand Changes
 
 - type: reagent
   id: Lipozine

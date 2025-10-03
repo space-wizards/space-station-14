@@ -4,6 +4,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server._Offbrand.Surgery;
 
+/// <summary>
+/// Sets the current node of the construction graph, and clears the pathfinding target if the repeat conditions are not met
+/// </summary>
 [DataDefinition]
 public sealed partial class SetNode : IGraphAction
 {

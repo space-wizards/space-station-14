@@ -1,8 +1,10 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
+using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Shared._Offbrand.EntityEffects;
 
@@ -25,7 +27,11 @@ public sealed partial class AdjustReagentGaussian : EntityEffect
         if (reagentArgs.Source == null)
             return;
 
-        var rand = IoCManager.Resolve<IRobustRandom>();
+        var timing = IoCManager.Resolve<IGameTiming>();
+
+        var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)timing.CurTick.Value, args.EntityManager.GetNetEntity(args.TargetEntity).Id });
+        var rand = new System.Random(seed);
+
         var amount = rand.NextGaussian(μ, σ);
         amount *= reagentArgs.Scale.Double();
 

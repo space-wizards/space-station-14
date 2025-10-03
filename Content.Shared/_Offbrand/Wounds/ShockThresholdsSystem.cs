@@ -76,7 +76,7 @@ public sealed partial class ShockThresholdsSystem : EntitySystem
     {
         args.State = ThresholdHelpers.Max(ent.Comp.CurrentMobState, args.State);
 
-        var overlays = new PotentiallyUpdateDamageOverlay(ent);
+        var overlays = new bPotentiallyUpdateDamageOverlayEventb(ent);
         RaiseLocalEvent(ent, ref overlays, true);
     }
 }

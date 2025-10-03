@@ -33,7 +33,10 @@ namespace Content.Shared.Construction
 
         // Begin Offbrand
         [DataField]
-        public LocId? SurgeryName;
+        public LocId? LocalizedName;
+
+        [DataField]
+        public LocId Header = "construction-component-to-create-header";
         // End Offbrand
 
         /// <summary>

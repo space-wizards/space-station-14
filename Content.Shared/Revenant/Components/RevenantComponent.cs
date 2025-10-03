@@ -221,5 +221,11 @@ public sealed partial class RevenantComponent : Component
     /// Offbrand - how much cold damage to deal on harvest
     /// </summary>
     [DataField]
-    public FixedPoint2 HarvestColdDamage = 200;
+    public Content.Shared.Damage.DamageSpecifier HarvestDamage = new()
+    {
+        DamageDict = new()
+        {
+            { "Cold", 200 },
+        }
+    };
 }

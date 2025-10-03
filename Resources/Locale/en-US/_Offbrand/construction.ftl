@@ -1,4 +1,4 @@
-construction-presenter-to-surgery = To perform this, first you need to:
+construction-presenter-to-node-to-node = To perform this, first you need to:
 
 construction-examine-status-effect-should-have = The target needs to have { $effect }.
 construction-examine-status-effect-should-not-have = The target needs to not have { $effect }.
@@ -21,4 +21,4 @@ construction-step-heart-damage-range = { $max ->
              }
 }
 
-construction-component-to-perform-header = To perform {$name}...
+construction-component-to-perform-header = To perform {$targetName}...

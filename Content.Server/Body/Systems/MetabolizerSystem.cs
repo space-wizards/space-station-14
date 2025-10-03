@@ -274,7 +274,7 @@ namespace Content.Server.Body.Systems
                 if (ent.Comp1.MetabolizingReagents.Contains(metaboliteReagent))
                     continue;
 
-                if (!_prototypeManager.TryIndex(metaboliteReagent, out var proto) || proto.Metabolisms is not { } metabolisms)
+                if (!_prototypeManager.Resolve(metaboliteReagent, out var proto) || proto.Metabolisms is not { } metabolisms)
                     continue;
 
                 if (ent.Comp1.MetabolismGroups is null)

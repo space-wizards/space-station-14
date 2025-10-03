@@ -53,7 +53,7 @@ public sealed partial class HeartSystem : EntitySystem
         var strainChangedEvt = new AfterStrainChangedEvent();
         RaiseLocalEvent(ent, ref strainChangedEvt);
 
-        var overlays = new PotentiallyUpdateDamageOverlay(ent);
+        var overlays = new bPotentiallyUpdateDamageOverlayEventb(ent);
         RaiseLocalEvent(ent, ref overlays, true);
     }
 
@@ -124,7 +124,7 @@ public sealed partial class HeartSystem : EntitySystem
                 continue;
             }
 
-            var overlays = new PotentiallyUpdateDamageOverlay(uid);
+            var overlays = new bPotentiallyUpdateDamageOverlayEventb(uid);
             RaiseLocalEvent(uid, ref overlays, true);
         }
     }

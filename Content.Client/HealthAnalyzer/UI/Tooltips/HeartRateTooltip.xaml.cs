@@ -1,3 +1,4 @@
+using Content.Shared._Offbrand.Wounds;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.MedicalScanner;
@@ -16,13 +17,16 @@ public sealed partial class HeartRateTooltip : PanelContainer
         RobustXamlLoader.Load(this);
     }
 
-    public void Update(HealthAnalyzerScannedUserMessage msg, Entity<DamageableComponent> ent)
+    public void Update(HealthAnalyzerScannedUserMessage msg, Entity<DamageableComponent, HeartrateComponent?> ent)
     {
         if (msg.WoundableData is not { } woundable)
             return;
 
+        if (ent.Comp2?.AsphyxiationDamage is not { } damageType)
+            return;
+
         var asphyxiation = FixedPoint2.Zero;
-        ent.Comp.Damage.DamageDict.TryGetValue("Asphyxiation", out asphyxiation);
+        ent.Comp1.Damage.DamageDict.TryGetValue(damageType, out asphyxiation);
 
         Label.Text = Loc.GetString("health-analyzer-heart-rate-tooltip", ("asphyxiation", asphyxiation));
     }

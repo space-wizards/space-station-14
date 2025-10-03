@@ -5,7 +5,11 @@ using Robust.Shared.Serialization;
 namespace Content.Shared._Offbrand.Surgery;
 
 [RegisterComponent]
-public sealed partial class SurgeryGuideTargetComponent : Component;
+public sealed partial class SurgeryGuideTargetComponent : Component
+{
+    [DataField]
+    public string Category = "Surgery";
+}
 
 [Serializable, NetSerializable]
 public enum SurgeryGuideUiKey : byte
