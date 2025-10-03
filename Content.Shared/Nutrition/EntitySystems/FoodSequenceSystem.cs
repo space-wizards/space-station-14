@@ -117,6 +117,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         //looking for a suitable FoodSequence prototype
         if (!element.Comp1.Entries.TryGetValue(start.Comp.Key, out var elementProto))
             return false;
+
         if (!_proto.Resolve(elementProto, out var elementIndexed))
             return false;
 
