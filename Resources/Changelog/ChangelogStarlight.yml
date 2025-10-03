@@ -16822,5 +16822,12 @@ Entries:
   id: 179600
   time: '2025-10-02T05:41:58.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1796
+- author: CrazyPhantom
+  changes:
+  - message: Fixes ID card consoles not being able to change access
+    type: Fix
+  id: 180900
+  time: '2025-10-03T02:17:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1809
 Order: -1
 
