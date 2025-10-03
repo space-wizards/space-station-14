@@ -112,7 +112,6 @@
   - accent-words-zombie-dwarf-2
   - accent-words-zombie-dwarf-3
   - accent-words-zombie-dwarf-4
-  - accent-words-zombie-dwarf-5
 
 - type: accent
   id: zombieVulpkanin
@@ -130,7 +129,6 @@
   - accent-words-zombie-vulpkanin-1
   - accent-words-zombie-vulpkanin-2
   - accent-words-zombie-vulpkanin-3
-  - accent-words-zombie-vulpkanin-4
 
 - type: accent
   id: genericAggressive
