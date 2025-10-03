@@ -9,16 +9,16 @@ reagent-effect-guidebook-status-effect-remove = { $chance ->
 }
 
 reagent-effect-guidebook-modify-brain-damage-heals = { $chance ->
-        [1] Heals { $amount } brain damage
-   *[other] heal { $amount } brain damage
+        [1] Heals { $amount } brain activity
+   *[other] heal { $amount } brain activity
 }
 reagent-effect-guidebook-modify-brain-damage-deals = { $chance ->
         [1] Deals { $amount } brain damage
    *[other] deal { $amount } brain damage
 }
 reagent-effect-guidebook-modify-heart-damage-heals = { $chance ->
-        [1] Heals { $amount } heart damage
-   *[other] heal { $amount } heart damage
+        [1] Heals { $amount } heart health
+   *[other] heal { $amount } heart health
 }
 reagent-effect-guidebook-modify-heart-damage-deals = { $chance ->
         [1] Deals { $amount } heart damage

@@ -127,7 +127,7 @@
 - type: entity
   parent: MobStatusEffectBase
   id: StatusEffectHeartStabilizationInaprovaline
-  name: heart stabilization
+  name: reduced heartrate
   components:
   - type: StrainStatusEffect
     delta: -2
@@ -180,22 +180,22 @@
 - type: entity
   parent: MobStatusEffectBase
   id: StatusEffectBrainStabilizationInaprovaline
-  name: brain stabilization
+  name: reduction in chance to take brain damage
   components:
   - type: ModifyBrainDamageChanceStatusEffect
     oxygenationModifierThresholds:
-      0.30: 0.8
-      0.60: 0.6
-      0.70: 0.5
-      0.85: 0.5
-      1:    0.2
+      0.30: 0.7
+      0.60: 0.5
+      0.70: 0.4
+      0.85: 0.4
+      1:    0.1
   - type: ModifyBrainOxygenDepletionChanceStatusEffect
     oxygenationModifierThresholds:
-      0.30: 0.8
-      0.60: 0.6
-      0.70: 0.5
-      0.85: 0.5
-      1:    0.2
+      0.30: 0.7
+      0.60: 0.5
+      0.70: 0.4
+      0.85: 0.4
+      1:    0.1
 
 - type: entity
   parent: MobStatusEffectBase
