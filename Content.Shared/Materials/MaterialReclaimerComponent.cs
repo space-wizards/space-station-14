@@ -143,7 +143,7 @@ public sealed partial class MaterialReclaimerComponent : Component
     /// <summary>
     /// What damage the recycler does to people when emagged, due to a bug elsewhere the damage set here is applied twice
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public DamageSpecifier DamageOnGrind = new DamageSpecifier
     {
         DamageDict = new Dictionary<string, FixedPoint2>
