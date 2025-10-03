@@ -272,5 +272,3 @@
     hideChat: true
   - type: DatasetVocalizer
     dataset: MineGameAds
-  - type: SpeakOnUIClosed
-    pack: MineGameGoodbyes

@@ -1,4 +1,5 @@
 advertisement-mine-game-1 = Legally distinct!
+advertisement-mine-game-2 = Boom!
 advertisement-mine-game-3 = These mines need to be cleaned up!
 advertisement-mine-game-4 = Don't you love chording?
 advertisement-mine-game-5 = Sweep the field clear!
