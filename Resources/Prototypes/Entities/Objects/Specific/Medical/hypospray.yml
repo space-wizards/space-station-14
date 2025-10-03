@@ -179,6 +179,8 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: medipen_empty
+  - type: Hypospray # Offbrand
+    transferAmount: 35
   - type: SolutionContainerManager
     solutions:
       pen:
