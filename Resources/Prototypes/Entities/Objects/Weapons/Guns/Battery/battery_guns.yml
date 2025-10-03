@@ -825,12 +825,19 @@
       - state: base
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-unshaded-4
-        map: ["enum.GunVisualLayers.MagUnshaded"]
+        map: ["enum.BatteryWeaponFireModeVisualizer.Color", "enum.GunVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: MagazineVisuals
     magState: mag
     steps: 5
     zeroVisible: false
+  - type: GenericVisualizer
+    visuals:
+      enum.BatteryWeaponFireModeVisuals.State:
+        enum.BatteryWeaponFireModeVisualizer.Color:
+          BulletLaserSpread: {}
+          BulletLaserSpreadNarrow: {}
+          BulletDisablerSmgSpread: {}
   - type: Appearance
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
@@ -845,10 +852,18 @@
     fireModes:
     - proto: BulletLaserSpread
       fireCost: 150
+      color: "#5fcde4"
     - proto: BulletLaserSpreadNarrow
       fireCost: 200
+      color: "#5fcde4"
     - proto: BulletDisablerSmgSpread
       fireCost: 120
+      color: "#ff0006"
+    clothingVisuals:
+      back:
+      - state: equipped-BACKPACK-color
+      suitstorage:
+      - state: equipped-SUITSTORAGE-color
   - type: Item
     size: Large
     sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
