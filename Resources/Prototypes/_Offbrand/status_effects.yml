@@ -296,15 +296,23 @@
   - type: KnockdownOnAppliedStatusEffect
     duration: 5
   - type: MeleeModifiersStatusEffect
+    damageModifier:
+      coefficients:
+        Blunt: 0.7
+        Piercing: 0.7
+        Slash: 0.7
+        Structural: 0.7
     attackRateMultiplier: 0.3
     attackRateConstant: -0.1
   - type: GunAccuracyStatusEffect
-    angleRangeModifier: 12
+    angleRangeModifier: 24
   - type: CannotUseHeadsetStatusEffect
   - type: SilencedStatusEffect
   - type: BlockMovementWhenPulledStatusEffect
   - type: GunBackfireStatusEffect
+    probability: 0.9
   - type: HyposprayBackfireStatusEffect
+    probability: 0.9
   - type: DisruptOnAttackStatusEffect
 
 - type: entity
@@ -356,9 +364,11 @@
     attackRateMultiplier: 0.2
     attackRateConstant: -0.1
   - type: GunAccuracyStatusEffect
-    angleRangeModifier: 12
+    angleRangeModifier: 24
   - type: GunBackfireStatusEffect
+    probability: 0.9
   - type: HyposprayBackfireStatusEffect
+    probability: 0.9
   - type: DisruptOnAttackStatusEffect
 
 - type: entity
