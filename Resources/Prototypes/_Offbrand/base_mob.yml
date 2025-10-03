@@ -295,8 +295,8 @@
   id: BaseMobCryostasis
   components:
   - type: CryostasisFactor
-    temperatureCoefficient: -0.059
-    temperatureConstant: 19
+    temperatureCoefficient: -0.03
+    temperatureConstant: 10
 
 - type: entity
   abstract: true
