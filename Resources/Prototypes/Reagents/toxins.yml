@@ -618,6 +618,11 @@
         conditions:
         - !type:MobStateCondition
           mobstate: Dead
+      - !type:ClampWounds
+        chance: 0.4
+      - !type:RemoveStatusEffect
+        effectProto: WoundArterialBleeding
+        probability: 0.4
       # End Offbrand
 
 - type: reagent
