@@ -20,7 +20,6 @@ public sealed partial class ProfileEditorAntagsTab : BoxContainer
     [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly JobRequirementsManager _requirements = default!;
-    private readonly SharedRoleSystem _role;
 
     public event Action<HumanoidCharacterProfile?>? OnAntagsUpdated;
     public event Action<List<ProtoId<GuideEntryPrototype>>>? OnOpenGuidebook;
@@ -37,8 +36,6 @@ public sealed partial class ProfileEditorAntagsTab : BoxContainer
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
-
-        _role = _entManager.System<SharedRoleSystem>();
     }
 
     public void SetProfile(HumanoidCharacterProfile? profile)
@@ -49,7 +46,7 @@ public sealed partial class ProfileEditorAntagsTab : BoxContainer
 
     public void RefreshAntags()
     {
-        AntagList.DisposeAllChildren();
+        AntagList.RemoveAllChildren();
 
         var selectedProfile = (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter;
         var items = new[]
@@ -64,7 +61,7 @@ public sealed partial class ProfileEditorAntagsTab : BoxContainer
             if (!antag.SetPreference)
                 continue;
 
-            var prefButtons = new AntagPreferenceButtons(_requirements, _role);
+            var prefButtons = new AntagPreferenceButtons(_requirements);
             prefButtons.Setup(antag, items, selectedProfile, hasLoadout: false);
             prefButtons.Select(_profile?.AntagPreferences.Contains(antag.ID) == true ? YesOption : NoOption);
 

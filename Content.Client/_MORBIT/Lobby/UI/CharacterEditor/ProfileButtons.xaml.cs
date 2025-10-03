@@ -86,7 +86,8 @@ public sealed partial class ProfileButtons : BoxContainer
             return;
 
         StartExport();
-        await using var file = await _dialogManager.OpenFile(new FileDialogFilters(new FileDialogFilters.Group("yml")));
+        var filters = new FileDialogFilters(new FileDialogFilters.Group("yml"));
+        await using var file = await _dialogManager.OpenFile(filters, FileAccess.Read);
 
         if (file == null)
         {

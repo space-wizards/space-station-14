@@ -18,7 +18,6 @@ namespace Content.Client._MORBIT.Lobby.UI.CharacterEditor;
 public sealed partial class AntagPreferenceButtons : BoxContainer
 {
     private readonly JobRequirementsManager _requirements;
-    private readonly SharedRoleSystem _role;
 
     public event Action<int>? OnPreferenceSelected;
     public event Action<List<ProtoId<GuideEntryPrototype>>>? OnOpenGuidebook;
@@ -29,12 +28,11 @@ public sealed partial class AntagPreferenceButtons : BoxContainer
     private const int MinTitleWidth = 250;
     private const int DisabledValue = 1;
 
-    public AntagPreferenceButtons(JobRequirementsManager requirements, SharedRoleSystem role)
+    public AntagPreferenceButtons(JobRequirementsManager requirements)
     {
         RobustXamlLoader.Load(this);
 
         _requirements = requirements;
-        _role = role;
 
         PreferenceSelector.OnOpenGuidebook += args => { OnOpenGuidebook?.Invoke(args); };
         PreferenceSelector.OnSelected += selected => { OnPreferenceSelected?.Invoke(selected); };
@@ -54,8 +52,7 @@ public sealed partial class AntagPreferenceButtons : BoxContainer
             description: description,
             guides: antag.Guides);
 
-        var requirements = _role.GetAntagRequirement(antag);
-        var locked = !_requirements.CheckRoleRequirements(requirements, selectedProfile, out var reason);
+        var locked = !_requirements.IsAllowed(antag, selectedProfile, out var reason);
         SetLocked(locked, reason);
 
         LoadoutButton.Disabled = !hasLoadout;

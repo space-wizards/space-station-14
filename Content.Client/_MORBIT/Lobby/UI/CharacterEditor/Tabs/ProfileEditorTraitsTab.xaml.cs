@@ -42,7 +42,7 @@ public sealed partial class ProfileEditorTraitsTab : BoxContainer
     /// </summary>
     public void RefreshTraits()
     {
-        TraitsList.DisposeAllChildren();
+        TraitsList.RemoveAllChildren();
 
         var traits = _prototypeManager.EnumeratePrototypes<TraitPrototype>()
             .OrderBy(t => Loc.GetString(t.Name));

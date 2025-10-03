@@ -170,15 +170,14 @@ public sealed partial class AppearanceBodyOptions : BoxContainer
             return;
 
         var skin = _prototypeManager.Index(_profile.Species).SkinColoration;
-        UpdateSkinColorVisibility(skin);
+        var strategy = _prototypeManager.Index(skin).Strategy;
+        UpdateSkinColorVisibility(strategy);
 
-        var skinColor = skin switch
+        var skinColor = strategy.InputType switch
         {
-            HumanoidSkinColor.HumanToned => SkinColor.HumanSkinTone((int)Skin.Value),
-            HumanoidSkinColor.Hues => _rgbSkinColorSelector.Color,
-            HumanoidSkinColor.TintedHues => SkinColor.TintedHues(_rgbSkinColorSelector.Color),
-            HumanoidSkinColor.VoxFeathers => SkinColor.ClosestVoxColor(_rgbSkinColorSelector.Color),
-            _ => throw new ArgumentOutOfRangeException(),
+            SkinColorationStrategyInput.Color => strategy.ClosestSkinColor(_rgbSkinColorSelector.Color),
+            SkinColorationStrategyInput.Unary => strategy.FromUnary(Skin.Value),
+            _ => throw new ArgumentOutOfRangeException(strategy.InputType.ToString()),
         };
 
         _profile = _profile.WithCharacterAppearance(_profile.Appearance.WithSkinColor(skinColor));
@@ -191,25 +190,33 @@ public sealed partial class AppearanceBodyOptions : BoxContainer
             return;
 
         var skin = _prototypeManager.Index(_profile.Species).SkinColoration;
-        UpdateSkinColorVisibility(skin);
+        var strategy = _prototypeManager.Index(skin).Strategy;
+        UpdateSkinColorVisibility(strategy);
 
-        // TODO: Make this less hardcoded?
-        if (_rgbSkinColorSelector.Visible)
+        switch (strategy.InputType)
         {
-            var skinColor = _profile.Appearance.SkinColor;
-
-            if (skin == HumanoidSkinColor.VoxFeathers)
-                skinColor = SkinColor.ClosestVoxColor(_profile.Appearance.SkinColor);
-
-            _rgbSkinColorSelector.Color = skinColor;
+            case SkinColorationStrategyInput.Unary:
+                {
+                    Skin.Value = strategy.ToUnary(_profile.Appearance.SkinColor);
+                    break;
+                }
+            case SkinColorationStrategyInput.Color:
+                {
+                    _rgbSkinColorSelector.Color = strategy.ClosestSkinColor(_profile.Appearance.SkinColor);
+                    break;
+                }
         }
-        else
-            Skin.Value = SkinColor.HumanSkinToneFromColor(_profile.Appearance.SkinColor);
     }
 
-    private void UpdateSkinColorVisibility(HumanoidSkinColor skin)
+    private void UpdateSkinColorVisibility(ISkinColorationStrategy strategy)
     {
-        var useRgb = skin != HumanoidSkinColor.HumanToned;
+        var useRgb = strategy.InputType switch
+        {
+            SkinColorationStrategyInput.Unary => false,
+            SkinColorationStrategyInput.Color => true,
+            _ => throw new ArgumentOutOfRangeException(strategy.InputType.ToString()),
+        };
+
         Skin.Visible = !useRgb;
         RgbSkinColorContainer.Visible = useRgb;
     }

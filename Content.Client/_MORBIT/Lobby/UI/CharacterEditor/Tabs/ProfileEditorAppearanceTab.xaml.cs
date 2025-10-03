@@ -167,7 +167,7 @@ public sealed partial class ProfileEditorAppearanceTab : BoxContainer
         var sexes = new List<Sex>();
 
         // add species sex options, default to just none if we are in bizzaro world and have no species
-        if (_prototypeManager.TryIndex(_profile.Species, out var speciesProto))
+        if (_prototypeManager.Resolve(_profile.Species, out var speciesProto))
             foreach (var sex in speciesProto.Sexes)
                 sexes.Add(sex);
         else

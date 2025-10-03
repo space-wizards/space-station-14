@@ -82,7 +82,7 @@ public sealed partial class ProfileEditorJobsTab : BoxContainer
     /// </summary>
     public void RefreshJobs()
     {
-        JobList.DisposeAllChildren();
+        JobList.RemoveAllChildren();
         _jobCategories.Clear();
         _jobPriorities.Clear();
 
