@@ -28,7 +28,6 @@
     sprite: Clothing/Eyes/Hud/diag.rsi
   - type: ShowHealthBars
     damageContainers:
-    - Inorganic
     - Silicon
   - type: ShowAccessReaderSettings
 
