@@ -14,9 +14,11 @@ health-analyzer-window-entity-blood-oxygenation-text = Blood Saturation:
 health-analyzer-window-entity-blood-flow-text = Blood Flow:
 health-analyzer-window-entity-heart-rate-text = Heart Rate:
 health-analyzer-window-entity-heart-health-text = Heart Health:
+health-analyzer-window-entity-lung-health-text = Lung Health:
 
 health-analyzer-window-entity-brain-health-value = {$value}% { -health-analyzer-rating(rating: $rating) }
 health-analyzer-window-entity-heart-health-value = {$value}% { -health-analyzer-rating(rating: $rating) }
+health-analyzer-window-entity-lung-health-value = {$value}% { -health-analyzer-rating(rating: $rating) }
 health-analyzer-window-entity-heart-rate-value = {$value}bpm { -health-analyzer-rating(rating: $rating) }
 health-analyzer-window-entity-blood-oxygenation-value = {$value}% { -health-analyzer-rating(rating: $rating) }
 health-analyzer-window-entity-blood-pressure-value = {$systolic}/{$diastolic} { -health-analyzer-rating(rating: $rating) }
@@ -100,6 +102,13 @@ health-analyzer-cryostasis-temperature-tooltip =
     The patient's body temperature.
 
     This temperature has a cryostasis factor of {$factor}%.
+
+health-analyzer-lung-health-tooltip =
+    The patient's lung health.
+
+    The lower this number, the more difficulty they have breathing.
+
+    If the lung health is low, consider putting the patient on higher-pressure internals.
 
 health-analyzer-blood-tooltip =
     The patient's blood volume.

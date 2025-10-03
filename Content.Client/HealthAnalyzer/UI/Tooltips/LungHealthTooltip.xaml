@@ -1,0 +1,8 @@
+<PanelContainer xmlns="https://spacestation14.io" StyleClasses="tooltipBox">
+    <BoxContainer
+        Orientation="Vertical"
+        RectClipContent="True"
+        Margin="4">
+        <RichTextLabel Text="{Loc 'health-analyzer-lung-health-tooltip'}" HorizontalExpand="True" />
+    </BoxContainer>
+</PanelContainer>

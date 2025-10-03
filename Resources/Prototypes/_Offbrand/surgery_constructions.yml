@@ -33,6 +33,28 @@
 
 - type: construction
   hide: true
+  id: LungTreatmentSuture
+  name: surgery-lung-treatment-suture-name
+  description: surgery-lung-treatment-suture-desc
+  graph: SurgeryGraph
+  startNode: Base
+  targetNode: LungTreatmentSuture
+  category: Surgery
+  objectType: NodeToNode
+
+- type: construction
+  hide: true
+  id: LungTreatmentMedicatedSuture
+  name: surgery-lung-treatment-medicated-suture-name
+  description: surgery-lung-treatment-medicated-suture-desc
+  graph: SurgeryGraph
+  startNode: Base
+  targetNode: LungTreatmentMedicatedSuture
+  category: Surgery
+  objectType: NodeToNode
+
+- type: construction
+  hide: true
   id: HuskingTreatment
   name: surgery-husking-treatment-name
   description: surgery-husking-treatment-desc

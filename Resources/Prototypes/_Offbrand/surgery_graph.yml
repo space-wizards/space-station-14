@@ -157,6 +157,36 @@
       steps:
       - tool: Drilling
         doAfter: 2
+    - to: OpenRibCageRecoupling
+      steps:
+      - tool: Recoupling
+        doAfter: 1
+  - node: OpenRibCageRecoupling
+    edges:
+    - to: OpenRibCage
+      steps:
+      - tool: Clamping
+        doAfter: 1
+    - to: LungTreatmentSuture
+      conditions: &lung-damage-conditions
+      - !type:LungDamage
+        min: 1
+      completed:
+      - !type:ChangeLungDamage
+        amount: -5
+      steps:
+      - material: Suture
+        amount: 1
+        doAfter: 5
+    - to: LungTreatmentMedicatedSuture
+      conditions: *lung-damage-conditions
+      completed:
+      - !type:ChangeLungDamage
+        amount: -10
+      steps:
+      - material: MedicatedSuture
+        amount: 1
+        doAfter: 3
   - node: OpenRibCageMending
     edges:
     - to: OpenRibCageSetting
@@ -204,6 +234,20 @@
     - !type:SetNode
       node: OpenRibCage
       repeatConditions: *heart-damage-conditions
+  - node: LungTreatmentSuture
+    header: construction-component-to-perform-header
+    localizedName: surgery-lung-treatment-suture-name
+    actions:
+    - !type:SetNode
+      node: OpenRibCageRecoupling
+      repeatConditions: *lung-damage-conditions
+  - node: LungTreatmentMedicatedSuture
+    header: construction-component-to-perform-header
+    localizedName: surgery-lung-treatment-medicated-suture-name
+    actions:
+    - !type:SetNode
+      node: OpenRibCageRecoupling
+      repeatConditions: *lung-damage-conditions
   - node: HuskingTreatment
     header: construction-component-to-perform-header
     localizedName: surgery-husking-treatment-name

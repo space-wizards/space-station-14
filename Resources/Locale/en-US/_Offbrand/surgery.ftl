@@ -14,6 +14,12 @@ surgery-heart-treatment-suture-desc = Treats heart damage.
 surgery-heart-treatment-medicated-suture-name = heart treatment (medicated sutures)
 surgery-heart-treatment-medicated-suture-desc = Treats heart damage.
 
+surgery-lung-treatment-suture-name = lung treatment (sutures)
+surgery-lung-treatment-suture-desc = Treats lung damage.
+
+surgery-lung-treatment-medicated-suture-name = lung treatment (medicated sutures)
+surgery-lung-treatment-medicated-suture-desc = Treats lung damage.
+
 surgery-husking-treatment-name = husking treatment
 surgery-husking-treatment-desc = Reconstructs a husked body.
 

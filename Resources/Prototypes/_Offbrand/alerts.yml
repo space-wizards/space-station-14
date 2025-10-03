@@ -32,6 +32,36 @@
 - type: alertCategory
   id: BrainDamage
 
+- type: alertCategory
+  id: LungDamage
+
+- type: alert
+  id: MinorLungDamage
+  category: LungDamage
+  icons:
+  - sprite: /Textures/_Offbrand/Alerts/lung_damage.rsi
+    state: minor
+  name: alerts-minor-lung-damage-name
+  description: alerts-minor-lung-damage-desc
+
+- type: alert
+  id: SevereLungDamage
+  category: LungDamage
+  icons:
+  - sprite: /Textures/_Offbrand/Alerts/lung_damage.rsi
+    state: severe
+  name: alerts-severe-lung-damage-name
+  description: alerts-severe-lung-damage-desc
+
+- type: alert
+  id: CriticalLungDamage
+  category: LungDamage
+  icons:
+  - sprite: /Textures/_Offbrand/Alerts/lung_damage.rsi
+    state: critical
+  name: alerts-critical-lung-damage-name
+  description: alerts-critical-lung-damage-desc
+
 - type: alert
   id: SuppressedPain
   category: Pain

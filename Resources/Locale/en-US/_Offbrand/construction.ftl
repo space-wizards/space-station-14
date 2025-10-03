@@ -21,4 +21,20 @@ construction-step-heart-damage-range = { $max ->
              }
 }
 
+construction-examine-lung-damage-range = { $max ->
+    [2147483648] The target needs to have at least {NATURALFIXED($min, 2)} lung damage.
+    *[other] { $min ->
+                [0] The target needs to have at most {NATURALFIXED($max, 2)} lung damage.
+                *[other] The target needs to have between {NATURALFIXED($min, 2)} and {NATURALFIXED($max, 2)} lung damage.
+             }
+}
+
+construction-step-lung-damage-range = { $max ->
+    [2147483648] The target needs to have at least {NATURALFIXED($min, 2)} lung damage.
+    *[other] { $min ->
+                [0] The target needs to have at most {NATURALFIXED($max, 2)} lung damage.
+                *[other] The target needs to have between {NATURALFIXED($min, 2)} and {NATURALFIXED($max, 2)} lung damage.
+             }
+}
+
 construction-component-to-perform-header = To perform {$targetName}...

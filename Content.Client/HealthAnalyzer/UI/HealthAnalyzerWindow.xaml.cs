@@ -44,6 +44,7 @@ namespace Content.Client.HealthAnalyzer.UI
         private readonly Tooltips.BloodOxygenationTooltip _bloodOxygenationTooltip = new();
         private readonly Tooltips.HeartRateTooltip _heartRateTooltip = new();
         private readonly Tooltips.HeartHealthTooltip _heartHealthTooltip = new();
+        private readonly Tooltips.LungHealthTooltip _lungHealthTooltip = new();
         private readonly Tooltips.BloodFlowTooltip _bloodFlowTooltip = new();
         private readonly Tooltips.BloodTooltip _bloodTooltip = new();
         private readonly Tooltips.TemperatureTooltip _temperatureTooltip = new();
@@ -71,6 +72,7 @@ namespace Content.Client.HealthAnalyzer.UI
             TemperatureButton.TooltipSupplier = _ => _temperatureTooltip;
             DamageButton.TooltipSupplier = _ => _damageTooltip;
             BloodButton.TooltipSupplier = _ => _bloodTooltip;
+            LungHealthButton.TooltipSupplier = _ => _lungHealthTooltip;
             // End Offbrand
         }
 
@@ -263,6 +265,11 @@ namespace Content.Client.HealthAnalyzer.UI
                 BloodPressureLabel.Text = Loc.GetString("health-analyzer-window-entity-blood-pressure-value", ("systolic", systolic), ("diastolic", diastolic), ("rating", woundable.BloodPressureRating));
                 BloodPressureButton.Visible = true;
 
+                LungHealthText.Visible = true;
+                LungHealthLabel.Visible = true;
+                LungHealthLabel.Text = Loc.GetString("health-analyzer-window-entity-lung-health-value", ("value", $"{woundable.LungHealth * 100:F1}"), ("rating", woundable.LungHealthRating));
+                LungHealthButton.Visible = true;
+
                 BloodLabel.Visible = false;
                 BloodText.Visible = false;
                 BloodButton.Visible = false;
@@ -275,18 +282,21 @@ namespace Content.Client.HealthAnalyzer.UI
                 HeartRateLabel.Visible = false;
                 HeartHealthLabel.Visible = false;
                 BloodFlowLabel.Visible = false;
+                LungHealthLabel.Visible = false;
                 BrainHealthText.Visible = false;
                 BloodPressureText.Visible = false;
                 BloodOxygenationText.Visible = false;
                 BloodFlowText.Visible = false;
                 HeartRateText.Visible = false;
                 HeartHealthText.Visible = false;
+                LungHealthText.Visible = false;
                 BrainHealthButton.Visible = false;
                 BloodPressureButton.Visible = false;
                 BloodOxygenationButton.Visible = false;
                 BloodFlowButton.Visible = false;
                 HeartRateButton.Visible = false;
                 HeartHealthButton.Visible = false;
+                LungHealthButton.Visible = false;
 
                 BloodLabel.Visible = true;
                 BloodText.Visible = true;

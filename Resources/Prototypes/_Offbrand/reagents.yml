@@ -169,6 +169,11 @@
         conditions:
         - !type:HeartDamage
           max: 25
+      - !type:ModifyLungDamage
+        amount: -0.2
+        conditions:
+        - !type:LungDamage
+          max: 50
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -208,6 +213,11 @@
       effects:
       - !type:ModifyHeartDamage
         amount: -0.3
+        conditions:
+        - !type:Temperature
+          max: 170.0
+      - !type:ModifyLungDamage
+        amount: -0.6
         conditions:
         - !type:Temperature
           max: 170.0
@@ -336,7 +346,7 @@
         - !type:TotalGroupDamage
           group: Airloss
           min: 4
-      - !type:ModifyHeartDamage
+      - !type:ModifyLungDamage
         amount: 0.05
 
 - type: reagent

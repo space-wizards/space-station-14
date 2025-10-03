@@ -140,7 +140,15 @@ public sealed class RespiratorSystem : EntitySystem
         if (ev.Gas is null)
             return;
 
-        var gas = ev.Gas.RemoveVolume(entity.Comp.BreathVolume);
+        // Begin Offbrand
+        var breathEv = new Content.Shared._Offbrand.Wounds.BeforeBreathEvent(entity.Comp.BreathVolume);
+        RaiseLocalEvent(entity, ref breathEv);
+
+        var gas = ev.Gas.RemoveVolume(breathEv.BreathVolume);
+
+        var beforeEv = new Content.Shared._Offbrand.Wounds.BeforeInhaledGasEvent(gas);
+        RaiseLocalEvent(entity, ref beforeEv);
+        // End Offbrand
 
         var inhaleEv = new InhaledGasEvent(gas);
         RaiseLocalEvent(entity, ref inhaleEv);

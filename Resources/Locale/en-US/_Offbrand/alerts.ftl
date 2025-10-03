@@ -33,3 +33,12 @@ alerts-critical-brain-damage-desc = Your brain cannot control your body.
 
 alerts-brain-death-name = [color=crimson]Brain Dead[/color]
 alerts-brain-death-desc = Your brain has faded away into nothingness.
+
+alerts-minor-lung-damage-name = [color=yellow]Minor Lung Damage[/color]
+alerts-minor-lung-damage-desc = Your lungs have taken minor damage. Turn up the pressure on your internals and seek care.
+
+alerts-severe-lung-damage-name = [color=red]Severe Lung Damage[/color]
+alerts-severe-lung-damage-desc = Your lungs are struggling to breathe. Turn up the pressure on your internals and seek care promptly.
+
+alerts-critical-lung-damage-name = [color=crimson]Lung Failure[/color]
+alerts-critical-lung-damage-desc = You cannot breathe well if at all. Seek care promptly.

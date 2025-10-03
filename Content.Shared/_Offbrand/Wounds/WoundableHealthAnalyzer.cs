@@ -46,6 +46,12 @@ public sealed partial class WoundableHealthAnalyzerData
     public AttributeRating HeartRateRating;
 
     [DataField]
+    public double LungHealth;
+
+    [DataField]
+    public AttributeRating LungHealthRating;
+
+    [DataField]
     public bool AnyVitalCritical;
 
     [DataField]
@@ -124,8 +130,12 @@ public abstract class SharedWoundableHealthAnalyzerSystem : EntitySystem
         if (!TryComp<BrainDamageComponent>(uid, out var brainDamage))
             return null;
 
+        if (!TryComp<LungDamageComponent>(uid, out var lungDamage))
+            return null;
+
         var brainHealth = 1d - ((double)brainDamage.Damage / (double)brainDamage.MaxDamage);
         var heartHealth = 1d - ((double)heartrate.Damage / (double)heartrate.MaxDamage);
+        var lungHealth = 1d - ((double)lungDamage.Damage / (double)lungDamage.MaxDamage);
         var strain = _heart.HeartStrain((uid, heartrate)).Double() / 4d;
         var (upper, lower) = _heart.BloodPressure((uid, heartrate));
         var oxygenation = _heart.BloodOxygenation((uid, heartrate)).Double();
@@ -149,6 +159,8 @@ public abstract class SharedWoundableHealthAnalyzerSystem : EntitySystem
                 BloodFlowRating = RateHigherIsBetter(flow),
                 HeartRate = _heart.HeartRate((uid, heartrate)).Int(),
                 HeartRateRating = !heartrate.Running ? AttributeRating.Dangerous : RateHigherIsWorse(strain),
+                LungHealth = lungHealth,
+                LungHealthRating = RateHigherIsBetter(lungHealth),
                 AnyVitalCritical = _shockThresholds.IsCritical(uid) || _brainDamage.IsCritical(uid) || _heart.IsCritical(uid),
                 Wounds = withWounds ? SampleWounds(uid) : null,
                 Reagents = reagents,

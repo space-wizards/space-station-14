@@ -297,3 +297,22 @@
   - type: CryostasisFactor
     temperatureCoefficient: -0.059
     temperatureConstant: 19
+
+- type: entity
+  abstract: true
+  id: BaseMobLungDamage
+  components:
+  - type: LungDamage
+    damage: 0
+    maxDamage: 100
+  - type: LungDamageOnInhaledAirTemperature
+    heatCoefficient: 0.005
+    heatConstant: -1.375
+    coldCoefficient: -0.01
+    coldConstant: 3
+  - type: LungDamageAlerts
+    alertThresholds:
+      15: MinorLungDamage
+      40: SevereLungDamage
+      60: CriticalLungDamage
+    alertCategory: LungDamage

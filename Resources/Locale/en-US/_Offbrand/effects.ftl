@@ -24,6 +24,14 @@ reagent-effect-guidebook-modify-heart-damage-deals = { $chance ->
         [1] Deals { $amount } heart damage
    *[other] deal { $amount } heart damage
 }
+reagent-effect-guidebook-modify-lung-damage-heals = { $chance ->
+        [1] Heals { $amount } lung health
+   *[other] heal { $amount } lung health
+}
+reagent-effect-guidebook-modify-lung-damage-deals = { $chance ->
+        [1] Deals { $amount } lung damage
+   *[other] deal { $amount } lung damage
+}
 reagent-effect-guidebook-clamp-wounds = { $probability ->
         [1] Stops bleeding in wounds with { NATURALPERCENT($chance, 2) } chance per wound
    *[other] stop bleeding in wounds with { NATURALPERCENT($chance, 2) } chance per wound
@@ -33,6 +41,13 @@ reagent-effect-condition-guidebook-heart-damage = { $max ->
     *[other] { $min ->
                 [0] it has at most {NATURALFIXED($max, 2)} heart damage
                 *[other] it has between {NATURALFIXED($min, 2)} and {NATURALFIXED($max, 2)} heart damage
+             }
+}
+reagent-effect-condition-guidebook-lung-damage = { $max ->
+    [2147483648] it has at least {NATURALFIXED($min, 2)} lung damage
+    *[other] { $min ->
+                [0] it has at most {NATURALFIXED($max, 2)} lung damage
+                *[other] it has between {NATURALFIXED($min, 2)} and {NATURALFIXED($max, 2)} lung damage
              }
 }
 reagent-effect-condition-guidebook-brain-damage = { $max ->

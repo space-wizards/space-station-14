@@ -170,6 +170,9 @@ public sealed partial class ZombieSystem
             RemComp<CryostasisFactorComponent>(target);
             RemComp<UniqueWoundOnDamageComponent>(target);
             RemComp<IntrinsicPainComponent>(target);
+            RemComp<LungDamageComponent>(target);
+            RemComp<LungDamageOnInhaledAirTemperatureComponent>(target);
+            RemComp<LungDamageAlertsComponent>(target);
 
             var entProto = _protoManager.Index(AddOnWoundableZombified);
             EntityManager.RemoveComponents(target, entProto.Components);

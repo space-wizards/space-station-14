@@ -202,6 +202,11 @@
         conditions:
         - !type:Temperature
           max: 213.0
+      - !type:ModifyLungDamage
+        amount: -0.3
+        conditions:
+        - !type:Temperature
+          max: 213.0
       - !type:EvenHealthChange
         conditions:
         - !type:Temperature

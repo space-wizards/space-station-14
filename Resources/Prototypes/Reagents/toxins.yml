@@ -339,6 +339,8 @@
         damage:
           groups:
             Airloss: 10
+      - !type:ModifyLungDamage # Offbrand
+        amount: 2
 
 - type: reagent
   id: MindbreakerToxin
@@ -511,6 +513,11 @@
         - !type:MetaboliteThreshold
           min: 15
       - !type:ModifyHeartDamage
+        amount: 0.1
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 15
+      - !type:ModifyLungDamage
         amount: 0.1
         conditions:
         - !type:MetaboliteThreshold
