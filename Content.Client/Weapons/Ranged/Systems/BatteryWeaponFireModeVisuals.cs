@@ -51,7 +51,7 @@ public sealed partial class GunSystem
             return;
 
         var i = 0;
-        var defaultKey = $"inhand-{args.Location.ToString().ToLowerInvariant()}-toggle";
+        var defaultKey = $"inhand-{args.Location.ToString().ToLowerInvariant()}-color";
         foreach (var layer in layers)
         {
             var key = layer.MapKeys?.FirstOrDefault();
@@ -91,7 +91,7 @@ public sealed partial class GunSystem
             var key = layer.MapKeys?.FirstOrDefault();
             if (key == null)
             {
-                key = i == 0 ? $"{args.Slot}-toggle" : $"{args.Slot}-toggle-{i}";
+                key = i == 0 ? $"{args.Slot}-color" : $"{args.Slot}-color-{i}";
                 i++;
             }
 

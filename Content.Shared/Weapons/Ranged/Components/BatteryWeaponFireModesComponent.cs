@@ -27,13 +27,13 @@ public sealed partial class BatteryWeaponFireModesComponent : Component
     public int CurrentFireMode;
 
     /// <summary>
-    /// Layers to add to the sprite of the player that is holding this entity (while the component is toggled on).
+    /// Layers to add to the sprite of the player that is holding this entity (for changing gun color)
     /// </summary>
     [DataField]
     public Dictionary<HandLocation, List<PrototypeLayerData>> InhandVisuals = new();
 
     /// <summary>
-    /// Layers to add to the sprite of the player that is wearing this entity (while the component is toggled on).
+    /// Layers to add to the sprite of the player that is wearing this entity (for changing gun color)
     /// </summary>
     [DataField]
     public Dictionary<string, List<PrototypeLayerData>> ClothingVisuals = new();
