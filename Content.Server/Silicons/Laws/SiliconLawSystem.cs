@@ -12,6 +12,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Radio.Components;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
+using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
 using Robust.Server.GameObjects;
@@ -57,6 +58,8 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         SubscribeLocalEvent<SiliconLawProviderComponent, MindRemovedMessage>(OnLawProviderMindRemoved);
         SubscribeLocalEvent<SiliconLawProviderComponent, SiliconEmaggedEvent>(OnEmagLawsAdded);
         SubscribeLocalEvent<SiliconLawProviderComponent, RoleSubtypeOverrideEvent>(OnRoleSubtypeOverride);
+
+        SubscribeLocalEvent<BorgChassisComponent, RoleSubtypeOverrideEvent>(OnRoleSubtypeOverrideChassis);
     }
 
     private void OnMapInit(EntityUid uid, SiliconLawBoundComponent component, MapInitEvent args)
@@ -144,7 +147,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
             component.Lawset = args.Lawset;
 
             //Update subtype
-            // TODO: Make this differentiate between "corrupt" ion, and ion that assigns a real lawset
+            // TODO: Make this differentiate between "corrupt" ion, and ion that assigns a real lawset. We should then name the specific lawset
             component.Lawset.Subtype = LawsetIon;
 
             // gotta tell player to check their laws
@@ -202,6 +205,14 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
         args.SubtypeOverride = lawSet.Subtype;
     }
+
+    // We need to somehow "Subscribe" to the ABSENCE of a component...
+    private void OnRoleSubtypeOverrideChassis(Entity<BorgChassisComponent> ent, ref RoleSubtypeOverrideEvent args)
+    {
+        if (!HasComp<SiliconLawProviderComponent>(ent))
+            args.SubtypeOverride = LawsetNone;
+    }
+
 
     protected override void EnsureSubvertedSiliconRole(EntityUid mindId)
     {
