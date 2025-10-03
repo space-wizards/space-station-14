@@ -15,7 +15,7 @@
         Blunt: 5
     soundHit:
       collection: MetalThud
-  - type: StrippingComponent # Offbrand
+  - type: Stripping # Offbrand
   - type: CombatMode
   - type: NoSlip
   - type: StaticPrice
