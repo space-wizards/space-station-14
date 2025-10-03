@@ -59,7 +59,13 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
         }
     }
 
-    public void ApplyEffects(EntityUid target, AnyEntityEffect[] effects, float scale = 1f)
+    /// <summary>
+    /// Applies a list of entity effects to a target entity.
+    /// </summary>
+    /// <param name="target">Entity being targeted by the effects</param>
+    /// <param name="effects">Effects we're applying to the entity</param>
+    /// <param name="scale">Optional scale multiplier for the effects</param>
+    public void ApplyEffects(EntityUid target, EntityEffect[] effects, float scale = 1f)
     {
         // do all effects, if conditions apply
         foreach (var effect in effects)
@@ -68,7 +74,14 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
         }
     }
 
-    public bool TryApplyEffect(EntityUid target, AnyEntityEffect effect, float scale = 1f)
+    /// <summary>
+    /// Applies an entity effect to a target if all conditions pass.
+    /// </summary>
+    /// <param name="target">Target we're applying an effect to</param>
+    /// <param name="effect">Effect we're applying</param>
+    /// <param name="scale">Optional scale multiplier for the effect. Not all </param>
+    /// <returns>True if all conditions pass!</returns>
+    public bool TryApplyEffect(EntityUid target, EntityEffect effect, float scale = 1f)
     {
         if (scale < effect.MinScale)
             return false;
@@ -81,25 +94,37 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
         return true;
     }
 
-    public void ApplyEffect(EntityUid target, AnyEntityEffect effect, float scale = 1f)
+    /// <summary>
+    /// Applies an <see cref="EntityEffect"/> to a given target.
+    /// This doesn't check conditions so you should only call this if you know what you're doing!
+    /// </summary>
+    /// <param name="target">Target we're applying an effect to</param>
+    /// <param name="effect">Effect we're applying</param>
+    /// <param name="scale">Optional scale multiplier for the effect. Not all </param>
+    public void ApplyEffect(EntityUid target, EntityEffect effect, float scale = 1f)
     {
-        // TODO: Logging
-        /*
+        // Clamp the scale if the effect doesn't allow scaling.
+        if (effect.Scaling)
+            scale = Math.Min(scale, 1f);
+
         if (effect.ShouldLog)
         {
             _adminLog.Add(
-                LogType.ReagentEffect,
+                LogType.EntityEffect,
                 effect.LogImpact,
-                $"Metabolism effect {effect.GetType().Name:effect}"
-                + $" of reagent {proto.LocalizedName:reagent}"
-                + $" applied on entity {actualEntity:entity}"
-                + $" at {Transform(actualEntity).Coordinates:coordinates}"
+                $"Entity effect {effect.GetType().Name:effect}"
+                + $" applied on entity {target:entity}"
+                + $" at {Transform(target).Coordinates:coordinates}"
+                + $" with a scale multiplier of {scale}"
             );
-        }*/
+        }
 
         effect.RaiseEvent(target, this, scale);
     }
 
+    /// <summary>
+    /// Raises an effect to an entity. You should not be calling this unless you know what you're doing.
+    /// </summary>
     public void RaiseEffectEvent<T>(EntityUid target, T effect, float scale) where T : EntityEffectBase<T>
     {
         var effectEv = new EntityEffectEvent<T>(effect, scale);
@@ -138,7 +163,7 @@ public interface IEntityEffectRaiser
     void RaiseEffectEvent<T>(EntityUid target, T effect, float scale) where T : EntityEffectBase<T>;
 }
 
-public abstract partial class EntityEffectBase<T> : AnyEntityEffect where T : EntityEffectBase<T>
+public abstract partial class EntityEffectBase<T> : EntityEffect where T : EntityEffectBase<T>
 {
     public override void RaiseEvent(EntityUid target, IEntityEffectRaiser raiser, float scale)
     {
@@ -151,12 +176,12 @@ public abstract partial class EntityEffectBase<T> : AnyEntityEffect where T : En
 
 // This exists so we can store entity effects in list and raise events without type erasure.
 [ImplicitDataDefinitionForInheritors]
-public abstract partial class AnyEntityEffect
+public abstract partial class EntityEffect
 {
     public abstract void RaiseEvent(EntityUid target, IEntityEffectRaiser raiser, float scale);
 
     [DataField]
-    public AnyEntityCondition[]? Conditions;
+    public EntityCondition[]? Conditions;
 
     /// <summary>
     /// If our scale is less than this value, the effect fails.
@@ -222,5 +247,5 @@ public readonly record struct EntityEffectEvent<T>(T Effect, float Scale) where 
     /// <summary>
     /// The Scale modifier of this Effect.
     /// </summary>
-    public readonly float Scale = Effect.Scaling ? Scale : Math.Min(Scale, 1f);
+    public readonly float Scale = Scale;
 }

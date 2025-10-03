@@ -24,7 +24,7 @@ public sealed class ReactionJsonGenerator
             WriteIndented = true,
             Converters =
             {
-                new UniversalJsonConverter<AnyEntityEffect>(),
+                new UniversalJsonConverter<EntityEffect>(),
             }
         };
 

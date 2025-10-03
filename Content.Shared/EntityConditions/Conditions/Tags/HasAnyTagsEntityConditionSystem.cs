@@ -1,4 +1,5 @@
-﻿using Content.Shared.Tag;
+﻿using Content.Shared.Localizations;
+using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Tags;
@@ -21,7 +22,20 @@ public sealed partial class HasAnyTag : EntityConditionBase<HasAnyTag>
     [DataField(required: true)]
     public ProtoId<TagPrototype>[] Tags = [];
 
-    // TODO: Special LOC for list also combine this with HasTag...
-    public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>
-        Loc.GetString("reagent-effect-condition-guidebook-has-tag", ("tag", Tags), ("invert", Inverted));
+    public override string EntityConditionGuidebookText(IPrototypeManager prototype)
+    {
+        var tagList = new List<string>();
+
+        foreach (var type in Tags)
+        {
+            if (!prototype.Resolve(type, out var proto))
+                continue;
+
+            tagList.Add(proto.ID);
+        }
+
+        var names = ContentLocalizationManager.FormatListToOr(tagList);
+
+        return Loc.GetString("reagent-effect-condition-guidebook-has-tag", ("tag", names), ("invert", Inverted));
+    }
 }

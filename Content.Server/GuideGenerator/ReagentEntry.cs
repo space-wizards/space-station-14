@@ -62,7 +62,7 @@ public sealed class ReactionEntry
     public Dictionary<string, float> Products { get; }
 
     [JsonPropertyName("effects")]
-    public List<AnyEntityEffect> Effects { get; }
+    public List<EntityEffect> Effects { get; }
 
     public ReactionEntry(ReactionPrototype proto)
     {

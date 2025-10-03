@@ -206,7 +206,7 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
                 }
 
                 // This allows us to check certain conditions on organs themselves!
-                bool CanMetabolizeEffect(AnyEntityCondition[] conditions)
+                bool CanMetabolizeEffect(EntityCondition[] conditions)
                 {
                     foreach (var condition in conditions)
                     {

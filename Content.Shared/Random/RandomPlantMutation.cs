@@ -32,7 +32,7 @@ public sealed partial class RandomPlantMutation
     /// The actual EntityEffect to apply to the target
     /// </summary>
     [DataField]
-    public AnyEntityEffect Effect = default!;
+    public EntityEffect Effect = default!;
 
     /// <summary>
     /// This mutation will target the harvested produce

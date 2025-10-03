@@ -49,7 +49,6 @@ public sealed partial class HasJob : EntityConditionBase<HasJob>
 {
     [DataField(required: true)] public List<ProtoId<JobPrototype>> Jobs = [];
 
-    // TODO: Special LOC for list
     public override string EntityConditionGuidebookText(IPrototypeManager prototype)
     {
         var localizedNames = Jobs.Select(jobId => prototype.Index(jobId).LocalizedName).ToList();

@@ -182,7 +182,7 @@ namespace Content.Shared.Chemistry.Reagent
         public List<ITileReaction> TileReactions = new(0);
 
         [DataField("plantMetabolism")]
-        public List<AnyEntityEffect> PlantMetabolisms = new(0);
+        public List<EntityEffect> PlantMetabolisms = new(0);
 
         [DataField]
         public float PricePerUnit;
@@ -256,7 +256,7 @@ namespace Content.Shared.Chemistry.Reagent
         /// </summary>
         [JsonPropertyName("effects")]
         [DataField("effects", required: true)]
-        public AnyEntityEffect[] Effects = default!;
+        public EntityEffect[] Effects = default!;
 
         public ReagentEffectsGuideEntry MakeGuideEntry(IPrototypeManager prototype, IEntitySystemManager entSys)
         {
@@ -290,6 +290,6 @@ namespace Content.Shared.Chemistry.Reagent
         public HashSet<ReactionMethod> Methods = default!;
 
         [DataField("effects", required: true)]
-        public AnyEntityEffect[] Effects = default!;
+        public EntityEffect[] Effects = default!;
     }
 }

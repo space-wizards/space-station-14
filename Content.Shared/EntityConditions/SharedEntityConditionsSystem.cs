@@ -9,8 +9,15 @@ namespace Content.Shared.EntityConditions;
 /// </summary>
 public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntityConditionRaiser
 {
-    public bool TryConditions(EntityUid target, AnyEntityCondition[]? conditions)
+    /// <summary>
+    /// Checks a list of conditions to verify that they all return true.
+    /// </summary>
+    /// <param name="target">Target entity we're checking conditions on</param>
+    /// <param name="conditions">Conditions we're checking</param>
+    /// <returns>Returns true if all conditions return true, false if any fail</returns>
+    public bool TryConditions(EntityUid target, EntityCondition[]? conditions)
     {
+        // If there's no conditions we can't fail any of them...
         if (conditions == null)
             return true;
 
@@ -23,11 +30,41 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
         return true;
     }
 
-    public bool TryCondition(EntityUid target, AnyEntityCondition condition)
+    /// <summary>
+    /// Checks a list of conditions to see if any are true.
+    /// </summary>
+    /// <param name="target">Target entity we're checking conditions on</param>
+    /// <param name="conditions">Conditions we're checking</param>
+    /// <returns>Returns true if any conditions return true</returns>
+    public bool TryAnyCondition(EntityUid target, EntityCondition[]? conditions)
+    {
+        // If there's no conditions we can't meet any of them...
+        if (conditions == null)
+            return false;
+
+        foreach (var condition in conditions)
+        {
+            if (TryCondition(target, condition))
+                return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Checks a single <see cref="EntityCondition"/> on an entity.
+    /// </summary>
+    /// <param name="target">Target entity we're checking conditions on</param>
+    /// <param name="condition">Condition we're checking</param>
+    /// <returns>Returns true if we meet the condition and false otherwise</returns>
+    public bool TryCondition(EntityUid target, EntityCondition condition)
     {
         return condition.Inverted != condition.RaiseEvent(target, this);
     }
 
+    /// <summary>
+    /// Raises a condition to an entity. You should not be calling this unless you know what you're doing.
+    /// </summary>
     public bool RaiseConditionEvent<T>(EntityUid target, T effect) where T : EntityConditionBase<T>
     {
         var effectEv = new EntityConditionEvent<T>(effect);
@@ -56,7 +93,7 @@ public interface IEntityConditionRaiser
     bool RaiseConditionEvent<T>(EntityUid target, T effect) where T : EntityConditionBase<T>;
 }
 
-public abstract partial class EntityConditionBase<T> : AnyEntityCondition where T : EntityConditionBase<T>
+public abstract partial class EntityConditionBase<T> : EntityCondition where T : EntityConditionBase<T>
 {
     public override bool RaiseEvent(EntityUid target, IEntityConditionRaiser raiser)
     {
@@ -70,7 +107,7 @@ public abstract partial class EntityConditionBase<T> : AnyEntityCondition where 
 
 // This exists so we can store entity effects in list and raise events without type erasure.
 [ImplicitDataDefinitionForInheritors]
-public abstract partial class AnyEntityCondition
+public abstract partial class EntityCondition
 {
     public abstract bool RaiseEvent(EntityUid target, IEntityConditionRaiser raiser);
 
@@ -104,5 +141,3 @@ public record struct EntityConditionEvent<T>(T Condition) where T : EntityCondit
     /// </summary>
     public readonly T Condition = Condition;
 }
-
-// TODO: Make a struct for or/and/xor linked conditions.

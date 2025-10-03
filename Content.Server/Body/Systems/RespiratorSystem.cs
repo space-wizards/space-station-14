@@ -344,7 +344,7 @@ public sealed class RespiratorSystem : EntitySystem
         // TODO generalize condition checks
         // this is pretty janky, but I just want to bodge a method that checks if an entity can breathe a gas mixture
         // Applying actual reaction effects require a full ReagentEffectArgs struct.
-        bool CanMetabolize(AnyEntityEffect effect)
+        bool CanMetabolize(EntityEffect effect)
         {
             if (effect.Conditions == null)
                 return true;
