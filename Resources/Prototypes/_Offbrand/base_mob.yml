@@ -309,7 +309,7 @@
     heatCoefficient: 0.005
     heatConstant: -1.375
     coldCoefficient: -0.01
-    coldConstant: 3
+    coldConstant: 2
   - type: LungDamageAlerts
     alertThresholds:
       15: MinorLungDamage
