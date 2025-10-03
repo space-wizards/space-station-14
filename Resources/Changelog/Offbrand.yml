@@ -67,4 +67,16 @@ Entries:
     type: Tweak
   id: 4
   time: '2025-10-02T21:00:00.0000000+00:00'
+- author: sowelipililimute
+  changes:
+  - message: Tricordrazine heals slightly less damage
+    type: Tweak
+  - message: Lung damage has been added! Try not to breathe air that is bad for you
+    type: Add
+  - message: Heart health and damages have been rescaled so that the guidebook is less confusing
+    type: Fix
+  - message: You now have less cryostasis from being cold
+    type: Tweak
+  id: 5
+  time: '2025-10-03T21:00:00.0000000+00:00'
 Order: 2
