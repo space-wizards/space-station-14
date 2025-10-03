@@ -25,7 +25,9 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Shared.Damage;
 using Content.Shared.Humanoid;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Content.Server.Materials;
 
@@ -44,6 +46,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly DamageableSystem _damage = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -190,10 +193,9 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         if (CanGib(uid, item, component))
         {
             var logImpact = HasComp<HumanoidAppearanceComponent>(item) ? LogImpact.Extreme : LogImpact.Medium;
-            _adminLogger.Add(LogType.Gib, logImpact, $"{ToPrettyString(item):victim} was gibbed by {ToPrettyString(uid):entity} ");
-            if (component.ReclaimSolutions)
-                SpawnChemicalsFromComposition(uid, item, completion, false, component, xform);
-            _body.GibBody(item, true);
+            _adminLogger.Add(LogType.Damaged, logImpact, $"{ToPrettyString(item):victim} was ground by {ToPrettyString(uid):entity} ");
+            TryComp<DamageableComponent>(item, out var comp);
+            _damage.TryChangeDamage(item, component.DamageOnGrind, true, true, comp);
             _appearance.SetData(uid, RecyclerVisuals.Bloody, true);
         }
         else
@@ -202,7 +204,8 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
                 SpawnChemicalsFromComposition(uid, item, completion, true, component, xform);
         }
 
-        QueueDel(item);
+        if(!CanGib(uid, item, component)) //Don't delete bodies that were only damaged
+            QueueDel(item);
     }
 
     private void SpawnMaterialsFromComposition(EntityUid reclaimer,
