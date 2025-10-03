@@ -74,9 +74,13 @@ public sealed partial class RevenantSystem
         if (HasComp<PoweredLightComponent>(target))
         {
             args.Handled = _ghost.DoGhostBooEvent(target);
-            if (!(component.Essence >= component.EssenceRegenCap) && args.Handled)
+            if (!args.Handled || component.Essence >= component.EssenceRegenCap)
+                return;
+            else
+            {
                 ChangeEssenceAmount(uid, component.LightFlashEssenceAmount, component);
-            return;
+                return;
+            }
         }
 
         if (!HasComp<MobStateComponent>(target) || !HasComp<HumanoidAppearanceComponent>(target) || HasComp<RevenantComponent>(target))

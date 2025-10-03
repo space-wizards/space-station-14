@@ -1,5 +1,5 @@
 revenant-appear-name = Apparate
-revenant-appear-desc = Makes you corporeal for five seconds, allowing you to make your presence known to mortals. Using it also leaves you vulnerable to attacks for a short period of time.
+revenant-appear-desc = Makes you corporeal for five seconds, allowing you to make your presence known to mortals. Using it leaves you vulnerable to attacks for a short period of time.
 
 revenant-defile-name = Defile
 revenant-defile-desc = Defiles the surrounding area, ripping up floors, damaging windows, opening containers, and throwing items. Using it leaves you vulnerable to attacks for a short period of time.
