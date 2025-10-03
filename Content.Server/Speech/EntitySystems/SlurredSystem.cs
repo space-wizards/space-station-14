@@ -27,7 +27,7 @@ public sealed class SlurredSystem : SharedSlurredSystem
     /// </summary>
     private float GetProbabilityScale(EntityUid uid)
     {
-        if (!_status.TryGetMaxTime<DrunkStatusEffectComponent>(uid, out var time))
+        if (!_status.TryGetMaxTime<SlurredAccentComponent>(uid, out var time))
             return 0;
 
         // This is a magic number. Why this value? No clue it was made 3 years before I refactored this.
