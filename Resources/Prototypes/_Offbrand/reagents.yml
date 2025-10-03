@@ -320,7 +320,7 @@
         damage:
           types:
             Asphyxiation: -4
-            Blunt: 1.5
+            Blunt: 1
         conditions:
         - !type:TotalGroupDamage
           group: Airloss
@@ -329,7 +329,7 @@
         damage:
           types:
             Asphyxiation: -4
-            Blunt: 1.5
+            Blunt: 1
         conditions:
         - !type:MetaboliteThreshold
           min: 10
