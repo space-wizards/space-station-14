@@ -28,11 +28,11 @@
   ## Equipment
   <Box>
     <GuideEntityEmbed Entity="MachineArtifactAnalyzer" Caption="Analyzer"/>
-    <GuideEntityEmbed Entity="ComputerAnalysisConsole" Caption="Console"/>
+    <GuideEntityEmbed Entity="ComputerAnalysisConsole" Caption="Analysis Console"/>
     <GuideEntityEmbed Entity="NodeScanner" Caption="Node Scanner"/>
   </Box>
   - [bold]Artifact Analyzer:[/bold] Stationary device that scans artifacts, sending data to the Console.
-  - [bold]Analysis Console:[/bold] Stationary device that is used to display the node tree. Must be linked to an Analyzer with a multitool.
+  - [bold][textlink="Analysis Console:" link="AnalysisConsole"][/bold] Stationary device that is used to display the node tree. Must be linked to an Analyzer with a multitool.
   - [bold]Node Scanner:[/bold] Small hand-held device that can show the ID of the node currently being activated and whether the artifact is ready to trigger, letting scientist have minimal required knowledge for operating inside chamber near artifact and far without direct access to console.
 
   <Box>
@@ -47,57 +47,5 @@
   <Box>
     <GuideEntityEmbed Entity="ArtifactFragment" Caption="Artifact Fragment"/>
   </Box>
-  ## Unlocking Nodes
-  - Select a node on the [bold]Analysis Console[/bold] to check its triggers and effects.
-  - Perform the [bold]triggers[/bold] listed in the console. Some require direct interaction with the artifact, while others may only need the correct environment or a specific action performed nearby. When a trigger is successfully performed, the artifact will respond with the message: [italic]"It begins to shift in strange ways..."[/italic]. The [bold]Node Scanner[/bold] will then indicate which specific node was triggered.
-
-  Some nodes require multiple triggers to be performed before they can be unlocked. Once all required triggers are completed, the artifact will respond with the message: [italic]"It slows down, visibly changed."[/italic], and the node will appear as [bold][color=plum]Active[/color][/bold] on the Console.
-
-  Artifacts enter an unlocking state after the first trigger is met. During this state, remaining triggers must be completed. The unlocking window initially lasts a few seconds and resets each time a new trigger is activated. This window grows longer with each additional node unlocked, giving more time to complete further triggers.
-
-  If an artifact fails to activate, it will stop resonating and display the message: [italic]"It slows down before uneventfully stopping."[/italic]. After this, it enters a cooldown period before it can be activated again.
-
-  The order of trigger activation [bold]does not matter[/bold] for individual nodes. [italic]However[/italic], some triggers affect multiple nodes. As a rule of thumb, start with a trigger that is unique to the node you want to unlock. Activating a trigger for a different node during this phase prevents the target node from unlocking until the artifact’s cooldown ends.
-
-  [bold]Artifexium:[/bold] This reagent can also be used to unlock nodes directly, bypassing some or all trigger requirements.
-
-  ## Active Nodes
-  Once unlocked, a node is considered active. Only the highest unlocked nodes in a tree’s layer are activatable, lower nodes in the same tree cannot be triggered if a higher node is active.
-
-  Artifacts often have multiple trees. Layer precedence applies within each tree, but different trees operate independently. This means nodes in different trees can be activated simultaneously as long as they are the highest unlocked nodes in their respective trees.
-
-  [bold]Manual activation triggers all unlocked nodes at once and consumes durability.[/bold]
-
-  [bold]Artifact Glue:[/bold] Splashing this reagent on an artifact restores the durability of all active nodes, allowing them to be manually activated again.
-
-  ## Analysis Console Interface
-  Analysis console interface will display data for each node you select in tree, this data includes:
-  - [bold]ID:[/bold] Unique identifier for use with the Node Scanner.
-  - [bold]Class:[/bold] The layer name. Nodes on the same layer share it.
-  - [bold]Status:[/bold]
-  - [italic][color=red]Locked[/color][/italic] by default
-  - [italic][color=plum]Active[/color][/italic] when first triggered
-  - [italic][color=lime]Unlocked[/color][/italic] if a deeper node is reached (prevents manual activations)
-  - [bold]Durability:[/bold] Number of manual activations available for that node.
-  - [bold]Effect:[/bold] What happens when the node activates or is manually triggered.
-  - [bold]Triggers:[/bold] Required actions to activate the node the first time.
-  - [bold]Server:[/bold] Choose the research server the extracted research points are sent to.
-  - [bold]Extract Points:[/bold] Retrieves research points from nodes that have been unlocked since the last extraction. Nodes already extracted will not yield additional points.
-
-  ## Triggers
-  Examples include:
-  - Examining the artifact
-  - Playing an instrument
-  - Damaging or throwing it
-  - Exposing it to gases (plasma, tritium, etc.)
-  - Changing pressure or temperature
-  - Using tools (screwdriver, multitool, crowbar, wrench)
-  - Splashing reagents (blood, water, ammonia, etc.)
-  - Killing something nearby
-
-  ## Effects
-  Effects can be:
-  - [color=green]Harmless:[/color] producing plants, animals, or junk
-  - [color=#00ccff]Helpful:[/color] charging batteries, creating instruments or money
-  - [color=red]Hazardous:[/color] anomalies, radiation, explosions, hostile fauna
+  - [bold]Artifact Fragment:[/bold] Pieces of destroyed artifacts. Four fragments can be rebuilt into a new artifact using the craft menu.
 </Document>

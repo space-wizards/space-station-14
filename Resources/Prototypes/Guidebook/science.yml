@@ -36,6 +36,19 @@
   id: Xenoarchaeology
   name: guide-entry-xenoarchaeology
   text: "/ServerInfo/Guidebook/Science/Xenoarchaeology.xml"
+  children:
+    - AnalysisConsole
+    - XenoarchaeologyUnlockingNodes
+
+- type: guideEntry
+  id: XenoarchaeologyUnlockingNodes
+  name: guide-entry-xenoarchaeologyunlockingnodes
+  text: "/ServerInfo/Guidebook/Science/UnlockingNodes.xml"
+
+- type: guideEntry
+  id: AnalysisConsole
+  name: guide-entry-analysisconsole
+  text: "/ServerInfo/Guidebook/Science/AnalysisConsole.xml"
 
 - type: guideEntry
   id: Robotics
