@@ -62,7 +62,7 @@
         Bloodloss: -1
   - type: MeleeChemicalInjector
     solution: melee
-    transferAmount: 0.25
+    transferAmount: 0.75
   - type: SolutionRegeneration
     solution: melee
     duration: 5

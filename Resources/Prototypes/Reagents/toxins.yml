@@ -506,6 +506,23 @@
         conditions:
         - !type:MetaboliteThreshold
           min: 15
+      - !type:ModifyHeartDamage
+        amount: 2
+        conditions:
+        - !type:MobStateCondition
+          mobstate: Critical
+      - !type:ModifyLungDamage
+        amount: 2
+        conditions:
+        - !type:MobStateCondition
+          mobstate: Critical
+      - !type:HealthChange
+        damage:
+          types:
+            Asphyxiation: 10
+        conditions:
+        - !type:MobStateCondition
+          mobstate: Critical
       - !type:Zombify
         conditions:
         - !type:BrainDamage
