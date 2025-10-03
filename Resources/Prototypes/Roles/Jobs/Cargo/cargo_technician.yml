@@ -19,8 +19,8 @@
 - type: startingGear
   id: CargoTechGear
   equipment:
+    belt: ClothingBeltUtilityCargo
     ears: ClothingHeadsetCargo
-    pocket1: AppraisalTool
   #storage:
     #back:
     #- Stuff

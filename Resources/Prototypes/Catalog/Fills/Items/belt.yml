@@ -13,6 +13,19 @@
       - id: NetworkConfigurator
 
 - type: entity
+  id: ClothingBeltUtilityCargo
+  parent: ClothingBeltUtility
+  suffix: Cargo
+  components:
+  - type: StorageFill
+    contents:
+      - id: CrowbarGreen
+      - id: Wrench
+      - id: Screwdriver
+      - id: UtilityKnife
+      - id: AppraisalTool
+
+- type: entity
   id: ClothingBeltUtilityEngineering
   parent: ClothingBeltUtility
   suffix: Engineering
