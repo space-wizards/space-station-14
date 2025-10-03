@@ -101,6 +101,7 @@
       - id: ChemistryBottleParacetamol
       - id: ChemistryBottleInaprovaline
       - id: ChemistryBottleDexalin
+      - id: ChemistryBottleDylovene
       # End Offbrand Additions
       - id: Gauze
       - id: EmergencyMedipen #You never know what people are going to latejoin into
@@ -118,6 +119,7 @@
       - id: ChemistryBottleParacetamol
       - id: ChemistryBottleInaprovaline
       - id: ChemistryBottleDexalin
+      - id: ChemistryBottleDylovene
       # End Offbrand Additions
       - id: Gauze
       - id: EmergencyMedipen #You never know what people are going to latejoin into
