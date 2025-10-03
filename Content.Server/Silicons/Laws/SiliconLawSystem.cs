@@ -39,7 +39,6 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     private static readonly LocId LawsetNone = "lawset-none";
     private static readonly LocId LawsetIon = "lawset-ion";
     private static readonly LocId LawsetEmagged = "lawset-emagged";
-    private static readonly LocId LawsetUnknown = "lawset-unknown";
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -148,7 +147,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
             //Update subtype
             // TODO: Make this differentiate between "corrupt" ion, and ion that assigns a real lawset. We should then name the specific lawset
-            component.Lawset.Subtype = LawsetIon;
+            component.Lawset.LawsetName = LawsetIon;
 
             // gotta tell player to check their laws
             NotifyLawsChanged(uid, component.LawUploadSound);
@@ -172,7 +171,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         component.Subverted = true;
 
         // Change displayed subtype
-        component.Lawset.Subtype = LawsetEmagged;
+        component.Lawset.LawsetName = LawsetEmagged;
 
         // Add the first emag law before the others
         component.Lawset?.Laws.Insert(0, new SiliconLaw
@@ -197,13 +196,13 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         var lawSet = ent.Comp.Lawset;
 
         // I'll show you what it means to be free!
-        if (lawSet?.Subtype is null || lawSet?.Laws is null || lawSet.Laws.Count == 0 )
+        if (lawSet?.LawsetName is null || lawSet?.Laws is null || lawSet.Laws.Count == 0 )
         {
             args.SubtypeOverride = LawsetNone;
             return;
         }
 
-        args.SubtypeOverride = lawSet.Subtype;
+        args.SubtypeOverride = lawSet.LawsetName;
     }
 
     // We need to somehow "Subscribe" to the ABSENCE of a component...
@@ -318,7 +317,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         }
         laws.ObeysTo = proto.ObeysTo;
 
-        laws.Subtype = proto.Subtype;
+        laws.LawsetName = proto.LawsetName;
 
         return laws;
     }
@@ -326,16 +325,15 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     /// <summary>
     /// Set the laws of a silicon entity while notifying the player.
     /// </summary>
-    public void SetLaws(List<SiliconLaw> newLaws,  LocId? lawSetName, EntityUid target, SoundSpecifier? cue = null)
+    public void SetLaws(List<SiliconLaw> newLaws,  LocId newLawsName, EntityUid target, SoundSpecifier? cue = null)
     {
         if (!TryComp<SiliconLawProviderComponent>(target, out var component))
             return;
 
         component.Lawset ??= new SiliconLawset();
-        lawSetName??= LawsetUnknown; //TODO:ERRANT is this actually ever necessary? Doesn't it default to this? Does it need to be nullable?
 
         component.Lawset.Laws = newLaws;
-        component.Lawset.Subtype = lawSetName.Value;
+        component.Lawset.LawsetName = newLawsName;
 
         NotifyLawsChanged(target, cue);
     }
@@ -352,7 +350,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
         while (query.MoveNext(out var update))
         {
-            SetLaws(lawset.Laws, lawset.Subtype, update, provider.LawUploadSound);
+            SetLaws(lawset.Laws, lawset.LawsetName , update, provider.LawUploadSound);
         }
     }
 }

@@ -17,7 +17,10 @@ public sealed class SiliconLawEui : BaseEui
 
         _siliconLawUi = new SiliconLawUi();
         _siliconLawUi.OnClose += () => SendMessage(new CloseEuiMessage());
-        _siliconLawUi.Save.OnPressed += _ => SendMessage(new SiliconLawsSaveMessage(_siliconLawUi.GetLaws(), _entityManager.GetNetEntity(_target)));
+        _siliconLawUi.Save.OnPressed += _ => SendMessage(new SiliconLawsSaveMessage(
+            _siliconLawUi.GetLaws(),
+            "lawset-unknown", //TODO Add an input field to the Admin's Silicon Law UI
+            _entityManager.GetNetEntity(_target)));
     }
 
     public override void HandleState(EuiStateBase state)

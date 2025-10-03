@@ -53,8 +53,7 @@ public sealed class SiliconLawEui : BaseEui
 
         var player = _entityManager.GetEntity(message.Target);
         if (_entityManager.TryGetComponent<SiliconLawProviderComponent>(player, out var playerProviderComp))
-            _siliconLawSystem.SetLaws(message.Laws, null, player, playerProviderComp.LawUploadSound);
-        //TODO:ERRANT make this able to pass a lawset name?
+            _siliconLawSystem.SetLaws(message.Laws, message.LawsetName, player, playerProviderComp.LawUploadSound);
     }
 
     private bool IsAllowed()

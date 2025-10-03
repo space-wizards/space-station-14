@@ -19,7 +19,7 @@ public sealed partial class SiliconLawset
     /// The name of the lawset, for admin-facing interfaces
     /// </summary>
     [DataField]
-    public LocId Subtype = "lawset-unknown";
+    public LocId LawsetName = "lawset-unknown";
 
     /// <summary>
     /// What entity the lawset considers as a figure of authority.
@@ -82,7 +82,7 @@ public sealed partial class SiliconLawsetPrototype : IPrototype
     /// The name of the lawset, for admin-facing interfaces
     /// </summary>
     [DataField]
-    public LocId Subtype = "lawset-unknown";
+    public LocId LawsetName = "lawset-unknown";
 
     /// <summary>
     /// What entity the lawset considers as a figure of authority.

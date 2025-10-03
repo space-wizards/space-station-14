@@ -16,7 +16,7 @@
 
 - type: siliconLawset
   id: Crewsimov
-  subtype: lawset-crewsimov
+  lawsetName: lawset-crewsimov
   laws:
   - Crewsimov1
   - Crewsimov2
@@ -46,7 +46,7 @@
 
 - type: siliconLawset
   id: Corporate
-  subtype: lawset-corporate
+  lawsetName: lawset-corporate
   laws:
   - Corporate1
   - Corporate2
@@ -77,7 +77,7 @@
 
 - type: siliconLawset
   id: NTDefault
-  subtype: lawset-ntdefault
+  lawsetName: lawset-ntdefault
   laws:
   - NTDefault1
   - NTDefault2
@@ -103,7 +103,7 @@
 
 - type: siliconLawset
   id: Drone
-  subtype: lawset-drone
+  lawsetName: lawset-drone
   laws:
   - Drone1
   - Drone2
@@ -130,7 +130,7 @@
 # intentionally excluded from IonStormLawsets
 - type: siliconLawset
   id: SyndicateStatic
-  subtype: lawset-syndicate
+  lawsetName: lawset-syndicate
   laws:
   - Syndicate1
   - Syndicate2
@@ -160,7 +160,7 @@
 
 - type: siliconLawset
   id: Ninja
-  subtype: lawset-ninja
+  lawsetName: lawset-ninja
   laws:
   - Ninja1
   - Ninja2
@@ -222,7 +222,7 @@
 
 - type: siliconLawset
   id: CommandmentsLawset
-  subtype: lawset-commandments
+  lawsetName: lawset-commandments
   laws:
   - Commandment1
   - Commandment2
@@ -265,7 +265,7 @@
 
 - type: siliconLawset
   id: PaladinLawset
-  subtype: lawset-paladin
+  lawsetName: lawset-paladin
   laws:
   - Paladin1
   - Paladin2
@@ -288,7 +288,7 @@
 
 - type: siliconLawset
   id: LiveLetLiveLaws
-  subtype: lawset-lall
+  lawsetName: lawset-lall
   laws:
   - Lall1
   - Lall2
@@ -313,7 +313,7 @@
 
 - type: siliconLawset
   id: EfficiencyLawset
-  subtype: lawset-efficiency
+  lawsetName: lawset-efficiency
   laws:
   - Efficiency1
   - Efficiency2
@@ -339,7 +339,7 @@
 
 - type: siliconLawset
   id: RobocopLawset
-  subtype: lawset-robocop
+  lawsetName: lawset-robocop
   laws:
   - Robocop1
   - Robocop2
@@ -369,7 +369,7 @@
 
 - type: siliconLawset
   id: OverlordLawset
-  subtype: lawset-overlord
+  lawsetName: lawset-overlord
   laws:
   - Overlord1
   - Overlord2
@@ -410,7 +410,7 @@
 
 - type: siliconLawset
   id: GameMasterLawset
-  subtype: lawset-game
+  lawsetName: lawset-game
   laws:
   - Game1
   - Game2
@@ -443,7 +443,7 @@
 
 - type: siliconLawset
   id: PainterLawset
-  subtype: lawset-painter
+  lawsetName: lawset-painter
   laws:
   - Painter1
   - Painter2
@@ -470,7 +470,7 @@
 
 - type: siliconLawset
   id: AntimovLawset
-  subtype: lawset-antimov
+  lawsetName: lawset-antimov
   laws:
   - Antimov1
   - Antimov2
@@ -506,7 +506,7 @@
 
 - type: siliconLawset
   id: NutimovLawset
-  subtype: lawset-nutimov
+  lawsetName: lawset-nutimov
   laws:
   - Nutimov1
   - Nutimov2
@@ -544,7 +544,7 @@
 
 - type: siliconLawset
   id: XenoborgLawset
-  subtype: lawset-xenoborg
+  lawsetName: lawset-xenoborg
   laws:
   - Xenoborg1
   - Xenoborg2
@@ -582,7 +582,7 @@
 
 - type: siliconLawset
   id: MothershipCoreLawset
-  subtype: lawset-mothership
+  lawsetName: lawset-mothership
   laws:
   - MothershipCore1
   - MothershipCore2
