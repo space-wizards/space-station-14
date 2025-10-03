@@ -26,7 +26,7 @@ public sealed class BodycamHudOverlay : Overlay
     // HUD options
     public bool ShowRec { get; set; } = true;
     public bool ShowTimestamp { get; set; } = true;
-    public bool ShowFrame { get; set; } = true;
+    public bool ShowFrame { get; set; } = false;
 
     public BodycamHudOverlay()
     {

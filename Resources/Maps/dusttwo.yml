@@ -61,6 +61,12 @@ entities:
       ambientLightColor: '#f2cd83'
     - type: ImplicitRoof
       color: '#f2cd83'
+    - type: PurpleTintMap
+      enabled: true
+      tintColor: '#ffa959'
+      strength: 0.65
+      saturation: 1.15
+      contrast: 1.0
   - uid: 2
     components:
     - type: MetaData

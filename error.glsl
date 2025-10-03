@@ -232,15 +232,23 @@ varying highp vec4 VtxModulate;
 // TODO CLYDE consistent shader variable naming
 uniform sampler2D lightMap;
 
-uniform ARRAY_HIGHP vec2 centerPx;
-uniform ARRAY_HIGHP float angleDeg;
-uniform ARRAY_HIGHP float rotation;
-uniform ARRAY_HIGHP float outsideOpacity;
-uniform ARRAY_HIGHP float edgeFeatherPixels;
-uniform ARRAY_HIGHP float centerClearRadiusPixels;
-uniform ARRAY_HIGHP float centerFeatherPixels;
+uniform sampler2D SCREEN_TEXTURE;
+uniform ARRAY_LOWP float time;
+uniform ARRAY_LOWP float scanlineStrength;
+uniform ARRAY_LOWP float vignetteStrength;
+uniform ARRAY_LOWP float aberrationStrength;
+uniform ARRAY_LOWP float grainStrength;
+uniform ARRAY_LOWP float distortionStrength;
+uniform ARRAY_LOWP float cornerRadius;
+uniform ARRAY_LOWP float cornerFeather;
+uniform ARRAY_LOWP float fisheyeStrength;
+uniform ARRAY_LOWP float edgeBlurStrength;
 
 
+ARRAY_LOWP float hash( ARRAY_LOWP vec2 co) {
+ return fract ( sin ( dot ( co , vec2 ( 12.9898 , 78.233 ) ) ) * 43758.5453 ) ;
+
+}
 
 
 void main()
@@ -275,23 +283,62 @@ void main()
     // Requires breaking changes.
     lowp vec3 lightSample = LIGHT.xyz;
 
-     highp vec2 v = FRAGCOORD . xy - centerPx ;
- highp float len = length ( v ) ;
- if ( len <= 1 e - 5 ) {
- COLOR = vec4 ( 0.0 , 0.0 , 0.0 , 0.0 ) ;
- return ;
+     lowp vec2 uv = UV ;
+ lowp vec2 uvScreen = UV ;
+ lowp vec2 center = vec2 ( 0.5 , 0.5 ) ;
+ {
+ lowp vec2 ruv = uv - center ;
+ lowp float r = length ( ruv ) ;
+ lowp float rn = min ( r / 0.70710678 , 1.0 ) ;
+ lowp float curved = mix ( rn , sin ( rn * 1.57079633 ) , clamp ( fisheyeStrength , 0.0 , 1.0 ) ) ;
+ lowp float scale = r > 1 e - 5 ? ( curved / rn ) : 1.0 ;
+ uv = center + ruv * scale ;
  }
- highp vec2 dir = v / len ;
- highp vec2 fwd = vec2 ( cos ( rotation ) , sin ( rotation ) ) ;
- highp float halfAngle = angleDeg * 0.017453292519943295 * 0.5 ;
- highp float featherAng = edgeFeatherPixels / max ( len , 1 e - 5 ) ;
- highp float m = dot ( dir , fwd ) ;
- highp float cLow = cos ( halfAngle + featherAng ) ;
- highp float cHigh = cos ( halfAngle - featherAng ) ;
- highp float smoothEdge = 1.0 - smoothstep ( cLow , cHigh , m ) ;
- highp float smoothCenter = smoothstep ( centerClearRadiusPixels - centerFeatherPixels , centerClearRadiusPixels + centerFeatherPixels , len ) ;
- highp float alpha = outsideOpacity * smoothEdge * smoothCenter ;
- COLOR = vec4 ( 0.0 , 0.0 , 0.0 , alpha ) ;
+ lowp float ab = aberrationStrength * 0.0015 ;
+ lowp float r = zTextureSpec ( SCREEN_TEXTURE , uv + vec2 ( + ab , 0.0 ) ) . r ;
+ lowp float g = zTextureSpec ( SCREEN_TEXTURE , uv ) . g ;
+ lowp float b = zTextureSpec ( SCREEN_TEXTURE , uv + vec2 ( - ab , 0.0 ) ) . b ;
+ lowp vec3 col = vec3 ( r , g , b ) ;
+ if ( edgeBlurStrength > 0.0 ) {
+ lowp vec2 ruv2 = uv - center ;
+ lowp float rn2 = min ( length ( ruv2 ) / 0.70710678 , 1.0 ) ;
+ lowp float w = smoothstep ( 0.75 , 1.0 , rn2 ) * edgeBlurStrength ;
+ if ( w > 0.0 ) {
+ lowp float rad = 0.0015 * edgeBlurStrength ;
+ lowp vec3 acc = col ;
+ acc += zTextureSpec ( SCREEN_TEXTURE , uv + vec2 ( rad , 0.0 ) ) . rgb ;
+ acc += zTextureSpec ( SCREEN_TEXTURE , uv + vec2 ( - rad , 0.0 ) ) . rgb ;
+ acc += zTextureSpec ( SCREEN_TEXTURE , uv + vec2 ( 0.0 , rad ) ) . rgb ;
+ acc += zTextureSpec ( SCREEN_TEXTURE , uv + vec2 ( 0.0 , - rad ) ) . rgb ;
+ acc *= 0.2 ;
+ col = mix ( col , acc , w ) ;
+ }
+ }
+ if ( scanlineStrength > 0.0 ) {
+ lowp float band = step ( 0.5 , fract ( uvScreen . y * 720.0 ) ) ;
+ lowp float mod = mix ( 1.0 , 0.85 , band ) ;
+ col *= mix ( 1.0 , mod , clamp ( scanlineStrength , 0.0 , 1.0 ) ) ;
+ }
+ if ( vignetteStrength > 0.0 ) {
+ lowp float d = distance ( uv , center ) ;
+ lowp float vig = smoothstep ( 0.6 , 0.9 , d ) ;
+ col *= mix ( 1.0 , 1.0 - vig * 0.35 , clamp ( vignetteStrength , 0.0 , 1.0 ) ) ;
+ }
+ if ( grainStrength > 0.0 ) {
+ lowp float n = hash ( uv * vec2 ( 1920.0 , 1080.0 ) + time * 12.345 ) ;
+ lowp float g2 = ( n - 0.5 ) * 0.07 ;
+ col += g2 * clamp ( grainStrength , 0.0 , 1.0 ) ;
+ }
+ if ( cornerRadius > 0.0 ) {
+ lowp vec2 p = uv - vec2 ( 0.5 ) ;
+ lowp vec2 b = vec2 ( 0.5 ) - vec2 ( max ( cornerRadius , 0.0 ) + 0.005 ) ;
+ lowp vec2 q = abs ( p ) - b ;
+ lowp float d = length ( max ( q , vec2 ( 0.0 ) ) ) - cornerRadius ;
+ lowp float feath = max ( cornerFeather , 0.001 ) ;
+ lowp float mask = 1.0 - smoothstep ( 0.0 , feath , d ) ;
+ col *= mask ;
+ }
+ COLOR = vec4 ( col , 1.0 ) ;
 
 
     LIGHT.xyz = lightSample;

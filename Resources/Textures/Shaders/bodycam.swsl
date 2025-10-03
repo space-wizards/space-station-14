@@ -15,6 +15,10 @@ uniform lowp float distortionStrength;  // 0..1
 uniform lowp float cornerRadius;        // 0..0.2 in UV, 0 = off
 uniform lowp float cornerFeather;       // 0..0.1 feather for smooth edge
 
+// GoPro-like controls
+uniform lowp float fisheyeStrength;     // 0..1, low ~0.2
+uniform lowp float edgeBlurStrength;    // 0..1, small values ~0.1
+
 lowp float hash(lowp vec2 co){
     return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
 }
@@ -24,12 +28,21 @@ void fragment(){
     lowp vec2 uvScreen = UV; // preserve screen-space UV for straight scanlines
     lowp vec2 center = vec2(0.5, 0.5);
 
-    // Barrel distortion (very subtle)
-    if (distortionStrength > 0.0){
+    // Fisheye mapping (low strength)
+    {
         lowp vec2 ruv = uv - center;
-        lowp float r2 = dot(ruv, ruv);
-        lowp float k = distortionStrength * 0.05; // even subtler
-        uv = center + ruv * (1.0 + k * r2);
+        lowp float r = length(ruv);
+        // Normalize radius to [0,1] using max radius to corner (~0.7071)
+        lowp float rn = min(r / 0.70710678, 1.0);
+        // Curve from linear to sin curve as fisheyeStrength increases
+        lowp float curved = mix(rn, sin(rn * 1.57079633), clamp(fisheyeStrength, 0.0, 1.0));
+        // Avoid divide by zero (use if to avoid ternary bool->float issues)
+        lowp float scale = 1.0;
+        if (r > 0.00001)
+        {
+            scale = curved / rn;
+        }
+        uv = center + ruv * scale;
     }
 
     // Chromatic aberration: offset channels slightly in UV space
@@ -39,6 +52,24 @@ void fragment(){
     lowp float g = zTextureSpec(SCREEN_TEXTURE, uv).g;
     lowp float b = zTextureSpec(SCREEN_TEXTURE, uv + vec2(-ab, 0.0)).b;
     lowp vec3 col = vec3(r, g, b);
+
+    // Edge blur to mimic lens softness
+    if (edgeBlurStrength > 0.0){
+        lowp vec2 ruv2 = uv - center;
+        lowp float rn2 = min(length(ruv2) / 0.70710678, 1.0);
+        lowp float w = smoothstep(0.75, 1.0, rn2) * edgeBlurStrength; // only near edges
+        if (w > 0.0){
+            // Small blur radius in UV space
+            lowp float rad = 0.0015 * edgeBlurStrength; // very subtle
+            lowp vec3 acc = col;
+            acc += zTextureSpec(SCREEN_TEXTURE, uv + vec2( rad,  0.0)).rgb;
+            acc += zTextureSpec(SCREEN_TEXTURE, uv + vec2(-rad,  0.0)).rgb;
+            acc += zTextureSpec(SCREEN_TEXTURE, uv + vec2( 0.0,  rad)).rgb;
+            acc += zTextureSpec(SCREEN_TEXTURE, uv + vec2( 0.0, -rad)).rgb;
+            acc *= 0.2; // average 5 samples
+            col = mix(col, acc, w);
+        }
+    }
 
     // Scanlines (horizontal) in screen space, straight (non-sine) bands
     if (scanlineStrength > 0.0){
@@ -70,7 +101,7 @@ void fragment(){
         lowp vec2 b = vec2(0.5) - vec2(max(cornerRadius, 0.0) + 0.005);
         // Signed distance to rounded box (approx)
         lowp vec2 q = abs(p) - b;
-        lowp float d = length(max(q, 0.0)) - cornerRadius;
+        lowp float d = length(max(q, vec2(0.0))) - cornerRadius;
         // d < 0 inside, >0 outside. Build mask with feather falloff at edge.
         lowp float feath = max(cornerFeather, 0.001);
         lowp float mask = 1.0 - smoothstep(0.0, feath, d);

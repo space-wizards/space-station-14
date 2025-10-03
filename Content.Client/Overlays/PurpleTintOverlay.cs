@@ -17,11 +17,11 @@ public sealed partial class PurpleTintOverlay : Overlay
 
     private readonly ShaderInstance _shader;
 
-    // Parameters
-    public Color TintColor { get; set; } = Color.FromHex("#7f00e0");
-    public float Strength { get; set; } = 0.65f;
-    public float Saturation { get; set; } = 1.15f;
-    public float Contrast { get; set; } = 1.00f;
+    // Parameters (neutral defaults; map component config overrides these)
+    public Color TintColor { get; set; } = Color.White;
+    public float Strength { get; set; } = 0.0f;
+    public float Saturation { get; set; } = 1.0f;
+    public float Contrast { get; set; } = 1.0f;
 
     public PurpleTintOverlay()
     {
