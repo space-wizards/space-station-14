@@ -6,7 +6,6 @@ using Content.Shared.Hands;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Weapons.Ranged.Components;
-using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Weapons.Ranged.Systems;
@@ -30,11 +29,11 @@ public sealed class BatteryWeaponFireModesVisuals : EntitySystem
         if (args.Sprite == null)
             return;
 
-        if (!_appearance.TryGetData<Color>(ent.Owner, BatteryWeaponFireModeProjectile.Type, out var color, args.Component))
+        if (!_appearance.TryGetData<Color>(ent.Owner, BatteryWeaponFireModeVisualizer.Color, out var color, args.Component))
             return;
 
-        if (TryComp(ent, out SpriteComponent? sprite) && _sprite.LayerExists((ent.Owner, sprite), BatteryWeaponFireModeProjectile.Type))
-                _sprite.LayerSetColor((ent.Owner, sprite), BatteryWeaponFireModeProjectile.Type, color);
+        if (TryComp(ent, out SpriteComponent? sprite) && _sprite.LayerExists((ent.Owner, sprite), BatteryWeaponFireModeVisualizer.Color))
+                _sprite.LayerSetColor((ent.Owner, sprite), BatteryWeaponFireModeVisualizer.Color, color);
 
         _item.VisualsChanged(ent);
 
@@ -45,7 +44,7 @@ public sealed class BatteryWeaponFireModesVisuals : EntitySystem
         if (!TryComp(ent, out AppearanceComponent? appearance))
             return;
 
-        if (!_appearance.TryGetData<Color>(ent.Owner, BatteryWeaponFireModeProjectile.Type, out var color, appearance))
+        if (!_appearance.TryGetData<Color>(ent.Owner, BatteryWeaponFireModeVisualizer.Color, out var color, appearance))
             return;
 
         if (!ent.Comp.InhandVisuals.TryGetValue(args.Location, out var layers))
@@ -83,7 +82,7 @@ public sealed class BatteryWeaponFireModesVisuals : EntitySystem
         if (layers == null && !ent.Comp.ClothingVisuals.TryGetValue(args.Slot, out layers))
             return;
 
-        if (!_appearance.TryGetData<Color>(ent.Owner, BatteryWeaponFireModeProjectile.Type, out var color, appearance))
+        if (!_appearance.TryGetData<Color>(ent.Owner, BatteryWeaponFireModeVisualizer.Color, out var color, appearance))
             return;
 
         var i = 0;

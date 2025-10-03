@@ -10,13 +10,13 @@
     - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-unshaded-0
-      map: ["enum.BatteryWeaponFireModeProjectile.Type", "enum.GunVisualLayers.MagUnshaded"]
+      map: ["enum.BatteryWeaponFireModeVisualizer.Color", "enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.BatteryWeaponFireModeVisuals.State:
-        enum.BatteryWeaponFireModeProjectile.Type:
+        enum.BatteryWeaponFireModeVisualizer.Color:
           BulletDisabler: {}
           BulletLaser: {}
   - type: Clothing

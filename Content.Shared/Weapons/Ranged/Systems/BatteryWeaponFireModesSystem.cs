@@ -27,12 +27,12 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
         SubscribeLocalEvent<BatteryWeaponFireModesComponent, ExaminedEvent>(OnExamined);
     }
 
-    private void OnExamined(EntityUid uid, BatteryWeaponFireModesComponent component, ExaminedEvent args)
+    private void OnExamined(Entity<BatteryWeaponFireModesComponent> ent, ref ExaminedEvent args)
     {
-        if (component.FireModes.Count < 2)
+        if (ent.Comp.FireModes.Count < 2)
             return;
 
-        var fireMode = GetMode(component);
+        var fireMode = GetMode(ent.Comp);
 
         if (!_prototypeManager.TryIndex<EntityPrototype>(fireMode.Prototype, out var proto))
             return;
@@ -45,20 +45,22 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
         return component.FireModes[component.CurrentFireMode];
     }
 
-    private void OnGetVerb(EntityUid uid, BatteryWeaponFireModesComponent component, GetVerbsEvent<Verb> args)
+    private void OnGetVerb(Entity<BatteryWeaponFireModesComponent> ent, ref GetVerbsEvent<Verb> args)
     {
         if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract)
             return;
 
-        if (component.FireModes.Count < 2)
+        if (ent.Comp.FireModes.Count < 2)
             return;
 
-        if (!_accessReaderSystem.IsAllowed(args.User, uid))
+        if (!_accessReaderSystem.IsAllowed(args.User, ent))
             return;
 
-        for (var i = 0; i < component.FireModes.Count; i++)
+        var target = args.User;
+
+        for (var i = 0; i < ent.Comp.FireModes.Count; i++)
         {
-            var fireMode = component.FireModes[i];
+            var fireMode = ent.Comp.FireModes[i];
             var entProto = _prototypeManager.Index<EntityPrototype>(fireMode.Prototype);
             var index = i;
 
@@ -67,12 +69,12 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
                 Priority = 1,
                 Category = VerbCategory.SelectType,
                 Text = entProto.Name,
-                Disabled = i == component.CurrentFireMode,
+                Disabled = i == ent.Comp.CurrentFireMode,
                 Impact = LogImpact.Medium,
                 DoContactInteraction = true,
                 Act = () =>
                 {
-                    TrySetFireMode(uid, component, index, args.User);
+                    TrySetFireMode(ent, index, target);
                 }
             };
 
@@ -80,86 +82,80 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
         }
     }
 
-    private void OnUseInHandEvent(EntityUid uid, BatteryWeaponFireModesComponent component, UseInHandEvent args)
+    private void OnUseInHandEvent(Entity<BatteryWeaponFireModesComponent> ent, ref UseInHandEvent args)
     {
         if(args.Handled)
             return;
 
         args.Handled = true;
-        TryCycleFireMode(uid, component, args.User);
+        TryCycleFireMode(ent, args.User);
     }
 
-    public void TryCycleFireMode(EntityUid uid, BatteryWeaponFireModesComponent component, EntityUid? user = null)
+    public void TryCycleFireMode(Entity<BatteryWeaponFireModesComponent> ent, EntityUid? user = null)
     {
-        if (component.FireModes.Count < 2)
+        if (ent.Comp.FireModes.Count < 2)
             return;
 
-        var index = (component.CurrentFireMode + 1) % component.FireModes.Count;
-        TrySetFireMode(uid, component, index, user);
+        var index = (ent.Comp.CurrentFireMode + 1) % ent.Comp.FireModes.Count;
+        TrySetFireMode(ent, index, user);
     }
 
-    public bool TrySetFireMode(EntityUid uid, BatteryWeaponFireModesComponent component, int index, EntityUid? user = null)
+    public bool TrySetFireMode(Entity<BatteryWeaponFireModesComponent> ent, int index, EntityUid? user = null)
     {
-        if (index < 0 || index >= component.FireModes.Count)
+        if (index < 0 || index >= ent.Comp.FireModes.Count)
             return false;
 
-        if (user != null && !_accessReaderSystem.IsAllowed(user.Value, uid))
+        if (user != null && !_accessReaderSystem.IsAllowed(user.Value, ent))
             return false;
 
-        SetFireMode(uid, component, index, user);
+        SetFireMode(ent, index, user);
 
         return true;
     }
 
-    private void SetFireMode(EntityUid uid, BatteryWeaponFireModesComponent component, int index, EntityUid? user = null)
+    private void SetFireMode(Entity<BatteryWeaponFireModesComponent> ent, int index, EntityUid? user = null)
     {
-        var fireMode = component.FireModes[index];
-        component.CurrentFireMode = index;
-        Dirty(uid, component);
+        var fireMode = ent.Comp.FireModes[index];
+        ent.Comp.CurrentFireMode = index;
+        Dirty(ent);
 
         if (_prototypeManager.TryIndex<EntityPrototype>(fireMode.Prototype, out var prototype))
         {
-            if (TryComp<AppearanceComponent>(uid, out var appearance))
+            if (TryComp<AppearanceComponent>(ent, out var appearance))
             {
-                _appearanceSystem.SetData(uid, BatteryWeaponFireModeVisuals.State, prototype.ID, appearance);
-                _appearanceSystem.SetData(uid, BatteryWeaponFireModeProjectile.Type, fireMode.Color, appearance);
+                _appearanceSystem.SetData(ent, BatteryWeaponFireModeVisuals.State, prototype.ID, appearance);
+                _appearanceSystem.SetData(ent, BatteryWeaponFireModeVisualizer.Color, fireMode.Color, appearance);
             }
 
             if (user != null)
-                _popupSystem.PopupClient(Loc.GetString("gun-set-fire-mode", ("mode", prototype.Name)), uid, user.Value);
+                _popupSystem.PopupClient(Loc.GetString("gun-set-fire-mode", ("mode", prototype.Name)), ent, user.Value);
         }
 
-        if (TryComp(uid, out ProjectileBatteryAmmoProviderComponent? projectileBatteryAmmoProviderComponent))
+        if (TryComp(ent, out ProjectileBatteryAmmoProviderComponent? projectileBatteryAmmoProviderComponent))
         {
             // TODO: Have this get the info directly from the batteryComponent when power is moved to shared.
-            var OldFireCost = projectileBatteryAmmoProviderComponent.FireCost;
+            var oldFireCost = projectileBatteryAmmoProviderComponent.FireCost;
             projectileBatteryAmmoProviderComponent.Prototype = fireMode.Prototype;
             projectileBatteryAmmoProviderComponent.FireCost = fireMode.FireCost;
 
-            float FireCostDiff = (float)fireMode.FireCost / (float)OldFireCost;
-            projectileBatteryAmmoProviderComponent.Shots = (int)Math.Round(projectileBatteryAmmoProviderComponent.Shots / FireCostDiff);
-            projectileBatteryAmmoProviderComponent.Capacity = (int)Math.Round(projectileBatteryAmmoProviderComponent.Capacity / FireCostDiff);
+            var fireCostDiff = fireMode.FireCost / oldFireCost;
+            projectileBatteryAmmoProviderComponent.Shots = (int)Math.Round(projectileBatteryAmmoProviderComponent.Shots / fireCostDiff);
+            projectileBatteryAmmoProviderComponent.Capacity = (int)Math.Round(projectileBatteryAmmoProviderComponent.Capacity / fireCostDiff);
 
-            Dirty(uid, projectileBatteryAmmoProviderComponent);
+            Dirty(ent, projectileBatteryAmmoProviderComponent);
 
             var updateClientAmmoEvent = new UpdateClientAmmoEvent();
-            RaiseLocalEvent(uid, ref updateClientAmmoEvent);
+            RaiseLocalEvent(ent, ref updateClientAmmoEvent);
         }
     }
 
+    /// <summary>
+    /// Initialize the appearance and firemode.
+    /// </summary>
+    /// <param name="ent"></param>
+    /// <param name="args"></param>
     private void OnComponentInit(Entity<BatteryWeaponFireModesComponent> ent, ref ComponentInit args)
     {
-        ent.Comp.CurrentFireMode = 0;
-        Dirty(ent);
-        var fireMode = ent.Comp.FireModes[ent.Comp.CurrentFireMode];
-
-        if (_prototypeManager.TryIndex<EntityPrototype>(fireMode.Prototype, out var prototype))
-        {
-            if (TryComp<AppearanceComponent>(ent.Owner, out var appearance))
-            {
-                _appearanceSystem.SetData(ent.Owner, BatteryWeaponFireModeVisuals.State, prototype.ID, appearance);
-                _appearanceSystem.SetData(ent.Owner, BatteryWeaponFireModeProjectile.Type, fireMode.Color, appearance);
-            }
-        }
+        SetFireMode(ent, 0);
     }
 }
