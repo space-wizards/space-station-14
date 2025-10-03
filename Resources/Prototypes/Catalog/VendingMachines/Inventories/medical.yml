@@ -37,6 +37,9 @@
     Brutepack: 5
     Ointment: 5
     ChemistryBottleParacetamol: 3 # Offbrand
+    ChemistryBottleInaprovaline: 3 # Offbrand
+    ChemistryBottleDylovene: 3 # Offbrand
+    ChemistryBottleDexalin: 3 # Offbrand
     Tourniquet: 2
     Splints: 2 # Offbrand
     ChemistryBottleEpinephrine: 3
@@ -73,6 +76,9 @@
     PillCanisterCopper: 1
     PillCanisterPotassiumIodide: 1
     ChemistryBottleParacetamol: 3 # Offbrand
+    ChemistryBottleInaprovaline: 2 # Offbrand
+    ChemistryBottleDylovene: 2 # Offbrand
+    ChemistryBottleDexalin: 2 # Offbrand
   contrabandInventory:
     PillCanisterRandom: 1
     PillSpaceDrugs: 3
