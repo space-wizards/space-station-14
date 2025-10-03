@@ -25,7 +25,7 @@
     quickEquip: false
     slots:
     - suitStorage
-    - Belt
+    - Back
   - type: Gun
     fireRate: 2
     projectileSpeed: 35 # any higher and this causes issues in lag
@@ -40,6 +40,13 @@
       - state: inhand-left-color
       right:
       - state: inhand-right-color
+    clothingVisuals:
+      back:
+      - state: equipped-BACKPACK-color
+        color: "#ff0006"
+      suitStorage:
+      - state: equipped-SUITSTORAGE-color
+        color: "#ff0006"
     fireModes:
     - proto: BulletDisabler
       fireCost: 62.5

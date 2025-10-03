@@ -19,8 +19,9 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
 
     public override void Initialize()
     {
-        base.Initialize();
 
+        base.Initialize();
+        SubscribeLocalEvent<BatteryWeaponFireModesComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<BatteryWeaponFireModesComponent, UseInHandEvent>(OnUseInHandEvent);
         SubscribeLocalEvent<BatteryWeaponFireModesComponent, GetVerbsEvent<Verb>>(OnGetVerb);
         SubscribeLocalEvent<BatteryWeaponFireModesComponent, ExaminedEvent>(OnExamined);
@@ -143,6 +144,23 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
 
             var updateClientAmmoEvent = new UpdateClientAmmoEvent();
             RaiseLocalEvent(uid, ref updateClientAmmoEvent);
+        }
+    }
+
+    private void OnComponentInit(Entity<BatteryWeaponFireModesComponent> ent, ref ComponentInit args)
+    {
+
+        ent.Comp.CurrentFireMode = 0;
+        Dirty(ent);
+        var fireMode = ent.Comp.FireModes[ent.Comp.CurrentFireMode];
+
+        if (_prototypeManager.TryIndex<EntityPrototype>(fireMode.Prototype, out var prototype))
+        {
+            if (TryComp<AppearanceComponent>(ent.Owner, out var appearance))
+            {
+                _appearanceSystem.SetData(ent.Owner, BatteryWeaponFireModeVisuals.State, prototype.ID, appearance);
+                _appearanceSystem.SetData(ent.Owner, BatteryWeaponFireModeProjectile.Type, fireMode.Color, appearance);
+            }
         }
     }
 }
