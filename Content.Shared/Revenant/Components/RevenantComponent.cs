@@ -89,6 +89,14 @@ public sealed partial class RevenantComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("appearCost")]
     public FixedPoint2 AppearCost = 0;
+
+    /// <summary>
+    /// The status effects applied after the ability
+    /// the first float corresponds to amount of time the entity is stunned.
+    /// the second corresponds to the amount of time the entity is made solid.
+    /// </summary>
+    [DataField("appearDebuffs")]
+    public Vector2 AppearDebuffs = new(0, 5);
     #endregion
 
     //In the nearby radius, causes various objects to be thrown, messed with, and containers opened
