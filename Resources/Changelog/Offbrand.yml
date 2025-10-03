@@ -37,4 +37,34 @@ Entries:
     type: Tweak
   id: 3
   time: '2025-10-01T21:00:00.0000000+00:00'
+- author: sowelipililimute
+  changes:
+  - message: Medipens now inject a full dosage
+    type: Fix
+  - message: Convermol deals less brute
+    type: Tweak
+  - message: Guidebook messages regarding Offbrand changes should be clearer now
+    type: Fix
+  - message: Inaprovaline reduces the chance to take brain damage further
+    type: Tweak
+  - message: Offbrand critical states now count as critical for reagents
+    type: Fix
+  - message: Pills can now be inserted into syringes
+    type: Add
+  - message: Dylovene is now provided to medical personnel roundstart
+    type: Add
+  - message: NanoMeds now contain more basic medications
+    type: Add
+  - message: Bicaridine now has twice the duration
+    type: Tweak
+  - message: Dermaline now has twice the duration
+    type: Tweak
+  - message: Kelotane now works at the same duration as Dermaline
+    type: Tweak
+  - message: Tricordrazine now has a longer duration and higher maximum damage
+    type: Tweak
+  - message: Mannitol no longer has negligible healing if the brain does not have oxygen
+    type: Tweak
+  id: 4
+  time: '2025-10-02T21:00:00.0000000+00:00'
 Order: 2
