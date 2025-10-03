@@ -29,10 +29,11 @@ public sealed partial class EMPScreamSystem : EntitySystem
 
     private void OnEMPScream(EMPScreamEvent ev)
     {
-        if (ev.Handled || _chargesSystem.GetCurrentCharges(ev.Action.Owner) == 0)
+        if (ev.Handled)
             return;
 
         ev.Handled = true;
+
         var uid = ev.Performer;
 
         ScreamEffect(uid, ev.Power, ev.ScreamSound);

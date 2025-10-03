@@ -19,7 +19,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Content.Shared.Chat; // Starlight
+using Content.Shared.Chat; // Starlight-edit
 
 namespace Content.Server.Access.Systems;
 
@@ -44,6 +44,8 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
         SubscribeLocalEvent<IdCardConsoleComponent, WriteToTargetIdMessage>(OnWriteToTargetIdMessage);
 
+        SubscribeLocalEvent<IdCardConsoleComponent, AccessGroupSelectedMessage>(OnAccessGroupSelected); // Starlight-edit
+
         // one day, maybe bound user interfaces can be shared too.
         SubscribeLocalEvent<IdCardConsoleComponent, ComponentStartup>(UpdateUserInterface);
         SubscribeLocalEvent<IdCardConsoleComponent, EntInsertedIntoContainerMessage>(UpdateUserInterface);
@@ -65,18 +67,94 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         UpdateUserInterface(uid, component, args);
     }
 
+    // Starlight-start
+
+    private void OnAccessGroupSelected(EntityUid uid, IdCardConsoleComponent component, IdCardConsoleComponent.AccessGroupSelectedMessage args)
+    {
+        component.CurrentAccessGroup = args.SelectedGroup;
+
+        UpdateUserInterface(uid, component, args);
+    }
+
+    // Starlight-end
+
     private void UpdateUserInterface(EntityUid uid, IdCardConsoleComponent component, EntityEventArgs args)
     {
         if (!component.Initialized)
             return;
 
         var privilegedIdName = string.Empty;
-        List<ProtoId<AccessLevelPrototype>>? possibleAccess = null;
+        List<ProtoId<AccessLevelPrototype>> possibleAccess = new(); // Starlight
         if (component.PrivilegedIdSlot.Item is { Valid: true } item)
         {
             privilegedIdName = Comp<MetaDataComponent>(item).EntityName;
-            possibleAccess = _accessReader.FindAccessTags(item).ToList();
+        // Starlight-edit: Start
+            var privilegedTags = _accessReader.FindAccessTags(item).ToHashSet();
+            possibleAccess = privilegedTags.ToList();
         }
+        else
+        {
+            privilegedIdName = string.Empty;
+        }
+
+        List<ProtoId<AccessGroupPrototype>> availableGroups = new();
+        bool isHighPrivilege = false;
+        
+        if (possibleAccess.Count > 0)
+        {
+            var allPossibleAccess = _prototype.EnumeratePrototypes<AccessLevelPrototype>()
+                .Where(a => a.CanAddToIdCard)
+                .Select(a => a.ID)
+                .ToHashSet();
+            
+            isHighPrivilege = possibleAccess.Count >= allPossibleAccess.Count * 0.8f;
+
+            foreach (var groupId in component.AccessGroups.ToList())
+            {
+                if (!_prototype.TryIndex<AccessGroupPrototype>(groupId, out var groupPrototype))
+                    continue;
+
+                var groupTags = groupPrototype.Tags.Where(tag => 
+                    _prototype.TryIndex<AccessLevelPrototype>(tag, out var accessProto) && 
+                    accessProto.CanAddToIdCard).ToList();
+                
+                if (groupTags.Count == 0)
+                    continue;
+                
+                var matchingTags = groupTags.Count(tag => possibleAccess.Contains(tag));
+                var threshold = Math.Max(1, Math.Min(3, groupTags.Count / 2));
+                
+                if (matchingTags >= threshold)
+                {
+                    availableGroups.Add(groupId);
+                }
+            }
+        }
+
+        var currentGroup = component.CurrentAccessGroup;
+
+        if (currentGroup == null || !availableGroups.Contains(currentGroup.Value))
+        {
+            if (availableGroups.Count > 0)
+            {
+                // Start on group selected
+                var preferredGroups = new[] { "Command", "Security", "Engineering", "Medical" };
+                var selectedGroup = preferredGroups
+                    .Select(name => (ProtoId<AccessGroupPrototype>)name)
+                    .FirstOrDefault(group => availableGroups.Contains(group));
+                
+                currentGroup = availableGroups.Contains(selectedGroup) ? selectedGroup : availableGroups.First();
+            }
+            else
+            {
+                currentGroup = component.AccessGroups.FirstOrDefault();
+            }
+            
+            component.CurrentAccessGroup = currentGroup;
+        }
+
+        var showGroups = availableGroups.Count > 1;
+        // Starlight-edit: End
 
         IdCardConsoleBoundUserInterfaceState newState;
         // this could be prettier
@@ -92,7 +170,11 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
                 possibleAccess,
                 string.Empty,
                 privilegedIdName,
-                string.Empty);
+                string.Empty,
+                // Starlight-edit: Start
+                currentGroup.HasValue ? currentGroup.Value : component.AccessGroups.FirstOrDefault(),
+                availableGroups); 
+                // Starlight-edit: End
         }
         else
         {
@@ -117,7 +199,11 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
                 possibleAccess,
                 jobProto,
                 privilegedIdName,
-                Name(targetId));
+                Name(targetId),
+                // Starlight-edit: Start
+                currentGroup.HasValue ? currentGroup.Value : component.AccessGroups.FirstOrDefault(),
+                availableGroups);
+                // Starlight-edit: End
         }
 
         _userInterface.SetUiState(uid, IdCardConsoleUiKey.Key, newState);
@@ -160,37 +246,59 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             Comp<IdCardComponent>(targetId).JobPrototype = newJobProto;
         }
 
-        if (!newAccessList.TrueForAll(x => component.AccessLevels.Contains(x)))
+        // Starlight-edit: Start
+        // Instead of only updating the currently selected group, update all groups.
+        var oldTags = _access.TryGetTags(targetId)?.ToHashSet() ?? new HashSet<ProtoId<AccessLevelPrototype>>();
+
+        // Collect all access tags from all groups
+        var allGroupTags = new HashSet<ProtoId<AccessLevelPrototype>>();
+        foreach (var group in component.AccessGroups.ToList())
+        {
+            if (_prototype.TryIndex<AccessGroupPrototype>(group, out var groupPrototype))
+                allGroupTags.UnionWith(groupPrototype.Tags);
+        }
+
+        if (!newAccessList.TrueForAll(x => allGroupTags.Contains(x)))
+        // Starlight-edit: End
         {
             _sawmill.Warning($"User {ToPrettyString(uid)} tried to write unknown access tag.");
             return;
         }
 
-        var oldTags = _access.TryGetTags(targetId) ?? new List<ProtoId<AccessLevelPrototype>>();
-        oldTags = oldTags.ToList();
-
         var privilegedId = component.PrivilegedIdSlot.Item;
+        // Starlight-edit: Start
+        var privilegedPerms = _accessReader.FindAccessTags(privilegedId!.Value).ToHashSet();
 
-        if (oldTags.SequenceEqual(newAccessList))
+        // For each group, update the tags for that group with the ones from newAccessList
+        var finalTags = oldTags.Except(allGroupTags).ToHashSet(); // preserve tags not in any group
+        foreach (var group in component.AccessGroups.ToList())
+        {
+            if (!_prototype.TryIndex<AccessGroupPrototype>(group, out var groupPrototype))
+                continue;
+            var groupTags = groupPrototype.Tags.ToHashSet();
+            var newGroupTags = newAccessList.Intersect(groupTags).ToHashSet();
+            finalTags.UnionWith(newGroupTags);
+        }
+
+        if (oldTags.SetEquals(finalTags))
             return;
 
-        // I hate that C# doesn't have an option for this and don't desire to write this out the hard way.
-        // var difference = newAccessList.Difference(oldTags);
-        var difference = newAccessList.Union(oldTags).Except(newAccessList.Intersect(oldTags)).ToHashSet();
-        // NULL SAFETY: PrivilegedIdIsAuthorized checked this earlier.
-        var privilegedPerms = _accessReader.FindAccessTags(privilegedId!.Value).ToHashSet();
+        var difference = finalTags.Union(oldTags).Except(finalTags.Intersect(oldTags)).ToHashSet();
+        // Starlight-edit: End
         if (!difference.IsSubsetOf(privilegedPerms))
         {
             _sawmill.Warning($"User {ToPrettyString(uid)} tried to modify permissions they could not give/take!");
             return;
         }
 
-        var addedTags = newAccessList.Except(oldTags).Select(tag => "+" + tag).ToList();
-        var removedTags = oldTags.Except(newAccessList).Select(tag => "-" + tag).ToList();
-        _access.TrySetTags(targetId, newAccessList);
-
         /*TODO: ECS SharedIdCardConsoleComponent and then log on card ejection, together with the save.
         This current implementation is pretty shit as it logs 27 entries (27 lines) if someone decides to give themselves AA*/
+        // Starlight-edit: Start
+        var addedTags = finalTags.Except(oldTags).Select(tag => "+" + tag).ToList();
+        var removedTags = oldTags.Except(finalTags).Select(tag => "-" + tag).ToList();
+        _access.TrySetTags(targetId, finalTags);
+        // Starlight-edit: End
+
         _adminLogger.Add(LogType.Action, LogImpact.Medium,
             $"{ToPrettyString(player):player} has modified {ToPrettyString(targetId):entity} with the following accesses: [{string.Join(", ", addedTags.Union(removedTags))}] [{string.Join(", ", newAccessList)}]");
     }

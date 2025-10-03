@@ -80,3 +80,59 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 4.00
     baseSprintSpeed : 5.00
+
+- type: entity
+  name: spiderling
+  parent: MobSpiderling 
+  id: MobSpiderlingTerrorRed
+  components:
+  - type: TimedSpawner
+    prototypes:
+    - MobTerrorRed
+    intervalSeconds: 90
+    minimumEntitiesSpawned: 1
+    maximumEntitiesSpawned: 1
+  - type: TimedDespawn 
+    lifetime: 91
+
+- type: entity
+  name: spiderling
+  parent: MobSpiderling 
+  id: MobSpiderlingTerrorGray
+  components:
+  - type: TimedSpawner
+    prototypes:
+    - MobTerrorGray
+    intervalSeconds: 90
+    minimumEntitiesSpawned: 1
+    maximumEntitiesSpawned: 1
+  - type: TimedDespawn 
+    lifetime: 91
+
+- type: entity
+  name: spiderling
+  parent: MobSpiderling 
+  id: MobSpiderlingTerrorGreen
+  components:
+  - type: TimedSpawner
+    prototypes:
+    - MobTerrorGreen
+    intervalSeconds: 90
+    minimumEntitiesSpawned: 1
+    maximumEntitiesSpawned: 1
+  - type: TimedDespawn 
+    lifetime: 91
+
+- type: entity
+  name: spiderling
+  parent: MobSpiderling 
+  id: MobSpiderlingSpiderAngry
+  components:
+  - type: TimedSpawner
+    prototypes:
+    - MobGiantSpiderAngry
+    intervalSeconds: 60
+    minimumEntitiesSpawned: 1
+    maximumEntitiesSpawned: 1
+  - type: TimedDespawn 
+    lifetime: 61

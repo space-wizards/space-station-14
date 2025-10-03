@@ -143,8 +143,8 @@
 - type: entity
   parent: [ ClothingNeckBase, BaseCommandContraband ]
   id: ClothingNeckCloakBsoElite
-  name: Elite Blueshield Officer's cloak
-  description: An elite Blueshield Officer's cloak crafted from the latest composite glowing fabric. Any true BlueShield is not afraid of shining in the dark!
+  name: elite blueshield officer's cloak
+  description: An elite blueshield officer's cloak crafted from the latest composite glowing fabric. Any true BlueShield is not afraid of shining in the dark!
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Neck/Cloaks/bso_elite.rsi
@@ -160,11 +160,23 @@
 - type: entity
   parent: [ ClothingNeckBase, BaseCommandContraband ]
   id: ClothingNeckCloakBsoCape
-  name: Blueshield Officer's Formal Cloak
+  name: blueshield officer's formal cloak
   description: An incredibly large coat, owned only by the most experienced blueshields. It's said the sleeves have never been worn.
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Neck/Cloaks/bso_formal.rsi
+  - type: Clothing
+    slots:
+      - neck
+
+- type: entity
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
+  id: ClothingNeckCloakBsoPoncho
+  name: blueshield officer's poncho
+  description: This type of poncho was the signature garment of a legendary BSO with no name, or so it is said.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/bso_poncho
   - type: Clothing
     slots:
       - neck
@@ -288,6 +300,18 @@
     size: Huge
   - type: StaticPrice
     price: 5000
+    
+# Salvage Lead
+- type: entity
+  parent: [ ClothingNeckBase, BaseSalvageContraband ]
+  id: ClothingNeckMantleDecoratedSalvager
+  name: ceremonial salvage mantle
+  description: A ceremonial mantle worn by salvagers that have distinguished themselves.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Clothing/Neck/Mantles/salvagemantle.rsi
+    - type: Clothing
+      sprite: _Starlight/Clothing/Neck/Mantles/salvagemantle.rsi
 
 ## Cool
 

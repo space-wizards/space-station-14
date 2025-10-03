@@ -1,0 +1,42 @@
+﻿- type: job
+  id: SalvageLead
+  name: job-name-salvagelead
+  description: job-description-salvagelead
+  playTimeTracker: JobSalvageLead
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobQuartermaster
+      time: 18000 # 5 hours
+  icon: "JobIconSalvageLead"
+  startingGear: SalvageLeadGear
+  supervisors: job-supervisors-qm
+  canBeAntag: false
+  access:
+  - Cargo
+  - Salvage
+  - SalvageLead
+  - Maintenance
+  - External
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+
+- type: startingGear
+  id: SalvageLeadGear
+  equipment:
+    id: SalvageLeadPDA
+    ears: ClothingHeadsetSalvageLead
+  #storage:
+    #back:
+    #- Stuff
+
+- type: chameleonOutfit
+  id: SalvageLeadChameleonOutfit
+  job: SalvageLead
+  equipment:
+    head: ClothingHeadHatCargosoft
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskGasExplorer
+    outerClothing: ClothingOuterWinterMiner
+    neck: ClothingNeckScarfStripedBrown
+    gloves: ClothingHandsGlovesColorBlack

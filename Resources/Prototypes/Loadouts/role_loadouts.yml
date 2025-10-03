@@ -11,6 +11,7 @@
   - CaptainEyewear
   - SurvivalExtended
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -26,6 +27,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathTool
 
 # Silicons
@@ -55,6 +57,7 @@
   - AssistantHead #starlight
   - Survival
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -69,6 +72,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -81,6 +85,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -96,6 +101,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -108,6 +114,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -120,6 +127,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -137,6 +145,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -151,6 +160,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - Scarves # Starlight
   - JanitorPlunger
   - GroupSpeciesBreathTool
 
@@ -166,6 +176,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -181,6 +192,7 @@
   - Glasses
   - SurvivalClown
   - Trinkets
+  - Scarves # Starlight
 
 - type: roleLoadout
   id: JobMime
@@ -196,6 +208,7 @@
   - Glasses
   - SurvivalMime
   - Trinkets
+  - Scarves # Starlight
 
 - type: roleLoadout
   id: JobMusician
@@ -208,6 +221,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - Scarves # Starlight
   - Instruments
   - GroupSpeciesBreathTool
 
@@ -225,6 +239,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -240,6 +255,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -247,11 +263,13 @@
   groups:
   - GroupTankHarness
   - SalvageSpecialistBackpack
+  - SalvageSpecialistJumpsuit # afterlight
   - SalvageSpecialistOuterClothing
   - SalvageSpecialistShoes
   - Glasses
   - Survival
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathTool
 
 # Engineering
@@ -267,6 +285,7 @@
   - ChiefEngineerShoes
   - SurvivalExtended
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -277,6 +296,7 @@
   - StationEngineerBackpack
   - SurvivalExtended
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -291,6 +311,7 @@
   - StationEngineerID
   - SurvivalExtended
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -303,6 +324,7 @@
   - AtmosphericTechnicianShoes
   - SurvivalExtended
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathTool
 
 # Science
@@ -320,6 +342,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -337,6 +360,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -348,6 +372,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathTool
 
 # Security
@@ -365,6 +390,7 @@
   - SecurityShoes
   - SurvivalSecurity
   - Trinkets
+  - Scarves # Starlight
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
@@ -380,6 +406,7 @@
   - SecurityShoes
   - SurvivalSecurity
   - Trinkets
+  - Scarves # Starlight
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
@@ -398,6 +425,7 @@
   - SecuritySidearm #Starlight
   - SurvivalSecurity
   - Trinkets
+  - Scarves # Starlight
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
@@ -413,6 +441,7 @@
   - DetectiveShoes # 🌟Starlight🌟
   - SurvivalSecurity
   - Trinkets
+  - Scarves # Starlight
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
@@ -425,6 +454,7 @@
   - SecurityEyewear
   - SurvivalSecurity
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathToolSecurity
 
 # Medical
@@ -443,6 +473,7 @@
   - MedicalEyewear
   - SurvivalMedical
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -460,6 +491,7 @@
   - MedicalEyewear
   - SurvivalMedical
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -471,6 +503,7 @@
   - MedicalEyewear
   - SurvivalMedical
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -485,6 +518,7 @@
   - MedicalShoes
   - SurvivalMedical
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -501,6 +535,7 @@
   - MedicalEyewear
   - SurvivalMedical
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathToolMedical
 
 # Wildcards
@@ -513,6 +548,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -525,6 +561,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -537,6 +574,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -549,6 +587,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - Scarves # Starlight
   - GroupSpeciesBreathTool
 
 # These loadouts are used for non-crew spawns, like off-station antags and event mobs

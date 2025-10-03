@@ -8,6 +8,10 @@ using Content.Shared.Roles;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using static Content.Shared.Access.Components.IdCardConsoleComponent;
+// Starlight-edit: Start
+using Robust.Client.UserInterface;
+using Content.Shared._Starlight.Access; 
+// Starlight-edit: End
 
 namespace Content.Client.Access.UI
 {
@@ -34,23 +38,11 @@ namespace Content.Client.Access.UI
         protected override void Open()
         {
             base.Open();
-            List<ProtoId<AccessLevelPrototype>> accessLevels;
-
-            if (EntMan.TryGetComponent<IdCardConsoleComponent>(Owner, out var idCard))
-            {
-                accessLevels = idCard.AccessLevels;
-            }
-            else
-            {
-                accessLevels = new List<ProtoId<AccessLevelPrototype>>();
-                _idCardConsoleSystem.Log.Error($"No IdCardConsole component found for {EntMan.ToPrettyString(Owner)}!");
-            }
-
-            _window = new IdCardConsoleWindow(this, _prototypeManager, accessLevels)
-            {
-                Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName
-            };
-
+            // Starlight-edit: Start
+            _window = this.CreateWindow<IdCardConsoleWindow>();
+            _window.Initialize(this);
+            _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+            // Starlight-edit: End
             _window.CrewManifestButton.OnPressed += _ => SendMessage(new CrewManifestOpenUiMessage());
             _window.PrivilegedIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(PrivilegedIdCardSlotId));
             _window.TargetIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(TargetIdCardSlotId));
@@ -89,5 +81,12 @@ namespace Content.Client.Access.UI
                 newAccessList,
                 newJobPrototype));
         }
+        // Starlight-edit: Start
+
+        public void OnGroupSelected(ProtoId<AccessGroupPrototype> group)
+        {
+            SendMessage(new IdCardConsoleComponent.AccessGroupSelectedMessage(group)); // Starlight-edit
+        }
+        // Starlight-edit: End
     }
 }

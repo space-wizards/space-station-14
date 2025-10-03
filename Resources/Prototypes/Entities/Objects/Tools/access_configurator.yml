@@ -1,3 +1,4 @@
+# Standard Access Configurator
 - type: entity
   parent: BaseItem
   id: AccessConfigurator
@@ -18,49 +19,26 @@
       slots:
         - Belt
     - type: AccessOverrider
-      accessLevels:
-      - Armory
-      - Atmospherics
-      - Bar
-      - Brig
-      - Detective
-      - Captain
-      - Cargo
-      - Chapel
-      - Chemistry
-      - ChiefEngineer
-      - ChiefMedicalOfficer
-      - Command
-      - Engineering
-      - External
-      - HeadOfPersonnel
-      - HeadOfSecurity
-      - Hydroponics
-      - Janitor
-      - Kitchen
-      - Lawyer
-      - Maintenance
-      - Medical
-      - Quartermaster
-      - Research
-      - ResearchDirector
-      - Salvage
+      # Starlight-edit: Start
+      accessGroups:
+      - General
       - Security
+      - Cargo
+      - Command
+      - Research
+      - Medical
       - Service
-      - Theatre
-      - GenpopEnter
-      - GenpopLeave
-      - Ntrep #Starlight job
-      - Magistrate #Starlight job
+      - Engineering
+      # Starlight-edit: End
       privilegedIdSlot:
-        name: id-card-console-privileged-id
+        name: AccessOverrider-privilegedId
         ejectSound: /Audio/Machines/id_swipe.ogg
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectOnBreak: true
         swap: false
         whitelist:
           components:
-          - IdCard
+            - IdCard
       denialSound:
         path: /Audio/Machines/custom_deny.ogg
       doAfter: 0.5
@@ -79,6 +57,7 @@
       containers:
         AccessOverrider-privilegedId: !type:ContainerSlot
 
+# Universal/Admin Access Configurator
 - type: entity
   parent: AccessConfigurator
   id: AccessConfiguratorUniversal
@@ -86,63 +65,49 @@
   suffix: Admin
   description: A modified access configurator used only by the mythical Administrator.
   components:
-  - type: Sprite
-    sprite: Objects/Tools/universal_access_configurator.rsi
-  - type: Clothing
-    sprite: Objects/Tools/universal_access_configurator.rsi
-  - type: AccessOverrider
-    accessLevels:
-    - Armory
-    - Atmospherics
-    - Bar
-    - BasicSilicon
-    - Borg
-    - Brig
-    - Detective
-    - Captain
-    - Cargo
-    - Chapel
-    - Chemistry
-    - ChiefEngineer
-    - ChiefMedicalOfficer
-    - Command
-    - Cryogenics
-    - EmergencyShuttleRepealAll
-    - Engineering
-    - External
-    - HeadOfPersonnel
-    - HeadOfSecurity
-    - Hydroponics
-    - Janitor
-    - Kitchen
-    - Lawyer
-    - Maintenance
-    - Medical
-    - Quartermaster
-    - Research
-    - ResearchDirector
-    - Salvage
-    - Security
-    - Service
-    - StationAi
-    - Theatre
-    - CentralCommand
-    - NuclearOperative
-    - SyndicateAgent
-    - Wizard
-    - Xenoborg
-    - GenpopEnter
-    - GenpopLeave
-    privilegedIdSlot:
-      name: id-card-console-privileged-id
-      startingItem: UniversalIDCard
-      ejectSound: /Audio/Machines/id_swipe.ogg
-      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-      ejectOnBreak: true
-      swap: false
-      whitelist:
-        components:
-        - IdCard
-    denialSound:
-      path: /Audio/Machines/custom_deny.ogg
-    doAfter: 0.5
+    - type: Sprite
+      sprite: Objects/Tools/universal_access_configurator.rsi
+    - type: Clothing
+      sprite: Objects/Tools/universal_access_configurator.rsi
+    - type: AccessOverrider
+    # Starlight-edit: Start
+      accessGroups:
+      - General
+      - Security
+      - Cargo
+      - Command
+      - Research
+      - Medical
+      - Service
+      - Engineering
+      - Misc
+      - CentralCommand
+      - Syndicate
+      privilegedIdSlot:
+        name: AccessOverrider-privilegedId # Starlight-edit
+        startingItem: UniversalIDCard
+        ejectSound: /Audio/Machines/id_swipe.ogg
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectOnBreak: true
+        swap: false
+        whitelist:
+          components:
+            - IdCard
+      denialSound:
+        path: /Audio/Machines/custom_deny.ogg
+      doAfter: 0.5
+    - type: UserInterface
+      interfaces:
+        enum.AccessOverriderUiKey.Key:
+          type: AccessOverriderBoundUserInterface
+    - type: ActivatableUI
+      key: enum.AccessOverriderUiKey.Key
+      requiresComplex: true
+      requireActiveHand: false
+      singleUser: true
+      inHandsOnly: true
+    - type: ItemSlots
+    - type: ContainerContainer
+      containers:
+        AccessOverrider-privilegedId: !type:ContainerSlot
+    # Starlight-edit: End

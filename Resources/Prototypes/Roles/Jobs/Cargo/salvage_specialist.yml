@@ -7,7 +7,7 @@
     - !type:DepartmentTimeRequirement
       department: Cargo
       time: 9000 # 2.5 hrs
-  icon: "JobIconShaftMiner"
+  icon: "JobIconSalvageSpec" # Starlight - New distinct icon
   startingGear: SalvageSpecialistGear
   supervisors: job-supervisors-qm
   canBeAntag: false
@@ -23,7 +23,6 @@
 - type: startingGear
   id: SalvageSpecialistGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
     id: SalvagePDA
     ears: ClothingHeadsetCargo
   #storage:

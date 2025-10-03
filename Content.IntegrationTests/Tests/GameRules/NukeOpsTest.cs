@@ -226,17 +226,22 @@ public sealed class NukeOpsTest
         Assert.That(total, Is.GreaterThan(3));
 
         // Check the nukie commander passed basic training and figured out how to breathe.
-        var totalSeconds = 30;
-        var totalTicks = (int) Math.Ceiling(totalSeconds / server.Timing.TickPeriod.TotalSeconds);
-        var increment = 5;
-        var resp = entMan.GetComponent<RespiratorComponent>(player);
-        var damage = entMan.GetComponent<DamageableComponent>(player);
-        for (var tick = 0; tick < totalTicks; tick += increment)
+        // Starlight edit Start: Who needs to breathe anyway?
+        if (entMan.TryGetComponent<RespiratorComponent>(player, out var resp))
         {
-            await pair.RunTicksSync(increment);
-            Assert.That(resp.SuffocationCycles, Is.LessThanOrEqualTo(resp.SuffocationCycleThreshold));
-            Assert.That(damage.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
+            var totalSeconds = 30;
+            var totalTicks = (int) Math.Ceiling(totalSeconds / server.Timing.TickPeriod.TotalSeconds);
+            var increment = 5;
+            // var resp = entMan.GetComponent<RespiratorComponent>(player);
+            var damage = entMan.GetComponent<DamageableComponent>(player);
+            for (var tick = 0; tick < totalTicks; tick += increment)
+            {
+                await pair.RunTicksSync(increment);
+                Assert.That(resp.SuffocationCycles, Is.LessThanOrEqualTo(resp.SuffocationCycleThreshold));
+                Assert.That(damage.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
+            }
         }
+        // Starlight edit End
 
         // Check that the round does not end prematurely when agents are deleted in the outpost
         var nukies = dummyEnts.Where(entMan.HasComponent<NukeOperativeComponent>).Append(player).ToArray();

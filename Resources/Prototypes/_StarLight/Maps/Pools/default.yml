@@ -23,7 +23,8 @@
   - StarlightElkridge
   - Prism
   - StarlightSilica
-# - StarlightBox
+  - StarlightCluster
+  - StarlightBox
 # - StarlightMarathon
 # - StarlightMeta
 # - StarlightPacked

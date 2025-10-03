@@ -15,6 +15,10 @@
   - Maintenance
   extendedAccess:
   - Chemistry
+  # Starlight Start
+  - Paramedic
+  - Surgery
+  # Starlight End
   special:
   - !type:GiveItemOnHolidaySpecial
     holiday: DoctorDay

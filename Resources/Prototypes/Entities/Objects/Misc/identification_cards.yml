@@ -212,9 +212,10 @@
   name: salvage ID card
   components:
   - type: Sprite
+    sprite: _Starlight/Objects/Misc/id_cards.rsi # Starlight - new salv icon
     layers:
     - state: default
-    - state: idshaftminer
+    - state: idsalvagespecialist # Starlight - new salv icon
   - type: PresetIdCard
     job: SalvageSpecialist
 
@@ -865,15 +866,14 @@
     jobTitle: job-title-universal
     jobIcon: JobIconAdmin
   - type: Access
+    # Starlight-edit: Start
     groups:
     - AllAccess
     - Silicon
-    tags:
+    - Misc
     - CentralCommand
-    - NuclearOperative
-    - SyndicateAgent
-    - Wizard
-    - Xenoborg
+    - Syndicate
+    # Starlight-edit: End
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener

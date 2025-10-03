@@ -1,0 +1,17 @@
+- type: reagent
+  id: RoyalJelly
+  name: reagent-name-royaljelly
+  desc: reagent-desc-royaljelly
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: medicine
+  color: "#9d42d5"
+  metabolisms:
+    Food:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Brute: -2
+            Burn: -2
+            Toxin: -2
+            Genetic: -2

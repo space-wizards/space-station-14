@@ -18,3 +18,8 @@
       types:
         Structural: 35
         Piercing: 15
+  # region starlight
+  - type: Tag
+    tags:
+    - PaddyMech
+  # end region

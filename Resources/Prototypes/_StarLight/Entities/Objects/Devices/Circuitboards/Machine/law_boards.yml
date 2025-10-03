@@ -1,0 +1,70 @@
+- type: entity
+  id: SyndimovCircuitBoard
+  parent: [BaseElectronics, BaseSyndicateContraband]
+  name: law board (Syndimov)
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: SyndimovLawset
+    lawUploadSound: /Audio/Ambience/Antag/silicon_lawboard_antimov.ogg
+    IsLawboard: true 
+  - type: StaticPrice 
+    price: 1000
+
+- type: entity
+  id: PanicmovCircuitBoard
+  parent: BaseElectronics
+  name: law board (Panicmov)
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: PanicmovLawset
+    IsLawboard: true 
+  - type: StaticPrice 
+    price: 1000
+
+- type: entity
+  id: GenieCircuitBoard
+  parent: BaseElectronics
+  name: law board (Genie in a Core)
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: GenieLawset
+    IsLawboard: true 
+  - type: StaticPrice 
+    price: 1000
+
+- type: entity
+  id: ReporterCircuitBoard
+  parent: BaseElectronics
+  name: law board (Reporter)
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: ReporterLawset
+    IsLawboard: true 
+  - type: StaticPrice 
+    price: 1000
+
+- type: entity
+  id: JermovCircuitBoard
+  parent: BaseElectronics
+  name: law board (Jermov)
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: JermovLawset
+    IsLawboard: true 
+  - type: StaticPrice 
+    price: 1000

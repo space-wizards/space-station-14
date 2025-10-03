@@ -48,7 +48,7 @@
 - type: entity
   parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseSecurityContraband]
   id: ClothingOuterCoatCorpsman
-  name: Corpsman's Armored Jacket
+  name: corpsman's armored jacket
   description: Tacticool never looked so good..However, impractical armor placement makes it just as effective as the normal coat.
   components:
   - type: Sprite

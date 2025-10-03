@@ -22,10 +22,6 @@
     magState: mag
     steps: 4
     zeroVisible: true
-  - type: ClothingSpeedModifier
-    walkModifier: 1
-    sprintModifier: 0.9
-  - type: HeldSpeedModifier
   - type: Gun
     minAngle: 20
     maxAngle: 35
@@ -33,14 +29,12 @@
     angleDecay: 10
     fireRate: 6  
   - type: Appearance
+  - type: RestrictByEquippedTag
+    requiredTag: "RequiredForLmgTag"
+    denialMessage: "lmg-restricted-to-hardsuit-message"
+    denialSound: /Audio/Machines/custom_deny.ogg
   - type: ItemSlots
     slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: LightRifleHeavyMagazineSP
-        whitelist:
-          tags:
-            - LightRifleHeavy
       gun_chamber:
         name: Chamber
         startingItem: CartridgeLightRifleSP
@@ -48,6 +42,12 @@
         whitelist:
           tags:
             - CartridgeLightRifle
+      gun_magazine:
+        name: Magazine
+        startingItem: LightRifleHeavyMagazineSP
+        whitelist:
+          tags:
+            - LightRifleHeavy
 
 - type: entity
   name: DP-28 LMG

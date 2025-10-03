@@ -3,7 +3,7 @@
   mapName: 'Cog'
   mapPath: /Maps/_Starlight/Stations/Cog.yml
   minPlayers: 40
-  maxPlayers: 100 #big map
+  maxPlayers: 150 #big map
   stations:
     StarlightCog:
       stationProto: StandardNanotrasenStation
@@ -60,6 +60,7 @@
             CargoTechnician: [ 4, 4 ]
             MailTech: [ 1, 2 ]
             MiningSpecialist: [ 3, 3 ]
+            SalvageLead: [ 1, 1 ]
             #civilian
             Assistant: [ -1, -1 ]
             Clown: [ 1, 1 ]

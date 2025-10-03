@@ -72,3 +72,29 @@
     - BorgModuleMartyr
     - BorgModuleSyndicateWeapon
     - BorgModuleL6C
+
+# Lawboards
+- type: latheRecipePack
+  id: StarlightLawboards
+  recipes:
+    - NTDefaultCircuitBoard
+    - AsimovCircuitBoard
+    - CorporateCircuitBoard
+    - CommandmentCircuitBoard
+    - PaladinCircuitBoard
+    - PanicmovCircuitBoard
+    - GenieCircuitBoard
+    - ReporterCircuitBoard
+    - LiveLetLiveCircuitBoard
+    - StationEfficiencyCircuitBoard
+    - RobocopCircuitBoard
+    - GameMasterCircuitBoard
+    - ArtistCircuitBoard
+    - NutimovCircuitBoard
+    - JermovCircuitBoard
+
+# Dangerous Lawboards (Emag only)
+- type: latheRecipePack
+  id: StarlightDangerousLawboards
+  recipes:
+    - OverlordCircuitBoard

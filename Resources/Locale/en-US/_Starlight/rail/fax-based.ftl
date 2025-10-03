@@ -1,4 +1,4 @@
-rr-criminal = Сriminal
+rr-criminal = Criminal
 rr-criminal-desc = That was a mistake, at any moment I could be reported and the hunt would begin.
 
 rr-criminal-message = Well-wisher: We have just intercepted a fax, you’ve been declared wanted. Nevertheless, your recent malicious act against NT has greatly impressed us. We’ll send you a gift by mail, it should arrive in about 20 minutes.
@@ -35,4 +35,4 @@ rr-criminal-failed-content = [logo]            [cclogo]
    ⠀                                    [italic]Place for stamps[/italic]
 
 rr-nt-isd = NT ISD
-rr-cc = CentCom
+rr-cc = CentComm

@@ -31,6 +31,7 @@
     damageCoefficient: 0.6
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBlueshield
+
 #NTRep Hardsuit
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseCommandContraband]
@@ -64,6 +65,7 @@
     damageCoefficient: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitNtrep
+
 #Clown Battlesuit
 - type: entity
   parent: [ClothingOuterHardsuitBase]
@@ -98,6 +100,7 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetBattlesuitClown
+
 #Mercenary Hardsuit
 - type: entity
   parent: [ ClothingOuterHardsuitBase, BaseSalvageContraband ]
@@ -353,3 +356,212 @@
     sprintModifier: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitLuxmax
+
+# Experimental Security Hardsuit
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseSecurityContraband]
+  id: ClothingOuterHardsuitSecurityExperimental
+  name: experimental security hardsuit
+  description: A high-tech hardsuit meant to eventually replace the standard security suit, it boasts an ID-Lock and Gun-Lock system. Rumors have it that the first prototype was stolen by the syndicate..
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/experimental_security.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/experimental_security.rsi
+    equipSound: /Audio/Mecha/mechmove03.ogg
+    unequipSound: /Audio/Mecha/mechmove03.ogg
+    equipDelay: 3
+    unequipDelay: 3
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: ZombificationResistance
+    zombificationResistanceCoefficient: 0.50
+  - type: IdClothingBlocker
+    allowedJobs:
+      - SecurityOfficer
+      - Brigmedic
+      - Warden
+      - HeadOfSecurity
+      - Captain
+      - Detective
+  - type: Pierceable
+    level: Metal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 0.6
+        Caustic: 0.7
+    staminaModifier: 0.6
+  - type: ClothingSpeedModifier
+    walkModifier: 0.60
+    sprintModifier: 0.60
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
+      params:
+        volume: -6
+        pitch: 0.7
+        variation: 0.025
+  - type: HeldSpeedModifier
+  - type: Tag
+    tags:
+      - RequiredForLmgTag
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSecurityExperimental
+
+
+#Spationaut Lead Hardsuit
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseSalvageContraband]
+  id: ClothingOuterHardsuitSpatioLead
+  name: spationaut lead hardsuit
+  description: A lightweight decorated hardsuit designed for industrial EVA in zero gravity.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Clothing/OuterClothing/Hardsuits/leadspatio.rsi
+    - type: Clothing
+      sprite: _Starlight/Clothing/OuterClothing/Hardsuits/leadspatio.rsi
+    - type: PressureProtection
+      highPressureMultiplier: 0.7
+      lowPressureMultiplier: 1000
+    - type: Pierceable
+      level: Metal
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.85
+          Slash: 0.85
+          Piercing: 0.85
+          Radiation: 0.3
+          Caustic: 0.8
+    - type: ClothingSpeedModifier
+      walkModifier: 0.8
+      sprintModifier: 0.8
+    - type: HeldSpeedModifier
+    - type: ToggleableClothing
+      clothingPrototype: ClothingHeadHelmetHardsuitSpatioLead
+    - type: Tag
+      tags:
+        - Hardsuit
+        - HardsuitSpatio
+
+#Mining Specialist Advanced hardsuit
+- type: entity
+  parent: [ ClothingOuterHardsuitBase, BaseSalvageMiningContraband ]
+  id: ClothingOuterHardsuitAdvancedMining
+  name: advanced mining hardsuit
+  description: An advanced jetpack-equipped hardsuit designed for mining operations.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/advmining.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/advmining.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+  - type: Pierceable
+    level: Metal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 0.75
+        Piercing: 0.85
+        Heat: 0.65
+        Cold: 0.65
+        Radiation: 0.2
+        Caustic: 0.6
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: TemperatureProtection
+    heatingCoefficient: 0.001
+    coolingCoefficient: 0.001
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitAdvancedMining
+  - type: Jump
+    action: JumpJet
+    isEquipment: true
+  - type: ActivatableUI
+    key: enum.SharedGasTankUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.SharedGasTankUiKey.Key:
+        type: GasTankBoundUserInterface
+  - type: UseDelay
+    delays:
+      gasTank:
+        length: 1.0
+  - type: GasTank
+    outputPressure: 42.6
+    air:
+      # 13 minutes of thrust
+      volume: 5
+      temperature: 293.15
+      moles:
+      - 1.025689525 # oxygen
+      - 1.025689525 # nitrogen
+  - type: Jetpack
+    moleUsage: 0.00085
+
+#Mining Hardsuit
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseSalvageMiningContraband]
+  id: ClothingOuterHardsuitMining
+  name: mining hardsuit
+  description: A special suit that protects against hazardous, low pressure environments encountered during space mining.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/mining.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/mining.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.2
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+  - type: Pierceable
+    level: Metal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.9
+        Heat: 0.7
+        Cold: 0.7
+        Radiation: 0.3
+        Caustic: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.80
+    sprintModifier: 0.80
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitMining
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+
+# Golden
+
+- type: entity
+  parent: ClothingOuterHardsuitAtmos
+  id: ClothingOuterHardsuitAtmosGolden
+  name: atmos hardsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has thermal shielding.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/atmospherics_golden.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/atmospherics_golden.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitAtmosGolden

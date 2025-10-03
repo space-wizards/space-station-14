@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations;
@@ -54,8 +54,22 @@ namespace Content.Server.Database
                 .IsUnique();
 
             modelBuilder.Entity<Profile>()
-                .HasIndex(p => new {p.Slot, PrefsId = p.PreferenceId})
+                .HasIndex(p => new { p.Slot, PrefsId = p.PreferenceId })
                 .IsUnique();
+
+            // Cosmatic Drift Record System-start: Link CD profile tables into the EF model so they persist with preferences
+            modelBuilder.Entity<CDModel.CDProfile>()
+                .HasOne(p => p.Profile)
+                .WithOne(p => p.CDProfile)
+                .HasForeignKey<CDModel.CDProfile>(p => p.ProfileId)
+                .IsRequired();
+
+            modelBuilder.Entity<CDModel.CharacterRecordEntry>()
+                .HasOne(e => e.CDProfile)
+                .WithMany(e => e.CharacterRecordEntries)
+                .HasForeignKey(e => e.CDProfileId)
+                .IsRequired();
+            // Cosmatic Drift Record System-end
 
             // Starlight - Start
             modelBuilder.Entity<StarLightModel.StarLightProfile>(entity =>
@@ -74,11 +88,11 @@ namespace Content.Server.Database
             // Starlight - End
 
             modelBuilder.Entity<Antag>()
-                .HasIndex(p => new {HumanoidProfileId = p.ProfileId, p.AntagName})
+                .HasIndex(p => new { HumanoidProfileId = p.ProfileId, p.AntagName })
                 .IsUnique();
 
             modelBuilder.Entity<Trait>()
-                .HasIndex(p => new {HumanoidProfileId = p.ProfileId, p.TraitName})
+                .HasIndex(p => new { HumanoidProfileId = p.ProfileId, p.TraitName })
                 .IsUnique();
 
             modelBuilder.Entity<ProfileRoleLoadout>()
@@ -107,6 +121,13 @@ namespace Content.Server.Database
                 .IsUnique()
                 .HasFilter("priority = 3");
 
+            //starlight start
+            modelBuilder.Entity<JobPriorityEntry>()
+                .HasIndex(e => new { e.PreferenceId, e.JobName })
+                .HasDatabaseName("UX_JobPriorityEntry_Pref_Job")
+                .IsUnique();
+            //starlight end
+
             modelBuilder.Entity<Job>()
                 .HasIndex(j => j.ProfileId);
 
@@ -129,15 +150,15 @@ namespace Content.Server.Database
                 .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<AdminFlag>()
-                .HasIndex(f => new {f.Flag, f.AdminId})
+                .HasIndex(f => new { f.Flag, f.AdminId })
                 .IsUnique();
 
             modelBuilder.Entity<AdminRankFlag>()
-                .HasIndex(f => new {f.Flag, f.AdminRankId})
+                .HasIndex(f => new { f.Flag, f.AdminRankId })
                 .IsUnique();
 
             modelBuilder.Entity<AdminLog>()
-                .HasKey(log => new {log.RoundId, log.Id});
+                .HasKey(log => new { log.RoundId, log.Id });
 
             modelBuilder.Entity<AdminLog>()
                 .Property(log => log.Id);
@@ -162,7 +183,7 @@ namespace Content.Server.Database
                 .HasIndex(round => round.StartDate);
 
             modelBuilder.Entity<AdminLogPlayer>()
-                .HasKey(logPlayer => new {logPlayer.RoundId, logPlayer.LogId, logPlayer.PlayerUserId});
+                .HasKey(logPlayer => new { logPlayer.RoundId, logPlayer.LogId, logPlayer.PlayerUserId });
 
             modelBuilder.Entity<ServerBan>()
                 .HasIndex(p => p.PlayerUserId);
@@ -440,6 +461,7 @@ namespace Content.Server.Database
         public int PreferenceId { get; set; }
         public Preference Preference { get; set; } = null!;
         public StarLightModel.StarLightProfile? StarLightProfile { get; set; } // Starlight
+        public CDModel.CDProfile? CDProfile { get; set; } // Cosmatic Drift Record System: optional persisted record data
     }
 
     public class Job
@@ -771,7 +793,7 @@ namespace Content.Server.Database
     public enum ServerBanExemptFlags
     {
         // @formatter:off
-        None       = 0,
+        None = 0,
 
         /// <summary>
         /// Ban is a datacenter range, connections usually imply usage of a VPN service.

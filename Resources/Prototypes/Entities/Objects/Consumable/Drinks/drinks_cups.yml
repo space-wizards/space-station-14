@@ -99,7 +99,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 5 # One sip at a time. No rushing at the water cooler
+        maxVol: 15 # One sip at a time. No rushing at the water cooler - I REBUKE YOUR HERESY OF ONE SIP ONLY (Starlight)
   - type: Item
     size: Tiny
   - type: Sprite
