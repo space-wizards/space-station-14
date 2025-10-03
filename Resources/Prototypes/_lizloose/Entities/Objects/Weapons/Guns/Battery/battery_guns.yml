@@ -34,6 +34,13 @@
     proto: BulletDisabler
     fireCost: 62.5
   - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: BulletDisabler
+      fireCost: 62.5
+      color: "#5fcde4"
+    - proto: BulletLaser
+      fireCost: 125
+      color: "#ff0006"
     inhandVisuals:
       left:
       - state: inhand-left-color
@@ -44,13 +51,6 @@
       - state: equipped-BACKPACK-color
       suitstorage:
       - state: equipped-SUITSTORAGE-color
-    fireModes:
-    - proto: BulletDisabler
-      fireCost: 62.5
-      color: "#5fcde4"
-    - proto: BulletLaser
-      fireCost: 125
-      color: "#ff0006"
   - type: MagazineVisuals
     magState: mag
     steps: 5

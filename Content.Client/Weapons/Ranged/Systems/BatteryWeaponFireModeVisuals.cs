@@ -6,23 +6,24 @@ using Content.Shared.Hands;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Weapons.Ranged.Systems;
 
 /// <inheritdoc/>
-public sealed partial class GunSystem
+public sealed class BatteryWeaponFireModesVisuals : EntitySystem
 {
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedItemSystem _item = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
-    private void InitializeBatteryWeaponFireModeVisuals()
+    public override void Initialize()
     {
         SubscribeLocalEvent<BatteryWeaponFireModesComponent, AppearanceChangeEvent>(OnAppearanceChange);
         SubscribeLocalEvent<BatteryWeaponFireModesComponent, GetInhandVisualsEvent>(OnGetHeldVisuals, after: [typeof(ItemSystem)]);
         SubscribeLocalEvent<BatteryWeaponFireModesComponent, GetEquipmentVisualsEvent>(OnGetEquipmentVisuals, after: [typeof(ClientClothingSystem)]);
     }
-
 
     private void OnAppearanceChange(Entity<BatteryWeaponFireModesComponent> ent, ref AppearanceChangeEvent args)
     {
