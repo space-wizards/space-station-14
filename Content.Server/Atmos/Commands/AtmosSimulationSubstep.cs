@@ -12,6 +12,8 @@ namespace Content.Server.Atmos.Commands;
 [AdminCommand(AdminFlags.Debug)]
 public sealed class AtmosSimulationSubstep : LocalizedEntityCommands
 {
+    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+
     public override string Command => "substepatmos";
     public override string Description => Loc.GetString("atmos-substep-description");
     public override string Help => $"Usage: {Command} <GridUid>";
@@ -25,7 +27,8 @@ public sealed class AtmosSimulationSubstep : LocalizedEntityCommands
             case 0:
             {
                 if (shell.Player is null ||
-                    !EntityManager.TryGetComponent<TransformComponent>(shell.Player.AttachedEntity, out var playerxform) ||
+                    !EntityManager.TryGetComponent<TransformComponent>(shell.Player.AttachedEntity,
+                        out var playerxform) ||
                     playerxform.GridUid == null)
                 {
                     shell.WriteError(Loc.GetString("error-no-grid-provided-or-invalid-grid"));
@@ -67,11 +70,7 @@ public sealed class AtmosSimulationSubstep : LocalizedEntityCommands
             return;
         }
 
-        if (!EntityManager.TryGetComponent<TransformComponent>(grid, out var xform))
-        {
-            shell.WriteError(Loc.GetString("error-no-xform"));
-            return;
-        }
+        var xform = EntityManager.GetComponent<TransformComponent>(grid);
 
         if (xform.MapUid == null || xform.MapID == MapId.Nullspace)
         {
@@ -86,16 +85,14 @@ public sealed class AtmosSimulationSubstep : LocalizedEntityCommands
                 mapGrid,
                 xform);
 
-        var atmosSys = EntityManager.System<AtmosphereSystem>();
-
         if (gridAtmos.Simulated)
         {
             shell.WriteLine(Loc.GetString("info-implicitly-paused-simulation",
                 ("grid", EntityManager.ToPrettyString(grid))));
         }
 
-        atmosSys.SetAtmosphereSimulation(newEnt, false);
-        atmosSys.RunProcessingFull(newEnt, xform.MapUid.Value, atmosSys.AtmosTickRate);
+        _atmosphereSystem.SetAtmosphereSimulation(newEnt, false);
+        _atmosphereSystem.RunProcessingFull(newEnt, xform.MapUid.Value, _atmosphereSystem.AtmosTickRate);
 
         shell.WriteLine(Loc.GetString("info-substepped-grid", ("grid", EntityManager.ToPrettyString(grid))));
     }

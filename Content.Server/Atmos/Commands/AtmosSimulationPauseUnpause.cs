@@ -9,6 +9,8 @@ namespace Content.Server.Atmos.Commands;
 [AdminCommand(AdminFlags.Debug)]
 public sealed class AtmosSimulationPauseUnpause : LocalizedEntityCommands
 {
+    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+
     public override string Command => "pauseatmos";
     public override string Description => Loc.GetString("atmos-pause-description");
     public override string Help => $"Usage: {Command} <GridUid>";
@@ -53,9 +55,7 @@ public sealed class AtmosSimulationPauseUnpause : LocalizedEntityCommands
 
         var newEnt = new Entity<GridAtmosphereComponent>(grid, gridAtmos);
 
-        var atmosSys = EntityManager.System<AtmosphereSystem>();
-
-        atmosSys.SetAtmosphereSimulation(newEnt, !newEnt.Comp.Simulated);
+        _atmosphereSystem.SetAtmosphereSimulation(newEnt, !newEnt.Comp.Simulated);
         shell.WriteLine(Loc.GetString("set-atmos-simulation",
             ("grid", EntityManager.ToPrettyString(grid)),
             ("state", newEnt.Comp.Simulated)));
