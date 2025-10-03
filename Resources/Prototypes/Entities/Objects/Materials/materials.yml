@@ -571,6 +571,9 @@
   - type: Appearance
   - type: Item
     heldPrefix: bananium
+  - type: Tag
+    tags:
+    - ConstructionMaterial
 
 - type: entity
   parent: MaterialBananium
