@@ -55,7 +55,7 @@ namespace Content.Client.Access.UI
             IoCManager.InjectDependencies(this);
             _logMill = _logManager.GetSawmill(SharedIdCardConsoleSystem.Sawmill);
 
-            // Starlight _owner = owner;
+            // Starlight _owner = owner; // Starlight edit
 
             _maxNameLength = _cfgManager.GetCVar(CCVars.MaxNameLength);
             _maxIdJobLength = _cfgManager.GetCVar(CCVars.MaxIdJobLength);
@@ -94,9 +94,19 @@ namespace Content.Client.Access.UI
             // Starlight-edit: Start
             _accessGroups = new AccessGroupControl();
             _accessButtons = new AccessLevelControl();
-            
             AccessGroupControlContainer.AddChild(_accessGroups);
             AccessLevelControlContainer.AddChild(_accessButtons);
+            foreach (var (id, button) in _accessButtons.ButtonsList)
+            {
+                button.OnPressed += _ =>
+                {
+                    if (button.Pressed)
+                        _pendingPressedAccessLevels.Add(id);
+                    else
+                        _pendingPressedAccessLevels.Remove(id);
+                    SubmitData();
+                };
+            }
         }
 
         public void Initialize(IdCardConsoleBoundUserInterface owner)
@@ -135,7 +145,6 @@ namespace Content.Client.Access.UI
                     allJobAccess.UnionWith(groupPrototype.Tags);
             }
 
-            // --- Fix: Only allow access levels that are both allowed by the privileged ID and present in any group ---
             // Get all tags from all groups in AccessGroups
             var allConsoleGroupTags = new HashSet<ProtoId<AccessLevelPrototype>>();
             foreach (var group in _accessGroups.ButtonsList.Keys)
