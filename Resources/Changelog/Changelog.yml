@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Shuttles now are treated as rooved for daylight.
-    type: Tweak
-  id: 8518
-  time: '2025-05-18T07:47:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36112
 - author: ScarKy0
   changes:
   - message: Deliveries can now very rarely spawn as bomb-type! They grant A LOT of
@@ -3960,3 +3953,10 @@
   id: 9028
   time: '2025-10-03T09:53:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40674
+- author: Crude Oil
+  changes:
+  - message: Returned PDA lights to original brightness
+    type: Fix
+  id: 9029
+  time: '2025-10-03T20:33:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40687
