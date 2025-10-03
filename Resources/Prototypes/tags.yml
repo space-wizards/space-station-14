@@ -40,10 +40,10 @@
   id: Arrow # Storage whitelist: ClothingBeltQuiver
 
 - type: Tag
-  id: ArtifactFragment # Storage whitelist: OreBag, CargoBounty: BountyArtifactFragment, ConstructionGraph: Artifact
+  id: ArtifactFragment # Storage whitelist: OreBag. CargoBounty: BountyArtifactFragment. ConstructionGraph: Artifact
 
 - type: Tag
-  id: ATVKeys # Unused
+  id: ATVKeys # Unused x2
 
 ## B ##
 
@@ -57,7 +57,7 @@
   id: Banana # CargoBounty: BountyBanana
 
 - type: Tag
-  id: BananaPeel # SpecialDigestible by OrganAnimalRuminantStomach, and several BananaClown ConstructionGraphs
+  id: BananaPeel # SpecialDigestible by OrganAnimalRuminantStomach. Several BananaClown ConstructionGraphs
 
 - type: Tag
   id: Bandana # CargoBounty: BountyBandana
@@ -66,13 +66,13 @@
   id: BaseballBat # CargoBounty: BountyBaseballBat
 
 - type: Tag
-  id: BBQsauce # Storage whitelist: ClothingBeltChef and FoodCartHot, ItemMapper: ClothingBeltChef and FoodCartHot
+  id: BBQsauce # Storage whitelist: ClothingBeltChef and FoodCartHot. ItemMapper: ClothingBeltChef and FoodCartHot
 
 - type: Tag
   id: Bedsheet # CargoBounty: BountyBedsheet
 
 - type: Tag
-  id: Bee # Mode switch whitelisting for BuzzochloricBees (only damages non-bees)
+  id: Bee # Mode switching for BuzzochloricBees (only damages non-bees)
 
 - type: Tag
   id: Beer # CargoBounty: BountyBeer
@@ -147,16 +147,16 @@
   id: BorgModuleSyndicateAssault # Cyborg module category for extra evil red robots (nukies)
 
 - type: Tag
-  id: Bot # Unused
+  id: Bot # Unused (Exists on MobRobotic, MobSupplyBot)
 
 - type: Tag
-  id: BotanyHatchet # Storage whitelist: ClothingBeltPlant, ItemMapper: ClothingBeltPlant
+  id: BotanyHatchet # Storage whitelist: ClothingBeltPlant. ItemMapper: ClothingBeltPlant
 
 - type: Tag
-  id: BotanyHoe # Storage whitelist: ClothingBeltPlant, ItemMapper: ClothingBeltPlant
+  id: BotanyHoe # Storage whitelist: ClothingBeltPlant. ItemMapper: ClothingBeltPlant
 
 - type: Tag
-  id: BotanyShovel # Storage whitelist: ClothingBeltPlant, ItemMapper: ClothingBeltPlant
+  id: BotanyShovel # Storage whitelist: ClothingBeltPlant. ItemMapper: ClothingBeltPlant
 
 - type: Tag # Used for specifically chemistry bottles
   id: Bottle # Storage whitelist: ChemMaster, ChemBag, SmartFridge, ClothingBeltJanitor, ClothingBeltMedical, ClothingBeltPlant
@@ -165,7 +165,7 @@
   id: BoxCardboard # CargoBounty: BountyCardboardBox
 
 - type: Tag
-  id: BoxHug # Unused
+  id: BoxHug # Unused (Exists on BoxHug, BoxHoloclown)
 
 - type: Tag
   id: Brain # Storage whitelist: MMI. CargoBounty: BountyBrain. FoodSequenceElement: Brain
@@ -177,7 +177,7 @@
   id: Bread # CargoBounty: BountyBread. Blacklisted in BountyFruit and BountyVegetable
 
 - type: Tag
-  id: Briefcase # Unused
+  id: Briefcase # Unused (exists on BriefcaseBase)
 
 - type: Tag
   id: BrimFlatcapBrown # ConstructionGraph: BladedFlatcapBrown
@@ -195,7 +195,7 @@
   id: Burger # Unused x2 (this is the only place burger tag exists)
 
 - type: Tag
-  id: BulletFoam # BallisticAmmoProviderComponent whitelist for WeaponRifleFoam, FoamCrossbow, MagazineFoamBox, BoxDonkSoftBox
+  id: BulletFoam # Ammo: WeaponRifleFoam, FoamCrossbow, MagazineFoamBox, BoxDonkSoftBox
 
 - type: Tag
   id: Burnt # Storage whitelist: ashtray. Seemingly redundant
@@ -212,64 +212,66 @@
 ## C ##
 
 - type: Tag
-  id: CableCoil
+  id: CableCoil # Storage whitelist: ClothingBeltUtility, BorgModuleCable
 
 - type: Tag
-  id: Candle
+  id: Candle # Storage whitelist: BoxCandle # TODO cardboard boxes shouldn't have whitelisting
 
 - type: Tag
-  id: Cake
+  id: Cake # CargoBounty blacklist: BountyFruit, BountyVegetable
 
 - type: Tag
-  id: CaneBlade
+  id: CaneBlade # Storage whitelist: CaneSheath. ItemMapper: CaneSheath
 
 - type: Tag
-  id: CannonBall
+  id: CannonBall # Ammo: WeaponLauncherPirateCannon, ShuttleGunPirateCannon
 
 - type: Tag
-  id: CannotSuicide
+  id: CannotSuicide # Used by SuicideSystem. Entities with this tag ghost when attempting to suicide
 
 - type: Tag
-  id: CanPilot
+  id: CanPilot # Used by ShuttleConsoleSystem to guard who's allowed to pilot ships
 
 - type: Tag
-  id: CaptainSabre
+  id: CaptainSabre # Storage whitelist: ClothingBeltSheath. ItemMapper: ClothingBeltSheath
 
 - type: Tag
-  id: Carpet
+  id: Carpet # Unused (exists on carpets (obviously))
 
 - type: Tag
-  id: Carrot
+  id: Carrot # CargoBounty: BountyCarrot
 
 - type: Tag
-  id: CarrotFries
+  id: CarrotFries # CargoBounty: BountyCarrotFries
 
 - type: Tag
-  id: Carp
+  id: Carp # CargoBounty: BountyCarp
+
+- type: Tag # NOT bullets. This is for the cart to load PDA programs
+  id: Cartridge # Storage whitelist: BasePDA, TrashBag
 
 - type: Tag
-  id: Cartridge
+  id: CartridgeAntiMateriel # Ammo: WeaponSniperHristov, Musket, BaseMagazineBoxAntiMateriel
 
 - type: Tag
-  id: CartridgeAntiMateriel
+  id: CartridgeCap # Ammo: RevolverCapGun, RevolverCapGunFake, BaseSpeedLoaderCap
 
 - type: Tag
-  id: CartridgeCap
+  id: CartridgeCaselessRifle # Ammo: WeaponPistolCobra, BaseMagazineCaselessRifle, BaseMagazineBoxCaselessRifle
 
 - type: Tag
-  id: CartridgeCaselessRifle
+  id: CartridgeCHIMP # Unused x2
 
 - type: Tag
-  id: CartridgeCHIMP
+  id: CartridgeHeavyRifle # Unused (exists on BaseCartridgeHeavyRifle)
 
 - type: Tag
-  id: CartridgeHeavyRifle
+  id: CartridgeLightRifle # Ammo: BaseWeaponLightMachineGun, BaseWeaponRifle, BaseWeaponSniper
+                          # SpeedLoaderLightRifle, BaseMagazineLightRifle, BaseMagazineBoxLightRifle
 
 - type: Tag
-  id: CartridgeLightRifle
-
-- type: Tag
-  id: CartridgeMagnum
+  id: CartridgeMagnum # Ammo: BaseWeaponRevolver, RevolverCapGunFake, WeaponPistolN1984, WeaponPistolFlintlock, XenoArtifactGun
+                      # BaseMagazineBoxMagnum, BaseMagazineMagnum, BaseSpeedLoaderMagnum
 
 - type: Tag
   id: CartridgePistol
