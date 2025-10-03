@@ -312,7 +312,7 @@
 - type: entityTable #2x medium
   id: RandomSatchelBurgerTable
   table: !type:GroupSelector
-    amount: !type:RangeNumberSelector
+    rolls: !type:RangeNumberSelector
       range: 1, 2
     children:
     - id: SpaceCash100
