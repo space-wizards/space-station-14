@@ -12,7 +12,7 @@ namespace Content.Shared.Temperature;
 /// </summary>
 [Serializable, NetSerializable, DataDefinition]
 [Access(typeof(HeatContainerHelpers), typeof(SharedAtmosphereSystem))]
-public partial record struct HeatContainer
+public partial struct HeatContainer : IRobustCloneable<HeatContainer>
 {
     /// <summary>
     /// The heat capacity of this container.
@@ -30,8 +30,27 @@ public partial record struct HeatContainer
     public float Temperature = Atmospherics.T20C;
 
     /// <summary>
+    /// The current temperature of the container in Celsius.
+    /// Ideal if you just need to read the temperature for UI.
+    /// Do not perform computations in Celsius, use Kelvin instead.
+    /// </summary>
+    [DataField, Access(Other = AccessPermissions.Read)]
+    public float TemperatureC => TemperatureHelpers.KelvinToCelsius(Temperature);
+
+    /// <summary>
     /// The current thermal energy of the container in Joules.
     /// </summary>
     [ViewVariables]
-    public float ThermalEnergy => Temperature * HeatCapacity;
+    public float InternalEnergy => Temperature * HeatCapacity;
+
+    public HeatContainer(HeatContainer c)
+    {
+        HeatCapacity = c.HeatCapacity;
+        Temperature = c.Temperature;
+    }
+
+    public HeatContainer Clone()
+    {
+        return new HeatContainer(this);
+    }
 }
