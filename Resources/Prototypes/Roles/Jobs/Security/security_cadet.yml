@@ -33,12 +33,12 @@
     id: SecurityCadetPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
-    pocket1: WeaponDisabler # Changed from wizden
+    pocket1: WeaponPistolMk58
     pocket2: BookSecurity
   storage:
     back:
     - Flash
-#    - MagazinePistol
+    - MagazinePistol
 
 - type: chameleonOutfit
   id: SecurityCadetChameleonOutfit
