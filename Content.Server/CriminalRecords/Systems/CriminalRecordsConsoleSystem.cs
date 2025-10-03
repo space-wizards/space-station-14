@@ -56,6 +56,8 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         Subs.BuiEvents<CriminalRecordsConsoleComponent>(CharacterRecordConsoleKey.Key, subs =>
         {
             subs.Event<SelectStationRecord>(OnKeySelected);
+            subs.Event<CriminalRecordAddHistory>(OnAddHistory);
+            subs.Event<CriminalRecordDeleteHistory>(OnDeleteHistory);
             subs.Event((Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordChangeStatus args) =>
             {
                 OnChangeStatus(ent, ref args);
@@ -214,6 +216,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         // no radio message since its not crucial to officers patrolling
 
         UpdateUserInterface(ent);
+        RaiseLocalEvent(ent, new CharacterRecordsModifiedEvent());
     }
 
     private void OnDeleteHistory(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordDeleteHistory msg)
@@ -227,6 +230,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         // a bit sus but not crucial to officers patrolling
 
         UpdateUserInterface(ent);
+        RaiseLocalEvent(ent, new CharacterRecordsModifiedEvent());
     }
 
     private void UpdateUserInterface(Entity<CriminalRecordsConsoleComponent> ent)

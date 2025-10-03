@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Content.Shared.CriminalRecords;
 using Content.Shared.Security;
 using Content.Shared.StationRecords;
 using Robust.Shared.Serialization;
@@ -44,6 +45,7 @@ public sealed class CharacterRecordConsoleState : BoundUserInterfaceState
     public StationRecordsFilter? Filter { get; set; }
 
     public (SecurityStatus, string?)? SelectedSecurityStatus { get; set; }
+    public CriminalRecord? SelectedCriminalRecord { get; set; }
 }
 
 [Serializable, NetSerializable]

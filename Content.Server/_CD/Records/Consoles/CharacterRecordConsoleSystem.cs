@@ -96,13 +96,17 @@ public sealed class CharacterRecordConsoleSystem : EntitySystem
                 : null;
 
         (SecurityStatus, string?)? securityStatus = null;
+        CriminalRecord? selectedCriminalRecord = null;
         if ((console.ConsoleType == RecordConsoleType.Admin || console.ConsoleType == RecordConsoleType.Security)
             && selectedRecord?.StationRecordsKey != null)
         {
             // Security-facing consoles surface the linked criminal record for quick context.
             var key = new StationRecordKey(selectedRecord.StationRecordsKey.Value, station.Value);
             if (_records.TryGetRecord<CriminalRecord>(key, out var entry))
+            {
                 securityStatus = (entry.Status, entry.Reason);
+                selectedCriminalRecord = entry;
+            }
         }
 
         SendState(entity,
@@ -114,6 +118,7 @@ public sealed class CharacterRecordConsoleSystem : EntitySystem
                 SelectedRecord = selectedRecord,
                 Filter = console.Filter,
                 SelectedSecurityStatus = securityStatus,
+                SelectedCriminalRecord = selectedCriminalRecord,
             });
     }
 
