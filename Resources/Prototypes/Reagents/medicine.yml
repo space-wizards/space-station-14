@@ -143,7 +143,7 @@
   metabolisms:
     Medicine:
       # Begin Offbrand
-      metabolismRate: 0.2
+      metabolismRate: 0.1
       statusEffects:
       - statusEffect: StatusEffectPainkillersNegligibleBicaridine
       # End Offbrand
@@ -255,7 +255,7 @@
   metabolisms:
     Medicine:
       # Begin Offbrand
-      metabolismRate: 0.2
+      metabolismRate: 0.1
       # End Offbrand
       effects:
       - !type:HealthChange
@@ -511,6 +511,7 @@
   color: "#bf3d19"
   metabolisms:
     Medicine:
+      metabolismRate: 0.1 # Offbrand
       effects:
       - !type:HealthChange
         damage:
@@ -862,14 +863,15 @@
   color: "#00e5ff"
   metabolisms:
     Medicine:
+      metabolismRate: 0.2 # Offbrand
       effects:
       - !type:HealthChange
         conditions:
         - !type:TotalDamage
-          max: 50
+          max: 100 # Offbrand
         damage:
           groups:
-            Brute: -1
+            Brute: -0.5 # Offbrand
           types:
             Poison: -0.5 ##Should be about what it was when it healed the toxin group
             Heat: -0.33
@@ -1417,8 +1419,6 @@
       statusEffects:
       - statusEffect: StatusEffectBrainHealingMannitol
       effects:
-      - !type:ModifyBrainDamage
-        amount: -0.05
       - !type:Drunk
         boozePower: 1
       - !type:Jitter
