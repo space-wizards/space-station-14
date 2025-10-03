@@ -55,7 +55,6 @@ admin-verbs-emergency-access-on = Emergency Access On
 admin-verbs-emergency-access-off = Emergency Access Off
 
 # Dialogs verbs
-admin-verbs-dialog-adjust-stack-title = Adjust stack
 admin-verbs-dialog-adjust-stack-amount = Amount (max {$max})
 admin-verbs-dialog-rename-title = Rename
 admin-verbs-dialog-rename-name = Name

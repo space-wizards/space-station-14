@@ -8,7 +8,7 @@
             <Label Text="{Loc npc-debug-overlay-window-section-npc-label}" HorizontalAlignment="Center"/>
         </controls:StripeBack>
         <BoxContainer Name="NPCBox" Orientation="Vertical">
-            <CheckBox Name="NPCThonk" Text="{Loc npc-debug-overlay-window-thonk-checkbox}"/>
+            <CheckBox Name="NPCThonk" Text="{Loc npc-debug-overlay-window-show-htn-tree-checkbox}"/>
         </BoxContainer>
         <controls:StripeBack>
             <Label Text="{Loc npc-debug-overlay-window-section-pathfinder-label}" HorizontalAlignment="Center"/>
