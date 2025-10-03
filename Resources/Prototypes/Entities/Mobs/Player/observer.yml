@@ -55,6 +55,7 @@
     skipChecks: true
   - type: Ghost
   - type: GhostHearing
+  - type: Visibility
   - type: ShowElectrocutionHUD
   - type: IntrinsicRadioReceiver
   - type: ActiveRadio
@@ -75,9 +76,9 @@
   id: MobObserver
   components:
   - type: Spectral
-  - type: Tag
-    tags:
-    - AllowGhostShownByEvent
+  - type: GhostVisibility
+    ignoreGlobalVisibility: false # affected by wizard show-ghosts action
+    visibleOnRoundEnd: true
 
 - type: entity
   parent: BaseMentalAction
