@@ -32,8 +32,8 @@ public sealed partial class GunSystem
         if (!_appearance.TryGetData<Color>(ent.Owner, BatteryWeaponFireModeProjectile.Type, out var color, args.Component))
             return;
 
-        if (TryComp(ent, out SpriteComponent? sprite))
-            _sprite.LayerSetColor((ent.Owner, sprite), BatteryWeaponFireModeProjectile.Type, color);
+        if (TryComp(ent, out SpriteComponent? sprite) && _sprite.LayerExists((ent.Owner, sprite), BatteryWeaponFireModeProjectile.Type))
+                _sprite.LayerSetColor((ent.Owner, sprite), BatteryWeaponFireModeProjectile.Type, color);
 
         _item.VisualsChanged(ent);
 
