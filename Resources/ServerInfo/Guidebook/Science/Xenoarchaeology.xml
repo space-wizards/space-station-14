@@ -3,11 +3,11 @@
 
   Xenoarchaeology is a branch of Science focused on researching alien [bold]artifacts[/bold].
 
-  Unlocking their secrets grants research points and reveals strange, sometimes dangerous effects.
+  Unlocking their secrets grants research points and reveals strange, potentially useful, or dangerous effects.
 
   At round start, Science usually has one or two artifacts in the lab. More can be:
-  - Ordered from [color=yellow]Cargo[/color]
-  - Found by [color=orange]Salvage[/color]
+  - Ordered from [color=brown]Cargo[/color]
+  - Found by [color=brown]Salvage[/color]
   - Assembled from [bold]fragments[/bold]
   - Appear during certain station events
 
@@ -19,11 +19,11 @@
 
   Artifacts contain [bold]nodes[/bold] arranged in [bold]layers[/bold].
   - Unlocking a node unlocks connected nodes on upper layers.
-  - Each node has [bold]triggers[/bold] and an [bold]effect[/bold].
+  - Each node has [bold]triggers[/bold], actions that must be performed near the artifact to unlock a node.
+  - When a node is unlocked, its [bold]effect[/bold] will trigger, and the node becomes [bold][color=plum]Active[/color][/bold].
   - Each node has [bold]durability[/bold]: the number of times it can be manually activated after being unlocked.
-  - Higher nodes are harder to reach but give more points.
-
-  Unlocking all nodes provides no special bonus, but every node yields points.
+  - Higher nodes are harder to reach but give more [bold]research points[/bold].
+  - Unlocking all nodes provides no special bonus, but every node yields research points.
 
   ## Equipment
   <Box>
@@ -31,9 +31,9 @@
     <GuideEntityEmbed Entity="ComputerAnalysisConsole" Caption="Console"/>
     <GuideEntityEmbed Entity="NodeScanner" Caption="Node Scanner"/>
   </Box>
-  - [bold]Artifact Analyzer:[/bold] Scans artifacts, sending data to the Console.
-  - [bold]Analysis Console:[/bold] Displays and interacts with the node tree. Must be linked to an Analyzer with a multitool.
-  - [bold]Node Scanner:[/bold] Shows the ID of the node currently being activated and whether the artifact is ready to trigger.
+  - [bold]Artifact Analyzer:[/bold] Stationary device that scans artifacts, sending data to the Console.
+  - [bold]Analysis Console:[/bold] Stationary device that is used to display the node tree. Must be linked to an Analyzer with a multitool.
+  - [bold]Node Scanner:[/bold] Small hand-held device that can show the ID of the node currently being activated and whether the artifact is ready to trigger, letting scientist have minimal required knowledge for operating inside chamber near artifact and far without direct access to console.
 
   <Box>
     <GuideEntityEmbed Entity="CrateArtifactContainer" Caption="Artifact Container"/>
@@ -50,19 +50,22 @@
   ## Unlocking Nodes
   1. Select a node on the [bold]Analysis Console[/bold] to check its trigger and effect.
 
-  2. Perform its listed [bold]triggers[/bold] near the artifact, which will resonate with the message: [italic]"It begins to shift in strange ways..."[/italic]. The [bold]Node Scanner[/bold] will show if a specific node is being triggered.
+  2. Perform the [bold]triggers[/bold] listed in the Analysis Console. Some require direct interaction with the artifact, while others may only need the correct environment or a specific action performed nearby. When a trigger is successfully activated, the artifact will respond with the message: [italic]"It begins to shift in strange ways..."[/italic]. The [bold]Node Scanner[/bold] will then indicate which specific node was triggered.
 
-  3. Once all triggers are met, the artifact will trigger its effect with the message: [italic]"It slows down, visibly changed."[/italic] and the node will become [bold][color=green]Active[/color][/bold] on the Console and can be manually activated by interacting with the artifact.
+  3. Some nodes may require multiple triggers to be performed before they activate. Once all required triggers for a node are completed, the artifact will respond with the message: [italic]"It slows down, visibly changed."[/italic]. The node will then appear as [bold][color=plum]Active[/color][/bold] on the Console and can be manually activated by interacting with the artifact.
 
   Artifacts after having their first trigger met will have a window of 5 seconds to meet the remaining triggers, resetting every time a new trigger is met.
 
-  If an artifact's activation fails, it will stop resonating with the message: [italic]"It slows down before uneventfully stopping."[/italic]
+  If an artifact's activation fails, it will stop resonating with the message: [italic]"It slows down before uneventfully stopping."[/italic] After this, the artifact enters a cooldown period before it can be activated again.
 
-  Order of trigger activation [bold]does not matter[/bold], [italic]however[/italic], it might in relation to other nodes. If multiple nodes have the same trigger, you may need to start with a trigger not present in other nodes.
+  The order of trigger activation [bold]does not matter[/bold] for individual nodes. [italic]However[/italic], some triggers affect multiple nodes. As a rule of thumb, start with a trigger that is unique to the node you want to unlock.
+
+  Be aware that if you activate a trigger belonging to a different node during this unlocking phase, the target node cannot be unlocked until the artifact’s cooldown ends.
 
   [bold]Manual activation triggers all unlocked nodes at once and consumes durability.[/bold]
 
   ## Analysis Console Interface
+  Analysis console interface will display data for each node you select in tree, this data includes:
   - [bold]ID:[/bold] Unique identifier for use with the Node Scanner.
   - [bold]Class:[/bold] The layer name. Nodes on the same layer share it.
   - [bold]Status:[/bold]
@@ -72,7 +75,8 @@
   - [bold]Durability:[/bold] Number of manual activations available for that node.
   - [bold]Effect:[/bold] What happens when the node activates or is manually triggered.
   - [bold]Triggers:[/bold] Required actions to activate the node the first time.
-  - [bold]Server/Extraction:[/bold] Choose a research server and extract points from unlocked nodes.
+  - [bold]Server:[/bold] Choose the research server the extracted research points are sent to.
+  - [bold]Extract Points:[/bold] Retrieves research points from nodes that have been unlocked since the last extraction. Nodes already extracted will not yield additional points.
 
   ## Triggers
   Examples include:
