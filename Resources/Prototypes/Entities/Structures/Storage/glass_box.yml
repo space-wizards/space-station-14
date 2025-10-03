@@ -27,7 +27,7 @@
     delay: 4
 
 - type: entity
-  parent: BaseGlassBox
+  parent: [BaseGlassBox, BaseItemCabinetGlass]
   id: GlassBox
   name: glass box
   description: A sturdy showcase for an expensive exhibit.
@@ -36,14 +36,14 @@
   - type: Sprite
     layers:
     - state: base
+    - state: caplaser # TODO: Remove it after item scaling in cabinets is implemented.
+      map: ["enum.ItemCabinetVisuals.Layer"]
+      visible: false
     - state: glass
       map: ["enum.OpenableVisuals.Layer"]
     - state: locked
       shader: unshaded
       map: ["enum.LockVisualLayers.Lock"]
-    - state: caplaser # TODO: Remove it after item scaling in cabinets is implemented.
-      map: ["enum.ItemCabinetVisuals.Layer"]
-      visible: false
   - type: Fixtures
     fixtures:
       fix1:
