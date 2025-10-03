@@ -157,6 +157,12 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             return;
         // Cosmatic Drift Record System-end
 
+        var statusName = Loc.GetString("criminal-records-status-" + msg.Status.ToString().ToLower());
+        var statusHistory = reason != null
+            ? Loc.GetString("criminal-records-console-status-history-reason", ("status", statusName), ("reason", reason))
+            : Loc.GetString("criminal-records-console-status-history", ("status", statusName));
+        _criminalRecords.TryAddHistory(key.Value, statusHistory, officer);
+
         (string, object)[] args;
         if (reason != null)
             args = new (string, object)[] { ("name", name), ("officer", officer), ("reason", reason), ("job", jobName) };

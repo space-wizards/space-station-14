@@ -105,7 +105,7 @@
                     <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="10" SeparationOverride="8">
                         <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="5">
                             <Label Name="RecordEntryListLabel" Visible="False" Text="{Loc 'cd-character-records-viewer-security-permanent-label'}"/>
-                            <ItemList Name="RecordEntryList" HorizontalExpand="True" MinHeight="200" />
+                            <ItemList Name="RecordEntryList" HorizontalExpand="True" MinHeight="120" />
                             <BoxContainer Orientation="Horizontal">
                                 <Button Name="RecordEntryViewButton" Text="{Loc 'cd-character-records-viewer-view-entry'}"/>
                                 <!-- Admin console entry type selector -->
@@ -116,7 +116,7 @@
                         <BoxContainer Name="CurrentShiftContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" SeparationOverride="5" Visible="False">
                             <Label Text="{Loc 'cd-character-records-viewer-security-current-shift-label'}"/>
                             <Label Name="CurrentShiftEmpty" Text="{Loc 'cd-character-records-viewer-security-current-shift-empty'}" Visible="False" FontColorOverride="DarkGray" />
-                            <ScrollContainer VerticalExpand="True" MinHeight="220">
+                            <ScrollContainer VerticalExpand="True" MinHeight="120">
                                 <ItemList Name="CurrentShiftHistoryList" HorizontalExpand="True" VerticalExpand="True" />
                             </ScrollContainer>
                             <BoxContainer Orientation="Horizontal">
