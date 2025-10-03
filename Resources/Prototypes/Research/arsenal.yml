@@ -98,7 +98,6 @@
   - TelescopicShield
   - HoloprojectorSecurity
   - WeaponDisablerSMG
-  - WeaponEnergySMG # Addition for lizloose
 
 - type: technology
   id: ExplosiveTechnology
