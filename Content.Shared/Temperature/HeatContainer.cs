@@ -32,9 +32,9 @@ public partial struct HeatContainer : IRobustCloneable<HeatContainer>
     /// <summary>
     /// The current temperature of the container in Celsius.
     /// Ideal if you just need to read the temperature for UI.
-    /// Do not perform computations in Celsius, use Kelvin instead.
+    /// Do not perform computations in Celsius/set this value, use Kelvin instead.
     /// </summary>
-    [DataField, Access(Other = AccessPermissions.Read)]
+    [DataField]
     public float TemperatureC => TemperatureHelpers.KelvinToCelsius(Temperature);
 
     /// <summary>
