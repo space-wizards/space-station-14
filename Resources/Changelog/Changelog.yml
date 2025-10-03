@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: ScarKy0
   changes:
-  - message: Deliveries can now very rarely spawn as bomb-type! They grant A LOT of
-      spesos... at a price.
-    type: Add
-  id: 8519
-  time: '2025-05-18T08:57:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37069
-- author: ScarKy0
-  changes:
   - message: Aloxadone has been tweaked. The recipe has been altered to be simplier
       to make and the healing values have been increased.
     type: Tweak
@@ -3960,3 +3952,10 @@
   id: 9029
   time: '2025-10-03T20:33:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40687
+- author: NoreUhh
+  changes:
+  - message: The Syndicate Cyborg Martyr Module can now be used multiple times.
+    type: Tweak
+  id: 9030
+  time: '2025-10-03T23:35:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40224
