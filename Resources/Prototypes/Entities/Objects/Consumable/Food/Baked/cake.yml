@@ -28,6 +28,13 @@
   - type: SecretStash
     maxItemSize: "Normal"
     secretStashName: secret-stash-cake
+    blacklist:
+      components:
+      - SecretStash # Prevents being able to insert cakes inside eachother
+      - NukeDisk # Could confuse the Nukies if they don't know that cakes have a stash.
+      tags:
+      - QuantumSpinInverter # It will cause issues with the grinder...
+      - FakeNukeDisk # So you can't tell if the nuke disk is real or fake depending on if it can be inserted or not.
     damageEatenItemInside:
       types:
         Slash: 7.5
