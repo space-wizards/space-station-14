@@ -261,7 +261,7 @@
     - type: Tag
       tags:
       - Sheet
-      - ConstructionMaterials
+      - ConstructionMaterial
     - type: Material
     - type: PhysicalComposition
       materialComposition:
