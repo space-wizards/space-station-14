@@ -60,6 +60,9 @@
         reagents:
         - ReagentId: Gold
           Quantity: 10
+  - type: Tag
+    tags:
+    - ConstructionMaterial
 
 - type: entity
   parent: IngotGold
@@ -105,6 +108,9 @@
         reagents:
         - ReagentId: Silver
           Quantity: 10
+  - type: Tag
+    tags:
+    - ConstructionMaterial
 
 - type: entity
   parent: IngotSilver

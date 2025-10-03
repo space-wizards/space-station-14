@@ -63,6 +63,9 @@
     prototype: CarpetCard
     doAfter: 0.5
     removeOnInteract: true
+  - type: Tag
+    tags:
+    - ConstructionMaterial
 
 - type: entity
   parent: MaterialCardboard
