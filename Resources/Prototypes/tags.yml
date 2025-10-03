@@ -3,46 +3,46 @@
 ## A ##
 
 - type: Tag
-  id: AccessBreakerImmune
+  id: AccessBreakerImmune # This tag marks an entity as immune to emagging.
 
 - type: Tag
-  id: AirAlarm
+  id: AirAlarm # Used in tandem with AtmosAlarmableComponent
 
 - type: Tag
-  id: AirAlarmElectronics
+  id: AirAlarmElectronics # construction graph: AirAlarm
 
 - type: Tag
-  id: Airlock
+  id: Airlock # construction graph: Airlock
 
 - type: Tag
-  id: AirSensor
+  id: AirSensor # Used in tandem with AtmosAlarmableComponent
 
 - type: Tag
   id: AllowBiomeLoading # Entities with this tag will load terrain, even if a ghost.
 
 - type: Tag
-  id: AllowGhostShownByEvent
+  id: AllowGhostShownByEvent # Used by GhostSystem to show ghosts (usually at round end)
 
 - type: Tag
-  id: Ambrosia
+  id: Ambrosia # construction graph: flowerwreath
 
 - type: Tag
-  id: AnomalyHost
+  id: AnomalyHost # Whitelisting for BaseAnomalyInjector
 
 - type: Tag
-  id: AppraisalTool
+  id: AppraisalTool # Whitelisting for ClothingBeltUtility
 
 - type: Tag
-  id: Apron
+  id: Apron # Construction graph: scraparmor
 
 - type: Tag
-  id: Arrow
+  id: Arrow # Whitelisting for ClothingBeltQuiver
 
 - type: Tag
-  id: ArtifactFragment
+  id: ArtifactFragment # Whitelisting for OreBag, BountyArtifactFragment. Construction graph: Artifact
 
 - type: Tag
-  id: ATVKeys
+  id: ATVKeys # Unused
 
 ## B ##
 
