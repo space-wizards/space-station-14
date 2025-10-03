@@ -19,7 +19,7 @@
 
   Artifacts contain [bold]nodes[/bold] arranged in [bold]layers[/bold].
   - Unlocking a node unlocks connected nodes on upper layers.
-  - Each node have [bold]triggers[/bold], actions that must be performed near the artifact to unlock a node.
+  - Each node has [bold]triggers[/bold], actions that must be performed near the artifact to unlock a node.
   - When a node is unlocked, its [bold]effect[/bold] will trigger, and the node becomes [bold][color=plum]Active[/color][/bold].
   - Each node has [bold]durability[/bold]: the number of times it can be manually activated after being unlocked.
   - Higher nodes are harder to reach but give more [bold]research points[/bold].
@@ -54,7 +54,7 @@
 
   3. Some nodes may require multiple triggers to be performed before they activate. Once all required triggers for a node are completed, the artifact will respond with the message: [italic]"It slows down, visibly changed."[/italic]. The node will then appear as [bold][color=plum]Active[/color][/bold] on the Console and can be manually activated by interacting with the artifact.
 
-  Artifacts after having their first trigger met will have a window of 5 seconds to meet the remaining triggers, resetting every time a new trigger is met.
+  After an artifact’s first trigger is met, it enters an unlocking state during which remaining triggers must be performed. The initial unlocking window lasts a few seconds and resets each time a new trigger is activated. With each subsequent node unlocked, this window grows longer, giving more time to complete additional triggers.
 
   If an artifact's activation fails, it will stop resonating with the message: [italic]"It slows down before uneventfully stopping."[/italic] After this, the artifact enters a cooldown period before it can be activated again.
 
