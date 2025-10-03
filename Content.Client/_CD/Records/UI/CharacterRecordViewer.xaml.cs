@@ -493,10 +493,7 @@ public sealed partial class CharacterRecordViewer : FancyWindow
             {
                 CurrentShiftHistoryList.AddItem(FormatHistoryEntry(entry));
             }
-        }
-
-        CurrentShiftEmpty.Visible = criminalRecord == null || criminalRecord.History.Count == 0;
-        _lastShiftHistoryCount = criminalRecord?.History.Count;
+        }        _lastShiftHistoryCount = criminalRecord?.History.Count;
         UpdateHistoryButtons();
     }
 
@@ -594,3 +591,4 @@ public sealed partial class CharacterRecordViewer : FancyWindow
         }
     }
 }
+

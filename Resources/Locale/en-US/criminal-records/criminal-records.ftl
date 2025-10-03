@@ -30,6 +30,12 @@ criminal-records-no-history = This crewmember's record is spotless.
 criminal-records-add-history = Add
 criminal-records-delete-history = Delete
 
+## Status history
+
+criminal-records-console-status-history = { $status }
+criminal-records-console-status-history-reason = { $status }: { $reason }
+criminal-records-console-unspecified-reason = <unspecified reason>
+
 criminal-records-permission-denied = Permission denied
 
 ## Security channel notifications
@@ -53,10 +59,3 @@ criminal-records-dna-filter = DNA
 criminal-records-job-filter = Job
 criminal-records-species-filter = Species
 
-## Arrest auto history lines
-criminal-records-console-auto-history = ARRESTED: {$reason}
-criminal-records-console-unspecified-reason = <unspecified reason>
-
-## Status history
-criminal-records-console-status-history = STATUS CHANGED: { $status }
-criminal-records-console-status-history-reason = STATUS CHANGED: { $status } - { $reason }

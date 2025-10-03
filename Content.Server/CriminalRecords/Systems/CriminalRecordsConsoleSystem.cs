@@ -133,8 +133,8 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         // fallback exists if the player was not set to wanted beforehand
         if (msg.Status == SecurityStatus.Detained)
         {
-            var oldReason = record.Reason ?? Loc.GetString("criminal-records-console-unspecified-reason");
-            var history = Loc.GetString("criminal-records-console-auto-history", ("reason", oldReason));
+            var oldReason = string.IsNullOrWhiteSpace(record.Reason) ? null : record.Reason;
+            var history = FormatStatusHistory(SecurityStatus.Detained, oldReason);
             _criminalRecords.TryAddHistory(key.Value, history, officer);
         }
 
@@ -157,10 +157,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             return;
         // Cosmatic Drift Record System-end
 
-        var statusName = Loc.GetString("criminal-records-status-" + msg.Status.ToString().ToLower());
-        var statusHistory = reason != null
-            ? Loc.GetString("criminal-records-console-status-history-reason", ("status", statusName), ("reason", reason))
-            : Loc.GetString("criminal-records-console-status-history", ("status", statusName));
+        var statusHistory = FormatStatusHistory(msg.Status, reason);
         _criminalRecords.TryAddHistory(key.Value, statusHistory, officer);
 
         (string, object)[] args;
@@ -304,6 +301,16 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         key = new StationRecordKey(id, station);
         mob = user;
         return true;
+    }
+
+    private string FormatStatusHistory(SecurityStatus status, string? reason)
+    {
+        var statusName = Loc.GetString("criminal-records-status-" + status.ToString().ToLower());
+        var sanitizedReason = string.IsNullOrWhiteSpace(reason) ? null : reason.Trim();
+        if (sanitizedReason != null)
+            return Loc.GetString("criminal-records-console-status-history-reason", ("status", statusName), ("reason", sanitizedReason));
+
+        return Loc.GetString("criminal-records-console-status-history", ("status", statusName));
     }
 
     /// <summary>
