@@ -110,9 +110,12 @@
     currentTemperature: 310.15
   - type: Tag
     tags:
-      - CannotSuicide
-      - DoorBumpOpener
-      - FootstepSound
+    - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
+    - VimPilot
+    - SimpleMobStorage
+    - FootstepSound
   - type: NoSlip
   - type: Perishable #Ummmm the acid kills a lot of the bacteria or something
     molsPerSecondPerUnitMass: 0.0005
@@ -227,6 +230,11 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
+    - VimPilot
+    - SimpleMobStorage
+    - FootstepSound
 
 - type: entity
   name: ravager
@@ -423,8 +431,11 @@
       collection: FootstepSnake
   - type: Tag
     tags:
+    - CannotSuicide
     - DoorBumpOpener
-    - FootstepSound
+    - StunImmune
+    - VimPilot
+    - SimpleMobStorage
 
 - type: entity
   name: space adder
@@ -558,6 +569,10 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
+    - VimPilot
+    - FootstepSound
   - type: SolutionContainerManager # Being hit speeds you up so you can escape
     solutions:
       bite:
