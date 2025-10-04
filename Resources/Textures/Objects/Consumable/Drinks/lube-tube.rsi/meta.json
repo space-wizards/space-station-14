@@ -8,7 +8,7 @@
     "copyright": "Created by discord: brainfood#7460 / github: brainfood1183. Inhands by Tiniest Shark (Github)",
     "states": [
         {
-            "name": "icon"
+            "name": "icon_empty"
         },
         {
             "name": "icon_open"
@@ -17,22 +17,22 @@
             "name": "icon-front"
         },
         {
-            "name": "fill1"
+            "name": "fill-1"
         },
         {
-            "name": "fill2"
+            "name": "fill-2"
         },
         {
-            "name": "fill3"
+            "name": "fill-3"
         },
         {
-            "name": "fill4"
+            "name": "fill-4"
         },
         {
-            "name": "fill5"
+            "name": "fill-5"
         },
         {
-            "name": "fill6"
+            "name": "fill-6"
         },
         {
             "name": "inhand-left",
