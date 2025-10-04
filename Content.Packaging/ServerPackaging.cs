@@ -37,25 +37,9 @@ public static class ServerPackaging
         .Select(o => o.Rid)
         .ToList();
 
-    private static readonly List<string> ServerContentAssemblies = new()
-    {
-        "Content.Server.Database",
-        "Content.Server",
-        "Content.Shared",
-        "Content.Shared.Database",
-    };
-
-    private static readonly List<string> ServerExtraAssemblies = new()
-    {
-        // Python script had Npgsql. though we want Npgsql.dll as well soooo
-        "Npgsql",
-        "Microsoft",
-        "NetCord",
-    };
-
     private static readonly List<string> ServerNotExtraAssemblies = new()
     {
-        "Microsoft.CodeAnalysis",
+        "JetBrains.Annotations",
     };
 
     private static readonly HashSet<string> BinSkipFolders = new()
@@ -181,23 +165,13 @@ public static class ServerPackaging
 
         var inputPassCore = graph.InputCore;
         var inputPassResources = graph.InputResources;
-        var contentAssemblies = new List<string>(ServerContentAssemblies);
 
         // Additional assemblies that need to be copied such as EFCore.
         var sourcePath = Path.Combine(contentDir, "bin", "Content.Server");
 
-        // Should this be an asset pass?
-        // For future archaeologists I just want audio rework to work and need the audio pass so
-        // just porting this as is from python.
-        foreach (var fullPath in Directory.EnumerateFiles(sourcePath, "*.*", SearchOption.AllDirectories))
-        {
-            var fileName = Path.GetFileNameWithoutExtension(fullPath);
+        var deps = DepsHandler.Load(Path.Combine(sourcePath, "Content.Server.deps.json"));
 
-            if (!ServerNotExtraAssemblies.Any(o => fileName.StartsWith(o)) && ServerExtraAssemblies.Any(o => fileName.StartsWith(o)))
-            {
-                contentAssemblies.Add(fileName);
-            }
-        }
+        var contentAssemblies = GetContentAssemblyNamesToCopy(deps);
 
         await RobustSharedPackaging.DoResourceCopy(
             Path.Combine("RobustToolbox", "bin", "Server",
@@ -227,6 +201,22 @@ public static class ServerPackaging
 
         inputPassCore.InjectFinished();
         inputPassResources.InjectFinished();
+    }
+
+    // This returns both content assemblies (e.g. Content.Server.dll) and dependencies (e.g. Npgsql)
+    private static IEnumerable<string> GetContentAssemblyNamesToCopy(DepsHandler deps)
+    {
+        var depsContent = deps.RecursiveGetLibrariesFrom("Content.Server").SelectMany(GetLibraryNames);
+        var depsRobust = deps.RecursiveGetLibrariesFrom("Robust.Server").SelectMany(GetLibraryNames);
+
+        var depsContentExclusive = depsContent.Except(depsRobust).ToHashSet();
+
+        // Remove .dll suffix and apply filtering.
+        var names = depsContentExclusive.Select(p => p[..^4]).Where(p => !ServerNotExtraAssemblies.Any(p.StartsWith));
+
+        return names;
+
+        IEnumerable<string> GetLibraryNames(string library) => deps.Libraries[library].GetDllNames();
     }
 
     private readonly record struct PlatformReg(string Rid, string TargetOs, bool BuildByDefault);
