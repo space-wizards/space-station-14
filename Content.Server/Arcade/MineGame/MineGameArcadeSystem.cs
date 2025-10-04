@@ -52,19 +52,22 @@ public sealed partial class MineGameArcadeSystem : EntitySystem
     /// and other metadata like game time/status/mine count.
     /// </summary>
     /// <param name="component">The arcade component hosting the game.</param>
-    /// <param name="boardSize">The size of the mine game board.</param>
-    /// <param name="mineCount">The number of mines to put in the mine game.</param>
+    /// <param name="boardSettings">The settings (board width/height/mine count) for the new board.</param>
     /// <returns>An initialized mine game state.</returns>
-    private MineGame SetupMineGame(MineGameArcadeComponent component, Vector2i boardSize, int mineCount)
+    private MineGame SetupMineGame(MineGameArcadeComponent component, MineGameBoardSettings boardSettings)
     {
         // Validate what are potentially user-inputted numbers
-        boardSize = Vector2i.ComponentMin(Vector2i.ComponentMax(boardSize, component.MinBoardSize), component.MaxBoardSize);
-        return new(
-            boardSize,
-            Math.Clamp(mineCount, component.MinMineCount, boardSize.X * boardSize.Y),
-            component.SafeStartRadius
+        var clampedBoardSize = Vector2i.ComponentMin(Vector2i.ComponentMax(boardSettings.BoardSize, component.MinBoardSize),
+            component.MaxBoardSize);
+        var validatedBoardSettings = new MineGameBoardSettings(
+            clampedBoardSize,
+            Math.Clamp(boardSettings.MineCount, component.MinMineCount, clampedBoardSize.X * clampedBoardSize.Y)
         );
 
+        return new(
+            validatedBoardSettings,
+            component.SafeStartRadius
+        );
     }
 
     private void OnMineGameRequestDataMessage(EntityUid uid, MineGameArcadeComponent component, MineGameRequestDataMessage msg)
@@ -76,13 +79,14 @@ public sealed partial class MineGameArcadeSystem : EntitySystem
 
     private void OnMineGameRequestNewBoardMessage(EntityUid uid, MineGameArcadeComponent component, MineGameRequestNewBoardMessage msg)
     {
-        component.Game = SetupMineGame(component, msg.Settings.BoardSize, msg.Settings.MineCount);
+        component.Game = SetupMineGame(component, msg.Settings);
         component.Game.UpdateUi(uid, null);
     }
 
     private void OnAfterUIOpen(EntityUid uid, MineGameArcadeComponent component, AfterActivatableUIOpenEvent args)
     {
-        component.Game ??= SetupMineGame(component, component.MinBoardSize, component.MinBoardSize.X * component.MinBoardSize.Y / 8);
+        component.Game ??= SetupMineGame(component,
+            new(component.MinBoardSize, component.MinBoardSize.X * component.MinBoardSize.Y / 8));
         component.Game.UpdateUi(uid, null);
     }
 

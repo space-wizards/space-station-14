@@ -13,31 +13,54 @@ public sealed partial class MineGame
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    private readonly UserInterfaceSystem _uiSystem = default!;
+    private readonly UserInterfaceSystem _uiSystem;
 
+    /// <summary>
+    /// Player-configurable board settings for this game specifically (XY dimensions, mine count)
+    /// </summary>
     [ViewVariables]
-    private Vector2i _boardSize;
+    private readonly MineGameBoardSettings _boardSettings;
 
+    /// <summary>
+    /// "Radius" of safe starting area for the mine game. Safe square of side length _safeStartRadius*2-1.
+    /// (Set <= 0 for no safe starting area) (sourced from ArcadeComponent)
+    /// </summary>
     [ViewVariables]
-    private int _mineCount;
+    private readonly int _safeStartRadius;
 
+    /// <summary>
+    /// Counter tracking total number of flags currently on the board (can be recomputed directly from _tileVisState)
+    /// </summary>
     [ViewVariables]
     private int _flagCount;
 
+    /// <summary>
+    /// Counter tracking total number of tiles cleared from the board (can be recomputed directly from _tileVisState)
+    /// </summary>
     [ViewVariables]
     private int _clearedCount;
 
-    [ViewVariables]
-    private int _safeStartRadius;
-
+    /// <summary>
+    /// Whether the board was populated with mines; false suggests the game hasn't yet started by an initial tile clear.
+    /// </summary>
+    /// <remarks>
+    /// It is necessary to generate mines only after the initial clear because of the option for a safe-start
+    /// tile radius, preventing mines from spawning on the first clear where the player has zero mine information.
+    /// </remarks>
     [ViewVariables]
     private bool _minesGenerated = false;
 
+    /// <summary>
+    /// Time either referencing the first clear (when the game is officially started), or completion time if game ended.
+    /// </summary>
     [ViewVariables]
     private TimeSpan _referenceTime;
 
-    private MineGameTileVisState[,] _tileVisState;
-    private bool[,] _tileMined;
+    private readonly MineGameTileVisState[,] _tileVisState;
+    /// <summary>
+    /// Lookup for whether tile at any given coordinates has a mine. See _minesGenerated field also.
+    /// </summary>
+    private readonly bool[,] _tileMined;
 
     [ViewVariables]
     public bool GameWon = false;
@@ -45,16 +68,15 @@ public sealed partial class MineGame
     public bool GameLost = false;
 
 
-    public MineGame(Vector2i boardSize, int mineCount, int safeStartRadius)
+    public MineGame(MineGameBoardSettings boardSettings, int safeStartRadius)
     {
         IoCManager.InjectDependencies(this);
         _uiSystem = _entityManager.System<UserInterfaceSystem>();
 
-        _boardSize = boardSize;
-        _mineCount = mineCount;
+        _boardSettings = boardSettings;
         _safeStartRadius = safeStartRadius;
-        _tileVisState = new MineGameTileVisState[_boardSize.X, _boardSize.Y];
-        _tileMined = new bool[_boardSize.X, _boardSize.Y];
+        _tileVisState = new MineGameTileVisState[_boardSettings.BoardSize.X, _boardSettings.BoardSize.Y];
+        _tileMined = new bool[_boardSettings.BoardSize.X, _boardSettings.BoardSize.Y];
     }
 
     /// <summary>
@@ -65,14 +87,14 @@ public sealed partial class MineGame
         int safeSquareLength = Math.Max(_safeStartRadius * 2 - 1, 0);
         int safeTileCount = safeSquareLength * safeSquareLength;
 
-        bool canGenSafeArea = _mineCount <= (_boardSize.X * _boardSize.Y - safeTileCount);
+        bool canGenSafeArea = _boardSettings.MineCount <= (_boardSettings.BoardSize.X * _boardSettings.BoardSize.Y - safeTileCount);
         // if the mine count is explicitly set higher than would normally be allowed by the
         // safe area... just let it happen w/out safe area; Don't play a 10x10 board with 100 mines.
 
         List<Vector2i> availablePositions = new();
-        for (var y = 0; y < _boardSize.Y; ++y)
+        for (var y = 0; y < _boardSettings.BoardSize.Y; ++y)
         {
-            for (var x = 0; x < _boardSize.X; ++x)
+            for (var x = 0; x < _boardSettings.BoardSize.X; ++x)
             {
                 var pos = new Vector2i(x, y);
                 if (canGenSafeArea)
@@ -86,7 +108,7 @@ public sealed partial class MineGame
                 availablePositions.Add(pos);
             }
         }
-        var minePositions = _random.GetItems(availablePositions, _mineCount, allowDuplicates: false);
+        var minePositions = _random.GetItems(availablePositions, _boardSettings.MineCount, allowDuplicates: false);
 
         foreach (Vector2i minePos in minePositions)
         {
@@ -103,8 +125,8 @@ public sealed partial class MineGame
     private List<Vector2i> GetNeighborsOfPos(Vector2i pos)
     {
         List<Vector2i> neighborPositions = new();
-        int ySt = Math.Max(pos.Y - 1, 0), yEn = Math.Min(pos.Y + 1, _boardSize.Y - 1);
-        int xSt = Math.Max(pos.X - 1, 0), xEn = Math.Min(pos.X + 1, _boardSize.X - 1);
+        int ySt = Math.Max(pos.Y - 1, 0), yEn = Math.Min(pos.Y + 1, _boardSettings.BoardSize.Y - 1);
+        int xSt = Math.Max(pos.X - 1, 0), xEn = Math.Min(pos.X + 1, _boardSettings.BoardSize.X - 1);
         for (var y = ySt; y <= yEn; ++y)
             for (var x = xSt; x <= xEn; ++x)
                 neighborPositions.Add(new Vector2i(x, y));
@@ -144,11 +166,11 @@ public sealed partial class MineGame
     /// </summary>
     private void WinCheck(ref MineGameTileVisState[,] changedTileVisStates)
     {
-        if (_clearedCount != _boardSize.X * _boardSize.Y - _mineCount)
+        if (_clearedCount != _boardSettings.BoardSize.X * _boardSettings.BoardSize.Y - _boardSettings.MineCount)
             return;
         // Finish flagging all the mines
-        for (var y = 0; y < _boardSize.Y; ++y)
-            for (var x = 0; x < _boardSize.X; ++x)
+        for (var y = 0; y < _boardSettings.BoardSize.Y; ++y)
+            for (var x = 0; x < _boardSettings.BoardSize.X; ++x)
                 if (_tileMined[x, y])
                 {
                     _tileVisState[x, y] = MineGameTileVisState.Flagged;
@@ -172,9 +194,12 @@ public sealed partial class MineGame
 
         // Used for sending 'deltas' to clients; expressly for the purpose of allowing clients to remember local
         // 'predicted' states in some circumstances. Could be done better.
-        MineGameTileVisState[,] changedTileVisStates = new MineGameTileVisState[_boardSize.X, _boardSize.Y];
-        for (int y = 0; y < _boardSize.Y; ++y)
-            for (int x = 0; x < _boardSize.X; ++x)
+        MineGameTileVisState[,] changedTileVisStates = new MineGameTileVisState[
+            _boardSettings.BoardSize.X,
+            _boardSettings.BoardSize.Y
+        ];
+        for (int y = 0; y < _boardSettings.BoardSize.Y; ++y)
+            for (int x = 0; x < _boardSettings.BoardSize.X; ++x)
                 changedTileVisStates[x, y] = MineGameTileVisState.None;
 
         switch (action.ActionType)
@@ -223,9 +248,9 @@ public sealed partial class MineGame
                     _referenceTime = _gameTiming.CurTime.Subtract(_referenceTime);
 
                     // Show all remaining mines on the board
-                    for (var y = 0; y < _boardSize.Y; ++y)
+                    for (var y = 0; y < _boardSettings.BoardSize.Y; ++y)
                     {
-                        for (var x = 0; x < _boardSize.X; ++x)
+                        for (var x = 0; x < _boardSettings.BoardSize.X; ++x)
                         {
                             if (_tileMined[x, y])
                             {

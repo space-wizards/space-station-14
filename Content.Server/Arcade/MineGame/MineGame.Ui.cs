@@ -19,14 +19,14 @@ public sealed partial class MineGame
     /// <returns>A mine game board update message.</returns>
     public MineGameBoardUpdateMessage GenerateBoardUpdateMessage(MineGameTileVisState[,]? updatedTiles = null)
     {
-        var tileStates = new MineGameTileVisState[_boardSize.X * _boardSize.Y];
+        var tileStates = new MineGameTileVisState[_boardSettings.BoardSize.X * _boardSettings.BoardSize.Y];
         var readFrom = updatedTiles ?? _tileVisState; // Send entire board if we aren't sending a specific update set
 
-        for (var y = 0; y < _boardSize.Y; ++y)
-            for (var x = 0; x < _boardSize.X; ++x)
-                tileStates[y * _boardSize.X + x] = readFrom[x, y];
+        for (var y = 0; y < _boardSettings.BoardSize.Y; ++y)
+            for (var x = 0; x < _boardSettings.BoardSize.X; ++x)
+                tileStates[y * _boardSettings.BoardSize.X + x] = readFrom[x, y];
 
-        MineGameMetadata metadata = new(_referenceTime, _minesGenerated && !(GameWon || GameLost), _mineCount - _flagCount);
-        return new(_boardSize.X, tileStates, metadata);
+        MineGameMetadata metadata = new(_referenceTime, _minesGenerated && !(GameWon || GameLost), _boardSettings.MineCount - _flagCount);
+        return new(_boardSettings.BoardSize.X, tileStates, metadata);
     }
 }
