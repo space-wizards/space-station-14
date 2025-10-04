@@ -272,17 +272,20 @@
   - type: Clothing
     sprite: Clothing/Belt/medical.rsi
   - type: Storage
+    grid:
+    - 0,0,5,1
     whitelist:
       tags:
         - Wrench
         - Bottle
+        - Vial
         - Spray
         - Brutepack
         - Bloodpack
         - Gauze
         - Ointment
-        - CigPack
         - PillCanister
+        - CigPack
         - Radio
         - DiscreteHealthAnalyzer
         - SurgeryTool
@@ -337,6 +340,10 @@
     sprite: Clothing/Belt/emt.rsi
   - type: Clothing
     sprite: Clothing/Belt/emt.rsi
+  - type: Storage
+    grid:
+    - 0,0,7,1
+
 
 - type: entity
   parent: ClothingBeltStorageBase

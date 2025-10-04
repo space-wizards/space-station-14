@@ -572,8 +572,6 @@
     solutions:
       food:
         maxVol: 20
-  - type: ExplosionResistance
-    damageCoefficient: 0.025 # survives conventional explosives but not minibombs and nukes
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -600,7 +598,7 @@
   name: pill canister
   id: PillCanister
   parent: BaseStorageItem
-  description: Holds up to 10 pills.
+  description: Holds up to 15 pills.
   components:
   - type: Item
     size: Tiny
@@ -613,7 +611,7 @@
       - PillCanister
   - type: Storage
     grid:
-    - 0,0,4,1
+    - 0,0,4,2
     quickInsert: true
     areaInsert: true
     areaInsertRadius: 1
@@ -623,3 +621,46 @@
       tags:
       - Pill
   - type: Dumpable
+
+- type: entity
+  name: medical pouch
+  id: MedicalPouch
+  parent: [ PillCanister, BaseBagOpenClose ]
+  description: Holds up to 12 tiny medical items.
+  components:
+  - type: Item
+    size: Small
+    sprite: Objects/Specific/Chemistry/medical_pouch.rsi
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/medical_pouch.rsi
+    layers:
+    - state: closed
+      map: ["closeLayer"]
+    - state: open
+      map: ["openLayer"]
+      visible: false
+  - type: Storage
+    grid:
+    - 0,0,3,2
+    whitelist:
+      tags:
+      - Pill
+      - Bottle
+      - Vial
+      - Syringe
+      components:
+      - Hypospray
+
+- type: entity
+  name: corpsman's medical pouch
+  id: CorpsmanMedicalPouch
+  parent: [ MedicalPouch, BaseSyndicateContraband]
+  description: Holds up to 15 tiny medical items.
+  components:
+  - type: Item
+    sprite: Objects/Specific/Chemistry/corpsman_medical_pouch.rsi
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/corpsman_medical_pouch.rsi
+  - type: Storage
+    grid:
+    - 0,0,4,2 #syndie stuffs always bigger
