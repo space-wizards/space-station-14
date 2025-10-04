@@ -56,6 +56,10 @@
     guides:
     - Janitorial
   - type: DnaSubstanceTrace
+  - type: MobilityAid
+    isMakeshift: true
+    effectiveness: 0.7
+    tripChance: 0.2
 
 - type: entity
   parent: BaseItem
