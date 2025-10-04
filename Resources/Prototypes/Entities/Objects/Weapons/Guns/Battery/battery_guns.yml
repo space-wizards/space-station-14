@@ -852,13 +852,23 @@
     fireModes:
     - proto: BulletLaserSpread
       fireCost: 150
-      color: "#5fcde4"
+      color: "#ff0006"
     - proto: BulletLaserSpreadNarrow
       fireCost: 200
-      color: "#5fcde4"
+      color: "#ff9d00"
     - proto: BulletDisablerSmgSpread
       fireCost: 120
-      color: "#ff0006"
+      color: "#5fcde4"
+    inhandVisuals:
+      left:
+      - state: energy-inhand-left-color
+      right:
+      - state: energy-inhand-right-color
+    wieldedInhandVisuals:
+      left:
+      - state: wielded-inhand-left-color
+      right:
+      - state: wielded-inhand-right-color
     clothingVisuals:
       back:
       - state: equipped-BACKPACK-color
