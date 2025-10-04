@@ -17,6 +17,7 @@
           type: [ Human, Animal, Rat, Plant ]
       # Convert Oxygen into CO2.
       - !type:ModifyLungGas
+        scaling: true
         conditions:
         - !type:MetabolizerType
           type: [ Vox ]
@@ -28,7 +29,7 @@
         conditions:
         - !type:MetabolizerType
           type: [ Vox ]
-        scaleByQuantity: true
+        scaling: true
         ignoreResistances: true
         damage:
           types:
@@ -50,6 +51,7 @@
           type: [ Human, Animal, Rat, Plant ]
       # Convert Oxygen into CO2.
       - !type:ModifyLungGas
+        scaling: true
         conditions:
         - !type:MetabolizerType
           type: [ Vox ]
@@ -61,7 +63,7 @@
         conditions:
         - !type:MetabolizerType
           type: [ Vox ]
-        scaleByQuantity: true
+        scaling: true
         ignoreResistances: true
         damage:
           types:
@@ -101,7 +103,7 @@
     Gas:
       effects:
       - !type:HealthChange
-        scaleByQuantity: true
+        scaling: true
         ignoreResistances: true
         damage:
           types:
@@ -147,7 +149,7 @@
     Gas:
       effects:
       - !type:HealthChange
-        scaleByQuantity: true
+        scaling: true
         ignoreResistances: true
         damage:
           types:
@@ -180,7 +182,7 @@
         - !type:MetabolizerType
           type: [ Plant, Vox ]
           inverted: true
-        scaleByQuantity: true
+        scaling: true
         ignoreResistances: true
         damage:
           types:
@@ -208,7 +210,7 @@
           inverted: true
         # Don't want people to get toxin damage from the gas they just
         # exhaled, right?
-        scaleByQuantity: true
+        scaling: true
         ignoreResistances: true
         damage:
           types:
@@ -250,6 +252,7 @@
           type: [ Vox, Slime ]
       # Converts Nitrogen into Ammonia
       - !type:ModifyLungGas
+        scaling: true
         conditions:
         - !type:MetabolizerType
           type: [ Vox ]
@@ -257,6 +260,7 @@
           Ammonia: 1.0
           Nitrogen: -1.0
       - !type:ModifyLungGas
+        scaling: true
         conditions:
         - !type:MetabolizerType
           type: [ Slime ]
@@ -355,7 +359,7 @@
     Narcotic:
       effects:
       - !type:HealthChange
-        scaleByQuantity: true
+        scaling: true
         ignoreResistances: true
         damage:
           types:
@@ -382,7 +386,7 @@
       effects:
       - !type:HealthChange
         minScale: 1
-        scaleByQuantity: true
+        scaling: true
         ignoreResistances: true
         damage:
           types:

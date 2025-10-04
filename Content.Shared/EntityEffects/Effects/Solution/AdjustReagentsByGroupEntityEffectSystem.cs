@@ -6,7 +6,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Solution;
 
-// TODO: Metabolism Groups suck and also I'm not even sure if this is even *used* so it should be removed either now or in the future.
 public sealed partial class AdjustReagentsByGroupEntityEffectSystem : EntityEffectSystem<SolutionComponent, AdjustReagentsByGroup>
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;

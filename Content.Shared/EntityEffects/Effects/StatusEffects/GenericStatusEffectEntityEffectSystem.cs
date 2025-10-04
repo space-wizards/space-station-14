@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.StatusEffects;
 
-// TODO: Old status is obsolete, this is here cause not everything has been moved over yet.
+[Obsolete("Use ModifyStatusEffect instead")]
 public sealed partial class GenericStatusEffectEntityEffectSystem : EntityEffectSystem<MetaDataComponent, GenericStatusEffect>
 {
     [Dependency] private readonly StatusEffectsSystem _status = default!;

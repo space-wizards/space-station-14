@@ -75,7 +75,7 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<PendingZombieComponent, MapInitEvent>(OnPendingMapInit);
             SubscribeLocalEvent<PendingZombieComponent, BeforeRemoveAnomalyOnDeathEvent>(OnBeforeRemoveAnomalyOnDeath);
 
-            SubscribeLocalEvent<IncurableZombieComponent, MapInitEvent>(OnPendingMapInit);
+            SubscribeLocalEvent<Shared.Zombies.IncurableZombieComponent, MapInitEvent>(OnPendingMapInit);
 
             SubscribeLocalEvent<ZombifyOnDeathComponent, MobStateChangedEvent>(OnDamageChanged);
         }
@@ -87,7 +87,7 @@ namespace Content.Server.Zombies
             args.Cancelled = true;
         }
 
-        private void OnPendingMapInit(EntityUid uid, IncurableZombieComponent component, MapInitEvent args)
+        private void OnPendingMapInit(EntityUid uid, Shared.Zombies.IncurableZombieComponent component, MapInitEvent args)
         {
             _actions.AddAction(uid, ref component.Action, component.ZombifySelfActionPrototype);
             _faction.AddFaction(uid, Faction);

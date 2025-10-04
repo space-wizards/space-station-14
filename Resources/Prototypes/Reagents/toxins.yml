@@ -145,7 +145,7 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaleByQuantity: true
+        scaling: true
         ignoreResistances: false
         damage:
           types:
@@ -184,7 +184,7 @@
       - !type:SatiateThirst
         factor: -1.5
       - !type:HealthChange
-        scaleByQuantity: true
+        scaling: true
         ignoreResistances: true
         damage:
           types:
@@ -207,7 +207,7 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaleByQuantity: true
+        scaling: true
         ignoreResistances: false
         damage:
           types:
@@ -257,7 +257,7 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaleByQuantity: true
+        scaling: true
         ignoreResistances: false
         damage:
           types:

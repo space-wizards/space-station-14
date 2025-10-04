@@ -8,11 +8,8 @@ public sealed partial class VomitEntityEffectSystem : EntityEffectSystem<MetaDat
 
     protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<Vomit> args)
     {
-        if (args.Scale < 1f)
-            return;
-
         // TODO: Need vomiting in shared...
-        //_vomit.Vomit(entity.Owner, args.Effect.ThirstAmount, args.Effect.HungerAmount);
+        //_vomit.Vomit(entity.Owner, args.Effect.ThirstAmount * args.Scale, args.Effect.HungerAmount * args.Scale);
     }
 }
 

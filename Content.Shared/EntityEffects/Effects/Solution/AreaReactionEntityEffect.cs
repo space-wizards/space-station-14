@@ -11,7 +11,6 @@ public sealed partial class AreaReactionEffect : EntityEffectBase<AreaReactionEf
     /// </summary>
     [DataField("duration")] public float Duration = 10;
 
-    // TODO: WE MAY BE ABLE TO REMOVE THIS AND JUST PASS SCALE PRECALCULATED???
     /// <summary>
     /// How big of a reaction scale we need for 1 smoke entity.
     /// </summary>

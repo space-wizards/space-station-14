@@ -150,7 +150,8 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         {
             switch (effect)
             {
-                // TODO: Kill this hardcoded cringe!
+                // TODO: Rather than this, ReactionAttempt should allow systems to remove effects from the list before the reaction.
+                // TODO: I think there's a PR up on the repo for this and if there isn't I'll make one -Princess
                 case EntityEffects.Effects.EntitySpawning.SpawnEntity: // Prevent entities from spawning in the bloodstream
                 case AreaReactionEffect: // No spontaneous smoke or foam leaking out of blood vessels.
                     args.Cancelled = true;

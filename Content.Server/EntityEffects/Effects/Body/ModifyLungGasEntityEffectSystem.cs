@@ -7,8 +7,7 @@ namespace Content.Server.EntityEffects.Effects.Body;
 
 public sealed partial class ModifyLungGasEntityEffectSystem : EntityEffectSystem<LungComponent, ModifyLungGas>
 {
-    // TODO: I hate it here...
-    // TODO: This currently doesn't work don't forget to fix it!
+    // TODO: This shouldn't be an entity effect, gasses should just metabolize and make a byproduct by default...
     protected override void Effect(Entity<LungComponent> entity, ref EntityEffectEvent<ModifyLungGas> args)
     {
         var amount = args.Scale;

@@ -87,10 +87,10 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaleByQuantity: true
+        scaling: true
         damage:
           types:
-            Heat: 0.1
+            Heat: 0.05
       - !type:PopupMessage
         type: Local
         visualType: Large

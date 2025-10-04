@@ -24,5 +24,5 @@ public sealed partial class ReduceRotting : EntityEffectBase<ReduceRotting>
     protected override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-reduce-rotting",
             ("chance", Probability),
-            ("time", Seconds));
+            ("time", Seconds.TotalSeconds));
 }

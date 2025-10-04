@@ -1,9 +1,11 @@
-﻿using Robust.Shared.Random;
+﻿using Robust.Shared.Network;
+using Robust.Shared.Random;
 
 namespace Content.Shared.EntityEffects.Effects.Transform;
 
 public sealed partial class GlowEntityEffectSystem : EntityEffectSystem<MetaDataComponent, Glow>
 {
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedPointLightSystem _lightSystem = default!;
 
@@ -11,10 +13,11 @@ public sealed partial class GlowEntityEffectSystem : EntityEffectSystem<MetaData
     {
         var color = args.Effect.Color;
 
-        // TODO: This will mispredict on client hard. May want to use the workaround...
         if (color == Color.Black)
         {
-            color = _random.Pick(Colors);
+            // TODO: When we get proper predicted RNG remove this check...
+            if (_net.IsServer)
+                color = _random.Pick(Colors);
         }
 
         var light = _lightSystem.EnsureLight(entity);

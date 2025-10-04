@@ -453,7 +453,7 @@
     Gas:
       effects:
       - !type:HealthChange
-        scaleByQuantity: true
+        scaling: true
         ignoreResistances: true
         conditions:
         - !type:MetabolizerType

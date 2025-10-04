@@ -1,6 +1,7 @@
 using Content.Server.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Organ;
+using Content.Shared.Body.Prototypes;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
@@ -10,6 +11,8 @@ using Content.Shared.EntityConditions;
 using Content.Shared.EntityConditions.Conditions;
 using Content.Shared.EntityConditions.Conditions.Body;
 using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Effects.Body;
+using Content.Shared.EntityEffects.Effects.Solution;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -34,6 +37,7 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
 
     private EntityQuery<OrganComponent> _organQuery;
     private EntityQuery<SolutionContainerManagerComponent> _solutionQuery;
+    private ProtoId<MetabolismGroupPrototype> _gas = "Gas";
 
     public override void Initialize()
     {
@@ -178,7 +182,12 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
                 // Remove $rate, as long as there's enough reagent there to actually remove that much
                 mostToRemove = FixedPoint2.Clamp(rate, 0, quantity);
 
-                var scale = (float) (mostToRemove / entry.MetabolismRate);
+                var scale = (float) mostToRemove;
+
+                // TODO: This is a very stupid workaround to lungs heavily relying on scale = reagent quantity. Needs lung and metabolism refactors to remove.
+                // TODO: Lungs just need to have their scale be equal to the mols consumed, scale needs to be not hardcoded either and configurable per metabolizer...
+                if (group.Id != _gas)
+                    scale /= (float) entry.MetabolismRate;
 
                 // if it's possible for them to be dead, and they are,
                 // then we shouldn't process any effects, but should probably
@@ -198,40 +207,28 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
                         continue;
 
                     // See if conditions apply
-                    if (effect.Conditions == null || CanMetabolizeEffect(effect.Conditions))
-                    {
-                        _entityEffects.ApplyEffect(ent, effect, scale);
-                    }
+                    if (effect.Conditions != null && !CanMetabolizeEffect(actualEntity, ent, soln.Value, effect.Conditions))
+                        continue;
+
+                    ApplyEffect(effect);
 
                 }
 
-                // This allows us to check certain conditions on organs themselves!
-                bool CanMetabolizeEffect(EntityCondition[] conditions)
+                // TODO: We should have to do this with metabolism. ReagentEffect struct needs refactoring and so does metabolism!
+                void ApplyEffect(EntityEffect effect)
                 {
-                    foreach (var condition in conditions)
+                    switch (effect)
                     {
-                        switch (condition)
-                        {
-                            // Need specific handling of specific conditions since Metabolism is funny like that.
-                            // TODO: MetabolizerTypes should be handled well before this stage by metabolism itself.
-                            case MetabolizerType:
-                                if (_entityConditions.TryCondition(ent, condition))
-                                    continue;
-                                break;
-                            case ReagentThreshold:
-                                if (_entityConditions.TryCondition(soln.Value, condition))
-                                    continue;
-                                break;
-                            default:
-                                if (_entityConditions.TryCondition(actualEntity, condition))
-                                    continue;
-                                break;
-                        }
-
-                        return false;
+                        case ModifyLungGas:
+                            _entityEffects.ApplyEffect(ent, effect, scale);
+                            break;
+                        case AdjustReagent:
+                            _entityEffects.ApplyEffect(soln.Value, effect, scale);
+                            break;
+                        default:
+                            _entityEffects.ApplyEffect(actualEntity, effect, scale);
+                            break;
                     }
-
-                    return true;
                 }
             }
 
@@ -246,6 +243,43 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
         }
 
         _solutionContainerSystem.UpdateChemicals(soln.Value);
+    }
+
+    /// <summary>
+    /// Public API to check if a certain metabolism effect can be applied to an entity.
+    /// TODO: With metabolism refactor make this logic smarter and unhardcode the old hardcoding entity effects used to have for metabolism!
+    /// </summary>
+    /// <param name="body">The body metabolizing the effects</param>
+    /// <param name="organ">The organ doing the metabolizing</param>
+    /// <param name="solution">The solution we are metabolizing from</param>
+    /// <param name="conditions">The conditions that need to be met to metabolize</param>
+    /// <returns>True if we can metabolize! False if we cannot!</returns>
+    public bool CanMetabolizeEffect(EntityUid body, EntityUid organ, Entity<SolutionComponent> solution, EntityCondition[] conditions)
+    {
+        foreach (var condition in conditions)
+        {
+            switch (condition)
+            {
+                // Need specific handling of specific conditions since Metabolism is funny like that.
+                // TODO: MetabolizerTypes should be handled well before this stage by metabolism itself.
+                case MetabolizerType:
+                    if (_entityConditions.TryCondition(organ, condition))
+                        continue;
+                    break;
+                case ReagentThreshold:
+                    if (_entityConditions.TryCondition(solution, condition))
+                        continue;
+                    break;
+                default:
+                    if (_entityConditions.TryCondition(body, condition))
+                        continue;
+                    break;
+            }
+
+            return false;
+        }
+
+        return true;
     }
 }
 

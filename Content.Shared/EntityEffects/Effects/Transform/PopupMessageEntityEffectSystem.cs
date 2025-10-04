@@ -1,16 +1,21 @@
 ﻿using Content.Shared.Popups;
+using Robust.Shared.Network;
 using Robust.Shared.Random;
 
 namespace Content.Shared.EntityEffects.Effects.Transform;
 
 public sealed partial class PopupMessageEntityEffectSystem : EntityEffectSystem<TransformComponent, PopupMessage>
 {
-    // TODO: This will mispredict hard on client maybe use random workaround.
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     protected override void Effect(Entity<TransformComponent> entity, ref EntityEffectEvent<PopupMessage> args)
     {
+        // TODO: When we get proper random prediction remove this check.
+        if (_net.IsClient)
+            return;
+
         var msg = _random.Pick(args.Effect.Messages);
 
         // TODO: A way to pass arguments to this that aren't hardcoded into the effect.

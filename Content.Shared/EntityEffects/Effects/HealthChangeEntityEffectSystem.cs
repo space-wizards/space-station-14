@@ -17,8 +17,7 @@ public sealed partial class HealthChangeEntityEffectSystem : EntityEffectSystem<
     {
         var damageSpec = new DamageSpecifier(args.Effect.Damage);
 
-        // TODO: This incorrectly scaled parabolically before, so we need adjust every effect that has this set to true.
-        damageSpec *= args.Effect.ScaleByQuantity ? args.Scale : float.Min(1f, args.Scale);
+        damageSpec *= args.Scale;
 
         _damageable.TryChangeDamage(
                 entity,
@@ -35,14 +34,6 @@ public sealed partial class HealthChange : EntityEffectBase<HealthChange>
     /// </summary>
     [DataField(required: true)]
     public DamageSpecifier Damage = default!;
-
-    /// <summary>
-    ///     Should this effect scale the damage by the amount of chemical in the solution?
-    ///     Useful for touch reactions, like styptic powder or acid.
-    ///     Only usable if the EntityEffectBaseArgs is an EntityEffectReagentArgs.
-    /// </summary>
-    [DataField]
-    public bool ScaleByQuantity;
 
     [DataField]
     public bool IgnoreResistances = true;

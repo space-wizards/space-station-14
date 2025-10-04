@@ -10,9 +10,6 @@ public sealed partial class SpawnEntityInInventoryEntityEffectSystem : EntityEff
     protected override void Effect(Entity<InventoryComponent> entity, ref EntityEffectEvent<SpawnEntityInInventory> args)
     {
         _inventory.SpawnItemInSlot(entity, args.Effect.Slot, args.Effect.Entity);
-
-        // TODO: Reactive needs to handle deleting reagents for this.
-        // TODO: Maybe not?
     }
 }
 

@@ -1,12 +1,14 @@
 ﻿using System.Linq;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Database;
 using Content.Shared.EntityConditions;
 using Content.Shared.Localizations;
+using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.EntityEffects;
 
@@ -17,6 +19,7 @@ namespace Content.Shared.EntityEffects;
 /// </summary>
 public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEffectRaiser
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
     [Dependency] private readonly SharedEntityConditionsSystem _condition = default!;
 
@@ -86,6 +89,15 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
         if (scale < effect.MinScale)
             return false;
 
+        // TODO: Replace with proper random prediciton when it exists.
+        if (effect.Probability <= 1f)
+        {
+            var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(target).Id, 0 });
+            var rand = new System.Random(seed);
+            if (!rand.Prob(effect.Probability))
+                return false;
+        }
+
         // See if conditions apply
         if (!_condition.TryConditions(target, effect.Conditions))
             return false;
@@ -104,7 +116,7 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
     public void ApplyEffect(EntityUid target, EntityEffect effect, float scale = 1f)
     {
         // Clamp the scale if the effect doesn't allow scaling.
-        if (effect.Scaling)
+        if (!effect.Scaling)
             scale = Math.Min(scale, 1f);
 
         if (effect.ShouldLog)
@@ -143,19 +155,9 @@ public abstract partial class EntityEffectSystem<T, TEffect> : EntitySystem wher
     public override void Initialize()
     {
         SubscribeLocalEvent<T, EntityEffectEvent<TEffect>>(Effect);
-        // TODO: Temporary relay until Metabolism can properly separate effects/conditions for organs and bodies
-        SubscribeLocalEvent<OrganComponent, EntityEffectEvent<TEffect>>(RelayEffect);
     }
 
     protected abstract void Effect(Entity<T> entity, ref EntityEffectEvent<TEffect> args);
-
-    private void RelayEffect(Entity<OrganComponent> entity, ref EntityEffectEvent<TEffect> args)
-    {
-        if (entity.Comp.Body is not { } body)
-            return;
-
-        RaiseLocalEvent(body, ref args);
-    }
 }
 
 public interface IEntityEffectRaiser

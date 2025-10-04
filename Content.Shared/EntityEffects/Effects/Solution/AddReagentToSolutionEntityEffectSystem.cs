@@ -21,8 +21,7 @@ public sealed class AddReagentToSolutionEntityEffectSystem : EntityEffectSystem<
         if (!_solutionContainer.TryGetSolution((entity, entity), solution, out var solutionContainer))
             return;
 
-        // TODO: Make sure this properly removes reagents if we're using reagents!!!
-        _solutionContainer.TryAddReagent(solutionContainer.Value, reagent, args.Scale, out var accepted);
+        _solutionContainer.TryAddReagent(solutionContainer.Value, reagent, args.Scale);
     }
 }
 

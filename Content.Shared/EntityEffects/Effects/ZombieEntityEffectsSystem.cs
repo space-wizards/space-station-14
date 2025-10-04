@@ -12,6 +12,9 @@ public sealed partial class CauseZombieInfectionEntityEffectsSystem : EntityEffe
     // MobState because you have to die to become a zombie...
     protected override void Effect(Entity<MobStateComponent> entity, ref EntityEffectEvent<CauseZombieInfection> args)
     {
+        if (HasComp<ZombieImmuneComponent>(entity) || HasComp<IncurableZombieComponent>(entity))
+            return;
+
         EnsureComp<ZombifyOnDeathComponent>(entity);
         EnsureComp<PendingZombieComponent>(entity);
     }
@@ -22,16 +25,14 @@ public sealed partial class CureZombieInfectionEntityEffectsSystem : EntityEffec
     // MobState because you have to die to become a zombie...
     protected override void Effect(Entity<MobStateComponent> entity, ref EntityEffectEvent<CureZombieInfection> args)
     {
-        // TODO: Server only...
-        //if (HasComp<IncurableZombieComponent>(entity))
-            //return;
+        if (HasComp<IncurableZombieComponent>(entity))
+            return;
 
         RemComp<ZombifyOnDeathComponent>(entity);
         RemComp<PendingZombieComponent>(entity);
 
         if (args.Effect.Innoculate)
             EnsureComp<ZombieImmuneComponent>(entity);
-
     }
 }
 
