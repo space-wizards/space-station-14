@@ -32,6 +32,9 @@ public sealed partial class BatteryWeaponFireModesComponent : Component
     [DataField]
     public Dictionary<HandLocation, List<PrototypeLayerData>> InhandVisuals = new();
 
+    [DataField]
+    public Dictionary<HandLocation, List<PrototypeLayerData>> WieldedInhandVisuals = new();
+
     /// <summary>
     /// Layers to add to the sprite of the player that is wearing this entity (for changing gun color)
     /// </summary>

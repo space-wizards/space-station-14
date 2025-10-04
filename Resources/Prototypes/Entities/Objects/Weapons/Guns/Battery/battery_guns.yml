@@ -895,8 +895,14 @@
     - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-unshaded-1
-      map: ["enum.GunVisualLayers.MagUnshaded"]
+      map: ["enum.GunVisualLayers.MagUnshaded", "enum.BatteryWeaponFireModeVisualizer.Color"]
       shader: unshaded
+  - type: GenericVisualizer
+    visuals:
+      enum.BatteryWeaponFireModeVisuals.State:
+        enum.BatteryWeaponFireModeVisualizer.Color:
+          BoltTempgunCold: {}
+          BoltTempgunHot: {}
   - type: Appearance
   - type: Item
     size: Large
@@ -919,8 +925,25 @@
     fireModes:
     - proto: BoltTempgunCold
       fireCost: 100
+      color: "#a7ecde"
     - proto: BoltTempgunHot
       fireCost: 100
+      color: OrangeRed
+    inhandVisuals:
+      left:
+      - state: inhand-left-color
+      right:
+      - state: inhand-right-color
+    wieldedInhandVisuals:
+      left:
+      - state: wielded-inhand-left-color
+      right:
+      - state: wielded-inhand-right-color
+    clothingVisuals:
+      back:
+      - state: equipped-BACKPACK-color
+      suitstorage:
+      - state: equipped-SUITSTORAGE-color
   - type: Battery
     maxCharge: 1000
     startingCharge: 1000

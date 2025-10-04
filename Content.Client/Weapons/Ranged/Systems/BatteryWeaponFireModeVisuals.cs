@@ -6,6 +6,8 @@ using Content.Shared.Hands;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Wieldable;
+using Content.Shared.Wieldable.Components;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Weapons.Ranged.Systems;
@@ -20,8 +22,15 @@ public sealed class BatteryWeaponFireModesVisuals : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<BatteryWeaponFireModesComponent, AppearanceChangeEvent>(OnAppearanceChange);
+        SubscribeLocalEvent<BatteryWeaponFireModesComponent, ItemWieldedEvent>(OnItemWielded);
         SubscribeLocalEvent<BatteryWeaponFireModesComponent, GetInhandVisualsEvent>(OnGetHeldVisuals, after: [typeof(ItemSystem)]);
         SubscribeLocalEvent<BatteryWeaponFireModesComponent, GetEquipmentVisualsEvent>(OnGetEquipmentVisuals, after: [typeof(ClientClothingSystem)]);
+    }
+
+    private void OnItemWielded(Entity<BatteryWeaponFireModesComponent> ent, ref ItemWieldedEvent args)
+    {
+
+
     }
 
     private void OnAppearanceChange(Entity<BatteryWeaponFireModesComponent> ent, ref AppearanceChangeEvent args)
@@ -50,8 +59,22 @@ public sealed class BatteryWeaponFireModesVisuals : EntitySystem
         if (!ent.Comp.InhandVisuals.TryGetValue(args.Location, out var layers))
             return;
 
-        var i = 0;
+
         var defaultKey = $"inhand-{args.Location.ToString().ToLowerInvariant()}-color";
+
+        if (TryComp(ent, out WieldableComponent? wieldableComponent) && wieldableComponent.Wielded)
+        {
+            if (!ent.Comp.WieldedInhandVisuals.TryGetValue(args.Location, out var wieldedLayers))
+                return;
+            AddLayers(wieldedLayers, color, defaultKey, args);
+            return;
+        }
+        AddLayers(layers, color, defaultKey, args);
+    }
+
+    private void AddLayers(List<PrototypeLayerData> layers, Color color, string defaultKey, GetInhandVisualsEvent args)
+    {
+        var i = 0;
         foreach (var layer in layers)
         {
             var key = layer.MapKeys?.FirstOrDefault();
