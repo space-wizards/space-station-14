@@ -30,6 +30,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Content.Shared.Atmos.Components;
 using System.Linq;
+using Content.Shared.Nutrition.Prototypes;
 
 namespace Content.Server.NPC.Systems;
 
@@ -54,12 +55,16 @@ public sealed class NPCUtilitySystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly MobThresholdSystem _thresholdSystem = default!;
     [Dependency] private readonly TurretTargetSettingsSystem _turretTargetSettings = default!;
+    [Dependency] private readonly SatiationSystem _satiation = default!;
 
     private EntityQuery<PuddleComponent> _puddleQuery;
     private EntityQuery<TransformComponent> _xformQuery;
 
     private ObjectPool<HashSet<EntityUid>> _entPool =
         new DefaultObjectPool<HashSet<EntityUid>>(new SetPolicy<EntityUid>(), 256);
+
+    private static readonly ProtoId<SatiationTypePrototype> HungerSatiation = "Hunger";
+    private static readonly ProtoId<SatiationTypePrototype> ThirstSatiation = "Thirst";
 
     // Temporary caches.
     private List<EntityUid> _entityList = new();
@@ -177,7 +182,9 @@ public sealed class NPCUtilitySystem : EntitySystem
                 var avoidBadFood = !HasComp<IgnoreBadFoodComponent>(owner);
 
                 // only eat when hungry or if it will eat anything
-                if (TryComp<HungerComponent>(owner, out var hunger) && hunger.CurrentThreshold > HungerThreshold.Okay && avoidBadFood)
+                if (TryComp<SatiationComponent>(owner, out var satiation) &&
+                    _satiation.GetThresholdOrNull((owner, satiation), HungerSatiation) > SatiationThreshold.Okay &&
+                    avoidBadFood)
                     return 0f;
 
                 // no mouse don't eat the uranium-235
@@ -197,7 +204,8 @@ public sealed class NPCUtilitySystem : EntitySystem
                     return 0f;
 
                 // only drink when thirsty
-                if (TryComp<ThirstComponent>(owner, out var thirst) && thirst.CurrentThirstThreshold > ThirstThreshold.Okay)
+                if (TryComp<SatiationComponent>(owner, out var satiation) &&
+                    _satiation.GetThresholdOrNull((owner, satiation), ThirstSatiation) > SatiationThreshold.Okay)
                     return 0f;
 
                 // no janicow don't drink the blood puddle

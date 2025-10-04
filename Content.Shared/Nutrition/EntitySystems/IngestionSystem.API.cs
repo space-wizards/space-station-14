@@ -22,6 +22,9 @@ public sealed partial class IngestionSystem
     public static readonly ProtoId<EdiblePrototype> Food = "Food";
     public static readonly ProtoId<EdiblePrototype> Drink = "Drink";
 
+    private static readonly ProtoId<SatiationTypePrototype> Hunger = "Hunger";
+    private static readonly ProtoId<SatiationTypePrototype> Thirst = "Thirst";
+
     public const float MaxFeedDistance = 1.0f; // We should really have generic interaction ranges like short, medium, long and use those instead...
     // BodySystem has no way of telling us where the mouth is so we're making some assumptions.
     public const SlotFlags DefaultFlags = SlotFlags.HEAD | SlotFlags.MASK;
@@ -226,9 +229,9 @@ public sealed partial class IngestionSystem
                 foreach (var effect in entry.Effects)
                 {
                     // ignores any effect conditions, just cares about how much it can hydrate
-                    if (effect is SatiateHunger hunger)
+                    if (effect is Satiate satiate && satiate.SatiationType == Hunger)
                     {
-                        total += hunger.NutritionFactor * quantity.Quantity.Float();
+                        total += satiate.Factor * quantity.Quantity.Float();
                     }
                 }
             }
@@ -277,9 +280,9 @@ public sealed partial class IngestionSystem
                 foreach (var effect in entry.Effects)
                 {
                     // ignores any effect conditions, just cares about how much it can hydrate
-                    if (effect is SatiateThirst thirst)
+                    if (effect is Satiate satiate && satiate.SatiationType == Thirst)
                     {
-                        total += thirst.HydrationFactor * quantity.Quantity.Float();
+                        total += satiate.Factor * quantity.Quantity.Float();
                     }
                 }
             }
