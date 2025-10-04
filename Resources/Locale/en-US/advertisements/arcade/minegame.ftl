@@ -1,0 +1,10 @@
+advertisement-mine-game-1 = Legally distinct!
+advertisement-mine-game-2 = Boom!
+advertisement-mine-game-3 = These mines need to be cleaned up!
+advertisement-mine-game-4 = Don't you love chording?
+advertisement-mine-game-5 = Sweep the field clear!
+advertisement-mine-game-6 = Discover the feared 8-tile!
+advertisement-mine-game-7 = Hot 8-bit action!
+advertisement-mine-game-8 = Be safe and use flags!
+advertisement-mine-game-9 = Break some speed records!
+advertisement-mine-game-10 = Game's mine! But it's yours too!
