@@ -10,18 +10,25 @@ namespace Content.Server.NodeContainer.Nodes
     [DataDefinition]
     public sealed partial class AdjacentNode : Node
     {
-        public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
+        public override IEnumerable<Node> GetReachableNodes(
+            EntityUid uid,
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
-            MapGridComponent? grid,
-            IEntityManager entMan)
+            EntityQuery<MapGridComponent> gridQuery,
+            IEntityManager entMan,
+            SharedMapSystem mapSystem)
         {
-            if (!xform.Anchored || grid == null)
+            if (!xformQuery.TryGetComponent(uid, out var xform)
+                || !xform.Anchored
+                || xform.GridUid == null)
                 yield break;
 
-            var gridIndex = grid.TileIndicesFor(xform.Coordinates);
+            if (!gridQuery.TryGetComponent(xform.GridUid.Value, out var grid))
+                yield break;
 
-            foreach (var (_, node) in NodeHelpers.GetCardinalNeighborNodes(nodeQuery, grid, gridIndex))
+            var gridIndex = mapSystem.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates);
+
+            foreach (var (_, node) in NodeHelpers.GetCardinalNeighborNodes(nodeQuery, xform, grid, gridIndex, mapSystem))
             {
                 if (node != this)
                     yield return node;
