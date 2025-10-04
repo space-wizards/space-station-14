@@ -64,7 +64,8 @@
   - type: UnpoweredFlashlight
   - type: PointLight
     enabled: false
-    radius: 1.5
+    radius: 1.7
+    falloff: 3
     softness: 5
     autoRot: true
   - type: Ringer
