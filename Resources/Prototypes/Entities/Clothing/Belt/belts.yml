@@ -15,7 +15,7 @@
     # Don't add more than absolutely needed to this whitelist!
     # Utility belts shouldn't just be free extra storage.
     # This is only intended for basic engineering equipment.
-    whitelist:
+    whitelist: &UtilityWhitelist
       tags:
         - Powerdrill
         - Wirecutter
@@ -103,39 +103,7 @@
   - type: Storage
     grid:
     - 0,0,9,1
-    # TODO: Fill this out more.
-    whitelist:
-      tags:
-        - Wirecutter
-        - Crowbar
-        - Screwdriver
-        - Flashlight
-        - Wrench
-        - GeigerCounter
-        - Flare
-        - CableCoil
-        - Powerdrill
-        - JawsOfLife
-        - CigPack
-        - Radio
-        - HolofanProjector
-        - Multitool
-        - AppraisalTool
-        - UtilityKnife
-      components:
-        - StationMap
-        - SprayPainter
-        - SprayPainterAmmo
-        - NetworkConfigurator
-        - RCD
-        - RCDAmmo
-        - Welder
-        - Flash
-        - Handcuff
-        - PowerCell
-        - Geiger
-        - TrayScanner
-        - GasAnalyzer
+    whitelist: *UtilityWhitelist
   - type: ItemMapper
     mapLayers:
       drill:

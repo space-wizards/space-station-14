@@ -76,7 +76,7 @@
   components:
   - type: Spectral
   - type: Tag
-    tags: # BAD: Intentional override of inherited tag
+    tags: # BAD: Intentional removal of inherited tag
     - AllowGhostShownByEvent
 
 - type: entity
