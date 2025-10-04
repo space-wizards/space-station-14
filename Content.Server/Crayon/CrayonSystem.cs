@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Server.Administration.Logs;
 using Content.Server.Decals;
 using Content.Server.Popups;
+using Content.Server.Power.Components;
 using Content.Shared.Crayon;
 using Content.Shared.Database;
 using Content.Shared.Decals;
@@ -48,7 +49,10 @@ public sealed class CrayonSystem : SharedCrayonSystem
         if (args.Handled || !args.CanReach)
             return;
 
-        if (component.Charges <= 0)
+        if (component.Charges <= 0 ||
+            component.BatteryPowered &&
+            EntityManager.TryGetComponent<BatteryComponent>(uid, out var battery) &&
+            battery.CurrentCharge <= 0)
         {
             if (component.DeleteEmpty)
                 UseUpCrayon(uid, args.User);
@@ -73,6 +77,12 @@ public sealed class CrayonSystem : SharedCrayonSystem
             _audio.PlayPvs(component.UseSound, uid, AudioParams.Default.WithVariation(0.125f));
 
         // Decrease "Ammo"
+        if (component.BatteryPowered)
+        {
+            var batteryComponent = EntityManager.GetComponent<BatteryComponent>(uid);
+            batteryComponent.CurrentCharge--;
+        }
+
         component.Charges--;
         Dirty(uid, component);
 
@@ -121,7 +131,6 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
         component.Color = args.Color;
         Dirty(uid, component);
-
     }
 
     private void OnCrayonInit(EntityUid uid, CrayonComponent component, ComponentInit args)
@@ -144,5 +153,19 @@ public sealed class CrayonSystem : SharedCrayonSystem
     {
         _popup.PopupEntity(Loc.GetString("crayon-interact-used-up-text", ("owner", uid)), user, user);
         QueueDel(uid);
+    }
+
+    public override void Update(float frameTime)
+    {
+        var query = EntityQueryEnumerator<BatteryComponent, CrayonComponent>();
+        while (query.MoveNext(out var uid, out var battery, out var crayon))
+        {
+            if (crayon.BatteryPowered && crayon.Charges < (int)battery.CurrentCharge)
+            {
+                crayon.Charges = (int)battery.CurrentCharge;
+            }
+
+            EntityManager.Dirty(uid, crayon);
+        }
     }
 }

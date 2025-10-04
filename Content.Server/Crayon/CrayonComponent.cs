@@ -1,6 +1,4 @@
-using Content.Server.UserInterface;
 using Content.Shared.Crayon;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Crayon
@@ -8,21 +6,39 @@ namespace Content.Server.Crayon
     [RegisterComponent]
     public sealed partial class CrayonComponent : SharedCrayonComponent
     {
-        [DataField("useSound")] public SoundSpecifier? UseSound;
+        /// <summary>
+        /// Play a sound when drawing if specified
+        /// </summary>
+        [DataField]
+        public SoundSpecifier? UseSound;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("selectableColor")]
-        public bool SelectableColor { get; set; }
+        /// <summary>
+        /// Is the color valid
+        /// </summary>
+        [DataField]
+        public bool SelectableColor;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public int Charges { get; set; }
+        /// <summary>
+        /// How many crayon usages are left
+        /// </summary>
+        public int Charges;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("capacity")]
-        public int Capacity { get; set; } = 30;
+        /// <summary>
+        /// Max number of charges/drawings
+        /// </summary>
+        [DataField]
+        public int Capacity = 30;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("deleteEmpty")]
+        /// <summary>
+        /// Should the crayon be deleted when all charges are consumed
+        /// </summary>
+        [DataField]
         public bool DeleteEmpty = true;
+
+        /// <summary>
+        /// Does the crayon use the battery power system to track charges
+        /// </summary>
+        [DataField]
+        public bool BatteryPowered;
     }
 }
