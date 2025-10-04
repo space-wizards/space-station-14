@@ -22,10 +22,10 @@ public sealed class SiliconLawsSaveMessage : EuiMessageBase
     public LocId LawsetName;
     public NetEntity Target { get; }
 
-    public SiliconLawsSaveMessage(List<SiliconLaw> laws, LocId lawsetName , NetEntity target) //TODO:ERRANT what the hell is this
+    public SiliconLawsSaveMessage(List<SiliconLaw> laws, LocId lawsetName , NetEntity target)
     {
         Laws = laws;
-        LawsetName = "lawset-unknown"; //TODO:ERRANT FIX THIS
+        LawsetName = lawsetName;
         Target = target;
     }
 }

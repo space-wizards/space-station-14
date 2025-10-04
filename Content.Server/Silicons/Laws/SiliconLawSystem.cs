@@ -36,7 +36,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
 
-    private static readonly LocId LawsetNone = "lawset-none";
+    private static readonly LocId LawsetNone = "lawset-none"; // As far as I know, there is currently no way to actually achieve this state. Unhoused borgbrains technically are this, but they do not have the necessary borg components to display a lawset/subtype
     private static readonly LocId LawsetIon = "lawset-ion";
     private static readonly LocId LawsetEmagged = "lawset-emagged";
 
