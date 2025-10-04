@@ -4,9 +4,15 @@ namespace Content.Shared.DeviceLinking.Events
     {
         public readonly string Port;
 
-        public PortDisconnectedEvent(string port)
+        public readonly EntityUid Source;
+
+        public readonly EntityUid Sink;
+
+        public PortDisconnectedEvent(string port, EntityUid source, EntityUid sink)
         {
             Port = port;
+            Source = source;
+            Sink = sink;
         }
     }
 }
