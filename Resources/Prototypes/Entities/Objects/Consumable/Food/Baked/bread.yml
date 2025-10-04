@@ -21,7 +21,7 @@
       food:
         maxVol: 26
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 20
 
 - type: entity
@@ -43,7 +43,7 @@
       food:
         maxVol: 8
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 4
 
 # Custom Bread Example
@@ -97,6 +97,17 @@
     tags:
     - Fruit
     - Bread
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Sugar
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 2
 # Tastes like bread, banana, nut.
 
 - type: entity
@@ -117,6 +128,17 @@
     - Fruit
     - Bread
     - Slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: Sugar
+          Quantity: 1
+        - ReagentId: Vitamin
+          Quantity: 0.5
 
 - type: entity
   parent: FoodBreadBase
@@ -142,10 +164,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 26
+        maxVol: 35
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
+        - ReagentId: Carbohydrate
+          Quantity: 20
         - ReagentId: Fiber
           Quantity: 10
 
@@ -172,10 +194,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 8
+        maxVol: 10
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
+        - ReagentId: Carbohydrate
+          Quantity: 4
         - ReagentId: Fiber
           Quantity: 2
 
@@ -199,7 +221,7 @@
       food:
         maxVol: 20
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 15
 # Tastes like bread, banana, nut.
 
@@ -221,7 +243,7 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 3
 
 - type: entity
@@ -245,9 +267,11 @@
       food:
         maxVol: 35
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 20
-        - ReagentId: Vitamin
+        - ReagentId: Fat
+          Quantity: 5
+        - ReagentId: Sugar
           Quantity: 5
 # Tastes like bread, cheese.
 
@@ -270,10 +294,12 @@
       food:
         maxVol: 10
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 4
-        - ReagentId: Vitamin
-          Quantity: 1.2
+        - ReagentId: Fat
+          Quantity: 1
+        - ReagentId: Sugar
+          Quantity: 1
 
 - type: entity
   name: meat bread
@@ -295,10 +321,12 @@
       food:
         maxVol: 45
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 30
-        - ReagentId: Vitamin
-          Quantity: 5
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Protein
+          Quantity: 6
+        - ReagentId: Fat
+          Quantity: 10
   - type: Tag
     tags:
     - Meat
@@ -321,12 +349,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 13
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 1.2
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: Protein
+          Quantity: 1.5
+        - ReagentId: Fat
+          Quantity: 2.5
   - type: Tag
     tags:
     - Meat
@@ -353,8 +383,8 @@
       food:
         maxVol: 40
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 15
+        - ReagentId: Carbohydrate
+          Quantity: 20
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Nothing
@@ -379,10 +409,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 11
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
+        - ReagentId: Carbohydrate
+          Quantity: 4
         - ReagentId: Vitamin
           Quantity: 1
         - ReagentId: Nothing
@@ -432,11 +462,11 @@
       food:
         maxVol: 45
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 5
+        - ReagentId: Carbohydrate
+          Quantity: 20
         - ReagentId: Protein
+          Quantity: 6
+        - ReagentId: Fat
           Quantity: 5
   - type: Tag
     tags:
@@ -461,12 +491,12 @@
       food:
         maxVol: 10
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Vitamin
-          Quantity: 1
+        - ReagentId: Carbohydrate
+          Quantity: 4
         - ReagentId: Protein
-          Quantity: 1
+          Quantity: 1.5
+        - ReagentId: Fat
+          Quantity: 1.25
   - type: Tag
     tags:
     - Meat
@@ -491,12 +521,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 45
+        maxVol: 55
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 30
-        - ReagentId: Vitamin
-          Quantity: 5
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Protein
+          Quantity: 10
+        - ReagentId: Fat
+          Quantity: 10
   - type: Tag
     tags:
     - Meat
@@ -521,10 +553,12 @@
       food:
         maxVol: 12
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 1.2
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: Protein
+          Quantity: 2.5
+        - ReagentId: Fat
+          Quantity: 2.5
   - type: Tag
     tags:
     - Meat
@@ -551,10 +585,12 @@
       food:
         maxVol: 48
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 30
+        - ReagentId: Carbohydrate
+          Quantity: 25
         - ReagentId: Protein
-          Quantity: 12
+          Quantity: 10
+        - ReagentId: Fat
+          Quantity: 5
 # Tastes like bread, tofu.
 
 - type: entity
@@ -573,12 +609,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 12
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 2.4
+        - ReagentId: Carbohydrate
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 2.5
+        - ReagentId: Fat
+          Quantity: 1
 
 - type: entity
   name: xeno meat bread
@@ -600,10 +638,12 @@
       food:
         maxVol: 45
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 30
-        - ReagentId: Vitamin
-          Quantity: 5
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Protein
+          Quantity: 6
+        - ReagentId: Sugar
+          Quantity: 3
   - type: Tag
     tags:
     - Meat
@@ -628,10 +668,12 @@
       food:
         maxVol: 10
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 1.2
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: Protein
+          Quantity: 1.5
+        - ReagentId: Sugar
+          Quantity: 0.75
   - type: Tag
     tags:
     - Meat
@@ -654,16 +696,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 35
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 1
+        - ReagentId: Carbohydrate
+          Quantity: 20
         - ReagentId: TableSalt
-          Quantity: 1
+          Quantity: 5
         - ReagentId: Blackpepper
-          Quantity: 1
+          Quantity: 5
   - type: Clothing
     slots: [ BELT ]
     equippedPrefix: baguette
@@ -714,18 +754,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 35
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
+        - ReagentId: Carbohydrate
+          Quantity: 5
         - ReagentId: Fiber
-          Quantity: 3
-        - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 15
         - ReagentId: TableSalt
-          Quantity: 1
+          Quantity: 5
         - ReagentId: Blackpepper
-          Quantity: 1
+          Quantity: 5
 
 - type: entity
   name: crostini
@@ -738,16 +776,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 2
+        maxVol: 10
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 0.5
-        - ReagentId: Vitamin
-          Quantity: 0.1
+        - ReagentId: Carbohydrate
+          Quantity: 1
+        - ReagentId: Fiber
+          Quantity: 3
         - ReagentId: TableSalt
-          Quantity: 0.1
+          Quantity: 1
         - ReagentId: Blackpepper
-          Quantity: 0.1
+          Quantity: 1
 
 - type: entity
   parent: FoodBreadBaguetteSlice
@@ -767,18 +805,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 2
+        maxVol: 10
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 0.25
+        - ReagentId: Carbohydrate
+          Quantity: 1
         - ReagentId: Fiber
-          Quantity: 0.25
-        - ReagentId: Vitamin
-          Quantity: 0.1
+          Quantity: 3
         - ReagentId: TableSalt
-          Quantity: 0.1
+          Quantity: 1
         - ReagentId: Blackpepper
-          Quantity: 0.1
+          Quantity: 1
 
 - type: entity
   name: buttered toast
@@ -797,10 +833,10 @@
       food:
         maxVol: 10
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Oil
           Quantity: 5
-        - ReagentId: Vitamin
-          Quantity: 1
+        - ReagentId: Carbohydrate
+          Quantity: 4
 # Tastes like bread, butter.
 
 - type: entity
@@ -820,10 +856,12 @@
       food:
         maxVol: 10
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 4
-        - ReagentId: Vitamin
-          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 12
+        - ReagentId: Fat
+          Quantity: 5
 # Tastes like bread, butter.
 
 - type: entity
@@ -844,10 +882,14 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: Oil
           Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 4
+        - ReagentId: Allicin
+          Quantity: 4
 # Tastes like garlic, Italy.
 
 - type: entity
@@ -868,7 +910,7 @@
       food:
         maxVol: 10
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 4
         - ReagentId: Vitamin
           Quantity: 4
@@ -891,7 +933,7 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 4
         - ReagentId: Mold
           Quantity: 7
@@ -912,9 +954,7 @@
         maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
-        - ReagentId: Vitamin
-          Quantity: 2
+          Quantity: 8
         - ReagentId: Wine
           Quantity: 5
 # Tastes like decaying fungus.
@@ -934,13 +974,15 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 45
+        maxVol: 55
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 5
+        - ReagentId: Carbohydrate
+          Quantity: 20
         - ReagentId: Protein
+          Quantity: 15
+        - ReagentId: Fat
+          Quantity: 5
+        - ReagentId: Vitamin
           Quantity: 5
   - type: Sprite
     noRot: true
