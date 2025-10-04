@@ -12,6 +12,12 @@
         },
         {
             "name": "state1"
+        },
+                {
+            "name": "reinforced_wall_girder"
+        },
+                {
+            "name": "wall_girder"
         }
     ]
 }
