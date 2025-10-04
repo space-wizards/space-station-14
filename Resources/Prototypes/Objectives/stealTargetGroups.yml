@@ -55,13 +55,13 @@
   sprite:
     sprite: Objects/Consumable/Food/meat.rsi
     state: corgi
-    #
+
 - type: stealTargetGroup
   id: CaptainIDCard
   name: steal-target-groups-captain-id-card
   sprite:
     sprite: Objects/Misc/id_cards.rsi
-    state: ert_commander #no one will know the difference.
+    state: icon-captain
 
 - type: stealTargetGroup
   id: JetpackCaptainFilled
