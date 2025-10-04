@@ -1,7 +1,6 @@
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Spreader;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Maps;
 using Content.Shared.Trigger;
 using Content.Shared.Trigger.Components.Effects;
@@ -53,7 +52,7 @@ public sealed class SmokeOnTriggerSystem : EntitySystem
             return;
 
         var coords = _map.MapToGrid(gridUid, mapCoords);
-        var smoke = Spawn(ent.Comp.SmokePrototype, coords.SnapToGrid());
+        var smoke = Spawn(ent.Comp.SmokePrototype, _transform.SnapToGrid(coords));
         if (!TryComp<SmokeComponent>(smoke, out var smokeComp))
         {
             Log.Error($"Smoke prototype {ent.Comp.SmokePrototype} was missing SmokeComponent");

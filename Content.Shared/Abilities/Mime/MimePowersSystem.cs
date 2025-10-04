@@ -2,7 +2,6 @@ using Content.Shared.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Events;
 using Content.Shared.Alert;
-using Content.Shared.Coordinates.Helpers;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Maps;
 using Content.Shared.Paper;
@@ -16,6 +15,7 @@ namespace Content.Shared.Abilities.Mime;
 
 public sealed class MimePowersSystem : EntitySystem
 {
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly AlertsSystem _alertsSystem = default!;
@@ -90,7 +90,7 @@ public sealed class MimePowersSystem : EntitySystem
         var xform = Transform(ent);
         // Get the tile in front of the mime
         var offsetValue = xform.LocalRotation.ToWorldVec();
-        var coords = xform.Coordinates.Offset(offsetValue).SnapToGrid(EntityManager, _mapMan);
+        var coords = _transform.SnapToGrid(xform.Coordinates.Offset(offsetValue));
         var tile = _turf.GetTileRef(coords);
         if (tile == null)
             return;
