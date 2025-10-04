@@ -6,10 +6,12 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Contraband;
 using Content.Shared.EntityEffects;
 using Content.Shared.Database;
 using Content.Shared.Nutrition;
 using Content.Shared.Prototypes;
+using Content.Shared.Roles;
 using Content.Shared.Slippery;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -58,10 +60,35 @@ namespace Content.Shared.Chemistry.Reagent
         public string LocalizedPhysicalDescription => Loc.GetString(PhysicalDescription);
 
         /// <summary>
+        ///     The degree of contraband severity this reagent is considered to have.
+        ///     If AllowedDepartments or AllowedJobs are set, they take precedent and override this value.
+        /// </summary>
+        [DataField]
+        public ProtoId<ContrabandSeverityPrototype>? ContrabandSeverity = null;
+
+        /// <summary>
+        ///     Which departments is this reagent restricted to, if any?
+        /// </summary>
+        [DataField]
+        public HashSet<ProtoId<DepartmentPrototype>> AllowedDepartments = new();
+
+        /// <summary>
+        ///     Which jobs is this reagent restricted to, if any?
+        /// </summary>
+        [DataField]
+        public HashSet<ProtoId<JobPrototype>> AllowedJobs = new();
+
+        /// <summary>
         ///     Is this reagent recognizable to the average spaceman (water, welding fuel, ketchup, etc)?
         /// </summary>
         [DataField]
         public bool Recognizable;
+
+        /// <summary>
+        /// Whether this reagent stands out (blood, slime).
+        /// </summary>
+        [DataField]
+        public bool Standsout;
 
         [DataField]
         public ProtoId<FlavorPrototype>? Flavor;
@@ -184,14 +211,17 @@ namespace Content.Shared.Chemistry.Reagent
             return removed;
         }
 
-        public void ReactionPlant(EntityUid? plantHolder, ReagentQuantity amount, Solution solution)
+        public void ReactionPlant(EntityUid? plantHolder,
+            ReagentQuantity amount,
+            Solution solution,
+            EntityManager entityManager,
+            IRobustRandom random,
+            ISharedAdminLogManager logger)
         {
             if (plantHolder == null)
                 return;
 
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            var random = IoCManager.Resolve<IRobustRandom>();
-            var args = new EntityEffectReagentArgs(plantHolder.Value, entMan, null, solution, amount.Quantity, this, null, 1f);
+            var args = new EntityEffectReagentArgs(plantHolder.Value, entityManager, null, solution, amount.Quantity, this, null, 1f);
             foreach (var plantMetabolizable in PlantMetabolisms)
             {
                 if (!plantMetabolizable.ShouldApply(args, random))
@@ -200,8 +230,10 @@ namespace Content.Shared.Chemistry.Reagent
                 if (plantMetabolizable.ShouldLog)
                 {
                     var entity = args.TargetEntity;
-                    entMan.System<SharedAdminLogSystem>().Add(LogType.ReagentEffect, plantMetabolizable.LogImpact,
-                        $"Plant metabolism effect {plantMetabolizable.GetType().Name:effect} of reagent {ID:reagent} applied on entity {entMan.ToPrettyString(entity):entity} at {entMan.GetComponent<TransformComponent>(entity).Coordinates:coordinates}");
+                    logger.Add(
+                        LogType.ReagentEffect,
+                        plantMetabolizable.LogImpact,
+                        $"Plant metabolism effect {plantMetabolizable.GetType().Name:effect} of reagent {ID} applied on entity {entity}");
                 }
 
                 plantMetabolizable.Effect(args);

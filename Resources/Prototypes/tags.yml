@@ -1,205 +1,215 @@
 # PUT YOUR TAGS IN ALPHABETICAL ORDER
+# ALSO DOCUMENT WHAT THE HELL THEY DO
+
+## A ##
 
 - type: Tag
-  id: AccessBreakerImmune
+  id: AccessBreakerImmune # This tag marks an entity as immune to emagging.
 
 - type: Tag
-  id: AirAlarm
+  id: AirAlarm # Used by AtmosAlarmableComponent for syncing devices
 
 - type: Tag
-  id: AirAlarmElectronics
+  id: AirAlarmElectronics # ConstructionGraph: AirAlarm
 
 - type: Tag
-  id: Airlock
+  id: Airlock # Used in ConstructionGraph "Airlock" to navigate between regular, glass, and highsec airlocks
 
 - type: Tag
-  id: AirSensor
+  id: AirSensor # Used by AtmosAlarmableComponent for syncing devices
 
 - type: Tag
   id: AllowBiomeLoading # Entities with this tag will load terrain, even if a ghost.
 
 - type: Tag
-  id: AllowGhostShownByEvent
+  id: AllowGhostShownByEvent # Used by GhostSystem to show ghosts (usually at round end)
 
 - type: Tag
-  id: Ambrosia
+  id: Ambrosia # ConstructionGraph: flowerwreath
 
 - type: Tag
-  id: AnomalyHost
+  id: AnomalyHost # Targeting whitelist: BaseAnomalyInjector
 
 - type: Tag
-  id: AppraisalTool
+  id: AppraisalTool # Storage whitelist: ClothingBeltUtility
 
 - type: Tag
-  id: Apron
+  id: Apron # ConstructionGraph: scraparmor
 
 - type: Tag
-  id: Arrow
+  id: Arrow # Storage whitelist: ClothingBeltQuiver
 
 - type: Tag
-  id: ArtifactFragment
+  id: ArtifactFragment # Storage whitelist: OreBag, CargoBounty: BountyArtifactFragment, ConstructionGraph: Artifact
 
 - type: Tag
-  id: ATVKeys
+  id: ATVKeys # Unused
+
+## B ##
 
 - type: Tag
-  id: Balloon
+  id: Backpack # ConstructionGraph: ClothingBagPet
 
 - type: Tag
-  id: Banana
+  id: Balloon # Used by BalloonPopperComponent/System to viciously maim helpless balloons
 
 - type: Tag
-  id: BananaPeel
+  id: Banana # CargoBounty: BountyBanana
 
 - type: Tag
-  id: Bandana
+  id: BananaPeel # SpecialDigestible by OrganAnimalRuminantStomach, and several BananaClown ConstructionGraphs
 
 - type: Tag
-  id: BaseballBat
+  id: Bandana # CargoBounty: BountyBandana
 
 - type: Tag
-  id: BBQsauce
+  id: BaseballBat # CargoBounty: BountyBaseballBat
 
 - type: Tag
-  id: Bedsheet
+  id: BBQsauce # Storage whitelist: ClothingBeltChef and FoodCartHot, ItemMapper: ClothingBeltChef and FoodCartHot
 
 - type: Tag
-  id: Bee
+  id: Bedsheet # CargoBounty: BountyBedsheet
 
 - type: Tag
-  id: Beer
+  id: Bee # Mode switch whitelisting for BuzzochloricBees (only damages non-bees)
 
 - type: Tag
-  id: BikeHorn
+  id: Beer # CargoBounty: BountyBeer
 
 - type: Tag
-  id: Bloodpack
+  id: BikeHorn # ConstructionGraph: HonkBot, BananiumHorn
 
 - type: Tag
-  id: BlueprintAutolathe
+  id: Bloodpack # Storage whitelist: ClothingBeltMedical
 
 - type: Tag
-  id: BodyBag
+  id: BlueprintAutolathe # Whitelist on BlueprintReceiverComponent on the autolate for linking this entity's BlueprintComponent
 
 - type: Tag
-  id: Boll
+  id: BodyBag # Storage whitelist: BoxBodyBag # TODO cardboard boxes shouldn't have whitelisting
 
 - type: Tag
-  id: Book
+  id: Boll # MaterialStorage whitelist: Sheetifier
 
 - type: Tag
-  id: BorgArm
+  id: Book # Storage whitelist: BorgModuleService, BooksBag, Bookshelf. Blacklisting on various entities whitelisting PaperComponent
 
 - type: Tag
-  id: BorgHead
+  id: BorgArm # ConstructionGraphs for various bots
 
 - type: Tag
-  id: BorgLArm
+  id: BorgHead # Used by PartAssemblyComponent on CyborgEndoskeleton. Also in ConstructionGraphs for various bots
 
 - type: Tag
-  id: BorgLLeg
+  id: BorgLArm # Used by PartAssemblyComponent on CyborgEndoskeleton
 
 - type: Tag
-  id: BorgRArm
+  id: BorgLLeg # Used by PartAssemblyComponent on CyborgEndoskeleton
 
 - type: Tag
-  id: BorgRLeg
+  id: BorgRArm # Used by PartAssemblyComponent on CyborgEndoskeleton
 
 - type: Tag
-  id: BorgTorso
+  id: BorgRLeg # Used by PartAssemblyComponent on CyborgEndoskeleton
 
 - type: Tag
-  id: BorgLeg
+  id: BorgTorso # Used by PartAssemblyComponent on CyborgEndoskeleton
 
 - type: Tag
-  id: BorgModuleCargo
+  id: BorgLeg # Used by PartAssemblyComponent on VimHarness
 
 - type: Tag
-  id: BorgModuleEngineering
+  id: BorgModuleCargo # Cyborg module category for salvage and cargo
 
 - type: Tag
-  id: BorgModuleGeneric
+  id: BorgModuleEngineering # Cyborg module category for engineers and saboteurs
 
 - type: Tag
-  id: BorgModuleJanitor
+  id: BorgModuleGeneric # Cyborg module category for general purpose
 
 - type: Tag
-  id: BorgModuleMedical
+  id: BorgModuleJanitor # Cyborg module category for janitors
 
 - type: Tag
-  id: BorgModuleScience
+  id: BorgModuleMedical # Cyborg module category for doctors
 
 - type: Tag
-  id: BorgModuleService
+  id: BorgModuleScience # Cyborg module category for scientists
 
 - type: Tag
-  id: BorgModuleSyndicate
+  id: BorgModuleService # Cyborg module category for bartenders, botanists, and more
 
 - type: Tag
-  id: BorgModuleSyndicateAssault
+  id: BorgModuleSyndicate # Cyborg module category for evil red robots
 
 - type: Tag
-  id: Bot
+  id: BorgModuleSyndicateAssault # Cyborg module category for extra evil red robots (nukies)
 
 - type: Tag
-  id: BotanyHatchet
+  id: Bot # Unused
 
 - type: Tag
-  id: BotanyHoe
+  id: BotanyHatchet # Storage whitelist: ClothingBeltPlant, ItemMapper: ClothingBeltPlant
 
 - type: Tag
-  id: BotanyShovel
+  id: BotanyHoe # Storage whitelist: ClothingBeltPlant, ItemMapper: ClothingBeltPlant
 
 - type: Tag
-  id: Bottle
+  id: BotanyShovel # Storage whitelist: ClothingBeltPlant, ItemMapper: ClothingBeltPlant
+
+- type: Tag # Used for specifically chemistry bottles
+  id: Bottle # Storage whitelist: ChemMaster, ChemBag, SmartFridge, ClothingBeltJanitor, ClothingBeltMedical, ClothingBeltPlant
 
 - type: Tag
-  id: BoxCardboard
+  id: BoxCardboard # CargoBounty: BountyCardboardBox
 
 - type: Tag
-  id: BoxHug
+  id: BoxHug # Unused
 
 - type: Tag
-  id: Brain
+  id: Brain # Storage whitelist: MMI. CargoBounty: BountyBrain. FoodSequenceElement: Brain
 
 - type: Tag
-  id: BrassInstrument
+  id: BrassInstrument # MachineBoard construction: DawInstrumentMachineCircuitboard
 
 - type: Tag
-  id: Bread
+  id: Bread # CargoBounty: BountyBread. Blacklisted in BountyFruit and BountyVegetable
 
 - type: Tag
-  id: Briefcase
+  id: Briefcase # Unused
 
 - type: Tag
-  id: BrimFlatcapBrown
+  id: BrimFlatcapBrown # ConstructionGraph: BladedFlatcapBrown
 
 - type: Tag
-  id: BrimFlatcapGrey
+  id: BrimFlatcapGrey # ConstructionGraph: BladedFlatcapGrey
 
 - type: Tag
-  id: Brutepack
+  id: Brutepack # Storage whitelist: ClothingBeltMedical
 
 - type: Tag
-  id: Bucket
+  id: Bucket # Storage whitelist: JanitorialTrolley. ItemMapper: JanitorialTrolley. ConstructionGraph: CleanBot, scraphelmet
 
 - type: Tag
-  id: Burger
+  id: Burger # Unused x2 (this is the only place burger tag exists)
 
 - type: Tag
-  id: BulletFoam
+  id: BulletFoam # BallisticAmmoProviderComponent whitelist for WeaponRifleFoam, FoamCrossbow, MagazineFoamBox, BoxDonkSoftBox
 
 - type: Tag
-  id: Burnt
+  id: Burnt # Storage whitelist: ashtray. Seemingly redundant
 
 - type: Tag
-  id: Bun
+  id: Bun # FoodSequenceElement: BunTopBurger, CottonBunTopBurger
 
 - type: Tag
-  id: BypassDropChecks
+  id: BypassDropChecks # Entities with this tag don't care about drop distance or walls (Aghost)
 
 - type: Tag
-  id: BypassInteractionRangeChecks
+  id: BypassInteractionRangeChecks # Entities with this tag don't care about distance or walls when touching things (Aghost)
+
+## C ##
 
 - type: Tag
   id: CableCoil
@@ -221,7 +231,6 @@
 
 - type: Tag
   id: CanPilot
-
 
 - type: Tag
   id: CaptainSabre
@@ -346,6 +355,9 @@
   id: ComputerTelevisionCircuitboard
 
 - type: Tag
+  id: ConstructionMaterial
+
+- type: Tag
   id: ConveyorAssembly
 
 - type: Tag
@@ -435,6 +447,8 @@
 - type: Tag
   id: CubanCarp
 
+## D ##
+
 - type: Tag
   id: DeathAcidifier
 
@@ -504,6 +518,8 @@
 - type: Tag
   id: Duck
 
+## E ##
+
 - type: Tag
   id: Ectoplasm
 
@@ -547,7 +563,18 @@
   id: Enzyme
 
 - type: Tag
+  id: ExCable
+
+- type: Tag
   id: ExplosivePassable
+
+## F ##
+
+- type: Tag
+  id: FakeMindShieldImplant
+
+- type: Tag
+  id: FakeNukeDisk
 
 - type: Tag
   id: Figurine
@@ -606,6 +633,8 @@
 - type: Tag
   id: Fruit
 
+## G ##
+
 - type: Tag
   id: Galaxythistle
 
@@ -629,6 +658,9 @@
   id: GhostOnlyWarp
 
 - type: Tag
+  id: GenderPin
+
+- type: Tag
   id: GlassAirlock
 
 - type: Tag
@@ -639,6 +671,9 @@
 
 - type: Tag
   id: Goat
+
+- type: Tag
+  id: GoldenPlunger
 
 - type: Tag
   id: Goliath
@@ -656,12 +691,6 @@
   id: GrenadeFlashBang
 
 - type: Tag
-  id: HudMedical
-
-- type: Tag
-  id: HudSecurity
-
-- type: Tag
   id: GuideEmbeded
 
 - type: Tag
@@ -672,6 +701,8 @@
 
 - type: Tag
   id: GunUpgradeReloadSpeed
+
+## H ##
 
 - type: Tag
   id: Hamster
@@ -779,6 +810,14 @@
   id: Hotsauce
 
 - type: Tag
+  id: HudMedical
+
+- type: Tag
+  id: HudSecurity
+
+## I ##
+
+- type: Tag
   id: Ice
 
 - type: Tag
@@ -794,6 +833,9 @@
   id: Ingot
 
 - type: Tag
+  id: Inflatable
+
+- type: Tag
   id: InstantDoAfters
 
 - type: Tag
@@ -805,8 +847,12 @@
 - type: Tag
   id: InvalidForSurvivorAntag
 
+## J ##
+
 - type: Tag
   id: JawsOfLife
+
+## K ##
 
 - type: Tag
   id: Kangaroo
@@ -827,6 +873,11 @@
   id: Knife
 
 - type: Tag
+  id: KnockdownImmune
+
+## L ##
+
+- type: Tag
   id: LavaBrig
 
 - type: Tag
@@ -837,6 +888,8 @@
 
 - type: Tag
   id: Lime
+
+## M ##
 
 - type: Tag
   id: Machete
@@ -889,9 +942,6 @@
   id: MagazineShotgun
 
 - type: Tag
-  id: MagazineMagnumSubMachineGun
-
-- type: Tag
   id: MagazinePistolSubMachineGun
 
 - type: Tag
@@ -921,6 +971,9 @@
   id: Medkit
 
 - type: Tag
+  id: MessyDrinkerImmune
+
+- type: Tag
   id: Metal
 
 - type: Tag
@@ -934,9 +987,6 @@
 
 - type: Tag
   id: MimeHappyHonk
-
-- type: Tag
-  id: FakeMindShieldImplant
 
 - type: Tag
   id: MindTransferTarget
@@ -971,6 +1021,8 @@
 - type: Tag
   id: Mushroom
 
+## N ##
+
 - type: Tag
   id: NoBlockAnchoring
 
@@ -984,10 +1036,9 @@
   id: Nugget # for chicken nuggets
 
 - type: Tag
-  id: FakeNukeDisk
-
-- type: Tag
   id: NukeOpsUplink
+
+## O ##
 
 - type: Tag
   id: Ointment
@@ -1009,6 +1060,8 @@
 
 - type: Tag
   id: OreUranium
+
+## P ##
 
 - type: Tag
   id: Packet
@@ -1036,6 +1089,9 @@
 
 - type: Tag
   id: PercussionInstrument
+
+- type: Tag
+  id: PetOnly
 
 - type: Tag
   id: PetWearable
@@ -1089,6 +1145,12 @@
   id: PlushieCarp
 
 - type: Tag
+  id: PlushieCarpHolo
+
+- type: Tag
+  id: PlushieCarpMagi
+
+- type: Tag
   id: PlushieGhost
 
 - type: Tag
@@ -1130,8 +1192,12 @@
 - type: Tag
   id: ProximitySensor
 
+## Q ##
+
 - type: Tag
   id: QuantumSpinInverter
+
+## R ##
 
 - type: Tag
   id: Radio
@@ -1145,6 +1211,9 @@
 
 - type: Tag
   id: ReinforcedGlassShard
+
+- type: Tag
+  id: RemoteSignaller
 
 - type: Tag
   id: ReptilianFood
@@ -1183,6 +1252,11 @@
   id: RollingPin
 
 - type: Tag
+  id: Ruminant
+
+## S ##
+
+- type: Tag
   id: SaltShaker
 
 - type: Tag
@@ -1196,6 +1270,9 @@
 
 - type: Tag
   id: Screwdriver
+
+- type: Tag # Flags items that scurrets can wear in their back and outerwear slots.
+  id: ScurretWearable
 
 - type: Tag
   id: SecBeltEquip
@@ -1252,6 +1329,9 @@
   id: Slice # sliced fruit, vegetables, pizza etc.
 
 - type: Tag
+  id: SlowImmune
+
+- type: Tag
   id: SmallAIChip
 
 - type: Tag
@@ -1306,6 +1386,9 @@
   id: StationAi
 
 - type: Tag
+  id: StationAiCoreElectronics
+
+- type: Tag
   id: StationMapElectronics
 
 - type: Tag
@@ -1313,6 +1396,9 @@
 
 - type: Tag
   id: StringInstrument
+
+- type: Tag
+  id: StunImmune
 
 - type: Tag
   id: SubdermalImplant
@@ -1343,6 +1429,8 @@
 
 - type: Tag
   id: Spellbook
+
+## T ##
 
 - type: Tag
   id: TabletopBoard
@@ -1378,6 +1466,9 @@
   id: Torch
 
 - type: Tag
+  id: ToteBase
+
+- type: Tag
   id: ToyRubberDuck
 
 - type: Tag
@@ -1398,6 +1489,8 @@
 - type: Tag
   id: TurretControlElectronics # Used in the construction of sentry turret control panels
 
+## U ##
+
 - type: Tag
   id: Unimplantable
 
@@ -1411,6 +1504,11 @@
   id: UtilityBelt
 
 - type: Tag
+  id: UtilityKnife
+
+## V ##
+
+- type: Tag
   id: Vegetable
 
 - type: Tag
@@ -1421,6 +1519,8 @@
 
 - type: Tag
   id: VoiceTrigger
+
+## W ##
 
 - type: Tag
   id: Wall
@@ -1468,6 +1568,9 @@
   id: Wine
 
 - type: Tag
+  id: WireBrush
+
+- type: Tag
   id: Wirecutter
 
 - type: Tag
@@ -1494,6 +1597,8 @@
 - type: Tag
   id: WriteIgnoreStamps
 
+## X ##
+
 - type: Tag
   id: XenoborgModuleEngi
 
@@ -1509,4 +1614,6 @@
 - type: Tag
   id: XenoborgModuleStealth
 
+## Y ##
+## Z ##
 # ALPHABETICAL

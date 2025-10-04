@@ -8,5 +8,6 @@
 - type: stack
   id: Manipulator
   name: stack-micro-manipulator
+  icon: { sprite: /Textures/Objects/Misc/stock_parts.rsi, state: micro_mani }
   spawn: MicroManipulatorStockPart
   maxCount: 10

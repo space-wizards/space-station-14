@@ -112,4 +112,10 @@ public sealed partial class ScatteringGrenadeComponent : Component
     /// We need to store this because we are only allowed to spawn and trigger timed entities on the next available frame update
     /// </summary>
     public bool IsTriggered = false;
+
+    /// <summary>
+    /// The trigger key that will activate the grenade.
+    /// </summary>
+    [DataField]
+    public string TriggerKey = "timer";
 }
