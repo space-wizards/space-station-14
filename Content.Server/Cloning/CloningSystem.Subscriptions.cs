@@ -3,6 +3,8 @@ using Content.Shared.Cloning.Events;
 using Content.Shared.FixedPoint;
 using Content.Server.Forensics.Components;
 using Content.Server.Forensics.Systems;
+using Content.Shared.Forensics.Components;
+using Content.Shared.Forensics.Systems;
 using Content.Shared.Inventory;
 using Content.Shared.Labels.Components;
 using Content.Shared.Labels.EntitySystems;
@@ -29,7 +31,7 @@ public sealed partial class CloningSystem
 {
     [Dependency] private readonly SharedStackSystem _stack = default!;
     [Dependency] private readonly LabelSystem _label = default!;
-    [Dependency] private readonly ForensicsSystem _forensics = default!;
+    [Dependency] private readonly SharedForensicsSystem _forensics = default!;
     [Dependency] private readonly PaperSystem _paper = default!;
     [Dependency] private readonly VocalSystem _vocal = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;

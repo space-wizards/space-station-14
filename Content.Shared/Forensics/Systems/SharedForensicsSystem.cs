@@ -36,7 +36,7 @@ using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
-public sealed class ForensicsSystem : EntitySystem
+public abstract class SharedForensicsSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
@@ -334,7 +334,7 @@ public sealed class ForensicsSystem : EntitySystem
 
     #region PublicAPI
 
-    public void RandomizeDNA(Entity<DnaComponent?> ent)
+    public override void RandomizeDNA(Entity<DnaComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;
@@ -346,7 +346,7 @@ public sealed class ForensicsSystem : EntitySystem
         RaiseLocalEvent(ent.Owner, ref ev);
     }
 
-    public void RandomizeFingerprint(Entity<FingerprintComponent?> ent)
+    public override void RandomizeFingerprint(Entity<FingerprintComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;
@@ -391,28 +391,4 @@ public sealed class ForensicsSystem : EntitySystem
     }
 
     #endregion
-}
-
-public abstract class SharedForensicsSystem : EntitySystem
-{
-    /// <summary>
-    /// Give the entity a new, random DNA string and call an event to notify other systems like the bloodstream that it has been changed.
-    /// Does nothing if it does not have the DnaComponent.
-    /// </summary>
-    public virtual void RandomizeDNA(Entity<DnaComponent?> ent) { }
-
-    /// <summary>
-    /// Give the entity a new, random fingerprint string.
-    /// Does nothing if it does not have the FingerprintComponent.
-    /// </summary>
-    public virtual void RandomizeFingerprint(Entity<FingerprintComponent?> ent) { }
-
-    /// <summary>
-    /// Transfer DNA from one entity onto the forensics of another.
-    /// </summary>
-    /// <param name="recipient">The entity receiving the DNA.</param>
-    /// <param name="donor">The entity applying its DNA.</param>
-    /// <param name="canDnaBeCleaned">If this DNA be cleaned off of the recipient. e.g. cleaning a knife vs cleaning a puddle of blood.</param>
-    public virtual void TransferDna(EntityUid recipient, EntityUid donor, bool canDnaBeCleaned = true) { }
-
 }
