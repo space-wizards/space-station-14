@@ -480,9 +480,14 @@
         - !type:MetaboliteThreshold
           min: 15
       effects:
+      - !type:AdjustReagent
+        reagent: Romerol
+        amount: -10
+        conditions:
+        - !type:IsZombie
       - !type:AdjustReagentGaussian
         reagent: Romerol
-        μ: 0.25
+        μ: 0.35
         σ: 0.1
         conditions:
         - !type:IsZombieImmune
@@ -527,6 +532,11 @@
         conditions:
         - !type:BrainDamage
           min: 70
+        - !type:MetaboliteThreshold
+          min: 15
+      - !type:ModifyBrainDamage
+        amount: 0.5
+        conditions:
         - !type:MetaboliteThreshold
           min: 15
       - !type:ModifyHeartDamage

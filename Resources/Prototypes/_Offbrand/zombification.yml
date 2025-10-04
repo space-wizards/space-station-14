@@ -62,11 +62,11 @@
         Bloodloss: -1
   - type: MeleeChemicalInjector
     solution: melee
-    transferAmount: 0.75
+    transferAmount: 2
   - type: SolutionRegeneration
     solution: melee
-    duration: 5
+    duration: 1
     generated:
       reagents:
       - ReagentId: Romerol
-        Quantity: 1
+        Quantity: 5

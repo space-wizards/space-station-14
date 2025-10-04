@@ -106,6 +106,12 @@ reagent-effect-condition-guidebook-is-zombie-immune =
                    *[false] is immunized against zombie infections
                 }
 
+reagent-effect-condition-guidebook-is-zombie =
+    the target { $invert ->
+                    [true] is not a zombie
+                   *[false] is a zombie
+                }
+
 reagent-effect-condition-guidebook-this-metabolite = this reagent's
 
 reagent-effect-guidebook-adjust-reagent-gaussian =
