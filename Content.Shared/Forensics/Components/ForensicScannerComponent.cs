@@ -15,31 +15,31 @@ namespace Content.Shared.Forensics.Components
         /// <summary>
         /// A list of fingerprint GUIDs that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
         /// </summary>
-        [ViewVariables, DataField]
+        [DataField]
         public List<string> Fingerprints = new();
 
         /// <summary>
         /// A list of glove fibers that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
         /// </summary>
-        [ViewVariables, DataField]
+        [DataField, AutoNetworkedField]
         public List<string> Fibers = new();
 
         /// <summary>
         /// DNA that the forensic scanner found from the <see cref="DnaComponent"/> on an entity.
         /// </summary>
-        [ViewVariables, DataField]
+        [DataField, AutoNetworkedField]
         public List<string> TouchDNAs = new();
 
         /// <summary>
         /// DNA that the forensic scanner found from the solution containers in an entity.
         /// </summary>
-        [ViewVariables, DataField]
+        [DataField, AutoNetworkedField]
         public List<string> SolutionDNAs = new();
 
         /// <summary>
         /// Residue that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
         /// </summary>
-        [ViewVariables, DataField]
+        [DataField, AutoNetworkedField]
         public List<string> Residues = new();
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Content.Shared.Forensics.Components
         /// <remarks>
         /// This will be used for the title of the printout and displayed to players.
         /// </remarks>
-        [ViewVariables, DataField]
+        [DataField, AutoNetworkedField]
         public string LastScannedName = string.Empty;
 
         /// <summary>
