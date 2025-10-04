@@ -456,7 +456,7 @@ namespace Content.Server.Voting.Managers
                     (Loc.GetString("ui-vote-votekick-abstain"), "abstain")
                 },
                 Duration = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VotekickTimer)),
-                InitiatorTimeout = TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.VotekickTimeout)),
+                InitiatorTimeout = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VotekickTimeout)),
                 VoterEligibility = voterEligibility,
                 DisplayVotes = false,
                 TargetEntity = targetNetEntity
@@ -580,7 +580,11 @@ namespace Content.Server.Voting.Managers
 
         private void TimeoutStandardVote(StandardVoteType type)
         {
-            var timeout = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteSameTypeTimeout));
+            var timeout = TimeSpan.FromSeconds(type switch
+            {
+                StandardVoteType.Votekick => _cfg.GetCVar(CCVars.VotekickTimeout),
+                _ => _cfg.GetCVar(CCVars.VoteSameTypeTimeout)
+            });
             _standardVoteTimeout[type] = _timing.RealTime + timeout;
             DirtyCanCallVoteAll();
         }
