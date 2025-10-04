@@ -215,8 +215,8 @@
     sound:
       path: /Audio/Effects/lightburn.ogg
   - type: Explosive
-    explosionType: MicroBomb
-    totalIntensity: 150
+    explosionType: Default
+    totalIntensity: 180
     intensitySlope: 5
-    maxIntensity: 15
+    maxIntensity: 18
     canCreateVacuum: false
