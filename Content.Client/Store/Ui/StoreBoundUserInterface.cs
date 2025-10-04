@@ -31,7 +31,9 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
 
         _menu = this.CreateWindow<StoreMenu>();
         if (EntMan.TryGetComponent<StoreComponent>(Owner, out var store))
+        {
             _menu.Title = Loc.GetString(store.Name);
+        }
 
         _menu.OnListingButtonPressed += (_, listing) =>
         {

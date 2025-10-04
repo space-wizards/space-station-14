@@ -14,7 +14,7 @@
                               VerticalExpand="True"
                               Margin="0 0 0 0"
                               VerticalAlignment="Center">
-                    <Label Text="{Loc 'anomaly-generator-fuel-display'}" StyleClasses="StatusFieldTitle" />
+                    <Label Text="{Loc 'anomaly-generator-fuel-display'}" StyleClasses="highlight" />
                     <ProgressBar Name="FuelBar"
                                  HorizontalExpand="True"
                                  MaxValue="1"
@@ -27,8 +27,8 @@
                                Text="0 %" />
                     </ProgressBar>
                 </BoxContainer>
-                <RichTextLabel Name="CooldownLabel" StyleClasses="StatusFieldTitle" />
-                <RichTextLabel Name="ReadyLabel" StyleClasses="StatusFieldTitle" />
+                <RichTextLabel Name="CooldownLabel" StyleClasses="highlight" />
+                <RichTextLabel Name="ReadyLabel" StyleClasses="highlight" />
             </BoxContainer>
             <!--Sprite View-->
             <PanelContainer Margin="12 0 0 0"

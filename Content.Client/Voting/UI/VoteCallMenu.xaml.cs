@@ -63,7 +63,7 @@ namespace Content.Client.Voting.UI
             RobustXamlLoader.Load(this);
             _votingSystem = _entityManager.System<VotingSystem>();
 
-            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace;
+            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSystem;
             CloseButton.OnPressed += _ => Close();
             VoteNotTrustedLabel.Text = Loc.GetString("ui-vote-trusted-users-notice", ("timeReq", _cfg.GetCVar(CCVars.VotekickEligibleVoterDeathtime)));
 
