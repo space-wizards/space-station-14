@@ -8,16 +8,22 @@
     <GuideEntityEmbed Entity="PosterContrabandRevolt" Caption=""/>
   </Box>
 
-  Revolutionaries are conversion antagonists sponsored by the [color=#ff0000]Syndicate[/color] who are tasked with taking control of the station. They have no fancy gimmicks or cheap tricks, they only have a cause and strength in numbers.
+  Revolutionaries are [bold]conversion antagonists[/bold] sponsored by the [color=#ff0000]Syndicate[/color].
+  They have no secret weapons, no hidden tricks—only a cause and strength in numbers.
+  Your purpose is not to destroy the station, but to [italic]seize control of it[/italic].
 
   ## Objectives
-  You must convert, cuff or kill all of the [textlink="Command staff" link="Command"] on station in no particular order.
+  Your main goal is to [color=cyan]convert[/color], [color=yellow]cuff[/color], or [color=red]kill[/color] all of the [textlink="Command staff" link="Command"].
 
-  Your objective is [bold]not to destroy the station[/bold], but [italic]to take it over[/italic], so try to minimize damage where possible.
+  These roles form the backbone of station authority, and they are always protected by [color=cyan]mindshield implants[/color].
 
-  [bold]The revolution will fail[/bold] if all of the [bold][color=#5e9cff]Head Revolutionaries[/color][/bold] die, and all [color=red]Revolutionaries[/color] will de-convert if this happens.
+  [bold]Converting command and/or security is critical for success.[/bold]
+  Converted command/security can play key roles in empowering your revolution.
 
-  ## Headrevs & Conversion
+  The revolution also fails if all [bold][color=#5e9cff]Head Revolutionaries[/color][/bold] are killed.
+  In that case, every [color=red]Revolutionary[/color] deconverts immediately.
+
+  ## Head Revolutionaries
   [bold][color=#5e9cff]Head Revolutionaries[/color][/bold] are chosen at the start of the shift and begin with a [color=cyan]flash[/color] and a pair of [color=cyan]sunglasses[/color].
 
   <Box>
@@ -25,8 +31,9 @@
     <GuideEntityEmbed Entity="ClothingEyesGlassesSunglasses"/>
   </Box>
 
-  You can convert crew members to your side by taking any [bold]flash[/bold] and attacking someone with it using [color=#ff0000]harm mode[/color].
-  However, [bold]you can't convert your target if they're wearing [color=cyan]flash protection[/color][/bold] such as sunglasses or a welding mask.
+  ### Conversion
+  - To convert, hit someone with a [bold]flash[/bold] on [color=red]harm mode[/color].
+  - [bold]Conversion fails if the target either has [color=cyan]flash protection[/color][/bold] (such as sunglasses, security glasses, or welding masks) [bold]or a [color=cyan]mindshield implant[/color].[/bold]
 
   <Box>
     <GuideEntityEmbed Entity="ClothingEyesGlassesSunglasses"/>
@@ -34,20 +41,48 @@
     <GuideEntityEmbed Entity="ClothingHeadHatWelding"/>
   </Box>
 
-  Another obstacle in your way are those pesky [color=cyan]mindshield implanters[/color]. These will:
-  - Prevent the implanted person from being converted into a [color=red]Revolutionary[/color]
-  - De-convert Revolutionaries, and will make them no longer loyal to your cause
-  - [bold]Visibly be destroyed upon being implanted into a [color=#5e9cff]Head Revolutionary[/color][/bold], giving you away
-  - NOT protect against flash disorientation
+  ## Regular Revolutionaries
+  A [color=red]Revolutionary[/color] (indicated by a red R) is a crewmember converted by a [color=#5e9cff]Head Revolutionary[/color] (indicated by a blue R).
+  They [bold]cannot convert others[/bold] themselves, but their loyalty and numbers are the lifeblood of the movement.
 
-  Assume all of [color=#cb0000]Security[/color] and [color=#1b67a5]Command[/color] are implanted with mindshields already, [bold]however they can be removed using an implant extractor, obtainable from the Medical department's MedFab.[/bold]
+  [bold][color=red]Revolutionaries[/color] are expected to follow the orders of the Head Revolutionaries.[/bold]
+  Acting independently weakens the cause, teamwork and coordination win revolutions.
+  Whether it’s subduing command and security, protecting a Headrev, or gathering resources, your strength comes from working together.
 
+  ## Mindshield Implants
   <Box>
     <GuideEntityEmbed Entity="MindShieldImplanter"/>
   </Box>
 
-  ## Revolutionary
-  A [color=red]Revolutionary[/color] is a crew member that has been converted by a [bold][color=#5e9cff]Head Revolutionary[/color][/bold].
+  [color=cyan]Mindshield implants[/color] are your greatest obstacle. They will:
+  - Prevent conversion into a [color=red]Revolutionary[/color]
+  - Deconvert existing revolutionaries
+  - [bold]Visibly be destroyed upon being implanted into a [color=#5e9cff]Head Revolutionary[/color][/bold], giving you away
+  - NOT protect against flash disorientation
 
-  [bold][color=red]Revolutionaries[/color] can't convert people themselves,[/bold] but they're more than capable of doing dirty work and carrying out orders.
+  Assume all of [color=#cb0000]Security[/color] and [color=#1b67a5]Command[/color] are implanted with mindshields already, however they can be removed using an implant extractor, obtainable from the Medical department's MedFab.
+
+  ### How to Remove Mindshields
+  1. Craft an [color=cyan]implant extractor[/color] at a [bold]Medical TechFab[/bold] (5 steel, 5 glass).
+
+  2. Subdue your target (stun, cuff, or otherwise restrain them).
+
+  3. Use the extractor to remove their implant [italic](ensure the implanter is set to extract mindshields).[/italic]
+
+  4. Take away any flash protection they have.
+
+  5. Flash them in [color=red]harm mode[/color] to convert.
+
+  <Box>
+    <GuideEntityEmbed Entity="MedicalTechFab"/>
+    <GuideEntityEmbed Entity="Implanter"/>
+  </Box>
+
+  [color=red][bold]Beware:[/bold][/color] Removing mindshields is risky, those with the security hud are able to see who is and isn't mindshielded. If Security notices a command or security member without a mindshield, it will instantly out them as being a revolutionary.
+
+  ### Tips for Converting Command/Security
+  - [bold]Coordinate[/bold] ambushes with other revolutionaries.
+  - [bold]Involve[/bold] converted medical staff to produce implant extractors.
+  - If conversion isn’t possible, [bold]restraining[/bold] or [bold]eliminating[/bold] the target is a last resort.
+
 </Document>
