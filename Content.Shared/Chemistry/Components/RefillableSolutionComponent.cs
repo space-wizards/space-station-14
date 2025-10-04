@@ -14,12 +14,18 @@ public sealed partial class RefillableSolutionComponent : Component
     /// <summary>
     /// Solution name that can added to easily.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public string Solution = "default";
 
     /// <summary>
     /// The maximum amount that can be transferred to the solution at once
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public FixedPoint2? MaxRefill = null;
+
+    /// <summary>
+    /// The refill doafter time required to transfer reagents into the solution.
+    /// </summary>
+    [DataField]
+    public float RefillTime = 0f;
 }
