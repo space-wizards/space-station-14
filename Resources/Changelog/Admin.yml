@@ -1,4 +1,7 @@
 ﻿AdminOnly: true
+Name: Admin
+Order: 2
+# Do NOT put anything after the Entries section, in order to prevent merge conflict with new CL entries
 Entries:
 - author: DrSmugleaf
   changes:
@@ -1447,5 +1450,3 @@ Entries:
   id: 175
   time: '2025-09-25T21:43:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40246
-Name: Admin
-Order: 2
