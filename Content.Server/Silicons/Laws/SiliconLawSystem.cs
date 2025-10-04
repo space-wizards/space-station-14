@@ -189,7 +189,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     }
 
     /// <summary>
-    /// Override the entity's subtype with the name of the last known lawset
+    /// When AdminSystem updates the playerinfo for this entity, override the mind role subtype with the name of the current lawset
     /// </summary>
     private void OnRoleSubtypeOverride(Entity<SiliconLawProviderComponent> ent, ref RoleSubtypeOverrideEvent args)
     {
