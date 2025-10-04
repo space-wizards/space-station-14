@@ -5,7 +5,7 @@ namespace Content.Client.Arcade.UI;
 
 public sealed class MineGameBoundUserInterface : BoundUserInterface
 {
-    [ViewVariables] private MineGameMenu? _menu;
+    [ViewVariables] private MineGameArcadeWindow? _menu;
 
     public MineGameBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
@@ -26,7 +26,7 @@ public sealed class MineGameBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _menu = this.CreateWindow<MineGameMenu>();
+        _menu = this.CreateWindow<MineGameArcadeWindow>();
         _menu.OnTileAction += SendTileAction;
         _menu.OnBoardSettingAction += SetBoardAction;
     }
