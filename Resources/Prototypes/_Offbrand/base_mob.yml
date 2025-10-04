@@ -316,3 +316,6 @@
       40: SevereLungDamage
       60: CriticalLungDamage
     alertCategory: LungDamage
+  - type: PassiveLungDamage
+    damage: -0.05
+    damageCap: 30

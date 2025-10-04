@@ -1,12 +1,14 @@
 using Content.Shared.Alert;
 using Content.Shared.FixedPoint;
 using Content.Shared.Rejuvenate;
+using Robust.Shared.Timing;
 
 namespace Content.Shared._Offbrand.Wounds;
 
 public sealed class LungDamageSystem : EntitySystem
 {
     [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -16,6 +18,26 @@ public sealed class LungDamageSystem : EntitySystem
         SubscribeLocalEvent<LungDamageComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<LungDamageAlertsComponent, AfterLungDamageChangedEvent>(OnLungDamageChanged);
         SubscribeLocalEvent<LungDamageAlertsComponent, ComponentShutdown>(OnAlertsShutdown);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<LungDamageComponent, PassiveLungDamageComponent>();
+        while (query.MoveNext(out var uid, out var lung, out var passive))
+        {
+            if (_timing.CurTime < passive.NextUpdate)
+                continue;
+
+            passive.NextUpdate = _timing.CurTime + passive.UpdateInterval;
+            Dirty(uid, passive);
+
+            if (lung.Damage > passive.DamageCap)
+                continue;
+
+            TryModifyDamage((uid, lung), passive.Damage);
+        }
     }
 
     private void OnBeforeBreath(Entity<LungDamageComponent> ent, ref BeforeBreathEvent args)

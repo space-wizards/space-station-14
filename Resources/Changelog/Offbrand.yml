@@ -79,4 +79,20 @@ Entries:
     type: Tweak
   id: 5
   time: '2025-10-03T21:00:00.0000000+00:00'
+- author: sowelipililimute
+  changes:
+  - message: Lung damage has been nerfed slightly from cold environments
+    type: Tweak
+  - message: Cyborgs can now strip crew
+    type: Add
+  - message: Romerol has been boosted in efficacy
+    type: Tweak
+  - message: Zombies should no longer self-overheat
+    type: Fix
+  - message: Zombies now inject more romerol on bite
+    type: Tweak
+  - message: Lung damage now passively regenerates for mild cases
+    type: Add
+  id: 6
+  time: '2025-10-03T22:00:00.0000000+00:00'
 Order: 2

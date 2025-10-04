@@ -3,6 +3,7 @@ using Content.Shared.Atmos;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared._Offbrand.Wounds;
 
@@ -69,6 +70,23 @@ public sealed partial class LungDamageOnInhaledAirTemperatureComponent : Compone
     /// </summary>
     [DataField(required: true)]
     public float HeatConstant;
+}
+
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+[Access(typeof(LungDamageSystem))]
+public sealed partial class PassiveLungDamageComponent : Component
+{
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
+    public TimeSpan NextUpdate;
+
+    [DataField]
+    public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
+
+    [DataField(required: true)]
+    public FixedPoint2 Damage;
+
+    [DataField(required: true)]
+    public FixedPoint2 DamageCap;
 }
 
 /// <summary>

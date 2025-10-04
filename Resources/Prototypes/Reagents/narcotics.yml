@@ -226,7 +226,9 @@
     Narcotic:
       statusEffects:
       - statusEffect: StatusEffectHeartStrainNicotine
-      effects: []
+      effects:
+      - !type:ModifyLungDamage
+        amount: 0.25
 
 # TODO: Replace these nonstandardized effects with generic brain damage
 - type: reagent
