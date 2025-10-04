@@ -19,7 +19,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Forensics.Systems;
 
-public abstract class SharedForensicsSystem : EntitySystem
+public sealed class ForensicsSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
@@ -52,8 +52,8 @@ public abstract class SharedForensicsSystem : EntitySystem
             foreach (string dna in soln)
             {
                 comp.DNAs.Add(dna);
-                Dirty(ent, ent.Comp);
             }
+            Dirty(ent, ent.Comp);
         }
     }
 
@@ -92,7 +92,7 @@ public abstract class SharedForensicsSystem : EntitySystem
             var partComp = EnsureComp<ForensicsComponent>(part);
             partComp.DNAs.Add(dna);
             partComp.CanDnaBeCleaned = false;
-            Dirty(uid, component);
+            Dirty(part, partComp);
         }
     }
 
@@ -113,36 +113,41 @@ public abstract class SharedForensicsSystem : EntitySystem
 
     private void OnRehydrated(Entity<ForensicsComponent> ent, ref GotRehydratedEvent args)
     {
-        CopyForensicsFrom(ent.Comp, args.Target);
+        CopyForensicsFrom(ent.Owner, args.Target);
     }
 
     /// <summary>
     /// Copy forensic information from a source entity to a destination.
     /// Existing forensic information on the target is still kept.
     /// </summary>
-    public void CopyForensicsFrom(ForensicsComponent src, EntityUid target)
+    public void CopyForensicsFrom(Entity <ForensicsComponent?> src, EntityUid target)
     {
-        var dest = EnsureComp<ForensicsComponent>(target);
-        foreach (var dna in src.DNAs)
+        if (!Resolve(target, ref src.Comp, false))
         {
-            dest.DNAs.Add(dna);
+            return;
         }
 
-        foreach (var fiber in src.Fibers)
+        var targetComp = EnsureComp<ForensicsComponent>(target);
+        foreach (var dna in src.Comp.DNAs)
         {
-            dest.Fibers.Add(fiber);
+            targetComp.DNAs.Add(dna);
         }
 
-        foreach (var print in src.Fingerprints)
+        foreach (var fiber in src.Comp.Fibers)
         {
-            dest.Fingerprints.Add(print);
+            targetComp.Fibers.Add(fiber);
         }
 
-        foreach (var residue in src.Residues)
+        foreach (var print in src.Comp.Fingerprints)
         {
-            dest.Residues.Add(residue);
+            targetComp.Fingerprints.Add(print);
         }
-        Dirty(target, src);
+
+        foreach (var residue in src.Comp.Residues)
+        {
+            targetComp.Residues.Add(residue);
+        }
+        Dirty(target, targetComp);
     }
 
     public List<string> GetSolutionsDNA(EntityUid uid)
@@ -167,7 +172,7 @@ public abstract class SharedForensicsSystem : EntitySystem
             {
                 if (data is DnaData)
                 {
-                    list.Add(((DnaData) data).DNA);
+                    list.Add(((DnaData)data).DNA);
                 }
             }
         }
@@ -282,14 +287,14 @@ public abstract class SharedForensicsSystem : EntitySystem
     public string GenerateDNA()
     {
         var letters = new[] { "A", "C", "G", "T" };
-        var DNA = string.Empty;
+        var dna = string.Empty;
 
         for (var i = 0; i < 16; i++)
         {
-            DNA += letters[_random.Next(letters.Length)];
+            dna += letters[_random.Next(letters.Length)];
         }
 
-        return DNA;
+        return dna;
     }
 
     private void ApplyEvidence(EntityUid user, EntityUid target)
