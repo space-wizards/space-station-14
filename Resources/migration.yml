@@ -706,6 +706,15 @@ BarSignWhiskeyEchoesAlignTile: BarSignWhiskeyEchoes
 # 2025-06-21
 ClothingNeckHeadphones: ClothingMultipleHeadphones
 
+# 2025-07-11
+CryogenicSleepUnitSpawnerLateJoin: HyperSleepUnitSpawnerLateJoin
+CryogenicSleepUnitSpawner: HyperSleepUnitSpawner
+CryogenicSleepUnit: HyperSleepUnitSpawner
+SignCryo: SignHyperSleep
+SignDirectionalCryo: SignDirectionalHyperSleep
+DefaultStationBeaconCryosleep: DefaultStationBeaconHypersleep
+HolopadGeneralCryosleep: HolopadGeneralHypersleep
+
 # 2025-07-17
 RipleyChassis: null
 HonkerChassis: null

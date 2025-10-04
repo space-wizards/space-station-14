@@ -35,10 +35,10 @@ Once it arrives, you'll need to make your way over to it, board it, and then sur
 The round doesn't officially end until you reach [bold]Central Command[/bold]
 
 <Box>
-  <GuideEntityEmbed Entity="CryogenicSleepUnit"/>
+  <GuideEntityEmbed Entity="HyperSleepUnit"/>
 </Box>
 
-If you need to leave a round early, you can do so through a [color=lime]cryogenic sleep unit[/color].
+If you need to leave a round early, you can do so through a [color=lime]hypersleep unit[/color].
 Simply going inside and leaving the game will store your belongings and ensure that they are not stolen or misused.
 
 ## More Info

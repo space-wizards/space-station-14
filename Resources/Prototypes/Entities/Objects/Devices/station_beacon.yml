@@ -756,11 +756,11 @@
 
 - type: entity
   parent: DefaultStationBeacon
-  id: DefaultStationBeaconCryosleep
-  suffix: Cryosleep
+  id: DefaultStationBeaconHypersleep
+  suffix: Hypersleep
   components:
   - type: NavMapBeacon
-    defaultText: station-beacon-cryosleep
+    defaultText: station-beacon-hypersleep
 
 - type: entity
   parent: DefaultStationBeacon

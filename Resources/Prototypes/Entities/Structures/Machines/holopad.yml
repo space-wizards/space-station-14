@@ -188,11 +188,11 @@
 
 - type: entity
   parent: Holopad
-  id: HolopadGeneralCryosleep
-  suffix: Cryosleep
+  id: HolopadGeneralHypersleep
+  suffix: Hypersleep
   components:
   - type: Label
-    currentLabel: holopad-general-cryosleep
+    currentLabel: holopad-general-hypersleep
 
 - type: entity
   parent: Holopad
