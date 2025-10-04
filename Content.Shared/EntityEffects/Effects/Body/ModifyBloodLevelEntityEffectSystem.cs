@@ -24,6 +24,6 @@ public sealed partial class ModifyBloodLevel : EntityEffectBase<ModifyBloodLevel
     public FixedPoint2 Amount = 1.0f;
 
     /// <inheritdoc/>
-    protected override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-modify-blood-level", ("chance", Probability), ("deltasign", MathF.Sign(Amount.Float())));
 }

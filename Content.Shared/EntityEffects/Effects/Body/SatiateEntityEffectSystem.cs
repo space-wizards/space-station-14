@@ -39,12 +39,12 @@ public abstract partial class Satiate<T> : EntityEffectBase<T> where T : EntityE
 
 public sealed partial class SatiateThirst : Satiate<SatiateThirst>
 {
-    protected override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-satiate-thirst", ("chance", Probability), ("relative",  Factor / AverageSatiation));
 }
 
 public sealed partial class SatiateHunger : Satiate<SatiateHunger>
 {
-    protected override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-satiate-hunger", ("chance", Probability), ("relative", Factor / AverageSatiation));
 }

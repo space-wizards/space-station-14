@@ -49,7 +49,7 @@ public sealed partial class GenericStatusEffect : EntityEffectBase<GenericStatus
     [DataField]
     public StatusEffectMetabolismType Type = StatusEffectMetabolismType.Update;
 
-    protected override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => Loc.GetString(
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => Loc.GetString(
         "entity-effect-guidebook-status-effect-old",
         ("chance", Probability),
         ("type", Type),

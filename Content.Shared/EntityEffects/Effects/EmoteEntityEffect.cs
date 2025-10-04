@@ -30,7 +30,7 @@ public sealed partial class Emote : EntityEffectBase<Emote>
     public bool Force;
 
     /// <inheritdoc/>
-    protected override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
         if (!ShowInGuidebook || !prototype.Resolve(EmoteId, out var emote))
             return null; // JUSTIFICATION: Emoting is mostly flavor, so same reason popup messages are not in here.

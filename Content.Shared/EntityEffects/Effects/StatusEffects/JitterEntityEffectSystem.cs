@@ -38,6 +38,6 @@ public sealed partial class Jitter : EntityEffectBase<Jitter>
     public bool Refresh = true;
 
     /// <inheritdoc/>
-    protected override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
         Loc.GetString("entity-effect-guidebook-jittering", ("chance", Probability));
 }

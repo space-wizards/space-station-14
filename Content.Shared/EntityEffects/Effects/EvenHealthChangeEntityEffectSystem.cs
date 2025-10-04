@@ -61,7 +61,7 @@ public sealed partial class EvenHealthChange : EntityEffectBase<EvenHealthChange
     public bool IgnoreResistances = true;
 
     /// <inheritdoc/>
-    protected override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
         var damages = new List<string>();
         var heals = false;

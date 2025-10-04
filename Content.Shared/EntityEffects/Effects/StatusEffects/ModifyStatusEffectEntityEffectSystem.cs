@@ -43,7 +43,7 @@ public sealed partial class ModifyStatusEffect : BaseStatusEntityEffect<ModifySt
     public EntProtoId EffectProto;
 
     /// <inheritdoc />
-    protected override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
+    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
         Time == null
             ? Loc.GetString(
                 "entity-effect-guidebook-status-effect-indef",

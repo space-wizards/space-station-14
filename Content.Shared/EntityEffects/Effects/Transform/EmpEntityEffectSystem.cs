@@ -44,7 +44,7 @@ public sealed partial class Emp : EntityEffectBase<Emp>
     public float Duration = 15;
 
     /// <inheritdoc/>
-    protected override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-emp-reaction-effect", ("chance", Probability));
 
     public override bool ShouldLog => true;

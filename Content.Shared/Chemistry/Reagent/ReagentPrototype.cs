@@ -212,6 +212,31 @@ namespace Content.Shared.Chemistry.Reagent
 
             return removed;
         }
+
+        public IEnumerable<string> GuidebookReagentEffectsDescription(IPrototypeManager prototype, IEntitySystemManager entSys, IEnumerable<EntityEffect> effects)
+        {
+            return effects.Select(x => GuidebookReagentEffectDescription(prototype, entSys, x))
+                .Where(x => x is not null)
+                .Select(x => x!)
+                .ToArray();
+        }
+
+        public string? GuidebookReagentEffectDescription(IPrototypeManager prototype, IEntitySystemManager entSys, EntityEffect effect)
+        {
+            if (effect.EntityEffectGuidebookText(prototype, entSys) is not { } description)
+                return null;
+
+            // TODO: PASS SCALE!!!
+            return Loc.GetString(
+                "guidebook-reagent-effect-description",
+                ("effect", description),
+                ("chance", effect.Probability),
+                ("conditionCount", effect.Conditions?.Length ?? 0),
+                ("conditions",
+                    ContentLocalizationManager.FormatList(
+                        effect.Conditions?.Select(x => x.EntityConditionGuidebookText(prototype)).ToList() ?? new List<string>()
+                    )));
+        }
     }
 
     [Serializable, NetSerializable]
@@ -228,15 +253,12 @@ namespace Content.Shared.Chemistry.Reagent
         {
             ReagentPrototype = proto.ID;
             GuideEntries = proto.Metabolisms?
-                .Select(x => (x.Key, x.Value.MakeGuideEntry(prototype, entSys)))
+                .Select(x => (x.Key, x.Value.MakeGuideEntry(prototype, entSys, proto)))
                 .ToDictionary(x => x.Key, x => x.Item2);
             if (proto.PlantMetabolisms.Count > 0)
             {
-                PlantMetabolisms = new List<string>(proto.PlantMetabolisms
-                    .Select(x => x.GuidebookEffectDescription(prototype, entSys, "guidebook-reagent-effect-description"))
-                    .Where(x => x is not null)
-                    .Select(x => x!)
-                    .ToArray());
+                PlantMetabolisms =
+                    new List<string>(proto.GuidebookReagentEffectsDescription(prototype, entSys, proto.PlantMetabolisms));
             }
         }
     }
@@ -261,14 +283,9 @@ namespace Content.Shared.Chemistry.Reagent
 
         public string EntityEffectFormat => "guidebook-reagent-effect-description";
 
-        public ReagentEffectsGuideEntry MakeGuideEntry(IPrototypeManager prototype, IEntitySystemManager entSys)
+        public ReagentEffectsGuideEntry MakeGuideEntry(IPrototypeManager prototype, IEntitySystemManager entSys, ReagentPrototype proto)
         {
-            return new ReagentEffectsGuideEntry(MetabolismRate,
-                Effects
-                    .Select(x => x.GuidebookEffectDescription(prototype, entSys, EntityEffectFormat)) // hate.
-                    .Where(x => x is not null)
-                    .Select(x => x!)
-                    .ToArray());
+            return new ReagentEffectsGuideEntry(MetabolismRate, proto.GuidebookReagentEffectsDescription(prototype, entSys, Effects).ToArray());
         }
     }
 

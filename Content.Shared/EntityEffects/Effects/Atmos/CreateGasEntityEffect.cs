@@ -20,7 +20,7 @@ public sealed partial class CreateGas : EntityEffectBase<CreateGas>
     [DataField]
     public float Multiplier = 3f;
 
-    protected override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
         var atmos = entSys.GetEntitySystem<SharedAtmosphereSystem>();
         var gasProto = atmos.GetGas(Gas);

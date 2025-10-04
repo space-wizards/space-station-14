@@ -54,12 +54,12 @@ public sealed partial class ArtifactDurabilityRestore : EntityEffectBase<Artifac
     [DataField]
     public int RestoredDurability = 1;
 
-    protected override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
         Loc.GetString("entity-effect-guidebook-artifact-durability-restore", ("restored", RestoredDurability));
 }
 
 public sealed partial class ArtifactUnlock : EntityEffectBase<ArtifactUnlock>
 {
-    protected override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
         Loc.GetString("entity-effect-guidebook-artifact-unlock", ("chance", Probability));
 }

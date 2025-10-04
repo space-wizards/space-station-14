@@ -27,7 +27,7 @@ public sealed partial class AreaReactionEffect : EntityEffectBase<AreaReactionEf
     /// </summary>
     [DataField(required: true)] public SoundSpecifier Sound = default!;
 
-    protected override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-area-reaction",
             ("duration", Duration)
         );

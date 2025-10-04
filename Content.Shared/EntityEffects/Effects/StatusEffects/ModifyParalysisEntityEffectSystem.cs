@@ -33,7 +33,7 @@ public sealed partial class ModifyParalysisEntityEffectSystem : EntityEffectSyst
 public sealed partial class ModifyParalysis : BaseStatusEntityEffect<ModifyParalysis>
 {
     /// <inheritdoc/>
-    protected override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
+    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
         Time == null
             ? null // Not gonna make a whole new looc for something that shouldn't ever exist.
             : Loc.GetString(

@@ -19,7 +19,7 @@ public sealed partial class SetSolutionTemperature : EntityEffectBase<SetSolutio
     [DataField(required: true)]
     public float Temperature;
 
-    protected override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-set-solution-temperature-effect",
             ("chance", Probability),
             ("temperature", Temperature));
@@ -62,7 +62,7 @@ public sealed partial class AdjustSolutionTemperature : EntityEffectBase<AdjustS
     [DataField]
     public bool Scaled;
 
-    protected override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-adjust-solution-temperature-effect",
             ("chance", Probability),
             ("deltasign", MathF.Sign(Delta)),
@@ -126,7 +126,7 @@ public sealed partial class AdjustSolutionThermalEnergy : EntityEffectBase<Adjus
     [DataField]
     public bool Scaled;
 
-    protected override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-adjust-solution-temperature-effect",
             ("chance", Probability),
             ("deltasign", MathF.Sign(Delta)),

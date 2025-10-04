@@ -204,24 +204,7 @@ public abstract partial class EntityEffect
     /// <summary>
     /// A general description of the entity effect for guidebooks.
     /// </summary>
-    protected virtual string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => null;
-
-    public string? GuidebookEffectDescription(IPrototypeManager prototype, IEntitySystemManager entSys, string locFormat)
-    {
-        if (EntityEffectGuidebookText(prototype, entSys) is not { } effect)
-            return null;
-
-        // TODO: Min Scale!!!
-        return Loc.GetString(
-            locFormat,
-            ("effect", effect),
-            ("chance", Probability),
-            ("conditionCount", Conditions?.Length ?? 0),
-            ("conditions",
-                ContentLocalizationManager.FormatList(
-                    Conditions?.Select(x => x.EntityConditionGuidebookText(prototype)).ToList() ?? new List<string>()
-                )));
-    }
+    public virtual string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => null;
 
     [DataField]
     public virtual bool ShouldLog { get; private set; } = true;

@@ -16,6 +16,6 @@ public sealed partial class Flammable : EntityEffectBase<Flammable>
     public override bool ShouldLog => true;
 
     /// <inheritdoc/>
-    protected override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-flammable-reaction", ("chance", Probability));
 }

@@ -53,7 +53,7 @@ public sealed partial class ModifyKnockdown : BaseStatusEntityEffect<ModifyKnock
     public bool Drop;
 
     /// <inheritdoc />
-    protected override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
+    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
         Time == null
         ? null
         : Loc.GetString(

@@ -25,6 +25,6 @@ public sealed partial class ResetNarcolepsy : EntityEffectBase<ResetNarcolepsy>
     public TimeSpan TimerReset = TimeSpan.FromSeconds(600);
 
     /// <inheritdoc/>
-    protected override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
         Loc.GetString("entity-effect-guidebook-reset-narcolepsy", ("chance", Probability));
 }

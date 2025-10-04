@@ -46,7 +46,7 @@ public sealed partial class AddReagentToSolution : EntityEffectBase<AddReagentTo
     public float StrengthModifier = 1.0f;
 
     /// <remarks>This guidebook isn't used since the effect is for reactive anyways. Not even sure why I updated it tbqh.</remarks>
-    protected override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
         return prototype.Resolve(Reagent, out ReagentPrototype? proto)
             ? Loc.GetString("entity-effect-guidebook-add-to-solution-reaction",
