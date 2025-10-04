@@ -6,20 +6,42 @@
   speciesRestriction: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
-      state: fennec
+      state: fennec_front
     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
-      state: fennec-tip
+      state: fennec-tip_front
+
+- type: marking
+  id: VulpTailFennecBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: fennec_behind
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: fennec-tip_behind
 
 - type: marking
   id: VulpTailFluffy
   bodyPart: Tail
   markingCategory: Tail
-  speciesRestriction: [ Vulpkanin ]
+  speciesRestriction: []
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
-      state: fluffy
+      state: fluffy_front
     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
-      state: fluffy-tip
+      state: fluffy-tip_front
+
+- type: marking
+  id: VulpTailFluffyBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: fluffy_behind
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: fluffy-tip_behind
 
 - type: marking
   id: VulpTailHusky
@@ -28,11 +50,20 @@
   speciesRestriction: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
-      state: husky
+      state: husky-inner_front
     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
-      state: husky-inner
-    - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
-      state: husky-outer
+      state: husky-outer_front
+
+- type: marking
+  id: VulpTailHuskyBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: husky-inner_behind
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: husky-outer_behind
 
 - type: marking
   id: VulpTailLong
@@ -41,9 +72,20 @@
   speciesRestriction: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
-      state: long
+      state: long_front
     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
-      state: long-tip
+      state: long-tip_front
+
+- type: marking
+  id: VulpTailLongBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: long_behind
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: long-tip_behind
 
 - type: marking
   id: VulpTailVulp
@@ -52,9 +94,20 @@
   speciesRestriction: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
-      state: vulp
+      state: vulp_front
     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
-      state: vulp-tip
+      state: vulp-tip_front
+
+- type: marking
+  id: VulpTailVulpBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: vulp_behind
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: vulp-tip_behind
 
 - type: marking
   id: VulpTailVulpFade
@@ -63,6 +116,17 @@
   speciesRestriction: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
-      state: vulp
+      state: vulp_front
     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
-      state: vulp-fade
+      state: vulp-fade_front
+
+- type: marking
+  id: VulpTailVulpFadeBehind
+  bodyPart: TailBehind
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: vulp_behind
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: vulp-fade_behind

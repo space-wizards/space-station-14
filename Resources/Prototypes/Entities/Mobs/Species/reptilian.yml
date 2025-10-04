@@ -12,6 +12,7 @@
     - HeadTop
     - HeadSide
     - Tail
+    - TailBehind
     undergarmentBottom: UndergarmentBottomBoxersReptilian
   - type: Hunger
   - type: Puller
