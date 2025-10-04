@@ -27,7 +27,7 @@ namespace Content.Shared.Forensics.Systems
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
-        [Dependency] private readonly SharedForensicsSystem _forensicsSystem = default!;
+        [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
         [Dependency] private readonly TagSystem _tag = default!;
 
         private static readonly ProtoId<TagPrototype> DNASolutionScannableTag = "DNASolutionScannable";
@@ -50,8 +50,8 @@ namespace Content.Shared.Forensics.Systems
             var state = new ForensicScannerBoundUserInterfaceState(
                 component.Fingerprints,
                 component.Fibers,
-                component.Dnas,
-                component.SolutionDnas,
+                component.DNAs,
+                component.SolutionDNAs,
                 component.Residues,
                 component.LastScannedName,
                 component.PrintCooldown,
@@ -65,39 +65,36 @@ namespace Content.Shared.Forensics.Systems
             if (args.Handled || args.Cancelled)
                 return;
 
-            if (!TryComp(uid, out ForensicScannerComponent? scanner))
-                return;
-
             if (args.Args.Target != null)
             {
                 if (!TryComp<ForensicsComponent>(args.Args.Target, out var forensics))
                 {
-                    scanner.Fingerprints = new();
-                    scanner.Fibers = new();
-                    scanner.Dnas = new();
-                    scanner.Residues = new();
+                    component.Fingerprints = new();
+                    component.Fibers = new();
+                    component.DNAs = new();
+                    component.Residues = new();
                 }
                 else
                 {
-                    scanner.Fingerprints = forensics.Fingerprints.ToList();
-                    scanner.Fibers = forensics.Fibers.ToList();
-                    scanner.Dnas = forensics.DNAs.ToList();
-                    scanner.Residues = forensics.Residues.ToList();
+                    component.Fingerprints = forensics.Fingerprints.ToList();
+                    component.Fibers = forensics.Fibers.ToList();
+                    component.DNAs = forensics.DNAs.ToList();
+                    component.Residues = forensics.Residues.ToList();
                 }
 
                 if (_tag.HasTag(args.Args.Target.Value, DNASolutionScannableTag))
                 {
-                    scanner.SolutionDnas = _forensicsSystem.GetSolutionsDNA(args.Args.Target.Value);
+                    component.SolutionDNAs = _forensicsSystem.GetSolutionsDNA(args.Args.Target.Value);
                 } else
                 {
-                    scanner.SolutionDnas = new();
+                    component.SolutionDNAs = new();
                 }
 
-                scanner.LastScannedName = MetaData(args.Args.Target.Value).EntityName;
+                component.LastScannedName = MetaData(args.Args.Target.Value).EntityName;
                 Dirty(uid, component);
             }
 
-            OpenUserInterface(args.Args.User, (uid, scanner));
+            OpenUserInterface(args.Args.User, (uid, component));
         }
 
         /// <remarks>
@@ -221,14 +218,14 @@ namespace Content.Shared.Forensics.Systems
             }
             text.AppendLine();
             text.AppendLine(Loc.GetString("forensic-scanner-interface-dnas"));
-            foreach (var dna in component.Dnas)
+            foreach (var dna in component.DNAs)
             {
                 text.AppendLine(dna);
             }
-            foreach (var dna in component.SolutionDnas)
+            foreach (var dna in component.SolutionDNAs)
             {
                 Log.Debug(dna);
-                if (component.Dnas.Contains(dna))
+                if (component.DNAs.Contains(dna))
                     continue;
                 text.AppendLine(dna);
             }
@@ -255,8 +252,8 @@ namespace Content.Shared.Forensics.Systems
         {
             component.Fingerprints = new();
             component.Fibers = new();
-            component.Dnas = new();
-            component.SolutionDnas = new();
+            component.DNAs = new();
+            component.SolutionDNAs = new();
             component.LastScannedName = string.Empty;
 
             Dirty(uid, component);

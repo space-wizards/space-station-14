@@ -13,6 +13,6 @@ namespace Content.Shared.Forensics.Components
         public LocId FiberMaterial = "fibers-synthetic";
 
         [DataField, AutoNetworkedField]
-        public string? FiberColor;
+        public LocId? FiberColor;
     }
 }

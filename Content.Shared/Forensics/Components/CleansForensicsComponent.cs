@@ -12,5 +12,5 @@ public sealed partial class CleansForensicsComponent : Component
     /// How long it takes to wipe prints/blood/etc. off of things using this entity
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float CleanDelay = 12.0f;
+    public TimeSpan CleanDelay =  TimeSpan.FromSeconds(12.0f);
 }

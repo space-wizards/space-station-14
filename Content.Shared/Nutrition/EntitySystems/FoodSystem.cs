@@ -31,7 +31,7 @@ public sealed class FoodSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedForensicsSystem _forensics = default!;
+    [Dependency] private readonly ForensicsSystem _forensics = default!;
 
     public const float MaxFeedDistance = 1.0f;
 
