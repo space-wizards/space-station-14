@@ -3754,7 +3754,6 @@
   - type: Tag
     tags:
     - DoorBumpOpener
-    - StunImmune
   - type: Emoting
   - type: BodyEmotes
     soundsId: Nymph
