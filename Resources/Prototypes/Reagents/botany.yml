@@ -127,6 +127,9 @@
       metabolismRate: 0.2
       statusEffects:
       - statusEffect: StatusEffectPainkillersNegligibleRobustHarvest
+        conditions:
+        - !type:OrganType
+          type: Plant
       effects:
       - !type:HealthChange
         damage:
