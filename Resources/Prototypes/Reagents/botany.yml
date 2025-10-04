@@ -14,8 +14,8 @@
       effects:
       - !type:SatiateHunger
         conditions:
-        - !type:OrganType
-          type: Plant
+        - !type:MetabolizerType
+          type: [Plant]
 
 - type: reagent
   id: Left4Zed
@@ -38,15 +38,15 @@
       effects:
       - !type:SatiateHunger
         conditions:
-        - !type:OrganType
-          type: Plant
+        - !type:MetabolizerType
+          type: [Plant]
       - !type:HealthChange
         damage:
           types:
             Poison: 1
         conditions:
-        - !type:OrganType
-          type: Plant
+        - !type:MetabolizerType
+          type: [Plant]
 
 - type: reagent
   id: PestKiller
@@ -69,8 +69,8 @@
           types:
             Poison: 3
         conditions:
-        - !type:OrganType
-          type: Plant
+        - !type:MetabolizerType
+          type: [Plant]
 
 - type: reagent
   id: PlantBGone
@@ -100,8 +100,8 @@
             Slash: 1
             Piercing: 1
         conditions:
-        - !type:OrganType
-          type: Plant
+        - !type:MetabolizerType
+          type: [Plant]
 
 - type: reagent
   id: RobustHarvest
@@ -132,13 +132,14 @@
             Slash: -3
             Piercing: -3
         conditions:
-        - !type:OrganType
-          type: Plant
+        - !type:MetabolizerType
+          type: [Plant]
       - !type:HealthChange
         conditions:
-        - !type:OrganType
-          type: Plant
+        - !type:MetabolizerType
+          type: [Plant]
         - !type:ReagentThreshold
+          reagent: RobustHarvest
           min: 30
         damage:
           types:
@@ -150,9 +151,10 @@
       - !type:Polymorph
         prototype: TreeMorph
         conditions:
-          - !type:OrganType
-            type: Plant
+          - !type:MetabolizerType
+            type: [Plant]
           - !type:ReagentThreshold
+            reagent: RobustHarvest
             min: 80
 
 - type: reagent
@@ -192,8 +194,8 @@
           types:
             Poison: 4
         conditions:
-        - !type:OrganType
-          type: Plant
+        - !type:MetabolizerType
+          type: [Plant]
 
 - type: reagent
   id: Ammonia
@@ -221,9 +223,9 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:OrganType
-          type: Rat
-          shouldHave: false
+        - !type:MetabolizerType
+          type: [ Rat ]
+          inverted: true
         - !type:ReagentThreshold
           reagent: Ammonia
           min: 1
@@ -231,15 +233,12 @@
         damage:
           types:
             Poison: 0.25
-      - !type:ChemVomit
+      - !type:Vomit
         probability: 0.12
         conditions:
-        - !type:OrganType
-          type: Rat
-          shouldHave: false
-        - !type:OrganType
-          type: Vox
-          shouldHave: false
+        - !type:MetabolizerType
+          type: [ Rat, Vox ]
+          inverted: true
         - !type:ReagentThreshold
           reagent: Ammonia
           min: 0.8
@@ -254,23 +253,23 @@
           min: 0.25
       - !type:HealthChange
         conditions:
-        - !type:OrganType
-          type: Rat
+        - !type:MetabolizerType
+          type: [ Rat ]
         - !type:ReagentThreshold
           reagent: Ammonia
           min: 1
-        scaleByQuantity: true
+        scaling: true
         ignoreResistances: true
         damage:
           groups:
-            Brute: -5
-            Burn: -5
+            Brute: -2.5
+            Burn: -2.5
           types:
             Bloodloss: -5
       - !type:Oxygenate # ammonia displaces nitrogen in vox blood
         conditions:
-        - !type:OrganType
-          type: Vox
+        - !type:MetabolizerType
+          type: [ Vox ]
         factor: -4
 
 
