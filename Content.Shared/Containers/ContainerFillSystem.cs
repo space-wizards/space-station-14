@@ -1,15 +1,22 @@
 using System.Linq;
 using System.Numerics;
 using Content.Shared.EntityTable;
+using Content.Shared.Item;
+using Content.Shared.Storage;
+using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Containers;
 
 public sealed class ContainerFillSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly EntityTableSystem _entityTable = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!;
+    [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
@@ -57,6 +64,9 @@ public sealed class ContainerFillSystem : EntitySystem
         if (TerminatingOrDeleted(ent) || !Exists(ent))
             return;
 
+        // we include special behavior for storage due to stack merging and other things that it handles.
+        var storageComp = CompOrNull<StorageComponent>(ent);
+
         var xform = Transform(ent);
         var coords = new EntityCoordinates(ent, Vector2.Zero);
 
@@ -68,11 +78,20 @@ public sealed class ContainerFillSystem : EntitySystem
                 continue;
             }
 
-            var spawns = _entityTable.GetSpawns(table);
+            var spawns = _entityTable.GetSpawns(table)
+                .OrderByDescending(p => _prototype.Index(p).TryGetComponent<ItemComponent>(out var item, EntityManager.ComponentFactory)
+                    ? _item.GetItemShape(item).GetArea()
+                    : int.MaxValue);
+
             foreach (var proto in spawns)
             {
                 var spawn = Spawn(proto, coords);
-                if (!_containerSystem.Insert(spawn, container, containerXform: xform))
+
+                var success = storageComp != null && containerId == StorageComponent.ContainerId
+                    ? _storage.Insert(ent, spawn, out _, storageComp: storageComp, playSound: false)
+                    : _containerSystem.Insert(spawn, container, containerXform: xform);
+
+                if (!success)
                 {
                     var alreadyContained = container.ContainedEntities.Count > 0 ? string.Join("\n", container.ContainedEntities.Select(e => $"\t - {ToPrettyString(e)}")) : "< empty >";
                     Log.Error($"Entity {ToPrettyString(ent)} with a {nameof(EntityTableContainerFillComponent)} failed to insert an entity: {ToPrettyString(spawn)}.\nCurrent contents:\n{alreadyContained}");
