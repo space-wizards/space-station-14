@@ -45,7 +45,7 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
         var originEnt = args.Actor;
         var telePointXForm = Transform(telePointEnt.Value);
 
-        var coords = Transform(originEnt).Coordinates;
+        var coords = telePointXForm.Coordinates;
         var newCoords = coords.Offset(_random.NextVector2(ent.Comp.MaxRandomRadius));
 
         for (var i = 0; i < MaxRandomTeleportAttempts; i++)
