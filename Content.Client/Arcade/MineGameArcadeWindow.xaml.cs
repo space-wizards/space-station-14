@@ -11,7 +11,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Utility;
 using Robust.Shared.Timing;
 using TerraFX.Interop.Xlib;
-using static Content.Shared.Arcade.MineGameShared;
+using Content.Shared.Arcade;
 
 namespace Content.Client.Arcade;
 

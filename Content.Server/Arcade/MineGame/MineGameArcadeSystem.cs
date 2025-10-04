@@ -5,7 +5,6 @@ using Content.Shared.Power;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using static Content.Shared.Arcade.MineGameShared;
 
 namespace Content.Server.Arcade.MineGame;
 
@@ -95,6 +94,6 @@ public sealed partial class MineGameArcadeSystem : EntitySystem
         if (args.Powered)
             return;
 
-        _uiSystem.CloseUi(uid, MineGameShared.MineGameArcadeUiKey.Key);
+        _uiSystem.CloseUi(uid, MineGameArcadeUiKey.Key);
     }
 }

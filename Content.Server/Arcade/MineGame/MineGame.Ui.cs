@@ -1,4 +1,4 @@
-using static Content.Shared.Arcade.MineGameShared;
+using Content.Shared.Arcade;
 
 namespace Content.Server.Arcade.MineGame;
 

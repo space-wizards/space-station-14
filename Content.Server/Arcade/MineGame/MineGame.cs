@@ -1,7 +1,7 @@
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using static Content.Shared.Arcade.MineGameShared;
+using Content.Shared.Arcade;
 
 namespace Content.Server.Arcade.MineGame;
 
