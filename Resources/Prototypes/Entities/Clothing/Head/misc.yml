@@ -197,7 +197,6 @@
   - type: Clothing
     sprite: Clothing/Head/Misc/cone.rsi
   - type: Item
-    sprite: Clothing/Head/Misc/cone.rsi
     storedRotation: 0
   - type: Appearance
   - type: Stack
