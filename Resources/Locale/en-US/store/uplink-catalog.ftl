@@ -427,8 +427,8 @@ uplink-revolver-cap-gun-desc = Looks almost like the real thing! Ages 8 and up.
 uplink-syndicate-stamp-name = Syndicate Rubber Stamp
 uplink-syndicate-stamp-desc = A rubber stamp for stamping important documents.
 
-uplink-cat-ears-name = Cat Ears
-uplink-cat-ears-desc = UwU
+uplink-cat-maid-bundle-name = Cat Maid Bundle
+uplink-cat-maid-bundle-desc = OwO UwU :3 Nyaaa~
 
 uplink-outlaw-hat-name = Outlaw Hat
 uplink-outlaw-hat-desc = A hat that makes you look like you carry a notched pistol, numbered one and nineteen more.

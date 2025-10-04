@@ -219,7 +219,7 @@
   - type: AddAccentClothing
     accent: OwOAccent
   - type: StaticPrice
-    price: 15000
+    price: 500
 
 - type: entity
   parent: [ClothingHeadHatCatEars, BaseToggleClothing]
