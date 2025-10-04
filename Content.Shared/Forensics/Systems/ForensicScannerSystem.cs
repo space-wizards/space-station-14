@@ -51,8 +51,8 @@ namespace Content.Shared.Forensics.Systems
             var state = new ForensicScannerBoundUserInterfaceState(
                 component.Fingerprints,
                 component.Fibers,
-                component.TouchDNAs,
-                component.SolutionDNAs,
+                component.Dnas,
+                component.SolutionDnas,
                 component.Residues,
                 component.LastScannedName,
                 component.PrintCooldown,
