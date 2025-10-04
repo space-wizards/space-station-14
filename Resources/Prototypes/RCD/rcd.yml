@@ -201,7 +201,7 @@
   category: Lighting
   sprite: /Textures/Interface/Radial/RCD/tube_light.png
   mode: ConstructObject
-  prototype: Poweredlight
+  prototype: PoweredLightTubeFixtureFluorescent
   cost: 2
   delay: 1
   collisionMask: TabletopMachineMask
@@ -214,7 +214,7 @@
   category: Lighting
   sprite: /Textures/Interface/Radial/RCD/bulb_light.png
   mode: ConstructObject
-  prototype: PoweredSmallLight
+  prototype: PoweredLightBulbFixtureIncandescent
   cost: 2
   delay: 1
   collisionMask: TabletopMachineMask
