@@ -4,8 +4,7 @@
   abstract: true
   components:
   - type: Sprite
-    sprite: Structures/Storage/tanks.rsi
-    state: cleanerdispenser
+    sprite: Structures/Wallmounts/walldispenser.rsi
   - type: Appearance
   - type: Destructible
     thresholds:
@@ -48,12 +47,42 @@
 
 - type: entity
   parent: BaseDispenser
-  id: FuelDispenser
-  name: fuel dispenser
+  id: CleanerDispenser
+  name: space cleaner dispenser
+  description: Wallmount Space Cleaner dispenser.
   components:
   - type: Sprite
-    sprite: Structures/Storage/tanks.rsi
-    state: fueldispenser
+    layers:
+    - state: cleanerdispenser
+    - state: cleanerdispenser-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: cleanerdispenser-
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: SpaceCleaner
+          Quantity: 5000
+  - type: ReagentTank
+
+- type: entity
+  parent: BaseDispenser
+  id: FuelDispenser
+  name: fuel dispenser
+  description: Wallmount Fuel dispenser.
+  components:
+  - type: Sprite
+    layers:
+    - state: fueldispenser
+    - state: fueldispenser-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: fueldispenser-
   - type: SolutionContainerManager
     solutions:
       tank:
@@ -67,16 +96,23 @@
     weldingDamage:
       types:
         Heat: 20
+  - type: PacifismDangerousAttack
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 50
 
 - type: entity
   parent: BaseDispenser
-  id: CleanerDispenser
-  name: space cleaner dispenser
+  id: PepperDispenser
+  name: pepper dispenser
+  description: Wallmount Pepper dispenser.
   components:
+  - type: Sprite
+    layers:
+    - state: pepperdispenser
   - type: SolutionContainerManager
     solutions:
       tank:
         reagents:
-        - ReagentId: SpaceCleaner
-          Quantity: 5000
-  - type: ReagentTank
+        - ReagentId: Blackpepper
+          Quantity: 500
