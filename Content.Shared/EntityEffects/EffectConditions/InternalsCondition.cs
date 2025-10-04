@@ -1,8 +1,7 @@
 using Content.Shared.Body.Components;
-using Content.Shared.EntityEffects;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.EntityEffects.EffectConditions;
+namespace Content.Shared.EntityEffects.EffectConditions;
 
 /// <summary>
 ///     Condition for if the entity is or isn't wearing internals.
@@ -20,7 +19,7 @@ public sealed partial class Internals : EntityEffectCondition
         if (!args.EntityManager.TryGetComponent(args.TargetEntity, out InternalsComponent? internalsComp))
             return !UsingInternals; // They have no internals to wear.
 
-        var internalsState = internalsComp.GasTankEntity == null;
+        var internalsState = internalsComp.GasTankEntity != null; // If gas tank is not null, they are wearing internals
         return UsingInternals == internalsState;
     }
 

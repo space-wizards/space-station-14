@@ -14,6 +14,7 @@ turret-controls-window-turret-deployed = SEARCHING...
 turret-controls-window-turret-deploying = ACTIVATING
 turret-controls-window-turret-firing = ENGAGING TARGET
 turret-controls-window-turret-error = ERROR [404]
+turret-controls-window-turret-broken = ***INOPERABLE***
 
 # Buttons
 turret-controls-window-safe = Inactive

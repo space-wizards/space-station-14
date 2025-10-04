@@ -18,6 +18,7 @@
     proto: ProjectileHealingBolt
     capacity: 10
     count: 10
+  - type: PacifismAllowedGun
 
 - type: entity
   name: staff of entrance

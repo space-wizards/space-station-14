@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: ClothingUniformBase
+  parent: [ClothingUniformBase, BaseChameleon]
   id: ClothingUniformJumpsuitChameleon
   name: black jumpsuit
   description: A generic black jumpsuit with no rank markings.
@@ -36,7 +36,3 @@
     - type: ChameleonClothing
       slot: [innerclothing]
       default: ClothingUniformJumpsuitColorBlack
-    - type: UserInterface
-      interfaces:
-        enum.ChameleonUiKey.Key:
-          type: ChameleonBoundUserInterface

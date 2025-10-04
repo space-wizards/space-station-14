@@ -12,6 +12,7 @@
   - type: ParticleAcceleratorEndCap
   - type: Construction
     graph: ParticleAcceleratorEndCap
+  - type: MultipartMachinePart
 
 # Unfinished
 
@@ -26,3 +27,4 @@
     sprite: Structures/Power/Generation/PA/end_cap.rsi
   - type: Construction
     graph: ParticleAcceleratorEndCap
+  - type: MultipartMachinePart
