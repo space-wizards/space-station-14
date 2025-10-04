@@ -481,43 +481,44 @@
   id: DockEmergency # Used bv EmergencyShuttleSystem
 
 - type: Tag
-  id: Document # A superset of Paper tag. Represents a paper-like entity with writing on it.
+  id: Document # A superset of Paper tag. Represents a paper-like entity with writing on it, but is not necessarily writeable itself.
 
 - type: Tag
-  id: DonkPocket
+  id: DonkPocket # Storage whitelist: FoodBoxDonkpocket
 
 - type: Tag
-  id: Donut
+  id: Donut # Storage whitelist: FoodBoxDonut. CargoBounty: BountyDonut
 
 - type: Tag
-  id: DoorBumpOpener
+  id: DoorBumpOpener # Used by SharedDoorSystem to allow entities to open doors when they collide.
 
 - type: Tag
-  id: DoorElectronics
+  id: DoorElectronics  # ConstructionGraph: PinionAirlock, BlastDoor, Windoor
+                       # Used interchangeably with DoorElectronicsComponent, sometimes even in the same graph. TODO pick one
 
 - type: Tag
-  id: DoorElectronicsConfigurator
+  id: DoorElectronicsConfigurator # Used by ActivatableUIComponent on entity DoorElectronics to whitelist a tool to open the UI.
 
 - type: Tag
-  id: DrinkBottle
+  id: DrinkBottle # Storage whitelist: BoozeDispenserEmpty, SodaDispenserEmpty
 
 - type: Tag
-  id: DrinkCan
+  id: DrinkCan # ConstructionGraph: FireBomb
 
 - type: Tag
-  id: DrinkCup
+  id: DrinkCup # Unused. Exists on DrinkBaseCup, DrinkWaterCup, DrinkGlass
 
 - type: Tag
-  id: DrinkGlass
+  id: DrinkGlass # Unused. Exists on DrinkGlass, DrinkShotGlass, DrinkJarWhat, DrinkShakeBase
 
 - type: Tag
-  id: DrinkSpaceGlue
+  id: DrinkSpaceGlue # Unused. Exists on DrinkSpaceGlue, CrazyGlue
 
 - type: Tag
-  id: Dropper
+  id: Dropper # Storage whitelist: ClothingBeltMedical, ClothingBeltPlant, ChemBag
 
 - type: Tag
-  id: Duck
+  id: Duck # Reproduction key. MetamorphRecipe: FoodBurgerDuck
 
 ## E ##
 
