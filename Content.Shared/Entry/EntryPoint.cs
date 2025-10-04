@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using Content.Shared.Administration.Managers;
 using Content.Shared.Humanoid.Markings;
-using Content.Shared.IoC;
 using Content.Shared.Maps;
 using Robust.Shared;
 using Robust.Shared.Configuration;
@@ -21,13 +21,11 @@ namespace Content.Shared.Entry
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IResourceManager _resMan = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly ISharedAdminManager _adminManager = default!;
+        [Dependency] private readonly MarkingManager _marking = default!;
 
         private readonly ResPath _ignoreFileDirectory = new("/IgnoredPrototypes/");
-
-        public override void PreInit()
-        {
-            IoCManager.InjectDependencies(this);
-        }
 
         public override void Shutdown()
         {
@@ -36,6 +34,8 @@ namespace Content.Shared.Entry
 
         public override void Init()
         {
+            Dependencies.BuildGraph();
+            Dependencies.InjectDependencies(this);
             IgnorePrototypes();
         }
 
@@ -43,14 +43,14 @@ namespace Content.Shared.Entry
         {
             base.PostInit();
 
+            _adminManager.Initialize();
             InitTileDefinitions();
-            IoCManager.Resolve<MarkingManager>().Initialize();
+            _marking.Initialize();
 
 #if DEBUG
-            var configMan = IoCManager.Resolve<IConfigurationManager>();
-            configMan.OverrideDefault(CVars.NetFakeLagMin, 0.075f);
-            configMan.OverrideDefault(CVars.NetFakeLoss, 0.005f);
-            configMan.OverrideDefault(CVars.NetFakeDuplicates, 0.005f);
+            _cfg.OverrideDefault(CVars.NetFakeLagMin, 0.075f);
+            _cfg.OverrideDefault(CVars.NetFakeLoss, 0.005f);
+            _cfg.OverrideDefault(CVars.NetFakeDuplicates, 0.005f);
 #endif
         }
 
