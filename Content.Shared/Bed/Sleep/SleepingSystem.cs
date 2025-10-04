@@ -257,10 +257,10 @@ public sealed partial class SleepingSystem : EntitySystem
     /// </summary>
     private void OnMobStateChanged(Entity<SleepingComponent> ent, ref MobStateChangedEvent args)
     {
-        if (args.NewMobState == MobState.Dead)
+        if (args.NewMobState == MobState.Dead || args.NewMobState == MobState.Critical)
         {
             RemComp<SpamEmitSoundComponent>(ent);
-            RemComp<SleepingComponent>(ent);
+            Wake(ent);
             return;
         }
         if (TryComp<SpamEmitSoundComponent>(ent, out var spam))
@@ -292,6 +292,9 @@ public sealed partial class SleepingSystem : EntitySystem
     public bool TrySleeping(Entity<MobStateComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, logMissing: false))
+            return false;
+
+        if (ent.Comp.CurrentState == MobState.Critical)
             return false;
 
         var tryingToSleepEvent = new TryingToSleepEvent(ent);
