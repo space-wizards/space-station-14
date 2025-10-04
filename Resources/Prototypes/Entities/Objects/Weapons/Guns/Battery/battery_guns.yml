@@ -888,7 +888,7 @@
     - proto: BulletLaserWindowPiercingMagnum
       fireCost: 150
     - proto: BulletDisabler
-      fireCost: 80
+      fireCost: 62.5
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 48
