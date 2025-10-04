@@ -19,10 +19,7 @@ public sealed partial class ReactionMixerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ReactionMixerComponent, AfterInteractEvent>(
-            OnAfterInteract,
-            before: [typeof(IngestionSystem)]
-        );
+        SubscribeLocalEvent<ReactionMixerComponent, AfterInteractEvent>(OnAfterInteract, before: [typeof(IngestionSystem)]);
         SubscribeLocalEvent<ReactionMixerComponent, ShakeEvent>(OnShake);
         SubscribeLocalEvent<ReactionMixerComponent, ReactionMixDoAfterEvent>(OnDoAfter);
     }
