@@ -48,6 +48,7 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
         var coords = telePointXForm.Coordinates;
         var newCoords = coords.Offset(_random.NextVector2(ent.Comp.MaxRandomRadius));
 
+        // TODO: Turn this into a generic method for xform.
         for (var i = 0; i < MaxRandomTeleportAttempts; i++)
         {
             var randVector = _random.NextVector2(ent.Comp.MaxRandomRadius);
