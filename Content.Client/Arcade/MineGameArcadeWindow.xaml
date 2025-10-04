@@ -1,7 +1,7 @@
-<DefaultWindow xmlns="https://spacestation14.io"
-               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-               MinSize="160 160" Title="{Loc 'minegame-menu-title'}">
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      MinSize="160 160" Title="{Loc 'minegame-menu-title'}">
     <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
             <BoxContainer Name="MainHeader"
@@ -39,4 +39,4 @@
             </GridContainer>
         </BoxContainer>
     </BoxContainer>
-</DefaultWindow>
+</controls:FancyWindow>
