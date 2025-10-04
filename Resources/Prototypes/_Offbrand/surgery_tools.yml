@@ -1,0 +1,44 @@
+- type: entity
+  parent: BaseToolSurgery
+  id: BoneGel
+  name: bottle of bone gel
+  components:
+  - type: Sprite
+    sprite: _Offbrand/surgery_tools.rsi
+    state: bone-gel
+  - type: Item
+    sprite: _Offbrand/surgery_tools.rsi
+    heldPrefix: bone-gel
+  - type: Tool
+    qualities:
+    - BoneMending
+
+- type: entity
+  parent: BaseToolSurgery
+  id: BoneSetter
+  name: bone setter
+  components:
+  - type: Sprite
+    sprite: _Offbrand/surgery_tools.rsi
+    state: bonesetter
+  - type: Item
+    sprite: _Offbrand/surgery_tools.rsi
+    heldPrefix: bonesetter
+  - type: Tool
+    qualities:
+    - BoneSetting
+
+- type: entity
+  parent: BaseToolSurgery
+  id: VascularRecoupler
+  name: vascular recoupler
+  components:
+  - type: Sprite
+    sprite: _Offbrand/surgery_tools.rsi
+    state: bloodfilter
+  - type: Item
+    sprite: _Offbrand/surgery_tools.rsi
+    heldPrefix: bloodfilter
+  - type: Tool
+    qualities:
+    - Recoupling

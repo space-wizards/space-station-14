@@ -1,0 +1,8 @@
+<PanelContainer xmlns="https://spacestation14.io" StyleClasses="tooltipBox" MaxWidth="450">
+    <BoxContainer
+        Orientation="Vertical"
+        RectClipContent="True"
+        Margin="4">
+        <RichTextLabel Name="Label" HorizontalExpand="True" />
+    </BoxContainer>
+</PanelContainer>

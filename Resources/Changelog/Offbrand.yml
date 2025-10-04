@@ -1,0 +1,98 @@
+Entries:
+- author: sowelipililimute
+  changes:
+  - message: Damages should no longer get decoupled from wounds for brutes and burns.
+    type: Fix
+  - message: More wounds can be seen on visual examination.
+    type: Tweak
+  - message: The crew monitor can give an at-a-glance rating of someone's health again.
+    type: Add
+  id: 1
+  time: '2025-09-29T21:00:00.0000000+00:00'
+- author: sowelipililimute
+  changes:
+  - message: Brain damage has been re-curved, happening slower in less severe scenarios but faster in worse scenarios.
+    type: Tweak
+  - message: Painkillers have been re-tuned to be less lethal with ethanol, longer-lasting for weaker ones and shorter-lasting for stronger ones.
+    type: Tweak
+  - message: Inaprovaline and dexalin (plus) last twice as long.
+    type: Tweak
+  id: 2
+  time: '2025-09-30T21:00:00.0000000+00:00'
+- author: sowelipililimute
+  changes:
+  - message: Cyborgs can use IV bags as expected.
+    type: Fix
+  - message: Doxarubiadone is now more potent to offset the cryostasis speed.
+    type: Tweak
+  - message: Husking and bone death are now cheaper to heal.
+    type: Tweak
+  - message: The health analyzer now includes tooltips that explain the vitals and their relationships.
+    type: Add
+  - message: Nuclear operatives can now synthesize coagulant and osseous reagent to more effectively deal with bleeding and fractures.
+    type: Add
+  - message: Oxandrolone, convermol, and salicylic acid now exist as potent alternatives to medications that can heal some severe internal wounds at high overdoses.
+    type: Add
+  - message: Combat pens now contain coagulant instead of tranexamic acid.
+    type: Tweak
+  id: 3
+  time: '2025-10-01T21:00:00.0000000+00:00'
+- author: sowelipililimute
+  changes:
+  - message: Medipens now inject a full dosage
+    type: Fix
+  - message: Convermol deals less brute
+    type: Tweak
+  - message: Guidebook messages regarding Offbrand changes should be clearer now
+    type: Fix
+  - message: Inaprovaline reduces the chance to take brain damage further
+    type: Tweak
+  - message: Offbrand critical states now count as critical for reagents
+    type: Fix
+  - message: Pills can now be inserted into syringes
+    type: Add
+  - message: Dylovene is now provided to medical personnel roundstart
+    type: Add
+  - message: NanoMeds now contain more basic medications
+    type: Add
+  - message: Bicaridine now has twice the duration
+    type: Tweak
+  - message: Dermaline now has twice the duration
+    type: Tweak
+  - message: Kelotane now works at the same duration as Dermaline
+    type: Tweak
+  - message: Tricordrazine now has a longer duration and higher maximum damage
+    type: Tweak
+  - message: Mannitol no longer has negligible healing if the brain does not have oxygen
+    type: Tweak
+  id: 4
+  time: '2025-10-02T21:00:00.0000000+00:00'
+- author: sowelipililimute
+  changes:
+  - message: Tricordrazine heals slightly less damage
+    type: Tweak
+  - message: Lung damage has been added! Try not to breathe air that is bad for you
+    type: Add
+  - message: Heart health and damages have been rescaled so that the guidebook is less confusing
+    type: Fix
+  - message: You now have less cryostasis from being cold
+    type: Tweak
+  id: 5
+  time: '2025-10-03T21:00:00.0000000+00:00'
+- author: sowelipililimute
+  changes:
+  - message: Lung damage has been nerfed slightly from cold environments
+    type: Tweak
+  - message: Cyborgs can now strip crew
+    type: Add
+  - message: Romerol has been boosted in efficacy
+    type: Tweak
+  - message: Zombies should no longer self-overheat
+    type: Fix
+  - message: Zombies now inject more romerol on bite
+    type: Tweak
+  - message: Lung damage now passively regenerates for mild cases
+    type: Add
+  id: 6
+  time: '2025-10-03T22:00:00.0000000+00:00'
+Order: 2

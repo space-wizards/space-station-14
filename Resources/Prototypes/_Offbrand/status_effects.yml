@@ -1,0 +1,450 @@
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectPainkillersNegligibleBicaridine
+  name: 10 pain relief
+  components:
+  - type: PainkillerStatusEffect
+    effectiveness: 10
+
+- type: entity
+  parent: StatusEffectPainkillersNegligibleBicaridine
+  id: StatusEffectPainkillersNegligibleRobustHarvest
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectPainkillersMildParacetamol
+  name: 15 pain relief
+  components:
+  - type: PainkillerStatusEffect
+    effectiveness: 15
+
+- type: entity
+  parent: StatusEffectPainkillersMildParacetamol
+  id: StatusEffectPainkillersMildEthanol
+  name: 15 pain relief and motor control dysfunction
+  components:
+  - type: MeleeModifiersStatusEffect
+    attackRateMultiplier: 0.95
+    attackRateConstant: -0.05
+  - type: GunAccuracyStatusEffect
+    angleRangeModifier: 3
+
+- type: entity
+  parent: StatusEffectPainkillersMildParacetamolOverdose
+  id: StatusEffectPainkillersMildEthanolOverdose
+  name: extra 10 pain relief and worse motor control dysfunction
+  components:
+  - type: MeleeModifiersStatusEffect
+    attackRateMultiplier: 0.8
+    attackRateConstant: -0.1
+  - type: GunAccuracyStatusEffect
+    angleRangeModifier: 6
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectPainkillersMildParacetamolOverdose
+  name: extra 10 pain relief
+  components:
+  - type: PainkillerStatusEffect
+    effectiveness: 10
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectPainkillersTramadol
+  name: 35 pain relief
+  components:
+  - type: PainkillerStatusEffect
+    effectiveness: 35
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectPainkillersTramadolOverdose
+  name: extra 10 pain relief
+  components:
+  - type: PainkillerStatusEffect
+    effectiveness: 10
+
+- type: entity
+  parent: StatusEffectHeartStrainDesoxyephedrine
+  id: StatusEffectHeartStrainTramadolAlcohol
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectPainkillersSalicylicAcid
+  name: 30 pain relief
+  components:
+  - type: PainkillerStatusEffect
+    effectiveness: 30
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectPainkillersOxandrolone
+  name: 30 pain relief
+  components:
+  - type: PainkillerStatusEffect
+    effectiveness: 30
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectPainkillersStrongOxycodone
+  name: 50 pain relief
+  components:
+  - type: PainkillerStatusEffect
+    effectiveness: 50
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectPainkillersStrongOxycodoneOverdose
+  name: extra 10 pain relief
+  components:
+  - type: PainkillerStatusEffect
+    effectiveness: 10
+
+- type: entity
+  parent: StatusEffectHeartStrainSedin
+  id: StatusEffectHeartStrainOxycodoneAlcohol
+
+- type: entity
+  parent: StatusEffectHeartStrainHyperzine
+  id: StatusEffectHeartStrainEpinephrine
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectHeartStrainSedin
+  name: severely increased heart rate
+  components:
+  - type: StrainStatusEffect
+    delta: 2
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectHeartStrainRomerol
+  name: increased heart rate
+  components:
+  - type: StrainStatusEffect
+    delta: 1.5
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectHeartStabilizationInaprovaline
+  name: reduced heartrate
+  components:
+  - type: StrainStatusEffect
+    delta: -2
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectHeartStrainDesoxyephedrine
+  name: increased heart rate
+  components:
+  - type: StrainStatusEffect
+    delta: 1
+
+- type: entity
+  parent: StatusEffectHeartStrainDesoxyephedrine
+  id: StatusEffectHeartStrainEphedrine
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectHeartStrainNicotine
+  name: slightly increased heart rate
+  components:
+  - type: StrainStatusEffect
+    delta: 0.5
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectHeartStrainHyperzine
+  name: severely increased heart rate & forced heartbeat
+  components:
+  - type: StrainStatusEffect
+    delta: 2
+  - type: PreventHeartStopFromStrainStatusEffect
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectHeartStabilizationTHC
+  name: minor heart stabilization
+  components:
+  - type: StrainStatusEffect
+    delta: -1
+
+- type: entity
+  parent: StatusEffectHeartStabilizationInaprovaline
+  id: StatusEffectHeartStabilizationCryoxadone
+
+- type: entity
+  parent: StatusEffectHeartStabilizationInaprovaline
+  id: StatusEffectHeartStabilizationCloneoxadone
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectBrainStabilizationInaprovaline
+  name: reduction in chance to take brain damage
+  components:
+  - type: ModifyBrainDamageChanceStatusEffect
+    oxygenationModifierThresholds:
+      0.30: 0.7
+      0.60: 0.5
+      0.70: 0.4
+      0.85: 0.4
+      1:    0.1
+  - type: ModifyBrainOxygenDepletionChanceStatusEffect
+    oxygenationModifierThresholds:
+      0.30: 0.7
+      0.60: 0.5
+      0.70: 0.4
+      0.85: 0.4
+      1:    0.1
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectBrainHealingMannitol
+  name: brain healing with adequate saturation
+  components:
+  - type: BrainHealingStatusEffect
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectMinorOxygenationDexalin
+  name: 50% artificial respiration
+  components:
+  - type: BloodOxygenationModifierStatusEffect
+    minimumOxygenation: 0.5
+
+- type: entity
+  parent: StatusEffectMinorOxygenationDexalin
+  id: StatusEffectMinorOxygenationPolypyryliumOligomers
+
+- type: entity
+  parent: StatusEffectMinorOxygenationDexalin
+  id: StatusEffectMinorOxygenationCryoxadone
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectMajorOxygenationDexalinPlus
+  name: 80% artificial respiration
+  components:
+  - type: BloodOxygenationModifierStatusEffect
+    minimumOxygenation: 0.8
+
+- type: entity
+  parent: StatusEffectMajorOxygenationDexalinPlus
+  id: StatusEffectMajorOxygenationCloneoxadone
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectMinorPain
+  name: minor pain
+  components:
+  - type: PopupOnAppliedStatusEffect
+    message: minor-pain-applied
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectPainStuttering
+  name: pain stuttering
+  components:
+  - type: StutteringAccent
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectModeratePain
+  name: moderate pain
+  components:
+  - type: PopupOnAppliedStatusEffect
+    message: moderate-pain-applied
+    visualType: SmallCaution
+  - type: MeleeModifiersStatusEffect
+    attackRateMultiplier: 0.9
+    attackRateConstant: -0.05
+  - type: GunAccuracyStatusEffect
+    angleRangeModifier: 1.5
+  - type: CauseStatusEffectRandomlyStatusEffect
+    probability: 0.3
+    updateInterval: 5
+    effects:
+    - [StatusEffectPainStuttering, 5]
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectSeverePain
+  name: severe pain
+  components:
+  - type: PopupOnAppliedStatusEffect
+    message: severe-pain-applied
+    visualType: MediumCaution
+  - type: MovementModStatusEffect
+    sprintSpeedModifier: 0.95
+    walkSpeedModifier: 0.95
+  - type: MeleeModifiersStatusEffect
+    attackRateMultiplier: 0.8
+    attackRateConstant: -0.05
+  - type: GunAccuracyStatusEffect
+    angleRangeModifier: 6
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectBlackoutPain
+  name: blackout pain
+  components:
+  - type: PopupOnAppliedStatusEffect
+    message: blackout-pain-applied
+    visualType: LargeCaution
+  - type: MovementModStatusEffect
+  - type: KnockdownStatusEffect
+  - type: KnockdownOnAppliedStatusEffect
+    duration: 5
+  - type: MeleeModifiersStatusEffect
+    damageModifier:
+      coefficients:
+        Blunt: 0.7
+        Piercing: 0.7
+        Slash: 0.7
+        Structural: 0.7
+    attackRateMultiplier: 0.3
+    attackRateConstant: -0.1
+  - type: GunAccuracyStatusEffect
+    angleRangeModifier: 24
+  - type: CannotUseHeadsetStatusEffect
+  - type: SilencedStatusEffect
+  - type: BlockMovementWhenPulledStatusEffect
+  - type: GunBackfireStatusEffect
+    probability: 0.9
+  - type: HyposprayBackfireStatusEffect
+    probability: 0.9
+  - type: DisruptOnAttackStatusEffect
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectHeartStopped
+  name: stopped heart
+  components:
+  - type: PopupOnAppliedStatusEffect
+    message: own-heart-has-stopped-beating
+    visualType: LargeCaution
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectPainSuppressionNocturine
+  name: total pain suppression
+  components:
+  - type: PainSuppressionStatusEffect
+
+- type: entity
+  parent: StatusEffectPainSuppressionNocturine
+  id: StatusEffectPainSuppressionNitrousOxide
+  name: total pain suppression
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectNeuralSuppression
+  name: neural suppression
+  components:
+  - type: PopupOnAppliedStatusEffect
+    message: neural-suppression-applied
+  - type: PainSuppressionStatusEffect
+  - type: BlindnessStatusEffect
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectSevereBrainDamage
+  name: severe brain damage
+  components:
+  - type: PopupOnAppliedStatusEffect
+    message: severe-brain-damage-applied
+  - type: StutteringAccent
+  - type: MeleeModifiersStatusEffect
+    damageModifier:
+      coefficients:
+        Blunt: 0.5
+        Piercing: 0.5
+        Slash: 0.5
+        Structural: 0.5
+    attackRateMultiplier: 0.2
+    attackRateConstant: -0.1
+  - type: GunAccuracyStatusEffect
+    angleRangeModifier: 24
+  - type: GunBackfireStatusEffect
+    probability: 0.9
+  - type: HyposprayBackfireStatusEffect
+    probability: 0.9
+  - type: DisruptOnAttackStatusEffect
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectBrainNoOxygen
+  name: no brain oxygen
+  components:
+  - type: PopupOnAppliedStatusEffect
+    message: brain-oxygen-depleted
+    visualType: LargeCaution
+  - type: StutteringAccent
+  - type: DrunkStatusEffect
+  - type: KnockdownStatusEffect
+  - type: KnockdownOnAppliedStatusEffect
+    duration: 5
+
+- type: entity
+  parent: StatusEffectSevereBrainDamage
+  id: StatusEffectCriticalBrainDamage
+  name: critical brain damage
+  components:
+  - type: PopupOnAppliedStatusEffect
+    message: critical-brain-damage-applied
+    visualType: LargeCaution
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectActiveCPR
+  name: ongoing CPR
+  components:
+  - type: AssistedCirculationStatusEffect
+    amount: 0.4
+
+- type: entity
+  abstract: true
+  id: BaseStatusEffectPersistentTender
+  components:
+  - type: RemovableStatusEffect
+    selfUserCompleted: persistent-tender-removal-reflexive-user-completed
+    selfOtherCompleted: persistent-tender-removal-reflexive-other-completed
+    userCompleted: persistent-tender-removal-user-completed
+    otherCompleted: persistent-tender-removal-other-completed
+    selfUserStarted: persistent-tender-removal-reflexive-user-started
+    selfOtherStarted: persistent-tender-removal-reflexive-other-started
+    userStarted: persistent-tender-removal-user-started
+    otherStarted: persistent-tender-removal-other-started
+
+- type: entity
+  parent: [BaseStatusEffectPersistentTender, MobStatusEffectBase]
+  id: StatusEffectTourniquet
+  name: tourniquet
+  components:
+  - type: ExaminableStatusEffect
+    message: tourniquet-applied-examine
+  - type: RemovableStatusEffect
+    verb: verb-remove-tourniquet
+    spawnOnRemove: TourniquetOffbrand
+  - type: DamageOverTimeStatusEffect
+    damages:
+      types:
+        Blunt: 0.15
+  - type: BleedMultiplierStatusEffect
+    multiplier: 0.25
+
+- type: entity
+  parent: [BaseStatusEffectPersistentTender, MobStatusEffectBase]
+  id: StatusEffectSplints
+  name: splints
+  components:
+  - type: ExaminableStatusEffect
+    message: splints-applied-examine
+  - type: RemovableStatusEffect
+    verb: verb-remove-splints
+    spawnOnRemove: Splints
+  - type: MovementModStatusEffect
+    sprintSpeedModifier: 0.8
+    walkSpeedModifier: 0.8
+  - type: SlowOnDamageModifierStatusEffect
+    modifier: 0.25

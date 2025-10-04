@@ -44,6 +44,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Content.Shared.NPC.Prototypes;
 using Content.Shared.Roles;
+using Content.Shared._Offbrand.Wounds; // Offbrand
 
 namespace Content.Server.Zombies;
 
@@ -77,6 +78,8 @@ public sealed partial class ZombieSystem
     private static readonly ProtoId<NpcFactionPrototype> ZombieFaction = "Zombie";
     private static readonly string MindRoleZombie = "MindRoleZombie";
     private static readonly List<ProtoId<AntagPrototype>> BannableZombiePrototypes = ["Zombie"];
+    private static readonly EntProtoId AddOnWoundableZombified = "AddOnWoundableZombified"; // Offbrand
+    private static readonly EntProtoId AddOnAnyZombified = "AddOnAnyZombified"; // Offbrand
 
     /// <summary>
     /// Handles an entity turning into a zombie when they die or go into crit
@@ -143,6 +146,39 @@ public sealed partial class ZombieSystem
         RemComp<LegsParalyzedComponent>(target);
         RemComp<ComplexInteractionComponent>(target);
         RemComp<SentienceTargetComponent>(target);
+
+        // Begin Offbrand
+        if (RemComp<WoundableComponent>(target))
+        {
+            RemComp<HeartrateComponent>(target);
+            RemComp<HeartDefibrillatableComponent>(target);
+            RemComp<HeartStopOnHypovolemiaComponent>(target);
+            RemComp<HeartStopOnHighStrainComponent>(target);
+            RemComp<HeartStopOnBrainHealthComponent>(target);
+            RemComp<PainComponent>(target);
+            RemComp<HeartrateAlertsComponent>(target);
+            RemComp<ShockThresholdsComponent>(target);
+            RemComp<ShockAlertsComponent>(target);
+            RemComp<BrainDamageComponent>(target);
+            RemComp<BrainDamageOxygenationComponent>(target);
+            RemComp<BrainDamageThresholdsComponent>(target);
+            RemComp<BrainDamageOnDamageComponent>(target);
+            RemComp<HeartDamageOnDamageComponent>(target);
+            RemComp<MaximumDamageComponent>(target);
+            RemComp<CprTargetComponent>(target);
+            RemComp<Content.Server.Construction.Components.ConstructionComponent>(target);
+            RemComp<CryostasisFactorComponent>(target);
+            RemComp<UniqueWoundOnDamageComponent>(target);
+            RemComp<IntrinsicPainComponent>(target);
+            RemComp<LungDamageComponent>(target);
+            RemComp<LungDamageOnInhaledAirTemperatureComponent>(target);
+            RemComp<LungDamageAlertsComponent>(target);
+
+            var entProto = _protoManager.Index(AddOnWoundableZombified);
+            EntityManager.RemoveComponents(target, entProto.Components);
+            EntityManager.AddComponents(target, entProto.Components);
+        }
+        // End Offbrand
 
         //funny voice
         var accentType = "zombie";
@@ -227,11 +263,18 @@ public sealed partial class ZombieSystem
         //The zombie gets the assigned damage weaknesses and strengths
         _damageable.SetDamageModifierSetId(target, "Zombie");
 
+        // Begin Offbrand
+        var allProto = _protoManager.Index(AddOnAnyZombified);
+        EntityManager.RemoveComponents(target, allProto.Components);
+        EntityManager.AddComponents(target, allProto.Components);
+        // End Offbrand
+
         //This makes it so the zombie doesn't take bloodloss damage.
         //NOTE: they are supposed to bleed, just not take damage
         _bloodstream.SetBloodLossThreshold(target, 0f);
         //Give them zombie blood
         _bloodstream.ChangeBloodReagent(target, zombiecomp.NewBloodReagent);
+        _bloodstream.FlushChemicals(target, null, 100); // Offbrand
 
         //This is specifically here to combat insuls, because frying zombies on grilles is funny as shit.
         _inventory.TryUnequip(target, "gloves", true, true);
@@ -255,6 +298,11 @@ public sealed partial class ZombieSystem
 
         _faction.ClearFactions(target, dirty: false);
         _faction.AddFaction(target, ZombieFaction);
+
+        // Begin Offbrand
+        var rejuv = new Content.Shared.Rejuvenate.RejuvenateEvent();
+        RaiseLocalEvent(target, rejuv);
+        // End Offbrand
 
         //gives it the funny "Zombie ___" name.
         _nameMod.RefreshNameModifiers(target);

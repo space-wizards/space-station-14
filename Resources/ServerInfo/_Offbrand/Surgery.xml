@@ -1,0 +1,219 @@
+<Document>
+# Surgery
+
+Surgery is used for treating severe and often internal wounds.
+
+## Pain Management
+
+<Box>
+  <GuideEntityEmbed Entity="OperatingTable" Caption="operating table" />
+  <GuideEntityEmbed Entity="NitrousOxideTankFilled" Caption="nitrous oxide" />
+  <GuideEntityEmbed Entity="ChemistryBottleTramadol" Caption="tramadol" />
+</Box>
+
+Pain management is an important part of surgery, as excessive pain will cause your patient to go into cardiac arrest.
+
+When powered, operating tables can entirely suppress your patients' ability to feel pain.
+
+Nitrous oxide can also be used for anesthesia.
+
+When none of the above are available, normal painkillers are an option.
+
+## Performing Surgery
+
+In order to conduct surgery, your patient must not have any clothing obstructing them, and must be laying down.
+
+<Box>
+  <GuideEntityEmbed Entity="ClothingOuterVestTank" Caption="tank harness" />
+  <GuideEntityEmbed Entity="ClothingOuterHospitalGown" Caption="hospital gown" />
+</Box>
+
+Hospital gowns and tank harnesses can be operated through.
+
+Use surgical tools in the orders described below to perform operations.
+
+## Surgical Steps
+
+The following is a list of surgeries you can perform.
+
+### Opening An Incision
+
+The first step of most surgeries.
+
+<Table Columns="3">
+  <Box>
+    <GuideEntityEmbed Entity="Scalpel" Caption="" />
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="Hemostat" Caption="" />
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="Retractor" Caption="" />
+  </Box>
+  <Box>
+    1. Use a scalpel
+  </Box>
+  <Box>
+    2. Clamp bleeding veins
+  </Box>
+  <Box>
+    3. Retract the skin
+  </Box>
+</Table>
+
+### Closing An Incision
+
+The last step of most surgeries.
+An incision must be open.
+The rib cage must be closed.
+
+<Table Columns="1">
+  <Box>
+    <GuideEntityEmbed Entity="Cautery" Caption="" />
+  </Box>
+  <Box>
+    1. Cauterize the incision
+  </Box>
+</Table>
+
+### Bone Repair
+
+Mend fractures in your patient.
+An incision must be open.
+
+<Table Columns="2">
+  <Box>
+    <GuideEntityEmbed Entity="BoneGel" Caption="" />
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="BoneSetter" Caption="" />
+  </Box>
+  <Box>
+    1. Apply bone gel to broken bones
+  </Box>
+  <Box>
+    2. Ensure bones are in place
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="BoneGel" Caption="" />
+  </Box>
+  <Box></Box>
+  <Box>
+    3. Apply more bone gel
+  </Box>
+  <Box></Box>
+</Table>
+
+### Artery Repair
+
+Mend damaged arteries in your patient.
+An incision must be open.
+
+<Table Columns="1">
+  <Box>
+    <GuideEntityEmbed Entity="VascularRecoupler" Caption="" />
+  </Box>
+  <Box>
+    1. Repair the damaged blood vessels
+  </Box>
+</Table>
+
+### Open The Rib Cage
+
+For operating on internal organs.
+An incision must be open.
+
+<Table Columns="1">
+  <Box>
+    <GuideEntityEmbed Entity="Saw" Caption="" />
+  </Box>
+  <Box>
+    1. Open the ribs
+  </Box>
+</Table>
+
+
+### Close The Rib Cage
+
+For when you're done operating on internal organs.
+The rib cage must be open.
+
+<Table Columns="2">
+  <Box>
+    <GuideEntityEmbed Entity="BoneGel" Caption="" />
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="BoneSetter" Caption="" />
+  </Box>
+  <Box>
+    1. Apply bone gel to sawed bones
+  </Box>
+  <Box>
+    2. Ensure bones are in place
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="BoneGel" Caption="" />
+  </Box>
+  <Box></Box>
+  <Box>
+    3. Apply more bone gel
+  </Box>
+  <Box></Box>
+</Table>
+
+### Heart Repair Surgery
+
+For when the patient's heart is damaged.
+The rib cage must be opened.
+
+<Table Columns="1">
+  <Box>
+    <GuideEntityEmbed Entity="Suture" />
+    <GuideEntityEmbed Entity="MedicatedSuture" />
+  </Box>
+  <Box>
+    1. Use sutures to mend the heart
+  </Box>
+</Table>
+
+### Dehusking
+
+For when the patient has been husked by severe burns.
+The rib cage must be opened.
+
+<Table Columns="1">
+  <Box>
+    <GuideEntityEmbed Entity="RegenerativeMesh" Caption="" />
+  </Box>
+  <Box>
+    1. Use 10 regenerative meshes
+  </Box>
+</Table>
+
+### Bone Death Repair
+
+For when the patient's bones are damaged past normal repair.
+The rib cage must be opened.
+
+<Table Columns="3">
+  <Box>
+    <GuideEntityEmbed Entity="BoneGel" Caption="" />
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="MedicatedSuture" Caption="" />
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="BoneGel" Caption="" />
+  </Box>
+  <Box>
+    1. Apply bone gel
+  </Box>
+  <Box>
+    2. Use 10 medicated sutures
+  </Box>
+  <Box>
+    3. Apply more bone gel
+  </Box>
+</Table>
+
+</Document>

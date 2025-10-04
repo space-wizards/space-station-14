@@ -1,0 +1,79 @@
+- type: entity
+  abstract: true
+  id: WoundSurgicalBase
+  components:
+  - type: StatusEffect
+  - type: Sprite
+    drawdepth: Effects
+  - type: RejuvenateRemovedStatusEffect
+  - type: Wound
+
+- type: entity
+  parent: WoundSurgicalBase
+  id: WoundIncision
+  name: open incision
+  components:
+  - type: Wound
+    maximumDamage: 10
+  - type: PainfulWound
+    painCoefficients:
+      Slash: 5
+    freshPainCoefficients:
+      Slash: 5
+  - type: AnalyzableWound
+    descriptions:
+      0: wound-incision
+  - type: WoundDescription
+    descriptions:
+      0: wound-incision-examine
+
+- type: entity
+  parent: WoundSurgicalBase
+  id: WoundClamped
+  name: clamped arteries
+  components:
+  - type: Wound
+    maximumDamage: 5
+  - type: PainfulWound
+    painCoefficients:
+      Blunt: 5
+    freshPainCoefficients:
+      Blunt: 5
+  - type: AnalyzableWound
+    descriptions:
+      0: wound-clamped
+
+- type: entity
+  parent: WoundSurgicalBase
+  id: WoundRetracted
+  name: retracted skin
+  components:
+  - type: Wound
+    maximumDamage: 5
+  - type: PainfulWound
+    painCoefficients:
+      Blunt: 5
+    freshPainCoefficients:
+      Blunt: 5
+  - type: AnalyzableWound
+    descriptions:
+      0: wound-retracted
+
+- type: entity
+  parent: WoundSurgicalBase
+  id: WoundOpenRibCage
+  name: open ribcage
+  components:
+  - type: Wound
+    maximumDamage: 5
+  - type: PainfulWound
+    painCoefficients:
+      Blunt: 10
+    freshPainCoefficients:
+      Blunt: 5
+  - type: AnalyzableWound
+    descriptions:
+      0: wound-ribcage-open
+  - type: WoundDescription
+    descriptions:
+      0: wound-ribcage-open-examine

@@ -1,0 +1,33 @@
+- type: emote
+  id: DefaultPaingasp
+  name: chat-emote-name-paingasp
+  icon: Interface/Emotes/deathgasp.png
+  whitelist:
+    components:
+    - Pain
+  chatMessages: ["chat-emote-msg-paingasp"]
+  chatTriggers:
+  - paingasp
+
+- type: emote
+  id: DefaultBraingasp
+  name: chat-emote-name-braingasp
+  icon: Interface/Emotes/deathgasp.png
+  whitelist:
+    components:
+    - BrainDamage
+  chatMessages: ["chat-emote-msg-braingasp"]
+  chatTriggers:
+  - braingasp
+
+
+- type: emote
+  id: DefaultPainslump
+  name: chat-emote-name-painslump
+  icon: Interface/Emotes/deathgasp.png
+  whitelist:
+    components:
+    - Pain
+  chatMessages: ["chat-emote-msg-painslump"]
+  chatTriggers:
+  - painslump

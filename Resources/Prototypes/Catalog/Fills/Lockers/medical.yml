@@ -10,7 +10,7 @@
     - id: Ointment
       amount: !type:ConstantNumberSelector
         value: 2
-    - id: Bloodpack
+    - id: ChemistryBottleParacetamol # Offbrand
       amount: !type:ConstantNumberSelector
         value: 2
     - id: Gauze

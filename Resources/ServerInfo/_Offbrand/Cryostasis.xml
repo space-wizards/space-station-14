@@ -1,0 +1,68 @@
+<Document>
+# Cryostasis
+
+Cryostasis allows you to slow down a patient's body, buying you more time to work with them.
+
+Stasis beds apply a fixed 10× slowdown, whilst the stasis provided by cryo pods varies based on the patient's body temperature.
+
+<Box>
+  <GuideEntityEmbed Entity="StasisBed" Caption="stasis bed" />
+  <GuideEntityEmbed Entity="CryoPod" Caption="cryo pod" />
+</Box>
+
+## Cryo Pods
+
+Patients can be inserted into cryo pods to cool them down, slowing their metabolism and allowing the use of cryogenic medicines. Be warned that patients will suffer from their low body temperatures when removed from the pods, or if the pods lose power. Leporazine is advised.
+
+### Cryogenic Medicines
+
+[color=cyan]Cryoxadone[/color] is the most common medicine you'll be using in cryopods, as it offers broad healing and improves stabilization.
+
+<GuideReagentEmbed Reagent="Cryoxadone"/>
+
+[color=cyan]Leporazine[/color] can be used to raise a patient's body temperature before removing them from the cryopod.
+
+<GuideReagentEmbed Reagent="Leporazine"/>
+
+Other medicines are less common, but have their uses.
+
+<GuideReagentEmbed Reagent="Aloxadone"/>
+<GuideReagentEmbed Reagent="Doxarubixadone"/>
+<GuideReagentEmbed Reagent="Necrosol"/>
+<GuideReagentEmbed Reagent="Opporozidone"/>
+
+### Setting Up Cryo Pods
+
+Cryo pods have a network of pipes carrying cold air to the patient, and carrying out their exhaled breaths.
+
+- [color=cyan]Air in[/color]: Air needs to be supplied through the cryo pod, and is often a gas pump pulling from a connector with a canister, or from the station's air distribution network. The gas pump should be configured to at least 101 kPa, and no more than 300 kPa.
+- [color=cyan]Freezer[/color]: The main means by which you control the temperature of the air within the cryo pod. The freezer should be turned on and set to cool to at least 200K.
+- [color=cyan]Gas filters[/color]: These remove your patients' exhaled breaths from the network. The most common exhaled gas is Carbon Dioxide.
+- [color=cyan]Air out[/color]: Anything filtered out by the gas filters is returned to the station's waste network.
+
+<Box>
+<GuideEntityEmbed Entity="GasPipeBend" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPipeStraight" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPipeStraight" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPipeBend" Rotation="0"/>
+<GuideEntityEmbed Entity="CryoPod" Caption="cryo pod" Rotation="0"/>
+<GuideEntityEmbed Entity="GasThermoMachineFreezerEnabled" Rotation="0"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="GasPipeBend" Rotation="180"/>
+<GuideEntityEmbed Entity="GasFilterFlipped" Rotation="90"/>
+<GuideEntityEmbed Entity="GasFilterFlipped" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180"/>
+<GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180"/>
+<GuideEntityEmbed Entity="GasPipeTJunction" Rotation="270"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="GasPort" Caption="air out" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180"/>
+<GuideEntityEmbed Entity="GasPipeBend" Rotation="270"/>
+<GuideEntityEmbed Entity="GasPort" Caption="air in" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPressurePump" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPipeBend" Rotation="270"/>
+</Box>
+
+</Document>

@@ -5,7 +5,7 @@
     Gauze: 3
     Brutepack: 3
     Ointment: 3
-    Bloodpack: 3
+    ChemistryBottleParacetamol: 3 # Offbrand
     ChemistryBottleEpinephrine: 3
     Syringe: 3
     PillCanisterTricordrazine: 2
@@ -21,7 +21,7 @@
     Gauze: 3
     Brutepack: 3
     Ointment: 2
-    Bloodpack: 3
+    ChemistryBottleParacetamol: 3 # Offbrand
     ChemistryBottleEpinephrine: 3
     Syringe: 3
     PillCanisterTricordrazine: 2
@@ -36,8 +36,12 @@
     Gauze: 5
     Brutepack: 5
     Ointment: 5
-    Bloodpack: 5
+    ChemistryBottleParacetamol: 3 # Offbrand
+    ChemistryBottleInaprovaline: 3 # Offbrand
+    ChemistryBottleDylovene: 3 # Offbrand
+    ChemistryBottleDexalin: 3 # Offbrand
     Tourniquet: 2
+    Splints: 2 # Offbrand
     ChemistryBottleEpinephrine: 3
     ChemistryBottleBicaridine: 1
     Syringe: 5
@@ -71,6 +75,10 @@
     PillCanisterIron: 1
     PillCanisterCopper: 1
     PillCanisterPotassiumIodide: 1
+    ChemistryBottleParacetamol: 3 # Offbrand
+    ChemistryBottleInaprovaline: 2 # Offbrand
+    ChemistryBottleDylovene: 2 # Offbrand
+    ChemistryBottleDexalin: 2 # Offbrand
   contrabandInventory:
     PillCanisterRandom: 1
     PillSpaceDrugs: 3

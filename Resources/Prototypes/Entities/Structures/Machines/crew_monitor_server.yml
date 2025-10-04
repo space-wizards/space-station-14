@@ -80,4 +80,4 @@
         path: /Audio/Ambience/Objects/server_fans.ogg
     - type: GuideHelp
       guides:
-      - Medical
+      - OffbrandMedical # Offbrand

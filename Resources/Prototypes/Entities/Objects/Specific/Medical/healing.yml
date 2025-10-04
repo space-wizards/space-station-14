@@ -46,6 +46,27 @@
       params:
         volume: 1.0
         variation: 0.125
+  # Begin Offbrand
+  - type: Tending
+    woundWhitelist:
+      tags: [WoundHeat, WoundCold, WoundShock, WoundCaustic]
+    damage:
+      types:
+        Heat: -5
+        Cold: -5
+        Shock: -5
+        Caustic: -1.5
+    tendingBeginSound:
+      path: "/Audio/Items/Medical/ointment_begin.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
+    tendingEndSound:
+      path: "/Audio/Items/Medical/ointment_end.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
+  # End Offbrand
   - type: Stack
     stackType: Ointment
     count: 10
@@ -94,6 +115,27 @@
       params:
         volume: 1.0
         variation: 0.125
+  # Begin Offbrand
+  - type: Tending
+    woundWhitelist:
+      tags: [WoundHeat, WoundCold, WoundShock, WoundCaustic]
+    damage:
+      types:
+        Heat: -10
+        Cold: -10
+        Shock: -10
+        Caustic: -10
+    tendingBeginSound:
+      path: "/Audio/Items/Medical/ointment_begin.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
+    tendingEndSound:
+      path: "/Audio/Items/Medical/ointment_end.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
+  # End Offbrand
   - type: Stack
     stackType: RegenerativeMesh
     count: 10
@@ -139,6 +181,24 @@
       params:
         volume: 1.0
         variation: 0.125
+  # Begin Offbrand
+  - type: Tending
+    woundWhitelist:
+      tags: [WoundBrute]
+    damage:
+      groups:
+        Brute: -15
+    tendingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
+    tendingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
+  # End Offbrand
   - type: Stack
     stackType: Brutepack
     count: 10
@@ -186,6 +246,24 @@
       params:
         volume: 1.0
         variation: 0.125
+  # Begin Offbrand
+  - type: Tending
+    woundWhitelist:
+      tags: [WoundBrute]
+    damage:
+      groups:
+        Brute: -30
+    tendingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
+    tendingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
+  # End Offbrand
   - type: Stack
     stackType: MedicatedSuture
     count: 10
@@ -316,6 +394,25 @@
       params:
         volume: 1.0
         variation: 0.125
+  # Begin Offbrand
+  - type: Tending
+    woundWhitelist:
+      tags: [WoundCut, WoundPuncture]
+    damage:
+      types:
+        Slash: -5
+        Piercing: -10
+    tendingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
+    tendingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
+  # End Offbrand
   - type: Stack
     stackType: Gauze
     count: 10
@@ -342,6 +439,14 @@
   - type: Stack
     stackType: AloeCream
     count: 10
+  # Begin Offbrand
+  - type: Tending
+    woundWhitelist:
+      tags: [WoundHeat]
+    damage:
+      types:
+        Heat: -10
+  # End Offbrand
 
 - type: entity
   parent: BaseHealingItem
@@ -1105,6 +1210,6 @@
     - id: SyringeInaprovaline
     - id: SyringeIpecac
     - id: SyringePhalanximine
-    - id: SyringeSaline
+    - id: SyringeTramadol # Offbrand
     - id: SyringeSigynate
     - id: SyringeTranexamicAcid

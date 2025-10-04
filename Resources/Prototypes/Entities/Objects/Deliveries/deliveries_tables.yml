@@ -104,7 +104,7 @@
       - id: Brutepack
       - id: Ointment
       - id: Gauze
-      - id: Bloodpack
+      - id: ChemistryBottleParacetamol # Offbrand
 
 # Packages
 # TODO: Currently mostly maints loot, should be updated in the future.

@@ -18,6 +18,7 @@ public sealed class MobThresholdSystem : EntitySystem
     {
         SubscribeLocalEvent<MobThresholdsComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<MobThresholdsComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<MobThresholdsComponent, MapInitEvent>(MobThresholdMapInit); // Offbrand
 
         SubscribeLocalEvent<MobThresholdsComponent, ComponentShutdown>(MobThresholdShutdown);
         SubscribeLocalEvent<MobThresholdsComponent, ComponentStartup>(MobThresholdStartup);
@@ -438,6 +439,14 @@ public sealed class MobThresholdSystem : EntitySystem
         CheckThresholds(target, mobState, thresholds, damageable);
         UpdateAllEffects((target, thresholds, mobState, damageable), mobState.CurrentState);
     }
+
+    // Begin Offbrand
+    private void MobThresholdMapInit(Entity<MobThresholdsComponent> ent, ref MapInitEvent args)
+    {
+        var overlayUpdate = new Content.Shared._Offbrand.Wounds.bPotentiallyUpdateDamageOverlayEventb(ent);
+        RaiseLocalEvent(ent, ref overlayUpdate);
+    }
+    // End Offbrand
 
     private void MobThresholdShutdown(EntityUid target, MobThresholdsComponent component, ComponentShutdown args)
     {

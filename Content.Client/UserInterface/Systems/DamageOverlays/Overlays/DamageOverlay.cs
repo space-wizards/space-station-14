@@ -25,6 +25,8 @@ public sealed class DamageOverlay : Overlay
 
     public MobState State = MobState.Alive;
 
+    public bool AlwaysRenderAll = false; // Offbrand
+
     /// <summary>
     /// Handles the red pulsing overlay
     /// </summary>
@@ -52,6 +54,7 @@ public sealed class DamageOverlay : Overlay
     {
         // TODO: Replace
         IoCManager.InjectDependencies(this);
+        ZIndex = -5; // Offbrand
         _oxygenShader = _prototypeManager.Index(CircleMaskShader).InstanceUnique();
         _critShader = _prototypeManager.Index(CircleMaskShader).InstanceUnique();
         _bruteShader = _prototypeManager.Index(CircleMaskShader).InstanceUnique();
@@ -138,39 +141,6 @@ public sealed class DamageOverlay : Overlay
 
         // Makes debugging easier don't @ me
         float level = 0f;
-        level = _oldPainLevel;
-
-        // TODO: Lerping
-        if (level > 0f && _oldCritLevel <= 0f)
-        {
-            var pulseRate = 3f;
-            var adjustedTime = time * pulseRate;
-            float outerMaxLevel = 2.0f * distance;
-            float outerMinLevel = 0.8f * distance;
-            float innerMaxLevel = 0.6f * distance;
-            float innerMinLevel = 0.2f * distance;
-
-            var outerRadius = outerMaxLevel - level * (outerMaxLevel - outerMinLevel);
-            var innerRadius = innerMaxLevel - level * (innerMaxLevel - innerMinLevel);
-
-            var pulse = MathF.Max(0f, MathF.Sin(adjustedTime));
-
-            _bruteShader.SetParameter("time", pulse);
-            _bruteShader.SetParameter("color", new Vector3(1f, 0f, 0f));
-            _bruteShader.SetParameter("darknessAlphaOuter", 0.8f);
-
-            _bruteShader.SetParameter("outerCircleRadius", outerRadius);
-            _bruteShader.SetParameter("outerCircleMaxRadius", outerRadius + 0.2f * distance);
-            _bruteShader.SetParameter("innerCircleRadius", innerRadius);
-            _bruteShader.SetParameter("innerCircleMaxRadius", innerRadius + 0.02f * distance);
-            handle.UseShader(_bruteShader);
-            handle.DrawRect(viewport, Color.White);
-        }
-        else
-        {
-            _oldPainLevel = PainLevel;
-        }
-
         level = State != MobState.Critical ? _oldOxygenLevel : 1f;
 
         if (level > 0f)
@@ -216,6 +186,41 @@ public sealed class DamageOverlay : Overlay
             handle.UseShader(_oxygenShader);
             handle.DrawRect(viewport, Color.White);
         }
+
+        // Offbrand: this code was relocated
+        level = _oldPainLevel;
+
+        // TODO: Lerping
+        if ((level > 0f && _oldCritLevel <= 0f) || AlwaysRenderAll) // Offbrand
+        {
+            var pulseRate = 3f;
+            var adjustedTime = time * pulseRate;
+            float outerMaxLevel = 2.0f * distance;
+            float outerMinLevel = 0.8f * distance;
+            float innerMaxLevel = 0.6f * distance;
+            float innerMinLevel = 0.2f * distance;
+
+            var outerRadius = outerMaxLevel - level * (outerMaxLevel - outerMinLevel);
+            var innerRadius = innerMaxLevel - level * (innerMaxLevel - innerMinLevel);
+
+            var pulse = MathF.Max(0f, MathF.Sin(adjustedTime));
+
+            _bruteShader.SetParameter("time", pulse);
+            _bruteShader.SetParameter("color", new Vector3(1f, 0f, 0f));
+            _bruteShader.SetParameter("darknessAlphaOuter", 0.8f);
+
+            _bruteShader.SetParameter("outerCircleRadius", outerRadius);
+            _bruteShader.SetParameter("outerCircleMaxRadius", outerRadius + 0.2f * distance);
+            _bruteShader.SetParameter("innerCircleRadius", innerRadius);
+            _bruteShader.SetParameter("innerCircleMaxRadius", innerRadius + 0.02f * distance);
+            handle.UseShader(_bruteShader);
+            handle.DrawRect(viewport, Color.White);
+        }
+        else
+        {
+            _oldPainLevel = PainLevel;
+        }
+
 
         level = State != MobState.Dead ? _oldCritLevel : DeadLevel;
 

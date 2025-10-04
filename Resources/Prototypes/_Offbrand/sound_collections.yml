@@ -1,0 +1,22 @@
+- type: soundCollection
+  id: Cautery
+  files:
+  - /Audio/_Offbrand/Surgery/cautery1.ogg
+  - /Audio/_Offbrand/Surgery/cautery2.ogg
+
+- type: soundCollection
+  id: Hemostat
+  files:
+  - /Audio/_Offbrand/Surgery/hemostat1.ogg
+
+- type: soundCollection
+  id: Retractor
+  files:
+  - /Audio/_Offbrand/Surgery/retractor1.ogg
+  - /Audio/_Offbrand/Surgery/retractor2.ogg
+
+- type: soundCollection
+  id: Scalpel
+  files:
+  - /Audio/_Offbrand/Surgery/scalpel1.ogg
+  - /Audio/_Offbrand/Surgery/scalpel2.ogg

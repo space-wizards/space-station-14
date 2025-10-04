@@ -183,7 +183,7 @@ namespace Content.Server.Ghost
             if (!_minds.TryGetMind(uid, out var mindId, out var mind) || mind.IsVisitingEntity)
                 return;
 
-            if (component.MustBeDead && (_mobState.IsAlive(uid) || _mobState.IsCritical(uid)))
+            if (component.MustBeDead && _mobState.IsAlive(uid)) // Offbrand - exit on crit
                 return;
 
             OnGhostAttempt(mindId, component.CanReturn, mind: mind);

@@ -1,0 +1,53 @@
+<Document>
+# Topicals
+
+When tending to external wounds, topical medications should be your first port of call.
+These can be used to stop bleeding, or to augment the speed at which wounds heal naturally.
+
+## Brutes
+
+<Box>
+  <GuideEntityEmbed Entity="Brutepack" />
+</Box>
+
+A bruise pack can bandage and tend to all types of brute injuries at a moderate level.
+
+<Box>
+  <GuideEntityEmbed Entity="MedicatedSuture" />
+</Box>
+
+A medicated suture can bandage and tend to all types of brute injuries.
+
+<Box>
+  <GuideEntityEmbed Entity="Gauze" />
+</Box>
+
+Gauze can bandage and tend to lacerations and punctures, but is most effective on puncture wounds.
+
+<Box>
+  <GuideEntityEmbed Entity="Suture" />
+</Box>
+
+A simple suture can bandage and tend to lacerations and punctures, but is most effective on lacerations.
+
+## Burns
+
+<Box>
+  <GuideEntityEmbed Entity="Ointment" />
+</Box>
+
+Ointment can tend to burns of all types, but is less effective against caustic burns.
+
+<Box>
+  <GuideEntityEmbed Entity="RegenerativeMesh" />
+</Box>
+
+Regenerative meshes can tend burns of all types, including caustic burns.
+
+<Box>
+  <GuideEntityEmbed Entity="AloeCream" />
+</Box>
+
+Aloe cream can effectively tend to heat burns.
+
+</Document>

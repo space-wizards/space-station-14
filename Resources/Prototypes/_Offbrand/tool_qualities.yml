@@ -1,0 +1,55 @@
+- type: tool
+  id: Incising
+  name: tool-quality-incising-name
+  toolName: tool-quality-incising-tool-name
+  spawn: Scalpel
+  icon: { sprite: _Offbrand/surgery_tools.rsi, state: scalpel }
+
+- type: tool
+  id: Clamping
+  name: tool-quality-clamping-name
+  toolName: tool-quality-clamping-tool-name
+  spawn: Hemostat
+  icon: { sprite: _Offbrand/surgery_tools.rsi, state: hemostat }
+
+- type: tool
+  id: Retracting
+  name: tool-quality-retracting-name
+  toolName: tool-quality-retracting-tool-name
+  spawn: Retractor
+  icon: { sprite: _Offbrand/surgery_tools.rsi, state: retractor }
+
+- type: tool
+  id: Cauterizing
+  name: tool-quality-cauterizing-name
+  toolName: tool-quality-cauterizing-tool-name
+  spawn: Cautery
+  icon: { sprite: _Offbrand/surgery_tools.rsi, state: cautery }
+
+- type: tool
+  id: BoneMending
+  name: tool-quality-bone-mending-name
+  toolName: tool-quality-bone-mending-tool-name
+  spawn: BoneGel
+  icon: { sprite: _Offbrand/surgery_tools.rsi, state: bone-gel }
+
+- type: tool
+  id: BoneSetting
+  name: tool-quality-bone-setting-name
+  toolName: tool-quality-bone-setting-tool-name
+  spawn: BoneSetter
+  icon: { sprite: _Offbrand/surgery_tools.rsi, state: bonesetter }
+
+- type: tool
+  id: Recoupling
+  name: tool-quality-recoupling-name
+  toolName: tool-quality-recoupling-tool-name
+  spawn: VascularRecoupler
+  icon: { sprite: _Offbrand/surgery_tools.rsi, state: bloodfilter }
+
+- type: tool
+  id: Drilling
+  name: tool-quality-drilling-name
+  toolName: tool-quality-drilling-tool-name
+  spawn: Drill
+  icon: { sprite: _Offbrand/surgery_tools.rsi, state: drill }

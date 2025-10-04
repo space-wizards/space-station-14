@@ -1,0 +1,321 @@
+- type: entity
+  abstract: true
+  id: BaseMobWoundable
+  components:
+  - type: StatusEffectContainer
+  - type: Woundable
+  - type: HealthExaminable
+    examinableTypes:
+    - Asphyxiation
+    - Radiation
+  - type: Deathgasp
+  - type: Damageable
+    damageContainer: Biological
+  - type: RadiationReceiver
+  - type: Stamina
+  - type: MobState
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+  - type: Pullable
+  - type: LightningTarget
+    priority: 2
+    lightningExplode: false
+  - type: MaximumDamage
+    damage:
+      Blunt: [200, 10]
+      Slash: [200, 10]
+      Piercing: [200, 10]
+      Heat: [200, 10]
+      Cold: [200, 10]
+      Caustic: [200, 10]
+      Shock: [200, 10]
+      Poison: [100, 10]
+      Radiation: [100, 10]
+      Cellular: [100, 10]
+      Asphyxiation: [100, 0]
+      Bloodloss: [0, 0]
+  - type: UniqueWoundOnDamage
+    wounds:
+    - damageTypes: [Slash, Blunt, Piercing]
+      minimumDamage: 15
+      minimumTotalDamage: 25
+      woundPrototype: WoundArterialBleeding
+      woundDamages:
+        damageDict:
+          Slash: 5
+      damageProbabilityCoefficient: 0.01
+      damageProbabilityConstant: 0
+    - damageTypes: [Blunt]
+      minimumDamage: 20
+      minimumTotalDamage: 40
+      woundPrototype: WoundFracture
+      woundDamages:
+        damageDict:
+          Blunt: 10
+      damageProbabilityCoefficient: 0.005
+      damageProbabilityConstant: 0
+    - damageTypes: [Heat]
+      minimumDamage: 1
+      minimumTotalDamage: 250
+      woundPrototype: WoundHusking
+      woundDamages:
+        damageDict:
+          Heat: 100
+          Blunt: 100
+      damageProbabilityCoefficient: 0.25
+      damageProbabilityConstant: 0
+    - damageTypes: [Heat]
+      minimumDamage: 100
+      minimumTotalDamage: 0
+      woundPrototype: WoundHusking
+      woundDamages:
+        damageDict:
+          Heat: 100
+          Blunt: 100
+      damageProbabilityCoefficient: 1
+      damageProbabilityConstant: 0
+    - damageTypes: [Slash, Blunt, Piercing]
+      minimumDamage: 1
+      minimumTotalDamage: 300
+      woundPrototype: WoundBoneDeath
+      woundDamages:
+        damageDict:
+          Blunt: 50
+          Slash: 50
+          Piercing: 50
+      damageProbabilityCoefficient: 0.25
+      damageProbabilityConstant: 0
+    - damageTypes: [Slash, Blunt, Piercing]
+      minimumDamage: 120
+      minimumTotalDamage: 0
+      woundPrototype: WoundBoneDeath
+      woundDamages:
+        damageDict:
+          Blunt: 50
+          Slash: 50
+          Piercing: 50
+      damageProbabilityCoefficient: 1
+      damageProbabilityConstant: 0
+
+- type: entity
+  abstract: true
+  id: BaseMobPain
+  components:
+  - type: StatusEffectContainer
+  - type: Woundable
+  - type: HealthExaminable
+    examinableTypes:
+    - Asphyxiation
+    - Radiation
+  - type: Pain
+    painMultiplier: 1.25
+    maxShockIncreasePerSecond: 36
+    maxShockDecreasePerSecond: 12
+    doubleShockRecoveryThreshold: 0.5
+  - type: IntrinsicPain
+    painCoefficients:
+      Poison: 0.7
+      Radiation: 0.7
+      Cellular: 0.7
+  - type: ShockThresholds
+    thresholds:
+      10: StatusEffectMinorPain
+      30: StatusEffectModeratePain
+      60: StatusEffectSeverePain
+      120: StatusEffectBlackoutPain
+    mobThresholds:
+      200: Critical
+  - type: ShockAlerts
+    alertCategory: Pain
+    suppressedAlert: SuppressedPain
+    thresholds:
+      0: NoPain
+      10: MinorPain
+      30: ModeratePain
+      60: SeverePain
+      120: BlackoutPain
+      200: UnconsciousPain
+  - type: ShockGaspThresholds
+    messageThresholds:
+      120: DefaultPainslump
+      200: DefaultPaingasp
+
+- type: entity
+  abstract: true
+  id: BaseMobHeartrate
+  components:
+  - type: Heartrate
+    asphyxiationDamage: Asphyxiation
+    asphyxiationThreshold: 100
+    maxDamage: 100
+    damage: 0
+    strainDamageThresholds:
+      1: [0.04, 0.1]
+      2: [0.1, 0.1]
+      3: [0.3, 0.1]
+      4: [0.4, 2]
+    circulationStrainModifierCoefficient: 0.075
+    circulationStrainModifierConstant: 1.025
+    stoppedBloodCirculationModifier: 0.2
+    minimumDamageCirculationModifier: 0.3
+    shockStrainDivisor: 40
+    bloodPressureDeviation: 5
+    systolicBase: 120
+    diastolicBase: 80
+    heartRateDeviation: 15
+    heartRateBase: 75
+    heartRateStrainFactor: 200
+    heartRateStrainDivisor: 6
+    maximumStrain: 6
+    heartStoppedEffect: StatusEffectHeartStopped
+  - type: HeartDefibrillatable
+  - type: HeartStopOnHypovolemia
+    chance: 0.8
+    volumeThreshold: 0.3
+  - type: HeartStopOnHighStrain
+    chance: 0.05
+    threshold: 4
+  - type: HeartStopOnBrainHealth
+    chance: 0.8
+    threshold: 70
+  - type: HeartrateAlerts
+    strainAlert: HeartRate
+    stoppedAlert: HeartStopped
+    alertCategory: Health
+    maxStrain: 4
+  - type: SolutionContainerManager
+  - type: InjectableSolution
+    solution: chemicals
+  - type: Bloodstream
+    bleedReductionAmount: 0
+    damageBleedModifiers: null
+    bloodlossDamage: null
+    bloodlossHealDamage: null
+    updateInterval: 1
+  - type: CprTarget
+    effect: StatusEffectActiveCPR
+    effectDuration: 2.1
+    doAfterDuration: 2
+    wound: WoundFracture
+    woundProbability: 0.03
+  - type: IVTarget
+  - type: HeartDamageOnDamage
+    thresholds:
+    - damageTypes: [Slash, Blunt, Piercing]
+      minimumTotalDamage: 200
+      conversionFactor: 0.6
+    - damageTypes: [Heat, Cold, Caustic, Shock]
+      minimumTotalDamage: 200
+      conversionFactor: 0.6
+
+- type: entity
+  abstract: true
+  id: BaseMobBrain
+  components:
+  - type: BrainDamage
+    maxDamage: 100
+    damage: 0
+    maxOxygen: 10
+    oxygen: 10
+  - type: BrainDamageOxygenation
+    oxygenationDamageThresholds:
+      0.10: [1.0, [100, 0.75]]
+      0.30: [0.7, [ 90, 0.75]]
+      0.60: [0.6, [ 60, 0.75]]
+      0.70: [0.4, [ 40, 0.75]]
+      0.85: [0.3, [ 20, 0.75]]
+    oxygenDepletionThresholds:
+      0.30: [0.6, 1]
+    oxygenRegeneration: 1
+    maxPassivelyHealableDamage: 30
+    damageHealing: 1
+  - type: BrainDamageThresholds
+    damageStateThresholds:
+      70: Critical
+      100: Dead
+    oxygenStateThresholds: {}
+    damageEffectThresholds:
+      30: StatusEffectSevereBrainDamage
+      70: StatusEffectCriticalBrainDamage
+    damageAlertThresholds:
+      30: SevereBrainDamage
+      70: CriticalBrainDamage
+      100: BrainDead
+    damageAlertCategory: BrainDamage
+    oxygenEffectThresholds:
+      0: StatusEffectBrainNoOxygen
+    aliveDamageIcons:
+    - HealthIconNormal7
+    - HealthIconNormal6
+    - HealthIconNormal5
+    - HealthIconNormal4
+    - HealthIconNormal3
+    - HealthIconNormal2
+    - HealthIconNormal1
+    criticalDamageIcons:
+    - HealthIconCritical7
+    - HealthIconCritical6
+    - HealthIconCritical5
+    - HealthIconCritical4
+    - HealthIconCritical3
+    - HealthIconCritical2
+    - HealthIconCritical1
+    deadIcon: HealthIconBrainDead
+  - type: BrainDamageOnDamage
+    thresholds:
+    - damageTypes: [Slash, Blunt, Piercing]
+      minimumTotalDamage: 200
+      conversionFactor: 0.1
+    - damageTypes: [Heat, Cold, Caustic, Shock]
+      minimumTotalDamage: 200
+      conversionFactor: 0.01
+  - type: BrainGaspThresholds
+    messageThresholds:
+      70: DefaultBraingasp
+
+- type: entity
+  abstract: true
+  id: BaseMobSurgery
+  components:
+  - type: Construction
+    graph: SurgeryGraph
+    node: Base
+    deconstructionTarget: null
+  - type: SurgeryGuideTarget
+  - type: ContainerContainer
+    containers:
+      cavity_slot: !type:Container
+
+- type: entity
+  abstract: true
+  id: BaseMobCryostasis
+  components:
+  - type: CryostasisFactor
+    temperatureCoefficient: -0.03
+    temperatureConstant: 10
+
+- type: entity
+  abstract: true
+  id: BaseMobLungDamage
+  components:
+  - type: LungDamage
+    damage: 0
+    maxDamage: 100
+  - type: LungDamageOnInhaledAirTemperature
+    heatCoefficient: 0.005
+    heatConstant: -1.375
+    coldCoefficient: -0.01
+    coldConstant: 2
+  - type: LungDamageAlerts
+    alertThresholds:
+      15: MinorLungDamage
+      40: SevereLungDamage
+      60: CriticalLungDamage
+    alertCategory: LungDamage
+  - type: PassiveLungDamage
+    damage: -0.05
+    damageCap: 30

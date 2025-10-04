@@ -1,0 +1,111 @@
+<Document>
+# The Body
+
+## The Brain
+<Box>
+  <GuideEntityEmbed Entity="OrganHumanBrain" Caption="Human Brain" />
+</Box>
+
+Everything in a patient's body depends on the brain.
+[color=#00d3b8][bold]As long as the patient's brain is not dead, the patient is alive.[/bold][/color]
+Everything else in their body is responsible for keeping its brain alive.
+The more an injury threatens your patient's brain, the more important it is to treat.
+
+[color=#00d3b8][bold]Once a brain dies, it is dead, and the body cannot be rescuitated.[/bold][/color]
+
+A patient's brain requires adequate saturation (oxygenation for most species) in the bloodstream to survive.
+[color=#00d3b8][bold]The primary goal in medical care is to ensure the brain has adequate saturation.[/bold][/color]
+
+Symptoms of a patient with severe brain damage include, but are not limited to:
+
+- [color=cyan]Impaired communication[/color]: A patient experiencing severe brain damage can have difficulty speaking (i.e. stuttering).
+- [color=cyan]Impaired motor control[/color]: A patient experiencing pain may show sluggishness or an inability to aim precisely.
+- [color=cyan]Inability to stand[/color]: A patient experiencing severe brain damage may be unable to stand.
+- [color=cyan]Gasping[/color]: A patient experiencing severe brain damage may have trouble breathing, and gasp as a result.
+- [color=cyan]Nonresponsiveness[/color]: A patient experiencing severe brain damage may be unable to respond to environmental stimuli.
+
+### Diagnosis
+
+You can gauge your patient's brain activity with your health analyzer, listed as [color=#7af396]Brain Activity[/color].
+The left-most icon on your medical HUD also indicates a rough read of brain activity, with the blue cross being replaced by a red-and-white exclamation mark if the patient's brain is at risk of fatal injury.
+
+If your patient's [color=#7af396]Brain Activity[/color] is lowering, ensure their [color=#7af396]Blood Saturation[/color] is at safe levels.
+
+## Bloodstream
+
+Blood saturation is the primary measure for how satiated a patient's brain is.
+
+Blood saturation is affected by:
+- [color=cyan]Blood volume[/color]: Blood can be restored with saline for most species, or blood bags.
+- [color=cyan]Breathable air[/color]: Ensure the patient can breathe. Dexalin (plus) can be used to artificially oxygenate the bloodstream.
+- [color=cyan]Blood flow[/color]: The heart is responsible for circulating blood around your patient's body. CPR can be administered if the patient's heart has stopped, followed by surgical intervention as soon as possible.
+
+### Diagnosis
+
+You can gauge your patient's blood vitals with your health analyzer, listed as [color=#7af396]Blood Saturation[/color], [color=#7af396]Blood Pressure[/color], and [color=#7af396]Blood Flow[/color].
+
+If your patient's [color=#7af396]Blood Saturation[/color] is low, ensure their [color=#7af396]Blood Pressure[/color] is at safe levels, and make sure the patient has access to air.
+Medicines such as Dexalin can be used to ensure the bloodstream has access to air, and to speed up the process of respiration after prolonged suffocation.
+
+If your patient's [color=#7af396]Blood Flow[/color] is low, ensure their [color=#7af396]Heart Rate[/color] and [color=#7af396]Heart Health[/color] are at safe levels.
+In the case of a stopped heart, you can give CPR to ensure the blood is moving.
+
+If your patient's [color=#7af396]Blood Pressure[/color] is low, ensure their [color=#7af396]Heart Rate[/color] and blood volume are at safe levels.
+Saline and blood bags can be used to increase the patient's blood volume.
+
+## The Heart
+
+<Box>
+  <GuideEntityEmbed Entity="OrganHumanHeart" Caption="Human Heart" />
+</Box>
+
+The heart is responsible for blood flow.
+
+[color=#00d3b8][bold]If a patient's heart has stopped, they are priority number one.[/bold][/color]
+
+Blood flow increases with heartrate, and decreases with heart damage, coming to near-zero if the heart stops.
+
+The heart will increase its heartrate in response to pain, lack of access to breathable air, and lowered blood volume.
+
+The heart will stop from:
+- [color=cyan]Ventricular tachycardia[/color]: Excessively high pulse can cause the patient's heart to stop, usually from pain. Administer painkillers and inaprovaline before restarting the heart.
+- [color=cyan]Hypovolemia[/color]: If a patient loses too much blood, their heart will stop. Stop bleeding and restore blood levels before restarting the heart.
+- [color=cyan]Accumulated damage[/color]: If a patient's heart accumulates too much damage, it will stop. Surgical intervention will be required before restarting the heart.
+
+The heart can be restarted using a defibrillator.
+
+If the heart cannot be restarted, medical professionals and other crew alike can administer CPR to ensure blood flow.
+
+### Diagnosis
+
+You can gauge your patient's heart vitals with your health analyzer, listed as [color=#7af396]Heart Health[/color] and [color=#7af396]Heart Rate[/color].
+
+If your patient's [color=#7af396]Heart Rate[/color] is low, ensure their blood volume is adequate, and use a defibrillator or stimulant medications as necessary.
+
+If your patient's [color=#7af396]Heart Rate[/color] is high, ensure that the patient's pain is under management, the patient's blood volume is sufficient, and that the patient has adequate access to oxygen.
+Medicines such as Inaprovaline can be administered to stabilize the heart rate, at the risk of reducing the patient's overall [color=#7af396]Blood Saturation[/color] if other conditions are not treated.
+
+If your patient's [color=#7af396]Heart Health[/color] is declining, ensure that their [color=#7af396]Heart Rate[/color] is not excessively high.
+
+If your patient's [color=#7af396]Heart Health[/color] is dangerously low, surgery will be required to repair injuries to the heart.
+
+## Pain
+
+In response to injuries, your patient will experience pain.
+
+Fresh wounds are more painful than older and untended wounds.
+
+The effect of pain can primarily felt through the increase in a patient's heart rate, as well as shock in cases of severe pain.
+
+Symptoms of a patient experiencing pain include, but are not limited to:
+
+- [color=cyan]Impaired communication[/color]: A patient experiencing pain can have difficulty speaking (i.e. stuttering or volume), and may be unable to operate their headset effectively
+- [color=cyan]Imapired motor control[/color]: A patient experiencing pain may show sluggishness or an inability to aim precisely.
+- [color=cyan]Inability to stand[/color]: A patient experiencing pain may be unable to stand.
+
+### Diagnosis
+
+The patient's pain level can primarily be gauged by asking the patient how they feel, or in cases where they cannot communicate, their [color=#7af396]Heart Rate[/color] or displayed symptoms.
+Note that pain is not the only thing that can cause the heart rate to increase.
+
+</Document>

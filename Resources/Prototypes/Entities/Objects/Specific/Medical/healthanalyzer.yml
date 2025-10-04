@@ -40,7 +40,7 @@
           False: { visible: false }
   - type: GuideHelp
     guides:
-    - MedicalDoctor
+    - OffbrandBody # Offbrand
 
 - type: entity
   id: HandheldHealthAnalyzer

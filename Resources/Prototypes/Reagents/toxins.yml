@@ -339,6 +339,8 @@
         damage:
           groups:
             Airloss: 10
+      - !type:ModifyLungDamage # Offbrand
+        amount: 2
 
 - type: reagent
   id: MindbreakerToxin
@@ -470,11 +472,168 @@
   worksOnTheDead: true
   metabolisms:
     Medicine:
+      # Begin Offbrand
+      metabolismRate: 0.25
+      statusEffects:
+      - statusEffect: StatusEffectHeartStrainRomerol
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 15
       effects:
-        - !type:CauseZombieInfection
-          conditions:
-            - !type:ReagentThreshold
-              min: 5
+      - !type:AdjustReagent
+        reagent: Romerol
+        amount: -10
+        conditions:
+        - !type:IsZombie
+      - !type:AdjustReagentGaussian
+        reagent: Romerol
+        μ: 0.35
+        σ: 0.1
+        conditions:
+        - !type:IsZombieImmune
+          invert: true
+      - !type:PopupMessage
+        type: Local
+        visualType: MediumCaution
+        messages:
+        - zombification-30-message-1
+        - zombification-30-message-2
+        - zombification-30-message-3
+        - zombification-30-message-4
+        probability: 0.05
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 15
+      - !type:HealthChange
+        damage:
+          types:
+             Poison: 0.15
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 15
+      - !type:ModifyHeartDamage
+        amount: 2
+        conditions:
+        - !type:MobStateCondition
+          mobstate: Critical
+      - !type:ModifyLungDamage
+        amount: 2
+        conditions:
+        - !type:MobStateCondition
+          mobstate: Critical
+      - !type:HealthChange
+        damage:
+          types:
+            Asphyxiation: 10
+        conditions:
+        - !type:MobStateCondition
+          mobstate: Critical
+      - !type:Zombify
+        conditions:
+        - !type:BrainDamage
+          min: 70
+        - !type:MetaboliteThreshold
+          min: 15
+      - !type:ModifyBrainDamage
+        amount: 0.5
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 15
+      - !type:ModifyHeartDamage
+        amount: 0.2
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 15
+      - !type:ModifyLungDamage
+        amount: 0.2
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 15
+      - !type:AdjustTemperature
+        amount: 3000
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 15
+      - !type:Jitter
+        probability: 0.25
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 30
+      - !type:AdjustTemperature
+        amount: 6000
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 30
+      - !type:PopupMessage
+        type: Local
+        visualType: MediumCaution
+        messages:
+        - zombification-60-message-1
+        - zombification-60-message-2
+        - zombification-60-message-3
+        - zombification-60-message-4
+        probability: 0.05
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 30
+      - !type:ModifyBrainDamage
+        amount: 0.25
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 45
+      - !type:HealthChange
+        damage:
+          types:
+             Slash: 0.15
+             Blunt: 0.15
+             Piercing: 0.15
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 45
+      - !type:PopupMessage
+        type: Local
+        visualType: MediumCaution
+        messages:
+        - zombification-90-message-1
+        - zombification-90-message-2
+        - zombification-90-message-3
+        - zombification-90-message-4
+        probability: 0.05
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 45
+      - !type:ModifyBrainDamage
+        amount: 0.5
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 60
+      - !type:PopupMessage
+        type: Local
+        visualType: MediumCaution
+        messages:
+        - zombification-120-message-1
+        - zombification-120-message-2
+        - zombification-120-message-3
+        - zombification-120-message-4
+        probability: 0.05
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 60
+      - !type:ModifyBrainDamage
+        amount: 5
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 70
+      - !type:Zombify
+        conditions:
+        - !type:MobStateCondition
+          mobstate: Dead
+      - !type:ClampWounds
+        chance: 0.4
+      - !type:RemoveStatusEffect
+        effectProto: WoundArterialBleeding
+        probability: 0.4
+      # End Offbrand
 
 - type: reagent
   id: UncookedAnimalProteins

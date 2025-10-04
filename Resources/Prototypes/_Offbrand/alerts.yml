@@ -1,0 +1,154 @@
+- type: alert
+  id: HeartStopped
+  category: Health
+  icons:
+  - sprite: /Textures/_Offbrand/Alerts/heart_rate.rsi
+    state: heart_stopped
+  name: alerts-heart-stopped-name
+  description: alerts-heart-stopped-desc
+
+- type: alert
+  id: HeartRate
+  category: Health
+  icons:
+  - sprite: /Textures/_Offbrand/Alerts/heart_rate.rsi
+    state: heart_normal
+  - sprite: /Textures/_Offbrand/Alerts/heart_rate.rsi
+    state: heart_okay
+  - sprite: /Textures/_Offbrand/Alerts/heart_rate.rsi
+    state: heart_poor
+  - sprite: /Textures/_Offbrand/Alerts/heart_rate.rsi
+    state: heart_bad
+  - sprite: /Textures/_Offbrand/Alerts/heart_rate.rsi
+    state: heart_danger
+  name: alerts-heart-rate-name
+  description: alerts-heart-rate-desc
+  minSeverity: 0
+  maxSeverity: 4
+
+- type: alertCategory
+  id: Pain
+
+- type: alertCategory
+  id: BrainDamage
+
+- type: alertCategory
+  id: LungDamage
+
+- type: alert
+  id: MinorLungDamage
+  category: LungDamage
+  icons:
+  - sprite: /Textures/_Offbrand/Alerts/lung_damage.rsi
+    state: minor
+  name: alerts-minor-lung-damage-name
+  description: alerts-minor-lung-damage-desc
+
+- type: alert
+  id: SevereLungDamage
+  category: LungDamage
+  icons:
+  - sprite: /Textures/_Offbrand/Alerts/lung_damage.rsi
+    state: severe
+  name: alerts-severe-lung-damage-name
+  description: alerts-severe-lung-damage-desc
+
+- type: alert
+  id: CriticalLungDamage
+  category: LungDamage
+  icons:
+  - sprite: /Textures/_Offbrand/Alerts/lung_damage.rsi
+    state: critical
+  name: alerts-critical-lung-damage-name
+  description: alerts-critical-lung-damage-desc
+
+- type: alert
+  id: SuppressedPain
+  category: Pain
+  icons:
+  - sprite: /Textures/_Offbrand/Alerts/pain.rsi
+    state: pain_suppressed
+  name: alerts-pain-suppressed-name
+  description: alerts-pain-suppressed-desc
+
+- type: alert
+  id: NoPain
+  category: Pain
+  icons:
+  - sprite: /Textures/_Offbrand/Alerts/pain.rsi
+    state: pain_good
+  name: alerts-pain-good-name
+  description: alerts-pain-good-desc
+
+- type: alert
+  id: MinorPain
+  category: Pain
+  icons:
+  - sprite: /Textures/_Offbrand/Alerts/pain.rsi
+    state: pain_minor
+  name: alerts-pain-minor-name
+  description: alerts-pain-minor-desc
+
+- type: alert
+  id: ModeratePain
+  category: Pain
+  icons:
+  - sprite: /Textures/_Offbrand/Alerts/pain.rsi
+    state: pain_moderate
+  name: alerts-pain-moderate-name
+  description: alerts-pain-moderate-desc
+
+- type: alert
+  id: SeverePain
+  category: Pain
+  icons:
+  - sprite: /Textures/_Offbrand/Alerts/pain.rsi
+    state: pain_severe
+  name: alerts-pain-severe-name
+  description: alerts-pain-severe-desc
+
+- type: alert
+  id: BlackoutPain
+  category: Pain
+  icons:
+  - sprite: /Textures/_Offbrand/Alerts/pain.rsi
+    state: pain_blackout
+  name: alerts-pain-blackout-name
+  description: alerts-pain-blackout-desc
+
+- type: alert
+  id: UnconsciousPain
+  category: Pain
+  icons:
+  - sprite: /Textures/_Offbrand/Alerts/pain.rsi
+    state: pain_unconscious
+  name: alerts-pain-unconscious-name
+  description: alerts-pain-unconscious-desc
+
+- type: alert
+  id: SevereBrainDamage
+  category: BrainDamage
+  icons:
+  - sprite: /Textures/_Offbrand/Alerts/brain_damage.rsi
+    state: severe
+  name: alerts-severe-brain-damage-name
+  description: alerts-severe-brain-damage-desc
+
+- type: alert
+  id: CriticalBrainDamage
+  category: BrainDamage
+  icons:
+  - sprite: /Textures/_Offbrand/Alerts/brain_damage.rsi
+    state: critical
+  name: alerts-critical-brain-damage-name
+  description: alerts-critical-brain-damage-desc
+
+- type: alert
+  id: BrainDead
+  category: BrainDamage
+  icons:
+  - sprite: /Textures/_Offbrand/Alerts/brain_damage.rsi
+    state: dead
+  name: alerts-brain-death-name
+  description: alerts-brain-death-desc
+

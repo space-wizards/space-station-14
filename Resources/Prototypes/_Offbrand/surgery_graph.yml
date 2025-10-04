@@ -1,0 +1,307 @@
+- type: constructionGraph
+  id: SurgeryGraph
+  start: Base
+  graph:
+  - node: Base
+    header: construction-component-to-perform-header
+    localizedName: surgery-cleanup-name
+    edges:
+    - to: OpenIncision
+      steps:
+      - tool: Incising
+        doAfter: 1
+        completed:
+        - !type:AddWound
+          wound: WoundIncision
+          damages:
+            damageDict:
+              Slash: 10
+  - node: OpenIncision
+    edges:
+    - &stop_surgery
+      to: Base
+      steps:
+      - tool: Cauterizing
+        doAfter: 1
+        completed:
+        - !type:RemoveStatusEffect
+          effect: WoundClamped
+        - !type:RemoveStatusEffect
+          effect: WoundIncision
+        - !type:RemoveStatusEffect
+          effect: WoundRetracted
+        - !type:DamageEntity
+          damage:
+            types:
+              Burn: 10
+    - to: ClampedBleeders
+      steps:
+      - tool: Clamping
+        doAfter: 1
+        completed:
+        - !type:AddWound
+          wound: WoundClamped
+          damages:
+            damageDict:
+              Blunt: 5
+  - node: ClampedBleeders
+    edges:
+    - *stop_surgery
+    - to: RetractedIncision
+      steps:
+      - tool: Retracting
+        doAfter: 1
+        completed:
+        - !type:AddWound
+          wound: WoundRetracted
+          damages:
+            damageDict:
+              Blunt: 5
+  - node: RetractedIncision
+    edges:
+    - *stop_surgery
+    - to: WoundFractureBoneMending
+      conditions: &fracture-conditions
+      - !type:HasStatusEffect
+        effect: WoundFracture
+      steps:
+      - tool: BoneMending
+        doAfter: 1
+    - to: WoundArterialTreatment
+      conditions: &arterial-conditions
+      - !type:HasStatusEffect
+        effect: WoundArterialBleeding
+      completed:
+      - !type:RemoveStatusEffect
+        effect: WoundArterialBleeding
+      steps:
+      - tool: Recoupling
+        doAfter: 1
+    - to: OpenRibCage
+      completed:
+      - !type:AddWound
+        wound: WoundOpenRibCage
+        damages:
+          damageDict:
+            Blunt: 5
+      steps:
+      - tool: Sawing
+        doAfter: 5
+  - node: WoundFractureBoneMending
+    edges:
+    - to: WoundFractureBoneSetting
+      steps:
+      - tool: BoneSetting
+        doAfter: 1
+  - node: WoundFractureBoneSetting
+    edges:
+    - to: WoundFractureTreatment
+      completed:
+      - !type:RemoveStatusEffect
+        effect: WoundFracture
+      steps:
+      - tool: BoneMending
+        doAfter: 1
+  - node: WoundFractureTreatment
+    header: construction-component-to-perform-header
+    localizedName: surgery-wound-fracture-treatment-name
+    actions:
+    - !type:SetNode
+      node: RetractedIncision
+      repeatConditions: *fracture-conditions
+  - node: WoundArterialTreatment
+    header: construction-component-to-perform-header
+    localizedName: surgery-wound-arterial-treatment-name
+    actions:
+    - !type:SetNode
+      node: RetractedIncision
+      repeatConditions: *arterial-conditions
+  - node: OpenRibCage
+    edges:
+    - to: OpenRibCageMending
+      steps:
+      - tool: BoneMending
+        doAfter: 1
+    - to: HeartTreatmentSuture
+      conditions: &heart-damage-conditions
+      - !type:HeartDamage
+        min: 1
+      completed:
+      - !type:ChangeHeartDamage
+        amount: -10
+      steps:
+      - material: Suture
+        amount: 1
+        doAfter: 5
+    - to: HeartTreatmentMedicatedSuture
+      conditions: *heart-damage-conditions
+      completed:
+      - !type:ChangeHeartDamage
+        amount: -20
+      steps:
+      - material: MedicatedSuture
+        amount: 1
+        doAfter: 3
+    - to: HuskingTreatment
+      conditions: &husking-conditions
+      - !type:HasStatusEffect
+        effect: WoundHusking
+      completed:
+      - !type:RemoveStatusEffect
+        effect: WoundHusking
+      steps:
+      - material: RegenerativeMesh
+        amount: 3
+        doAfter: 5
+    - to: CavityManipulationOpen
+      steps:
+      - tool: Drilling
+        doAfter: 2
+    - to: OpenRibCageRecoupling
+      steps:
+      - tool: Recoupling
+        doAfter: 1
+  - node: OpenRibCageRecoupling
+    edges:
+    - to: OpenRibCage
+      steps:
+      - tool: Clamping
+        doAfter: 1
+    - to: LungTreatmentSuture
+      conditions: &lung-damage-conditions
+      - !type:LungDamage
+        min: 1
+      completed:
+      - !type:ChangeLungDamage
+        amount: -10
+      steps:
+      - material: Suture
+        amount: 1
+        doAfter: 5
+    - to: LungTreatmentMedicatedSuture
+      conditions: *lung-damage-conditions
+      completed:
+      - !type:ChangeLungDamage
+        amount: -20
+      steps:
+      - material: MedicatedSuture
+        amount: 1
+        doAfter: 3
+  - node: OpenRibCageMending
+    edges:
+    - to: OpenRibCageSetting
+      steps:
+      - tool: BoneSetting
+        doAfter: 1
+    - to: BoneDeathTreatment
+      conditions: &bone-death-conditions
+      - !type:HasStatusEffect
+        effect: WoundBoneDeath
+      completed:
+      - !type:RemoveStatusEffect
+        effect: WoundBoneDeath
+      steps:
+      - material: MedicatedSuture
+        amount: 3
+        doAfter: 5
+  - node: OpenRibCageSetting
+    edges:
+    - to: RetractedIncision
+      completed:
+      - !type:RemoveStatusEffect
+        effect: WoundOpenRibCage
+      steps:
+      - tool: BoneMending
+        doAfter: 1
+  - node: BoneDeathTreatment
+    header: construction-component-to-perform-header
+    localizedName: surgery-bone-death-treatment-name
+    actions:
+    - !type:SetNode
+      node: OpenRibCage
+      repeatConditions: *bone-death-conditions
+  - node: HeartTreatmentSuture
+    header: construction-component-to-perform-header
+    localizedName: surgery-heart-treatment-suture-name
+    actions:
+    - !type:SetNode
+      node: OpenRibCage
+      repeatConditions: *heart-damage-conditions
+  - node: HeartTreatmentMedicatedSuture
+    header: construction-component-to-perform-header
+    localizedName: surgery-heart-treatment-medicated-suture-name
+    actions:
+    - !type:SetNode
+      node: OpenRibCage
+      repeatConditions: *heart-damage-conditions
+  - node: LungTreatmentSuture
+    header: construction-component-to-perform-header
+    localizedName: surgery-lung-treatment-suture-name
+    actions:
+    - !type:SetNode
+      node: OpenRibCageRecoupling
+      repeatConditions: *lung-damage-conditions
+  - node: LungTreatmentMedicatedSuture
+    header: construction-component-to-perform-header
+    localizedName: surgery-lung-treatment-medicated-suture-name
+    actions:
+    - !type:SetNode
+      node: OpenRibCageRecoupling
+      repeatConditions: *lung-damage-conditions
+  - node: HuskingTreatment
+    header: construction-component-to-perform-header
+    localizedName: surgery-husking-treatment-name
+    actions:
+    - !type:SetNode
+      node: OpenRibCage
+      repeatConditions: *husking-conditions
+  - node: CavityManipulationOpen
+    edges:
+    - to: OpenRibCage
+      steps:
+      - tool: Cauterizing
+        doAfter: 2
+    - to: CavityManipulationInsert
+      conditions:
+      - !type:ContainerEmpty
+        container: cavity_slot
+        examineText: cavity-slot-insertion-examine
+        guideStep: cavity-slot-insertion-guide
+      steps:
+      - whitelist:
+          requireAll: true
+          components:
+          - Item
+          sizes:
+          - Tiny
+          - Small
+        doAfter: 2
+        store: cavity_slot
+        name: cavity-slot-insertion-small-item
+    - to: CavityManipulationRemoval
+      completed:
+      - !type:TriggerContainerContents
+        container: cavity_slot
+      - !type:EmptyContainer
+        container: cavity_slot
+        pickup: true
+      conditions:
+      - !type:ContainerNotEmpty
+        container: cavity_slot
+        examineText: cavity-slot-removal-examine
+        guideText: cavity-slot-removal-guide
+      steps:
+      - tool: Clamping
+        doAfter: 2
+  - node: CavityManipulationInsert
+    header: construction-component-to-perform-header
+    localizedName: surgery-cavity-manipulation-insert-name
+    actions:
+    - !type:SetNode
+      node: CavityManipulationOpen
+  - node: CavityManipulationRemoval
+    header: construction-component-to-perform-header
+    localizedName: surgery-cavity-manipulation-removal-name
+    actions:
+    - !type:SetNode
+      node: CavityManipulationOpen

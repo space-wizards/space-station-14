@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Client.Message;
 using Content.Shared.Atmos;
 using Content.Client.UserInterface.Controls;
+using Content.Shared._Offbrand.Wounds; // Offbrand
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -36,6 +37,20 @@ namespace Content.Client.HealthAnalyzer.UI
         private readonly IPrototypeManager _prototypes;
         private readonly IResourceCache _cache;
 
+        // Begin Offbrand
+        private readonly Tooltips.StatusTooltip _statusTooltip = new();
+        private readonly Tooltips.BrainHealthTooltip _brainHealthTooltip = new();
+        private readonly Tooltips.BloodPressureTooltip _bloodPressureTooltip = new();
+        private readonly Tooltips.BloodOxygenationTooltip _bloodOxygenationTooltip = new();
+        private readonly Tooltips.HeartRateTooltip _heartRateTooltip = new();
+        private readonly Tooltips.HeartHealthTooltip _heartHealthTooltip = new();
+        private readonly Tooltips.LungHealthTooltip _lungHealthTooltip = new();
+        private readonly Tooltips.BloodFlowTooltip _bloodFlowTooltip = new();
+        private readonly Tooltips.BloodTooltip _bloodTooltip = new();
+        private readonly Tooltips.TemperatureTooltip _temperatureTooltip = new();
+        private readonly Tooltips.DamageTooltip _damageTooltip = new();
+        // End Offbrand
+
         public HealthAnalyzerWindow()
         {
             RobustXamlLoader.Load(this);
@@ -45,6 +60,20 @@ namespace Content.Client.HealthAnalyzer.UI
             _spriteSystem = _entityManager.System<SpriteSystem>();
             _prototypes = dependencies.Resolve<IPrototypeManager>();
             _cache = dependencies.Resolve<IResourceCache>();
+
+            // Begin Offbrand
+            StatusButton.TooltipSupplier = _ => _statusTooltip;
+            BrainHealthButton.TooltipSupplier = _ => _brainHealthTooltip;
+            BloodPressureButton.TooltipSupplier = _ => _bloodPressureTooltip;
+            BloodOxygenationButton.TooltipSupplier = _ => _bloodOxygenationTooltip;
+            HeartRateButton.TooltipSupplier = _ => _heartRateTooltip;
+            BloodFlowButton.TooltipSupplier = _ => _bloodFlowTooltip;
+            HeartHealthButton.TooltipSupplier = _ => _heartHealthTooltip;
+            TemperatureButton.TooltipSupplier = _ => _temperatureTooltip;
+            DamageButton.TooltipSupplier = _ => _damageTooltip;
+            BloodButton.TooltipSupplier = _ => _bloodTooltip;
+            LungHealthButton.TooltipSupplier = _ => _lungHealthTooltip;
+            // End Offbrand
         }
 
         public void Populate(HealthAnalyzerScannedUserMessage msg)
@@ -59,6 +88,16 @@ namespace Content.Client.HealthAnalyzer.UI
             }
 
             NoPatientDataText.Visible = false;
+
+            // Begin Offbrand Tooltips
+            _brainHealthTooltip.Update(msg);
+            _bloodPressureTooltip.Update(msg);
+            _bloodOxygenationTooltip.Update(msg, (target.Value, damageable, _entityManager.GetComponentOrNull<HeartrateComponent>(target)));
+            _heartRateTooltip.Update(msg, (target.Value, damageable, _entityManager.GetComponentOrNull<HeartrateComponent>(target)));
+            _bloodFlowTooltip.Update(msg);
+            _heartHealthTooltip.Update(msg);
+            _temperatureTooltip.Update(msg, (target.Value, _entityManager.GetComponentOrNull<CryostasisFactorComponent>(target)));
+            // End Offbrand Tooltips
 
             // Scan Mode
 
@@ -110,7 +149,7 @@ namespace Content.Client.HealthAnalyzer.UI
 
             // Alerts
 
-            var showAlerts = msg.Unrevivable == true || msg.Bleeding == true;
+            var showAlerts = msg.Unrevivable == true || msg.Bleeding == true || msg.WoundableData?.NonMedicalReagents == true || msg.WoundableData?.Wounds != null; // Offbrand
 
             AlertsDivider.Visible = showAlerts;
             AlertsContainer.Visible = showAlerts;
@@ -133,6 +172,137 @@ namespace Content.Client.HealthAnalyzer.UI
                     Margin = new Thickness(0, 4),
                     MaxWidth = 300
                 });
+
+            // Begin Offbrand
+            var showReagents = msg.WoundableData?.Reagents?.Count is { } count && count > 0;
+            ReagentsDivider.Visible = showReagents;
+            ReagentsContainer.Visible = showReagents;
+
+            if (msg.WoundableData is { } woundable)
+            {
+                if (woundable.Wounds is not null)
+                {
+                    foreach (var wound in woundable.Wounds)
+                    {
+                        AlertsContainer.AddChild(new RichTextLabel
+                        {
+                            Text = Loc.GetString(wound),
+                            Margin = new Thickness(0, 4),
+                            MaxWidth = 300
+                        });
+                    }
+                }
+                if (woundable.NonMedicalReagents)
+                {
+                    AlertsContainer.AddChild(new RichTextLabel
+                    {
+                        Text = Loc.GetString("health-analyzer-window-entity-non-medical-reagents"),
+                        Margin = new Thickness(0, 4),
+                        MaxWidth = 300
+                    });
+                }
+                if (woundable.Reagents is { } reagents)
+                {
+                    ReagentsContainer.DisposeAllChildren();
+                    foreach (var (reagent, amounts) in reagents.OrderBy(kvp => _prototypes.Index(kvp.Key).LocalizedName))
+                    {
+                        var (quantity, metabolites) = amounts;
+                        var proto = _prototypes.Index(reagent);
+                        ReagentsContainer.AddChild(new BoxContainer
+                        {
+                            Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                            HorizontalExpand = true,
+                            Children =
+                            {
+                                new PanelContainer
+                                {
+                                    VerticalExpand = true,
+                                    MinWidth = 4,
+                                    PanelOverride = new StyleBoxFlat
+                                    {
+                                        BackgroundColor = proto.SubstanceColor
+                                    },
+                                    Margin = new Thickness(4, 1),
+                                },
+
+                                new Label { Text = proto.LocalizedName, HorizontalExpand = true, SizeFlagsStretchRatio = 3 },
+
+                                new Label { Text = $"{metabolites}u", StyleClasses = { Content.Client.Stylesheets.StyleNano.StyleClassLabelSecondaryColor }, HorizontalExpand = true, SizeFlagsStretchRatio = 1 },
+
+                                new Label { Text = $"{quantity}u", HorizontalExpand = true, SizeFlagsStretchRatio = 1 },
+                            }
+                        });
+                    }
+                }
+                BrainHealthText.Visible = true;
+                BrainHealthLabel.Visible = true;
+                BrainHealthLabel.Text = Loc.GetString("health-analyzer-window-entity-brain-health-value", ("value", $"{woundable.BrainHealth * 100:F1}"), ("rating", woundable.BrainHealthRating));
+                BrainHealthButton.Visible = true;
+
+                HeartHealthText.Visible = true;
+                HeartHealthLabel.Visible = true;
+                HeartHealthLabel.Text = Loc.GetString("health-analyzer-window-entity-heart-health-value", ("value", $"{woundable.HeartHealth * 100:F1}"), ("rating", woundable.HeartHealthRating));
+                HeartHealthButton.Visible = true;
+
+                HeartRateText.Visible = true;
+                HeartRateLabel.Visible = true;
+                HeartRateLabel.Text = Loc.GetString("health-analyzer-window-entity-heart-rate-value", ("value", woundable.HeartRate), ("rating", woundable.HeartRateRating));
+                HeartRateButton.Visible = true;
+
+                BloodOxygenationText.Visible = true;
+                BloodOxygenationLabel.Visible = true;
+                BloodOxygenationLabel.Text = Loc.GetString("health-analyzer-window-entity-blood-oxygenation-value", ("value", $"{woundable.BloodOxygenation * 100:F1}"), ("rating", woundable.BloodOxygenationRating));
+                BloodOxygenationButton.Visible = true;
+
+                BloodFlowText.Visible = true;
+                BloodFlowLabel.Visible = true;
+                BloodFlowLabel.Text = Loc.GetString("health-analyzer-window-entity-blood-flow-value", ("value", $"{woundable.BloodFlow * 100:F1}"), ("rating", woundable.BloodFlowRating));
+                BloodFlowButton.Visible = true;
+
+                var (systolic, diastolic) = woundable.BloodPressure;
+                BloodPressureText.Visible = true;
+                BloodPressureLabel.Visible = true;
+                BloodPressureLabel.Text = Loc.GetString("health-analyzer-window-entity-blood-pressure-value", ("systolic", systolic), ("diastolic", diastolic), ("rating", woundable.BloodPressureRating));
+                BloodPressureButton.Visible = true;
+
+                LungHealthText.Visible = true;
+                LungHealthLabel.Visible = true;
+                LungHealthLabel.Text = Loc.GetString("health-analyzer-window-entity-lung-health-value", ("value", $"{woundable.LungHealth * 100:F1}"), ("rating", woundable.LungHealthRating));
+                LungHealthButton.Visible = true;
+
+                BloodLabel.Visible = false;
+                BloodText.Visible = false;
+                BloodButton.Visible = false;
+            }
+            else
+            {
+                BrainHealthLabel.Visible = false;
+                BloodPressureLabel.Visible = false;
+                BloodOxygenationLabel.Visible = false;
+                HeartRateLabel.Visible = false;
+                HeartHealthLabel.Visible = false;
+                BloodFlowLabel.Visible = false;
+                LungHealthLabel.Visible = false;
+                BrainHealthText.Visible = false;
+                BloodPressureText.Visible = false;
+                BloodOxygenationText.Visible = false;
+                BloodFlowText.Visible = false;
+                HeartRateText.Visible = false;
+                HeartHealthText.Visible = false;
+                LungHealthText.Visible = false;
+                BrainHealthButton.Visible = false;
+                BloodPressureButton.Visible = false;
+                BloodOxygenationButton.Visible = false;
+                BloodFlowButton.Visible = false;
+                HeartRateButton.Visible = false;
+                HeartHealthButton.Visible = false;
+                LungHealthButton.Visible = false;
+
+                BloodLabel.Visible = true;
+                BloodText.Visible = true;
+                BloodButton.Visible = true;
+            }
+            // End Offbrand
 
             // Damage Groups
 
@@ -200,6 +370,10 @@ namespace Content.Client.HealthAnalyzer.UI
                     groupContainer.AddChild(CreateDiagnosticItemLabel(damageString.Insert(0, " · ")));
                 }
             }
+
+            // Begin Offbrand
+            NoDamagesText.Visible = GroupsContainer.ChildCount == 0;
+            // End Offbrand
         }
 
         private Texture GetTexture(string texture)

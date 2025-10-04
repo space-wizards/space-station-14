@@ -24,6 +24,7 @@
     containers:
       storagebase: !type:Container
         ents: []
+      cavity_slot: !type:Container # Offbrand
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:
@@ -32,6 +33,8 @@
         type: HumanoidMarkingModifierBoundUserInterface
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
+      enum.SurgeryGuideUiKey.Key: # Offbrand
+        type: SurgeryGuideBoundUserInterface
   # to prevent bag open/honk spam
   - type: UseDelay
     delay: 0.5
