@@ -228,7 +228,6 @@ namespace Content.Shared.Chemistry.Reagent
 
             var quantity = metabolism == null ? 0f : (double) (effect.MinScale * metabolism);
 
-            // TODO: PASS SCALE!!!
             return Loc.GetString(
                 "guidebook-reagent-effect-description",
                 ("reagent", LocalizedName),
