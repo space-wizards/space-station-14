@@ -1,7 +1,4 @@
-using Content.Shared.Anomaly;
-using Content.Shared.Anomaly.Components;
-
-namespace Content.Server.Anomaly.Components;
+namespace Content.Shared.Anomaly.Components;
 
 /// <summary>
 /// This is used for projectiles which affect anomalies through colliding with them.
