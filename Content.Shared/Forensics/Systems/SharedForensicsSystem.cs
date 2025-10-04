@@ -35,7 +35,7 @@ using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
-public abstract class SharedForensicsSystem : EntitySystem
+public abstract class ForensicsSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
