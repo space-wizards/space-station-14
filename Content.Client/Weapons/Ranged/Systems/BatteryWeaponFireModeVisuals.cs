@@ -38,7 +38,6 @@ public sealed class BatteryWeaponFireModesVisuals : EntitySystem
                 _sprite.LayerSetColor((ent.Owner, sprite), BatteryWeaponFireModeVisualizer.Color, color);
 
         _item.VisualsChanged(ent);
-
     }
 
     private void OnGetHeldVisuals(Entity<BatteryWeaponFireModesComponent> ent, ref GetInhandVisualsEvent args)
@@ -51,7 +50,6 @@ public sealed class BatteryWeaponFireModesVisuals : EntitySystem
 
         if (!ent.Comp.InhandVisuals.TryGetValue(args.Location, out var layers))
             return;
-
 
         var defaultKey = $"inhand-{args.Location.ToString().ToLowerInvariant()}-color";
 
