@@ -26,5 +26,8 @@ namespace Content.Server.Chemistry.Components
 
         [DataField("clickSound"), ViewVariables(VVAccess.ReadWrite)]
         public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+
+        [DataField("drawSource"), ViewVariables(VVAccess.ReadWrite)]
+        public ChemMasterDrawSource DrawSource = ChemMasterDrawSource.Internal;
     }
 }
