@@ -1,15 +1,15 @@
-﻿using Robust.Shared.Prototypes;
+﻿using Content.Shared.Medical;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Body;
 
 public sealed partial class VomitEntityEffectSystem : EntityEffectSystem<MetaDataComponent, Vomit>
 {
-    //[Dependency] private readonly VomitSystem _vomit = default!;
+    [Dependency] private readonly VomitSystem _vomit = default!;
 
     protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<Vomit> args)
     {
-        // TODO: Need vomiting in shared...
-        //_vomit.Vomit(entity.Owner, args.Effect.ThirstAmount * args.Scale, args.Effect.HungerAmount * args.Scale);
+        _vomit.Vomit(entity.Owner, args.Effect.ThirstAmount * args.Scale, args.Effect.HungerAmount * args.Scale);
     }
 }
 

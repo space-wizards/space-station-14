@@ -41,7 +41,7 @@ public sealed partial class Emp : EntityEffectBase<Emp>
     ///     Amount of time entities will be disabled
     /// </summary>
     [DataField]
-    public float Duration = 15;
+    public TimeSpan Duration = TimeSpan.FromSeconds(15);
 
     /// <inheritdoc/>
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
