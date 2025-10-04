@@ -90,7 +90,8 @@ namespace Content.Shared.Storage
         /// <summary>
         /// How many entities area pickup can pickup at once.
         /// </summary>
-        public const int AreaPickupLimit = 10;
+        [DataField]
+        public int AreaPickupLimit = 10;
 
         [DataField]
         public bool AreaInsert; // Clicking with the storage entity causes it to insert all nearby storables after a delay
