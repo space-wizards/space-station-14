@@ -6,7 +6,8 @@
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
             <BoxContainer Name="MainHeader"
                           Orientation="Horizontal"
-                          HorizontalExpand="True">
+                          HorizontalExpand="True"
+                          HorizontalAlignment="Center">
                 <Label Name="TimeLabel" Align="Center"/>
                 <BoxContainer Name="BoardOptionsPresetsContainer"
                               Orientation="Horizontal"
@@ -18,7 +19,8 @@
             </BoxContainer>
             <BoxContainer Name="CustomBoardOptionsContainer"
                           Orientation="Horizontal"
-                          HorizontalExpand="True">
+                          HorizontalExpand="True"
+                          Visible="False">
                 <LineEdit Name="CustomWidthField" HorizontalExpand="True" MinWidth="60"
                           PlaceHolder="{Loc 'minegame-menu-field-custom-width'}"/>
                 <LineEdit Name="CustomHeightField" HorizontalExpand="True" MinWidth="60"
