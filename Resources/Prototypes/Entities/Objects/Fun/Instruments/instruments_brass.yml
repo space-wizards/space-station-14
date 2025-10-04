@@ -52,6 +52,6 @@
   components:
   - type: Instrument
     program: 3
-    bank: 1
+    bank: 10
   - type: Sprite
     sprite: Objects/Fun/Instruments/euphonium.rsi
