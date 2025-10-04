@@ -190,8 +190,9 @@ public sealed class MindSystem : SharedMindSystem
             if (TryComp<ActorComponent>(entity.Value, out var actor))
             {
                 // Happens when transferring to your currently visited entity.
-                if (!_players.TryGetSessionByEntity(entity.Value, out var session) ||
-                    mind.UserId == null || actor.PlayerSession != session )
+                // Or when an entity somehow has an ActorComponent without having a MindContainerComponent & associated
+                // mind, but that shouldn't happen
+                if (!_players.TryGetSessionById(mind.UserId, out var session) || actor.PlayerSession != session)
                 {
                     throw new ArgumentException("Visit target already has a session.", nameof(entity));
                 }
