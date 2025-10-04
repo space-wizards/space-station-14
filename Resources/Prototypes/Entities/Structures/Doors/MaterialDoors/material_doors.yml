@@ -55,7 +55,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 300
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -69,6 +69,8 @@
   components:
   - type: NavMapDoor
 
+### Metal doors ###
+
 - type: entity
   id: MetalDoor
   name: metal door
@@ -77,6 +79,183 @@
   - type: Construction
     graph: DoorGraph
     node: metalDoor
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 3
+            max: 5
+
+- type: entity
+  id: PlasmaDoor
+  name: plasma door
+  parent: BaseMaterialDoorNavMap
+  description: A door, where will it lead?
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/MineralDoors/plasma_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: DoorGraph
+    node: plasmaDoor
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlasma1:
+            min: 3
+            max: 5
+
+- type: entity
+  id: GoldDoor
+  name: gold door
+  parent: BaseMaterialDoorNavMap
+  description: A door, where will it lead?
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/MineralDoors/gold_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: DoorGraph
+    node: goldDoor
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          IngotGold1:
+            min: 3
+            max: 5
+
+- type: entity
+  id: SilverDoor
+  name: silver door
+  parent: BaseMaterialDoorNavMap
+  description: A door, where will it lead?
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/MineralDoors/silver_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: DoorGraph
+    node: silverDoor
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          IngotSilver1:
+            min: 3
+            max: 5
+
+- type: entity
+  id: BananiumDoor
+  name: bananium door
+  parent: BaseMaterialDoorNavMap
+  description: A door, where will it lead?
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/MineralDoors/bananium_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Door
+    openSound:
+      path: /Audio/Items/bikehorn.ogg
+    closeSound:
+      path: /Audio/Items/bikehorn.ogg
+  - type: Construction
+    graph: DoorGraph
+    node: bananiumDoor
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialBananium1:
+            min: 1
+            max: 2
+
+### Other doors ###
 
 - type: entity
   id: WoodDoor
@@ -90,6 +269,9 @@
       path: /Audio/Effects/door_open.ogg
     closeSound:
       path: /Audio/Effects/door_close.ogg
+  - type: Construction
+    graph: DoorGraph
+    node: woodDoor
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Wood
@@ -97,97 +279,69 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 150
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: Construction
-    graph: DoorGraph
-    node: woodDoor
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 3
+            max: 5
 
 - type: entity
   id: PaperDoor
   name: paper door
   parent: BaseMaterialDoorNavMap
+  description: A door, where will it lead?
   components:
   - type: Sprite
     sprite: Structures/Doors/MineralDoors/paper_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Door
+    openSound:
+      path: /Audio/Effects/paperdoor_openclose.ogg
+    closeSound:
+      path: /Audio/Effects/paperdoor_openclose.ogg
+  - type: Construction
+    graph: DoorGraph
+    node: paperDoor
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Wood
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 50
       behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/poster_broken.ogg
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: Construction
-    graph: DoorGraph
-    node: paperDoor
-  - type: Door
-    openSound:
-      path: /Audio/Effects/paperdoor_openclose.ogg
-    closeSound:
-      path: /Audio/Effects/paperdoor_openclose.ogg
-
-- type: entity
-  id: PlasmaDoor
-  name: plasma door
-  parent: BaseMaterialDoorNavMap
-  components:
-  - type: Sprite
-    sprite: Structures/Doors/MineralDoors/plasma_door.rsi
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StructuralMetallicStrong
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-  - type: Construction
-    graph: DoorGraph
-    node: plasmaDoor
-
-- type: entity
-  id: GoldDoor
-  name: gold door
-  parent: BaseMaterialDoorNavMap
-  components:
-  - type: Sprite
-    sprite: Structures/Doors/MineralDoors/gold_door.rsi
-  - type: Construction
-    graph: DoorGraph
-    node: goldDoor
-
-- type: entity
-  id: SilverDoor
-  name: silver door
-  parent: BaseMaterialDoorNavMap
-  components:
-  - type: Sprite
-    sprite: Structures/Doors/MineralDoors/silver_door.rsi
-  - type: Construction
-    graph: DoorGraph
-    node: silverDoor
-
-- type: entity
-  id: BananiumDoor
-  name: bananium door
-  parent: BaseMaterialDoorNavMap
-  components:
-  - type: Sprite
-    sprite: Structures/Doors/MineralDoors/bananium_door.rsi
-  - type: Construction
-    graph: DoorGraph
-    node: bananiumDoor
-  - type: Door
-    openSound:
-      path: /Audio/Items/bikehorn.ogg
-    closeSound:
-      path: /Audio/Items/bikehorn.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPaper1:
+            min: 3
+            max: 5
 
 - type: entity
   id: WebDoor
@@ -197,9 +351,19 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/web_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Door
+    closeSound:
+      path: /Audio/Effects/rustle1.ogg
+    openSound:
+      path: /Audio/Effects/rustle2.ogg
   - type: Construction
     graph: WebStructures
     node: door
+  - type: Damageable
+    damageModifierSet: Web
   - type: Destructible
     thresholds:
     - trigger: # Excess damage, don't spawn entities
@@ -213,6 +377,12 @@
         acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:DoActsBehavior
@@ -222,16 +392,9 @@
           collection: WoodDestroy
       - !type:SpawnEntitiesBehavior
         spawn:
-          MaterialWebSilk:
-            min: 3
-            max: 5
-  - type: Damageable
-    damageModifierSet: Web
-  - type: Door
-    closeSound:
-      path: /Audio/Effects/rustle1.ogg
-    openSound:
-      path: /Audio/Effects/rustle2.ogg
+          MaterialWebSilk1:
+            min: 1
+            max: 2
 
 - type: entity
   id: CardDoor
@@ -242,9 +405,12 @@
     sprite: Structures/Doors/MineralDoors/card_door.rsi
   - type: Door
     openSound:
-      path: /Audio/Effects/card_drag.ogg 
+      path: /Audio/Effects/card_drag.ogg
     closeSound:
       path: /Audio/Effects/card_drag.ogg
+  - type: Construction
+    graph: DoorGraph
+    node: cardDoor
   - type: MeleeSound
     soundGroups:
       Brute:
@@ -265,13 +431,13 @@
         !type:DamageTrigger
         damage: 30
       behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialCardboard:
-            min: 2
-            max: 4
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: Construction
-    graph: DoorGraph
-    node: cardDoor
+            min: 3
+            max: 5

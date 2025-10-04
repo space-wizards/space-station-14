@@ -389,7 +389,7 @@
   parent: BasePlushie
   id: PlushieExperiment #Arf!
   name: experiment plushie
-  description: A plushie of a canid of sorts, it yearns to be detonated on a landmine.
+  description: A plushie of a canid of sorts. It yearns to be detonated on a landmine.
   components:
   - type: Sprite
     sprite: Objects/Fun/Plushies/expi.rsi
