@@ -14,8 +14,8 @@ namespace Content.Shared.Humanoid
     }
 
     /// <summary>
-    ///     Raised when entity has changed their sex.
+    ///     Raised when entity has changed their voice.
     ///     This doesn't handle gender changes.
     /// </summary>
-    public record struct SexChangedEvent(Sex OldSex, Sex NewSex);
+    public record struct VoiceChangedEvent(Sex OldVoice, Sex NewVoice);
 }
