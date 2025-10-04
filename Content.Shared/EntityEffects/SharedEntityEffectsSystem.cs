@@ -189,13 +189,13 @@ public abstract partial class EntityEffect
     /// If our scale is less than this value, the effect fails.
     /// </summary>
     [DataField]
-    public float MinScale;
+    public virtual float MinScale { get; private set; }
 
     /// <summary>
     /// If true, then it allows the scale multiplier to go above 1.
     /// </summary>
     [DataField]
-    public bool Scaling;
+    public virtual bool Scaling { get; private set; }
 
     // TODO: This should be an entity condition but guidebook relies on it heavily for formatting...
     [DataField]
