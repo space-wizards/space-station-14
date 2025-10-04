@@ -857,11 +857,6 @@
   - type: Battery
     maxCharge: 1200
     startingCharge: 1200
-  - type: BatterySelfRecharger
-    autoRecharge: true
-    autoRechargeRate: 24
-    autoRechargePause: true
-    autoRechargePauseTime: 30
 
 - type: entity
   name: energy magnum
@@ -893,7 +888,7 @@
     - proto: BulletLaserWindowPiercingMagnum
       fireCost: 150
     - proto: BulletDisabler
-      fireCost: 100
+      fireCost: 80
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 48
