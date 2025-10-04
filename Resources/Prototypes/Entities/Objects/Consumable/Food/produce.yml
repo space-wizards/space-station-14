@@ -206,6 +206,9 @@
   - type: Produce
     seedId: towercap
   - type: Log
+  - type: Tag
+    tags:
+    - Log
 
 - type: entity
   name: steel-cap log
