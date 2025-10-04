@@ -1,26 +1,37 @@
 using Content.Shared.Atmos;
-using Robust.Shared.Audio;
+using Content.Shared.DoAfter;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Disposal.Components;
 
 /// <summary>
 /// Takes in entities and flushes them out to attached disposals tubes after a timer.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), AutoGenerateComponentPause]
 public sealed partial class DisposalUnitComponent : Component
 {
-    public const string ContainerId = "disposals";
-
     /// <summary>
     /// Air contained in the disposal unit.
     /// </summary>
     [DataField]
     public GasMixture Air = new(Atmospherics.CellVolume);
+
+    /// <summary>
+    /// Name of the flushing animation state.
+    /// </summary>
+    [DataField]
+    public string FlushingState = "disposal-flush";
+
+    /// <summary>
+    /// The animation used when unit flushes.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public object FlushingAnimation = default!;
 
     /// <summary>
     /// Sounds played upon the unit flushing.
@@ -47,6 +58,19 @@ public sealed partial class DisposalUnitComponent : Component
     public SoundSpecifier? InsertSound = new SoundPathSpecifier("/Audio/Effects/trashbag1.ogg");
 
     /// <summary>
+    /// The next time that the insertion sound is allowed to be played.
+    /// Used to reduce audio spam when dumping multiple items into the unit.
+    /// </summary>
+    [DataField, AutoNetworkedField, AutoPausedField]
+    public TimeSpan NextAllowedInsertSound = TimeSpan.Zero;
+
+    /// <summary>
+    /// Delay in seconds before the insertion audio can be played again.
+    /// </summary>
+    [DataField]
+    public TimeSpan InsertSoundDelay = TimeSpan.FromSeconds(0.1);
+
+    /// <summary>
     /// State for this disposals unit.
     /// </summary>
     [DataField, AutoNetworkedField]
@@ -55,8 +79,14 @@ public sealed partial class DisposalUnitComponent : Component
     /// <summary>
     /// Next time the disposal unit will be pressurized.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    [DataField, AutoNetworkedField, AutoPausedField]
     public TimeSpan NextPressurized = TimeSpan.Zero;
+
+    /// <summary>
+    /// The percentage of pressure gained per second by the unit.
+    /// </summary>
+    [DataField]
+    public float PressurePerSecond = 0.05f;
 
     /// <summary>
     /// How long it takes to flush a disposals unit manually.
@@ -79,17 +109,31 @@ public sealed partial class DisposalUnitComponent : Component
     /// <summary>
     /// Last time that an entity tried to exit this disposal unit.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField, AutoNetworkedField, AutoPausedField]
     public TimeSpan LastExitAttempt;
 
+    /// <summary>
+    /// Delay in seconds before entities are allowed another
+    /// attempt to exit the disposal unit again.
+    /// </summary>
+    [DataField]
+    public TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
+
+    /// <summary>
+    /// Sets whether the unit should automatically flush
+    /// after something is inserted into it.
+    /// </summary>
     [DataField]
     public bool AutomaticEngage = true;
 
+    /// <summary>
+    /// Delay for automatic flushing of the disposal unit.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public TimeSpan AutomaticEngageTime = TimeSpan.FromSeconds(30);
 
     /// <summary>
-    /// Delay from trying to enter disposals ourselves.
+    /// Delay for entities trying to enter disposals themselves.
     /// </summary>
     [DataField]
     public float EntryDelay = 0.5f;
@@ -103,7 +147,8 @@ public sealed partial class DisposalUnitComponent : Component
     /// <summary>
     /// Container of entities inside this disposal unit.
     /// </summary>
-    [ViewVariables] public Container Container = default!;
+    [DataField]
+    public Container? Container;
 
     /// <summary>
     /// Was the disposals unit engaged for a manual flush.
@@ -114,75 +159,50 @@ public sealed partial class DisposalUnitComponent : Component
     /// <summary>
     /// Next time this unit will flush. Is the lesser of <see cref="FlushDelay"/> and <see cref="AutomaticEngageTime"/>
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    [DataField, AutoNetworkedField, AutoPausedField]
     public TimeSpan? NextFlush;
 
-    [Serializable, NetSerializable]
-    public enum Visuals : byte
-    {
-        VisualState,
-        Handle,
-        Light
-    }
-
-    [Serializable, NetSerializable]
-    public enum VisualState : byte
-    {
-        UnAnchored,
-        Anchored,
-        OverlayFlushing,
-        OverlayCharging
-    }
-
-    [Serializable, NetSerializable]
-    public enum HandleState : byte
-    {
-        Normal,
-        Engaged
-    }
-
-    [Serializable, NetSerializable]
-    [Flags]
-    public enum LightStates : byte
-    {
-        Off = 0,
-        Charging = 1 << 0,
-        Full = 1 << 1,
-        Ready = 1 << 2
-    }
-
-    [Serializable, NetSerializable]
-    public enum UiButton : byte
-    {
-        Eject,
-        Engage,
-        Power
-    }
+    /// <summary>
+    /// The max number of entities that can be inserted in the unit before it needs to be flushed.
+    /// </summary>
+    [DataField]
+    public int MaxCapacity = 30;
 
     /// <summary>
-    ///     Message data sent from client to server when a disposal unit ui button is pressed.
+    /// Proto ID of the holder spawned to contain entities that
+    /// are inserted into the disposals system.
     /// </summary>
-    [Serializable, NetSerializable]
-    public sealed class UiButtonPressedMessage : BoundUserInterfaceMessage
-    {
-        public readonly UiButton Button;
-
-        public UiButtonPressedMessage(UiButton button)
-        {
-            Button = button;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public enum DisposalUnitUiKey : byte
-    {
-        Key
-    }
+    [DataField]
+    public EntProtoId HolderPrototypeId = "DisposalHolder";
 }
 
+/// <summary>
+/// Event raised on entities that are entering or exiting disposals.
+/// </summary>
+[ByRefEvent]
+public record DisposalSystemTransitionEvent;
+
+/// <summary>
+/// Do after raised when attempting to insert an entity into a disposal unit.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed partial class DisposalDoAfterEvent : SimpleDoAfterEvent;
+
+/// <summary>
+/// Message sent from the server to the client to update the UI of disposal units.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class DisposalUnitBoundUserInterfaceState : BoundUserInterfaceState;
+
+/// <summary>
+/// Disposal unit pressure states.
+/// </summary>
 [Serializable, NetSerializable]
 public enum DisposalsPressureState : byte
 {
+    /// <summary>
+    /// The disposal unit is fully pressurized and ready to flush.
+    /// </summary>
     Ready,
 
     /// <summary>
@@ -194,4 +214,63 @@ public enum DisposalsPressureState : byte
     /// FlushDelay has elapsed and now we're transitioning back to Ready.
     /// </summary>
     Pressurizing
+}
+
+/// <summary>
+/// Visual keys for disposal units.
+/// </summary>
+[Serializable, NetSerializable]
+public enum DisposalUnitVisuals : byte
+{
+    IsReady,
+    IsEngaged,
+    IsFlushing,
+    IsCharging,
+    IsFull,
+}
+
+/// <summary>
+/// Sprite layers for disposal units.
+/// </summary>
+[Serializable, NetSerializable]
+public enum DisposalUnitVisualLayers : byte
+{
+    Base,
+    OverlayEngaged,
+    OverlayCharging,
+    OverlayFull,
+}
+
+/// <summary>
+/// UI button types for disposal units.
+/// </summary>
+[Serializable, NetSerializable]
+public enum DisposalUnitUiButton : byte
+{
+    Eject,
+    Engage,
+    Power,
+}
+
+/// <summary>
+/// Message data sent from client to server when a disposal unit ui button is pressed.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class DisposalUnitUiButtonPressedMessage : BoundUserInterfaceMessage
+{
+    public readonly DisposalUnitUiButton Button;
+
+    public DisposalUnitUiButtonPressedMessage(DisposalUnitUiButton button)
+    {
+        Button = button;
+    }
+}
+
+/// <summary>
+/// Key for the disposal unit UI.
+/// </summary>
+[Serializable, NetSerializable]
+public enum DisposalUnitUiKey : byte
+{
+    Key
 }

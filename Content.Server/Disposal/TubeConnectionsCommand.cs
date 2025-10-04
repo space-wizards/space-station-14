@@ -1,6 +1,6 @@
 using Content.Server.Administration;
-using Content.Server.Disposal.Tube;
 using Content.Shared.Administration;
+using Content.Shared.Conduit;
 using Robust.Shared.Console;
 
 namespace Content.Server.Disposal
@@ -46,15 +46,15 @@ namespace Content.Server.Disposal
                 return;
             }
 
-            if (!_entities.TryGetComponent(id, out DisposalTubeComponent? tube))
+            if (!_entities.TryGetComponent(id, out ConduitComponent? tube))
             {
                 shell.WriteLine(Loc.GetString("shell-entity-with-uid-lacks-component",
                                               ("uid", id),
-                                              ("componentName", nameof(DisposalTubeComponent))));
+                                              ("componentName", nameof(ConduitComponent))));
                 return;
             }
 
-            _entities.System<DisposalTubeSystem>().PopupDirections(id.Value, tube, player.AttachedEntity.Value);
+            _entities.System<SharedConduitSystem>().PopupDirections((id.Value, tube), player.AttachedEntity.Value);
         }
     }
 }

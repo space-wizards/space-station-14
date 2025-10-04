@@ -1,7 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.UI;
-using Content.Server.Disposal.Tube;
 using Content.Server.EUI;
 using Content.Server.Ghost.Roles;
 using Content.Server.Mind;
@@ -11,6 +10,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Conduit;
 using Content.Shared.Configurable;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -50,7 +50,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly SharedMapSystem _map = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly AdminSystem _adminSystem = default!;
-        [Dependency] private readonly DisposalTubeSystem _disposalTubes = default!;
+        [Dependency] private readonly SharedConduitSystem _disposalTubes = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
@@ -531,14 +531,14 @@ namespace Content.Server.Administration.Systems
 
             // Get Disposal tube direction verb
             if (_groupController.CanCommand(player, "tubeconnections") &&
-                TryComp(args.Target, out DisposalTubeComponent? tube))
+                TryComp(args.Target, out ConduitComponent? tube))
             {
                 Verb verb = new()
                 {
                     Text = Loc.GetString("tube-direction-verb-get-data-text"),
                     Category = VerbCategory.Debug,
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/information.svg.192dpi.png")),
-                    Act = () => _disposalTubes.PopupDirections(args.Target, tube, args.User)
+                    Act = () => _disposalTubes.PopupDirections((args.Target, tube), args.User)
                 };
                 args.Verbs.Add(verb);
             }
