@@ -22,15 +22,8 @@ public sealed class BatteryWeaponFireModesVisuals : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<BatteryWeaponFireModesComponent, AppearanceChangeEvent>(OnAppearanceChange);
-        SubscribeLocalEvent<BatteryWeaponFireModesComponent, ItemWieldedEvent>(OnItemWielded);
         SubscribeLocalEvent<BatteryWeaponFireModesComponent, GetInhandVisualsEvent>(OnGetHeldVisuals, after: [typeof(ItemSystem)]);
         SubscribeLocalEvent<BatteryWeaponFireModesComponent, GetEquipmentVisualsEvent>(OnGetEquipmentVisuals, after: [typeof(ClientClothingSystem)]);
-    }
-
-    private void OnItemWielded(Entity<BatteryWeaponFireModesComponent> ent, ref ItemWieldedEvent args)
-    {
-
-
     }
 
     private void OnAppearanceChange(Entity<BatteryWeaponFireModesComponent> ent, ref AppearanceChangeEvent args)
