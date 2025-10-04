@@ -946,6 +946,36 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("profile_role_loadout", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.PronounSet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("pronoun_set_id");
+
+                    b.Property<int>("ProfileId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("profile_id");
+
+                    b.Property<string>("Pronoun")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("pronoun");
+
+                    b.Property<string>("Tense")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("tense");
+
+                    b.HasKey("Id")
+                        .HasName("PK_pronoun_set");
+
+                    b.HasIndex("ProfileId", "Tense")
+                        .IsUnique();
+
+                    b.ToTable("pronoun_set", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.RoleWhitelist", b =>
                 {
                     b.Property<Guid>("PlayerUserId")
@@ -1714,6 +1744,18 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("Profile");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.PronounSet", b =>
+                {
+                    b.HasOne("Content.Server.Database.Profile", "Profile")
+                        .WithMany("Pronouns")
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_pronoun_set_profile_profile_id");
+
+                    b.Navigation("Profile");
+                });
+
             modelBuilder.Entity("Content.Server.Database.RoleWhitelist", b =>
                 {
                     b.HasOne("Content.Server.Database.Player", "Player")
@@ -1998,6 +2040,8 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("Jobs");
 
                     b.Navigation("Loadouts");
+
+                    b.Navigation("Pronouns");
 
                     b.Navigation("Traits");
                 });
