@@ -213,22 +213,26 @@ namespace Content.Shared.Chemistry.Reagent
             return removed;
         }
 
-        public IEnumerable<string> GuidebookReagentEffectsDescription(IPrototypeManager prototype, IEntitySystemManager entSys, IEnumerable<EntityEffect> effects)
+        public IEnumerable<string> GuidebookReagentEffectsDescription(IPrototypeManager prototype, IEntitySystemManager entSys, IEnumerable<EntityEffect> effects, FixedPoint2? metabolism = null)
         {
-            return effects.Select(x => GuidebookReagentEffectDescription(prototype, entSys, x))
+            return effects.Select(x => GuidebookReagentEffectDescription(prototype, entSys, x, metabolism))
                 .Where(x => x is not null)
                 .Select(x => x!)
                 .ToArray();
         }
 
-        public string? GuidebookReagentEffectDescription(IPrototypeManager prototype, IEntitySystemManager entSys, EntityEffect effect)
+        public string? GuidebookReagentEffectDescription(IPrototypeManager prototype, IEntitySystemManager entSys, EntityEffect effect, FixedPoint2? metabolism)
         {
             if (effect.EntityEffectGuidebookText(prototype, entSys) is not { } description)
                 return null;
 
+            var quantity = metabolism == null ? 0f : (double) (effect.MinScale * metabolism);
+
             // TODO: PASS SCALE!!!
             return Loc.GetString(
                 "guidebook-reagent-effect-description",
+                ("reagent", LocalizedName),
+                ("quantity", quantity),
                 ("effect", description),
                 ("chance", effect.Probability),
                 ("conditionCount", effect.Conditions?.Length ?? 0),
@@ -285,7 +289,7 @@ namespace Content.Shared.Chemistry.Reagent
 
         public ReagentEffectsGuideEntry MakeGuideEntry(IPrototypeManager prototype, IEntitySystemManager entSys, ReagentPrototype proto)
         {
-            return new ReagentEffectsGuideEntry(MetabolismRate, proto.GuidebookReagentEffectsDescription(prototype, entSys, Effects).ToArray());
+            return new ReagentEffectsGuideEntry(MetabolismRate, proto.GuidebookReagentEffectsDescription(prototype, entSys, Effects, MetabolismRate).ToArray());
         }
     }
 
