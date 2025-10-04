@@ -266,6 +266,7 @@
     - id: ClothingHeadsetAltScience
     - id: DoorRemoteResearch
     - id: HandTeleporter
+    - id: LawOverrider
     - id: RubberStampRd
 
 # Hardsuit table, used for suit storage as well
