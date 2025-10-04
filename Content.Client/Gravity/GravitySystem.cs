@@ -12,8 +12,11 @@ public sealed partial class GravitySystem : SharedGravitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<SharedGravityGeneratorComponent, AppearanceChangeEvent>(OnAppearanceChange);
+
         InitializeShake();
+        InitializeFloatingVisuals();
     }
 
     /// <summary>
