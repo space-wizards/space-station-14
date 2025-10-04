@@ -151,7 +151,7 @@ public sealed class ThrowingSystem : EntitySystem
 
         var comp = new ThrownItemComponent
         {
-            Thrower = user,
+            Thrower = GetWeakReference(user),
             Animate = animated,
         };
 
