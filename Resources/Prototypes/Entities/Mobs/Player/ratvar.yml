@@ -94,7 +94,7 @@
     - GhostOnlyWarp
   - type: WarpPoint
     follow: true
-    location: Ratvar
+    location: location-ratvar
     blacklist:
       tags:
       - GhostOnlyWarp
