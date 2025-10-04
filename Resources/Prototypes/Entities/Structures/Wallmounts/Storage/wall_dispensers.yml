@@ -1,23 +1,11 @@
 - type: entity
-<<<<<<< HEAD:Resources/Prototypes/Entities/Structures/Wallmounts/walldispenser.yml
-  id: BaseDispenser
-  abstract: true
-  name: wallmount dispenser
-  description: Wallmount dispenser without contents.
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
-=======
   parent: BaseWallmountMetallic
   id: BaseDispenser
   abstract: true
->>>>>>> upstream/master:Resources/Prototypes/Entities/Structures/Wallmounts/Storage/wall_dispensers.yml
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/walldispenser.rsi
-    layers:
-      - state: basedispenser
+    sprite: Structures/Storage/tanks.rsi
+    state: cleanerdispenser
   - type: Appearance
   - type: Destructible
     thresholds:
@@ -60,46 +48,12 @@
 
 - type: entity
   parent: BaseDispenser
-<<<<<<< HEAD:Resources/Prototypes/Entities/Structures/Wallmounts/walldispenser.yml
-  id: CleanerDispenser
-  name: space cleaner dispenser
-  description: Wallmount Space Cleaner dispenser.
-=======
   id: FuelDispenser
   name: fuel dispenser
->>>>>>> upstream/master:Resources/Prototypes/Entities/Structures/Wallmounts/Storage/wall_dispensers.yml
   components:
   - type: Sprite
-    layers:
-      - state: cleanerdispenser-2
-      - state: cleanerdispenser-2-1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
-  - type: SolutionContainerVisuals
-    maxFillLevels: 5
-    fillBaseName: cleanerdispenser-2-
-  - type: SolutionContainerManager
-    solutions:
-      tank:
-        reagents:
-        - ReagentId: SpaceCleaner
-          Quantity: 5000
-
-- type: entity
-  parent: BaseDispenser
-  id: FuelDispenser
-  name: fuel dispenser
-  description: Wallmount Fuel dispenser.
-  components:
-  - type: Sprite
-    layers:
-      - state: fueldispenser-2
-      - state: fueldispenser-2-1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
-  - type: SolutionContainerVisuals
-    maxFillLevels: 5
-    fillBaseName: fueldispenser-2-
+    sprite: Structures/Storage/tanks.rsi
+    state: fueldispenser
   - type: SolutionContainerManager
     solutions:
       tank:
@@ -112,30 +66,6 @@
     tools: Welding
     weldingDamage:
       types:
-<<<<<<< HEAD:Resources/Prototypes/Entities/Structures/Wallmounts/walldispenser.yml
-        Heat: 10
-  - type: PacifismDangerousAttack
-  - type: Explosive
-    explosionType: Default
-    totalIntensity: 50 # Smaller explosion due to lower fuel amount than a fuel tank
-
-- type: entity
-  parent: BaseDispenser
-  id: PepperDispenser
-  name: pepper dispenser
-  description: Wallmount Pepper dispenser.
-  components:
-  - type: Sprite
-    layers: # No fill layer for pepper dispenser, because pepper is black and that doesn't look good on the dispenser
-      - state: pepperdispenser # To enable fill layer change to: pepperdispenser-2
-# To enable fill layer, uncomment the following lines and adjust the indentation:
-#     - state: pepperdispenser-2-1
-#       map: ["enum.SolutionContainerLayers.Fill"]
-#       visible: false
-# - type: SolutionContainerVisuals
-#   maxFillLevels: 5
-#   fillBaseName: pepperdispenser-2-
-=======
         Heat: 20
 
 - type: entity
@@ -143,16 +73,10 @@
   id: CleanerDispenser
   name: space cleaner dispenser
   components:
->>>>>>> upstream/master:Resources/Prototypes/Entities/Structures/Wallmounts/Storage/wall_dispensers.yml
   - type: SolutionContainerManager
     solutions:
       tank:
         reagents:
-<<<<<<< HEAD:Resources/Prototypes/Entities/Structures/Wallmounts/walldispenser.yml
-        - ReagentId: Blackpepper
-          Quantity: 500
-=======
         - ReagentId: SpaceCleaner
           Quantity: 5000
   - type: ReagentTank
->>>>>>> upstream/master:Resources/Prototypes/Entities/Structures/Wallmounts/Storage/wall_dispensers.yml
