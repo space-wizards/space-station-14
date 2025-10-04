@@ -169,3 +169,13 @@
   name: signal-port-name-item-detected
   description: signal-port-description-item-detected
   defaultLinks: [ Toggle, Trigger, Timer ]
+
+- type: sourcePort
+  id: AboveThreshold
+  name: signal-port-name-above-threshold
+  description: signal-port-description-above-threshold
+
+- type: sourcePort
+  id: BelowThreshold
+  name: signal-port-name-below-threshold
+  description: signal-port-description-below-threshold
