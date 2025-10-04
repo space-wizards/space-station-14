@@ -286,6 +286,7 @@
     layers:
       Hair: HEAD
       Snout: HEAD
+      FacialHair: HEAD
 
 #Atmos Fire Helmet
 - type: entity
@@ -318,6 +319,7 @@
     layers:
       Hair: HEAD
       Snout: HEAD
+      FacialHair: HEAD
   - type: BreathMask
 
 #Chitinous Helmet
