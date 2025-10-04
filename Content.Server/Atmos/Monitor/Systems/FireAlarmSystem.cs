@@ -7,6 +7,7 @@ using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Emag.Systems;
+using Content.Shared.Power;
 using Robust.Shared.Configuration;
 
 namespace Content.Server.Atmos.Monitor.Systems;
@@ -25,6 +26,7 @@ public sealed class FireAlarmSystem : EntitySystem
         SubscribeLocalEvent<FireAlarmComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<FireAlarmComponent, DeviceListUpdateEvent>(OnDeviceListSync);
         SubscribeLocalEvent<FireAlarmComponent, GotEmaggedEvent>(OnEmagged);
+        SubscribeLocalEvent<FireAlarmComponent, PowerChangedEvent>(OnPowerChangedEvent);
     }
 
     private void OnDeviceListSync(EntityUid uid, FireAlarmComponent component, DeviceListUpdateEvent args)
@@ -54,19 +56,28 @@ public sealed class FireAlarmSystem : EntitySystem
 
         if (this.IsPowered(uid, EntityManager))
         {
-            if (!_atmosAlarmable.TryGetHighestAlert(uid, out var alarm))
-            {
-                alarm = AtmosAlarmType.Normal;
-            }
+            component.AlarmTriggered = !component.AlarmTriggered;
+            UpdateFireAlarm(uid, component);
+        }
+    }
 
-            if (alarm == AtmosAlarmType.Normal)
-            {
-                _atmosAlarmable.ForceAlert(uid, AtmosAlarmType.Danger);
-            }
-            else
-            {
-                _atmosAlarmable.ResetAllOnNetwork(uid);
-            }
+    private void OnPowerChangedEvent(EntityUid uid, FireAlarmComponent component, ref PowerChangedEvent args)
+    {
+        if (args.Powered)
+        {
+            UpdateFireAlarm(uid, component);
+        }
+    }
+
+    private void UpdateFireAlarm(EntityUid uid, FireAlarmComponent component)
+    {
+        if (component.AlarmTriggered)
+        {
+            _atmosAlarmable.ForceAlert(uid, AtmosAlarmType.Danger);
+        }
+        else
+        {
+            _atmosAlarmable.ForceAlert(uid, AtmosAlarmType.Normal);
         }
     }
 
