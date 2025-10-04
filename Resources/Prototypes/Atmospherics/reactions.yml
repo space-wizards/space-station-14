@@ -58,13 +58,11 @@
   effects:
   - !type:N2ODecompositionReaction {}
 
-#- type: gasReaction
-#  id: WaterVaporPuddle
-#  priority: 1
-#  maximumTemperature: 373.13 # Boiling point of water.
-#  minimumRequirements: # In this case, same as minimum mole count.
-#    WaterVapor: 1
-#  effects:
-#    - !type:WaterVaporReaction
-#      gas: 5
-#      reagent: Water
+- type: gasReaction
+  id: WaterVaporPuddle
+  priority: 1
+  maximumTemperature: 373.15
+  minimumRequirements:
+    WaterVapor: 5
+  effects:
+  - !type:WaterVaporCondensationReaction {}
