@@ -18,3 +18,9 @@ reagent-desc-nitrous-oxide = You know how everything seems funnier when you're t
 
 reagent-name-frezon = frezon
 reagent-desc-frezon = A highly effective coolant.. and hallucinogenic.
+
+reagent-name-electrovae = electrovae
+reagent-desc-electrovae = An ominously humming gas... 
+
+reagent-name-charged-electrovae = charged electrovae
+reagent-desc-charged-electrovae = An electrically charged gas... It tingles the skin.

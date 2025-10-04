@@ -603,6 +603,108 @@
   - type: Lock
     locked: true
 
+- type: entity
+  parent: GasCanister
+  id: ElectrovaeCanister
+  name: electrovae canister
+  description: A canister that can contain any type of gas. This one is supposed to contain electrovae. It can be attached to connector ports using a wrench.
+  components:
+  - type: Sprite
+    layers:
+    - state: electrovae
+  - type: GasCanister
+    gasMixture:
+      volume: 1500
+      moles:
+      - 0 # oxygen
+      - 0 # nitrogen
+      - 0 # CO2
+      - 0 # Plasma
+      - 0 # Tritium
+      - 0 # Water vapor
+      - 0 # Ammonia
+      - 0 # N2O
+      - 0 # Frezon
+      - 2769.36 # Electrovae
+      - 0 # Charged electrovae
+      temperature: 293.15
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ElectrovaeCanisterBroken:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:DumpCanisterBehavior
+  - type: Lock
+    locked: true
+
+- type: entity
+  parent: GasCanister
+  id: ChargedElectrovaeCanister
+  name: charged electrovae canister
+  description: A canister that can contain any type of gas. This one is supposed to contain charged electrovae. It can be attached to connector ports using a wrench.
+  components:
+  - type: Sprite
+    layers:
+    - state: electrovae
+  - type: GasCanister
+    gasMixture:
+      volume: 1500
+      moles:
+      - 0 # oxygen
+      - 0 # nitrogen
+      - 0 # CO2
+      - 0 # Plasma
+      - 0 # Tritium
+      - 0 # Water vapor
+      - 0 # Ammonia
+      - 0 # N2O
+      - 0 # Frezon
+      - 0 # Electrovae
+      - 2769.36 # Charged electrovae
+      temperature: 293.15
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ChargedElectrovaeCanisterBroken:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:DumpCanisterBehavior
+  - type: Lock
+    locked: true
+
 # Broke Entities
 
 - type: entity
@@ -747,3 +849,19 @@
   components:
   - type: Sprite
     state: frezon-1
+
+- type: entity
+  parent: GasCanisterBrokenBase
+  id: ElectrovaeCanisterBroken
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: electrovae-1
+
+- type: entity
+  parent: GasCanisterBrokenBase
+  id: ChargedElectrovaeCanisterBroken
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: electrovae-1
