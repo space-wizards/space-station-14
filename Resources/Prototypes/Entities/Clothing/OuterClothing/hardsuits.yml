@@ -81,7 +81,7 @@
 
 #Spationaut Hardsuit
 - type: entity
-  parent: [ClothingOuterHardsuitBase, BaseCargoContraband]
+  parent: [ClothingOuterHardsuitBase, BaseSalvageContraband]
   id: ClothingOuterHardsuitSpatio
   name: spationaut hardsuit
   description: A lightweight hardsuit designed for industrial EVA in zero gravity.
@@ -116,7 +116,7 @@
 
 #Salvage Hardsuit
 - type: entity
-  parent: [ClothingOuterHardsuitBase, BaseCargoContraband]
+  parent: [ClothingOuterHardsuitBase, BaseSalvageContraband]
   id: ClothingOuterHardsuitSalvage
   name: mining hardsuit
   description: A special suit that protects against hazardous, low pressure environments. Has reinforced plating for wildlife encounters.
@@ -153,7 +153,7 @@
 
 #Goliath Hardsuit
 - type: entity
-  parent: [ClothingOuterHardsuitBase, BaseCargoContraband]
+  parent: [ClothingOuterHardsuitBase, BaseSalvageContraband]
   id: ClothingOuterHardsuitGoliath
   name: goliath hardsuit
   description: A lightweight hardsuit, adorned with a patchwork of thick, chitinous goliath hide.
@@ -193,7 +193,7 @@
 
 #Maxim Hardsuit
 - type: entity
-  parent: [ClothingOuterHardsuitBase, BaseCargoContraband]
+  parent: [ClothingOuterHardsuitBase, BaseSalvageContraband]
   id: ClothingOuterHardsuitMaxim
   name: salvager maxim hardsuit
   description: Fire. Heat. These things forge great weapons, they also forge great salvagers.
