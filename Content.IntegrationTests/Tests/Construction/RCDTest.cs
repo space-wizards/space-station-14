@@ -3,6 +3,7 @@ using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Charges.Systems;
 using Content.Shared.RCD;
 using Content.Shared.RCD.Components;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
@@ -65,19 +66,11 @@ public sealed class RCDTest : InteractionTest
         var initialCharges = sCharges.GetCurrentCharges(ToServer(rcd));
         Assert.That(initialCharges, Is.EqualTo(10000), "RCD did not have the correct amount of charges.");
 
-        // Check if using the RCD opens the UI.
+        // Make sure that picking it up did not open the UI.
         Assert.That(IsUiOpen(RcdUiKey.Key), Is.False, "RCD UI was opened when picking it up.");
-        await UseInHand();
-        await RunTicks(3);
 
-        Assert.That(IsUiOpen(RcdUiKey.Key), Is.True, "RCD UI was not opened when using the RCD while holding it.");
-
-        // Simulating a click on the right control for nested radial menus is very complicated.
-        // So we just manually send a networking message from the client to tell the server we selected an option.
-        // TODO: Write a separate test for clicking through a SimpleRadialMenu.
-        await SendBui(RcdUiKey.Key, new RCDSystemMessage(RCDSettingWall), rcd);
-        await CloseBui(RcdUiKey.Key, rcd);
-        Assert.That(IsUiOpen(RcdUiKey.Key), Is.False, "RCD UI is still open.");
+        // Switch to building walls.
+        await SetRcdProto(rcd, RCDSettingWall);
 
         // Build a wall next to the player.
         await Interact(null, pNorth);
@@ -108,12 +101,7 @@ public sealed class RCDTest : InteractionTest
         Assert.That(initialCharges, Is.EqualTo(newCharges), "RCD has wrong amount of charges after failing to build something.");
 
         // Switch to building airlocks.
-        await UseInHand();
-        await RunTicks(3);
-        Assert.That(IsUiOpen(RcdUiKey.Key), Is.True, "RCD UI was not opened when using the RCD while holding it.");
-        await SendBui(RcdUiKey.Key, new RCDSystemMessage(RCDSettingAirlock), rcd);
-        await CloseBui(RcdUiKey.Key, rcd);
-        Assert.That(IsUiOpen(RcdUiKey.Key), Is.False, "RCD UI is still open.");
+        await SetRcdProto(rcd, RCDSettingAirlock);
 
         // Build an airlock next to the player.
         await Interact(null, pSouth);
@@ -125,7 +113,7 @@ public sealed class RCDTest : InteractionTest
             (settingAirlock.Prototype, 1)
             );
 
-        // Check that the wall is in the correct tile.
+        // Check that the airlock is in the correct tile.
         var airlockUid = await FindEntity(settingAirlock.Prototype);
         var airlockNetUid = FromServer(airlockUid);
         AssertLocation(airlockNetUid, FromServer(pSouth));
@@ -136,12 +124,7 @@ public sealed class RCDTest : InteractionTest
         initialCharges = newCharges;
 
         // Switch to building plating.
-        await UseInHand();
-        await RunTicks(3);
-        Assert.That(IsUiOpen(RcdUiKey.Key), Is.True, "RCD UI was not opened when using the RCD while holding it.");
-        await SendBui(RcdUiKey.Key, new RCDSystemMessage(RCDSettingPlating), rcd);
-        await CloseBui(RcdUiKey.Key, rcd);
-        Assert.That(IsUiOpen(RcdUiKey.Key), Is.False, "RCD UI is still open.");
+        await SetRcdProto(rcd, RCDSettingPlating);
 
         // Try building plating on existing plating.
         await AssertTile(settingPlating.Prototype, FromServer(pEast));
@@ -169,12 +152,7 @@ public sealed class RCDTest : InteractionTest
         initialCharges = newCharges;
 
         // Switch to building steel tiles.
-        await UseInHand();
-        await RunTicks(3);
-        Assert.That(IsUiOpen(RcdUiKey.Key), Is.True, "RCD UI was not opened when using the RCD while holding it.");
-        await SendBui(RcdUiKey.Key, new RCDSystemMessage(RCDSettingFloorSteel), rcd);
-        await CloseBui(RcdUiKey.Key, rcd);
-        Assert.That(IsUiOpen(RcdUiKey.Key), Is.False, "RCD UI is still open.");
+        await SetRcdProto(rcd, RCDSettingFloorSteel);
 
         // Try building a steel tile on top of plating.
         await Interact(null, pEast);
@@ -189,12 +167,7 @@ public sealed class RCDTest : InteractionTest
         initialCharges = newCharges;
 
         // Switch to deconstruction mode.
-        await UseInHand();
-        await RunTicks(3);
-        Assert.That(IsUiOpen(RcdUiKey.Key), Is.True, "RCD UI was not opened when using the RCD while holding it.");
-        await SendBui(RcdUiKey.Key, new RCDSystemMessage(RCDSettingDeconstruct), rcd);
-        await CloseBui(RcdUiKey.Key, rcd);
-        Assert.That(IsUiOpen(RcdUiKey.Key), Is.False, "RCD UI is still open.");
+        await SetRcdProto(rcd, RCDSettingDeconstruct);
 
         // Deconstruct the wall.
         Assert.That(SEntMan.TryGetComponent<RCDDeconstructableComponent>(wallUid, out var wallComp), "Wall entity did not have the RCDDeconstructableComponent.");
@@ -252,5 +225,19 @@ public sealed class RCDTest : InteractionTest
 
         // Check that there are no entities left.
         await AssertEntityLookup();
+    }
+
+    private async Task SetRcdProto(NetEntity rcd, ProtoId<RCDPrototype> protoId)
+    {
+        await UseInHand();
+        await RunTicks(3);
+        Assert.That(IsUiOpen(RcdUiKey.Key), Is.True, "RCD UI was not opened when using the RCD while holding it.");
+
+        // Simulating a click on the right control for nested radial menus is very complicated.
+        // So we just manually send a networking message from the client to tell the server we selected an option.
+        // TODO: Write a separate test for clicking through a SimpleRadialMenu.
+        await SendBui(RcdUiKey.Key, new RCDSystemMessage(protoId), rcd);
+        await CloseBui(RcdUiKey.Key, rcd);
+        Assert.That(IsUiOpen(RcdUiKey.Key), Is.False, "RCD UI is still open.");
     }
 }
