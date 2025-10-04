@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Simyon
-  changes:
-  - message: The Syndicate and Wizard Communications Console now no longer show who
-      the message was sent by.
-    type: Tweak
-  id: 8524
-  time: '2025-05-18T09:18:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37567
 - author: SuperGDPWYL
   changes:
   - message: A Lone Operative detonating the nuke on-station will now end the round.
@@ -3960,3 +3952,10 @@
   id: 9031
   time: '2025-10-04T01:44:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37975
+- author: AwareFoxy
+  changes:
+  - message: Added Pride-O-Mat to marathon!
+    type: Add
+  id: 9032
+  time: '2025-10-04T16:50:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40696
