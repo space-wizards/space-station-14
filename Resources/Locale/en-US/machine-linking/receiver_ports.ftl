@@ -11,10 +11,10 @@ signal-port-name-off-receiver = Off
 signal-port-description-off-receiver = Turns a device off.
 
 signal-port-name-forward = Forward
-signal-port-description-forward = Makes a device (e.g. conveyer) operate in the normal direction.
+signal-port-description-forward = Makes a device (e.g. conveyor) operate in the normal direction.
 
 signal-port-name-reverse = Reverse
-signal-port-description-reverse = Makes a device (e.g. conveyer) operate in the reverse direction.
+signal-port-description-reverse = Makes a device (e.g. conveyor) operate in the reverse direction.
 
 signal-port-name-open = Open
 signal-port-description-open = Opens a device.
