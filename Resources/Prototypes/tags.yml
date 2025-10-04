@@ -451,37 +451,37 @@
 ## D ##
 
 - type: Tag
-  id: DeathAcidifier
+  id: DeathAcidifier # Unused (Exists on DeathAcidifierImplant)
 
 - type: Tag
-  id: Debug
+  id: Debug # Exists on various debug / testing entities, but seemingly unused
+
+- type: Tag # Exists on diagonal walls and windows
+  id: Diagonal # Used by TileWallsCommand and FixRotationsCommand
 
 - type: Tag
-  id: Diagonal
+  id: Diamond # CargoBounty: BountySalvageDiamond
 
 - type: Tag
-  id: Diamond
+  id: Dice # Storage whitelist: BorgModuleService, DiceBag, BooksBag
 
 - type: Tag
-  id: Dice
+  id: DiscreteHealthAnalyzer # Storage whitelist: ClothingBeltMedical. ConstructionGraph: MediBot
 
 - type: Tag
-  id: DiscreteHealthAnalyzer #So construction recipes don't eat medical PDAs
+  id: DNASolutionScannable # Used by ForensicScannerSystem for scanning a solution container. Exists only on Puddle
 
 - type: Tag
-  id: DNASolutionScannable
+  id: DockArrivals # Used by ArrivalsSystem for finding a priority FTL destination
 
 - type: Tag
-  id: DockArrivals
+  id: DockCargo # Unused x2
 
 - type: Tag
-  id: DockCargo
+  id: DockEmergency # Used bv EmergencyShuttleSystem
 
 - type: Tag
-  id: DockEmergency
-
-- type: Tag
-  id: Document
+  id: Document # A superset of Paper tag. Represents a paper-like entity with writing on it.
 
 - type: Tag
   id: DonkPocket
@@ -1071,7 +1071,7 @@
   id: ParadoxCloneObjectiveBlacklist # objective entities with this tag don't get copied to paradox clones
 
 - type: Tag
-  id: Paper
+  id: Paper # A writeable piece of paper. Subset of Document tag. SpecialDigestible: OrganMothStomach, OrganReptilianStomach
 
 - type: Tag
   id: Pancake
