@@ -1,5 +1,5 @@
 using System.Numerics;
-using Content.Server.Decals;
+using Content.Shared.Decals;
 using Content.Server.Spawners.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -10,7 +10,7 @@ namespace Content.Server.Spawners.EntitySystems;
 
 public sealed class RandomDecalSpawnerSystem : EntitySystem
 {
-    [Dependency] private readonly DecalSystem _decal = default!;
+    [Dependency] private readonly SharedDecalSystem _decal = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -111,14 +111,9 @@ public sealed class RandomDecalSpawnerSystem : EntitySystem
             if (comp.RandomColorList != null && comp.RandomColorList.Count != 0)
                 color = _random.Pick(comp.RandomColorList);
 
-            _decal.TryAddDecal(
-                decalProtoId,
+            _decal.TryAddDecal(new Decal(decalProtoId).WithColor(color).WithRotation(rotation).WithZIndex(comp.ZIndex).WithCleanable(cleanable),
                 position,
-                out _,
-                color,
-                rotation,
-                comp.ZIndex,
-                cleanable
+                out _
             );
 
             if (comp.MaxDecalsPerTile is > 0)
