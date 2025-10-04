@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: lightning
   id: BaseLightning
   abstract: true
@@ -60,6 +60,8 @@
       castShadows: false
     - type: Lightning
       canArc: false
+    - type: Electrified
+      requirePower: false
       shockDamage: 30
 
 - type: entity
