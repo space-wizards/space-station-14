@@ -10,6 +10,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Configuration;
+using Robust.Shared.Maths;
 using Content.Shared.CCVar;
 
 namespace Content.Server.Atmos.EntitySystems
@@ -95,6 +96,17 @@ namespace Content.Server.Atmos.EntitySystems
                 if (comp.Air != null)
                 {
                     _atmosphereSystem.React(comp.Air, comp);
+                }
+
+                // Update and network internal pressure for client UI.
+                if (comp.Air != null)
+                {
+                    var newPressure = comp.Air.Pressure;
+                    if (!MathHelper.CloseTo(newPressure, comp.InternalPressure, 0.1f))
+                    {
+                        comp.InternalPressure = newPressure;
+                        Dirty(uid, comp);
+                    }
                 }
 
                 CheckStatus(gasTank);
