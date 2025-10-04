@@ -2,6 +2,7 @@
 using Content.Shared.Timing;
 using Content.Shared.UserInterface;
 using Content.Shared.Warps;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Teleportation.Systems;
 
@@ -11,12 +12,13 @@ namespace Content.Shared.Teleportation.Systems;
 public abstract partial class SharedTeleportLocationsSystem : EntitySystem
 {
     [Dependency] protected readonly UseDelaySystem Delay = default!;
-
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
 
     protected const string TeleportDelay = "TeleportDelay";
-
+    private const int MaxRandomTeleportAttempts = 20;
     public override void Initialize()
     {
         base.Initialize();
@@ -38,15 +40,29 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
         if (!TryGetEntity(args.NetEnt, out var telePointEnt) || TerminatingOrDeleted(telePointEnt) || !HasComp<WarpPointComponent>(telePointEnt) || Delay.IsDelayed(ent.Owner, TeleportDelay))
             return;
 
+
         var comp = ent.Comp;
         var originEnt = args.Actor;
         var telePointXForm = Transform(telePointEnt.Value);
 
-        SpawnAtPosition(comp.TeleportEffect, Transform(originEnt).Coordinates);
+        var coords = Transform(originEnt).Coordinates;
+        var newCoords = coords.Offset(_random.NextVector2(ent.Comp.MaxRandomRadius));
 
-        _xform.SetMapCoordinates(originEnt, _xform.GetMapCoordinates(telePointEnt.Value, telePointXForm));
+        for (var i = 0; i < MaxRandomTeleportAttempts; i++)
+        {
+            var randVector = _random.NextVector2(ent.Comp.MaxRandomRadius);
+            newCoords = coords.Offset(randVector);
+            if (!_lookup.AnyEntitiesIntersecting(_xform.ToMapCoordinates(newCoords), LookupFlags.Static))
+            {
+                // newCoords is not a wall
+                break;
+            }
+            // after "MaxRandomTeleportAttempts" attempts, end up in the walls
+        }
 
-        SpawnAtPosition(comp.TeleportEffect, telePointXForm.Coordinates);
+        SpawnAtPosition(comp.TeleportEffect, newCoords);
+
+        _xform.SetMapCoordinates(originEnt, _xform.ToMapCoordinates(newCoords));
 
         Delay.TryResetDelay(ent.Owner, true, id: TeleportDelay);
 

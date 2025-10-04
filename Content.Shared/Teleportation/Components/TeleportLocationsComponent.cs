@@ -45,6 +45,12 @@ public sealed partial class TeleportLocationsComponent : Component
     /// </summary>
     [DataField]
     public LocId? Speech;
+
+    /// <summary>
+    /// Maximum radius around the beacon the user could teleport to.
+    /// </summary>
+    [DataField("maxRandomRadius"), ViewVariables(VVAccess.ReadWrite)]
+    public float MaxRandomRadius = 7.0f;
 }
 
 /// <summary>
