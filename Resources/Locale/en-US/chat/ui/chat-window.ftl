@@ -1,5 +1,8 @@
 chat-window-title = Chat
 
+cmd-chatpanel-desc = Additional Chat Panel
+cmd-chatpanel-help = Usage: chatpanel
+
 cmd-chatwindow-desc = Additional Chat Window
 cmd-chatwindow-help = Usage: chatwindow
 
