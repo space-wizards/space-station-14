@@ -35,13 +35,13 @@
     - id: ClothingHeadsetAltCommand
     - id: ClothingOuterArmorCaptainCarapace
     - id: BoxCaptainCircuitboards
+    - id: BoxCaptainStamps
     - id: DoorRemoteCustom
     - id: MedalCase
     - id: NukeDisk
     - id: PinpointerNuclear
     - id: PlushieNuke
       prob: 0.1
-    - id: RubberStampCaptain
     - id: SpaceCash1000
     - id: WeaponDisabler
     - id: ClothingEyesGlassesCommand
@@ -156,9 +156,9 @@
     - id: ClothingHeadsetAltEngineering
     - id: DoorRemoteEngineering
     - id: BoxCECircuitboards
+    - id: BoxCEStamps
     - id: RCD
     - id: RCDAmmo
-    - id: RubberStampCE
     - id: MetalFoamGrenade
 
 # Hardsuit table, used for suit storage as well
@@ -215,8 +215,8 @@
     - id: HandheldCrewMonitor
     - id: Hypospray
     - id: BoxCMOCircuitboards
+    - id: BoxCMOStamps
     - id: MedkitFilled
-    - id: RubberStampCMO
     - id: MedTekCartridge
 
 # Hardsuit table, used for suit storage as well
@@ -262,11 +262,11 @@
     - id: Intellicard
     - id: BoxEncryptionKeyScience
     - id: BoxRDCircuitboards
+    - id: BoxRDStamps
     - id: ClothingBeltUtilityFilled
     - id: ClothingHeadsetAltScience
     - id: DoorRemoteResearch
     - id: HandTeleporter
-    - id: RubberStampRd
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
@@ -321,8 +321,8 @@
     - id: ClothingShoesBootsJack
     - id: DoorRemoteSecurity
     - id: HoloprojectorSecurity
-    - id: RubberStampHos
     - id: BoxHoSCircuitboards
+    - id: BoxHoSStamps
     - id: WeaponDisabler
     - id: WeaponTaser
     - id: WantedListCartridge
