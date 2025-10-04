@@ -9,13 +9,14 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Forensics.Systems;
-using Robust.Shared.GameObjects;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Smoking;
 using Content.Shared.Temperature;
+using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Nutrition.EntitySystems
 {

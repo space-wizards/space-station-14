@@ -10,7 +10,6 @@ using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Timing;
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Forensics.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Prototypes;

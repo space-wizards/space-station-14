@@ -14,28 +14,12 @@ using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
-
-namespace Content.Shared.Forensics.Systems;
-using Content.Shared.Body.Events;
-using Content.Shared.Body.Systems;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Chemistry.Reagent;
-using Content.Shared.DoAfter;
-using Content.Shared.Fluids;
-using Content.Shared.Forensics.Components;
-using Content.Shared.Hands.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Inventory;
-using Content.Shared.Popups;
-using Content.Shared.Verbs;
-using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
-public abstract class ForensicsSystem : EntitySystem
+namespace Content.Shared.Forensics.Systems;
+
+public sealed class ForensicsSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
@@ -333,7 +317,7 @@ public abstract class ForensicsSystem : EntitySystem
 
     #region PublicAPI
 
-    public override void RandomizeDNA(Entity<DnaComponent?> ent)
+    public void RandomizeDNA(Entity<DnaComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;
@@ -345,7 +329,7 @@ public abstract class ForensicsSystem : EntitySystem
         RaiseLocalEvent(ent.Owner, ref ev);
     }
 
-    public override void RandomizeFingerprint(Entity<FingerprintComponent?> ent)
+    public void RandomizeFingerprint(Entity<FingerprintComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;

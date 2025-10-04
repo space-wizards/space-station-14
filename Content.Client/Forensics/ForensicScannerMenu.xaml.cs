@@ -58,9 +58,9 @@ namespace Content.Client.Forensics
             {
                 text.AppendLine(dna);
             }
-            foreach (var dna in msg.SolutionDnas)
+            foreach (var dna in msg.SolutionDNAs)
             {
-                if (msg.TouchDnas.Contains(dna))
+                if (msg.Dnas.Contains(dna))
                     continue;
                 text.AppendLine(dna);
             }

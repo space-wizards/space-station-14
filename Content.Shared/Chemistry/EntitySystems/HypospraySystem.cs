@@ -176,8 +176,7 @@ public sealed class HypospraySystem : EntitySystem
         _reactiveSystem.DoEntityReaction(target, removedSolution, ReactionMethod.Injection);
         _solutionContainers.TryAddSolution(targetSoln.Value, removedSolution);
 
-        var ev = new TransferDnaEvent { Donor = target, Recipient = uid };
-        RaiseLocalEvent(target, ref ev);
+        _forensics.TransferDna(uid, target);
 
         // same LogType as syringes...
         _adminLogger.Add(LogType.ForceFeed, $"{ToPrettyString(user):user} injected {ToPrettyString(target):target} with a solution {SharedSolutionContainerSystem.ToPrettyString(removedSolution):removedSolution} using a {ToPrettyString(uid):using}");

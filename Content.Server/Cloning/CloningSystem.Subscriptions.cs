@@ -1,8 +1,6 @@
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Cloning.Events;
 using Content.Shared.FixedPoint;
-using Content.Server.Forensics.Components;
-using Content.Server.Forensics.Systems;
 using Content.Shared.Forensics.Components;
 using Content.Shared.Forensics.Systems;
 using Content.Shared.Inventory;
