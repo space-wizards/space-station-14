@@ -43,6 +43,7 @@
     - Hypospray
     - DeathAcidifierImplanter # crew will try to steal their amazing hardsuits
     - FreedomImplanter
+    - JetpackBluespaceFilled # not on suitStorage cuz otherwise vox will die a painful death
   inhand:
   - WeaponPulseRifle
 
