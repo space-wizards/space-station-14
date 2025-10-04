@@ -206,11 +206,11 @@ public abstract partial class EntityEffect
     /// </summary>
     public virtual string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => null;
 
-    [DataField]
-    public virtual bool ShouldLog { get; private set; } = true;
+    [ViewVariables]
+    public virtual bool ShouldLog => true;
 
-    [DataField]
-    public virtual LogImpact LogImpact { get; private set; } = LogImpact.Low;
+    [ViewVariables]
+    public virtual LogImpact LogImpact => LogImpact.Low;
 }
 
 /// <summary>
