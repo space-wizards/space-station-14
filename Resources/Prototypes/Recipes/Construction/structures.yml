@@ -452,10 +452,29 @@
   placementMode: SnapgridCenter
 
 - type: construction
+  name: directional frosted window
+  id: FrostedWindowDirectional
+  graph: WindowDirectional
+  startNode: start
+  targetNode: frostedWindowDirectional
+  category: construction-category-structures
+  description: Not clear, but lasers still pass through.
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/directional.rsi
+    state: frosted_window
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  name: directional reinforced window
   id: WindowReinforcedDirectional
   graph: WindowDirectional
   startNode: start
-  targetNode: windowReinforcedDirectional
+  targetNode: reinforcedWindowDirectional
   category: construction-category-structures
   canBuildInImpassable: true
   conditions:
@@ -468,7 +487,7 @@
   id: WindowClockworkDirectional
   graph: WindowDirectional
   startNode: start
-  targetNode: windowClockworkDirectional
+  targetNode: clockworkWindowDirectional
   category: construction-category-structures
   canBuildInImpassable: true
   conditions:
@@ -494,7 +513,7 @@
   id: PlasmaReinforcedWindowDirectional
   graph: WindowDirectional
   startNode: start
-  targetNode: plasmaReinforcedWindowDirectional
+  targetNode: reinforcedPlasmaWindowDirectional
   category: construction-category-structures
   canBuildInImpassable: true
   conditions:
@@ -532,8 +551,46 @@
   canRotate: false
 
 - type: construction
-  id: UraniumWindowDiagonal
+  name: directional uranium window
+  id: UraniumWindowDirectional
+  graph: WindowDirectional
+  startNode: start
+  targetNode: uraniumWindowDirectional
+  category: construction-category-structures
+  canBuildInImpassable: true
+  description: Clear, with added RadAbsorb to protect you from deadly radiation.
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/directional.rsi
+    state: uranium_window
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
+  name: directional reinforced uranium window
+  id: ReinforcedUraniumWindowDirectional
+  graph: WindowDirectional
+  startNode: start
+  targetNode: reinforcedUraniumWindowDirectional
+  category: construction-category-structures
+  canBuildInImpassable: true
+  description: Clear and even tougher, with added RadAbsorb to protect you from deadly radiation.
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/directional.rsi
+    state: uranium_reinforced_window
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
   name: construction-recipe-uranium-window-diagonal
+  id: UraniumWindowDiagonal
   graph: WindowDiagonal
   startNode: start
   targetNode: uraniumWindowDiagonal
