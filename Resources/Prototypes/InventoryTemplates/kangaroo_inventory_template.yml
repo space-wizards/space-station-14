@@ -6,7 +6,7 @@
     slotFlags: MASK
     uiWindowPos: 1,1
     strippingWindowPos: 1,1
-    displayName: Mask
+    displayName: inventory-slot-mask
     whitelist:
       tags:
         - PetWearable
@@ -18,7 +18,7 @@
     stripTime: 3
     uiWindowPos: 2,0
     strippingWindowPos: 2,5
-    displayName: Suit Storage
+    displayName: inventory-slot-suit-storage
     whitelist:
       components:
         - GasTank
@@ -28,7 +28,7 @@
     slotFlags: GLOVES
     uiWindowPos: 0,1
     strippingWindowPos: 2,2
-    displayName: Gloves
+    displayName: inventory-slot-gloves
     whitelist:
       tags:
         - Kangaroo
@@ -41,7 +41,7 @@
     stripTime: 6
     uiWindowPos: 3,1
     strippingWindowPos: 1,5
-    displayName: Belt
+    displayName: inventory-slot-belt
     whitelist:
       tags:
         - Kangaroo
@@ -54,7 +54,7 @@
     stripTime: 3
     uiWindowPos: 2,3
     strippingWindowPos: 1,4
-    displayName: Pouch
+    displayName: inventory-slot-pouch
     stripHidden: true
 
 - type: inventoryTemplate
@@ -68,7 +68,7 @@
     stripTime: 3
     uiWindowPos: 2,3
     strippingWindowPos: 1,4
-    displayName: Pouch
+    displayName: inventory-slot-pouch
     stripHidden: true
 
   - name: gloves
@@ -76,7 +76,7 @@
     slotFlags: GLOVES
     uiWindowPos: 1,0
     strippingWindowPos: 2,2
-    displayName: Gloves
+    displayName: inventory-slot-gloves
     whitelist:
       tags:
         - Kangaroo
