@@ -21,6 +21,21 @@ namespace Content.Shared.Crayon
         [DataField("color")]
         public Color Color;
 
+        /// <summary>
+        /// Rotation of the resulting decal
+        /// </summary>
+        [DataField]
+        public float Rotation;
+
+        [DataField]
+        public bool PreviewEnabled;
+
+        [DataField]
+        public bool PreviewVisible;
+
+        [DataField]
+        public bool OpaqueGhost;
+
         [Serializable, NetSerializable]
         public enum CrayonUiKey : byte
         {
@@ -54,6 +69,27 @@ namespace Content.Shared.Crayon
         }
     }
 
+    [Serializable, NetSerializable]
+    public sealed class CrayonRotationMessage : BoundUserInterfaceMessage
+    {
+        public readonly float Rotation;
+        public CrayonRotationMessage(float rotation)
+        {
+            Rotation = rotation;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class CrayonPreviewToggleMessage : BoundUserInterfaceMessage
+    {
+        public readonly bool State;
+
+        public CrayonPreviewToggleMessage(bool state)
+        {
+            State = state;
+        }
+    }
+
     /// <summary>
     /// Server to CLIENT. Notifies the BUI that a decal with given ID has been drawn.
     /// Allows the client UI to advance forward in the client-only ephemeral queue,
@@ -80,13 +116,21 @@ namespace Content.Shared.Crayon
         public readonly string State;
         public readonly int Charges;
         public readonly int Capacity;
+        public readonly float Rotation;
+        public readonly bool PreviewEnabled;
+        public readonly bool PreviewVisible;
+        public readonly bool OpaqueGhost;
 
-        public CrayonComponentState(Color color, string state, int charges, int capacity)
+        public CrayonComponentState(Color color, string state, int charges, int capacity, float rotation, bool previewEnabled, bool previewVisible, bool opaqueGhost)
         {
             Color = color;
             State = state;
             Charges = charges;
             Capacity = capacity;
+            Rotation = rotation;
+            PreviewEnabled = previewEnabled;
+            PreviewVisible = previewVisible;
+            OpaqueGhost = opaqueGhost;
         }
     }
 
@@ -102,12 +146,20 @@ namespace Content.Shared.Crayon
         /// </summary>
         public bool SelectableColor;
         public Color Color;
+        public float Rotation;
+        public bool PreviewEnabled;
+        public bool PreviewVisible;
+        public bool OpaqueGhost;
 
-        public CrayonBoundUserInterfaceState(string selected, bool selectableColor, Color color)
+        public CrayonBoundUserInterfaceState(string selected, bool selectableColor, Color color, float rotation, bool previewEnabled, bool previewVisible, bool opaqueGhost)
         {
             Selected = selected;
             SelectableColor = selectableColor;
             Color = color;
+            Rotation = rotation;
+            PreviewEnabled = previewEnabled;
+            PreviewVisible = previewVisible;
+            OpaqueGhost = opaqueGhost;
         }
     }
 }
