@@ -55,6 +55,12 @@ public sealed partial class BallisticAmmoProviderComponent : Component
     /// <summary>
     /// DoAfter delay for filling a bullet into another ballistic ammo provider.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan FillDelay = TimeSpan.FromSeconds(0.5);
+
+    /// <summary>
+    /// Whether the ammo provider can reload a weapon from a clothing slot like belt or backpack.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ReloadFromClothing;
 }
