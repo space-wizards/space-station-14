@@ -13,6 +13,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 using System.Text.RegularExpressions;
 
 namespace Content.Shared.Disposal.Holder;
@@ -36,6 +37,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
     [Dependency] private readonly SharedEyeSystem _eye = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly TileSystem _tile = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     private EntityQuery<DisposalUnitComponent> _disposalUnitQuery;
     private EntityQuery<MetaDataComponent> _metaQuery;
@@ -63,6 +65,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
     private void OnComponentStartup(Entity<DisposalHolderComponent> ent, ref ComponentStartup args)
     {
         ent.Comp.Container = _containerSystem.EnsureContainer<Container>(ent, nameof(DisposalHolderComponent));
+        ent.Comp.EndTime = _timing.CurTime + ent.Comp.LifeTime;
     }
 
     private void OnActorTransition(Entity<ActorComponent> ent, ref DisposalSystemTransitionEvent args)
@@ -171,7 +174,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
             else
             {
                 // Knockdown the entity emerging from the pipe
-                _stun.TryKnockdown(held, ent.Comp.DisposalExitStunDuration, force: true);
+                _stun.TryKnockdown(held, ent.Comp.ExitStunDuration, force: true);
 
                 // Throw the entity out of the pipe
                 _xformSystem.AttachToGridOrMap(held, heldXform);
@@ -243,6 +246,8 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
             ent.Comp.CurrentDirection != ev.Next &&
             ent.Comp.AccumulatedDamage < ent.Comp.MaxAllowedDamage)
         {
+            ent.Comp.DirectionChangeCount++;
+
             var damage = tube.Comp.DamageOnTurn;
 
             foreach (var held in ent.Comp.Container.ContainedEntities)
@@ -256,6 +261,10 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
             }
 
             ent.Comp.AccumulatedDamage += damage.GetTotal();
+
+            // Check if the holder can escape the current pipe
+            if (TryEscaping(ent, tube))
+                return false;
         }
 
         // Update trajectory
@@ -265,20 +274,6 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
 
         // Update rotation
         xform.LocalRotation = ent.Comp.CurrentDirection.ToAngle();
-
-        // Check how many times the holder has visited the current pipe
-        var visits = 1;
-
-        if (ent.Comp.TubeVisits.TryGetValue(tube, out visits))
-        {
-            visits += 1;
-        }
-
-        ent.Comp.TubeVisits[tube] = visits;
-
-        // Check if the holder can escape the current pipe
-        if (TryEscapingDisposals(ent, tube))
-            return false;
 
         Dirty(ent);
         return true;
@@ -457,7 +452,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
     /// <param name="ent">The disposal holder.</param>
     /// <param name="tube">The disposal tube the holder is attempting to escape.</param>
     /// <returns> True if the disposal holder escaped the disposal tube.</returns>
-    protected virtual bool TryEscapingDisposals(Entity<DisposalHolderComponent> ent, Entity<DisposalTubeComponent> tube)
+    protected virtual bool TryEscaping(Entity<DisposalHolderComponent> ent, Entity<DisposalTubeComponent> tube)
     {
         // Handled by the server
 

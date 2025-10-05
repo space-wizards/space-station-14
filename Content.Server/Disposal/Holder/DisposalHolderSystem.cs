@@ -4,6 +4,7 @@ using Content.Shared.Disposal.Holder;
 using Content.Shared.Disposal.Tube;
 using Content.Shared.Disposal.Unit;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Disposal.Holder;
 
@@ -13,6 +14,7 @@ public sealed partial class DisposalHolderSystem : SharedDisposalHolderSystem
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     /// <inheritdoc/>
     public override void TransferAtmos(Entity<DisposalHolderComponent> ent, Entity<DisposalUnitComponent> unit)
@@ -32,24 +34,22 @@ public sealed partial class DisposalHolderSystem : SharedDisposalHolderSystem
     }
 
     /// <inheritdoc/>
-    protected override bool TryEscapingDisposals(Entity<DisposalHolderComponent> ent, Entity<DisposalTubeComponent> tube)
+    protected override bool TryEscaping(Entity<DisposalHolderComponent> ent, Entity<DisposalTubeComponent> conduit)
     {
-        if (!ent.Comp.TubeVisits.TryGetValue(tube, out var visits))
+        // Check if the entity should have a chance to escape yet
+        if (ent.Comp.DirectionChangeCount < ent.Comp.DirectionChangeThreshold &&
+            _timing.CurTime < ent.Comp.EndTime)
             return false;
 
-        // Check if the holder should attempt to escape the current pipe
-        if (visits > ent.Comp.TubeVisitThreshold &&
-            _random.NextFloat() <= ent.Comp.TubeEscapeChance)
-        {
-            var xform = Transform(tube);
+        // Check if the holder escaped
+        if (_random.NextFloat() > ent.Comp.EscapeChance)
+            return false;
 
-            // Unanchor the pipe and exit disposals
-            _xformSystem.Unanchor(tube, xform);
-            ExitDisposals(ent);
+        // Unanchor the conduit and exit
+        var xform = Transform(conduit);
+        _xformSystem.Unanchor(conduit, xform);
+        ExitDisposals(ent);
 
-            return true;
-        }
-
-        return false;
+        return true;
     }
 }

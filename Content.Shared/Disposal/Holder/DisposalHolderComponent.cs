@@ -77,34 +77,44 @@ public sealed partial class DisposalHolderComponent : Component, IGasMixtureHold
     public GasMixture Air { get; set; } = new(70);
 
     /// <summary>
-    /// A dictionary containing the number of times the holder has passed through
-    /// specific tubes. If the number of visits exceeds <see cref="TubeVisitThreshold"/>,
-    /// the holder has a chance to break free of the disposal system, as set by
-    /// <see cref="TubeEscapeChance"/>.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public Dictionary<EntityUid, int> TubeVisits = new();
-
-    /// <summary>
-    /// The number of times the holder can pass through a tube before it has
-    /// a chance to escape the disposals system.
+    /// Tracks the number of times the entity changes direction
     /// </summary>
     [DataField]
-    public int TubeVisitThreshold = 1;
+    public int DirectionChangeCount;
 
     /// <summary>
-    /// The chance of the holder escaping the disposals system once the
-    /// number of times it passes through the same pipe exceeds
-    /// <see cref="TubeVisitThreshold"/>.
+    /// After <see cref="DirectionChangeCount"/> exceeds this value, this entity
+    /// has a chance to escape the disposals system each time it changes direction
+    /// (as set by <see cref="EscapeChance"/>).
     /// </summary>
     [DataField]
-    public float TubeEscapeChance = 0.2f;
+    public int DirectionChangeThreshold = 15;
+
+    /// <summary>
+    /// After this entity has been in transit for this lenght of time, it has a chance to escape the
+    /// disposals system whenever it changes direction (as set by <see cref="EscapeChance"/>).
+    /// </summary>
+    [DataField]
+    public TimeSpan LifeTime = TimeSpan.FromSeconds(30);
+
+    /// <summary>
+    /// The time after which the entity has a chance to escape the disposals system
+    /// whenever it changes direction (as set by <see cref="EscapeChance"/>).
+    /// </summary>
+    [DataField]
+    public TimeSpan EndTime = TimeSpan.FromSeconds(30);
+
+    /// <summary>
+    /// When given the opportunity, the entity has this chance of escaping the disposals system.
+    /// </summary>
+    [DataField]
+    public float EscapeChance = 0.2f;
 
     /// <summary>
     /// Sets how many seconds mobs will be stunned after being ejected from a pipe.
     /// </summary>
     [DataField]
-    public TimeSpan DisposalExitStunDuration = TimeSpan.FromSeconds(1.5f);
+    public TimeSpan ExitStunDuration = TimeSpan.FromSeconds(1.5f);
 
     /// <summary>
     /// The amount of damage that has been accumulated from being bounced around
