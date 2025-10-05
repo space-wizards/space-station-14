@@ -1,4 +1,6 @@
-namespace Content.Shared.Silicons.Laws.LawFormatCorruptions;
+using Robust.Shared.Prototypes;
+
+namespace Content.Shared.Silicons.Laws.LawFormats.LawFormatCorruptions;
 
 /// <summary>
 /// Applies no flavor formatting.
@@ -7,7 +9,7 @@ namespace Content.Shared.Silicons.Laws.LawFormatCorruptions;
 /// </summary>
 public sealed partial class NoFormatCorruption : LawFormatCorruption
 {
-    public override string? ApplyFormatCorruption(string toFormat)
+    public override ProtoId<LawFormatPrototype>? FormatToApply()
     {
         return null;
     }

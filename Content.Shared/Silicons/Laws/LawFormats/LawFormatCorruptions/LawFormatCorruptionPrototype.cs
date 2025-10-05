@@ -1,6 +1,6 @@
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Silicons.Laws.LawFormatCorruptions;
+namespace Content.Shared.Silicons.Laws.LawFormats.LawFormatCorruptions;
 
 /// <summary>
 /// Container-prototype for silicon law corruptions.
@@ -16,8 +16,8 @@ public sealed partial class LawFormatCorruptionPrototype : IPrototype
     [DataField]
     public LawFormatCorruption? FormatCorruption;
 
-    public string? ApplyFormatCorruption(string toFormat)
+    public ProtoId<LawFormatPrototype>? FormatToApply()
     {
-        return FormatCorruption?.ApplyFormatCorruption(toFormat) ?? null;
+        return FormatCorruption?.FormatToApply();
     }
 }

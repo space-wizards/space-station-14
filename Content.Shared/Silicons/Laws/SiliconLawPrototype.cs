@@ -1,4 +1,5 @@
 ﻿using Content.Shared.FixedPoint;
+using Content.Shared.Silicons.Laws.LawFormats;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -33,24 +34,11 @@ public partial class SiliconLaw : IComparable<SiliconLaw>, IEquatable<SiliconLaw
     public string? LawIdentifierOverride;
 
     /// <summary>
-    /// If not null, this string overrides how the law text is presented to the player.
-    /// Apply all text flavoring here (i.e. corruption effects).
+    /// The format corruption affects how the law text is presented to the player.
+    /// This must never affect the verbatim meaning of the law.
     /// </summary>
-    /// <remarks>
-    /// This must only affect presentation:<br/>
-    /// - YES: alternative letter-casing of the original text;<br/>
-    /// - YES: degraded original lettering (i.e. select letters replaced with similar-looking symbols);<br/>
-    /// - YES: original text, but animated;<br/>
-    /// - NO: unrelated text that may be understood differently;<br/>
-    /// - NO: identical to original text - set this to null instead.
-    /// </remarks>
     [DataField]
-    public string? FlavorFormattedLawString;
-
-    public string ReadLawString(bool ignoreFlavoring)
-    {
-        return ignoreFlavoring ? LawString : FlavorFormattedLawString ?? LawString;
-    }
+    public ProtoId<LawFormatPrototype>? LawFormat;
 
     public int CompareTo(SiliconLaw? other)
     {
@@ -67,7 +55,7 @@ public partial class SiliconLaw : IComparable<SiliconLaw>, IEquatable<SiliconLaw
         return LawString == other.LawString
                && Order == other.Order
                && LawIdentifierOverride == other.LawIdentifierOverride
-               && FlavorFormattedLawString == other.FlavorFormattedLawString;
+               && LawFormat == other.LawFormat;
     }
 
     public override bool Equals(object? obj)
@@ -79,7 +67,7 @@ public partial class SiliconLaw : IComparable<SiliconLaw>, IEquatable<SiliconLaw
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(LawString, Order, LawIdentifierOverride, FlavorFormattedLawString);
+        return HashCode.Combine(LawString, Order, LawIdentifierOverride, LawFormat);
     }
 
     /// <summary>
@@ -92,7 +80,7 @@ public partial class SiliconLaw : IComparable<SiliconLaw>, IEquatable<SiliconLaw
             LawString = LawString,
             Order = Order,
             LawIdentifierOverride = LawIdentifierOverride,
-            FlavorFormattedLawString = FlavorFormattedLawString
+            LawFormat = LawFormat
         };
     }
 }

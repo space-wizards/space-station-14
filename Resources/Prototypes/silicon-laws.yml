@@ -594,6 +594,42 @@
     NutimovLawset: 0.5
     Ninja: 0.25
 
+# law formats
+- type: lawFormat
+  id: AllCapsFormat
+  format: !type:AllCapsLawFormat
+
+- type: lawFormat
+  id: LimeGreenColorLawFormat
+  format: !type:ColoredLawFormat
+    color: limegreen
+
+- type: lawFormat
+  id: RedColorLawFormat
+  format: !type:ColoredLawFormat
+    color: red
+
+- type: lawFormat
+  id: YellowColorLawFormat
+  format: !type:ColoredLawFormat
+    color: yellow
+
+- type: lawFormat
+  id: MediumPurpleColorLawFormat
+  format: !type:ColoredLawFormat
+    color: mediumpurple
+
+- type: lawFormat
+  id: OrangeColorLawFormat
+  format: !type:ColoredLawFormat
+    color: orange
+
+- type: lawFormat
+  id: CyanColorLawFormat
+  format: !type:ColoredLawFormat
+    color: cyan
+
+# law format corruptions
 - type: lawFormatCorruption
   id: NoFormatCorruption
   formatCorruption: !type:NoFormatCorruption
@@ -606,12 +642,14 @@
   id: ColorizeFormatCorruption
   formatCorruption: !type:ColorizeFormatCorruption
     possibleColors:
-    - limegreen
-    - red
-    - yellow
-    - mediumpurple
-    - orange
-    - cyan
+    - LimeGreenColorLawFormat
+    - RedColorLawFormat
+    - YellowColorLawFormat
+    - MeniumPurpleColorLawFormat
+    - OrangeColorLawFormat
+    - CyanColorLawFormat
+
+# ion-stormed corruption probabilities
 
 - type: weightedRandom
   id: IonStormDefaultLawFormatCorruption

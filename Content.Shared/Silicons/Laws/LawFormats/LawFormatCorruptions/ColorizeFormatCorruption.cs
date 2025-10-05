@@ -1,6 +1,7 @@
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Shared.Silicons.Laws.LawFormatCorruptions;
+namespace Content.Shared.Silicons.Laws.LawFormats.LawFormatCorruptions;
 
 /// <summary>
 /// Applies one of the specified colors at random to the text of the law.
@@ -9,19 +10,19 @@ namespace Content.Shared.Silicons.Laws.LawFormatCorruptions;
 public sealed partial class ColorizeFormatCorruption : LawFormatCorruption
 {
     [DataField]
-    public List<Color>? PossibleColors;
+    public List<ProtoId<LawFormatPrototype>>? PossibleColors = [];
 
-    public override string? ApplyFormatCorruption(string toFormat)
+    public override ProtoId<LawFormatPrototype>? FormatToApply()
     {
         if (PossibleColors is null || PossibleColors.Count == 0)
             return null;
 
         if (PossibleColors.Count == 1)
-            return $"[color={PossibleColors[0].ToHexNoAlpha()}]{Loc.GetString(toFormat)}[/color]";
+            return PossibleColors[0];
 
         var random = IoCManager.Resolve<IRobustRandom>();
 
         var pickedColor = random.Pick(PossibleColors);
-        return $"[color={pickedColor.ToHexNoAlpha()}]{Loc.GetString(toFormat)}[/color]";
+        return pickedColor;
     }
 }

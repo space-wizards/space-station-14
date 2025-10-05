@@ -1,4 +1,6 @@
-namespace Content.Shared.Silicons.Laws.LawFormatCorruptions;
+using Robust.Shared.Prototypes;
+
+namespace Content.Shared.Silicons.Laws.LawFormats.LawFormatCorruptions;
 
 /// <summary>
 /// Abstract Data Definition shared by LawFormatCorruptions. For details see its implementations.
@@ -6,5 +8,5 @@ namespace Content.Shared.Silicons.Laws.LawFormatCorruptions;
 [ImplicitDataDefinitionForInheritors]
 public abstract partial class LawFormatCorruption
 {
-    public abstract string? ApplyFormatCorruption(string toFormat);
+    public abstract ProtoId<LawFormatPrototype>? FormatToApply();
 }
