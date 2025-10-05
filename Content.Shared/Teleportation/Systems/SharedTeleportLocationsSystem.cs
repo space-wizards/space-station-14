@@ -18,7 +18,7 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _xform = default!;
 
     protected const string TeleportDelay = "TeleportDelay";
-    private const int MaxRandomTeleportAttempts = 20;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -40,7 +40,6 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
         if (!TryGetEntity(args.NetEnt, out var telePointEnt) || TerminatingOrDeleted(telePointEnt) || !HasComp<WarpPointComponent>(telePointEnt) || Delay.IsDelayed(ent.Owner, TeleportDelay))
             return;
 
-
         var comp = ent.Comp;
         var originEnt = args.Actor;
         var telePointXForm = Transform(telePointEnt.Value);
@@ -49,7 +48,7 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
         var newCoords = coords.Offset(_random.NextVector2(ent.Comp.MaxRandomRadius));
 
         // TODO: Turn this into a generic method for xform.
-        for (var i = 0; i < MaxRandomTeleportAttempts; i++)
+        for (var i = 0; i < ent.Comp.MaxTeleportAttempts; i++)
         {
             var randVector = _random.NextVector2(ent.Comp.MaxRandomRadius);
             newCoords = coords.Offset(randVector);
