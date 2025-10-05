@@ -89,7 +89,7 @@
   name: steal-target-groups-weapon-energy-magnum
   sprite:
     sprite: Objects/Weapons/Guns/Battery/energy_magnum.rsi
-    state: base
+    state: icon
 
 # Thief Collection
 

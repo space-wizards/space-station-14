@@ -867,9 +867,19 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/energy_magnum.rsi
     layers:
-    - state: icon
-    - state: icon-unshaded
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-unshaded-1
+      visible: false
+      map: [ "enum.GunVisualLayers.MagUnshaded" ]
       shader: unshaded
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: true
+  - type: Appearance
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/energy_magnum.rsi
   - type: Tag
     tags:
     - HighRiskItem
@@ -894,7 +904,6 @@
     autoRechargeRate: 48
     autoRechargePause: true
     autoRechargePauseTime: 10
-  - type: Appearance
 
 - type: entity
   name: temperature gun
