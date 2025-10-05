@@ -83,8 +83,6 @@ public sealed class InteractionPopupSystem : EntitySystem
         EntityUid target,
         EntityUid user)
     {
-        //Handling does nothing and this thing annoyingly plays way too often.
-        // HUH? What does this comment even mean?
         if (!CanInteract(uid, target, user))
             return false;
         
