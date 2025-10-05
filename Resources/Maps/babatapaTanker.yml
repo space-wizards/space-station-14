@@ -4,7 +4,7 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/28/2025 10:26:47
+  time: 10/03/2025 12:09:32
   entityCount: 3144
 maps:
 - 1
@@ -72,6 +72,11 @@ entities:
     - type: Weather
       weather:
         SnowfallMedium: {}
+    - type: PurpleTintMap
+      contrast: 1
+      saturation: 1.15
+      strength: 0.65
+      tintColor: '#400080'
   - uid: 2
     components:
     - type: MetaData

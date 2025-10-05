@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 10/01/2025 18:17:32
-  entityCount: 2490
+  time: 10/03/2025 12:06:48
+  entityCount: 2491
 maps:
 - 1
 grids:
@@ -68,6 +68,11 @@ entities:
         - 0
     - type: MapLight
       ambientLightColor: '#0D3B5CFF'
+    - type: PurpleTintMap
+      contrast: 1
+      saturation: 1.15
+      strength: 0.65
+      tintColor: '#400080'
   - uid: 2
     components:
     - type: MetaData
@@ -185,15 +190,81 @@ entities:
         version: 2
         nodes:
         - node:
+            color: '#930000FF'
+            id: BrickCornerOverlayNE
+          decals:
+            24: 12,-51
+            30: 53,-55
+        - node:
+            color: '#930000FF'
+            id: BrickCornerOverlayNW
+          decals:
+            25: 9,-51
+            29: 50,-55
+        - node:
+            color: '#930000FF'
+            id: BrickCornerOverlaySE
+          decals:
+            26: 12,-54
+            31: 53,-58
+        - node:
+            color: '#930000FF'
+            id: BrickCornerOverlaySW
+          decals:
+            27: 9,-54
+            28: 50,-58
+        - node:
+            color: '#930000FF'
+            id: StencilLetterA
+          decals:
+            14: 43.40975,-21.470722
+        - node:
             color: '#FF0000FF'
             id: StencilLetterA
           decals:
             7: 10.395246,-51.726433
         - node:
+            color: '#930000FF'
+            id: StencilLetterB
+          decals:
+            15: 46.84725,-22.658222
+        - node:
             color: '#FF0000FF'
             id: StencilLetterB
           decals:
             9: 50.21861,-55.514465
+        - node:
+            color: '#930000FF'
+            id: a
+          decals:
+            22: 19.167303,-37.971264
+        - node:
+            color: '#930000FF'
+            id: arrow
+          decals:
+            32: 19.85528,-41.26405
+        - node:
+            angle: 1.5707963267948966 rad
+            color: '#930000FF'
+            id: arrow
+          decals:
+            13: 42.357666,-21.460306
+        - node:
+            angle: 3.141592653589793 rad
+            color: '#930000FF'
+            id: arrow
+          decals:
+            12: 46.868084,-23.626972
+            17: 34.391167,-40.851192
+            18: 34.320854,-38.882442
+            19: 19.220543,-38.764233
+            20: 19.185387,-37.076733
+        - node:
+            color: '#930000FF'
+            id: b
+          decals:
+            23: 34.350273,-39.940014
+            33: 19.831842,-41.990612
         - node:
             color: '#FF0000FF'
             id: x
@@ -4799,6 +4870,13 @@ entities:
     components:
     - type: Transform
       pos: -0.5,-17.5
+      parent: 2
+- proto: CounterStrikeBomb
+  entities:
+  - uid: 2491
+    components:
+    - type: Transform
+      pos: 45.5,-21.5
       parent: 2
 - proto: DebugAPCRecharging
   entities:

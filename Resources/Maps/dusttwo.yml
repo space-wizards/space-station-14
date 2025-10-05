@@ -4,7 +4,7 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/23/2025 16:32:34
+  time: 10/03/2025 11:59:51
   entityCount: 1812
 maps:
 - 1
@@ -58,15 +58,14 @@ entities:
         - 0
         - 0
     - type: MapLight
-      ambientLightColor: '#f2cd83'
+      ambientLightColor: '#F2CD83FF'
     - type: ImplicitRoof
-      color: '#f2cd83'
+      color: '#F2CD83FF'
     - type: PurpleTintMap
-      enabled: true
-      tintColor: '#ffa959'
-      strength: 0.65
+      contrast: 1
       saturation: 1.15
-      contrast: 1.0
+      strength: 0.65
+      tintColor: '#FFDC85FF'
   - uid: 2
     components:
     - type: MetaData
@@ -644,7 +643,8 @@ entities:
           - 0
         chunkSize: 4
     - type: ImplicitRoof
-      color: '#f2cd83'
+      color: '#F2CD83FF'
+    - type: NavMap
 - proto: AlwaysPoweredlightBlue
   entities:
   - uid: 1808

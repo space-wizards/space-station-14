@@ -1,0 +1,16 @@
+- type: gameMap
+  id: deHotel
+  mapName: 'de_hotel'
+  mapPath: /Maps/hotel.yml
+  minPlayers: 0
+  stations:
+   dehotel:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: "De Hotel"
+        - type: StationJobs
+          availableJobs:
+            Janitor: [ -1, -1 ]
+            ServiceWorker: [-1, -1 ]
+

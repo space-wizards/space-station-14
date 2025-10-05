@@ -4,7 +4,7 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/23/2025 17:10:09
+  time: 10/03/2025 12:08:39
   entityCount: 2309
 maps:
 - 1
@@ -60,16 +60,21 @@ entities:
         - 0
         - 0
     - type: MapLight
-      ambientLightColor: '#f0c878'
+      ambientLightColor: '#F0C878FF'
+    - type: PurpleTintMap
+      contrast: 1
+      saturation: 1.15
+      strength: 0.65
+      tintColor: '#FFDC85FF'
   - uid: 2
     components:
-    - type: BecomesStation
-      id: demirage
     - type: MetaData
       name: grid
     - type: Transform
       pos: 15.799938,-4.4712925
       parent: 1
+    - type: BecomesStation
+      id: demirage
     - type: MapGrid
       chunks:
         0,0:
@@ -164,7 +169,7 @@ entities:
     - type: Shuttle
       dampingModifier: 0.25
     - type: ImplicitRoof
-      color: "#f0c878"
+      color: '#F0C878FF'
     - type: GridPathfinding
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
@@ -5300,7 +5305,7 @@ entities:
       pos: -44.5,20.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -4048.3018
+      secondsUntilStateChange: -4097.785
       state: Closing
   - uid: 697
     components:
