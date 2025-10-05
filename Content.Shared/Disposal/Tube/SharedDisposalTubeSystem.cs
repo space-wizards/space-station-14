@@ -196,8 +196,6 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
         var holderComponent = Comp<DisposalHolderComponent>(holder);
         var holderEnt = new Entity<DisposalHolderComponent>(holder, holderComponent);
 
-        AddPVSOverride(holderEnt);
-
         if (holderComponent.Container != null)
         {
             foreach (var entity in _disposalUnit.GetContainedEntities(unit))
@@ -215,14 +213,5 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
         }
 
         return _disposalHolder.TryEnterTube(holderEnt, ent);
-    }
-
-    /// <summary>
-    /// Adds a PVS override to a specified disposal holder.
-    /// </summary>
-    /// <param name="ent">The disposal holder.</param>
-    protected virtual void AddPVSOverride(Entity<DisposalHolderComponent> ent)
-    {
-        // Handled by the server
     }
 }
