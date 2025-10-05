@@ -13,7 +13,6 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 using System.Text.RegularExpressions;
 
 namespace Content.Shared.Disposal.Holder;
@@ -37,7 +36,6 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
     [Dependency] private readonly SharedEyeSystem _eye = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly TileSystem _tile = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
 
     private EntityQuery<DisposalUnitComponent> _disposalUnitQuery;
     private EntityQuery<MetaDataComponent> _metaQuery;
@@ -95,10 +93,10 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         if (Terminating(ent))
             return;
 
-        if (ent.Comp.IsExitingDisposals)
+        if (ent.Comp.IsExiting)
             return;
 
-        ent.Comp.IsExitingDisposals = true;
+        ent.Comp.IsExiting = true;
         Dirty(ent);
 
         // Get the holder and grid transforms
@@ -191,13 +189,6 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         }
 
         ExpelAtmos(ent);
-
-        if (ent.Comp.DespawnEffect != null)
-        {
-            var effect = Spawn(ent.Comp.DespawnEffect, xform.Coordinates);
-            Transform(effect).LocalRotation = xform.LocalRotation;
-        }
-
         PredictedDel(ent.Owner);
     }
 
@@ -213,7 +204,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
     /// </remarks>
     public bool TryEnterTube(Entity<DisposalHolderComponent> ent, Entity<DisposalTubeComponent> tube)
     {
-        if (ent.Comp.IsExitingDisposals)
+        if (ent.Comp.IsExiting)
             return false;
 
         if (ent.Comp.CurrentTube == tube)
@@ -358,12 +349,6 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
             // Remove any disposal holders that were somehow emptied
             if (holder.Container?.Count == 0)
             {
-                if (holder.DespawnEffect != null)
-                {
-                    var effect = Spawn(holder.DespawnEffect, xform.Coordinates);
-                    Transform(effect).LocalRotation = xform.LocalRotation;
-                }
-
                 PredictedQueueDel(uid);
                 continue;
             }

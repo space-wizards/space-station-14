@@ -6,6 +6,7 @@ using Content.Shared.Containers;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.Disposal.Components;
+using Content.Shared.Disposal.Holder;
 using Content.Shared.Disposal.Tube;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
@@ -52,6 +53,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     [Dependency] private readonly SharedJointSystem _joints = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
     [Dependency] private readonly DisposalTubeSystem _disposalTube = default!;
+    [Dependency] private readonly SharedDisposalHolderSystem _disposalHolder = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
@@ -643,9 +645,20 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             return false;
         }
 
-        IntakeAir(ent, xform);
-
-        _disposalTube.TryInsert((tubeUid.Value, tubeComp), ent, beforeFlushArgs.Tags);
+        // Try to transfer entities from the unit into disposals.
+        // If successful, take in the local atmos and pass it
+        // to the spawned disposals holder.
+        if (ent.Comp.Container != null &&
+            _disposalTube.TryInsert
+                ((tubeUid.Value, tubeComp),
+                ent.Comp.Container.ContainedEntities.ToArray(),
+                ent.Comp.HolderPrototypeId,
+                out var holderEnt,
+                beforeFlushArgs.Tags))
+        {
+            IntakeAir(ent, xform);
+            _disposalHolder.TransferAtmos(holderEnt.Value, ent);
+        }
 
         ent.Comp.NextPressurized = _timing.CurTime;
         if (!ent.Comp.DisablePressure)
