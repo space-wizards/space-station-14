@@ -29,7 +29,7 @@ public sealed partial class MineGameArcadeComponent : Component
     /// <summary>
     /// Minimum allowed mine count for games on this component
     /// </summary>
-    [DataField("boardPresets")]
+    [DataField("boardPresets", required: true)]
     public Dictionary<string, MineGameBoardSettings> BoardPresets;
 
     /// <summary>
