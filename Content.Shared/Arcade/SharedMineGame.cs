@@ -11,11 +11,13 @@ public enum MineGameArcadeUiKey
 [Serializable, NetSerializable]
 public sealed class MineGameRequestDataMessage : BoundUserInterfaceMessage { }
 
-[Serializable, NetSerializable]
-public struct MineGameBoardSettings(Vector2i boardSize, int mineCount)
+[DataDefinition, Serializable, NetSerializable]
+public partial struct MineGameBoardSettings
 {
-    public readonly Vector2i BoardSize = boardSize;
-    public readonly int MineCount = mineCount;
+    [DataField("boardSize")]
+    public Vector2i BoardSize;
+    [DataField("mineCount")]
+    public int MineCount;
 }
 
 [Serializable, NetSerializable]
@@ -46,7 +48,7 @@ public sealed class MineGameTileActionMessage(MineGameTileAction tileAction) : B
 }
 
 [Serializable, NetSerializable]
-public enum MineGameTileVisState
+public enum MineGameTileVisState : byte
 { // all this to avoid sending true game state (such as actual random mine locs) to client
     Uncleared,
     Flagged,
@@ -64,27 +66,4 @@ public enum MineGameTileVisState
     ClearedSix,
     ClearedSeven,
     ClearedEight
-}
-
-/// <summary>
-/// Stores information on game start or completion time, whether game is active/running, and unflagged mine count.
-/// </summary>
-[Serializable, NetSerializable]
-
-public sealed class MineGameMetadata(TimeSpan referenceTime, bool running, int remainingMines) : BoundUserInterfaceMessage
-{
-    public readonly TimeSpan ReferenceTime = referenceTime;
-    public readonly bool Running = running;
-    public readonly int RemainingMines = remainingMines;
-}
-
-/// <summary>
-/// Message with all information for the visual state of an ongoing, completed, or not started game.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class MineGameBoardUpdateMessage(int boardWidth, MineGameTileVisState[] tileStates, MineGameMetadata? metadata) : BoundUserInterfaceMessage
-{
-    public readonly int BoardWidth = boardWidth;
-    public readonly MineGameTileVisState[] TileStates = tileStates;
-    public readonly MineGameMetadata? Metadata = metadata;
 }

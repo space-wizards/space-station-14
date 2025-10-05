@@ -3,37 +3,46 @@ using Content.Shared.Arcade;
 
 namespace Content.Client.Arcade.UI;
 
-public sealed class MineGameBoundUserInterface : BoundUserInterface
+public sealed class MineGameBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
-    [ViewVariables] private MineGameArcadeWindow? _menu;
-
-    public MineGameBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-        SendMessage(new MineGameRequestDataMessage());
-    }
+    [ViewVariables] private MineGameArcadeWindow? _window;
+    private bool _difficultiesLoaded = false;
 
     public void SendTileAction(MineGameTileAction action)
     {
-        SendMessage(new MineGameTileActionMessage(action));
+        SendPredictedMessage(new MineGameTileActionMessage(action));
     }
 
     public void SetBoardAction(MineGameBoardSettings settings)
     {
-        SendMessage(new MineGameRequestNewBoardMessage(settings));
+        SendPredictedMessage(new MineGameRequestNewBoardMessage(settings));
     }
 
+    /// <inheritdoc/>
     protected override void Open()
     {
         base.Open();
 
-        _menu = this.CreateWindow<MineGameArcadeWindow>();
-        _menu.OnTileAction += SendTileAction;
-        _menu.OnBoardSettingAction += SetBoardAction;
+        _window = this.CreateWindow<MineGameArcadeWindow>();
+        _window.OnTileAction += SendTileAction;
+        _window.OnBoardSettingAction += SetBoardAction;
+        Update();
     }
 
-    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+    /// <inheritdoc/>
+    public override void Update()
     {
-        if (message is MineGameBoardUpdateMessage msg)
-            _menu?.UpdateBoard(msg.BoardWidth, msg.TileStates, msg.Metadata);
+        base.Update();
+
+        if (_window is null || !EntMan.TryGetComponent(Owner, out MineGameArcadeComponent? component))
+            return;
+
+        if (!_difficultiesLoaded)
+        {
+            _window?.LoadPresetDifficulties(component.BoardPresets);
+            _difficultiesLoaded = true;
+        }
+
+        _window?.UpdateBoard(component);
     }
 }

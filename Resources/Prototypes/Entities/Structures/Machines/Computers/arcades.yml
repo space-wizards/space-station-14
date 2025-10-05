@@ -248,6 +248,16 @@
     maxBoardSize: 100, 100
     minMineCount: 1 # max regulated by board size
     safeStartRadius: 2
+    boardPresets:
+      easy:
+        boardSize: 9, 9
+        mineCount: 10
+      medium:
+        boardSize: 16, 16
+        mineCount: 40
+      hard:
+        boardSize: 30, 16
+        mineCount: 99
     gameOverSound:
       collection: ExplosionSmall
       params:
