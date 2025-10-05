@@ -10,8 +10,8 @@ namespace Content.Shared.Silicons.Laws;
 public partial class SiliconLaw : IComparable<SiliconLaw>, IEquatable<SiliconLaw>
 {
     /// <summary>
-    /// A locale string which is the underlying base text of the law, before flavor formatting is applied.
-    /// If the text should appear corrupted, modify <see cref="FlavorFormattedLawString"/>.
+    /// A locale string which is the source-of-truth for the verbatim text of this law.
+    /// Its format can be modified. See <see cref="LawFormat"/>.
     /// </summary>
     [DataField(required: true)]
     public string LawString = string.Empty;
@@ -34,11 +34,11 @@ public partial class SiliconLaw : IComparable<SiliconLaw>, IEquatable<SiliconLaw
     public string? LawIdentifierOverride;
 
     /// <summary>
-    /// The format corruption affects how the law text is presented to the player.
+    /// This controls how the printed law is presented to the player.
     /// This must never affect the verbatim meaning of the law.
     /// </summary>
     [DataField]
-    public ProtoId<LawFormatPrototype>? LawFormat;
+    public ProtoId<LawFormatPrototype> LawFormat = "DefaultLawFormat";
 
     public int CompareTo(SiliconLaw? other)
     {

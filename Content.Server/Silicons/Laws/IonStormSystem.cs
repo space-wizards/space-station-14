@@ -6,7 +6,7 @@ using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
-using Content.Shared.Silicons.Laws.LawFormats.LawFormatCorruptions;
+using Content.Shared.Silicons.Laws.LawFormats;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
@@ -41,9 +41,9 @@ public sealed class IonStormSystem : EntitySystem
     private static readonly ProtoId<DatasetPrototype> Foods = "IonStormFoods";
 
     /// <summary>
-    /// Fallback format corruption to use if caller doesn't specify any.
+    /// Fallback format to use if caller prototype doesn't specify any or its ProtoId is invalid.
     /// </summary>
-    private static readonly ProtoId<LawFormatCorruptionPrototype> FallbackFormatCorruption = "AllCapsFormatCorruption";
+    private static readonly ProtoId<LawFormatPrototype> FallbackFormatCorruption = "AllCapsLawFormat";
 
     /// <summary>
     /// Randomly alters the laws of an individual silicon.
@@ -97,8 +97,8 @@ public sealed class IonStormSystem : EntitySystem
         }
 
         // generate a new law...
-        var newLawString = GenerateLaw();
-        var corruptedFormatLawString = PickFormatCorruption(possibleFormatCorruptions);
+        var corruptedLawString = GenerateLaw();
+        var corruptedLawFormat = PickFormatCorruption(possibleFormatCorruptions);
 
         // see if the law we add will replace a random existing law or be a new glitched order one
         if (laws.Laws.Count > 0 && _robustRandom.Prob(target.ReplaceChance))
@@ -106,8 +106,8 @@ public sealed class IonStormSystem : EntitySystem
             var i = _robustRandom.Next(laws.Laws.Count);
             laws.Laws[i] = new SiliconLaw()
             {
-                LawString = newLawString,
-                LawFormat = corruptedFormatLawString,
+                LawString = corruptedLawString,
+                LawFormat = corruptedLawFormat,
                 Order = laws.Laws[i].Order
             };
         }
@@ -115,8 +115,8 @@ public sealed class IonStormSystem : EntitySystem
         {
             laws.Laws.Insert(0, new SiliconLaw
             {
-                LawString = newLawString,
-                LawFormat = corruptedFormatLawString,
+                LawString = corruptedLawString,
+                LawFormat = corruptedLawFormat,
                 Order = -1,
                 LawIdentifierOverride = Loc.GetString("ion-storm-law-scrambled-number", ("length", _robustRandom.Next(5, 10)))
             });
@@ -258,8 +258,7 @@ public sealed class IonStormSystem : EntitySystem
     }
 
     /// <summary>
-    /// Picks a random value from an ion storm dataset.
-    /// All ion storm datasets start with IonStorm.
+    /// Picks a random value from an ion storm dataset. All ion storm datasets start with IonStorm.
     /// </summary>
     private string PickRandomFromDataset(string datasetName)
     {
@@ -268,18 +267,13 @@ public sealed class IonStormSystem : EntitySystem
     }
 
     /// <summary>
-    /// Picks a random format corruption.
+    /// Picks a weighted random from the possible formats. Use fallback if undefined or left blank.
     /// </summary>
-    private string? PickFormatCorruption(ProtoId<WeightedRandomPrototype>? possibleFormatCorruptions)
+    private ProtoId<LawFormatPrototype> PickFormatCorruption(ProtoId<WeightedRandomPrototype>? possibleFormatCorruptions)
     {
-        // Grab a weighted random from the possible formattings. Use fallback if undefined or left blank.
-        _proto.TryIndex(possibleFormatCorruptions, out var formatCorruptions);
-        var formattingToApply = formatCorruptions is null || formatCorruptions.Weights.Count == 0 ?
-            _proto.Index(FallbackFormatCorruption) :
-                _proto.TryIndex<LawFormatCorruptionPrototype>(formatCorruptions.Pick(_robustRandom), out var indexed) ?
-                    indexed :
-                    _proto.Index(FallbackFormatCorruption);
+        if (!_proto.TryIndex(possibleFormatCorruptions, out var formatCorruptions) || formatCorruptions.Weights.Count == 0)
+            return FallbackFormatCorruption;
 
-        return formattingToApply.FormatToApply();
+        return new ProtoId<LawFormatPrototype>(formatCorruptions.Pick(_robustRandom));
     }
 }

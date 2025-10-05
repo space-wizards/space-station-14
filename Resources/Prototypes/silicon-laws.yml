@@ -596,7 +596,11 @@
 
 # law formats
 - type: lawFormat
-  id: AllCapsFormat
+  id: DefaultLawFormat
+  format: !type:DefaultLawFormat
+
+- type: lawFormat
+  id: AllCapsLawFormat
   format: !type:AllCapsLawFormat
 
 - type: lawFormat
@@ -615,9 +619,9 @@
     color: yellow
 
 - type: lawFormat
-  id: MediumPurpleColorLawFormat
+  id: FuchsiaColorLawFormat
   format: !type:ColoredLawFormat
-    color: mediumpurple
+    color: fuchsia
 
 - type: lawFormat
   id: OrangeColorLawFormat
@@ -629,31 +633,15 @@
   format: !type:ColoredLawFormat
     color: cyan
 
-# law format corruptions
-- type: lawFormatCorruption
-  id: NoFormatCorruption
-  formatCorruption: !type:NoFormatCorruption
-
-- type: lawFormatCorruption
-  id: AllCapsFormatCorruption
-  formatCorruption: !type:AllCapsFormatCorruption
-
-- type: lawFormatCorruption
-  id: ColorizeFormatCorruption
-  formatCorruption: !type:ColorizeFormatCorruption
-    possibleColors:
-    - LimeGreenColorLawFormat
-    - RedColorLawFormat
-    - YellowColorLawFormat
-    - MeniumPurpleColorLawFormat
-    - OrangeColorLawFormat
-    - CyanColorLawFormat
-
 # ion-stormed corruption probabilities
-
 - type: weightedRandom
   id: IonStormDefaultLawFormatCorruption
   weights:
-    NoFormatCorruption: 0.5
-    AllCapsFormatCorruption: 1
-    ColorizeFormatCorruption: 1
+    DefaultLawFormat: 0.5
+    AllCapsLawFormat: 1
+    LimeGreenColorLawFormat: 0.17
+    RedColorLawFormat: 0.17
+    YellowColorLawFormat: 0.17
+    FuchsiaColorLawFormat: 0.17
+    OrangeColorLawFormat: 0.17
+    CyanColorLawFormat: 0.17

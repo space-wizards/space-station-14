@@ -206,9 +206,6 @@ public sealed partial class LawDisplay : Control
     {
         var raw = Loc.GetString(law.LawString);
 
-        if (law.LawFormat is null)
-            return raw;
-
         if (!_proto.TryIndex(law.LawFormat, out var lawFormat))
             return raw;
 

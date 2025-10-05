@@ -4,7 +4,7 @@ namespace Content.Shared.Silicons.Laws.LawFormats;
 
 /// <summary>
 /// Prototype containing a format to apply to a silicon law.
-/// This controls appearance but must never affect the text-as-sentence (meaning) of the law.
+/// This controls appearance but must never affect the text-as-sentence of the law (meaning).
 /// </summary>
 [Prototype]
 public sealed partial class LawFormatPrototype : IPrototype
