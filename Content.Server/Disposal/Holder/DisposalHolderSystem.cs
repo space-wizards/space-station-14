@@ -37,8 +37,7 @@ public sealed partial class DisposalHolderSystem : SharedDisposalHolderSystem
     protected override bool TryEscaping(Entity<DisposalHolderComponent> ent, Entity<DisposalTubeComponent> conduit)
     {
         // Check if the entity should have a chance to escape yet
-        if (ent.Comp.DirectionChangeCount < ent.Comp.DirectionChangeThreshold &&
-            _timing.CurTime < ent.Comp.EndTime)
+        if (ent.Comp.DirectionChangeCount < ent.Comp.DirectionChangeThreshold)
             return false;
 
         // Check if the holder escaped

@@ -88,21 +88,7 @@ public sealed partial class DisposalHolderComponent : Component, IGasMixtureHold
     /// (as set by <see cref="EscapeChance"/>).
     /// </summary>
     [DataField]
-    public int DirectionChangeThreshold = 15;
-
-    /// <summary>
-    /// After this entity has been in transit for this lenght of time, it has a chance to escape the
-    /// disposals system whenever it changes direction (as set by <see cref="EscapeChance"/>).
-    /// </summary>
-    [DataField]
-    public TimeSpan LifeTime = TimeSpan.FromSeconds(30);
-
-    /// <summary>
-    /// The time after which the entity has a chance to escape the disposals system
-    /// whenever it changes direction (as set by <see cref="EscapeChance"/>).
-    /// </summary>
-    [DataField]
-    public TimeSpan EndTime = TimeSpan.FromSeconds(30);
+    public int DirectionChangeThreshold = 20;
 
     /// <summary>
     /// When given the opportunity, the entity has this chance of escaping the disposals system.

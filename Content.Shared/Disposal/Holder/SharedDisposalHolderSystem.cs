@@ -65,7 +65,6 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
     private void OnComponentStartup(Entity<DisposalHolderComponent> ent, ref ComponentStartup args)
     {
         ent.Comp.Container = _containerSystem.EnsureContainer<Container>(ent, nameof(DisposalHolderComponent));
-        ent.Comp.EndTime = _timing.CurTime + ent.Comp.LifeTime;
     }
 
     private void OnActorTransition(Entity<ActorComponent> ent, ref DisposalSystemTransitionEvent args)
