@@ -63,6 +63,7 @@
   - type: SolutionContainerManager
     solutions:
       tank:
+        maxVol: 5000
         reagents:
         - ReagentId: SpaceCleaner
           Quantity: 5000
@@ -86,6 +87,7 @@
   - type: SolutionContainerManager
     solutions:
       tank:
+        maxVol: 1000
         reagents:
         - ReagentId: WeldingFuel
           Quantity: 1000
@@ -113,6 +115,7 @@
   - type: SolutionContainerManager
     solutions:
       tank:
+        maxVol: 500
         reagents:
         - ReagentId: Blackpepper
           Quantity: 500
