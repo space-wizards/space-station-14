@@ -1,4 +1,4 @@
-namespace Content.Server.Silicons.Laws.LawFormatCorruptions;
+namespace Content.Shared.Silicons.Laws.LawFormatCorruptions;
 
 /// <summary>
 /// Applies no flavor formatting.

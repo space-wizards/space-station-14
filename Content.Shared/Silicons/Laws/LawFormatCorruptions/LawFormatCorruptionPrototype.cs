@@ -1,6 +1,6 @@
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Silicons.Laws.LawFormatCorruptions;
+namespace Content.Shared.Silicons.Laws.LawFormatCorruptions;
 
 /// <summary>
 /// Container-prototype for silicon law corruptions.

@@ -1,4 +1,4 @@
-namespace Content.Server.Silicons.Laws.LawFormatCorruptions;
+namespace Content.Shared.Silicons.Laws.LawFormatCorruptions;
 
 /// <summary>
 /// Abstract Data Definition shared by LawFormatCorruptions. For details see its implementations.

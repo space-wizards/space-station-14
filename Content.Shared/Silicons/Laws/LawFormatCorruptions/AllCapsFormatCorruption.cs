@@ -1,4 +1,4 @@
-namespace Content.Server.Silicons.Laws.LawFormatCorruptions;
+namespace Content.Shared.Silicons.Laws.LawFormatCorruptions;
 
 /// <summary>
 /// Turns the law string into ALL CAPITAL LETTERS. The OG corrupted laws formatting.

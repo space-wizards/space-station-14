@@ -1,6 +1,6 @@
 using Robust.Shared.Random;
 
-namespace Content.Server.Silicons.Laws.LawFormatCorruptions;
+namespace Content.Shared.Silicons.Laws.LawFormatCorruptions;
 
 /// <summary>
 /// Applies one of the specified colors at random to the text of the law.
