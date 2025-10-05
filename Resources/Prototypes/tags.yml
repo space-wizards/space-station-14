@@ -573,55 +573,55 @@
 ## F ##
 
 - type: Tag
-  id: FakeMindShieldImplant
+  id: FakeMindShieldImplant # Used by FakeMindShieldSystem to toggle the action when a chameleon outfit is selected
 
 - type: Tag
-  id: FakeNukeDisk
+  id: FakeNukeDisk # Exists so that the fake nuke disk can be blacklisted by storages that blacklist the real disk
 
 - type: Tag
-  id: Figurine
+  id: Figurine # Storage whitelist: BooksBag, BorgModuleService. CargoBounty: BountyFigurine
 
 - type: Tag
-  id: FireAlarm
+  id: FireAlarm # Used by AtmosAlarmableComponent for syncing devices
 
 - type: Tag
-  id: FireAlarmElectronics
+  id: FireAlarmElectronics # ConstructionGraph: FireAlarmAssembly
 
 - type: Tag
-  id: FireAxe
+  id: FireAxe # Storage whitelist: FireAxeCabinet
 
 - type: Tag
-  id: FirelockElectronics
+  id: FirelockElectronics # ConstructionGraph: Firelock
 
 - type: Tag
-  id: FireExtinguisher
+  id: FireExtinguisher # ConstructionGraph: FireBot
 
 - type: Tag
-  id: FireHelmet
+  id: FireHelmet # ConstructionGraph: FireBot
 
 - type: Tag
-  id: Flare
+  id: Flare # Storage whitelist: ClothingBeltUtility
 
 - type: Tag
-  id: Flashlight
+  id: Flashlight # Storage whitelist: ClothingBeltUtility, ClothingBeltJanitor
 
 - type: Tag
-  id: Flesh
+  id: Flesh # Used by FleshKudzu to ignore contacts with flesh creatures
 
 - type: Tag
-  id: Flower
+  id: Flower # CargoBounty: flowerwreath. CargoBounty: BountyFlower
 
 - type: Tag
-  id: Folder
+  id: Folder # Storage whitelist: Bookshelf, NoticeBoard
 
 - type: Tag
-  id: FoodSnack
+  id: FoodSnack # Storage whitelist: CandyBucket, CandyBowl. ItemMapper: CandyBowl
 
 - type: Tag
-  id: FootstepSound
+  id: FootstepSound # SharedMoverController checks for this before playing footstep sounds
 
 - type: Tag
-  id: ForceableFollow
+  id: ForceableFollow # Used by FollowerSystem to give entities an altverb to start orbiting the user
 
 - type: Tag
   id: ForceFixRotations # fixrotations command WILL target this
@@ -630,10 +630,10 @@
   id: ForceNoFixRotations # fixrotations command WON'T target this
 
 - type: Tag
-  id: FreezerElectronics
+  id: FreezerElectronics # ConstructionGraph: CrateFreezer, ClosetFreezer
 
 - type: Tag
-  id: Fruit
+  id: Fruit # SpecialDigestible: OrganReptilianStomach. CargoBounty: BountyFruit
 
 ## G ##
 
