@@ -1454,5 +1454,12 @@ Entries:
   id: 176
   time: '2025-10-03T11:31:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40604
+- author: Kowlin
+  changes:
+  - message: Stun prods are now high severity when crafted.
+    type: Tweak
+  id: 177
+  time: '2025-10-05T07:40:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40709
 Name: Admin
 Order: 2
