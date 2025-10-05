@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: qwerltaz
-  changes:
-  - message: Water vapor is now dangerous to slime life-forms.
-    type: Add
-  id: 8527
-  time: '2025-05-18T22:55:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32751
 - author: slarticodefast
   changes:
   - message: Added a new keybind for swapping hands in the other direction (if you
@@ -3957,3 +3950,11 @@
   id: 9034
   time: '2025-10-05T08:06:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40694
+- author: Princess-Cheeseballs
+  changes:
+  - message: Incendiary rounds now deal a mix of pierce damage and heat damage instead
+      of primarily heat damage.
+    type: Tweak
+  id: 9035
+  time: '2025-10-05T08:38:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39204
