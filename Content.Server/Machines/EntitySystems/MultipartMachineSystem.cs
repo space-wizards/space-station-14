@@ -1,5 +1,5 @@
 using Content.Server.Construction;
-using Content.Server.Construction.Components;
+using Content.Shared.Construction.Components;
 using Content.Shared.Machines.Components;
 using Content.Shared.Machines.EntitySystems;
 using Content.Shared.Machines.Events;

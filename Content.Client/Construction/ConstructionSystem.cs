@@ -2,9 +2,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.Popups;
 using Content.Shared.Construction;
+using Content.Shared.Construction.Components;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Examine;
 using Content.Shared.Input;
+using Content.Shared.Verbs;
 using Content.Shared.Wall;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -47,7 +49,6 @@ namespace Content.Client.Construction
             UpdatesOutsidePrediction = true;
             SubscribeLocalEvent<LocalPlayerAttachedEvent>(HandlePlayerAttached);
             SubscribeNetworkEvent<AckStructureConstructionMessage>(HandleAckStructure);
-            SubscribeNetworkEvent<ResponseConstructionGuide>(OnConstructionGuideReceived);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.OpenCraftingMenu,
@@ -60,6 +61,19 @@ namespace Content.Client.Construction
 
             SubscribeLocalEvent<ConstructionGhostComponent, ExaminedEvent>(HandleConstructionGhostExamined);
             SubscribeLocalEvent<ConstructionGhostComponent, ComponentShutdown>(HandleGhostComponentShutdown);
+        }
+
+        public override void BeginDeconstructionGuide(EntityUid uid, ConstructionComponent component, GetVerbsEvent<Verb> args)
+        {
+            if (component.TargetNode == null)
+            {
+                // Maybe check, but on the flip-side a better solution might be to not make it undeconstructible in the first place, no?
+                Popup.PopupClient(Loc.GetString("deconstructible-verb-activate-no-target-text"), uid);
+            }
+            else
+            {
+                Popup.PopupClient(Loc.GetString("deconstructible-verb-activate-text"), args.User);
+            }
         }
 
         private void HandleGhostComponentShutdown(EntityUid uid, ConstructionGhostComponent component, ComponentShutdown args)
@@ -135,27 +149,12 @@ namespace Content.Client.Construction
             }
         }
 
-        private void OnConstructionGuideReceived(ResponseConstructionGuide ev)
-        {
-            _guideCache[ev.ConstructionId] = ev.Guide;
-            ConstructionGuideAvailable?.Invoke(this, ev.ConstructionId);
-        }
-
         /// <inheritdoc />
         public override void Shutdown()
         {
             base.Shutdown();
 
             CommandBinds.Unregister<ConstructionSystem>();
-        }
-
-        public ConstructionGuide? GetGuide(ConstructionPrototype prototype)
-        {
-            if (_guideCache.TryGetValue(prototype.ID, out var guide))
-                return guide;
-
-            RaiseNetworkEvent(new RequestConstructionGuide(prototype.ID));
-            return null;
         }
 
         private void HandleConstructionGhostExamined(EntityUid uid, ConstructionGhostComponent component, ExaminedEvent args)

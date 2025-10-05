@@ -14,7 +14,7 @@ namespace Content.Server.Construction.Completions
             if (string.IsNullOrEmpty(Container))
                 return;
 
-            entityManager.EntitySysManager.GetEntitySystem<ConstructionSystem>().AddContainer(uid, Container);
+            entityManager.EntitySysManager.GetEntitySystem<Shared.Construction.ConstructionSystem>().AddContainer(uid, Container);
         }
     }
 }

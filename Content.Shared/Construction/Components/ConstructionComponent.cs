@@ -1,10 +1,9 @@
 using Content.Shared.Construction.Prototypes;
-using Content.Shared.DoAfter;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Construction.Components
+namespace Content.Shared.Construction.Components
 {
-    [RegisterComponent, Access(typeof(ConstructionSystem))]
+    [RegisterComponent, Access(typeof(SharedConstructionSystem))]
     public sealed partial class ConstructionComponent : Component
     {
         [DataField("graph", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<ConstructionGraphPrototype>))]

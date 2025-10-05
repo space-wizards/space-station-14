@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Content.Server.Construction.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Construction;
+using Content.Shared.Construction.Components;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Coordinates;
@@ -107,7 +108,7 @@ namespace Content.Server.Construction
 
             if (existed)
             {
-                _popup.PopupEntity(Loc.GetString("construction-system-construct-cannot-start-another-construction"), user, user);
+                Popup.PopupEntity(Loc.GetString("construction-system-construct-cannot-start-another-construction"), user, user);
                 return null;
             }
 
@@ -248,7 +249,7 @@ namespace Content.Server.Construction
 
             if (failed)
             {
-                _popup.PopupEntity(Loc.GetString("construction-system-construct-no-materials"), user, user);
+                Popup.PopupEntity(Loc.GetString("construction-system-construct-no-materials"), user, user);
                 FailCleanup();
                 return null;
             }
@@ -340,7 +341,7 @@ namespace Content.Server.Construction
 
             if (_whitelistSystem.IsWhitelistFail(constructionPrototype.EntityWhitelist, user))
             {
-                _popup.PopupEntity(Loc.GetString("construction-system-cannot-start"), user, user);
+                Popup.PopupEntity(Loc.GetString("construction-system-cannot-start"), user, user);
                 return false;
             }
 
@@ -425,13 +426,13 @@ namespace Content.Server.Construction
 
             if (_whitelistSystem.IsWhitelistFail(constructionPrototype.EntityWhitelist, user))
             {
-                _popup.PopupEntity(Loc.GetString("construction-system-cannot-start"), user, user);
+                Popup.PopupEntity(Loc.GetString("construction-system-cannot-start"), user, user);
                 return;
             }
 
             if (_container.IsEntityInContainer(user))
             {
-                _popup.PopupEntity(Loc.GetString("construction-system-inside-container"), user, user);
+                Popup.PopupEntity(Loc.GetString("construction-system-inside-container"), user, user);
                 return;
             }
 
@@ -444,7 +445,7 @@ namespace Content.Server.Construction
             {
                 if (!set.Add(ev.Ack))
                 {
-                    _popup.PopupEntity(Loc.GetString("construction-system-already-building"), user, user);
+                    Popup.PopupEntity(Loc.GetString("construction-system-already-building"), user, user);
                     return;
                 }
             }

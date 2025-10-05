@@ -1,10 +1,9 @@
-using Content.Server.Construction.Components;
-using Content.Shared.Construction;
+using Content.Shared.Construction.Components;
 using Content.Shared.Construction.Prototypes;
 
-namespace Content.Server.Construction
+namespace Content.Shared.Construction
 {
-    public sealed partial class ConstructionSystem
+    public abstract partial class SharedConstructionSystem
     {
         /// <summary>
         ///     Sets or clears a pathfinding target node for a given construction entity.

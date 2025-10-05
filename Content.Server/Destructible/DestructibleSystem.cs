@@ -34,7 +34,7 @@ namespace Content.Server.Destructible
         [Dependency] public readonly AtmosphereSystem AtmosphereSystem = default!;
         [Dependency] public readonly AudioSystem AudioSystem = default!;
         [Dependency] public readonly BodySystem BodySystem = default!;
-        [Dependency] public readonly ConstructionSystem ConstructionSystem = default!;
+        [Dependency] public readonly Shared.Construction.ConstructionSystem ConstructionSystem = default!;
         [Dependency] public readonly ExplosionSystem ExplosionSystem = default!;
         [Dependency] public readonly StackSystem StackSystem = default!;
         [Dependency] public readonly TriggerSystem TriggerSystem = default!;

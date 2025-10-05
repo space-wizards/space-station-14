@@ -35,7 +35,7 @@ namespace Content.Server.Construction.Conditions
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var protoManager = IoCManager.Resolve<IPrototypeManager>();
-            var constructionSys = entityManager.System<ConstructionSystem>();
+            var constructionSys = entityManager.System<Shared.Construction.ConstructionSystem>();
 
             if (!entityManager.TryGetComponent(entity, out MachineFrameComponent? machineFrame))
                 return false;
