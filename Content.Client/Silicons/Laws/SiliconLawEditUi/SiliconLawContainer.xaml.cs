@@ -42,7 +42,8 @@ public sealed partial class SiliconLawContainer : BoxContainer
         LawContent.OnTextChanged += _ =>
         {
             _law!.LawString = Rope.Collapse(LawContent.TextRope).Trim();
-            _law!.FlavorFormattedLawString = null; // Edit laws UI does not support format corruption
+            // TODO: Support format corruption in the edit laws UI
+            _law!.FlavorFormattedLawString = null;
         };
         LawContent.Placeholder = new Rope.Leaf(Loc.GetString("silicon-law-ui-placeholder"));
         Delete.OnPressed += _ => DeleteAction?.Invoke(_law!);
