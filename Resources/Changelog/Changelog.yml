@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Added a new keybind for swapping hands in the other direction (if you
-      got more than two). Defaults to Shift+X. Useful for cycling through borg modules.
-    type: Add
-  id: 8528
-  time: '2025-05-19T01:17:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37588
 - author: keronshb
   changes:
   - message: Force Wall timers changed so it despawns faster than it can be cast.
@@ -3958,3 +3950,11 @@
   id: 9035
   time: '2025-10-05T08:38:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39204
+- author: Centronias
+  changes:
+  - message: Stirring is once again prioritized over drinking. No longer will your
+      bartender be very tempted to taste test your drink as they stir it.
+    type: Fix
+  id: 9036
+  time: '2025-10-05T22:12:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40704
