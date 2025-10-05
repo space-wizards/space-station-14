@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fixes being able to grab items through walls.
-    type: Fix
-  id: 8526
-  time: '2025-05-18T14:38:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37570
 - author: qwerltaz
   changes:
   - message: Water vapor is now dangerous to slime life-forms.
@@ -3957,3 +3950,10 @@
   id: 9033
   time: '2025-10-04T20:27:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38545
+- author: NoreUhh
+  changes:
+  - message: The Ian suit makes you bark now. Woof!
+    type: Tweak
+  id: 9034
+  time: '2025-10-05T08:06:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40694
