@@ -111,7 +111,6 @@
     color: Red
     selectableColor: true
     deleteEmpty: false
-    batteryPowered: true
   - type: LimitedCharges
     maxCharges: 30
   - type: AutoRecharge
