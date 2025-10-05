@@ -12,8 +12,8 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTypeTrigger
         damageType: Heat
@@ -67,7 +67,6 @@
         reagents:
         - ReagentId: SpaceCleaner
           Quantity: 5000
-  - type: ReagentTank
 
 - type: entity
   parent: BaseDispenser
