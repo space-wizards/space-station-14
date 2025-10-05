@@ -368,7 +368,7 @@
   - type: Storage
     grid:
     - 0,0,3,2
-    whitelist: # TODO cardboard boxes shouldn't have a storage whitelist
+    whitelist:
       tags:
       - DonkPocket
   - type: Item

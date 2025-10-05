@@ -523,52 +523,52 @@
 ## E ##
 
 - type: Tag
-  id: Ectoplasm
+  id: Ectoplasm # ConstructionGraph: PlushieGhostRevenant
 
 - type: Tag
-  id: Egg
+  id: Egg # Storage whitelist: FoodContainerEgg
 
 - type: Tag
-  id: EmagImmune
+  id: EmagImmune # Default value in EmagComponent to prevent the emag
 
 - type: Tag
-  id: EmitterBolt
+  id: EmitterBolt # Default value in ContainmentFieldGeneratorComponent for collisions that power the generator
 
 - type: Tag
-  id: EncryptionCargo
+  id: EncryptionCargo # ItemMapper: TelecomServer
 
 - type: Tag
-  id: EncryptionCommand
+  id: EncryptionCommand # ItemMapper: TelecomServer
 
 - type: Tag
-  id: EncryptionCommon
+  id: EncryptionCommon # ItemMapper: TelecomServer
 
 - type: Tag
-  id: EncryptionElse
+  id: EncryptionElse # Unused x2
 
 - type: Tag
-  id: EncryptionEngineering
+  id: EncryptionEngineering # ItemMapper: TelecomServer
 
 - type: Tag
-  id: EncryptionMedical
+  id: EncryptionMedical # ItemMapper: TelecomServer
 
 - type: Tag
-  id: EncryptionScience
+  id: EncryptionScience # ItemMapper: TelecomServer
 
 - type: Tag
-  id: EncryptionSecurity
+  id: EncryptionSecurity # ItemMapper: TelecomServer
 
 - type: Tag
-  id: EncryptionService
+  id: EncryptionService # ItemMapper: TelecomServer
 
 - type: Tag
-  id: Enzyme
+  id: Enzyme # Storage whitelist: ClothingBeltChef. ItemMapper: ClothingBeltChef
 
 - type: Tag
-  id: ExCable
+  id: ExCable # Placement blacklist on CableDetStack. Placement whitelist on WiredDetonator
 
 - type: Tag
-  id: ExplosivePassable
+  id: ExplosivePassable # Unused x2
 
 ## F ##
 
