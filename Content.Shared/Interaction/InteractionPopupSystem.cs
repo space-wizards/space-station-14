@@ -76,6 +76,7 @@ public sealed class InteractionPopupSystem : EntitySystem
 
         return true;
     }
+
     private bool SharedInteract(
         EntityUid uid,
         InteractionPopupComponent component,
