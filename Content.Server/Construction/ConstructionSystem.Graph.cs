@@ -27,8 +27,8 @@ namespace Content.Server.Construction
         /// <param name="container">The container identifier. This method does not check whether the container exists.</param>
         /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
         /// <returns>Whether we could set the container as being handled by construction or not. Also returns false if
-        ///          the entity does not have a <see cref="Shared.Construction.Components.ConstructionComponent"/>.</returns>
-        public bool AddContainer(EntityUid uid, string container, Shared.Construction.Components.ConstructionComponent? construction = null)
+        ///          the entity does not have a <see cref="ConstructionComponent"/>.</returns>
+        public bool AddContainer(EntityUid uid, string container, ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction))
                 return false;
@@ -44,9 +44,9 @@ namespace Content.Server.Construction
         /// <param name="id">The identifier of the node to change to.</param>
         /// <param name="performActions">Whether the actions for the new node will be performed or not.</param>
         /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
-        /// <returns>Whether the node change succeeded or not. Also returns false if the entity does not have a <see cref="Shared.Construction.Components.ConstructionComponent"/>.</returns>
+        /// <returns>Whether the node change succeeded or not. Also returns false if the entity does not have a <see cref="ConstructionComponent"/>.</returns>
         /// <remarks>This method also updates the construction pathfinding automatically, if the node change succeeds.</remarks>
-        public bool ChangeNode(EntityUid uid, EntityUid? userUid, string id, bool performActions = true, Shared.Construction.Components.ConstructionComponent? construction = null)
+        public bool ChangeNode(EntityUid uid, EntityUid? userUid, string id, bool performActions = true, ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction))
                 return false;
@@ -94,7 +94,7 @@ namespace Content.Server.Construction
         ///                                but it is an optional component and not required for the method to work.</param>
         /// <returns>The new entity, or null if the method did not succeed.</returns>
         private EntityUid? ChangeEntity(EntityUid uid, EntityUid? userUid, string newEntity,
-            Shared.Construction.Components.ConstructionComponent? construction = null,
+            ConstructionComponent? construction = null,
             string? previousNode = null,
             MetaDataComponent? metaData = null,
             TransformComponent? transform = null,
@@ -131,7 +131,7 @@ namespace Content.Server.Construction
             var newUid = EntityManager.CreateEntityUninitialized(newEntity, transform.Coordinates);
 
             // Construction transferring.
-            var newConstruction = EnsureComp<Shared.Construction.Components.ConstructionComponent>(newUid);
+            var newConstruction = EnsureComp<ConstructionComponent>(newUid);
 
             // Transfer all construction-owned containers.
             newConstruction.Containers.UnionWith(construction.Containers);
@@ -234,8 +234,8 @@ namespace Content.Server.Construction
         /// <param name="performActions">Whether actions on the new node will be performed or not.</param>
         /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
         /// <returns>Whether the construction graph change succeeded or not. Returns false if the entity does not have
-        ///          a <see cref="Shared.Construction.Components.ConstructionComponent"/>.</returns>
-        public bool ChangeGraph(EntityUid uid, EntityUid? userUid, string graphId, string nodeId, bool performActions = true, Shared.Construction.Components.ConstructionComponent? construction = null)
+        ///          a <see cref="ConstructionComponent"/>.</returns>
+        public bool ChangeGraph(EntityUid uid, EntityUid? userUid, string graphId, string nodeId, bool performActions = true, ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction))
                 return false;
