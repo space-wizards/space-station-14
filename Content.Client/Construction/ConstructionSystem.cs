@@ -63,19 +63,6 @@ namespace Content.Client.Construction
             SubscribeLocalEvent<ConstructionGhostComponent, ComponentShutdown>(HandleGhostComponentShutdown);
         }
 
-        public override void BeginDeconstructionGuide(EntityUid uid, ConstructionComponent component, GetVerbsEvent<Verb> args)
-        {
-            if (component.TargetNode == null)
-            {
-                // Maybe check, but on the flip-side a better solution might be to not make it undeconstructible in the first place, no?
-                Popup.PopupClient(Loc.GetString("deconstructible-verb-activate-no-target-text"), uid);
-            }
-            else
-            {
-                Popup.PopupClient(Loc.GetString("deconstructible-verb-activate-text"), args.User);
-            }
-        }
-
         private void HandleGhostComponentShutdown(EntityUid uid, ConstructionGhostComponent component, ComponentShutdown args)
         {
             ClearGhost(component.GhostId);

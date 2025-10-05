@@ -71,7 +71,7 @@ namespace Content.Shared.Construction
         /// <param name="currentEdge">The current edge the entity is at, or null if none.</param>
         /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
         /// <returns>Whether we could update the pathfinding state correctly.</returns>
-        private bool UpdatePathfinding(EntityUid uid, ConstructionGraphPrototype graph,
+        protected bool UpdatePathfinding(EntityUid uid, ConstructionGraphPrototype graph,
             ConstructionGraphNode currentNode, ConstructionGraphNode targetNode,
             ConstructionGraphEdge? currentEdge,
             ConstructionComponent? construction = null)

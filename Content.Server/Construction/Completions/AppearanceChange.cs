@@ -33,7 +33,7 @@ public sealed partial class AppearanceChange : IGraphAction
             return;
         }
 
-        var (node, edge) = entityManager.System<Shared.Construction.ConstructionSystem>().GetCurrentNodeAndEdge(uid);
+        var (node, edge) = entityManager.System<ConstructionSystem>().GetCurrentNodeAndEdge(uid);
         var nodeName = edge?.Target ?? node?.Name;
 
         if (nodeName != null)

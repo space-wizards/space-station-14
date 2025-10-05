@@ -24,7 +24,7 @@ namespace Content.Server.Storage.EntitySystems;
 
 public sealed class EntityStorageSystem : SharedEntityStorageSystem
 {
-    [Dependency] private readonly Shared.Construction.ConstructionSystem _construction = default!;
+    [Dependency] private readonly ConstructionSystem _construction = default!;
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly MapSystem _mapSystem = default!;

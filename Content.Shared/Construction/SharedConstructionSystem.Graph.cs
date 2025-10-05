@@ -1,5 +1,6 @@
 using Content.Shared.Construction.Components;
 using Content.Shared.Construction.Prototypes;
+using Content.Shared.Construction.Steps;
 
 namespace Content.Shared.Construction
 {
@@ -62,6 +63,42 @@ namespace Content.Shared.Construction
         }
 
         /// <summary>
+        ///     Variant of <see cref="GetCurrentEdge"/> that returns both the node and edge.
+        /// </summary>
+        public (ConstructionGraphNode?, ConstructionGraphEdge?) GetCurrentNodeAndEdge(EntityUid uid, Shared.Construction.Components.ConstructionComponent? construction = null)
+        {
+            if (!Resolve(uid, ref construction, false))
+                return (null, null);
+
+            if (GetCurrentNode(uid, construction) is not { } node)
+                return (null, null);
+
+            if (construction.EdgeIndex is not { } edgeIndex)
+                return (node, null);
+
+            return (node, GetEdgeFromNode(node, edgeIndex));
+        }
+
+        /// <summary>
+        ///     Gets the construction graph step the entity is currently at, or null.
+        /// </summary>
+        /// <param name="uid">The target entity.</param>
+        /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
+        /// <returns>The construction graph step the entity is currently at, if any. Also returns null if the entity
+        ///          does not have a <see cref="Shared.Construction.Components.ConstructionComponent"/>.</returns>
+        /// <remarks>An entity with a valid construction state might not always be at a step or an edge.</remarks>
+        public ConstructionGraphStep? GetCurrentStep(EntityUid uid, Shared.Construction.Components.ConstructionComponent? construction = null)
+        {
+            if (!Resolve(uid, ref construction, false))
+                return null;
+
+            if (GetCurrentEdge(uid, construction) is not { } edge)
+                return null;
+
+            return GetStepFromEdge(edge, construction.StepIndex);
+        }
+
+        /// <summary>
         ///     Gets the construction graph node the entity's construction pathfinding is currently targeting, if any.
         /// </summary>
         /// <param name="uid">The target entity.</param>
@@ -109,6 +146,29 @@ namespace Content.Shared.Construction
         }
 
         /// <summary>
+        ///     Gets both the construction edge and step the entity is currently at, if any.
+        /// </summary>
+        /// <param name="uid">The target entity.</param>
+        /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
+        /// <returns>A tuple containing the current edge and step the entity's construction state is at.</returns>
+        /// <remarks>The edge, step or both could be null. A valid construction state does not necessarily need them.</remarks>
+        public (ConstructionGraphEdge? edge, ConstructionGraphStep? step) GetCurrentEdgeAndStep(EntityUid uid,
+            Shared.Construction.Components.ConstructionComponent? construction = null)
+        {
+            if (!Resolve(uid, ref construction, false))
+                return default;
+
+            var edge = GetCurrentEdge(uid, construction);
+
+            if (edge == null)
+                return default;
+
+            var step = GetStepFromEdge(edge, construction.StepIndex);
+
+            return (edge, step);
+        }
+
+        /// <summary>
         ///     Gets a node from a construction graph given its identifier.
         /// </summary>
         /// <param name="graph">The construction graph where to get the node.</param>
@@ -128,6 +188,17 @@ namespace Content.Shared.Construction
         public ConstructionGraphEdge? GetEdgeFromNode(ConstructionGraphNode node, int index)
         {
             return node.Edges.Count > index ? node.Edges[index] : null;
+        }
+
+        /// <summary>
+        ///     Gets a step from a construction edge given its index.
+        /// </summary>
+        /// <param name="edge">The construction edge where to get the step.</param>
+        /// <param name="index">The index or position of the step on the edge.</param>
+        /// <returns>The edge on that index in the construction edge, or null if none.</returns>
+        public ConstructionGraphStep? GetStepFromEdge(ConstructionGraphEdge edge, int index)
+        {
+            return edge.Steps.Count > index ? edge.Steps[index] : null;
         }
     }
 }

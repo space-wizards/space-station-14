@@ -36,11 +36,6 @@ namespace Content.Server.Construction
             SubscribeLocalEvent<ConstructionComponent, ComponentStartup>(OnConstructionStartup);
         }
 
-        public override void BeginDeconstructionGuide(EntityUid uid, ConstructionComponent component, GetVerbsEvent<Verb> args)
-        {
-            SetPathfindingTarget(uid, component.DeconstructionNode, component);
-        }
-
         private void OnConstructionInit(Entity<ConstructionComponent> ent, ref ComponentInit args)
         {
             var construction = ent.Comp;

@@ -1,8 +1,11 @@
+using Content.Server.Construction.Components;
+using Content.Server.Containers;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Containers;
 using Content.Shared.Database;
+using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using System.Linq;
@@ -24,83 +27,13 @@ namespace Content.Server.Construction
         /// <param name="container">The container identifier. This method does not check whether the container exists.</param>
         /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
         /// <returns>Whether we could set the container as being handled by construction or not. Also returns false if
-        ///          the entity does not have a <see cref="ConstructionComponent"/>.</returns>
-        public bool AddContainer(EntityUid uid, string container, ConstructionComponent? construction = null)
+        ///          the entity does not have a <see cref="Shared.Construction.Components.ConstructionComponent"/>.</returns>
+        public bool AddContainer(EntityUid uid, string container, Shared.Construction.Components.ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction))
                 return false;
 
             return construction.Containers.Add(container);
-        }
-
-        /// <summary>
-        ///     Variant of <see cref="SharedConstructionSystem.GetCurrentEdge"/> that returns both the node and edge.
-        /// </summary>
-        public (ConstructionGraphNode?, ConstructionGraphEdge?) GetCurrentNodeAndEdge(EntityUid uid, ConstructionComponent? construction = null)
-        {
-            if (!Resolve(uid, ref construction, false))
-                return (null, null);
-
-            if (GetCurrentNode(uid, construction) is not { } node)
-                return (null, null);
-
-            if (construction.EdgeIndex is not { } edgeIndex)
-                return (node, null);
-
-            return (node, GetEdgeFromNode(node, edgeIndex));
-        }
-
-        /// <summary>
-        ///     Gets the construction graph step the entity is currently at, or null.
-        /// </summary>
-        /// <param name="uid">The target entity.</param>
-        /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
-        /// <returns>The construction graph step the entity is currently at, if any. Also returns null if the entity
-        ///          does not have a <see cref="ConstructionComponent"/>.</returns>
-        /// <remarks>An entity with a valid construction state might not always be at a step or an edge.</remarks>
-        public ConstructionGraphStep? GetCurrentStep(EntityUid uid, ConstructionComponent? construction = null)
-        {
-            if (!Resolve(uid, ref construction, false))
-                return null;
-
-            if (GetCurrentEdge(uid, construction) is not { } edge)
-                return null;
-
-            return GetStepFromEdge(edge, construction.StepIndex);
-        }
-
-        /// <summary>
-        ///     Gets both the construction edge and step the entity is currently at, if any.
-        /// </summary>
-        /// <param name="uid">The target entity.</param>
-        /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
-        /// <returns>A tuple containing the current edge and step the entity's construction state is at.</returns>
-        /// <remarks>The edge, step or both could be null. A valid construction state does not necessarily need them.</remarks>
-        public (ConstructionGraphEdge? edge, ConstructionGraphStep? step) GetCurrentEdgeAndStep(EntityUid uid,
-            ConstructionComponent? construction = null)
-        {
-            if (!Resolve(uid, ref construction, false))
-                return default;
-
-            var edge = GetCurrentEdge(uid, construction);
-
-            if (edge == null)
-                return default;
-
-            var step = GetStepFromEdge(edge, construction.StepIndex);
-
-            return (edge, step);
-        }
-
-        /// <summary>
-        ///     Gets a step from a construction edge given its index.
-        /// </summary>
-        /// <param name="edge">The construction edge where to get the step.</param>
-        /// <param name="index">The index or position of the step on the edge.</param>
-        /// <returns>The edge on that index in the construction edge, or null if none.</returns>
-        public ConstructionGraphStep? GetStepFromEdge(ConstructionGraphEdge edge, int index)
-        {
-            return edge.Steps.Count > index ? edge.Steps[index] : null;
         }
 
         /// <summary>
@@ -111,9 +44,9 @@ namespace Content.Server.Construction
         /// <param name="id">The identifier of the node to change to.</param>
         /// <param name="performActions">Whether the actions for the new node will be performed or not.</param>
         /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
-        /// <returns>Whether the node change succeeded or not. Also returns false if the entity does not have a <see cref="ConstructionComponent"/>.</returns>
+        /// <returns>Whether the node change succeeded or not. Also returns false if the entity does not have a <see cref="Shared.Construction.Components.ConstructionComponent"/>.</returns>
         /// <remarks>This method also updates the construction pathfinding automatically, if the node change succeeds.</remarks>
-        public bool ChangeNode(EntityUid uid, EntityUid? userUid, string id, bool performActions = true, ConstructionComponent? construction = null)
+        public bool ChangeNode(EntityUid uid, EntityUid? userUid, string id, bool performActions = true, Shared.Construction.Components.ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction))
                 return false;
@@ -161,7 +94,7 @@ namespace Content.Server.Construction
         ///                                but it is an optional component and not required for the method to work.</param>
         /// <returns>The new entity, or null if the method did not succeed.</returns>
         private EntityUid? ChangeEntity(EntityUid uid, EntityUid? userUid, string newEntity,
-            ConstructionComponent? construction = null,
+            Shared.Construction.Components.ConstructionComponent? construction = null,
             string? previousNode = null,
             MetaDataComponent? metaData = null,
             TransformComponent? transform = null,
@@ -198,7 +131,7 @@ namespace Content.Server.Construction
             var newUid = EntityManager.CreateEntityUninitialized(newEntity, transform.Coordinates);
 
             // Construction transferring.
-            var newConstruction = EnsureComp<ConstructionComponent>(newUid);
+            var newConstruction = EnsureComp<Shared.Construction.Components.ConstructionComponent>(newUid);
 
             // Transfer all construction-owned containers.
             newConstruction.Containers.UnionWith(construction.Containers);
@@ -301,8 +234,8 @@ namespace Content.Server.Construction
         /// <param name="performActions">Whether actions on the new node will be performed or not.</param>
         /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
         /// <returns>Whether the construction graph change succeeded or not. Returns false if the entity does not have
-        ///          a <see cref="ConstructionComponent"/>.</returns>
-        public bool ChangeGraph(EntityUid uid, EntityUid? userUid, string graphId, string nodeId, bool performActions = true, ConstructionComponent? construction = null)
+        ///          a <see cref="Shared.Construction.Components.ConstructionComponent"/>.</returns>
+        public bool ChangeGraph(EntityUid uid, EntityUid? userUid, string graphId, string nodeId, bool performActions = true, Shared.Construction.Components.ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction))
                 return false;

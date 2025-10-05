@@ -16,7 +16,7 @@ public sealed class MachineFrameSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly StackSystem _stack = default!;
-    [Dependency] private readonly Shared.Construction.ConstructionSystem _construction = default!;
+    [Dependency] private readonly ConstructionSystem _construction = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
     public override void Initialize()
