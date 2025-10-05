@@ -11,7 +11,7 @@ namespace Content.Shared.Disposal.SignalRouter;
 public sealed class DisposalSignalRouterSystem : EntitySystem
 {
     [Dependency] private readonly SharedDeviceLinkSystem _deviceLink = default!;
-    [Dependency] private readonly SharedDisposalTubeSystem _disposalTube = default!;
+    [Dependency] private readonly DisposalTubeSystem _disposalTube = default!;
 
     public override void Initialize()
     {
@@ -19,7 +19,7 @@ public sealed class DisposalSignalRouterSystem : EntitySystem
 
         SubscribeLocalEvent<DisposalSignalRouterComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<DisposalSignalRouterComponent, SignalReceivedEvent>(OnSignalReceived);
-        SubscribeLocalEvent<DisposalSignalRouterComponent, GetDisposalsNextDirectionEvent>(OnGetNextDirection, after: new[] { typeof(SharedDisposalTubeSystem) });
+        SubscribeLocalEvent<DisposalSignalRouterComponent, GetDisposalsNextDirectionEvent>(OnGetNextDirection, after: new[] { typeof(DisposalTubeSystem) });
     }
 
     private void OnInit(Entity<DisposalSignalRouterComponent> ent, ref ComponentInit args)

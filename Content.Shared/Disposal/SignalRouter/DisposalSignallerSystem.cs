@@ -15,7 +15,7 @@ public sealed class DisposalSignallerSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<DisposalSignallerComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<DisposalSignallerComponent, GetDisposalsNextDirectionEvent>(OnGetNextDirection, after: new[] { typeof(SharedDisposalTubeSystem) });
+        SubscribeLocalEvent<DisposalSignallerComponent, GetDisposalsNextDirectionEvent>(OnGetNextDirection, after: new[] { typeof(DisposalTubeSystem) });
     }
 
     private void OnInit(Entity<DisposalSignallerComponent> ent, ref ComponentInit args)

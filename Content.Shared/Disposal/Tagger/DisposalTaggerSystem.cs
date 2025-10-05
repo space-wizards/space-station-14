@@ -18,7 +18,7 @@ public sealed partial class DisposalTaggerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DisposalTaggerComponent, GetDisposalsNextDirectionEvent>(OnGetTaggerNextDirection, after: new[] { typeof(SharedDisposalTubeSystem) });
+        SubscribeLocalEvent<DisposalTaggerComponent, GetDisposalsNextDirectionEvent>(OnGetTaggerNextDirection, after: new[] { typeof(DisposalTubeSystem) });
 
         Subs.BuiEvents<DisposalTaggerComponent>(DisposalTaggerUiKey.Key, subs =>
         {

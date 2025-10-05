@@ -10,7 +10,7 @@ namespace Content.Shared.Disposal.Tube;
 /// Basic component required by all disposal pipes.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(SharedDisposalTubeSystem))]
+[Access(typeof(DisposalTubeSystem))]
 public sealed partial class DisposalTubeComponent : Component
 {
     /// <summary>

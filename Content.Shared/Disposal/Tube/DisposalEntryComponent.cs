@@ -7,7 +7,7 @@ namespace Content.Shared.Disposal.Tube;
 /// Attached to entities that are used as an entrance into the disposal system.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(SharedDisposalTubeSystem), typeof(SharedDisposalUnitSystem))]
+[Access(typeof(DisposalTubeSystem), typeof(SharedDisposalUnitSystem))]
 public sealed partial class DisposalEntryComponent : Component
 {
 

@@ -16,7 +16,7 @@ namespace Content.Shared.Disposal.Tube;
 /// Handles the basic logic for determining which disposal tubes are connected
 /// and which direction entities inside the tubes should move next.
 /// </summary>
-public abstract partial class SharedDisposalTubeSystem : EntitySystem
+public sealed partial class DisposalTubeSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;

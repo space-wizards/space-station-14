@@ -12,7 +12,7 @@ namespace Content.Shared.Disposal.Unit;
 /// Holder for entities being transported through the disposals system.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(new[] { typeof(SharedDisposalTubeSystem), typeof(SharedDisposalHolderSystem) })]
+[Access(new[] { typeof(DisposalTubeSystem), typeof(SharedDisposalHolderSystem) })]
 public sealed partial class DisposalHolderComponent : Component, IGasMixtureHolder
 {
     /// <summary>

@@ -14,14 +14,14 @@ namespace Content.Shared.Disposal.Router;
 public sealed partial class DisposalRouterSystem : EntitySystem
 {
     [Dependency] private readonly SharedDisposalHolderSystem _disposalHolder = default!;
-    [Dependency] private readonly SharedDisposalTubeSystem _disposalTube = default!;
+    [Dependency] private readonly DisposalTubeSystem _disposalTube = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DisposalRouterComponent, GetDisposalsNextDirectionEvent>(OnGetRouterNextDirection, after: new[] { typeof(SharedDisposalTubeSystem) });
+        SubscribeLocalEvent<DisposalRouterComponent, GetDisposalsNextDirectionEvent>(OnGetRouterNextDirection, after: new[] { typeof(DisposalTubeSystem) });
 
         Subs.BuiEvents<DisposalRouterComponent>(DisposalRouterUiKey.Key, subs =>
         {
