@@ -7,7 +7,7 @@
     state: icon
   - type: Clothing
     slots: [gloves]
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
   - type: Item
     size: Small
