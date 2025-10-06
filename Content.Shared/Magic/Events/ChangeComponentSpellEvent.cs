@@ -17,6 +17,6 @@ public sealed partial class ChangeComponentsSpellEvent : EntityTargetActionEvent
 
     [DataField]
     [AlwaysPushInheritance]
-    public HashSet<string> ToRemove = new();
+    public ComponentRegistry ToRemove = new(); // Imp edit, changed to component registry
 
 }
