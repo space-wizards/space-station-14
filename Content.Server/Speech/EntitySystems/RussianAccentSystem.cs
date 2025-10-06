@@ -55,8 +55,8 @@ public sealed class RussianAccentSystem : EntitySystem
     {
         var accentedMessage = _replacement.ApplyReplacements(message, "russian");
 
-        // Randomly replace 'tovarisch' with 'Komrade' (20% chance per instance, matching capitalization)
-        accentedMessage = ApplyKomradeReplacement(accentedMessage);
+        // Randomly replace 'tovarisch' with 'Komrade' using component's chance
+        accentedMessage = ApplyKomradeReplacement(accentedMessage, component);
 
         accentedMessage = ApplyGrammarRules(accentedMessage, component);
         accentedMessage = ApplySoundReplacements(accentedMessage);
@@ -66,11 +66,11 @@ public sealed class RussianAccentSystem : EntitySystem
 
     // Randomly replaces 'tovarisch' with 'Komrade' while preserving capitalization.
     // TODO: The ReplacementAccentSystem REALLY should have random replacements built-in.
-    private string ApplyKomradeReplacement(string message)
+    private string ApplyKomradeReplacement(string message, RussianAccentComponent component)
     {
         return TovarischRegex.Replace(message, match =>
         {
-            if (!_random.Prob(0.2f))
+            if (!_random.Prob(component.KomradeReplacementChance))
                 return match.Value;
 
             var original = match.Value;
