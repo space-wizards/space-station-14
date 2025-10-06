@@ -1106,7 +1106,7 @@
 - type: reagent
   id: Holywater
   name: reagent-name-holywater
-  group: Sacred
+  group: Medicine
   desc: reagent-desc-holywater
   evaporationSpeed: 0.3
   physicalDesc: reagent-physical-desc-holy
@@ -1441,7 +1441,4 @@
         amount: -3.0
       - !type:AdjustReagent
         reagent: MindbreakerToxin
-        amount: -3.0
-      - !type:AdjustReagent
-        reagent: TemporalLubricant
         amount: -3.0

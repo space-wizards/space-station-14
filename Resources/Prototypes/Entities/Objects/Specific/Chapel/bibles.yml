@@ -109,7 +109,7 @@
 - type: entity
   id: BibleDruid
   name: mystery of the druids
-  parent: BibleBase
+  parent: Bible
   description: "It's the mystery of the druids!"
   components:
   - type: Sprite
@@ -120,7 +120,7 @@
 - type: entity
   id: BibleCommunistManifesto
   name: communist manifesto
-  parent: BibleBase
+  parent: Bible
   description: "Remove the mask of humanity from Capital."
   components:
   - type: Sprite
@@ -142,7 +142,7 @@
 - type: entity
   id: BibleNarsie
   name: tome of nar'sie
-  parent: BibleBase
+  parent: Bible
   description: "What could possibly go wrong with a book covered in blood?"
   components:
   - type: Sprite
@@ -153,7 +153,7 @@
 - type: entity
   id: BibleNanoTrasen
   name: codex nanotrasimus
-  parent: BibleBase
+  parent: Bible
   description: "A familiar book containing the Sacred Operating Procedures."
   components:
   - type: Sprite
@@ -164,7 +164,7 @@
 - type: entity
   id: BibleHonk
   name: mirth of the honkmother
-  parent: BibleBase
+  parent: Bible
   description: "Oh great and glorious Mother, Mistress of Mirth, Matron of Mask and Merriments, Blessed is she amongst us jesters."
   components:
   - type: Sprite
@@ -175,7 +175,7 @@
 - type: entity 
   id: BibleLamp
   name: doctrine of the lantern path
-  parent: BibleBase
+  parent: Bible
   description: "Carry forth your inner flame, through shadow toward rebirth in the First Light."
   components:
   - type: Sprite
@@ -186,7 +186,7 @@
 - type: entity
   id: BibleRatvar
   name: tablet of ratvar
-  parent: BibleBase
+  parent: Bible
   description: "A holy relic of the Clockwork Cult, blessed by the Clockwork Justice, Ratvar."
   components:
   - type: Sprite
