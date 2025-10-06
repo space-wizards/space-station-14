@@ -7,6 +7,9 @@
   requirements:
   - !type:OverallPlaytimeRequirement
     time: 18000 # 5h
+  - !type:DepartmentTimeRequirement
+    department: Security
+    time: 18000 # 5h
   guides: [ NuclearOperatives ]
 
 - type: antag
@@ -18,9 +21,12 @@
   requirements:
   - !type:OverallPlaytimeRequirement
     time: 18000 # 5h
+  - !type:DepartmentTimeRequirement
+    department: Security
+    time: 18000 # 5h
   - !type:RoleTimeRequirement
     role: JobChemist
-    time: 10800 # 3h
+    time: 18000 # 5h
   guides: [ NuclearOperatives ]
 
 - type: antag
@@ -34,6 +40,9 @@
     time: 18000 # 5h
   - !type:DepartmentTimeRequirement
     department: Security
+    time: 18000 # 5h
+  - !type:DepartmentTimeRequirement
+    department: Command
     time: 18000 # 5h
   # should be changed to nukie playtime when thats tracked (wyci)
   guides: [ NuclearOperatives ]
