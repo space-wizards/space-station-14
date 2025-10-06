@@ -57,7 +57,7 @@
       fixtures:
         fix1:
           shape:
-            !type:PhysShapeAabb {}
+            !type:PhysShapeAabb
             bounds: "-0.5,-0.5,0.5,0.5"
           mask:
           - FullTileMask
