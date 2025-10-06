@@ -24,7 +24,7 @@ public sealed partial class MineGameArcadeWindow : FancyWindow
     private List<Button> _presetDifficultyButtons;
     private TimeSpan _referenceTime;
     private MineGameBoardSettings _boardSettings;
-    private bool _gameRunning;
+    private bool _gameStarted;
 
     public event Action<MineGameBoardSettings>? OnBoardSettingAction;
     public event Action<MineGameTileAction>? OnTileAction;
@@ -166,18 +166,17 @@ public sealed partial class MineGameArcadeWindow : FancyWindow
         _referenceTime = component.ReferenceTime;
         var currSettings = _boardSettings;
         _boardSettings = component.BoardSettings;
-        _boardSettings.BoardSize.X = Math.Max(_boardSettings.BoardSize.X, 1);
-        _boardSettings.BoardSize.Y = Math.Max(_boardSettings.BoardSize.Y, 1);
+
+        // Obviously improper state which can cause numerous errors
+        if (_boardSettings.BoardSize.X <= 0 || _boardSettings.BoardSize.Y <= 0)
+            return;
 
         BoardGrid.Columns = _boardSettings.BoardSize.X;
         bool shouldFixSize = _boardSettings.BoardSize.X != currSettings.BoardSize.X || _boardSettings.BoardSize.Y != currSettings.BoardSize.Y;
 
+        var properTileCount = _boardSettings.BoardSize.X * _boardSettings.BoardSize.Y;
         var tileStates = component.TileVisState;
-        if (_boardSettings.BoardSize.X == 1)
-        {
-            tileStates = new MineGameTileVisState[1, 1];
-        }
-        for (var i = _gameTiles.Count; i < tileStates.Length; ++i)
+        for (var i = _gameTiles.Count; i < properTileCount; ++i)
         {
             // Add new tiles if we don't have enough pooled.
             var newTile = new MineGameTile(this, i);
@@ -185,22 +184,13 @@ public sealed partial class MineGameArcadeWindow : FancyWindow
             BoardGrid.AddChild(newTile);
         }
 
-        bool boardHasClearedTile = false;
         int flagCount = 0;
-        for (var i = 0; i < tileStates.Length; ++i)
+        for (var i = 0; i < properTileCount; ++i)
         {
             // Update state of existing tiles
-            var state = tileStates[i % _boardSettings.BoardSize.X, i / _boardSettings.BoardSize.X];
-            if (state != MineGameTileVisState.None)
-            {
-                _gameTiles[i].CurrState = state;
-                _gameTiles[i].UpdateImage();
-            }
-
-            if (state >= MineGameTileVisState.ClearedEmpty)
-            {
-                boardHasClearedTile = true;
-            }
+            var state = tileStates[i % _boardSettings.BoardSize.X][i / _boardSettings.BoardSize.X];
+            _gameTiles[i].CurrState = state;
+            _gameTiles[i].UpdateImage();
 
             if (state == MineGameTileVisState.Flagged)
             {
@@ -208,13 +198,13 @@ public sealed partial class MineGameArcadeWindow : FancyWindow
             }
             _gameTiles[i].Visible = true;
         }
-        for (var i = tileStates.Length; i < _gameTiles.Count; ++i)
+        for (var i = properTileCount; i < _gameTiles.Count; ++i)
         {
             // Hide any extra pooled tiles
             _gameTiles[i].Visible = false;
         }
 
-        _gameRunning = boardHasClearedTile && !(component.GameWon || component.GameLost);
+        _gameStarted = component.GameStatus == MineGameStatus.MinesSpawned;
         MineCountLabel.Text = (_boardSettings.MineCount - flagCount).ToString();
 
         if (shouldFixSize)
@@ -224,7 +214,7 @@ public sealed partial class MineGameArcadeWindow : FancyWindow
     {
         base.Draw(handle);
 
-        if (_gameRunning)
+        if (_gameStarted)
         {
             var elapsedTime = _gameTiming.CurTime.Subtract(_referenceTime);
             TimeLabel.Text = elapsedTime.ToString("m\\:ss");

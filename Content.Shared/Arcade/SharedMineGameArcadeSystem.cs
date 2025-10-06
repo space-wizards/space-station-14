@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Arcade;
 
 /// <summary>
-/// This handles component state networking for the MineGameArcade
+/// This handles ent.Comp state networking for the MineGameArcade
 /// </summary>
 public abstract class SharedMineGameArcadeSystem : EntitySystem
 {
@@ -13,7 +13,6 @@ public abstract class SharedMineGameArcadeSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<MineGameArcadeComponent, ComponentGetState>(OnGetState);
 
         Subs.BuiEvents<MineGameArcadeComponent>(MineGameArcadeUiKey.Key, subs =>
         {
@@ -26,42 +25,44 @@ public abstract class SharedMineGameArcadeSystem : EntitySystem
     /// Generates an array of tile visual states based on the current game board state, and packs width
     /// and other metadata like game time/status/mine count.
     /// </summary>
-    /// <param name="uid">The uid of the entity hosting the arcade game.</param>
-    /// <param name="component">The arcade component hosting the game.</param>
+    /// <param name="ent">The entity hosting the arcade game.</param>
     /// <param name="boardSettings">The settings (board width/height/mine count) for the new board.</param>
     /// <returns>An initialized mine game state.</returns>
-    public virtual void SetupMineGame(EntityUid uid, MineGameArcadeComponent component, MineGameBoardSettings boardSettings)
+    public void SetupMineGame(Entity<MineGameArcadeComponent> ent, MineGameBoardSettings boardSettings)
     {
-        component.GameInitialized = true;
+        ent.Comp.GameStatus = MineGameStatus.Initialized;
         // Validate what are potentially user-inputted numbers
-        var clampedBoardSize = Vector2i.ComponentMin(Vector2i.ComponentMax(boardSettings.BoardSize, component.MinBoardSize),
-            component.MaxBoardSize);
+        var clampedBoardSize = Vector2i.ComponentMin(Vector2i.ComponentMax(boardSettings.BoardSize, ent.Comp.MinBoardSize),
+            ent.Comp.MaxBoardSize);
 
         // Replace with corrected values
         boardSettings.BoardSize = clampedBoardSize;
         boardSettings.MineCount = Math.Clamp(boardSettings.MineCount,
-            component.MinMineCount,
+            ent.Comp.MinMineCount,
             clampedBoardSize.X * clampedBoardSize.Y);
 
-        component.GameLost = false;
-        component.GameWon = false;
-        component.ClearedCount = 0;
-        component.MinesGenerated = false;
-        component.BoardSettings = boardSettings;
-        component.ReferenceTime = TimeSpan.Zero;
-        component.TileVisState = new MineGameTileVisState[boardSettings.BoardSize.X, boardSettings.BoardSize.Y];
-        component.TileMined = new bool[boardSettings.BoardSize.X, boardSettings.BoardSize.Y];
-        UpdateUI(uid);
+        ent.Comp.ClearedCount = 0;
+        ent.Comp.BoardSettings = boardSettings;
+        ent.Comp.ReferenceTime = TimeSpan.Zero;
+        ent.Comp.TileVisState = new MineGameTileVisState[boardSettings.BoardSize.X][];
+        ent.Comp.TileMined = new bool[boardSettings.BoardSize.X][];
+        for (int x = 0; x < boardSettings.BoardSize.X; ++x)
+        {
+            ent.Comp.TileVisState[x] = new MineGameTileVisState[boardSettings.BoardSize.Y];
+            ent.Comp.TileMined[x] = new bool[boardSettings.BoardSize.Y];
+        }
+        Dirty(ent);
+        UpdateUI(ent.Owner);
     }
 
     /// <summary>
     /// Handler for MineGameRequestNewBoardMessage, should create/set up a new board according to message parameters.
     /// </summary>
-    public void OnMineGameRequestNewBoardMessage(EntityUid uid, MineGameArcadeComponent component, MineGameRequestNewBoardMessage msg)
+    public void OnMineGameRequestNewBoardMessage(Entity<MineGameArcadeComponent> ent, ref MineGameRequestNewBoardMessage msg)
     {
-        if (!_receiver.IsPowered(uid) || Deleted(uid))
+        if (!_receiver.IsPowered(ent.Owner) || Deleted(ent))
             return;
-        SetupMineGame(uid, component, msg.Settings);
+        SetupMineGame(ent, msg.Settings);
     }
 
     /// <summary>
@@ -75,80 +76,42 @@ public abstract class SharedMineGameArcadeSystem : EntitySystem
     /// perform chording and may clear multiple adjacent tiles. All cleared tiles floodfill clear empty space confirmed
     /// to be void of any adjacent mines.
     /// </summary>
-    /// <param name="uid">The uid of the entity hosting the arcade game.</param>
-    /// <param name="component">The arcade component hosting the game.</param>
+    /// <param name="ent">The entity hosting the arcade game.</param>
     /// <param name="actionLoc">The tile location to attempt to clear at/around.</param>
-    public virtual void ClearTile(EntityUid uid, MineGameArcadeComponent component, Vector2i actionLoc) { }
-
-    /// <summary>
-    /// Sets the visual state for a tile at a certain position.
-    /// </summary>
-    public virtual void SetTileState(MineGameArcadeComponent component, int x, int y, MineGameTileVisState state)
-    {
-        component.TileVisState[x, y] = state;
-    }
+    public virtual void ClearTile(Entity<MineGameArcadeComponent> ent, Vector2i actionLoc) { }
 
     /// <summary>
     /// Fully performs a game tile action somewhere on the board, including clearing, flag/unflag, chording.
     /// </summary>
-    /// <param name="uid">The uid of the entity hosting the arcade game.</param>
-    /// <param name="component">The component holding the arcade game data.</param>
+    /// <param name="ent">The entity hosting the arcade game.</param>
     /// <param name="msg">The message containing the action and tile the user picked.</param>
-    public void OnMineGameTileAction(EntityUid uid, MineGameArcadeComponent component, MineGameTileActionMessage msg)
+    public void OnMineGameTileAction(Entity<MineGameArcadeComponent> ent, ref MineGameTileActionMessage msg)
     {
-        if (!_receiver.IsPowered(uid) || Deleted(uid))
+        if (!_receiver.IsPowered(ent.Owner) || Deleted(ent))
             return;
 
-        // Player shouldn't be able to do anything if the game has already ended.
-        if (component.GameWon || component.GameLost)
+        // Player shouldn't be able to do anything if the game isn't in a running state.
+        if (ent.Comp.GameStatus != MineGameStatus.Initialized && ent.Comp.GameStatus != MineGameStatus.MinesSpawned)
             return;
 
-        var actionLoc = Vector2i.ComponentMin(Vector2i.ComponentMax(msg.TileAction.TileLocation, Vector2i.Zero), component.BoardSettings.BoardSize);
+        var actionLoc = Vector2i.ComponentMin(Vector2i.ComponentMax(msg.TileAction.TileLocation, Vector2i.Zero), ent.Comp.BoardSettings.BoardSize);
         switch (msg.TileAction.ActionType)
         {
             // Flagging is a simple operation which can be easily predicted and needs no knowledge of mines
             // Clearing, however, needs different client/server impls
             case MineGameTileActionType.Clear:
-                ClearTile(uid, component, actionLoc);
+                ClearTile(ent, actionLoc);
                 break;
             case MineGameTileActionType.Flag:
-                if (component.TileVisState[actionLoc.X, actionLoc.Y] == MineGameTileVisState.Uncleared)
-                    SetTileState(component, actionLoc.X, actionLoc.Y, MineGameTileVisState.Flagged);
+                if (ent.Comp.TileVisState[actionLoc.X][actionLoc.Y] == MineGameTileVisState.Uncleared)
+                    ent.Comp.TileVisState[actionLoc.X][actionLoc.Y] = MineGameTileVisState.Flagged;
                 break;
             case MineGameTileActionType.Unflag:
-                if (component.TileVisState[actionLoc.X, actionLoc.Y] == MineGameTileVisState.Flagged)
-                    SetTileState(component, actionLoc.X, actionLoc.Y, MineGameTileVisState.Uncleared);
+                if (ent.Comp.TileVisState[actionLoc.X][actionLoc.Y] == MineGameTileVisState.Flagged)
+                    ent.Comp.TileVisState[actionLoc.X][actionLoc.Y] = MineGameTileVisState.Uncleared;
                 break;
         }
-        Dirty(uid, component);
-        UpdateUI(uid);
-    }
-
-    private void OnGetState(EntityUid uid, MineGameArcadeComponent component, ref ComponentGetState args)
-    {
-        var isFullState = args.FromTick <= component.CreationTick;
-
-        var tileStates = new MineGameTileVisState[component.BoardSettings.BoardSize.X * component.BoardSettings.BoardSize.Y];
-        for (var y = 0; y < component.BoardSettings.BoardSize.Y; ++y)
-        {
-            for (var x = 0; x < component.BoardSettings.BoardSize.X; ++x)
-            {
-                var tileState = MineGameTileVisState.None;
-                if (isFullState || args.FromTick <= component.TileLastVisUpdateTick[x, y])
-                {
-                    tileState = component.TileVisState[x, y];
-                }
-                tileStates[y * component.BoardSettings.BoardSize.X + x] = tileState;
-            }
-        }
-
-        args.State = new MineGameArcadeComponentState()
-        {
-            BoardSettings = component.BoardSettings,
-            ReferenceTime = component.ReferenceTime,
-            GameWon = component.GameWon,
-            GameLost = component.GameLost,
-            TileVisState = tileStates
-        };
+        Dirty(ent);
+        UpdateUI(ent.Owner);
     }
 }

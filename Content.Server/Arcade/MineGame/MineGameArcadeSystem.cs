@@ -27,43 +27,25 @@ public sealed class MineGameArcadeSystem : SharedMineGameArcadeSystem
     }
 
     /// <inheritdoc/>
-    public override void SetupMineGame(EntityUid uid,
-        MineGameArcadeComponent component,
-        MineGameBoardSettings boardSettings)
+    public override void ClearTile(Entity<MineGameArcadeComponent> ent, Vector2i actionLoc)
     {
-        base.SetupMineGame(uid, component, boardSettings);
-        boardSettings = component.BoardSettings; // base performed validation
-
-        component.TileLastVisUpdateTick = new GameTick[boardSettings.BoardSize.X, boardSettings.BoardSize.Y];
-        for (var y = 0; y < boardSettings.BoardSize.Y; ++y)
+        // The game board is still only in the initial initialized status, implying mines haven't been generated
+        if (ent.Comp.GameStatus == MineGameStatus.Initialized)
         {
-            for (var x = 0; x < boardSettings.BoardSize.X; ++x)
-            {
-                component.TileLastVisUpdateTick[x, y] = _gameTiming.CurTick;
-            }
-        }
-        Dirty(uid, component);
-    }
-
-    /// <inheritdoc/>
-    public override void ClearTile(EntityUid uid, MineGameArcadeComponent component, Vector2i actionLoc)
-    {
-        if (!component.MinesGenerated)
-        {
-            component.ReferenceTime = _gameTiming.CurTime;
-            GenerateMines(component, actionLoc);
+            ent.Comp.ReferenceTime = _gameTiming.CurTime;
+            GenerateMines(ent.Comp, actionLoc);
         }
         Queue<Vector2i> toClear = new();
 
-        if (component.TileVisState[actionLoc.X, actionLoc.Y] >= MineGameTileVisState.ClearedEmpty)
+        if (ent.Comp.TileVisState[actionLoc.X][actionLoc.Y] >= MineGameTileVisState.ClearedEmpty)
         {
             // Chording
-            if (CountFlagsAroundPos(component, actionLoc) != CountMinesAroundPos(component, actionLoc))
+            if (CountFlagsAroundPos(ent.Comp, actionLoc) != CountMinesAroundPos(ent.Comp, actionLoc))
             {
                 // Correct number of flags is not around this number tile. Can't do anything.
                 return;
             }
-            foreach (Vector2i neighborPos in GetNeighborsOfPos(component, actionLoc))
+            foreach (Vector2i neighborPos in GetNeighborsOfPos(ent.Comp, actionLoc))
             {
                 toClear.Enqueue(neighborPos);
             }
@@ -78,87 +60,95 @@ public sealed class MineGameArcadeSystem : SharedMineGameArcadeSystem
         // Perform initial check to see if we hit a mine, before clearing anything (for proper chording display)
         foreach (var currPos in toClear)
         {
-            if (component.TileMined[currPos.X, currPos.Y]
-                && component.TileVisState[currPos.X, currPos.Y] != MineGameTileVisState.Flagged)
+            if (ent.Comp.TileMined[currPos.X][currPos.Y]
+                && ent.Comp.TileVisState[currPos.X][currPos.Y] != MineGameTileVisState.Flagged)
             {
                 mineHit = true;
-                SetTileState(component, currPos.X, currPos.Y, MineGameTileVisState.MineDetonated);
+                ent.Comp.TileVisState[currPos.X][currPos.Y] = MineGameTileVisState.MineDetonated;
             }
         }
         if (mineHit)
         {
             // We blew up at least one mine with this action! Game over.
-            component.GameLost = true;
-            component.ReferenceTime = _gameTiming.CurTime.Subtract(component.ReferenceTime);
+            ent.Comp.GameStatus = MineGameStatus.Lost;
+            ent.Comp.ReferenceTime = _gameTiming.CurTime.Subtract(ent.Comp.ReferenceTime);
 
             // Show all remaining mines on the board
-            for (var y = 0; y < component.BoardSettings.BoardSize.Y; ++y)
+            for (var y = 0; y < ent.Comp.BoardSettings.BoardSize.Y; ++y)
             {
-                for (var x = 0; x < component.BoardSettings.BoardSize.X; ++x)
+                for (var x = 0; x < ent.Comp.BoardSettings.BoardSize.X; ++x)
                 {
-                    if (component.TileMined[x, y])
+                    if (ent.Comp.TileMined[x][y])
                     {
-                        if (component.TileVisState[x, y] != MineGameTileVisState.MineDetonated)
+                        if (ent.Comp.TileVisState[x][y] != MineGameTileVisState.MineDetonated)
                         {
-                            SetTileState(component, x, y, MineGameTileVisState.Mine);
+                            ent.Comp.TileVisState[x][y] = MineGameTileVisState.Mine;
                         }
                     }
-                    else if (component.TileVisState[x, y] == MineGameTileVisState.Flagged)
+                    else if (ent.Comp.TileVisState[x][y] == MineGameTileVisState.Flagged)
                     {
-                        SetTileState(component, x, y, MineGameTileVisState.FalseFlagged);
+                        ent.Comp.TileVisState[x][y] = MineGameTileVisState.FalseFlagged;
                     }
                 }
             }
-            _audioSystem.PlayPvs(component.GameOverSound, uid, AudioParams.Default.WithVolume(-5f));
+            _audioSystem.PlayPvs(ent.Comp.GameOverSound, ent.Owner, AudioParams.Default.WithVolume(-5f));
         }
         else
         {
             while (toClear.Count > 0)
             {
                 var currPos = toClear.Dequeue();
-                if (component.TileVisState[currPos.X, currPos.Y] != MineGameTileVisState.Uncleared)
+                if (ent.Comp.TileVisState[currPos.X][currPos.Y] != MineGameTileVisState.Uncleared)
                     continue;
-                int mineCount = CountMinesAroundPos(component, currPos);
-                SetTileState(component, currPos.X, currPos.Y, MineGameTileVisState.ClearedEmpty + (byte)mineCount);
-                ++component.ClearedCount;
+                int mineCount = CountMinesAroundPos(ent.Comp, currPos);
+                ent.Comp.TileVisState[currPos.X][currPos.Y] = MineGameTileVisState.ClearedEmpty + (byte)mineCount;
+                ++ent.Comp.ClearedCount;
 
                 if (mineCount == 0)
                 {
                     // Floodfill clear empty areas of the board
-                    foreach (Vector2i neighborPos in GetNeighborsOfPos(component, currPos))
-                    {
-                        if (component.TileVisState[neighborPos.X, neighborPos.Y] == MineGameTileVisState.Uncleared)
+                    foreach (Vector2i neighborPos in GetNeighborsOfPos(ent.Comp, currPos))
+                        if (ent.Comp.TileVisState[neighborPos.X][neighborPos.Y] == MineGameTileVisState.Uncleared)
                             toClear.Enqueue(neighborPos);
-                    }
                 }
             }
         }
-        WinCheck(component);
+        WinCheck(ent.Comp);
     }
 
-    private void OnComponentInit(EntityUid uid, MineGameArcadeComponent component, ComponentInit args)
+    private void OnComponentInit(Entity<MineGameArcadeComponent> ent, ref ComponentInit args)
     {
-        if (component.BoardPresets.Count > 0 && !component.GameInitialized)
-            SetupMineGame(uid, component, component.BoardPresets.First().Value);
+        // We only need to perform an initial default setup if there isn't preexisting game data.
+        if (ent.Comp.GameStatus != MineGameStatus.Uninitialized)
+            return;
+
+        if (ent.Comp.BoardPresets.Count > 0)
+            // Use a default board preset to set up an initialized game
+            SetupMineGame(ent, ent.Comp.BoardPresets.First().Value);
+        else
+            // This is essentially an emergency case to try and ensure a valid board state is applied
+            SetupMineGame(ent, new MineGameBoardSettings() {BoardSize = new(10, 10), MineCount = 30});
     }
 
-    private void OnPowerChanged(EntityUid uid, MineGameArcadeComponent component, ref PowerChangedEvent args)
+    private void OnPowerChanged(Entity<MineGameArcadeComponent> ent, ref PowerChangedEvent args)
     {
         if (args.Powered)
             return;
 
-        _uiSystem.CloseUi(uid, MineGameArcadeUiKey.Key);
+        _uiSystem.CloseUi(ent.Owner, MineGameArcadeUiKey.Key);
     }
 
     /// <summary>
-    /// Places mines, filling in the component.TileMined lookup.
+    /// Places mines, filling in the ent.Comp.TileMined lookup.
     /// </summary>
     private void GenerateMines(MineGameArcadeComponent component, Vector2i firstClearPos)
     {
         int safeSquareLength = Math.Max(component.SafeStartRadius * 2 - 1, 0);
         int safeTileCount = safeSquareLength * safeSquareLength;
 
-        bool canGenSafeArea = component.BoardSettings.MineCount <= (component.BoardSettings.BoardSize.X * component.BoardSettings.BoardSize.Y - safeTileCount);
+        bool canGenSafeArea = component.BoardSettings.MineCount <=
+                              (component.BoardSettings.BoardSize.X * component.BoardSettings.BoardSize.Y -
+                               safeTileCount);
         // if the mine count is explicitly set higher than would normally be allowed by the
         // safe area... just let it happen w/out safe area; Don't play a 10x10 board with 100 mines.
 
@@ -176,18 +166,21 @@ public sealed class MineGameArcadeSystem : SharedMineGameArcadeSystem
                         // Within safe starting area: don't allow this tile to be a mine
                         continue;
                 }
+
                 availablePositions.Add(pos);
             }
         }
-        var minePositions = _random.GetItems(availablePositions, component.BoardSettings.MineCount, allowDuplicates: false);
+
+        var minePositions =
+            _random.GetItems(availablePositions, component.BoardSettings.MineCount, allowDuplicates: false);
 
         foreach (Vector2i minePos in minePositions)
         {
-            component.TileMined[minePos.X, minePos.Y] = true;
+            component.TileMined[minePos.X][minePos.Y] = true;
         }
 
-        component.MinesGenerated = true;
-    }
+        component.GameStatus = MineGameStatus.MinesSpawned;
+}
 
     /// <summary>
     /// Gets adjacent tile positions in 3x3 square, with border bounds check.
@@ -214,7 +207,7 @@ public sealed class MineGameArcadeSystem : SharedMineGameArcadeSystem
     {
         int cnt = 0;
         foreach (Vector2i neighborPos in GetNeighborsOfPos(component, pos))
-            if (component.TileMined[neighborPos.X, neighborPos.Y])
+            if (component.TileMined[neighborPos.X][neighborPos.Y])
                 ++cnt;
         return cnt;
     }
@@ -228,7 +221,7 @@ public sealed class MineGameArcadeSystem : SharedMineGameArcadeSystem
     {
         int cnt = 0;
         foreach (Vector2i neighborPos in GetNeighborsOfPos(component, pos))
-            if (component.TileVisState[neighborPos.X, neighborPos.Y] == MineGameTileVisState.Flagged)
+            if (component.TileVisState[neighborPos.X][neighborPos.Y] == MineGameTileVisState.Flagged)
                 ++cnt;
         return cnt;
     }
@@ -242,25 +235,11 @@ public sealed class MineGameArcadeSystem : SharedMineGameArcadeSystem
             return;
         // Finish flagging all the mines
         for (var y = 0; y < component.BoardSettings.BoardSize.Y; ++y)
-        {
             for (var x = 0; x < component.BoardSettings.BoardSize.X; ++x)
-            {
-                if (component.TileMined[x, y])
-                {
-                    component.TileVisState[x, y] = MineGameTileVisState.Flagged;
-                    component.TileLastVisUpdateTick[x, y] = _gameTiming.CurTick;
-                }
-            }
-        }
+                if (component.TileMined[x][y])
+                    component.TileVisState[x][y] = MineGameTileVisState.Flagged;
 
-        component.GameWon = true;
+        component.GameStatus = MineGameStatus.Won;
         component.ReferenceTime = _gameTiming.CurTime.Subtract(component.ReferenceTime); // Save the completion duration
-    }
-
-    /// <inheritdoc/>
-    public override void SetTileState(MineGameArcadeComponent component, int x, int y, MineGameTileVisState state)
-    {
-        base.SetTileState(component, x, y, state);
-        component.TileLastVisUpdateTick[x, y] = _gameTiming.CurTick;
     }
 }
