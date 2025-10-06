@@ -92,19 +92,17 @@ public sealed partial class DisposalTubeSystem : EntitySystem
             default:
 
                 // Check that the default exit is valid
-                if (args.Next.GetOpposite() == currentDirection ||
-                    Math.Abs(Angle.ShortestDistance(currentDirection.ToAngle(), args.Next.ToAngle())) > ent.Comp.MaxDeltaAngle)
+                if (args.Next.GetOpposite() == currentDirection)
                 {
-                    // If it isn't, remove it from the list, along with any other invalid exits
-                    var directions = exits.Skip(1).
-                        Where(direction => direction != currentDirection &&
-                        Math.Abs(Angle.ShortestDistance(currentDirection.ToAngle(), direction.ToAngle())) <= ent.Comp.MaxDeltaAngle).ToArray();
+                    // If it isn't, pick one of the remaining exits at random
+                    var directions = exits.Skip(1).Where(direction => direction != currentDirection).ToArray();
 
-                    // If no exits were valid, just use the default
                     if (directions.Length == 0)
+                    {
+                        args.Next = Direction.Invalid;
                         return;
+                    }
 
-                    // Otherwise, pick one of the remaining exits at random
                     args.Next = _random.Pick(directions);
                 }
 

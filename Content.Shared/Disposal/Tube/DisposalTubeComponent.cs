@@ -49,13 +49,6 @@ public sealed partial class DisposalTubeComponent : Component
     public Direction[] Exits = { Direction.South };
 
     /// <summary>
-    /// The largest angle that entities can turn while traveling through the conduit.
-    /// This only applies when there are more than two potential exits.
-    /// </summary>
-    [DataField]
-    public Angle MaxDeltaAngle = 180;
-
-    /// <summary>
     /// Determines the type of disposal pipe -
     /// only pipes of the same type can connect to each other.
     /// </summary>
