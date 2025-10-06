@@ -764,8 +764,8 @@
       - !type:HealthChange
         damage:
           types:
-            Caustic: 8
-            Radiation: 7
+            Caustic: 7
+            Radiation: 6
       - !type:PopupMessage
         type: Local
         visualType: Large
