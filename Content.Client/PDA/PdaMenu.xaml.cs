@@ -9,6 +9,7 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
+using System.Globalization;
 
 namespace Content.Client.PDA
 {
@@ -172,7 +173,31 @@ namespace Content.Client.PDA
             StationTimeLabel.SetMarkup(Loc.GetString("comp-pda-ui-station-time",
                 ("time", stationTime.ToString("hh\\:mm\\:ss")),
                 ("date", DateTime.UtcNow.AddHours(3).ToString("dd.MM") + ".2709")));
-
+            // DS14-start
+            if (state.IsRoundEndRequested)
+            {
+                var diff1 = MathHelper.Max((state.ExpectedCountdownEnd - _gameTiming.CurTime) ?? TimeSpan.Zero, TimeSpan.Zero);
+                var diff2 = MathHelper.Max((state.ShuttleDockTime + state.ExpectedCountdownEnd - _gameTiming.CurTime) ?? TimeSpan.Zero, TimeSpan.Zero);
+                if (diff1 != TimeSpan.Zero)
+                {
+                    EvacTimeLabel.SetMarkup(Loc.GetString("comp-pda-ui-evac-time",
+                    ("time", diff1.ToString("hh\\:mm\\:ss", CultureInfo.CurrentCulture))));
+                }
+                else if (diff2 != TimeSpan.Zero)
+                {
+                    EvacTimeLabel.SetMarkup(Loc.GetString("comp-pda-ui-evac-docked",
+                    ("time", diff2.ToString("hh\\:mm\\:ss", CultureInfo.CurrentCulture))));
+                }
+                else
+                {
+                    EvacTimeLabel.SetMarkup(Loc.GetString("comp-pda-ui-evac-not-called"));
+                }
+            }
+            else
+            {
+                EvacTimeLabel.SetMarkup(Loc.GetString("comp-pda-ui-evac-not-called"));
+            }
+            // DS14-end
             var alertLevel = state.PdaOwnerInfo.StationAlertLevel;
             var alertColor = state.PdaOwnerInfo.StationAlertColor;
             var alertLevelKey = alertLevel != null ? $"alert-level-{alertLevel}" : "alert-level-unknown";
