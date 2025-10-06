@@ -3,12 +3,12 @@ using Content.Shared._Offbrand.StatusEffects;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Medical;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Rejuvenate;
 using Content.Shared.StatusEffectNew;
+using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -30,15 +30,8 @@ public sealed partial class HeartSystem : EntitySystem
         SubscribeLocalEvent<HeartrateComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         SubscribeLocalEvent<HeartrateComponent, RejuvenateEvent>(OnRejuvenate);
 
-        SubscribeLocalEvent<BloodstreamComponent, GetStrainEvent>(OnBloodstreamGetStrain);
-
-        SubscribeLocalEvent<HeartStopOnHypovolemiaComponent, HeartBeatEvent>(OnHeartBeatHypovolemia);
         SubscribeLocalEvent<HeartStopOnHighStrainComponent, HeartBeatEvent>(OnHeartBeatStrain);
-        SubscribeLocalEvent<HeartStopOnBrainHealthComponent, HeartBeatEvent>(OnHeartBeatBrain);
-
-        SubscribeLocalEvent<HeartStopOnHypovolemiaComponent, BeforeTargetDefibrillatedEvent>(OnHeartBeatHypovolemiaMessage);
         SubscribeLocalEvent<HeartStopOnHighStrainComponent, BeforeTargetDefibrillatedEvent>(OnHeartBeatStrainMessage);
-        SubscribeLocalEvent<HeartStopOnBrainHealthComponent, BeforeTargetDefibrillatedEvent>(OnHeartBeatBrainMessage);
 
         SubscribeLocalEvent<HeartDefibrillatableComponent, TargetDefibrillatedEvent>(OnTargetDefibrillated);
     }
@@ -47,13 +40,9 @@ public sealed partial class HeartSystem : EntitySystem
     {
         ent.Comp.Damage = 0;
         ent.Comp.Running = true;
-        ent.Comp.Strain = 0;
         Dirty(ent);
 
-        var strainChangedEvt = new AfterStrainChangedEvent();
-        RaiseLocalEvent(ent, ref strainChangedEvt);
-
-        var overlays = new bPotentiallyUpdateDamageOverlayEventb(ent);
+        var overlays = new PotentiallyUpdateDamageOverlayEvent(ent);
         RaiseLocalEvent(ent, ref overlays, true);
     }
 
@@ -81,25 +70,23 @@ public sealed partial class HeartSystem : EntitySystem
             heartrate.LastUpdate = _timing.CurTime;
             Dirty(uid, heartrate);
 
+            RecomputeVitals((uid, heartrate));
+
+            var strainChanged = new AfterStrainChangedEvent();
+            RaiseLocalEvent(uid, ref strainChanged);
+
+            var respiration = new ApplyRespiratoryRateModifiersEvent(ComputeRespiratoryRateModifier((uid, heartrate)), ComputeExhaleEfficiencyModifier((uid, heartrate)));
+            RaiseLocalEvent(uid, ref respiration);
+
             if (!heartrate.Running)
                 continue;
-
-            var newStrain = RecomputeHeartStrain((uid, heartrate));
-            if (newStrain != heartrate.Strain)
-            {
-                heartrate.Strain = RecomputeHeartStrain((uid, heartrate));
-                Dirty(uid, heartrate);
-
-                var strainChangedEvt = new AfterStrainChangedEvent();
-                RaiseLocalEvent(uid, ref strainChangedEvt);
-            }
 
             var evt = new HeartBeatEvent(false);
             RaiseLocalEvent(uid, ref evt);
 
             if (!evt.Stop)
             {
-                var threshold = heartrate.StrainDamageThresholds.HighestMatch(HeartStrain((uid, heartrate)));
+                var threshold = heartrate.StrainDamageThresholds.HighestMatch(Strain((uid, heartrate)));
                 if (threshold is (var chance, var amount))
                 {
                     var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(uid).Id });
@@ -118,13 +105,14 @@ public sealed partial class HeartSystem : EntitySystem
                 }
             }
 
+
             if (evt.Stop)
             {
                 StopHeart((uid, heartrate));
                 continue;
             }
 
-            var overlays = new bPotentiallyUpdateDamageOverlayEventb(uid);
+            var overlays = new PotentiallyUpdateDamageOverlayEvent(uid);
             RaiseLocalEvent(uid, ref overlays, true);
         }
     }
@@ -132,10 +120,7 @@ public sealed partial class HeartSystem : EntitySystem
     private void StopHeart(Entity<HeartrateComponent> ent)
     {
         ent.Comp.Running = false;
-        ent.Comp.Strain = 0;
-
-        var strainChangedEvt = new AfterStrainChangedEvent();
-        RaiseLocalEvent(ent, ref strainChangedEvt);
+        Dirty(ent);
 
         var stoppedEvt = new HeartStoppedEvent();
         RaiseLocalEvent(ent, ref stoppedEvt);
@@ -150,11 +135,7 @@ public sealed partial class HeartSystem : EntitySystem
 
         ent.Comp.Damage = ent.Comp.MaxDamage;
         ent.Comp.Running = false;
-        ent.Comp.Strain = 0;
         Dirty(ent);
-
-        var strainChangedEvt = new AfterStrainChangedEvent();
-        RaiseLocalEvent(ent, ref strainChangedEvt);
 
         var stoppedEvt = new HeartStoppedEvent();
         RaiseLocalEvent(ent, ref stoppedEvt);
@@ -168,15 +149,6 @@ public sealed partial class HeartSystem : EntitySystem
         Dirty(ent);
     }
 
-    private void OnHeartBeatHypovolemia(Entity<HeartStopOnHypovolemiaComponent> ent, ref HeartBeatEvent args)
-    {
-        var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(ent).Id });
-        var rand = new System.Random(seed);
-
-        var volume = BloodVolume((ent.Owner, Comp<HeartrateComponent>(ent)));
-        args.Stop = args.Stop || rand.Prob(ent.Comp.Chance) && volume < ent.Comp.VolumeThreshold;
-    }
-
     private void OnHeartBeatStrain(Entity<HeartStopOnHighStrainComponent> ent, ref HeartBeatEvent args)
     {
         var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(ent).Id });
@@ -185,29 +157,8 @@ public sealed partial class HeartSystem : EntitySystem
         if (_statusEffects.HasEffectComp<PreventHeartStopFromStrainStatusEffectComponent>(ent))
             return;
 
-        var strain = HeartStrain((ent.Owner, Comp<HeartrateComponent>(ent)));
+        var strain = Strain((ent.Owner, Comp<HeartrateComponent>(ent)));
         args.Stop = args.Stop || rand.Prob(ent.Comp.Chance) && strain > ent.Comp.Threshold;
-    }
-
-    private void OnHeartBeatBrain(Entity<HeartStopOnBrainHealthComponent> ent, ref HeartBeatEvent args)
-    {
-        var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(ent).Id });
-        var rand = new System.Random(seed);
-
-        if (_statusEffects.HasEffectComp<PreventHeartStopFromStrainStatusEffectComponent>(ent))
-            return;
-
-        var damage = Comp<BrainDamageComponent>(ent).Damage;
-        args.Stop = args.Stop || rand.Prob(ent.Comp.Chance) && damage > ent.Comp.Threshold;
-    }
-
-    private void OnHeartBeatHypovolemiaMessage(Entity<HeartStopOnHypovolemiaComponent> ent, ref BeforeTargetDefibrillatedEvent args)
-    {
-        var volume = BloodVolume((ent.Owner, Comp<HeartrateComponent>(ent)));
-        if (volume >= ent.Comp.VolumeThreshold)
-            return;
-
-        args.Messages.Add(ent.Comp.Warning);
     }
 
     private void OnHeartBeatStrainMessage(Entity<HeartStopOnHighStrainComponent> ent, ref BeforeTargetDefibrillatedEvent args)
@@ -215,20 +166,18 @@ public sealed partial class HeartSystem : EntitySystem
         if (_statusEffects.HasEffectComp<PreventHeartStopFromStrainStatusEffectComponent>(ent))
             return;
 
-        var strain = RecomputeHeartStrain((ent.Owner, Comp<HeartrateComponent>(ent)));
+        var heartrate = Comp<HeartrateComponent>(ent);
+
+        var volume = ComputeBloodVolume((ent.Owner, heartrate));
+        var tone = ComputeVascularTone((ent.Owner, heartrate));
+        var perfusion = MathF.Min(volume, tone);
+        var function = ComputeLungFunction((ent.Owner, heartrate));
+        var supply = function * perfusion;
+        var demand = ComputeMetabolicRate((ent.Owner, heartrate));
+        var compensation = ComputeCompensation((ent.Owner, heartrate), supply, demand);
+        var strain = heartrate.CompensationStrainCoefficient * compensation + heartrate.CompensationStrainConstant;
+
         if (strain < ent.Comp.Threshold)
-            return;
-
-        args.Messages.Add(ent.Comp.Warning);
-    }
-
-    private void OnHeartBeatBrainMessage(Entity<HeartStopOnBrainHealthComponent> ent, ref BeforeTargetDefibrillatedEvent args)
-    {
-        if (_statusEffects.HasEffectComp<PreventHeartStopFromStrainStatusEffectComponent>(ent))
-            return;
-
-        var damage = Comp<BrainDamageComponent>(ent).Damage;
-        if (damage <= ent.Comp.Threshold)
             return;
 
         args.Messages.Add(ent.Comp.Warning);
@@ -252,120 +201,117 @@ public sealed partial class HeartSystem : EntitySystem
         }
     }
 
-    public FixedPoint2 BloodVolume(Entity<HeartrateComponent> ent)
+    private void RecomputeVitals(Entity<HeartrateComponent> ent)
+    {
+        var volume = ComputeBloodVolume(ent);
+        var tone = ComputeVascularTone(ent);
+
+        var perfusion = MathF.Min(volume, MathF.Min(tone, CardiacOutput(ent)));
+
+        var function = ComputeLungFunction(ent);
+
+        var supply = function * perfusion;
+
+        var demand = ComputeMetabolicRate(ent);
+
+        var compensation = ComputeCompensation(ent, supply, demand);
+
+        perfusion *= compensation;
+        supply = function * perfusion;
+
+        ent.Comp.Perfusion = perfusion;
+        ent.Comp.Compensation = compensation;
+        ent.Comp.OxygenSupply = supply;
+        ent.Comp.OxygenDemand = demand;
+
+        Dirty(ent);
+    }
+
+    [Access(typeof(HeartSystem), typeof(HeartrateComponent))]
+    public float CardiacOutput(Entity<HeartrateComponent> ent)
+    {
+        var baseEv = new BaseCardiacOutputEvent(!ent.Comp.Running ? 0f : 1f - (ent.Comp.Damage.Float() / ent.Comp.MaxDamage.Float()));
+        RaiseLocalEvent(ent, ref baseEv);
+
+        var modifiedEv = new ModifiedCardiacOutputEvent(baseEv.Output);
+        RaiseLocalEvent(ent, ref modifiedEv);
+
+        return Math.Max(modifiedEv.Output, ent.Comp.MinimumCardiacOutput);
+    }
+
+    [Access(typeof(HeartSystem), typeof(HeartrateComponent))]
+    public float ComputeCompensation(Entity<HeartrateComponent> ent, float supply, float demand)
+    {
+        var invert = MathF.Log(demand / supply);
+        if (!float.IsFinite(invert))
+            throw new InvalidOperationException($"demand/supply {demand}/{supply} is not finite: {invert}");
+
+        var targetCompensation = ent.Comp.CompensationCoefficient * invert + ent.Comp.CompensationConstant;
+        var healthFactor = !ent.Comp.Running ? 0f : 1f - (ent.Comp.Damage.Float() / ent.Comp.MaxDamage.Float());
+
+        return Math.Max(targetCompensation * healthFactor, 1f);
+    }
+
+    [Access(typeof(HeartSystem), typeof(HeartrateComponent))]
+    public float ComputeBloodVolume(Entity<HeartrateComponent> ent)
     {
         var bloodstream = Comp<BloodstreamComponent>(ent);
         if (!_solutionContainer.ResolveSolution(ent.Owner, bloodstream.BloodSolutionName,
             ref bloodstream.BloodSolution, out var bloodSolution))
         {
-            return 1;
+            return 1f;
         }
 
-        return bloodSolution.Volume / bloodSolution.MaxVolume;
+        return Math.Max(bloodSolution.Volume.Float() / bloodSolution.MaxVolume.Float(), ent.Comp.MinimumBloodVolume);
     }
 
-    public FixedPoint4 BloodFlow(Entity<HeartrateComponent> ent)
+    [Access(typeof(HeartSystem), typeof(HeartrateComponent))]
+    public float ComputeVascularTone(Entity<HeartrateComponent> ent)
     {
-        if (!ent.Comp.Running)
-        {
-            var evt = new GetStoppedCirculationModifier(ent.Comp.StoppedBloodCirculationModifier);
-            RaiseLocalEvent(ent, ref evt);
-            return evt.Modifier;
-        }
+        var baseEv = new BaseVascularToneEvent(1f);
+        RaiseLocalEvent(ent, ref baseEv);
 
-        FixedPoint4 modifier = 1;
+        var modifiedEv = new ModifiedVascularToneEvent(baseEv.Tone);
+        RaiseLocalEvent(ent, ref modifiedEv);
 
-        FixedPoint4 strain = HeartStrain(ent);
-
-        var strainModifier = ent.Comp.CirculationStrainModifierCoefficient * strain + ent.Comp.CirculationStrainModifierConstant;
-
-        modifier *= strainModifier;
-
-        modifier *= FixedPoint2.Max( ent.Comp.MinimumDamageCirculationModifier, FixedPoint2.New(1d) - (ent.Comp.Damage / ent.Comp.MaxDamage) );
-
-        return modifier;
+        return Math.Max(modifiedEv.Tone, ent.Comp.MinimumVascularTone);
     }
 
-    public FixedPoint2 BloodCirculation(Entity<HeartrateComponent> ent)
+    [Access(typeof(HeartSystem), typeof(HeartrateComponent))]
+    public float ComputeMetabolicRate(Entity<HeartrateComponent> ent)
     {
-        FixedPoint4 volume = BloodVolume(ent);
-        var flow = BloodFlow(ent);
+        var baseEv = new BaseMetabolicRateEvent(1f);
+        RaiseLocalEvent(ent, ref baseEv);
 
-        return FixedPoint2.Min((FixedPoint2)(volume * flow), 1);
+        var modifiedEv = new ModifiedMetabolicRateEvent(baseEv.Rate);
+        RaiseLocalEvent(ent, ref modifiedEv);
+
+        return modifiedEv.Rate;
     }
 
-    public FixedPoint2 BloodOxygenation(Entity<HeartrateComponent> ent)
+    [Access(typeof(HeartSystem), typeof(HeartrateComponent))]
+    public float ComputeLungFunction(Entity<HeartrateComponent> ent)
     {
-        var circulation = BloodCirculation(ent);
-        var damageable = Comp<DamageableComponent>(ent);
-        if (!damageable.Damage.DamageDict.TryGetValue(ent.Comp.AsphyxiationDamage, out var asphyxiationAmount))
-            return circulation;
+        var baseEv = new BaseLungFunctionEvent(1f);
+        RaiseLocalEvent(ent, ref baseEv);
 
-        var oxygenationModifier = FixedPoint2.Clamp(1 - (asphyxiationAmount / ent.Comp.AsphyxiationThreshold), 0, 1);
+        var modifiedEv = new ModifiedLungFunctionEvent(baseEv.Function);
+        RaiseLocalEvent(ent, ref modifiedEv);
 
-        var evt = new GetOxygenationModifier(oxygenationModifier);
-        RaiseLocalEvent(ent, ref evt);
-
-        return evt.Modifier * circulation;
+        return Math.Max(modifiedEv.Function, ent.Comp.MinimumLungFunction);
     }
 
-    private FixedPoint2 RecomputeHeartStrain(Entity<HeartrateComponent> ent)
+    private float OxygenBalance(Entity<HeartrateComponent> ent)
     {
-        var pain = _pain.GetShock(ent.Owner);
-        var strain = pain / ent.Comp.ShockStrainDivisor;
-
-        var evt = new GetStrainEvent(strain);
-        RaiseLocalEvent(ent, ref evt);
-
-        return FixedPoint2.Clamp(evt.Strain, FixedPoint2.Zero, ent.Comp.MaximumStrain);
+        return ent.Comp.OxygenSupply / ent.Comp.OxygenDemand;
     }
 
-    public FixedPoint2 HeartStrain(Entity<HeartrateComponent> ent)
+    public float Strain(Entity<HeartrateComponent> ent)
     {
-        return ent.Comp.Strain;
+        return Math.Max(ent.Comp.CompensationStrainCoefficient * ent.Comp.Compensation + ent.Comp.CompensationStrainConstant, 0f);
     }
 
-    private void OnBloodstreamGetStrain(Entity<BloodstreamComponent> ent, ref GetStrainEvent args)
-    {
-        var heartrate = Comp<HeartrateComponent>(ent);
-        var volume = BloodVolume((ent, heartrate));
-        var damageable = Comp<DamageableComponent>(ent);
-        if (damageable.Damage.DamageDict.TryGetValue(heartrate.AsphyxiationDamage, out var asphyxiationAmount))
-        {
-            volume *= FixedPoint2.Min(1 - (asphyxiationAmount / heartrate.AsphyxiationThreshold), 1);
-        }
-
-        var strainDelta = FixedPoint2.Zero;
-
-        if (volume <= ent.Comp.BloodlossThreshold)
-            strainDelta += 1;
-        if (volume <= ent.Comp.BloodlossThreshold/2)
-            strainDelta += 1;
-        if (volume <= ent.Comp.BloodlossThreshold/3)
-            strainDelta += 1;
-        if (volume <= ent.Comp.BloodlossThreshold/4)
-            strainDelta += 1;
-
-        args.Strain += strainDelta;
-    }
-
-    public (FixedPoint2, FixedPoint2) BloodPressure(Entity<HeartrateComponent> ent)
-    {
-        var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(ent).Id });
-        var rand = new System.Random(seed);
-
-        var volume = BloodCirculation(ent);
-
-        var deviationA = rand.Next(-ent.Comp.BloodPressureDeviation, ent.Comp.BloodPressureDeviation);
-        var deviationB = rand.Next(-ent.Comp.BloodPressureDeviation, ent.Comp.BloodPressureDeviation);
-
-        var upper = FixedPoint2.Max((ent.Comp.SystolicBase * volume + deviationA), 0).Int();
-        var lower = FixedPoint2.Max((ent.Comp.DiastolicBase * volume + deviationB), 0).Int();
-
-        return (upper, lower);
-    }
-
-    public FixedPoint2 HeartRate(Entity<HeartrateComponent> ent)
+    public int HeartRate(Entity<HeartrateComponent> ent)
     {
         if (!ent.Comp.Running)
             return 0;
@@ -373,8 +319,65 @@ public sealed partial class HeartSystem : EntitySystem
         var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(ent).Id });
         var rand = new System.Random(seed);
 
-        var strain = HeartStrain(ent);
-        return (FixedPoint2.Max(strain, 0)/ent.Comp.HeartRateStrainDivisor) * ent.Comp.HeartRateStrainFactor + ent.Comp.HeartRateBase + rand.Next(-ent.Comp.HeartRateDeviation, ent.Comp.HeartRateDeviation);
+        var deviation = rand.Next(-ent.Comp.HeartRateDeviation, ent.Comp.HeartRateDeviation);
+
+        return Math.Max((int)MathHelper.Lerp(ent.Comp.HeartRateFullPerfusion, ent.Comp.HeartRateNoPerfusion, Strain(ent)) + deviation, 0);
+    }
+
+    public (int, int) BloodPressure(Entity<HeartrateComponent> ent)
+    {
+        var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(ent).Id });
+        var rand = new System.Random(seed);
+
+        var deviationA = rand.Next(-ent.Comp.BloodPressureDeviation, ent.Comp.BloodPressureDeviation);
+        var deviationB = rand.Next(-ent.Comp.BloodPressureDeviation, ent.Comp.BloodPressureDeviation);
+
+        var upper = (int)Math.Max((ent.Comp.SystolicBase * ent.Comp.Perfusion + deviationA), 0);
+        var lower = (int)Math.Max((ent.Comp.DiastolicBase * ent.Comp.Perfusion + deviationB), 0);
+
+        return (upper, lower);
+    }
+
+    public int Etco2(Entity<HeartrateComponent> ent)
+    {
+        var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(ent).Id });
+        var rand = new System.Random(seed);
+
+        var deviation = rand.Next(-ent.Comp.Etco2Deviation, ent.Comp.Etco2Deviation);
+
+        var baseEtco2 = ent.Comp.Etco2Base * ComputeExhaleEfficiencyModifier(ent);
+
+        return Math.Max((int)baseEtco2 + deviation, 0);
+    }
+
+    public float ComputeExhaleEfficiencyModifier(Entity<HeartrateComponent> ent)
+    {
+        return Math.Max(ent.Comp.Perfusion, ent.Comp.MinimumPerfusionEtco2Modifier) * ComputeRespiratoryRateModifier(ent);
+    }
+
+    public float ComputeRespiratoryRateModifier(Entity<HeartrateComponent> ent)
+    {
+        var balance = ent.Comp.OxygenSupply / ent.Comp.OxygenDemand;
+        var rate = Math.Max(1f/(ent.Comp.RespiratoryRateCoefficient * balance) + ent.Comp.RespiratoryRateConstant, ent.Comp.MinimumRespiratoryRateModifier);
+
+        var modifiedEv = new ModifiedRespiratoryRateEvent(rate);
+        RaiseLocalEvent(ent, ref modifiedEv);
+
+        return modifiedEv.Rate;
+    }
+
+    public int RespiratoryRate(Entity<HeartrateComponent> ent)
+    {
+        var breathDuration = ent.Comp.RespiratoryRateNormalBreath * ComputeRespiratoryRateModifier(ent);
+        if (breathDuration <= 0f)
+            return 0;
+
+        return (int)(60f / breathDuration);
+    }
+
+    public FixedPoint2 Spo2(Entity<HeartrateComponent> ent)
+    {
+        return FixedPoint2.Clamp(OxygenBalance(ent), 0, 1);
     }
 
     public void TryRestartHeart(Entity<HeartrateComponent?> ent)

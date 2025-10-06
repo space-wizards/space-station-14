@@ -3,6 +3,6 @@
         Orientation="Vertical"
         RectClipContent="True"
         Margin="4">
-        <RichTextLabel Name="Label" HorizontalExpand="True" />
+        <RichTextLabel Access="Protected" Name="Label" HorizontalExpand="True" />
     </BoxContainer>
 </PanelContainer>

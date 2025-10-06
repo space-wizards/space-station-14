@@ -443,7 +443,7 @@ public sealed class MobThresholdSystem : EntitySystem
     // Begin Offbrand
     private void MobThresholdMapInit(Entity<MobThresholdsComponent> ent, ref MapInitEvent args)
     {
-        var overlayUpdate = new Content.Shared._Offbrand.Wounds.bPotentiallyUpdateDamageOverlayEventb(ent);
+        var overlayUpdate = new Content.Shared._Offbrand.Wounds.PotentiallyUpdateDamageOverlayEvent(ent);
         RaiseLocalEvent(ent, ref overlayUpdate);
     }
     // End Offbrand

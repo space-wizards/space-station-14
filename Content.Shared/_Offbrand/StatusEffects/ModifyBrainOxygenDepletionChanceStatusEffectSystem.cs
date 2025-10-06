@@ -20,7 +20,7 @@ public sealed class ModifyBrainOxygenDepletionChanceStatusEffectSystem : EntityS
         if (Comp<StatusEffectComponent>(ent).AppliedTo is not { } target)
             return;
 
-        var oxygenation = _heart.BloodOxygenation((target, Comp<HeartrateComponent>(target)));
+        var oxygenation = _heart.Spo2((target, Comp<HeartrateComponent>(target)));
         if (ent.Comp.OxygenationModifierThresholds.LowestMatch(oxygenation) is not { } modifier)
             return;
 

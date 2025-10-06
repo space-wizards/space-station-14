@@ -16,6 +16,8 @@ public sealed partial class PainSystem : EntitySystem
         SubscribeLocalEvent<PainComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<PainComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<PainComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
+
+        SubscribeLocalEvent<PainMetabolicRateComponent, BaseMetabolicRateEvent>(OnBaseMetabolicRate);
     }
 
     private void OnApplyMetabolicMultiplier(Entity<PainComponent> ent, ref ApplyMetabolicMultiplierEvent args)
@@ -67,7 +69,7 @@ public sealed partial class PainSystem : EntitySystem
             var evt = new AfterShockChangeEvent();
             RaiseLocalEvent(uid, ref evt);
 
-            var overlays = new bPotentiallyUpdateDamageOverlayEventb(uid);
+            var overlays = new PotentiallyUpdateDamageOverlayEvent(uid);
             RaiseLocalEvent(uid, ref overlays, true);
 
             Dirty(uid, pain);
@@ -82,7 +84,7 @@ public sealed partial class PainSystem : EntitySystem
         var evt = new AfterShockChangeEvent();
         RaiseLocalEvent(ent, ref evt);
 
-        var overlays = new bPotentiallyUpdateDamageOverlayEventb(ent);
+        var overlays = new PotentiallyUpdateDamageOverlayEvent(ent);
         RaiseLocalEvent(ent, ref overlays, true);
     }
 
@@ -97,6 +99,12 @@ public sealed partial class PainSystem : EntitySystem
     private void OnMapInit(Entity<PainComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.LastUpdate = _timing.CurTime;
+    }
+
+    private void OnBaseMetabolicRate(Entity<PainMetabolicRateComponent> ent, ref BaseMetabolicRateEvent args)
+    {
+        var shock = GetShock(ent.Owner).Float();
+        args.Rate += MathF.Max(ent.Comp.QuadraticFactor * (shock * shock) + ent.Comp.LinearFactor * shock + ent.Comp.ConstantFactor, 0f);
     }
 
     public FixedPoint2 GetShock(Entity<PainComponent?> ent)

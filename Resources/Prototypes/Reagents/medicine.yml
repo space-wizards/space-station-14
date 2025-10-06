@@ -365,7 +365,7 @@
       # Begin Offbrand
       metabolismRate: 0.25
       statusEffects:
-      - statusEffect: StatusEffectHeartStrainEpinephrine
+      - statusEffect: StatusEffectEpinephrine
       effects:
       - !type:StartHeart
         probability: 0.03

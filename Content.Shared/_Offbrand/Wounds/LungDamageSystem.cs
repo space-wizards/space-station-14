@@ -1,4 +1,5 @@
 using Content.Shared.Alert;
+using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.Timing;
@@ -16,6 +17,7 @@ public sealed class LungDamageSystem : EntitySystem
 
         SubscribeLocalEvent<LungDamageComponent, BeforeBreathEvent>(OnBeforeBreath);
         SubscribeLocalEvent<LungDamageComponent, RejuvenateEvent>(OnRejuvenate);
+        SubscribeLocalEvent<LungDamageComponent, BaseLungFunctionEvent>(OnBaseLungFunction);
         SubscribeLocalEvent<LungDamageAlertsComponent, AfterLungDamageChangedEvent>(OnLungDamageChanged);
         SubscribeLocalEvent<LungDamageAlertsComponent, ComponentShutdown>(OnAlertsShutdown);
     }
@@ -64,6 +66,22 @@ public sealed class LungDamageSystem : EntitySystem
 
         var evt = new AfterLungDamageChangedEvent();
         RaiseLocalEvent(ent, ref evt);
+    }
+
+    private void OnBaseLungFunction(Entity<LungDamageComponent> ent, ref BaseLungFunctionEvent args)
+    {
+        var damage = ent.Comp.Damage.Float() / ent.Comp.MaxDamage.Float();
+        var health = 1f - damage;
+        var damageable = Comp<DamageableComponent>(ent);
+        if (!damageable.Damage.DamageDict.TryGetValue(ent.Comp.AsphyxiationDamage, out var asphyxiationAmount))
+        {
+            args.Function *= health - damage;
+            return;
+        }
+
+        var airSupply = Math.Clamp(1f - (asphyxiationAmount.Float() / ent.Comp.AsphyxiationThreshold.Float()), 0, 1);
+
+        args.Function *= health * airSupply;
     }
 
     private void OnLungDamageChanged(Entity<LungDamageAlertsComponent> ent, ref AfterLungDamageChangedEvent args)

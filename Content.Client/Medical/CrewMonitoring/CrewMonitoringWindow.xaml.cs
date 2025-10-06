@@ -239,9 +239,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             }
             else if (sensor.WoundableData is { } woundableSummary)
             {
-                var worstRating = Math.Max((byte)woundableSummary.BloodPressureRating, Math.Max((byte)woundableSummary.BloodOxygenationRating, (byte)woundableSummary.HeartRateRating));
-                var index = MathF.Round(4f * ((float)worstRating)/5f);
-                specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Alerts/human_crew_monitoring.rsi"), "health" + index);
+                specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Alerts/human_crew_monitoring.rsi"), $"health{(byte)woundableSummary.Ranking}");
             }
             // End Offbrand Additions
 
@@ -330,10 +328,10 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
 
             if (sensor.WoundableData is { } woundable)
             {
-                vitalsContainer.AddChild(new RichTextLabel() { Text = Loc.GetString("offbrand-crew-monitoring-heart-rate", ("rate", woundable.HeartRate), ("rating", woundable.HeartRateRating)) });
+                vitalsContainer.AddChild(new RichTextLabel() { Text = Loc.GetString("offbrand-crew-monitoring-heart-rate", ("rate", woundable.HeartRate)) });
                 var (systolic, diastolic) = woundable.BloodPressure;
-                vitalsContainer.AddChild(new RichTextLabel() { Text = Loc.GetString("offbrand-crew-monitoring-blood-pressure", ("systolic", systolic), ("diastolic", diastolic), ("rating", woundable.BloodPressureRating)) });
-                vitalsContainer.AddChild(new RichTextLabel() { Text = Loc.GetString("offbrand-crew-monitoring-oxygenation", ("oxygenation", $"{woundable.BloodOxygenation * 100:F1}"), ("rating", woundable.BloodOxygenationRating)) });
+                vitalsContainer.AddChild(new RichTextLabel() { Text = Loc.GetString("offbrand-crew-monitoring-blood-pressure", ("systolic", systolic), ("diastolic", diastolic)) });
+                vitalsContainer.AddChild(new RichTextLabel() { Text = Loc.GetString("offbrand-crew-monitoring-spo2", ("value", $"{woundable.Spo2 * 100:F1}"), ("spo2", woundable.Spo2Name)) });
             }
 
             mainContainer.AddChild(vitalsContainer);

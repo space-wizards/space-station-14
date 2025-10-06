@@ -105,40 +105,48 @@
   id: StatusEffectHeartStrainOxycodoneAlcohol
 
 - type: entity
-  parent: StatusEffectHeartStrainHyperzine
-  id: StatusEffectHeartStrainEpinephrine
+  parent: MobStatusEffectBase
+  id: StatusEffectEpinephrine
+  name: counteracts the effects of low brain health on blood pressure and increases the metabolic rate
+  components:
+  - type: VascularToneModifierStatusEffect
+    tone: 0.9
+  - type: MetabolicRateModifierStatusEffect
+    delta: 0.1
 
 - type: entity
   parent: MobStatusEffectBase
   id: StatusEffectHeartStrainSedin
-  name: severely increased heart rate
+  name: severely increased metabolic rate
   components:
-  - type: StrainStatusEffect
-    delta: 2
+  - type: MetabolicRateModifierStatusEffect
+    delta: 0.25
 
 - type: entity
   parent: MobStatusEffectBase
   id: StatusEffectHeartStrainRomerol
-  name: increased heart rate
+  name: increased metabolic rate
   components:
-  - type: StrainStatusEffect
-    delta: 1.5
+  - type: MetabolicRateModifierStatusEffect
+    delta: 0.25
 
 - type: entity
   parent: MobStatusEffectBase
   id: StatusEffectHeartStabilizationInaprovaline
-  name: reduced heartrate
+  name: reduced metabolic rate and regulated respiratory rate
   components:
-  - type: StrainStatusEffect
-    delta: -2
+  - type: MetabolicRateModifierStatusEffect
+    delta: -0.5
+  - type: RespiratoryRateModifierStatusEffect
+    rate: 0.8
 
 - type: entity
   parent: MobStatusEffectBase
   id: StatusEffectHeartStrainDesoxyephedrine
-  name: increased heart rate
+  name: increased metabolic rate
   components:
-  - type: StrainStatusEffect
-    delta: 1
+  - type: MetabolicRateModifierStatusEffect
+    delta: 0.15
 
 - type: entity
   parent: StatusEffectHeartStrainDesoxyephedrine
@@ -147,27 +155,27 @@
 - type: entity
   parent: MobStatusEffectBase
   id: StatusEffectHeartStrainNicotine
-  name: slightly increased heart rate
+  name: slightly increased metabolic rate
   components:
-  - type: StrainStatusEffect
-    delta: 0.5
+  - type: MetabolicRateModifierStatusEffect
+    delta: 0.1
 
 - type: entity
   parent: MobStatusEffectBase
   id: StatusEffectHeartStrainHyperzine
-  name: severely increased heart rate & forced heartbeat
+  name: severely increased metabolic rate & forced heartbeat
   components:
-  - type: StrainStatusEffect
-    delta: 2
   - type: PreventHeartStopFromStrainStatusEffect
+  - type: MetabolicRateModifierStatusEffect
+    delta: 0.5
 
 - type: entity
   parent: MobStatusEffectBase
   id: StatusEffectHeartStabilizationTHC
-  name: minor heart stabilization
+  name: 20 pain relief
   components:
-  - type: StrainStatusEffect
-    delta: -1
+  - type: PainkillerStatusEffect
+    effectiveness: 20
 
 - type: entity
   parent: StatusEffectHeartStabilizationInaprovaline
@@ -209,8 +217,8 @@
   id: StatusEffectMinorOxygenationDexalin
   name: 50% artificial respiration
   components:
-  - type: BloodOxygenationModifierStatusEffect
-    minimumOxygenation: 0.5
+  - type: LungFunctionModifierStatusEffect
+    function: 0.5
 
 - type: entity
   parent: StatusEffectMinorOxygenationDexalin
@@ -225,8 +233,8 @@
   id: StatusEffectMajorOxygenationDexalinPlus
   name: 80% artificial respiration
   components:
-  - type: BloodOxygenationModifierStatusEffect
-    minimumOxygenation: 0.8
+  - type: LungFunctionModifierStatusEffect
+    function: 0.8
 
 - type: entity
   parent: StatusEffectMajorOxygenationDexalinPlus
@@ -399,8 +407,8 @@
   id: StatusEffectActiveCPR
   name: ongoing CPR
   components:
-  - type: AssistedCirculationStatusEffect
-    amount: 0.4
+  - type: CardiacOutputModifierStatusEffect
+    output: 0.8
 
 - type: entity
   abstract: true

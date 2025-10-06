@@ -1,5 +1,6 @@
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -22,6 +23,18 @@ public sealed partial class LungDamageComponent : Component
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
     public FixedPoint2 Damage;
+
+    /// <summary>
+    /// The damage type to use when computing oxygenation from the lungs
+    /// </summary>
+    [DataField(required: true)]
+    public ProtoId<DamageTypePrototype> AsphyxiationDamage;
+
+    /// <summary>
+    /// The amount of <see cref="AsphyxiationDamage" /> at which lung oxygenation is considered to be 0%
+    /// </summary>
+    [DataField(required: true)]
+    public FixedPoint2 AsphyxiationThreshold;
 }
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]

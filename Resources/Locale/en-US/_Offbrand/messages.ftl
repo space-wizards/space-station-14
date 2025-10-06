@@ -1,7 +1,5 @@
 heart-defibrillatable-target-is-dead = Severe neurological decay makes rescuitation impossible. Further attempts futile.
-heart-defibrillatable-target-hypovolemia = Patient is in hypovolemic shock and will require a blood transfuion: rescuitation will likely fail.
-heart-defibrillatable-target-brain-damage = Patient has severe neurological decay: rescuitation will likely fail without epinephrine.
-heart-defibrillatable-target-pain = Patient is in severe shock: the heart may stop without intervention.
+heart-defibrillatable-target-strain = Patient's vitals are outside of acceptable parameters: the patient will likely re-enter cardiac arrest.
 
 mmi-extractor-no-mind = No neurological activity detected in patient; brain will not be extracted.
 mmi-extractor-probing = Probing patient for neurological activity...

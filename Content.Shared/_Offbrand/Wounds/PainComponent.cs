@@ -61,6 +61,20 @@ public sealed partial class PainComponent : Component
     public TimeSpan? LastUpdate;
 }
 
+[RegisterComponent]
+[Access(typeof(PainSystem))]
+public sealed partial class PainMetabolicRateComponent : Component
+{
+    [DataField(required: true)]
+    public float QuadraticFactor;
+
+    [DataField(required: true)]
+    public float LinearFactor;
+
+    [DataField(required: true)]
+    public float ConstantFactor;
+}
+
 /// <summary>
 /// Raised on an entity after its shock has changed
 /// </summary>

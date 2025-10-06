@@ -1,5 +1,7 @@
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Shared._Offbrand.Wounds;
+using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.EntitySystems;
@@ -11,6 +13,7 @@ namespace Content.Server._Offbrand.Wounds;
 
 public sealed class WoundableHealthAnalyzerSystem : SharedWoundableHealthAnalyzerSystem
 {
+    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
@@ -59,6 +62,29 @@ public sealed class WoundableHealthAnalyzerSystem : SharedWoundableHealthAnalyze
                     ret[reagent] = (0, 0);
 
                 ret[reagent] = (ret[reagent].InBloodstream, ret[reagent].Metabolites + quantity);
+            }
+        }
+
+        foreach (var lung in _body.GetBodyOrganEntityComps<LungComponent>(uid))
+        {
+            foreach (var gasId in Enum.GetValues<Gas>())
+            {
+                var idx = (int) gasId;
+                var moles = lung.Comp1.Air[idx];
+                if (moles <= 0)
+                    continue;
+
+                if (_atmosphere.GasReagents[idx] is not { } reagent)
+                    continue;
+
+                var amount = FixedPoint2.New(moles * Atmospherics.BreathMolesToReagentMultiplier);
+                if (amount <= 0)
+                    continue;
+
+                if (!ret.ContainsKey(reagent))
+                    ret[reagent] = (0, 0);
+
+                ret[reagent] = (ret[reagent].InBloodstream + amount, ret[reagent].Metabolites);
             }
         }
 

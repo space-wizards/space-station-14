@@ -21,4 +21,4 @@ public record struct BeforeDamageCommitEvent(DamageSpecifier Damage, bool ForceR
 /// Raised when the values for a damage overlay may have changed
 /// </summary>
 [ByRefEvent]
-public record struct bPotentiallyUpdateDamageOverlayEventb(EntityUid Target);
+public record struct PotentiallyUpdateDamageOverlayEvent(EntityUid Target);

@@ -34,7 +34,7 @@ public sealed class DamageOverlayUiController : UIController
         SubscribeLocalEvent<LocalPlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<MobThresholdChecked>(OnThresholdCheck);
-        SubscribeLocalEvent<bPotentiallyUpdateDamageOverlayEventb>(OnPotentiallyUpdateDamageOverlay); // Offbrand
+        SubscribeLocalEvent<PotentiallyUpdateDamageOverlayEvent>(OnPotentiallyUpdateDamageOverlay); // Offbrand
     }
 
     private void OnPlayerAttach(LocalPlayerAttachedEvent args)
@@ -86,7 +86,7 @@ public sealed class DamageOverlayUiController : UIController
         TryUpdateWoundableOverlays(entity);
     }
 
-    private void OnPotentiallyUpdateDamageOverlay(ref bPotentiallyUpdateDamageOverlayEventb args)
+    private void OnPotentiallyUpdateDamageOverlay(ref PotentiallyUpdateDamageOverlayEvent args)
     {
         if (args.Target != _playerManager.LocalEntity)
             return;
@@ -113,7 +113,7 @@ public sealed class DamageOverlayUiController : UIController
             {
                 _overlay.CritLevel = FixedPoint2.Clamp(brainDamage.Damage / maxBrain, 0, 1).Float();
                 _overlay.PainLevel = FixedPoint2.Clamp(_pain.GetShock((entity, pain)) / maxShock, 0, 1).Float();
-                _overlay.OxygenLevel = FixedPoint2.Clamp(1 - _heart.BloodOxygenation((entity, heartrate)), 0, 1).Float();
+                _overlay.OxygenLevel = FixedPoint2.Clamp(1 - _heart.Spo2((entity, heartrate)), 0, 1).Float();
                 _overlay.DeadLevel = 0;
                 break;
             }

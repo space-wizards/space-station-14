@@ -161,12 +161,6 @@ public record struct HealWoundsEvent(DamageSpecifier Damage);
 public record struct GetPainEvent(FixedPoint2 Pain);
 
 /// <summary>
-/// Raised on an entity to get the sum total of heart strain
-/// </summary>
-[ByRefEvent]
-public record struct GetStrainEvent(FixedPoint2 Strain);
-
-/// <summary>
 /// Raised on an entity to get the amount it should bleed
 /// </summary>
 [ByRefEvent]

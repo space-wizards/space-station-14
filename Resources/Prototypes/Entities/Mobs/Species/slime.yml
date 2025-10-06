@@ -20,6 +20,13 @@
     maxItemSize: Large
     storageInsertSound:
       path: /Audio/Voice/Slime/slime_squish.ogg
+  # Begin Offbrand Additions
+  - type: Heartrate
+    etco2Name: etco2-nitrous-oxide
+    etco2GasName: reagent-name-nitrous-oxide
+    spo2Name: spo2-nitrogen
+    spo2GasName: reagent-name-nitrogen
+  # End Offbrand Additions
   - type: ContainerContainer
     containers:
       storagebase: !type:Container

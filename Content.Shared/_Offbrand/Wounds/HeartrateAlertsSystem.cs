@@ -24,14 +24,17 @@ public sealed class HeartrateAlertsSystem : EntitySystem
         var heartrate = Comp<HeartrateComponent>(ent);
         if (heartrate.Running)
         {
-            var strain = FixedPoint2.Min(_heart.HeartStrain((ent, heartrate)), ent.Comp.MaxStrain);
-            _alerts.ShowAlert(ent.Owner, ent.Comp.StrainAlert, (short)strain.Int());
+            var range = _alerts.GetSeverityRange(ent.Comp.StrainAlert);
+            var min = _alerts.GetMinSeverity(ent.Comp.StrainAlert);
+            var max = _alerts.GetMaxSeverity(ent.Comp.StrainAlert);
+
+            var severity = Math.Min(min + (short)Math.Round(range * _heart.Strain((ent.Owner, heartrate))), max);
+            _alerts.ShowAlert(ent.Owner, ent.Comp.StrainAlert, (short)severity);
         }
         else
         {
             _alerts.ShowAlert(ent.Owner, ent.Comp.StoppedAlert);
         }
-
     }
 
     private void OnMapInit(Entity<HeartrateAlertsComponent> ent, ref MapInitEvent args)

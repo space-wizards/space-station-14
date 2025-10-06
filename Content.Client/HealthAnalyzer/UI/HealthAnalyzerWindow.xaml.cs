@@ -41,14 +41,15 @@ namespace Content.Client.HealthAnalyzer.UI
         private readonly Tooltips.StatusTooltip _statusTooltip = new();
         private readonly Tooltips.BrainHealthTooltip _brainHealthTooltip = new();
         private readonly Tooltips.BloodPressureTooltip _bloodPressureTooltip = new();
-        private readonly Tooltips.BloodOxygenationTooltip _bloodOxygenationTooltip = new();
         private readonly Tooltips.HeartRateTooltip _heartRateTooltip = new();
         private readonly Tooltips.HeartHealthTooltip _heartHealthTooltip = new();
         private readonly Tooltips.LungHealthTooltip _lungHealthTooltip = new();
-        private readonly Tooltips.BloodFlowTooltip _bloodFlowTooltip = new();
         private readonly Tooltips.BloodTooltip _bloodTooltip = new();
         private readonly Tooltips.TemperatureTooltip _temperatureTooltip = new();
         private readonly Tooltips.DamageTooltip _damageTooltip = new();
+        private readonly Tooltips.SpO2Tooltip _spo2Tooltip = new();
+        private readonly Tooltips.EtCO2Tooltip _etco2Tooltip = new();
+        private readonly Tooltips.RespiratoryRateTooltip _respiratoryRateTooltip = new();
         // End Offbrand
 
         public HealthAnalyzerWindow()
@@ -65,14 +66,15 @@ namespace Content.Client.HealthAnalyzer.UI
             StatusButton.TooltipSupplier = _ => _statusTooltip;
             BrainHealthButton.TooltipSupplier = _ => _brainHealthTooltip;
             BloodPressureButton.TooltipSupplier = _ => _bloodPressureTooltip;
-            BloodOxygenationButton.TooltipSupplier = _ => _bloodOxygenationTooltip;
             HeartRateButton.TooltipSupplier = _ => _heartRateTooltip;
-            BloodFlowButton.TooltipSupplier = _ => _bloodFlowTooltip;
             HeartHealthButton.TooltipSupplier = _ => _heartHealthTooltip;
             TemperatureButton.TooltipSupplier = _ => _temperatureTooltip;
             DamageButton.TooltipSupplier = _ => _damageTooltip;
             BloodButton.TooltipSupplier = _ => _bloodTooltip;
             LungHealthButton.TooltipSupplier = _ => _lungHealthTooltip;
+            SpO2Button.TooltipSupplier = _ => _spo2Tooltip;
+            EtCO2Button.TooltipSupplier = _ => _etco2Tooltip;
+            RespiratoryRateButton.TooltipSupplier = _ => _respiratoryRateTooltip;
             // End Offbrand
         }
 
@@ -91,12 +93,12 @@ namespace Content.Client.HealthAnalyzer.UI
 
             // Begin Offbrand Tooltips
             _brainHealthTooltip.Update(msg);
-            _bloodPressureTooltip.Update(msg);
-            _bloodOxygenationTooltip.Update(msg, (target.Value, damageable, _entityManager.GetComponentOrNull<HeartrateComponent>(target)));
-            _heartRateTooltip.Update(msg, (target.Value, damageable, _entityManager.GetComponentOrNull<HeartrateComponent>(target)));
-            _bloodFlowTooltip.Update(msg);
+            _heartRateTooltip.Update(msg);
             _heartHealthTooltip.Update(msg);
             _temperatureTooltip.Update(msg, (target.Value, _entityManager.GetComponentOrNull<CryostasisFactorComponent>(target)));
+            _spo2Tooltip.Update(msg);
+            _etco2Tooltip.Update(msg);
+            _respiratoryRateTooltip.Update(msg);
             // End Offbrand Tooltips
 
             // Scan Mode
@@ -236,39 +238,46 @@ namespace Content.Client.HealthAnalyzer.UI
                 }
                 BrainHealthText.Visible = true;
                 BrainHealthLabel.Visible = true;
-                BrainHealthLabel.Text = Loc.GetString("health-analyzer-window-entity-brain-health-value", ("value", $"{woundable.BrainHealth * 100:F1}"), ("rating", woundable.BrainHealthRating));
+                BrainHealthLabel.Text = Loc.GetString("health-analyzer-window-entity-brain-health-value", ("value", $"{woundable.BrainHealth * 100:F1}"));
                 BrainHealthButton.Visible = true;
 
                 HeartHealthText.Visible = true;
                 HeartHealthLabel.Visible = true;
-                HeartHealthLabel.Text = Loc.GetString("health-analyzer-window-entity-heart-health-value", ("value", $"{woundable.HeartHealth * 100:F1}"), ("rating", woundable.HeartHealthRating));
+                HeartHealthLabel.Text = Loc.GetString("health-analyzer-window-entity-heart-health-value", ("value", $"{woundable.HeartHealth * 100:F1}"));
                 HeartHealthButton.Visible = true;
 
                 HeartRateText.Visible = true;
                 HeartRateLabel.Visible = true;
-                HeartRateLabel.Text = Loc.GetString("health-analyzer-window-entity-heart-rate-value", ("value", woundable.HeartRate), ("rating", woundable.HeartRateRating));
+                HeartRateLabel.Text = Loc.GetString("health-analyzer-window-entity-heart-rate-value", ("value", woundable.HeartRate));
                 HeartRateButton.Visible = true;
-
-                BloodOxygenationText.Visible = true;
-                BloodOxygenationLabel.Visible = true;
-                BloodOxygenationLabel.Text = Loc.GetString("health-analyzer-window-entity-blood-oxygenation-value", ("value", $"{woundable.BloodOxygenation * 100:F1}"), ("rating", woundable.BloodOxygenationRating));
-                BloodOxygenationButton.Visible = true;
-
-                BloodFlowText.Visible = true;
-                BloodFlowLabel.Visible = true;
-                BloodFlowLabel.Text = Loc.GetString("health-analyzer-window-entity-blood-flow-value", ("value", $"{woundable.BloodFlow * 100:F1}"), ("rating", woundable.BloodFlowRating));
-                BloodFlowButton.Visible = true;
 
                 var (systolic, diastolic) = woundable.BloodPressure;
                 BloodPressureText.Visible = true;
                 BloodPressureLabel.Visible = true;
-                BloodPressureLabel.Text = Loc.GetString("health-analyzer-window-entity-blood-pressure-value", ("systolic", systolic), ("diastolic", diastolic), ("rating", woundable.BloodPressureRating));
+                BloodPressureLabel.Text = Loc.GetString("health-analyzer-window-entity-blood-pressure-value", ("systolic", systolic), ("diastolic", diastolic));
                 BloodPressureButton.Visible = true;
 
                 LungHealthText.Visible = true;
                 LungHealthLabel.Visible = true;
-                LungHealthLabel.Text = Loc.GetString("health-analyzer-window-entity-lung-health-value", ("value", $"{woundable.LungHealth * 100:F1}"), ("rating", woundable.LungHealthRating));
+                LungHealthLabel.Text = Loc.GetString("health-analyzer-window-entity-lung-health-value", ("value", $"{woundable.LungHealth * 100:F1}"));
                 LungHealthButton.Visible = true;
+
+                SpO2Text.Visible = true;
+                SpO2Text.Text = Loc.GetString("health-analyzer-window-entity-spo2-text", ("spo2", woundable.Spo2Name));
+                SpO2Label.Visible = true;
+                SpO2Label.Text = Loc.GetString("health-analyzer-window-entity-spo2-value", ("value", $"{woundable.Spo2 * 100:F1}"));
+                SpO2Button.Visible = true;
+
+                EtCO2Text.Visible = true;
+                EtCO2Text.Text = Loc.GetString("health-analyzer-window-entity-etco2-text", ("etco2", woundable.Etco2Name));
+                EtCO2Label.Visible = true;
+                EtCO2Label.Text = Loc.GetString("health-analyzer-window-entity-etco2-value", ("value", $"{woundable.Etco2}"));
+                EtCO2Button.Visible = true;
+
+                RespiratoryRateText.Visible = true;
+                RespiratoryRateLabel.Visible = true;
+                RespiratoryRateLabel.Text = Loc.GetString("health-analyzer-window-entity-respiratory-rate-value", ("value", $"{woundable.RespiratoryRate}"));
+                RespiratoryRateButton.Visible = true;
 
                 BloodLabel.Visible = false;
                 BloodText.Visible = false;
@@ -278,25 +287,28 @@ namespace Content.Client.HealthAnalyzer.UI
             {
                 BrainHealthLabel.Visible = false;
                 BloodPressureLabel.Visible = false;
-                BloodOxygenationLabel.Visible = false;
                 HeartRateLabel.Visible = false;
                 HeartHealthLabel.Visible = false;
-                BloodFlowLabel.Visible = false;
                 LungHealthLabel.Visible = false;
                 BrainHealthText.Visible = false;
                 BloodPressureText.Visible = false;
-                BloodOxygenationText.Visible = false;
-                BloodFlowText.Visible = false;
                 HeartRateText.Visible = false;
                 HeartHealthText.Visible = false;
                 LungHealthText.Visible = false;
                 BrainHealthButton.Visible = false;
                 BloodPressureButton.Visible = false;
-                BloodOxygenationButton.Visible = false;
-                BloodFlowButton.Visible = false;
                 HeartRateButton.Visible = false;
                 HeartHealthButton.Visible = false;
                 LungHealthButton.Visible = false;
+                SpO2Text.Visible = false;
+                SpO2Label.Visible = false;
+                SpO2Button.Visible = false;
+                EtCO2Text.Visible = false;
+                EtCO2Label.Visible = false;
+                EtCO2Button.Visible = false;
+                RespiratoryRateText.Visible = false;
+                RespiratoryRateLabel.Visible = false;
+                RespiratoryRateButton.Visible = false;
 
                 BloodLabel.Visible = true;
                 BloodText.Visible = true;

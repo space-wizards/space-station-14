@@ -152,10 +152,9 @@ public sealed partial class ZombieSystem
         {
             RemComp<HeartrateComponent>(target);
             RemComp<HeartDefibrillatableComponent>(target);
-            RemComp<HeartStopOnHypovolemiaComponent>(target);
             RemComp<HeartStopOnHighStrainComponent>(target);
-            RemComp<HeartStopOnBrainHealthComponent>(target);
             RemComp<PainComponent>(target);
+            RemComp<PainMetabolicRateComponent>(target);
             RemComp<HeartrateAlertsComponent>(target);
             RemComp<ShockThresholdsComponent>(target);
             RemComp<ShockAlertsComponent>(target);

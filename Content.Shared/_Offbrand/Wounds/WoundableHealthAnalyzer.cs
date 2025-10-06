@@ -10,49 +10,43 @@ namespace Content.Shared._Offbrand.Wounds;
 public sealed partial class WoundableHealthAnalyzerData
 {
     [DataField]
-    public double BrainHealth;
+    public float BrainHealth;
 
     [DataField]
-    public AttributeRating BrainHealthRating;
-
-    [DataField]
-    public double HeartHealth;
-
-    [DataField]
-    public AttributeRating HeartHealthRating;
+    public float HeartHealth;
 
     [DataField]
     public (int, int) BloodPressure;
 
     [DataField]
-    public AttributeRating BloodPressureRating;
-
-    [DataField]
-    public double BloodOxygenation;
-
-    [DataField]
-    public AttributeRating BloodOxygenationRating;
-
-    [DataField]
-    public double BloodFlow;
-
-    [DataField]
-    public AttributeRating BloodFlowRating;
-
-    [DataField]
     public int HeartRate;
 
     [DataField]
-    public AttributeRating HeartRateRating;
+    public int Etco2;
 
     [DataField]
-    public double LungHealth;
+    public int RespiratoryRate;
 
     [DataField]
-    public AttributeRating LungHealthRating;
+    public float Spo2;
+
+    [DataField]
+    public float LungHealth;
 
     [DataField]
     public bool AnyVitalCritical;
+
+    [DataField]
+    public LocId Etco2Name;
+
+    [DataField]
+    public LocId Etco2GasName;
+
+    [DataField]
+    public LocId Spo2Name;
+
+    [DataField]
+    public LocId Spo2GasName;
 
     [DataField]
     public List<string>? Wounds;
@@ -62,17 +56,19 @@ public sealed partial class WoundableHealthAnalyzerData
 
     [DataField]
     public bool NonMedicalReagents;
+
+    [DataField]
+    public MetricRanking Ranking;
 }
 
 [Serializable, NetSerializable]
-public enum AttributeRating : byte
+public enum MetricRanking : byte
 {
     Good = 0,
     Okay = 1,
     Poor = 2,
     Bad = 3,
-    Awful = 4,
-    Dangerous = 5,
+    Dangerous = 4,
 }
 
 public abstract class SharedWoundableHealthAnalyzerSystem : EntitySystem
@@ -83,16 +79,6 @@ public abstract class SharedWoundableHealthAnalyzerSystem : EntitySystem
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
 
     protected const string MedicineGroup = "Medicine";
-
-    private AttributeRating RateHigherIsBetter(double value)
-    {
-        return RateHigherIsWorse(1d - value);
-    }
-
-    private AttributeRating RateHigherIsWorse(double value)
-    {
-        return (AttributeRating)(byte)Math.Clamp(Math.Floor(6d * value), 0d, 5d);
-    }
 
     public List<string>? SampleWounds(EntityUid uid)
     {
@@ -119,6 +105,17 @@ public abstract class SharedWoundableHealthAnalyzerSystem : EntitySystem
         return null;
     }
 
+    public MetricRanking Ranking(Entity<HeartrateComponent> ent)
+    {
+        var strain = (MetricRanking)Math.Min((int)MathF.Round(4f * _heart.Strain(ent)), 4);
+        var spo2 = (MetricRanking)Math.Min((int)MathF.Round(4f * (1f - _heart.Spo2(ent).Float())), 4);
+
+        if ((byte)spo2 > (byte)strain)
+            return spo2;
+
+        return strain;
+    }
+
     public WoundableHealthAnalyzerData? TakeSample(EntityUid uid, bool withWounds = true)
     {
         if (!HasComp<WoundableComponent>(uid))
@@ -133,14 +130,10 @@ public abstract class SharedWoundableHealthAnalyzerSystem : EntitySystem
         if (!TryComp<LungDamageComponent>(uid, out var lungDamage))
             return null;
 
-        var brainHealth = 1d - ((double)brainDamage.Damage / (double)brainDamage.MaxDamage);
-        var heartHealth = 1d - ((double)heartrate.Damage / (double)heartrate.MaxDamage);
-        var lungHealth = 1d - ((double)lungDamage.Damage / (double)lungDamage.MaxDamage);
-        var strain = _heart.HeartStrain((uid, heartrate)).Double() / 4d;
+        var brainHealth = 1f - ((float)brainDamage.Damage / (float)brainDamage.MaxDamage);
+        var heartHealth = 1f - ((float)heartrate.Damage / (float)heartrate.MaxDamage);
+        var lungHealth = 1f - ((float)lungDamage.Damage / (float)lungDamage.MaxDamage);
         var (upper, lower) = _heart.BloodPressure((uid, heartrate));
-        var oxygenation = _heart.BloodOxygenation((uid, heartrate)).Double();
-        var circulation = _heart.BloodCirculation((uid, heartrate)).Double();
-        var flow = _heart.BloodFlow((uid, heartrate)).Double();
 
         var hasNonMedical = false;
         var reagents = withWounds ? SampleReagents(uid, out hasNonMedical) : null;
@@ -148,23 +141,22 @@ public abstract class SharedWoundableHealthAnalyzerSystem : EntitySystem
         return new WoundableHealthAnalyzerData()
             {
                 BrainHealth = brainHealth,
-                BrainHealthRating = RateHigherIsBetter(brainHealth),
                 HeartHealth = heartHealth,
-                HeartHealthRating = RateHigherIsBetter(heartHealth),
-                BloodPressure = (upper.Int(), lower.Int()),
-                BloodPressureRating = RateHigherIsBetter(circulation),
-                BloodOxygenation = oxygenation,
-                BloodOxygenationRating = RateHigherIsBetter(oxygenation),
-                BloodFlow = flow,
-                BloodFlowRating = RateHigherIsBetter(flow),
-                HeartRate = _heart.HeartRate((uid, heartrate)).Int(),
-                HeartRateRating = !heartrate.Running ? AttributeRating.Dangerous : RateHigherIsWorse(strain),
+                BloodPressure = (upper, lower),
+                HeartRate = _heart.HeartRate((uid, heartrate)),
+                Etco2 = _heart.Etco2((uid, heartrate)),
+                RespiratoryRate = _heart.RespiratoryRate((uid, heartrate)),
+                Spo2 = _heart.Spo2((uid, heartrate)).Float(),
                 LungHealth = lungHealth,
-                LungHealthRating = RateHigherIsBetter(lungHealth),
                 AnyVitalCritical = _shockThresholds.IsCritical(uid) || _brainDamage.IsCritical(uid) || _heart.IsCritical(uid),
+                Etco2Name = heartrate.Etco2Name,
+                Etco2GasName = heartrate.Etco2GasName,
+                Spo2Name = heartrate.Spo2Name,
+                Spo2GasName = heartrate.Spo2GasName,
                 Wounds = withWounds ? SampleWounds(uid) : null,
                 Reagents = reagents,
                 NonMedicalReagents = hasNonMedical,
+                Ranking = Ranking((uid, heartrate)),
             };
     }
 }
