@@ -2,8 +2,8 @@
   id: Loop
   mapName: 'Loop'
   mapPath: /Maps/loop.yml
-  minPlayers: 0
-  maxPlayers: 40
+  minPlayers: 25
+  maxPlayers: 65
   stations:
     Loop:
       stationProto: StandardNanotrasenStation
@@ -29,7 +29,7 @@
             SeniorOfficer: [ 1, 1 ]
             Detective: [ 1, 1 ]
             SecurityPilot: [ 1, 1 ]
-            SecurityOfficer: [ 3, 3 ]
+            SecurityOfficer: [ 4, 4 ]
             Brigmedic: [ 1, 1 ]
             SecurityCadet: [ 2, 2 ]
             # med
@@ -39,6 +39,7 @@
             MedicalDoctor: [ 4, 4 ]
             Paramedic: [ 1, 1 ]
             Coroner: [ 1, 1 ]
+            Psychologist: [ 1, 1 ]
             MedicalIntern: [ 3, 3 ]
             # rnd
             ResearchDirector: [ 1, 1 ]
@@ -55,7 +56,7 @@
             Quartermaster: [ 1, 1 ]
             SeniorSalvageSpecialist: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
-            CargoTechnician: [ 2, 2 ]
+            CargoTechnician: [ 3, 3 ]
             # civ
             HeadOfPersonnel: [ 1, 1 ]
             SeniorAdministrator: [ 1, 1 ]
@@ -73,7 +74,8 @@
             Clown: [ 1, 1 ]
             # sil
             StationAi: [ 1, 1 ]
-            Borg: [ 2, 3 ]
+            Borg: [ 3, 3 ]
             BorgSecurity: [ 1, 1 ]
             # etc
             ClownSponsor: [ 0, 2 ]
+            Zookeeper: [ 1, 1 ]
