@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking;
+using Content.Shared.EntityTable;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Popups;
 using Content.Shared.Timing;
@@ -38,6 +39,7 @@ public sealed partial class TriggerSystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
     [Dependency] private readonly SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private readonly EntityTableSystem _entityTable = default!;
 
     public const string DefaultTriggerKey = "trigger";
 
@@ -105,6 +107,7 @@ public sealed partial class TriggerSystem : EntitySystem
         ent.Comp.NextTrigger = curTime + ent.Comp.Delay;
         var delay = ent.Comp.InitialBeepDelay ?? ent.Comp.BeepInterval;
         ent.Comp.NextBeep = curTime + delay;
+        ent.Comp.User = user;
         Dirty(ent);
 
         var ev = new ActiveTimerTriggerEvent(user);

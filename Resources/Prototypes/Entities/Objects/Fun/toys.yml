@@ -11,10 +11,8 @@
     blacklist:
       components:
       - SecretStash # Prevents being able to insert plushies inside each other (infinite plush)!
-      - NukeDisk # Could confuse the Nukies if they don't know that plushies have a stash.
       tags:
       - QuantumSpinInverter # It will cause issues with the grinder...
-      - FakeNukeDisk # So you can't tell if the nuke disk is real or fake depending on if it can be inserted or not.
   - type: ToolOpenable
     openToolQualityNeeded: Slicing
     closeToolQualityNeeded: Slicing # Should probably be stitching or something if that gets added
@@ -452,6 +450,47 @@
   - type: Item
     size: Small
     sprite: Objects/Fun/Balls/football.rsi
+
+- type: entity
+  parent: BaseItem
+  id: TennisBall
+  name: tennis ball
+  description: A fuzzy orb of endless betrayal.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Balls/tennisball.rsi
+    state: icon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.25
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.5 # a little bouncy
+        friction: 0.2
+  - type: Catchable
+    catchChance: 0.8
+    catchSuccessSound:
+      path: /Audio/Effects/Footsteps/bounce.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/Footsteps/bounce.ogg
+  - type: Item
+    size: Small
+    sprite: Objects/Fun/Balls/tennisball.rsi
+  - type: EmitSoundOnUse
+    sound:
+      collection: ToySqueak
+      params:
+        volume: -4
+  - type: UseDelay
+  - type: Clothing
+    slots: [mask]
+  - type: Tag
+    tags:
+    - PetWearable
 
 - type: entity
   parent: BaseItem
