@@ -93,6 +93,15 @@
   - type: ReplacementAccent
     accent: liar
 
+- type: trait
+  id: RussianAccent
+  name: trait-russian-accent-name
+  description: trait-russian-accent-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: RussianAccent
+
 # 2 Cost
 
 - type: trait
