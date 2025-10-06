@@ -1,7 +1,0 @@
-<BoxContainer xmlns="https://spacestation14.io"
-    HorizontalExpand="True" Orientation="Vertical"
-            Margin = "20 0 0 0" MinSize="160 0" >
-    <Label Name="CBoundLabel" HorizontalAlignment="Center" />
-    <CheckBox Name="CBoundEnabled" HorizontalAlignment="Center" Text="{Loc 'air-alarm-ui-widget-enable'}" Pressed="True" />
-    <FloatSpinBox Name="CSpinner" />
-</BoxContainer>
