@@ -6,6 +6,7 @@ using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Light.EntitySystems;
 
@@ -66,6 +67,10 @@ public sealed class LightReplacerSystem : EntitySystem
     private void OnInit(EntityUid uid, LightReplacerComponent replacer, ComponentInit args)
     {
         replacer.InsertedBulbs = _container.EnsureContainer<Container>(uid, "light_replacer_storage");
+        foreach (var bulb in replacer.InsertedBulbs.ContainedEntities)
+        {
+            replacer.ContentOrder.Add(bulb); // Save the Order of Lightbulbs for Prediction
+        }
     }
 
     private void HandleAfterInteract(EntityUid uid, LightReplacerComponent component, AfterInteractEvent eventArgs)
@@ -122,12 +127,13 @@ public sealed class LightReplacerSystem : EntitySystem
                 return false;
         }
 
-        // try get first inserted bulb of the same type as targeted light fixtutre
-        var bulb = replacer.InsertedBulbs.ContainedEntities.LastOrDefault(
-            e => CompOrNull<LightBulbComponent>(e)?.Type == fixture.BulbType);
+        // try get last inserted bulb of the same type as targeted light fixtutre
+        var bulb = replacer.ContentOrder.LastOrDefault(
+            e => CompOrNull<LightBulbComponent>(e)?.Type == fixture.BulbType
+            && replacer.InsertedBulbs.Contains(e));
 
         // found bulb in inserted storage
-        if (bulb.Valid) // FirstOrDefault can return default/invalid uid.
+        if (bulb.Valid) // LastOrDefault can return default/invalid uid.
         {
             // try to remove it
             var hasRemoved = _container.Remove(bulb, replacer.InsertedBulbs);
@@ -136,12 +142,12 @@ public sealed class LightReplacerSystem : EntitySystem
         }
         else
         {
-            if (userUid != null)
-            {
-                var msg = Loc.GetString("comp-light-replacer-missing-light",
-                    ("light-replacer", replacerUid));
-                _popupSystem.PopupClient(msg, replacerUid, userUid.Value);
-            }
+            if (userUid == null)
+                return false;
+
+            var msg = Loc.GetString("comp-light-replacer-missing-light",
+                ("light-replacer", replacerUid));
+            _popupSystem.PopupClient(msg, replacerUid, userUid.Value);
             return false;
         }
 
@@ -181,6 +187,9 @@ public sealed class LightReplacerSystem : EntitySystem
 
         // try insert light and show message
         var hasInsert = _container.Insert(bulbUid, replacer.InsertedBulbs);
+        if (hasInsert && !replacer.ContentOrder.Contains(bulbUid))
+            replacer.ContentOrder.Add(bulbUid);
+
         if (hasInsert && showTooltip && userUid != null)
         {
             var msg = Loc.GetString("comp-light-replacer-insert-light",

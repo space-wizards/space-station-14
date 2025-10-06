@@ -11,7 +11,7 @@ namespace Content.Shared.Light.Components;
 ///     Device that allows user to quickly change bulbs in <see cref="PoweredLightComponent"/>
 ///     Can be reloaded by new light tubes or light bulbs
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(LightReplacerSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(LightReplacerSystem)), AutoGenerateComponentState]
 public sealed partial class LightReplacerComponent : Component
 {
     [DataField]
@@ -34,4 +34,10 @@ public sealed partial class LightReplacerComponent : Component
     /// </summary>
     [DataField]
     public List<EntitySpawnEntry> Contents = [];
+
+    /// <summary>
+    /// This is used for predition, since FirstOrDefault() doesn't properly save the content order.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public List<EntityUid> ContentOrder = [];
 }
