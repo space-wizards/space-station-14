@@ -81,6 +81,7 @@
   sprites:
   - sprite: Mobs/Customization/vox_tattoos.rsi
     state: chest_v_1
+  - sprite: Mobs/Customization/vox_tattoos.rsi
     state: chest_v_2
 
 - type: marking
