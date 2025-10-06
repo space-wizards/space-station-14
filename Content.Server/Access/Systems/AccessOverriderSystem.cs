@@ -229,7 +229,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         _adminLogger.Add(LogType.Action, LogImpact.High,
             $"{ToPrettyString(player):player} has modified {ToPrettyString(accessReaderEnt.Value):entity} with the following allowed access level holders: [{string.Join(", ", addedTags.Union(removedTags))}] [{string.Join(", ", newAccessList)}]");
 
-        _accessReader.SetAccesses(accessReaderEnt.Value, newAccessList);
+        _accessReader.TrySetAccesses(accessReaderEnt.Value, newAccessList);
 
         var ev = new OnAccessOverriderAccessUpdatedEvent(player);
         RaiseLocalEvent(component.TargetAccessReaderId, ref ev);
