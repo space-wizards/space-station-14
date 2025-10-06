@@ -114,7 +114,7 @@
 
 - type: entity
   id: BibleDruid
-  name: druidic tablet
+  name: mystery of the druids
   parent: BibleBase
   description: "It's the mystery of the druids!"
   components:
@@ -123,9 +123,9 @@
     reactionTypes:
     - Druidic
   - type: Sprite
-    sprite: Objects/Specific/Chapel/druidictablet.rsi
+    sprite: Objects/Specific/Chapel/mysteryofthedruids.rsi
   - type: Item
-    sprite: Objects/Specific/Chapel/druidictablet.rsi
+    sprite: Objects/Specific/Chapel/mysteryofthedruids.rsi
 
 - type: entity
   id: BibleCommunistManifesto
@@ -209,9 +209,9 @@
     reactionTypes:
     - Lamp
   - type: Sprite
-    sprite: Objects/Specific/Chapel/lamp.rsi
+    sprite: Objects/Specific/Chapel/lanternpath.rsi
   - type: Item
-    sprite: Objects/Specific/Chapel/lamp.rsi
+    sprite: Objects/Specific/Chapel/lanternpath.rsi
 
 - type: entity
   id: BibleRatvar
