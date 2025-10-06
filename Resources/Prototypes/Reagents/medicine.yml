@@ -1468,7 +1468,7 @@
             max: 213.0
           damage:
             groups:
-              Burn: -6
+              Burn: -5
             types:
-              Poison: -10
-              Radiation: -5
+              Poison: -8
+              Radiation: -4
