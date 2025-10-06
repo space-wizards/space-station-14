@@ -1,6 +1,8 @@
-﻿using Content.Shared.Interaction;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item.ItemToggle.Components;
+using Content.Shared.Throwing;
 using Content.Shared.Trigger.Components.Triggers;
 using Content.Shared.Trigger.Components.Effects;
 
@@ -10,12 +12,23 @@ public sealed partial class TriggerSystem
 {
     private void InitializeInteraction()
     {
+        SubscribeLocalEvent<TriggerOnExaminedComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<TriggerOnActivateComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<TriggerOnUseComponent, UseInHandEvent>(OnUse);
+        SubscribeLocalEvent<TriggerOnInteractHandComponent, InteractHandEvent>(OnInteractHand);
+        SubscribeLocalEvent<TriggerOnInteractUsingComponent, InteractUsingEvent>(OnInteractUsing);
+
+        SubscribeLocalEvent<TriggerOnThrowComponent, ThrowEvent>(OnThrow);
+        SubscribeLocalEvent<TriggerOnThrownComponent, ThrownEvent>(OnThrown);
 
         SubscribeLocalEvent<ItemToggleOnTriggerComponent, TriggerEvent>(HandleItemToggleOnTrigger);
         SubscribeLocalEvent<AnchorOnTriggerComponent, TriggerEvent>(HandleAnchorOnTrigger);
         SubscribeLocalEvent<UseDelayOnTriggerComponent, TriggerEvent>(HandleUseDelayOnTrigger);
+    }
+
+    private void OnExamined(Entity<TriggerOnExaminedComponent> ent, ref ExaminedEvent args)
+    {
+        Trigger(ent.Owner, args.Examiner, ent.Comp.KeyOut);
     }
 
     private void OnActivate(Entity<TriggerOnActivateComponent> ent, ref ActivateInWorldEvent args)
@@ -37,6 +50,37 @@ public sealed partial class TriggerSystem
 
         Trigger(ent.Owner, args.User, ent.Comp.KeyOut);
         args.Handled = true;
+    }
+
+    private void OnInteractHand(Entity<TriggerOnInteractHandComponent> ent, ref InteractHandEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        Trigger(ent.Owner, args.User, ent.Comp.KeyOut);
+        args.Handled = true;
+    }
+
+    private void OnInteractUsing(Entity<TriggerOnInteractUsingComponent> ent, ref InteractUsingEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!_whitelist.CheckBoth(args.Used, ent.Comp.Blacklist, ent.Comp.Whitelist))
+            return;
+
+        Trigger(ent.Owner, ent.Comp.TargetUsed ? args.Used : args.User, ent.Comp.KeyOut);
+        args.Handled = true;
+    }
+
+    private void OnThrow(Entity<TriggerOnThrowComponent> ent, ref ThrowEvent args)
+    {
+        Trigger(ent.Owner, args.Thrown, ent.Comp.KeyOut);
+    }
+
+    private void OnThrown(Entity<TriggerOnThrownComponent> ent, ref ThrownEvent args)
+    {
+        Trigger(ent.Owner, args.User, ent.Comp.KeyOut);
     }
 
     private void HandleItemToggleOnTrigger(Entity<ItemToggleOnTriggerComponent> ent, ref TriggerEvent args)

@@ -20,3 +20,5 @@
     snapCardinals: true
   - type: StaticPrice
     price: 20
+  - type: Transform
+    anchored: false

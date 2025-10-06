@@ -25,15 +25,21 @@ public sealed partial class TriggerSystem
             RemCompDeferred<ActiveListenerComponent>(ent);
     }
 
-    private void OnVoiceExamine(Entity<TriggerOnVoiceComponent> ent, ref ExaminedEvent args)
+    private void OnVoiceExamine(EntityUid uid, TriggerOnVoiceComponent component, ExaminedEvent args)
     {
-        if (args.IsInDetailsRange)
+        if (!args.IsInDetailsRange || !component.ShowExamine)
+            return;
+
+        if (component.InspectUninitializedLoc != null && string.IsNullOrWhiteSpace(component.KeyPhrase))
         {
-            args.PushText(string.IsNullOrWhiteSpace(ent.Comp.KeyPhrase)
-                ? Loc.GetString("trigger-on-voice-uninitialized")
-                : Loc.GetString("trigger-on-voice-examine", ("keyphrase", ent.Comp.KeyPhrase)));
+            args.PushText(Loc.GetString(component.InspectUninitializedLoc));
+        }
+        else if (component.InspectInitializedLoc != null && !string.IsNullOrWhiteSpace(component.KeyPhrase))
+        {
+            args.PushText(Loc.GetString(component.InspectInitializedLoc.Value, ("keyphrase", component.KeyPhrase)));
         }
     }
+
     private void OnListen(Entity<TriggerOnVoiceComponent> ent, ref ListenEvent args)
     {
         var component = ent.Comp;
@@ -71,13 +77,13 @@ public sealed partial class TriggerSystem
 
     private void OnVoiceGetAltVerbs(Entity<TriggerOnVoiceComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess)
+        if (!args.CanInteract || !args.CanAccess || !ent.Comp.ShowVerbs)
             return;
 
         var user = args.User;
         args.Verbs.Add(new AlternativeVerb
         {
-            Text = Loc.GetString(ent.Comp.IsRecording ? "trigger-on-voice-stop" : "trigger-on-voice-record"),
+            Text = Loc.GetString(ent.Comp.IsRecording ? ent.Comp.StopRecordingVerb : ent.Comp.StartRecordingVerb),
             Act = () =>
             {
                 if (ent.Comp.IsRecording)
@@ -93,7 +99,7 @@ public sealed partial class TriggerSystem
 
         args.Verbs.Add(new AlternativeVerb
         {
-            Text = Loc.GetString("trigger-on-voice-clear"),
+            Text = Loc.GetString(ent.Comp.ClearRecordingVerb),
             Act = () =>
             {
                 ClearRecording(ent);
