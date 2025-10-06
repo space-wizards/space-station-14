@@ -502,6 +502,7 @@ public sealed class SharedBloodstreamSystem : EntitySystem
 
         bloodData.Add(dnaData);
 
+        DirtyEntity(uid);
         return bloodData;
     }
 
