@@ -1,6 +1,0 @@
-void fragment() {
-    highp vec2 coords = FRAGCOORD.xy;
-    highp vec2 value = zRandom(coords * SCREEN_PIXEL_SIZE * sin(TIME * 0.01));
-    highp vec3 color = vec3(value.x);
-    COLOR = vec4(0.1 * color,1.0);
-}

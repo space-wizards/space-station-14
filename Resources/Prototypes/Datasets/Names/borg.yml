@@ -1,6 +1,0 @@
-# only used roundstart, names can be changed after
-- type: localizedDataset
-  id: NamesBorg
-  values:
-    prefix: names-borg-dataset-
-    count: 42

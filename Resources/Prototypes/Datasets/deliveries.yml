@@ -1,5 +1,0 @@
-- type: localizedDataset
-  id: DeliverySpamLetters
-  values:
-    prefix: delivery-spam-
-    count: 13

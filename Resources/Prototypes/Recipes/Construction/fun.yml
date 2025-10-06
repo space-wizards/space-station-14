@@ -1,7 +1,0 @@
-- type: construction
-  id: HornBananium
-  graph: BananiumHorn
-  startNode: start
-  targetNode: bananiumHorn
-  category: construction-category-weapons
-  objectType: Item

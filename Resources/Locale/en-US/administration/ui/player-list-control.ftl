@@ -1,1 +1,0 @@
-player-list-filter = Filter

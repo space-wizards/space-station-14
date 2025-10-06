@@ -1,1 +1,0 @@
-shutter-rattle = *rattle rattle*
