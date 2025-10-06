@@ -38,14 +38,7 @@ We are not currently accepting translations of the game on our main repository. 
 ```shell
 git clone https://github.com/space-wizards/space-station-14.git
 ```
-2. Go to the project folder and run `RUN_THIS.py` to initialize the submodules and load the engine:
-```shell
-cd space-station-14
-python RUN_THIS.py
-```
-3. Compile the solution:  
-
-Build the server using `dotnet build`.
+2. Cry, because you can't build it.
 
 [More detailed instructions on building the project.](https://docs.spacestation14.com/en/general-development/setup.html)
 
