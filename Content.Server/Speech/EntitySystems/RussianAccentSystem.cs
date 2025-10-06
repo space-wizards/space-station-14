@@ -13,7 +13,6 @@ public sealed class RussianAccentSystem : EntitySystem
     // Cached regex patterns
     private static readonly Regex TovarischRegex = new(@"\btovarisch\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-    // I HATE DOING REGEXES WHY DID I PUT MYSELF THROUGH THIS.
     // Sound replacement regexes
     private static readonly Regex ThToZVowelRegex = new(@"\bTh(?=[aeiou])", RegexOptions.Compiled);
     private static readonly Regex ThToZWordsRegex = new(@"Th(?=at|is|ese|ose|ey|em|an)", RegexOptions.Compiled);
@@ -51,7 +50,7 @@ public sealed class RussianAccentSystem : EntitySystem
         SubscribeLocalEvent<RussianAccentComponent, AccentGetEvent>(OnAccent);
     }
 
-    /// Applies Russian accent to a message by performing word replacements, grammar rules, and sound changes.
+    // Applies Russian accent to a message by performing word replacements, grammar rules, and sound changes.
     public string Accentuate(string message, RussianAccentComponent component)
     {
         var accentedMessage = _replacement.ApplyReplacements(message, "russian");
@@ -65,8 +64,8 @@ public sealed class RussianAccentSystem : EntitySystem
         return accentedMessage;
     }
 
-    /// Randomly replaces 'tovarisch' with 'Komrade' while preserving capitalization.
-    /// TODO: The ReplacementAccentSystem REALLY should have random replacements this built-in.
+    // Randomly replaces 'tovarisch' with 'Komrade' while preserving capitalization.
+    // TODO: The ReplacementAccentSystem REALLY should have random replacements built-in.
     private string ApplyKomradeReplacement(string message)
     {
         return TovarischRegex.Replace(message, match =>
@@ -86,7 +85,7 @@ public sealed class RussianAccentSystem : EntitySystem
         });
     }
 
-    /// Checks if a string is all uppercase letters.
+    // Checks if a string is all uppercase letters.
     private static bool IsAllUpperCase(string text)
     {
         if (string.IsNullOrEmpty(text))
@@ -100,7 +99,7 @@ public sealed class RussianAccentSystem : EntitySystem
         return true;
     }
 
-    /// Checks if a string is capitalized (first letter uppercase, rest lowercase).
+    // Checks if a string is capitalized (first letter uppercase, rest lowercase).
     private static bool IsCapitalized(string text)
     {
         if (string.IsNullOrEmpty(text) || !char.IsLetter(text[0]))
@@ -117,7 +116,7 @@ public sealed class RussianAccentSystem : EntitySystem
         return true;
     }
 
-    /// Applies sound-level replacements to simulate Russian accent phonetics.
+    // Applies sound-level replacements to simulate Russian accent phonetics.
     private string ApplySoundReplacements(string message)
     {
         var result = message;
