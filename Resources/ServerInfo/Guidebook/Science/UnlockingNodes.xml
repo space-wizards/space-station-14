@@ -18,7 +18,7 @@
 
   The order of trigger activation [bold]does not matter[/bold] for individual nodes. [italic]However[/italic], some triggers affect multiple nodes. As a rule of thumb, start with a trigger that is unique to the node you want to unlock. Activating a trigger for a different node during this phase prevents the target node from unlocking until the artifact’s cooldown ends.
 
-  [bold]Artifexium:[/bold] This reagent can also be used to unlock nodes directly and randomly, bypassing some or all trigger requirements.
+  <GuideReagentEmbed Reagent="Artifexium"/>
 
   ## Active Nodes
   Once unlocked, a node is considered active. Only the highest unlocked nodes in a tree’s layer are activatable, lower nodes in the same tree cannot be triggered anymore once a higher node has been activated.
@@ -27,7 +27,7 @@
 
   [bold]Manual activation triggers all unlocked nodes at once and consumes durability.[/bold]
 
-  [bold]Artifact Glue:[/bold] Splashing this reagent on an artifact restores the durability of all active nodes, allowing them to be manually activated again.
+  <GuideReagentEmbed Reagent="ArtifactGlue"/>
 
   ## Triggers
   Examples include:
