@@ -38,7 +38,7 @@ public sealed class NinjaConditionsSystem : EntitySystem
         args.Progress = DoorjackProgress(comp, _number.GetTarget(uid));
     }
 
-    private static float DoorjackProgress(DoorjackConditionComponent comp, int target)
+    private float DoorjackProgress(DoorjackConditionComponent comp, int target)
     {
         // prevent divide-by-zero
         if (target == 0)
@@ -96,12 +96,12 @@ public sealed class NinjaConditionsSystem : EntitySystem
         args.Progress = StealResearchProgress(comp, _number.GetTarget(uid));
     }
 
-    private static float StealResearchProgress(StealResearchConditionComponent comp, int target)
+    private float StealResearchProgress(StealResearchConditionComponent comp, int target)
     {
         // prevent divide-by-zero
         if (target == 0)
             return 1f;
 
-        return MathF.Min(comp.DownloadedNodes.Count / (float)target, 1f);
+        return MathF.Min(comp.DownloadedNodes.Count / (float) target, 1f);
     }
 }
