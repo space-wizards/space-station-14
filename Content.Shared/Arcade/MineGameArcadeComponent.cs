@@ -11,7 +11,7 @@ public sealed partial class MineGameArcadeComponent : Component
     /// <summary>
     /// Minimum allowed board size for games on this component
     /// </summary>
-    [DataField("minBoardSize")]
+    [DataField]
     public Vector2i MinBoardSize = new Vector2i(9, 9);
 
     /// <summary>
@@ -48,7 +48,7 @@ public sealed partial class MineGameArcadeComponent : Component
     /// <summary>
     /// Player-configurable board settings for this game specifically (XY dimensions, mine count)
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [AutoNetworkedField, ViewVariables]
     public MineGameBoardSettings BoardSettings;
 
     /// <summary>
@@ -58,14 +58,14 @@ public sealed partial class MineGameArcadeComponent : Component
     public int ClearedCount;
 
     /// <inheritdoc cref="MineGameStatus"/>
-    [DataField, AutoNetworkedField]
+    [AutoNetworkedField, ViewVariables]
     public MineGameStatus GameStatus;
 
     /// <summary>
     /// Time referencing either the first clear (when the game is officially started), or the final completion time
     /// Should be interpreted based on <see cref="GameStatus"/>
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [AutoNetworkedField, ViewVariables]
     public TimeSpan ReferenceTime;
 
     /// <summary>
