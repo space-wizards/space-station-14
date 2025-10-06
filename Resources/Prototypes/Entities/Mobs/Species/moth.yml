@@ -178,6 +178,18 @@
             sprite: Mobs/Species/Moth/displacement.rsi
             state: shoes
   - type: Sanity # DS14
+  # DS14-start
+  - type: Reactive
+    reactions:
+    - reagents: [ PestKiller ]
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        damage:
+          types:
+            Caustic: 2
+  # DS14-end
   # - type: FootPrints # Backmen-footsteps
 
 - type: entity
