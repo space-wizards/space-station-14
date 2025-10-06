@@ -114,7 +114,7 @@
   id: Nukeops
   components:
   - type: GameRule
-    minPlayers: 40
+    minPlayers: 35 # DS14
   - type: LoadMapRule
     mapPath: /Maps/Nonstations/nukieplanet.yml
   - type: AntagSelection
@@ -201,7 +201,7 @@
   id: Traitor
   components:
   - type: GameRule
-    minPlayers: 5
+    minPlayers: 20 # DS14
     delay:
       min: 240
       max: 420
@@ -268,7 +268,7 @@
   parent: BaseGameRule
   components:
   - type: GameRule
-    minPlayers: 15
+    minPlayers: 35 # DS14
   - type: RevolutionaryRule
   - type: AntagSelection
     selectionTime: IntraPlayerSpawn
@@ -322,7 +322,7 @@
   id: Wizard
   components:
   - type: GameRule
-    minPlayers: 30 # DS14
+    minPlayers: 35 # DS14
   - type: AntagSelection
     agentName: wizard-round-end-name
     selectionTime: PrePlayerSpawn
@@ -359,7 +359,7 @@
   parent: BaseGameRule
   components:
   - type: GameRule
-    minPlayers: 20
+    minPlayers: 25 # DS14
     delay:
       min: 600
       max: 900
