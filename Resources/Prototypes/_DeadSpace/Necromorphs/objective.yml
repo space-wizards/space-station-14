@@ -15,7 +15,7 @@
   id: UniSubmissionObjective
   components:
   - type: Objective
-    icon: _DeadSpace/Sith/actions/submission.png
+    icon: _DeadSpace/Renegade/actions/submission.png
   - type: NumberObjective
     min: 1
     max: 6

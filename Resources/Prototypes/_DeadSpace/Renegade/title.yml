@@ -1,0 +1,11 @@
+- type: localizedDataset
+  id: NamesRenegadeTitle
+  values:
+    prefix: names-renegade-title-dataset-
+    count: 48
+
+- type: localizedDataset
+  id: NamesRenegade
+  values:
+    prefix: names-renegade-dataset-
+    count: 30

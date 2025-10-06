@@ -1,0 +1,10 @@
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleRenegade
+  name: Роль Ренегата
+  components:
+  - type: MindRole
+    antagPrototype: Renegade
+    exclusiveAntag: true
+    subtype: role-subtype-renegade
+  - type: RenegadeRole

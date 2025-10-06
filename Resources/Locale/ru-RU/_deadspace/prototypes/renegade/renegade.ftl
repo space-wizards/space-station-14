@@ -1,0 +1,15 @@
+ent-RenegadeForceShield = { ent-BaseShield }
+    .desc = { ent-BaseShield.desc }
+ent-RandomHumanoidSpawnerRenegade = Ренегат
+    .desc = { "" }
+    .suffix = ТОЛЬКО ДЛЯ ИВЕНТОВ ИЛИ ТЕСТОВ, Без целей, Призрачная роль
+ent-BaseRenegadeObjective = { ent-BaseObjective }
+    .desc = { ent-BaseObjective.desc }
+ent-SubordinationCommandObjective = { ent-BaseRenegadeObjective }
+    .desc = С помощью силы вы можете уничтожить импланты защиты разума. Подчините командование станции.
+ent-RenegadeSurviveObjective = Выжить
+    .desc = Вам нужно остатся в живых.
+ent-SpawnPointGhostRenegade = { ent-BaseAntagSpawner }
+    .desc = { ent-BaseAntagSpawner.desc }
+ent-EnergySwordRenegade = энергомеч ренегата
+    .desc = { ent-EnergySword.desc }

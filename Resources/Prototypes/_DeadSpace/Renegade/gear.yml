@@ -1,0 +1,27 @@
+- type: startingGear
+  id: RenegadeGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitRenegade
+    back: ClothingBackpackSatchel
+    neck: ClothingNeckRenegade
+    mask: ClothingMaskRenegade
+    head: ClothingHeadHelmetRenegade
+    gloves: ClothingHandsGlovesRenegade
+    outerClothing: ClothingOuterHardsuitRenegade
+    shoes: ClothingShoesBootsRenegade
+    id: AgentIDCard
+    ears: ClothingHeadsetGrey
+    pocket1: EnergySwordRenegade
+    pocket2: PinpointerStation
+    suitstorage: OxygenTankFilled
+  inhand:
+    - JetpackBlackFilled
+  storage:
+    back:
+    - BoxSurvival
+    - Crowbar
+    - Wrench
+    - Screwdriver
+    - Wirecutter
+    - Welder
+    - Multitool

@@ -1,0 +1,14 @@
+ent-RenegadeForceShield = { ent-BaseShield }
+    .desc = { ent-BaseShield.desc }
+ent-RandomHumanoidSpawnerRenegade = { "" }
+    .desc = { "" }
+ent-BaseRenegadeObjective = { ent-BaseObjective }
+    .desc = { ent-BaseObjective.desc }
+ent-SubordinationCommandObjective = { ent-BaseRenegadeObjective }
+    .desc = { ent-BaseRenegadeObjective.desc }
+ent-RenegadeSurviveObjective = { ent-BaseRenegadeObjective }
+    .desc = { ent-BaseRenegadeObjective.desc }
+ent-SpawnPointGhostRenegade = { ent-BaseAntagSpawner }
+    .desc = { ent-BaseAntagSpawner.desc }
+ent-EnergySwordRenegade = { ent-EnergySword }
+    .desc = { ent-EnergySword.desc }

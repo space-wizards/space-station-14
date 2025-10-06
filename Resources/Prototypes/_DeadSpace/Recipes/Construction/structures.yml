@@ -65,7 +65,6 @@
 
 - type: construction
   id: MiningWall
-  name: construction-recipe-diagonal-mining-wall
   graph: Girder
   startNode: start
   targetNode: miningWall
@@ -80,6 +79,7 @@
 
 - type: construction
   id: MiningWallDiagonal
+  name: construction-recipe-diagonal-mining-wall
   graph: Girder
   startNode: start
   targetNode: diagonalMiningWall

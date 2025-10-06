@@ -1,0 +1,98 @@
+- type: entity
+  id: ActionRenegadeLightning
+  name: Ударить молнией
+  description: Выпускает в цель молнию.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 20
+    icon: _DeadSpace/Renegade/actions/renegade_lightning.png
+  - type: TargetAction
+    range: 5
+  - type: EntityTargetAction
+    canTargetSelf: false
+    event: !type:RenegadeLightningEvent
+
+- type: entity
+  id: ActionRenegadeForceOne
+  name: Поток силы
+  description: Отталкивает или притягивает одну цель.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 8
+    icon: _DeadSpace/Renegade/actions/force_Any.png
+  - type: TargetAction
+    range: 8
+  - type: EntityTargetAction
+    canTargetSelf: false
+    event: !type:RenegadeForceOneEvent
+
+- type: entity
+  id: ActionRenegadeForce
+  name: Поток силы
+  description: Отталкивает или притягивает всё вокруг.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 20
+    icon: _DeadSpace/Renegade/actions/force_all.png
+  - type: InstantAction
+    event: !type:RenegadeForceEvent
+
+- type: entity
+  id: ActionRenegadeShield
+  name: Щит силы
+  description: Барьер силы который отталкивает или поглощает удары.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 10
+    icon: _DeadSpace/Renegade/actions/shield.png
+  - type: InstantAction
+    event: !type:RenegadeShieldEvent
+
+- type: entity
+  id: ActionRenegadeSubmission
+  name: Подчинение силой
+  description: Влияет на разум цели с помощью силы, подчиняя его.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 10
+    icon: _DeadSpace/Renegade/actions/submission.png
+  - type: TargetAction
+    range: 8
+  - type: EntityTargetAction
+    canTargetSelf: false
+    event: !type:RenegadeSubmissionEvent
+
+- type: entity
+  id: ActionRecallRenegadeEsword
+  name: Телепортировать меч
+  description: Телепортирует ваш энерго меч вам в руки.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 1
+    icon:
+      sprite: Objects/Weapons/Melee/energykatana.rsi
+      state: icon
+    itemIconStyle: NoItem
+  - type: InstantAction
+    event: !type:RecallRenegadeEswordEvent {}
+
+- type: entity
+  id: ActionRenegadeEswordTeleport
+  name: Телепортироваться к мечу
+  description: Телепортирует вас к энерго мечу и даёт вам его в руку.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 1
+    icon:
+      sprite: Objects/Weapons/Melee/energykatana.rsi
+      state: icon
+    itemIconStyle: noItem
+  - type: InstantAction
+    event: !type:RenegadeEswordTeleport {}

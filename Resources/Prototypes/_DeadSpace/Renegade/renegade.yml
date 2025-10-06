@@ -1,0 +1,148 @@
+- type: entity
+  parent: BaseShield
+  id: RenegadeForceShield
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/shields.rsi
+    state: force-icon
+  - type: Item
+    sprite: Objects/Weapons/Melee/shields.rsi
+    heldPrefix: force
+  - type: Reflect
+    reflectProb: 0.8
+
+- type: entity
+  id: RandomHumanoidSpawnerRenegade
+  components:
+  - type: Sprite
+    sprite: Markers/cross.rsi
+    state: red
+  - type: RandomHumanoidSpawner
+    settings: RandomHumanoidSettingsRenegade
+
+- type: randomHumanoidSettings
+  id: RandomHumanoidSettingsRenegade
+  randomizeName: false
+  speciesBlacklist:
+  - Arachnid
+  - Diona
+  - Dwarf
+  # - Human
+  - Moth
+  - Reptilian
+  - SlimePerson
+  - Vox
+  - Demon
+  - Shark
+  - Tajaran
+  - Vulpkanin
+  - Felinid
+  - Kobolt
+  - Xenomorph
+  - IPC
+  - IPS
+  components:
+  - type: Renegade
+  - type: RenegadeSubmissionAbility
+  - type: RenegadeForceShieldAbility
+    proto: RenegadeForceShield
+  - type: RenegadeLightningAbility
+  - type: RenegadeForceAbility
+    strenghtPush: 1
+    numberOfPulses: 1
+    range: 5
+    soundPush:
+      collection: RenegadePush
+      params:
+        volume: 3
+    soundPull:
+      collection: RenegadePull
+      params:
+        volume: 3
+  - type: GhostRole
+    name: ghost-role-information-renegade-name
+    description: ghost-role-information-renegade-description
+    rules: ghost-role-information-antagonist-rules
+  - type: GhostTakeoverAvailable
+  - type: Loadout
+    prototypes: [ RenegadeGear ]
+  - type: RandomMetadata
+    nameSegments:
+    - NamesRenegadeTitle
+    - NamesRenegade
+  - type: RandomHumanoidAppearance
+    randomizeName: false
+
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseRenegadeObjective
+  components:
+  - type: Objective
+    difficulty: 1.5
+    issuer: objective-issuer-renegade
+  - type: RoleRequirement
+    roles:
+      - RenegadeRole
+
+- type: entity
+  parent: BaseRenegadeObjective
+  id: SubordinationCommandObjective
+  components:
+  - type: Objective
+    icon: _DeadSpace/Renegade/actions/submission.png
+  - type: NumberObjective
+    min: 4
+    max: 4
+    title: objective-condition-subordination-command-title
+  - type: RenegadeSubmissionCondition
+
+- type: entity
+  parent: [BaseRenegadeObjective, BaseSurviveObjective]
+  id: RenegadeSurviveObjective
+  components:
+  - type: Objective
+    icon:
+      sprite: _DeadSpace/Renegade/bondrewd_helm.rsi
+      state: icon
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: BaseAntagSpawner
+  id: SpawnPointGhostRenegade
+  components:
+  - type: GhostRole
+    name: ghost-role-information-renegade-name
+    description: ghost-role-information-renegade-description
+    rules: ghost-role-information-antagonist-rules
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 36000 # 10 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 72000 # 20 hours
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 36000 # 10 hours
+    - !type:OverallPlaytimeRequirement
+      time: 144000 # 40 hours
+    raffle:
+      settings: default
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: Objects/Weapons/Melee/energykatana.rsi
+      state: icon
+
+- type: entity
+  parent: EnergySword
+  id: EnergySwordRenegade
+  components:
+  - type: EnergySword
+    activatedColor: red
+    colorOptions:
+    - red
+  - type: RenegadeEsword

@@ -46,6 +46,7 @@
     - id: ZombieOutbreak
     - id: LoneOpsSpawn
     - id: WizardSpawn
+    - id: RenegadeSpawn # DS14
     - id: ShadowDemonInvasion # DS14
     - id: DemonsInvasion # DS14
     - id: BlobSpawn # DS14-Backmen

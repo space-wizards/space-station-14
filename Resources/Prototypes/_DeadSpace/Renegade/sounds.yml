@@ -1,0 +1,15 @@
+- type: soundCollection
+  id: RenegadePush
+  files:
+  - /Audio/_DeadSpace/Renegade/renegadepush1.ogg
+  - /Audio/_DeadSpace/Renegade/renegadepush2.ogg
+  - /Audio/_DeadSpace/Renegade/renegadepush3.ogg
+  - /Audio/_DeadSpace/Renegade/renegadepush4.ogg
+
+- type: soundCollection
+  id: RenegadePull
+  files:
+  - /Audio/_DeadSpace/Renegade/renegadepull1.ogg
+  - /Audio/_DeadSpace/Renegade/renegadepull2.ogg
+  - /Audio/_DeadSpace/Renegade/renegadepull3.ogg
+  - /Audio/_DeadSpace/Renegade/renegadepull4.ogg

@@ -1,0 +1,14 @@
+ent-ActionRenegadeLightning = Ударить молнией
+    .desc = Выпускает в цель молнию.
+ent-ActionRenegadeForceOne = Поток силы
+    .desc = Отталкивает или притягивает одну цель.
+ent-ActionRenegadeForce = Поток силы
+    .desc = Отталкивает или притягивает всё вокруг.
+ent-ActionRenegadeShield = Щит силы
+    .desc = Барьет из силы который отталкивает или поглощает удары.
+ent-ActionRenegadeSubmission = Подчинение силой
+    .desc = Влияет на разум цели с помощью силы, подчиняя её пользователю.
+ent-ActionRecallRenegadeEsword = Телепортировать меч
+    .desc = Телепортирует ваш энерго меч вам в руки.
+ent-ActionRenegadeEswordTeleport = Телепортироваться к мечу
+    .desc = Телепортирует вас к энерго мечу и даёт вам его в руку.
