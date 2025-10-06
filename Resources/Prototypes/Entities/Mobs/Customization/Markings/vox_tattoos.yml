@@ -80,7 +80,8 @@
       fallbackColor: "#666666"
   sprites:
   - sprite: Mobs/Customization/vox_tattoos.rsi
-    state: chest_v
+    state: chest_v_1
+    state: chest_v_2
 
 - type: marking
   id: TattooVoxUnderbelly

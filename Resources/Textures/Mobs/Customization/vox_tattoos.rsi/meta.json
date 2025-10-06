@@ -28,7 +28,11 @@
       "directions": 4
     },
     {
-      "name": "chest_v",
+      "name": "chest_v_1",
+      "directions": 4
+    },
+    {
+      "name": "chest_v_2",
       "directions": 4
     },
     {
