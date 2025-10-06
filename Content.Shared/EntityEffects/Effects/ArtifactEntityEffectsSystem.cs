@@ -6,8 +6,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityEffects.Effects;
 
 /// <summary>
-/// This is used for...
+/// Restores durability on this artifact
 /// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class ArtifactDurabilityRestoreEntityEffectsSystem : EntityEffectSystem<XenoArtifactComponent, ArtifactDurabilityRestore>
 {
     [Dependency] private readonly SharedXenoArtifactSystem _xenoArtifact = default!;
@@ -23,6 +24,10 @@ public sealed partial class ArtifactDurabilityRestoreEntityEffectsSystem : Entit
     }
 }
 
+/// <summary>
+/// Unlocks a node on this artifact. Only works this effect hasn't been applied before.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class ArtifactUnlockEntityEffectSystem : EntityEffectSystem<XenoArtifactComponent, ArtifactUnlock>
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -46,6 +51,7 @@ public sealed partial class ArtifactUnlockEntityEffectSystem : EntityEffectSyste
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class ArtifactDurabilityRestore : EntityEffectBase<ArtifactDurabilityRestore>
 {
     /// <summary>
@@ -58,6 +64,7 @@ public sealed partial class ArtifactDurabilityRestore : EntityEffectBase<Artifac
         Loc.GetString("entity-effect-guidebook-artifact-durability-restore", ("restored", RestoredDurability));
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class ArtifactUnlock : EntityEffectBase<ArtifactUnlock>
 {
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>

@@ -4,6 +4,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Transform;
 
+/// <summary>
+/// Creates a Flash at this entity's coordinates.
+/// Range is modified by scale.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class FlashEntityEffectSystem : EntityEffectSystem<TransformComponent, Flash>
 {
     [Dependency] private readonly SharedFlashSystem _flash = default!;
@@ -31,6 +36,7 @@ public sealed partial class FlashEntityEffectSystem : EntityEffectSystem<Transfo
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class Flash : EntityEffectBase<Flash>
 {
     /// <summary>
@@ -70,7 +76,6 @@ public sealed partial class Flash : EntityEffectBase<Flash>
     [DataField]
     public SoundSpecifier? Sound = new SoundPathSpecifier("/Audio/Weapons/flash.ogg");
 
-    /// <inheritdoc/>
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-flash-reaction-effect", ("chance", Probability));
 }

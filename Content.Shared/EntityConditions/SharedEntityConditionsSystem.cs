@@ -88,11 +88,18 @@ public abstract partial class EntityConditionSystem<T, TCon> : EntitySystem wher
     protected abstract void Condition(Entity<T> entity, ref EntityConditionEvent<TCon> args);
 }
 
+/// <summary>
+/// Used to raise an EntityCondition without losing the type of condition.
+/// </summary>
 public interface IEntityConditionRaiser
 {
     bool RaiseConditionEvent<T>(EntityUid target, T effect) where T : EntityConditionBase<T>;
 }
 
+/// <summary>
+/// Used to store an <see cref="EntityCondition"/> so it can be raised without losing the type of the condition.
+/// </summary>
+/// <typeparam name="T">The Condition wer are raising.</typeparam>
 public abstract partial class EntityConditionBase<T> : EntityCondition where T : EntityConditionBase<T>
 {
     public override bool RaiseEvent(EntityUid target, IEntityConditionRaiser raiser)
@@ -105,7 +112,9 @@ public abstract partial class EntityConditionBase<T> : EntityCondition where T :
     }
 }
 
-// This exists so we can store entity effects in list and raise events without type erasure.
+/// <summary>
+/// A basic condition which can be checked for on an entity via events.
+/// </summary>
 [ImplicitDataDefinitionForInheritors]
 public abstract partial class EntityCondition
 {
@@ -118,7 +127,7 @@ public abstract partial class EntityCondition
     public bool Inverted;
 
     /// <summary>
-    /// A basic description of what this condition is looking for.
+    /// A basic description of this condition, which displays in the guidebook.
     /// </summary>
     public abstract string EntityConditionGuidebookText(IPrototypeManager prototype);
 }

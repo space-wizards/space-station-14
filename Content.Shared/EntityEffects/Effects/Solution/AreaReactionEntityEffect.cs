@@ -4,6 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Solution;
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class AreaReactionEffect : EntityEffectBase<AreaReactionEffect>
 {
     /// <summary>

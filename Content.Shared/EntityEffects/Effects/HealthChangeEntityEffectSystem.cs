@@ -7,8 +7,10 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityEffects.Effects;
 
 /// <summary>
-/// This is used for...
+/// Adjust the damages on this entity by specified amounts.
+/// Amounts are modified by scale.
 /// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class HealthChangeEntityEffectSystem : EntityEffectSystem<DamageableComponent, HealthChange>
 {
     [Dependency] private readonly DamageableSystem _damageable = default!;
@@ -27,6 +29,7 @@ public sealed partial class HealthChangeEntityEffectSystem : EntityEffectSystem<
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class HealthChange : EntityEffectBase<HealthChange>
 {
     /// <summary>
@@ -38,7 +41,6 @@ public sealed partial class HealthChange : EntityEffectBase<HealthChange>
     [DataField]
     public bool IgnoreResistances = true;
 
-    /// <inheritdoc/>
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         {
             var damages = new List<string>();

@@ -3,8 +3,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Atmos;
 
-// Server side system.
-
+/// <summary>
+/// See serverside system
+/// </summary>
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class Ignite : EntityEffectBase<Ignite>
 {
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>

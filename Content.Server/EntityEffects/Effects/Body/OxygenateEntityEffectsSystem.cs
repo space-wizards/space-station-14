@@ -6,8 +6,10 @@ using Content.Shared.EntityEffects.Effects.Body;
 namespace Content.Server.EntityEffects.Effects.Body;
 
 /// <summary>
-/// This is used for...
+/// This effect adjusts a respirator's saturation value.
+/// The saturation adjustment is modified by scale.
 /// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class OxygenateEntityEffectsSystem : EntityEffectSystem<RespiratorComponent, Oxygenate>
 {
     [Dependency] private readonly RespiratorSystem _respirator = default!;

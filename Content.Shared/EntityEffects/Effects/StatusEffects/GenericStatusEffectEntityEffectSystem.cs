@@ -3,6 +3,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.StatusEffects;
 
+/// <summary>
+/// Applies a Generic Status Effect to this entity, which is a timed Component.
+/// The amount of time the Component is applied is modified by scale.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 [Obsolete("Use ModifyStatusEffect instead")]
 public sealed partial class GenericStatusEffectEntityEffectSystem : EntityEffectSystem<MetaDataComponent, GenericStatusEffect>
 {
@@ -16,22 +21,23 @@ public sealed partial class GenericStatusEffectEntityEffectSystem : EntityEffect
         {
             case StatusEffectMetabolismType.Update:
                 if (args.Effect.Component != String.Empty)
-                    _status.TryAddStatusEffect(entity, args.Effect.Key, TimeSpan.FromSeconds(time), true, args.Effect.Component);
+                    _status.TryAddStatusEffect(entity, args.Effect.Key, time, true, args.Effect.Component);
                 break;
             case StatusEffectMetabolismType.Add:
                 if (args.Effect.Component != String.Empty)
-                    _status.TryAddStatusEffect(entity, args.Effect.Key, TimeSpan.FromSeconds(time), false, args.Effect.Component);
+                    _status.TryAddStatusEffect(entity, args.Effect.Key, time, false, args.Effect.Component);
                 break;
             case StatusEffectMetabolismType.Remove:
-                _status.TryRemoveTime(entity, args.Effect.Key, TimeSpan.FromSeconds(time));
+                _status.TryRemoveTime(entity, args.Effect.Key, time);
                 break;
             case StatusEffectMetabolismType.Set:
-                _status.TrySetTime(entity, args.Effect.Key, TimeSpan.FromSeconds(time));
+                _status.TrySetTime(entity, args.Effect.Key, time);
                 break;
         }
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class GenericStatusEffect : EntityEffectBase<GenericStatusEffect>
 {
     [DataField(required: true)]
@@ -41,7 +47,7 @@ public sealed partial class GenericStatusEffect : EntityEffectBase<GenericStatus
     public string Component = String.Empty;
 
     [DataField]
-    public float Time = 2.0f;
+    public TimeSpan Time = TimeSpan.FromSeconds(2f);
 
     /// <summary>
     ///     Should this effect add the status effect, remove time from it, or set its cooldown?
@@ -53,6 +59,6 @@ public sealed partial class GenericStatusEffect : EntityEffectBase<GenericStatus
         "entity-effect-guidebook-status-effect-old",
         ("chance", Probability),
         ("type", Type),
-        ("time", Time),
+        ("time", Time.TotalSeconds),
         ("key", $"entity-effect-status-effect-{Key}"));
 }

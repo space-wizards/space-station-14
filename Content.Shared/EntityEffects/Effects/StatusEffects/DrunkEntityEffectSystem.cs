@@ -1,8 +1,13 @@
 ﻿using Content.Shared.Drunk;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.EntityEffects.Effects.Body;
+namespace Content.Shared.EntityEffects.Effects.StatusEffects;
 
+/// <summary>
+/// Applies the drunk status effect to this entity.
+/// The duration of the effect is equal to <see cref="Drunk.BoozePower"/> modified by scale.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class DrunkEntityEffectSystem : EntityEffectSystem<MetaDataComponent, Drunk>
 {
     [Dependency] private readonly SharedDrunkSystem _drunk = default!;
@@ -15,6 +20,7 @@ public sealed partial class DrunkEntityEffectSystem : EntityEffectSystem<MetaDat
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class Drunk : EntityEffectBase<Drunk>
 {
     /// <summary>

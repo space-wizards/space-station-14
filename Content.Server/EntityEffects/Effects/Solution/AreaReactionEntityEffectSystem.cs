@@ -12,8 +12,10 @@ using Robust.Shared.Map;
 namespace Content.Server.EntityEffects.Effects.Solution;
 
 /// <summary>
-/// This is used for creating smoke or foam in an area.
+/// This effect creates smoke at this solution's position.
+/// The amount of smoke created is modified by scale.
 /// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class AreaReactionEntityEffectsSystem : EntityEffectSystem<SolutionComponent, AreaReactionEffect>
 {
     [Dependency] private readonly IMapManager _mapManager = default!;

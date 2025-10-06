@@ -4,6 +4,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Body;
 
+/// <summary>
+/// Returns true if this entity's hunger is within a specified minimum and maximum.
+/// </summary>
+/// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class TotalHungerEntityConditionSystem : EntityConditionSystem<HungerComponent, TotalHunger>
 {
     [Dependency] private readonly HungerSystem _hunger = default!;
@@ -15,6 +19,7 @@ public sealed partial class TotalHungerEntityConditionSystem : EntityConditionSy
     }
 }
 
+/// <inheritdoc cref="EntityCondition"/>
 public sealed partial class TotalHunger : EntityConditionBase<TotalHunger>
 {
     [DataField]

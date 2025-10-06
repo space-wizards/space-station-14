@@ -3,6 +3,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class Emote : EntityEffectBase<Emote>
 {
     /// <summary>
@@ -29,7 +30,6 @@ public sealed partial class Emote : EntityEffectBase<Emote>
     [DataField]
     public bool Force;
 
-    /// <inheritdoc/>
     public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
         if (!ShowInGuidebook || !prototype.Resolve(EmoteId, out var emote))

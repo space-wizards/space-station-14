@@ -6,6 +6,11 @@ using Content.Shared.Mind.Components;
 
 namespace Content.Server.EntityEffects.Effects;
 
+/// <summary>
+/// Makes this entity sentient. Allows ghost to take it over if it's not already occupied.
+/// Optionally also allows this entity to speak.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class MakeSentientEntityEffectSystem : EntityEffectSystem<MetaDataComponent, MakeSentient>
 {
     protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<MakeSentient> args)
@@ -16,6 +21,7 @@ public sealed partial class MakeSentientEntityEffectSystem : EntityEffectSystem<
         if (args.Effect.AllowSpeech)
         {
             RemComp<ReplacementAccentComponent>(entity);
+            // TODO: Make MonkeyAccent a replacement accent and remove MonkeyAccent code-smell.
             RemComp<MonkeyAccentComponent>(entity);
         }
 

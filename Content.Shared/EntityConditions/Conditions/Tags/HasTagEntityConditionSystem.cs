@@ -4,8 +4,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityConditions.Conditions.Tags;
 
 /// <summary>
-/// Returns true if we have the required tag. False if we do not.
+/// Returns true if this entity has the listed tag.
 /// </summary>
+/// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class HasTagEntityConditionSystem : EntityConditionSystem<TagComponent, HasTag>
 {
     [Dependency] private readonly TagSystem _tag = default!;
@@ -16,6 +17,7 @@ public sealed partial class HasTagEntityConditionSystem : EntityConditionSystem<
     }
 }
 
+/// <inheritdoc cref="EntityCondition"/>
 public sealed partial class HasTag : EntityConditionBase<HasTag>
 {
     [DataField(required: true)]

@@ -5,6 +5,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions;
 
+/// <summary>
+/// Returns true if this solution entity has an amount of reagent in it within a specified minimum and maximum.
+/// </summary>
+/// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class ReagentThresholdEntityConditionSystem : EntityConditionSystem<SolutionComponent, ReagentThreshold>
 {
     protected override void Condition(Entity<SolutionComponent> entity, ref EntityConditionEvent<ReagentThreshold> args)
@@ -15,6 +19,7 @@ public sealed partial class ReagentThresholdEntityConditionSystem : EntityCondit
     }
 }
 
+/// <inheritdoc cref="EntityCondition"/>
 public sealed partial class ReagentThreshold : EntityConditionBase<ReagentThreshold>
 {
     [DataField]

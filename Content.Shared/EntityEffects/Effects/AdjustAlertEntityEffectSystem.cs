@@ -4,6 +4,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.EntityEffects.Effects;
 
+/// <summary>
+/// Adjusts a given alert on this entity.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class AdjustAlertEntityEffectSysten : EntityEffectSystem<AlertsComponent, AdjustAlert>
 {
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -32,6 +36,7 @@ public sealed partial class AdjustAlertEntityEffectSysten : EntityEffectSystem<A
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class AdjustAlert : EntityEffectBase<AdjustAlert>
 {
     /// <summary>

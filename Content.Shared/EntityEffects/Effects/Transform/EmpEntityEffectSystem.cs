@@ -4,6 +4,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Transform;
 
+/// <summary>
+/// Creates an EMP at this entity's coordinates.
+/// Range is modified by scale.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class EmpEntityEffectSystem : EntityEffectSystem<TransformComponent, Emp>
 {
     [Dependency] private readonly SharedEmpSystem _emp = default!;
@@ -17,6 +22,7 @@ public sealed partial class EmpEntityEffectSystem : EntityEffectSystem<Transform
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class Emp : EntityEffectBase<Emp>
 {
     /// <summary>
@@ -43,7 +49,6 @@ public sealed partial class Emp : EntityEffectBase<Emp>
     [DataField]
     public TimeSpan Duration = TimeSpan.FromSeconds(15);
 
-    /// <inheritdoc/>
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-emp-reaction-effect", ("chance", Probability));
 

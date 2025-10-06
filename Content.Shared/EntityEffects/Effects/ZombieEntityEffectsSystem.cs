@@ -5,8 +5,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityEffects.Effects;
 
 /// <summary>
-/// This is used for...
+/// Causes the zombie infection on this entity.
 /// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
 public sealed partial class CauseZombieInfectionEntityEffectsSystem : EntityEffectSystem<MobStateComponent, CauseZombieInfection>
 {
     // MobState because you have to die to become a zombie...
@@ -20,6 +21,10 @@ public sealed partial class CauseZombieInfectionEntityEffectsSystem : EntityEffe
     }
 }
 
+/// <summary>
+/// Cures the Zombie infection on this entity and optionally inoculates them against future infection.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
 public sealed partial class CureZombieInfectionEntityEffectsSystem : EntityEffectSystem<MobStateComponent, CureZombieInfection>
 {
     // MobState because you have to die to become a zombie...
@@ -36,12 +41,14 @@ public sealed partial class CureZombieInfectionEntityEffectsSystem : EntityEffec
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class CauseZombieInfection : EntityEffectBase<CauseZombieInfection>
 {
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-cause-zombie-infection", ("chance", Probability));
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class CureZombieInfection : EntityEffectBase<CureZombieInfection>
 {
     /// <summary>
@@ -50,7 +57,7 @@ public sealed partial class CureZombieInfection : EntityEffectBase<CureZombieInf
     [DataField]
     public bool Innoculate;
 
-    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
         if (Innoculate)
             return Loc.GetString("entity-effect-guidebook-innoculate-zombie-infection", ("chance", Probability));

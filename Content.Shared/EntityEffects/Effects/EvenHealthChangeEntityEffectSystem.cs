@@ -7,6 +7,11 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.EntityEffects.Effects;
 
+/// <summary>
+/// Evenly adjust the damage types in a damage group by up to a specified total on this entity.
+/// Total adjustment is modified by scale.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class EvenHealthChangeEntityEffectSystem : EntityEffectSystem<DamageableComponent, EvenHealthChange>
 {
     [Dependency] private readonly DamageableSystem _damageable = default!;
@@ -46,6 +51,7 @@ public sealed partial class EvenHealthChangeEntityEffectSystem : EntityEffectSys
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class EvenHealthChange : EntityEffectBase<EvenHealthChange>
 {
     /// <summary>
@@ -60,7 +66,6 @@ public sealed partial class EvenHealthChange : EntityEffectBase<EvenHealthChange
     [DataField]
     public bool IgnoreResistances = true;
 
-    /// <inheritdoc/>
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
         var damages = new List<string>();

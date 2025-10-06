@@ -4,6 +4,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions;
 
+/// <summary>
+/// Returns true if this entity can take damage and if its total damage is within a specified minimum and maximum.
+/// </summary>
+/// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class TotalDamageEntityConditionSystem : EntityConditionSystem<DamageableComponent, TotalDamage>
 {
     protected override void Condition(Entity<DamageableComponent> entity, ref EntityConditionEvent<TotalDamage> args)
@@ -13,6 +17,7 @@ public sealed partial class TotalDamageEntityConditionSystem : EntityConditionSy
     }
 }
 
+/// <inheritdoc cref="EntityCondition"/>
 public sealed partial class TotalDamage : EntityConditionBase<TotalDamage>
 {
     [DataField]

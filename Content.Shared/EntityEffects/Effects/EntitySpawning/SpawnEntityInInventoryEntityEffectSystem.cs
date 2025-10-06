@@ -3,6 +3,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.EntitySpawning;
 
+/// <summary>
+/// Spawns an entity of a given prototype in a specified inventory slot owned by this entity.
+/// Fails if it cannot spawn the entity in the given slot.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class SpawnEntityInInventoryEntityEffectSystem : EntityEffectSystem<InventoryComponent, SpawnEntityInInventory>
 {
     [Dependency] private readonly InventorySystem _inventory = default!;
@@ -13,6 +18,7 @@ public sealed partial class SpawnEntityInInventoryEntityEffectSystem : EntityEff
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class SpawnEntityInInventory : EntityEffectBase<SpawnEntityInInventory>
 {
     /// <summary>

@@ -5,6 +5,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.StatusEffects;
 
+/// <summary>
+/// Applies the paralysis status effect to this entity.
+/// Duration is modified by scale.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class ModifyParalysisEntityEffectSystem : EntityEffectSystem<StatusEffectContainerComponent, ModifyParalysis>
 {
     [Dependency] private readonly StatusEffectsSystem _status = default!;
@@ -12,27 +17,29 @@ public sealed partial class ModifyParalysisEntityEffectSystem : EntityEffectSyst
 
     protected override void Effect(Entity<StatusEffectContainerComponent> entity, ref EntityEffectEvent<ModifyParalysis> args)
     {
+        var time = args.Effect.Time * args.Scale;
+
         switch (args.Effect.Type)
         {
             case StatusEffectMetabolismType.Update:
-                _stun.TryUpdateParalyzeDuration(entity, args.Effect.Time * args.Scale);
+                _stun.TryUpdateParalyzeDuration(entity, time);
                 break;
             case StatusEffectMetabolismType.Add:
-                _stun.TryAddParalyzeDuration(entity, args.Effect.Time * args.Scale);
+                _stun.TryAddParalyzeDuration(entity, time);
                 break;
             case StatusEffectMetabolismType.Remove:
-                _status.TryRemoveTime(entity, SharedStunSystem.StunId, args.Effect.Time * args.Scale);
+                _status.TryRemoveTime(entity, SharedStunSystem.StunId, time);
                 break;
             case StatusEffectMetabolismType.Set:
-                _status.TrySetStatusEffectDuration(entity, SharedStunSystem.StunId, args.Effect.Time * args.Scale);
+                _status.TrySetStatusEffectDuration(entity, SharedStunSystem.StunId, time);
                 break;
         }
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class ModifyParalysis : BaseStatusEntityEffect<ModifyParalysis>
 {
-    /// <inheritdoc/>
     public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
         Time == null
             ? null // Not gonna make a whole new looc for something that shouldn't ever exist.

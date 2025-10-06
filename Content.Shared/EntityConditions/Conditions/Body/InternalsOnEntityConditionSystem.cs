@@ -4,8 +4,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityConditions.Conditions.Body;
 
 /// <summary>
-/// Returns true if the entity is using internals. False if they are not or cannot use internals.
+/// Returns true if this entity is using internals. False if they are not or cannot use internals.
 /// </summary>
+/// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class InternalsOnEntityConditionSystem : EntityConditionSystem<InternalsComponent, InternalsOn>
 {
     protected override void Condition(Entity<InternalsComponent> entity, ref EntityConditionEvent<InternalsOn> args)
@@ -14,6 +15,7 @@ public sealed partial class InternalsOnEntityConditionSystem : EntityConditionSy
     }
 }
 
+/// <inheritdoc cref="EntityCondition"/>
 public sealed partial class InternalsOn : EntityConditionBase<InternalsOn>
 {
     public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>

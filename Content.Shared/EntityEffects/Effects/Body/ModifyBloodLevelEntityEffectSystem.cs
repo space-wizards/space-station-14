@@ -5,6 +5,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Body;
 
+/// <summary>
+/// Modifies the amount of blood in this entity's bloodstream by a given amount multiplied by scale.
+/// This effect can increase or decrease blood level.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class ModifyBloodLevelEntityEffectSystem : EntityEffectSystem<BloodstreamComponent, ModifyBloodLevel>
 {
     [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
@@ -15,6 +20,7 @@ public sealed partial class ModifyBloodLevelEntityEffectSystem : EntityEffectSys
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class ModifyBloodLevel : EntityEffectBase<ModifyBloodLevel>
 {
     /// <summary>
@@ -23,7 +29,6 @@ public sealed partial class ModifyBloodLevel : EntityEffectBase<ModifyBloodLevel
     [DataField]
     public FixedPoint2 Amount = 1.0f;
 
-    /// <inheritdoc/>
     public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-modify-blood-level", ("chance", Probability), ("deltasign", MathF.Sign(Amount.Float())));
 }

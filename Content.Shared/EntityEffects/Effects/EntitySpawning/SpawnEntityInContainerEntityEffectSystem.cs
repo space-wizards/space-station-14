@@ -2,6 +2,12 @@
 
 namespace Content.Shared.EntityEffects.Effects.EntitySpawning;
 
+/// <summary>
+/// Spawns a given number of entities of a given prototype in a specified container owned by this entity.
+/// Returns if the prototype cannot spawn in the specified container.
+/// Amount is modified by scale.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class SpawnEntityInContainerEntityEffectSystem : EntityEffectSystem<ContainerManagerComponent, SpawnEntityInContainer>
 {
     protected override void Effect(Entity<ContainerManagerComponent> entity, ref EntityEffectEvent<SpawnEntityInContainer> args)
@@ -19,6 +25,7 @@ public sealed partial class SpawnEntityInContainerEntityEffectSystem : EntityEff
     }
 }
 
+/// <inheritdoc cref="BaseSpawnEntityEntityEffect{T}"/>
 public sealed partial class SpawnEntityInContainer : BaseSpawnEntityEntityEffect<SpawnEntityInContainer>
 {
     /// <summary>

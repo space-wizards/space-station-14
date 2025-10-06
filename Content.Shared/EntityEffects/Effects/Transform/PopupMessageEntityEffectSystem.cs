@@ -4,6 +4,10 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.EntityEffects.Effects.Transform;
 
+/// <summary>
+/// Creates a text popup to appear at this entity's coordinates.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class PopupMessageEntityEffectSystem : EntityEffectSystem<TransformComponent, PopupMessage>
 {
     [Dependency] private readonly INetManager _net = default!;
@@ -18,22 +22,37 @@ public sealed partial class PopupMessageEntityEffectSystem : EntityEffectSystem<
 
         var msg = _random.Pick(args.Effect.Messages);
 
-        // TODO: A way to pass arguments to this that aren't hardcoded into the effect.
-        if (args.Effect.Type == PopupRecipients.Local)
-            _popup.PopupEntity(Loc.GetString(msg, ("entity", entity)), entity, entity, args.Effect.VisualType);
-        else if (args.Effect.Type == PopupRecipients.Pvs)
-            _popup.PopupEntity(Loc.GetString(msg, ("entity", entity)), entity, args.Effect.VisualType);
+        switch (args.Effect.Type)
+        {
+            case PopupRecipients.Local:
+                _popup.PopupEntity(Loc.GetString(msg, ("entity", entity)), entity, entity, args.Effect.VisualType);
+                break;
+            case PopupRecipients.Pvs:
+                _popup.PopupEntity(Loc.GetString(msg, ("entity", entity)), entity, args.Effect.VisualType);
+                break;
+        }
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class PopupMessage : EntityEffectBase<PopupMessage>
 {
+    /// <summary>
+    /// Array of messages that can popup.
+    /// Only one is chosen when the effect is applied.
+    /// </summary>
     [DataField(required: true)]
     public string[] Messages = default!;
 
+    /// <summary>
+    /// Whether to just the entity we're affecting, or everyone around them.
+    /// </summary>
     [DataField]
     public PopupRecipients Type = PopupRecipients.Local;
 
+    /// <summary>
+    /// Size of the popup.
+    /// </summary>
     [DataField]
     public PopupType VisualType = PopupType.Small;
 }

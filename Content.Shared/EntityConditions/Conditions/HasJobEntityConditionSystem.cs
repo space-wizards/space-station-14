@@ -9,8 +9,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityConditions.Conditions;
 
 /// <summary>
-/// Returns true if the entity has any of the specified jobs. False if the entity has no mind or none of the specified jobs, or is jobless.
+/// Returns true if this entity has any of the specified jobs. False if the entity has no mind, none of the specified jobs, or is jobless.
 /// </summary>
+/// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class HasJobEntityConditionSystem : EntityConditionSystem<MindContainerComponent, HasJob>
 {
     protected override void Condition(Entity<MindContainerComponent> entity, ref EntityConditionEvent<HasJob> args)
@@ -45,6 +46,7 @@ public sealed partial class HasJobEntityConditionSystem : EntityConditionSystem<
     }
 }
 
+/// <inheritdoc cref="EntityCondition"/>
 public sealed partial class HasJob : EntityConditionBase<HasJob>
 {
     [DataField(required: true)] public List<ProtoId<JobPrototype>> Jobs = [];

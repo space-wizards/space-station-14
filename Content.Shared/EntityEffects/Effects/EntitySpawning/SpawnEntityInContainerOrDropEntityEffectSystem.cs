@@ -3,6 +3,12 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.EntitySpawning;
 
+/// <summary>
+/// Spawns a given number of entities of a given prototype in a specified container owned by this entity.
+/// Acts like <see cref="SpawnEntityEntityEffectSystem"/> if it cannot spawn the prototype in the specified container.
+/// Amount is modified by scale.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class SpawnEntityInContainerOrDropEntityEffectSystem : EntityEffectSystem<ContainerManagerComponent, SpawnEntityInContainerOrDrop>
 {
     protected override void Effect(Entity<ContainerManagerComponent> entity, ref EntityEffectEvent<SpawnEntityInContainerOrDrop> args)
@@ -19,6 +25,7 @@ public sealed partial class SpawnEntityInContainerOrDropEntityEffectSystem : Ent
     }
 }
 
+/// <inheritdoc cref="BaseSpawnEntityEntityEffect{T}"/>
 public sealed partial class SpawnEntityInContainerOrDrop : BaseSpawnEntityEntityEffect<SpawnEntityInContainerOrDrop>
 {
     /// <summary>

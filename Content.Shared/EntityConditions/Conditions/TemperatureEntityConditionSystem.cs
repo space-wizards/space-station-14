@@ -4,6 +4,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions;
 
+/// <summary>
+/// Returns true if this entity has an amount of reagent in it within a specified minimum and maximum.
+/// </summary>
+/// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class TemperatureEntityConditionSystem : EntityConditionSystem<TemperatureComponent, Temperature>
 {
     protected override void Condition(Entity<TemperatureComponent> entity, ref EntityConditionEvent<Temperature> args)
@@ -13,7 +17,10 @@ public sealed partial class TemperatureEntityConditionSystem : EntityConditionSy
     }
 }
 
-// TODO: These should be merged together when we get a proper temperature struct
+/// <summary>
+/// Returns true if this solution entity has an amount of reagent in it within a specified minimum and maximum.
+/// </summary>
+/// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class SolutionTemperatureEntityConditionSystem : EntityConditionSystem<SolutionComponent, Temperature>
 {
     protected override void Condition(Entity<SolutionComponent> entity, ref EntityConditionEvent<Temperature> args)
@@ -23,6 +30,7 @@ public sealed partial class SolutionTemperatureEntityConditionSystem : EntityCon
     }
 }
 
+/// <inheritdoc cref="EntityCondition"/>
 public sealed partial class Temperature : EntityConditionBase<Temperature>
 {
     /// <summary>
@@ -37,7 +45,6 @@ public sealed partial class Temperature : EntityConditionBase<Temperature>
     [DataField]
     public float Max = float.PositiveInfinity;
 
-    ///<inhereitdoc/>
     public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>
         Loc.GetString("reagent-effect-condition-guidebook-body-temperature",
             ("max", float.IsPositiveInfinity(Max) ? (float) int.MaxValue : Max),

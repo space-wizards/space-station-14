@@ -7,8 +7,10 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityEffects.Effects.Body;
 
 /// <summary>
-/// This is used for...
+/// Removes a given amount of chemicals from the bloodstream modified by scale.
+/// Optionally ignores a given chemical.
 /// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class CleanBloodstreamEntityEffectSystem : EntityEffectSystem<BloodstreamComponent, CleanBloodstream>
 {
     [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
@@ -21,6 +23,7 @@ public sealed partial class CleanBloodstreamEntityEffectSystem : EntityEffectSys
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class CleanBloodstream : EntityEffectBase<CleanBloodstream>
 {
     /// <summary>
@@ -29,6 +32,9 @@ public sealed partial class CleanBloodstream : EntityEffectBase<CleanBloodstream
     [DataField]
     public FixedPoint2 CleanseRate = 3.0f;
 
+    /// <summary>
+    ///     An optional chemical to ignore when doing removal.
+    /// </summary>
     [DataField]
     public ProtoId<ReagentPrototype>? Excluded;
 

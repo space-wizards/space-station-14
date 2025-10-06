@@ -1,8 +1,12 @@
 ﻿using Robust.Shared.Network;
 using Robust.Shared.Random;
 
-namespace Content.Shared.EntityEffects.Effects.Transform;
+namespace Content.Shared.EntityEffects.Effects;
 
+/// <summary>
+/// Causes this entity to glow.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class GlowEntityEffectSystem : EntityEffectSystem<MetaDataComponent, Glow>
 {
     [Dependency] private readonly INetManager _net = default!;
@@ -38,6 +42,7 @@ public sealed partial class GlowEntityEffectSystem : EntityEffectSystem<MetaData
     };
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class Glow : EntityEffectBase<Glow>
 {
     [DataField]

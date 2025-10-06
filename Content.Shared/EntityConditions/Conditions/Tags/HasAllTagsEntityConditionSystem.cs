@@ -5,8 +5,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityConditions.Conditions.Tags;
 
 /// <summary>
-/// Returns true if we have all the required tags. False if we do not.
+/// Returns true if this entity has all the listed tags.
 /// </summary>
+/// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class HasAllTagsEntityConditionSystem : EntityConditionSystem<TagComponent, HasAllTags>
 {
     [Dependency] private readonly TagSystem _tag = default!;
@@ -17,6 +18,7 @@ public sealed partial class HasAllTagsEntityConditionSystem : EntityConditionSys
     }
 }
 
+/// <inheritdoc cref="EntityCondition"/>
 public sealed partial class HasAllTags : EntityConditionBase<HasAllTags>
 {
     [DataField(required: true)]

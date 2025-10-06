@@ -7,8 +7,10 @@ namespace Content.Shared.EntityEffects.Effects.Solution;
 
 // TODO: This should be removed and changed to an "AbsorbentSolutionComponent"
 /// <summary>
-/// Creates a reagent in a specified solution when this effect occurs.
+/// Creates a reagent in a specified solution owned by this entity.
+/// Quantity is modified by scale.
 /// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed class AddReagentToSolutionEntityEffectSystem : EntityEffectSystem<SolutionContainerManagerComponent, AddReagentToSolution>
 {
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
@@ -21,10 +23,11 @@ public sealed class AddReagentToSolutionEntityEffectSystem : EntityEffectSystem<
         if (!_solutionContainer.TryGetSolution((entity, entity), solution, out var solutionContainer))
             return;
 
-        _solutionContainer.TryAddReagent(solutionContainer.Value, reagent, args.Scale);
+        _solutionContainer.TryAddReagent(solutionContainer.Value, reagent, args.Scale * args.Effect.StrengthModifier);
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class AddReagentToSolution : EntityEffectBase<AddReagentToSolution>
 {
     /// <summary>
@@ -45,7 +48,6 @@ public sealed partial class AddReagentToSolution : EntityEffectBase<AddReagentTo
     [DataField]
     public float StrengthModifier = 1.0f;
 
-    /// <remarks>This guidebook isn't used since the effect is for reactive anyways. Not even sure why I updated it tbqh.</remarks>
     public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
         return prototype.Resolve(Reagent, out ReagentPrototype? proto)

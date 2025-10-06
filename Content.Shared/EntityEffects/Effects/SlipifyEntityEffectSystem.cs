@@ -8,8 +8,9 @@ using Robust.Shared.Physics.Systems;
 namespace Content.Shared.EntityEffects.Effects;
 
 /// <summary>
-/// This effect creates a slippery fixture for an entity and then makes that entity slippery like soap.
+/// This effect permanently creates a slippery fixture for this entity and then makes this entity slippery like soap.
 /// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class SlipifyEntityEffectSystem : EntityEffectSystem<FixturesComponent, Slipify>
 {
     [Dependency] private readonly CollisionWakeSystem _collisionWake = default!;
@@ -35,6 +36,7 @@ public sealed partial class SlipifyEntityEffectSystem : EntityEffectSystem<Fixtu
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class Slipify : EntityEffectBase<Slipify>
 {
     [DataField]

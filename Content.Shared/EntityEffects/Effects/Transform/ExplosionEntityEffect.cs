@@ -4,6 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Transform;
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class ExplosionEffect : EntityEffectBase<ExplosionEffect>
 {
     /// <summary>
@@ -48,7 +49,6 @@ public sealed partial class ExplosionEffect : EntityEffectBase<ExplosionEffect>
     [DataField]
     public float TileBreakScale = 1f;
 
-    /// <inheritdoc/>
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-explosion-reaction-effect", ("chance", Probability));
 

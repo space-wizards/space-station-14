@@ -5,6 +5,10 @@ using Robust.Shared.Random;
 
 namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 
+/// <summary>
+/// This system mutates an inputted stat for a PlantHolder, only works for floats, integers, and bools.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantChangeStat>
 {
     // TODO: This is awful. I do not have the strength to refactor this. I want it gone.

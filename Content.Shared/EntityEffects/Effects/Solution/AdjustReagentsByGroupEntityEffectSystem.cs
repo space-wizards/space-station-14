@@ -6,6 +6,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Solution;
 
+/// <summary>
+/// Adjust all reagents in this solution which are metabolized by a given metabolism group.
+/// Quantity is modified by scale, quantity is per reagent and not a total.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class AdjustReagentsByGroupEntityEffectSystem : EntityEffectSystem<SolutionComponent, AdjustReagentsByGroup>
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
@@ -30,6 +35,7 @@ public sealed partial class AdjustReagentsByGroupEntityEffectSystem : EntityEffe
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class AdjustReagentsByGroup : EntityEffectBase<AdjustReagentsByGroup>
 {
 

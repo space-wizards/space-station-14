@@ -4,6 +4,12 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.StatusEffects;
 
+// TODO: When Electrocution is moved to new Status, make this use StatusEffectsContainerComponent.
+/// <summary>
+/// Electrocutes this entity for a given amount of damage and time.
+/// The shock damage applied by this effect is modified by scale.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class ElectrocuteEntityEffectSystem : EntityEffectSystem<StatusEffectsComponent, Electrocute>
 {
     [Dependency] private readonly SharedElectrocutionSystem _electrocution = default!;
@@ -17,6 +23,7 @@ public sealed partial class ElectrocuteEntityEffectSystem : EntityEffectSystem<S
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class Electrocute : EntityEffectBase<Electrocute>
 {
     /// <summary>

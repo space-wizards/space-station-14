@@ -6,6 +6,11 @@ using Robust.Shared.Random;
 
 namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 
+/// <summary>
+/// This effect directly increases the potency of a PlantHolder's plant provided it exists and isn't dead.
+/// Potency directly correlates to the size of the plant's produce.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class RobustHarvestEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, RobustHarvest>
 {
     [Dependency] private readonly IRobustRandom _random = default!;

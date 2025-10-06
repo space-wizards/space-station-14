@@ -4,8 +4,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Atmos;
 
-// Server side system
-
+/// <summary>
+/// See serverside system.
+/// </summary>
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class CreateGas : EntityEffectBase<CreateGas>
 {
     /// <summary>
@@ -15,10 +17,10 @@ public sealed partial class CreateGas : EntityEffectBase<CreateGas>
     public Gas Gas;
 
     /// <summary>
-    ///     Mol modifier for gas creation.
+    ///     Amount of moles we're creating
     /// </summary>
     [DataField]
-    public float Multiplier = 3f;
+    public float Moles = 3f;
 
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
@@ -27,7 +29,7 @@ public sealed partial class CreateGas : EntityEffectBase<CreateGas>
 
         return Loc.GetString("entity-effect-guidebook-create-gas",
             ("chance", Probability),
-            ("moles", Multiplier),
+            ("moles", Moles),
             ("gas", gasProto.Name));
     }
 }

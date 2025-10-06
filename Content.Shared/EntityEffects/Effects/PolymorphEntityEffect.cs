@@ -3,6 +3,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class Polymorph : EntityEffectBase<Polymorph>
 {
     /// <summary>
@@ -11,7 +12,6 @@ public sealed partial class Polymorph : EntityEffectBase<Polymorph>
     [DataField(required: true)]
     public ProtoId<PolymorphPrototype> Prototype;
 
-    /// <inheritdoc/>
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-make-polymorph",
             ("chance", Probability),

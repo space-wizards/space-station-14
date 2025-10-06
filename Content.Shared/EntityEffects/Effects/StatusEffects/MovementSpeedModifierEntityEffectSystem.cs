@@ -5,6 +5,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.StatusEffects;
 
+/// <summary>
+/// Applies a given movement speed modifier status effect to this entity.
+/// Duration is modified by scale.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class MovementSpeedModifierEntityEffectSystem : EntityEffectSystem<MovementSpeedModifierComponent, MovementSpeedModifier>
 {
     [Dependency] private readonly StatusEffectsSystem _status = default!;
@@ -56,6 +61,7 @@ public sealed partial class MovementSpeedModifierEntityEffectSystem : EntityEffe
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class MovementSpeedModifier : BaseStatusEntityEffect<MovementSpeedModifier>
 {
     /// <summary>
@@ -76,7 +82,6 @@ public sealed partial class MovementSpeedModifier : BaseStatusEntityEffect<Movem
     [DataField]
     public EntProtoId EffectProto = MovementModStatusSystem.ReagentSpeed;
 
-    /// <inheritdoc/>
     public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
     Time == null
         ? null // Not gonna make a whole new looc for something that shouldn't ever exist.

@@ -3,6 +3,11 @@ using Content.Shared.Temperature.Systems;
 
 namespace Content.Shared.EntityEffects.Effects;
 
+// TODO: When we get a proper temperature/energy struct combine this with the solution temperature effect!!!
+/// <summary>
+/// Adjusts the temperature of this entity.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class AdjustTemperatureEntityEffectSystem : EntityEffectSystem<TemperatureComponent, AdjustTemperature>
 {
     [Dependency] private readonly SharedTemperatureSystem _temperature = default!;
@@ -14,10 +19,11 @@ public sealed partial class AdjustTemperatureEntityEffectSystem : EntityEffectSy
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class AdjustTemperature : EntityEffectBase<AdjustTemperature>
 {
     /// <summary>
-    ///     Amount of firestacks reduced.
+    ///     Amount we're adjusting temperature by.
     /// </summary>
     [DataField]
     public float Amount;

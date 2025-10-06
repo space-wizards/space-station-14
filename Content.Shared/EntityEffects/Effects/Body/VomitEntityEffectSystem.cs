@@ -3,6 +3,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Body;
 
+/// <summary>
+/// Makes an entity vomit and reduces hunger and thirst by a given amount, modified by scale.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class VomitEntityEffectSystem : EntityEffectSystem<MetaDataComponent, Vomit>
 {
     [Dependency] private readonly VomitSystem _vomit = default!;
@@ -13,13 +17,18 @@ public sealed partial class VomitEntityEffectSystem : EntityEffectSystem<MetaDat
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class Vomit : EntityEffectBase<Vomit>
 {
-    /// How many units of thirst to add each time we vomit
+    /// <summary>
+    /// How much we adjust our thirst after vomiting.
+    /// </summary>
     [DataField]
     public float ThirstAmount = -8f;
 
-    /// How many units of hunger to add each time we vomit
+    /// <summary>
+    /// How much we adjust our hunger after vomiting.
+    /// </summary>
     [DataField]
     public float HungerAmount = -8f;
 

@@ -5,6 +5,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Solution;
 
+/// <summary>
+/// Adjust a reagent in this solution by an amount modified by scale.
+/// Quantity is modified by scale.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class AdjustReagentEntityEffectSystem : EntityEffectSystem<SolutionComponent, AdjustReagent>
 {
     protected override void Effect(Entity<SolutionComponent> entity, ref EntityEffectEvent<AdjustReagent> args)
@@ -20,6 +25,7 @@ public sealed partial class AdjustReagentEntityEffectSystem : EntityEffectSystem
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class AdjustReagent : EntityEffectBase<AdjustReagent>
 {
     /// <summary>

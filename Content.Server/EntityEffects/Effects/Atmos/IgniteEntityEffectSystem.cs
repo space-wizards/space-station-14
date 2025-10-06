@@ -5,6 +5,10 @@ using Content.Shared.EntityEffects.Effects.Atmos;
 
 namespace Content.Server.EntityEffects.Effects.Atmos;
 
+/// <summary>
+/// Sets this entity on fire.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class IngiteEntityEffectSystem : EntityEffectSystem<FlammableComponent, Ignite>
 {
     [Dependency] private readonly FlammableSystem _flammable = default!;

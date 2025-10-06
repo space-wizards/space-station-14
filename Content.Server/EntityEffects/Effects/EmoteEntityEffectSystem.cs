@@ -4,6 +4,10 @@ using Content.Shared.EntityEffects.Effects;
 
 namespace Content.Server.EntityEffects.Effects;
 
+/// <summary>
+/// Makes this entity emote.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class EmoteEntityEffectSystem : EntityEffectSystem<MetaDataComponent, Emote>
 {
     [Dependency] private readonly ChatSystem _chat = default!;

@@ -1,8 +1,9 @@
 ﻿namespace Content.Shared.EntityEffects.Effects.Body;
 
-/// <remarks>
-/// Both Component and System are serverside.
-/// </remarks>
+/// <summary>
+/// See serverside system.
+/// </summary>
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class Oxygenate : EntityEffectBase<Oxygenate>
 {
     /// <summary>

@@ -4,6 +4,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.StatusEffects;
 
+/// <summary>
+/// Applies a given status effect to this entity.
+/// Duration is modified by scale.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class ModifyStatusEffectEntityEffectSystem : EntityEffectSystem<StatusEffectContainerComponent, ModifyStatusEffect>
 {
     [Dependency] private readonly StatusEffectsSystem _status = default!;
@@ -34,6 +39,7 @@ public sealed partial class ModifyStatusEffectEntityEffectSystem : EntityEffectS
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class ModifyStatusEffect : BaseStatusEntityEffect<ModifyStatusEffect>
 {
     /// <summary>
@@ -42,7 +48,6 @@ public sealed partial class ModifyStatusEffect : BaseStatusEntityEffect<ModifySt
     [DataField(required: true)]
     public EntProtoId EffectProto;
 
-    /// <inheritdoc />
     public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
         Time == null
             ? Loc.GetString(

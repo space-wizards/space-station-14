@@ -3,6 +3,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Solution;
 
+/// <summary>
+/// Sets the temperature of this solution to a fixed value.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed class SetSolutionTemperatureEntityEffectSystem : EntityEffectSystem<SolutionComponent, SetSolutionTemperature>
 {
     protected override void Effect(Entity<SolutionComponent> entity, ref EntityEffectEvent<SetSolutionTemperature> args)
@@ -11,6 +15,7 @@ public sealed class SetSolutionTemperatureEntityEffectSystem : EntityEffectSyste
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class SetSolutionTemperature : EntityEffectBase<SetSolutionTemperature>
 {
     /// <summary>
@@ -19,12 +24,17 @@ public sealed partial class SetSolutionTemperature : EntityEffectBase<SetSolutio
     [DataField(required: true)]
     public float Temperature;
 
-    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-set-solution-temperature-effect",
             ("chance", Probability),
             ("temperature", Temperature));
 }
 
+/// <summary>
+/// Adjusts the temperature of this solution by a given amount.
+/// The temperature adjustment is modified by scale.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed class AdjustSolutionTemperatureEntityEffectSystem : EntityEffectSystem<SolutionComponent, AdjustSolutionTemperature>
 {
     protected override void Effect(Entity<SolutionComponent> entity, ref EntityEffectEvent<AdjustSolutionTemperature> args)
@@ -36,6 +46,7 @@ public sealed class AdjustSolutionTemperatureEntityEffectSystem : EntityEffectSy
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class AdjustSolutionTemperature : EntityEffectBase<AdjustSolutionTemperature>
 {
     /// <summary>
@@ -62,7 +73,7 @@ public sealed partial class AdjustSolutionTemperature : EntityEffectBase<AdjustS
     [DataField]
     public bool Scaled;
 
-    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-adjust-solution-temperature-effect",
             ("chance", Probability),
             ("deltasign", MathF.Sign(Delta)),
@@ -70,6 +81,11 @@ public sealed partial class AdjustSolutionTemperature : EntityEffectBase<AdjustS
             ("maxtemp", MaxTemp));
 }
 
+/// <summary>
+/// Adjusts the thermal energy of this solution by a given amount.
+/// The energy adjustment is modified by scale.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed class AdjustSolutionThermalEnergyEntityEffectSystem : EntityEffectSystem<SolutionComponent, AdjustSolutionThermalEnergy>
 {
     protected override void Effect(Entity<SolutionComponent> entity, ref EntityEffectEvent<AdjustSolutionThermalEnergy> args)
@@ -99,7 +115,7 @@ public sealed class AdjustSolutionThermalEnergyEntityEffectSystem : EntityEffect
     }
 }
 
-[DataDefinition]
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class AdjustSolutionThermalEnergy : EntityEffectBase<AdjustSolutionThermalEnergy>
 {
     /// <summary>
@@ -126,7 +142,7 @@ public sealed partial class AdjustSolutionThermalEnergy : EntityEffectBase<Adjus
     [DataField]
     public bool Scaled;
 
-    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-adjust-solution-temperature-effect",
             ("chance", Probability),
             ("deltasign", MathF.Sign(Delta)),

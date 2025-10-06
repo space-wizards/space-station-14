@@ -160,11 +160,18 @@ public abstract partial class EntityEffectSystem<T, TEffect> : EntitySystem wher
     protected abstract void Effect(Entity<T> entity, ref EntityEffectEvent<TEffect> args);
 }
 
+/// <summary>
+/// Used to raise an EntityEffect without losing the type of effect.
+/// </summary>
 public interface IEntityEffectRaiser
 {
     void RaiseEffectEvent<T>(EntityUid target, T effect, float scale) where T : EntityEffectBase<T>;
 }
 
+/// <summary>
+/// Used to store an <see cref="EntityEffect"/> so it can be raised without losing the type of the condition.
+/// </summary>
+/// <typeparam name="T">The Condition wer are raising.</typeparam>
 public abstract partial class EntityEffectBase<T> : EntityEffect where T : EntityEffectBase<T>
 {
     public override void RaiseEvent(EntityUid target, IEntityEffectRaiser raiser, float scale)
@@ -176,7 +183,9 @@ public abstract partial class EntityEffectBase<T> : EntityEffect where T : Entit
     }
 }
 
-// This exists so we can store entity effects in list and raise events without type erasure.
+/// <summary>
+/// A basic instantaneous effect which can be applied to an entity via events.
+/// </summary>
 [ImplicitDataDefinitionForInheritors]
 public abstract partial class EntityEffect
 {
@@ -198,17 +207,26 @@ public abstract partial class EntityEffect
     public virtual bool Scaling { get; private set; }
 
     // TODO: This should be an entity condition but guidebook relies on it heavily for formatting...
+    /// <summary>
+    /// Probability of the effect occuring.
+    /// </summary>
     [DataField]
     public float Probability = 1.0f;
 
     /// <summary>
-    /// A general description of the entity effect for guidebooks.
+    /// The description of this entity effect that shows in guidebooks.
     /// </summary>
     public virtual string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => null;
 
+    /// <summary>
+    /// Whether this effect should be logged in admin logs.
+    /// </summary>
     [ViewVariables]
     public virtual bool ShouldLog => true;
 
+    /// <summary>
+    /// If this effect is logged, how important is the log?
+    /// </summary>
     [ViewVariables]
     public virtual LogImpact LogImpact => LogImpact.Low;
 }

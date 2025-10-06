@@ -5,8 +5,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityConditions.Conditions.Body;
 
 /// <summary>
-/// Returns true if current mob state matches given mob state.
+/// Returns true if this entity's current mob state matches the condition's specified mob state.
 /// </summary>
+/// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class MobStateEntityConditionSystem : EntityConditionSystem<MobStateComponent, IsMobState>
 {
     protected override void Condition(Entity<MobStateComponent> entity, ref EntityConditionEvent<IsMobState> args)
@@ -16,6 +17,7 @@ public sealed partial class MobStateEntityConditionSystem : EntityConditionSyste
     }
 }
 
+/// <inheritdoc cref="EntityCondition"/>
 public sealed partial class IsMobState : EntityConditionBase<IsMobState>
 {
     [DataField]

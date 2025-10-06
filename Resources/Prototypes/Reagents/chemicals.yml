@@ -42,6 +42,7 @@
           types:
             Poison: -1
       - !type:CleanBloodstream
+        excluded: Charcoal
         cleanseRate: 3
 
 - type: reagent

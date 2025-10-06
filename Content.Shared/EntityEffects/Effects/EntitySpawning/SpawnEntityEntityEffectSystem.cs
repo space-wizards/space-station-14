@@ -1,5 +1,10 @@
 ﻿namespace Content.Shared.EntityEffects.Effects.EntitySpawning;
 
+/// <summary>
+/// Spawns a number of entities of a given prototype at the coordinates of this entity.
+/// Amount is modified by scale.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class SpawnEntityEntityEffectSystem : EntityEffectSystem<TransformComponent, SpawnEntity>
 {
     protected override void Effect(Entity<TransformComponent> entity, ref EntityEffectEvent<SpawnEntity> args)
@@ -14,4 +19,5 @@ public sealed partial class SpawnEntityEntityEffectSystem : EntityEffectSystem<T
     }
 }
 
+/// <inheritdoc cref="BaseSpawnEntityEntityEffect{T}"/>
 public sealed partial class SpawnEntity : BaseSpawnEntityEntityEffect<SpawnEntity>;

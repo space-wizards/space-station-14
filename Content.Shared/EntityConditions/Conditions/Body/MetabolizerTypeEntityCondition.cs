@@ -4,9 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Body;
 
-/// <summary>
-/// Checks if an entity has any of the given metabolizer types.
-/// </summary>
+/// <inheritdoc cref="EntityCondition"/>
 public sealed partial class MetabolizerType : EntityConditionBase<MetabolizerType>
 {
     [DataField(required: true)]
