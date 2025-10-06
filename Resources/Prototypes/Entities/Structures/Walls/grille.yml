@@ -57,8 +57,9 @@
       fixtures:
         fix1:
           shape:
-            !type:PhysShapeAabb
-            bounds: "-0.5,-0.5,0.5,0.5"
+            !type:PhysShapeAabb {}
+          mask:
+          - FullTileMask
           layer:
           - GlassLayer
     - type: Destructible
