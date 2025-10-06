@@ -63,7 +63,7 @@ public sealed partial class DisposalTubeComponent : Component
 [ByRefEvent]
 public record struct GetDisposalsNextDirectionEvent(Entity<DisposalHolderComponent> Holder)
 {
-    public Direction Next;
+    public Direction Next = Direction.Invalid;
 }
 
 /// <summary>

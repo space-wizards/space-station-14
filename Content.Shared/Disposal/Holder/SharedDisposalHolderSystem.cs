@@ -192,7 +192,6 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         PredictedDel(ent.Owner);
     }
 
-
     /// <summary>
     /// Attempts to assigns a disposal holder to a new disposal tube, updating the trajectory of the holder.
     /// </summary>
@@ -232,25 +231,26 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         var xform = Transform(ent);
 
         // Attempt to damage entities when changing direction
-        if (ent.Comp.Container != null &&
-            ent.Comp.CurrentDirection != ev.Next &&
-            ent.Comp.AccumulatedDamage < ent.Comp.MaxAllowedDamage)
+        if (ent.Comp.CurrentDirection != ev.Next)
         {
             ent.Comp.DirectionChangeCount++;
 
-            var damage = tube.Comp.DamageOnTurn;
-
-            foreach (var held in ent.Comp.Container.ContainedEntities)
+            if (ent.Comp.Container != null && ent.Comp.AccumulatedDamage < ent.Comp.MaxAllowedDamage)
             {
-                _damageable.TryChangeDamage(held, damage);
+                var damage = tube.Comp.DamageOnTurn;
+
+                foreach (var held in ent.Comp.Container.ContainedEntities)
+                {
+                    _damageable.TryChangeDamage(held, damage);
+                }
+
+                ent.Comp.AccumulatedDamage += damage.GetTotal();
             }
 
             if (_net.IsServer)
             {
                 _audio.PlayPvs(tube.Comp.ClangSound, xform.Coordinates);
             }
-
-            ent.Comp.AccumulatedDamage += damage.GetTotal();
 
             // Check if the holder can escape the current pipe
             if (TryEscaping(ent, tube))
