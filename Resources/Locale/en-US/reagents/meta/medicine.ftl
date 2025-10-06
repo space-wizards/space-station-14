@@ -118,6 +118,9 @@ reagent-desc-puncturase = A fizzy chemical that helps rebuild trauma caused by p
 reagent-name-bruizine = bruizine
 reagent-desc-bruizine = Originally developed as a cough medicine, it turns out this chemical is wildly effective at treating blunt force trauma.
 
+reagent-name-holywater = holy water
+reagent-desc-holywater = The cleanest and purest of waters straight from the hands of god, is known to magically heal wounds.
+
 reagent-name-pyrazine = pyrazine
 reagent-desc-pyrazine = Efficiently heals burns from the hottest of fires. Causes massive internal bleeding when overdosed.
 

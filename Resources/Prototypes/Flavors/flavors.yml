@@ -1485,21 +1485,6 @@
   description: flavor-complex-artifact-glue
 
 - type: flavor
-  id: joyful
-  flavorType: base
-  description: flavor-base-joyful
-
-- type: flavor
-  id: unholy
-  flavorType: base
-  description: flavor-base-unholy
-
-- type: flavor
-  id: flavorless
-  flavorType: base
-  description: flavor-base-flavorless
-
-- type: flavor
   id: alkaline
   flavorType: Base
   description: flavor-base-alkaline

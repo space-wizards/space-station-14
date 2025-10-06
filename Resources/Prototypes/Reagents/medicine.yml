@@ -1104,6 +1104,51 @@
             Poison: 2.5 # 10 per u
 
 - type: reagent
+  id: Holywater
+  name: reagent-name-holywater
+  group: Sacred
+  desc: reagent-desc-holywater
+  evaporationSpeed: 0.3
+  physicalDesc: reagent-physical-desc-holy
+  flavor: holy
+  color: "#91C3F7"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          max: 50
+        damage:
+          types:
+            Blunt: -0.2
+            Poison: -0.2
+            Heat: -0.2
+            Shock: -0.2
+            Cold: -0.2
+  reactiveEffects:
+    Extinguish:
+      methods: [ Touch ]
+      effects:
+      - !type:ExtinguishReaction
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Holy: 0.5
+  plantMetabolism:
+  - !type:PlantAdjustWater
+    amount: 1
+  tileReactions:
+  - !type:ExtinguishTileReaction { }
+
+- type: reagent
   id: Pyrazine
   name: reagent-name-pyrazine
   group: Medicine

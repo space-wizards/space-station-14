@@ -110,7 +110,6 @@ guide-entry-toxins = Toxins
 guide-entry-foods = Foods
 guide-entry-biological = Biological
 guide-entry-botanical = Botanical
-guide-entry-sacred = Sacred
 guide-entry-special = Special
 guide-entry-others = Others
 
