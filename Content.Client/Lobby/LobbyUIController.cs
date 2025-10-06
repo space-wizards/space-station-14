@@ -74,6 +74,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         });
 
         _configurationManager.OnValueChanged(CCVars.GameRoleTimers, _ => RefreshEditors());
+        _configurationManager.OnValueChanged(CCVars.GameRoleLoadoutTimers, _ => RefreshEditors());
 
         _configurationManager.OnValueChanged(CCVars.GameRoleWhitelist, _ => RefreshEditors());
     }

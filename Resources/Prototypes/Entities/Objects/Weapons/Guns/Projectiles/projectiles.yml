@@ -902,6 +902,7 @@
     containers:
       cluster-payload: !type:Container
   - type: ProjectileGrenade
+    triggerKey: trigger
     fillPrototype: PelletClusterLessLethal
     capacity: 30
 
