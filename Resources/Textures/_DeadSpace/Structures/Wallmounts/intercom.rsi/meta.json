@@ -1,0 +1,61 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from /tg/station at https://github.com/tgstation/tgstation/blob/HEAD/icons/obj/machines/wallmounts.dmi, edited by andrew_fenriz (discord) for Space Station 14 server Мёртвый Космос",
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "broadcasting"
+        },
+        {
+            "name": "build"
+        },
+        {
+            "name": "speaker"
+        },
+        {
+            "name": "unshaded",
+            "delays": [
+                [
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
+                ]
+            ]
+        },
+        {
+            "name": "panel"
+        },
+        {
+            "name": "command"
+        },
+        {
+            "name": "engineering"
+        },
+        {
+            "name": "medical"
+        },
+        {
+            "name": "science"
+        },
+        {
+            "name": "security"
+        },
+        {
+            "name": "service"
+        },
+        {
+            "name": "supply"
+        },
+        {
+            "name": "freelance"
+        }
+    ]
+}
