@@ -74,6 +74,7 @@
   - type: Sprite
     sprite: Mobs/Elemental/orecrab.rsi
     state: uranium_crab
+  - type: NPCProximitySleep
   - type: HTN
     rootTask:
       task: SimpleHostileCompound

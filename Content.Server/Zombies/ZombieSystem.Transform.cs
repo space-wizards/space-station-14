@@ -264,7 +264,7 @@ public sealed partial class ZombieSystem
         var htn = EnsureComp<HTNComponent>(target);
         htn.RootTask = new HTNCompoundTask() { Task = "SimpleHostileCompound" };
         htn.Blackboard.SetValue(NPCBlackboard.Owner, target);
-        _npc.SleepNPC(target, htn);
+        _npc.SleepNPC(target, null, htn);
 
         //He's gotta have a mind
         var hasMind = _mind.TryGetMind(target, out var mindId, out var mind);
@@ -281,7 +281,7 @@ public sealed partial class ZombieSystem
         }
         else
         {
-            _npc.WakeNPC(target, htn);
+            _npc.WakeNPC(target, null, htn);
         }
 
         if (!HasComp<GhostRoleMobSpawnerComponent>(target) && !hasMind) //this specific component gives build test trouble so pop off, ig
