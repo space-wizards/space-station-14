@@ -7,7 +7,6 @@ using Content.Server.Clothing.Systems;
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.Stunnable;
-using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage;
 using Robust.Shared.Prototypes;
 using Content.Server.Emoting.Systems;
@@ -21,7 +20,6 @@ namespace Content.Server.Cluwne;
 
 public sealed class CluwneSystem : EntitySystem
 {
-    private static readonly ProtoId<DamageGroupPrototype> GeneticDamageGroup = "Genetic";
 
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -55,8 +53,7 @@ public sealed class CluwneSystem : EntitySystem
             RemComp<CluwneComponent>(ent.Owner);
             RemComp<ClumsyComponent>(ent.Owner);
             RemComp<AutoEmoteComponent>(ent.Owner);
-            var damageSpec = new DamageSpecifier(_prototypeManager.Index(GeneticDamageGroup), ent.Comp.RevertDamage);
-            _damageableSystem.TryChangeDamage(ent.Owner, damageSpec);
+            _damageableSystem.TryChangeDamage(ent.Owner, ent.Comp.RevertDamage);
         }
     }
 
@@ -68,8 +65,6 @@ public sealed class CluwneSystem : EntitySystem
     private void OnComponentStartup(Entity<CluwneComponent> ent, ref ComponentStartup args)
     {
         if (ent.Comp.EmoteSoundsId == null)
-            return;
-        if (ent.Comp.OutfitId == null)
             return;
 
         _prototypeManager.TryIndex(ent.Comp.EmoteSoundsId, out EmoteSounds);

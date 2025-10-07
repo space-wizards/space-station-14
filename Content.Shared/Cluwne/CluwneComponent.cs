@@ -1,6 +1,9 @@
 using Robust.Shared.Audio;
 using Content.Shared.Chat.Prototypes;
+using Content.Shared.Damage;
+using Content.Shared.Roles;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Cluwne;
@@ -19,11 +22,23 @@ public sealed partial class CluwneComponent : Component
     /// Amount of genetic damage dealt when they revert
     /// </summary>
     [DataField]
-    public int RevertDamage = 300;
+    public DamageSpecifier RevertDamage = new()
+    {
+        DamageDict = new()
+        {
+            { "Genetic", 300.0 },
+        },
+    };
 
+    /// <summary>
+    /// Chance that the Cluwne will be knocked over and paralized.
+    /// </summary>
     [DataField]
     public float KnockChance = 0.05f;
 
+    /// <summary>
+    /// Chance that the Cluwne will randomly giggle
+    /// </summary>
     [DataField]
     public float GiggleRandomChance = 0.1f;
 
@@ -33,15 +48,28 @@ public sealed partial class CluwneComponent : Component
     [DataField]
     public bool RandomEmote = true;
 
+    /// <summary>
+    /// Emote sound collection that the Cluwne should use.
+    /// </summary>
     [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
-    public string? EmoteSoundsId = "Cluwne";
+    public ProtoId<EmoteSoundsPrototype>? EmoteSoundsId = "Cluwne";
 
+    /// <summary>
+    /// Emote to use for the Cluwne Giggling
+    /// </summary>
     [DataField]
-    public string? AutoEmoteId = "CluwneGiggle";
+    public ProtoId<AutoEmotePrototype>? AutoEmoteId = "CluwneGiggle";
 
+    /// <summary>
+    /// Message to popup when the Cluwne is transformed
+    /// </summary>
     [DataField]
     public LocId TransformMessage = "cluwne-transform";
 
+    /// <summary>
+    /// Name prefix for the Cluwne.
+    /// Example "Urist McHuman" will be "Cluwned Urist McHuman"
+    /// </summary>
     [DataField]
     public LocId NamePrefix = "cluwne-name-prefix";
 
@@ -49,7 +77,7 @@ public sealed partial class CluwneComponent : Component
     /// Outfit ID that the cluwne will spawn with.
     /// </summary>
     [DataField]
-    public string? OutfitId = "CluwneGear";
+    public ProtoId<StartingGearPrototype> OutfitId = "CluwneGear";
 
     /// <summary>
     /// Amount of time cluwne is paralyzed for when falling over.
@@ -63,12 +91,21 @@ public sealed partial class CluwneComponent : Component
     [DataField("spawnsound")]
     public SoundSpecifier SpawnSound = new SoundPathSpecifier("/Audio/Items/bikehorn.ogg");
 
-    [ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// Emote to use for the cluwne giggling
+    /// </summary>
+    [DataField]
     public LocId GiggleEmote = "cluwne-giggle-emote";
 
+    /// <summary>
+    /// Sound to play when the Cluwne is knocked over and paralyzed
+    /// </summary>
     [DataField("knocksound")]
     public SoundSpecifier KnockSound = new SoundPathSpecifier("/Audio/Items/airhorn.ogg");
 
+    /// <summary>
+    /// Emote thats used when the cluwne getting knocked over
+    /// </summary>
     [DataField]
     public LocId KnockEmote = "cluwne-knock-emote";
 }
