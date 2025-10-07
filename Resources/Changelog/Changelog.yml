@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: FrostWinters
-  changes:
-  - message: Histamines no longer cause radiation.
-    type: Tweak
-  - message: Epinephrine treats Histamines above OD threshold.
-    type: Tweak
-  id: 8544
-  time: '2025-05-21T01:12:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37460
 - author: Minty642
   changes:
   - message: Added fungal soil, maintenance version of hydroponics.
@@ -3956,3 +3947,10 @@
   id: 9046
   time: '2025-10-07T18:22:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39888
+- author: Hitlinemoss
+  changes:
+  - message: MRE wrappers are no longer twice as nutritious as the actual food within.
+    type: Fix
+  id: 9047
+  time: '2025-10-07T19:36:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40761
