@@ -4,8 +4,8 @@ meta:
   engineVersion: 267.2.0
   forkId: ""
   forkVersion: ""
-  time: 10/06/2025 22:08:58
-  entityCount: 23857
+  time: 10/07/2025 01:59:23
+  entityCount: 23873
 maps:
 - 5350
 grids:
@@ -11783,7 +11783,7 @@ entities:
       pos: 34.5,45.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -34193.54
+      secondsUntilStateChange: -47726.9
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -13659,6 +13659,14 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,10.5
+      parent: 30
+    - type: Fixtures
+      fixtures: {}
+  - uid: 23866
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -52.5,47.5
       parent: 30
     - type: Fixtures
       fixtures: {}
@@ -30532,12 +30540,12 @@ entities:
   - uid: 16832
     components:
     - type: Transform
-      pos: -52.5,45.5
+      pos: -53.5,45.5
       parent: 30
   - uid: 16833
     components:
     - type: Transform
-      pos: -52.5,44.5
+      pos: -53.5,44.5
       parent: 30
   - uid: 16834
     components:
@@ -34813,6 +34821,41 @@ entities:
     components:
     - type: Transform
       pos: -30.5,41.5
+      parent: 30
+  - uid: 23862
+    components:
+    - type: Transform
+      pos: -48.5,48.5
+      parent: 30
+  - uid: 23863
+    components:
+    - type: Transform
+      pos: -49.5,48.5
+      parent: 30
+  - uid: 23864
+    components:
+    - type: Transform
+      pos: -50.5,48.5
+      parent: 30
+  - uid: 23865
+    components:
+    - type: Transform
+      pos: -51.5,48.5
+      parent: 30
+  - uid: 23867
+    components:
+    - type: Transform
+      pos: -53.5,46.5
+      parent: 30
+  - uid: 23869
+    components:
+    - type: Transform
+      pos: -52.5,47.5
+      parent: 30
+  - uid: 23870
+    components:
+    - type: Transform
+      pos: -53.5,47.5
       parent: 30
 - proto: CableApcStack
   entities:
@@ -47082,6 +47125,11 @@ entities:
     - type: Transform
       pos: -30.5,41.5
       parent: 30
+  - uid: 23868
+    components:
+    - type: Transform
+      pos: -52.5,47.5
+      parent: 30
 - proto: CableMVStack
   entities:
   - uid: 1638
@@ -53123,6 +53171,28 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 15.5,18.5
+      parent: 30
+  - uid: 23858
+    components:
+    - type: Transform
+      pos: -31.5,-5.5
+      parent: 30
+  - uid: 23859
+    components:
+    - type: Transform
+      pos: -30.5,-5.5
+      parent: 30
+  - uid: 23860
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -31.5,-7.5
+      parent: 30
+  - uid: 23861
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -30.5,-7.5
       parent: 30
 - proto: ChairGreyscale
   entities:
@@ -68276,8 +68346,8 @@ entities:
     components:
     - type: Transform
       anchored: False
-      pos: -0.22898674,-38.91482
-      parent: 5350
+      pos: -2.5,-36.5
+      parent: 30
     - type: Physics
       bodyType: Dynamic
     - type: DeviceNetwork
@@ -111106,6 +111176,22 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 42.5,43.5
+      parent: 30
+  - uid: 23871
+    components:
+    - type: Transform
+      pos: -51.5,45.5
+      parent: 30
+  - uid: 23872
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -57.5,46.5
+      parent: 30
+  - uid: 23873
+    components:
+    - type: Transform
+      pos: -56.5,41.5
       parent: 30
 - proto: Poweredlight
   entities:
