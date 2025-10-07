@@ -351,13 +351,14 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
                 if (ents.Attached != session.AttachedEntity)
                 {
-                    Log.Warning("User pre-selected for antag role is no longer attached to the same entity.");
+                    Log.Warning($"User {session} pre-selected for antag role is no longer attached to the same entity. Old: {ToPrettyString(ents.Attached)}. New: {ToPrettyString(session.AttachedEntity)}.");
                     continue;
                 }
 
-                if (ents.Mind != session.GetMind())
+                var mind = session.GetMind();
+                if (ents.Mind != mind)
                 {
-                    Log.Warning("User pre-selected for antag role is no longer associated with the same mind.");
+                    Log.Warning($"User {session} pre-selected for antag role is no longer associated with the same mind.  Old: {ToPrettyString(ents.Mind)}. New: {ToPrettyString(mind)}.");
                     continue;
                 }
 
