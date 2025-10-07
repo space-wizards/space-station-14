@@ -52,7 +52,7 @@
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitSyndie
     shoes: ClothingShoesBootsCombatFilled
-    id: SyndiPDA
+    id: SyndiOperativePDA
     pocket2: PlushieCarp
     belt: ClothingBeltMilitaryWebbing
   storage:
@@ -82,6 +82,7 @@
   id: SyndicateCommanderGearFull
   parent: SyndicateOperativeGearFull
   equipment:
+    id: SyndiCommanderPDA
     neck: SyndicateWhistle
     outerClothing: ClothingOuterHardsuitSyndieCommander
   inhand:
@@ -104,7 +105,7 @@
     eyes: ClothingEyesHudSyndicateAgent
     outerClothing: ClothingOuterHardsuitSyndieMedic
     shoes: ClothingShoesBootsMagSyndie
-    id: SyndiAgentPDA
+    id: SyndiCorpsmanPDA
     belt: ClothingBeltMilitaryWebbingMedFilled
   storage:
     back:
