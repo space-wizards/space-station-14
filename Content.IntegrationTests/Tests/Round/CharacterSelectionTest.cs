@@ -355,6 +355,7 @@ public sealed class CharacterSelectionTest
             foreach (var character in data.Characters)
             {
                 var profile = character.ToProfile();
+                profile.EnsureValid(pair.Player!, pair.Client.InstanceDependencyCollection);
                 cPref.CreateCharacter(profile);
                 if (character.ExpectToSpawn)
                 {
