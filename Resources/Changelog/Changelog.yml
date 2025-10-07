@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Minty642
-  changes:
-  - message: Added fungal soil, maintenance version of hydroponics.
-    type: Add
-  id: 8545
-  time: '2025-05-21T04:59:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36245
 - author: metalgearsloth
   changes:
   - message: Picking up items with area pickups (e.g. trash bags) no longer lags the
@@ -3954,3 +3947,14 @@
   id: 9047
   time: '2025-10-07T19:36:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40761
+- author: TrixxedHeart
+  changes:
+  - message: 'Added new markings for Vox: 3 new beak types, 2 beak markings, 1 overlay
+      6 head, and 3 chest markings.'
+    type: Add
+  - message: Fixed sprite layering issue where a Vox's back leg would appear on top
+      of their front leg in side sprites.
+    type: Fix
+  id: 9048
+  time: '2025-10-07T23:14:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40569
