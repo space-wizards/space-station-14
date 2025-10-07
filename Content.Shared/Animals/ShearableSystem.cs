@@ -200,27 +200,26 @@ public sealed class SharedShearableSystem : EntitySystem
             maxProductsToSpawn = (float)ent.Comp.MaximumProductsSpawned;
         }
 
-        // Modulas the targetSolutionQuantity so no solution is wasted if it can't be divided evenly.
+        // Modulus the targetSolutionQuantity so no solution is wasted if it can't be divided evenly.
         // subtract targetSolutionQuantity from the remainder.
         // Everything is divided by 100, because fixedPoint2 multiplies everything by 100.
         // Math.Min ensures that no more solution than what is needed for the maximum stack is used, shear the entity multiple times if you want the rest of the product.
         // e.g.
-        // Sheep contains 5000 fibre reagent (50 units).
-        // We want 0.2 products per solution. Since we're calcuating with reagent and not units we need to modify the value.
-        // 1 / 0.2 * 100 = 500. (See above)
-        // 5000 - 5000 % 500. 500 fits nicely into 5000 so there is no remainer of 0. This means we're removing all 5000 reagent currently.
-        // Next we check the maxmium number of product we want to spawn, if this is less than 5000 then the animal will need to be sheared multiple times to delete its resources.
-        // We've not configured a maxProductsToSpawn, so we aren't imposing a limit. In this case it defaults to productsPerSolution.
+        // targetSolutionQuantity.Value = 2500, this is how much shearable solution the target entity contains, it's equivalent to 25 units.
+        // productsPerSolution = 500, this is the yaml defined number of materials we will get from shearing. It has been converted from units to reagent above, it was originally 0.2 units.
+        // maxProductsToSpawn is undefined in yaml and has been defaulted to productsPerSolution (500).
+        // 2500 - 2500 % 500. 500 fits nicely into 2500 so there is no remainder of 0. This means we're removing all 2500 reagent currently.
+        //
+        // Next, we check the maximum number of products we want to spawn, if this is less than the total reagent available then the entity will need to be sheared multiple times to deplete its resources.
+        // If there's no configured maxProductsToSpawn, then we aren't imposing a limit. In this case it defaults to productsPerSolution.
         // productsPerSolution is set to 500. Therefore, the calculation is:
-        // 500 * 500 / 100 = 2500.
-        // We take the smaller of two values, we don't want to remove more reagent than we're using.
-        // Despite their being 5000 reagent available, we end up only removing 2500, even though no limit has been set, why is this?
-        // I don't know... it seems to work OK though.
-        var solutionToRemove = FixedPoint2.New(
-            Math.Min(
-                (targetSolutionQuantity.Value - targetSolutionQuantity.Value % productsPerSolution) / 100,
-                maxProductsToSpawn * productsPerSolution / 100
-            )
+        // 500 * 500 / 100 = 2500 (See how it lines up with the total reagent available).
+        // If we had configured a limit, e,g 3 then it would look like this:
+        // 3 * 500 / 100 = 1500, 1000 reagent less than what was available.
+        // We take the smaller of two values with .Min, we don't want to remove more reagent than we're using.
+        var solutionToRemove = FixedPoint2.Min(
+                (targetSolutionQuantity.Value - targetSolutionQuantity.Value % productsPerSolution) / 100.0f,
+                maxProductsToSpawn * productsPerSolution / 100.0f
         );
 
         // Failure message, if the shearable creature has no targetSolutionName to be sheared.
