@@ -14,6 +14,9 @@ using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Stacks;
 using Content.Server.Maps;
 using Robust.Server.GameObjects;
+using System.Linq;
+using SQLitePCL;
+using Content.Server.GameTicking;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -29,6 +32,7 @@ public sealed class StealConditionSystem : EntitySystem
     [Dependency] private readonly IGameMapManager _gameMapManager = default!;
     [Dependency] private readonly MapSystem _mapSystem = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
 
 
     private EntityQuery<ContainerManagerComponent> _containerQuery;
@@ -50,34 +54,21 @@ public sealed class StealConditionSystem : EntitySystem
     /// start checks of target acceptability, and generation of start values.
     private void OnAssigned(Entity<StealConditionComponent> condition, ref ObjectiveAssignedEvent args)
     {
-        var selectedMapId = _gameMapManager.GetSelectedMap()?.ID;
+        var selectedMapId = _gameTicker.DefaultMap;
+        List<StealTargetComponent?> targetList = new();
 
-        if (string.IsNullOrEmpty(selectedMapId))
+        var query = AllEntityQuery<StealTargetComponent>();
+        while (query.MoveNext(out var target))
         {
-            Logger.Warning("No selected map found, skipping OnAssigned logic.");
-            return;
-        }
+            var transform = EntityManager.GetComponent<TransformComponent>(target.Owner);
 
-        var allMapIds = _mapSystem.GetAllMapIds();
-        var targetList = new List<StealTargetComponent>();
-
-        foreach (var mapId in allMapIds)
-        {
-            if (!_mapSystem.TryGetMap(mapId, out var map))
+            if (transform.MapID != selectedMapId)
                 continue;
 
-            if (!_entityManager.TryGetComponent(map, out MetaDataComponent? mapMeta))
+            if (condition.Comp.StealGroup != target.StealGroup)
                 continue;
 
-            if (mapMeta.EntityPrototype?.ID != selectedMapId)
-                continue;
-
-            var query = AllEntityQuery<StealTargetComponent, TransformComponent>();
-            while (query.MoveNext(out var target, out var xform))
-            {
-                if (condition.Comp.StealGroup == target.StealGroup && xform.MapID == mapId)
-                    targetList.Add(target);
-            }
+            targetList.Add(target);
         }
 
         // cancel if the required items do not exist
