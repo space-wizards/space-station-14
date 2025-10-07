@@ -138,6 +138,22 @@
     - Shake
 
 - type: entity
+  parent: DrinkShaker
+  id: DrinkShakerGold
+  name: golden shaker
+  description: A gold-plated shaker given as a token of appreciation for years of service. It doesn't make the drinks taste any different.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/shaker_gold.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Consumable/Drinks/shaker_gold.rsi
+  - type: PhysicalComposition
+    materialComposition:
+      Gold: 10 # Gold plated, not solid gold
+      Steel: 40
+
+- type: entity
   parent: [DrinkBaseMaterialMetal, DrinkBase]
   id: DrinkJigger
   name: jigger
