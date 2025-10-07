@@ -1,10 +1,11 @@
 using Content.Shared.DeviceNetwork;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.SurveillanceCamera;
+namespace Content.Shared.SurveillanceCamera.Components;
 
-[RegisterComponent]
-[Access(typeof(SurveillanceCameraSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(SharedSurveillanceCameraSystem))]
 public sealed partial class SurveillanceCameraComponent : Component
 {
     // List of active viewers. This is for bookkeeping purposes,
@@ -24,23 +25,20 @@ public sealed partial class SurveillanceCameraComponent : Component
 
     // If this camera is active or not. Deactivating a camera
     // will not allow it to obtain any new viewers.
-    [ViewVariables]
-    public bool Active { get; set; } = true;
+    [DataField]
+    public bool Active = true;
 
     // This one isn't easy to deal with. Will require a UI
     // to change/set this so mapping these in isn't
     // the most terrible thing possible.
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("id")]
-    public string CameraId { get; set;  } = "camera";
+    public string CameraId = "camera";
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("nameSet")]
-    public bool NameSet { get; set; }
+    [DataField, AutoNetworkedField]
+    public bool NameSet;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("networkSet")]
-    public bool NetworkSet { get; set; }
+    [DataField, AutoNetworkedField]
+    public bool NetworkSet;
 
     // This has to be device network frequency prototypes.
     [DataField("setupAvailableNetworks")]
