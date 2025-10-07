@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Added a reduced motion version of the seeing rainbows overlay.
-    type: Add
-  id: 8536
-  time: '2025-05-20T12:36:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37584
 - author: B-Kirill
   changes:
   - message: Added new fun meteors variations (Cosmic cow, Honksteroid, Space potato)
@@ -3953,3 +3946,13 @@
   id: 9043
   time: '2025-10-07T14:12:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40115
+- author: BoskiYourk, spanky_spanky
+  changes:
+  - message: The Head of Security now has an energy magnum, a self-charging multi-mode
+      laser revolver, in their locker instead of the energy shotgun.
+    type: Add
+  - message: The Warden now has the energy shotgun in their locker round-start.
+    type: Tweak
+  id: 9044
+  time: '2025-10-07T16:05:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40615
