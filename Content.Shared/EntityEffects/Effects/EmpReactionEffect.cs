@@ -27,7 +27,7 @@ public sealed partial class EmpReactionEffect : EventEntityEffect<EmpReactionEff
     ///     Amount of time entities will be disabled
     /// </summary>
     [DataField("duration")]
-    public float DisableDuration = 15;
+    public TimeSpan DisableDuration = TimeSpan.FromSeconds(15);
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
             => Loc.GetString("reagent-effect-guidebook-emp-reaction-effect", ("chance", Probability));
