@@ -165,9 +165,3 @@
   storage:
     back:
     - BibleRatvar
-
-- type: loadout
-  id: BibleLamp
-  storage:
-    back:
-    - BibleLamp
