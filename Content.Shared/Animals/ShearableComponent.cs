@@ -59,6 +59,18 @@ public sealed partial class ShearableComponent : Component
     public int? MaximumProductsSpawned;
 
     /// <summary>
+    ///     Items dropped by shearing an entity can have their placement randomised so they don't all fall on the exact same pixel.
+    ///     For each spawn, a random number is chosen between the negative and positive values of this setting.
+    ///     If you set it to 0.2 then a random offset between -0.2 and 0.2 is picked for each spawn.
+    ///     Setting a value higher than 1 has a chance to spawn items outside the tile the entity stands on, which may go through walls.
+    /// </summary>
+    /// <example>
+    ///     RandomSpawnOffsetVariation: 0.2f
+    /// </example>
+    [DataField]
+    public float RandomSpawnOffsetVariation = 0.2f;
+
+    /// <summary>
     ///     The "Quality" of the target item that allows this entity to be sheared.
     ///     For example, Wirecutters have the "cutting" quality.
     ///     Leave undefined for no tool required.

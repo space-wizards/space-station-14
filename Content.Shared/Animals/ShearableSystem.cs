@@ -241,9 +241,9 @@ public sealed class SharedShearableSystem : EntitySystem
         // Spawn product.
         for (var i = 0; i < removedSolution.Volume.Value / productsPerSolution; i++)
         {
-            // Offset the spawn position by 0.4 pixels, so they don't all stack in one spot.
-            var xoffs = random.NextFloat(-0.2f, 0.2f);
-            var yoffs = random.NextFloat(-0.2f, 0.2f);
+            // Offset the spawn position by e.g 0.4 pixels, so they don't all stack in one spot.
+            var xoffs = random.NextFloat(-ent.Comp.RandomSpawnOffsetVariation, ent.Comp.RandomSpawnOffsetVariation);
+            var yoffs = random.NextFloat(-ent.Comp.RandomSpawnOffsetVariation, ent.Comp.RandomSpawnOffsetVariation);
             var pos = center.Offset(new Vector2(xoffs, yoffs));
 
             EntityManager.PredictedSpawnAtPosition(ent.Comp.ShearedProductID, pos);
