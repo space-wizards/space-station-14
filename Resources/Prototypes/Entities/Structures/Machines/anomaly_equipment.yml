@@ -162,14 +162,7 @@
     access: [[ "Research" ]]
   - type: Emitter
     onState: firing
-    powerUseActive: 100
-    boltType: AnomalousParticleDelta
     underpoweredState: underpowered
-    selectableTypes:
-    - AnomalousParticleDelta
-    - AnomalousParticleEpsilon
-    - AnomalousParticleZeta
-    - AnomalousParticleSigma
     setTypePorts:
       SetParticleDelta: AnomalousParticleDelta
       SetParticleEpsilon: AnomalousParticleEpsilon
@@ -178,6 +171,36 @@
     fireBurstSize: 1
     fireBurstDelayMin: 2
     fireBurstDelayMax: 6
+  - type: ActivatableUI
+    singleUser: true
+    verbOnly: true
+    key: enum.BatteryWeaponFireModesUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.BatteryWeaponFireModesUiKey.Key:
+        type: BatteryWeaponFireModesBoundUserInterface
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: AnomalousParticleDeltaStrong
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Battery/battery_weapon_fire_mode.rsi
+        state: delta-particle
+      fireCost: 100
+    - proto: AnomalousParticleEpsilonStrong
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Battery/battery_weapon_fire_mode.rsi
+        state: epsilon-particle
+      fireCost: 100
+    - proto: AnomalousParticleZetaStrong
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Battery/battery_weapon_fire_mode.rsi
+        state: zeta-particle
+      fireCost: 100
+    - proto: AnomalousParticleSigmaStrong
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Battery/battery_weapon_fire_mode.rsi
+        state: sigma-particle
+      fireCost: 100
   - type: ApcPowerReceiver
     powerLoad: 100
   - type: GuideHelp

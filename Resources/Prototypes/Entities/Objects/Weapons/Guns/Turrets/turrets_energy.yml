@@ -83,8 +83,14 @@
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: BulletEnergyTurretDisabler
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+        state: omnilaser
       fireCost: 100
     - proto: BulletEnergyTurretLaser
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+        state: heavylaser
       fireCost: 100
   - type: DeployableTurret
     retractedDamageModifierSetId: Metallic

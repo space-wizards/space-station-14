@@ -7,6 +7,7 @@ using Content.Server.Projectiles;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Lock;
 using Content.Shared.Popups;
@@ -15,6 +16,7 @@ using Content.Shared.Projectiles;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -142,12 +144,15 @@ namespace Content.Server.Singularity.EntitySystems
 
         public void SwitchOn(EntityUid uid, EmitterComponent component)
         {
+            if (!FireMode.TryGetFireMode((uid, null), out var fireMode))
+                return;
+
             component.IsOn = true;
             if (TryComp<PowerConsumerComponent>(uid, out var powerConsumer))
-                powerConsumer.DrawRate = component.PowerUseActive;
+                powerConsumer.DrawRate = fireMode.FireCost;
             if (TryComp<ApcPowerReceiverComponent>(uid, out var apcReceiver))
             {
-                apcReceiver.Load = component.PowerUseActive;
+                apcReceiver.Load = fireMode.FireCost;
                 if (apcReceiver.Powered)
                     PowerOn(uid, component);
             }
@@ -225,8 +230,11 @@ namespace Content.Server.Singularity.EntitySystems
             if (!TryComp<GunComponent>(uid, out var gunComponent))
                 return;
 
+            if(!FireMode.TryGetFireMode((uid, null), out var fireMode))
+                return;
+
             var xform = Transform(uid);
-            var ent = Spawn(component.BoltType, xform.Coordinates);
+            var ent = Spawn(fireMode.Prototype, xform.Coordinates);
             var proj = EnsureComp<ProjectileComponent>(ent);
             _projectile.SetShooter(ent, proj, uid);
 
@@ -278,9 +286,9 @@ namespace Content.Server.Singularity.EntitySystems
                     SwitchOn(uid, component);
                 }
             }
-            else if (component.SetTypePorts.TryGetValue(args.Port, out var boltType))
+            else if (component.SetTypePorts.TryGetValue(args.Port, out var protoId))
             {
-                component.BoltType = boltType;
+                FireMode.TrySetFireMode((uid, null), protoId);
             }
         }
     }
