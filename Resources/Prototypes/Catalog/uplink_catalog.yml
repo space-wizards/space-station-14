@@ -81,6 +81,19 @@
   - UplinkWeaponry
 
 - type: listing
+  id: UplinkEnergyCrossbow
+  name: uplink-energycrossbow-name
+  description: uplink-energycrossbow-desc
+  discountCategory: RareDiscounts
+  discountDownTo:
+    Telecrystal: 4
+  productEntity: WeaponEnergyCrossbow
+  cost:
+    Telecrystal: 6
+  categories:
+  - UplinkWeaponry
+
+- type: listing
   id: UplinkThrowingKnivesKit
   name: uplink-knives-kit-name
   description: uplink-knives-kit-desc
