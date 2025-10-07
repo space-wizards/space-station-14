@@ -99,8 +99,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         var query = QueryActiveRules();
         while (query.MoveNext(out var uid, out _, out var comp, out _))
         {
-            if (comp.SelectionTime != AntagSelectionTime.PrePlayerSpawn
-                && comp.SelectionTime != AntagSelectionTime.IntraPlayerSpawn)
+            if (comp.SelectionTime != AntagSelectionTime.PrePlayerSpawn && comp.SelectionTime != AntagSelectionTime.IntraPlayerSpawn)
                 continue;
 
             if (comp.AssignmentComplete)
@@ -136,8 +135,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         var query = QueryActiveRules();
         while (query.MoveNext(out var uid, out _, out var comp, out _))
         {
-            if (comp.SelectionTime != AntagSelectionTime.PostPlayerSpawn
-                && comp.SelectionTime != AntagSelectionTime.IntraPlayerSpawn)
+            if (comp.SelectionTime != AntagSelectionTime.PostPlayerSpawn && comp.SelectionTime != AntagSelectionTime.IntraPlayerSpawn)
                 continue;
 
             ChooseAntags((uid, comp), args.Players);
@@ -162,7 +160,6 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             {
                 if (!comp.PreSelectedSessions.TryGetValue(def, out var session))
                     break;
-
                 session.Remove(args.Player.UserId);
             }
         }
@@ -307,15 +304,13 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             {
                 if (!playerPool.TryPickAndTake(RobustRandom, out session) && noSpawner)
                 {
-                    Log.Warning(
-                        $"Couldn't pick a player for {ToPrettyString(ent):rule}, no longer choosing antags for this definition");
+                    Log.Warning($"Couldn't pick a player for {ToPrettyString(ent):rule}, no longer choosing antags for this definition");
                     break;
                 }
 
                 if (session != null && ent.Comp.PreSelectedSessions.Values.Any(x => x.ContainsKey(session.UserId)))
                 {
-                    Log.Warning(
-                        $"Somehow picked {session} for an antag when this rule already selected them previously");
+                    Log.Warning($"Somehow picked {session} for an antag when this rule already selected them previously");
                     continue;
                 }
             }
@@ -327,8 +322,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                 var set = ent.Comp.PreSelectedSessions.GetOrNew(def);
                 set.Add(session.UserId, (session.GetMind(), session.AttachedEntity)); // Selection done!
                 Log.Debug($"Pre-selected {session.Name} as antagonist: {ToPrettyString(ent)}");
-                _adminLogger.Add(LogType.AntagSelection,
-                    $"Pre-selected {session.Name} as antagonist: {ToPrettyString(ent)}");
+                _adminLogger.Add(LogType.AntagSelection, $"Pre-selected {session.Name} as antagonist: {ToPrettyString(ent)}");
             }
         }
     }
