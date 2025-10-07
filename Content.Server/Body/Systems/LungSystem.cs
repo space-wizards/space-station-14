@@ -4,11 +4,13 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Clothing;
+using Content.Shared.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Shared.Inventory.Events;
 using BreathToolComponent = Content.Shared.Atmos.Components.BreathToolComponent;
 using InternalsComponent = Content.Shared.Body.Components.InternalsComponent;
 
-namespace Content.Server.Body.Systems;
+namespace Content.Shared.Body.Systems;
 
 public sealed class LungSystem : EntitySystem
 {
