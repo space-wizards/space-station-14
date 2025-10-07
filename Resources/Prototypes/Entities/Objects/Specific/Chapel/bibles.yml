@@ -108,7 +108,7 @@
 
 - type: entity
   id: BibleDruid
-  name: mystery of the druids
+  name: druidic tablet
   parent: Bible
   description: "It's the mystery of the druids!"
   components:
@@ -171,17 +171,6 @@
     sprite: Objects/Specific/Chapel/honk.rsi
   - type: Item
     sprite: Objects/Specific/Chapel/honk.rsi
-
-- type: entity 
-  id: BibleLamp
-  name: doctrine of the lantern path
-  parent: Bible
-  description: "Carry forth your inner flame, through shadow toward rebirth in the First Light."
-  components:
-  - type: Sprite
-    sprite: Objects/Specific/Chapel/lanternpath.rsi
-  - type: Item
-    sprite: Objects/Specific/Chapel/lanternpath.rsi
 
 - type: entity
   id: BibleRatvar
