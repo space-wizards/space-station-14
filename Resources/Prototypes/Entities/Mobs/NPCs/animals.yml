@@ -1215,6 +1215,8 @@
         true
       NavSmash: !type:Bool
         true
+  - type: Puller
+    needsHands: false
   - type: Prying
     pryPowered: true
     force: true

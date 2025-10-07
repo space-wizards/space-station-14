@@ -731,4 +731,22 @@
   id: 88
   time: '2025-09-25T21:36:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40546
+- author: Absotively
+  changes:
+  - message: Updated Elkridge's burn chambers for safer delta pressure handling
+    type: Tweak
+  id: 89
+  time: '2025-09-30T03:45:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40590
+- author: ToastEnjoyer
+  changes:
+  - message: On Marathon, added various improvements to engineering, parts of maints,
+      and some service improvements.
+    type: Tweak
+  - message: On Marathon, the security front has been fixed so that power is there
+      roundstart.
+    type: Fix
+  id: 90
+  time: '2025-10-07T02:21:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40725
 Order: 1
