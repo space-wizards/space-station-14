@@ -329,12 +329,15 @@ namespace Content.Client.Lobby
 
             Lobby.ReadyButton.Disabled = !_readyPossibleWithCharacters;
 
+            var sendNotReady = false;
             if (!_readyPossibleWithCharacters)
             {
+                sendNotReady = true;
                 Lobby.ReadyButton.Pressed = false;
             }
 
-            SetReady(Lobby.ReadyButton.Pressed);
+            if (sendNotReady && !_gameTicker.IsGameStarted)
+                SetReady(Lobby.ReadyButton.Pressed);
         }
     }
 }
