@@ -241,6 +241,11 @@
   suffix: White, Filled
 
 - type: entity
+  parent: [BoxFolderWhiteEmpty, BoxFolderFillThreePapers]
+  id: BoxFolderWhiteThreePapers
+  suffix: White, 3 papers
+
+- type: entity
   parent: BoxFolderBaseEmpty
   id: BoxFolderCentComEmpty
   categories: [ DoNotMap ]
@@ -255,7 +260,12 @@
 - type: entity
   parent: [BoxFolderCentComEmpty, BoxFolderFill]
   id: BoxFolderCentCom
-  suffix: DO NOT MAP, Filled
+  suffix: DO NOT MAP; Filled
+
+- type: entity
+  parent: [BoxFolderCentComEmpty, BoxFolderFillThreePapers]
+  id: BoxFolderCentComThreePapers
+  suffix: DO NOT MAP; 3 papers
 
 - type: entity
   parent: BoxFolderBaseEmpty
