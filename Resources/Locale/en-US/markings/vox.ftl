@@ -25,6 +25,9 @@ marking-VoxBeak = Beak (Pointed)
 marking-VoxBeakSquareCere-beak_squarecere = Beak (Square Cere)
 marking-VoxBeakSquareCere = Beak (Square Cere)
 
+marking-VoxBeakHooked-beak_hooked = Beak (Hooked)
+marking-VoxBeakHooked = Beak (Hooked)
+
 marking-VoxBeakShaved-beak_shaved = Beak (Shaved)
 marking-VoxBeakShaved = Beak (Shaved)
 

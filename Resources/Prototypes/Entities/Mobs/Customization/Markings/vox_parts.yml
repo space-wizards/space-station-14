@@ -45,6 +45,21 @@
         color: "#937e3d"
 
 - type: marking
+  id: VoxBeakHooked
+  bodyPart: Snout
+  markingCategory: Snout
+  forcedColoring: true
+  speciesRestriction: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_parts.rsi
+    state: beak_hooked
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#937e3d"
+
+- type: marking
   id: VoxLArmScales
   bodyPart: LArm
   markingCategory: Arms
