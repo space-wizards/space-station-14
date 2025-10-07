@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: keronshb
-  changes:
-  - message: Force Wall timers changed so it despawns faster than it can be cast.
-    type: Tweak
-  - message: Force Wall users can now interact while inside of the wall, but also
-      can be attacked while inside of the wall.
-    type: Tweak
-  id: 8529
-  time: '2025-05-19T01:30:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37525
 - author: Samuka
   changes:
   - message: Holy water now evaporates.
@@ -3958,3 +3948,10 @@
   id: 9036
   time: '2025-10-05T22:12:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40704
+- author: jessicamaybe
+  changes:
+  - message: Skeletons are now playable instruments!
+    type: Add
+  id: 9037
+  time: '2025-10-07T00:59:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40009
