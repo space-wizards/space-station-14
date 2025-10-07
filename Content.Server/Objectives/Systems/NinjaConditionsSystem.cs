@@ -57,7 +57,7 @@ public sealed class NinjaConditionsSystem : EntitySystem
 
         // choose spider charge detonation point
         var warps = new List<EntityUid>();
-        var allEnts = AllEntityQuery<WarpPointComponent>();
+        var allEnts = EntityQueryEnumerator<WarpPointComponent>();
         var bombingBlacklist = new EntityWhitelist() { Tags = Blacklist };
 
         while (allEnts.MoveNext(out var warpUid, out var warp))
