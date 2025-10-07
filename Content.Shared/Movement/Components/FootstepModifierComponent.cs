@@ -11,4 +11,7 @@ public sealed partial class FootstepModifierComponent : Component
 {
     [DataField, AutoNetworkedField]
     public SoundSpecifier? FootstepSoundCollection;
+
+    [DataField]
+    public bool PlayInHand = false;
 }
