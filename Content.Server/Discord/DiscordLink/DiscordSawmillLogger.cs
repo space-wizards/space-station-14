@@ -13,6 +13,7 @@ public sealed class DiscordSawmillLogger(ISawmill sawmill) : IGatewayLogger, IRe
             NLogLevel.Critical => LogLevel.Fatal,
             NLogLevel.Error => LogLevel.Error,
             NLogLevel.Warning => LogLevel.Warning,
+            NLogLevel.Information => LogLevel.Info,
             _ => LogLevel.Debug,
         };
     }
