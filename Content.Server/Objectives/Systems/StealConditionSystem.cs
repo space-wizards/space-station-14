@@ -12,10 +12,6 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Stacks;
-using Content.Server.Maps;
-using Robust.Server.GameObjects;
-using System.Linq;
-using SQLitePCL;
 using Content.Server.GameTicking;
 
 namespace Content.Server.Objectives.Systems;
@@ -29,9 +25,6 @@ public sealed class StealConditionSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly IGameMapManager _gameMapManager = default!;
-    [Dependency] private readonly MapSystem _mapSystem = default!;
-    [Dependency] private readonly EntityManager _entityManager = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
 
 
