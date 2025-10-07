@@ -35,6 +35,7 @@
         - GPS
         - WeldingMask
         - RemoteSignaller
+        - UtilityKnife
       components:
         - StationMap
         - SprayPainter
@@ -120,6 +121,7 @@
         - HolofanProjector
         - Multitool
         - AppraisalTool
+        - UtilityKnife
       components:
         - StationMap
         - SprayPainter
@@ -170,6 +172,8 @@
           - Wrench
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
+  - type: StealTarget
+    stealGroup: ChiefEngineerToolBelt
 
 - type: entity
   parent: ClothingBeltStorageBase
