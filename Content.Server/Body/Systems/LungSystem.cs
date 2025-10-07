@@ -9,15 +9,16 @@ using Content.Server.Body.Systems;
 using Content.Shared.Inventory.Events;
 using BreathToolComponent = Content.Shared.Atmos.Components.BreathToolComponent;
 using InternalsComponent = Content.Shared.Body.Components.InternalsComponent;
-using Content.Shared.Body.Systems;
 
-namespace Content.Server.Body.Systems;
+namespace Content.Shared.Body.Systems;
 
-public sealed class LungSystem : SharedLungSystem
+public sealed class LungSystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly InternalsSystem _internals = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+
+    public static string LungSolutionName = "Lung";
 
     public override void Initialize()
     {
@@ -85,7 +86,7 @@ public sealed class LungSystem : SharedLungSystem
         }
     }
 
-    public override Solution GasToReagent(GasMixture gas)
+    public Solution GasToReagent(GasMixture gas)
     {
         var solution = new Solution();
         GasToReagent(gas, solution);

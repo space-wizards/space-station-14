@@ -11,7 +11,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using System.Linq;
 using System.Numerics;
-using Content.Server.Body.Systems;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Utility;
 

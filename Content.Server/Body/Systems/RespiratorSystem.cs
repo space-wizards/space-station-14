@@ -33,7 +33,7 @@ public sealed class RespiratorSystem : EntitySystem
     [Dependency] private readonly AtmosphereSystem _atmosSys = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSys = default!;
-    [Dependency] private readonly LungSystem _lungSystem = default!; //Should this be SharedLungSystem instead?
+    [Dependency] private readonly LungSystem _lungSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
