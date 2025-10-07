@@ -19,8 +19,6 @@
   - type: Spillable
     solution: absorbed
     spillWhenThrown: false
-  - type: DrainableSolution
-    solution: absorbed
   - type: Absorbent
     pickupAmount: 15
   - type: SolutionContainerManager

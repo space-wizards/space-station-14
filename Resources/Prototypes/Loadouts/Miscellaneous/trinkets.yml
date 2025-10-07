@@ -6,7 +6,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Command
-      time: 3600 # 1 hour
+      time: 1h
 
 # Flowers
 - type: loadout
@@ -316,7 +316,7 @@
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:OverallPlaytimeRequirement
-      time: 36000 # 10hr
+      time: 10h
   storage:
     back:
     - TowelColorWhite
@@ -381,7 +381,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Cargo
-      time: 360000 # 100hr
+      time: 100h
   storage:
     back:
     - TowelColorLightBrown
@@ -433,7 +433,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Medical
-      time: 360000 # 100hr
+      time: 100h
   storage:
     back:
     - TowelColorLightBlue
@@ -459,7 +459,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Science
-      time: 360000 # 100hr
+      time: 100h
   storage:
     back:
     - TowelColorPurple
@@ -472,7 +472,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobLawyer
-      time: 360000 # 100hr
+      time: 100h
   storage:
     back:
     - TowelColorMaroon
@@ -485,7 +485,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobMime
-      time: 360000 # 100hr
+      time: 100h
   storage:
     back:
     - TowelColorMime
