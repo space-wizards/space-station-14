@@ -500,9 +500,9 @@ public sealed class SharedBloodstreamSystem : EntitySystem
         else
             dnaData.DNA = Loc.GetString("forensics-dna-unknown");
 
+        DirtyEntity(uid);
         bloodData.Add(dnaData);
 
-        DirtyEntity(uid);
         return bloodData;
     }
 
