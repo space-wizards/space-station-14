@@ -50,18 +50,20 @@ public sealed class SharedShearableSystem : EntitySystem
     /// <param name="shearedProduct">An out variable of the resolved sheared product prototype.</param>
     /// <param name="shearingSolutionState">An out variable of the resolved sheared product solution.</param>
     /// <param name="shearingSolutionEnt">An out variable of the resolved sheared product solution entity.</param>
+    /// <param name="shearingSolutionToRemove">An out variable of the reagent that will be removed from the target entity if it is sheared.</param>
     /// <param name="usedItem">The held item that is being used to shear the target entity.</param>
     /// <param name="checkItem">If false then skip checking for the correct shearing tool.</param>
     /// <returns>
     ///     A <c>ShearableComponent.CheckShearReturns</c> enum of the result.
     /// </returns>
     /// <seealso cref="CheckShearReturns"/>
-    public CheckShearReturns CheckShear(EntityUid ent, ShearableComponent comp, out EntityPrototype shearedProduct, out Solution? shearingSolutionState, out Entity<SolutionComponent>? shearingSolutionEnt, EntityUid? usedItem = null, bool checkItem = true)
+    public CheckShearReturns CheckShear(EntityUid ent, ShearableComponent comp, out EntityPrototype shearedProduct, out Solution? shearingSolutionState, out Entity<SolutionComponent>? shearingSolutionEnt, out FixedPoint2? shearingSolutionToRemove, EntityUid? usedItem = null, bool checkItem = true)
     {
         // Set these to null in-case we return early.
         shearedProduct = _proto.Index(comp.ShearedProductID);
         shearingSolutionState = null;
         shearingSolutionEnt = null;
+        shearingSolutionToRemove = null;
 
         // Are we checking items? Has a toolQuality been defined?
         // Even if we are checking items, if no toolQuality has been defined, then they're allowed to use anything, including an empty hand.
@@ -71,7 +73,6 @@ public sealed class SharedShearableSystem : EntitySystem
         {
             return CheckShearReturns.WrongTool;
         }
-
 
         // Everything below this point is just calculating whether the animal
         // has enough solution to spawn at least one item in the specified stack.
@@ -95,22 +96,33 @@ public sealed class SharedShearableSystem : EntitySystem
         // If a limit has been defined, use that.
         if (comp.MaximumProductsSpawned is not null)
         {
-            // No limit defined, so set to productsPerSolution
-            maxProductsToSpawn = productsPerSolution;
+            maxProductsToSpawn = (float)comp.MaximumProductsSpawned;
         }
 
-        // Modulas the targetSolutionQuantity so no solution is wasted if it can't be divided evenly.
+        // Modulus the targetSolutionQuantity so no solution is wasted if it can't be divided evenly.
+        // subtract targetSolutionQuantity from the remainder.
         // Everything is divided by 100, because fixedPoint2 multiplies everything by 100.
         // Math.Min ensures that no more solution than what is needed for the maximum stack is used, shear the entity multiple times if you want the rest of the product.
-        var solutionToRemove = FixedPoint2.New(
-            Math.Min(
-                (targetSolutionQuantity.Value - targetSolutionQuantity.Value % productsPerSolution) / 100,
-                maxProductsToSpawn * productsPerSolution / 100
-            )
-        );
+        // e.g.
+        // targetSolutionQuantity.Value = 2500, this is how much shearable solution the target entity contains, it's equivalent to 25 units.
+        // productsPerSolution = 500, this is the yaml defined number of materials we will get from shearing. It has been converted from units to reagent above, it was originally 0.2 units.
+        // maxProductsToSpawn is undefined in yaml and has been defaulted to productsPerSolution (500).
+        // 2500 - 2500 % 500. 500 fits nicely into 2500 so there is no remainder of 0. This means we're removing all 2500 reagent currently.
+        //
+        // Next, we check the maximum number of products we want to spawn, if this is less than the total reagent available then the entity will need to be sheared multiple times to deplete its resources.
+        // If there's no configured maxProductsToSpawn, then we aren't imposing a limit. In this case it defaults to productsPerSolution.
+        // productsPerSolution is set to 500. Therefore, the calculation is:
+        // 500 * 500 / 100 = 2500 (See how it lines up with the total reagent available).
+        // If we had configured a limit, e,g 3 then it would look like this:
+        // 3 * 500 / 100 = 1500, 1000 reagent less than what was available.
+        // We take the smaller of two values with .Min, we don't want to remove more reagent than we're using.
+        shearingSolutionToRemove = FixedPoint2.Min(
+                targetSolutionQuantity.Value - targetSolutionQuantity.Value % productsPerSolution,
+                maxProductsToSpawn * productsPerSolution
+        ) / 100;
 
         // Failure message, if the shearable creature has no targetSolutionName to be sheared.
-        if (solutionToRemove <= 0)
+        if (shearingSolutionToRemove <= 0)
         {
             return CheckShearReturns.InsufficientSolution;
         }
@@ -137,7 +149,7 @@ public sealed class SharedShearableSystem : EntitySystem
     private void AttemptShear(Entity<ShearableComponent> ent, EntityUid userUid, EntityUid? toolUsed)
     {
         // Run all shearing checks.
-        switch (CheckShear(ent, ent.Comp, out var shearedProduct, out _, out _, toolUsed))
+        switch (CheckShear(ent, ent.Comp, out var shearedProduct, out _, out _, out _, toolUsed))
         {
             case CheckShearReturns.Success:
                 // ALL SYSTEMS GO!
@@ -173,10 +185,11 @@ public sealed class SharedShearableSystem : EntitySystem
             return;
 
         // Check again and this time get the objects we need.
-        if (CheckShear(ent.Owner, ent.Comp, out var shearedProduct, out var shearingSolutionState, out var shearingSolutionEnt, null, false) != CheckShearReturns.Success
-            // shearingSolution must be resolved.
+        if (CheckShear(ent.Owner, ent.Comp, out var shearedProduct, out var shearingSolutionState, out var shearingSolutionEnt, out var shearingSolutionToRemove, null, false) != CheckShearReturns.Success
+            // these must all be resolved.
             || shearingSolutionState is null
-            || shearingSolutionEnt is null)
+            || shearingSolutionEnt is null
+            || shearingSolutionToRemove is null)
         {
             return;
         }
@@ -184,53 +197,19 @@ public sealed class SharedShearableSystem : EntitySystem
         // Mark as handled so we don't duplicate.
         args.Handled = true;
 
-        // Store solution.Volume in a variable to make calculations a bit clearer.
-        var targetSolutionQuantity = shearingSolutionState.Volume;
-
         // Solution is measured in units but the actual value for 1u is 1000 reagent, so multiply it by 100.
         // Then, divide by 1 because it's the reagent needed for 1 product.
         var productsPerSolution = (int)(1 / ent.Comp.ProductsPerSolution * 100);
 
-        // Work out the maximum number of products to spawn.
-        var maxProductsToSpawn = (float)productsPerSolution;
-        // If a limit has been defined, use that.
-        if (ent.Comp.MaximumProductsSpawned is not null)
-        {
-            // No limit defined, so set to productsPerSolution
-            maxProductsToSpawn = (float)ent.Comp.MaximumProductsSpawned;
-        }
-
-        // Modulus the targetSolutionQuantity so no solution is wasted if it can't be divided evenly.
-        // subtract targetSolutionQuantity from the remainder.
-        // Everything is divided by 100, because fixedPoint2 multiplies everything by 100.
-        // Math.Min ensures that no more solution than what is needed for the maximum stack is used, shear the entity multiple times if you want the rest of the product.
-        // e.g.
-        // targetSolutionQuantity.Value = 2500, this is how much shearable solution the target entity contains, it's equivalent to 25 units.
-        // productsPerSolution = 500, this is the yaml defined number of materials we will get from shearing. It has been converted from units to reagent above, it was originally 0.2 units.
-        // maxProductsToSpawn is undefined in yaml and has been defaulted to productsPerSolution (500).
-        // 2500 - 2500 % 500. 500 fits nicely into 2500 so there is no remainder of 0. This means we're removing all 2500 reagent currently.
-        //
-        // Next, we check the maximum number of products we want to spawn, if this is less than the total reagent available then the entity will need to be sheared multiple times to deplete its resources.
-        // If there's no configured maxProductsToSpawn, then we aren't imposing a limit. In this case it defaults to productsPerSolution.
-        // productsPerSolution is set to 500. Therefore, the calculation is:
-        // 500 * 500 / 100 = 2500 (See how it lines up with the total reagent available).
-        // If we had configured a limit, e,g 3 then it would look like this:
-        // 3 * 500 / 100 = 1500, 1000 reagent less than what was available.
-        // We take the smaller of two values with .Min, we don't want to remove more reagent than we're using.
-        var solutionToRemove = FixedPoint2.Min(
-                (targetSolutionQuantity.Value - targetSolutionQuantity.Value % productsPerSolution) / 100.0f,
-                maxProductsToSpawn * productsPerSolution / 100.0f
-        );
-
         // Failure message, if the shearable creature has no targetSolutionName to be sheared.
-        if (solutionToRemove == 0)
+        if (shearingSolutionToRemove == 0)
         {
             _popup.PopupClient(Loc.GetString("shearable-system-no-product", ("target", Identity.Entity(ent.Owner, EntityManager)), ("product", shearedProduct.Name)), ent.Owner, args.Args.User);
             return;
         }
 
         // Split the solution inside the creature by solutionToRemove, return what was removed.
-        var removedSolution = _solutionContainer.SplitSolution(shearingSolutionEnt.Value, solutionToRemove);
+        var removedSolution = _solutionContainer.SplitSolution(shearingSolutionEnt.Value, (FixedPoint2)shearingSolutionToRemove);
 
         // Psuedo shared randomness stolen from #39661
         // Can be replaced with SharedRandom once that exists.
@@ -267,7 +246,7 @@ public sealed class SharedShearableSystem : EntitySystem
         var toolUsed = args.Using;
 
         // Check.
-        if (CheckShear(ent.Owner, ent.Comp, out _, out _, out _, toolUsed, true) != CheckShearReturns.Success)
+        if (CheckShear(ent.Owner, ent.Comp, out _, out _, out _, out _, toolUsed, true) != CheckShearReturns.Success)
         {
             // Still adds the verb but it's disabled.
             verbDisabled = true;
@@ -306,7 +285,7 @@ public sealed class SharedShearableSystem : EntitySystem
         }
 
         // Checks whether the entity can be sheared and applies appropriate examine additions.
-        switch (CheckShear(ent, ent.Comp, out _, out _, out _, checkItem: false))
+        switch (CheckShear(ent, ent.Comp, out _, out _, out _, out _, checkItem: false))
         {
             case CheckShearReturns.Success:
                 // Check again if this description has been set.
