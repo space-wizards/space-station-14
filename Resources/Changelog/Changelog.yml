@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SpeltIncorrectyl
-  changes:
-  - message: Kammerer now has a tighter spread to compensate for its lower rate of
-      fire.
-    type: Tweak
-  id: 8534
-  time: '2025-05-19T22:45:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37616
 - author: Pronana
   changes:
   - message: Galoshes now slow on puddles again
@@ -3952,3 +3944,11 @@
   id: 9041
   time: '2025-10-07T10:18:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40601
+- author: Lordbrandon12
+  changes:
+  - message: Fixed issue allowing space heater temperature to be set above the allowed
+      limit.
+    type: Fix
+  id: 9042
+  time: '2025-10-07T12:53:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40453
