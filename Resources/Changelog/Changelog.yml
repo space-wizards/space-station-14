@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Kittygyat
-  changes:
-  - message: Added a new, faster way for slimepeople to access their own special inventory,
-      with LMB.
-    type: Add
-  id: 8538
-  time: '2025-05-20T16:55:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37592
 - author: FrostWinters
   changes:
   - message: Histamines no longer cause radiation.
@@ -3954,3 +3946,13 @@
   id: 9045
   time: '2025-10-07T16:33:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40102
+- author: FungiFellow
+  changes:
+  - message: Biosuits can now fit Gastanks in Suit Storage, the Security Biosuit can
+      fit both Gastanks and Weapons
+    type: Add
+  - message: Security Biosuits Cost has been increased 800->1600
+    type: Tweak
+  id: 9046
+  time: '2025-10-07T18:22:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39888
