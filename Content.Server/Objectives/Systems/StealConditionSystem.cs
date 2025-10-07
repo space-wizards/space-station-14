@@ -50,7 +50,7 @@ public sealed class StealConditionSystem : EntitySystem
         var selectedMapId = _gameTicker.DefaultMap;
         List<StealTargetComponent?> targetList = new();
 
-        var query = AllEntityQuery<StealTargetComponent>();
+        var query = AllEntityQuery<StealTargetComponent, TransformComponent>();
         while (query.MoveNext(out var target))
         {
             var transform = EntityManager.GetComponent<TransformComponent>(target.Owner);
