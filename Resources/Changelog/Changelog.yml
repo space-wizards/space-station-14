@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Entvari
-  changes:
-  - message: Hyper Capacity Powercells are now available as Tier 3 Industrial Research.
-    type: Add
-  - message: The Tier 3 Industrial Research 'Portable Fission' has been renamed to
-      Optimized Microgalvanism to better reflect this.
-    type: Tweak
-  id: 8532
-  time: '2025-05-19T22:35:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37619
 - author: RedBookcase
   changes:
   - message: The Salvage section of the guidebook has been updated.
@@ -3955,3 +3945,10 @@
   id: 9039
   time: '2025-10-07T09:14:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39698
+- author: jessicamaybe
+  changes:
+  - message: Gorillas can now pull objects.
+    type: Tweak
+  id: 9040
+  time: '2025-10-07T09:31:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40700
