@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Pronana
-  changes:
-  - message: Galoshes now slow on puddles again
-    type: Fix
-  id: 8535
-  time: '2025-05-20T02:47:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37628
 - author: slarticodefast
   changes:
   - message: Added a reduced motion version of the seeing rainbows overlay.
@@ -3952,3 +3945,11 @@
   id: 9042
   time: '2025-10-07T12:53:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40453
+- author: IProduceWidgets
+  changes:
+  - message: Vox that take excessive amounts of fire damage will now burn into fried
+      chicken.
+    type: Tweak
+  id: 9043
+  time: '2025-10-07T14:12:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40115
