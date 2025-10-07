@@ -45,6 +45,9 @@
     FacialHair:
       points: 1
       required: false
+    Head:
+      points: 4
+      required: true
     Snout:
       points: 1
       required: true
