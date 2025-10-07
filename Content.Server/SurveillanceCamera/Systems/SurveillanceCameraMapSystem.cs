@@ -20,20 +20,29 @@ public sealed class SurveillanceCameraMapSystem : EntitySystem
 
     private void OnCameraPaused(EntityUid uid, SurveillanceCameraComponent comp, ref EntityPausedEvent args)
     {
+        if (Terminating(uid))
+            return;
+
         RemoveCameraFromMap(uid);
     }
 
     private void OnCameraUnpaused(EntityUid uid, SurveillanceCameraComponent comp, ref EntityUnpausedEvent args)
     {
+        if (Terminating(uid))
+            return;
+
         UpdateCameraMarker((uid, comp));
     }
 
     private void OnCameraMoved(EntityUid uid, SurveillanceCameraComponent comp, ref MoveEvent args)
     {
+        if (Terminating(uid))
+            return;
+
         var oldGridUid = _transform.GetGrid(args.OldPosition);
         var newGridUid = _transform.GetGrid(args.NewPosition);
 
-        if (oldGridUid != newGridUid && oldGridUid is not null)
+        if (oldGridUid != newGridUid && oldGridUid is not null && !Terminating(oldGridUid.Value))
         {
             if (TryComp<SurveillanceCameraMapComponent>(oldGridUid, out var oldMapComp))
             {
@@ -43,7 +52,7 @@ public sealed class SurveillanceCameraMapSystem : EntitySystem
             }
         }
 
-        if (newGridUid is not null)
+        if (newGridUid is not null && !Terminating(newGridUid.Value))
             UpdateCameraMarker((uid, comp));
     }
 
@@ -78,6 +87,9 @@ public sealed class SurveillanceCameraMapSystem : EntitySystem
     public void UpdateCameraMarker(Entity<SurveillanceCameraComponent> camera)
     {
         var (uid, comp) = camera;
+
+        if (Terminating(uid))
+            return;
 
         if (!TryComp(uid, out TransformComponent? xform) || !TryComp(uid, out DeviceNetworkComponent? deviceNet))
             return;
