@@ -12,18 +12,23 @@ public sealed class SurveillanceCameraMapSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<SurveillanceCameraComponent, MoveEvent>(OnCameraMoved);
-        SubscribeLocalEvent<SurveillanceCameraComponent, EntityPausedEvent>(OnCameraPaused);
+
         SubscribeLocalEvent<SurveillanceCameraComponent, EntityUnpausedEvent>(OnCameraUnpaused);
+        SubscribeLocalEvent<SurveillanceCameraMapComponent, EntityPausedEvent>(OnGridPaused);
 
         SubscribeNetworkEvent<RequestCameraMarkerUpdateMessage>(OnRequestCameraMarkerUpdate);
     }
 
-    private void OnCameraPaused(EntityUid uid, SurveillanceCameraComponent comp, ref EntityPausedEvent args)
+    private void OnGridPaused(EntityUid uid, SurveillanceCameraMapComponent comp, ref EntityPausedEvent args)
     {
         if (Terminating(uid))
             return;
 
-        RemoveCameraFromMap(uid);
+        if (component.Cameras.Count > 0)
+        {
+            component.Cameras.Clear();
+            Dirty(uid, component);
+        }
     }
 
     private void OnCameraUnpaused(EntityUid uid, SurveillanceCameraComponent comp, ref EntityUnpausedEvent args)
@@ -54,22 +59,6 @@ public sealed class SurveillanceCameraMapSystem : EntitySystem
 
         if (newGridUid is not null && !Terminating(newGridUid.Value))
             UpdateCameraMarker((uid, comp));
-    }
-
-    private void RemoveCameraFromMap(EntityUid cameraUid)
-    {
-        if (!TryComp(cameraUid, out TransformComponent? xform))
-            return;
-
-        var gridUid = xform.GridUid ?? xform.MapUid;
-        if (gridUid == null || !TryComp<SurveillanceCameraMapComponent>(gridUid.Value, out var mapComp))
-            return;
-
-        var netEntity = GetNetEntity(cameraUid);
-        if (mapComp.Cameras.Remove(netEntity))
-        {
-            Dirty(gridUid.Value, mapComp);
-        }
     }
 
     private void OnRequestCameraMarkerUpdate(RequestCameraMarkerUpdateMessage args)
