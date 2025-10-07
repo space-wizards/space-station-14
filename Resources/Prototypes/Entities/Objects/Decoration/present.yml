@@ -100,6 +100,8 @@
         orGroup: GiftPool
       - id: ClothingNeckCloakMoth
         orGroup: GiftPool
+      - id: TennisBall
+        orGroup: GiftPool
       - id: ToyMouse
         orGroup: GiftPool
       - id: ToyAi
@@ -321,6 +323,8 @@
       - id: ClothingUniformJumpsuitColorMaroon
         orGroup: GiftPool
       - id: ClothingUniformColorRainbow
+        orGroup: GiftPool
+      - id: ClothingUniformJumpskirtColorRainbow
         orGroup: GiftPool
       - id: ClothingUniformOveralls
         orGroup: GiftPool

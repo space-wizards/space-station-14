@@ -8,23 +8,138 @@
     sprite: Structures/Machines/telecomms.rsi
     snapCardinals: true
     layers:
-    - state: icon
-    - state: unlit
+    - state: telecom-nopower
+    - state: telecom-stripe
+    - state: telecom-on
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
-    - state: panel
+      visible: false
+      map: ["telecom-on"]
+    - state: variant-nokey
+      map: ["variant-nokey"]
+    - state: variant-default
+      map: ["variant-default"]
+    - state: variant-common
+      map: ["variant-common"]
+    - state: variant-cargo
+      map: ["variant-cargo"]
+    - state: variant-engineering
+      map: ["variant-engineering"]
+    - state: variant-medical
+      map: ["variant-medical"]
+    - state: variant-science
+      map: ["variant-science"]
+    - state: variant-sec
+      map: ["variant-sec"]
+    - state: variant-service
+      map: ["variant-service"]
+    - state: variant-command
+      map: ["variant-command"]
+    - state: variant-multiple
+      map: ["variant-multiple"]
+    - state: telecom-open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: ItemMapper
+    sprite: Structures/Machines/telecomms.rsi
+    mapLayers:
+      variant-nokey:
+        whitelist:
+          components:
+          - EncryptionKey  #Shown when no keys are present
+        minCount: 0
+      variant-default:
+        whitelist:
+          components:
+          - EncryptionKey
+        minCount: 1
+      variant-common:
+        whitelist:
+          tags:
+          - EncryptionCommon
+      variant-cargo:
+        whitelist:
+          tags:
+          - EncryptionCargo
+      variant-engineering:
+        whitelist:
+          tags:
+          - EncryptionEngineering
+      variant-medical:
+        whitelist:
+          tags:
+          - EncryptionMedical
+      variant-science:
+        whitelist:
+          tags:
+          - EncryptionScience
+      variant-sec:
+        whitelist:
+          tags:
+          - EncryptionSecurity
+      variant-service:
+        whitelist:
+          tags:
+          - EncryptionService
+      variant-command:
+        whitelist:
+          tags:
+          - EncryptionCommand
+      variant-multiple:
+        whitelist:
+          components:
+          - EncryptionKey  #Shown when multiple keys are present
+        minCount: 2
+  - type: PointLight
+    enabled: false
+    castShadows: false
+    radius: 1.5
+    energy: 1.6
+    color: "#39b8ee"
+  - type: LitOnPowered
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
-        enum.PowerDeviceVisualLayers.Powered:
+        telecom-on:
           True: { visible: true }
           False: { visible: false }
+        variant-common:
+          True: { shader: unshaded }
+          False: { shader: shaded }
+        variant-cargo:
+          True: { shader: unshaded }
+          False: { shader: shaded }
+        variant-engineering:
+          True: { shader: unshaded }
+          False: { shader: shaded }
+        variant-medical:
+          True: { shader: unshaded }
+          False: { shader: shaded }
+        variant-science:
+          True: { shader: unshaded }
+          False: { shader: shaded }
+        variant-sec:
+          True: { shader: unshaded }
+          False: { shader: shaded }
+        variant-service:
+          True: { shader: unshaded }
+          False: { shader: shaded }
+        variant-command:
+          True: { shader: unshaded }
+          False: { shader: shaded }
+        variant-default:
+          True: { shader: unshaded }
+          False: { shader: shaded }
+        variant-multiple:
+          True: { shader: unshaded }
+          False: { shader: shaded }
+        variant-nokey:
+          True: { shader: unshaded }
+          False: { shader: shaded }
   - type: Appearance
   - type: AmbientOnPowered
   - type: AmbientSound
     volume: -9
     range: 5
+    enabled: false
     sound:
       path: /Audio/Ambience/Objects/server_fans.ogg
   - type: WiresVisuals

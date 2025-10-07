@@ -9,6 +9,18 @@ namespace Content.Shared.Power.Generator;
 /// <seealso cref="PortableGeneratorComponent"/>
 public abstract class SharedPortableGeneratorSystem : EntitySystem
 {
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<FuelGeneratorComponent, SwitchPowerCheckEvent>(OnSwitchPowerCheck);
+    }
+
+    private void OnSwitchPowerCheck(EntityUid uid, FuelGeneratorComponent comp, ref SwitchPowerCheckEvent args)
+    {
+        if (comp.On)
+            args.DisableMessage = Loc.GetString("fuel-generator-verb-disable-on");
+    }
 }
 
 /// <summary>

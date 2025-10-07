@@ -13,6 +13,11 @@ public sealed partial class LoadoutPrototype : IPrototype, IEquipmentLoadout
     [IdDataField]
     public string ID { get; private set; } = string.Empty;
 
+    /// <summary>
+    /// A text identifier used to group loadouts.
+    /// </summary>
+    [DataField]
+    public string? GroupBy;
     /*
      * You can either use an existing StartingGearPrototype or specify it inline to avoid bloating yaml.
      */
