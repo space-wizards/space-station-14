@@ -1,5 +1,5 @@
 - type: entity
-  name: bible
+  name: space bible
   description: New Interstellar Version 2340.
   parent: BaseStorageItem
   id: Bible
