@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: aada
-  changes:
-  - message: Pepper makes you cough.
-    type: Add
-  id: 8531
-  time: '2025-05-19T18:23:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36358
 - author: Entvari
   changes:
   - message: Hyper Capacity Powercells are now available as Tier 3 Industrial Research.
@@ -3955,3 +3948,10 @@
   id: 9038
   time: '2025-10-07T07:39:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39181
+- author: Huaqas
+  changes:
+  - message: The Tanakh and Satanic bibles have been removed.
+    type: Remove
+  id: 9039
+  time: '2025-10-07T09:14:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39698
