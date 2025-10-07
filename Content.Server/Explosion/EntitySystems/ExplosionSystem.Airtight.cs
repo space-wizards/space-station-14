@@ -116,21 +116,21 @@ public sealed partial class ExplosionSystem
         // that this will result in a non-airtight entity.Entities that ONLY break via construction graph node changes
         // are currently effectively "invincible" as far as this is concerned. This really should be done more rigorously.
         var totalDamageTarget = FixedPoint2.MaxValue;
-        if (_destructibleQuery.Resolve(entity, ref destructibleComp))
+        if (_destructibleQuery.Resolve(entity, ref destructibleComp, false))
         {
             totalDamageTarget = _destructibleSystem.DestroyedAt(uid, destructibleComp);
         }
 
         var armor = new DamageModifierSet();
-        if (_armorQuery.Resolve(uid, ref armorComp))
+        if (_armorQuery.Resolve(uid, ref armorComp, false))
         {
             armor = armorComp.Modifiers;
         }
 
-        _explosionResistanceQuery.Resolve(uid, ref explosionComp);
+        _explosionResistanceQuery.Resolve(uid, ref explosionComp, false);
 
         var explosionTolerance = new float[_explosionTypes.Count];
-        if (totalDamageTarget == FixedPoint2.MaxValue || !_damageableQuery.Resolve(uid, ref damageableComp))
+        if (totalDamageTarget == FixedPoint2.MaxValue || !_damageableQuery.Resolve(uid, ref damageableComp, false))
         {
             for (var i = 0; i < explosionTolerance.Length; i++)
             {
