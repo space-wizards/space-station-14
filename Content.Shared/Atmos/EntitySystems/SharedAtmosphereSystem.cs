@@ -13,6 +13,8 @@ namespace Content.Shared.Atmos.EntitySystems
 
         private EntityQuery<InternalsComponent> _internalsQuery;
 
+        public string?[] GasReagents = new string[Atmospherics.TotalNumberOfGases];
+
         protected readonly GasPrototype[] GasPrototypes = new GasPrototype[Atmospherics.TotalNumberOfGases];
 
         public override void Initialize()
