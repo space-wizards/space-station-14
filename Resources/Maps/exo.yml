@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 266.0.0
+  engineVersion: 267.1.0
   forkId: ""
   forkVersion: ""
-  time: 09/10/2025 20:15:35
-  entityCount: 19959
+  time: 09/25/2025 21:06:16
+  entityCount: 19960
 maps:
 - 1
 grids:
@@ -8820,6 +8820,15 @@ entities:
     - type: Transform
       pos: -13.5,-69.5
       parent: 2
+    - type: AccessReader
+      accessListsOriginal: []
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        18143:
+        - - DoorStatus
+          - InputB
 - proto: AirlockExternalGlass
   entities:
   - uid: 543
@@ -9049,6 +9058,13 @@ entities:
     - type: Transform
       pos: -16.5,-69.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        18143:
+        - - DoorStatus
+          - InputA
   - uid: 16699
     components:
     - type: Transform
@@ -9059,6 +9075,16 @@ entities:
     - type: Transform
       pos: -15.5,-72.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        5745:
+        - - DoorStatus
+          - DoorBolt
+        5774:
+        - - DoorStatus
+          - DoorBolt
 - proto: AirlockExternalGlassLocked
   entities:
   - uid: 201
@@ -9091,6 +9117,11 @@ entities:
     - type: Transform
       pos: -11.5,-81.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        6303:
+        - - DoorStatus
+          - DoorBolt
   - uid: 1649
     components:
     - type: Transform
@@ -9138,6 +9169,8 @@ entities:
     - type: Transform
       pos: -11.5,-78.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
     - type: DeviceLinkSource
       linkedPorts:
         1487:
@@ -10045,7 +10078,7 @@ entities:
       pos: 11.5,-30.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -244104.44
+      secondsUntilStateChange: -245383
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10401,7 +10434,7 @@ entities:
       pos: 34.5,-36.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -19602.13
+      secondsUntilStateChange: -20880.693
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -88100,6 +88133,22 @@ entities:
       parent: 2
 - proto: LogicGateOr
   entities:
+  - uid: 18143
+    components:
+    - type: Transform
+      anchored: True
+      pos: -14.5,-70.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        18305:
+        - - Output
+          - DoorBolt
+    - type: Physics
+      canCollide: False
+      bodyType: Static
   - uid: 18350
     components:
     - type: Transform
