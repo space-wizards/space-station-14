@@ -116,12 +116,17 @@
     inHandsOnly: false
     singleUser: true
     requiresComplex: true
+    verbOnly: true
     verbText: verb-instrument-openui
     key: enum.InstrumentUiKey.Key
   - type: UserInterface
     interfaces:
       enum.InstrumentUiKey.Key:
         type: InstrumentBoundUserInterface
+      enum.HumanoidMarkingModifierKey.Key:
+        type: HumanoidMarkingModifierBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
 
 - type: entity
   parent: BaseSpeciesDummy
