@@ -145,7 +145,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shaker_gold.rsi
-    state: icon
   - type: Item
     sprite: Objects/Consumable/Drinks/shaker_gold.rsi
   - type: PhysicalComposition
