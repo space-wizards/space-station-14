@@ -1,6 +1,6 @@
 - type: entity
   parent: BaseItem
-  id: DefaultStationBeacon
+  id: BaseStationBeacon
   name: station beacon
   description: A small device that transmits information to station maps. Can be configured.
   placement:
@@ -38,9 +38,6 @@
     layer: 1
   - type: SubFloorHide
   - type: Anchorable
-  - type: Construction
-    graph: StationBeaconPart
-    node: complete
   - type: CollideOnAnchor
   - type: Physics
     canCollide: false
@@ -77,6 +74,20 @@
           acts: ["Breakage"]
   - type: StaticPrice
     price: 25
+
+- type: entity
+  parent: BaseStationBeacon
+  id: DefaultStationBeacon
+  placement:
+    mode: SnapgridCenter
+  suffix: General
+  components:
+  - type: Tag
+    tags:
+    - TeleportScrollWarp
+  - type: Construction
+    graph: StationBeaconPart
+    node: complete
 
 - type: entity
   parent: DefaultStationBeacon
@@ -842,23 +853,9 @@
   - type: NavMapBeacon
     defaultText: station-beacon-vox
 
-# Ghost Only Beacons
-- type: entity
-  parent: DefaultStationBeacon
-  id: DefaultStationBeaconGhost
-  suffix: Boo
-  components:
-  - type: Tag
-    tags:
-    - GhostOnlyWarp
-  - type: WarpPoint
-    blacklist:
-      tags:
-      - GhostOnlyWarp
-
 # CentComm Beacons
 - type: entity
-  parent: DefaultStationBeaconGhost
+  parent: BaseStationBeacon
   id: DefaultStationBeaconCentComm
   suffix: CentComm
   components:
@@ -866,7 +863,7 @@
     text: CentComm
 
 - type: entity
-  parent: DefaultStationBeaconGhost
+  parent: BaseStationBeacon
   id: DefaultStationBeaconCentCommAfterhours
   suffix: CentComm Afterhours
   components:
@@ -874,7 +871,7 @@
     text: Afterhours
 
 - type: entity
-  parent: DefaultStationBeaconGhost
+  parent: BaseStationBeacon
   id: DefaultStationBeaconCentCommThunderdome
   suffix: CentComm Thunder Dome
   components:
@@ -882,7 +879,7 @@
     text: Thunderdome
 
 - type: entity
-  parent: DefaultStationBeaconGhost
+  parent: BaseStationBeacon
   id: DefaultStationBeaconCentCommERT
   suffix: CentComm ERT
   components:

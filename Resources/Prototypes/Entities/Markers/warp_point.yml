@@ -16,19 +16,14 @@
   - type: WarpPoint
     location: beacon
 
-# Use for areas like CC
 - type: entity
-  id: GhostWarpPoint
+  id: TeleportScrollWarpPoint
   parent: MarkerBase
-  name: ghost only warp point
+  name: Teleport scroll warp point
   components:
   - type: Tag
     tags:
-    - GhostOnlyWarp
-  - type: WarpPoint
-    blacklist:
-      tags:
-      - GhostOnlyWarp
+    - TeleportScrollWarp
   - type: Sprite
     state: pink
 
@@ -39,14 +34,6 @@
   suffix: ninja bombing target
   components:
   - type: BombingTarget
-  - type: Tag
-    tags:
-    - GhostOnlyWarp
-  - type: WarpPoint
-    location: bombing target
-    blacklist:
-      tags:
-      - GhostOnlyWarp
   - type: Sprite
     layers:
     - state: pink

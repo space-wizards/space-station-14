@@ -100,6 +100,3 @@
   - type: WarpPoint
     follow: true
     location: Nar'Sie
-    blacklist:
-      tags:
-      - GhostOnlyWarp

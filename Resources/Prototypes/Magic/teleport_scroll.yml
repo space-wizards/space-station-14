@@ -19,6 +19,9 @@
     teleportEffect: WizardSmoke
     closeAfterTeleport: true
     speech: teleportation-scroll-speech-wizard
+    whitelist:
+      tags:
+      - TeleportScrollWarp
   - type: UseDelay
     delay: 1
     delays:
