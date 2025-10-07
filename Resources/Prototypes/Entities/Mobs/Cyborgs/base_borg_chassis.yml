@@ -185,7 +185,8 @@
           params:
             volume: 5
     - trigger:
-        !type:DamageTrigger
+        !type:DamageTypeTrigger
+        damageType: Blunt
         damage: 300
       behaviors:
       - !type:PlaySoundBehavior
