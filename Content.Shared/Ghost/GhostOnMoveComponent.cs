@@ -6,7 +6,7 @@ namespace Content.Shared.Ghost;
 public sealed partial class GhostOnMoveComponent : Component
 {
     [DataField]
-    public bool CanReturn { get; set; } = true;
+    public bool CanReturn = true;
 
     [DataField]
     public bool MustBeDead;
