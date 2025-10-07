@@ -23,6 +23,11 @@ namespace Content.Server.GameTicking.Commands
 
         private readonly ISawmill _sawmill = default!;
 
+        public JoinGameCommand()
+        {
+            _sawmill = _logManager.GetSawmill("security");
+        }
+
         public override string Command => "joingame";
 
         public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
