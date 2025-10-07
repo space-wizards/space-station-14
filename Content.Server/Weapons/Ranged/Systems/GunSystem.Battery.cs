@@ -1,4 +1,4 @@
-using Content.Server.Power.Components;
+using Content.Shared.Power;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;

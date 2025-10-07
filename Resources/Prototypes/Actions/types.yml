@@ -7,6 +7,14 @@
   components:
   - type: Action
 
+# base proto for an action that requires a DoAfter
+- type: entity
+  abstract: true
+  parent: BaseAction
+  id: BaseDoAfterAction
+  components:
+  - type: DoAfterArgs
+
 # an action that is done all in le head and cant be prevented by any means
 - type: entity
   abstract: true

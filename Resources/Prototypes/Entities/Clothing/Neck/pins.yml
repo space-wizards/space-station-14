@@ -21,6 +21,7 @@
     slot: Neck
 #    default: ClothingNeckLGBTPin
     requireTag: GenderPin
+    affectedByEmp: false
   - type: UserInterface
     interfaces:
       enum.ChameleonUiKey.Key:

@@ -381,10 +381,11 @@
   minLimit: 1
   loadouts:
   - Bible
-  - BibleDruid
   - BibleNanoTrasen
-  - BibleSatanic
-  - BibleTanakh
+  - BibleDruid
+  - BibleHonk
+  - BibleRatvar
+  - BibleNarsie
 
 - type: loadoutGroup
   id: JanitorHead
