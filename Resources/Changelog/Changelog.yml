@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Picking up items with area pickups (e.g. trash bags) no longer lags the
-      game.
-    type: Fix
-  id: 8546
-  time: '2025-05-21T06:16:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37638
 - author: Errant
   changes:
   - message: High-energy shuttle impacts now deal much less damage.
@@ -3958,3 +3950,11 @@
   id: 9048
   time: '2025-10-07T23:14:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40569
+- author: Hitlinemoss
+  changes:
+  - message: Bartenders with a significant amount of playtime can now select a golden
+      shaker in the loadout menu.
+    type: Add
+  id: 9049
+  time: '2025-10-07T23:37:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40762
