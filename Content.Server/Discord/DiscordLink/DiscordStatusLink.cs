@@ -11,6 +11,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Discord.DiscordLink;
 
+/// <summary>
+/// Handles the player count status. Shows player count, current map, and game status (in lobby, round end, etc.)
+/// </summary>
+/// <seealso cref="DiscordLink"/>
 public sealed class DiscordStatusLink
 {
     public const string PlayerStatusId = "PlayerStatus";
@@ -25,15 +29,15 @@ public sealed class DiscordStatusLink
     [Dependency] private readonly IGameTiming _timing = default!;
 
     private StatusRef _statusRef = null!;
-    private DateTime _nextUpdate;
+    private TimeSpan _nextUpdate;
 
     public void Update()
     {
-        if (DateTime.Now < _nextUpdate)
+        if (_timing.RealTime < _nextUpdate)
             return;
 
         UpdateStatus();
-        _nextUpdate = DateTime.Now.AddSeconds(1);
+        _nextUpdate = _timing.RealTime + TimeSpan.FromSeconds(1);
     }
 
     public void Initialize()

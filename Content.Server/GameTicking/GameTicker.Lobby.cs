@@ -13,7 +13,7 @@ namespace Content.Server.GameTicking
         private readonly Dictionary<NetUserId, PlayerGameStatus> _playerGameStatuses = new();
 
         /// <summary>
-        /// How long before the round starts
+        /// The time when the game starts relative to <see cref="Robust.Shared.Timing.IGameTiming.CurTime"/>
         /// </summary>
         [ViewVariables]
         public TimeSpan RoundStartTime { get; private set; }
