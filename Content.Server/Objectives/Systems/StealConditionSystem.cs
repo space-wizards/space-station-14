@@ -27,7 +27,6 @@ public sealed class StealConditionSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
 
-
     private EntityQuery<ContainerManagerComponent> _containerQuery;
 
     private HashSet<Entity<TransformComponent>> _nearestEnts = new();
