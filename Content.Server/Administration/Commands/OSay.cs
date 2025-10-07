@@ -15,22 +15,24 @@ public sealed class OSay : LocalizedCommands
 
     public override string Command => "osay";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
         {
-            return CompletionResult.FromHint(Loc.GetString("osay-command-arg-uid"));
+            return CompletionResult.FromHint(Loc.GetString($"cmd-{Command}-arg-uid"));
         }
 
         if (args.Length == 2)
         {
             return CompletionResult.FromHintOptions( Enum.GetNames(typeof(InGameICChatType)),
-                Loc.GetString("osay-command-arg-type"));
+                Loc.GetString($"cmd-{Command}-arg-type"));
         }
 
         if (args.Length > 2)
         {
-            return CompletionResult.FromHint(Loc.GetString("osay-command-arg-message"));
+            return CompletionResult.FromHint(Loc.GetString($"cmd-{Command}-arg-message"));
         }
 
         return CompletionResult.Empty;
@@ -40,7 +42,7 @@ public sealed class OSay : LocalizedCommands
     {
         if (args.Length < 3)
         {
-            shell.WriteLine(Loc.GetString("osay-command-error-args"));
+            shell.WriteLine(Loc.GetString($"cmd-{Command}-error-args"));
             return;
         }
 
@@ -48,7 +50,7 @@ public sealed class OSay : LocalizedCommands
 
         if (!NetEntity.TryParse(args[0], out var sourceNet) || !_entityManager.TryGetEntity(sourceNet, out var source) || !_entityManager.EntityExists(source))
         {
-            shell.WriteLine(Loc.GetString("osay-command-error-euid", ("arg", args[0])));
+            shell.WriteLine(Loc.GetString($"cmd-{Command}-error-euid", ("arg", args[0])));
             return;
         }
 

@@ -13,6 +13,8 @@ namespace Content.Server.Power
 
         public override string Command => "setbatterypercent";
 
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
@@ -31,13 +33,13 @@ namespace Content.Server.Power
 
             if (!float.TryParse(args[1], out var percent))
             {
-                shell.WriteLine(Loc.GetString($"cmd-setbatterypercent-not-valid-percent", ("arg", args[1])));
+                shell.WriteLine(Loc.GetString($"cmd-{Command}-not-valid-percent", ("arg", args[1])));
                 return;
             }
 
             if (!EntityManager.TryGetComponent<BatteryComponent>(id, out var battery))
             {
-                shell.WriteLine(Loc.GetString($"cmd-setbatterypercent-battery-not-found", ("id", id)));
+                shell.WriteLine(Loc.GetString($"cmd-{Command}-battery-not-found", ("id", id)));
                 return;
             }
             _batterySystem.SetCharge(id.Value, battery.MaxCharge * percent / 100, battery);

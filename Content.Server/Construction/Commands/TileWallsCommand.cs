@@ -11,21 +11,23 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Construction.Commands;
 
 [AdminCommand(AdminFlags.Mapping)]
-public sealed class TileWallsCommand : IConsoleCommand
+public sealed class TileWallsCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly MapSystem _mapSystem = default!;
 
     // ReSharper disable once StringLiteralTypo
-    public string Command => "tilewalls";
-    public string Description => "Puts an underplating tile below every wall on a grid.";
-    public string Help => $"Usage: {Command} <gridId> | {Command}";
+    public override string Command => "tilewalls";
+
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
     public static readonly ProtoId<ContentTileDefinition> TilePrototypeId = "Plating";
     public static readonly ProtoId<TagPrototype> WallTag = "Wall";
     public static readonly ProtoId<TagPrototype> DiagonalTag = "Diagonal";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var player = shell.Player;
         EntityUid? gridId;
@@ -35,7 +37,7 @@ public sealed class TileWallsCommand : IConsoleCommand
             case 0:
                 if (player?.AttachedEntity is not { Valid: true } playerEntity)
                 {
-                    shell.WriteError("Only a player can run this command.");
+                    shell.WriteError(Loc.GetString($"cmd-{Command}-only-player"));
                     return;
                 }
 
@@ -44,7 +46,7 @@ public sealed class TileWallsCommand : IConsoleCommand
             case 1:
                 if (!NetEntity.TryParse(args[0], out var idNet) || !_entManager.TryGetEntity(idNet, out var id))
                 {
-                    shell.WriteError($"{args[0]} is not a valid entity.");
+                    shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-entity", ("entity", args[0])));
                     return;
                 }
 
@@ -57,17 +59,16 @@ public sealed class TileWallsCommand : IConsoleCommand
 
         if (!_entManager.TryGetComponent(gridId, out MapGridComponent? grid))
         {
-            shell.WriteError($"No grid exists with id {gridId}");
+            shell.WriteError(Loc.GetString($"cmd-{Command}-no-grid", ("gridId", (gridId?.ToString() ?? string.Empty))));
             return;
         }
 
         if (!_entManager.EntityExists(gridId))
         {
-            shell.WriteError($"Grid {gridId} doesn't have an associated grid entity.");
+            shell.WriteError(Loc.GetString($"cmd-{Command}-grid-no-entity", ("gridId", (gridId?.ToString() ?? string.Empty))));
             return;
         }
 
-        var tagSystem = _entManager.EntitySysManager.GetEntitySystem<TagSystem>();
         var underplating = _tileDefManager[TilePrototypeId];
         var underplatingTile = new Tile(underplating.TileId);
         var changed = 0;
@@ -79,12 +80,12 @@ public sealed class TileWallsCommand : IConsoleCommand
                 continue;
             }
 
-            if (!tagSystem.HasTag(child, WallTag))
+            if (!_tagSystem.HasTag(child, WallTag))
             {
                 continue;
             }
 
-            if (tagSystem.HasTag(child, DiagonalTag))
+            if (_tagSystem.HasTag(child, DiagonalTag))
             {
                 continue;
             }
@@ -96,8 +97,7 @@ public sealed class TileWallsCommand : IConsoleCommand
                 continue;
             }
 
-            var mapSystem = _entManager.System<MapSystem>();
-            var tile = mapSystem.GetTileRef(gridId.Value, grid, childTransform.Coordinates);
+            var tile = _mapSystem.GetTileRef(gridId.Value, grid, childTransform.Coordinates);
             var tileDef = (ContentTileDefinition)_tileDefManager[tile.Tile.TypeId];
 
             if (tileDef.ID == TilePrototypeId)
@@ -105,10 +105,10 @@ public sealed class TileWallsCommand : IConsoleCommand
                 continue;
             }
 
-            mapSystem.SetTile(gridId.Value, grid, childTransform.Coordinates, underplatingTile);
+            _mapSystem.SetTile(gridId.Value, grid, childTransform.Coordinates, underplatingTile);
             changed++;
         }
 
-        shell.WriteLine($"Changed {changed} tiles.");
+        shell.WriteLine(Loc.GetString("cmd-tilewalls-changed", ("changed", changed)));
     }
 }

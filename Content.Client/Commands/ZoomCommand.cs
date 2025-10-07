@@ -17,6 +17,8 @@ public sealed class ZoomCommand : LocalizedCommands
 
     public override string Command => "zoom";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         Vector2 zoom;

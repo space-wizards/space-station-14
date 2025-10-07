@@ -10,6 +10,8 @@ public sealed class GhostToggleSelfVisibility : LocalizedEntityCommands
 
     public override string Command => "toggleselfghost";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var attachedEntity = shell.Player?.AttachedEntity;
@@ -18,7 +20,7 @@ public sealed class GhostToggleSelfVisibility : LocalizedEntityCommands
 
         if (!EntityManager.HasComponent<GhostComponent>(attachedEntity))
         {
-            shell.WriteError(Loc.GetString($"cmd-toggleselfghost-must-be-ghost"));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-must-be-ghost"));
             return;
         }
 

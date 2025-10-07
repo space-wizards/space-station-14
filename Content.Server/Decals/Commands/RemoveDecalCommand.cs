@@ -6,24 +6,27 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Decals.Commands
 {
     [AdminCommand(AdminFlags.Mapping)]
-    public sealed class RemoveDecalCommand : IConsoleCommand
+    public sealed class RemoveDecalCommand : LocalizedEntityCommands
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly DecalSystem _decalSystem = default!;
 
-        public string Command => "rmdecal";
-        public string Description => "removes a decal";
-        public string Help => $"{Command} <uid> <gridId>";
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Command => "rmdecal";
+
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {
-                shell.WriteError($"Unexpected number of arguments.\nExpected two: {Help}");
+                shell.WriteError(Loc.GetString($"cmd-{Command}-error-args"));
+                shell.WriteError(Help);
                 return;
             }
 
             if (!uint.TryParse(args[0], out var uid))
             {
-                shell.WriteError($"Failed parsing uid.");
+                shell.WriteError(Loc.GetString($"cmd-{Command}-error-uid"));
                 return;
             }
 
@@ -31,18 +34,17 @@ namespace Content.Server.Decals.Commands
                 !_entManager.TryGetEntity(rawGridIdNet, out var rawGridId) ||
                 !_entManager.HasComponent<MapGridComponent>(rawGridId))
             {
-                shell.WriteError("Failed parsing gridId.");
+                shell.WriteError(Loc.GetString($"cmd-{Command}-error-gridId"));
                 return;
             }
 
-            var decalSystem = _entManager.System<DecalSystem>();
-            if (decalSystem.RemoveDecal(rawGridId.Value, uid))
+            if (_decalSystem.RemoveDecal(rawGridId.Value, uid))
             {
-                shell.WriteLine($"Successfully removed decal {uid}.");
+                shell.WriteLine(Loc.GetString($"cmd-{Command}-success", ("uid", uid)));
                 return;
             }
 
-            shell.WriteError($"Failed trying to remove decal {uid}.");
+            shell.WriteError(Loc.GetString($"cmd-{Command}-error-remove", ("uid", uid)));
         }
     }
 }

@@ -7,22 +7,20 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AnyCommand]
-public sealed class OpenUserVisibleNotesCommand : IConsoleCommand
+public sealed class OpenUserVisibleNotesCommand : LocalizedCommands
 {
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IAdminNotesManager _notes = default!;
 
-    public const string CommandName = "adminremarks";
+    public override string Command => "adminremarks";
 
-    public string Command => CommandName;
-    public string Description => Loc.GetString("admin-remarks-command-description");
-    public string Help => $"Usage: {Command}";
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
-    public async void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (!_configuration.GetCVar(CCVars.SeeOwnNotes))
         {
-            shell.WriteError(Loc.GetString("admin-remarks-command-error"));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-error"));
             return;
         }
 

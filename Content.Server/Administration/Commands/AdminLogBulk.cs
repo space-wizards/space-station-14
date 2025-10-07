@@ -9,17 +9,18 @@ namespace Content.Server.Administration.Commands;
 
 #if DEBUG
 [AdminCommand(AdminFlags.Host)]
-public sealed class AdminLogBulk : IConsoleCommand
+public sealed class AdminLogBulk : LocalizedCommands
 {
-    public string Command => "adminlogbulk";
-    public string Description => "Adds debug logs to the database.";
-    public string Help => $"Usage: {Command} <amount> <parallel>";
+    public override string Command => "adminlogbulk";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player?.AttachedEntity is not { } entity)
         {
-            shell.WriteError("This command can only be ran by a player with an attached entity.");
+            shell.WriteError(Loc.GetString($"cmd-{Command}-player-only"));
             return;
         }
 
@@ -57,7 +58,7 @@ public sealed class AdminLogBulk : IConsoleCommand
             }
         }
 
-        shell.WriteLine($"Added {amount} logs in {stopwatch.Elapsed.TotalMilliseconds} ms");
+        shell.WriteLine(Loc.GetString($"cmd-{Command}-added", ("amount", amount), ("ms", stopwatch.Elapsed.TotalMilliseconds)));
     }
 }
 #endif

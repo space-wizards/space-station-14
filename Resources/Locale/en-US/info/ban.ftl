@@ -1,6 +1,6 @@
 # ban
-cmd-ban-desc = Bans somebody
-cmd-ban-help = Usage: ban <name or user ID> <reason> [duration in minutes, leave out or 0 for permanent ban]
+cmd-ban-desc = Bans somebody.
+cmd-ban-help = Usage: {$command} <name or user ID> <reason> [duration in minutes, leave out or 0 for permanent ban]
 cmd-ban-player = Unable to find a player with that name.
 cmd-ban-invalid-minutes = {$minutes} is not a valid amount of minutes!
 cmd-ban-invalid-severity = {$severity} is not a valid severity!
@@ -18,19 +18,19 @@ cmd-ban-hint-duration-5 = 2 week
 cmd-ban-hint-duration-6 = 1 month
 
 # ban panel
-cmd-banpanel-desc = Opens the ban panel
-cmd-banpanel-help = Usage: banpanel [name or user guid]
+cmd-banpanel-desc = Opens the ban panel.
+cmd-banpanel-help = Usage: {$command} [name or user guid]
 cmd-banpanel-server = This can not be used from the server console
 cmd-banpanel-player-err = The specified player could not be found
 
 # listbans
 cmd-banlist-desc = Lists a user's active bans.
-cmd-banlist-help = Usage: banlist <name or user ID>
+cmd-banlist-help = Usage: {$command} <name or user ID>
 cmd-banlist-empty = No active bans found for {$user}
 cmd-banlist-hint = <name/user ID>
 
 cmd-ban_exemption_update-desc = Set an exemption to a type of ban on a player.
-cmd-ban_exemption_update-help = Usage: ban_exemption_update <player> <flag> [<flag> [...]]
+cmd-ban_exemption_update-help = Usage: {$command} <player> <flag> [<flag> [...]]
     Specify multiple flags to give a player multiple ban exemption flags.
     To remove all exemptions, run this command and give "None" as only flag.
 
@@ -42,7 +42,7 @@ cmd-ban_exemption_update-arg-player = <player>
 cmd-ban_exemption_update-arg-flag = <flag>
 
 cmd-ban_exemption_get-desc = Show ban exemptions for a certain player.
-cmd-ban_exemption_get-help = Usage: ban_exemption_get <player>
+cmd-ban_exemption_get-help = Usage: {$command} <player>
 
 cmd-ban_exemption_get-nargs = Expected exactly 1 argument
 cmd-ban_exemption_get-none = User is not exempt from any bans.

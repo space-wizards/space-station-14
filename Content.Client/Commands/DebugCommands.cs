@@ -11,6 +11,8 @@ internal sealed class ShowMarkersCommand : LocalizedEntityCommands
 
     public override string Command => "showmarkers";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         _markerSystem.MarkersVisible ^= true;
@@ -23,6 +25,8 @@ internal sealed class ShowSubFloor : LocalizedEntityCommands
 
     public override string Command => "showsubfloor";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         _subfloorSystem.ShowAll ^= true;
@@ -34,6 +38,8 @@ internal sealed class NotifyCommand : LocalizedEntityCommands
     [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     public override string Command => "notify";
+
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {

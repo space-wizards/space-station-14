@@ -12,6 +12,8 @@ public sealed class HideMechanismsCommand : LocalizedEntityCommands
 
     public override string Command => "hidemechanisms";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var query = EntityManager.AllEntityQueryEnumerator<OrganComponent, SpriteComponent>();

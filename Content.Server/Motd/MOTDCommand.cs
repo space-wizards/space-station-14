@@ -14,6 +14,8 @@ internal sealed class MOTDCommand : LocalizedCommands
 
     public override string Command => "motd";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var player = shell.Player;

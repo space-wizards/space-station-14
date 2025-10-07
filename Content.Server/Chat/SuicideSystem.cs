@@ -156,10 +156,10 @@ public sealed class SuicideSystem : EntitySystem
         if (args.Handled)
             return;
 
-        var othersMessage = Loc.GetString("suicide-command-default-text-others", ("name", Identity.Entity(victim, EntityManager)));
+        var othersMessage = Loc.GetString("cmd-suicide-default-text-others", ("name", Identity.Entity(victim, EntityManager)));
         _popup.PopupEntity(othersMessage, victim, Filter.PvsExcept(victim), true);
 
-        var selfMessage = Loc.GetString("suicide-command-default-text-self");
+        var selfMessage = Loc.GetString("cmd-suicide-default-text-self");
         _popup.PopupEntity(selfMessage, victim, victim);
 
         if (args.DamageSpecifier != null)

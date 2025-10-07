@@ -11,6 +11,8 @@ public sealed class ChatWindowCommand : LocalizedCommands
 {
     public override string Command => "chatwindow";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var window = new ChatWindow();
@@ -25,6 +27,8 @@ public sealed class ChatWindowCommand : LocalizedCommands
 public sealed class AdminChatWindowCommand : LocalizedCommands
 {
     public override string Command => "achatwindow";
+
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {

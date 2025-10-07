@@ -9,7 +9,10 @@ namespace Content.Server.Chat.Commands
     internal sealed class WhisperCommand : LocalizedEntityCommands
     {
         [Dependency] private readonly ChatSystem _chatSystem = default!;
+
         public override string Command => "whisper";
+
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {

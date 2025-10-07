@@ -6,15 +6,15 @@ using Robust.Shared.Enums;
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
-    internal sealed class LOOCCommand : IConsoleCommand
+    internal sealed class LOOCCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _e = default!;
+        [Dependency] private readonly ChatSystem _chatSystem = default!;
 
-        public string Command => "looc";
-        public string Description => "Send Local Out Of Character chat messages.";
-        public string Help => "looc <text>";
+        public override string Command => "looc";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (shell.Player is not { } player)
             {
@@ -35,7 +35,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            _e.System<ChatSystem>().TrySendInGameOOCMessage(entity, message, InGameOOCChatType.Looc, false, shell, player);
+            _chatSystem.TrySendInGameOOCMessage(entity, message, InGameOOCChatType.Looc, false, shell, player);
         }
     }
 }

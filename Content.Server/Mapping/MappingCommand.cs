@@ -22,18 +22,20 @@ namespace Content.Server.Mapping
 
         public override string Command => "mapping";
 
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
         public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             switch (args.Length)
             {
                 case 1:
-                    return CompletionResult.FromHint(Loc.GetString("cmd-hint-mapping-id"));
+                    return CompletionResult.FromHint(Loc.GetString($"cmd-{Command}-hint-id"));
                 case 2:
                     var opts = CompletionHelper.UserFilePath(args[1], _resourceMgr.UserData)
                         .Concat(CompletionHelper.ContentFilePath(args[1], _resourceMgr));
-                    return CompletionResult.FromHintOptions(opts, Loc.GetString("cmd-hint-mapping-path"));
+                    return CompletionResult.FromHintOptions(opts, Loc.GetString($"cmd-{Command}-hint-path"));
                 case 3:
-                    return CompletionResult.FromHintOptions(["false", "true"], Loc.GetString("cmd-mapping-hint-grid"));
+                    return CompletionResult.FromHintOptions(["false", "true"], Loc.GetString($"cmd-{Command}-hint-grid"));
             }
             return CompletionResult.Empty;
         }
@@ -53,7 +55,7 @@ namespace Content.Server.Mapping
             }
 
 #if DEBUG
-            shell.WriteLine(Loc.GetString("cmd-mapping-warning"));
+            shell.WriteLine(Loc.GetString($"cmd-{Command}-warning"));
 #endif
 
             // For backwards compatibility, isGrid is optional and we allow mappers to try load grids without explicitly
@@ -73,7 +75,7 @@ namespace Content.Server.Mapping
             {
                 if (!int.TryParse(args[0], out var intMapId))
                 {
-                    shell.WriteError(Loc.GetString("cmd-mapping-failure-integer", ("arg", args[0])));
+                    shell.WriteError(Loc.GetString($"cmd-{Command}-failure-integer", ("arg", args[0])));
                     return;
                 }
 
@@ -82,13 +84,13 @@ namespace Content.Server.Mapping
                 // no loading null space
                 if (mapId == MapId.Nullspace)
                 {
-                    shell.WriteError(Loc.GetString("cmd-mapping-nullspace"));
+                    shell.WriteError(Loc.GetString($"cmd-{Command}-nullspace"));
                     return;
                 }
 
                 if (_mapSystem.MapExists(mapId))
                 {
-                    shell.WriteError(Loc.GetString("cmd-mapping-exists", ("mapId", mapId)));
+                    shell.WriteError(Loc.GetString($"cmd-{Command}-exists", ("mapId", mapId)));
                     return;
                 }
 
@@ -108,7 +110,7 @@ namespace Content.Server.Mapping
                         _mapSystem.CreateMap(mapId, runMapInit: false);
                         if (!_mapLoader.TryLoadGrid(mapId, path, out grid, opts))
                         {
-                            shell.WriteError(Loc.GetString("cmd-mapping-error"));
+                            shell.WriteError(Loc.GetString($"cmd-{Command}-error"));
                             _mapSystem.DeleteMap(mapId);
                             return;
                         }
@@ -117,17 +119,17 @@ namespace Content.Server.Mapping
                     {
                         if (isGrid == false)
                         {
-                            shell.WriteError(Loc.GetString("cmd-mapping-error"));
+                            shell.WriteError(Loc.GetString($"cmd-{Command}-error"));
                             return;
                         }
 
                         // isGrid was not specified and loading it as a map failed, so we fall back to trying to load
                         // the file as a grid
-                        shell.WriteLine(Loc.GetString("cmd-mapping-try-grid"));
+                        shell.WriteLine(Loc.GetString($"cmd-{Command}-try-grid"));
                         _mapSystem.CreateMap(mapId, runMapInit: false);
                         if (!_mapLoader.TryLoadGrid(mapId, path, out grid, opts))
                         {
-                            shell.WriteError(Loc.GetString("cmd-mapping-error"));
+                            shell.WriteError(Loc.GetString($"cmd-{Command}-error"));
                             _mapSystem.DeleteMap(mapId);
                             return;
                         }
@@ -137,7 +139,7 @@ namespace Content.Server.Mapping
                 // was the map actually created or did it fail somehow?
                 if (!_mapSystem.MapExists(mapId))
                 {
-                    shell.WriteError(Loc.GetString("cmd-mapping-error"));
+                    shell.WriteError(Loc.GetString($"cmd-{Command}-error"));
                     return;
                 }
             }
@@ -165,11 +167,11 @@ namespace Content.Server.Mapping
             DebugTools.Assert(_mapSystem.IsPaused(mapId));
 
             if (args.Length != 2)
-                shell.WriteLine(Loc.GetString("cmd-mapping-success", ("mapId", mapId)));
+                shell.WriteLine(Loc.GetString($"cmd-{Command}-success", ("mapId", mapId)));
             else if (grid == null)
-                shell.WriteLine(Loc.GetString("cmd-mapping-success-load", ("mapId", mapId), ("path", args[1])));
+                shell.WriteLine(Loc.GetString($"cmd-{Command}-success-load", ("mapId", mapId), ("path", args[1])));
             else
-                shell.WriteLine(Loc.GetString("cmd-mapping-success-load-grid", ("mapId", mapId), ("path", args[1])));
+                shell.WriteLine(Loc.GetString($"cmd-{Command}-success-load-grid", ("mapId", mapId), ("path", args[1])));
         }
     }
 }

@@ -6,15 +6,16 @@ using Robust.Shared.Console;
 namespace Content.Server.Damage.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public sealed class GodModeCommand : IConsoleCommand
+    public sealed class GodModeCommand : LocalizedEntityCommands
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly SharedGodmodeSystem _godmodeSystem = default!;
 
-        public string Command => "godmode";
-        public string Description => "Makes your entity or another invulnerable to almost anything. May have irreversible changes.";
-        public string Help => $"Usage: {Command} / {Command} <entityUid>";
+        public override string Command => "godmode";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
             EntityUid entity;
@@ -24,13 +25,13 @@ namespace Content.Server.Damage.Commands
                 case 0:
                     if (player == null)
                     {
-                        shell.WriteLine("An entity needs to be specified when the command isn't used by a player.");
+                        shell.WriteLine(Loc.GetString($"cmd-{Command}-only-player-run"));
                         return;
                     }
 
                     if (player.AttachedEntity == null)
                     {
-                        shell.WriteLine("An entity needs to be specified when you aren't attached to an entity.");
+                        shell.WriteLine(Loc.GetString($"cmd-{Command}-no-entity"));
                         return;
                     }
 
@@ -39,13 +40,13 @@ namespace Content.Server.Damage.Commands
                 case 1:
                     if (!NetEntity.TryParse(args[0], out var idNet) || !_entManager.TryGetEntity(idNet, out var id))
                     {
-                        shell.WriteLine($"{args[0]} isn't a valid entity id.");
+                        shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-entity-uid", ("uid", args[0])));
                         return;
                     }
 
                     if (!_entManager.EntityExists(id))
                     {
-                        shell.WriteLine($"No entity found with id {id}.");
+                        shell.WriteLine(Loc.GetString($"cmd-{Command}-entity-not-found", ("id", id)));
                         return;
                     }
 
@@ -56,14 +57,13 @@ namespace Content.Server.Damage.Commands
                     return;
             }
 
-            var godmodeSystem = _entManager.System<SharedGodmodeSystem>();
-            var enabled = godmodeSystem.ToggleGodmode(entity);
+            var enabled = _godmodeSystem.ToggleGodmode(entity);
 
             var name = _entManager.GetComponent<MetaDataComponent>(entity).EntityName;
 
             shell.WriteLine(enabled
-                ? $"Enabled godmode for entity {name} with id {entity}"
-                : $"Disabled godmode for entity {name} with id {entity}");
+                ? Loc.GetString($"cmd-{Command}-enabled", ("name", name), ("entity", entity))
+                : Loc.GetString($"cmd-{Command}-disabled", ("name", name), ("entity", entity)));
         }
     }
 }

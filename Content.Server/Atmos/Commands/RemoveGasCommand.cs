@@ -7,15 +7,16 @@ using Robust.Shared.Map;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class RemoveGasCommand : IConsoleCommand
+    public sealed class RemoveGasCommand : LocalizedEntityCommands
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
-        public string Command => "removegas";
-        public string Description => "Removes an amount of gases.";
-        public string Help => "removegas <X> <Y> <GridId> <amount> <ratio>\nIf <ratio> is true, amount will be treated as the ratio of gas to be removed.";
+        public override string Command => "removegas";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 5)
                 return;
@@ -30,13 +31,12 @@ namespace Content.Server.Atmos.Commands
                 return;
             }
 
-            var atmosphereSystem = _entManager.System<AtmosphereSystem>();
             var indices = new Vector2i(x, y);
-            var tile = atmosphereSystem.GetTileMixture(id, null, indices, true);
+            var tile = _atmosphereSystem.GetTileMixture(id, null, indices, true);
 
             if (tile == null)
             {
-                shell.WriteLine("Invalid coordinates or tile.");
+                shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-tile"));
                 return;
             }
 

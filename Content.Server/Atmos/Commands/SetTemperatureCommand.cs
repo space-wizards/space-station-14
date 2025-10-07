@@ -8,15 +8,16 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class SetTemperatureCommand : IConsoleCommand
+    public sealed class SetTemperatureCommand : LocalizedEntityCommands
     {
         [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
-        public string Command => "settemp";
-        public string Description => "Sets a tile's temperature (in kelvin).";
-        public string Help => "Usage: settemp <X> <Y> <GridId> <Temperature>";
+        public override string Command => "settemp";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 4)
                 return;
@@ -32,24 +33,23 @@ namespace Content.Server.Atmos.Commands
 
             if (temperature < Atmospherics.TCMB)
             {
-                shell.WriteLine("Invalid temperature.");
+                shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-temperature"));
                 return;
             }
 
             if (!_entities.HasComponent<MapGridComponent>(gridId))
             {
-                shell.WriteError("Invalid grid.");
+                shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-grid"));
                 return;
             }
 
-            var atmospheres = _entities.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
             var indices = new Vector2i(x, y);
 
-            var tile = atmospheres.GetTileMixture(gridId, null, indices, true);
+            var tile = _atmosphereSystem.GetTileMixture(gridId, null, indices, true);
 
             if (tile == null)
             {
-                shell.WriteLine("Invalid coordinates or tile.");
+                shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-tile"));
                 return;
             }
 

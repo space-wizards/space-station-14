@@ -11,6 +11,8 @@ namespace Content.Client.NodeContainer
 
         public override string Command => "nodevis";
 
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (!_adminManager.HasFlag(AdminFlags.Debug))
@@ -28,6 +30,8 @@ namespace Content.Client.NodeContainer
         [Dependency] private readonly NodeGroupSystem _nodeSystem = default!;
 
         public override string Command => "nodevisfilter";
+
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {

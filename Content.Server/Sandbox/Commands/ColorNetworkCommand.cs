@@ -17,11 +17,13 @@ namespace Content.Server.Sandbox.Commands
 
         public override string Command => "colornetwork";
 
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (shell.IsClient || (!_sandboxSystem.IsSandboxEnabled && !_adminManager.HasAdminFlag(shell.Player!, AdminFlags.Mapping)))
             {
-                shell.WriteError(Loc.GetString("cmd-colornetwork-no-access"));
+                shell.WriteError(Loc.GetString($"cmd-{Command}-no-access"));
             }
 
             if (args.Length != 3)

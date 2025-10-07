@@ -5,15 +5,15 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class RemoveMechanismCommand : IConsoleCommand
+    public sealed class RemoveMechanismCommand : LocalizedCommands
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
 
-        public string Command => "rmmechanism";
-        public string Description => "Removes a given entity from it's containing bodypart, if any.";
-        public string Help => "Usage: rmmechanism <uid>";
+        public override string Command => "rmmechanism";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
             {
@@ -29,7 +29,7 @@ namespace Content.Server.Administration.Commands
 
             var xformSystem = _entManager.System<SharedTransformSystem>();
             xformSystem.AttachToGridOrMap(entityUid.Value);
-            shell.WriteLine($"Removed organ {_entManager.ToPrettyString(entityUid.Value)}");
+            shell.WriteLine(Loc.GetString($"cmd-{Command}-removed", ("entityUid", entityUid.Value)));
         }
     }
 }

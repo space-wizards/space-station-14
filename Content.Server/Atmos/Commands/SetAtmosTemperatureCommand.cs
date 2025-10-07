@@ -8,15 +8,16 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class SetAtmosTemperatureCommand : IConsoleCommand
+    public sealed class SetAtmosTemperatureCommand : LocalizedEntityCommands
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
-        public string Command => "setatmostemp";
-        public string Description => "Sets a grid's temperature (in kelvin).";
-        public string Help => "Usage: setatmostemp <GridId> <Temperature>";
+        public override string Command => "setatmostemp";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 2)
                 return;
@@ -29,26 +30,24 @@ namespace Content.Server.Atmos.Commands
 
             if (temperature < Atmospherics.TCMB)
             {
-                shell.WriteLine("Invalid temperature.");
+                shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-temperature"));
                 return;
             }
 
             if (!gridId.Value.IsValid() || !_entManager.HasComponent<MapGridComponent>(gridId))
             {
-                shell.WriteLine("Invalid grid ID.");
+                shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-grid"));
                 return;
             }
 
-            var atmosphereSystem = _entManager.System<AtmosphereSystem>();
-
             var tiles = 0;
-            foreach (var tile in atmosphereSystem.GetAllMixtures(gridId.Value, true))
+            foreach (var tile in _atmosphereSystem.GetAllMixtures(gridId.Value, true))
             {
                 tiles++;
                 tile.Temperature = temperature;
             }
 
-            shell.WriteLine($"Changed the temperature of {tiles} tiles.");
+            shell.WriteLine(Loc.GetString($"cmd-{Command}-changed-temperature", ("tiles", tiles)));
         }
     }
 }

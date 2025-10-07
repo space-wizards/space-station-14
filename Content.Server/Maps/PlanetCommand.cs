@@ -29,32 +29,33 @@ public sealed class PlanetCommand : LocalizedEntityCommands
     [Dependency] private readonly SharedMapSystem _map = default!;
 
     public override string Command => "planet";
-    public override string Description => Loc.GetString("cmd-planet-desc");
-    public override string Help => Loc.GetString("cmd-planet-help", ("command", Command));
+
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 2)
         {
-            shell.WriteError(Loc.GetString($"cmd-planet-args"));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-args"));
             return;
         }
 
         if (!int.TryParse(args[0], out var mapInt))
         {
-            shell.WriteError(Loc.GetString($"cmd-planet-map", ("map", mapInt)));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-map", ("map", mapInt)));
             return;
         }
 
         var mapId = new MapId(mapInt);
         if (!_map.MapExists(mapId))
         {
-            shell.WriteError(Loc.GetString($"cmd-planet-map", ("map", mapId)));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-map", ("map", mapId)));
             return;
         }
 
         if (!_protoManager.TryIndex<BiomeTemplatePrototype>(args[1], out var biomeTemplate))
         {
-            shell.WriteError(Loc.GetString("cmd-planet-map-prototype", ("prototype", args[1])));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-map-prototype", ("prototype", args[1])));
             return;
         }
 
@@ -62,18 +63,18 @@ public sealed class PlanetCommand : LocalizedEntityCommands
         var mapUid = _map.GetMapOrInvalid(mapId);
         biomeSystem.EnsurePlanet(mapUid, biomeTemplate);
 
-        shell.WriteLine(Loc.GetString("cmd-planet-success", ("mapId", mapId)));
+        shell.WriteLine(Loc.GetString($"cmd-{Command}-success", ("mapId", mapId)));
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
-            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(_entManager), "Map Id");
+            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(_entManager), Loc.GetString($"cmd-{Command}-hint-id"));
 
         if (args.Length == 2)
         {
             var options = _protoManager.EnumeratePrototypes<BiomeTemplatePrototype>()
-                .Select(o => new CompletionOption(o.ID, "Biome"));
+                .Select(o => new CompletionOption(o.ID, Loc.GetString($"cmd-{Command}-hint-biome")));
             return CompletionResult.FromOptions(options);
         }
 

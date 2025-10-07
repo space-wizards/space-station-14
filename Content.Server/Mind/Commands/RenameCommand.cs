@@ -18,6 +18,8 @@ public sealed class RenameCommand : LocalizedEntityCommands
 
     public override string Command => "rename";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 2)
@@ -29,7 +31,7 @@ public sealed class RenameCommand : LocalizedEntityCommands
         var name = args[1];
         if (name.Length > _cfgManager.GetCVar(CCVars.MaxNameLength))
         {
-            shell.WriteLine(Loc.GetString("cmd-rename-too-long"));
+            shell.WriteLine(Loc.GetString($"cmd-{Command}-too-long"));
             return;
         }
 
@@ -52,9 +54,9 @@ public sealed class RenameCommand : LocalizedEntityCommands
         }
 
         if (session == null)
-            shell.WriteError(Loc.GetString("cmd-rename-not-found", ("target", str)));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-not-found", ("target", str)));
         else
-            shell.WriteError(Loc.GetString("cmd-rename-no-entity", ("target", str)));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-no-entity", ("target", str)));
 
         entityUid = EntityUid.Invalid;
         return false;

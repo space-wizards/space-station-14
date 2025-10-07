@@ -6,15 +6,16 @@ using Robust.Shared.Console;
 namespace Content.Server.Disposal
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class TubeConnectionsCommand : IConsoleCommand
+    public sealed class TubeConnectionsCommand : LocalizedEntityCommands
     {
         [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly DisposalTubeSystem _disposalTubeSystem = default!;
 
-        public string Command => "tubeconnections";
-        public string Description => Loc.GetString("tube-connections-command-description");
-        public string Help => Loc.GetString("tube-connections-command-help-text", ("command", Command));
+        public override string Command => "tubeconnections";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (shell.Player is not { } player)
             {
@@ -54,7 +55,7 @@ namespace Content.Server.Disposal
                 return;
             }
 
-            _entities.System<DisposalTubeSystem>().PopupDirections(id.Value, tube, player.AttachedEntity.Value);
+            _disposalTubeSystem.PopupDirections(id.Value, tube, player.AttachedEntity.Value);
         }
     }
 }

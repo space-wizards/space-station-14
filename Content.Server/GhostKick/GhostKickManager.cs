@@ -52,6 +52,8 @@ public sealed class GhostKickCommand : LocalizedEntityCommands
 
     public override string Command => "ghostkick";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length < 1)
@@ -61,7 +63,7 @@ public sealed class GhostKickCommand : LocalizedEntityCommands
         }
 
         var playerName = args[0];
-        var reason = args.Length > 1 ? args[1] : Loc.GetString($"cmd-ghostkick-default-reason");
+        var reason = args.Length > 1 ? args[1] : Loc.GetString($"cmd-{Command}-default-reason");
 
         if (!_playerManager.TryGetSessionByUsername(playerName, out var player))
         {

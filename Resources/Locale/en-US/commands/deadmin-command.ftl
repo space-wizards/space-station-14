@@ -1,3 +1,3 @@
 ﻿cmd-deadmin-desc = Temporarily de-admins you so you can experience the round as a normal player.
-cmd-deadmin-help = Usage: deadmin
+cmd-deadmin-help = Usage: {$command}
                    Use readmin to re-admin after using this.

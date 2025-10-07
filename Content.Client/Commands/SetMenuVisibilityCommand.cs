@@ -12,7 +12,7 @@ internal sealed class SetMenuVisibilityCommand : LocalizedCommands
 
     public override string Command => "menuvis";
 
-    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {

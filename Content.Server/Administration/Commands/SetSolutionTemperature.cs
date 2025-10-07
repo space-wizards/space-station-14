@@ -7,31 +7,32 @@ using System.Linq;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public sealed class SetSolutionTemperature : IConsoleCommand
+    public sealed class SetSolutionTemperature : LocalizedCommands
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
 
-        public string Command => "setsolutiontemperature";
-        public string Description => "Set the temperature of some solution.";
-        public string Help => $"Usage: {Command} <target> <solution> <new temperature>";
+        public override string Command => "setsolutiontemperature";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 3)
             {
-                shell.WriteLine($"Not enough arguments.\n{Help}");
+                shell.WriteLine(Loc.GetString($"cmd-{Command}-not-enough-args"));
+                shell.WriteLine(Help);
                 return;
             }
 
             if (!NetEntity.TryParse(args[0], out var uidNet) || !_entManager.TryGetEntity(uidNet, out var uid))
             {
-                shell.WriteLine($"Invalid entity id.");
+                shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-id"));
                 return;
             }
 
             if (!_entManager.TryGetComponent(uid, out SolutionContainerManagerComponent? man))
             {
-                shell.WriteLine($"Entity does not have any solutions.");
+                shell.WriteLine(Loc.GetString($"cmd-{Command}-no-solutions"));
                 return;
             }
 
@@ -39,19 +40,20 @@ namespace Content.Server.Administration.Commands
             if (!solutionContainerSystem.TryGetSolution((uid.Value, man), args[1], out var solution))
             {
                 var validSolutions = string.Join(", ", solutionContainerSystem.EnumerateSolutions((uid.Value, man)).Select(s => s.Name));
-                shell.WriteLine($"Entity does not have a \"{args[1]}\" solution. Valid solutions are:\n{validSolutions}");
+                shell.WriteLine(Loc.GetString($"cmd-{Command}-no-solution", ("solution", args[1])));
+                shell.WriteLine(validSolutions);
                 return;
             }
 
             if (!float.TryParse(args[2], out var quantity))
             {
-                shell.WriteLine($"Failed to parse new temperature.");
+                shell.WriteLine(Loc.GetString($"cmd-{Command}-parse-error"));
                 return;
             }
 
             if (quantity <= 0.0f)
             {
-                shell.WriteLine($"Cannot set the temperature of a solution to a non-positive number.");
+                shell.WriteLine(Loc.GetString($"cmd-{Command}-negative-value-error"));
                 return;
             }
 

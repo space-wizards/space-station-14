@@ -13,6 +13,8 @@ public sealed class RestartRoundCommand : LocalizedEntityCommands
 
     public override string Command => "restartround";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (_gameTicker.RunLevel != GameRunLevel.InRound)
@@ -31,6 +33,8 @@ public sealed class RestartRoundNowCommand : LocalizedEntityCommands
     [Dependency] private readonly GameTicker _gameTicker = default!;
 
     public override string Command => "restartroundnow";
+
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {

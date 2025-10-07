@@ -8,15 +8,15 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class AddAtmosCommand : IConsoleCommand
+    public sealed class AddAtmosCommand : LocalizedCommands
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
-        public string Command => "addatmos";
-        public string Description => "Adds atmos support to a grid.";
-        public string Help => $"{Command} <GridId>";
+        public override string Command => "addatmos";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 1)
             {
@@ -26,13 +26,13 @@ namespace Content.Server.Atmos.Commands
 
             if (!NetEntity.TryParse(args[0], out var eNet) || !_entities.TryGetEntity(eNet, out var euid))
             {
-                shell.WriteError($"Failed to parse euid '{args[0]}'.");
+                shell.WriteError(Loc.GetString($"cmd-{Command}-parse-failed", ("arg", args[0])));
                 return;
             }
 
             if (!_entities.HasComponent<MapGridComponent>(euid))
             {
-                shell.WriteError($"Euid '{euid}' does not exist or is not a grid.");
+                shell.WriteError(Loc.GetString($"cmd-{Command}-not-grid", ("euid", euid)));
                 return;
             }
 
@@ -40,13 +40,13 @@ namespace Content.Server.Atmos.Commands
 
             if (atmos.HasAtmosphere(euid.Value))
             {
-                shell.WriteLine("Grid already has an atmosphere.");
+                shell.WriteLine(Loc.GetString($"cmd-{Command}-already-has-atmos"));
                 return;
             }
 
             _entities.AddComponent<GridAtmosphereComponent>(euid.Value);
 
-            shell.WriteLine($"Added atmosphere to grid {euid}.");
+            shell.WriteLine(Loc.GetString($"cmd-{Command}-added", ("grid", euid)));
         }
     }
 }

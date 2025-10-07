@@ -10,20 +10,21 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Construction.Commands;
 
 [AdminCommand(AdminFlags.Mapping)]
-public sealed class FixRotationsCommand : IConsoleCommand
+public sealed class FixRotationsCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     private static readonly ProtoId<TagPrototype> ForceFixRotationsTag = "ForceFixRotations";
     private static readonly ProtoId<TagPrototype> ForceNoFixRotationsTag = "ForceNoFixRotations";
     private static readonly ProtoId<TagPrototype> DiagonalTag = "Diagonal";
 
     // ReSharper disable once StringLiteralTypo
-    public string Command => "fixrotations";
-    public string Description => "Sets the rotation of all occluders, low walls and windows to south.";
-    public string Help => $"Usage: {Command} <gridId> | {Command}";
+    public override string Command => "fixrotations";
 
-    public void Execute(IConsoleShell shell, string argsOther, string[] args)
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
+    public override void Execute(IConsoleShell shell, string argsOther, string[] args)
     {
         var player = shell.Player;
         EntityUid? gridId;
@@ -34,7 +35,7 @@ public sealed class FixRotationsCommand : IConsoleCommand
             case 0:
                 if (player?.AttachedEntity is not { Valid: true } playerEntity)
                 {
-                    shell.WriteError("Only a player can run this command.");
+                    shell.WriteError(Loc.GetString($"cmd-{Command}-only-player"));
                     return;
                 }
 
@@ -43,7 +44,7 @@ public sealed class FixRotationsCommand : IConsoleCommand
             case 1:
                 if (!NetEntity.TryParse(args[0], out var idNet) || !_entManager.TryGetEntity(idNet, out var id))
                 {
-                    shell.WriteError($"{args[0]} is not a valid entity.");
+                    shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-entity", ("entity", args[0])));
                     return;
                 }
 
@@ -56,19 +57,17 @@ public sealed class FixRotationsCommand : IConsoleCommand
 
         if (!_entManager.TryGetComponent(gridId, out MapGridComponent? grid))
         {
-            shell.WriteError($"No grid exists with id {gridId}");
+            shell.WriteError(Loc.GetString($"cmd-{Command}-no-grid", ("gridId", (gridId?.ToString() ?? string.Empty))));
             return;
         }
 
         if (!_entManager.EntityExists(gridId))
         {
-            shell.WriteError($"Grid {gridId} doesn't have an associated grid entity.");
+            shell.WriteError(Loc.GetString($"cmd-{Command}-grid-no-entity", ("gridId", (gridId?.ToString() ?? string.Empty))));
             return;
         }
 
         var changed = 0;
-        var tagSystem = _entManager.EntitySysManager.GetEntitySystem<TagSystem>();
-
 
         var enumerator = xformQuery.GetComponent(gridId.Value).ChildEnumerator;
         while (enumerator.MoveNext(out var child))
@@ -91,11 +90,11 @@ public sealed class FixRotationsCommand : IConsoleCommand
             // cables
             valid |= _entManager.HasComponent<CableComponent>(child);
             // anything else that might need this forced
-            valid |= tagSystem.HasTag(child, ForceFixRotationsTag);
+            valid |= _tagSystem.HasTag(child, ForceFixRotationsTag);
             // override
-            valid &= !tagSystem.HasTag(child, ForceNoFixRotationsTag);
+            valid &= !_tagSystem.HasTag(child, ForceNoFixRotationsTag);
             // remove diagonal entities as well
-            valid &= !tagSystem.HasTag(child, DiagonalTag);
+            valid &= !_tagSystem.HasTag(child, DiagonalTag);
 
             if (!valid)
                 continue;
@@ -109,6 +108,6 @@ public sealed class FixRotationsCommand : IConsoleCommand
             }
         }
 
-        shell.WriteLine($"Changed {changed} entities. If things seem wrong, reconnect.");
+        shell.WriteLine(Loc.GetString($"cmd-{Command}-changed", ("changed", changed)));
     }
 }

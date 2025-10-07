@@ -20,37 +20,39 @@ public sealed class AddObjectiveCommand : LocalizedEntityCommands
 
     public override string Command => "addobjective";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 2)
         {
-            shell.WriteError(Loc.GetString(Loc.GetString("cmd-addobjective-invalid-args")));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-args"));
             return;
         }
 
         if (!_players.TryGetSessionByUsername(args[0], out var data))
         {
-            shell.WriteError(Loc.GetString("cmd-addobjective-player-not-found"));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-player-not-found"));
             return;
         }
 
         if (!_mind.TryGetMind(data, out var mindId, out var mind))
         {
-            shell.WriteError(Loc.GetString("cmd-addobjective-mind-not-found"));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-mind-not-found"));
             return;
         }
 
         if (!_prototypes.TryIndex<EntityPrototype>(args[1], out var proto) ||
             !proto.HasComponent<ObjectiveComponent>())
         {
-            shell.WriteError(Loc.GetString("cmd-addobjective-objective-not-found", ("obj", args[1])));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-objective-not-found", ("obj", args[1])));
             return;
         }
 
         if (!_mind.TryAddObjective(mindId, mind, args[1]))
         {
             // can fail for other reasons so dont pretend to be right
-            shell.WriteError(Loc.GetString("cmd-addobjective-adding-failed"));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-adding-failed"));
         }
     }
 
@@ -60,7 +62,7 @@ public sealed class AddObjectiveCommand : LocalizedEntityCommands
         {
             var options = _players.Sessions.OrderBy(c => c.Name).Select(c => c.Name).ToArray();
 
-            return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-addobjective-player-completion"));
+            return CompletionResult.FromHintOptions(options, Loc.GetString($"cmd-{Command}-player-completion"));
         }
 
         if (args.Length != 2)
@@ -68,6 +70,6 @@ public sealed class AddObjectiveCommand : LocalizedEntityCommands
 
         return CompletionResult.FromHintOptions(
             _objectives.Objectives(),
-            Loc.GetString(Loc.GetString("cmd-add-objective-obj-completion")));
+            Loc.GetString($"cmd-{Command}-obj-completion"));
     }
 }

@@ -22,6 +22,8 @@ public sealed class ResaveCommand : LocalizedCommands
 
     public override string Command => "resave";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var loader = _entManager.System<MapLoaderSystem>();
@@ -50,7 +52,7 @@ public sealed class ResaveCommand : LocalizedCommands
             if (result.Maps.Count != 1)
             {
                 shell.WriteError(
-                    $"Multi-map or multi-grid files like {fn} are not yet supported by the {Command} command");
+                    Loc.GetString($"cmd-{Command}-multi-map-or-grid", ("fn", fn), ("command", Command)));
                 loader.Delete(result);
                 continue;
             }
@@ -70,12 +72,12 @@ public sealed class ResaveCommand : LocalizedCommands
             }
             else
             {
-                shell.WriteError($"Failed to resave {fn}");
+                shell.WriteError(Loc.GetString($"cmd-{Command}-failed-to-resave", ("fn", fn)));
             }
 
             loader.Delete(result);
         }
 
-        shell.WriteLine($"Resaved all maps");
+        shell.WriteLine(Loc.GetString($"cmd-{Command}-resaved-all-maps"));
     }
 }

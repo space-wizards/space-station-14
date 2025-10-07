@@ -11,6 +11,8 @@ public sealed class StartRoundCommand : LocalizedEntityCommands
 
     public override string Command => "startround";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (_gameTicker.RunLevel != GameRunLevel.PreRoundLobby)

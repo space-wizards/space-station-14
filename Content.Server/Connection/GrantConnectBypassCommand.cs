@@ -14,11 +14,13 @@ public sealed class GrantConnectBypassCommand : LocalizedCommands
 
     public override string Command => "grant_connect_bypass";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length is not (1 or 2))
         {
-            shell.WriteError(Loc.GetString("cmd-grant_connect_bypass-invalid-args"));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-args"));
             return;
         }
 
@@ -26,7 +28,7 @@ public sealed class GrantConnectBypassCommand : LocalizedCommands
         var info = await _playerLocator.LookupIdByNameOrIdAsync(argPlayer);
         if (info == null)
         {
-            shell.WriteError(Loc.GetString("cmd-grant_connect_bypass-unknown-user", ("user", argPlayer)));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-unknown-user", ("user", argPlayer)));
             return;
         }
 
@@ -36,7 +38,7 @@ public sealed class GrantConnectBypassCommand : LocalizedCommands
             var argDuration = args[2];
             if (!uint.TryParse(argDuration, out var minutes))
             {
-                shell.WriteLine(Loc.GetString("cmd-grant_connect_bypass-invalid-duration", ("duration", argDuration)));
+                shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-duration", ("duration", argDuration)));
                 return;
             }
 
@@ -44,16 +46,16 @@ public sealed class GrantConnectBypassCommand : LocalizedCommands
         }
 
         _connectionManager.AddTemporaryConnectBypass(info.UserId, duration);
-        shell.WriteLine(Loc.GetString("cmd-grant_connect_bypass-success", ("user", argPlayer)));
+        shell.WriteLine(Loc.GetString($"cmd-{Command}-success", ("user", argPlayer)));
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
-            return CompletionResult.FromHint(Loc.GetString("cmd-grant_connect_bypass-arg-user"));
+            return CompletionResult.FromHint(Loc.GetString($"cmd-{Command}-arg-user"));
 
         if (args.Length == 2)
-            return CompletionResult.FromHint(Loc.GetString("cmd-grant_connect_bypass-arg-duration"));
+            return CompletionResult.FromHint(Loc.GetString($"cmd-{Command}-arg-duration"));
 
         return CompletionResult.Empty;
     }

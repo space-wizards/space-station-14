@@ -10,7 +10,7 @@ public sealed class CreditsCommand : LocalizedCommands
 {
     public override string Command => "credits";
 
-    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {

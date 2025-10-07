@@ -17,6 +17,8 @@ namespace Content.Server.Administration.Commands
 
         public override string Command => "loadgamemap";
 
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length is not (2 or 4 or 5))
@@ -27,7 +29,7 @@ namespace Content.Server.Administration.Commands
 
             if (!_prototypeManager.TryIndex<GameMapPrototype>(args[1], out var gameMap))
             {
-                shell.WriteError($"The given map prototype {args[0]} is invalid.");
+                shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-map-prototype", ("mapPrototype", args[0])));
                 return;
             }
 
@@ -46,7 +48,7 @@ namespace Content.Server.Administration.Commands
                 ? _gameTicker.MergeGameMap(gameMap, id, stationName: stationName, offset: offset)
                 : _gameTicker.LoadGameMapWithId(gameMap, id, stationName: stationName, offset: offset);
 
-            shell.WriteLine($"Loaded {grids.Count} grids.");
+            shell.WriteLine(Loc.GetString($"cmd-{Command}-loaded-grids", ("count", grids.Count)));
         }
 
         public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -78,6 +80,8 @@ namespace Content.Server.Administration.Commands
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Command => "listgamemaps";
+
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {

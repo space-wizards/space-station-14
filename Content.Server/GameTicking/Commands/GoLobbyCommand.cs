@@ -15,6 +15,8 @@ namespace Content.Server.GameTicking.Commands
 
         public override string Command => "golobby";
 
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             GamePresetPrototype? preset = null;
@@ -36,7 +38,7 @@ namespace Content.Server.GameTicking.Commands
             if (preset != null)
                 _gameTicker.SetGamePreset(preset);
 
-            shell.WriteLine(Loc.GetString(preset == null ? "cmd-golobby-success" : "cmd-golobby-success-with-preset", ("preset", presetName)));
+            shell.WriteLine(Loc.GetString(preset == null ? $"cmd-{Command}-success" : $"cmd-{Command}-success-with-preset", ("preset", presetName)));
         }
     }
 }

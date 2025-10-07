@@ -21,6 +21,8 @@ namespace Content.Server.Voting
 
         public override string Command => "createvote";
 
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1 && args[0] != StandardVoteType.Votekick.ToString())
@@ -37,14 +39,14 @@ namespace Content.Server.Voting
 
             if (!Enum.TryParse<StandardVoteType>(args[0], ignoreCase: true, out var type))
             {
-                shell.WriteError(Loc.GetString("cmd-createvote-invalid-vote-type"));
+                shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-vote-type"));
                 return;
             }
 
             if (shell.Player != null && !_voteManager.CanCallVote(shell.Player, type))
             {
                 _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{shell.Player} failed to start {type.ToString()} vote");
-                shell.WriteError(Loc.GetString("cmd-createvote-cannot-call-vote-now"));
+                shell.WriteError(Loc.GetString($"cmd-{Command}-cannot-call-vote-now"));
                 return;
             }
 
@@ -56,7 +58,7 @@ namespace Content.Server.Voting
             if (args.Length == 1)
             {
                 var options = Enum.GetNames<StandardVoteType>();
-                return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-createvote-arg-vote-type"));
+                return CompletionResult.FromHintOptions(options, Loc.GetString($"cmd-{Command}-arg-vote-type"));
             }
 
             return CompletionResult.Empty;
@@ -75,6 +77,8 @@ namespace Content.Server.Voting
         private const int MaxArgCount = 10;
 
         public override string Command => "customvote";
+
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -114,12 +118,12 @@ namespace Content.Server.Voting
                 {
                     var ties = string.Join(", ", eventArgs.Winners.Select(c => args[(int) c]));
                     _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Custom vote {options.Title} finished as tie: {ties}");
-                    _chatManager.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-tie", ("title", options.Title), ("ties", ties)));
+                    _chatManager.DispatchServerAnnouncement(Loc.GetString($"cmd-{Command}-on-finished-tie", ("title", options.Title), ("ties", ties)));
                 }
                 else
                 {
                     _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Custom vote {options.Title} finished: {args[(int) eventArgs.Winner]}");
-                    _chatManager.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-win", ("title", options.Title), ("winner", args[(int) eventArgs.Winner])));
+                    _chatManager.DispatchServerAnnouncement(Loc.GetString($"cmd-{Command}-on-finished-win", ("title", options.Title), ("winner", args[(int) eventArgs.Winner])));
                 }
 
                 _voteWebhooks.UpdateWebhookIfConfigured(webhookState, eventArgs);
@@ -134,13 +138,13 @@ namespace Content.Server.Voting
         public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             if (args.Length == 1)
-                return CompletionResult.FromHint(Loc.GetString("cmd-customvote-arg-title"));
+                return CompletionResult.FromHint(Loc.GetString($"cmd-{Command}-arg-title"));
 
             if (args.Length > MaxArgCount)
                 return CompletionResult.Empty;
 
             var n = args.Length - 1;
-            return CompletionResult.FromHint(Loc.GetString("cmd-customvote-arg-option-n", ("n", n)));
+            return CompletionResult.FromHint(Loc.GetString($"cmd-{Command}-arg-option-n", ("n", n)));
         }
     }
 
@@ -151,11 +155,13 @@ namespace Content.Server.Voting
 
         public override string Command => "vote";
 
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (shell.Player == null)
             {
-                shell.WriteError(Loc.GetString("cmd-vote-on-execute-error-must-be-player"));
+                shell.WriteError(Loc.GetString($"cmd-{Command}-on-execute-error-must-be-player"));
                 return;
             }
 
@@ -167,19 +173,19 @@ namespace Content.Server.Voting
 
             if (!int.TryParse(args[0], out var voteId))
             {
-                shell.WriteError(Loc.GetString("cmd-vote-on-execute-error-invalid-vote-id"));
+                shell.WriteError(Loc.GetString($"cmd-{Command}-on-execute-error-invalid-vote-id"));
                 return;
             }
 
             if (!int.TryParse(args[1], out var voteOption))
             {
-                shell.WriteError(Loc.GetString("cmd-vote-on-execute-error-invalid-vote-options"));
+                shell.WriteError(Loc.GetString($"cmd-{Command}-on-execute-error-invalid-vote-options"));
                 return;
             }
 
             if (!_voteManager.TryGetVote(voteId, out var vote))
             {
-                shell.WriteError(Loc.GetString("cmd-vote-on-execute-error-invalid-vote"));
+                shell.WriteError(Loc.GetString($"cmd-{Command}-on-execute-error-invalid-vote"));
                 return;
             }
 
@@ -194,7 +200,7 @@ namespace Content.Server.Voting
             }
             else
             {
-                shell.WriteError(Loc.GetString("cmd-vote-on-execute-error-invalid-option"));
+                shell.WriteError(Loc.GetString($"cmd-{Command}-on-execute-error-invalid-option"));
                 return;
             }
 
@@ -208,6 +214,8 @@ namespace Content.Server.Voting
         [Dependency] private readonly IVoteManager _voteManager = default!;
 
         public override string Command => "listvotes";
+
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -226,17 +234,19 @@ namespace Content.Server.Voting
 
         public override string Command => "cancelvote";
 
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 1)
             {
-                shell.WriteError(Loc.GetString("cmd-cancelvote-error-missing-vote-id"));
+                shell.WriteError(Loc.GetString($"cmd-{Command}-error-missing-vote-id"));
                 return;
             }
 
             if (!int.TryParse(args[0], out var id) || !_voteManager.TryGetVote(id, out var vote))
             {
-                shell.WriteError(Loc.GetString("cmd-cancelvote-error-invalid-vote-id"));
+                shell.WriteError(Loc.GetString($"cmd-{Command}-error-invalid-vote-id"));
                 return;
             }
 
@@ -255,7 +265,7 @@ namespace Content.Server.Voting
                     .OrderBy(v => v.Id)
                     .Select(v => new CompletionOption(v.Id.ToString(), v.Title));
 
-                return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-cancelvote-arg-id"));
+                return CompletionResult.FromHintOptions(options, Loc.GetString($"cmd-{Command}-arg-id"));
             }
 
             return CompletionResult.Empty;

@@ -8,15 +8,14 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class FillGas : IConsoleCommand
+    public sealed class FillGas : LocalizedCommands
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
 
-        public string Command => "fillgas";
-        public string Description => "Adds gas to all tiles in a grid.";
-        public string Help => "fillgas <GridEid> <Gas> <moles>";
+        public override string Command => "fillgas";
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 3)
                 return;
@@ -31,7 +30,7 @@ namespace Content.Server.Atmos.Commands
 
             if (!_entManager.HasComponent<MapGridComponent>(gridId))
             {
-                shell.WriteLine("Invalid grid ID.");
+                shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-grid", ("grid", gridId)));
                 return;
             }
 

@@ -14,6 +14,8 @@ public sealed class ToggleNukeCommand : LocalizedCommands
 
     public override string Command => "nukearm";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         EntityUid? bombUid = null;
@@ -39,7 +41,7 @@ public sealed class ToggleNukeCommand : LocalizedCommands
 
             if (bombUid == null)
             {
-                shell.WriteError(Loc.GetString("cmd-nukearm-not-found"));
+                shell.WriteError(Loc.GetString($"cmd-{Command}-not-found"));
                 return;
             }
         }
@@ -64,12 +66,12 @@ public sealed class ToggleNukeCommand : LocalizedCommands
     {
         if (args.Length == 1)
         {
-            return CompletionResult.FromHint(Loc.GetString(Loc.GetString("cmd-nukearm-1-help")));
+            return CompletionResult.FromHint(Loc.GetString(Loc.GetString($"cmd-{Command}-1-help")));
         }
 
         if (args.Length == 2)
         {
-            return CompletionResult.FromHintOptions(CompletionHelper.Components<NukeComponent>(args[1]), Loc.GetString("cmd-nukearm-2-help"));
+            return CompletionResult.FromHintOptions(CompletionHelper.Components<NukeComponent>(args[1]), Loc.GetString($"cmd-{Command}-2-help"));
         }
 
         return CompletionResult.Empty;

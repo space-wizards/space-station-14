@@ -9,9 +9,11 @@ public sealed class ShowEmergencyShuttleCommand : LocalizedEntityCommands
 
     public override string Command => "showemergencyshuttle";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         _shuttle.EnableShuttlePosition ^= true;
-        shell.WriteLine(Loc.GetString($"cmd-showemergencyshuttle-status", ("status", _shuttle.EnableShuttlePosition)));
+        shell.WriteLine(Loc.GetString($"cmd-{Command}-status", ("status", _shuttle.EnableShuttlePosition)));
     }
 }

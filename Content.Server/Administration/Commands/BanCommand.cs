@@ -22,6 +22,8 @@ public sealed class BanCommand : LocalizedCommands
 
     public override string Command => "ban";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         string target;
@@ -47,7 +49,7 @@ public sealed class BanCommand : LocalizedCommands
 
                 if (!uint.TryParse(args[2], out minutes))
                 {
-                    shell.WriteLine(Loc.GetString("cmd-ban-invalid-minutes", ("minutes", args[2])));
+                    shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-minutes", ("minutes", args[2])));
                     shell.WriteLine(Help);
                     return;
                 }
@@ -59,21 +61,21 @@ public sealed class BanCommand : LocalizedCommands
 
                 if (!uint.TryParse(args[2], out minutes))
                 {
-                    shell.WriteLine(Loc.GetString("cmd-ban-invalid-minutes", ("minutes", args[2])));
+                    shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-minutes", ("minutes", args[2])));
                     shell.WriteLine(Help);
                     return;
                 }
 
                 if (!Enum.TryParse(args[3], ignoreCase: true, out severity))
                 {
-                    shell.WriteLine(Loc.GetString("cmd-ban-invalid-severity", ("severity", args[3])));
+                    shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-severity", ("severity", args[3])));
                     shell.WriteLine(Help);
                     return;
                 }
 
                 break;
             default:
-                shell.WriteLine(Loc.GetString("cmd-ban-invalid-arguments"));
+                shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-arguments"));
                 shell.WriteLine(Help);
                 return;
         }
@@ -83,7 +85,7 @@ public sealed class BanCommand : LocalizedCommands
 
         if (located == null)
         {
-            shell.WriteError(Loc.GetString("cmd-ban-player"));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-player"));
             return;
         }
 
@@ -98,25 +100,25 @@ public sealed class BanCommand : LocalizedCommands
         if (args.Length == 1)
         {
             var options = _playerManager.Sessions.Select(c => c.Name).OrderBy(c => c).ToArray();
-            return CompletionResult.FromHintOptions(options, LocalizationManager.GetString("cmd-ban-hint"));
+            return CompletionResult.FromHintOptions(options, LocalizationManager.GetString($"cmd-{Command}-hint"));
         }
 
         if (args.Length == 2)
-            return CompletionResult.FromHint(LocalizationManager.GetString("cmd-ban-hint-reason"));
+            return CompletionResult.FromHint(LocalizationManager.GetString($"cmd-{Command}-hint-reason"));
 
         if (args.Length == 3)
         {
             var durations = new CompletionOption[]
             {
-                new("0", LocalizationManager.GetString("cmd-ban-hint-duration-1")),
-                new("1440", LocalizationManager.GetString("cmd-ban-hint-duration-2")),
-                new("4320", LocalizationManager.GetString("cmd-ban-hint-duration-3")),
-                new("10080", LocalizationManager.GetString("cmd-ban-hint-duration-4")),
-                new("20160", LocalizationManager.GetString("cmd-ban-hint-duration-5")),
-                new("43800", LocalizationManager.GetString("cmd-ban-hint-duration-6")),
+                new("0", LocalizationManager.GetString($"cmd-{Command}-hint-duration-1")),
+                new("1440", LocalizationManager.GetString($"cmd-{Command}-hint-duration-2")),
+                new("4320", LocalizationManager.GetString($"cmd-{Command}-hint-duration-3")),
+                new("10080", LocalizationManager.GetString($"cmd-{Command}-hint-duration-4")),
+                new("20160", LocalizationManager.GetString($"cmd-{Command}-hint-duration-5")),
+                new("43800", LocalizationManager.GetString($"cmd-{Command}-hint-duration-6")),
             };
 
-            return CompletionResult.FromHintOptions(durations, LocalizationManager.GetString("cmd-ban-hint-duration"));
+            return CompletionResult.FromHintOptions(durations, LocalizationManager.GetString($"cmd-{Command}-hint-duration"));
         }
 
         if (args.Length == 4)
@@ -129,7 +131,7 @@ public sealed class BanCommand : LocalizedCommands
                 new("high", Loc.GetString("admin-note-editor-severity-high")),
             };
 
-            return CompletionResult.FromHintOptions(severities, Loc.GetString("cmd-ban-hint-severity"));
+            return CompletionResult.FromHintOptions(severities, Loc.GetString($"cmd-{Command}-hint-severity"));
         }
 
         return CompletionResult.Empty;

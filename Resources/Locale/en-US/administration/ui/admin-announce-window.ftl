@@ -8,4 +8,4 @@ admin-announce-type-server = Server
 admin-announce-keep-open = Keep open
 
 cmd-announceui-desc = Opens the announcement UI.
-cmd-announceui-help = Usage: announceui
+cmd-announceui-help = Usage: {$command}

@@ -15,17 +15,19 @@ public sealed class PlayerPanelCommand : LocalizedCommands
 
     public override string Command => "playerpanel";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player is not { } admin)
         {
-            shell.WriteError(Loc.GetString("cmd-playerpanel-server"));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-server"));
             return;
         }
 
         if (args.Length != 1)
         {
-            shell.WriteError(Loc.GetString("cmd-playerpanel-invalid-arguments"));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-arguments"));
             return;
         }
 
@@ -33,7 +35,7 @@ public sealed class PlayerPanelCommand : LocalizedCommands
 
         if (queriedPlayer == null)
         {
-            shell.WriteError(Loc.GetString("cmd-playerpanel-invalid-player"));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-player"));
             return;
         }
 
@@ -48,7 +50,7 @@ public sealed class PlayerPanelCommand : LocalizedCommands
         {
             var options = _players.Sessions.OrderBy(c => c.Name).Select(c => c.Name).ToArray();
 
-            return CompletionResult.FromHintOptions(options, LocalizationManager.GetString("cmd-playerpanel-completion"));
+            return CompletionResult.FromHintOptions(options, LocalizationManager.GetString($"cmd-{Command}-completion"));
         }
 
         return CompletionResult.Empty;

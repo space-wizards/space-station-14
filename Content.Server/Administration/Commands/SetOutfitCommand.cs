@@ -14,7 +14,10 @@ namespace Content.Server.Administration.Commands
         [Dependency] private readonly OutfitSystem _outfitSystem = default!;
 
         public override string Command => "setoutfit";
-        public override string Description => Loc.GetString("cmd-setoutfit-desc", ("requiredComponent", nameof(InventoryComponent)));
+
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
+        public override string Description => Loc.GetString($"cmd-{Command}-desc", ("requiredComponent", nameof(InventoryComponent)));
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -48,7 +51,7 @@ namespace Content.Server.Administration.Commands
             {
                 if (shell.Player is not { } player)
                 {
-                    shell.WriteError(Loc.GetString("cmd-setoutfit-is-not-player-error"));
+                    shell.WriteError(Loc.GetString($"cmd-{Command}-is-not-player-error"));
                     return;
                 }
 
@@ -58,7 +61,7 @@ namespace Content.Server.Administration.Commands
             }
 
             if (!_outfitSystem.SetOutfit(target.Value, args[1]))
-                shell.WriteLine(Loc.GetString("cmd-setoutfit-invalid-outfit-id-error"));
+                shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-outfit-id-error"));
         }
     }
 }

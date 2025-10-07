@@ -17,11 +17,13 @@ public sealed class AddActionCommand : LocalizedEntityCommands
 
     public override string Command => "addaction";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 2)
         {
-            shell.WriteError(Loc.GetString(Loc.GetString("cmd-addaction-invalid-args")));
+            shell.WriteError(Loc.GetString(Loc.GetString($"cmd-{Command}-invalid-args")));
             return;
         }
 
@@ -33,20 +35,20 @@ public sealed class AddActionCommand : LocalizedEntityCommands
 
         if (!EntityManager.HasComponent<ActionsComponent>(targetEntity))
         {
-            shell.WriteError(Loc.GetString("cmd-addaction-actions-not-found"));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-actions-not-found"));
             return;
         }
 
         if (!_prototypeManager.TryIndex<EntityPrototype>(args[1], out var proto) ||
             !proto.HasComponent<ActionComponent>())
         {
-            shell.WriteError(Loc.GetString("cmd-addaction-action-not-found", ("action", args[1])));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-action-not-found", ("action", args[1])));
             return;
         }
 
         if (_actions.AddAction(targetEntity.Value, args[1]) == null)
         {
-            shell.WriteError(Loc.GetString("cmd-addaction-adding-failed"));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-adding-failed"));
         }
     }
 
@@ -56,7 +58,7 @@ public sealed class AddActionCommand : LocalizedEntityCommands
         {
             return CompletionResult.FromHintOptions(
                 CompletionHelper.Components<ActionsComponent>(args[0]),
-                Loc.GetString("cmd-addaction-player-completion"));
+                Loc.GetString($"cmd-{Command}-player-completion"));
         }
 
         if (args.Length != 2)
@@ -69,6 +71,6 @@ public sealed class AddActionCommand : LocalizedEntityCommands
 
         return CompletionResult.FromHintOptions(
             actionPrototypes,
-            Loc.GetString("cmd-addaction-action-completion"));
+            Loc.GetString($"cmd-{Command}-action-completion"));
     }
 }

@@ -15,6 +15,8 @@ internal sealed class MappingClientSideSetupCommand : LocalizedEntityCommands
 
     public override string Command => "mappingclientsidesetup";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (_lightManager.LockConsoleAccess)

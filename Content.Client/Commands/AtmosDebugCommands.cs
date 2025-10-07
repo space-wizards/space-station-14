@@ -12,7 +12,7 @@ internal sealed class AtvRangeCommand : LocalizedCommands
 
     public override string Command => "atvrange";
 
-    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -49,7 +49,7 @@ internal sealed class AtvModeCommand : LocalizedCommands
 
     public override string Command => "atvmode";
 
-    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -108,7 +108,7 @@ internal sealed class AtvCBMCommand : LocalizedCommands
 
     public override string Command => "atvcbm";
 
-    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {

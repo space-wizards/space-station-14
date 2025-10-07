@@ -13,6 +13,8 @@ public sealed class AddBlacklistCommand : LocalizedCommands
 
     public override string Command => "blacklistadd";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length == 0)
@@ -34,26 +36,26 @@ public sealed class AddBlacklistCommand : LocalizedCommands
 
         if (data == null)
         {
-            shell.WriteError(Loc.GetString("cmd-blacklistadd-not-found", ("username", args[0])));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-not-found", ("username", args[0])));
             return;
         }
         var guid = data.UserId;
         var isBlacklisted = await _db.GetBlacklistStatusAsync(guid);
         if (isBlacklisted)
         {
-            shell.WriteLine(Loc.GetString("cmd-blacklistadd-existing", ("username", data.Username)));
+            shell.WriteLine(Loc.GetString($"cmd-{Command}-existing", ("username", data.Username)));
             return;
         }
 
         await _db.AddToBlacklistAsync(guid);
-        shell.WriteLine(Loc.GetString("cmd-blacklistadd-added", ("username", data.Username)));
+        shell.WriteLine(Loc.GetString($"cmd-{Command}-added", ("username", data.Username)));
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
         {
-            return CompletionResult.FromHint(Loc.GetString("cmd-blacklistadd-arg-player"));
+            return CompletionResult.FromHint(Loc.GetString($"cmd-{Command}-arg-player"));
         }
 
         return CompletionResult.Empty;
@@ -68,6 +70,8 @@ public sealed class RemoveBlacklistCommand : LocalizedCommands
 
     public override string Command => "blacklistremove";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length == 0)
@@ -89,7 +93,7 @@ public sealed class RemoveBlacklistCommand : LocalizedCommands
 
         if (data == null)
         {
-            shell.WriteError(Loc.GetString("cmd-blacklistremove-not-found", ("username", args[0])));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-not-found", ("username", args[0])));
             return;
         }
 
@@ -97,19 +101,19 @@ public sealed class RemoveBlacklistCommand : LocalizedCommands
         var isBlacklisted = await _db.GetBlacklistStatusAsync(guid);
         if (!isBlacklisted)
         {
-            shell.WriteLine(Loc.GetString("cmd-blacklistremove-existing", ("username", data.Username)));
+            shell.WriteLine(Loc.GetString($"cmd-{Command}-existing", ("username", data.Username)));
             return;
         }
 
         await _db.RemoveFromBlacklistAsync(guid);
-        shell.WriteLine(Loc.GetString("cmd-blacklistremove-removed", ("username", data.Username)));
+        shell.WriteLine(Loc.GetString($"cmd-{Command}-removed", ("username", data.Username)));
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
         {
-            return CompletionResult.FromHint(Loc.GetString("cmd-blacklistremove-arg-player"));
+            return CompletionResult.FromHint(Loc.GetString($"cmd-{Command}-arg-player"));
         }
 
         return CompletionResult.Empty;

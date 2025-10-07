@@ -9,15 +9,14 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class AddGasCommand : IConsoleCommand
+    public sealed class AddGasCommand : LocalizedCommands
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
 
-        public string Command => "addgas";
-        public string Description => "Adds gas at a certain position.";
-        public string Help => "addgas <X> <Y> <GridEid> <Gas> <moles>";
+        public override string Command => "addgas";
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 5)
                 return;
@@ -34,7 +33,7 @@ namespace Content.Server.Atmos.Commands
 
             if (!_entManager.HasComponent<MapGridComponent>(euid))
             {
-                shell.WriteError($"Euid '{euid}' does not exist or is not a grid.");
+                shell.WriteError(Loc.GetString($"cmd-{Command}-not-grid", ("euid", euid)));
                 return;
             }
 
@@ -44,7 +43,7 @@ namespace Content.Server.Atmos.Commands
 
             if (tile == null)
             {
-                shell.WriteLine("Invalid coordinates or tile.");
+                shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-coordinates-or-tile"));
                 return;
             }
 

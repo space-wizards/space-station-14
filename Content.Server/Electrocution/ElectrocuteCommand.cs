@@ -14,6 +14,8 @@ public sealed class ElectrocuteCommand : LocalizedEntityCommands
 
     public override string Command => "electrocute";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     private static readonly ProtoId<StatusEffectPrototype> ElectrocutionStatusEffect = "Electrocution";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
@@ -34,7 +36,7 @@ public sealed class ElectrocuteCommand : LocalizedEntityCommands
 
         if (!_statusEffects.CanApplyEffect(uid.Value, ElectrocutionStatusEffect))
         {
-            shell.WriteError(Loc.GetString("cmd-electrocute-entity-cannot-be-electrocuted"));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-entity-cannot-be-electrocuted"));
             return;
         }
 

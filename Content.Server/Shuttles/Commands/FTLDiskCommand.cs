@@ -25,6 +25,8 @@ public sealed class FTLDiskCommand : LocalizedCommands
 
     public override string Command => "ftldisk";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public static readonly EntProtoId CoordinatesDisk = "CoordinatesDisk";
     public static readonly EntProtoId DiskCase = "DiskCase";
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
@@ -75,13 +77,13 @@ public sealed class FTLDiskCommand : LocalizedCommands
                 {
                     if (!_entManager.TryGetComponent<TransformComponent>(dest, out var entTransform))
                     {
-                        shell.WriteLine(Loc.GetString("cmd-ftldisk-no-transform", ("destination", destinations)));
+                        shell.WriteLine(Loc.GetString($"cmd-{Command}-no-transform", ("destination", destinations)));
                         continue;
                     }
 
                     if (!mapSystem.TryGetMap(entTransform.MapID, out var mapDest))
                     {
-                        shell.WriteLine(Loc.GetString("cmd-ftldisk-no-map", ("destination", destinations)));
+                        shell.WriteLine(Loc.GetString($"cmd-{Command}-no-map", ("destination", destinations)));
                         continue;
                     }
 
@@ -92,17 +94,17 @@ public sealed class FTLDiskCommand : LocalizedCommands
                 // find and verify the map is not somehow unusable.
                 if (!_entManager.TryGetComponent<MapComponent>(dest, out var mapComp)) // We have to check for a MapComponent here and above since we could have changed our dest entity.
                 {
-                    shell.WriteLine(Loc.GetString("cmd-ftldisk-no-map-comp", ("destination", destinations), ("map", dest)));
+                    shell.WriteLine(Loc.GetString($"cmd-{Command}-no-map-comp", ("destination", destinations), ("map", dest)));
                     continue;
                 }
                 if (mapComp.MapInitialized == false)
                 {
-                    shell.WriteLine(Loc.GetString("cmd-ftldisk-map-not-init", ("destination", destinations), ("map", dest)));
+                    shell.WriteLine(Loc.GetString($"cmd-{Command}-map-not-init", ("destination", destinations), ("map", dest)));
                     continue;
                 }
                 if (mapComp.MapPaused == true)
                 {
-                    shell.WriteLine(Loc.GetString("cmd-ftldisk-map-paused", ("destination", destinations), ("map", dest)));
+                    shell.WriteLine(Loc.GetString($"cmd-{Command}-map-paused", ("destination", destinations), ("map", dest)));
                     continue;
                 }
 
@@ -116,17 +118,17 @@ public sealed class FTLDiskCommand : LocalizedCommands
                     {
                         ftlDest.BeaconsOnly = true;
 
-                        shell.WriteLine(Loc.GetString("cmd-ftldisk-planet", ("destination", destinations), ("map", dest)));
+                        shell.WriteLine(Loc.GetString($"cmd-{Command}-planet", ("destination", destinations), ("map", dest)));
                     }
                 }
                 else
                 {
                     // we don't do these automatically, since it isn't clear what the correct resolution is. Instead we provide feedback to the user and carry on like they know what theyre doing.
                     if (ftlDestComp.Enabled == false)
-                        shell.WriteLine(Loc.GetString("cmd-ftldisk-already-dest-not-enabled", ("destination", destinations), ("map", dest)));
+                        shell.WriteLine(Loc.GetString($"cmd-{Command}-already-dest-not-enabled", ("destination", destinations), ("map", dest)));
 
                     if (ftlDestComp.BeaconsOnly == true)
-                        shell.WriteLine(Loc.GetString("cmd-ftldisk-requires-ftl-point", ("destination", destinations), ("map", dest)));
+                        shell.WriteLine(Loc.GetString($"cmd-{Command}-requires-ftl-point", ("destination", destinations), ("map", dest)));
                 }
 
                 // create the FTL disk
@@ -174,7 +176,7 @@ public sealed class FTLDiskCommand : LocalizedCommands
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length >= 1)
-            return CompletionResult.FromHintOptions(CompletionHelper.MapUids(_entManager), Loc.GetString("cmd-ftldisk-hint"));
+            return CompletionResult.FromHintOptions(CompletionHelper.MapUids(_entManager), Loc.GetString($"cmd-{Command}-hint"));
         return CompletionResult.Empty;
     }
 }

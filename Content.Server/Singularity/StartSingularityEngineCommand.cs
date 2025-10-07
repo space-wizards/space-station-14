@@ -21,6 +21,8 @@ namespace Content.Server.Singularity
 
         public override string Command => "startsingularityengine";
 
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 0)

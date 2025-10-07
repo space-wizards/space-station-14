@@ -7,17 +7,15 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Mapping)]
-public sealed class VariantizeCommand : IConsoleCommand
+public sealed class VariantizeCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
-    public string Command => "variantize";
+    public override string Command => "variantize";
 
-    public string Description => Loc.GetString("variantize-command-description");
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
-    public string Help => Loc.GetString("variantize-command-help-text");
-
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
         {
@@ -27,13 +25,13 @@ public sealed class VariantizeCommand : IConsoleCommand
 
         if (!NetEntity.TryParse(args[0], out var euidNet) || !_entManager.TryGetEntity(euidNet, out var euid))
         {
-            shell.WriteError($"Failed to parse euid '{args[0]}'.");
+            shell.WriteError(Loc.GetString($"cmd-{Command}-parse-failed", ("arg", args[0])));
             return;
         }
 
         if (!_entManager.TryGetComponent(euid, out MapGridComponent? gridComp))
         {
-            shell.WriteError($"Euid '{euid}' does not exist or is not a grid.");
+            shell.WriteError(Loc.GetString($"cmd-{Command}-not-grid", ("euid", euid)));
             return;
         }
 

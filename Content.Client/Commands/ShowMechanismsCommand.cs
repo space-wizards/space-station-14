@@ -10,6 +10,8 @@ public sealed class ShowMechanismsCommand : LocalizedEntityCommands
 
     public override string Command => "showmechanisms";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var query = EntityManager.AllEntityQueryEnumerator<OrganComponent, SpriteComponent>();

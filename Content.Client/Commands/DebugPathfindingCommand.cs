@@ -13,7 +13,7 @@ public sealed class DebugPathfindingCommand : LocalizedCommands
 
     public override string Command => "pathfinder";
 
-    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {

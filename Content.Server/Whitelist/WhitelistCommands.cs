@@ -14,7 +14,10 @@ public sealed class AddWhitelistCommand : LocalizedCommands
 {
     [Dependency] private readonly IPlayerLocator _locator = default!;
     [Dependency] private readonly IServerDbManager _dbManager = default!;
+
     public override string Command => "whitelistadd";
+
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -34,23 +37,23 @@ public sealed class AddWhitelistCommand : LocalizedCommands
             var isWhitelisted = await _dbManager.GetWhitelistStatusAsync(guid);
             if (isWhitelisted)
             {
-                shell.WriteLine(Loc.GetString("cmd-whitelistadd-existing", ("username", data.Username)));
+                shell.WriteLine(Loc.GetString($"cmd-{Command}-existing", ("username", data.Username)));
                 return;
             }
 
             await _dbManager.AddToWhitelistAsync(guid);
-            shell.WriteLine(Loc.GetString("cmd-whitelistadd-added", ("username", data.Username)));
+            shell.WriteLine(Loc.GetString($"cmd-{Command}-added", ("username", data.Username)));
             return;
         }
 
-        shell.WriteError(Loc.GetString("cmd-whitelistadd-not-found", ("username", args[0])));
+        shell.WriteError(Loc.GetString($"cmd-{Command}-not-found", ("username", args[0])));
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
         {
-            return CompletionResult.FromHint(Loc.GetString("cmd-whitelistadd-arg-player"));
+            return CompletionResult.FromHint(Loc.GetString($"cmd-{Command}-arg-player"));
         }
 
         return CompletionResult.Empty;
@@ -64,6 +67,8 @@ public sealed class RemoveWhitelistCommand : LocalizedCommands
     [Dependency] private readonly IServerDbManager _dbManager = default!;
 
     public override string Command => "whitelistremove";
+
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -83,23 +88,23 @@ public sealed class RemoveWhitelistCommand : LocalizedCommands
             var isWhitelisted = await _dbManager.GetWhitelistStatusAsync(guid);
             if (!isWhitelisted)
             {
-                shell.WriteLine(Loc.GetString("cmd-whitelistremove-existing", ("username", data.Username)));
+                shell.WriteLine(Loc.GetString($"cmd-{Command}-existing", ("username", data.Username)));
                 return;
             }
 
             await _dbManager.RemoveFromWhitelistAsync(guid);
-            shell.WriteLine(Loc.GetString("cmd-whitelistremove-removed", ("username", data.Username)));
+            shell.WriteLine(Loc.GetString($"cmd-{Command}-removed", ("username", data.Username)));
             return;
         }
 
-        shell.WriteError(Loc.GetString("cmd-whitelistremove-not-found", ("username", args[0])));
+        shell.WriteError(Loc.GetString($"cmd-{Command}-not-found", ("username", args[0])));
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
         {
-            return CompletionResult.FromHint(Loc.GetString("cmd-whitelistremove-arg-player"));
+            return CompletionResult.FromHint(Loc.GetString($"cmd-{Command}-arg-player"));
         }
 
         return CompletionResult.Empty;
@@ -115,6 +120,8 @@ public sealed class KickNonWhitelistedCommand : LocalizedCommands
     [Dependency] private readonly IServerDbManager _dbManager = default!;
 
     public override string Command => "kicknonwhitelisted";
+
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -134,7 +141,7 @@ public sealed class KickNonWhitelistedCommand : LocalizedCommands
                 continue;
 
             if (!await _dbManager.GetWhitelistStatusAsync(session.UserId))
-                _netManager.DisconnectChannel(session.Channel, Loc.GetString("whitelist-not-whitelisted"));
+                _netManager.DisconnectChannel(session.Channel, Loc.GetString("whitelist-not-whitelisted")); // TODO: No localization key
         }
     }
 }

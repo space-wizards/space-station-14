@@ -14,6 +14,8 @@ namespace Content.Server.AlertLevel.Commands
 
         public override string Command => "setalertlevel";
 
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
         public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             var levelNames = new string[] {};
@@ -28,9 +30,9 @@ namespace Content.Server.AlertLevel.Commands
             return args.Length switch
             {
                 1 => CompletionResult.FromHintOptions(levelNames,
-                    LocalizationManager.GetString("cmd-setalertlevel-hint-1")),
+                    LocalizationManager.GetString($"cmd-{Command}-hint-1")),
                 2 => CompletionResult.FromHintOptions(CompletionHelper.Booleans,
-                    LocalizationManager.GetString("cmd-setalertlevel-hint-2")),
+                    LocalizationManager.GetString($"cmd-{Command}-hint-2")),
                 _ => CompletionResult.Empty,
             };
         }
@@ -60,7 +62,7 @@ namespace Content.Server.AlertLevel.Commands
             var stationUid = _stationSystem.GetOwningStation(player.AttachedEntity.Value);
             if (stationUid == null)
             {
-                shell.WriteLine(LocalizationManager.GetString("cmd-setalertlevel-invalid-grid"));
+                shell.WriteLine(LocalizationManager.GetString($"cmd-{Command}-invalid-grid"));
                 return;
             }
 
@@ -68,7 +70,7 @@ namespace Content.Server.AlertLevel.Commands
             var levelNames = GetStationLevelNames(stationUid.Value);
             if (!levelNames.Contains(level))
             {
-                shell.WriteLine(LocalizationManager.GetString("cmd-setalertlevel-invalid-level"));
+                shell.WriteLine(LocalizationManager.GetString($"cmd-{Command}-invalid-level"));
                 return;
             }
 

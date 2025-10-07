@@ -8,6 +8,8 @@ public sealed class DirtyCommand : LocalizedEntityCommands
 {
     public override string Command => "dirty";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         switch (args.Length)

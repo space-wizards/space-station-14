@@ -8,6 +8,9 @@ public sealed class ShowBiomeCommand : LocalizedCommands
     [Dependency] private readonly IOverlayManager _overlayMgr = default!;
 
     public override string Command => "showbiome";
+
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (_overlayMgr.HasOverlay<BiomeDebugOverlay>())

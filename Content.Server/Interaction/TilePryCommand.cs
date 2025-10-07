@@ -19,6 +19,8 @@ public sealed class TilePryCommand : LocalizedEntityCommands
 
     public override string Command => "tilepry";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var player = shell.Player;
@@ -35,13 +37,13 @@ public sealed class TilePryCommand : LocalizedEntityCommands
 
         if (!int.TryParse(args[0], out var radius))
         {
-            shell.WriteError(Loc.GetString($"cmd-tilepry-arg-must-be-number", ("arg", args[0])));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-arg-must-be-number", ("arg", args[0])));
             return;
         }
 
         if (radius < 0)
         {
-            shell.WriteError(Loc.GetString($"cmd-tilepry-radius-must-be-positive"));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-radius-must-be-positive"));
             return;
         }
 

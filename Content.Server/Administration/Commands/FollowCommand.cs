@@ -12,6 +12,8 @@ public sealed class FollowCommand : LocalizedEntityCommands
 
     public override string Command => "follow";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player is not { } player)

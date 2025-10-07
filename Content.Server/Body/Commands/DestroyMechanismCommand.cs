@@ -14,6 +14,8 @@ namespace Content.Server.Body.Commands
 
         public override string Command => "destroymechanism";
 
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
@@ -48,12 +50,12 @@ namespace Content.Server.Body.Commands
                 if (_compFactory.GetComponentName(organ.Component.GetType()).ToLowerInvariant() == mechanismName)
                 {
                     EntityManager.QueueDeleteEntity(organ.Id);
-                    shell.WriteLine(Loc.GetString($"cmd-destroymechanism-success", ("name", mechanismName)));
+                    shell.WriteLine(Loc.GetString($"cmd-{Command}-success", ("name", mechanismName)));
                     return;
                 }
             }
 
-            shell.WriteLine(Loc.GetString($"cmd-destroymechanism-no-mechanism-found", ("name", mechanismName)));
+            shell.WriteLine(Loc.GetString($"cmd-{Command}-no-mechanism-found", ("name", mechanismName)));
         }
     }
 }

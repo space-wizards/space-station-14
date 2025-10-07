@@ -12,9 +12,9 @@ public sealed class OpenAdminNotesCommand : LocalizedCommands
     [Dependency] private readonly IAdminNotesManager _adminNotes = default!;
     [Dependency] private readonly IPlayerLocator _locator = default!;
 
-    public const string CommandName = "adminnotes";
+    public override string Command => "adminnotes";
 
-    public override string Command => CommandName;
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -35,14 +35,14 @@ public sealed class OpenAdminNotesCommand : LocalizedCommands
 
                 if (dbGuid == null)
                 {
-                    shell.WriteError(Loc.GetString("cmd-adminnotes-wrong-target", ("user", args[0])));
+                    shell.WriteError(Loc.GetString($"cmd-{Command}-wrong-target", ("user", args[0])));
                     return;
                 }
 
                 notedPlayer = dbGuid.UserId;
                 break;
             default:
-                shell.WriteError(Loc.GetString("cmd-adminnotes-args-error"));
+                shell.WriteError(Loc.GetString($"cmd-{Command}-args-error"));
                 return;
         }
 
@@ -56,6 +56,6 @@ public sealed class OpenAdminNotesCommand : LocalizedCommands
 
         var playerMgr = IoCManager.Resolve<IPlayerManager>();
         var options = playerMgr.Sessions.Select(c => c.Name).OrderBy(c => c).ToArray();
-        return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-adminnotes-hint"));
+        return CompletionResult.FromHintOptions(options, Loc.GetString($"cmd-{Command}-hint"));
     }
 }

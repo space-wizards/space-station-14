@@ -10,7 +10,9 @@ public sealed class LockEyesCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly SharedMoverController _controller = default!;
 
-    public override string Command => $"lockeyes";
+    public override string Command => "lockeyes";
+
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {

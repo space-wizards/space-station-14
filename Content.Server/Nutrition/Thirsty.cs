@@ -11,6 +11,8 @@ public sealed class Thirsty : LocalizedEntityCommands
 {
     public override string Command => "thirsty";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var player = shell.Player;

@@ -12,10 +12,12 @@ public sealed class PowerStatCommand : LocalizedEntityCommands
 
     public override string Command => "powerstat";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var stats = _powerNet.GetStatistics();
-        shell.WriteLine(Loc.GetString("cmd-powerstat-output",
+        shell.WriteLine(Loc.GetString($"cmd-{Command}-output",
             ("networks", stats.CountNetworks),
             ("loads", stats.CountLoads),
             ("supplies", stats.CountSupplies),

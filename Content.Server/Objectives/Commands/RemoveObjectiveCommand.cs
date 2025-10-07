@@ -15,35 +15,38 @@ namespace Content.Server.Objectives.Commands
         [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
 
         public override string Command => "rmobjective";
+
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {
-                shell.WriteError(Loc.GetString(Loc.GetString("cmd-rmobjective-invalid-args")));
+                shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-args"));
                 return;
             }
 
             if (!_players.TryGetSessionByUsername(args[0], out var session))
             {
-                shell.WriteError(Loc.GetString("cmd-rmojective-player-not-found"));
+                shell.WriteError(Loc.GetString($"cmd-{Command}-player-not-found"));
                 return;
             }
 
             if (!_mind.TryGetMind(session, out var mindId, out var mind))
             {
-                shell.WriteError(Loc.GetString("cmd-rmojective-mind-not-found"));
+                shell.WriteError(Loc.GetString($"cmd-{Command}-mind-not-found"));
                 return;
             }
 
             if (int.TryParse(args[1], out var i))
             {
                 shell.WriteLine(Loc.GetString(_mind.TryRemoveObjective(mindId, mind, i)
-                    ? "cmd-rmobjective-success"
-                    : "cmd-rmobjective-failed"));
+                    ? $"cmd-{Command}-success"
+                    : $"cmd-{Command}-failed"));
             }
             else
             {
-                shell.WriteError(Loc.GetString("cmd-rmobjective-invalid-index", ("index", args[1])));
+                shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-index", ("index", args[1])));
             }
         }
 
@@ -68,7 +71,7 @@ namespace Content.Server.Objectives.Commands
                 for (int i = 0; i < mind.Objectives.Count; i++)
                 {
                     var info = _objectives.GetInfo(mind.Objectives[i], mindId, mind);
-                    var hint = info == null ? Loc.GetString("cmd-rmobjective-invalid-objective-info") : $"{mind.Objectives[i]} ({info.Value.Title})";
+                    var hint = info == null ? Loc.GetString($"cmd-{Command}-invalid-objective-info") : $"{mind.Objectives[i]} ({info.Value.Title})";
                     options.Add(new CompletionOption(i.ToString(), hint));
                 }
 

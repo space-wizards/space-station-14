@@ -12,6 +12,8 @@ namespace Content.Server.Administration.Commands
 
         public override string Command => "callshuttle";
 
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             // ReSharper disable once ConvertIfStatementToSwitchStatement
@@ -32,6 +34,8 @@ namespace Content.Server.Administration.Commands
         [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
 
         public override string Command => "recallshuttle";
+
+        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {

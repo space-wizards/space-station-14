@@ -13,6 +13,8 @@ public sealed class DockCommand : LocalizedEntityCommands
 
     public override string Command => "dock";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 2)
@@ -50,9 +52,9 @@ public sealed class DockCommand : LocalizedEntityCommands
         _dockSystem.Dock((airlock1.Value, dock1), (airlock2.Value, dock2));
 
         if (dock1.DockedWith == airlock2)
-            shell.WriteLine(Loc.GetString("cmd-dock-success"));
+            shell.WriteLine(Loc.GetString($"cmd-{Command}-success"));
         else
-            shell.WriteError(Loc.GetString("cmd-dock-fail"));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-fail"));
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)

@@ -15,6 +15,8 @@ public sealed class GridDraggingCommand : LocalizedEntityCommands
 
     public override string Command => SharedGridDraggingSystem.CommandName;
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player == null)
@@ -24,6 +26,6 @@ public sealed class GridDraggingCommand : LocalizedEntityCommands
         }
 
         _grid.Toggle(shell.Player);
-        shell.WriteLine(Loc.GetString($"cmd-griddrag-status", ("status", _grid.IsEnabled(shell.Player))));
+        shell.WriteLine(Loc.GetString($"cmd-{Command}-status", ("status", _grid.IsEnabled(shell.Player))));
     }
 }

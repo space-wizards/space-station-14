@@ -10,6 +10,8 @@ public sealed class RotateEyesCommand : LocalizedEntityCommands
 {
     public override string Command => "rotateeyes";
 
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var rotation = Angle.Zero;
@@ -38,6 +40,6 @@ public sealed class RotateEyesCommand : LocalizedEntityCommands
             count++;
         }
 
-        shell.WriteLine(Loc.GetString("cmd-rotateeyes-command-count", ("count", count)));
+        shell.WriteLine(Loc.GetString($"cmd-{Command}-count", ("count", count)));
     }
 }
