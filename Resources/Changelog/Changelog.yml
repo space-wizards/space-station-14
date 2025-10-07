@@ -1,93 +1,4 @@
 ﻿Entries:
-- author: keronshb
-  changes:
-  - message: Force Wall timers changed so it despawns faster than it can be cast.
-    type: Tweak
-  - message: Force Wall users can now interact while inside of the wall, but also
-      can be attacked while inside of the wall.
-    type: Tweak
-  id: 8529
-  time: '2025-05-19T01:30:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37525
-- author: Samuka
-  changes:
-  - message: Holy water now evaporates.
-    type: Fix
-  id: 8530
-  time: '2025-05-19T16:14:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37611
-- author: aada
-  changes:
-  - message: Pepper makes you cough.
-    type: Add
-  id: 8531
-  time: '2025-05-19T18:23:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36358
-- author: Entvari
-  changes:
-  - message: Hyper Capacity Powercells are now available as Tier 3 Industrial Research.
-    type: Add
-  - message: The Tier 3 Industrial Research 'Portable Fission' has been renamed to
-      Optimized Microgalvanism to better reflect this.
-    type: Tweak
-  id: 8532
-  time: '2025-05-19T22:35:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37619
-- author: RedBookcase
-  changes:
-  - message: The Salvage section of the guidebook has been updated.
-    type: Fix
-  id: 8533
-  time: '2025-05-19T22:39:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37593
-- author: SpeltIncorrectyl
-  changes:
-  - message: Kammerer now has a tighter spread to compensate for its lower rate of
-      fire.
-    type: Tweak
-  id: 8534
-  time: '2025-05-19T22:45:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37616
-- author: Pronana
-  changes:
-  - message: Galoshes now slow on puddles again
-    type: Fix
-  id: 8535
-  time: '2025-05-20T02:47:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37628
-- author: slarticodefast
-  changes:
-  - message: Added a reduced motion version of the seeing rainbows overlay.
-    type: Add
-  id: 8536
-  time: '2025-05-20T12:36:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37584
-- author: B-Kirill
-  changes:
-  - message: Added new fun meteors variations (Cosmic cow, Honksteroid, Space potato)
-      that drop unique loot upon destruction. Urist McMeteor now shatters into meat
-      when explodes.
-    type: Add
-  id: 8537
-  time: '2025-05-20T13:04:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37327
-- author: Kittygyat
-  changes:
-  - message: Added a new, faster way for slimepeople to access their own special inventory,
-      with LMB.
-    type: Add
-  id: 8538
-  time: '2025-05-20T16:55:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37592
-- author: FrostWinters
-  changes:
-  - message: Histamines no longer cause radiation.
-    type: Tweak
-  - message: Epinephrine treats Histamines above OD threshold.
-    type: Tweak
-  id: 8544
-  time: '2025-05-21T01:12:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37460
 - author: Minty642
   changes:
   - message: Added fungal soil, maintenance version of hydroponics.
@@ -3958,3 +3869,88 @@
   id: 9036
   time: '2025-10-05T22:12:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40704
+- author: jessicamaybe
+  changes:
+  - message: Skeletons are now playable instruments!
+    type: Add
+  id: 9037
+  time: '2025-10-07T00:59:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40009
+- author: Huaqas, Davyei
+  changes:
+  - message: 3 new Holy Books have been added to the Chaplain's loadout.
+    type: Add
+  id: 9038
+  time: '2025-10-07T07:39:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39181
+- author: Huaqas
+  changes:
+  - message: The Tanakh and Satanic bibles have been removed.
+    type: Remove
+  id: 9039
+  time: '2025-10-07T09:14:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39698
+- author: jessicamaybe
+  changes:
+  - message: Gorillas can now pull objects.
+    type: Tweak
+  id: 9040
+  time: '2025-10-07T09:31:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40700
+- author: SurrealShibe
+  changes:
+  - message: Added the nutri-batard to mime survival boxes in place of the nutri-brick.
+    type: Add
+  id: 9041
+  time: '2025-10-07T10:18:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40601
+- author: Lordbrandon12
+  changes:
+  - message: Fixed issue allowing space heater temperature to be set above the allowed
+      limit.
+    type: Fix
+  id: 9042
+  time: '2025-10-07T12:53:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40453
+- author: IProduceWidgets
+  changes:
+  - message: Vox that take excessive amounts of fire damage will now burn into fried
+      chicken.
+    type: Tweak
+  id: 9043
+  time: '2025-10-07T14:12:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40115
+- author: BoskiYourk, spanky_spanky
+  changes:
+  - message: The Head of Security now has an energy magnum, a self-charging multi-mode
+      laser revolver, in their locker instead of the energy shotgun.
+    type: Add
+  - message: The Warden now has the energy shotgun in their locker round-start.
+    type: Tweak
+  id: 9044
+  time: '2025-10-07T16:05:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40615
+- author: FungiFellow
+  changes:
+  - message: Cancer Mice now have unique ghost role entries.
+    type: Tweak
+  id: 9045
+  time: '2025-10-07T16:33:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40102
+- author: FungiFellow
+  changes:
+  - message: Biosuits can now fit Gastanks in Suit Storage, the Security Biosuit can
+      fit both Gastanks and Weapons
+    type: Add
+  - message: Security Biosuits Cost has been increased 800->1600
+    type: Tweak
+  id: 9046
+  time: '2025-10-07T18:22:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39888
+- author: Hitlinemoss
+  changes:
+  - message: MRE wrappers are no longer twice as nutritious as the actual food within.
+    type: Fix
+  id: 9047
+  time: '2025-10-07T19:36:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40761
