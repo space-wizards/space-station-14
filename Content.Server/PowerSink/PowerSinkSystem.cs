@@ -20,7 +20,7 @@ public sealed class PowerSinkSystem : EntitySystem
     /// </summary>
     private const float WarningMessageThreshold = 0.70f;
 
-    private static ProtoId<ExplosionPrototype> PowerSinkExplosion = "HardBomb";
+    private static ProtoId<ExplosionPrototype> _powerSinkExplosion = "MicroBomb";
 
     private readonly float[] _warningSoundThresholds = new[] { .80f, .90f, .95f, .98f };
 
@@ -114,7 +114,7 @@ public sealed class PowerSinkSystem : EntitySystem
 
         foreach (var (entity, component) in toRemove)
         {
-            _explosionSystem.QueueExplosion(entity, PowerSinkExplosion, 2000f, 4f, 20f, canCreateVacuum: true);
+            _explosionSystem.QueueExplosion(entity, _powerSinkExplosion, 2000f, 4f, 20f, canCreateVacuum: true);
             RemComp(entity, component);
         }
     }
