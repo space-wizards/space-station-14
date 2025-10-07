@@ -1,8 +1,8 @@
 ﻿- type: entity
-  id: BaseMaterialDoor
-  parent: BaseStructure
-  name: door
   abstract: true
+  parent: BaseStructure
+  id: BaseMaterialDoor
+  name: door
   description: A door, where will it lead?
   components:
   - type: Anchorable
@@ -63,31 +63,31 @@
   - type: BlockWeather
 
 - type: entity
+  abstract: true
   parent: BaseMaterialDoor
   id: BaseMaterialDoorNavMap
-  abstract: true
   components:
   - type: NavMapDoor
 
 ### Metal doors ###
 
 - type: entity
+  parent: BaseMaterialDoorNavMap
   id: MetalDoor
   name: metal door
-  parent: BaseMaterialDoorNavMap
   components:
   - type: Construction
     graph: DoorGraph
     node: metalDoor
   - type: Destructible
     thresholds:
-    - trigger:
+    - trigger: &DamageTrigger200 # Overkill threshold
         !type:DamageTrigger
         damage: 200
-      behaviors:
+      behaviors: &OverkillBehavior
       - !type:DoActsBehavior
         acts: ["Destruction"]
-    - trigger:
+    - trigger: &DamageTrigger150
         !type:DamageTrigger
         damage: 150
       behaviors:
@@ -103,30 +103,20 @@
             max: 5
 
 - type: entity
+  parent: BaseMaterialDoorNavMap
   id: PlasmaDoor
   name: plasma door
-  parent: BaseMaterialDoorNavMap
-  description: A door, where will it lead?
   components:
   - type: Sprite
     sprite: Structures/Doors/MineralDoors/plasma_door.rsi
-    layers:
-    - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
   - type: Construction
     graph: DoorGraph
     node: plasmaDoor
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
-        damage: 150
+    - trigger: *DamageTrigger200
+      behaviors: *OverkillBehavior
+    - trigger: *DamageTrigger150
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -140,30 +130,20 @@
             max: 5
 
 - type: entity
+  parent: BaseMaterialDoorNavMap
   id: GoldDoor
   name: gold door
-  parent: BaseMaterialDoorNavMap
-  description: A door, where will it lead?
   components:
   - type: Sprite
     sprite: Structures/Doors/MineralDoors/gold_door.rsi
-    layers:
-    - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
   - type: Construction
     graph: DoorGraph
     node: goldDoor
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
-        damage: 150
+    - trigger: *DamageTrigger200
+      behaviors: *OverkillBehavior
+    - trigger: *DamageTrigger150
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -177,30 +157,20 @@
             max: 5
 
 - type: entity
+  parent: BaseMaterialDoorNavMap
   id: SilverDoor
   name: silver door
-  parent: BaseMaterialDoorNavMap
-  description: A door, where will it lead?
   components:
   - type: Sprite
     sprite: Structures/Doors/MineralDoors/silver_door.rsi
-    layers:
-    - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
   - type: Construction
     graph: DoorGraph
     node: silverDoor
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
-        damage: 150
+    - trigger: *DamageTrigger200
+      behaviors: *OverkillBehavior
+    - trigger: *DamageTrigger150
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -214,35 +184,26 @@
             max: 5
 
 - type: entity
+  parent: BaseMaterialDoorNavMap
   id: BananiumDoor
   name: bananium door
-  parent: BaseMaterialDoorNavMap
-  description: A door, where will it lead?
   components:
   - type: Sprite
     sprite: Structures/Doors/MineralDoors/bananium_door.rsi
-    layers:
-    - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
   - type: Door
-    openSound:
-      path: /Audio/Items/bikehorn.ogg
-    closeSound:
-      path: /Audio/Items/bikehorn.ogg
+    openSound: &BikeHornSound
+      collection: BikeHorn
+      params:
+        variation: 0.125
+    closeSound: *BikeHornSound
   - type: Construction
     graph: DoorGraph
     node: bananiumDoor
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
-        damage: 150
+    - trigger: *DamageTrigger200
+      behaviors: *OverkillBehavior
+    - trigger: *DamageTrigger150
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -258,9 +219,9 @@
 ### Other doors ###
 
 - type: entity
+  parent: BaseMaterialDoorNavMap
   id: WoodDoor
   name: wooden door
-  parent: BaseMaterialDoorNavMap
   components:
   - type: Sprite
     sprite: Structures/Doors/MineralDoors/wood_door.rsi
@@ -273,16 +234,11 @@
     graph: DoorGraph
     node: woodDoor
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Wood
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 150
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+    - trigger: *DamageTrigger150
+      behaviors: *OverkillBehavior
     - trigger:
         !type:DamageTrigger
         damage: 75
@@ -299,16 +255,12 @@
             max: 5
 
 - type: entity
+  parent: BaseMaterialDoorNavMap
   id: PaperDoor
   name: paper door
-  parent: BaseMaterialDoorNavMap
-  description: A door, where will it lead?
   components:
   - type: Sprite
     sprite: Structures/Doors/MineralDoors/paper_door.rsi
-    layers:
-    - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
   - type: Door
     openSound:
       path: /Audio/Effects/paperdoor_openclose.ogg
@@ -318,16 +270,11 @@
     graph: DoorGraph
     node: paperDoor
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Wood
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 150
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+    - trigger: *DamageTrigger150
+      behaviors: *OverkillBehavior
     - trigger:
         !type:DamageTrigger
         damage: 50
@@ -344,16 +291,13 @@
             max: 5
 
 - type: entity
+  parent: BaseMaterialDoorNavMap
   id: WebDoor
   name: web door
-  parent: BaseMaterialDoorNavMap
   description: A door, leading to the lands of the spiders... or a spaced room.
   components:
   - type: Sprite
     sprite: Structures/Doors/web_door.rsi
-    layers:
-    - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
   - type: Door
     closeSound:
       path: /Audio/Effects/rustle1.ogg
@@ -366,21 +310,8 @@
     damageModifierSet: Web
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
-        damage: 150
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+    - trigger: *DamageTrigger150
+      behaviors: *OverkillBehavior
     - trigger:
         !type:DamageTrigger
         damage: 50
@@ -397,8 +328,8 @@
             max: 2
 
 - type: entity
-  id: CardDoor
   parent: BaseMaterialDoorNavMap
+  id: CardDoor
   name: cardboard door
   components:
   - type: Sprite
@@ -417,16 +348,11 @@
         path:
           "/Audio/Weapons/pierce.ogg"
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Card
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 60 #excess damage (nuke?). avoid computational cost of spawning entities.
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+    - trigger: *DamageTrigger150
+      behaviors: *OverkillBehavior
     - trigger:
         !type:DamageTrigger
         damage: 30
