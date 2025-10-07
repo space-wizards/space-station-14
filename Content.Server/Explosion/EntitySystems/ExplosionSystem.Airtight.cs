@@ -165,7 +165,7 @@ public sealed partial class ExplosionSystem
                         modifier = 1f;
 
                     if (armor.FlatReduction.TryGetValue(type, out var flat))
-                        flatReduction += flat;
+                        flatReduction += flat * modifier;
                 }
                 else
                 {
