@@ -13,6 +13,7 @@ using Content.Shared.Stacks;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Map;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -46,13 +47,30 @@ public sealed class StealConditionSystem : EntitySystem
     /// start checks of target acceptability, and generation of start values.
     private void OnAssigned(Entity<StealConditionComponent> condition, ref ObjectiveAssignedEvent args)
     {
-        var selectedMapId = _gameTicker.DefaultMap;
+        // Select map: owner map if requested and available, otherwise default map
+        var filterByMap = condition.Comp.FilterByMap;
+        MapId selectedMapId = default;
+        var hasSelectedMap = false;
+        if (filterByMap)
+        {
+            if (condition.Comp.UseOwnerMap && args.Mind.OwnedEntity != null &&
+                TryComp<TransformComponent>(args.Mind.OwnedEntity.Value, out var ownerXform))
+            {
+                selectedMapId = ownerXform.MapID;
+                hasSelectedMap = true;
+            }
+            else
+            {
+                selectedMapId = _gameTicker.DefaultMap;
+                hasSelectedMap = true;
+            }
+        }
         List<StealTargetComponent?> targetList = new();
 
         var query = AllEntityQuery<StealTargetComponent, TransformComponent>();
         while (query.MoveNext(out var target, out var transform))
         {
-            if (transform.MapID != selectedMapId)
+            if (filterByMap && hasSelectedMap && transform.MapID != selectedMapId)
                 continue;
 
             if (condition.Comp.StealGroup != target.StealGroup)
