@@ -24,10 +24,10 @@ public sealed class SurveillanceCameraMapSystem : EntitySystem
         if (Terminating(uid))
             return;
 
-        if (component.Cameras.Count > 0)
+        if (comp.Cameras.Count > 0)
         {
-            component.Cameras.Clear();
-            Dirty(uid, component);
+            comp.Cameras.Clear();
+            Dirty(uid, comp);
         }
     }
 
