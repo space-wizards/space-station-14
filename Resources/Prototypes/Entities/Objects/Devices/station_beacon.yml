@@ -455,7 +455,9 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-solars
-  - type: BombingTargetBlocker
+  - type: Tag
+    tags:
+    - NinjaBombingTargetBlocker
 
 - type: entity
   parent: DefaultStationBeaconEngineering
@@ -674,7 +676,9 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-arrivals
-  - type: BombingTargetBlocker
+  - type: Tag
+    tags:
+    - NinjaBombingTargetBlocker
 
 - type: entity
   parent: DefaultStationBeacon
@@ -763,7 +767,9 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-cryosleep
-  - type: BombingTargetBlocker
+  - type: Tag
+    tags:
+    - NinjaBombingTargetBlocker
 
 - type: entity
   parent: DefaultStationBeacon

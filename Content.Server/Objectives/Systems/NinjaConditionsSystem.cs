@@ -1,10 +1,11 @@
 using Content.Server.Objectives.Components;
 using Content.Shared.Objectives.Components;
-using Content.Shared.Ninja.Components;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
+using Content.Shared.Tag;
 using Content.Shared.Warps;
 using Content.Shared.Whitelist;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Objectives.Systems;
@@ -21,6 +22,7 @@ public sealed class NinjaConditionsSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
 
+    private static readonly List<ProtoId<TagPrototype>> Blacklist = ["NinjaBombingTargetBlocker", "GhostOnlyWarp"];
     public override void Initialize()
     {
         SubscribeLocalEvent<DoorjackConditionComponent, ObjectiveGetProgressEvent>(OnDoorjackGetProgress);
@@ -56,11 +58,12 @@ public sealed class NinjaConditionsSystem : EntitySystem
         // choose spider charge detonation point
         var warps = new List<EntityUid>();
         var allEnts = AllEntityQuery<WarpPointComponent>();
+        var bombingBlacklist = new EntityWhitelist() { Tags = Blacklist };
+
         while (allEnts.MoveNext(out var warpUid, out var warp))
         {
-            if (_whitelist.IsBlacklistPass(warp.Blacklist, warpUid)
-                || string.IsNullOrWhiteSpace(warp.Location)
-                || !HasComp<BombingTargetBlockerComponent>(warpUid))
+            if (_whitelist.IsBlacklistFail(bombingBlacklist, warpUid)
+                && !string.IsNullOrWhiteSpace(warp.Location))
             {
                 warps.Add(warpUid);
             }
