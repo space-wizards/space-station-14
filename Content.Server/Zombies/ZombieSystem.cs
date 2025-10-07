@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Shared.NPC.Prototypes;
 using Content.Server.Actions;
 using Content.Server.Body.Systems;
 using Content.Server.Chat;
@@ -9,6 +8,7 @@ using Content.Server.Speech.EntitySystems;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Armor;
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Changeling.Systems;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Damage;
 using Content.Shared.Humanoid;
@@ -18,6 +18,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.NPC.Prototypes;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
@@ -26,7 +27,6 @@ using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Content.Shared.Changeling.Systems;
 
 namespace Content.Server.Zombies
 {
@@ -73,7 +73,7 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<ZombieComponent, MindAddedMessage>(OnMindAdded);
             SubscribeLocalEvent<ZombieComponent, MindRemovedMessage>(OnMindRemoved);
 
-            // После смены формы линга восстанавливаем зомби-визуал и фракции
+            // After changing the ling's form, we restore the zombie visuals and factions
             SubscribeLocalEvent<ZombieComponent, ChangelingPostTransformEvent>(OnChangelingPostTransform);
 
             SubscribeLocalEvent<PendingZombieComponent, MapInitEvent>(OnPendingMapInit);
