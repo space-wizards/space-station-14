@@ -840,13 +840,13 @@
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: BulletLaserSpreadNarrow
-    fireCost: 100
+    fireCost: 80
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: BulletLaserSpreadNarrow
-      fireCost: 100
+      fireCost: 80
     - proto: BulletDisablerSmgSpread
-      fireCost: 60
+      fireCost: 48
   - type: Item
     size: Large
     sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
@@ -858,8 +858,8 @@
     stealGroup: WeaponEnergyShotgun
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Battery
-    maxCharge: 600
-    startingCharge: 600
+    maxCharge: 480
+    startingCharge: 480
 
 - type: entity
   name: temperature gun
