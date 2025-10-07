@@ -64,7 +64,7 @@
   parent: [ BaseWeaponLauncher, BaseGunWieldable, BaseMajorContraband ]
   id: WeaponLauncherHydra
   name: hydra
-  description: PLOOP... FSSSSSS
+  description: PLOOP... FSSSSSS...
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/hydra_launcher.rsi
@@ -425,7 +425,7 @@
   description: It fires large meteors.
   components:
   - type: BallisticAmmoProvider
-    whitelist:
+    whitelist: # Redundant
       tags:
         - CartridgeRocket
     proto: MeteorMedium
@@ -438,7 +438,7 @@
   description: It fires slow immovable rods.
   components:
   - type: BallisticAmmoProvider
-    whitelist:
+    whitelist: # Redundant
       tags:
         - CartridgeRocket
     proto: ImmovableRodSlow

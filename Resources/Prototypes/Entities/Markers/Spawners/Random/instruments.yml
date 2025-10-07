@@ -124,6 +124,25 @@
       children:
       - id: SuperSynthesizerInstrument
 
+- type: entityTable
+  id: SalvageInstrumentTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: VarietyInstrumentTable
+    - !type:NestedSelector
+      tableId: BrassInstrumentTable
+    - !type:NestedSelector
+      tableId: StringInstrumentTable
+    - !type:NestedSelector
+      tableId: KeyedPercussionInstrumentTable
+    - !type:NestedSelector
+      tableId: WoodwindInstrumentTable
+    - !type:NestedSelector
+      tableId: SpecialInstrumentTable
+    - id: SuperSynthesizerInstrument
+      weight: 0.3
+
 - type: entity
   id: RandomInstruments
   name: random instruments spawner
