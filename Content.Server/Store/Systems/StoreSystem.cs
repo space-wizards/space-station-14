@@ -13,6 +13,7 @@ using System.Linq;
 using Content.Shared.Actions;
 using Robust.Shared.Timing;
 using Content.Shared.Mind;
+using Content.Shared.Store.Events;
 
 namespace Content.Server.Store.Systems;
 
@@ -38,6 +39,7 @@ public sealed partial class StoreSystem : EntitySystem
         SubscribeLocalEvent<StoreComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<StoreComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<StoreComponent, OpenUplinkImplantEvent>(OnImplantActivate);
+        SubscribeLocalEvent<StoreComponent, IntrinsicStoreActionEvent>(OnIntrinsicStore);
 
         InitializeUi();
         InitializeCommand();
@@ -188,6 +190,12 @@ public sealed partial class StoreSystem : EntitySystem
         UpdateUserInterface(null, uid, store);
         return true;
     }
+
+    private void OnIntrinsicStore(Entity<StoreComponent> ent, ref IntrinsicStoreActionEvent args)
+    {
+        ToggleUi(args.Performer, ent.Owner, ent.Comp);
+    }
+
 }
 
 public sealed class CurrencyInsertAttemptEvent : CancellableEntityEventArgs

@@ -58,8 +58,9 @@
     - Common
   - type: DoAfter
   - type: Actions
-  - type: IntrinsicStore
-    storeActionId: ActionPAIOpenShop
+  - type: ActionGrant
+    actions:
+    - ActionPAIOpenShop
   - type: Store
     categories:
     - PAIAbilities
