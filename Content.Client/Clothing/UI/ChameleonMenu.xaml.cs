@@ -54,7 +54,7 @@ public sealed partial class ChameleonMenu : DefaultWindow
 
         foreach (var id in _possibleIds)
         {
-            if (!_prototypeManager.TryIndex(id, out EntityPrototype? proto))
+            if (!_prototypeManager.Resolve(id, out EntityPrototype? proto))
                 continue;
 
             var lowId = id.Id.ToLowerInvariant();
