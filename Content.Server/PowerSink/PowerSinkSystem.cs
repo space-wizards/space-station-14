@@ -114,7 +114,7 @@ public sealed class PowerSinkSystem : EntitySystem
 
         foreach (var (entity, component) in toRemove)
         {
-            _explosionSystem.QueueExplosion(entity, _powerSinkExplosion, 4000f, 4f, 40f, canCreateVacuum: true);
+            _explosionSystem.QueueExplosion(entity, _powerSinkExplosion, 4000f, 8f, 40f, canCreateVacuum: true);
             RemComp(entity, component);
         }
     }
