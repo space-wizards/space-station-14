@@ -37,7 +37,7 @@ public sealed class BrainSystem : EntitySystem
         _mindSystem.TransferTo(mindId, newEntity, mind: mind);
     }
 
-    private static void OnPointAttempt(Entity<BrainComponent> ent, ref PointAttemptEvent args)
+    private void OnPointAttempt(Entity<BrainComponent> ent, ref PointAttemptEvent args)
     {
         args.Cancel();
     }
