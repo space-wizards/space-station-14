@@ -13,7 +13,7 @@ public sealed partial class SurveillanceCameraMapComponent : Component
     /// <summary>
     /// Dictionary of cameras on on the current grid.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField, AutoNetworkedField, NonSerialized]
     public Dictionary<NetEntity, CameraMarker> Cameras = new();
 }
 
