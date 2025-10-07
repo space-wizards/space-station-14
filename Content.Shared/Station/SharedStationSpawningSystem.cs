@@ -73,7 +73,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
             name = loadout.EntityName;
         }
 
-        if (string.IsNullOrEmpty(name) && PrototypeManager.TryIndex(roleProto.NameDataset, out var nameData))
+        if (string.IsNullOrEmpty(name) && PrototypeManager.Resolve(roleProto.NameDataset, out var nameData))
         {
             name = Loc.GetString(_random.Pick(nameData.Values));
         }
@@ -95,7 +95,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
     /// </summary>
     public void EquipStartingGear(EntityUid entity, ProtoId<StartingGearPrototype>? startingGear, bool raiseEvent = true)
     {
-        PrototypeManager.TryIndex(startingGear, out var gearProto);
+        PrototypeManager.Resolve(startingGear, out var gearProto);
         EquipStartingGear(entity, gearProto, raiseEvent);
     }
 
@@ -127,7 +127,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
                 var equipmentStr = startingGear.GetGear(slot.Name);
                 if (!string.IsNullOrEmpty(equipmentStr))
                 {
-                    var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, xform.Coordinates);
+                    var equipmentEntity = Spawn(equipmentStr, xform.Coordinates);
                     InventorySystem.TryEquip(entity, equipmentEntity, slot.Name, silent: true, force: true);
                 }
             }
@@ -139,9 +139,9 @@ public abstract class SharedStationSpawningSystem : EntitySystem
             var coords = xform.Coordinates;
             foreach (var prototype in inhand)
             {
-                var inhandEntity = EntityManager.SpawnEntity(prototype, coords);
+                var inhandEntity = Spawn(prototype, coords);
 
-                if (_handsSystem.TryGetEmptyHand(entity, out var emptyHand, handsComponent))
+                if (_handsSystem.TryGetEmptyHand((entity, handsComponent), out var emptyHand))
                 {
                     _handsSystem.TryPickup(entity, inhandEntity, emptyHand, checkActionBlocker: false, handsComp: handsComponent);
                 }
@@ -198,7 +198,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
         {
             foreach (var items in group.Value)
             {
-                if (!PrototypeManager.TryIndex(items.Prototype, out var loadoutPrototype))
+                if (!PrototypeManager.Resolve(items.Prototype, out var loadoutPrototype))
                     return null;
 
                 var gear = ((IEquipmentLoadout) loadoutPrototype).GetGear(slot);

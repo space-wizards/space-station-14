@@ -4,7 +4,6 @@ using Content.Server.Administration.UI;
 using Content.Server.Disposal.Tube;
 using Content.Server.EUI;
 using Content.Server.Ghost.Roles;
-using Content.Server.Mind.Commands;
 using Content.Server.Mind;
 using Content.Server.Prayer;
 using Content.Server.Silicons.Laws;
@@ -16,7 +15,6 @@ using Content.Shared.Configurable;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
-using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Mind.Components;
 using Content.Shared.Movement.Components;
@@ -88,7 +86,7 @@ namespace Content.Server.Administration.Systems
 
         private void AddAdminVerbs(GetVerbsEvent<Verb> args)
         {
-            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+            if (!TryComp(args.User, out ActorComponent? actor))
                 return;
 
             var player = actor.PlayerSession;
@@ -390,12 +388,28 @@ namespace Content.Server.Administration.Systems
                         Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Actions/actions_borg.rsi"), "state-laws"),
                     });
                 }
+
+                // open camera
+                args.Verbs.Add(new Verb()
+                {
+                    Priority = 10,
+                    Text = Loc.GetString("admin-verbs-camera"),
+                    Message = Loc.GetString("admin-verbs-camera-description"),
+                    Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/vv.svg.192dpi.png")),
+                    Category = VerbCategory.Admin,
+                    Act = () =>
+                    {
+                        var ui = new AdminCameraEui(args.Target);
+                        _euiManager.OpenEui(ui, player);
+                    },
+                    Impact = LogImpact.Low
+                });
             }
         }
 
         private void AddDebugVerbs(GetVerbsEvent<Verb> args)
         {
-            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+            if (!TryComp(args.User, out ActorComponent? actor))
                 return;
 
             var player = actor.PlayerSession;
@@ -408,7 +422,7 @@ namespace Content.Server.Administration.Systems
                     Text = Loc.GetString("delete-verb-get-data-text"),
                     Category = VerbCategory.Debug,
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png")),
-                    Act = () => EntityManager.DeleteEntity(args.Target),
+                    Act = () => Del(args.Target),
                     Impact = LogImpact.Medium,
                     ConfirmationPopup = true
                 };
@@ -451,14 +465,14 @@ namespace Content.Server.Administration.Systems
             // Make Sentient verb
             if (_groupController.CanCommand(player, "makesentient") &&
                 args.User != args.Target &&
-                !EntityManager.HasComponent<MindContainerComponent>(args.Target))
+                !HasComp<MindContainerComponent>(args.Target))
             {
                 Verb verb = new()
                 {
                     Text = Loc.GetString("make-sentient-verb-get-data-text"),
                     Category = VerbCategory.Debug,
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/sentient.svg.192dpi.png")),
-                    Act = () => MakeSentientCommand.MakeSentient(args.Target, EntityManager),
+                    Act = () => _mindSystem.MakeSentient(args.Target),
                     Impact = LogImpact.Medium
                 };
                 args.Verbs.Add(verb);
@@ -517,7 +531,7 @@ namespace Content.Server.Administration.Systems
 
             // Get Disposal tube direction verb
             if (_groupController.CanCommand(player, "tubeconnections") &&
-                EntityManager.TryGetComponent(args.Target, out DisposalTubeComponent? tube))
+                TryComp(args.Target, out DisposalTubeComponent? tube))
             {
                 Verb verb = new()
                 {
@@ -544,7 +558,7 @@ namespace Content.Server.Administration.Systems
             }
 
             if (_groupController.CanAdminMenu(player) &&
-                EntityManager.TryGetComponent(args.Target, out ConfigurationComponent? config))
+                TryComp(args.Target, out ConfigurationComponent? config))
             {
                 Verb verb = new()
                 {
@@ -558,7 +572,7 @@ namespace Content.Server.Administration.Systems
 
             // Add verb to open Solution Editor
             if (_groupController.CanCommand(player, "addreagent") &&
-                EntityManager.HasComponent<SolutionContainerManagerComponent>(args.Target))
+                HasComp<SolutionContainerManagerComponent>(args.Target))
             {
                 Verb verb = new()
                 {
