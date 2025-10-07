@@ -59,6 +59,16 @@
   group: market
 
 - type: cargoProduct
+  id: FunInstrumentsRandom
+  icon:
+    sprite: Objects/Fun/Instruments/h_synthesizer.rsi
+    state: supersynth
+  product: CrateFunInstrumentsRandom
+  cost: 2500
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
   id: FunArtSupplies
   icon:
     sprite: Objects/Fun/crayons.rsi

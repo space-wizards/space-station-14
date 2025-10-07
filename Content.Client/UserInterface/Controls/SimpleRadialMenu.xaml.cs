@@ -7,6 +7,8 @@ using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.Input;
+using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.UserInterface.Controls;
 
@@ -30,7 +32,7 @@ public sealed partial class SimpleRadialMenu : RadialMenu
         _attachMenuToEntity = owner;
     }
 
-    public void SetButtons(IEnumerable<RadialMenuOption> models, SimpleRadialMenuSettings? settings = null)
+    public void SetButtons(IEnumerable<RadialMenuOptionBase> models, SimpleRadialMenuSettings? settings = null)
     {
         ClearExistingChildrenRadialButtons();
 
@@ -45,7 +47,7 @@ public sealed partial class SimpleRadialMenu : RadialMenu
     }
 
     private void Fill(
-        IEnumerable<RadialMenuOption> models,
+        IEnumerable<RadialMenuOptionBase> models,
         SpriteSystem sprites,
         ICollection<Control> rootControlChildren,
         SimpleRadialMenuSettings settings
@@ -77,7 +79,7 @@ public sealed partial class SimpleRadialMenu : RadialMenu
         }
     }
 
-    private RadialMenuTextureButton RecursiveContainerExtraction(
+    private RadialMenuButton RecursiveContainerExtraction(
         SpriteSystem sprites,
         ICollection<Control> rootControlChildren,
         RadialMenuNestedLayerOption model,
@@ -112,8 +114,8 @@ public sealed partial class SimpleRadialMenu : RadialMenu
         return thisLayerLinkButton;
     }
 
-    private RadialMenuTextureButton ConvertToButton(
-        RadialMenuOption model,
+    private RadialMenuButton ConvertToButton(
+        RadialMenuOptionBase model,
         SpriteSystem sprites,
         SimpleRadialMenuSettings settings,
         bool haveNested
@@ -121,29 +123,26 @@ public sealed partial class SimpleRadialMenu : RadialMenu
     {
         var button = settings.UseSectors
             ? ConvertToButtonWithSector(model, settings)
-            : new RadialMenuTextureButton();
+            : new RadialMenuButton();
         button.SetSize = new Vector2(64f, 64f);
         button.ToolTip = model.ToolTip;
-        if (model.Sprite != null)
+        var imageControl = model.IconSpecifier switch
         {
-            var scale = Vector2.One;
+            RadialMenuTextureIconSpecifier textureSpecifier => CreateTexture(textureSpecifier.Sprite, sprites),
+            RadialMenuEntityIconSpecifier entitySpecifier => CreateSpriteView(entitySpecifier.Entity),
+            RadialMenuEntityPrototypeIconSpecifier entProtoSpecifier => CreateEntityPrototypeView(entProtoSpecifier.ProtoId),
+            _ => null
+        };
 
-            var texture = sprites.Frame0(model.Sprite);
-            if (texture.Width <= 32)
-            {
-                scale *= 2;
-            }
+        if(imageControl != null)
+            button.AddChild(imageControl);
 
-            button.TextureNormal = texture;
-            button.Scale = scale;
-        }
-
-        if (model is RadialMenuActionOption actionOption)
+        if (model is RadialMenuActionOptionBase actionOption)
         {
             button.OnPressed += _ =>
             {
                 actionOption.OnPressed?.Invoke();
-                if(!haveNested)
+                if (!haveNested)
                     Close();
             };
         }
@@ -151,9 +150,53 @@ public sealed partial class SimpleRadialMenu : RadialMenu
         return button;
     }
 
-    private static RadialMenuTextureButtonWithSector ConvertToButtonWithSector(RadialMenuOption model, SimpleRadialMenuSettings settings)
+    private Control CreateEntityPrototypeView(EntProtoId protoId)
     {
-        var button = new RadialMenuTextureButtonWithSector
+        var entProtoView = new EntityPrototypeView
+        {
+            SetSize = new Vector2(48, 48),
+            VerticalAlignment = VAlignment.Center,
+            HorizontalAlignment = HAlignment.Center,
+            Stretch = SpriteView.StretchMode.Fill,
+        };
+        entProtoView.SetPrototype(protoId);
+        return entProtoView;
+    }
+
+    private static Control CreateSpriteView(EntityUid entityForSpriteView)
+    {
+        var entView = new SpriteView
+        {
+            SetSize = new Vector2(48, 48),
+            VerticalAlignment = VAlignment.Center,
+            HorizontalAlignment = HAlignment.Center,
+            Stretch = SpriteView.StretchMode.Fill,
+        };
+        entView.SetEntity(entityForSpriteView);
+        return entView;
+    }
+
+    private static Control CreateTexture(SpriteSpecifier spriteSpecifier, SpriteSystem sprites)
+    {
+        var scale = Vector2.One;
+
+        var texture = sprites.Frame0(spriteSpecifier);
+        if (texture.Width <= 32)
+        {
+            scale *= 2;
+        }
+
+        var imageControl = new TextureRect()
+        {
+            Texture = texture,
+            TextureScale = scale
+        };
+        return imageControl;
+    }
+
+    private static RadialMenuButtonWithSector ConvertToButtonWithSector(RadialMenuOptionBase model, SimpleRadialMenuSettings settings)
+    {
+        var button = new RadialMenuButtonWithSector
         {
             DrawBorder = settings.DisplayBorders,
             DrawBackground = !settings.NoBackground
@@ -228,32 +271,99 @@ public sealed partial class SimpleRadialMenu : RadialMenu
 
 }
 
-
-public abstract class RadialMenuOption
+/// <summary>
+/// Abstract representation of a way to specify icon in radial menu.
+/// </summary>
+public abstract record RadialMenuIconSpecifier
 {
-    public string? ToolTip { get; init; }
+    /// <summary> Use entity prototype viewer. </summary>
+    public static RadialMenuIconSpecifier? With(EntProtoId? protoId)
+    {
+        if (protoId is null)
+            return null;
 
-    public SpriteSpecifier? Sprite { get; init; }
-    public Color? BackgroundColor { get; set; }
-    public Color? HoverBackgroundColor { get; set; }
+        return new RadialMenuEntityPrototypeIconSpecifier(protoId.Value);
+    }
+
+    /// <summary> Use simple texture icon. </summary>
+    public static RadialMenuIconSpecifier? With(SpriteSpecifier? sprite)
+    {
+        if (sprite == null)
+            return null;
+
+        return new RadialMenuTextureIconSpecifier(sprite);
+    }
+
+    /// <summary> Use entity sprite viewer. </summary>
+    public static RadialMenuIconSpecifier? With(EntityUid? entity)
+    {
+        if (entity == null)
+            return null;
+
+        return new RadialMenuEntityIconSpecifier(entity.Value);
+    }
 }
 
-public abstract class RadialMenuActionOption(Action onPressed) : RadialMenuOption
+/// <summary> Marker that <see cref="SpriteView"/> should be used to display radial menu icon. </summary>
+public sealed record RadialMenuEntityIconSpecifier(EntityUid Entity) : RadialMenuIconSpecifier;
+
+/// <summary> Marker that <see cref="TextureRect"/> should be used to display radial menu icon. </summary>
+public sealed record RadialMenuTextureIconSpecifier(SpriteSpecifier Sprite) : RadialMenuIconSpecifier;
+
+/// <summary> Marker that <see cref="EntityPrototypeView"/> should be used to display radial menu icon. </summary>
+public sealed record RadialMenuEntityPrototypeIconSpecifier(EntProtoId ProtoId) : RadialMenuIconSpecifier;
+
+/// <summary> Container for common options for radial menu button. </summary>
+public abstract class RadialMenuOptionBase
 {
+    /// <summary> Tooltip to be displayed when button is hovered. </summary>
+    public string? ToolTip { get; init; }
+
+    /// <summary>
+    /// Color for button background.
+    /// Is used only with sector radial (<see cref="SimpleRadialMenuSettings.UseSectors"/>).
+    /// </summary>
+    public Color? BackgroundColor { get; set; }
+    /// <summary>
+    /// Color for button background when it is hovered.
+    /// Is used only with sector radial (<see cref="SimpleRadialMenuSettings.UseSectors"/>).
+    /// </summary>
+    public Color? HoverBackgroundColor { get; set; }
+
+    /// <summary>
+    /// Specifier that describes icon to be used for radial menu button.
+    /// </summary>
+    public RadialMenuIconSpecifier? IconSpecifier { get; set; }
+}
+
+/// <summary> Base type for model of radial menu button with some action on button pressed. </summary>
+/// <param name="onPressed"></param>
+public abstract class RadialMenuActionOptionBase(Action onPressed) : RadialMenuOptionBase
+{
+    /// <summary> Action to be executed on button press. </summary>
     public Action OnPressed { get; } = onPressed;
 }
 
-public sealed class RadialMenuActionOption<T>(Action<T> onPressed, T data)
-    : RadialMenuActionOption(onPressed: () => onPressed(data));
+/// <summary> Strong-typed model for radial menu button with action, stores provided data to be used upon button press. </summary>
+public sealed class RadialMenuActionOption<T>(Action<T> onPressed, T data) : RadialMenuActionOptionBase(onPressed: () => onPressed(data));
 
-public sealed class RadialMenuNestedLayerOption(IReadOnlyCollection<RadialMenuOption> nested, float containerRadius = 100)
-    : RadialMenuOption
+/// <summary>
+/// Model for radial menu button that represents reference for next layer of radial buttons.
+/// </summary>
+/// <param name="nested">List of button models for next layer of menu.</param>
+/// <param name="containerRadius">Radius for radial menu buttons of next layer.</param>
+public sealed class RadialMenuNestedLayerOption(IReadOnlyCollection<RadialMenuOptionBase> nested, float containerRadius = 100) : RadialMenuOptionBase
 {
+    /// <summary> Radius for radial menu buttons of next layer. </summary>
     public float? ContainerRadius { get; } = containerRadius;
 
-    public IReadOnlyCollection<RadialMenuOption> Nested { get; } = nested;
+    /// <summary> List of button models for next layer of menu. </summary>
+    public IReadOnlyCollection<RadialMenuOptionBase> Nested { get; } = nested;
 }
 
+/// <summary>
+/// Additional settings for radial menu render.
+/// </summary>
 public sealed class SimpleRadialMenuSettings
 {
     /// <summary>

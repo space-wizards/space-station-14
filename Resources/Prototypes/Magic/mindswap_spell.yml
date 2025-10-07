@@ -14,7 +14,7 @@
   - type: EntityTargetAction
     whitelist:
       components:
-      - Body # this also allows borgs because that supercode uses Body for no reason
+      - MobState
       - PAI # intended to mindswap pAIs and AIs
       - StationAiCore
     event: !type:MindSwapSpellEvent
