@@ -65,6 +65,7 @@
   - type: ZombieImmune
   - type: ProtectedFromStepTriggers
   - type: Appearance
+  - type: StunVisuals
 
 - type: entity
   abstract: true
