@@ -50,9 +50,9 @@ public sealed class StealConditionSystem : EntitySystem
         List<StealTargetComponent?> targetList = new();
 
         var query = AllEntityQuery<StealTargetComponent, TransformComponent>();
-        while (query.MoveNext(out var target))
+        while (query.MoveNext())
         {
-            var transform = EntityManager.GetComponent<TransformComponent>(target.Owner);
+            var (target, transform) = query.Current;
 
             if (transform.MapID != selectedMapId)
                 continue;
