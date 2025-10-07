@@ -654,6 +654,11 @@ SpawnHonkBot: SpawnMobHonkBot
 CrateFoodPizzaLarge: CrateFoodPizza
 CrateFoodSoftdrinksLarge: CrateFoodSoftdrinks
 
+# 2025-06-03
+FloorTileItemGCircuit4: FloorTileItemGCircuit
+FloorTileItemBCircuit4: FloorTileItemBCircuit
+FloorTileItemRCircuit4: FloorTileItemRCircuit
+
 # 2025-06-06
 MagazineLightRifleMaxim: null
 MagazineLightRiflePkBox: null
