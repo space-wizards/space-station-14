@@ -540,7 +540,6 @@ public sealed class SharedBloodstreamSystem : EntitySystem
                 List<ReagentData> reagentData = reagent.Reagent.EnsureReagentData();
                 reagentData.RemoveAll(x => x is DnaData);
                 reagentData.AddRange(GetEntityBloodData(entity.Owner));
-                Dirty(entity, entity.Comp);
             }
         }
         else
