@@ -11,6 +11,9 @@
         map: ["enum.GunVisualLayers.Base"]
   - type: Item
     size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
     sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
   - type: ItemSlots
     slots:

@@ -155,3 +155,8 @@
   license: "CC0-1.0"
   copyright: "Created by SeaWyrm"
   source: "https://github.com/space-wizards/space-station-14/pull/38007"
+
+- files: ["exoborg.png"]
+  license: "CC0-1.0"
+  copyright: "Created by Samuka-C (github) for space-station-14."
+  source: "https://github.com/space-wizards/space-station-14/pull/37068"

@@ -381,10 +381,13 @@
   minLimit: 1
   loadouts:
   - Bible
-  - BibleDruid
   - BibleNanoTrasen
+  - BibleDruid
   - BibleSatanic
   - BibleTanakh
+  - BibleHonk
+  - BibleRatvar
+  - BibleNarsie
 
 - type: loadoutGroup
   id: JanitorHead
@@ -687,6 +690,13 @@
   loadouts:
   - BlackShoes
   - CargoWinterBoots
+
+- type: loadoutGroup
+  id: CargoTechnicianID
+  name: loadout-group-cargo-technician-id
+  loadouts:
+  - CargoTechnicianPDA
+  - SeniorCourierPDA
 
 - type: loadoutGroup
   id: SalvageSpecialistBackpack
