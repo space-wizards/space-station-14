@@ -2,15 +2,17 @@ using Content.Shared.Body.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Components;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Body.Components;
 
-[RegisterComponent, Access(typeof(LungSystem))]
-public sealed partial class LungComponent : Component
+[Virtual]
+[RegisterComponent, Access(typeof(SharedLungSystem))]
+public partial class LungComponent : Component
 {
     [DataField]
-    [Access(typeof(LungSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
+    [Access(typeof(SharedLungSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
     public GasMixture Air = new()
     {
         Volume = 6,
@@ -21,7 +23,7 @@ public sealed partial class LungComponent : Component
     /// The name/key of the solution on this entity which these lungs act on.
     /// </summary>
     [DataField]
-    public string SolutionName = LungSystem.LungSolutionName;
+    public string SolutionName = SharedLungSystem.LungSolutionName;
 
     /// <summary>
     /// The solution on this entity that these lungs act on.
