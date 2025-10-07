@@ -36,6 +36,13 @@
         Blunt: 3
   - type: UseDelay
     delay: 1
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepHighHeels
+      params:
+        volume: -8
+        variation: 0.09
+    playInHand: true
 
 - type: entity
   parent: OffsetCane
