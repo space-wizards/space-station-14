@@ -33,7 +33,7 @@ ghost-role-information-mouse-name = Mouse
 ghost-role-information-mouse-description = A hungry and mischievous mouse.
 
 ghost-role-information-cancer-mouse-name = Cancer Mouse
-ghost-role-information-cancer-mouse-description = An Irradiated Mouse, spread your affliction and seek food
+ghost-role-information-cancer-mouse-description = An Irradiated Mouse, spread your affliction and seek food.
 
 ghost-role-information-mothroach-name = Mothroach
 ghost-role-information-mothroach-description = A cute but mischievous mothroach.
