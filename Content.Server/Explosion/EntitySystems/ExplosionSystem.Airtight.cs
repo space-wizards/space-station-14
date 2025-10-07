@@ -109,28 +109,27 @@ public sealed partial class ExplosionSystem
     /// <summary>
     ///     Return a dictionary that specifies how intense a given explosion type needs to be in order to destroy an entity.
     /// </summary>
-    public float[] GetExplosionTolerance(Entity<ArmorComponent?, DamageableComponent?, DestructibleComponent?, ExplosionResistanceComponent?> entity)
+    public float[] GetExplosionTolerance(EntityUid uid)
     {
-        var (uid, armorComp, damageableComp, destructibleComp, explosionComp) = entity;
         // How much total damage is needed to destroy this entity? This also includes "break" behaviors. This ASSUMES
         // that this will result in a non-airtight entity.Entities that ONLY break via construction graph node changes
         // are currently effectively "invincible" as far as this is concerned. This really should be done more rigorously.
         var totalDamageTarget = FixedPoint2.MaxValue;
-        if (_destructibleQuery.Resolve(entity, ref destructibleComp, false))
+        if (_destructibleQuery.TryComp(uid, out var destructible))
         {
-            totalDamageTarget = _destructibleSystem.DestroyedAt(uid, destructibleComp);
+            totalDamageTarget = _destructibleSystem.DestroyedAt(uid, destructible);
         }
 
-        var armor = new DamageModifierSet();
-        if (_armorQuery.Resolve(uid, ref armorComp, false))
+        DamageModifierSet? armor = null;
+        if (_armorQuery.TryComp(uid, out var armorComp))
         {
             armor = armorComp.Modifiers;
         }
 
-        _explosionResistanceQuery.Resolve(uid, ref explosionComp, false);
+        _explosionResistanceQuery.TryComp(uid, out var explosionComp);
 
         var explosionTolerance = new float[_explosionTypes.Count];
-        if (totalDamageTarget == FixedPoint2.MaxValue || !_damageableQuery.Resolve(uid, ref damageableComp, false))
+        if (totalDamageTarget == FixedPoint2.MaxValue || !_damageableQuery.TryComp(uid, out var damageable))
         {
             for (var i = 0; i < explosionTolerance.Length; i++)
             {
@@ -157,14 +156,21 @@ public sealed partial class ExplosionSystem
             float modifier;
             foreach (var (type, value) in explosionType.DamagePerIntensity.DamageDict)
             {
-                if (!damageableComp.Damage.DamageDict.ContainsKey(type))
+                if (!damageable.Damage.DamageDict.ContainsKey(type))
                     continue;
 
-                if (!armor.Coefficients.TryGetValue(type, out modifier))
-                    modifier = 1f;
+                if (armor != null)
+                {
+                    if (!armor.Coefficients.TryGetValue(type, out modifier))
+                        modifier = 1f;
 
-                if (armor.FlatReduction.TryGetValue(type, out var flat))
-                    flatReduction += flat;
+                    if (armor.FlatReduction.TryGetValue(type, out var flat))
+                        flatReduction += flat;
+                }
+                else
+                {
+                    modifier = 1f;
+                }
 
                 if (explosionComp != null)
                 {
@@ -177,7 +183,7 @@ public sealed partial class ExplosionSystem
             }
 
             explosionTolerance[index] = damagePerIntensity > 0
-                ? (float) ((totalDamageTarget - damageableComp.TotalDamage + flatReduction) / (damagePerIntensity * mod))
+                ? (float) ((totalDamageTarget - damageable.TotalDamage + flatReduction) / (damagePerIntensity * mod))
                 : float.MaxValue;
         }
 
