@@ -18,7 +18,7 @@ public sealed partial class DamageOtherOnHitComponent : Component
     /// <summary>
     /// The damage amount to deal on hit.
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public DamageSpecifier Damage = default!;
 
 }
