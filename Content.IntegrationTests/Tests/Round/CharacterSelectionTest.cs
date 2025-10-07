@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Lobby;
+using Content.IntegrationTests.Pair;
 using Content.Server.Antag;
 using Content.Server.GameTicking;
 using Content.Server.Humanoid;
@@ -87,12 +88,14 @@ public sealed class CharacterSelectionTest
         public bool ExpectToSpawn;
         public bool Enabled = true;
 
-        public HumanoidCharacterProfile ToProfile()
+        public HumanoidCharacterProfile ToProfile(TestPair pair)
         {
-            return HumanoidCharacterProfile.Random()
+            var profile = HumanoidCharacterProfile.Random()
                 .AsEnabled(Enabled)
                 .WithJobPreferences(Jobs)
                 .WithAntagPreferences(IsTraitor ? [Traitor] : []);
+            profile.EnsureValid(pair.Player!, pair.Client.InstanceDependencyCollection);
+            return profile;
         }
     }
 
@@ -354,8 +357,7 @@ public sealed class CharacterSelectionTest
         {
             foreach (var character in data.Characters)
             {
-                var profile = character.ToProfile();
-                profile.EnsureValid(pair.Player!, pair.Client.InstanceDependencyCollection);
+                var profile = character.ToProfile(pair);
                 cPref.CreateCharacter(profile);
                 if (character.ExpectToSpawn)
                 {
