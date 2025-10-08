@@ -1,12 +1,16 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from Paradise at https://github.com/ParadiseSS13/Paradise/blob/dcd1f5d88a8c5ba9634fc3fce67a76ada45f71dc/icons/mob/sprite_accessories/vox/vox_hair.dmi and greyscaled. wise_braid_s modified from braid_s by Flareguy, spotty by Flareguy",
+  "copyright": "Taken from Paradise at https://github.com/ParadiseSS13/Paradise/blob/dcd1f5d88a8c5ba9634fc3fce67a76ada45f71dc/icons/mob/sprite_accessories/vox/vox_hair.dmi and greyscaled. wise_braid_s modified from braid_s by Flareguy. mad_scientist_s modified from keelquills_s by Flareguy. spotty_s, bushy_s, hedgehog_s, and slick_s by Flareguy",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
+    {
+      "name": "bushy_s",
+      "directions": 4
+    },
     {
       "name": "crestedquills_s",
       "directions": 4
@@ -52,7 +56,15 @@
       "directions": 4
     },
     {
+      "name": "mad_scientist_s",
+      "directions": 4
+    },
+    {
       "name": "mohawk_s",
+      "directions": 4
+    },
+    {
+      "name": "hedgehog_s",
       "directions": 4
     },
     {
@@ -101,6 +113,10 @@
     },
     {
       "name": "flowing_s",
+      "directions": 4
+    },
+    {
+      "name": "slick_s",
       "directions": 4
     }
   ]

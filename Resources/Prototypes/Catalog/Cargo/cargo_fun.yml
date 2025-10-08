@@ -59,6 +59,16 @@
   group: market
 
 - type: cargoProduct
+  id: FunInstrumentsRandom
+  icon:
+    sprite: Objects/Fun/Instruments/h_synthesizer.rsi
+    state: supersynth
+  product: CrateFunInstrumentsRandom
+  cost: 2500
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
   id: FunArtSupplies
   icon:
     sprite: Objects/Fun/crayons.rsi
@@ -215,6 +225,16 @@
     state: icon
   product: CrateFunDartsSet
   cost: 900
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
+  id: HydratedScurret
+  icon:
+    sprite: Structures/Wallmounts/posters.rsi
+    state: poster55_legit
+  product: CrateFunScurret
+  cost: 25000 # You will surely not regret buying this
   category: cargoproduct-category-name-fun
   group: market
 
