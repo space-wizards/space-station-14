@@ -90,10 +90,10 @@
             max: 4
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-    - type: MeleeWeapon
-      damage:
-        types:
-          Blunt: 6
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 6
 
 - type: entity
   parent: MobOreCrab
