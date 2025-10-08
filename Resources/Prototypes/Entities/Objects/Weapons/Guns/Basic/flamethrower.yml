@@ -24,9 +24,9 @@
     sprite: Objects/Weapons/Guns/Basic/syndie-flamer.rsi
     size: Ginormous
   - type: Gun
-    projectileSpeed: 5
+    projectileSpeed: 16
     cameraRecoilScalar: 0
-    fireRate: 8
+    fireRate: 10
     selectedMode: FullAuto
     availableModes:
     - FullAuto
@@ -37,12 +37,12 @@
       chamber:
         reagents:
         - ReagentId: WeldingFuel
-          Quantity: 400
-        maxVol: 400 #10 seconds of flaming
+          Quantity: 600
+        maxVol: 600 #25 seconds of flaming
   - type: SolutionAmmoProvider
     solutionId: chamber
     proto: BulletFlamethrower
-    fireCost: 5
+    fireCost: 3
   - type: Welder
     fuelSolutionName: chamber
     fuelReagent: WeldingFuel
