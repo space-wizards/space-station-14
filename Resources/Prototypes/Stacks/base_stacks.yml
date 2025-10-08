@@ -28,7 +28,7 @@
   id: BaseVeryLargeStack
   maxCount: 100
 
-# size used by "sheets," typically materials like steel and plasma
+# size used by "sheets." Usually materials like steel, glass, or plasma
 - type: stack
   abstract: true
   id: BaseSheetStack
