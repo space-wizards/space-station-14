@@ -6,7 +6,6 @@ using Content.Shared.Hands;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Weapons.Ranged.Components;
-using Content.Shared.Wieldable;
 using Content.Shared.Wieldable.Components;
 using Robust.Client.GameObjects;
 
@@ -15,9 +14,7 @@ namespace Content.Client.Weapons.Ranged.Systems;
 /// <inheritdoc/>
 public sealed class BatteryWeaponFireModesVisuals : EntitySystem
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedItemSystem _item = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -36,7 +33,7 @@ public sealed class BatteryWeaponFireModesVisuals : EntitySystem
 
     private void OnGetHeldVisuals(Entity<BatteryWeaponFireModesComponent> ent, ref GetInhandVisualsEvent args)
     {
-        if (!TryComp(ent, out AppearanceComponent? appearance))
+        if (!HasComp<AppearanceComponent>(ent))
             return;
 
         var color = ent.Comp.FireModes[ent.Comp.CurrentFireMode].Color;
@@ -74,7 +71,7 @@ public sealed class BatteryWeaponFireModesVisuals : EntitySystem
 
     private void OnGetEquipmentVisuals(Entity<BatteryWeaponFireModesComponent> ent, ref GetEquipmentVisualsEvent args)
     {
-        if (!TryComp(ent.Owner, out AppearanceComponent? appearance))
+        if (!HasComp<AppearanceComponent>(ent))
             return;
 
         if (!TryComp(args.Equipee, out InventoryComponent? inventory))
