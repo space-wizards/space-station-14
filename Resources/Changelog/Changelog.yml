@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: The "Help another traitor" objective now requires you help them complete
-      all of their objectives.
-    type: Tweak
-  - message: The "Help another traitor" objective now updates it's progress according
-      to the progress of who you're supposed to help, allowing for partial completion.
-    type: Tweak
-  id: 8552
-  time: '2025-05-21T20:45:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37679
 - author: PJB3005
   changes:
   - message: Significantly reduced video memory usage of the parallax system.
@@ -3964,3 +3953,10 @@
   id: 9054
   time: '2025-10-08T15:10:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37581
+- author: K-Dynamic
+  changes:
+  - message: Energy shotgun lethal projectiles can now hit holo mobs.
+    type: Fix
+  id: 9055
+  time: '2025-10-08T15:23:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37920
