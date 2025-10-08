@@ -9,7 +9,6 @@ namespace Content.Shared.FeedbackSystem;
 
 public sealed partial class SharedFeedbackSystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IConfigurationManager _confg = default!;
 
     private List<string> _validOrigins = [];

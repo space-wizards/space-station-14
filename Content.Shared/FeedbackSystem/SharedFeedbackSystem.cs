@@ -7,6 +7,7 @@ namespace Content.Shared.FeedbackSystem;
 public sealed partial class SharedFeedbackSystem : EntitySystem
 {
     [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     public List<string> FeedbackPopupProtoIds = new();
 
@@ -52,7 +53,5 @@ public sealed partial class SharedFeedbackSystem : EntitySystem
     {
         var msg = new FeedbackPopupMessage(popupPrototypes);
         RaiseNetworkEvent(msg, session);
-
-        return;
     }
 }
