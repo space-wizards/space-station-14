@@ -361,7 +361,7 @@
     - state: omnilaser
       shader: unshaded
   - type: Ammo
-    muzzleFlash: null
+    muzzleFlash: MuzzleFlashEffectOmnilaser
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -371,7 +371,6 @@
           bounds: "-0.2,-0.2,0.2,0.2"
         hard: false
         mask:
-        - Opaque
         - Impassable
         - BulletImpassable
       fly-by: *flybyfixture
@@ -418,6 +417,8 @@
     - state: omnilaser_greyscale
       shader: unshaded
       color: orangered
+  - type: Ammo
+    muzzleFlash: MuzzleFlashEffectHeavyLaser
   - type: Projectile
     #   soundHit:  Waiting on serv3
     impactEffect: BulletImpactEffectOrangeDisabler
