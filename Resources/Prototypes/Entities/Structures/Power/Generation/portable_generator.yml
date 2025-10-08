@@ -309,6 +309,8 @@
           maxVol: 50
     - type: RefillableSolution
       solution: tank
+    - type: DumpableSolution
+      solution: tank
     - type: PortableGenerator
       # Unreliable bugger
       startChance: 0.5
