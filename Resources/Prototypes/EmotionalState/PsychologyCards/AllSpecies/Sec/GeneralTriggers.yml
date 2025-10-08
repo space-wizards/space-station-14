@@ -80,7 +80,7 @@
   suffix: barriers
   components:
   - type: PsychologyCard
-    locNamw: psychology-card-with-barriers
+    locName: psychology-card-with-barriers
     triggers:
       - DeployableBarrier
       - HolosignSecurity
