@@ -635,7 +635,7 @@
 
 # ion-stormed corruption probabilities
 - type: weightedRandom
-  id: IonStormDefaultLawFormatCorruption
+  id: IonStormDefaultCorruptedLawFormattings
   weights:
     DefaultLawFormat: 0.5
     AllCapsLawFormat: 1

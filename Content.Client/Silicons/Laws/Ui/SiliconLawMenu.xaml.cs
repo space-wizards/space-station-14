@@ -28,21 +28,31 @@ public sealed partial class SiliconLawMenu : FancyWindow
         var laws = state.Laws;
         laws.Sort();
 
-        var chatChannels = new List<ChatChannelPrototype>(muted ? 0 : 1 + (state.RadioChannels?.Count ?? 0));
-        if (!muted)
+        if (muted)
         {
-            chatChannels.Add(ChatChannelPrototype.Local);
-
-            if (state.RadioChannels is not null)
-                foreach (var radioChannel in state.RadioChannels)
-                    if (_prototypeManager.Resolve(radioChannel, out var radioChannelProto))
-                        chatChannels.Add(ChatChannelPrototype.Radio(radioChannelProto, radioChannel == SharedChatSystem.CommonChannel));
+            UpdateLawDisplays(laws, []);
+            return;
         }
+
+        var chatChannels = new List<ChatChannelDescriptor>(1 + state.RadioChannels?.Count ?? 0)
+        {
+            ChatChannelDescriptor.Local
+        };
+
+        if (state.RadioChannels is null)
+        {
+            UpdateLawDisplays(laws, chatChannels);
+            return;
+        }
+
+        foreach (var radioChannel in state.RadioChannels)
+            if (_prototypeManager.Resolve(radioChannel, out var radioChannelProto))
+                chatChannels.Add(ChatChannelDescriptor.Radio(radioChannelProto, radioChannel == SharedChatSystem.CommonChannel));
 
         UpdateLawDisplays(laws, chatChannels);
     }
 
-    private void UpdateLawDisplays(List<SiliconLaw> laws, List<ChatChannelPrototype> chatChannels, bool forceRedraw = false)
+    private void UpdateLawDisplays(List<SiliconLaw> laws, List<ChatChannelDescriptor> chatChannels, bool forceRedraw = false)
     {
         if (forceRedraw)
             RedrawLawDisplays(laws, chatChannels);
@@ -54,7 +64,7 @@ public sealed partial class SiliconLawMenu : FancyWindow
     /// Base update UI variant. Clears old law displays and draws new.
     /// When in doubt - use this.
     /// </summary>
-    private void RedrawLawDisplays(List<SiliconLaw> laws, List<ChatChannelPrototype> chatChannels)
+    private void RedrawLawDisplays(List<SiliconLaw> laws, List<ChatChannelDescriptor> chatChannels)
     {
         if (laws.Count == 0 && LawDisplayContainer.ChildCount == 0)
         {
@@ -72,7 +82,7 @@ public sealed partial class SiliconLawMenu : FancyWindow
     /// Optimized update UI variant.
     /// Calculates a net delta change and only redraws what needs to be redrawn.
     /// </summary>
-    private void PatchLawDisplays(List<SiliconLaw> laws, List<ChatChannelPrototype> chatChannels)
+    private void PatchLawDisplays(List<SiliconLaw> laws, List<ChatChannelDescriptor> chatChannels)
     {
         if (laws.Count == 0 && LawDisplayContainer.ChildCount == 0)
         {
@@ -111,9 +121,7 @@ public sealed partial class SiliconLawMenu : FancyWindow
         }
 
         foreach (var nonReusableControl in nonReusableControls)
-        {
             LawDisplayContainer.RemoveChild(nonReusableControl);
-        }
 
         for (var i = 0; i < laws.Count; i++)
         {
@@ -138,10 +146,10 @@ public sealed partial class SiliconLawMenu : FancyWindow
 /// <summary>
 /// Helper record to contain RadioChannelPrototype. Can be Radio or Local (null prototype).
 /// </summary>
-public sealed record ChatChannelPrototype(RadioChannelPrototype? RadioChannelPrototype, bool IsCommon)
+public sealed record ChatChannelDescriptor(RadioChannelPrototype? RadioChannelPrototype, bool IsCommon)
 {
-    public static ChatChannelPrototype Local => new(null, false);
-    public static ChatChannelPrototype Radio(RadioChannelPrototype rcp, bool isCommon) => new(rcp, isCommon);
+    public static ChatChannelDescriptor Local => new(null, false);
+    public static ChatChannelDescriptor Radio(RadioChannelPrototype rcp, bool isCommon) => new(rcp, isCommon);
     public string Caption => Loc.GetString(RadioChannelPrototype?.Name ?? "hud-chatbox-select-channel-Local");
     public Color Color => RadioChannelPrototype?.Color ?? Color.DarkGray;
     public string ChannelPrefix => $"{ChannelTypePrefix}{RadioChannelPrototype?.KeyCode ?? null}";

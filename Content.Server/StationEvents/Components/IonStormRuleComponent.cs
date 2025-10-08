@@ -9,6 +9,9 @@ namespace Content.Server.StationEvents.Components;
 [RegisterComponent]
 public sealed partial class IonStormRuleComponent : Component
 {
+    /// <summary>
+    /// Which formats (and with what weights) will be applied to newly generated corrupted laws.
+    /// </summary>
     [DataField]
-    public ProtoId<WeightedRandomPrototype>? LawFormatCorruption;
+    public ProtoId<WeightedRandomPrototype>? CorruptedLawFormattings;
 }

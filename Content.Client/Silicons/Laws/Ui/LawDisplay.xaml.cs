@@ -23,9 +23,9 @@ public sealed partial class LawDisplay : Control
     private static readonly TimeSpan PressCooldown = TimeSpan.FromSeconds(3);
 
     public SiliconLaw Law { get; private init; }
-    private readonly Dictionary<ChatChannelPrototype, TimeSpan> _stateLawOnCooldownUntil = [];
+    private readonly Dictionary<ChatChannelDescriptor, TimeSpan> _stateLawOnCooldownUntil = [];
 
-    public LawDisplay(SiliconLaw law, List<ChatChannelPrototype> chatChannels)
+    public LawDisplay(SiliconLaw law, List<ChatChannelDescriptor> chatChannels)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
@@ -39,7 +39,7 @@ public sealed partial class LawDisplay : Control
         UpdateStateLawButtons(chatChannels);
     }
 
-    public void UpdateStateLawButtons(List<ChatChannelPrototype> chatChannels, bool forceRedraw = false)
+    public void UpdateStateLawButtons(List<ChatChannelDescriptor> chatChannels, bool forceRedraw = false)
     {
         if (forceRedraw)
             RedrawStateLawButtons(chatChannels);
@@ -86,7 +86,7 @@ public sealed partial class LawDisplay : Control
         }
     }
 
-    private void OnStateLawsButtonPressed(BaseButton sender, string message, string channelPrefix, ChatChannelPrototype chatChannel)
+    private void OnStateLawsButtonPressed(BaseButton sender, string message, string channelPrefix, ChatChannelDescriptor chatChannel)
     {
         if (_stateLawOnCooldownUntil.ContainsKey(chatChannel))
             return;
@@ -107,7 +107,7 @@ public sealed partial class LawDisplay : Control
     /// Base update UI variant. Clears old state law buttons and draws new.
     /// When in doubt - use this.
     /// </summary>
-    private void RedrawStateLawButtons(List<ChatChannelPrototype> chatChannels)
+    private void RedrawStateLawButtons(List<ChatChannelDescriptor> chatChannels)
     {
         LawAnnouncementButtons.RemoveAllChildren();
 
@@ -125,10 +125,10 @@ public sealed partial class LawDisplay : Control
     /// Optimized update UI variant.
     /// Calculates a net delta change and only redraws what needs to be redrawn.
     /// </summary>
-    private void PatchStateLawButtons(List<ChatChannelPrototype> chatChannels)
+    private void PatchStateLawButtons(List<ChatChannelDescriptor> chatChannels)
     {
-        var channelsToSeekMatchFor = new List<ChatChannelPrototype>(chatChannels);
-        var validStateLawButtons = new Dictionary<ChatChannelPrototype, Button>(LawAnnouncementButtons.ChildCount);
+        var channelsToSeekMatchFor = new List<ChatChannelDescriptor>(chatChannels);
+        var validStateLawButtons = new Dictionary<ChatChannelDescriptor, Button>(LawAnnouncementButtons.ChildCount);
         var nonReusableControls = new List<Control>(LawAnnouncementButtons.ChildCount);
         foreach (var lawAnnouncementButtonsChild in LawAnnouncementButtons.Children)
         {
@@ -158,9 +158,7 @@ public sealed partial class LawDisplay : Control
         }
 
         foreach (var nonReusableControl in nonReusableControls)
-        {
             LawAnnouncementButtons.RemoveChild(nonReusableControl);
-        }
 
         if (chatChannels.Count == 0)
             return;
@@ -182,7 +180,7 @@ public sealed partial class LawDisplay : Control
         }
     }
 
-    private Button AddNewStateLawButton(string stateLawMessage, ChatChannelPrototype chatChannel)
+    private Button AddNewStateLawButton(string stateLawMessage, ChatChannelDescriptor chatChannel)
     {
         var button = new Button
         {

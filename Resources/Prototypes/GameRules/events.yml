@@ -649,7 +649,7 @@
     reoccurrenceDelay: 20
     duration: 1
   - type: IonStormRule
-    lawFormatCorruption: IonStormDefaultLawFormatCorruption
+    corruptedLawFormattings: IonStormDefaultCorruptedLawFormattings
 
 - type: entity
   id: MimicVendorRule
