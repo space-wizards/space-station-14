@@ -386,7 +386,7 @@ public sealed partial class AntagSelectionSystem
                     continue;
 
                 if (comp.PreSelectedSessions.TryGetValue(def, out var set))
-                    result.UnionWith(set.Keys);
+                    result.UnionWith(set);
             }
         }
 
@@ -416,7 +416,7 @@ public sealed partial class AntagSelectionSystem
 
                 if (def.MultiAntagSetting == AntagAcceptability.None && comp.PreSelectedSessions.TryGetValue(def, out var set))
                 {
-                    result.UnionWith(set.Keys);
+                    result.UnionWith(set);
                     break;
                 }
             }

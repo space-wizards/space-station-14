@@ -48,7 +48,7 @@ public sealed partial class AntagSelectionComponent : Component
     /// Cached sessions of antag definitions and selected players. Players in this dict are not guaranteed to have been assigned the role yet.
     /// </summary>
     [DataField]
-    public Dictionary<AntagSelectionDefinition, Dictionary<NetUserId, (EntityUid? Mind, EntityUid? Attached)>> PreSelectedSessions = new();
+    public Dictionary<AntagSelectionDefinition, HashSet<NetUserId>> PreSelectedSessions = new();
 
     /// <summary>
     /// Cached sessions of players who are chosen. Used so we don't have to rebuild the pool multiple times in a tick.
