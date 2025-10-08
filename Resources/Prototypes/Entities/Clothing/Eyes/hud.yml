@@ -320,3 +320,15 @@
   parent: [ClothingEyesEyepatchHudDiag, ClothingHeadEyeBaseFlipped]
   id: ClothingEyesEyepatchHudDiagFlipped
   name: diagnostic hud eyepatch
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesHudPsychology
+  name: Psychology hud
+  description: You can see humanoid's emotional state
+  components:
+  - type: Sprite
+    sprite: EmotionalState/psychology_hud.rsi
+  - type: Clothing
+    sprite: EmotionalState/psychology_hud.rsi
+  - type: ShowEmotionalStateIcons

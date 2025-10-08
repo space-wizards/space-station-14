@@ -1,0 +1,23 @@
+- type: emotionalTriggers
+  id: BaseMothTrigger
+  abstract: true
+  triggersPrototype: MobVulpkanin
+  positEffect: 0.0
+  negatEffect: 0.0
+  species:
+    - MobMoth
+
+- type: emotionalTriggers
+  parent: BaseMothTrigger
+  id: MothTrigger_InsectBlood
+  triggersPrototype: InsectBlood
+  requiredTrigger: true
+  positEffect: 0.0
+  negatEffect: 0.07
+
+- type: emotionalTriggers
+  parent: BaseMothTrigger
+  id: MothTrigger_MobArachnid
+  triggersPrototype: MobArachnid # they do eat your kind...
+  positEffect: 0.0
+  negatEffect: 0.08

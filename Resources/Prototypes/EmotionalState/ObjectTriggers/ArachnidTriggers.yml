@@ -1,0 +1,23 @@
+- type: emotionalTriggers
+  id: BaseArachnidTrigger
+  abstract: true
+  triggersPrototype: MobVulpkanin
+  positEffect: 0.0
+  negatEffect: 0.0
+  species:
+    - MobArachnid
+
+- type: emotionalTriggers
+  parent: BaseArachnidTrigger
+  id: ArachnidTrigger_CopperBlood
+  triggersPrototype: CopperBlood
+  requiredTrigger: true
+  positEffect: 0.0
+  negatEffect: 0.07 # on average, the subject should give within 0 - 1.0 f
+
+- type: emotionalTriggers
+  parent: BaseArachnidTrigger
+  id: ArachnidTrigger_MobMoth
+  triggersPrototype: MobMoth # they look like a big meal after all
+  positEffect: 0.1
+  negatEffect: 0.0

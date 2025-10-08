@@ -1,0 +1,233 @@
+# CIVILIAN
+- type: entity
+  parent: BasePsychCard
+  id: BaseCivilianPsychCard
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: EmotionalState/psychologyCards.rsi
+    state: civilian
+    scale: 0.6, 0.6
+
+# card for identifying trigger items from the service department
+- type: entity
+  parent: BaseCivilianPsychCard
+  id: Civ_PsychCard
+  suffix: civilian items
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-civ-items
+    triggers:
+      - ClothingMaskGoldenCursed
+      - ClothingMaskJackal
+      - ClothingMaskPlague
+      - ClothingOuterHardsuitMaxim
+      - ClothingMaskFox
+      - ClothingMaskBlushingClown
+      - ClothingMaskBear
+      - ClothingMaskBat
+      - ClothingMaskBee
+      - ClothingMaskRaven
+      - ClothingMaskRat
+      - HolosignWetFloor
+      - WetFloorSign
+      - MobPig
+      - MobAlexander
+    emotionalEffect: 11.0
+
+# cards for identifying specific categories
+- type: entity
+  parent: BaseCivilianPsychCard
+  id: Civ_PsychCard_CivEquipment
+  suffix: civilian equipment
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-civ-equipment
+    triggers:
+      - ClothingMaskGoldenCursed
+      - ClothingMaskJackal
+      - ClothingMaskPlague
+      - ClothingOuterHardsuitMaxim
+      - ClothingMaskFox
+      - ClothingMaskBlushingClown
+      - ClothingMaskBear
+      - ClothingMaskBat
+      - ClothingMaskBee
+      - ClothingMaskRaven
+      - ClothingMaskRat
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCivilianPsychCard
+  id: Civ_PsychCard_CivSigns
+  suffix: civilian signs
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-civ-signs
+    triggers:
+      - HolosignWetFloor
+      - WetFloorSign
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCivilianPsychCard
+  id: Civ_PsychCard_Pig
+  suffix: pig
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-pig
+    triggers:
+      - MobPig
+      - MobAlexander
+    emotionalEffect: 11.0
+
+# each trigger's cards
+- type: entity
+  parent: BaseCivilianPsychCard
+  id: Civ_PsychCard_ClothingMaskGoldenCursed
+  suffix: clothing mask golden cursed
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingMaskGoldenCursed
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCivilianPsychCard
+  id: Civ_PsychCard_ClothingMaskJackal
+  suffix: clothing mask jackal
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingMaskJackal
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCivilianPsychCard
+  id: Civ_PsychCard_ClothingMaskPlague
+  suffix: clothing mask plague
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingMaskPlague
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCivilianPsychCard
+  id: Civ_PsychCard_ClothingOuterHardsuitMaxim
+  suffix: clothing outer hardsuit maxim
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingOuterHardsuitMaxim
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCivilianPsychCard
+  id: Civ_PsychCard_ClothingMaskFox
+  suffix: clothing mask fox
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingMaskFox
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCivilianPsychCard
+  id: Civ_PsychCard_ClothingMaskBlushingClown
+  suffix: clothing mask blushing clown
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingMaskBlushingClown
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCivilianPsychCard
+  id: Civ_PsychCard_ClothingMaskBear
+  suffix: clothing mask bear
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingMaskBear
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCivilianPsychCard
+  id: Civ_PsychCard_ClothingMaskBat
+  suffix: clothing mask bat
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingMaskBat
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCivilianPsychCard
+  id: Civ_PsychCard_ClothingMaskBee
+  suffix: clothing mask bee
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingMaskBee
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCivilianPsychCard
+  id: Civ_PsychCard_ClothingMaskRaven
+  suffix: clothing mask raven
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingMaskRaven
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCivilianPsychCard
+  id: Civ_PsychCard_ClothingMaskRat
+  suffix: clothing mask rat
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingMaskRat
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCivilianPsychCard
+  id: Civ_PsychCard_HolosignWetFloor
+  suffix: holosign wet floor
+  components:
+  - type: PsychologyCard
+    triggers:
+      - HolosignWetFloor
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCivilianPsychCard
+  id: Civ_PsychCard_WetFloorSign
+  suffix: wet floor sign
+  components:
+  - type: PsychologyCard
+    triggers:
+      - WetFloorSign
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCivilianPsychCard
+  id: Civ_PsychCard_MobPig
+  suffix: mob pig
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MobPig
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCivilianPsychCard
+  id: Civ_PsychCard_MobAlexander
+  suffix: mob alexander
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MobAlexander
+    emotionalEffect: 11.0

@@ -1,0 +1,149 @@
+# ENGINEER
+- type: entity
+  parent: BasePsychCard
+  id: BaseEngineerPsychCard
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: EmotionalState/psychologyCards.rsi
+    state: engineer
+    scale: 0.6, 0.6
+
+# card for identifying trigger items from the engineering department
+- type: entity
+  parent: BaseEngineerPsychCard
+  id: Eng_PsychCard
+  suffix: engineer items
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-eng-items
+    triggers:
+      - Singularity
+      - TeslaToy
+      - TeslaEnergyBall
+      - TeslaMiniEnergyBall
+      - PortableScrubber
+      - HoloFan
+      - InflatableWall
+      - InflatableDoor
+      - RCD
+    emotionalEffect: 11.0
+
+# cards for identifying specific categories
+- type: entity
+  parent: BaseEngineerPsychCard
+  id: Eng_PsychCard_Tesla
+  suffix: tesla
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-eng-tesla
+    triggers:
+      - TeslaToy
+      - TeslaEnergyBall
+      - TeslaMiniEnergyBall
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseEngineerPsychCard
+  id: Eng_PsychCard_AtmosphericProblems
+  suffix: atmospheric problems
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-eng-atmospheric-problems
+    triggers:
+      - PortableScrubber
+      - HoloFan
+      - InflatableWall
+      - InflatableDoor
+    emotionalEffect: 11.0
+
+# each trigger's cards
+- type: entity
+  parent: BaseEngineerPsychCard
+  id: Eng_PsychCard_Singularity
+  suffix: singularity
+  components:
+  - type: PsychologyCard
+    triggers:
+      - Singularity
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseEngineerPsychCard
+  id: Eng_PsychCard_TeslaToy
+  suffix: tesla toy
+  components:
+  - type: PsychologyCard
+    triggers:
+      - TeslaToy
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseEngineerPsychCard
+  id: Eng_PsychCard_TeslaEnergyBall
+  suffix: tesla energy ball
+  components:
+  - type: PsychologyCard
+    triggers:
+      - TeslaEnergyBall
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseEngineerPsychCard
+  id: Eng_PsychCard_TeslaMiniEnergyBall
+  suffix: tesla mini energy ball
+  components:
+  - type: PsychologyCard
+    triggers:
+      - TeslaMiniEnergyBall
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseEngineerPsychCard
+  id: Eng_PsychCard_PortableScrubber
+  suffix: portable scrubber
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PortableScrubber
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseEngineerPsychCard
+  id: Eng_PsychCard_HoloFan
+  suffix: holo fan
+  components:
+  - type: PsychologyCard
+    triggers:
+      - HoloFan
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseEngineerPsychCard
+  id: Eng_PsychCard_InflatableWall
+  suffix: inflatable wall
+  components:
+  - type: PsychologyCard
+    triggers:
+      - InflatableWall
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseEngineerPsychCard
+  id: Eng_PsychCard_InflatableDoor
+  suffix: inflatable door
+  components:
+  - type: PsychologyCard
+    triggers:
+      - InflatableDoor
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseEngineerPsychCard
+  id: Eng_PsychCard_RCD
+  suffix: rcd
+  components:
+  - type: PsychologyCard
+    triggers:
+      - RCD
+    emotionalEffect: 11.0

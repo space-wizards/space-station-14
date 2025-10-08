@@ -1,0 +1,16 @@
+- type: emotionalTriggers
+  id: BaseSlimePersonTrigger
+  abstract: true
+  triggersPrototype: MobVulpkanin
+  positEffect: 0.0
+  negatEffect: 0.0
+  species:
+    - MobSlimePerson
+
+- type: emotionalTriggers
+  parent: BaseSlimePersonTrigger
+  id: SlimePersonTrigger_Slime
+  triggersPrototype: Slime
+  requiredTrigger: true
+  positEffect: 0.0
+  negatEffect: 0.08

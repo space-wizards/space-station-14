@@ -1,0 +1,14 @@
+- type: entity
+  id: MadnessEvent
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-madness-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    earliestStart: 20
+    reoccurrenceDelay: 30
+    minimumPlayers: 2
+    weight: 5
+    duration: 1
+  - type: MadnessEventRule

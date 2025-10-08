@@ -27,6 +27,7 @@
     - alertType: Rooted
     - alertType: Pacified
     - alertType: Stealthy
+    - category: Emotions
 
 - type: entity
   id: AlertSpriteView
@@ -518,3 +519,67 @@
     state: critical
   name: Debug6
   description: Debug
+
+#BeatusCrow
+- type: alert
+  id: Rainbow
+  category: Emotions
+  icons:
+  - sprite: /Textures/Interface/Alerts/emotional.rsi
+    state: rainbow
+  name: alerts-rainbow-name
+  description: alerts-rainbow-desc
+
+- type: alert
+  id: Excellent
+  category: Emotions
+  icons:
+  - sprite: /Textures/Interface/Alerts/emotional.rsi
+    state: excellent
+  name: alerts-excellent-name
+  description: alerts-excellent-desc
+
+- type: alert
+  id: Good
+  category: Emotions
+  icons:
+  - sprite: /Textures/Interface/Alerts/emotional.rsi
+    state: good
+  name: alerts-good-name
+  description: alerts-good-desc
+
+- type: alert
+  id: Neutral
+  category: Emotions
+  icons:
+  - sprite: /Textures/Interface/Alerts/emotional.rsi
+    state: neutral
+  name: alerts-neutral-name
+  description: alerts-neutral-desc
+
+- type: alert
+  id: Sad
+  category: Emotions
+  icons:
+  - sprite: /Textures/Interface/Alerts/emotional.rsi
+    state: sad
+  name: alerts-sad-name
+  description: alerts-sad-desc
+
+- type: alert
+  id: Depressive
+  category: Emotions
+  icons:
+  - sprite: /Textures/Interface/Alerts/emotional.rsi
+    state: depressive
+  name: alerts-depressive-name
+  description: alerts-depressive-desc
+
+- type: alert
+  id: Demonic
+  category: Emotions
+  icons:
+  - sprite: /Textures/Interface/Alerts/emotional.rsi
+    state: demonic
+  name: alerts-demonic-name
+  description: alerts-demonic-desc

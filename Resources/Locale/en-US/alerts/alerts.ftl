@@ -122,3 +122,24 @@ alerts-rooted-desc = You are attached to the ground. You can't slip, but you abs
 
 alerts-stealthy-name = Pickpocketing
 alerts-stealthy-desc = Whether you are currently pickpocketing. Click to toggle.
+
+alerts-rainbow-name = [color=green]Rainbow hallucinations[/color]
+alerts-rainbow-desc = Your brain is so happy that you see this world in its pristine, beautiful state.
+
+alerts-excellent-name = [color=green]Excellent[/color]
+alerts-excellent-desc = You feel great. So much so that your body is more active than usual.
+
+alerts-good-name = [color=yellow]Good[/color]
+alerts-good-desc = You feel good.
+
+alerts-neutral-name = [color=yellow]Indifference[/color]
+alerts-neutral-desc = It's strange, but you don't feel any emotions.
+
+alerts-sad-name = [color=red]Sad[/color]
+alerts-sad-desc = It seems to you that everything has become a little more gray.
+
+alerts-depressive-name = [color=red]Depressive[/color]
+alerts-depressive-desc = This world is a disappointment... The body doesn't want to do anything.
+
+alerts-demonic-name = [color=red]Demonic hallucinations[/color]
+alerts-demonic-desc = Your brain is so disillusioned with this world that it seems THEY have come for you...

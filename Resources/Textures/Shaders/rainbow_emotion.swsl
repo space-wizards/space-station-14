@@ -1,0 +1,96 @@
+uniform sampler2D SCREEN_TEXTURE;
+
+const highp float PinkStrength = 3.0;
+const highp vec3 PinkMultiplier = vec3(1.1, 0.9, 1.0);
+const highp float HeartSize = 0.04;
+const highp vec3 HeartColor = vec3(1.0, 0.1, 0.3);
+const highp vec3 LeftHeartColor = vec3(0.1, 0.3, 1.0);
+const highp float OutlineWidth = 0.015;
+const highp float AnimationSpeed = 0.25;
+
+highp float drawSmoothHeart(highp vec2 uv, highp vec2 center, highp float size) {
+    highp vec2 p = (uv - center) / size;
+
+    p.x *= 1.3;
+    p.y *= 1.1;
+
+    highp float x = p.x;
+    highp float y = p.y;
+
+    highp float heart = pow(x*x + y*y - 1.0, 3.0) - x*x*y*y*y;
+
+    highp float d = heart;
+    highp float smoothness = 0.02;
+    return smoothstep(smoothness, -smoothness, d);
+}
+
+highp float drawHeartOutline(highp vec2 uv, highp vec2 center, highp float size) {
+    highp float heart = drawSmoothHeart(uv, center, size);
+
+    highp float innerHeart = drawSmoothHeart(uv, center, size - OutlineWidth);
+
+    return heart - innerHeart;
+}
+
+highp float heartbeat(highp float time) {
+    highp float beat1 = sin(time * 12.0);
+    highp float beat2 = sin(time * 12.0 + 1.0);
+    return max(beat1, beat2 * 0.5) * 0.5 + 0.5;
+}
+
+highp vec2 getRightHeartPosition(highp float time) {
+    highp float startY = -0.2;
+    highp float endY = 1.2;
+
+    highp float progress = fract(time * AnimationSpeed);
+    highp float posY = mix(startY, endY, progress);
+
+    // Правая граница экрана (с небольшим отступом)
+    return vec2(0.9, posY);
+}
+
+highp float mod(highp float x, highp float y)
+{
+    return x - y * floor(x/y);
+}
+
+highp vec2 getHeartPosition(highp float time, highp float index, highp float totalHearts) {
+    highp float side = step(10.0, index);
+    highp float sideIndex = mod(index, 10.0);
+
+    highp float progress = fract(time * AnimationSpeed + index * 0.1);
+    highp float posY = mix(-0.2, 1.2, progress);
+
+    highp float spacing = 0.18;
+    highp float baseOffset = 1.5 * spacing;
+
+    highp float zigzag = ((mod(sideIndex, 2.0) * 2.0) - 1.0) * 0.05;
+    highp float baseX = 0.5 + (side * 2.0 - 1.0) * baseOffset * 1.5;
+
+    return vec2(baseX + zigzag, posY);
+}
+
+void fragment() {
+    highp vec4 color = texture(SCREEN_TEXTURE, UV);
+    highp vec3 pinkMultiply = color.rgb * PinkMultiplier;
+    highp vec3 result = mix(color.rgb, pinkMultiply, PinkStrength);
+    result = min(result, vec3(1.0));
+
+    highp float beat = heartbeat(TIME);
+    highp float currentSize = HeartSize * (0.7 + 0.6 * beat);
+
+    for (int i = 0; i < 20; i++) {
+        highp vec2 heartCenter = getHeartPosition(TIME, highp float(i), 8.0);
+        highp float heartOutline = drawHeartOutline(UV, heartCenter, currentSize);
+
+        if (heartOutline > 0.0) {
+            highp vec3 pulseColor = HeartColor * (0.8 + 0.4 * beat);
+            highp float glowOutline = drawHeartOutline(UV, heartCenter, currentSize * 1.3);
+            highp vec3 glowColor = mix(result, pulseColor * 2.0, glowOutline * 0.3);
+            result = mix(result, glowColor, glowOutline * 0.2);
+            result = mix(result, pulseColor, heartOutline * 0.9);
+        }
+    }
+
+    COLOR = vec4(result, color.a);
+}

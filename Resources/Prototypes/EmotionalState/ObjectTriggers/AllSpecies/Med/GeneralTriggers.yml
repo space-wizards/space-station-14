@@ -1,0 +1,550 @@
+# MEDICAL
+# Negative triggers
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  abstract: true
+  id: GeneralNegTriggerMedicalBase
+  triggersPrototype: MobVulpkanin
+  positEffect: 0.0
+  negatEffect: 0.0
+  jobsExept:
+    - Chemist
+    - ChiefMedicalOfficer
+    - MedicalDoctor
+    - MedicalIntern
+    - Paramedic
+    - Psychologist
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_MedkitOxygenFilled_Neg
+  triggersPrototype: MedkitOxygenFilled
+  positEffect: 0.0
+  negatEffect: 0.05
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_MedkitO2_Neg
+  triggersPrototype: MedkitO2
+  positEffect: 0.0
+  negatEffect: 0.05
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_MedkitBruteFilled_Neg
+  triggersPrototype: MedkitBruteFilled
+  positEffect: 0.0
+  negatEffect: 0.05
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_MedkitBrute_Neg
+  triggersPrototype: MedkitBrute
+  positEffect: 0.0
+  negatEffect: 0.05
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_MedkitBurnFilled_Neg
+  triggersPrototype: MedkitBurnFilled
+  positEffect: 0.0
+  negatEffect: 0.05
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_MedkitBurn_Neg
+  triggersPrototype: MedkitBurn
+  positEffect: 0.0
+  negatEffect: 0.05
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_MedkitToxinFilled_Neg
+  triggersPrototype: MedkitToxinFilled
+  positEffect: 0.0
+  negatEffect: 0.05
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_MedkitToxin_Neg
+  triggersPrototype: MedkitToxin
+  positEffect: 0.0
+  negatEffect: 0.05
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_MedkitRadiationFilled_Neg
+  triggersPrototype: MedkitRadiationFilled
+  positEffect: 0.0
+  negatEffect: 0.05
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_MedkitRadiation_Neg
+  triggersPrototype: MedkitRadiation
+  positEffect: 0.0
+  negatEffect: 0.05
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_MedkitFilled_Neg
+  triggersPrototype: MedkitFilled
+  positEffect: 0.0
+  negatEffect: 0.05
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_Medkit_Neg
+  triggersPrototype: Medkit
+  positEffect: 0.0
+  negatEffect: 0.05
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_MedkitCombatFilled_Neg
+  triggersPrototype: MedkitCombatFilled
+  positEffect: 0.0
+  negatEffect: 0.05
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_MedkitCombat_Neg
+  triggersPrototype: MedkitCombat
+  positEffect: 0.0
+  negatEffect: 0.05
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_HandheldHealthAnalyzer_Neg
+  triggersPrototype: HandheldHealthAnalyzer
+  positEffect: 0.0
+  negatEffect: 0.05
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_HandheldHealthAnalyzerUnpowered_Neg
+  triggersPrototype: HandheldHealthAnalyzerUnpowered
+  positEffect: 0.0
+  negatEffect: 0.05
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_HandheldHealthAnalyzerEmpty_Neg
+  triggersPrototype: HandheldHealthAnalyzerEmpty
+  positEffect: 0.0
+  negatEffect: 0.05
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_Syringe_Neg
+  triggersPrototype: Syringe
+  positEffect: 0.0
+  negatEffect: 0.1
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_Hypospray_Neg
+  triggersPrototype: Hypospray
+  positEffect: 0.0
+  negatEffect: 0.1
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_Scalpel_Neg
+  triggersPrototype: Scalpel
+  positEffect: 0.0
+  negatEffect: 0.1
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_SignBio
+  triggersPrototype: SignBio
+  positEffect: 0.0
+  negatEffect: 0.2
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_ClothingHeadHatHoodBioVirology_Neg
+  triggersPrototype: ClothingHeadHatHoodBioVirology
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_ClothingOuterBioVirology_Neg
+  triggersPrototype: ClothingOuterBioVirology
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_ClothingHeadHatHoodBioGeneral_Neg
+  triggersPrototype: ClothingHeadHatHoodBioGeneral
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_ClothingOuterBioGeneral_Neg
+  triggersPrototype: ClothingOuterBioGeneral
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_ClothingHeadHatHoodBioCmo_Neg
+  triggersPrototype: ClothingHeadHatHoodBioCmo
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_ClothingOuterBioCmo_Neg
+  triggersPrototype: ClothingOuterBioCmo
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_ClothingMaskSterile_Neg
+  triggersPrototype: ClothingMaskSterile
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_ClothingUniformJumpsuitVirology_Neg
+  triggersPrototype: ClothingUniformJumpsuitVirology
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_ClothingUniformJumpsuitParamedic_Neg
+  triggersPrototype: ClothingUniformJumpsuitParamedic
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_ClothingOuterHardsuitVoidParamed_Neg
+  triggersPrototype: ClothingOuterHardsuitVoidParamed
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_ClothingUniformJumpsuitMedicalDoctor_Neg
+  triggersPrototype: ClothingUniformJumpsuitMedicalDoctor
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_ClothingUniformJumpsuitPsychologist_Neg
+  triggersPrototype: ClothingUniformJumpsuitPsychologist
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_ClothingUniformJumpskirtPsychologist_Neg
+  triggersPrototype: ClothingUniformJumpskirtPsychologist
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_ClothingUniformJumpsuitGenetics_Neg
+  triggersPrototype: ClothingUniformJumpsuitGenetics
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_ClothingUniformJumpsuitCMO_Neg
+  triggersPrototype: ClothingUniformJumpsuitCMO
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_ClothingUniformJumpsuitChemistry_Neg
+  triggersPrototype: ClothingUniformJumpsuitChemistry
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerMedicalBase
+  id: GeneralTrigger_ClothingCloakCmo_Neg
+  triggersPrototype: ClothingCloakCmo
+  positEffect: 0.0
+  negatEffect: 0.125
+
+# Positive triggers
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  abstract: true
+  id: GeneralPosTriggerMedicalBase
+  triggersPrototype: MobVulpkanin
+  positEffect: 0.0
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_MedkitOxygenFilled_Pos
+  triggersPrototype: MedkitOxygenFilled
+  positEffect: 0.05
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_MedkitO2_Pos
+  triggersPrototype: MedkitO2
+  positEffect: 0.05
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_MedkitBruteFilled_Pos
+  triggersPrototype: MedkitBruteFilled
+  positEffect: 0.05
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_MedkitBrute_Pos
+  triggersPrototype: MedkitBrute
+  positEffect: 0.05
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_MedkitBurnFilled_Pos
+  triggersPrototype: MedkitBurnFilled
+  positEffect: 0.05
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_MedkitBurn_Pos
+  triggersPrototype: MedkitBurn
+  positEffect: 0.05
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_MedkitToxinFilled_Pos
+  triggersPrototype: MedkitToxinFilled
+  positEffect: 0.05
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_MedkitToxin_Pos
+  triggersPrototype: MedkitToxin
+  positEffect: 0.05
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_MedkitRadiationFilled_Pos
+  triggersPrototype: MedkitRadiationFilled
+  positEffect: 0.05
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_MedkitRadiation_Pos
+  triggersPrototype: MedkitRadiation
+  positEffect: 0.05
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_MedkitFilled_Pos
+  triggersPrototype: MedkitFilled
+  positEffect: 0.05
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_Medkit_Pos
+  triggersPrototype: Medkit
+  positEffect: 0.05
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_MedkitCombatFilled_Pos
+  triggersPrototype: MedkitCombatFilled
+  positEffect: 0.05
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_MedkitCombat_Pos
+  triggersPrototype: MedkitCombat
+  positEffect: 0.05
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_HandheldHealthAnalyzer_Pos
+  triggersPrototype: HandheldHealthAnalyzer
+  positEffect: 0.05
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_HandheldHealthAnalyzerUnpowered_Pos
+  triggersPrototype: HandheldHealthAnalyzerUnpowered
+  positEffect: 0.05
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_HandheldHealthAnalyzerEmpty_Pos
+  triggersPrototype: HandheldHealthAnalyzerEmpty
+  positEffect: 0.05
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_Syringe_Pos
+  triggersPrototype: Syringe
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_Hypospray_Pos
+  triggersPrototype: Hypospray
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_Scalpel_Pos
+  triggersPrototype: Scalpel
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_ClothingHeadHatHoodBioVirology_Pos
+  triggersPrototype: ClothingHeadHatHoodBioVirology
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_ClothingOuterBioVirology_Pos
+  triggersPrototype: ClothingOuterBioVirology
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_ClothingHeadHatHoodBioGeneral_Pos
+  triggersPrototype: ClothingHeadHatHoodBioGeneral
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_ClothingOuterBioGeneral_Pos
+  triggersPrototype: ClothingOuterBioGeneral
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_ClothingHeadHatHoodBioCmo_Pos
+  triggersPrototype: ClothingHeadHatHoodBioCmo
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_ClothingOuterBioCmo_Pos
+  triggersPrototype: ClothingOuterBioCmo
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_ClothingMaskSterile_Pos
+  triggersPrototype: ClothingMaskSterile
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_ClothingUniformJumpsuitVirology_Pos
+  triggersPrototype: ClothingUniformJumpsuitVirology
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_ClothingUniformJumpsuitParamedic_Pos
+  triggersPrototype: ClothingUniformJumpsuitParamedic
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_ClothingOuterHardsuitVoidParamed_Pos
+  triggersPrototype: ClothingOuterHardsuitVoidParamed
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_ClothingUniformJumpsuitMedicalDoctor_Pos
+  triggersPrototype: ClothingUniformJumpsuitMedicalDoctor
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_ClothingUniformJumpsuitPsychologist_Pos
+  triggersPrototype: ClothingUniformJumpsuitPsychologist
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_ClothingUniformJumpskirtPsychologist_Pos
+  triggersPrototype: ClothingUniformJumpskirtPsychologist
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_ClothingUniformJumpsuitGenetics_Pos
+  triggersPrototype: ClothingUniformJumpsuitGenetics
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_ClothingUniformJumpsuitCMO_Pos
+  triggersPrototype: ClothingUniformJumpsuitCMO
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_ClothingUniformJumpsuitChemistry_Pos
+  triggersPrototype: ClothingUniformJumpsuitChemistry
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerMedicalBase
+  id: GeneralTrigger_ClothingCloakCmo_Pos
+  triggersPrototype: ClothingCloakCmo
+  positEffect: 0.0
+  negatEffect: 0.125

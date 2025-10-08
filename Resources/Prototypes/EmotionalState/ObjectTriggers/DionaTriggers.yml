@@ -1,0 +1,16 @@
+- type: emotionalTriggers
+  id: BaseDionaTrigger
+  abstract: true
+  triggersPrototype: Mob
+  positEffect: 0.0
+  negatEffect: 0.0
+  species:
+    - MobDiona
+
+- type: emotionalTriggers
+  parent: BaseDionaTrigger
+  id: DionaTrigger_Sap
+  triggersPrototype: Sap
+  requiredTrigger: true
+  positEffect: 0.0
+  negatEffect: 0.08

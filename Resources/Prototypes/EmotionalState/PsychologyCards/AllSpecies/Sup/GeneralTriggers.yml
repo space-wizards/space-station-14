@@ -1,0 +1,343 @@
+# CARGO
+- type: entity
+  parent: BasePsychCard
+  id: BaseCargoPsychCard
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: EmotionalState/psychologyCards.rsi
+    state: cargo
+    scale: 0.6, 0.6
+
+# card for identifying trigger items from the supply department
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard
+  suffix: cargo items
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-cargo-items
+    triggers:
+      - MobSharkSalvage
+      - MobShark
+      - CarpStatue
+      - ClothingOuterHardsuitMaxim
+      - WeaponProtoKineticAccelerator
+      - SurvivalKnife
+      - CarpRift
+      - SalvageHumanCorpse
+      - MobTickSalvage
+      - MobSpiderSpaceSalvage
+      - MobKangarooSpaceSalvage
+      - MobCobraSpaceSalvage
+      - MobBearSpaceSalvage
+      - MobCarpSalvage
+      - MobCarpHolo
+      - MobCarpMagic
+      - MobCarpRainbow
+      - MobCarp
+      - MobCarpDragon
+      - MobCarpDungeon
+      - PosterLegitCarpMount
+      - MiningDrillDiamond
+      - GoldRingDiamond
+      - DiamondOre
+      - TreasureCoinDiamond
+      - SilverRingDiamond
+    emotionalEffect: 11.0
+
+# cards for identifying specific categories
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_CargoEquipment
+  suffix: cargo equipment
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-cargo-equipment
+    triggers:
+      - ClothingOuterHardsuitMaxim
+      - WeaponProtoKineticAccelerator
+      - SurvivalKnife
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_DiamondItems
+  suffix: diamond items
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-diamond-items
+    triggers:
+      - MiningDrillDiamond
+      - GoldRingDiamond
+      - DiamondOre
+      - TreasureCoinDiamond
+      - SilverRingDiamond
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_SpaceMonsters
+  suffix: space monsters
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-space-monsters
+    triggers:
+      - MobSharkSalvage
+      - MobShark
+      - CarpStatue
+      - CarpRift
+      - MobTickSalvage
+      - MobSpiderSpaceSalvage
+      - MobKangarooSpaceSalvage
+      - MobCobraSpaceSalvage
+      - MobBearSpaceSalvage
+      - MobCarpSalvage
+      - MobCarpHolo
+      - MobCarpMagic
+      - MobCarpRainbow
+      - MobCarp
+      - MobCarpDragon
+      - MobCarpDungeon
+    emotionalEffect: 11.0
+
+# each trigger's cards
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_ClothingOuterHardsuitMaxim
+  suffix: salvage's hardsuit maxim
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingOuterHardsuitMaxim
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_WeaponProtoKineticAccelerator
+  suffix: protokinetic accelerator
+  components:
+  - type: PsychologyCard
+    triggers:
+      - WeaponProtoKineticAccelerator
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_SurvivalKnife
+  suffix: survival Knife
+  components:
+  - type: PsychologyCard
+    triggers:
+      - SurvivalKnife
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_MiningDrillDiamond
+  suffix: mining diamond drill
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MiningDrillDiamond
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_GoldRingDiamond
+  suffix: gold ring diamond
+  components:
+  - type: PsychologyCard
+    triggers:
+      - GoldRingDiamond
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_DiamondOre
+  suffix: diamond ore
+  components:
+  - type: PsychologyCard
+    triggers:
+      - DiamondOre
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_TreasureCoinDiamond
+  suffix: treasure coin diamond
+  components:
+  - type: PsychologyCard
+    triggers:
+      - TreasureCoinDiamond
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_SilverRingDiamond
+  suffix: silver ring diamond
+  components:
+  - type: PsychologyCard
+    triggers:
+      - SilverRingDiamond
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_MobSharkSalvage
+  suffix: mob shark salvage
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MobSharkSalvage
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_MobShark
+  suffix: mob shark
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MobShark
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_CarpStatue
+  suffix: carp statue
+  components:
+  - type: PsychologyCard
+    triggers:
+      - CarpStatue
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_CarpRift
+  suffix: carp rift
+  components:
+  - type: PsychologyCard
+    triggers:
+      - CarpRift
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_MobTickSalvage
+  suffix: mob tick salvage
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MobTickSalvage
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_MobSpiderSpaceSalvage
+  suffix: mob spider space salvage
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MobSpiderSpaceSalvage
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_MobKangarooSpaceSalvage
+  suffix: mob kangaroo space salvage
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MobKangarooSpaceSalvage
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_MobCobraSpaceSalvage
+  suffix: mob cobra space salvage
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MobCobraSpaceSalvage
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_MobBearSpaceSalvage
+  suffix: mob bear space salvage
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MobBearSpaceSalvage
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_MobCarpSalvage
+  suffix: mob carp salvage
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MobCarpSalvage
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_MobCarpHolo
+  suffix: mob carp holo
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MobCarpHolo
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_MobCarpMagic
+  suffix: mob carp magic
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MobCarpMagic
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_MobCarpRainbow
+  suffix: mob carp rainbow
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MobCarpRainbow
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_MobCarp
+  suffix: mob carp
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MobCarp
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_MobCarpDragon
+  suffix: mob carp dragon
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MobCarpDragon
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseCargoPsychCard
+  id: Sup_PsychCard_MobCarpDungeon
+  suffix: mob carp dungeon
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MobCarpDungeon
+    emotionalEffect: 11.0

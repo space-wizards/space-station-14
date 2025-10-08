@@ -1,0 +1,362 @@
+- type: entity
+  parent: BoxBase
+  id: BoxFolderWithPsychCardsBase
+  abstract: true
+  name: folder
+  description: A folder filled with top secret paperwork.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/folders.rsi
+    layers:
+    - state: folder-colormap
+    - state: folder-base
+  - type: Storage
+    maxItemSize: Small
+    grid:
+    - 0,0,8,5
+
+- type: entity
+  parent: BoxFolderWithPsychCardsBase
+  id: BoxFolderWithPsychCard_RnD
+  suffix: Filled, Cards
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/folders.rsi
+    layers:
+    - state: folder-colormap
+      color: "#8B008B"
+    - state: folder-base
+  - type: StorageFill
+    contents:
+    - id: RnD_PsychCard
+    - id: RnD_PsychCard_RndMachines
+    - id: RnD_PsychCard_Anomalies
+    - id: RnD_PsychCard_Borgs
+    - id: RnD_PsychCard_AnomaliesCores
+    - id: RnD_PsychCard_MachineAPE
+    - id: RnD_PsychCard_MachineAnomalyGenerator
+    - id: RnD_PsychCard_AnomalyBluespace
+    - id: RnD_PsychCard_AnomalyElectricity
+    - id: RnD_PsychCard_AnomalyFlesh
+    - id: RnD_PsychCard_AnomalyFlora
+    - id: RnD_PsychCard_AnomalyIce
+    - id: RnD_PsychCard_AnomalyTech
+    - id: RnD_PsychCard_AnomalyGravity
+    - id: RnD_PsychCard_AnomalyPyroclastic
+    - id: RnD_PsychCard_AnomalyLiquid
+    - id: RnD_PsychCard_AnomalyRockBananium
+    - id: RnD_PsychCard_AnomalyRockGold
+    - id: RnD_PsychCard_AnomalyRockIron
+    - id: RnD_PsychCard_AnomalyRockSilver
+    - id: RnD_PsychCard_AnomalyRockUranium
+    - id: RnD_PsychCard_AnomalyShadow
+    - id: RnD_PsychCard_AnomalySanta
+    - id: RnD_PsychCard_BorgChassisEngineer
+    - id: RnD_PsychCard_BorgChassisJanitor
+    - id: RnD_PsychCard_BorgChassisMedical
+    - id: RnD_PsychCard_BorgChassisMining
+    - id: RnD_PsychCard_BorgChassisService
+    - id: RnD_PsychCard_EngineeringBorgChassisDerelict
+    - id: RnD_PsychCard_PlayerEngineeringBorgDerelict
+    - id: RnD_PsychCard_PlayerEngineeringBorgDerelictGhostRole
+    - id: RnD_PsychCard_JanitorBorgChassisDerelict
+    - id: RnD_PsychCard_PlayerJanitorBorgDerelict
+    - id: RnD_PsychCard_PlayerJanitorBorgDerelictGhostRole
+    - id: RnD_PsychCard_MedicalBorgChassisDerelict
+    - id: RnD_PsychCard_PlayerMedicalBorgDerelict
+    - id: RnD_PsychCard_PlayerMedicalBorgDerelictGhostRole
+    - id: RnD_PsychCard_MiningBorgChassisDerelict
+    - id: RnD_PsychCard_PlayerMiningBorgDerelict
+    - id: RnD_PsychCard_PlayerMiningBorgDerelictGhostRole
+    - id: RnD_PsychCard_BorgChassisDerelict
+    - id: RnD_PsychCard_PlayerBorgDerelict
+    - id: RnD_PsychCard_AnomalyCoreBluespace
+    - id: RnD_PsychCard_AnomalyCoreBluespaceInert
+    - id: RnD_PsychCard_AnomalyCoreElectricity
+    - id: RnD_PsychCard_AnomalyCoreElectricityInert
+    - id: RnD_PsychCard_AnomalyCoreLiquid
+    - id: RnD_PsychCard_AnomalyCoreLiquidInert
+    - id: RnD_PsychCard_AnomalyCorePyroclastic
+    - id: RnD_PsychCard_AnomalyCorePyroclasticInert
+    - id: RnD_PsychCard_MobSlimesPet
+
+- type: entity
+  parent: BoxFolderWithPsychCardsBase
+  id: BoxFolderWithPsychCard_General
+  suffix: Filled, Cards
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/folders.rsi
+    layers:
+    - state: folder-colormap
+      color: "#808080"
+    - state: folder-base
+  - type: StorageFill
+    contents:
+    - id: General_PsychCard
+    - id: General_PsychCard_FloraTree
+    - id: General_PsychCard_PottedPlant
+    - id: General_PsychCard_Beer
+    - id: Genetal_PsychCard_FloraTreeLarge
+    - id: Genetal_PsychCard_FloraTree
+    - id: Genetal_PsychCard_PottedPlant1
+    - id: Genetal_PsychCard_PottedPlant2
+    - id: Genetal_PsychCard_PottedPlant3
+    - id: Genetal_PsychCard_PottedPlant4
+    - id: Genetal_PsychCard_PottedPlant5
+    - id: Genetal_PsychCard_PottedPlant6
+    - id: Genetal_PsychCard_PottedPlant7
+    - id: Genetal_PsychCard_PottedPlant8
+    - id: Genetal_PsychCard_PottedPlant9
+    - id: Genetal_PsychCard_PottedPlant10
+    - id: Genetal_PsychCard_PottedPlant11
+    - id: Genetal_PsychCard_PottedPlant12
+    - id: Genetal_PsychCard_PottedPlant13
+    - id: Genetal_PsychCard_PottedPlant14
+    - id: Genetal_PsychCard_PottedPlant15
+    - id: Genetal_PsychCard_PottedPlant16
+    - id: Genetal_PsychCard_PottedPlant17
+    - id: Genetal_PsychCard_PottedPlant18
+    - id: Genetal_PsychCard_PottedPlant19
+    - id: Genetal_PsychCard_PottedPlant20
+    - id: Genetal_PsychCard_PottedPlant21
+    - id: Genetal_PsychCard_PottedPlant22
+    - id: Genetal_PsychCard_PottedPlant23
+    - id: Genetal_PsychCard_PottedPlant24
+    - id: Genetal_PsychCard_PottedPlant25
+    - id: Genetal_PsychCard_RevolverCapGun
+    - id: Genetal_PsychCard_DrinkRootBeerCan
+    - id: Genetal_PsychCard_DrinkBottleBeer
+    - id: Genetal_PsychCard_DrinkBeerBottleFull
+    - id: Genetal_PsychCard_DrinkBeerCan
+    - id: Genetal_PsychCard_DrinkBeerGrowler
+
+- type: entity
+  parent: BoxFolderWithPsychCardsBase
+  id: BoxFolderWithPsychCard_Cargo
+  suffix: Filled, Cards
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/folders.rsi
+    layers:
+    - state: folder-colormap
+      color: "#DAA520"
+    - state: folder-base
+  - type: StorageFill
+    contents:
+    - id: Sup_PsychCard
+    - id: Sup_PsychCard_CargoEquipment
+    - id: Sup_PsychCard_DiamondItems
+    - id: Sup_PsychCard_SpaceMonsters
+    - id: Sup_PsychCard_ClothingOuterHardsuitMaxim
+    - id: Sup_PsychCard_WeaponProtoKineticAccelerator
+    - id: Sup_PsychCard_SurvivalKnife
+    - id: Sup_PsychCard_MiningDrillDiamond
+    - id: Sup_PsychCard_GoldRingDiamond
+    - id: Sup_PsychCard_DiamondOre
+    - id: Sup_PsychCard_TreasureCoinDiamond
+    - id: Sup_PsychCard_SilverRingDiamond
+    - id: Sup_PsychCard_MobSharkSalvage
+    - id: Sup_PsychCard_MobShark
+    - id: Sup_PsychCard_CarpStatue
+    - id: Sup_PsychCard_CarpRift
+    - id: Sup_PsychCard_MobTickSalvage
+    - id: Sup_PsychCard_MobSpiderSpaceSalvage
+    - id: Sup_PsychCard_MobKangarooSpaceSalvage
+    - id: Sup_PsychCard_MobCobraSpaceSalvage
+    - id: Sup_PsychCard_MobBearSpaceSalvage
+    - id: Sup_PsychCard_MobCarpSalvage
+    - id: Sup_PsychCard_MobCarpHolo
+    - id: Sup_PsychCard_MobCarpMagic
+    - id: Sup_PsychCard_MobCarpRainbow
+    - id: Sup_PsychCard_MobCarp
+    - id: Sup_PsychCard_MobCarpDragon
+    - id: Sup_PsychCard_MobCarpDungeon
+
+- type: entity
+  parent: BoxFolderWithPsychCardsBase
+  id: BoxFolderWithPsychCard_Security
+  suffix: Filled, Cards
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/folders.rsi
+    layers:
+    - state: folder-colormap
+      color: "#191970"
+    - state: folder-base
+  - type: StorageFill
+    contents:
+    - id: Sec_PsychCard
+    - id: Sec_PsychCard_SecuritySigns
+    - id: Sec_PsychCard_Barrier
+    - id: Sec_PsychCard_SecurityEquipments
+    - id: Sec_PsychCard_Gun
+    - id: Sec_PsychCard_SignSecure
+    - id: Sec_PsychCard_SignSecureMed
+    - id: Sec_PsychCard_SignSecurearea
+    - id: Sec_PsychCard_SignSecureMedRed
+    - id: Sec_PsychCard_SignSecureSmallRed
+    - id: Sec_PsychCard_SignSecureSmall
+    - id: Sec_PsychCard_SignArmory
+    - id: Sec_PsychCard_SignInterrogation
+    - id: Sec_PsychCard_SignGenpop
+    - id: Sec_PsychCard_BannerSecurity
+    - id: Sec_PsychCard_DeployableBarrier
+    - id: Sec_PsychCard_HolosignSecurity
+    - id: Sec_PsychCard_ClothingHeadHatBeretHoS
+    - id: Sec_PsychCard_ClothingNeckCloakHos
+    - id: Sec_PsychCard_ClothingNeckMantleHOS
+    - id: Sec_PsychCard_ClothingBackpackSecurity
+    - id: Sec_PsychCard_ClothingBeltSecurity
+    - id: Sec_PsychCard_ClothingBeltSecurityWebbing
+    - id: Sec_PsychCard_ClothingEyesHudSecurity
+    - id: Sec_PsychCard_ClothingEyesEyepatchHudSecurity
+    - id: Sec_PsychCard_ClothingHeadHatHoodBioSecurity
+    - id: Sec_PsychCard_ClothingOuterBioSecurity
+    - id: Sec_PsychCard_ClothingOuterHardsuitSecurity
+    - id: Sec_PsychCard_ClothingOuterHardsuitSecurityRed
+    - id: Sec_PsychCard_ClothingHeadHatBeretSecurity
+    - id: Sec_PsychCard_ClothingUniformJumpsuitHoSGrey
+    - id: Sec_PsychCard_ClothingUniformJumpsuitHoSAlt
+    - id: Sec_PsychCard_ClothingUniformJumpskirtHoS
+    - id: Sec_PsychCard_ClothingHeadHatSecurityTrooper
+    - id: Sec_PsychCard_ClothingUniformSecurityTrooper
+    - id: Sec_PsychCard_SecurityWhistle
+    - id: Sec_PsychCard_TurnstileGenpopLeave
+    - id: Sec_PsychCard_WeaponRifleAk
+
+- type: entity
+  parent: BoxFolderWithPsychCardsBase
+  id: BoxFolderWithPsychCard_Medical
+  suffix: Filled, Cards
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/folders.rsi
+    layers:
+    - state: folder-white
+  - type: StorageFill
+    contents:
+    - id: Med_PsychCard
+    - id: Med_PsychCard_MedEquipment
+    - id: Med_PsychCard_MedInstrument
+    - id: Med_PsychCard_Medkits
+    - id: Med_PsychCard_MedkitOxygenFilled
+    - id: Med_PsychCard_MedkitO2
+    - id: Med_PsychCard_MedkitBruteFilled
+    - id: Med_PsychCard_MedkitBrute
+    - id: Med_PsychCard_MedkitBurnFilled
+    - id: Med_PsychCard_MedkitBurn
+    - id: Med_PsychCard_MedkitToxinFilled
+    - id: Med_PsychCard_MedkitToxin
+    - id: Med_PsychCard_MedkitRadiationFilled
+    - id: Med_PsychCard_MedkitRadiation
+    - id: Med_PsychCard_MedkitFilled
+    - id: Med_PsychCard_Medkit
+    - id: Med_PsychCard_MedkitCombatFilled
+    - id: Med_PsychCard_MedkitCombat
+    - id: Med_PsychCard_HandheldHealthAnalyzer
+    - id: Med_PsychCard_HandheldHealthAnalyzerUnpowered
+    - id: Med_PsychCard_HandheldHealthAnalyzerEmpty
+    - id: Med_PsychCard_Syringe
+    - id: Med_PsychCard_Hypospray
+    - id: Med_PsychCard_Scalpel
+    - id: Med_PsychCard_SignBio
+    - id: Med_PsychCard_ClothingHeadHatHoodBioVirology
+    - id: Med_PsychCard_ClothingOuterBioVirology
+    - id: Med_PsychCard_ClothingHeadHatHoodBioGeneral
+    - id: Med_PsychCard_ClothingOuterBioGeneral
+    - id: Med_PsychCard_ClothingHeadHatHoodBioCmo
+    - id: Med_PsychCard_ClothingOuterBioCmo
+    - id: Med_PsychCard_ClothingMaskSterile
+    - id: Med_PsychCard_ClothingUniformJumpsuitVirology
+    - id: Med_PsychCard_ClothingUniformJumpsuitParamedic
+    - id: Med_PsychCard_ClothingOuterHardsuitVoidParamed
+    - id: Med_PsychCard_ClothingUniformJumpsuitMedicalDoctor
+    - id: Med_PsychCard_ClothingUniformJumpsuitPsychologist
+    - id: Med_PsychCard_ClothingUniformJumpskirtPsychologist
+    - id: Med_PsychCard_ClothingUniformJumpsuitGenetics
+    - id: Med_PsychCard_ClothingUniformJumpsuitCMO
+    - id: Med_PsychCard_ClothingUniformJumpsuitChemistry
+    - id: Med_PsychCard_ClothingCloakCmo
+
+- type: entity
+  parent: BoxFolderWithPsychCardsBase
+  id: BoxFolderWithPsychCard_Engineer
+  suffix: Filled, Cards
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/folders.rsi
+    layers:
+    - state: folder-colormap
+      color: "#FFD700"
+    - state: folder-base
+  - type: StorageFill
+    contents:
+    - id: Eng_PsychCard
+    - id: Eng_PsychCard_Tesla
+    - id: Eng_PsychCard_AtmosphericProblems
+    - id: Eng_PsychCard_Singularity
+    - id: Eng_PsychCard_TeslaToy
+    - id: Eng_PsychCard_TeslaEnergyBall
+    - id: Eng_PsychCard_TeslaMiniEnergyBall
+    - id: Eng_PsychCard_PortableScrubber
+    - id: Eng_PsychCard_HoloFan
+    - id: Eng_PsychCard_InflatableWall
+    - id: Eng_PsychCard_InflatableDoor
+    - id: Eng_PsychCard_RCD
+
+- type: entity
+  parent: BoxFolderWithPsychCardsBase
+  id: BoxFolderWithPsychCard_Command
+  suffix: Filled, Cards
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/folders.rsi
+    layers:
+    - state: folder-colormap
+      color: "#191970"
+    - state: folder-base
+    - state: folder-stamp-inverse
+      color: "#FFD700"
+  - type: StorageFill
+    contents:
+    - id: Com_PsychCard
+    - id: Com_PsychCard_SignHead
+    - id: Com_PsychCard_PosterLegitNanotrasenLogo
+    - id: Com_PsychCard_PosterLegitNanomichiAd
+    - id: Com_PsychCard_PosterLegitPDAAd
+    - id: Com_PsychCard_PosterLegitReportCrimes
+    - id: Com_PsychCard_BrbSign
+
+- type: entity
+  parent: BoxFolderWithPsychCardsBase
+  id: BoxFolderWithPsychCard_Civilian
+  suffix: Filled, Cards
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/folders.rsi
+    layers:
+    - state: folder-colormap
+      color: "#3CB371"
+    - state: folder-base
+  - type: StorageFill
+    contents:
+    - id: Civ_PsychCard
+    - id: Civ_PsychCard_CivEquipment
+    - id: Civ_PsychCard_CivSigns
+    - id: Civ_PsychCard_Pig
+    - id: Civ_PsychCard_ClothingMaskGoldenCursed
+    - id: Civ_PsychCard_ClothingMaskJackal
+    - id: Civ_PsychCard_ClothingMaskPlague
+    - id: Civ_PsychCard_ClothingOuterHardsuitMaxim
+    - id: Civ_PsychCard_ClothingMaskFox
+    - id: Civ_PsychCard_ClothingMaskBlushingClown
+    - id: Civ_PsychCard_ClothingMaskBear
+    - id: Civ_PsychCard_ClothingMaskBat
+    - id: Civ_PsychCard_ClothingMaskBee
+    - id: Civ_PsychCard_ClothingMaskRaven
+    - id: Civ_PsychCard_ClothingMaskRat
+    - id: Civ_PsychCard_HolosignWetFloor
+    - id: Civ_PsychCard_WetFloorSign
+    - id: Civ_PsychCard_MobPig
+    - id: Civ_PsychCard_MobAlexander

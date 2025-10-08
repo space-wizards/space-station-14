@@ -1,0 +1,208 @@
+# COMMANDS
+# Negative triggers
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  abstract: true
+  id: GeneralNegTriggerComBase
+  triggersPrototype: MobVulpkanin
+  positEffect: 0.0
+  negatEffect: 0.0
+  jobsExept:
+    - Captain
+    - HeadOfPersonnel
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerComBase
+  id: GeneralTrigger_SignHead_Com_Neg
+  triggersPrototype: SignHead
+  positEffect: 0.0
+  negatEffect: 0.1
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerComBase
+  id: GeneralTrigger_PosterLegitNanotrasenLogo_Com_Neg
+  triggersPrototype: PosterLegitNanotrasenLogo
+  positEffect: 0.0
+  negatEffect: 0.1
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerComBase
+  id: GeneralTrigger_PosterLegitNanomichiAd_Com_Neg
+  triggersPrototype: PosterLegitNanomichiAd
+  positEffect: 0.0
+  negatEffect: 0.1
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerComBase
+  id: GeneralTrigger_PosterLegitPDAAd_Com_Neg
+  triggersPrototype: PosterLegitPDAAd
+  positEffect: 0.0
+  negatEffect: 0.1
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerComBase
+  id: GeneralTrigger_PosterLegitReportCrimes_Com_Neg
+  triggersPrototype: PosterLegitReportCrimes
+  positEffect: 0.0
+  negatEffect: 0.1
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerComBase
+  id: GeneralTrigger_BrbSign_Com_Neg
+  triggersPrototype: BrbSign
+  positEffect: 0.0
+  negatEffect: 0.2
+
+# Positive triggers
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  abstract: true
+  id: GeneralPosTriggerComBase
+  triggersPrototype: MobVulpkanin
+  positEffect: 0.0
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerComBase
+  id: GeneralTrigger_SignHead_Com_Pos
+  triggersPrototype: SignHead
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerComBase
+  id: GeneralTrigger_PosterLegitNanotrasenLogo_Com_Pos
+  triggersPrototype: PosterLegitNanotrasenLogo
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerComBase
+  id: GeneralTrigger_PosterLegitNanomichiAd_Com_Pos
+  triggersPrototype: PosterLegitNanomichiAd
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerComBase
+  id: GeneralTrigger_PosterLegitPDAAd_Com_Pos
+  triggersPrototype: PosterLegitPDAAd
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerComBase
+  id: GeneralTrigger_PosterLegitReportCrimes_Com_Pos
+  triggersPrototype: PosterLegitReportCrimes
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerComBase
+  id: GeneralTrigger_BrbSign_Com_Pos
+  triggersPrototype: BrbSign
+  positEffect: 0.2
+  negatEffect: 0.0
+
+# 100% POSITIVE TRIGGERS
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  abstract: true
+  id: 100PercentGeneralPosTriggerComBase
+  triggersPrototype: MobVulpkanin
+  requiredTrigger: true
+  positEffect: 0.0
+  negatEffect: 0.0
+  jobsExept:
+    - Chemist
+    - ChiefMedicalOfficer
+    - MedicalDoctor
+    - MedicalIntern
+    - Paramedic
+    - Psychologist
+    - AtmosphericTechnician
+    - ChiefEngineer
+    - StationEngineer
+    - TechnicalAssistant
+    - CargoTechnician
+    - Quartermaster
+    - SalvageSpecialist
+    - Scientist
+    - ResearchDirector
+    - ResearchAssistant
+    - Boxer
+    - Reporter
+    - Zookeeper
+    - Clown
+    - Mime
+    - Passenger
+    - Bartender
+    - Botanist
+    - Chaplain
+    - Chef
+    - Janitor
+    - Lawyer
+    - Librarian
+    - Musician
+    - ServiceWorker
+    - Detective
+    - HeadOfSecurity
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+
+- type: emotionalTriggers
+  parent: 100PercentGeneralPosTriggerComBase
+  id: 100PercentGeneralTrigger_ToiletGoldenDirtyWater_Com_Pos
+  triggersPrototype: ToiletGoldenDirtyWater
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentGeneralPosTriggerComBase
+  id: 100PercentGeneralTrigger_MobHamsterHamlet_Com_Pos
+  triggersPrototype: MobHamsterHamlet
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentGeneralPosTriggerComBase
+  id: 100PercentGeneralTrigger_MobHamsterHamletSlippery_Com_Pos
+  triggersPrototype: MobHamsterHamletSlippery
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentGeneralPosTriggerComBase
+  id: 100PercentGeneralTrigger_ToyFigurineHamlet_Com_Pos
+  triggersPrototype: ToyFigurineHamlet
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentGeneralPosTriggerComBase
+  id: 100PercentGeneralTrigger_ClothingBackpackIan_Com_Pos
+  triggersPrototype: ClothingBackpackIan
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentGeneralPosTriggerComBase
+  id: 100PercentGeneralTrigger_MobCorgiIan_Com_Pos
+  triggersPrototype: MobCorgiIan
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentGeneralPosTriggerComBase
+  id: 100PercentGeneralTrigger_MobCorgiIanOld_Com_Pos
+  triggersPrototype: MobCorgiIanOld
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentGeneralPosTriggerComBase
+  id: 100PercentGeneralTrigger_MobCorgiIanPup_Com_Pos
+  triggersPrototype: MobCorgiIanPup
+  positEffect: 0.15
+  negatEffect: 0.0

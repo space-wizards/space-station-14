@@ -1,0 +1,1 @@
+station-event-madness-announcement = Attention! The station is passing through a magnetic storm zone. Crew members may experience a sharp decline in emotional state. Please check your condition with the psychologist.

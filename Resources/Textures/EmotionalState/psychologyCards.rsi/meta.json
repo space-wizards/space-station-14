@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "license": "CC-BY-4.0",
+    "copyright": "Сreated by BeatusCrow",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "based"
+        },
+        {
+            "name": "cargo"
+        },
+        {
+            "name": "civilian"
+        },
+        {
+            "name": "com"
+        },
+        {
+            "name": "engineer"
+        },
+        {
+            "name": "medical"
+        },
+        {
+            "name": "rnd"
+        },
+        {
+            "name": "sec"
+        }
+    ]
+}

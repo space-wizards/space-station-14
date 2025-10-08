@@ -14,6 +14,22 @@
   kind: source
   path: "/Textures/Shaders/gradient_circle_mask.swsl"
 
+#my test custon shader
+- type: shader
+  id: SadEmotion
+  kind: source
+  path: "/Textures/Shaders/sad_emotion.swsl"
+
+- type: shader
+  id: DepressiveEmotion
+  kind: source
+  path: "/Textures/Shaders/depresive_emotion.swsl"
+
+- type: shader
+  id: RainbowEmotion
+  kind: source
+  path: "/Textures/Shaders/rainbow_emotion.swsl"
+
 - type: shader
   id: WorldGradientCircle
   kind: source

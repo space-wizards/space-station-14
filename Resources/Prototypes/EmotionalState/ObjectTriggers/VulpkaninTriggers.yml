@@ -1,0 +1,16 @@
+- type: emotionalTriggers
+  id: BaseVulpkaninTrigger
+  abstract: true
+  triggersPrototype: MobVox
+  positEffect: 0.0
+  negatEffect: 0.0
+  species:
+    - MobVulpkanin
+
+- type: emotionalTriggers
+  parent: BaseVulpkaninTrigger
+  id: VulpkaninTrigger_Blood
+  triggersPrototype: Blood
+  requiredTrigger: true
+  positEffect: 0.0
+  negatEffect: 0.08

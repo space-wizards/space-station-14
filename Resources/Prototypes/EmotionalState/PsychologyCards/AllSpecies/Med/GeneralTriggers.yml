@@ -1,0 +1,508 @@
+# MEDICAL
+- type: entity
+  parent: BasePsychCard
+  id: BaseMedicalPsychCard
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: EmotionalState/psychologyCards.rsi
+    state: medical
+    scale: 0.6, 0.6
+
+# card for identifying trigger items from the medical department
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard
+  suffix: medical items
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-med-items
+    triggers:
+      - MedkitOxygenFilled
+      - MedkitO2
+      - MedkitBruteFilled
+      - MedkitBrute
+      - MedkitBurnFilled
+      - MedkitBurn
+      - MedkitToxinFilled
+      - MedkitToxin
+      - MedkitRadiationFilled
+      - MedkitRadiation
+      - MedkitFilled
+      - Medkit
+      - MedkitCombatFilled
+      - MedkitCombat
+      - HandheldHealthAnalyzer
+      - HandheldHealthAnalyzerUnpowered
+      - HandheldHealthAnalyzerEmpty
+      - Syringe
+      - Hypospray
+      - Scalpel
+      - SignBio
+      - ClothingHeadHatHoodBioVirology
+      - ClothingOuterBioVirology
+      - ClothingHeadHatHoodBioGeneral
+      - ClothingOuterBioGeneral
+      - ClothingHeadHatHoodBioCmo
+      - ClothingOuterBioCmo
+      - ClothingMaskSterile
+      - ClothingUniformJumpsuitVirology
+      - ClothingUniformJumpsuitParamedic
+      - ClothingOuterHardsuitVoidParamed
+      - ClothingUniformJumpsuitMedicalDoctor
+      - ClothingUniformJumpsuitPsychologist
+      - ClothingUniformJumpskirtPsychologist
+      - ClothingUniformJumpsuitGenetics
+      - ClothingUniformJumpsuitCMO
+      - ClothingUniformJumpsuitChemistry
+      - ClothingCloakCmo
+    emotionalEffect: 11.0
+
+# cards for identifying specific categories
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_MedEquipment
+  suffix: medical equipment
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-med-equipment
+    triggers:
+      - ClothingHeadHatHoodBioVirology
+      - ClothingOuterBioVirology
+      - ClothingHeadHatHoodBioGeneral
+      - ClothingOuterBioGeneral
+      - ClothingHeadHatHoodBioCmo
+      - ClothingOuterBioCmo
+      - ClothingMaskSterile
+      - ClothingUniformJumpsuitVirology
+      - ClothingUniformJumpsuitParamedic
+      - ClothingOuterHardsuitVoidParamed
+      - ClothingUniformJumpsuitMedicalDoctor
+      - ClothingUniformJumpsuitPsychologist
+      - ClothingUniformJumpskirtPsychologist
+      - ClothingUniformJumpsuitGenetics
+      - ClothingUniformJumpsuitCMO
+      - ClothingUniformJumpsuitChemistry
+      - ClothingCloakCmo
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_MedInstrument
+  suffix: medical instrument
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-med-instrument
+    triggers:
+      - HandheldHealthAnalyzer
+      - HandheldHealthAnalyzerUnpowered
+      - HandheldHealthAnalyzerEmpty
+      - Syringe
+      - Hypospray
+      - Scalpel
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_Medkits
+  suffix: medical kits
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-medkits
+    triggers:
+      - MedkitOxygenFilled
+      - MedkitO2
+      - MedkitBruteFilled
+      - MedkitBrute
+      - MedkitBurnFilled
+      - MedkitBurn
+      - MedkitToxinFilled
+      - MedkitToxin
+      - MedkitRadiationFilled
+      - MedkitRadiation
+      - MedkitFilled
+      - Medkit
+      - MedkitCombatFilled
+      - MedkitCombat
+    emotionalEffect: 11.0
+
+# each trigger's cards
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_MedkitOxygenFilled
+  suffix: medkit oxygen filled
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MedkitOxygenFilled
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_MedkitO2
+  suffix: medkit o2
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MedkitO2
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_MedkitBruteFilled
+  suffix: medkit brute filled
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MedkitBruteFilled
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_MedkitBrute
+  suffix: medkit brute
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MedkitBrute
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_MedkitBurnFilled
+  suffix: medkit burn filled
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MedkitBurnFilled
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_MedkitBurn
+  suffix: medkit burn
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MedkitBurn
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_MedkitToxinFilled
+  suffix: medkit toxin filled
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MedkitToxinFilled
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_MedkitToxin
+  suffix: medkit toxin
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MedkitToxin
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_MedkitRadiationFilled
+  suffix: medkit radiation filled
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MedkitRadiationFilled
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_MedkitRadiation
+  suffix: medkit radiation
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MedkitRadiation
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_MedkitFilled
+  suffix: medkit filled
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MedkitFilled
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_Medkit
+  suffix: medkit
+  components:
+  - type: PsychologyCard
+    triggers:
+      - Medkit
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_MedkitCombatFilled
+  suffix: medkit combat filled
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MedkitCombatFilled
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_MedkitCombat
+  suffix: medkit combat
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MedkitCombat
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_HandheldHealthAnalyzer
+  suffix: handheld health analyzer
+  components:
+  - type: PsychologyCard
+    triggers:
+      - HandheldHealthAnalyzer
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_HandheldHealthAnalyzerUnpowered
+  suffix: handheld health analyzer unpowered
+  components:
+  - type: PsychologyCard
+    triggers:
+      - HandheldHealthAnalyzerUnpowered
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_HandheldHealthAnalyzerEmpty
+  suffix: handheld health analyzer empty
+  components:
+  - type: PsychologyCard
+    triggers:
+      - HandheldHealthAnalyzerEmpty
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_Syringe
+  suffix: syringe
+  components:
+  - type: PsychologyCard
+    triggers:
+      - Syringe
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_Hypospray
+  suffix: hypospray
+  components:
+  - type: PsychologyCard
+    triggers:
+      - Hypospray
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_Scalpel
+  suffix: scalpel
+  components:
+  - type: PsychologyCard
+    triggers:
+      - Scalpel
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_SignBio
+  suffix: sign bio
+  components:
+  - type: PsychologyCard
+    triggers:
+      - SignBio
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_ClothingHeadHatHoodBioVirology
+  suffix: clothing head hat hood bio virology
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingHeadHatHoodBioVirology
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_ClothingOuterBioVirology
+  suffix: clothing outer bio virology
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingOuterBioVirology
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_ClothingHeadHatHoodBioGeneral
+  suffix: clothing head hat hood bio general
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingHeadHatHoodBioGeneral
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_ClothingOuterBioGeneral
+  suffix: clothing outer bio general
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingOuterBioGeneral
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_ClothingHeadHatHoodBioCmo
+  suffix: clothing head hat hood bio cmo
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingHeadHatHoodBioCmo
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_ClothingOuterBioCmo
+  suffix: clothing outer bio cmo
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingOuterBioCmo
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_ClothingMaskSterile
+  suffix: clothing mask sterile
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingMaskSterile
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_ClothingUniformJumpsuitVirology
+  suffix: clothing uniform jumpsuit virology
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingUniformJumpsuitVirology
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_ClothingUniformJumpsuitParamedic
+  suffix: clothing uniform jumpsuit paramedic
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingUniformJumpsuitParamedic
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_ClothingOuterHardsuitVoidParamed
+  suffix: clothing outer hardsuit void paramed
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingOuterHardsuitVoidParamed
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_ClothingUniformJumpsuitMedicalDoctor
+  suffix: clothing uniform jumpsuit medical doctor
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingUniformJumpsuitMedicalDoctor
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_ClothingUniformJumpsuitPsychologist
+  suffix: clothing uniform jumpsuit psychologist
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingUniformJumpsuitPsychologist
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_ClothingUniformJumpskirtPsychologist
+  suffix: clothing uniform jumpskirt psychologist
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingUniformJumpskirtPsychologist
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_ClothingUniformJumpsuitGenetics
+  suffix: clothing uniform jumpsuit genetics
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingUniformJumpsuitGenetics
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_ClothingUniformJumpsuitCMO
+  suffix: clothing uniform jumpsuit cmo
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingUniformJumpsuitCMO
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_ClothingUniformJumpsuitChemistry
+  suffix: clothing uniform jumpsuit chemistry
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingUniformJumpsuitChemistry
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseMedicalPsychCard
+  id: Med_PsychCard_ClothingCloakCmo
+  suffix: clothing cloak cmo
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingCloakCmo
+    emotionalEffect: 11.0

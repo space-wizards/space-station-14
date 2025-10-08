@@ -1,0 +1,23 @@
+- type: emotionalTriggers
+  id: BaseHumanTrigger
+  abstract: true
+  triggersPrototype: MobVulpkanin
+  positEffect: 0.0
+  negatEffect: 0.0
+  species:
+    - MobHuman
+
+- type: emotionalTriggers
+  parent: BaseHumanTrigger
+  id: HumanTrigger_Blood
+  triggersPrototype: Blood # I don't think you would enjoy looking at the fluid that leaked out of another person...
+  requiredTrigger: true
+  positEffect: 0.0
+  negatEffect: 0.07
+
+- type: emotionalTriggers
+  parent: BaseHumanTrigger
+  id: HumanTrigger_MobReptilian
+  triggersPrototype: MobReptilian
+  positEffect: 0.0
+  negatEffect: 0.09

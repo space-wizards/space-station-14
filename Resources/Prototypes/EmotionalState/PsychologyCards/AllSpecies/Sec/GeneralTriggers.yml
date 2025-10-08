@@ -1,0 +1,459 @@
+# SECURITY
+- type: entity
+  parent: BasePsychCard
+  id: BaseSecPsychCard
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: EmotionalState/psychologyCards.rsi
+    state: sec
+    scale: 0.6, 0.6
+
+# card for identifying trigger items from the security department
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard
+  suffix: security items
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-security-items
+    triggers:
+      - DeployableBarrier
+      - HolosignSecurity
+      - BannerSecurity
+      - SignSecure
+      - SignSecureMed
+      - SignSecurearea
+      - SignSecureMedRed
+      - SignSecureSmallRed
+      - SignSecureSmall
+      - SignArmory
+      - SignInterrogation
+      - SignGenpop
+      - ClothingHeadHatBeretHoS
+      - ClothingNeckCloakHos
+      - ClothingNeckMantleHOS
+      - ClothingBackpackSecurity
+      - ClothingBeltSecurity
+      - ClothingBeltSecurityWebbing
+      - ClothingEyesHudSecurity
+      - ClothingEyesEyepatchHudSecurity
+      - ClothingHeadHatHoodBioSecurity
+      - ClothingOuterBioSecurity
+      - ClothingOuterHardsuitSecurity
+      - ClothingOuterHardsuitSecurityRed
+      - ClothingHeadHatBeretSecurity
+      - ClothingUniformJumpsuitHoSGrey
+      - ClothingUniformJumpsuitHoSAlt
+      - ClothingUniformJumpskirtHoS
+      - ClothingHeadHatSecurityTrooper
+      - ClothingUniformSecurityTrooper
+      - SecurityWhistle
+      - TurnstileGenpopLeave
+      - WeaponRifleAk
+    emotionalEffect: 11.0
+
+# cards for identifying specific categories
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_SecuritySigns
+  suffix: security signs
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-security-signs
+    triggers:
+      - SignSecure
+      - SignSecureMed
+      - SignSecurearea
+      - SignSecureMedRed
+      - SignSecureSmallRed
+      - SignSecureSmall
+      - SignArmory
+      - SignInterrogation
+      - SignGenpop
+      - BannerSecurity
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_Barrier
+  suffix: barriers
+  components:
+  - type: PsychologyCard
+    locNamw: psychology-card-with-barriers
+    triggers:
+      - DeployableBarrier
+      - HolosignSecurity
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_SecurityEquipments
+  suffix: security equipment
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-security-equipments
+    triggers:
+      - ClothingHeadHatBeretHoS
+      - ClothingNeckCloakHos
+      - ClothingNeckMantleHOS
+      - ClothingBackpackSecurity
+      - ClothingBeltSecurity
+      - ClothingBeltSecurityWebbing
+      - ClothingEyesHudSecurity
+      - ClothingEyesEyepatchHudSecurity
+      - ClothingHeadHatHoodBioSecurity
+      - ClothingOuterBioSecurity
+      - ClothingOuterHardsuitSecurity
+      - ClothingOuterHardsuitSecurityRed
+      - ClothingHeadHatBeretSecurity
+      - ClothingUniformJumpsuitHoSGrey
+      - ClothingUniformJumpsuitHoSAlt
+      - ClothingUniformJumpskirtHoS
+      - ClothingHeadHatSecurityTrooper
+      - ClothingUniformSecurityTrooper
+      - SecurityWhistle
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_Gun
+  suffix: gun
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-gun
+    triggers:
+      - TurnstileGenpopLeave
+      - WeaponRifleAk
+    emotionalEffect: 11.0
+
+# each trigger's cards
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_SignSecure
+  suffix: sign secure
+  components:
+  - type: PsychologyCard
+    triggers:
+      - SignSecure
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_SignSecureMed
+  suffix: sign secure med
+  components:
+  - type: PsychologyCard
+    triggers:
+      - SignSecureMed
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_SignSecurearea
+  suffix: sign securearea
+  components:
+  - type: PsychologyCard
+    triggers:
+      - SignSecurearea
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_SignSecureMedRed
+  suffix: sign secure med red
+  components:
+  - type: PsychologyCard
+    triggers:
+      - SignSecureMedRed
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_SignSecureSmallRed
+  suffix: sign secure small red
+  components:
+  - type: PsychologyCard
+    triggers:
+      - SignSecureSmallRed
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_SignSecureSmall
+  suffix: sign secure small
+  components:
+  - type: PsychologyCard
+    triggers:
+      - SignSecureSmall
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_SignArmory
+  suffix: sign armory
+  components:
+  - type: PsychologyCard
+    triggers:
+      - SignArmory
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_SignInterrogation
+  suffix: sign interrogation
+  components:
+  - type: PsychologyCard
+    triggers:
+      - SignInterrogation
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_SignGenpop
+  suffix: sign genpop
+  components:
+  - type: PsychologyCard
+    triggers:
+      - SignGenpop
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_BannerSecurity
+  suffix: banner security
+  components:
+  - type: PsychologyCard
+    triggers:
+      - BannerSecurity
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_DeployableBarrier
+  suffix: deployable barrier
+  components:
+  - type: PsychologyCard
+    triggers:
+      - DeployableBarrier
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_HolosignSecurity
+  suffix: holosign security
+  components:
+  - type: PsychologyCard
+    triggers:
+      - HolosignSecurity
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_ClothingHeadHatBeretHoS
+  suffix: clothing head hat beret ho s
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingHeadHatBeretHoS
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_ClothingNeckCloakHos
+  suffix: clothing neck cloak hos
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingNeckCloakHos
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_ClothingNeckMantleHOS
+  suffix: clothing neck mantle hos
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingNeckMantleHOS
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_ClothingBackpackSecurity
+  suffix: clothing backpack security
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingBackpackSecurity
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_ClothingBeltSecurity
+  suffix: clothing belt security
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingBeltSecurity
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_ClothingBeltSecurityWebbing
+  suffix: clothing belt security webbing
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingBeltSecurityWebbing
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_ClothingEyesHudSecurity
+  suffix: clothing eyes hud security
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingEyesHudSecurity
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_ClothingEyesEyepatchHudSecurity
+  suffix: clothing eyes eyepatch hud security
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingEyesEyepatchHudSecurity
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_ClothingHeadHatHoodBioSecurity
+  suffix: clothing head hat hood bio security
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingHeadHatHoodBioSecurity
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_ClothingOuterBioSecurity
+  suffix: clothing outer bio security
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingOuterBioSecurity
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_ClothingOuterHardsuitSecurity
+  suffix: clothing outer hardsuit security
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingOuterHardsuitSecurity
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_ClothingOuterHardsuitSecurityRed
+  suffix: clothing outer hardsuit security red
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingOuterHardsuitSecurityRed
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_ClothingHeadHatBeretSecurity
+  suffix: clothing head hat beret security
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingHeadHatBeretSecurity
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_ClothingUniformJumpsuitHoSGrey
+  suffix: clothing uniform jumpsuit ho s grey
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingUniformJumpsuitHoSGrey
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_ClothingUniformJumpsuitHoSAlt
+  suffix: clothing uniform jumpsuit ho s alt
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingUniformJumpsuitHoSAlt
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_ClothingUniformJumpskirtHoS
+  suffix: clothing uniform jumpskirt hos
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingUniformJumpskirtHoS
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_ClothingHeadHatSecurityTrooper
+  suffix: clothing head hat security trooper
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingHeadHatSecurityTrooper
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_ClothingUniformSecurityTrooper
+  suffix: clothing uniform security trooper
+  components:
+  - type: PsychologyCard
+    triggers:
+      - ClothingUniformSecurityTrooper
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_SecurityWhistle
+  suffix: security whistle
+  components:
+  - type: PsychologyCard
+    triggers:
+      - SecurityWhistle
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_TurnstileGenpopLeave
+  suffix: turnstile genpop leave
+  components:
+  - type: PsychologyCard
+    triggers:
+      - TurnstileGenpopLeave
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseSecPsychCard
+  id: Sec_PsychCard_WeaponRifleAk
+  suffix: weapon rifle ak
+  components:
+  - type: PsychologyCard
+    triggers:
+      - WeaponRifleAk
+    emotionalEffect: 11.0

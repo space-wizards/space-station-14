@@ -1,0 +1,358 @@
+# CIVILIAN
+# It seems to me that there are many different professions combined here,
+# so it's impossible to identify anything common for them :(
+# Negative triggers
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  abstract: true
+  id: GeneralNegTriggerCivBase
+  triggersPrototype: MobVulpkanin
+  positEffect: 0.0
+  negatEffect: 0.0
+  jobsExept:
+    - Boxer
+    - Reporter
+    - Zookeeper
+    - Clown
+    - Mime
+    - Passenger
+    - Bartender
+    - Botanist
+    - Chaplain
+    - Chef
+    - Janitor
+    - Lawyer
+    - Librarian
+    - Musician
+    - ServiceWorker
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerCivBase
+  id: GeneralTrigger_ClothingMaskGoldenCursed_Civ_Neg
+  triggersPrototype: ClothingMaskGoldenCursed
+  positEffect: 0.0
+  negatEffect: 0.1
+  jobsExept:
+    - Clown
+    - Mime
+    - Musician
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerCivBase
+  id: GeneralTrigger_ClothingMaskJackal_Civ_Neg
+  triggersPrototype: ClothingMaskJackal
+  positEffect: 0.0
+  negatEffect: 0.1
+  jobsExept:
+    - Clown
+    - Mime
+    - Musician
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerCivBase
+  id: GeneralTrigger_Poweredlight_Civ_Neg
+  triggersPrototype: Poweredlight
+  positEffect: 0.0
+  negatEffect: 0.1
+  jobsExept:
+    - Clown
+    - Mime
+    - Musician
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerCivBase
+  id: GeneralTrigger_ClothingMaskPlague_Civ_Neg
+  triggersPrototype: ClothingMaskPlague
+  positEffect: 0.0
+  negatEffect: 0.1
+  jobsExept:
+    - Clown
+    - Mime
+    - Musician
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerCivBase
+  id: GeneralTrigger_ClothingMaskFox_Civ_Neg
+  triggersPrototype: ClothingMaskFox
+  positEffect: 0.0
+  negatEffect: 0.1
+  jobsExept:
+    - Clown
+    - Mime
+    - Musician
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerCivBase
+  id: GeneralTrigger_ClothingMaskBlushingClown_Civ_Neg
+  triggersPrototype: ClothingMaskBlushingClown
+  positEffect: 0.0
+  negatEffect: 0.1
+  jobsExept:
+    - Clown
+    - Mime
+    - Musician
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerCivBase
+  id: GeneralTrigger_ClothingMaskBear_Civ_Neg
+  triggersPrototype: ClothingMaskBear
+  positEffect: 0.0
+  negatEffect: 0.1
+  jobsExept:
+    - Clown
+    - Mime
+    - Musician
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerCivBase
+  id: GeneralTrigger_ClothingMaskBat_Civ_Neg
+  triggersPrototype: ClothingMaskBat
+  positEffect: 0.0
+  negatEffect: 0.1
+  jobsExept:
+    - Clown
+    - Mime
+    - Musician
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerCivBase
+  id: GeneralTrigger_ClothingMaskBee_Civ_Neg
+  triggersPrototype: ClothingMaskBee
+  positEffect: 0.0
+  negatEffect: 0.1
+  jobsExept:
+    - Clown
+    - Mime
+    - Musician
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerCivBase
+  id: GeneralTrigger_ClothingMaskRaven_Civ_Neg
+  triggersPrototype: ClothingMaskRaven
+  positEffect: 0.0
+  negatEffect: 0.1
+  jobsExept:
+    - Clown
+    - Mime
+    - Musician
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerCivBase
+  id: GeneralTrigger_ClothingMaskRat_Civ_Neg
+  triggersPrototype: ClothingMaskRat
+  positEffect: 0.0
+  negatEffect: 0.1
+  jobsExept:
+    - Clown
+    - Mime
+    - Musician
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerCivBase
+  id: GeneralTrigger_HolosignWetFloor_Civ_Neg
+  triggersPrototype: HolosignWetFloor
+  positEffect: 0.0
+  negatEffect: 0.1
+  jobsExept:
+    - Janitor
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerCivBase
+  id: GeneralTrigger_WetFloorSign_Civ_Neg
+  triggersPrototype: WetFloorSign
+  positEffect: 0.0
+  negatEffect: 0.1
+  jobsExept:
+    - Janitor
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerCivBase
+  id: GeneralTrigger_MobPig_Civ_Neg
+  triggersPrototype: MobPig
+  positEffect: 0.0
+  negatEffect: 0.1
+  jobsExept:
+    - Botanist
+    - ServiceWorker
+    - Chef
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerCivBase
+  id: GeneralTrigger_MobAlexander_Civ_Neg
+  triggersPrototype: MobAlexander
+  positEffect: 0.0
+  negatEffect: 0.1
+  jobsExept:
+    - Botanist
+    - ServiceWorker
+    - Chef
+
+# Positive triggers
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  abstract: true
+  id: GeneralPosTriggerCivBase
+  triggersPrototype: MobVulpkanin
+  positEffect: 0.0
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerCivBase
+  id: GeneralTrigger_ClothingMaskGoldenCursed_Civ_Pos
+  triggersPrototype: ClothingMaskGoldenCursed
+  positEffect: 0.1
+  negatEffect: 0.0
+  jobsExept:
+    - Clown
+    - Mime
+    - Musician
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerCivBase
+  id: GeneralTrigger_ClothingMaskJackal_Civ_Pos
+  triggersPrototype: ClothingMaskJackal
+  positEffect: 0.1
+  negatEffect: 0.0
+  jobsExept:
+    - Clown
+    - Mime
+    - Musician
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerCivBase
+  id: GeneralTrigger_Poweredlight_Civ_Pos
+  triggersPrototype: Poweredlight
+  positEffect: 0.1
+  negatEffect: 0.0
+  jobsExept:
+    - Clown
+    - Mime
+    - Musician
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerCivBase
+  id: GeneralTrigger_ClothingMaskPlague_Civ_Pos
+  triggersPrototype: ClothingMaskPlague
+  positEffect: 0.1
+  negatEffect: 0.0
+  jobsExept:
+    - Clown
+    - Mime
+    - Musician
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerCivBase
+  id: GeneralTrigger_ClothingMaskFox_Civ_Pos
+  triggersPrototype: ClothingMaskFox
+  positEffect: 0.1
+  negatEffect: 0.0
+  jobsExept:
+    - Clown
+    - Mime
+    - Musician
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerCivBase
+  id: GeneralTrigger_ClothingMaskBlushingClown_Civ_Pos
+  triggersPrototype: ClothingMaskBlushingClown
+  positEffect: 0.1
+  negatEffect: 0.0
+  jobsExept:
+    - Clown
+    - Mime
+    - Musician
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerCivBase
+  id: GeneralTrigger_ClothingMaskBear_Civ_Pos
+  triggersPrototype: ClothingMaskBear
+  positEffect: 0.1
+  negatEffect: 0.0
+  jobsExept:
+    - Clown
+    - Mime
+    - Musician
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerCivBase
+  id: GeneralTrigger_ClothingMaskBat_Civ_Pos
+  triggersPrototype: ClothingMaskBat
+  positEffect: 0.1
+  negatEffect: 0.0
+  jobsExept:
+    - Clown
+    - Mime
+    - Musician
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerCivBase
+  id: GeneralTrigger_ClothingMaskBee_Civ_Pos
+  triggersPrototype: ClothingMaskBee
+  positEffect: 0.1
+  negatEffect: 0.0
+  jobsExept:
+    - Clown
+    - Mime
+    - Musician
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerCivBase
+  id: GeneralTrigger_ClothingMaskRaven_Civ_Pos
+  triggersPrototype: ClothingMaskRaven
+  positEffect: 0.1
+  negatEffect: 0.0
+  jobsExept:
+    - Clown
+    - Mime
+    - Musician
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerCivBase
+  id: GeneralTrigger_ClothingMaskRat_Civ_Pos
+  triggersPrototype: ClothingMaskRat
+  positEffect: 0.1
+  negatEffect: 0.0
+  jobsExept:
+    - Clown
+    - Mime
+    - Musician
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerCivBase
+  id: GeneralTrigger_HolosignWetFloor_Civ_Pos
+  triggersPrototype: HolosignWetFloor
+  positEffect: 0.1
+  negatEffect: 0.0
+  jobsExept:
+    - Janitor
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerCivBase
+  id: GeneralTrigger_WetFloorSign_Civ_Pos
+  triggersPrototype: WetFloorSign
+  positEffect: 0.1
+  negatEffect: 0.0
+  jobsExept:
+    - Janitor
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerCivBase
+  id: GeneralTrigger_MobPig_Civ_Pos
+  triggersPrototype: MobPig
+  positEffect: 0.1
+  negatEffect: 0.0
+  jobsExept:
+    - Botanist
+    - ServiceWorker
+    - Chef
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerCivBase
+  id: GeneralTrigger_MobAlexander_Civ_Pos
+  triggersPrototype: MobAlexander
+  positEffect: 0.1
+  negatEffect: 0.0
+  jobsExept:
+    - Botanist
+    - ServiceWorker
+    - Chef

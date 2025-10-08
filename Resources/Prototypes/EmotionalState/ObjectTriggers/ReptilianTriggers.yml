@@ -1,0 +1,16 @@
+- type: emotionalTriggers
+  id: BaseReptilianTrigger
+  abstract: true
+  triggersPrototype: MobVulpkanin
+  positEffect: 0.0
+  negatEffect: 0.0
+  species:
+    - MobReptilian
+
+- type: emotionalTriggers
+  parent: BaseReptilianTrigger
+  id: ReptilianTrigger_Blood
+  triggersPrototype: Blood
+  requiredTrigger: true
+  positEffect: 0.0
+  negatEffect: 0.08

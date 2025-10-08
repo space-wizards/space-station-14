@@ -1,0 +1,9 @@
+- type: entity
+  parent: BasePsychCard
+  id: Human_PsychCard_MobReptilian
+  suffix: MobReptilian
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MobReptilian
+    emotionalEffect: 11.0

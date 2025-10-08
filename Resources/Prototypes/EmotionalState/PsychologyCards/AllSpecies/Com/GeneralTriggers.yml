@@ -1,0 +1,91 @@
+# COMMANDS
+- type: entity
+  parent: BasePsychCard
+  id: BaseComPsychCard
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: EmotionalState/psychologyCards.rsi
+    state: com
+    scale: 0.6, 0.6
+
+# card for identifying trigger items from the command department
+- type: entity
+  parent: BaseComPsychCard
+  id: Com_PsychCard
+  suffix: command items
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-com-items
+    triggers:
+      - SignHead
+      - PosterLegitNanotrasenLogo
+      - PosterLegitNanomichiAd
+      - PosterLegitPDAAd
+      - PosterLegitReportCrimes
+      - BrbSign
+    emotionalEffect: 11.0
+
+# cards for identifying specific categories
+# At the moment, it turns out that there's literally only one category here
+
+# each trigger's cards
+- type: entity
+  parent: BaseComPsychCard
+  id: Com_PsychCard_SignHead
+  suffix: sign head
+  components:
+  - type: PsychologyCard
+    triggers:
+      - SignHead
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseComPsychCard
+  id: Com_PsychCard_PosterLegitNanotrasenLogo
+  suffix: poster legit nanotrasen logo
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PosterLegitNanotrasenLogo
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseComPsychCard
+  id: Com_PsychCard_PosterLegitNanomichiAd
+  suffix: poster legit nanomichi ad
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PosterLegitNanomichiAd
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseComPsychCard
+  id: Com_PsychCard_PosterLegitPDAAd
+  suffix: poster legit pda ad
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PosterLegitPDAAd
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseComPsychCard
+  id: Com_PsychCard_PosterLegitReportCrimes
+  suffix: poster legit report crimes
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PosterLegitReportCrimes
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseComPsychCard
+  id: Com_PsychCard_BrbSign
+  suffix: brb sign
+  components:
+  - type: PsychologyCard
+    triggers:
+      - BrbSign
+    emotionalEffect: 11.0

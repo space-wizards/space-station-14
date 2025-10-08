@@ -1,0 +1,477 @@
+# R&D
+# Negative triggers
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  abstract: true
+  id: GeneralNegTriggerRnDBase
+  triggersPrototype: MobVulpkanin
+  positEffect: 0.0
+  negatEffect: 0.0
+  jobsExept:
+    - ResearchDirector
+    - Scientist
+    - ResearchAssistant
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_MachineAPE_RnD_Neg
+  triggersPrototype: MachineAPE
+  positEffect: 0.0
+  negatEffect: 0.1
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_MachineAnomalyGenerator_RnD_Neg
+  triggersPrototype: MachineAnomalyGenerator
+  positEffect: 0.0
+  negatEffect: 0.1
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_AnomalyBluespace_RnD_Neg
+  triggersPrototype: AnomalyBluespace
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_AnomalyElectricity_RnD_Neg
+  triggersPrototype: AnomalyElectricity
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_AnomalyFlesh_RnD_Neg
+  triggersPrototype: AnomalyFlesh
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_AnomalyFlora_RnD_Neg
+  triggersPrototype: AnomalyFlora
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_AnomalyIce_RnD_Neg
+  triggersPrototype: AnomalyIce
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_AnomalyTech_RnD_Neg
+  triggersPrototype: AnomalyTech
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_AnomalyGravity_RnD_Neg
+  triggersPrototype: AnomalyGravity
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_AnomalyPyroclastic_RnD_Neg
+  triggersPrototype: AnomalyPyroclastic
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_AnomalyLiquid_RnD_Neg
+  triggersPrototype: AnomalyLiquid
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_AnomalyRockBananium_RnD_Neg
+  triggersPrototype: AnomalyRockBananium
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_AnomalyRockGold_RnD_Neg
+  triggersPrototype: AnomalyRockGold
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_AnomalyRockIron_RnD_Neg
+  triggersPrototype: AnomalyRockIron
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_AnomalyRockSilver_RnD_Neg
+  triggersPrototype: AnomalyRockSilver
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_AnomalyRockUranium_RnD_Neg
+  triggersPrototype: AnomalyRockUranium
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_AnomalyShadow_RnD
+  triggersPrototype: AnomalyShadow
+  positEffect: 0.0
+  negatEffect: 0.1
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_BorgChassisEngineer_RnD_Neg
+  triggersPrototype: BorgChassisEngineer
+  positEffect: 0.0
+  negatEffect: 0.1
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_BorgChassisJanitor_RnD_Neg
+  triggersPrototype: BorgChassisJanitor
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_BorgChassisMedical_RnD_Neg
+  triggersPrototype: BorgChassisMedical
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_BorgChassisMining_RnD_Neg
+  triggersPrototype: BorgChassisMining
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_BorgChassisService_RnD_Neg
+  triggersPrototype: BorgChassisService
+  positEffect: 0.0
+  negatEffect: 0.1
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_EngineeringBorgChassisDerelict_RnD_Neg
+  triggersPrototype: EngineeringBorgChassisDerelict
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_PlayerEngineeringBorgDerelict_RnD_Neg
+  triggersPrototype: PlayerEngineeringBorgDerelict
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_PlayerEngineeringBorgDerelictGhostRole_RnD_Neg
+  triggersPrototype: PlayerEngineeringBorgDerelictGhostRole
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_JanitorBorgChassisDerelict_RnD_Neg
+  triggersPrototype: JanitorBorgChassisDerelict
+  positEffect: 0.0
+  negatEffect: 0.1
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_PlayerJanitorBorgDerelict_RnD_Neg
+  triggersPrototype: PlayerJanitorBorgDerelict
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_PlayerJanitorBorgDerelictGhostRole_RnD_Neg
+  triggersPrototype: PlayerJanitorBorgDerelictGhostRole
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_MedicalBorgChassisDerelict_RnD_Neg
+  triggersPrototype: MedicalBorgChassisDerelict
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_PlayerMedicalBorgDerelict_RnD_Neg
+  triggersPrototype: PlayerMedicalBorgDerelict
+  positEffect: 0.0
+  negatEffect: 0.1
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_PlayerMedicalBorgDerelictGhostRole_RnD_Neg
+  triggersPrototype: PlayerMedicalBorgDerelictGhostRole
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_MiningBorgChassisDerelict_RnD_Neg
+  triggersPrototype: MiningBorgChassisDerelict
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_PlayerMiningBorgDerelict_RnD_Neg
+  triggersPrototype: PlayerMiningBorgDerelict
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_PlayerMiningBorgDerelictGhostRole_RnD_Neg
+  triggersPrototype: PlayerMiningBorgDerelictGhostRole
+  positEffect: 0.0
+  negatEffect: 0.1
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_BorgChassisDerelict_RnD_Neg
+  triggersPrototype: BorgChassisDerelict
+  positEffect: 0.0
+  negatEffect: 0.15
+
+- type: emotionalTriggers
+  parent: GeneralNegTriggerRnDBase
+  id: GeneralTrigger_PlayerBorgDerelict_RnD_Neg
+  triggersPrototype: PlayerBorgDerelict
+  positEffect: 0.0
+  negatEffect: 0.15
+
+# Positive triggers
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  abstract: true
+  id: GeneralPosTriggerRnDBase
+  triggersPrototype: MobVulpkanin
+  positEffect: 0.0
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_MobSlimesPet_RnD
+  triggersPrototype: MobSlimesPet
+  positEffect: 0.2
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_AnomalySanta_RnD
+  triggersPrototype: AnomalySanta
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_AnomalyCoreBluespace_RnD
+  triggersPrototype: AnomalyCoreBluespace
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_AnomalyCoreBluespaceInert_RnD
+  triggersPrototype: AnomalyCoreBluespaceInert
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_AnomalyCoreElectricity_RnD
+  triggersPrototype: AnomalyCoreElectricity
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_AnomalyCoreElectricityInert_RnD
+  triggersPrototype: AnomalyCoreElectricityInert
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_AnomalyCoreLiquid_RnD
+  triggersPrototype: AnomalyCoreLiquid
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_AnomalyCoreLiquidInert_RnD
+  triggersPrototype: AnomalyCoreLiquidInert
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_AnomalyCorePyroclastic_RnD
+  triggersPrototype: AnomalyCorePyroclastic
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_AnomalyCorePyroclasticInert_RnD
+  triggersPrototype: AnomalyCorePyroclasticInert
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_BorgChassisEngineer_RnD_Pos
+  triggersPrototype: BorgChassisEngineer
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_BorgChassisJanitor_RnD_Pos
+  triggersPrototype: BorgChassisJanitor
+  positEffect: 0.2
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_BorgChassisMedical_RnD_Pos
+  triggersPrototype: BorgChassisMedical
+  positEffect: 0.2
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_BorgChassisMining_RnD_Pos
+  triggersPrototype: BorgChassisMining
+  positEffect: 0.2
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_BorgChassisService_RnD_Pos
+  triggersPrototype: BorgChassisService
+  positEffect: 0.2
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_AnomalyBluespace_RnD_Pos
+  triggersPrototype: AnomalyBluespace
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_AnomalyElectricity_RnD_Pos
+  triggersPrototype: AnomalyElectricity
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_AnomalyFlesh_RnD_Pos
+  triggersPrototype: AnomalyFlesh
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_AnomalyFlora_RnD_Pos
+  triggersPrototype: AnomalyFlora
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_AnomalyIce_RnD_Pos
+  triggersPrototype: AnomalyIce
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_AnomalyTech_RnD_Pos
+  triggersPrototype: AnomalyTech
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_AnomalyGravity_RnD_Pos
+  triggersPrototype: AnomalyGravity
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_AnomalyPyroclastic_RnD_Pos
+  triggersPrototype: AnomalyPyroclastic
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_AnomalyLiquid_RnD_Pos
+  triggersPrototype: AnomalyLiquid
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_AnomalyRockBananium_RnD_Pos
+  triggersPrototype: AnomalyRockBananium
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_AnomalyRockGold_RnD_Pos
+  triggersPrototype: AnomalyRockGold
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_AnomalyRockIron_RnD_Pos
+  triggersPrototype: AnomalyRockIron
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_AnomalyRockSilver_RnD_Pos
+  triggersPrototype: AnomalyRockSilver
+  positEffect: 0.15
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralPosTriggerRnDBase
+  id: GeneralTrigger_AnomalyRockUranium_RnD_Pos
+  triggersPrototype: AnomalyRockUranium
+  positEffect: 0.15
+  negatEffect: 0.0

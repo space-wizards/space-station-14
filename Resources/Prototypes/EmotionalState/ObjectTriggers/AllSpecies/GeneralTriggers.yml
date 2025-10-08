@@ -1,0 +1,867 @@
+# If anyone has questions about why this particular model for positive and negative effects was chosen, here's my reasoning:
+# There was an attempt to create the system as follows: if one of the values equals zero, then the second value is used
+# for the trigger reaction; but if both values are non-zero, one of them is chosen randomly. This solution reduced the number
+# of prototypes needed.
+# However, in my opinion, it has the drawback that for some professions,
+# it would be logical for them to experience positive emotions from items related
+# to their professional activities. That random selection model didn't allow for such
+# implementation... Or more precisely, we would still have to create additional prototypes to
+# work around this system, so the total volume would end up being the same anyway.
+
+- type: emotionalTriggers
+  abstract: true
+  id: GeneralTriggerBase
+  triggersPrototype: MobVulpkanin
+  positEffect: 0.0
+  negatEffect: 0.0
+  species:
+    - MobHuman
+    - MobArachnid
+    - MobDiona
+    - MobDwarf
+    - MobMoth
+    - MobReptilian
+    - SkeletonPerson
+    - MobSlimePerson
+    - MobVox
+    - MobVulpkanin
+
+# GENERAL 100% NEGATIVE TRIGGERS
+# Please don't create psychologist cards for them... They will always trigger
+# the entire category, which will lead to constant time wasted on these "fakes".
+- type: emotionalTriggers
+  abstract: true
+  parent: GeneralTriggerBase
+  id: 100PercentNegGeneralTriggerBase
+  triggersPrototype: ClothingOuterHardsuitJuggernaut
+  requiredTrigger: true
+  positEffect: 0.0
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_ClothingOuterHardsuitJuggernaut
+  triggersPrototype: ClothingOuterHardsuitJuggernaut
+  requiredTrigger: true
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_ClothingOuterHardsuitSyndieMedic
+  triggersPrototype: ClothingOuterHardsuitSyndieMedic
+  requiredTrigger: true
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_ClothingOuterHardsuitSyndie
+  triggersPrototype: ClothingOuterHardsuitSyndie
+  requiredTrigger: true
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_TrashBananaPeel
+  triggersPrototype: TrashBananaPeel
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_TrashBakedBananaPeel
+  triggersPrototype: TrashBakedBananaPeel
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_TrashBananiumPeel
+  triggersPrototype: TrashBananiumPeel
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_TrashMimanaPeel
+  triggersPrototype: TrashMimanaPeel
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_FoodBowlBigTrash
+  triggersPrototype: FoodBowlBigTrash
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_FoodPlateSmallTrash
+  triggersPrototype: FoodPlateSmallTrash
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_FoodPlateTrash
+  triggersPrototype: FoodPlateTrash
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_FoodTinPeachesMaintTrash
+  triggersPrototype: FoodTinPeachesMaintTrash
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_FoodTinBeansTrash
+  triggersPrototype: FoodTinBeansTrash
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_FoodTinMRETrash
+  triggersPrototype: FoodTinMRETrash
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_FoodTinPeachesTrash
+  triggersPrototype: FoodTinPeachesTrash
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_TrashCherryPit
+  triggersPrototype: TrashCherryPit
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_CigarSpent
+  triggersPrototype: CigarSpent
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_CigarGoldSpent
+  triggersPrototype: CigarGoldSpent
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_CigaretteSpent
+  triggersPrototype: CigaretteSpent
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_FoodFrozenSnowconeTrash
+  triggersPrototype: FoodFrozenSnowconeTrash
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_FoodPacketCnDsTrash
+  triggersPrototype: FoodPacketCnDsTrash
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_MysteryFigureBoxTrash
+  triggersPrototype: MysteryFigureBoxTrash
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_FoodPacketChipsTrash
+  triggersPrototype: FoodPacketChipsTrash
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_FoodPacketBoritosTrash
+  triggersPrototype: FoodPacketBoritosTrash
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_FoodPacketCheesieTrash
+  triggersPrototype: FoodPacketCheesieTrash
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_FoodPacketRaisinsTrash
+  triggersPrototype: FoodPacketRaisinsTrash
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_FoodPacketPistachioTrash
+  triggersPrototype: FoodPacketPistachioTrash
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_FoodPacketSemkiTrash
+  triggersPrototype: FoodPacketSemkiTrash
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_FoodPacketDanDanTrash
+  triggersPrototype: FoodPacketDanDanTrash
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_FoodPacketChowMeinTrash
+  triggersPrototype: FoodPacketChowMeinTrash
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_FoodPacketEnergyTrash
+  triggersPrototype: FoodPacketEnergyTrash
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_FoodPacketChocolateTrash
+  triggersPrototype: FoodPacketChocolateTrash
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_FoodPacketSusTrash
+  triggersPrototype: FoodPacketSusTrash
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_FoodPacketPopcornTrash
+  triggersPrototype: FoodPacketPopcornTrash
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_FoodPacketSyndiTrash
+  triggersPrototype: FoodPacketSyndiTrash
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_LightBulbBroken
+  triggersPrototype: LightBulbBroken
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_LightTube
+  triggersPrototype: LightTube
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_DrinkRootBeerCan
+  triggersPrototype: DrinkRootBeerCan
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_DrinkSodaWaterCan
+  triggersPrototype: DrinkSodaWaterCan
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_DrinkNukieCan
+  triggersPrototype: DrinkNukieCan
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_DrinkWineCan
+  triggersPrototype: DrinkWineCan
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_DrinkEnergyDrinkCan
+  triggersPrototype: DrinkEnergyDrinkCan
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_DrinkChangelingStingCan
+  triggersPrototype: DrinkChangelingStingCan
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_DrinkFourteenLokoCan
+  triggersPrototype: DrinkFourteenLokoCan
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_DrinkDrGibbCan
+  triggersPrototype: DrinkDrGibbCan
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_DrinkSpaceMountainWindCan
+  triggersPrototype: DrinkSpaceMountainWindCan
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_DrinkLemonLimeCan
+  triggersPrototype: DrinkLemonLimeCan
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_DrinkPwrGameCan
+  triggersPrototype: DrinkPwrGameCan
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_DrinkShamblersJuiceCan
+  triggersPrototype: DrinkShamblersJuiceCan
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_DrinkColaCan
+  triggersPrototype: DrinkColaCan
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_DrinkLemonLimeCranberryCan
+  triggersPrototype: DrinkLemonLimeCranberryCan
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_DrinkSolDryCan
+  triggersPrototype: DrinkSolDryCan
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_DrinkSpaceUpCan
+  triggersPrototype: DrinkSpaceUpCan
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_DrinkStarkistCan
+  triggersPrototype: DrinkStarkistCan
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_BrokenBottle
+  triggersPrototype: BrokenBottle
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: 100PercentNegGeneralTriggerBase
+  id: 100PercentGeneralTrigger_ShardGlass
+  triggersPrototype: ShardGlass
+  positEffect: 0.0
+  negatEffect: 0.125
+
+# GENERAL 100% POSITIVE TRIGGERS
+- type: emotionalTriggers
+  abstract: true
+  parent: GeneralTriggerBase
+  id: 100PercentPosGeneralTriggerBase
+  triggersPrototype: ClothingMaskClown
+  requiredTrigger: true
+  positEffect: 0.0
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentPosGeneralTriggerBase
+  id: 100PercentGeneralTrigger_ClothingMaskClown
+  triggersPrototype: ClothingMaskClown
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentPosGeneralTriggerBase
+  id: 100PercentGeneralTrigger_ClothingBackpackSatchelClown
+  triggersPrototype: ClothingBackpackSatchelClown
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentPosGeneralTriggerBase
+  id: 100PercentGeneralTrigger_ClothingBackpackClown
+  triggersPrototype: ClothingBackpackClown
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentPosGeneralTriggerBase
+  id: 100PercentGeneralTrigger_ClothingUniformJumpskirtClown
+  triggersPrototype: ClothingUniformJumpskirtClown
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentPosGeneralTriggerBase
+  id: 100PercentGeneralTrigger_ClothingUniformJumpsuitClown
+  triggersPrototype: ClothingUniformJumpsuitClown
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentPosGeneralTriggerBase
+  id: 100PercentGeneralTrigger_ClothingShoesClownLarge
+  triggersPrototype: ClothingShoesClownLarge
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentPosGeneralTriggerBase
+  id: 100PercentGeneralTrigger_ClothingShoesClown
+  triggersPrototype: ClothingShoesClown
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentPosGeneralTriggerBase
+  id: 100PercentGeneralTrigger_ClothingOuterHardsuitClown
+  triggersPrototype: ClothingOuterHardsuitClown
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentPosGeneralTriggerBase
+  id: 100PercentGeneralTrigger_ClothingMaskClownSecurity
+  triggersPrototype: ClothingMaskClownSecurity
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentPosGeneralTriggerBase
+  id: 100PercentGeneralTrigger_ClothingBackpackDuffelClownSmuggler
+  triggersPrototype: ClothingBackpackDuffelClownSmuggler
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentPosGeneralTriggerBase
+  id: 100PercentGeneralTrigger_ClothingOuterHardsuitMime
+  triggersPrototype: ClothingOuterHardsuitMime
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentPosGeneralTriggerBase
+  id: 100PercentGeneralTrigger_ClothingBackpackMime
+  triggersPrototype: ClothingBackpackMime
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentPosGeneralTriggerBase
+  id: 100PercentGeneralTrigger_ClothingBackpackSatchelMime
+  triggersPrototype: ClothingBackpackSatchelMime
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentPosGeneralTriggerBase
+  id: 100PercentGeneralTrigger_ClothingBackpackDuffelMime
+  triggersPrototype: ClothingBackpackDuffelMime
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentPosGeneralTriggerBase
+  id: 100PercentGeneralTrigger_ClothingUniformJumpskirtMime
+  triggersPrototype: ClothingUniformJumpskirtMime
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentPosGeneralTriggerBase
+  id: 100PercentGeneralTrigger_ClothingUniformJumpsuitMime
+  triggersPrototype: ClothingUniformJumpsuitMime
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentPosGeneralTriggerBase
+  id: 100PercentGeneralTrigger_ClothingMaskMime
+  triggersPrototype: ClothingMaskMime
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentPosGeneralTriggerBase
+  id: 100PercentGeneralTrigger_ClothingMaskBlushingMime
+  triggersPrototype: ClothingMaskBlushingMime
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentPosGeneralTriggerBase
+  id: 100PercentGeneralTrigger_ClothingMaskMimeSecurity
+  triggersPrototype: ClothingMaskMimeSecurity
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentPosGeneralTriggerBase
+  id: 100PercentGeneralTrigger_ClothingMaskScaredMime
+  triggersPrototype: ClothingMaskScaredMime
+  positEffect: 0.125
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: 100PercentPosGeneralTriggerBase
+  id: 100PercentGeneralTrigger_ClothingMaskSadMime
+  triggersPrototype: ClothingMaskSadMime
+  positEffect: 0.125
+  negatEffect: 0.0
+
+
+# Positive triggers
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_FloraTreeLarge
+  triggersPrototype: FloraTreeLarge
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_FloraTree
+  triggersPrototype: FloraTree
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant1
+  triggersPrototype: PottedPlant1
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant2
+  triggersPrototype: PottedPlant2
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant3
+  triggersPrototype: PottedPlant3
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant4
+  triggersPrototype: PottedPlant4
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant5
+  triggersPrototype: PottedPlant5
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant6
+  triggersPrototype: PottedPlant6
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant7
+  triggersPrototype: PottedPlant7
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant8
+  triggersPrototype: PottedPlant8
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant9
+  triggersPrototype: PottedPlant9
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant10
+  triggersPrototype: PottedPlant10
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant11
+  triggersPrototype: PottedPlant11
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant12
+  triggersPrototype: PottedPlant12
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant13
+  triggersPrototype: PottedPlant13
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant14
+  triggersPrototype: PottedPlant14
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant15
+  triggersPrototype: PottedPlant15
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant16
+  triggersPrototype: PottedPlant16
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant17
+  triggersPrototype: PottedPlant17
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant18
+  triggersPrototype: PottedPlant18
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant19
+  triggersPrototype: PottedPlant19
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant20
+  triggersPrototype: PottedPlant20
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant21
+  triggersPrototype: PottedPlant21
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant22
+  triggersPrototype: PottedPlant22
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant23
+  triggersPrototype: PottedPlant23
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant24
+  triggersPrototype: PottedPlant24
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant25
+  triggersPrototype: PottedPlant25
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_PottedPlant26
+  triggersPrototype: PottedPlant26
+  positEffect: 0.1
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_DrinkRootBeerCan_Pos
+  triggersPrototype: DrinkRootBeerCan
+  positEffect: 0.025
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_DrinkBottleBeer_Pos
+  triggersPrototype: DrinkBottleBeer
+  positEffect: 0.025
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_DrinkBeerBottleFull_Pos
+  triggersPrototype: DrinkBeerBottleFull
+  positEffect: 0.025
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_DrinkBeerCan_Pos
+  triggersPrototype: DrinkBeerCan
+  positEffect: 0.025
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_DrinkBeerGrowler_Pos
+  triggersPrototype: DrinkBeerGrowler
+  positEffect: 0.025
+  negatEffect: 0.0
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_RevolverCapGun_Pos
+  triggersPrototype: RevolverCapGun
+  positEffect: 0.025
+  negatEffect: 0.0
+
+# Negative triggers
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_RevolverCapGun_Neg
+  triggersPrototype: RevolverCapGun
+  positEffect: 0.0
+  negatEffect: 0.125
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_DrinkRootBeerCan_Neg
+  triggersPrototype: DrinkRootBeerCan
+  positEffect: 0.0
+  negatEffect: 0.025
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_DrinkBottleBeer_Neg
+  triggersPrototype: DrinkBottleBeer
+  positEffect: 0.0
+  negatEffect: 0.025
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_DrinkBeerBottleFull_Neg
+  triggersPrototype: DrinkBeerBottleFull
+  positEffect: 0.0
+  negatEffect: 0.025
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_DrinkBeerCan_Neg
+  triggersPrototype: DrinkBeerCan
+  positEffect: 0.0
+  negatEffect: 0.025
+
+- type: emotionalTriggers
+  parent: GeneralTriggerBase
+  id: GeneralTrigger_DrinkBeerGrowler_Neg
+  triggersPrototype: DrinkBeerGrowler
+  positEffect: 0.0
+  negatEffect: 0.025

@@ -1,0 +1,32 @@
+{
+    "version": 1,
+    "license": "CC-BY-4.0",
+    "copyright": "Сreated by BeatusCrow",
+    "size": {
+        "x": 8,
+        "y": 8
+    },
+    "states": [
+        {
+            "name": "ps_0"
+        },
+        {
+            "name": "ps_minus_1"
+        },
+        {
+            "name": "ps_minus_2"
+        },
+        {
+            "name": "ps_minus_3"
+        },
+        {
+            "name": "ps_plus_1"
+        },
+        {
+            "name": "ps_plus_2"
+        },
+        {
+            "name": "ps_plus_3"
+        }
+    ]
+}

@@ -1,0 +1,43 @@
+- type: emotionalTriggersReagent
+  abstract: true
+  id: GeneralTriggerReagentBase
+  triggersPrototype: Laughter
+  positEffect: 2.5 # per ounce of substance
+  negatEffect: 0.0 # per ounce of substance
+  negatEffectTime: 0 # seconds
+  species:
+    - MobHuman
+    - MobArachnid
+    - MobDiona
+    - MobDwarf
+    - MobMoth
+    - MobReptilian
+    - MobSlimePerson
+    - MobSkeletonPerson
+    - MobVox
+    - MobVulpkanin
+
+- type: emotionalTriggersReagent
+  parent: GeneralTriggerReagentBase
+  id: GeneralTriggerReagent_Laughter
+  triggersPrototype: Laughter
+  positEffect: 2.5 # per ounce of substance
+  negatEffect: 0.0 # per ounce of substance
+  negatEffectTime: 0 # seconds
+
+- type: emotionalTriggersReagent
+  id: GeneralTriggerReagent_Ethanol
+  triggersPrototype: Ethanol
+  positEffect: 4.0
+  negatEffect: 8.0
+  negatEffectTime: 10
+  species: # all except dwarves
+    - MobHuman
+    - MobArachnid
+    - MobDiona
+    - MobMoth
+    - MobReptilian
+    - MobSlimePerson
+    - MobSkeletonPerson
+    - MobVox
+    - MobVulpkanin

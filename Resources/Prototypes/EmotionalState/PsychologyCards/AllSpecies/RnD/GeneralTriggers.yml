@@ -1,0 +1,614 @@
+# R&D
+- type: entity
+  parent: BasePsychCard
+  id: BaseRnDPsychCard
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: EmotionalState/psychologyCards.rsi
+    state: rnd
+    scale: 0.6, 0.6
+
+# card for identifying trigger items from the science department
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard
+  suffix: RnD items
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-rnd-items
+    triggers:
+      - MachineAPE
+      - MachineAnomalyGenerator
+      - AnomalyBluespace
+      - AnomalyElectricity
+      - AnomalyFlesh
+      - AnomalyFlora
+      - AnomalyIce
+      - AnomalyTech
+      - AnomalyGravity
+      - AnomalyPyroclastic
+      - AnomalyLiquid
+      - AnomalyRockBananium
+      - AnomalyRockGold
+      - AnomalyRockIron
+      - AnomalyRockSilver
+      - AnomalyRockUranium
+      - AnomalyShadow
+      - AnomalySanta
+      - BorgChassisEngineer
+      - BorgChassisJanitor
+      - BorgChassisMedical
+      - BorgChassisMining
+      - BorgChassisService
+      - EngineeringBorgChassisDerelict
+      - PlayerEngineeringBorgDerelict
+      - PlayerEngineeringBorgDerelictGhostRole
+      - JanitorBorgChassisDerelict
+      - PlayerJanitorBorgDerelict
+      - PlayerJanitorBorgDerelictGhostRole
+      - MedicalBorgChassisDerelict
+      - PlayerMedicalBorgDerelict
+      - PlayerMedicalBorgDerelictGhostRole
+      - MiningBorgChassisDerelict
+      - PlayerMiningBorgDerelict
+      - PlayerMiningBorgDerelictGhostRole
+      - BorgChassisDerelict
+      - PlayerBorgDerelict
+      - MobSlimesPet
+      - AnomalyCoreBluespace
+      - AnomalyCoreBluespaceInert
+      - AnomalyCoreElectricity
+      - AnomalyCoreElectricityInert
+      - AnomalyCoreLiquid
+      - AnomalyCoreLiquidInert
+      - AnomalyCorePyroclastic
+      - AnomalyCorePyroclasticInert
+    emotionalEffect: 11.0
+
+# cards for identifying specific categories
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_RndMachines
+  suffix: RnD machines
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-rnd-machines
+    triggers:
+      - MachineAPE
+      - MachineAnomalyGenerator
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_Anomalies
+  suffix: anomalies
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-anomalies
+    triggers:
+      - AnomalyBluespace
+      - AnomalyElectricity
+      - AnomalyFlesh
+      - AnomalyFlora
+      - AnomalyIce
+      - AnomalyTech
+      - AnomalyGravity
+      - AnomalyPyroclastic
+      - AnomalyLiquid
+      - AnomalyRockBananium
+      - AnomalyRockGold
+      - AnomalyRockIron
+      - AnomalyRockSilver
+      - AnomalyRockUranium
+      - AnomalyShadow
+      - AnomalySanta
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_Borgs
+  suffix: borgs
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-borgs
+    triggers:
+      - BorgChassisEngineer
+      - BorgChassisJanitor
+      - BorgChassisMedical
+      - BorgChassisMining
+      - BorgChassisService
+      - EngineeringBorgChassisDerelict
+      - PlayerEngineeringBorgDerelict
+      - PlayerEngineeringBorgDerelictGhostRole
+      - JanitorBorgChassisDerelict
+      - PlayerJanitorBorgDerelict
+      - PlayerJanitorBorgDerelictGhostRole
+      - MedicalBorgChassisDerelict
+      - PlayerMedicalBorgDerelict
+      - PlayerMedicalBorgDerelictGhostRole
+      - MiningBorgChassisDerelict
+      - PlayerMiningBorgDerelict
+      - PlayerMiningBorgDerelictGhostRole
+      - BorgChassisDerelict
+      - PlayerBorgDerelict
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_AnomaliesCores
+  suffix: anomalies cores
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-anomalies-cores
+    triggers:
+      - AnomalyCoreBluespace
+      - AnomalyCoreBluespaceInert
+      - AnomalyCoreElectricity
+      - AnomalyCoreElectricityInert
+      - AnomalyCoreLiquid
+      - AnomalyCoreLiquidInert
+      - AnomalyCorePyroclastic
+      - AnomalyCorePyroclasticInert
+    emotionalEffect: 11.0
+
+# each trigger's cards
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_MachineAPE
+  suffix: machine ape
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MachineAPE
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_MachineAnomalyGenerator
+  suffix: machine anomaly generator
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MachineAnomalyGenerator
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_AnomalyBluespace
+  suffix: anomaly bluespace
+  components:
+  - type: PsychologyCard
+    triggers:
+      - AnomalyBluespace
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_AnomalyElectricity
+  suffix: anomaly electricity
+  components:
+  - type: PsychologyCard
+    triggers:
+      - AnomalyElectricity
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_AnomalyFlesh
+  suffix: anomaly flesh
+  components:
+  - type: PsychologyCard
+    triggers:
+      - AnomalyFlesh
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_AnomalyFlora
+  suffix: anomaly flora
+  components:
+  - type: PsychologyCard
+    triggers:
+      - AnomalyFlora
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_AnomalyIce
+  suffix: anomaly ice
+  components:
+  - type: PsychologyCard
+    triggers:
+      - AnomalyIce
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_AnomalyTech
+  suffix: anomaly tech
+  components:
+  - type: PsychologyCard
+    triggers:
+      - AnomalyTech
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_AnomalyGravity
+  suffix: anomaly gravity
+  components:
+  - type: PsychologyCard
+    triggers:
+      - AnomalyGravity
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_AnomalyPyroclastic
+  suffix: anomaly pyroclastic
+  components:
+  - type: PsychologyCard
+    triggers:
+      - AnomalyPyroclastic
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_AnomalyLiquid
+  suffix: anomaly liquid
+  components:
+  - type: PsychologyCard
+    triggers:
+      - AnomalyLiquid
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_AnomalyRockBananium
+  suffix: anomaly rock bananium
+  components:
+  - type: PsychologyCard
+    triggers:
+      - AnomalyRockBananium
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_AnomalyRockGold
+  suffix: anomaly rock gold
+  components:
+  - type: PsychologyCard
+    triggers:
+      - AnomalyRockGold
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_AnomalyRockIron
+  suffix: anomaly rock iron
+  components:
+  - type: PsychologyCard
+    triggers:
+      - AnomalyRockIron
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_AnomalyRockSilver
+  suffix: anomaly rock silver
+  components:
+  - type: PsychologyCard
+    triggers:
+      - AnomalyRockSilver
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_AnomalyRockUranium
+  suffix: anomaly rock uranium
+  components:
+  - type: PsychologyCard
+    triggers:
+      - AnomalyRockUranium
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_AnomalyShadow
+  suffix: anomaly shadow
+  components:
+  - type: PsychologyCard
+    triggers:
+      - AnomalyShadow
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_AnomalySanta
+  suffix: anomaly santa
+  components:
+  - type: PsychologyCard
+    triggers:
+      - AnomalySanta
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_BorgChassisEngineer
+  suffix: borg chassis engineer
+  components:
+  - type: PsychologyCard
+    triggers:
+      - BorgChassisEngineer
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_BorgChassisJanitor
+  suffix: borg chassis janitor
+  components:
+  - type: PsychologyCard
+    triggers:
+      - BorgChassisJanitor
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_BorgChassisMedical
+  suffix: borg chassis medical
+  components:
+  - type: PsychologyCard
+    triggers:
+      - BorgChassisMedical
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_BorgChassisMining
+  suffix: borg chassis mining
+  components:
+  - type: PsychologyCard
+    triggers:
+      - BorgChassisMining
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_BorgChassisService
+  suffix: borg chassis service
+  components:
+  - type: PsychologyCard
+    triggers:
+      - BorgChassisService
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_EngineeringBorgChassisDerelict
+  suffix: engineering borg chassis derelict
+  components:
+  - type: PsychologyCard
+    triggers:
+      - EngineeringBorgChassisDerelict
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_PlayerEngineeringBorgDerelict
+  suffix: player engineering borg derelict
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PlayerEngineeringBorgDerelict
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_PlayerEngineeringBorgDerelictGhostRole
+  suffix: player engineering borg derelict ghost role
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PlayerEngineeringBorgDerelictGhostRole
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_JanitorBorgChassisDerelict
+  suffix: janitor borg chassis derelict
+  components:
+  - type: PsychologyCard
+    triggers:
+      - JanitorBorgChassisDerelict
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_PlayerJanitorBorgDerelict
+  suffix: player janitor borg derelict
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PlayerJanitorBorgDerelict
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_PlayerJanitorBorgDerelictGhostRole
+  suffix: player janitor borg derelict ghost role
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PlayerJanitorBorgDerelictGhostRole
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_MedicalBorgChassisDerelict
+  suffix: medical borg chassis derelict
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MedicalBorgChassisDerelict
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_PlayerMedicalBorgDerelict
+  suffix: player medical borg derelict
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PlayerMedicalBorgDerelict
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_PlayerMedicalBorgDerelictGhostRole
+  suffix: player medical borg derelict ghost role
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PlayerMedicalBorgDerelictGhostRole
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_MiningBorgChassisDerelict
+  suffix: mining borg chassis derelict
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MiningBorgChassisDerelict
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_PlayerMiningBorgDerelict
+  suffix: player mining borg derelict
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PlayerMiningBorgDerelict
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_PlayerMiningBorgDerelictGhostRole
+  suffix: player mining borg derelict ghost role
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PlayerMiningBorgDerelictGhostRole
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_BorgChassisDerelict
+  suffix: borg chassis derelict
+  components:
+  - type: PsychologyCard
+    triggers:
+      - BorgChassisDerelict
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_PlayerBorgDerelict
+  suffix: player borg derelict
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PlayerBorgDerelict
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_AnomalyCoreBluespace
+  suffix: anomaly core bluespace
+  components:
+  - type: PsychologyCard
+    triggers:
+      - AnomalyCoreBluespace
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_AnomalyCoreBluespaceInert
+  suffix: anomaly core bluespace inert
+  components:
+  - type: PsychologyCard
+    triggers:
+      - AnomalyCoreBluespaceInert
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_AnomalyCoreElectricity
+  suffix: anomaly core electricity
+  components:
+  - type: PsychologyCard
+    triggers:
+      - AnomalyCoreElectricity
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_AnomalyCoreElectricityInert
+  suffix: anomaly core electricity inert
+  components:
+  - type: PsychologyCard
+    triggers:
+      - AnomalyCoreElectricityInert
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_AnomalyCoreLiquid
+  suffix: anomaly core liquid
+  components:
+  - type: PsychologyCard
+    triggers:
+      - AnomalyCoreLiquid
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_AnomalyCoreLiquidInert
+  suffix: anomaly core liquid inert
+  components:
+  - type: PsychologyCard
+    triggers:
+      - AnomalyCoreLiquidInert
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_AnomalyCorePyroclastic
+  suffix: anomaly core pyroclastic
+  components:
+  - type: PsychologyCard
+    triggers:
+      - AnomalyCorePyroclastic
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_AnomalyCorePyroclasticInert
+  suffix: anomaly core pyroclastic inert
+  components:
+  - type: PsychologyCard
+    triggers:
+      - AnomalyCorePyroclasticInert
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BaseRnDPsychCard
+  id: RnD_PsychCard_MobSlimesPet
+  suffix: mob slimes pet
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MobSlimesPet
+    emotionalEffect: 11.0

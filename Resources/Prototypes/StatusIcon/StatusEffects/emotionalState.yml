@@ -1,0 +1,112 @@
+- type: emotionalStateIcon
+  id: PsychologyStateIconBase
+  abstract: true
+  priority: 5
+  locationPreference: Right
+  isShaded: true
+
+- type: emotionalStateIcon
+  id: EmotionalStateIconZero
+  parent: PsychologyStateIconBase
+  icon:
+    sprite: /Textures/Interface/Misc/psychologyStatesIcons.rsi
+    state: ps_0
+
+- type: emotionalStateIcon
+  id: EmotionalStateIconMinus1
+  parent: PsychologyStateIconBase
+  icon:
+    sprite: /Textures/Interface/Misc/psychologyStatesIcons.rsi
+    state: ps_minus_1
+
+- type: emotionalStateIcon
+  id: EmotionalStateIconMinus2
+  parent: PsychologyStateIconBase
+  icon:
+    sprite: /Textures/Interface/Misc/psychologyStatesIcons.rsi
+    state: ps_minus_2
+
+- type: emotionalStateIcon
+  id: EmotionalStateIconMinus3
+  parent: PsychologyStateIconBase
+  icon:
+    sprite: /Textures/Interface/Misc/psychologyStatesIcons.rsi
+    state: ps_minus_3
+
+- type: emotionalStateIcon
+  id: EmotionalStateIconPlus1
+  parent: PsychologyStateIconBase
+  icon:
+    sprite: /Textures/Interface/Misc/psychologyStatesIcons.rsi
+    state: ps_plus_1
+
+- type: emotionalStateIcon
+  id: EmotionalStateIconPlus2
+  parent: PsychologyStateIconBase
+  icon:
+    sprite: /Textures/Interface/Misc/psychologyStatesIcons.rsi
+    state: ps_plus_2
+
+- type: emotionalStateIcon
+  id: EmotionalStateIconPlus3
+  parent: PsychologyStateIconBase
+  icon:
+    sprite: /Textures/Interface/Misc/psychologyStatesIcons.rsi
+    state: ps_plus_3
+
+# ============ Emotional States =============
+- type: emotionalStateIcon
+  id: EmotionalStateIconBase
+  abstract: true
+  priority: 4
+  locationPreference: Right
+  isShaded: true
+
+- type: emotionalStateIcon
+  id: EmotionalStateIconRainbow
+  parent: EmotionalStateIconBase
+  icon:
+    sprite: /Textures/Interface/Misc/emotionalStateIcons.rsi
+    state: ps_plus_3
+
+- type: emotionalStateIcon
+  id: EmotionalStateIconExcellent
+  parent: EmotionalStateIconBase
+  icon:
+    sprite: /Textures/Interface/Misc/emotionalStateIcons.rsi
+    state: ps_plus_2
+
+- type: emotionalStateIcon
+  id: EmotionalStateIconGood
+  parent: EmotionalStateIconBase
+  icon:
+    sprite: /Textures/Interface/Misc/emotionalStateIcons.rsi
+    state: ps_plus_1
+
+- type: emotionalStateIcon
+  id: EmotionalStateIconNeutral
+  parent: EmotionalStateIconBase
+  icon:
+    sprite: /Textures/Interface/Misc/emotionalStateIcons.rsi
+    state: ps_minus_3
+
+- type: emotionalStateIcon
+  id: EmotionalStateIconSad
+  parent: EmotionalStateIconBase
+  icon:
+    sprite: /Textures/Interface/Misc/emotionalStateIcons.rsi
+    state: ps_minus_2
+
+- type: emotionalStateIcon
+  id: EmotionalStateIconDepressive
+  parent: EmotionalStateIconBase
+  icon:
+    sprite: /Textures/Interface/Misc/emotionalStateIcons.rsi
+    state: ps_minus_1
+
+- type: emotionalStateIcon
+  id: EmotionalStateIconDemonic
+  parent: EmotionalStateIconBase
+  icon:
+    sprite: /Textures/Interface/Misc/emotionalStateIcons.rsi
+    state: ps_0

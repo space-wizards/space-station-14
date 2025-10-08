@@ -1,0 +1,9 @@
+- type: entity
+  parent: BasePsychCard
+  id: Moth_PsychCard_MobArachnid
+  suffix: MobArachnid
+  components:
+  - type: PsychologyCard
+    triggers:
+      - MobArachnid
+    emotionalEffect: 11.0

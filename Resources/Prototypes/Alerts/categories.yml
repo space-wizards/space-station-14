@@ -33,3 +33,7 @@
 
 - type: alertCategory
   id: Battery
+
+  #BeatusCrow
+- type: alertCategory
+  id: Emotions

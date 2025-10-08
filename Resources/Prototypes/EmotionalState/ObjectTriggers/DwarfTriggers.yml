@@ -1,0 +1,16 @@
+- type: emotionalTriggers
+  id: BaseDwarfTrigger
+  abstract: true
+  triggersPrototype: MobVulpkanin
+  positEffect: 0.0
+  negatEffect: 0.0
+  species:
+    - MobDwarf
+
+- type: emotionalTriggers
+  parent: BaseDwarfTrigger
+  id: DwarfTrigger_Blood
+  triggersPrototype: Blood
+  requiredTrigger: true
+  positEffect: 0.0
+  negatEffect: 0.07

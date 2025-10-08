@@ -1,0 +1,452 @@
+# Generally, items like wrappers, trash cans, benches, trees, flowers, flags, etc., will likely fall into the General category.
+- type: entity
+  parent: BaseItem
+  id: BasePsychCard
+  abstract: true
+  name: The psychologist's card
+  components:
+  - type: Sprite
+    sprite: EmotionalState/psychologyCards.rsi
+    state: based
+    scale: 0.6, 0.6
+  - type: Item
+    size: Tiny
+  - type: Appearance
+
+# card for identifying trigger items
+- type: entity
+  parent: BasePsychCard
+  id: General_PsychCard
+  suffix: general items
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-general-items
+    triggers:
+      - FloraTreeLarge
+      - FloraTree
+      - PottedPlant1
+      - PottedPlant2
+      - PottedPlant3
+      - PottedPlant4
+      - PottedPlant5
+      - PottedPlant6
+      - PottedPlant7
+      - PottedPlant8
+      - PottedPlant9
+      - PottedPlant10
+      - PottedPlant11
+      - PottedPlant12
+      - PottedPlant13
+      - PottedPlant14
+      - PottedPlant15
+      - PottedPlant16
+      - PottedPlant17
+      - PottedPlant18
+      - PottedPlant19
+      - PottedPlant20
+      - PottedPlant21
+      - PottedPlant22
+      - PottedPlant23
+      - PottedPlant24
+      - PottedPlant25
+      - RevolverCapGun
+      - DrinkRootBeerCan
+      - DrinkBottleBeer
+      - DrinkBeerBottleFull
+      - DrinkBeerCan
+      - DrinkBeerGrowler
+    emotionalEffect: 11.0
+
+# cards for identifying specific categories
+- type: entity
+  parent: BasePsychCard
+  id: General_PsychCard_FloraTree
+  suffix: general trees
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-general-trees
+    triggers:
+      - FloraTreeLarge
+      - FloraTree
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: General_PsychCard_PottedPlant
+  suffix: potted plants
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-general-potted-plants
+    triggers:
+      - PottedPlant1
+      - PottedPlant2
+      - PottedPlant3
+      - PottedPlant4
+      - PottedPlant5
+      - PottedPlant6
+      - PottedPlant7
+      - PottedPlant8
+      - PottedPlant9
+      - PottedPlant10
+      - PottedPlant11
+      - PottedPlant12
+      - PottedPlant13
+      - PottedPlant14
+      - PottedPlant15
+      - PottedPlant16
+      - PottedPlant17
+      - PottedPlant18
+      - PottedPlant19
+      - PottedPlant20
+      - PottedPlant21
+      - PottedPlant22
+      - PottedPlant23
+      - PottedPlant24
+      - PottedPlant25
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: General_PsychCard_Beer
+  suffix: general beer
+  components:
+  - type: PsychologyCard
+    locName: psychology-card-with-general-beer
+    triggers:
+      - DrinkRootBeerCan
+      - DrinkBottleBeer
+      - DrinkBeerBottleFull
+      - DrinkBeerCan
+      - DrinkBeerGrowler
+    emotionalEffect: 11.0
+
+# each trigger's cards
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_FloraTreeLarge
+  suffix: flora tree large
+  components:
+  - type: PsychologyCard
+    triggers:
+      - FloraTreeLarge
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_FloraTree
+  suffix: flora tree
+  components:
+  - type: PsychologyCard
+    triggers:
+      - FloraTree
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_PottedPlant1
+  suffix: potted plant 1
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PottedPlant1
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_PottedPlant2
+  suffix: potted plant 2
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PottedPlant2
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_PottedPlant3
+  suffix: potted plant 3
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PottedPlant3
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_PottedPlant4
+  suffix: potted plant 4
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PottedPlant4
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_PottedPlant5
+  suffix: potted plant 5
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PottedPlant5
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_PottedPlant6
+  suffix: potted plant 6
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PottedPlant6
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_PottedPlant7
+  suffix: potted plant 7
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PottedPlant7
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_PottedPlant8
+  suffix: potted plant 8
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PottedPlant8
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_PottedPlant9
+  suffix: potted plant 9
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PottedPlant9
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_PottedPlant10
+  suffix: potted plant 10
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PottedPlant10
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_PottedPlant11
+  suffix: potted plant 11
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PottedPlant11
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_PottedPlant12
+  suffix: potted plant 12
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PottedPlant12
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_PottedPlant13
+  suffix: potted plant 13
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PottedPlant13
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_PottedPlant14
+  suffix: potted plant 14
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PottedPlant14
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_PottedPlant15
+  suffix: potted plant 15
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PottedPlant15
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_PottedPlant16
+  suffix: potted plant 16
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PottedPlant16
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_PottedPlant17
+  suffix: potted plant 17
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PottedPlant17
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_PottedPlant18
+  suffix: potted plant 18
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PottedPlant18
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_PottedPlant19
+  suffix: potted plant 19
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PottedPlant19
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_PottedPlant20
+  suffix: potted plant 20
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PottedPlant20
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_PottedPlant21
+  suffix: potted plant 21
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PottedPlant21
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_PottedPlant22
+  suffix: potted plant 22
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PottedPlant22
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_PottedPlant23
+  suffix: potted plant 23
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PottedPlant23
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_PottedPlant24
+  suffix: potted plant 24
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PottedPlant24
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_PottedPlant25
+  suffix: potted plant 25
+  components:
+  - type: PsychologyCard
+    triggers:
+      - PottedPlant25
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_RevolverCapGun
+  suffix: revolver cap gun
+  components:
+  - type: PsychologyCard
+    triggers:
+      - RevolverCapGun
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_DrinkRootBeerCan
+  suffix: drink root beer can
+  components:
+  - type: PsychologyCard
+    triggers:
+      - DrinkRootBeerCan
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_DrinkBottleBeer
+  suffix: drink bottle beer
+  components:
+  - type: PsychologyCard
+    triggers:
+      - DrinkBottleBeer
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_DrinkBeerBottleFull
+  suffix: drink beer bottle full
+  components:
+  - type: PsychologyCard
+    triggers:
+      - DrinkBeerBottleFull
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_DrinkBeerCan
+  suffix: drink beer can
+  components:
+  - type: PsychologyCard
+    triggers:
+      - DrinkBeerCan
+    emotionalEffect: 11.0
+
+- type: entity
+  parent: BasePsychCard
+  id: Genetal_PsychCard_DrinkBeerGrowler
+  suffix: drink beer growler
+  components:
+  - type: PsychologyCard
+    triggers:
+      - DrinkBeerGrowler
+    emotionalEffect: 11.0

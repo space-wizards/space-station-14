@@ -1,0 +1,13 @@
+// Very light grayscale overlay - minimal color loss
+uniform sampler2D SCREEN_TEXTURE;
+
+const highp float EffectStrength = 0.7;
+
+void fragment() {
+    highp vec4 color = texture(SCREEN_TEXTURE, UV);
+
+    highp float gray = dot(color.rgb, vec3(0.299, 0.587, 0.114));
+    highp vec3 result = mix(color.rgb, vec3(gray), EffectStrength);
+
+    COLOR = vec4(result, color.a);
+}
