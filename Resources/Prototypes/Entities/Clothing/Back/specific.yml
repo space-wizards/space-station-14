@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingBackpack
+  parent: [ClothingBackpack, BaseChameleon]
   id: ClothingBackpackChameleon
   name: backpack
   description: You wear this on your back and put items into it.
@@ -96,6 +96,7 @@
     - WhitelistChameleon
     - CorgiWearable
     - PetOnly
+    - ScurretWearable
   - type: Construction
     graph: ClothingBagPet
     node: bagPet
