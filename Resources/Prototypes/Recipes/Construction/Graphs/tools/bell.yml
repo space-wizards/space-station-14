@@ -32,7 +32,7 @@
             - !type:SpawnPrototype
               prototype: PartRodMetal1
               amount: 1
-          steps:
+          steps: &UnscrewStep
             - tool: Screwing
               doAfter: 1
 
@@ -44,9 +44,7 @@
             - !type:SpawnPrototype
               prototype: CableApcStack1
               amount: 2
-          steps:
-            - tool: Screwing
-              doAfter: 1
+          steps: *UnscrewStep
 
     - node: deskHornNode
       entity: DeskHorn
@@ -56,6 +54,4 @@
             - !type:SpawnPrototype
               prototype: BikeHorn
               amount: 1
-          steps:
-            - tool: Screwing
-              doAfter: 1
+          steps: *UnscrewStep

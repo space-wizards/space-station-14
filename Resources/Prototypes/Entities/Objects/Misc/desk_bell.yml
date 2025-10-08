@@ -1,12 +1,12 @@
 - type: entity
   parent: BaseItem
   id: EmptyDeskBell
-  name: empty desk bell
-  description: It's missing the noise maker.
+  name: unfinished desk bell
+  description: An empty bell missing its noise maker.
   components:
   - type: Sprite
     sprite: Objects/Misc/desk_bell.rsi
-    state: "icon_empty"
+    state: icon-empty
   - type: Construction
     graph: BellGraph
     node: start
@@ -14,13 +14,13 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
+    - trigger: &DamageTrigger50
         !type:DamageTrigger
         damage: 50
-      behaviors:
+      behaviors: &OverkillBehavior
         - !type:DoActsBehavior
           acts: ["Destruction"]
-    - trigger:
+    - trigger: &DamageTrigger20
         !type:DamageTrigger
         damage: 20
       behaviors:
@@ -36,9 +36,9 @@
           acts: ["Destruction"]
   - type: MeleeWeapon
     wideAnimationRotation: 180
-    soundHit:
+    soundHit: &BellSound
       collection: DeskBell
-      params:
+      params: &SoundParams
           variation: 0.03
           volume: 3
     damage:
@@ -47,33 +47,20 @@
   # Sound
   - type: MeleeSound
     soundGroups:
-      Brute:
-        collection: DeskBell
-        params:
-            variation: 0.03
-            volume: 5
-            pitch: 1.5
+      Brute: *BellSound
   - type: EmitSoundOnLand
-    sound:
-      collection: DeskBell
-      params:
-          variation: 0.03
-          volume: 3
+    sound: *BellSound
   - type: EmitSoundOnCollide
-    sound:
-      collection: DeskBell
-      params:
-          variation: 0.03
-          volume: 3
+    sound: *BellSound
 
 - type: entity
   parent: EmptyDeskBell
   id: DeskBell
   name: desk bell
-  description: The cornerstone of any customer service job. You feel an unending urge to ring it. Can be screwed open to replace the noise maker.
+  description: The cornerstone of any customer service job. You feel an unending urge to ring it.
   components:
   - type: Sprite
-    state: "icon_bell"
+    state: icon-bell
   - type: Tag
     tags:
       - Payload
@@ -82,15 +69,9 @@
     node: deskBellNode
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
-        damage: 20
+    - trigger: *DamageTrigger50
+      behaviors: *OverkillBehavior
+    - trigger: *DamageTrigger20
       behaviors:
         - !type:PlaySoundBehavior
           sound:
@@ -106,27 +87,15 @@
           acts: ["Destruction"]
   - type: InteractionPopup
     successChance: 1
-    interactSuccessSound:
-      collection: DeskBell
-      params:
-        variation: 0.03
-        volume: 3
     onActivate: true
+    interactSuccessSound: *BellSound
   - type: UseDelay
     delay: 0.5
   # Sound
   - type: EmitSoundOnUse
-    sound:
-      collection: DeskBell
-      params:
-          variation: 0.03
-          volume: 3
+    sound: *BellSound
   - type: EmitSoundOnTrigger
-    sound:
-      collection: DeskBell
-      params:
-          variation: 0.03
-          volume: 3
+    sound: *BellSound
 
 - type: entity
   parent: EmptyDeskBell
@@ -135,7 +104,7 @@
   description: An advanced customer service tool. You feel an unending urge to buzz it.
   components:
   - type: Sprite
-    state: "icon_buzzer"
+    state: icon-buzzer
   - type: Tag
     tags:
       - Payload
@@ -144,15 +113,9 @@
     node: deskBuzzerNode
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
-        damage: 20
+    - trigger: *DamageTrigger50
+      behaviors: *OverkillBehavior
+    - trigger: *DamageTrigger20
       behaviors:
         - !type:PlaySoundBehavior
           sound:
@@ -169,54 +132,26 @@
   - type: StationAiWhitelist
   - type: InteractionPopup
     successChance: 1
-    interactSuccessSound:
-      collection: DeskBuzzer
-      params:
-        variation: 0.03
-        volume: 3
     onActivate: true
+    interactSuccessSound: &BuzzerSound
+      collection: DeskBuzzer
+      params: *SoundParams
   - type: UseDelay
     delay: 0.5
   # Sound
   - type: EmitSoundOnUse
-    sound:
-      collection: DeskBuzzer
-      params:
-          variation: 0.03
-          volume: 3
+    sound: *BuzzerSound
   - type: EmitSoundOnTrigger
-    sound:
-      collection: DeskBuzzer
-      params:
-          variation: 0.03
-          volume: 3
+    sound: *BuzzerSound
   - type: MeleeSound
     soundGroups:
-      Brute:
-        collection: DeskBuzzer
-        params:
-            variation: 0.03
-            volume: 5
-            pitch: 1.5
+      Brute: *BuzzerSound
   - type: MeleeWeapon
-    wideAnimationRotation: 180
-    soundHit:
-      collection: DeskBuzzer
-      params:
-          variation: 0.03
-          volume: 3
+    soundHit: *BuzzerSound
   - type: EmitSoundOnLand
-    sound:
-      collection: DeskBuzzer
-      params:
-          variation: 0.03
-          volume: 3
+    sound: *BuzzerSound
   - type: EmitSoundOnCollide
-    sound:
-      collection: DeskBuzzer
-      params:
-          variation: 0.03
-          volume: 3
+    sound: *BuzzerSound
 
 - type: entity
   parent: EmptyDeskBell
@@ -225,7 +160,7 @@
   description: The cornerstone of any clown business. You feel an unending urge to honk it.
   components:
   - type: Sprite
-    state: "icon_buzzer"
+    state: icon-buzzer
   - type: Tag
     tags:
       - Payload
@@ -234,15 +169,9 @@
     node: deskHornNode
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
-        damage: 20
+    - trigger: *DamageTrigger50
+      behaviors: *OverkillBehavior
+    - trigger: *DamageTrigger20
       behaviors:
         - !type:PlaySoundBehavior
           sound:
@@ -258,51 +187,23 @@
           acts: ["Destruction"]
   - type: InteractionPopup
     successChance: 1
-    interactSuccessSound:
-      collection: BikeHorn
-      params:
-        variation: 0.03
-        volume: 3
     onActivate: true
+    interactSuccessSound: &HornSound
+      collection: BikeHorn
+      params: *SoundParams
   - type: UseDelay
     delay: 0.5
   # Sound
   - type: EmitSoundOnUse
-    sound:
-      collection: BikeHorn
-      params:
-          variation: 0.03
-          volume: 3
+    sound: *HornSound
   - type: EmitSoundOnTrigger
-    sound:
-      collection: BikeHorn
-      params:
-          variation: 0.03
-          volume: 3
+    sound: *HornSound
   - type: MeleeSound
     soundGroups:
-      Brute:
-        collection: BikeHorn
-        params:
-            variation: 0.03
-            volume: 5
-            pitch: 1.5
+      Brute: *HornSound
   - type: MeleeWeapon
-    wideAnimationRotation: 180
-    soundHit:
-      collection: BikeHorn
-      params:
-          variation: 0.03
-          volume: 3
+    soundHit: *HornSound
   - type: EmitSoundOnLand
-    sound:
-      collection: BikeHorn
-      params:
-          variation: 0.03
-          volume: 3
+    sound: *HornSound
   - type: EmitSoundOnCollide
-    sound:
-      collection: BikeHorn
-      params:
-          variation: 0.03
-          volume: 3
+    sound: *HornSound
