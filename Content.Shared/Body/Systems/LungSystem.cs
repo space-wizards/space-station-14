@@ -6,7 +6,6 @@ using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Clothing;
 using Content.Shared.Inventory.Events;
-using Content.Shared.Body.Components;
 
 namespace Content.Shared.Body.Systems;
 
