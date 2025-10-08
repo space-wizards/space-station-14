@@ -290,15 +290,32 @@
   metabolisms:
     Narcotic:
       effects:
+      - !type:Emote
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Nocturine
+          min: 9
+          max: 9
+        emote: Yawn
+        showInChat: true
+        probability: 1
+      - !type:MovespeedModifier
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Nocturine
+          min: 2
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
       - !type:ModifyStatusEffect
         conditions:
         - !type:ReagentThreshold
           reagent: Nocturine
           min: 8
         effectProto: StatusEffectForcedSleeping
-        time: 3
-        delay: 6
-        type: Add
+        time: 6
+        delay: 5
+        type: Update
+
 
 - type: reagent
   id: MuteToxin
