@@ -17,13 +17,12 @@
   name: job-name-unknown # Always appear as unknown.
   description: job-description-unknown
   playTimeTracker: JobGhostRoleProtected
-  canBeAntag: false
   icon: JobIconGhostRoleProtected
   setPreference: false
   overrideConsoleVisibility: true
   requirements:
   - !type:OverallPlaytimeRequirement
-    time: 6000 # 100 minutes.
+    time: 1h
 
 - type: entity
   parent: BaseMindRole
@@ -32,4 +31,3 @@
   components:
   - type: MindRole
     jobPrototype: GhostRoleProtected
-  - type: JobRole
