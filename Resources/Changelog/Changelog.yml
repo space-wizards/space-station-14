@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: Tesla coils can now hold a max capacity of 5 MJ, and receive 5 MJ of
-      energy when struck by lightning.
-    type: Tweak
-  - message: Tesla coils can now only output a maximum of 350 kW to the grid. This
-      was done to make power flow smoother (it was triggering epilepsy in extreme
-      circumstances).
-    type: Tweak
-  id: 8554
-  time: '2025-05-22T01:39:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37626
 - author: Wolfkey-SomeoneElseTookMyUsername
   changes:
   - message: You can now construct disposal signalers, which trigger a signal every
@@ -3960,3 +3948,10 @@
   id: 9056
   time: '2025-10-08T15:49:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39920
+- author: SlamBamActionman
+  changes:
+  - message: Disablers, temperature guns and tasers can now hit holo mobs.
+    type: Fix
+  id: 9057
+  time: '2025-10-08T21:59:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40782
