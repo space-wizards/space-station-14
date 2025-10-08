@@ -735,7 +735,7 @@
   - type: Stack
     stackType: FloorTileMiningLight
 
-# Departamental
+# Departmental
 - type: entity
   name: freezer tile
   parent: FloorTileItemBase
@@ -1321,32 +1321,6 @@
   - type: Stack
     stackType: FloorTileRCircuit
 
-# Circuits stacks
-
-- type: entity
-  parent: FloorTileItemGCircuit
-  id: FloorTileItemGCircuit4
-  suffix: 4
-  components:
-  - type: Stack
-    count: 4
-
-- type: entity
-  parent: FloorTileItemBCircuit
-  id: FloorTileItemBCircuit4
-  suffix: 4
-  components:
-  - type: Stack
-    count: 4
-
-- type: entity
-  parent: FloorTileItemRCircuit
-  id: FloorTileItemRCircuit4
-  suffix: 4
-  components:
-  - type: Stack
-    count: 4
-
 # Terrain
 - type: entity
   name: grass tile
@@ -1534,6 +1508,40 @@
     stackType: FloorTileAstroGrass
 
 - type: entity
+  parent: FloorTileItemBase
+  id: FloorTileItemDarkAstroGrass
+  name: dark astro-grass
+  description: Fake grass that covers up wires and even comes with realistic NanoTrimmings!
+  components:
+  - type: Sprite
+    state: grassdark
+  - type: Item
+    heldPrefix: darkgrass
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorDarkAstroGrass
+  - type: Stack
+    stackType: FloorTileDarkAstroGrass
+
+- type: entity
+  parent: FloorTileItemBase
+  id: FloorTileItemLightAstroGrass
+  name: light astro-grass
+  description: Fake grass that covers up wires and even comes with realistic NanoTrimmings!
+  components:
+  - type: Sprite
+    state: grasslight
+  - type: Item
+    heldPrefix: lightgrass
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorLightAstroGrass
+  - type: Stack
+    stackType: FloorTileLightAstroGrass
+
+- type: entity
   id: FloorTileItemAstroIce
   parent: FloorTileItemBase
   name: astro-ice
@@ -1600,6 +1608,23 @@
     - FloorAstroAsteroidSandBorderless
   - type: Stack
     stackType: FloorTileAstroAsteroidSand
+
+- type: entity
+  parent: FloorTileItemBase
+  id: FloorTileItemDesertAstroSand
+  name: desert astro-sand
+  description: Fake sand, designed to be fine.
+  components:
+  - type: Sprite
+    state: desertsand
+  - type: Item
+    heldPrefix: desertsand
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorDesertAstroSand
+  - type: Stack
+    stackType: FloorTileDesertAstroSand
 
 - type: entity
   name: large wood floor
@@ -1767,6 +1792,20 @@
     - FloorXenoMaint
   - type: Stack
     stackType: FloorTileXenoMaint
+
+- type: entity
+  id: FloorTileItemXenoborg
+  parent: FloorTileItemBase
+  name: xenoborg floor
+  components:
+  - type: Sprite
+    state: xenoborg-floor
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorXenoborg
+  - type: Stack
+    stackType: FloorTileXenoborg
 
 - type: entity
   parent: FloorTileItemDark
