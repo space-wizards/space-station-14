@@ -2395,8 +2395,8 @@
   - type: Explosive
     explosionType: Default
     maxIntensity: 10
-    intensitySlope: 20
-    totalIntensity: 225
+    intensitySlope: 3
+    totalIntensity: 150
   - type: ExplodeOnTrigger
     keysIn:
     - timer
