@@ -1,12 +1,12 @@
-using Content.Server.Body.Components;
-using Content.Server.Ghost.Components;
+﻿using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
+using Content.Shared.Ghost;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Pointing;
 
-namespace Content.Server.Body.Systems;
+namespace Content.Shared.Body.Systems;
 
 public sealed class BrainSystem : EntitySystem
 {
@@ -43,4 +43,3 @@ public sealed class BrainSystem : EntitySystem
         args.Cancel();
     }
 }
-

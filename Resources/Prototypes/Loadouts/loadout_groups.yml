@@ -271,6 +271,13 @@
   - BartenderWintercoat
 
 - type: loadoutGroup
+  id: BartenderGoldenShaker
+  name: loadout-group-bartender-shaker
+  minLimit: 0
+  loadouts:
+  - BartenderGoldenShaker
+
+- type: loadoutGroup
   id: ChefHead
   name: loadout-group-chef-head
   minLimit: 0
