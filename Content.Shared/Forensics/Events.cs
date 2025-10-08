@@ -1,4 +1,5 @@
 using Content.Shared.DoAfter;
+using Content.Shared.Forensics.Components;
 using Content.Shared.Inventory;
 using Robust.Shared.Serialization;
 
@@ -35,7 +36,7 @@ public sealed partial class CleanForensicsDoAfterEvent : SimpleDoAfterEvent
 /// Raised on an entity when its DNA has been changed.
 /// </summary>
 [ByRefEvent]
-public record struct GenerateDnaEvent()
+public record struct GenerateDnaEvent
 {
     /// <summary>
     /// The entity getting new DNA.
@@ -45,7 +46,13 @@ public record struct GenerateDnaEvent()
     /// <summary>
     /// The generated DNA.
     /// </summary>
-    public required string DNA;
+    public string DNA;
+
+    public GenerateDnaEvent(EntityUid owner, string dna)
+    {
+        Owner = owner;
+        DNA = dna;
+    }
 }
 
 /// <summary>

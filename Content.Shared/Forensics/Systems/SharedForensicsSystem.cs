@@ -75,7 +75,7 @@ public sealed class ForensicsSystem : EntitySystem
         else
         {
             // If set manually (for example by cloning) we also need to inform the bloodstream of the correct DNA string so it can be updated
-            var ev = new GenerateDnaEvent { Owner = ent.Owner, DNA = ent.Comp.DNA };
+            var ev = new GenerateDnaEvent ( ent.Owner, ent.Comp.DNA );
             RaiseLocalEvent(ent.Owner, ref ev);
         }
     }
@@ -325,7 +325,7 @@ public sealed class ForensicsSystem : EntitySystem
         ent.Comp.DNA = GenerateDNA();
         Dirty(ent);
 
-        var ev = new GenerateDnaEvent { Owner = ent.Owner, DNA = ent.Comp.DNA };
+        var ev = new GenerateDnaEvent( ent.Owner, ent.Comp.DNA );
         RaiseLocalEvent(ent.Owner, ref ev);
     }
 
