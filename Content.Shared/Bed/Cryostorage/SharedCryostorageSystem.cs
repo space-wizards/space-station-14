@@ -182,3 +182,9 @@ public abstract class SharedCryostorageSystem : EntitySystem
         return comp.MapUid != null && comp.MapUid == PausedMap;
     }
 }
+
+/// <summary>
+/// Raised when someone is put to sleep in cryostorage
+/// </summary>
+[ByRefEvent]
+public record struct CryostorageEnteredEvent(EntityUid SleepyUid);

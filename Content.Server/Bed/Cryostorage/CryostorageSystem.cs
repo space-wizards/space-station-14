@@ -243,6 +243,9 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             ), Loc.GetString("earlyleave-cryo-sender"),
             playDefaultSound: false
         );
+
+        var cryoEnteredEvent = new CryostorageEnteredEvent(ent);
+        RaiseLocalEvent(ref cryoEnteredEvent);
     }
 
     private void HandleCryostorageReconnection(Entity<CryostorageContainedComponent> entity)
