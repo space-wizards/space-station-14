@@ -825,7 +825,7 @@
       - state: base
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-unshaded-4
-        map: ["enum.BatteryWeaponFireModeVisualizer.Color", "enum.GunVisualLayers.MagUnshaded"]
+        map: ["enum.BatteryWeaponFireModeVisuals.State", "enum.GunVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: MagazineVisuals
     magState: mag
@@ -834,7 +834,7 @@
   - type: GenericVisualizer
     visuals:
       enum.BatteryWeaponFireModeVisuals.State:
-        enum.BatteryWeaponFireModeVisualizer.Color:
+        enum.BatteryWeaponFireModeVisuals.State:
           BulletLaserSpread: { color: "#ff0006" }
           BulletLaserSpreadNarrow: { color: "#ff9d00"}
           BulletDisablerSmgSpread: { color: "#5fcde4" }
@@ -905,12 +905,12 @@
     - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-unshaded-1
-      map: ["enum.GunVisualLayers.MagUnshaded", "enum.BatteryWeaponFireModeVisualizer.Color"]
+      map: ["enum.GunVisualLayers.MagUnshaded", "enum.BatteryWeaponFireModeVisuals.State"]
       shader: unshaded
   - type: GenericVisualizer
     visuals:
       enum.BatteryWeaponFireModeVisuals.State:
-        enum.BatteryWeaponFireModeVisualizer.Color:
+        enum.BatteryWeaponFireModeVisuals.State:
           BoltTempgunCold: { color: "#a7ecde" }
           BoltTempgunHot: { color: OrangeRed }
   - type: Appearance

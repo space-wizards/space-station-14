@@ -124,7 +124,6 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
             if (TryComp<AppearanceComponent>(ent, out var appearance))
             {
                 _appearanceSystem.SetData(ent, BatteryWeaponFireModeVisuals.State, prototype.ID, appearance);
-                _appearanceSystem.SetData(ent, BatteryWeaponFireModeVisualizer.Color, prototype.ID, appearance);
             }
 
             if (user != null)
