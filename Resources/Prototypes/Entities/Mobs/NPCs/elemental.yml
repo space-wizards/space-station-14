@@ -1,38 +1,17 @@
 - type: entity
   abstract: true
+  parent: [BaseMob, MobCombat]
   id: MobElementalBase
   components:
-  - type: LagCompensation
   - type: Reactive
     groups:
       Acidic: [Touch]
-  - type: Clickable
   - type: Damageable
     damageContainer: Inorganic
-  - type: InteractionOutline
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.35
-        density: 50
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
     baseSprintSpeed : 3
-  - type: Sprite
-    noRot: true
-    drawdepth: Mobs
-  - type: NpcFactionMember
-    factions:
-    - SimpleNeutral
   - type: MovedByPressure
-  - type: Physics
-    bodyType: KinematicController # Same for all inheritors
   - type: StatusEffects
     allowed:
     - Electrocution
@@ -58,13 +37,8 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Input
-    context: "human"
-  - type: InputMover
-  - type: MobMover
   - type: ZombieImmune
   - type: ProtectedFromStepTriggers
-  - type: Appearance
   - type: StunVisuals
 
 - type: entity
@@ -83,9 +57,6 @@
     hidden: true
     soundHit:
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
-    damage:
-      types:
-        Blunt: 6
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
     baseSprintSpeed : 2.5
@@ -119,6 +90,10 @@
             max: 4
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 6
 
 - type: entity
   parent: MobOreCrab
@@ -128,10 +103,6 @@
   components:
   - type: Sprite
     state: iron_crab
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 5
   - type: MovementSpeedModifier
     baseWalkSpeed : 1.5
     baseSprintSpeed : 2
@@ -219,6 +190,10 @@
     radius: 2
     energy: 3
     color: "#06DF24"
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 6
 
 - type: entity
   parent: MobOreCrab
@@ -284,10 +259,6 @@
   components:
   - type: Sprite
     state: silver_crab
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 5
   - type: Destructible
     thresholds:
     - trigger:
@@ -313,10 +284,6 @@
   components:
   - type: Sprite
     state: gold_crab
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 5
   - type: Destructible
     thresholds:
     - trigger:
