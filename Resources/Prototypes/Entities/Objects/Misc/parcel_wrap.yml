@@ -38,6 +38,7 @@
   - type: ContainerContainer
     containers:
       contents: !type:ContainerSlot
+      paper_label: !type:ContainerSlot
   - type: Appearance
   - type: GenericVisualizer
     visuals:
