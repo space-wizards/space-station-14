@@ -41,7 +41,7 @@ public sealed partial class PickRandomPersonComponent : Component
     /// Color for the target reroll text
     /// </summary>
     [DataField]
-    public Color RerollColor = Color.Red;
+    public Color RerollColor = Color.OrangeRed;
 
     /// <summary>
     /// Sound played when the target is rerolled

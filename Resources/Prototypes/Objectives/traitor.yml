@@ -91,6 +91,7 @@
   - type: TargetObjective
     title: objective-condition-maroon-person-title
   - type: PickRandomPerson
+    rerollText: objective-notification-traitor-kill
     filters:
     # Can't have multiple objectives to kill the same person.
     - !type:TargetObjectiveMindFilter
@@ -113,6 +114,7 @@
   - type: TargetObjective
     title: objective-condition-kill-maroon-title
   - type: PickRandomPerson
+    rerollText: objective-notification-traitor-kill
     filters:
     - !type:BodyMindFilter
       whitelist:
@@ -141,6 +143,7 @@
   - type: TargetObjective
     title: objective-condition-other-traitor-alive-title
   - type: PickRandomPerson
+    rerollText: objective-notification-traitor-keep-alive
     filters:
     - !type:HasRoleMindFilter
       whitelist:
@@ -163,6 +166,7 @@
   - type: TargetObjective
     title: objective-condition-other-traitor-progress-title
   - type: PickRandomPerson
+    rerollText: objective-notification-traitor-help
     filters:
     - !type:HasRoleMindFilter
       whitelist:

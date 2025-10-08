@@ -1,16 +1,13 @@
 using Content.Server.Chat.Managers;
 using Content.Server.Objectives.Components;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Bed.Cryostorage;
 using Content.Shared.Chat;
+using Content.Shared.Database;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
-using Content.Server.GameTicking.Rules;
-using Content.Server.Revolutionary.Components;
-using Robust.Shared.Random;
-using System.Linq;
-using Content.Server.Chat.Systems;
+using Content.Shared.Roles.Jobs;
 using Robust.Server.Audio;
-using Robust.Shared.Network;
 using Robust.Shared.Player;
 
 namespace Content.Server.Objectives.Systems;
@@ -26,6 +23,8 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly ISharedPlayerManager _player = default!;
     [Dependency] private readonly IChatManager _chat = default!;
+    [Dependency] private readonly SharedJobSystem _job = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
 
     public override void Initialize()
     {
@@ -99,22 +98,39 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
                 continue;
 
             // invalid objective prototype
-            if (!TryComp<TargetObjectiveComponent>(uid, out var target))
+            if (!TryComp<TargetObjectiveComponent>(uid, out var targetObjective))
                 continue;
 
-            // couldn't find a target :(
-            if (_mind.PickFromPool(picker.Pool, picker.Filters, uid) is not {} picked)
-                continue;
-
-            _target.SetTarget(uid, picked, target);
-            _target.ChangeTitle(uid, target, MetaData(uid));
-
-            if (_player.TryGetSessionByEntity(uid, out var session))
+            // find the mind responsible for this objective, as to not make it the new target + for the text and audio playing
+            var mindQuery = EntityQueryEnumerator<MindComponent>();
+            while (mindQuery.MoveNext(out var playerMindId, out var playerMind))
             {
+                if (!playerMind.Objectives.Contains(uid))
+                    continue;
+
+                if (_mind.PickFromPool(picker.Pool, picker.Filters, playerMindId) is not {} targetMind)
+                    continue;
+
+                // set the new target id and name for the objective
+                _target.SetTarget(uid, targetMind, targetObjective);
+                _target.ChangeTitle(uid, targetObjective, MetaData(uid));
+
+                if (!_player.TryGetSessionById(playerMind.UserId, out var session))
+                    continue;
+
+                //tell the player their objectives changed
                 _audio.PlayGlobal(picker.RerollSound, session);
-                var msg = Loc.GetString(picker.RerollText);
+
+                var targetName = targetMind.Comp.CharacterName;
+                if (targetName == null)
+                    targetName = "Unknown";
+
+                var job = _job.MindTryGetJobName(targetMind);
+                var msg = Loc.GetString(picker.RerollText, ("Name", targetName), ("Job", job));
                 var wrappedMsg = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
-                _chat.ChatMessageToOne(ChatChannel.Server, msg, wrappedMsg, default, false, session.Channel, picker.RerollColor);;
+
+                _chat.ChatMessageToOne(ChatChannel.Server, msg, wrappedMsg, default, false, session.Channel, picker.RerollColor);
+                _adminLog.Add(LogType.Mind, LogImpact.Low, $"Objective target changed in mind of {_mind.MindOwnerLoggingString(playerMind)} to {targetName}");
             }
         }
     }
