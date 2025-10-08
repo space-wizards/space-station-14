@@ -249,9 +249,9 @@
   productEntity: WeaponFlamethrowerFG
   discountCategory: veryRareDiscounts
   discountDownTo:
-    Telecrystal: 12
+    Telecrystal: 14
   cost:
-    Telecrystal: 15
+    Telecrystal: 16
   categories:
     - UplinkWeaponry
 
