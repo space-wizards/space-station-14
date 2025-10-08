@@ -320,7 +320,12 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             else
             {
                 var set = ent.Comp.PreSelectedSessions.GetOrNew(def);
-                set.Add(session.UserId, (session.GetMind(), session.AttachedEntity)); // Selection done!
+                var entry = (session.GetMind(), session.AttachedEntity);
+                if (!set.TryAdd(session.UserId, entry))
+                {
+                    Log.Warning($"Overriding antag preselection for user {session}");
+                    set[session.UserId] = entry;
+                }
                 Log.Debug($"Pre-selected {session.Name} as antagonist: {ToPrettyString(ent)}");
                 _adminLogger.Add(LogType.AntagSelection, $"Pre-selected {session.Name} as antagonist: {ToPrettyString(ent)}");
             }
@@ -386,7 +391,12 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (onlyPreSelect && session != null)
         {
             var set = ent.Comp.PreSelectedSessions.GetOrNew(def);
-            set.Add(session.UserId, (session.GetMind(), session.AttachedEntity));
+            var entry = (session.GetMind(), session.AttachedEntity);
+            if (!set.TryAdd(session.UserId, entry))
+            {
+                Log.Warning($"Overriding antag preselection for user {session}");
+                set[session.UserId] = entry;
+            }
             Log.Debug($"Pre-selected {session.Name} as antagonist: {ToPrettyString(ent)}");
             _adminLogger.Add(LogType.AntagSelection, $"Pre-selected {session.Name} as antagonist: {ToPrettyString(ent)}");
         }
@@ -410,8 +420,13 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         {
             var mind = session.GetMind();
             var set = ent.Comp.PreSelectedSessions.GetOrNew(def);
-            set.Add(session.UserId, (mind, session.AttachedEntity));
             ent.Comp.AssignedSessions.Add(session.UserId);
+            var entry = (mind, session.AttachedEntity);
+            if (!set.TryAdd(session.UserId, entry))
+            {
+                Log.Warning($"Overriding antag preselection for user {session}");
+                set[session.UserId] = entry;
+            }
 
             // we shouldn't be blocking the entity if they're just a ghost or smth.
             if (!HasComp<GhostComponent>(session.AttachedEntity))
