@@ -9,7 +9,6 @@ namespace Content.Shared.FeedbackSystem;
 
 public sealed partial class SharedFeedbackSystem
 {
-    [Dependency] private readonly SharedFeedbackSystem _feedback = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IConfigurationManager _confg = default!;
 
@@ -35,7 +34,7 @@ public sealed partial class SharedFeedbackSystem
 
         while (actors.MoveNext(out _, out var actorComp))
         {
-            _feedback.SendPopupsSession(actorComp.PlayerSession, feedbackProtypes);
+            SendPopupsSession(actorComp.PlayerSession, feedbackProtypes);
         }
     }
 
