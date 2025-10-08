@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: High-energy shuttle impacts now deal much less damage.
-    type: Tweak
-  id: 8547
-  time: '2025-05-21T10:37:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37578
 - author: metalgearsloth
   changes:
   - message: Shuttle impact force is now proportional to direction of impact.
@@ -3958,3 +3951,11 @@
   id: 9049
   time: '2025-10-07T23:37:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40762
+- author: SlamBamActionman
+  changes:
+  - message: The Energy Shotgun no longer has a self-recharge or wide fire mode, but
+      charges faster in rechargers.
+    type: Tweak
+  id: 9050
+  time: '2025-10-08T02:51:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40757
