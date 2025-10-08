@@ -421,12 +421,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             var mind = session.GetMind();
             var set = ent.Comp.PreSelectedSessions.GetOrNew(def);
             ent.Comp.AssignedSessions.Add(session.UserId);
-            var entry = (mind, session.AttachedEntity);
-            if (!set.TryAdd(session.UserId, entry))
-            {
-                Log.Warning($"Overriding antag preselection for user {session}");
-                set[session.UserId] = entry;
-            }
+            set[session.UserId] = (mind, session.AttachedEntity);
 
             // we shouldn't be blocking the entity if they're just a ghost or smth.
             if (!HasComp<GhostComponent>(session.AttachedEntity))
