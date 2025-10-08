@@ -835,9 +835,9 @@
     visuals:
       enum.BatteryWeaponFireModeVisuals.State:
         enum.BatteryWeaponFireModeVisualizer.Color:
-          BulletLaserSpread: {}
-          BulletLaserSpreadNarrow: {}
-          BulletDisablerSmgSpread: {}
+          BulletLaserSpread: { color: "#ff0006" }
+          BulletLaserSpreadNarrow: { color: "#ff9d00"}
+          BulletDisablerSmgSpread: { color: "#5fcde4" }
   - type: Appearance
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
@@ -861,14 +861,14 @@
       color: "#5fcde4"
     inhandVisuals:
       left:
-      - state: energy-inhand-left-color
+      - state: color-energy-inhand-left
       right:
-      - state: energy-inhand-right-color
+      - state: color-energy-inhand-right
     wieldedInhandVisuals:
       left:
-      - state: wielded-inhand-left-color
+      - state: color-wielded-inhand-left
       right:
-      - state: wielded-inhand-right-color
+      - state: color-wielded-inhand-right
     clothingVisuals:
       back:
       - state: equipped-BACKPACK-color
@@ -911,8 +911,8 @@
     visuals:
       enum.BatteryWeaponFireModeVisuals.State:
         enum.BatteryWeaponFireModeVisualizer.Color:
-          BoltTempgunCold: {}
-          BoltTempgunHot: {}
+          BoltTempgunCold: { color: "#a7ecde" }
+          BoltTempgunHot: { color: OrangeRed }
   - type: Appearance
   - type: Item
     size: Large

@@ -70,6 +70,7 @@ public enum BatteryWeaponFireModeVisuals : byte
 {
     State
 }
+
 [Serializable, NetSerializable]
 public enum BatteryWeaponFireModeVisualizer : byte
 {

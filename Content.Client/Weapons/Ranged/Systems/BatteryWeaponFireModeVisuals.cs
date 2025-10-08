@@ -31,12 +31,6 @@ public sealed class BatteryWeaponFireModesVisuals : EntitySystem
         if (args.Sprite == null)
             return;
 
-        if (!_appearance.TryGetData<Color>(ent.Owner, BatteryWeaponFireModeVisualizer.Color, out var color, args.Component))
-            return;
-
-        if (TryComp(ent, out SpriteComponent? sprite) && _sprite.LayerExists((ent.Owner, sprite), BatteryWeaponFireModeVisualizer.Color))
-                _sprite.LayerSetColor((ent.Owner, sprite), BatteryWeaponFireModeVisualizer.Color, color);
-
         _item.VisualsChanged(ent);
     }
 
@@ -45,8 +39,7 @@ public sealed class BatteryWeaponFireModesVisuals : EntitySystem
         if (!TryComp(ent, out AppearanceComponent? appearance))
             return;
 
-        if (!_appearance.TryGetData<Color>(ent.Owner, BatteryWeaponFireModeVisualizer.Color, out var color, appearance))
-            return;
+        var color = ent.Comp.FireModes[ent.Comp.CurrentFireMode].Color;
 
         if (!ent.Comp.InhandVisuals.TryGetValue(args.Location, out var layers))
             return;
@@ -96,8 +89,7 @@ public sealed class BatteryWeaponFireModesVisuals : EntitySystem
         if (layers == null && !ent.Comp.ClothingVisuals.TryGetValue(args.Slot, out layers))
             return;
 
-        if (!_appearance.TryGetData<Color>(ent.Owner, BatteryWeaponFireModeVisualizer.Color, out var color, appearance))
-            return;
+        var color = ent.Comp.FireModes[ent.Comp.CurrentFireMode].Color;
 
         var i = 0;
         foreach (var layer in layers)
