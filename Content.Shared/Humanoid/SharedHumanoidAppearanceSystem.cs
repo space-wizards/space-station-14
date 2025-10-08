@@ -40,7 +40,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     [Dependency] private readonly ISerializationManager _serManager = default!;
     [Dependency] private readonly MarkingManager _markingManager = default!;
     [Dependency] private readonly GrammarSystem _grammarSystem = default!;
-    [Dependency] private readonly SharedIdentitySystem _identity = default!;
+    [Dependency] private readonly IdentitySystem _identity = default!;
 
     public static readonly ProtoId<SpeciesPrototype> DefaultSpecies = "Human";
 
@@ -297,9 +297,10 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
             return;
         }
 
-        if (verify && !SkinColor.VerifySkinColor(species.SkinColoration, skinColor))
+        if (verify && _proto.Resolve(species.SkinColoration, out var index))
         {
-            skinColor = SkinColor.ValidSkinTone(species.SkinColoration, skinColor);
+            var strategy = index.Strategy;
+            skinColor = strategy.EnsureVerified(skinColor);
         }
 
         humanoid.SkinColor = skinColor;

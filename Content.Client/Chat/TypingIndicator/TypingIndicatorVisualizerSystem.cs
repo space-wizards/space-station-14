@@ -37,8 +37,7 @@ public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingInd
         if (!layerExists)
             layer = SpriteSystem.LayerMapReserve((uid, args.Sprite), TypingIndicatorLayers.Base);
 
-        SpriteSystem.LayerSetRsi((uid, args.Sprite), layer, proto.SpritePath);
-        SpriteSystem.LayerSetRsiState((uid, args.Sprite), layer, proto.TypingState);
+        SpriteSystem.LayerSetRsi((uid, args.Sprite), layer, proto.SpritePath, proto.TypingState);
         args.Sprite.LayerSetShader(layer, proto.Shader);
         SpriteSystem.LayerSetOffset((uid, args.Sprite), layer, proto.Offset);
 
