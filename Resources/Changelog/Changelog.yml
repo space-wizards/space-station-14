@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: muburu
-  changes:
-  - message: Singularity beacons and powersinks now require two free hands to hold.
-    type: Tweak
-  id: 8549
-  time: '2025-05-21T17:11:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37683
 - author: ElectroJr
   changes:
   - message: Microwaving the nuke disk will now slightly randomize the nuke countdown
@@ -3959,3 +3952,10 @@
   id: 9051
   time: '2025-10-08T11:30:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37424
+- author: aada
+  changes:
+  - message: Buckets are now destructible.
+    type: Tweak
+  id: 9052
+  time: '2025-10-08T13:58:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40772
