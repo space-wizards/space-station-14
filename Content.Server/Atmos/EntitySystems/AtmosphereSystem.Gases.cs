@@ -35,7 +35,6 @@ namespace Content.Server.Atmos.EntitySystems
             for (var i = 0; i < GasPrototypes.Length; i++)
             {
                 _gasSpecificHeats[i] = GasPrototypes[i].SpecificHeat / HeatScale;
-                GasReagents[i] = GasPrototypes[i].Reagent;
             }
         }
 
