@@ -749,4 +749,12 @@
   id: 90
   time: '2025-10-07T02:21:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40725
+- author: Vortebo
+  changes:
+  - message: On Relic, some small changes to address unintended gameplay issues and
+      further increase historical accuracy.
+    type: Tweak
+  id: 91
+  time: '2025-10-08T16:59:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40537
 Order: 1
