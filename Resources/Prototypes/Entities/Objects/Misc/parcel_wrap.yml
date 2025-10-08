@@ -76,6 +76,7 @@
       params:
         volume: -4
     unwrapTrash: ParcelWrapTrash
+  - type: ItemSlots
   - type: PaperLabel
     labelSlot:
       insertVerbText: comp-paper-label-insert
