@@ -835,8 +835,7 @@
     visuals:
       enum.BatteryWeaponFireModeVisuals.State:
         enum.BatteryWeaponFireModeVisuals.State:
-          BulletLaserSpread: { color: "#ff0006" }
-          BulletLaserSpreadNarrow: { color: "#ff9d00"}
+          BulletLaserSpreadNarrow: { color: "#ff0006"}
           BulletDisablerSmgSpread: { color: "#5fcde4" }
   - type: Appearance
   - type: Clothing
