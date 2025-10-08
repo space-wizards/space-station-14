@@ -79,7 +79,6 @@
       groups:
         Brute: 6
   - type: DamageStateVisuals
-    rotate: true
     states:
       Alive:
         Base: running
@@ -394,6 +393,7 @@
   - type: NpcFactionMember
     factions:
     - Xeno
+    - SimpleHostile
   - type: MeleeWeapon
     angle: 0
     animation: WeaponArcBite
@@ -504,7 +504,6 @@
      groups:
        Brute: 5
   - type: DamageStateVisuals
-    rotate: true
     states:
       Alive:
         Base: running
