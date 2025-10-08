@@ -757,4 +757,11 @@
   id: 91
   time: '2025-10-08T16:59:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40537
+- author: ToastEnjoyer
+  changes:
+  - message: On box, the wardens enforcer has been removed from their office.
+    type: Remove
+  id: 92
+  time: '2025-10-08T20:41:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40785
 Order: 1
