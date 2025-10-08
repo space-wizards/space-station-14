@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 266.0.0
+  engineVersion: 267.2.0
   forkId: ""
   forkVersion: ""
-  time: 09/16/2025 02:17:32
-  entityCount: 24842
+  time: 10/08/2025 20:05:50
+  entityCount: 24841
 maps:
 - 1
 grids:
@@ -162602,13 +162602,6 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: WeaponShotgunEnforcer
-  entities:
-  - uid: 20591
-    components:
-    - type: Transform
-      pos: -22.486067,-6.1998725
-      parent: 2
 - proto: WeaponSubMachineGunWt550
   entities:
   - uid: 11313
