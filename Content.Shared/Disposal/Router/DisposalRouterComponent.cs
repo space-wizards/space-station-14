@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Disposal.Components;
 
 /// <summary>
-/// Attached to dipsoal tubes that can direct entities down different
+/// Attached to disposal tubes that can direct entities down different
 /// paths depending on what tags they both possess.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
@@ -26,6 +26,34 @@ public sealed partial class DisposalRouterComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+}
+
+/// <summary>
+/// Sends tag data from disposal router UIs to the server.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class DisposalRouterUiActionMessage : BoundUserInterfaceMessage
+{
+    public readonly string Tags = string.Empty;
+
+    public DisposalRouterUiActionMessage(string tags, int tagLength)
+    {
+        Tags = tags.Substring(0, Math.Min(tags.Length, tagLength));
+    }
+}
+
+/// <summary>
+/// Sends tag data to disposal router UIs.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class DisposalRouterUserInterfaceState : BoundUserInterfaceState
+{
+    public readonly string Tags;
+
+    public DisposalRouterUserInterfaceState(string tags)
+    {
+        Tags = tags;
+    }
 }
 
 /// <summary>

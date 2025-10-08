@@ -19,7 +19,7 @@ public abstract class SharedBeingDisposedSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BeingDisposedComponent, DisposalSystemTransitionEvent>(OnStartup);
+        SubscribeLocalEvent<BeingDisposedComponent, DisposalSystemTransitionEvent>(OnTransition);
         SubscribeLocalEvent<BeingDisposedComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<BeingDisposedComponent, EntityStartedFollowingEvent>(OnStartedFollowing);
         SubscribeLocalEvent<BeingDisposedComponent, EntityStoppedFollowingEvent>(OnStoppedFollowing);
@@ -28,7 +28,7 @@ public abstract class SharedBeingDisposedSystem : EntitySystem
         SubscribeLocalEvent<BeingDisposedComponent, AttackAttemptEvent>(OnAttackAttempt);
     }
 
-    private void OnStartup(Entity<BeingDisposedComponent> ent, ref DisposalSystemTransitionEvent args)
+    private void OnTransition(Entity<BeingDisposedComponent> ent, ref DisposalSystemTransitionEvent args)
     {
         if (!TryComp<DisposalHolderComponent>(ent.Comp.Holder, out var holder))
             return;
@@ -40,32 +40,35 @@ public abstract class SharedBeingDisposedSystem : EntitySystem
         // This is so that movement under subfloors can be predicted by follower clients.
         foreach (var follower in followed.Following)
         {
-            _disposable.AttachEntityToDisposalHolder((ent.Comp.Holder, holder), follower);
+            _disposable.AttachEntity((ent.Comp.Holder, holder), follower);
         }
     }
 
     private void OnShutdown(Entity<BeingDisposedComponent> ent, ref ComponentShutdown args)
     {
+        // Remove followers from the disposal holder
         if (!TryComp<FollowedComponent>(ent, out var followed))
             return;
 
         foreach (var follower in followed.Following)
         {
-            _disposable.DetachEntityFromDisposalHolder(follower);
+            _disposable.DetachEntity(follower);
         }
     }
 
     private void OnStartedFollowing(Entity<BeingDisposedComponent> ent, ref EntityStartedFollowingEvent args)
     {
+        // Attach new followers to the disposal holder to prevent mispredicts
         if (!TryComp<DisposalHolderComponent>(ent.Comp.Holder, out var holder))
             return;
 
-        _disposable.AttachEntityToDisposalHolder((ent.Comp.Holder, holder), args.Follower);
+        _disposable.AttachEntity((ent.Comp.Holder, holder), args.Follower);
     }
 
     private void OnStoppedFollowing(Entity<BeingDisposedComponent> ent, ref EntityStoppedFollowingEvent args)
     {
-        _disposable.DetachEntityFromDisposalHolder(args.Follower);
+        // Remove departing followers from the disposal holder
+        _disposable.DetachEntity(args.Follower);
     }
 
     private void OnInteractionAttempt(Entity<BeingDisposedComponent> ent, ref InteractionAttemptEvent args)

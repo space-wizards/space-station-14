@@ -38,7 +38,7 @@ public sealed partial class DisposalTubeSystem : EntitySystem
     private void OnGetTubeNextDirection(Entity<DisposalTubeComponent> ent, ref GetDisposalsNextDirectionEvent args)
     {
         var exits = GetTubeConnectableDirections(ent);
-        SelectNextTube(ent, exits, ref args);
+        SelectNextDirection(ent, exits, ref args);
     }
 
     /// <summary>
@@ -60,7 +60,7 @@ public sealed partial class DisposalTubeSystem : EntitySystem
     /// <param name="ent">The disposal tube.</param>
     /// <param name="exits">The currated list of possible exits from the disposal tube.</param>
     /// <param name="args">The args for the 'get next direction' event.</param>
-    public void SelectNextTube(Entity<DisposalTubeComponent> ent, Direction[] exits, ref GetDisposalsNextDirectionEvent args)
+    public void SelectNextDirection(Entity<DisposalTubeComponent> ent, Direction[] exits, ref GetDisposalsNextDirectionEvent args)
     {
         if (exits.Length == 0)
             return;
@@ -114,20 +114,20 @@ public sealed partial class DisposalTubeSystem : EntitySystem
     /// Tries to find an adjacent disposal tube in a specified direction.
     /// </summary>
     /// <param name="ent">The original disposal tube.</param>
-    /// <param name="nextDirection">The specified direction.</param>
+    /// <param name="direction">The specified direction.</param>
     /// <returns>The adjacent disposal tube.</returns>
-    public EntityUid? NextTubeFor(Entity<DisposalTubeComponent> ent, Direction nextDirection)
+    public EntityUid? GetTubeInDirection(Entity<DisposalTubeComponent> ent, Direction direction)
     {
-        var oppositeDirection = nextDirection.GetOpposite();
+        var oppositeDirection = direction.GetOpposite();
 
         var xform = Transform(ent);
         if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
             return null;
 
         var position = xform.Coordinates;
-        foreach (var entity in _map.GetInDir(xform.GridUid.Value, grid, position, nextDirection))
+        foreach (var entity in _map.GetInDir(xform.GridUid.Value, grid, position, direction))
         {
-            if (!TryComp(entity, out DisposalTubeComponent? tube) || tube.DisposalTubeType != ent.Comp.DisposalTubeType)
+            if (!TryComp(entity, out DisposalTubeComponent? tube))
                 continue;
 
             if (!CanConnect((entity, tube), oppositeDirection))

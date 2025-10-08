@@ -10,8 +10,9 @@ namespace Content.Client.Disposal.Router
     [UsedImplicitly]
     public sealed class DisposalRouterBoundUserInterface : BoundUserInterface
     {
-        [ViewVariables]
         private DisposalRouterWindow? _window;
+
+        private const int TagLimit = 150;
 
         public DisposalRouterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
@@ -23,13 +24,13 @@ namespace Content.Client.Disposal.Router
 
             _window = this.CreateWindow<DisposalRouterWindow>();
 
-            _window.Confirm.OnPressed += _ => ButtonPressed(DisposalTaggerUiAction.Ok, _window.TagInput.Text);
-            _window.TagInput.OnTextEntered += args => ButtonPressed(DisposalTaggerUiAction.Ok, args.Text);
+            _window.Confirm.OnPressed += _ => AcceptButtonPressed(_window.TagInput.Text);
+            _window.TagInput.OnTextEntered += args => AcceptButtonPressed(args.Text);
         }
 
-        private void ButtonPressed(DisposalTaggerUiAction action, string tag)
+        private void AcceptButtonPressed(string tag)
         {
-            SendMessage(new DisposalTaggerUiActionMessage(action, tag, 150));
+            SendMessage(new DisposalRouterUiActionMessage(tag, TagLimit));
             Close();
         }
 
@@ -37,7 +38,7 @@ namespace Content.Client.Disposal.Router
         {
             base.UpdateState(state);
 
-            if (state is not DisposalTaggerUserInterfaceState cast)
+            if (state is not DisposalRouterUserInterfaceState cast)
             {
                 return;
             }

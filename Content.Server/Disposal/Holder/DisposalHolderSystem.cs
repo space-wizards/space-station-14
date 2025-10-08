@@ -4,7 +4,6 @@ using Content.Shared.Disposal.Holder;
 using Content.Shared.Disposal.Tube;
 using Content.Shared.Disposal.Unit;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Disposal.Holder;
 
@@ -14,7 +13,6 @@ public sealed partial class DisposalHolderSystem : SharedDisposalHolderSystem
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
 
     /// <inheritdoc/>
     public override void TransferAtmos(Entity<DisposalHolderComponent> ent, Entity<DisposalUnitComponent> unit)
@@ -34,7 +32,7 @@ public sealed partial class DisposalHolderSystem : SharedDisposalHolderSystem
     }
 
     /// <inheritdoc/>
-    protected override bool TryEscaping(Entity<DisposalHolderComponent> ent, Entity<DisposalTubeComponent> conduit)
+    protected override bool TryEscaping(Entity<DisposalHolderComponent> ent, Entity<DisposalTubeComponent> tube)
     {
         // Check if the entity should have a chance to escape yet
         if (ent.Comp.DirectionChangeCount < ent.Comp.DirectionChangeThreshold)
@@ -44,10 +42,10 @@ public sealed partial class DisposalHolderSystem : SharedDisposalHolderSystem
         if (_random.NextFloat() > ent.Comp.EscapeChance)
             return false;
 
-        // Unanchor the conduit and exit
-        var xform = Transform(conduit);
-        _xformSystem.Unanchor(conduit, xform);
-        ExitDisposals(ent);
+        // Unanchor the tube and exit
+        var xform = Transform(tube);
+        _xformSystem.Unanchor(tube, xform);
+        Exit(ent);
 
         return true;
     }

@@ -31,17 +31,11 @@ public sealed partial class DisposalTaggerComponent : Component
 [Serializable, NetSerializable]
 public sealed class DisposalTaggerUiActionMessage : BoundUserInterfaceMessage
 {
-    public readonly DisposalTaggerUiAction Action;
     public readonly string Tags = string.Empty;
 
-    public DisposalTaggerUiActionMessage(DisposalTaggerUiAction action, string tags, int tagLength)
+    public DisposalTaggerUiActionMessage(string tags, int tagLength)
     {
-        Action = action;
-
-        if (Action == DisposalTaggerUiAction.Ok)
-        {
-            Tags = tags.Substring(0, Math.Min(tags.Length, tagLength));
-        }
+        Tags = tags.Substring(0, Math.Min(tags.Length, tagLength));
     }
 }
 
@@ -57,15 +51,6 @@ public sealed class DisposalTaggerUserInterfaceState : BoundUserInterfaceState
     {
         Tags = tags;
     }
-}
-
-/// <summary>
-/// Type of UI action for the disposal taggers to take.
-/// </summary>
-[Serializable, NetSerializable]
-public enum DisposalTaggerUiAction
-{
-    Ok
 }
 
 /// <summary>

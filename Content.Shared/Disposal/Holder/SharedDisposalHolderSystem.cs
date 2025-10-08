@@ -62,13 +62,13 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
 
     private void OnComponentStartup(Entity<DisposalHolderComponent> ent, ref ComponentStartup args)
     {
+        // Ensure the holder will have its container
         ent.Comp.Container = _containerSystem.EnsureContainer<Container>(ent, nameof(DisposalHolderComponent));
     }
 
     private void OnActorTransition(Entity<ActorComponent> ent, ref DisposalSystemTransitionEvent args)
     {
-        // Refreshes visibility mask of a player,
-        // leading to OnGetVisibility being called
+        // Refreshes visibility mask of a player, leading to OnGetVisibility being called
         _eye.RefreshVisibilityMask(ent.Owner);
     }
 
@@ -84,11 +84,10 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
     }
 
     /// <summary>
-    /// Ejects all entities inside a disposal holder from
-    /// the disposals system.
+    /// Ejects all entities inside a disposal holder from the disposals system.
     /// </summary>
     /// <param name="ent">The disposal holder.</param>
-    public void ExitDisposals(Entity<DisposalHolderComponent> ent)
+    public void Exit(Entity<DisposalHolderComponent> ent)
     {
         if (Terminating(ent))
             return;
@@ -112,22 +111,21 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         // *This ejection also makes the target not collide with the unit.*
         // *This is on purpose.*
 
-        EntityUid? disposalId = null;
-        DisposalUnitComponent? disposalUnit = null;
+        Entity<DisposalUnitComponent>? unit = null;
 
         if (TryComp<MapGridComponent>(gridUid, out var grid))
         {
             foreach (var contentUid in _maps.GetLocal(gridUid.Value, grid, xform.Coordinates))
             {
-                if (_disposalUnitQuery.TryGetComponent(contentUid, out disposalUnit))
+                if (_disposalUnitQuery.TryGetComponent(contentUid, out var disposalUnit))
                 {
-                    disposalId = contentUid;
+                    unit = new(contentUid, disposalUnit);
                     break;
                 }
             }
 
             // If no disposal unit was found, this exit will be a little messy
-            if (disposalUnit == null && _net.IsServer)
+            if (unit == null && _net.IsServer)
             {
                 // Pry up the tile that the pipe was under
                 var tileRef = _maps.GetTileRef((gridUid.Value, grid), xform.Coordinates);
@@ -154,7 +152,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         var children = xform.ChildEnumerator;
         while (children.MoveNext(out var held))
         {
-            DetachEntityFromDisposalHolder(held);
+            DetachEntity(held);
 
             var meta = _metaQuery.GetComponent(held);
             if (ent.Comp.Container != null && ent.Comp.Container.Contains(held))
@@ -164,16 +162,17 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
             if (heldXform.ParentUid != ent.Owner)
                 continue;
 
-            if (disposalUnit != null && disposalUnit.Container != null)
+            if (unit != null && unit.Value.Comp.Container != null)
             {
-                _containerSystem.Insert((held, heldXform, meta), disposalUnit.Container);
+                // Insert child into the disposal unit
+                _containerSystem.Insert((held, heldXform, meta), unit.Value.Comp.Container);
             }
             else
             {
-                // Knockdown the entity emerging from the pipe
+                // Knockdown the entity emerging from the tube
                 _stun.TryKnockdown(held, ent.Comp.ExitStunDuration, force: true);
 
-                // Throw the entity out of the pipe
+                // Throw the entity out of the tube
                 _xformSystem.AttachToGridOrMap(held, heldXform);
 
                 if (exitAngle != null)
@@ -183,9 +182,9 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
             }
         }
 
-        if (disposalId != null && disposalUnit != null)
+        if (unit != null)
         {
-            _disposalUnitSystem.EjectContents((disposalId.Value, disposalUnit));
+            _disposalUnitSystem.EjectContents(unit.Value);
         }
 
         ExpelAtmos(ent);
@@ -199,7 +198,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
     /// <param name="tube">The tube the holder is attempting to enter.</param>
     /// <returns>True if the holder can enter the tube.</returns>
     /// <remarks>
-    /// This function will call ExitDisposals on any failure that does not make an ExitDisposals impossible.
+    /// This function will call <see cref="Exit"> on any critical failure.
     /// </remarks>
     public bool TryEnterTube(Entity<DisposalHolderComponent> ent, Entity<DisposalTubeComponent> tube)
     {
@@ -215,17 +214,8 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         // If the next direction to move is invalid, exit immediately
         if (ev.Next == Direction.Invalid)
         {
-            ExitDisposals(ent);
+            Exit(ent);
             return false;
-        }
-
-        // Ensure all contained entities are attached to the holder
-        if (ent.Comp.Container != null)
-        {
-            foreach (var held in ent.Comp.Container.ContainedEntities)
-            {
-                AttachEntityToDisposalHolder(ent, held);
-            }
         }
 
         var xform = Transform(ent);
@@ -237,19 +227,17 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
 
             if (ent.Comp.Container != null && ent.Comp.AccumulatedDamage < ent.Comp.MaxAllowedDamage)
             {
-                var damage = tube.Comp.DamageOnTurn;
-
                 foreach (var held in ent.Comp.Container.ContainedEntities)
                 {
-                    _damageable.TryChangeDamage(held, damage);
+                    _damageable.TryChangeDamage(held, ent.Comp.DamageOnTurn);
                 }
 
-                ent.Comp.AccumulatedDamage += damage.GetTotal();
+                ent.Comp.AccumulatedDamage += ent.Comp.DamageOnTurn.GetTotal();
             }
 
             if (_net.IsServer)
             {
-                _audio.PlayPvs(tube.Comp.ClangSound, xform.Coordinates);
+                _audio.PlayPvs(ent.Comp.ClangSound, xform.Coordinates);
             }
 
             // Check if the holder can escape the current pipe
@@ -260,7 +248,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         // Update trajectory
         ent.Comp.CurrentDirection = ev.Next;
         ent.Comp.CurrentTube = tube;
-        ent.Comp.NextTube = _disposalTubeSystem.NextTubeFor(tube, ent.Comp.CurrentDirection);
+        ent.Comp.NextTube = _disposalTubeSystem.GetTubeInDirection(tube, ent.Comp.CurrentDirection);
 
         // Update rotation
         xform.LocalRotation = ent.Comp.CurrentDirection.ToAngle();
@@ -274,7 +262,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The disposal holder.</param>
     /// <param name="uid">The entity being linked.</param>
-    public void AttachEntityToDisposalHolder(Entity<DisposalHolderComponent> ent, EntityUid uid)
+    public void AttachEntity(Entity<DisposalHolderComponent> ent, EntityUid uid)
     {
         var comp = EnsureComp<BeingDisposedComponent>(uid);
 
@@ -292,7 +280,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
     /// Unlinks an entity from its disposal holder.
     /// </summary>
     /// <param name="uid">The entity being unlinked.</param>
-    public void DetachEntityFromDisposalHolder(EntityUid uid)
+    public void DetachEntity(EntityUid uid)
     {
         RemComp<BeingDisposedComponent>(uid);
 
@@ -368,7 +356,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
 
         if (!Exists(currentTube) || !Exists(nextTube))
         {
-            ExitDisposals(ent);
+            Exit(ent);
             return;
         }
 

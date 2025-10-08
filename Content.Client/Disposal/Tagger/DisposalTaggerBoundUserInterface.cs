@@ -10,8 +10,9 @@ namespace Content.Client.Disposal.Tagger
     [UsedImplicitly]
     public sealed class DisposalTaggerBoundUserInterface : BoundUserInterface
     {
-        [ViewVariables]
         private DisposalTaggerWindow? _window;
+
+        private const int TagLimit = 30;
 
         public DisposalTaggerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
@@ -23,13 +24,13 @@ namespace Content.Client.Disposal.Tagger
 
             _window = this.CreateWindow<DisposalTaggerWindow>();
 
-            _window.Confirm.OnPressed += _ => ButtonPressed(DisposalTaggerUiAction.Ok, _window.TagInput.Text);
-            _window.TagInput.OnTextEntered += args => ButtonPressed(DisposalTaggerUiAction.Ok, args.Text);
+            _window.Confirm.OnPressed += _ => AcceptButtonPressed(_window.TagInput.Text);
+            _window.TagInput.OnTextEntered += args => AcceptButtonPressed(args.Text);
         }
 
-        private void ButtonPressed(DisposalTaggerUiAction action, string tag)
+        private void AcceptButtonPressed(string tag)
         {
-            SendMessage(new DisposalTaggerUiActionMessage(action, tag, 30));
+            SendMessage(new DisposalTaggerUiActionMessage(tag, TagLimit));
             Close();
         }
 

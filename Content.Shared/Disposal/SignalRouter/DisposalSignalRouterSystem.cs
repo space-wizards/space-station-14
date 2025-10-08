@@ -1,6 +1,7 @@
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Disposal.Tube;
+using Content.Shared.Disposal.Unit;
 using System.Linq;
 
 namespace Content.Shared.Disposal.SignalRouter;
@@ -48,10 +49,10 @@ public sealed class DisposalSignalRouterSystem : EntitySystem
 
         if (exits.Length < 3 || !ent.Comp.Routing)
         {
-            _disposalTube.SelectNextTube((ent, disposalTube), exits, ref args);
+            _disposalTube.SelectNextDirection((ent, disposalTube), exits, ref args);
             return;
         }
 
-        _disposalTube.SelectNextTube((ent, disposalTube), exits.Skip(1).ToArray(), ref args);
+        _disposalTube.SelectNextDirection((ent, disposalTube), exits.Skip(1).ToArray(), ref args);
     }
 }

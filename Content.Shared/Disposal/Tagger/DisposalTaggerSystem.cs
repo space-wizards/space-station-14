@@ -1,6 +1,7 @@
 using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Holder;
 using Content.Shared.Disposal.Tube;
+using Content.Shared.Disposal.Unit;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 
@@ -42,7 +43,7 @@ public sealed partial class DisposalTaggerSystem : EntitySystem
             return;
 
         // Check for correct message and ignore maleformed strings
-        if (msg.Action == DisposalTaggerUiAction.Ok && SharedDisposalHolderSystem.TagRegex.IsMatch(msg.Tags))
+        if (SharedDisposalHolderSystem.TagRegex.IsMatch(msg.Tags))
         {
             ent.Comp.Tag = msg.Tags.Trim();
             Dirty(ent);

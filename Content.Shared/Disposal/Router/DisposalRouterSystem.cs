@@ -1,6 +1,7 @@
 using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Holder;
 using Content.Shared.Disposal.Tube;
+using Content.Shared.Disposal.Unit;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using System.Linq;
@@ -25,7 +26,7 @@ public sealed partial class DisposalRouterSystem : EntitySystem
 
         Subs.BuiEvents<DisposalRouterComponent>(DisposalRouterUiKey.Key, subs =>
         {
-            subs.Event<DisposalTaggerUiActionMessage>(OnUiAction);
+            subs.Event<DisposalRouterUiActionMessage>(OnUiAction);
         });
     }
 
@@ -38,11 +39,11 @@ public sealed partial class DisposalRouterSystem : EntitySystem
 
         if (exits.Length < 3 || _disposalHolder.TagsOverlap(args.Holder, ent.Comp.Tags))
         {
-            _disposalTube.SelectNextTube((ent, disposalTube), exits, ref args);
+            _disposalTube.SelectNextDirection((ent, disposalTube), exits, ref args);
             return;
         }
 
-        _disposalTube.SelectNextTube((ent, disposalTube), exits.Skip(1).ToArray(), ref args);
+        _disposalTube.SelectNextDirection((ent, disposalTube), exits.Skip(1).ToArray(), ref args);
     }
 
     /// <summary>
@@ -50,13 +51,13 @@ public sealed partial class DisposalRouterSystem : EntitySystem
     /// which interact with the world and require server action.
     /// </summary>
     /// <param name="msg">A user interface message from the client.</param>
-    private void OnUiAction(Entity<DisposalRouterComponent> ent, ref DisposalTaggerUiActionMessage msg)
+    private void OnUiAction(Entity<DisposalRouterComponent> ent, ref DisposalRouterUiActionMessage msg)
     {
         if (!Exists(msg.Actor))
             return;
 
         // Check for correct message and ignore maleformed strings
-        if (msg.Action == DisposalTaggerUiAction.Ok && SharedDisposalHolderSystem.TagRegex.IsMatch(msg.Tags))
+        if (SharedDisposalHolderSystem.TagRegex.IsMatch(msg.Tags))
         {
             ent.Comp.Tags.Clear();
 
