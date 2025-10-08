@@ -1343,7 +1343,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn
-    lifetime: 1
+    lifetime: 0.44
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles3.rsi
     layers:
@@ -1356,12 +1356,12 @@
     damage:
       types:
         Blunt: 0
-        Heat: 3
+        Heat: 6
     soundHit:
       path: /Audio/Effects/lightburn.ogg
     forceSound: true
   - type: IgniteOnCollide
-    fireStacks: 0.12
+    fireStacks: 0.11
   - type: IgnitionSource
     temperature: 700
 
