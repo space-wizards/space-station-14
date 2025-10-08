@@ -1,6 +1,10 @@
 {
     "recommendations": [
         "ms-dotnettools.csharp",
-        "editorconfig.editorconfig"
+        "editorconfig.editorconfig",
+        "redhat.vscode-yaml",
+        "macabeus.vscode-fluent",
+        "ertanic.robust-lsp"
+
     ]
 }
