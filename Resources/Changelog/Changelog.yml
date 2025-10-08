@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: The "Escape alive and unrestrained" objective now counts as partially
-      complete if you show up handcuffed. Being dead still has it count as a total
-      fail!
-    type: Tweak
-  id: 8556
-  time: '2025-05-22T03:25:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37680
 - author: EmoGarbage404
   changes:
   - message: Added cargo orders for gold and silver ingots.
@@ -3954,3 +3945,10 @@
   id: 9058
   time: '2025-10-08T22:27:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40783
+- author: ToastEnjoyer
+  changes:
+  - message: On fland, the wardens enforcer has been removed.
+    type: Remove
+  id: 9059
+  time: '2025-10-08T23:45:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40786
