@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Significantly reduced video memory usage of the parallax system.
-    type: Tweak
-  id: 8553
-  time: '2025-05-22T01:22:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37180
 - author: ArtisticRoomba
   changes:
   - message: Tesla coils can now hold a max capacity of 5 MJ, and receive 5 MJ of
@@ -3960,3 +3953,10 @@
   id: 9055
   time: '2025-10-08T15:23:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37920
+- author: Hitlinemoss
+  changes:
+  - message: Folders and clipboards are now available in the Trinkets loadout tab.
+    type: Add
+  id: 9056
+  time: '2025-10-08T15:49:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39920
