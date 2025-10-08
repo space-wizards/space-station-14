@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ElectroJr
-  changes:
-  - message: Microwaving the nuke disk will now slightly randomize the nuke countdown
-      timer.
-    type: Add
-  id: 8550
-  time: '2025-05-21T18:06:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36114
 - author: AsnDen
   changes:
   - message: Cyborgs now can scream. 9 new screaming sound were added.
@@ -3959,3 +3951,11 @@
   id: 9052
   time: '2025-10-08T13:58:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40772
+- author: UpAndLeaves
+  changes:
+  - message: Zombie infections now take approximately three minutes longer to bring
+      a fully healed person to critical condition.
+    type: Tweak
+  id: 9053
+  time: '2025-10-08T14:11:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37445
