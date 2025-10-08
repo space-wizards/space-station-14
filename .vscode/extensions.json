@@ -3,6 +3,6 @@
         "ms-dotnettools.csharp",
         "editorconfig.editorconfig",
         "redhat.vscode-yaml",
-        "macabeus.vscode-fluent",
+        "macabeus.vscode-fluent"
     ]
 }
