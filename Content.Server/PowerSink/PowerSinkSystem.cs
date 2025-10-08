@@ -4,10 +4,8 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Station.Systems;
 using Content.Shared.Examine;
-using Content.Shared.Explosion;
 using Content.Shared.Power.Components;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -20,7 +18,6 @@ public sealed class PowerSinkSystem : EntitySystem
     /// </summary>
     private const float WarningMessageThreshold = 0.70f;
 
-    private static ProtoId<ExplosionPrototype> _powerSinkExplosion = "MicroBomb";
 
     private readonly float[] _warningSoundThresholds = new[] { .80f, .90f, .95f, .98f };
 
@@ -114,7 +111,13 @@ public sealed class PowerSinkSystem : EntitySystem
 
         foreach (var (entity, component) in toRemove)
         {
-            _explosionSystem.QueueExplosion(entity, _powerSinkExplosion, 4000f, 8f, 40f, canCreateVacuum: true);
+            _explosionSystem.QueueExplosion(entity,
+                component.ExplosionType,
+                component.TotalIntensity,
+                component.IntensitySlope,
+                component.MaxTileIntensity,
+                component.TileBreakScale,
+                canCreateVacuum: component.CanCreateVacuum);
             RemComp(entity, component);
         }
     }
