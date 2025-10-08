@@ -1,12 +1,12 @@
 # they're uninflated by default so they're tiny
 - type: stack
   id: InflatableWall
-  name: inflatable wall
+  name: stack-inflatable-wall
   spawn: InflatableWallStack1
   maxCount: 10
 
 - type: stack
   id: InflatableDoor
-  name: inflatable door
+  name: stack-inflatable-door
   spawn: InflatableDoorStack1
   maxCount: 4

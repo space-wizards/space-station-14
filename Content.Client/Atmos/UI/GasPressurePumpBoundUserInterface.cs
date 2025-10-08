@@ -14,9 +14,6 @@ namespace Content.Client.Atmos.UI;
 public sealed class GasPressurePumpBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
-    private const float MaxPressure = Atmospherics.MaxOutputPressure;
-
-    [ViewVariables]
     private GasPressurePumpWindow? _window;
 
     protected override void Open()

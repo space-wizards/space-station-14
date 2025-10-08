@@ -1,0 +1,14 @@
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobGingerbreadAI
+  name: gingerbread man Spawner
+  suffix: Ghostrole
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: full
+      sprite: Mobs/Species/Gingerbread/parts.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobGingerbreadAI

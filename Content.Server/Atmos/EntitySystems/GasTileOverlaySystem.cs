@@ -68,6 +68,9 @@ namespace Content.Server.Atmos.EntitySystems
         {
             base.Initialize();
 
+            _query = GetEntityQuery<GasTileOverlayComponent>();
+            _gridQuery = GetEntityQuery<MapGridComponent>();
+
             _updateJob = new UpdatePlayerJob()
             {
                 EntManager = EntityManager,
@@ -88,8 +91,6 @@ namespace Content.Server.Atmos.EntitySystems
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<GasTileOverlayComponent, ComponentStartup>(OnStartup);
-            _query = GetEntityQuery<GasTileOverlayComponent>();
-            _gridQuery = GetEntityQuery<MapGridComponent>();
         }
 
         private void OnStartup(EntityUid uid, GasTileOverlayComponent component, ComponentStartup args)
