@@ -1,8 +1,8 @@
-using Content.Server.Body.Components;
 using Content.Server.Chat.Systems;
 using Content.Server.EUI;
 using Content.Shared._Offbrand.MMI;
 using Content.Shared._Offbrand.Wounds;
+using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DoAfter;
