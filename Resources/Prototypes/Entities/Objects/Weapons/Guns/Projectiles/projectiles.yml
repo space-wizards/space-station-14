@@ -1305,7 +1305,7 @@
     spread: 30
 
 - type: entity
-  name: narrow laser barrage
+  name: lethal laser barrage
   id: BulletLaserSpreadNarrow
   categories: [ HideSpawnMenu ]
   parent: BulletLaser
