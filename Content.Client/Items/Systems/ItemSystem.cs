@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Hands;
+using Content.Shared.Hands.Components;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Robust.Client.GameObjects;
@@ -14,6 +15,7 @@ public sealed class ItemSystem : SharedItemSystem
 {
     [Dependency] private readonly IResourceCache _resCache = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -26,14 +28,14 @@ public sealed class ItemSystem : SharedItemSystem
         SubscribeLocalEvent<SpriteComponent, GotUnequippedEvent>(OnUnequipped);
     }
 
-    private void OnUnequipped(EntityUid uid, SpriteComponent component, GotUnequippedEvent args)
+    private void OnUnequipped(Entity<SpriteComponent> ent, ref GotUnequippedEvent args)
     {
-        _sprite.SetVisible((uid, component), true);
+        _sprite.SetVisible((ent, ent.Comp), true);
     }
 
-    private void OnEquipped(EntityUid uid, SpriteComponent component, GotEquippedEvent args)
+    private void OnEquipped(Entity<SpriteComponent> ent, ref GotEquippedEvent args)
     {
-        _sprite.SetVisible((uid, component), false);
+        _sprite.SetVisible((ent, ent.Comp), false);
     }
 
     #region InhandVisuals
@@ -51,15 +53,15 @@ public sealed class ItemSystem : SharedItemSystem
     /// <summary>
     ///     An entity holding this item is requesting visual information for in-hand sprites.
     /// </summary>
-    private void OnGetVisuals(EntityUid uid, ItemComponent item, GetInhandVisualsEvent args)
+    private void OnGetVisuals(Entity<ItemComponent> ent, ref GetInhandVisualsEvent args)
     {
         var defaultKey = $"inhand-{args.Location.ToString().ToLowerInvariant()}";
 
         // try get explicit visuals
-        if (!item.InhandVisuals.TryGetValue(args.Location, out var layers))
+        if (!ent.Comp.InhandVisuals.TryGetValue(args.Location, out var layers))
         {
             // get defaults
-            if (!TryGetDefaultVisuals(uid, item, defaultKey, out layers))
+            if (!TryGetDefaultVisuals(ent, defaultKey, out layers))
                 return;
         }
 
@@ -83,23 +85,23 @@ public sealed class ItemSystem : SharedItemSystem
     /// <remarks>
     ///     Useful for lazily adding in-hand sprites without modifying yaml. And backwards compatibility.
     /// </remarks>
-    private bool TryGetDefaultVisuals(EntityUid uid, ItemComponent item, string defaultKey, [NotNullWhen(true)] out List<PrototypeLayerData>? result)
+    private bool TryGetDefaultVisuals(Entity<ItemComponent> ent, string defaultKey, [NotNullWhen(true)] out List<PrototypeLayerData>? result)
     {
         result = null;
 
         RSI? rsi = null;
 
-        if (item.RsiPath != null)
-            rsi = _resCache.GetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / item.RsiPath).RSI;
-        else if (TryComp(uid, out SpriteComponent? sprite))
+        if (ent.Comp.RsiPath != null)
+            rsi = _resCache.GetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / ent.Comp.RsiPath).RSI;
+        else if (TryComp(ent, out SpriteComponent? sprite))
             rsi = sprite.BaseRSI;
 
         if (rsi == null)
             return false;
 
-        var state = (item.HeldPrefix == null)
+        var state = (ent.Comp.HeldPrefix == null)
             ? defaultKey
-            : $"{item.HeldPrefix}-{defaultKey}";
+            : $"{ent.Comp.HeldPrefix}-{defaultKey}";
 
         if (!rsi.TryGetState(state, out var _))
             return false;

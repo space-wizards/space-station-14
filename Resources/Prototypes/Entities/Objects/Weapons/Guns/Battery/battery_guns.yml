@@ -851,29 +851,21 @@
     fireModes:
     - proto: BulletLaserSpreadNarrow
       fireCost: 80
-      color: "#ff0006"
     - proto: BulletDisablerSmgSpread
       fireCost: 48
-      color: "#5fcde4"
-    inhandVisuals:
-      left:
-      - state: color-energy-inhand-left
-      right:
-      - state: color-energy-inhand-right
-    wieldedInhandVisuals:
-      left:
-      - state: color-wielded-inhand-left
-      right:
-      - state: color-wielded-inhand-right
-    clothingVisuals:
-      back:
-      - state: equipped-BACKPACK-color
-      suitstorage:
-      - state: equipped-SUITSTORAGE-color
   - type: Item
     size: Large
     sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
     heldPrefix: energy
+  - type: ItemVisualizer
+    sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
+    inhandVisuals:
+      left:
+      - state: energy-inhand-left-color
+        map: [ "enum.BatteryWeaponFireModeVisuals.State" ]
+      right:
+      - state: energy-inhand-right-color
+        map: [ "enum.BatteryWeaponFireModeVisuals.State" ]
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Battery
     maxCharge: 480
@@ -938,14 +930,8 @@
     - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-unshaded-1
-      map: ["enum.GunVisualLayers.MagUnshaded", "enum.BatteryWeaponFireModeVisuals.State"]
+      map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: GenericVisualizer
-    visuals:
-      enum.BatteryWeaponFireModeVisuals.State:
-        enum.BatteryWeaponFireModeVisuals.State:
-          BoltTempgunCold: { color: "#a7ecde" }
-          BoltTempgunHot: { color: OrangeRed }
   - type: Appearance
   - type: Item
     size: Large
@@ -968,25 +954,8 @@
     fireModes:
     - proto: BoltTempgunCold
       fireCost: 100
-      color: "#a7ecde"
     - proto: BoltTempgunHot
       fireCost: 100
-      color: OrangeRed
-    inhandVisuals:
-      left:
-      - state: inhand-left-color
-      right:
-      - state: inhand-right-color
-    wieldedInhandVisuals:
-      left:
-      - state: wielded-inhand-left-color
-      right:
-      - state: wielded-inhand-right-color
-    clothingVisuals:
-      back:
-      - state: equipped-BACKPACK-color
-      suitstorage:
-      - state: equipped-SUITSTORAGE-color
   - type: Battery
     maxCharge: 1000
     startingCharge: 1000
