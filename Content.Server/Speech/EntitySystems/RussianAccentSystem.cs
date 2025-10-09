@@ -44,7 +44,6 @@ public sealed class RussianAccentSystem : EntitySystem
     {
         { 'K', 'К' }, { 'k', 'к' },
         { 'm', 'м' },
-        { 't', 'т' },
         { 'Y', 'У' }
     };
 
