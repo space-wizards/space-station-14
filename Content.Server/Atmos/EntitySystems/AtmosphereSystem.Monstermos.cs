@@ -595,7 +595,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (_firelockQuery.TryGetComponent(entity, out var firelock))
                     reconsiderAdjacent |= _firelockSystem.EmergencyPressureStop(entity, firelock);
 
-                var ev = new AtmosDeviceExplosiveDepressurizationEvent();
+                var ev = new AtmosDeviceExplosiveDepressurizationEvent((ent.Owner, ent.Comp1, ent.Comp2));
                 RaiseLocalEvent(entity, ref ev);
             }
 
