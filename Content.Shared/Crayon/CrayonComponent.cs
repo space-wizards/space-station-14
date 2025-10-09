@@ -13,7 +13,7 @@ namespace Content.Shared.Crayon
         /// <summary>
         /// The ID of currently selected decal prototype that will be placed when the crayon is used
         /// </summary>
-        [AutoNetworkedField]
+        [DataField, AutoNetworkedField]
         public string SelectedState;
 
         /// <summary>
