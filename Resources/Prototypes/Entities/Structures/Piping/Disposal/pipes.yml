@@ -58,7 +58,6 @@
   - type: Pullable
   - type: CollideOnAnchor
   - type: DisposalTube
-    disposalTubeType: Disposals
   - type: StaticPrice
     price: 30
 
