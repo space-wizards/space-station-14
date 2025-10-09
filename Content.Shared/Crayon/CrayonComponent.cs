@@ -19,7 +19,7 @@ namespace Content.Shared.Crayon
         /// <summary>
         /// Color with which the crayon will draw
         /// </summary>
-        [DataField]
+        [DataField, AutoNetworkedField]
         public Color Color;
 
         /// <summary>
