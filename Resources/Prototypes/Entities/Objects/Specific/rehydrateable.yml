@@ -205,6 +205,8 @@
     solutions:
       cube:
         maxVol: 1 # needs room for water
+  - type: Edible
+    solution: cube
   - type: Fixtures # BaseItem from PlushieCarp overrides fixtures, making carp not react to extinguishers
     fixtures:
       fix1:
