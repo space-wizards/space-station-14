@@ -89,7 +89,7 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
 
     private void OnRandomReassign(ref CryostorageEnteredEvent ev)
     {
-        if (!_mind.TryGetMind(ev.SleepyUid, out var oldTargetMindId, out var _))
+        if (!_mind.TryGetMind(ev.SleepyUid, out var oldTargetMindId, out var oldTargetMindComp))
             return;
 
         var query = EntityQueryEnumerator<PickRandomPersonComponent>();

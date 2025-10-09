@@ -244,8 +244,12 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             playDefaultSound: false
         );
 
-        var cryoEnteredEvent = new CryostorageEnteredEvent(ent.Owner);
-        RaiseLocalEvent(ref cryoEnteredEvent);
+        if (userId != null)
+        {
+            var cryoEnteredEvent = new CryostorageEnteredEvent(userId.Value);
+            RaiseLocalEvent(ref cryoEnteredEvent);
+
+        }
     }
 
     private void HandleCryostorageReconnection(Entity<CryostorageContainedComponent> entity)

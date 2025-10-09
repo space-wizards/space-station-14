@@ -7,6 +7,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -187,4 +188,4 @@ public abstract class SharedCryostorageSystem : EntitySystem
 /// Raised when someone is put to sleep in cryostorage
 /// </summary>
 [ByRefEvent]
-public record struct CryostorageEnteredEvent(EntityUid SleepyUid);
+public record struct CryostorageEnteredEvent(NetUserId SleepyUid);
