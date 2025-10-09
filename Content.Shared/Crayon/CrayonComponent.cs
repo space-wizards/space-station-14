@@ -14,7 +14,7 @@ namespace Content.Shared.Crayon
         /// The ID of currently selected decal prototype that will be placed when the crayon is used
         /// </summary>
         [DataField, AutoNetworkedField]
-        public string SelectedState;
+        public string SelectedState = string.Empty;
 
         /// <summary>
         /// Color with which the crayon will draw
@@ -86,22 +86,6 @@ namespace Content.Shared.Crayon
         public CrayonUsedMessage(string drawn)
         {
             DrawnDecal = drawn;
-        }
-    }
-
-    /// <summary>
-    /// Component state, describes how many charges are left in the crayon in the near-hand UI
-    /// </summary>
-    [Serializable, NetSerializable]
-    public sealed class CrayonComponentState : ComponentState
-    {
-        public readonly Color Color;
-        public readonly string State;
-
-        public CrayonComponentState(Color color, string state)
-        {
-            Color = color;
-            State = state;
         }
     }
 

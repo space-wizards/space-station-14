@@ -87,9 +87,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
             return;
 
         if (!_uiSystem.HasUi(uid, CrayonComponent.CrayonUiKey.Key))
-        {
             return;
-        }
 
         _uiSystem.TryToggleUi(uid, CrayonComponent.CrayonUiKey.Key, args.User);
 
@@ -104,13 +102,12 @@ public sealed class CrayonSystem : SharedCrayonSystem
             return;
 
         component.SelectedState = args.State;
-
         Dirty(uid, component);
     }
 
     private void OnCrayonBoundUIColor(EntityUid uid, CrayonComponent component, CrayonColorMessage args)
     {
-        // you still need to ensure that the given color is a valid color
+        // Ensure that the given color can be changed or already matches
         if (!component.SelectableColor || args.Color == component.Color)
             return;
 

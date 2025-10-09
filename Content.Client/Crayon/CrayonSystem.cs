@@ -12,27 +12,27 @@ namespace Content.Client.Crayon;
 
 public sealed class CrayonSystem : SharedCrayonSystem
 {
-    [Dependency] private readonly SharedChargesSystem _sharedCharges = default!;
+    [Dependency] private readonly SharedChargesSystem _charges = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        Subs.ItemStatus<CrayonComponent>(ent => new StatusControl(ent, _sharedCharges, _entityManager));
+        Subs.ItemStatus<CrayonComponent>(ent => new StatusControl(ent, _charges, _entityManager));
     }
 
     private sealed class StatusControl : Control
     {
         private readonly Entity<CrayonComponent> _crayon;
-        private readonly SharedChargesSystem _chargesSystem;
+        private readonly SharedChargesSystem _charges;
         private readonly RichTextLabel _label;
         private readonly int _capacity;
 
-        public StatusControl(Entity<CrayonComponent> crayon, SharedChargesSystem chargesSystem, EntityManager entityManage)
+        public StatusControl(Entity<CrayonComponent> crayon, SharedChargesSystem charges, EntityManager entityManage)
         {
             _crayon = crayon;
-            _chargesSystem = chargesSystem;
+            _charges = charges;
             _capacity = entityManage.GetComponent<LimitedChargesComponent>(_crayon.Owner).MaxCharges;
             _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
             AddChild(_label);
@@ -45,7 +45,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
             _label.SetMarkup(Robust.Shared.Localization.Loc.GetString("crayon-drawing-label",
                 ("color",_crayon.Comp.Color),
                 ("state",_crayon.Comp.SelectedState),
-                ("charges", _chargesSystem.GetCurrentCharges(_crayon.Owner)),
+                ("charges", _charges.GetCurrentCharges(_crayon.Owner)),
                 ("capacity", _capacity)));
         }
     }
