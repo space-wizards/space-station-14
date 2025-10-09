@@ -159,7 +159,9 @@ public sealed class SolutionTransferSystem : EntitySystem
                 transferAmount = FixedPoint2.Min(transferAmount, maxRefill);
 
             var transferTime = refill?.RefillTime;
-            if (transferTime > 0)
+            args.Handled = true;
+
+            if (transferTime > TimeSpan.Zero)
             {
                 if (!CanTransfer(args.User, target, targetSoln.Value, uid, ownerSoln.Value, transferAmount))
                     return;
@@ -172,17 +174,12 @@ public sealed class SolutionTransferSystem : EntitySystem
                     Hidden = true,
                 };
                 _doAfter.TryStartDoAfter(doAfterArgs, null);
-                args.Handled = true;
                 return;
             }
             else
             {
-                var transferred = FillTransfer(args.User, target, targetSoln.Value, uid, ownerSoln.Value, ownerRefill, transferAmount);
-                if (transferred > 0)
-                {
-                    args.Handled = true;
-                    return;
-                }
+                FillTransfer(args.User, target, targetSoln.Value, uid, ownerSoln.Value, ownerRefill, transferAmount);
+                return;
             }
         }
 
@@ -199,7 +196,9 @@ public sealed class SolutionTransferSystem : EntitySystem
                 transferAmount = FixedPoint2.Min(transferAmount, maxRefill);
 
             var transferTime = targetRefill?.RefillTime + drainComp.DrainTime;
-            if (transferTime > 0)
+            args.Handled = true;
+
+            if (transferTime > TimeSpan.Zero)
             {
                 if (!CanTransfer(args.User, uid, ownerSoln.Value, target, targetSoln.Value, transferAmount))
                     return;
@@ -217,7 +216,6 @@ public sealed class SolutionTransferSystem : EntitySystem
             {
                 DrainTransfer(args.User, uid, ownerSoln.Value, target, targetSoln.Value, transferAmount);
             }
-            args.Handled = true;
         }
     }
 
@@ -230,8 +228,8 @@ public sealed class SolutionTransferSystem : EntitySystem
     /// <param name="targetEntity">The entity being drained from.</param>
     /// <param name="target">The solution entity being drained from.</param>
     /// <param name="amount">The amount being transferred.</param>
-    /// <returns>The amount that finally got transferred.</returns>
-    private FixedPoint2 DrainTransfer(EntityUid user,
+    /// <returns>If any amount was transferred.</returns>
+    private bool DrainTransfer(EntityUid user,
         EntityUid sourceEntity,
         Entity<SolutionComponent> source,
         EntityUid targetEntity,
@@ -243,9 +241,10 @@ public sealed class SolutionTransferSystem : EntitySystem
         {
             var message = Loc.GetString("comp-solution-transfer-transfer-solution", ("amount", transferred), ("target", targetEntity));
             _popup.PopupClient(message, sourceEntity, user);
+            return true;
         }
 
-        return transferred;
+        return false;
     }
 
     /// <summary>
@@ -258,8 +257,8 @@ public sealed class SolutionTransferSystem : EntitySystem
     /// <param name="target">The solution entity being filled.</param>
     /// <param name="targetSolution">The solution being filled.</param>
     /// <param name="amount">The amount being transferred.</param>
-    /// <returns>The amount that finally got transferred.</returns>
-    private FixedPoint2 FillTransfer(EntityUid user,
+    /// <returns>If any amount was transferred.</returns>
+    private bool FillTransfer(EntityUid user,
         EntityUid sourceEntity,
         Entity<SolutionComponent> source,
         EntityUid targetEntity,
@@ -276,9 +275,10 @@ public sealed class SolutionTransferSystem : EntitySystem
                 : "comp-solution-transfer-fill-normal";
 
             _popup.PopupClient(Loc.GetString(msg, ("owner", sourceEntity), ("amount", transferred), ("target", targetEntity)), targetEntity, user);
+            return true;
         }
 
-        return transferred;
+        return false;
     }
 
     /// <summary>

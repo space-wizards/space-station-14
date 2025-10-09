@@ -27,5 +27,5 @@ public sealed partial class RefillableSolutionComponent : Component
     /// The refill doafter time required to transfer reagents into the solution.
     /// </summary>
     [DataField]
-    public float RefillTime = 0f;
+    public TimeSpan RefillTime = TimeSpan.Zero;
 }

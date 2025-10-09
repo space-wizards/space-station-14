@@ -19,5 +19,5 @@ public sealed partial class DrainableSolutionComponent : Component
     /// The drain doafter time required to transfer reagents from the solution.
     /// </summary>
     [DataField]
-    public float DrainTime = 0f;
+    public TimeSpan DrainTime = TimeSpan.Zero;
 }
