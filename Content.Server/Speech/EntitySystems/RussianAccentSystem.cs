@@ -39,7 +39,8 @@ public sealed class RussianAccentSystem : EntitySystem
     private static readonly Regex IAmCapitalRegex = new(@"\bI Am\b", RegexOptions.Compiled);
     private static readonly Regex WhitespaceRegex = new(@"\s+", RegexOptions.Compiled);
 
-    // Homoglyph mapping for visually similar Cyrillic letters
+    // Homoglyph mapping for visually similar Cyrillic letters, these are limited to 2 per word for readability
+    // TODO: (Pending Chat Refactor) This was intentionally kept to the absolute bare minimum to ensure that it remains readable. If we want to expand this, it should have an accessibility option to disable per client. Until then, keep it simple.
     private static readonly Dictionary<char, char> HomoglyphMap = new()
     {
         { 'K', 'К' }, { 'k', 'к' },
