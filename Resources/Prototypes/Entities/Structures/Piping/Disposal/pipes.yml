@@ -69,8 +69,8 @@
   components:
   - type: DisposalHolder
     traversalSpeed: 10
-    exitDistanceMultiplier: 2
-    exitSpeedMultiplier: 2
+    exitDistanceMultiplier: 1.5
+    exitSpeedMultiplier: 1
     container:
       occludes: true
       showEnts: false
