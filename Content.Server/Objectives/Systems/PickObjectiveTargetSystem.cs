@@ -97,6 +97,10 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
         //called infrequently so its probably fine
         while (query.MoveNext(out var uid, out var repicker))
         {
+            // nothing to filter!!
+            if (!TryComp<PickRandomPersonComponent>(uid, out var picker))
+                continue;
+
             // invalid objective prototype
             if (!TryComp<TargetObjectiveComponent>(uid, out var targetObjective))
                 continue;
@@ -113,9 +117,6 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
                     continue;
 
                 // find a new target, keeps old target if no viable ones were found
-                if (!TryComp<PickRandomPersonComponent>(uid, out var picker))
-                    return;
-
                 if (_mind.PickFromPool(picker.Pool, picker.Filters, playerMindId) is not {} targetMind)
                     break;
 
