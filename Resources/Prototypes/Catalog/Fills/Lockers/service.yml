@@ -219,7 +219,5 @@
   table: !type:AllSelector
     children:
     - id: DrinkBottleOfNothingFull
-    - id: RevolverCapGun
-    - id: BoxCartridgeCap
     - id: CrayonBox
 
