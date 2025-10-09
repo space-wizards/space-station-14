@@ -1,9 +1,7 @@
-﻿using Content.Server.Body.Components;
-using Content.Shared.Atmos;
-using Content.Shared.EntityEffects;
-using Content.Shared.EntityEffects.Effects.Body;
+﻿using Content.Shared.Atmos;
+using Content.Shared.Body.Components;
 
-namespace Content.Server.EntityEffects.Effects.Body;
+namespace Content.Shared.EntityEffects.Effects.Body;
 
 /// <summary>
 /// Adjust the amount of Moles stored in this set of lungs based on a given dictionary of gasses and ratios.
@@ -25,4 +23,11 @@ public sealed partial class ModifyLungGasEntityEffectSystem : EntityEffectSystem
             entity.Comp.Air.AdjustMoles(gas, quantity);
         }
     }
+}
+
+/// <inheritdoc cref="EntityEffect"/>
+public sealed partial class ModifyLungGas : EntityEffectBase<ModifyLungGas>
+{
+    [DataField(required: true)]
+    public Dictionary<Gas, float> Ratios = default!;
 }
