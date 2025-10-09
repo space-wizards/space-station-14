@@ -30,7 +30,6 @@ public sealed class CrayonSystem : SharedCrayonSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<CrayonComponent, ComponentInit>(OnCrayonInit);
         SubscribeLocalEvent<CrayonComponent, CrayonSelectMessage>(OnCrayonBoundUI);
         SubscribeLocalEvent<CrayonComponent, CrayonColorMessage>(OnCrayonBoundUIColor);
         SubscribeLocalEvent<CrayonComponent, UseInHandEvent>(OnCrayonUse, before: new[] { typeof(FoodSystem) });
@@ -112,14 +111,6 @@ public sealed class CrayonSystem : SharedCrayonSystem
             return;
 
         component.Color = args.Color;
-        Dirty(uid, component);
-    }
-
-    private void OnCrayonInit(EntityUid uid, CrayonComponent component, ComponentInit args)
-    {
-        // Get the first one from the catalog and set it as default
-        var decal = _prototypeManager.EnumeratePrototypes<DecalPrototype>().FirstOrDefault(x => x.Tags.Contains("crayon"));
-        component.SelectedState = decal?.ID ?? string.Empty;
         Dirty(uid, component);
     }
 

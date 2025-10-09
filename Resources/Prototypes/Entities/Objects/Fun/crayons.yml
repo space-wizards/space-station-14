@@ -21,6 +21,7 @@
       enum.CrayonUiKey.Key:
         type: CrayonBoundUserInterface
   - type: Crayon
+    selectedState: like
   - type: LimitedCharges
     maxCharges: 25
   - type: Food

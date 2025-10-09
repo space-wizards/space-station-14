@@ -14,7 +14,7 @@ namespace Content.Shared.Crayon
         /// The ID of currently selected decal prototype that will be placed when the crayon is used
         /// </summary>
         [DataField, AutoNetworkedField]
-        public string SelectedState = string.Empty;
+        public string SelectedState;
 
         /// <summary>
         /// Color with which the crayon will draw
