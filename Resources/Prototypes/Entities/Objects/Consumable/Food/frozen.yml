@@ -14,6 +14,8 @@
         maxVol: 20 # For sprinkles or something? Idk.
         reagents:
         - ReagentId: Sugar
+          Quantity: 5
+        - ReagentId: Ice
           Quantity: 10
 
 # Ice-cream
@@ -73,9 +75,11 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 21
         reagents:
         - ReagentId: Sugar
+          Quantity: 5
+        - ReagentId: Ice
           Quantity: 10
         - ReagentId: Theobromine
           Quantity: 1
@@ -138,10 +142,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 41
         reagents:
         - ReagentId: Sugar
           Quantity: 10
+        - ReagentId: Ice
+          Quantity: 20
         - ReagentId: Theobromine
           Quantity: 1
 
