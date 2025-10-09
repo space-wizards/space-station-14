@@ -375,6 +375,8 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     endAnnouncement: station-event-gas-leak-end-announcement
+    earliestStart: 25
+    minimumPlayers: 20
     weight: 8
   - type: GasLeakRule
 
