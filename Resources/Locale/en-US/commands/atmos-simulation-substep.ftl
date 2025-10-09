@@ -1,4 +1,5 @@
-atmos-substep-description = Substeps the atmosphere simulation by a single atmostick for the provided grid entity. Implicitly pauses atmospherics simulation.
+cmd-substepatmos-desc = Substeps the atmosphere simulation by a single atmostick for the provided grid entity. Implicitly pauses atmospherics simulation.
+cmd-substepatmos-help = Usage: substepatmos <GridUid>
 
 error-no-grid-provided-or-invalid-grid = You must either provide a grid entity or be standing on a grid to substep.
 error-couldnt-parse-entity = Entity provided could not be parsed or does not exist. Try standing on a grid you want to substep.

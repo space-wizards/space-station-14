@@ -10,13 +10,11 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Atmos.Commands;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class AtmosSimulationSubstep : LocalizedEntityCommands
+public sealed class AtmosSimulationSubstepCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
     public override string Command => "substepatmos";
-    public override string Description => Loc.GetString("atmos-substep-description");
-    public override string Help => $"Usage: {Command} <GridUid>";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -25,7 +23,6 @@ public sealed class AtmosSimulationSubstep : LocalizedEntityCommands
         switch (args.Length)
         {
             case 0:
-            {
                 if (shell.Player is null ||
                     !EntityManager.TryGetComponent<TransformComponent>(shell.Player.AttachedEntity,
                         out var playerxform) ||
@@ -37,9 +34,7 @@ public sealed class AtmosSimulationSubstep : LocalizedEntityCommands
 
                 grid = playerxform.GridUid.Value;
                 break;
-            }
             case 1:
-            {
                 if (!EntityUid.TryParse(args[0], out var parsedGrid) || !EntityManager.EntityExists(parsedGrid))
                 {
                     shell.WriteError(Loc.GetString("error-couldnt-parse-entity"));
@@ -48,7 +43,6 @@ public sealed class AtmosSimulationSubstep : LocalizedEntityCommands
 
                 grid = parsedGrid;
                 break;
-            }
         }
 
         // i'm straight piratesoftwaremaxxing
@@ -101,7 +95,9 @@ public sealed class AtmosSimulationSubstep : LocalizedEntityCommands
     {
         if (args.Length == 1)
         {
-            return CompletionResult.FromHint(Loc.GetString("completion-grid-substep"));
+            return CompletionResult.FromHintOptions(
+                CompletionHelper.Components<GridAtmosphereComponent>(args[0], EntityManager),
+                Loc.GetString("completion-grid-substep"));
         }
 
         return CompletionResult.Empty;

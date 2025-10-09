@@ -12,8 +12,6 @@ public sealed class AtmosSimulationPauseUnpause : LocalizedEntityCommands
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
     public override string Command => "pauseatmos";
-    public override string Description => Loc.GetString("atmos-pause-description");
-    public override string Help => $"Usage: {Command} <GridUid>";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -22,9 +20,9 @@ public sealed class AtmosSimulationPauseUnpause : LocalizedEntityCommands
         switch (args.Length)
         {
             case 0:
-            {
                 if (shell.Player is null ||
-                    !EntityManager.TryGetComponent<TransformComponent>(shell.Player.AttachedEntity, out var playerxform) ||
+                    !EntityManager.TryGetComponent<TransformComponent>(shell.Player.AttachedEntity,
+                        out var playerxform) ||
                     playerxform.GridUid == null)
                 {
                     shell.WriteError(Loc.GetString("error-no-grid-provided-or-invalid-grid"));
@@ -33,9 +31,7 @@ public sealed class AtmosSimulationPauseUnpause : LocalizedEntityCommands
 
                 grid = playerxform.GridUid.Value;
                 break;
-            }
             case 1:
-            {
                 if (!EntityUid.TryParse(args[0], out var parsedGrid) || !EntityManager.EntityExists(parsedGrid))
                 {
                     shell.WriteError(Loc.GetString("error-couldnt-parse-entity"));
@@ -44,7 +40,6 @@ public sealed class AtmosSimulationPauseUnpause : LocalizedEntityCommands
 
                 grid = parsedGrid;
                 break;
-            }
         }
 
         if (!EntityManager.TryGetComponent<GridAtmosphereComponent>(grid, out var gridAtmos))
@@ -65,7 +60,9 @@ public sealed class AtmosSimulationPauseUnpause : LocalizedEntityCommands
     {
         if (args.Length == 1)
         {
-            return CompletionResult.FromHint(Loc.GetString("completion-grid-pause"));
+            return CompletionResult.FromHintOptions(
+                CompletionHelper.Components<GridAtmosphereComponent>(args[0], EntityManager),
+                Loc.GetString("completion-grid-pause"));
         }
 
         return CompletionResult.Empty;

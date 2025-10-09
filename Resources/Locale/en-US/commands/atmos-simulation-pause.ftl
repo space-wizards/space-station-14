@@ -1,4 +1,5 @@
-atmos-pause-description = Pauses or unpauses the atmosphere simulation for the provided grid entity.
+cmd-pauseatmos-desc = Pauses or unpauses the atmosphere simulation for the provided grid entity.
+cmd-pauseatmos-help = Usage: pauseatmos <GridUid>
 
 set-atmos-simulation = Set atmospherics simulation on {grid} to state {state}.
 

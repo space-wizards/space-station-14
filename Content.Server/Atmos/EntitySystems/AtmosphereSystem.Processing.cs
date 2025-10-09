@@ -818,6 +818,11 @@ namespace Content.Server.Atmos.EntitySystems
         }
     }
 
+    /// <summary>
+    /// An enum representing the completion state of a <see cref="GridAtmosphereComponent"/>'s processing steps.
+    /// The processing of a <see cref="GridAtmosphereComponent"/> spans over multiple stages and sticks,
+    /// with the method handling the processing having multiple return types.
+    /// </summary>
     public enum AtmosphereProcessingCompletionState : byte
     {
         /// <summary>
