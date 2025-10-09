@@ -6,9 +6,9 @@ using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
+using Robust.Shared.Player;
 using Content.Shared.Roles.Jobs;
 using Robust.Server.Audio;
-using Robust.Shared.Player;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -89,6 +89,9 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
 
     private void OnRandomReassign(ref CryostorageEnteredEvent ev)
     {
+        if (!_mind.TryGetMind(ev.SleepyUid, out var oldTargetMindId, out var _))
+            return;
+
         var query = EntityQueryEnumerator<PickRandomPersonComponent>();
 
         //called infrequently so its probably fine
@@ -99,6 +102,10 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
 
             // invalid objective prototype
             if (!TryComp<TargetObjectiveComponent>(uid, out var targetObjective))
+                continue;
+
+            // only change targets if yours just cryod
+            if (targetObjective.Target == oldTargetMindId)
                 continue;
 
             // find the mind responsible for this objective, as to not make it the new target + for the text and audio playing

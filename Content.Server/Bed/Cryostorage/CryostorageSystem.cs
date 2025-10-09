@@ -244,7 +244,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             playDefaultSound: false
         );
 
-        var cryoEnteredEvent = new CryostorageEnteredEvent(ent);
+        var cryoEnteredEvent = new CryostorageEnteredEvent(ent.Owner);
         RaiseLocalEvent(ref cryoEnteredEvent);
     }
 
