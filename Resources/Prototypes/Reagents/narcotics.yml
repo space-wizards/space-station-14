@@ -291,10 +291,6 @@
     Narcotic:
       effects: # It would be nice to have speech slurred or mumbly, but accents are a bit iffy atm. Same for distortion effects.
       - !type:MovespeedModifier
-        conditions:
-        - !type:ReagentThreshold
-          reagent: Nocturine
-          min: 2
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
       - !type:ModifyStatusEffect
