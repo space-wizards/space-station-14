@@ -89,9 +89,6 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
 
     private void OnRandomReassign(ref CryostorageEnteredEvent ev)
     {
-        if (!_mind.TryGetMind(ev.SleepyUid, out var oldTargetMindId, out var oldTargetMindComp))
-            return;
-
         var query = EntityQueryEnumerator<RepickOnCryoComponent>();
 
         //called infrequently so its probably fine
@@ -106,7 +103,7 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
                 continue;
 
             // only change targets if yours just cryod
-            if (targetObjective.Target != oldTargetMindId)
+            if (targetObjective.Target != ev.SleepyUid)
                 continue;
 
             // find the mind responsible for this objective, as to not make it the new target + for the text and audio playing

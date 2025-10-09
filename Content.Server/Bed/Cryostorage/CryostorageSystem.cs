@@ -16,6 +16,7 @@ using Content.Shared.Climbing.Systems;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
+using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.StationRecords;
 using Content.Shared.UserInterface;
@@ -49,6 +50,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -246,9 +248,11 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
 
         if (userId != null)
         {
-            var cryoEnteredEvent = new CryostorageEnteredEvent(userId.Value);
-            RaiseLocalEvent(ref cryoEnteredEvent);
+            if (!_mind.TryGetMind(userId.Value, out var mindId, out var mindComp))
+                return;
 
+            var cryoEnteredEvent = new CryostorageEnteredEvent(mindId.Value);
+            RaiseLocalEvent(ref cryoEnteredEvent);
         }
     }
 

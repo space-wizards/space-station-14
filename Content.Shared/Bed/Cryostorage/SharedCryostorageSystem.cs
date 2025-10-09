@@ -188,4 +188,4 @@ public abstract class SharedCryostorageSystem : EntitySystem
 /// Raised when someone is put to sleep in cryostorage
 /// </summary>
 [ByRefEvent]
-public record struct CryostorageEnteredEvent(NetUserId SleepyUid);
+public record struct CryostorageEnteredEvent(EntityUid SleepyUid);
