@@ -105,7 +105,7 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
                 continue;
 
             // only change targets if yours just cryod
-            if (targetObjective.Target == oldTargetMindId)
+            if (targetObjective.Target != oldTargetMindId)
                 continue;
 
             // find the mind responsible for this objective, as to not make it the new target + for the text and audio playing
