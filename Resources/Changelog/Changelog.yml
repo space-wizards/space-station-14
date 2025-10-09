@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Hitlinemoss
-  changes:
-  - message: Liquid soap is now slippery.
-    type: Fix
-  id: 8559
-  time: '2025-05-23T21:57:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37747
 - author: CoconutThunder
   changes:
   - message: The Chief Medical Officer should now appear with the correct precedence
@@ -3949,3 +3942,10 @@
   id: 9061
   time: '2025-10-09T13:46:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40366
+- author: kontakt
+  changes:
+  - message: Bulldog magazines are now only accessible through emagged fabricators.
+    type: Tweak
+  id: 9062
+  time: '2025-10-09T14:00:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40790
