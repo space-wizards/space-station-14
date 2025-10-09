@@ -1,6 +1,6 @@
 ## UI
 
-ui-disposal-unit-title = Disposal Unit
+ui-disposal-unit-title = {CAPITALIZE($name)}
 
 ui-disposal-unit-label-state = State:
 ui-disposal-unit-label-pressure = Pressure:

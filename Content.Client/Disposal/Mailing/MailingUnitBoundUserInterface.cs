@@ -61,9 +61,11 @@ public sealed class MailingUnitBoundUserInterface : BoundUserInterface
         if (_mailingUnitWindow == null)
             return;
 
+        var name = EntMan.GetComponent<MetaDataComponent>(entity.Owner).EntityName;
+
         _mailingUnitWindow.Title = string.IsNullOrEmpty(entity.Comp.Tag)
-            ? Loc.GetString("ui-mailing-unit-window-title-unnamed")
-            : Loc.GetString("ui-mailing-unit-window-title", ("tag", entity.Comp.Tag));
+            ? Loc.GetString("ui-mailing-unit-window-title", ("name", name))
+            : Loc.GetString("ui-mailing-unit-window-title-tagged", ("tag", entity.Comp.Tag));
         _mailingUnitWindow.Target.Text = entity.Comp.Target;
 
         var entries = entity.Comp.TargetList.Select(target => new ItemList.Item(_mailingUnitWindow.TargetListContainer)

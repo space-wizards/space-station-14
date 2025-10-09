@@ -52,7 +52,8 @@ namespace Content.Client.Disposal.Unit
             if (_disposalUnitWindow == null)
                 return;
 
-            _disposalUnitWindow.Title = EntMan.GetComponent<MetaDataComponent>(entity.Owner).EntityName;
+            var name = EntMan.GetComponent<MetaDataComponent>(entity.Owner).EntityName;
+            _disposalUnitWindow.Title = Loc.GetString("ui-disposal-unit-title", ("name", name));
 
             if (!EntMan.TryGetComponent(entity.Owner, out DisposalUnitComponent? disposals))
                 return;
