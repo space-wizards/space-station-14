@@ -437,7 +437,7 @@
   - type: DamageOverTimeStatusEffect
     damages:
       types:
-        Blunt: 0.15
+        Blunt: 0.30
   - type: BleedMultiplierStatusEffect
     multiplier: 0.25
 

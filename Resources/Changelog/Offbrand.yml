@@ -95,4 +95,14 @@ Entries:
     type: Add
   id: 6
   time: '2025-10-03T22:00:00.0000000+00:00'
+- author: sowelipililimute
+  changes:
+  - message: The simulation of the cardiovascular system has been overhauled! The new system is more granular and based on a more physiologically accurate model than before.
+    type: Tweak
+  - message: Tourniquets now consistently use the new behaviour of being persistent effects.
+    type: Fix
+  - message: Tourniquets now bruise the target slightly more.
+    type: Tweak
+  id: 7
+  time: '2025-10-08T22:00:00.0000000+00:00'
 Order: 2
