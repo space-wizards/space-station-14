@@ -42,7 +42,14 @@ public sealed class CrayonSystem : SharedCrayonSystem
         if (args.Handled || !args.CanReach)
             return;
 
-        if (_charges.IsEmpty(uid))
+        if (!args.ClickLocation.IsValid(EntityManager))
+        {
+            _popup.PopupEntity(Loc.GetString("crayon-interact-invalid-location"), uid, args.User);
+            args.Handled = true;
+            return;
+        }
+
+        if (!_charges.TryUseCharge(uid))
         {
             if (component.DeleteEmpty)
                 UseUpCrayon(uid, args.User);
@@ -53,23 +60,14 @@ public sealed class CrayonSystem : SharedCrayonSystem
             return;
         }
 
-        if (!args.ClickLocation.IsValid(EntityManager))
-        {
-            _popup.PopupEntity(Loc.GetString("crayon-interact-invalid-location"), uid, args.User);
-            args.Handled = true;
-            return;
-        }
+        Dirty(uid, component);
 
         if (!_decals.TryAddDecal(component.SelectedState, args.ClickLocation.Offset(new Vector2(-0.5f, -0.5f)), out _, component.Color, cleanable: true))
             return;
 
         if (component.UseSound != null)
             _audio.PlayPvs(component.UseSound, uid, AudioParams.Default.WithVariation(0.125f));
-
-        // Decrease charges
-        _charges.AddCharges(uid, -1);
-        Dirty(uid, component);
-
+        
         _adminLogger.Add(LogType.CrayonDraw, LogImpact.Low, $"{ToPrettyString(args.User):user} drew a {component.Color:color} {component.SelectedState}");
         args.Handled = true;
 
