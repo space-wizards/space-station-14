@@ -33,7 +33,7 @@ accent-russian-words-9 = cheers
 accent-russian-words-replace-9 = na zdorovje
 
 accent-russian-words-10 = damn
-accent-russian-words-10-2 = fuck
+accent-russian-words-10-2 = dammit
 accent-russian-words-replace-10 = blin
 
 accent-russian-words-11 = shit
