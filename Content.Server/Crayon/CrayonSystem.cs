@@ -43,7 +43,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
         if (args.Handled || !args.CanReach)
             return;
 
-        if (_sharedCharges.IsEmpty(uid))
+        if (_charges.IsEmpty(uid))
         {
             if (component.DeleteEmpty)
                 UseUpCrayon(uid, args.User);
@@ -68,13 +68,13 @@ public sealed class CrayonSystem : SharedCrayonSystem
             _audio.PlayPvs(component.UseSound, uid, AudioParams.Default.WithVariation(0.125f));
 
         // Decrease charges
-        _sharedCharges.AddCharges(uid, -1);
+        _charges.AddCharges(uid, -1);
         Dirty(uid, component);
 
         _adminLogger.Add(LogType.CrayonDraw, LogImpact.Low, $"{ToPrettyString(args.User):user} drew a {component.Color:color} {component.SelectedState}");
         args.Handled = true;
 
-        if (component.DeleteEmpty && _sharedCharges.IsEmpty(uid))
+        if (component.DeleteEmpty && _charges.IsEmpty(uid))
             UseUpCrayon(uid, args.User);
         else
             _uiSystem.ServerSendUiMessage(uid, CrayonComponent.CrayonUiKey.Key, new CrayonUsedMessage(component.SelectedState));

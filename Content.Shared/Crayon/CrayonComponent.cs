@@ -29,7 +29,7 @@ namespace Content.Shared.Crayon
         public SoundSpecifier? UseSound;
 
         /// <summary>
-        /// Is the color valid
+        /// Can the color can be changed
         /// </summary>
         [DataField]
         public bool SelectableColor;
@@ -113,7 +113,7 @@ namespace Content.Shared.Crayon
     {
         public string Selected;
         /// <summary>
-        /// Whether or not the color can be selected
+        /// Can the color can be changed
         /// </summary>
         public bool SelectableColor;
         public Color Color;
