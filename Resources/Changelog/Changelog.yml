@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: The volume of large gas canisters have been increased to 1500L to encourage
-      their usage in resolving pressure problems in spaced rooms. The gas that starts
-      inside of the tanks and the price of them has increased to compensate.
-    type: Tweak
-  id: 8558
-  time: '2025-05-22T18:12:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37564
 - author: Hitlinemoss
   changes:
   - message: Liquid soap is now slippery.
@@ -3951,3 +3942,10 @@
   id: 9060
   time: '2025-10-09T13:32:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40797
+- author: Princess-Cheeseballs
+  changes:
+  - message: Dying while asleep shouldn't permanently blind you anymore.
+    type: Fix
+  id: 9061
+  time: '2025-10-09T13:46:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40366
