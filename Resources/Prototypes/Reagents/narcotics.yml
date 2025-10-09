@@ -307,7 +307,6 @@
         delay: 5
         type: Update
 
-
 - type: reagent
   id: MuteToxin
   name: reagent-name-mute-toxin
