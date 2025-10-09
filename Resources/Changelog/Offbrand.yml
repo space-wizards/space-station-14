@@ -103,6 +103,8 @@ Entries:
     type: Fix
   - message: Tourniquets now bruise the target slightly more.
     type: Tweak
+  - message: IV stands no longer turn non-blood reagents into blood
+    type: Fix
   id: 7
   time: '2025-10-08T22:00:00.0000000+00:00'
 Order: 2

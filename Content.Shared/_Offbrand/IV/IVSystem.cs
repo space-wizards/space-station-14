@@ -125,9 +125,9 @@ public sealed class IVSystem : EntitySystem
 
         if (bloodTransferAmount > 0)
         {
-            solution.SplitSolutionWithOnly(bloodTransferAmount, target.Comp2.BloodReagent);
+            var taken = solution.SplitSolutionWithOnly(bloodTransferAmount, target.Comp2.BloodReagent);
 
-            _bloodstream.TryModifyBloodLevel((target.Owner, target.Comp2), bloodTransferAmount);
+            _bloodstream.TryModifyBloodLevel((target.Owner, target.Comp2), taken.Volume);
         }
 
         if (chemsTransferAmount > 0)
