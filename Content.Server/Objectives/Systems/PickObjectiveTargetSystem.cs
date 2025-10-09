@@ -108,17 +108,18 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
                 if (!playerMind.Objectives.Contains(uid))
                     continue;
 
+                // find a new target, keeps old target if no viable ones were found
                 if (_mind.PickFromPool(picker.Pool, picker.Filters, playerMindId) is not {} targetMind)
-                    continue;
+                    break;
 
                 // set the new target id and name for the objective
                 _target.SetTarget(uid, targetMind, targetObjective);
                 _target.ChangeTitle(uid, targetObjective, MetaData(uid));
 
                 if (!_player.TryGetSessionById(playerMind.UserId, out var session))
-                    continue;
+                    break;
 
-                //tell the player their objectives changed
+                // tell the player their objectives changed
                 _audio.PlayGlobal(picker.RerollSound, session);
 
                 var targetName = targetMind.Comp.CharacterName;
