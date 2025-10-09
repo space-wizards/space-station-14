@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Added cargo orders for gold and silver ingots.
-    type: Add
-  - message: Reduced prices of cardboard and paper material crate.
-    type: Tweak
-  id: 8557
-  time: '2025-05-22T08:42:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37713
 - author: ArtisticRoomba
   changes:
   - message: The volume of large gas canisters have been increased to 1500L to encourage
@@ -3952,3 +3943,11 @@
   id: 9059
   time: '2025-10-08T23:45:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40786
+- author: SlamBamActionman
+  changes:
+  - message: Nocturine now slows the target down, with a longer duration and shorter
+      delay before activating.
+    type: Tweak
+  id: 9060
+  time: '2025-10-09T13:32:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40797
