@@ -4,6 +4,6 @@
 - type: latheRecipePack
   id: SyndicateAmmoStatic
   recipes:
-    - MagazineShotgun
-    - MagazineShotgunEmpty
-    - MagazineShotgunSlug
+  - MagazineShotgun
+  - MagazineShotgunEmpty
+  - MagazineShotgunSlug
