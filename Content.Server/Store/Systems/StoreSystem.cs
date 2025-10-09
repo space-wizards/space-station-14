@@ -1,19 +1,16 @@
+using System.Linq;
 using Content.Server.Store.Components;
-using Content.Shared.UserInterface;
 using Content.Shared.FixedPoint;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Store.Components;
-using JetBrains.Annotations;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
-using System.Linq;
-using Content.Shared.Actions;
-using Robust.Shared.Timing;
-using Content.Shared.Mind;
 using Content.Shared.Store.Events;
+using Content.Shared.UserInterface;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Store.Systems;
 
@@ -39,7 +36,7 @@ public sealed partial class StoreSystem : EntitySystem
         SubscribeLocalEvent<StoreComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<StoreComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<StoreComponent, OpenUplinkImplantEvent>(OnImplantActivate);
-        SubscribeLocalEvent<StoreComponent, IntrinsicStoreActionEvent>(OnIntrinsicStore);
+        SubscribeLocalEvent<StoreComponent, IntrinsicStoreActionEvent>(OnIntrinsicStoreAction);
 
         InitializeUi();
         InitializeCommand();
@@ -191,7 +188,7 @@ public sealed partial class StoreSystem : EntitySystem
         return true;
     }
 
-    private void OnIntrinsicStore(Entity<StoreComponent> ent, ref IntrinsicStoreActionEvent args)
+    private void OnIntrinsicStoreAction(Entity<StoreComponent> ent, ref IntrinsicStoreActionEvent args)
     {
         ToggleUi(args.Performer, ent.Owner, ent.Comp);
     }
