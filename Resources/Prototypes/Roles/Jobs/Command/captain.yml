@@ -8,6 +8,9 @@
       department: Cargo
       time: 4h
     - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 4h
+    - !type:DepartmentTimeRequirement
       department: Engineering
       time: 4h
     - !type:DepartmentTimeRequirement
@@ -18,9 +21,6 @@
       time: 4h
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 4h
-    - !type:DepartmentTimeRequirement
-      department: Service
       time: 4h
     - !type:DepartmentTimeRequirement
       department: Command
