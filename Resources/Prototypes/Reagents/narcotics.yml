@@ -293,15 +293,18 @@
   meltingPoint: 128.0
   metabolisms:
     Narcotic:
-      effects:
+      effects: # It would be nice to have speech slurred or mumbly, but accents are a bit iffy atm. Same for distortion effects.
+      - !type:MovementSpeedModifier
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
       - !type:ModifyStatusEffect
         conditions:
         - !type:ReagentThreshold
           reagent: Nocturine
           min: 8
         effectProto: StatusEffectForcedSleeping
-        time: 3
-        delay: 6
+        time: 6
+        delay: 5
 
 - type: reagent
   id: MuteToxin
