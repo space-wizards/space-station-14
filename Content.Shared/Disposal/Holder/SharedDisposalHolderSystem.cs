@@ -3,6 +3,7 @@ using Content.Shared.Damage;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Tube;
 using Content.Shared.Disposal.Unit;
+using Content.Shared.Explosion;
 using Content.Shared.Eye;
 using Content.Shared.Maps;
 using Content.Shared.Stunnable;
@@ -25,7 +26,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
 {
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly SharedDisposalUnitSystem _disposalUnitSystem = default!;
+    [Dependency] private readonly SharedDisposalUnitSystem _disposalUnit = default!;
     [Dependency] private readonly DisposalTubeSystem _disposalTubeSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
@@ -55,6 +56,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         _xformQuery = GetEntityQuery<TransformComponent>();
 
         SubscribeLocalEvent<DisposalHolderComponent, ComponentStartup>(OnComponentStartup);
+        SubscribeLocalEvent<DisposalHolderComponent, BeforeExplodeEvent>(OnExploded);
 
         SubscribeLocalEvent<ActorComponent, DisposalSystemTransitionEvent>(OnActorTransition);
         SubscribeLocalEvent<GetVisMaskEvent>(OnGetVisibility);
@@ -64,6 +66,14 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
     {
         // Ensure the holder will have its container
         ent.Comp.Container = _containerSystem.EnsureContainer<Container>(ent, nameof(DisposalHolderComponent));
+    }
+
+    private void OnExploded(Entity<DisposalHolderComponent> ent, ref BeforeExplodeEvent args)
+    {
+        if (ent.Comp.Container == null)
+            return;
+
+        args.Contents.AddRange(ent.Comp.Container.ContainedEntities);
     }
 
     private void OnActorTransition(Entity<ActorComponent> ent, ref DisposalSystemTransitionEvent args)
@@ -154,37 +164,32 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         {
             DetachEntity(held);
 
-            var meta = _metaQuery.GetComponent(held);
-            if (ent.Comp.Container != null && ent.Comp.Container.Contains(held))
-                _containerSystem.Remove((held, null, meta), ent.Comp.Container, reparent: false, force: true);
-
+            var heldMeta = _metaQuery.GetComponent(held);
             var heldXform = _xformQuery.GetComponent(held);
-            if (heldXform.ParentUid != ent.Owner)
-                continue;
 
             if (unit != null && unit.Value.Comp.Container != null)
             {
-                // Insert child into the disposal unit
-                _containerSystem.Insert((held, heldXform, meta), unit.Value.Comp.Container);
+                // Insert the child into the found disposal unit, then pop them out
+                _containerSystem.Insert((held, heldXform, heldMeta), unit.Value.Comp.Container);
+                _disposalUnit.Remove(unit.Value, held);
             }
             else
             {
-                // Knockdown the entity emerging from the tube
+                // Otherwise remove the child from the holder and prepare to throw it
+                if (ent.Comp.Container != null && ent.Comp.Container.Contains(held))
+                {
+                    _containerSystem.Remove((held, null, heldMeta), ent.Comp.Container, force: true);
+                }
+
+                // Knockdown the entity
                 _stun.TryKnockdown(held, ent.Comp.ExitStunDuration, force: true);
 
-                // Throw the entity out of the tube
-                _xformSystem.AttachToGridOrMap(held, heldXform);
-
+                // Throw the entity
                 if (exitAngle != null)
                 {
                     _throwing.TryThrow(held, exitAngle.Value.ToWorldVec() * ent.Comp.ExitDistanceMultiplier, ent.Comp.TraversalSpeed * ent.Comp.ExitSpeedMultiplier);
                 }
             }
-        }
-
-        if (unit != null)
-        {
-            _disposalUnitSystem.EjectContents(unit.Value);
         }
 
         ExpelAtmos(ent);

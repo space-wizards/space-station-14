@@ -1,14 +1,8 @@
 using Content.Shared.Atmos;
-using Content.Shared.Disposal.Holder;
 using Content.Shared.Disposal.Unit;
 using Content.Shared.Popups;
-using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Content.Shared.Disposal.Tube;
@@ -21,12 +15,7 @@ public sealed partial class DisposalTubeSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
-    [Dependency] private readonly SharedDisposalHolderSystem _disposalHolder = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly INetManager _net = default!;
 
     public override void Initialize()
     {
@@ -172,51 +161,5 @@ public sealed partial class DisposalTubeSystem : EntitySystem
 
         var directions = string.Join(", ", exits);
         _popups.PopupEntity(Loc.GetString("disposal-tube-component-popup-directions-text", ("directions", directions)), ent, recipient);
-    }
-
-    /// <summary>
-    /// Tries to insert a collection of entities into the disposals system.
-    /// </summary>
-    /// <param name="ent">The entry point into disposals.</param>
-    /// <param name="toInsert">The entities to insert.</param>
-    /// <param name="holderProtoId">The proto ID for the disposal holder.</param>
-    /// <param name="holderEnt">The spawned disposals holder.</param>
-    /// <param name="tags">Tags to add to the disposed contents.</param>
-    /// <returns>True if the insertion was successful.</returns>
-    public bool TryInsert
-        (Entity<DisposalTubeComponent> ent,
-        EntityUid[] toInsert,
-        EntProtoId holderProtoId,
-        [NotNullWhen(true)] out Entity<DisposalHolderComponent>? holderEnt,
-        IEnumerable<string>? tags = null)
-    {
-        holderEnt = null;
-
-        if (toInsert.Length == 0)
-            return false;
-
-        if (_net.IsClient && !_timing.IsFirstTimePredicted)
-            return false;
-
-        var xform = Transform(ent);
-        var holder = Spawn(holderProtoId, _transform.GetMapCoordinates(ent, xform: xform));
-        var holderComponent = Comp<DisposalHolderComponent>(holder);
-        holderEnt = new Entity<DisposalHolderComponent>(holder, holderComponent);
-
-        if (holderEnt?.Comp.Container == null)
-            return false;
-
-        foreach (var entity in toInsert)
-        {
-            _containerSystem.Insert(entity, holderEnt.Value.Comp.Container);
-        }
-
-        if (tags != null)
-        {
-            holderEnt.Value.Comp.Tags.UnionWith(tags);
-            Dirty(holderEnt.Value);
-        }
-
-        return _disposalHolder.TryEnterTube(holderEnt.Value, ent);
     }
 }

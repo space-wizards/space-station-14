@@ -1,10 +1,14 @@
+using Content.Shared.Body.Components;
 using Content.Shared.Containers;
 using Content.Shared.Database;
 using Content.Shared.Disposal.Components;
+using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Events;
+using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
@@ -27,7 +31,7 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
             // Verbs to flush the unit
             AlternativeVerb flushVerb = new()
             {
-                Act = () => ManualEngage(ent),
+                Act = () => SetEngage(ent, true),
                 Text = Loc.GetString("disposal-flush-verb-get-data-text"),
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png")),
                 Priority = 1,
@@ -50,10 +54,10 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || args.Hands == null || args.Using == null)
             return;
 
-        if (!_actionBlockerSystem.CanDrop(args.User))
+        if (!_actionBlocker.CanDrop(args.User))
             return;
 
-        if (ent.Comp.Container == null || !_containers.CanInsert(args.Using.Value, ent.Comp.Container))
+        if (ent.Comp.Container == null || !_container.CanInsert(args.Using.Value, ent.Comp.Container))
             return;
 
         var verbData = args;
@@ -82,7 +86,7 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
         // unwilling to accept that this is where they belong and don't want to accidentally climb inside.
         if (!args.CanAccess ||
             !args.CanInteract ||
-            !_actionBlockerSystem.CanMove(args.User))
+            !_actionBlocker.CanMove(args.User))
         {
             return;
         }
@@ -95,7 +99,7 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
 
         if (!GetContainedEntities(ent).Contains(args.User))
         {
-            if (!_containers.CanInsert(args.User, ent.Comp.Container))
+            if (!_container.CanInsert(args.User, ent.Comp.Container))
                 return;
 
             // Verb for climbing in
@@ -119,14 +123,14 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
         if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
             return;
 
-        Insert(ent, args.Args.Target.Value, args.Args.User, doInsert: true);
+        Insert(ent, args.Args.Target.Value, args.Args.User);
 
         args.Handled = true;
     }
 
     private void OnThrowInsert(Entity<DisposalUnitComponent> ent, ref BeforeThrowInsertEvent args)
     {
-        if (ent.Comp.Container == null || !_containers.CanInsert(args.ThrownEntity, ent.Comp.Container))
+        if (ent.Comp.Container == null || !_container.CanInsert(args.ThrownEntity, ent.Comp.Container))
         {
             args.Cancelled = true;
         }
@@ -153,8 +157,8 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
             return;
         }
 
-        if (_whitelistSystem.IsBlacklistPass(ent.Comp.Blacklist, args.EntityUid) ||
-            _whitelistSystem.IsWhitelistFail(ent.Comp.Whitelist, args.EntityUid))
+        if (_whitelist.IsBlacklistPass(ent.Comp.Blacklist, args.EntityUid) ||
+            _whitelist.IsWhitelistFail(ent.Comp.Whitelist, args.EntityUid))
         {
             args.Cancel();
             return;
@@ -176,7 +180,7 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
             return;
 
         if (ent.Comp.Container == null ||
-            !_containers.CanInsert(args.Used, ent.Comp.Container) ||
+            !_container.CanInsert(args.Used, ent.Comp.Container) ||
             !_handsSystem.TryDropIntoContainer(args.User, args.Used, ent.Comp.Container))
         {
             return;
@@ -192,7 +196,7 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
     {
         var currentTime = _timing.CurTime;
 
-        if (!_actionBlockerSystem.CanMove(args.Entity))
+        if (!_actionBlocker.CanMove(args.Entity))
             return;
 
         if (!TryComp(args.Entity, out HandsComponent? hands) ||
@@ -215,29 +219,68 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
         if (ent.Comp.Container == null)
             return;
 
-        args.CanDrop = _containers.CanInsert(args.Dragged, ent.Comp.Container);
+        args.CanDrop = _container.CanInsert(args.Dragged, ent.Comp.Container);
         args.Handled = true;
     }
 
     private void OnDragDropOn(Entity<DisposalUnitComponent> ent, ref DragDropTargetEvent args)
     {
+        if (args.Handled)
+            return;
+
         args.Handled = TryInsert(ent, args.Dragged, args.User);
     }
 
     #endregion
 
     /// <summary>
-    /// Insert an entity into a disposal unit.
+    /// Have a user try to insert an entity into a disposal unit.
     /// </summary>
     /// <param name="ent">The disposal unit.</param>
     /// <param name="toInsert">The entity to insert.</param>
-    /// <param name="user">The one inserting the entity.</param>
-    public void DoInsertDisposalUnit(Entity<DisposalUnitComponent> ent, EntityUid toInsert, EntityUid user)
+    /// <param name="user">The user inserting the entity.</param>
+    /// <returns>True if the entity can be inserted.</returns>
+    public bool TryInsert(Entity<DisposalUnitComponent> ent, EntityUid toInsert, EntityUid? user)
     {
-        if (ent.Comp.Container == null || !_containers.Insert(toInsert, ent.Comp.Container))
-            return;
+        if (ent.Comp.Container == null || !_container.CanInsert(toInsert, ent.Comp.Container))
+            return false;
 
-        _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):player} inserted {ToPrettyString(toInsert)} into {ToPrettyString(ent)}");
-        Insert(ent, toInsert, user);
+        // Mobs are allowed to jump inside even without any hands
+        if (user != null && !HasComp<HandsComponent>(user) && toInsert != user)
+        {
+            _popupSystem.PopupEntity(Loc.GetString("disposal-unit-no-hands"), user.Value, user.Value, PopupType.SmallCaution);
+            return false;
+        }
+
+        // Determine if the user is inserting themselves and determine the entry delay
+        bool insertingSelf = (user == toInsert);
+        var delay = insertingSelf ? ent.Comp.EntryDelay : ent.Comp.DraggedEntryDelay;
+
+        // Warn other players if someone is dragging them into a disposal unit
+        if (user != null && !insertingSelf)
+        {
+            _popupSystem.PopupEntity(Loc.GetString("disposal-unit-being-inserted",
+                ("user", Identity.Entity(user.Value, EntityManager))),
+                toInsert,
+                toInsert,
+                PopupType.Large);
+        }
+
+        // Check if we can insert the entity instantly
+        if (delay <= 0 || user == null || !HasComp<BodyComponent>(toInsert))
+        {
+            Insert(ent, toInsert, user);
+            return true;
+        }
+
+        // If not, start a do-after
+        var doAfterArgs = new DoAfterArgs(EntityManager, user.Value, delay, new DisposalDoAfterEvent(), ent, target: toInsert, used: ent)
+        {
+            BreakOnDamage = true,
+            BreakOnMove = true,
+            NeedHand = false,
+        };
+
+        return _doAfterSystem.TryStartDoAfter(doAfterArgs);
     }
 }
