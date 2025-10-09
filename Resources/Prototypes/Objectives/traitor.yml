@@ -91,13 +91,14 @@
   - type: TargetObjective
     title: objective-condition-maroon-person-title
   - type: PickRandomPerson
-    rerollText: objective-notification-traitor-kill
     filters:
     # Can't have multiple objectives to kill the same person.
     - !type:TargetObjectiveMindFilter
       blacklist:
         components:
         - KillPersonCondition
+  - type: RepickOnCryo
+    rerollText: objective-notification-traitor-kill
   - type: KillPersonCondition
     requireMaroon: true
 
@@ -114,7 +115,6 @@
   - type: TargetObjective
     title: objective-condition-kill-maroon-title
   - type: PickRandomPerson
-    rerollText: objective-notification-traitor-kill
     filters:
     - !type:BodyMindFilter
       whitelist:
@@ -125,6 +125,8 @@
       blacklist:
         components:
         - KillPersonCondition
+  - type: RepickOnCryo
+    rerollText: objective-notification-traitor-kill
   - type: KillPersonCondition
     # don't count missing evac as killing as heads are higher profile, so you really need to do the dirty work
     # if ce flies a shittle to centcom you better find a way onto it
@@ -143,7 +145,6 @@
   - type: TargetObjective
     title: objective-condition-other-traitor-alive-title
   - type: PickRandomPerson
-    rerollText: objective-notification-traitor-keep-alive
     filters:
     - !type:HasRoleMindFilter
       whitelist:
@@ -155,6 +156,8 @@
         components:
         - HelpProgressCondition
         - KeepAliveCondition
+  - type: RepickOnCryo
+    rerollText: objective-notification-traitor-keep-alive
 
 - type: entity
   parent: [BaseTraitorSocialObjective, BaseHelpProgressObjective]
@@ -166,7 +169,6 @@
   - type: TargetObjective
     title: objective-condition-other-traitor-progress-title
   - type: PickRandomPerson
-    rerollText: objective-notification-traitor-help
     filters:
     - !type:HasRoleMindFilter
       whitelist:
@@ -185,6 +187,8 @@
         components:
         - HelpProgressCondition
         - KeepAliveCondition
+  - type: RepickOnCryo
+    rerollText: objective-notification-traitor-help
 
 # steal
 

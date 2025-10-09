@@ -92,14 +92,11 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
         if (!_mind.TryGetMind(ev.SleepyUid, out var oldTargetMindId, out var oldTargetMindComp))
             return;
 
-        var query = EntityQueryEnumerator<PickRandomPersonComponent>();
+        var query = EntityQueryEnumerator<RepickOnCryoComponent>();
 
         //called infrequently so its probably fine
-        while (query.MoveNext(out var uid, out var picker))
+        while (query.MoveNext(out var uid, out var repicker))
         {
-            if (!picker.RerollsCryostorage)
-                continue;
-
             // invalid objective prototype
             if (!TryComp<TargetObjectiveComponent>(uid, out var targetObjective))
                 continue;
@@ -116,6 +113,9 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
                     continue;
 
                 // find a new target, keeps old target if no viable ones were found
+                if (!TryComp<PickRandomPersonComponent>(uid, out var picker))
+                    return;
+
                 if (_mind.PickFromPool(picker.Pool, picker.Filters, playerMindId) is not {} targetMind)
                     break;
 
@@ -127,17 +127,17 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
                     break;
 
                 // tell the player their objectives changed
-                _audio.PlayGlobal(picker.RerollSound, session);
+                _audio.PlayGlobal(repicker.RerollSound, session);
 
                 var targetName = targetMind.Comp.CharacterName;
                 if (targetName == null)
                     targetName = "Unknown";
 
                 var job = _job.MindTryGetJobName(targetMind);
-                var msg = Loc.GetString(picker.RerollText, ("Name", targetName), ("Job", job));
+                var msg = Loc.GetString(repicker.RerollText, ("Name", targetName), ("Job", job));
                 var wrappedMsg = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
 
-                _chat.ChatMessageToOne(ChatChannel.Server, msg, wrappedMsg, default, false, session.Channel, picker.RerollColor);
+                _chat.ChatMessageToOne(ChatChannel.Server, msg, wrappedMsg, default, false, session.Channel, repicker.RerollColor);
                 _adminLog.Add(LogType.Mind, LogImpact.Low, $"Objective target changed in mind of {_mind.MindOwnerLoggingString(playerMind)} to {targetName}");
             }
         }
