@@ -43,7 +43,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
         if (args.Handled || !args.CanReach)
             return;
 
-        if (!_sharedCharges.HasCharges(uid, 1))
+        if (_sharedCharges.IsEmpty(uid))
         {
             if (component.DeleteEmpty)
                 UseUpCrayon(uid, args.User);
