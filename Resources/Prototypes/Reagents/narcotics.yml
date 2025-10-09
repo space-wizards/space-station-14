@@ -289,16 +289,7 @@
   meltingPoint: 128.0
   metabolisms:
     Narcotic:
-      effects:
-      - !type:Emote
-        conditions:
-        - !type:ReagentThreshold
-          reagent: Nocturine
-          min: 9
-          max: 9
-        emote: Yawn
-        showInChat: true
-        probability: 1
+      effects: # It would be nice to have speech slurred or mumbly, but accents are a bit iffy atm. Same for distortion effects.
       - !type:MovespeedModifier
         conditions:
         - !type:ReagentThreshold
