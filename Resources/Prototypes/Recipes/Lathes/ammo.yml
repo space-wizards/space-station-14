@@ -168,14 +168,6 @@
     Plastic: 600
     Uranium: 600
 
-- type: latheRecipe
-  parent: BaseAmmoRecipe
-  id: MagazineLightRifleBox
-  result: MagazineLightRifleBox
-  materials:
-    Steel: 1825
-  completetime: 10
-
 # .35 Auto
 - type: latheRecipe
   parent: BaseEmptyAmmoRecipe
