@@ -1,6 +1,7 @@
 using Content.Shared.Disposal.Components;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
+using System.Collections.Generic;
 
 namespace Content.Client.Disposal.Router
 {
@@ -26,6 +27,12 @@ namespace Content.Client.Disposal.Router
 
             _window.Confirm.OnPressed += _ => AcceptButtonPressed(_window.TagInput.Text);
             _window.TagInput.OnTextEntered += args => AcceptButtonPressed(args.Text);
+
+            if (EntMan.TryGetComponent<DisposalRouterComponent>(Owner, out var router) &&
+                router.Tags.Count > 0)
+            {
+                _window.TagInput.Text = string.Join(",", router.Tags);
+            }
         }
 
         private void AcceptButtonPressed(string tag)

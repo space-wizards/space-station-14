@@ -26,6 +26,12 @@ namespace Content.Client.Disposal.Tagger
 
             _window.Confirm.OnPressed += _ => AcceptButtonPressed(_window.TagInput.Text);
             _window.TagInput.OnTextEntered += args => AcceptButtonPressed(args.Text);
+
+            if (EntMan.TryGetComponent<DisposalTaggerComponent>(Owner, out var tagger) &&
+                tagger.Tag != string.Empty)
+            {
+                _window.TagInput.Text = tagger.Tag;
+            }
         }
 
         private void AcceptButtonPressed(string tag)
