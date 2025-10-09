@@ -92,6 +92,14 @@
     Plastic: 500
     Uranium: 500
 
+# .25 Caseless
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolCaselessRifle
+  result: MagazinePistolCaselessRifle
+  materials:
+    Steel: 145
+
 # .30 Rifle
 - type: latheRecipe
   parent: BaseEmptyAmmoRecipe
@@ -159,6 +167,14 @@
   materials:
     Plastic: 600
     Uranium: 600
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineLightRifleBox
+  result: MagazineLightRifleBox
+  materials:
+    Steel: 1825
+  completetime: 10
 
 # .35 Auto
 - type: latheRecipe
@@ -451,6 +467,14 @@
   materials:
     Steel: 80
     Plastic: 80
+
+# .60 anti-materiel
+- type: latheRecipe
+  parent: BaseAmmoBoxRecipe
+  id: MagazineBoxAntiMateriel
+  result: MagazineBoxAntiMateriel
+  materials:
+    Steel: 200
 
 # Encampment ammo
 - type: latheRecipe
