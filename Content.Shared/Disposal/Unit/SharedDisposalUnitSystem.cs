@@ -423,6 +423,11 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
                 ? _timing.CurTime + ent.Comp.ManualFlushTime
                 : _timing.CurTime + ent.Comp.AutomaticEngageTime;
 
+            if (GetState(ent) != DisposalsPressureState.Ready)
+            {
+                newFlush += ent.Comp.NextPressurized;
+            }
+
             nextFlush = (ent.Comp.NextFlush ?? TimeSpan.MaxValue);
 
             // Check if there is a flush in progress that will occur
@@ -443,9 +448,6 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
     /// <param name="metadata">The disposal unit's metadata.</param>
     public void SetEngage(Entity<DisposalUnitComponent> ent, bool engaged)
     {
-        if (ent.Comp.Engaged == engaged)
-            return;
-
         ent.Comp.Engaged = engaged;
 
         RecalculateFlushTime(ent);

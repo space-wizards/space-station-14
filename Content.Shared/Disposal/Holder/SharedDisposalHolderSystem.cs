@@ -181,11 +181,13 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
                     _containerSystem.Remove((held, null, heldMeta), ent.Comp.Container, force: true);
                 }
 
+                _xformSystem.AttachToGridOrMap(held, heldXform);
+
                 // Knockdown the entity
                 _stun.TryKnockdown(held, ent.Comp.ExitStunDuration, force: true);
 
                 // Throw the entity
-                if (exitAngle != null)
+                if (exitAngle != null && heldXform.ParentUid.IsValid())
                 {
                     _throwing.TryThrow(held, exitAngle.Value.ToWorldVec() * ent.Comp.ExitDistanceMultiplier, ent.Comp.TraversalSpeed * ent.Comp.ExitSpeedMultiplier);
                 }
