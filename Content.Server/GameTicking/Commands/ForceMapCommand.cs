@@ -18,8 +18,6 @@ namespace Content.Server.GameTicking.Commands
 
         public override string Command => "forcemap";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
@@ -33,16 +31,16 @@ namespace Content.Server.GameTicking.Commands
             // An empty string clears the forced map
             if (!string.IsNullOrEmpty(name) && !_gameMapManager.CheckMapExists(name))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-map-not-found", ("map", name)));
+                shell.WriteLine(Loc.GetString("cmd-forcemap-map-not-found", ("map", name)));
                 return;
             }
 
             _configurationManager.SetCVar(CCVars.GameMap, name);
 
             if (string.IsNullOrEmpty(name))
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-cleared"));
+                shell.WriteLine(Loc.GetString("cmd-forcemap-cleared"));
             else
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-success", ("map", name)));
+                shell.WriteLine(Loc.GetString("cmd-forcemap-success", ("map", name)));
         }
 
         public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -54,7 +52,7 @@ namespace Content.Server.GameTicking.Commands
                     .Select(p => new CompletionOption(p.ID, p.MapName))
                     .OrderBy(p => p.Value);
 
-                return CompletionResult.FromHintOptions(options, Loc.GetString($"cmd-{Command}-hint"));
+                return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-forcemap-hint"));
             }
 
             return CompletionResult.Empty;

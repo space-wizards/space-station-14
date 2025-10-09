@@ -18,8 +18,6 @@ namespace Content.Server.Roles
 
         public override string Command => "rmrole";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)

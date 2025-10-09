@@ -14,8 +14,6 @@ public sealed class StripAllCommand : LocalizedEntityCommands
 
     public override string Command => "stripall";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
@@ -60,7 +58,7 @@ public sealed class StripAllCommand : LocalizedEntityCommands
         {
             return CompletionResult.FromHintOptions(
                 CompletionHelper.Components<InventoryComponent>(args[0]),
-                Loc.GetString($"cmd-{Command}-player-completion"));
+                Loc.GetString("cmd-stripall-player-completion"));
         }
 
         return CompletionResult.Empty;

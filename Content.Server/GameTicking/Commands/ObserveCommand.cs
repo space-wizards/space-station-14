@@ -13,8 +13,6 @@ namespace Content.Server.GameTicking.Commands
 
         public override string Command => "observe";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (shell.Player is not { } player)
@@ -25,7 +23,7 @@ namespace Content.Server.GameTicking.Commands
 
             if (_gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-wait-round-start"));
+                shell.WriteError(Loc.GetString("cmd-observe-wait-round-start"));
                 return;
             }
 
@@ -43,7 +41,7 @@ namespace Content.Server.GameTicking.Commands
             }
             else
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-not-in-lobby", ("player", player.Name)));
+                shell.WriteError(Loc.GetString("cmd-observe-not-in-lobby", ("player", player.Name)));
             }
         }
     }

@@ -20,8 +20,6 @@ public sealed class PlayGlobalSoundCommand : LocalizedCommands
 
     public override string Command => "playglobalsound";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         Filter filter;
@@ -33,7 +31,7 @@ public sealed class PlayGlobalSoundCommand : LocalizedCommands
         {
             // No arguments, show command help.
             case 0:
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-help"));
+                shell.WriteLine(Loc.GetString("cmd-playglobalsound-help"));
                 return;
 
             // No users, play sound for everyone.
@@ -54,7 +52,7 @@ public sealed class PlayGlobalSoundCommand : LocalizedCommands
                 }
                 else
                 {
-                    shell.WriteError(Loc.GetString($"cmd-{Command}-volume-parse", ("volume", args[1])));
+                    shell.WriteError(Loc.GetString("cmd-playglobalsound-volume-parse", ("volume", args[1])));
                     return;
                 }
 
@@ -76,7 +74,7 @@ public sealed class PlayGlobalSoundCommand : LocalizedCommands
 
                         if (!_playerManager.TryGetSessionByUsername(username, out var session))
                         {
-                            shell.WriteError(Loc.GetString($"cmd-{Command}-player-not-found", ("username", username)));
+                            shell.WriteError(Loc.GetString("cmd-playglobalsound-player-not-found", ("username", username)));
                             continue;
                         }
 
@@ -91,11 +89,11 @@ public sealed class PlayGlobalSoundCommand : LocalizedCommands
         _entManager.System<ServerGlobalSoundSystem>().PlayAdminGlobal(filter, args[0], audio, replay);
     }
 
-    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
         {
-            var hint = Loc.GetString($"cmd-{Command}-arg-path");
+            var hint = Loc.GetString("cmd-playglobalsound-arg-path");
 
             var options = CompletionHelper.AudioFilePath(args[0], _protoManager, _res);
 
@@ -103,14 +101,14 @@ public sealed class PlayGlobalSoundCommand : LocalizedCommands
         }
 
         if (args.Length == 2)
-            return CompletionResult.FromHint(Loc.GetString($"cmd-{Command}-arg-volume"));
+            return CompletionResult.FromHint(Loc.GetString("cmd-playglobalsound-arg-volume"));
 
         if (args.Length > 2)
         {
             var options = _playerManager.Sessions.Select<ICommonSession, string>(c => c.Name);
             return CompletionResult.FromHintOptions(
                 options,
-                Loc.GetString($"cmd-{Command}-arg-usern", ("user", args.Length - 2)));
+                Loc.GetString("cmd-playglobalsound-arg-usern", ("user", args.Length - 2)));
         }
 
         return CompletionResult.Empty;

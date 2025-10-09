@@ -11,8 +11,6 @@ public sealed class RoleUnbanCommand : LocalizedCommands
 
     public override string Command => "roleunban";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
@@ -23,7 +21,7 @@ public sealed class RoleUnbanCommand : LocalizedCommands
 
         if (!int.TryParse(args[0], out var banId))
         {
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-unable-to-parse-id", ("id", args[0]), ("help", Help)));
+            shell.WriteLine(Loc.GetString("cmd-roleunban-unable-to-parse-id", ("id", args[0]), ("help", Help)));
             return;
         }
 
@@ -36,7 +34,7 @@ public sealed class RoleUnbanCommand : LocalizedCommands
         // Can't think of good way to do hint options for this
         return args.Length switch
         {
-            1 => CompletionResult.FromHint(Loc.GetString($"cmd-{Command}-hint-1")),
+            1 => CompletionResult.FromHint(Loc.GetString("cmd-roleunban-hint-1")),
             _ => CompletionResult.Empty
         };
     }

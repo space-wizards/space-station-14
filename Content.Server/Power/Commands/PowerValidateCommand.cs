@@ -12,8 +12,6 @@ public sealed class PowerValidateCommand : LocalizedEntityCommands
 
     public override string Command => "power_validate";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         try
@@ -22,10 +20,10 @@ public sealed class PowerValidateCommand : LocalizedEntityCommands
         }
         catch (Exception e)
         {
-            shell.WriteLine(LocalizationManager.GetString($"cmd-{Command}-error", ("err", e.ToString())));
+            shell.WriteLine(LocalizationManager.GetString("cmd-power_validate-error", ("err", e.ToString())));
             return;
         }
 
-        shell.WriteLine(LocalizationManager.GetString($"cmd-{Command}-success"));
+        shell.WriteLine(LocalizationManager.GetString("cmd-power_validate-success"));
     }
 }

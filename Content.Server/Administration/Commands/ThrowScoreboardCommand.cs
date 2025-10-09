@@ -11,8 +11,6 @@ public sealed class ThrowScoreboardCommand : LocalizedEntityCommands
 
     public override string Command => "throwscoreboard";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length > 0)

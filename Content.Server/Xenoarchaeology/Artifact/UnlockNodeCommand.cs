@@ -13,8 +13,6 @@ public sealed class UnlockNodeCommand : LocalizedEntityCommands
 
     public override string Command => "unlocknode";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 2)
@@ -45,7 +43,7 @@ public sealed class UnlockNodeCommand : LocalizedEntityCommands
                     completionOptions.Add(new CompletionOption(uid.ToString()));
                 }
 
-                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString($"cmd-{Command}-artifact-hint"));
+                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-unlocknode-artifact-hint"));
             }
             case 2 when
                 NetEntity.TryParse(args[0], out var netEnt) &&
@@ -61,7 +59,7 @@ public sealed class UnlockNodeCommand : LocalizedEntityCommands
                     result.Add(completionOption);
                 }
 
-                return CompletionResult.FromHintOptions(result, Loc.GetString($"cmd-{Command}-node-hint"));
+                return CompletionResult.FromHintOptions(result, Loc.GetString("cmd-unlocknode-node-hint"));
             }
             default:
                 return CompletionResult.Empty;

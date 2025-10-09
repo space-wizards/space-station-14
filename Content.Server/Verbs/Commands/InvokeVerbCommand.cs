@@ -14,13 +14,11 @@ namespace Content.Server.Verbs.Commands
 
         public override string Command => "invokeverb";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 3)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-args"));
+                shell.WriteLine(Loc.GetString("cmd-invokeverb-invalid-args"));
                 return;
             }
 
@@ -34,7 +32,7 @@ namespace Content.Server.Verbs.Commands
                 }
                 else
                 {
-                    shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-player-uid"));
+                    shell.WriteError(Loc.GetString("cmd-invokeverb-invalid-player-uid"));
                     return;
                 }
             }
@@ -46,13 +44,13 @@ namespace Content.Server.Verbs.Commands
             // gets the target entity
             if (!int.TryParse(args[1], out var intUid))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-target-uid"));
+                shell.WriteError(Loc.GetString("cmd-invokeverb-invalid-target-uid"));
                 return;
             }
 
             if (playerEntity == null)
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-player-entity"));
+                shell.WriteError(Loc.GetString("cmd-invokeverb-invalid-player-entity"));
                 return;
             }
 
@@ -60,7 +58,7 @@ namespace Content.Server.Verbs.Commands
 
             if (!_entManager.TryGetEntity(targetNet, out var target))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-target-entity"));
+                shell.WriteError(Loc.GetString("cmd-invokeverb-invalid-target-entity"));
                 return;
             }
 
@@ -75,7 +73,7 @@ namespace Content.Server.Verbs.Commands
                 if (verb != null)
                 {
                     _verbSystem.ExecuteVerb(verb, playerEntity.Value, target.Value, forced: true);
-                    shell.WriteLine(Loc.GetString($"cmd-{Command}-success", ("verb", verbName), ("target", target), ("player", playerEntity)));
+                    shell.WriteLine(Loc.GetString("cmd-invokeverb-success", ("verb", verbName), ("target", target), ("player", playerEntity)));
                     return;
                 }
             }
@@ -85,13 +83,13 @@ namespace Content.Server.Verbs.Commands
                 if (verb.Text.ToLowerInvariant() == verbName)
                 {
                     _verbSystem.ExecuteVerb(verb, playerEntity.Value, target.Value, forced: true);
-                    shell.WriteLine(Loc.GetString($"cmd-{Command}-success", ("verb", verb.Text), ("target", target), ("player", playerEntity)));
+                    shell.WriteLine(Loc.GetString("cmd-invokeverb-success", ("verb", verb.Text), ("target", target), ("player", playerEntity)));
                     return;
                 }
             }
 
             // found nothing
-            shell.WriteError(Loc.GetString($"cmd-{Command}-verb-not-found", ("verb", verbName), ("target", target)));
+            shell.WriteError(Loc.GetString("cmd-invokeverb-verb-not-found", ("verb", verbName), ("target", target)));
         }
     }
 }

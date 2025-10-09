@@ -18,34 +18,33 @@ namespace Content.Server.Decals.Commands
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly TurfSystem _turfSystem = default!;
         [Dependency] private readonly MapSystem _mapSystem = default!;
+        [Dependency] private readonly DecalSystem _decalSystem = default!;
 
         public override string Command => "adddecal";
-
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 4 || args.Length > 7)
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-received-invalid-amount-of-arguments", ("expected", 4), ("got", args.Length)));
+                shell.WriteError(Loc.GetString("cmd-adddecal-received-invalid-amount-of-arguments", ("expected", 4), ("got", args.Length)));
                 shell.WriteLine(Help);
                 return;
             }
 
             if (!_protoManager.HasIndex<DecalPrototype>(args[0]))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-cannot-find-decalprototype", ("decalprototype", args[0])));
+                shell.WriteError(Loc.GetString("cmd-adddecal-cannot-find-decalprototype", ("decalprototype", args[0])));
             }
 
             if (!float.TryParse(args[1], out var x))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-failed-parsing-x-coordinate", ("x-coordinate", args[1])));
+                shell.WriteError(Loc.GetString("cmd-adddecal-failed-parsing-x-coordinate", ("x-coordinate", args[1])));
                 return;
             }
 
             if (!float.TryParse(args[2], out var y))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-failed-parsing-y-coordinate", ("y-coordinate", args[2])));
+                shell.WriteError(Loc.GetString("cmd-adddecal-failed-parsing-y-coordinate", ("y-coordinate", args[2])));
                 return;
             }
 
@@ -53,14 +52,14 @@ namespace Content.Server.Decals.Commands
                 !_entManager.TryGetEntity(gridIdNet, out var gridIdRaw) ||
                 !_entManager.TryGetComponent(gridIdRaw, out MapGridComponent? grid))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-failed-parsing-gridId", ("gridId", args[3])));
+                shell.WriteError(Loc.GetString("cmd-adddecal-failed-parsing-gridId", ("gridId", args[3])));
                 return;
             }
 
             var coordinates = new EntityCoordinates(gridIdRaw.Value, new Vector2(x, y));
             if (_turfSystem.IsSpace(_mapSystem.GetTileRef(gridIdRaw.Value, grid, coordinates)))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-cannot-create-decal-on-space-tile", ("coordinates", coordinates)));
+                shell.WriteError(Loc.GetString("cmd-adddecal-cannot-create-decal-on-space-tile", ("coordinates", coordinates)));
                 return;
             }
 
@@ -74,7 +73,7 @@ namespace Content.Server.Decals.Commands
                     var rawValue = args[i].Split('=');
                     if (rawValue.Length != 2)
                     {
-                        shell.WriteError(Loc.GetString($"cmd-{Command}-failed-parsing-parameter", ("parameter", args[i])));
+                        shell.WriteError(Loc.GetString("cmd-adddecal-failed-parsing-parameter", ("parameter", args[i])));
                         return;
                     }
 
@@ -83,7 +82,7 @@ namespace Content.Server.Decals.Commands
                         case "angle":
                             if (!double.TryParse(rawValue[1], out var degrees))
                             {
-                                shell.WriteError(Loc.GetString($"cmd-{Command}-failed-parsing-angle", ("angle", rawValue[1])));
+                                shell.WriteError(Loc.GetString("cmd-adddecal-failed-parsing-angle", ("angle", rawValue[1])));
                                 return;
                             }
                             rotation = Angle.FromDegrees(degrees);
@@ -91,33 +90,33 @@ namespace Content.Server.Decals.Commands
                         case "zIndex":
                             if (!int.TryParse(rawValue[1], out zIndex))
                             {
-                                shell.WriteError(Loc.GetString($"cmd-{Command}-failed-parsing-zIndex", ("zIndex", rawValue[1])));
+                                shell.WriteError(Loc.GetString("cmd-adddecal-failed-parsing-zIndex", ("zIndex", rawValue[1])));
                                 return;
                             }
                             break;
                         case "color":
                             if (!Color.TryFromName(rawValue[1], out var colorRaw))
                             {
-                                shell.WriteError(Loc.GetString($"cmd-{Command}-failed-parsing-color", ("color", rawValue[1])));
+                                shell.WriteError(Loc.GetString("cmd-adddecal-failed-parsing-color", ("color", rawValue[1])));
                                 return;
                             }
 
                             color = colorRaw;
                             break;
                         default:
-                            shell.WriteError(Loc.GetString($"cmd-{Command}-unknown-parameter-key", ("parameter-key", rawValue[0])));
+                            shell.WriteError(Loc.GetString("cmd-adddecal-unknown-parameter-key", ("parameter-key", rawValue[0])));
                             return;
                     }
                 }
             }
 
-            if (_entManager.System<DecalSystem>().TryAddDecal(args[0], coordinates, out var uid, color, rotation, zIndex))
+            if (_decalSystem.TryAddDecal(args[0], coordinates, out var uid, color, rotation, zIndex))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-successfully-created-decal", ("decal", uid)));
+                shell.WriteLine(Loc.GetString("cmd-adddecal-successfully-created-decal", ("decal", uid)));
             }
             else
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-failed-adding-decal"));
+                shell.WriteError(Loc.GetString("cmd-adddecal-failed-adding-decal"));
             }
         }
     }

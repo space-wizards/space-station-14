@@ -11,8 +11,6 @@ public sealed class ReadyAllCommand : LocalizedEntityCommands
 
     public override string Command => "readyall";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var ready = true;

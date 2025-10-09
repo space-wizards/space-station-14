@@ -10,8 +10,6 @@ namespace Content.Server.Administration.Commands
 
         public override string Command => "deletecomponent";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             switch (args.Length)
@@ -24,7 +22,7 @@ namespace Content.Server.Administration.Commands
 
                     if (!_compFactory.TryGetRegistration(name, out var registration))
                     {
-                        shell.WriteLine(Loc.GetString($"cmd-{Command}-no-component-exists", ("name", name)));
+                        shell.WriteLine(Loc.GetString("cmd-deletecomponent-no-component-exists", ("name", name)));
                         break;
                     }
 
@@ -39,7 +37,7 @@ namespace Content.Server.Administration.Commands
                         i++;
                     }
 
-                    shell.WriteLine(Loc.GetString($"cmd-{Command}-success", ("count", i), ("name", name)));
+                    shell.WriteLine(Loc.GetString("cmd-deletecomponent-success", ("count", i), ("name", name)));
 
                     break;
             }

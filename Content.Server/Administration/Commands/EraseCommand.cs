@@ -15,13 +15,11 @@ public sealed class EraseCommand : LocalizedEntityCommands
 
     public override string Command => "erase";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
         {
-            shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-args"));
+            shell.WriteError(Loc.GetString("cmd-erase-invalid-args"));
             shell.WriteLine(Help);
             return;
         }
@@ -30,7 +28,7 @@ public sealed class EraseCommand : LocalizedEntityCommands
 
         if (located == null)
         {
-            shell.WriteError(Loc.GetString($"cmd-{Command}-player-not-found"));
+            shell.WriteError(Loc.GetString("cmd-erase-player-not-found"));
             return;
         }
 
@@ -44,6 +42,6 @@ public sealed class EraseCommand : LocalizedEntityCommands
 
         var options = _players.Sessions.OrderBy(c => c.Name).Select(c => c.Name).ToArray();
 
-        return CompletionResult.FromHintOptions(options, Loc.GetString($"cmd-{Command}-player-completion"));
+        return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-erase-player-completion"));
     }
 }

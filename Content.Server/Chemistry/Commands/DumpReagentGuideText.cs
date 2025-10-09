@@ -13,8 +13,6 @@ public sealed class DumpReagentGuideText : LocalizedEntityCommands
 
     public override string Command => "dumpreagentguidetext";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
@@ -33,7 +31,7 @@ public sealed class DumpReagentGuideText : LocalizedEntityCommands
 
         if (reagent.Metabolisms is null)
         {
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-nothing-to-dump"));
+            shell.WriteLine(Loc.GetString("cmd-dumpreagentguidetext-nothing-to-dump"));
             return;
         }
 
@@ -42,7 +40,7 @@ public sealed class DumpReagentGuideText : LocalizedEntityCommands
             foreach (var effect in entry.Effects)
             {
                 shell.WriteLine(effect.GuidebookEffectDescription(_prototype, EntityManager.EntitySysManager) ??
-                                Loc.GetString($"cmd-{Command}-skipped", ("effect", effect.GetType())));
+                                Loc.GetString("cmd-dumpreagentguidetext-skipped", ("effect", effect.GetType())));
             }
         }
     }

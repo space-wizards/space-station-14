@@ -15,8 +15,6 @@ namespace Content.Server.Administration.Commands
 
         public override string Command => "setmind";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override string Description => Loc.GetString($"cmd-{Command}-desc", ("requiredComponent", nameof(MindContainerComponent)));
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
@@ -49,7 +47,7 @@ namespace Content.Server.Administration.Commands
 
             if (!EntityManager.HasComponent<MindContainerComponent>(eUid))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-target-has-no-mind-message"));
+                shell.WriteLine(Loc.GetString("cmd-setmind-target-has-no-mind-message"));
                 return;
             }
 
@@ -63,7 +61,7 @@ namespace Content.Server.Administration.Commands
             var playerCData = session.ContentData();
             if (playerCData == null)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-target-has-no-content-data-message"));
+                shell.WriteLine(Loc.GetString("cmd-setmind-target-has-no-content-data-message"));
                 return;
             }
 

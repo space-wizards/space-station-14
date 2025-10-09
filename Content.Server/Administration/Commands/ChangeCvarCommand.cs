@@ -28,7 +28,7 @@ public sealed class ChangeCvarCommand : LocalizedCommands
     {
         if (args.Length < 2)
         {
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-search-no-arguments"));
+            shell.WriteLine(Loc.GetString("cmd-changecvar-search-no-arguments"));
             return;
         }
 
@@ -44,11 +44,11 @@ public sealed class ChangeCvarCommand : LocalizedCommands
 
         if (matches.Count == 0)
         {
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-search-no-matches"));
+            shell.WriteLine(Loc.GetString("cmd-changecvar-search-no-matches"));
             return;
         }
 
-        shell.WriteLine(Loc.GetString($"cmd-{Command}-search-matches", ("count", matches.Count)));
+        shell.WriteLine(Loc.GetString("cmd-changecvar-search-matches", ("count", matches.Count)));
         shell.WriteLine(string.Join("\n", matches.Select(FormatCVarFullHelp)));
     }
 
@@ -68,13 +68,11 @@ public sealed class ChangeCvarCommand : LocalizedCommands
 
     public override string Command => "changecvar";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length == 0)
         {
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-no-arguments"));
+            shell.WriteLine(Loc.GetString("cmd-changecvar-no-arguments"));
             return;
         }
 
@@ -85,11 +83,11 @@ public sealed class ChangeCvarCommand : LocalizedCommands
         {
             if (cvars.Count == 0)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-no-cvars"));
+                shell.WriteLine(Loc.GetString("cmd-changecvar-no-cvars"));
                 return;
             }
 
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-available-cvars"));
+            shell.WriteLine(Loc.GetString("cmd-changecvar-available-cvars"));
             shell.WriteLine(string.Join("\n", cvars.Select(FormatCVarFullHelp)));
             return;
         }
@@ -102,13 +100,13 @@ public sealed class ChangeCvarCommand : LocalizedCommands
 
         if (!_configurationManager.IsCVarRegistered(cvar)) // Might be a redunat check with the if statement below.
         {
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-cvar-not-registered", ("cvar", cvar)));
+            shell.WriteLine(Loc.GetString("cmd-changecvar-cvar-not-registered", ("cvar", cvar)));
             return;
         }
 
         if (cvars.All(c => c.Name != cvar))
         {
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-cvar-not-allowed"));
+            shell.WriteLine(Loc.GetString("cmd-changecvar-cvar-not-allowed"));
             return;
         }
 
@@ -172,7 +170,7 @@ public sealed class ChangeCvarCommand : LocalizedCommands
 
                 if (!allowed)
                 {
-                    shell.WriteError(Loc.GetString($"cmd-{Command}-value-out-of-range",
+                    shell.WriteError(Loc.GetString("cmd-changecvar-value-out-of-range",
                         ("min", control.Min ?? "-∞"),
                         ("max", control.Max ?? "∞")));
                     return;
@@ -185,16 +183,16 @@ public sealed class ChangeCvarCommand : LocalizedCommands
                     $"{shell.Player!.Name} ({shell.Player!.UserId}) changed CVAR {cvar} from {oldValue.ToString()} to {parsed.ToString()}"
                     );
 
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-success", ("cvar", cvar), ("old", oldValue), ("value", parsed)));
+                shell.WriteLine(Loc.GetString("cmd-changecvar-success", ("cvar", cvar), ("old", oldValue), ("value", parsed)));
             }
             catch (FormatException)
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-parse-error", ("type", type)));
+                shell.WriteError(Loc.GetString("cmd-changecvar-parse-error", ("type", type)));
             }
         }
     }
 
-    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         var cvars = _cVarControlManager.GetAllRunnableCvars(shell);
 
@@ -203,7 +201,7 @@ public sealed class ChangeCvarCommand : LocalizedCommands
             return CompletionResult.FromHintOptions(
                 cvars
                     .Select(c => new CompletionOption(c.Name, c.ShortHelp ?? c.Name)),
-                Loc.GetString($"cmd-{Command}-arg-name"));
+                Loc.GetString("cmd-changecvar-arg-name"));
         }
 
         var cvar = args[0];

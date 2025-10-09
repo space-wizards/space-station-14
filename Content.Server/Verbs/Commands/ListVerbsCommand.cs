@@ -14,13 +14,11 @@ namespace Content.Server.Verbs.Commands
 
         public override string Command => "listverbs";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-args"));
+                shell.WriteLine(Loc.GetString("cmd-listverbs-invalid-args"));
                 return;
             }
 
@@ -35,7 +33,7 @@ namespace Content.Server.Verbs.Commands
                 }
                 else
                 {
-                    shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-player-uid"));
+                    shell.WriteError(Loc.GetString("cmd-listverbs-invalid-player-uid"));
                     return;
                 }
             }
@@ -47,13 +45,13 @@ namespace Content.Server.Verbs.Commands
             // gets the target entity
             if (!int.TryParse(args[1], out var intUid))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-target-uid"));
+                shell.WriteError(Loc.GetString("cmd-listverbs-invalid-target-uid"));
                 return;
             }
 
             if (playerEntity == null)
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-player-entity"));
+                shell.WriteError(Loc.GetString("cmd-listverbs-invalid-player-entity"));
                 return;
             }
 
@@ -61,7 +59,7 @@ namespace Content.Server.Verbs.Commands
 
             if (!_entManager.TryGetEntity(targetNet, out var target))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-target-entity"));
+                shell.WriteError(Loc.GetString("cmd-listverbs-invalid-target-entity"));
                 return;
             }
 
@@ -69,7 +67,7 @@ namespace Content.Server.Verbs.Commands
 
             foreach (var verb in verbs)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-verb-listing", ("type", verb.GetType().Name), ("verb", verb.Text)));
+                shell.WriteLine(Loc.GetString("cmd-listverbs-verb-listing", ("type", verb.GetType().Name), ("verb", verb.Text)));
             }
         }
     }

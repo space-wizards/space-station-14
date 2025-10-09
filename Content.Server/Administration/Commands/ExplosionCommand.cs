@@ -19,8 +19,6 @@ public sealed class OpenExplosionEui : LocalizedEntityCommands
 
     public override string Command => "explosionui";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var player = shell.Player;
@@ -44,8 +42,6 @@ public sealed class ExplosionCommand : LocalizedEntityCommands
 
     public override string Command => "explosion";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     // Note that if you change the arguments, you should also update the client-side SpawnExplosionWindow, as that just
     // uses this command.
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
@@ -58,21 +54,21 @@ public sealed class ExplosionCommand : LocalizedEntityCommands
 
         if (!float.TryParse(args[0], out var intensity))
         {
-            shell.WriteError(Loc.GetString($"cmd-{Command}-failed-to-parse-intensity", ("value", args[0])));
+            shell.WriteError(Loc.GetString("cmd-explosion-failed-to-parse-intensity", ("value", args[0])));
             return;
         }
 
         float slope = 5;
         if (args.Length > 1 && !float.TryParse(args[1], out slope))
         {
-            shell.WriteError(Loc.GetString($"cmd-{Command}-failed-to-parse-float", ("value", args[1])));
+            shell.WriteError(Loc.GetString("cmd-explosion-failed-to-parse-float", ("value", args[1])));
             return;
         }
 
         float maxIntensity = 100;
         if (args.Length > 2 && !float.TryParse(args[2], out maxIntensity))
         {
-            shell.WriteError(Loc.GetString($"cmd-{Command}-failed-to-parse-float", ("value", args[2])));
+            shell.WriteError(Loc.GetString("cmd-explosion-failed-to-parse-float", ("value", args[2])));
             return;
         }
 
@@ -81,7 +77,7 @@ public sealed class ExplosionCommand : LocalizedEntityCommands
         {
             if (!float.TryParse(args[3], out x) || !float.TryParse(args[4], out y))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-failed-to-parse-coords",
+                shell.WriteError(Loc.GetString("cmd-explosion-failed-to-parse-coords",
                     ("value1", args[3]),
                     ("value2", args[4])));
                 return;
@@ -93,7 +89,7 @@ public sealed class ExplosionCommand : LocalizedEntityCommands
         {
             if (!int.TryParse(args[5], out var parsed))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-failed-to-parse-map-id", ("value", args[5])));
+                shell.WriteError(Loc.GetString("cmd-explosion-failed-to-parse-map-id", ("value", args[5])));
                 return;
             }
             coords = new MapCoordinates(new Vector2(x, y), new(parsed));
@@ -103,7 +99,7 @@ public sealed class ExplosionCommand : LocalizedEntityCommands
             // attempt to find the player's current position
             if (!EntityManager.TryGetComponent(shell.Player?.AttachedEntity, out TransformComponent? xform))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-need-coords-explicit"));
+                shell.WriteError(Loc.GetString("cmd-explosion-need-coords-explicit"));
                 return;
             }
 
@@ -118,7 +114,7 @@ public sealed class ExplosionCommand : LocalizedEntityCommands
         {
             if (!_prototypeManager.TryIndex(args[6], out type))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-unknown-prototype", ("value", args[6])));
+                shell.WriteError(Loc.GetString("cmd-explosion-unknown-prototype", ("value", args[6])));
                 return;
             }
         }
@@ -129,7 +125,7 @@ public sealed class ExplosionCommand : LocalizedEntityCommands
 
             if (type == null)
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-no-prototypes"));
+                shell.WriteError(Loc.GetString("cmd-explosion-no-prototypes"));
                 return;
             }
         }

@@ -11,8 +11,6 @@ namespace Content.Server.Administration.Commands
 
         public override string Command => "readmin";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
@@ -24,7 +22,7 @@ namespace Content.Server.Administration.Commands
 
             if (_adminManager.GetAdminData(player, includeDeAdmin: true) == null)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-not-an-admin"));
+                shell.WriteLine(Loc.GetString("cmd-readmin-not-an-admin"));
                 return;
             }
 

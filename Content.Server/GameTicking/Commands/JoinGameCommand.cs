@@ -26,8 +26,6 @@ namespace Content.Server.GameTicking.Commands
 
         public override string Command => "joingame";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
@@ -46,13 +44,13 @@ namespace Content.Server.GameTicking.Commands
             if (_gameTicker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) && status == PlayerGameStatus.JoinedGame)
             {
                 Sawmill.Info($"{player.Name} ({player.UserId}) attempted to latejoin while in-game.");
-                shell.WriteError(Loc.GetString($"cmd-{Command}-not-in-lobby", ("player", player.Name)));
+                shell.WriteError(Loc.GetString("cmd-joingame-not-in-lobby", ("player", player.Name)));
                 return;
             }
 
             if (_gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-round-not-started"));
+                shell.WriteLine(Loc.GetString("cmd-joingame-round-not-started"));
                 return;
             }
             else if (_gameTicker.RunLevel == GameRunLevel.InRound)
@@ -68,7 +66,7 @@ namespace Content.Server.GameTicking.Commands
                 var jobPrototype = _prototypeManager.Index<JobPrototype>(id);
                 if(_stationJobsSystem.TryGetJobSlot(station, jobPrototype, out var slots) == false || slots == 0)
                 {
-                    shell.WriteLine(Loc.GetString($"cmd-{Command}-no-available-slots", ("job", jobPrototype.LocalizedName)));
+                    shell.WriteLine(Loc.GetString("cmd-joingame-no-available-slots", ("job", jobPrototype.LocalizedName)));
                     return;
                 }
 

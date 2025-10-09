@@ -28,19 +28,17 @@ public sealed class StatValuesCommand : LocalizedEntityCommands
 
     public override string Command => "showvalues";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player is not { } pSession)
         {
-            shell.WriteError(Loc.GetString($"cmd-{Command}-server"));
+            shell.WriteError(Loc.GetString("cmd-showvalues-server"));
             return;
         }
 
         if (args.Length != 1)
         {
-            shell.WriteError(Loc.GetString($"cmd-{Command}-args"));
+            shell.WriteError(Loc.GetString("cmd-showvalues-args"));
             return;
         }
 
@@ -64,7 +62,7 @@ public sealed class StatValuesCommand : LocalizedEntityCommands
                 message = GetDrawRateMessage();
                 break;
             default:
-                shell.WriteError(Loc.GetString($"cmd-{Command}-invalid", ("arg", args[0])));
+                shell.WriteError(Loc.GetString("cmd-showvalues-invalid", ("arg", args[0])));
                 return;
         }
 

@@ -18,15 +18,13 @@ namespace Content.Server.Administration.Commands
         [Dependency] private readonly IEntityManager _entManager = default!;
 
         public override string Command => "warp";
-        
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
             if (player == null)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-only-players"));
+                shell.WriteLine(Loc.GetString("cmd-warp-only-players"));
                 return;
             }
 
@@ -47,7 +45,7 @@ namespace Content.Server.Administration.Commands
             {
                 if (player.Status != SessionStatus.InGame || player.AttachedEntity is not { Valid: true } playerEntity)
                 {
-                    shell.WriteLine(Loc.GetString($"cmd-{Command}-not-in-game"));
+                    shell.WriteLine(Loc.GetString("cmd-warp-not-in-game"));
                     return;
                 }
 
@@ -106,7 +104,7 @@ namespace Content.Server.Administration.Commands
 
                 if (coords.EntityId == EntityUid.Invalid)
                 {
-                    shell.WriteError(Loc.GetString($"cmd-{Command}-location-not-found"));
+                    shell.WriteError(Loc.GetString("cmd-warp-location-not-found"));
                     return;
                 }
 
@@ -157,7 +155,7 @@ namespace Content.Server.Administration.Commands
             {
                 var options = new[] { "?" }.Concat(GetWarpPointNames());
 
-                return CompletionResult.FromHintOptions(options, Loc.GetString($"cmd-{Command}-completion-hint"));
+                return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-warp-completion-hint"));
             }
 
             return CompletionResult.Empty;

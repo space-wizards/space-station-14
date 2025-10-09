@@ -12,8 +12,6 @@ public sealed class LinkBluespaceLocker : LocalizedCommands
 
     public override string Command => "linkbluespacelocker";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 3)

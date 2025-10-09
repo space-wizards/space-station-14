@@ -21,8 +21,6 @@ public sealed class BanListCommand : LocalizedCommands
 
     public override string Command => "banlist";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
@@ -45,7 +43,7 @@ public sealed class BanListCommand : LocalizedCommands
 
             if (bans.Count == 0)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-empty", ("user", data.Username)));
+                shell.WriteLine(Loc.GetString("cmd-banlist-empty", ("user", data.Username)));
                 return;
             }
 
@@ -70,6 +68,6 @@ public sealed class BanListCommand : LocalizedCommands
             return CompletionResult.Empty;
 
         var options = _playerManager.Sessions.Select(c => c.Name).OrderBy(c => c).ToArray();
-        return CompletionResult.FromHintOptions(options, Loc.GetString($"cmd-{Command}-hint"));
+        return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-banlist-hint"));
     }
 }

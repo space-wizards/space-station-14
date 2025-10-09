@@ -17,14 +17,12 @@ namespace Content.Server.GameTicking.Commands
 
         public override string Command => "respawn";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override async void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
             if (args.Length > 1)
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-args"));
+                shell.WriteError(Loc.GetString("cmd-respawn-invalid-args"));
                 return;
             }
 
@@ -33,7 +31,7 @@ namespace Content.Server.GameTicking.Commands
             {
                 if (player == null)
                 {
-                    shell.WriteError(Loc.GetString($"cmd-{Command}-no-player"));
+                    shell.WriteError(Loc.GetString("cmd-respawn-no-player"));
                     return;
                 }
 
@@ -45,7 +43,7 @@ namespace Content.Server.GameTicking.Commands
 
                 if (located == null)
                 {
-                    shell.WriteError(Loc.GetString($"cmd-{Command}-unknown-player"));
+                    shell.WriteError(Loc.GetString("cmd-respawn-unknown-player"));
                     return;
                 }
 
@@ -56,26 +54,26 @@ namespace Content.Server.GameTicking.Commands
             {
                 if (!_player.TryGetPlayerData(userId, out var data))
                 {
-                    shell.WriteError(Loc.GetString($"cmd-{Command}-unknown-player"));
+                    shell.WriteError(Loc.GetString("cmd-respawn-unknown-player"));
                     return;
                 }
 
                 _mind.WipeMind(data.ContentData()?.Mind);
-                shell.WriteError(Loc.GetString($"cmd-{Command}-player-not-online"));
+                shell.WriteError(Loc.GetString("cmd-respawn-player-not-online"));
                 return;
             }
 
             _gameTicker.Respawn(targetPlayer);
         }
 
-      public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             if (args.Length != 1)
                 return CompletionResult.Empty;
 
             var options = _player.Sessions.OrderBy(c => c.Name).Select(c => c.Name).ToArray();
 
-            return CompletionResult.FromHintOptions(options, Loc.GetString($"cmd-{Command}-player-completion"));
+            return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-respawn-player-completion"));
         }
     }
 }

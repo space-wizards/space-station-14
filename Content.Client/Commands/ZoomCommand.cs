@@ -17,8 +17,6 @@ public sealed class ZoomCommand : LocalizedCommands
 
     public override string Command => "zoom";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         Vector2 zoom;
@@ -38,7 +36,7 @@ public sealed class ZoomCommand : LocalizedCommands
             zoom = new(arg0, arg0);
         else
         {
-            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error"));
+            shell.WriteError(LocalizationManager.GetString("cmd-zoom-error"));
             return;
         }
 
@@ -54,7 +52,7 @@ public sealed class ZoomCommand : LocalizedCommands
                 zoom.Y = arg1;
             else
             {
-                shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error"));
+                shell.WriteError(LocalizationManager.GetString("cmd-zoom-error"));
                 return;
             }
         }

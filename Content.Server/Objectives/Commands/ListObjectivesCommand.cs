@@ -18,8 +18,6 @@ namespace Content.Server.Objectives.Commands
 
         public override string Command => "lsobjectives";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             ICommonSession? player;
@@ -40,11 +38,11 @@ namespace Content.Server.Objectives.Commands
                 return;
             }
 
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-objectives-for-player", ("player", player.UserId)));
+            shell.WriteLine(Loc.GetString("cmd-lsobjectives-objectives-for-player", ("player", player.UserId)));
             var objectives = mind.Objectives.ToList();
             if (objectives.Count == 0)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-none"));
+                shell.WriteLine(Loc.GetString("cmd-lsobjectives-none"));
             }
 
             for (var i = 0; i < objectives.Count; i++)
@@ -52,7 +50,7 @@ namespace Content.Server.Objectives.Commands
                 var info = _objectivesSystem.GetInfo(objectives[i], mindId, mind);
                 if (info == null)
                 {
-                    shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid", ("objective", objectives[i])));
+                    shell.WriteLine(Loc.GetString("cmd-lsobjectives-invalid", ("objective", objectives[i])));
                 }
                 else
                 {

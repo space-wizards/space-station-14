@@ -19,8 +19,6 @@ namespace Content.Server.Damage.Commands
 
         public override string Command => "damage";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             if (args.Length == 1)
@@ -32,12 +30,12 @@ namespace Content.Server.Damage.Commands
                     .Select(p => new CompletionOption(p.ID));
 
                 return CompletionResult.FromHintOptions(types.Concat(groups).OrderBy(p => p.Value),
-                    Loc.GetString($"cmd-{Command}-arg-type"));
+                    Loc.GetString("cmd-damage-arg-type"));
             }
 
             if (args.Length == 2)
             {
-                return CompletionResult.FromHint(Loc.GetString($"cmd-{Command}-arg-quantity"));
+                return CompletionResult.FromHint(Loc.GetString("cmd-damage-arg-quantity"));
             }
 
             if (args.Length == 3)
@@ -48,7 +46,7 @@ namespace Content.Server.Damage.Commands
 
             if (args.Length == 4)
             {
-                return CompletionResult.FromHint(Loc.GetString($"cmd-{Command}-arg-target"));
+                return CompletionResult.FromHint(Loc.GetString("cmd-damage-arg-target"));
             }
 
             return CompletionResult.Empty;
@@ -64,7 +62,7 @@ namespace Content.Server.Damage.Commands
         {
             if (!float.TryParse(args[1], out var amount))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-error-quantity", ("arg", args[1])));
+                shell.WriteLine(Loc.GetString("cmd-damage-error-quantity", ("arg", args[1])));
                 func = null;
                 return false;
             }
@@ -92,7 +90,7 @@ namespace Content.Server.Damage.Commands
 
             }
 
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-error-type", ("arg", args[0])));
+            shell.WriteLine(Loc.GetString("cmd-damage-error-type", ("arg", args[0])));
             func = null;
             return false;
         }
@@ -101,7 +99,7 @@ namespace Content.Server.Damage.Commands
         {
             if (args.Length < 2 || args.Length > 4)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-error-args"));
+                shell.WriteLine(Loc.GetString("cmd-damage-error-args"));
                 return;
             }
 
@@ -111,7 +109,7 @@ namespace Content.Server.Damage.Commands
             {
                 if (!_entManager.TryParseNetEntity(args[3], out target) || !_entManager.EntityExists(target))
                 {
-                    shell.WriteLine(Loc.GetString($"cmd-{Command}-error-euid", ("arg", args[3])));
+                    shell.WriteLine(Loc.GetString("cmd-damage-error-euid", ("arg", args[3])));
                     return;
                 }
             }
@@ -121,7 +119,7 @@ namespace Content.Server.Damage.Commands
             }
             else
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-error-player"));
+                shell.WriteLine(Loc.GetString("cmd-damage-error-player"));
                 return;
             }
 
@@ -133,7 +131,7 @@ namespace Content.Server.Damage.Commands
             {
                 if (!bool.TryParse(args[2], out ignoreResistances))
                 {
-                    shell.WriteLine(Loc.GetString($"cmd-{Command}-error-bool", ("arg", args[2])));
+                    shell.WriteLine(Loc.GetString("cmd-damage-error-bool", ("arg", args[2])));
                     return;
                 }
             }

@@ -14,19 +14,17 @@ internal sealed class UpgradeActionCommand : LocalizedEntityCommands
 
     public override string Command => "upgradeaction";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length < 1)
         {
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-need-one-argument"));
+            shell.WriteLine(Loc.GetString("cmd-upgradeaction-need-one-argument"));
             return;
         }
 
         if (args.Length > 2)
         {
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-max-two-arguments"));
+            shell.WriteLine(Loc.GetString("cmd-upgradeaction-max-two-arguments"));
             return;
         }
 
@@ -34,19 +32,19 @@ internal sealed class UpgradeActionCommand : LocalizedEntityCommands
 
         if (!NetEntity.TryParse(id, out var nuid))
         {
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-incorrect-entityuid-format"));
+            shell.WriteLine(Loc.GetString("cmd-upgradeaction-incorrect-entityuid-format"));
             return;
         }
 
         if (!_entManager.TryGetEntity(nuid, out var uid))
         {
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-entity-does-not-exist"));
+            shell.WriteLine(Loc.GetString("cmd-upgradeaction-entity-does-not-exist"));
             return;
         }
 
         if (!_entManager.TryGetComponent<ActionUpgradeComponent>(uid, out var actionUpgradeComponent))
         {
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-entity-is-not-action"));
+            shell.WriteLine(Loc.GetString("cmd-upgradeaction-entity-is-not-action"));
             return;
         }
 
@@ -54,7 +52,7 @@ internal sealed class UpgradeActionCommand : LocalizedEntityCommands
         {
             if (!_actionUpgradeSystem.TryUpgradeAction(uid, out _, actionUpgradeComponent))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-cannot-level-up"));
+                shell.WriteLine(Loc.GetString("cmd-upgradeaction-cannot-level-up"));
                 return;
             }
         }
@@ -65,18 +63,18 @@ internal sealed class UpgradeActionCommand : LocalizedEntityCommands
 
             if (!int.TryParse(levelArg, out var level))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-second-argument-not-number"));
+                shell.WriteLine(Loc.GetString("cmd-upgradeaction-second-argument-not-number"));
                 return;
             }
 
             if (level <= 0)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-less-than-required-level"));
+                shell.WriteLine(Loc.GetString("cmd-upgradeaction-less-than-required-level"));
                 return;
             }
 
             if (!_actionUpgradeSystem.TryUpgradeAction(uid, out _, actionUpgradeComponent, level))
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-cannot-level-up"));
+                shell.WriteLine(Loc.GetString("cmd-upgradeaction-cannot-level-up"));
         }
     }
 }

@@ -17,8 +17,6 @@ namespace Content.Server.Mind.Commands
 
         public override string Command => "mindinfo";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
@@ -29,20 +27,20 @@ namespace Content.Server.Mind.Commands
 
             if (!_playerManager.TryGetSessionByUsername(args[0], out var session))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-mind-not-found"));
+                shell.WriteLine(Loc.GetString("cmd-mindinfo-mind-not-found"));
                 return;
             }
 
             if (!_minds.TryGetMind(session, out var mindId, out var mind))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-mind-not-found"));
+                shell.WriteLine(Loc.GetString("cmd-mindinfo-mind-not-found"));
                 return;
             }
 
             var builder = new StringBuilder();
             var playerStr = mind.UserId?.ToString() ?? string.Empty;
             var mobStr = mind.OwnedEntity?.ToString() ?? string.Empty;
-            builder.AppendFormat(Loc.GetString($"cmd-{Command}-player-mob-roles", ("player", playerStr), ("mob", mobStr)));
+            builder.AppendFormat(Loc.GetString("cmd-mindinfo-player-mob-roles", ("player", playerStr), ("mob", mobStr)));
 
             foreach (var role in _roles.MindGetAllRoleInfo(mindId))
             {

@@ -11,8 +11,6 @@ namespace Content.Server.Chat.Commands
 
         public override string Command => "ooc";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (shell.Player is not { } player)

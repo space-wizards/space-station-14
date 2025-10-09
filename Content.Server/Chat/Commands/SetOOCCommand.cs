@@ -13,8 +13,6 @@ public sealed class SetOOCCommand : LocalizedCommands
 
     public override string Command => "setooc";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length > 1)
@@ -38,6 +36,6 @@ public sealed class SetOOCCommand : LocalizedCommands
 
         _configManager.SetCVar(CCVars.OocEnabled, ooc);
 
-        shell.WriteLine(Loc.GetString(ooc ? $"cmd-{Command}-ooc-enabled" : $"cmd-{Command}-ooc-disabled"));
+        shell.WriteLine(Loc.GetString(ooc ? "cmd-setooc-ooc-enabled" : "cmd-setooc-ooc-disabled"));
     }
 }

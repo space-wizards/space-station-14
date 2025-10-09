@@ -925,13 +925,11 @@ public sealed class GhostRoles : LocalizedEntityCommands
 
     public override string Command => "ghostroles";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player != null)
             _ghostRoleSystem.OpenEui(shell.Player);
         else
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-only-client"));
+            shell.WriteLine(Loc.GetString("cmd-ghostroles-only-client"));
     }
 }

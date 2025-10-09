@@ -142,8 +142,6 @@ public sealed class ClearAllNetworkLinkOverlays : LocalizedEntityCommands
 
     public override string Command => "clearnetworklinkoverlays";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         _network.ClearAllOverlays();

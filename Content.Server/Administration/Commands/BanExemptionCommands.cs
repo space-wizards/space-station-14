@@ -14,13 +14,11 @@ public sealed class BanExemptionUpdateCommand : LocalizedCommands
 
     public override string Command => "ban_exemption_update";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length < 2)
         {
-            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-nargs"));
+            shell.WriteError(LocalizationManager.GetString("cmd-ban_exemption_update-nargs"));
             return;
         }
 
@@ -30,7 +28,7 @@ public sealed class BanExemptionUpdateCommand : LocalizedCommands
             var arg = args[i];
             if (!Enum.TryParse<ServerBanExemptFlags>(arg, ignoreCase: true, out var flag))
             {
-                shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-invalid-flag", ("flag", arg)));
+                shell.WriteError(LocalizationManager.GetString("cmd-ban_exemption_update-invalid-flag", ("flag", arg)));
                 return;
             }
 
@@ -41,13 +39,13 @@ public sealed class BanExemptionUpdateCommand : LocalizedCommands
         var playerData = await _playerLocator.LookupIdByNameOrIdAsync(player);
         if (playerData == null)
         {
-            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-locate", ("player", player)));
+            shell.WriteError(LocalizationManager.GetString("cmd-ban_exemption_update-locate", ("player", player)));
             return;
         }
 
         await _dbManager.UpdateBanExemption(playerData.UserId, flags);
         shell.WriteLine(LocalizationManager.GetString(
-            $"cmd-{Command}-success",
+            "cmd-ban_exemption_update-success",
             ("player", player),
             ("uid", playerData.UserId)));
     }
@@ -59,7 +57,7 @@ public sealed class BanExemptionUpdateCommand : LocalizedCommands
 
         return CompletionResult.FromHintOptions(
             Enum.GetNames<ServerBanExemptFlags>(),
-            LocalizationManager.GetString($"cmd-{Command}-arg-flag"));
+            LocalizationManager.GetString("cmd-ban_exemption_update-arg-flag"));
     }
 }
 
@@ -71,13 +69,11 @@ public sealed class BanExemptionGetCommand : LocalizedCommands
 
     public override string Command => "ban_exemption_get";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
         {
-            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-nargs"));
+            shell.WriteError(LocalizationManager.GetString("cmd-ban_exemption_get-nargs"));
             return;
         }
 
@@ -92,7 +88,7 @@ public sealed class BanExemptionGetCommand : LocalizedCommands
         var flags = await _dbManager.GetBanExemption(playerData.UserId);
         if (flags == ServerBanExemptFlags.None)
         {
-            shell.WriteLine(LocalizationManager.GetString($"cmd-{Command}-none"));
+            shell.WriteLine(LocalizationManager.GetString("cmd-ban_exemption_get-none"));
             return;
         }
 
@@ -112,14 +108,14 @@ public sealed class BanExemptionGetCommand : LocalizedCommands
         }
 
         shell.WriteLine(LocalizationManager.GetString(
-            $"cmd-{Command}-show",
+            "cmd-ban_exemption_get-show",
             ("flags", joined.ToString())));
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
-            return CompletionResult.FromHint(LocalizationManager.GetString($"cmd-{Command}-arg-player"));
+            return CompletionResult.FromHint(LocalizationManager.GetString("cmd-ban_exemption_get-arg-player"));
 
         return CompletionResult.Empty;
     }

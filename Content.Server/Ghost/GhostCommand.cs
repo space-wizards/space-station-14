@@ -18,28 +18,26 @@ namespace Content.Server.Ghost
 
         public override string Command => "ghost";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
             if (player == null)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-no-session"));
+                shell.WriteLine(Loc.GetString("cmd-ghost-no-session"));
                 return;
             }
 
             if (!_gameTicker.PlayerGameStatuses.TryGetValue(player.UserId, out var playerStatus) ||
                 playerStatus is not PlayerGameStatus.JoinedGame)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-error-lobby"));
+                shell.WriteLine(Loc.GetString("cmd-ghost-error-lobby"));
                 return;
             }
 
             if (player.AttachedEntity is { Valid: true } frozen &&
                 _entities.HasComponent<AdminFrozenComponent>(frozen))
             {
-                var deniedMessage = Loc.GetString($"cmd-{Command}-denied");
+                var deniedMessage = Loc.GetString("cmd-ghost-denied");
                 shell.WriteLine(deniedMessage);
                 _popupSystem.PopupEntity(deniedMessage, frozen, frozen);
                 return;
@@ -53,7 +51,7 @@ namespace Content.Server.Ghost
 
             if (!_ghostSystem.OnGhostAttempt(mindId, true, true, mind: mind))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-denied"));
+                shell.WriteLine(Loc.GetString("cmd-ghost-denied"));
             }
         }
     }

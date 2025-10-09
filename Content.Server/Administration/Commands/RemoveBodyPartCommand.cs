@@ -11,8 +11,6 @@ namespace Content.Server.Administration.Commands
 
         public override string Command => "rmbodypart";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
@@ -30,7 +28,7 @@ namespace Content.Server.Administration.Commands
             // TODO: THIS IS JUST A MECHANISM COPYPASTE
             var xformSystem = _entManager.System<SharedTransformSystem>();
             xformSystem.AttachToGridOrMap(entityUid.Value);
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-removed", ("entityUid", entityUid.Value)));
+            shell.WriteLine(Loc.GetString("cmd-rmbodypart-removed", ("entityUid", entityUid.Value)));
         }
     }
 }

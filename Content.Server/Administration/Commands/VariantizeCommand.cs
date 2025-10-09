@@ -13,8 +13,6 @@ public sealed class VariantizeCommand : LocalizedEntityCommands
 
     public override string Command => "variantize";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
@@ -25,13 +23,13 @@ public sealed class VariantizeCommand : LocalizedEntityCommands
 
         if (!NetEntity.TryParse(args[0], out var euidNet) || !_entManager.TryGetEntity(euidNet, out var euid))
         {
-            shell.WriteError(Loc.GetString($"cmd-{Command}-parse-failed", ("arg", args[0])));
+            shell.WriteError(Loc.GetString("cmd-variantize-parse-failed", ("arg", args[0])));
             return;
         }
 
         if (!_entManager.TryGetComponent(euid, out MapGridComponent? gridComp))
         {
-            shell.WriteError(Loc.GetString($"cmd-{Command}-not-grid", ("euid", euid)));
+            shell.WriteError(Loc.GetString("cmd-variantize-not-grid", ("euid", euid)));
             return;
         }
 

@@ -16,7 +16,6 @@ public sealed class NPCDomainCommand : LocalizedEntityCommands
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
     public override string Command => "npcdomain";
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -43,6 +42,6 @@ public sealed class NPCDomainCommand : LocalizedEntityCommands
         if (args.Length > 1)
             return CompletionResult.Empty;
 
-        return CompletionResult.FromHintOptions(CompletionHelper.PrototypeIDs<HTNCompoundPrototype>(proto: _protoManager), Loc.GetString($"cmd-{Command}-hint"));
+        return CompletionResult.FromHintOptions(CompletionHelper.PrototypeIDs<HTNCompoundPrototype>(proto: _protoManager), Loc.GetString("cmd-npcdomain-hint"));
     }
 }

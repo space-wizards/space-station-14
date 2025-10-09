@@ -14,8 +14,6 @@ namespace Content.Server.Atmos.Commands
 
         public override string Command => "deletegas";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
@@ -28,13 +26,13 @@ namespace Content.Server.Atmos.Commands
                 {
                     if (player == null)
                     {
-                        shell.WriteLine(Loc.GetString($"cmd-{Command}-no-grid"));
+                        shell.WriteLine(Loc.GetString("cmd-deletegas-no-grid"));
                         return;
                     }
 
                     if (player.AttachedEntity is not {Valid: true} playerEntity)
                     {
-                        shell.WriteLine(Loc.GetString($"cmd-{Command}-no-entity"));
+                        shell.WriteLine(Loc.GetString("cmd-deletegas-no-entity"));
                         return;
                     }
 
@@ -42,7 +40,7 @@ namespace Content.Server.Atmos.Commands
 
                     if (gridId == null)
                     {
-                        shell.WriteLine(Loc.GetString($"cmd-{Command}-no-on-grid"));
+                        shell.WriteLine(Loc.GetString("cmd-deletegas-no-on-grid"));
                         return;
                     }
 
@@ -55,13 +53,13 @@ namespace Content.Server.Atmos.Commands
                         // Argument is a gas
                         if (player == null)
                         {
-                            shell.WriteLine(Loc.GetString($"cmd-{Command}-no-grid"));
+                            shell.WriteLine(Loc.GetString("cmd-deletegas-no-grid"));
                             return;
                         }
 
                         if (player.AttachedEntity is not {Valid: true} playerEntity)
                         {
-                            shell.WriteLine(Loc.GetString($"cmd-{Command}-no-entity"));
+                            shell.WriteLine(Loc.GetString("cmd-deletegas-no-entity"));
                             return;
                         }
 
@@ -69,13 +67,13 @@ namespace Content.Server.Atmos.Commands
 
                         if (gridId == null)
                         {
-                            shell.WriteLine(Loc.GetString($"cmd-{Command}-no-on-grid"));
+                            shell.WriteLine(Loc.GetString("cmd-deletegas-no-on-grid"));
                             return;
                         }
 
                         if (!Enum.TryParse<Gas>(args[0], true, out var parsedGas))
                         {
-                            shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-gas", ("gas", args[0])));
+                            shell.WriteLine(Loc.GetString("cmd-deletegas-invalid-gas", ("gas", args[0])));
                             return;
                         }
 
@@ -91,7 +89,7 @@ namespace Content.Server.Atmos.Commands
                 {
                     if (!NetEntity.TryParse(args[0], out var firstNet) || !_entManager.TryGetEntity(firstNet, out var first))
                     {
-                        shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-integer-grid", ("grid", args[0])));
+                        shell.WriteLine(Loc.GetString("cmd-deletegas-invalid-integer-grid", ("grid", args[0])));
                         return;
                     }
 
@@ -99,13 +97,13 @@ namespace Content.Server.Atmos.Commands
 
                     if (gridId.Value.IsValid())
                     {
-                        shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-grid", ("grid", gridId)));
+                        shell.WriteLine(Loc.GetString("cmd-deletegas-invalid-grid", ("grid", gridId)));
                         return;
                     }
 
                     if (!Enum.TryParse<Gas>(args[1], true, out var parsedGas))
                     {
-                        shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-gas", ("gas", args[0])));
+                        shell.WriteLine(Loc.GetString("cmd-deletegas-invalid-gas", ("gas", args[0])));
                         return;
                     }
 
@@ -120,7 +118,7 @@ namespace Content.Server.Atmos.Commands
 
             if (!_entManager.TryGetComponent<MapGridComponent>(gridId, out _))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-no-exists-grid", ("grid", gridId)));
+                shell.WriteLine(Loc.GetString("cmd-deletegas-no-exists-grid", ("grid", gridId)));
                 return;
             }
 
@@ -158,11 +156,11 @@ namespace Content.Server.Atmos.Commands
 
             if (gas == null)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-removed-moles", ("moles", moles), ("tiles", tiles)));
+                shell.WriteLine(Loc.GetString("cmd-deletegas-removed-moles", ("moles", moles), ("tiles", tiles)));
                 return;
             }
 
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-removed-moles-gas", ("moles", moles), ("gas", gas), ("tiles", tiles)));
+            shell.WriteLine(Loc.GetString("cmd-deletegas-removed-moles-gas", ("moles", moles), ("gas", gas), ("tiles", tiles)));
         }
     }
 

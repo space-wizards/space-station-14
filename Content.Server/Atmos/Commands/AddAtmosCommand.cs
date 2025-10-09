@@ -14,8 +14,6 @@ namespace Content.Server.Atmos.Commands
 
         public override string Command => "addatmos";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 1)
@@ -26,13 +24,13 @@ namespace Content.Server.Atmos.Commands
 
             if (!NetEntity.TryParse(args[0], out var eNet) || !_entities.TryGetEntity(eNet, out var euid))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-parse-failed", ("arg", args[0])));
+                shell.WriteError(Loc.GetString("cmd-addatmos-parse-failed", ("arg", args[0])));
                 return;
             }
 
             if (!_entities.HasComponent<MapGridComponent>(euid))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-not-grid", ("euid", euid)));
+                shell.WriteError(Loc.GetString("cmd-addatmos-not-grid", ("euid", euid)));
                 return;
             }
 
@@ -40,13 +38,13 @@ namespace Content.Server.Atmos.Commands
 
             if (atmos.HasAtmosphere(euid.Value))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-already-has-atmos"));
+                shell.WriteLine(Loc.GetString("cmd-addatmos-already-has-atmos"));
                 return;
             }
 
             _entities.AddComponent<GridAtmosphereComponent>(euid.Value);
 
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-added", ("grid", euid)));
+            shell.WriteLine(Loc.GetString("cmd-addatmos-added", ("grid", euid)));
         }
     }
 }

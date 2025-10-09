@@ -12,8 +12,6 @@ namespace Content.Server.Administration.Commands
 
         public override string Command => "addstorage";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
@@ -41,7 +39,7 @@ namespace Content.Server.Administration.Commands
             }
             else
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-could-not-insert"));
+                shell.WriteError(Loc.GetString("cmd-addstorage-could-not-insert"));
             }
         }
     }

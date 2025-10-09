@@ -12,14 +12,12 @@ namespace Content.Server.Atmos.Commands
 
         public override string Command => "showatmos";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
             if (player == null)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-must-be-player"));
+                shell.WriteLine(Loc.GetString("cmd-showatmos-must-be-player"));
                 return;
             }
 
@@ -27,8 +25,8 @@ namespace Content.Server.Atmos.Commands
             var enabled = atmosDebug.ToggleObserver(player);
 
             shell.WriteLine(enabled
-                ? Loc.GetString($"cmd-{Command}-enabled")
-                : Loc.GetString($"cmd-{Command}-disabled"));
+                ? Loc.GetString("cmd-showatmos-enabled")
+                : Loc.GetString("cmd-showatmos-disabled"));
         }
     }
 }

@@ -118,8 +118,6 @@ namespace Content.Client.Changelog
 
         public override string Command => "changelog";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             _uiManager.GetUIController<ChangelogUIController>().OpenWindow();

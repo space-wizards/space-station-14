@@ -13,8 +13,6 @@ namespace Content.Server.Afk
 
         public override string Command => "isafk";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length == 0)
@@ -29,7 +27,7 @@ namespace Content.Server.Afk
                 return;
             }
 
-            shell.WriteLine(Loc.GetString(_afkManager.IsAfk(player) ? $"cmd-{Command}-true" : $"cmd-{Command}-false"));
+            shell.WriteLine(Loc.GetString(_afkManager.IsAfk(player) ? "cmd-isafk-true" : "cmd-isafk-false"));
         }
 
         public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -38,7 +36,7 @@ namespace Content.Server.Afk
             {
                 return CompletionResult.FromHintOptions(
                     CompletionHelper.SessionNames(players: _players),
-                    Loc.GetString($"cmd-{Command}-hint-1"));
+                    Loc.GetString("cmd-isafk-hint-1"));
             }
 
             return CompletionResult.Empty;

@@ -12,7 +12,6 @@ namespace Content.Server.Administration.Commands
 
         public override string Command => "removeextracomponents";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -23,7 +22,7 @@ namespace Content.Server.Administration.Commands
 
             if (checkPrototype && !_prototypeManager.TryIndex(id!, out prototype))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-prototype-id", ("id", $"{id}")));
+                shell.WriteError(Loc.GetString("cmd-removeextracomponents-invalid-prototype-id", ("id", $"{id}")));
                 return;
             }
 
@@ -55,14 +54,14 @@ namespace Content.Server.Administration.Commands
 
             if (id != null)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-success-with-id",
+                shell.WriteLine(Loc.GetString("cmd-removeextracomponents-success-with-id",
                     ("count", components),
                     ("entities", entities),
                     ("id", id)));
                 return;
             }
 
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-success",
+            shell.WriteLine(Loc.GetString("cmd-removeextracomponents-success",
                 ("count", components),
                 ("entities", entities)));
         }

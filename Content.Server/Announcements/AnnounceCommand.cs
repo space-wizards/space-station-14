@@ -17,8 +17,6 @@ public sealed class AnnounceCommand : LocalizedEntityCommands
 
     public override string Command => "announce";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         switch (args.Length)
@@ -32,7 +30,7 @@ public sealed class AnnounceCommand : LocalizedEntityCommands
         }
 
         var message = args[0];
-        var sender = Loc.GetString($"cmd-{Command}-sender");
+        var sender = Loc.GetString("cmd-announce-sender");
         var color = Color.Gold;
         var sound = new SoundPathSpecifier("/Audio/Announcements/announce.ogg");
 
@@ -66,12 +64,12 @@ public sealed class AnnounceCommand : LocalizedEntityCommands
     {
         return args.Length switch
         {
-            1 => CompletionResult.FromHint(Loc.GetString($"cmd-{Command}-arg-message")),
-            2 => CompletionResult.FromHint(Loc.GetString($"cmd-{Command}-arg-sender")),
-            3 => CompletionResult.FromHint(Loc.GetString($"cmd-{Command}-arg-color")),
+            1 => CompletionResult.FromHint(Loc.GetString("cmd-announce-arg-message")),
+            2 => CompletionResult.FromHint(Loc.GetString("cmd-announce-arg-sender")),
+            3 => CompletionResult.FromHint(Loc.GetString("cmd-announce-arg-color")),
             4 => CompletionResult.FromHintOptions(
                 CompletionHelper.AudioFilePath(args[3], _proto, _res),
-                Loc.GetString($"cmd-{Command}-arg-sound")
+                Loc.GetString("cmd-announce-arg-sound")
             ),
             _ => CompletionResult.Empty
         };

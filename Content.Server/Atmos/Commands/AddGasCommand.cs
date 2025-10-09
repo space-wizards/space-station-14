@@ -14,7 +14,6 @@ namespace Content.Server.Atmos.Commands
         [Dependency] private readonly IEntityManager _entManager = default!;
 
         public override string Command => "addgas";
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -33,7 +32,7 @@ namespace Content.Server.Atmos.Commands
 
             if (!_entManager.HasComponent<MapGridComponent>(euid))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-not-grid", ("euid", euid)));
+                shell.WriteError(Loc.GetString("cmd-addgas-not-grid", ("euid", euid)));
                 return;
             }
 
@@ -43,7 +42,7 @@ namespace Content.Server.Atmos.Commands
 
             if (tile == null)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-coordinates-or-tile"));
+                shell.WriteLine(Loc.GetString("cmd-addgas-invalid-coordinates-or-tile"));
                 return;
             }
 

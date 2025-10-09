@@ -13,8 +13,6 @@ namespace Content.Server.EntityList
 
         public override string Command => "spawnentitylist";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
@@ -37,7 +35,7 @@ namespace Content.Server.EntityList
 
             if (!_prototypeManager.TryIndex(args[0], out EntityListPrototype? prototype))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-failed",
+                shell.WriteError(Loc.GetString("cmd-spawnentitylist-failed",
                     ("prototype", nameof(EntityListPrototype)),
                     ("id", args[0])));
                 return;
@@ -51,7 +49,7 @@ namespace Content.Server.EntityList
                 i++;
             }
 
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-success", ("count", i)));
+            shell.WriteLine(Loc.GetString("cmd-spawnentitylist-success", ("count", i)));
         }
     }
 }

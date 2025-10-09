@@ -15,8 +15,6 @@ namespace Content.Server.Atmos.Commands
 
         public override string Command => "setatmostemp";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 2)
@@ -30,13 +28,13 @@ namespace Content.Server.Atmos.Commands
 
             if (temperature < Atmospherics.TCMB)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-temperature"));
+                shell.WriteLine(Loc.GetString("cmd-setatmostemp-invalid-temperature"));
                 return;
             }
 
             if (!gridId.Value.IsValid() || !_entManager.HasComponent<MapGridComponent>(gridId))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-grid"));
+                shell.WriteLine(Loc.GetString("cmd-setatmostemp-invalid-grid"));
                 return;
             }
 
@@ -47,7 +45,7 @@ namespace Content.Server.Atmos.Commands
                 tile.Temperature = temperature;
             }
 
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-changed-temperature", ("tiles", tiles)));
+            shell.WriteLine(Loc.GetString("cmd-setatmostemp-changed-temperature", ("tiles", tiles)));
         }
     }
 }

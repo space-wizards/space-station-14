@@ -11,8 +11,6 @@ public sealed class DelayStartCommand : LocalizedEntityCommands
 
     public override string Command => "delaystart";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (_gameTicker.RunLevel != GameRunLevel.PreRoundLobby)
@@ -25,7 +23,7 @@ public sealed class DelayStartCommand : LocalizedEntityCommands
         {
             case 0:
                 var paused = _gameTicker.TogglePause();
-                shell.WriteLine(Loc.GetString(paused ? $"cmd-{Command}-paused" : $"cmd-{Command}-unpaused"));
+                shell.WriteLine(Loc.GetString(paused ? "cmd-delaystart-paused" : "cmd-delaystart-unpaused"));
                 return;
             case 1:
                 break;
@@ -36,12 +34,12 @@ public sealed class DelayStartCommand : LocalizedEntityCommands
 
         if (!uint.TryParse(args[0], out var seconds) || seconds == 0)
         {
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-seconds", ("value", args[0])));
+            shell.WriteLine(Loc.GetString("cmd-delaystart-invalid-seconds", ("value", args[0])));
             return;
         }
 
         var time = TimeSpan.FromSeconds(seconds);
         if (!_gameTicker.DelayStart(time))
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-too-late"));
+            shell.WriteLine(Loc.GetString("cmd-delaystart-too-late"));
     }
 }

@@ -13,14 +13,11 @@ public sealed class AdminLogBulk : LocalizedCommands
 {
     public override string Command => "adminlogbulk";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player?.AttachedEntity is not { } entity)
         {
-            shell.WriteError(Loc.GetString($"cmd-{Command}-player-only"));
+            shell.WriteError(Loc.GetString("cmd-adminlogbulk-player-only"));
             return;
         }
 
@@ -58,7 +55,7 @@ public sealed class AdminLogBulk : LocalizedCommands
             }
         }
 
-        shell.WriteLine(Loc.GetString($"cmd-{Command}-added", ("amount", amount), ("ms", stopwatch.Elapsed.TotalMilliseconds)));
+        shell.WriteLine(Loc.GetString("cmd-adminlogbulk-added", ("amount", amount), ("ms", stopwatch.Elapsed.TotalMilliseconds)));
     }
 }
 #endif

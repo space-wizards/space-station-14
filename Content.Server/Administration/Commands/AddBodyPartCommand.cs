@@ -12,8 +12,6 @@ public sealed class AddBodyPartCommand : LocalizedEntityCommands
 
     public override string Command => "addbodypart";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 4)
@@ -37,9 +35,9 @@ public sealed class AddBodyPartCommand : LocalizedEntityCommands
         if (Enum.TryParse<BodyPartType>(args[3], out var partType) &&
             _bodySystem.TryCreatePartSlotAndAttach(parentId.Value, args[2], childId.Value, partType))
         {
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-added", ("childId", childId), ("parentId", parentId)));
+            shell.WriteLine(Loc.GetString("cmd-addbodypart-added", ("childId", childId), ("parentId", parentId)));
         }
         else
-            shell.WriteError(Loc.GetString($"cmd-{Command}-could-not-add", ("childId", childId), ("parentId", parentId)));
+            shell.WriteError(Loc.GetString("cmd-addbodypart-could-not-add", ("childId", childId), ("parentId", parentId)));
     }
 }

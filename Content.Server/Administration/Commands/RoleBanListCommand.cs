@@ -20,20 +20,18 @@ public sealed class RoleBanListCommand : LocalizedCommands
 
     public override string Command => "rolebanlist";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1 && args.Length != 2)
         {
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-args", ("help", Help)));
+            shell.WriteLine(Loc.GetString("cmd-rolebanlist-invalid-args", ("help", Help)));
             return;
         }
 
         var includeUnbanned = true;
         if (args.Length == 2 && !bool.TryParse(args[1], out includeUnbanned))
         {
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-arg2-not-bool", ("arg", args[1])));
+            shell.WriteLine(Loc.GetString("cmd-rolebanlist-arg2-not-bool", ("arg", args[1])));
             return;
         }
 
@@ -41,7 +39,7 @@ public sealed class RoleBanListCommand : LocalizedCommands
 
         if (data == null)
         {
-            shell.WriteError(Loc.GetString($"cmd-{Command}-player-not-found"));
+            shell.WriteError(Loc.GetString("cmd-rolebanlist-player-not-found"));
             return;
         }
 
@@ -52,7 +50,7 @@ public sealed class RoleBanListCommand : LocalizedCommands
 
             if (bans.Count == 0)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-no-bans", ("user", data.Username)));
+                shell.WriteLine(Loc.GetString("cmd-rolebanlist-no-bans", ("user", data.Username)));
                 return;
             }
 
@@ -61,7 +59,7 @@ public sealed class RoleBanListCommand : LocalizedCommands
                 var id = ban.Id ?? 0;
                 var role = ban.Role ?? string.Empty;
                 var reason = ban.Reason ?? string.Empty;
-                var msg = Loc.GetString($"cmd-{Command}-ban", ("id", id), ("role", role), ("reason", reason));
+                var msg = Loc.GetString("cmd-rolebanlist-ban", ("id", id), ("role", role), ("reason", reason));
                 shell.WriteLine(msg);
             }
             return;
@@ -78,9 +76,9 @@ public sealed class RoleBanListCommand : LocalizedCommands
         return args.Length switch
         {
             1 => CompletionResult.FromHintOptions(CompletionHelper.SessionNames(),
-                Loc.GetString($"cmd-{Command}-hint-1")),
+                Loc.GetString("cmd-rolebanlist-hint-1")),
             2 => CompletionResult.FromHintOptions(CompletionHelper.Booleans,
-                Loc.GetString($"cmd-{Command}-hint-2")),
+                Loc.GetString("cmd-rolebanlist-hint-2")),
             _ => CompletionResult.Empty
         };
     }

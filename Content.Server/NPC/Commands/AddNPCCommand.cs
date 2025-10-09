@@ -12,13 +12,11 @@ namespace Content.Server.NPC.Commands
 
         public override string Command => "addnpc";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-wrong-number"));
+                shell.WriteError(Loc.GetString("cmd-addnpc-wrong-number"));
                 return;
             }
 
@@ -26,13 +24,13 @@ namespace Content.Server.NPC.Commands
 
             if (!_entities.TryGetEntity(nent, out var entId))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-entity", ("entity", nent)));
+                shell.WriteError(Loc.GetString("cmd-addnpc-invalid-entity", ("entity", nent)));
                 return;
             }
 
             if (_entities.HasComponent<HTNComponent>(entId))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-already-has-npc"));
+                shell.WriteError(Loc.GetString("cmd-addnpc-already-has-npc"));
                 return;
             }
 
@@ -41,7 +39,7 @@ namespace Content.Server.NPC.Commands
             {
                 Task = args[1]
             };
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-added"));
+            shell.WriteLine(Loc.GetString("cmd-addnpc-added"));
         }
     }
 }

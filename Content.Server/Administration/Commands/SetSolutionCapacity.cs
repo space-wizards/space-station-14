@@ -14,26 +14,24 @@ namespace Content.Server.Administration.Commands
 
         public override string Command => "setsolutioncapacity";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 3)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-not-enough-args"));
+                shell.WriteLine(Loc.GetString("cmd-setsolutioncapacity-not-enough-args"));
                 shell.WriteLine(Help);
                 return;
             }
 
             if (!NetEntity.TryParse(args[0], out var uidNet))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-id"));
+                shell.WriteLine(Loc.GetString("cmd-setsolutioncapacity-invalid-id"));
                 return;
             }
 
             if (!_entManager.TryGetEntity(uidNet, out var uid) || !_entManager.TryGetComponent(uid, out SolutionContainerManagerComponent? man))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-no-solutions"));
+                shell.WriteLine(Loc.GetString("cmd-setsolutioncapacity-no-solutions"));
                 return;
             }
 
@@ -41,20 +39,20 @@ namespace Content.Server.Administration.Commands
             if (!solutionContainerSystem.TryGetSolution((uid.Value, man), args[1], out var solution))
             {
                 var validSolutions = string.Join(", ", solutionContainerSystem.EnumerateSolutions((uid.Value, man)).Select(s => s.Name));
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-no-solution", ("solution", args[1])));
+                shell.WriteLine(Loc.GetString("cmd-setsolutioncapacity-no-solution", ("solution", args[1])));
                 shell.WriteLine(validSolutions);
                 return;
             }
 
             if (!float.TryParse(args[2], out var quantityFloat))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-parse-error"));
+                shell.WriteLine(Loc.GetString("cmd-setsolutioncapacity-parse-error"));
                 return;
             }
 
             if (quantityFloat < 0.0f)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-negative-value-error"));
+                shell.WriteLine(Loc.GetString("cmd-setsolutioncapacity-negative-value-error"));
                 return;
             }
 

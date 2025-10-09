@@ -10,7 +10,6 @@ namespace Content.Server.Administration.Commands
         [Dependency] private readonly IEntityManager _entManager = default!;
 
         public override string Command => "addmechanism";
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -36,11 +35,11 @@ namespace Content.Server.Administration.Commands
 
             if (bodySystem.AddOrganToFirstValidSlot(partId.Value, organId.Value))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-added", ("organId", organId), ("partId", partId)));
+                shell.WriteLine(Loc.GetString("cmd-addmechanism-added", ("organId", organId), ("partId", partId)));
             }
             else
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-could-not-add", ("organId", organId), ("partId", partId)));
+                shell.WriteError(Loc.GetString("cmd-addmechanism-could-not-add", ("organId", organId), ("partId", partId)));
             }
         }
     }

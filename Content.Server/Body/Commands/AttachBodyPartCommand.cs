@@ -15,8 +15,6 @@ namespace Content.Server.Body.Commands
 
         public override string Command => "attachbodypart";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
@@ -29,21 +27,21 @@ namespace Content.Server.Body.Commands
                 case 1:
                     if (player == null)
                     {
-                        shell.WriteLine(Loc.GetString($"cmd-{Command}-only-player-run-without-args"));
+                        shell.WriteLine(Loc.GetString("cmd-attachbodypart-only-player-run-without-args"));
                         shell.WriteLine(Help);
                         return;
                     }
 
                     if (player.AttachedEntity == null)
                     {
-                        shell.WriteLine(Loc.GetString($"cmd-{Command}-no-entity"));
+                        shell.WriteLine(Loc.GetString("cmd-attachbodypart-no-entity"));
                         shell.WriteLine(Help);
                         return;
                     }
 
                     if (!NetEntity.TryParse(args[0], out var partNet) || !_entManager.TryGetEntity(partNet, out partUid))
                     {
-                        shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-entity-uid", ("uid", args[0])));
+                        shell.WriteLine(Loc.GetString("cmd-attachbodypart-invalid-entity-uid", ("uid", args[0])));
                         return;
                     }
 
@@ -53,19 +51,19 @@ namespace Content.Server.Body.Commands
                 case 2:
                     if (!NetEntity.TryParse(args[0], out var entityNet) || !_entManager.TryGetEntity(entityNet, out var entityUid))
                     {
-                        shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-entity-uid", ("uid", args[0])));
+                        shell.WriteLine(Loc.GetString("cmd-attachbodypart-invalid-entity-uid", ("uid", args[0])));
                         return;
                     }
 
                     if (!NetEntity.TryParse(args[1], out partNet) || !_entManager.TryGetEntity(partNet, out partUid))
                     {
-                        shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-entity-uid", ("uid", args[1])));
+                        shell.WriteLine(Loc.GetString("cmd-attachbodypart-invalid-entity-uid", ("uid", args[1])));
                         return;
                     }
 
                     if (!_entManager.EntityExists(entityUid))
                     {
-                        shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-entity", ("uid", entityUid)));
+                        shell.WriteLine(Loc.GetString("cmd-attachbodypart-invalid-entity", ("uid", entityUid)));
                         return;
                     }
 
@@ -78,25 +76,25 @@ namespace Content.Server.Body.Commands
 
             if (!_entManager.TryGetComponent(bodyId, out BodyComponent? body))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-entity-no-body-component", ("entity", _entManager.GetComponent<MetaDataComponent>(bodyId).EntityName), ("component", nameof(BodyComponent))));
+                shell.WriteLine(Loc.GetString("cmd-attachbodypart-entity-no-body-component", ("entity", _entManager.GetComponent<MetaDataComponent>(bodyId).EntityName), ("component", nameof(BodyComponent))));
                 return;
             }
 
             if (!_entManager.EntityExists(partUid))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-entity", ("uid", partUid)));
+                shell.WriteLine(Loc.GetString("cmd-attachbodypart-invalid-entity", ("uid", partUid)));
                 return;
             }
 
             if (!_entManager.TryGetComponent(partUid, out BodyPartComponent? part))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-entity-no-body-part-component", ("entity", _entManager.GetComponent<MetaDataComponent>(partUid.Value).EntityName), ("component", nameof(BodyPartComponent))));
+                shell.WriteLine(Loc.GetString("cmd-attachbodypart-entity-no-body-part-component", ("entity", _entManager.GetComponent<MetaDataComponent>(partUid.Value).EntityName), ("component", nameof(BodyPartComponent))));
                 return;
             }
 
             if (_bodySystem.BodyHasChild(bodyId, partUid.Value, body, part))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-body-part-already-attached", ("entity", _entManager.GetComponent<MetaDataComponent>(partUid.Value).EntityName), ("uid", partUid), ("bodyId", bodyId)));
+                shell.WriteLine(Loc.GetString("cmd-attachbodypart-body-part-already-attached", ("entity", _entManager.GetComponent<MetaDataComponent>(partUid.Value).EntityName), ("uid", partUid), ("bodyId", bodyId)));
                 return;
             }
 
@@ -104,7 +102,7 @@ namespace Content.Server.Body.Commands
 
             if (body.RootContainer.ContainedEntity is null && !_bodySystem.AttachPartToRoot(bodyId, partUid.Value, body, part))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-body-container-no-root-entity"));
+                shell.WriteError(Loc.GetString("cmd-attachbodypart-body-container-no-root-entity"));
                 return;
             }
 
@@ -116,10 +114,10 @@ namespace Content.Server.Body.Commands
                     rootPart,
                     part))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-could-not-create-slot", ("slotId", slotId), ("entity", _entManager.ToPrettyString(bodyId))));
+                shell.WriteError(Loc.GetString("cmd-attachbodypart-could-not-create-slot", ("slotId", slotId), ("entity", _entManager.ToPrettyString(bodyId))));
                 return;
             }
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-attached-part", ("part", _entManager.ToPrettyString(partUid.Value)), ("entity", _entManager.ToPrettyString(bodyId))));
+            shell.WriteLine(Loc.GetString("cmd-attachbodypart-attached-part", ("part", _entManager.ToPrettyString(partUid.Value)), ("entity", _entManager.ToPrettyString(bodyId))));
         }
     }
 }

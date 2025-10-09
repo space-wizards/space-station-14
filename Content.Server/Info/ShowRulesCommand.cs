@@ -18,8 +18,6 @@ public sealed class ShowRulesCommand : LocalizedCommands
 
     public override string Command => "showrules";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length is < 1 or > 2)

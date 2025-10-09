@@ -14,8 +14,6 @@ namespace Content.Server.Atmos.Commands
 
         public override string Command => "removegas";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 5)
@@ -36,7 +34,7 @@ namespace Content.Server.Atmos.Commands
 
             if (tile == null)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-tile"));
+                shell.WriteLine(Loc.GetString("cmd-removegas-invalid-tile"));
                 return;
             }
 

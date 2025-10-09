@@ -13,13 +13,11 @@ public sealed class RemoveActionCommand : LocalizedEntityCommands
 
     public override string Command => "rmaction";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 2)
         {
-            shell.WriteError(Loc.GetString(Loc.GetString($"cmd-{Command}-invalid-args")));
+            shell.WriteError(Loc.GetString("cmd-rmaction-invalid-args"));
             return;
         }
 
@@ -37,13 +35,13 @@ public sealed class RemoveActionCommand : LocalizedEntityCommands
 
         if (!EntityManager.HasComponent<ActionsComponent>(targetEntity))
         {
-            shell.WriteError(Loc.GetString($"cmd-{Command}-actions-not-found"));
+            shell.WriteError(Loc.GetString("cmd-rmaction-actions-not-found"));
             return;
         }
 
         if (_actions.GetAction(targetActionEntity) is not { } ent)
         {
-            shell.WriteError(Loc.GetString($"cmd-{Command}-not-an-action"));
+            shell.WriteError(Loc.GetString("cmd-rmaction-not-an-action"));
             return;
         }
 
@@ -58,7 +56,7 @@ public sealed class RemoveActionCommand : LocalizedEntityCommands
         {
             return CompletionResult.FromHintOptions(
                 CompletionHelper.Components<ActionsComponent>(args[0]),
-                Loc.GetString($"cmd-{Command}-player-completion"));
+                Loc.GetString("cmd-rmaction-player-completion"));
         }
 
         if (args.Length == 2)
@@ -74,11 +72,11 @@ public sealed class RemoveActionCommand : LocalizedEntityCommands
             var options = new List<CompletionOption>();
             foreach (var action in actions)
             {
-                var hint = Loc.GetString($"cmd-{Command}-action-info", ("action", action));
+                var hint = Loc.GetString("cmd-rmaction-action-info", ("action", action));
                 options.Add(new CompletionOption(action.Owner.ToString(), hint));
             }
 
-            return CompletionResult.FromHintOptions(options, Loc.GetString($"cmd-{Command}-action-completion"));
+            return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-rmaction-action-completion"));
         }
 
         return CompletionResult.Empty;

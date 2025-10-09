@@ -13,8 +13,6 @@ namespace Content.Server.GameTicking.Commands
 
         public override string Command => "toggledisallowlatejoin";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
@@ -26,7 +24,7 @@ namespace Content.Server.GameTicking.Commands
             if (bool.TryParse(args[0], out var result))
             {
                 _configManager.SetCVar(CCVars.GameDisallowLateJoins, bool.Parse(args[0]));
-                shell.WriteLine(Loc.GetString(result ? $"cmd-{Command}-disabled" : $"cmd-{Command}-enabled"));
+                shell.WriteLine(Loc.GetString(result ? "cmd-toggledisallowlatejoin-disabled" : "cmd-toggledisallowlatejoin-enabled"));
             }
             else
                 shell.WriteLine(Loc.GetString($"shell-invalid-bool"));

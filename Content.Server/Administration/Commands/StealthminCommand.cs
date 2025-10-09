@@ -12,8 +12,6 @@ public sealed class StealthminCommand : LocalizedCommands
 
     public override string Command => "stealthmin";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var player = shell.Player;

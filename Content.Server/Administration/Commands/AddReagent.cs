@@ -20,26 +20,24 @@ namespace Content.Server.Administration.Commands
 
         public override string Command => "addreagent";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 4)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-not-enough-args"));
+                shell.WriteLine(Loc.GetString("cmd-addreagent-not-enough-args"));
                 shell.WriteLine(Help);
                 return;
             }
 
             if (!NetEntity.TryParse(args[0], out var uidNet) || !_entManager.TryGetEntity(uidNet, out var uid))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-id"));
+                shell.WriteLine(Loc.GetString("cmd-addreagent-invalid-id"));
                 return;
             }
 
             if (!_entManager.TryGetComponent(uid, out SolutionContainerManagerComponent? man))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-no-solutions"));
+                shell.WriteLine(Loc.GetString("cmd-addreagent-no-solutions"));
                 return;
             }
 
@@ -47,19 +45,19 @@ namespace Content.Server.Administration.Commands
             if (!solutionContainerSystem.TryGetSolution((uid.Value, man), args[1], out var solution))
             {
                 var validSolutions = string.Join(", ", solutionContainerSystem.EnumerateSolutions((uid.Value, man)).Select(s => s.Name));
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-no-solution", ("solution", args[1]), ("validSolutions", validSolutions)));
+                shell.WriteLine(Loc.GetString("cmd-addreagent-no-solution", ("solution", args[1]), ("validSolutions", validSolutions)));
                 return;
             }
 
             if (!_protomanager.HasIndex<ReagentPrototype>(args[2]))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-unknown-reagent"));
+                shell.WriteLine(Loc.GetString("cmd-addreagent-unknown-reagent"));
                 return;
             }
 
             if (!float.TryParse(args[3], out var quantityFloat))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-bad-quantity"));
+                shell.WriteLine(Loc.GetString("cmd-addreagent-bad-quantity"));
                 return;
             }
             var quantity = FixedPoint2.New(MathF.Abs(quantityFloat));

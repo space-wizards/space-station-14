@@ -14,13 +14,11 @@ public sealed class OpenUserVisibleNotesCommand : LocalizedCommands
 
     public override string Command => "adminremarks";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (!_configuration.GetCVar(CCVars.SeeOwnNotes))
         {
-            shell.WriteError(Loc.GetString($"cmd-{Command}-error"));
+            shell.WriteError(Loc.GetString("cmd-adminremarks-error"));
             return;
         }
 

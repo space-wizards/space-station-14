@@ -12,8 +12,6 @@ public sealed class FaxUiCommand : LocalizedEntityCommands
 
     public override string Command => "faxui";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player is not { } player)

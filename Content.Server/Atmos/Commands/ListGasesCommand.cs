@@ -12,14 +12,12 @@ namespace Content.Server.Atmos.Commands
 
         public override string Command => "listgases";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             foreach (var gasPrototype in _atmosSystem.Gases)
             {
                 var gasName = Loc.GetString(gasPrototype.Name);
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-gas", ("gas", gasName), ("id", gasPrototype.ID)));
+                shell.WriteLine(Loc.GetString("cmd-listgases-gas", ("gas", gasName), ("id", gasPrototype.ID)));
             }
         }
     }

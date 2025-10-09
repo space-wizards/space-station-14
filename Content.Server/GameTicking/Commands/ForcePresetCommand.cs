@@ -15,13 +15,11 @@ namespace Content.Server.GameTicking.Commands
 
         public override string Command => "forcepreset";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (_ticker.RunLevel != GameRunLevel.PreRoundLobby)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-preround-lobby-only"));
+                shell.WriteLine(Loc.GetString("cmd-forcepreset-preround-lobby-only"));
                 return;
             }
 
@@ -34,12 +32,12 @@ namespace Content.Server.GameTicking.Commands
             var name = args[0];
             if (!_ticker.TryFindGamePreset(name, out var type))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-no-preset-found", ("preset", name)));
+                shell.WriteLine(Loc.GetString("cmd-forcepreset-no-preset-found", ("preset", name)));
                 return;
             }
 
             _ticker.SetGamePreset(type, true);
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-success", ("preset", name)));
+            shell.WriteLine(Loc.GetString("cmd-forcepreset-success", ("preset", name)));
             _ticker.UpdateInfoText();
         }
 
@@ -52,7 +50,7 @@ namespace Content.Server.GameTicking.Commands
                     .OrderBy(p => p.ID)
                     .Select(p => p.ID);
 
-                return CompletionResult.FromHintOptions(options, Loc.GetString($"cmd-{Command}-hint"));
+                return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-forcepreset-hint"));
             }
 
             return CompletionResult.Empty;

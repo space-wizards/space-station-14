@@ -10,8 +10,6 @@ public sealed class ShowHealthBarsCommand : LocalizedEntityCommands
 {
     public override string Command => "showhealthbars";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var player = shell.Player;
@@ -38,11 +36,11 @@ public sealed class ShowHealthBarsCommand : LocalizedEntityCommands
 
             EntityManager.AddComponent(playerEntity, showHealthBarsComponent, true);
 
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-notify-enabled", ("args", string.Join(", ", args))));
+            shell.WriteLine(Loc.GetString("cmd-showhealthbars-notify-enabled", ("args", string.Join(", ", args))));
             return;
         }
 
         EntityManager.RemoveComponentDeferred<ShowHealthBarsComponent>(playerEntity);
-        shell.WriteLine(Loc.GetString($"cmd-{Command}-notify-disabled"));
+        shell.WriteLine(Loc.GetString("cmd-showhealthbars-notify-disabled"));
     }
 }

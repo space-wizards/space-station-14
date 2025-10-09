@@ -13,14 +13,12 @@ namespace Content.Server.Alert.Commands
 
         public override string Command => "clearalert";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
             if (player?.AttachedEntity == null)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-no-entity"));
+                shell.WriteLine(Loc.GetString("cmd-clearalert-no-entity"));
                 return;
             }
 
@@ -34,7 +32,7 @@ namespace Content.Server.Alert.Commands
 
             if (!_e.TryGetComponent(attachedEntity, out AlertsComponent? alertsComponent))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-no-alerts-component"));
+                shell.WriteLine(Loc.GetString("cmd-clearalert-no-alerts-component"));
                 return;
             }
 
@@ -42,7 +40,7 @@ namespace Content.Server.Alert.Commands
             var alertsSystem = _e.System<AlertsSystem>();
             if (!alertsSystem.TryGet(alertType, out var alert))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-unrecognized-alert-type", ("alertType", alertType)));
+                shell.WriteLine(Loc.GetString("cmd-clearalert-unrecognized-alert-type", ("alertType", alertType)));
                 return;
             }
 

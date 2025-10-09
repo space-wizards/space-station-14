@@ -18,8 +18,6 @@ public sealed class MeleeSpreadCommand : LocalizedEntityCommands
 
     public override string Command => "showmeleespread";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (_overlay.RemoveOverlay<MeleeArcOverlay>())

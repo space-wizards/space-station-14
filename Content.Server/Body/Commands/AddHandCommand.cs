@@ -22,8 +22,6 @@ namespace Content.Server.Body.Commands
 
         public override string Command => "addhand";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
@@ -36,13 +34,13 @@ namespace Content.Server.Body.Commands
                 case 0:
                     if (player == null)
                     {
-                        shell.WriteLine(Loc.GetString($"cmd-{Command}-only-player-run-without-args"));
+                        shell.WriteLine(Loc.GetString("cmd-addhand-only-player-run-without-args"));
                         return;
                     }
 
                     if (player.AttachedEntity == null)
                     {
-                        shell.WriteLine(Loc.GetString($"cmd-{Command}-no-entity"));
+                        shell.WriteLine(Loc.GetString("cmd-addhand-no-entity"));
                         return;
                     }
 
@@ -55,7 +53,7 @@ namespace Content.Server.Body.Commands
                         {
                             if (!_entManager.EntityExists(uid))
                             {
-                                shell.WriteLine(Loc.GetString($"cmd-{Command}-no-entity-uid", ("uid", uid)));
+                                shell.WriteLine(Loc.GetString("cmd-addhand-no-entity-uid", ("uid", uid)));
                                 return;
                             }
 
@@ -66,13 +64,13 @@ namespace Content.Server.Body.Commands
                         {
                             if (player == null)
                             {
-                                shell.WriteLine(Loc.GetString($"cmd-{Command}-no-entity-server-terminal"));
+                                shell.WriteLine(Loc.GetString("cmd-addhand-no-entity-server-terminal"));
                                 return;
                             }
 
                             if (player.AttachedEntity == null)
                             {
-                                shell.WriteLine(Loc.GetString($"cmd-{Command}-no-entity"));
+                                shell.WriteLine(Loc.GetString("cmd-addhand-no-entity"));
                                 return;
                             }
 
@@ -86,13 +84,13 @@ namespace Content.Server.Body.Commands
                     {
                         if (!NetEntity.TryParse(args[0], out var netEnt) || !_entManager.TryGetEntity(netEnt, out var uid))
                         {
-                            shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-entity-uid", ("uid", args[0])));
+                            shell.WriteLine(Loc.GetString("cmd-addhand-invalid-entity-uid", ("uid", args[0])));
                             return;
                         }
 
                         if (!_entManager.EntityExists(uid))
                         {
-                            shell.WriteLine(Loc.GetString($"cmd-{Command}-no-entity-uid", ("uid", uid)));
+                            shell.WriteLine(Loc.GetString("cmd-addhand-no-entity-uid", ("uid", uid)));
                             return;
                         }
 
@@ -100,7 +98,7 @@ namespace Content.Server.Body.Commands
 
                         if (!_protoManager.HasIndex<EntityPrototype>(args[1]))
                         {
-                            shell.WriteLine(Loc.GetString($"cmd-{Command}-no-hand-entity-id", ("id", args[1])));
+                            shell.WriteLine(Loc.GetString("cmd-addhand-no-hand-entity-id", ("id", args[1])));
                             return;
                         }
 
@@ -131,7 +129,7 @@ namespace Content.Server.Body.Commands
 
             if (!_entManager.TryGetComponent(hand, out BodyPartComponent? part))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-hand-entity-no-body-part-component", ("hand", hand), ("component", nameof(BodyPartComponent))));
+                shell.WriteLine(Loc.GetString("cmd-addhand-hand-entity-no-body-part-component", ("hand", hand), ("component", nameof(BodyPartComponent))));
                 return;
             }
 
@@ -145,11 +143,11 @@ namespace Content.Server.Body.Commands
 
             if (!bodySystem.TryCreatePartSlotAndAttach(attachAt.Id, slotId, hand, BodyPartType.Hand, attachAt.Component, part))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-could-not-create-slot", ("slotId", slotId), ("entity", _entManager.ToPrettyString(entity))));
+                shell.WriteError(Loc.GetString("cmd-addhand-could-not-create-slot", ("slotId", slotId), ("entity", _entManager.ToPrettyString(entity))));
                 return;
             }
 
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-added-hand", ("entity", _entManager.GetComponent<MetaDataComponent>(entity).EntityName)));
+            shell.WriteLine(Loc.GetString("cmd-addhand-added-hand", ("entity", _entManager.GetComponent<MetaDataComponent>(entity).EntityName)));
         }
     }
 }

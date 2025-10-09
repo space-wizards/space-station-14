@@ -17,8 +17,6 @@ public sealed class PersistenceSave : LocalizedEntityCommands
 
     public override string Command => "persistencesave";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length < 1 || args.Length > 2)
@@ -43,7 +41,7 @@ public sealed class PersistenceSave : LocalizedEntityCommands
         var saveFilePath = (args.Length > 1 ? args[1] : null) ?? _config.GetCVar(CCVars.GameMap);
         if (string.IsNullOrWhiteSpace(saveFilePath))
         {
-            shell.WriteError(Loc.GetString($"cmd-{Command}-no-path", ("cvar", nameof(CCVars.GameMap))));
+            shell.WriteError(Loc.GetString("cmd-persistencesave-no-path", ("cvar", nameof(CCVars.GameMap))));
             return;
         }
 

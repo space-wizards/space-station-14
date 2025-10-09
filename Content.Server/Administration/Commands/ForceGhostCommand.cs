@@ -18,8 +18,6 @@ public sealed class ForceGhostCommand : LocalizedEntityCommands
 
     public override string Command => "forceghost";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length == 0 || args.Length > 1)
@@ -37,7 +35,7 @@ public sealed class ForceGhostCommand : LocalizedEntityCommands
         if (!_gameTicker.PlayerGameStatuses.TryGetValue(player.UserId, out var playerStatus) ||
             playerStatus is not PlayerGameStatus.JoinedGame)
         {
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-error-lobby"));
+            shell.WriteLine(Loc.GetString("cmd-forceghost-error-lobby"));
             return;
         }
 
@@ -45,7 +43,7 @@ public sealed class ForceGhostCommand : LocalizedEntityCommands
             (mindId, mind) = _mind.CreateMind(player.UserId);
 
         if (!_ghost.OnGhostAttempt(mindId, false, true, true, mind))
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-denied"));
+            shell.WriteLine(Loc.GetString("cmd-forceghost-denied"));
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -54,7 +52,7 @@ public sealed class ForceGhostCommand : LocalizedEntityCommands
         {
             return CompletionResult.FromHintOptions(
                 CompletionHelper.SessionNames(players: _playerManager),
-                Loc.GetString($"cmd-{Command}-hint"));
+                Loc.GetString("cmd-forceghost-hint"));
         }
 
         return CompletionResult.Empty;

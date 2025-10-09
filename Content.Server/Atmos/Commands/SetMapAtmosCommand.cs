@@ -16,8 +16,6 @@ public sealed class AddMapAtmosCommand : LocalizedEntityCommands
 
     public override string Command => "setmapatmos";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length < 2)
@@ -43,7 +41,7 @@ public sealed class AddMapAtmosCommand : LocalizedEntityCommands
         if (space || args.Length < 4)
         {
             _entities.RemoveComponent<MapAtmosphereComponent>(map);
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-removed", ("map", id)));
+            shell.WriteLine(Loc.GetString("cmd-setmapatmos-removed", ("map", id)));
             return;
         }
 
@@ -70,7 +68,7 @@ public sealed class AddMapAtmosCommand : LocalizedEntityCommands
 
         var atmos = _entities.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
         atmos.SetMapAtmosphere(map, space, mix);
-        shell.WriteLine(Loc.GetString($"cmd-{Command}-updated", ("map", id)));
+        shell.WriteLine(Loc.GetString("cmd-setmapatmos-updated", ("map", id)));
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -85,9 +83,9 @@ public sealed class AddMapAtmosCommand : LocalizedEntityCommands
             return CompletionResult.Empty;
 
         if (args.Length == 3)
-            return CompletionResult.FromHint(Loc.GetString($"cmd-{Command}-hint-temp"));
+            return CompletionResult.FromHint(Loc.GetString("cmd-setmapatmos-hint-temp"));
 
         var gas = (Gas)args.Length - 4;
-        return CompletionResult.FromHint(Loc.GetString($"cmd-{Command}-hint-gas", ("gas", gas.ToString())));
+        return CompletionResult.FromHint(Loc.GetString("cmd-setmapatmos-hint-gas", ("gas", gas.ToString())));
     }
 }

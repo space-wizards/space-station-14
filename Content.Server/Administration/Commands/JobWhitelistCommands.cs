@@ -20,8 +20,6 @@ public sealed class JobWhitelistAddCommand : LocalizedCommands
 
     public override string Command => "jobwhitelistadd";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 2)
@@ -49,7 +47,7 @@ public sealed class JobWhitelistAddCommand : LocalizedCommands
             var isWhitelisted = await _db.IsJobWhitelisted(guid, job);
             if (isWhitelisted)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-already-whitelisted",
+                shell.WriteLine(Loc.GetString("cmd-jobwhitelist-already-whitelisted",
                     ("player", player),
                     ("jobId", job.Id),
                     ("jobName", jobPrototype.LocalizedName)));
@@ -57,7 +55,7 @@ public sealed class JobWhitelistAddCommand : LocalizedCommands
             }
 
             _jobWhitelist.AddWhitelist(guid, job);
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-added",
+            shell.WriteLine(Loc.GetString("cmd-jobwhitelist-added",
                 ("player", player),
                 ("jobId", job.Id),
                 ("jobName", jobPrototype.LocalizedName)));
@@ -96,13 +94,11 @@ public sealed class GetJobWhitelistCommand : LocalizedCommands
 
     public override string Command => "jobwhitelistget";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length == 0)
         {
-            shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-args"));
+            shell.WriteError(Loc.GetString("cmd-jobwhitelistget-invalid-args"));
             shell.WriteLine(Help);
             return;
         }
@@ -115,11 +111,11 @@ public sealed class GetJobWhitelistCommand : LocalizedCommands
             var whitelists = await _db.GetJobWhitelists(guid);
             if (whitelists.Count == 0)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-whitelisted-none", ("player", player)));
+                shell.WriteLine(Loc.GetString("cmd-jobwhitelistget-whitelisted-none", ("player", player)));
                 return;
             }
 
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-whitelisted-for",
+            shell.WriteLine(Loc.GetString("cmd-jobwhitelistget-whitelisted-for",
                 ("player", player),
                 ("jobs", string.Join(", ", whitelists))));
             return;
@@ -152,8 +148,6 @@ public sealed class RemoveJobWhitelistCommand : LocalizedCommands
 
     public override string Command => "jobwhitelistremove";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 2)
@@ -181,7 +175,7 @@ public sealed class RemoveJobWhitelistCommand : LocalizedCommands
             var isWhitelisted = await _db.IsJobWhitelisted(guid, job);
             if (!isWhitelisted)
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-was-not-whitelisted",
+                shell.WriteError(Loc.GetString("cmd-jobwhitelistremove-was-not-whitelisted",
                     ("player", player),
                     ("jobId", job.Id),
                     ("jobName", jobPrototype.LocalizedName)));
@@ -189,7 +183,7 @@ public sealed class RemoveJobWhitelistCommand : LocalizedCommands
             }
 
             _jobWhitelist.RemoveWhitelist(guid, job);
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-removed",
+            shell.WriteLine(Loc.GetString("cmd-jobwhitelistremove-removed",
                 ("player", player),
                 ("jobId", job.Id),
                 ("jobName", jobPrototype.LocalizedName)));

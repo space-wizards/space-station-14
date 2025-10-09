@@ -9,8 +9,6 @@ public sealed class ShowHtnCommand : LocalizedEntityCommands
 
     public override string Command => "showhtn";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         _htnSystem.EnableOverlay ^= true;

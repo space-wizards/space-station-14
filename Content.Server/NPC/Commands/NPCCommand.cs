@@ -13,8 +13,6 @@ public sealed class NpcCommand : LocalizedEntityCommands
 
     public override string Command => "npc";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player is not { } playerSession)

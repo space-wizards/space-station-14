@@ -19,28 +19,26 @@ namespace Content.Server.Body.Commands
 
         public override string Command => "removehand";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
             if (player == null)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-only-player-run"));
+                shell.WriteLine(Loc.GetString("cmd-removehand-only-player-run"));
                 return;
             }
 
             if (player.AttachedEntity == null)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-no-entity"));
+                shell.WriteLine(Loc.GetString("cmd-removehand-no-entity"));
                 return;
             }
 
             if (!_entManager.TryGetComponent(player.AttachedEntity, out BodyComponent? body))
             {
                 var text = Loc.GetString(
-                $"cmd-{Command}-no-body",
-                ("random", _random.Prob(0.2f) ? Loc.GetString($"cmd-{Command}-no-body-must-scream") : "."));
+                "cmd-removehand-no-body",
+                ("random", _random.Prob(0.2f) ? Loc.GetString("cmd-removehand-no-body-must-scream") : "."));
 
                 shell.WriteLine(text);
                 return;
@@ -50,7 +48,7 @@ namespace Content.Server.Body.Commands
 
             if (hand == default)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-no-hands"));
+                shell.WriteLine(Loc.GetString("cmd-removehand-no-hands"));
             }
             else
             {

@@ -12,14 +12,13 @@ namespace Content.Server.Alert.Commands
         [Dependency] private readonly IEntityManager _e = default!;
 
         public override string Command => "showalert";
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
             if (player?.AttachedEntity == null)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-server-no-entity"));
+                shell.WriteLine(Loc.GetString("cmd-showalert-server-no-entity"));
                 return;
             }
 
@@ -33,7 +32,7 @@ namespace Content.Server.Alert.Commands
 
             if (!_e.TryGetComponent(attachedEntity, out AlertsComponent? alertsComponent))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-user-no-alerts"));
+                shell.WriteLine(Loc.GetString("cmd-showalert-user-no-alerts"));
                 return;
             }
 
@@ -42,12 +41,12 @@ namespace Content.Server.Alert.Commands
             var alertsSystem = _e.System<AlertsSystem>();
             if (!alertsSystem.TryGet(alertType, out var alert))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-unrecognized-type", ("type", alertType)));
+                shell.WriteLine(Loc.GetString("cmd-showalert-unrecognized-type", ("type", alertType)));
                 return;
             }
             if (!short.TryParse(severity, out var sevint))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-severity", ("severity", sevint)));
+                shell.WriteLine(Loc.GetString("cmd-showalert-invalid-severity", ("severity", sevint)));
                 return;
             }
 

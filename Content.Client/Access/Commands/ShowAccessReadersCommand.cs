@@ -12,14 +12,12 @@ public sealed class ShowAccessReadersCommand : LocalizedEntityCommands
 
     public override string Command => "showaccessreaders";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var existing = _overlay.RemoveOverlay<AccessOverlay>();
         if (!existing)
             _overlay.AddOverlay(new AccessOverlay(EntityManager, _cache, _xform));
 
-        shell.WriteLine(Loc.GetString($"cmd-{Command}-status", ("status", !existing)));
+        shell.WriteLine(Loc.GetString("cmd-showaccessreaders-status", ("status", !existing)));
     }
 }

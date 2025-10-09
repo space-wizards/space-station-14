@@ -13,20 +13,18 @@ namespace Content.Server.Decals.Commands
 
         public override string Command => "rmdecal";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-error-args"));
+                shell.WriteError(Loc.GetString("cmd-rmdecal-error-args"));
                 shell.WriteError(Help);
                 return;
             }
 
             if (!uint.TryParse(args[0], out var uid))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-error-uid"));
+                shell.WriteError(Loc.GetString("cmd-rmdecal-error-uid"));
                 return;
             }
 
@@ -34,17 +32,17 @@ namespace Content.Server.Decals.Commands
                 !_entManager.TryGetEntity(rawGridIdNet, out var rawGridId) ||
                 !_entManager.HasComponent<MapGridComponent>(rawGridId))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-error-gridId"));
+                shell.WriteError(Loc.GetString("cmd-rmdecal-error-gridId"));
                 return;
             }
 
             if (_decalSystem.RemoveDecal(rawGridId.Value, uid))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-success", ("uid", uid)));
+                shell.WriteLine(Loc.GetString("cmd-rmdecal-success", ("uid", uid)));
                 return;
             }
 
-            shell.WriteError(Loc.GetString($"cmd-{Command}-error-remove", ("uid", uid)));
+            shell.WriteError(Loc.GetString("cmd-rmdecal-error-remove", ("uid", uid)));
         }
     }
 }

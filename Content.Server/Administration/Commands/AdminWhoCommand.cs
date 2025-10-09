@@ -15,8 +15,6 @@ public sealed class AdminWhoCommand : LocalizedCommands
 
     public override string Command => "adminwho";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var seeStealth = true;

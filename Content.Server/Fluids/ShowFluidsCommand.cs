@@ -12,21 +12,19 @@ public sealed class ShowFluidsCommand : LocalizedEntityCommands
 
     public override string Command => "showfluids";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var player = shell.Player;
         if (player == null)
         {
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-must-be-player"));
+            shell.WriteLine(Loc.GetString("cmd-showfluids-must-be-player"));
             return;
         }
 
         var enabled = _puddleDebugDebugOverlaySystem.ToggleObserver(player);
 
         shell.WriteLine(enabled
-            ? Loc.GetString($"cmd-{Command}-enabled")
-            : Loc.GetString($"cmd-{Command}-disabled"));
+            ? Loc.GetString("cmd-showfluids-enabled")
+            : Loc.GetString("cmd-showfluids-disabled"));
     }
 }

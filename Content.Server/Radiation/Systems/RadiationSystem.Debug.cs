@@ -93,8 +93,6 @@ public sealed class RadiationViewCommand : LocalizedEntityCommands
 
     public override string Command => "showradiation";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var session = shell.Player;

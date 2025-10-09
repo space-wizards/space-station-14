@@ -13,33 +13,31 @@ namespace Content.Server.Ghost.Roles
 
         public override string Command => "makeghostrole";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 3 || args.Length > 4)
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-args"));
+                shell.WriteError(Loc.GetString("cmd-makeghostrole-invalid-args"));
                 shell.WriteLine(Help);
                 return;
             }
 
             if (!NetEntity.TryParse(args[0], out var uidNet) || !_entManager.TryGetEntity(uidNet, out var uid))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-entity-uid", ("entity", args[0])));
+                shell.WriteError(Loc.GetString("cmd-makeghostrole-invalid-entity-uid", ("entity", args[0])));
                 return;
             }
 
             if (!_entManager.TryGetComponent(uid, out MetaDataComponent? metaData))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-entity-not-found", ("entity", uid)));
+                shell.WriteError(Loc.GetString("cmd-makeghostrole-entity-not-found", ("entity", uid)));
                 return;
             }
 
             if (_entManager.TryGetComponent(uid, out MindContainerComponent? mind) &&
                 mind.HasMind)
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-entity-has-mind", ("entity", metaData.EntityName), ("uid", uid)));
+                shell.WriteError(Loc.GetString("cmd-makeghostrole-entity-has-mind", ("entity", metaData.EntityName), ("uid", uid)));
                 return;
             }
 
@@ -49,13 +47,13 @@ namespace Content.Server.Ghost.Roles
 
             if (_entManager.TryGetComponent(uid, out GhostRoleComponent? ghostRole))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-entity-has-ghost-role", ("entity", metaData.EntityName), ("uid", uid)));
+                shell.WriteError(Loc.GetString("cmd-makeghostrole-entity-has-ghost-role", ("entity", metaData.EntityName), ("uid", uid)));
                 return;
             }
 
             if (_entManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-entity-has-ghost-takeover", ("entity", metaData.EntityName), ("uid", uid)));
+                shell.WriteError(Loc.GetString("cmd-makeghostrole-entity-has-ghost-takeover", ("entity", metaData.EntityName), ("uid", uid)));
                 return;
             }
 
@@ -65,7 +63,7 @@ namespace Content.Server.Ghost.Roles
             ghostRole.RoleDescription = description;
             ghostRole.RoleRules = rules;
 
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-made-ghost-role", ("entity", metaData.EntityName)));
+            shell.WriteLine(Loc.GetString("cmd-makeghostrole-made-ghost-role", ("entity", metaData.EntityName)));
         }
     }
 }

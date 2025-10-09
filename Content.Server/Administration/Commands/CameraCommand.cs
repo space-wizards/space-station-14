@@ -15,8 +15,6 @@ public sealed class CameraCommand : LocalizedCommands
 
     public override string Command => "camera";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player is not { } user)
@@ -36,7 +34,7 @@ public sealed class CameraCommand : LocalizedCommands
             if (!_playerManager.TryGetSessionByUsername(args[0], out var player)
                 || player.AttachedEntity == null)
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-wrong-argument"));
+                shell.WriteError(Loc.GetString("cmd-camera-wrong-argument"));
                 return;
             }
             targetUid = player.AttachedEntity.Value;
@@ -52,7 +50,7 @@ public sealed class CameraCommand : LocalizedCommands
         {
             return CompletionResult.FromHintOptions(
                 CompletionHelper.SessionNames(players: _playerManager),
-                Loc.GetString($"cmd-{Command}-hint"));
+                Loc.GetString("cmd-camera-hint"));
         }
 
         return CompletionResult.Empty;

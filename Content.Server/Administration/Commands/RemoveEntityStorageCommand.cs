@@ -12,8 +12,6 @@ namespace Content.Server.Administration.Commands
 
         public override string Command => "rmstorage";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
@@ -42,7 +40,7 @@ namespace Content.Server.Administration.Commands
             }
             else
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-error-remove"));
+                shell.WriteError(Loc.GetString("cmd-rmstorage-error-remove"));
             }
         }
     }

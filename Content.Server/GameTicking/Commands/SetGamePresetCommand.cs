@@ -14,8 +14,6 @@ namespace Content.Server.GameTicking.Commands
 
         public override string Command => "setgamepreset";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (!args.Length.InRange(1, 3))
@@ -26,7 +24,7 @@ namespace Content.Server.GameTicking.Commands
 
             if (!_gameTicker.TryFindGamePreset(args[0], out var preset))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-preset-error", ("preset", args[0])));
+                shell.WriteError(Loc.GetString("cmd-setgamepreset-preset-error", ("preset", args[0])));
                 return;
             }
 
@@ -34,7 +32,7 @@ namespace Content.Server.GameTicking.Commands
 
             if (args.Length >= 2 && !int.TryParse(args[1], out rounds))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-optional-argument-not-integer"));
+                shell.WriteError(Loc.GetString("cmd-setgamepreset-optional-argument-not-integer"));
                 return;
             }
 
@@ -42,15 +40,15 @@ namespace Content.Server.GameTicking.Commands
 
             if (args.Length == 3 && !_gameTicker.TryFindGamePreset(args[2], out decoy))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-decoy-error", ("preset", args[2])));
+                shell.WriteError(Loc.GetString("cmd-setgamepreset-decoy-error", ("preset", args[2])));
                 return;
             }
 
             _gameTicker.SetGamePreset(preset, false, decoy, rounds);
             if (decoy == null)
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-preset-set-finite", ("preset", preset.ID), ("rounds", rounds.ToString())));
+                shell.WriteLine(Loc.GetString("cmd-setgamepreset-preset-set-finite", ("preset", preset.ID), ("rounds", rounds.ToString())));
             else
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-preset-set-finite-with-decoy", ("preset", preset.ID), ("rounds", rounds.ToString()), ("decoy", decoy.ID)));
+                shell.WriteLine(Loc.GetString("cmd-setgamepreset-preset-set-finite-with-decoy", ("preset", preset.ID), ("rounds", rounds.ToString()), ("decoy", decoy.ID)));
         }
 
         public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -58,10 +56,10 @@ namespace Content.Server.GameTicking.Commands
             return args.Length switch
             {
                 1 => CompletionResult.FromHintOptions(CompletionHelper.PrototypeIDs<GamePresetPrototype>(),
-                Loc.GetString($"cmd-{Command}-hint-1")),
-                2 => CompletionResult.FromHint(Loc.GetString($"cmd-{Command}-hint-2")),
+                Loc.GetString("cmd-setgamepreset-hint-1")),
+                2 => CompletionResult.FromHint(Loc.GetString("cmd-setgamepreset-hint-2")),
                 3 => CompletionResult.FromHintOptions(CompletionHelper.PrototypeIDs<GamePresetPrototype>(),
-                Loc.GetString($"cmd-{Command}-hint-3")),
+                Loc.GetString("cmd-setgamepreset-hint-3")),
 
                 _ => CompletionResult.Empty
             };

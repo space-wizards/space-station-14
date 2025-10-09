@@ -13,7 +13,6 @@ namespace Content.Server.Atmos.Commands
         [Dependency] private readonly IEntityManager _entManager = default!;
 
         public override string Command => "fillgas";
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -30,7 +29,7 @@ namespace Content.Server.Atmos.Commands
 
             if (!_entManager.HasComponent<MapGridComponent>(gridId))
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-invalid-grid", ("grid", gridId)));
+                shell.WriteLine(Loc.GetString("cmd-fillgas-invalid-grid", ("grid", gridId)));
                 return;
             }
 

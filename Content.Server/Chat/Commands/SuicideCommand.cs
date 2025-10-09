@@ -18,8 +18,6 @@ namespace Content.Server.Chat.Commands
 
         public override string Command => "suicide";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (shell.Player is not { } player)
@@ -35,13 +33,13 @@ namespace Content.Server.Chat.Commands
             if (!_mindSystem.TryGetMind(player, out var mindId, out var mindComp) ||
                 mindComp.OwnedEntity is not { Valid: true } victim)
             {
-                shell.WriteLine(Loc.GetString($"cmd-{Command}-no-mind"));
+                shell.WriteLine(Loc.GetString("cmd-suicide-no-mind"));
                 return;
             }
 
             if (_entManager.HasComponent<AdminFrozenComponent>(victim))
             {
-                var deniedMessage = Loc.GetString($"cmd-{Command}-denied");
+                var deniedMessage = Loc.GetString("cmd-suicide-denied");
                 shell.WriteLine(deniedMessage);
                 _popupSystem.PopupEntity(deniedMessage, victim, victim);
                 return;

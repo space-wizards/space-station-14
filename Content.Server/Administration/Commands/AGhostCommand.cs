@@ -20,8 +20,6 @@ public sealed class AGhostCommand : LocalizedCommands
 
     public override string Command => "aghost";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
@@ -80,8 +78,8 @@ public sealed class AGhostCommand : LocalizedCommands
         if (!mindSystem.TryGetMind(player, out var mindId, out var mind))
         {
             shell.WriteError(self
-                ? LocalizationManager.GetString($"cmd-{Command}-no-mind-self")
-                : LocalizationManager.GetString($"cmd-{Command}-no-mind-other"));
+                ? LocalizationManager.GetString("cmd-aghost-no-mind-self")
+                : LocalizationManager.GetString("cmd-aghost-no-mind-other"));
             return;
         }
 

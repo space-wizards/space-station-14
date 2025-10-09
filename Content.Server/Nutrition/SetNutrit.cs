@@ -13,8 +13,6 @@ public sealed class SetNutrit : LocalizedEntityCommands
 {
     public override string Command => "setnutrit";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var player = shell.Player;
@@ -52,7 +50,7 @@ public sealed class SetNutrit : LocalizedEntityCommands
 
                 if (!Enum.TryParse(args[1], out HungerThreshold hungerThreshold))
                 {
-                    shell.WriteError(Loc.GetString($"cmd-{Command}-error-invalid-threshold",
+                    shell.WriteError(Loc.GetString("cmd-setnutrit-error-invalid-threshold",
                         ("thresholdType", nameof(HungerThreshold)),
                         ("thresholdString", args[1])
                     ));
@@ -73,7 +71,7 @@ public sealed class SetNutrit : LocalizedEntityCommands
 
                 if (!Enum.TryParse(args[1], out ThirstThreshold thirstThreshold))
                 {
-                    shell.WriteError(Loc.GetString($"cmd-{Command}-error-invalid-threshold",
+                    shell.WriteError(Loc.GetString("cmd-setnutrit-error-invalid-threshold",
                          ("thresholdType", nameof(ThirstThreshold)),
                          ("thresholdString", args[1])
                      ));
@@ -86,7 +84,7 @@ public sealed class SetNutrit : LocalizedEntityCommands
             }
             default:
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-nutrition-system", ("systemString", systemString)));
+                shell.WriteError(Loc.GetString("cmd-setnutrit-invalid-nutrition-system", ("systemString", systemString)));
                 return;
             }
         }
@@ -99,7 +97,7 @@ public sealed class SetNutrit : LocalizedEntityCommands
             case 1:
             {
                 string[] kinds = { "hunger", "thirst" };
-                return CompletionResult.FromHintOptions(kinds, Loc.GetString($"cmd-{Command}-hint-nutrition-system"));
+                return CompletionResult.FromHintOptions(kinds, Loc.GetString("cmd-setnutrit-hint-nutrition-system"));
             }
             case 2:
             {

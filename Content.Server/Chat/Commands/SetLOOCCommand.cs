@@ -13,8 +13,6 @@ public sealed class SetLoocCommand : LocalizedCommands
 
     public override string Command => "setlooc";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length > 1)
@@ -38,6 +36,6 @@ public sealed class SetLoocCommand : LocalizedCommands
 
         _configManager.SetCVar(CCVars.LoocEnabled, looc);
 
-        shell.WriteLine(Loc.GetString(looc ? $"cmd-{Command}-looc-enabled" : $"cmd-{Command}-looc-disabled"));
+        shell.WriteLine(Loc.GetString(looc ? "cmd-setlooc-looc-enabled" : "cmd-setlooc-looc-disabled"));
     }
 }

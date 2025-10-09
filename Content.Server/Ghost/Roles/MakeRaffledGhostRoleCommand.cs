@@ -18,45 +18,43 @@ namespace Content.Server.Ghost.Roles
 
         public override string Command => "makeghostroleraffled";
 
-        public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length is < 4 or > 7)
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-args"));
+                shell.WriteError(Loc.GetString("cmd-makeghostroleraffled-invalid-args"));
                 shell.WriteLine(Help);
                 return;
             }
 
             if (!NetEntity.TryParse(args[0], out var uidNet) || !_entManager.TryGetEntity(uidNet, out var uid))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-entity-uid", ("entity", args[0])));
+                shell.WriteError(Loc.GetString("cmd-makeghostroleraffled-invalid-entity-uid", ("entity", args[0])));
                 return;
             }
 
             if (!_entManager.TryGetComponent(uid, out MetaDataComponent? metaData))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-entity-not-found", ("entity", uid)));
+                shell.WriteError(Loc.GetString("cmd-makeghostroleraffled-entity-not-found", ("entity", uid)));
                 return;
             }
 
             if (_entManager.TryGetComponent(uid, out MindContainerComponent? mind) &&
                 mind.HasMind)
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-entity-has-mind", ("entity", metaData.EntityName), ("uid", uid)));
+                shell.WriteError(Loc.GetString("cmd-makeghostroleraffled-entity-has-mind", ("entity", metaData.EntityName), ("uid", uid)));
                 return;
             }
 
             if (_entManager.TryGetComponent(uid, out GhostRoleComponent? ghostRole))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-entity-has-ghost-role", ("entity", metaData.EntityName), ("uid", uid)));
+                shell.WriteError(Loc.GetString("cmd-makeghostroleraffled-entity-has-ghost-role", ("entity", metaData.EntityName), ("uid", uid)));
                 return;
             }
 
             if (_entManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
             {
-                shell.WriteError(Loc.GetString($"cmd-{Command}-entity-has-ghost-takeover", ("entity", metaData.EntityName), ("uid", uid)));
+                shell.WriteError(Loc.GetString("cmd-makeghostroleraffled-entity-has-ghost-takeover", ("entity", metaData.EntityName), ("uid", uid)));
                 return;
             }
 
@@ -83,7 +81,7 @@ namespace Content.Server.Ghost.Roles
                         _protoManager.EnumeratePrototypes<GhostRoleRaffleSettingsPrototype>().Select(p => p.ID)
                     );
 
-                    shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-raffle-settings-prototype", ("prototype", args[3]), ("validProtos", validProtos)));
+                    shell.WriteError(Loc.GetString("cmd-makeghostroleraffled-invalid-raffle-settings-prototype", ("prototype", args[3]), ("validProtos", validProtos)));
                     return;
                 }
 
@@ -96,13 +94,13 @@ namespace Content.Server.Ghost.Roles
                     || !uint.TryParse(args[5], out var max)
                     || initial == 0 || max == 0)
                 {
-                    shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-raffle-settings"));
+                    shell.WriteError(Loc.GetString("cmd-makeghostroleraffled-invalid-raffle-settings"));
                     return;
                 }
 
                 if (initial > max)
                 {
-                    shell.WriteError(Loc.GetString($"cmd-{Command}-invalid-raffle-settings"));
+                    shell.WriteError(Loc.GetString("cmd-makeghostroleraffled-invalid-raffle-settings"));
                     return;
                 }
 
@@ -121,7 +119,7 @@ namespace Content.Server.Ghost.Roles
             ghostRole.RoleRules = rules;
             ghostRole.RaffleConfig = new GhostRoleRaffleConfig(settings);
 
-            shell.WriteLine(Loc.GetString($"cmd-{Command}-made-raffled-ghost-role", ("entity", metaData.EntityName)));
+            shell.WriteLine(Loc.GetString("cmd-makeghostroleraffled-made-raffled-ghost-role", ("entity", metaData.EntityName)));
         }
     }
 }

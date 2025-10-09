@@ -22,8 +22,6 @@ public sealed class DepartmentBanCommand : LocalizedCommands
 
     public override string Command => "departmentban";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         string target;
