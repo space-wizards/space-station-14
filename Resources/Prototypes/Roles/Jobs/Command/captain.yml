@@ -5,6 +5,9 @@
   playTimeTracker: JobCaptain
   requirements:
     - !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 4h
+    - !type:DepartmentTimeRequirement
       department: Engineering
       time: 4h
     - !type:DepartmentTimeRequirement
@@ -15,6 +18,9 @@
       time: 4h
     - !type:DepartmentTimeRequirement
       department: Security
+      time: 4h
+    - !type:DepartmentTimeRequirement
+      department: Service
       time: 4h
     - !type:DepartmentTimeRequirement
       department: Command
