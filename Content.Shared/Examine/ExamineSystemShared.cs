@@ -167,41 +167,35 @@ namespace Content.Shared.Examine
             MapCoordinates origin,
             MapCoordinates other,
             float range,
-            bool ignoreInsideBlocker = true)
+            bool ignoreTouching)
         {
-            if (!ignoreInsideBlocker)
-                return _occluder.InRangeUnoccluded(origin, other, range);
-
-            return _occluder.InRangeUnoccluded(
-                origin,
-                other,
-                range,
-                (_transform, origin, other),
-                OccluderSystem.IsColliding);
+            return _occluder.InRangeUnoccluded(origin, other, range, ignoreTouching);
         }
 
-        public bool InRangeUnoccluded(MapCoordinates origin,
+        public bool InRangeUnoccluded(
+            MapCoordinates origin,
             MapCoordinates other,
             float range,
             Ignored? predicate,
-            bool ignoreInsideBlocker)
+            bool ignoreTouching)
         {
             if (predicate == null)
-                return InRangeUnoccluded(origin, other, range, ignoreInsideBlocker);
+                return _occluder.InRangeUnoccluded(origin, other, range, ignoreTouching);
 
-            if (!ignoreInsideBlocker)
+            if (!ignoreTouching)
                 return _occluder.InRangeUnoccluded(origin, other, range, predicate, static (e, p) => p(e));
 
             return _occluder.InRangeUnoccluded(
                 origin,
                 other,
                 range,
-                (predicate, (_transform, origin, other)),
-                static (ent, s) => s.predicate(ent) || OccluderSystem.IsColliding(ent, s.Item2));
+                (predicate, (_transform, origin.Position, other.Position)),
+                static (ent, s) => s.predicate(ent) || OccluderSystem.IsTouchingEndpoint(ent, s.Item2));
         }
 
         [Obsolete("Use InRangeUnoccluded")]
-        public bool InRangeUnOccluded(MapCoordinates origin,
+        public bool InRangeUnOccluded(
+            MapCoordinates origin,
             MapCoordinates other,
             float range,
             Ignored? predicate,
@@ -232,8 +226,8 @@ namespace Content.Shared.Examine
                 origin,
                 other,
                 range,
-                (state, predicate, (_transform, origin, other)),
-                static (ent, s) => s.predicate(ent, s.state) || OccluderSystem.IsColliding(ent, s.Item3));
+                (state, predicate, (_transform, origin.Position, other.Position)),
+                static (ent, s) => s.predicate(ent, s.state) || OccluderSystem.IsTouchingEndpoint(ent, s.Item3));
         }
 
         public bool InRangeUnOccluded(EntityUid origin, EntityUid other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
@@ -249,7 +243,7 @@ namespace Content.Shared.Examine
             var originPos = _transform.GetMapCoordinates(origin);
             var otherPos = _transform.GetMapCoordinates(other);
 
-            return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
+            return InRangeUnoccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
         public bool InRangeUnOccluded(EntityUid origin, EntityCoordinates other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
@@ -257,14 +251,14 @@ namespace Content.Shared.Examine
             var originPos = _transform.GetMapCoordinates(origin);
             var otherPos = _transform.ToMapCoordinates(other);
 
-            return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
+            return InRangeUnoccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
         public bool InRangeUnOccluded(EntityUid origin, MapCoordinates other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
         {
             var originPos = _transform.GetMapCoordinates(origin);
 
-            return InRangeUnOccluded(originPos, other, range, predicate, ignoreInsideBlocker);
+            return InRangeUnoccluded(originPos, other, range, predicate, ignoreInsideBlocker);
         }
 
         public FormattedMessage GetExamineText(EntityUid entity, EntityUid? examiner)
