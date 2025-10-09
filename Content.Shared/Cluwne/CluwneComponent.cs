@@ -51,7 +51,7 @@ public sealed partial class CluwneComponent : Component
     /// <summary>
     /// Emote sound collection that the Cluwne should use.
     /// </summary>
-    [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
+    [DataField("emoteId")]
     public ProtoId<EmoteSoundsPrototype>? EmoteSoundsId = "Cluwne";
 
     /// <summary>
