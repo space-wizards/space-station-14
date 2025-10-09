@@ -2,8 +2,6 @@ using Content.Shared.Hands;
 using Content.Shared.Item;
 using Content.Shared.Wieldable.Components;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
 using Robust.Shared.Reflection;
 
 namespace Content.Client.Items.Systems;
@@ -11,8 +9,6 @@ namespace Content.Client.Items.Systems;
 
 public sealed class ItemVisualizerSystem : EntitySystem
 {
-    [Dependency] private readonly IResourceCache _resCache = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly IReflectionManager _refMan = default!;
@@ -21,7 +17,8 @@ public sealed class ItemVisualizerSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<ItemVisualizerComponent, AppearanceChangeEvent>(OnAppearanceChange);
-        SubscribeLocalEvent<ItemVisualizerComponent, GetInhandVisualsEvent>(OnGetHeldVisuals, after: [typeof(ItemSystem)]);
+        SubscribeLocalEvent<ItemVisualizerComponent, GetInhandVisualsEvent>(OnGetHeldVisuals,
+            after: [typeof(ItemSystem)]);
     }
 
     private void OnAppearanceChange(Entity<ItemVisualizerComponent> ent, ref AppearanceChangeEvent args)
@@ -31,28 +28,25 @@ public sealed class ItemVisualizerSystem : EntitySystem
 
     private void OnGetHeldVisuals(Entity<ItemVisualizerComponent> ent, ref GetInhandVisualsEvent args)
     {
-        if (!TryComp<AppearanceComponent>(ent, out var appearance))
+        if (!TryComp(ent, out AppearanceComponent? appearance))
             return;
 
-        if (!TryComp<ItemComponent>(ent, out var item))
+        if (!HasComp<ItemComponent>(ent))
             return;
 
         if (!ent.Comp.InhandVisuals.TryGetValue(args.Location, out var layers))
             return;
 
-        TryComp<WieldableComponent>(ent, out var wieldable);
+        if (TryComp<WieldableComponent>(ent, out var wieldableComponent) && wieldableComponent.Wielded && ent.Comp.WieldedInhandVisuals.TryGetValue(args.Location, out var wieldedLayers))
+            layers = wieldedLayers;
 
         var i = 0;
+        var defaultKey = $"inhand-visualizer-{args.Location.ToString().ToLowerInvariant()}";
         foreach (var layer in layers)
         {
             if (layer.MapKeys == null)
             {
-                var defaultKey = $"inhand-visualizer-{args.Location.ToString().ToLowerInvariant()}-{i}";
-                var plainlayer = layer;
-                plainlayer.RsiPath = item.RsiPath;
-                Log.Debug("Layer added: " + layer.State);
-                args.Layers.Add((defaultKey, plainlayer));
-                i++;
+                args.Layers.Add((i == 0 ? defaultKey : $"{defaultKey}-{i}", layer));
                 continue;
             }
 
@@ -64,46 +58,65 @@ public sealed class ItemVisualizerSystem : EntitySystem
                 if (!_appearance.TryGetData(ent.Owner, value, out var data, appearance))
                     continue;
 
-                var layerdata = GetGenericLayerData(ent, data, value);
+                var layerdata = GetGenericLayerData(ent, layer, data, value, key);
 
-                if (layerdata != null)
+                var finalLayer = layerdata ?? layer;
+
+                var mapKey = key;
+                if (string.IsNullOrEmpty(mapKey))
                 {
-                    var newlayer = layerdata;
-                    newlayer.State = layer.State;
-                    newlayer.RsiPath = null;
-                    if (wieldable != null && wieldable.Wielded)
-                    {
-                        newlayer.State = $"{wieldable.WieldedInhandPrefix}-{newlayer.State}";
-                    }
-                    args.Layers.Add((key, newlayer));
+                    mapKey = i == 0 ? defaultKey : $"{defaultKey}-{i}";
                     i++;
                 }
+
+                args.Layers.Add((mapKey, finalLayer));
             }
         }
     }
 
-    private PrototypeLayerData? GetGenericLayerData(Entity<ItemVisualizerComponent> ent, object data, Enum key)
+    private PrototypeLayerData? GetGenericLayerData(Entity<ItemVisualizerComponent> ent, PrototypeLayerData baseLayer, object data, Enum key, string mapKey)
     {
-        if (!TryComp<GenericVisualizerComponent>(ent, out var genericVisualizerComponent))
+        if (!TryComp(ent, out GenericVisualizerComponent? genericVisualizerComponent))
             return null;
 
-        foreach (var (appearanceKey, layerDict) in genericVisualizerComponent.Visuals)
+        var visuals = genericVisualizerComponent.Visuals;
+
+        var appearanceValue = data.ToString();
+        if (string.IsNullOrEmpty(appearanceValue))
+            return null;
+
+        if (!visuals.TryGetValue(key, out var layerDict))
+            return null;
+
+        if (!string.IsNullOrEmpty(mapKey) && layerDict.TryGetValue(mapKey, out var specificLayerDataDict))
         {
-            if (!Equals(appearanceKey, key))
-                continue;
-
-            var appearanceValue = data.ToString();
-            if (string.IsNullOrEmpty(appearanceValue))
-                continue;
-
-            foreach (var (_, layerDataDict) in layerDict)
-            {
-                if (!layerDataDict.TryGetValue(appearanceValue, out var layerData))
-                    continue;
-                return layerData;
-            }
+            if (specificLayerDataDict.TryGetValue(appearanceValue, out var overrideData))
+                return MergeLayerData(baseLayer, overrideData);
         }
+
+        foreach (var layerDataDict in layerDict.Values)
+        {
+            if (layerDataDict.TryGetValue(appearanceValue, out var overrideData))
+                return MergeLayerData(baseLayer, overrideData);
+        }
+
         return null;
     }
 
+    private static PrototypeLayerData MergeLayerData(PrototypeLayerData baseLayer, PrototypeLayerData overrideData)
+    {
+        var merged = new PrototypeLayerData();
+
+        merged.Shader = overrideData.Shader ?? baseLayer.Shader;
+        merged.TexturePath = overrideData.TexturePath ?? baseLayer.TexturePath;
+        merged.RsiPath = overrideData.RsiPath ?? baseLayer.RsiPath;
+        merged.State = overrideData.State ?? baseLayer.State;
+        merged.Scale = overrideData.Scale ?? baseLayer.Scale;
+        merged.Rotation = overrideData.Rotation ?? baseLayer.Rotation;
+        merged.Offset = overrideData.Offset ?? baseLayer.Offset;
+        merged.Visible = overrideData.Visible ?? baseLayer.Visible;
+        merged.Color = overrideData.Color ?? baseLayer.Color;
+        merged.MapKeys = overrideData.MapKeys ?? baseLayer.MapKeys;
+        return merged;
+    }
 }

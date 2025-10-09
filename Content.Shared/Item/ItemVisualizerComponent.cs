@@ -19,4 +19,7 @@ public sealed partial class ItemVisualizerComponent : Component
     [DataField(required:true)]
     public Dictionary<HandLocation, List<PrototypeLayerData>> InhandVisuals = new();
 
+    [DataField(required:true)]
+    public Dictionary<HandLocation, List<PrototypeLayerData>> WieldedInhandVisuals = new();
+
 }
