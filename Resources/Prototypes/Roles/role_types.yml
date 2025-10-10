@@ -40,7 +40,7 @@
   id: Silicon
   name: role-type-silicon-name
   color: '#6495ed'
-  symbol: "🗡" # Should never be antag, but just in case.
+  symbol: "▣"
 
 - type: roleType
   id: SiliconAntagonist

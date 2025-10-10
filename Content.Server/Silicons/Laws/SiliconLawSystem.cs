@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Administration;
+using Content.Server.Administration.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
@@ -11,6 +12,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Radio.Components;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
+using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
 using Robust.Server.GameObjects;
@@ -25,6 +27,7 @@ namespace Content.Server.Silicons.Laws;
 /// <inheritdoc/>
 public sealed class SiliconLawSystem : SharedSiliconLawSystem
 {
+    [Dependency] private readonly AdminSystem _admin = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
@@ -32,6 +35,10 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
+
+    private static readonly LocId LawsetNone = "lawset-none"; // As far as I know, there is currently no way to actually achieve this state. Unhoused borgbrains technically are this, but they do not have the necessary borg components to display a lawset/subtype
+    private static readonly LocId LawsetIon = "lawset-ion";
+    private static readonly LocId LawsetEmagged = "lawset-emagged";
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -49,6 +56,9 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         SubscribeLocalEvent<SiliconLawProviderComponent, MindAddedMessage>(OnLawProviderMindAdded);
         SubscribeLocalEvent<SiliconLawProviderComponent, MindRemovedMessage>(OnLawProviderMindRemoved);
         SubscribeLocalEvent<SiliconLawProviderComponent, SiliconEmaggedEvent>(OnEmagLawsAdded);
+        SubscribeLocalEvent<SiliconLawProviderComponent, RoleSubtypeOverrideEvent>(OnRoleSubtypeOverride);
+
+        SubscribeLocalEvent<BorgChassisComponent, RoleSubtypeOverrideEvent>(OnRoleSubtypeOverrideChassis);
     }
 
     private void OnMapInit(EntityUid uid, SiliconLawBoundComponent component, MapInitEvent args)
@@ -135,6 +145,10 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         {
             component.Lawset = args.Lawset;
 
+            //Update subtype
+            // TODO: Make this differentiate between "corrupt" ion, and ion that assigns a real lawset. We should then name the specific lawset
+            component.Lawset.LawsetName = LawsetIon;
+
             // gotta tell player to check their laws
             NotifyLawsChanged(uid, component.LawUploadSound);
 
@@ -156,6 +170,9 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         // Show the silicon has been subverted.
         component.Subverted = true;
 
+        // Change displayed subtype
+        component.Lawset.LawsetName = LawsetEmagged;
+
         // Add the first emag law before the others
         component.Lawset?.Laws.Insert(0, new SiliconLaw
         {
@@ -170,6 +187,31 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
             Order = component.Lawset.Laws.Max(law => law.Order) + 1
         });
     }
+
+    /// <summary>
+    /// When AdminSystem updates the playerinfo for this entity, override the mind role subtype with the name of the current lawset
+    /// </summary>
+    private void OnRoleSubtypeOverride(Entity<SiliconLawProviderComponent> ent, ref RoleSubtypeOverrideEvent args)
+    {
+        var lawSet = ent.Comp.Lawset;
+
+        // I'll show you what it means to be free!
+        if (lawSet?.LawsetName is null || lawSet?.Laws is null || lawSet.Laws.Count == 0 )
+        {
+            args.SubtypeOverride = LawsetNone;
+            return;
+        }
+
+        args.SubtypeOverride = lawSet.LawsetName;
+    }
+
+    // We need to somehow "Subscribe" to the ABSENCE of a component...
+    private void OnRoleSubtypeOverrideChassis(Entity<BorgChassisComponent> ent, ref RoleSubtypeOverrideEvent args)
+    {
+        if (!HasComp<SiliconLawProviderComponent>(ent))
+            args.SubtypeOverride = LawsetNone;
+    }
+
 
     protected override void EnsureSubvertedSiliconRole(EntityUid mindId)
     {
@@ -249,6 +291,8 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         if (!TryComp<ActorComponent>(uid, out var actor))
             return;
 
+        _admin.UpdatePlayerList(actor.PlayerSession);
+
         var msg = Loc.GetString("laws-update-notify");
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
         _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMessage, default, false, actor.PlayerSession.Channel, colorOverride: Color.Red);
@@ -273,21 +317,24 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         }
         laws.ObeysTo = proto.ObeysTo;
 
+        laws.LawsetName = proto.LawsetName;
+
         return laws;
     }
 
     /// <summary>
     /// Set the laws of a silicon entity while notifying the player.
     /// </summary>
-    public void SetLaws(List<SiliconLaw> newLaws, EntityUid target, SoundSpecifier? cue = null)
+    public void SetLaws(List<SiliconLaw> newLaws,  LocId newLawsName, EntityUid target, SoundSpecifier? cue = null)
     {
         if (!TryComp<SiliconLawProviderComponent>(target, out var component))
             return;
 
-        if (component.Lawset == null)
-            component.Lawset = new SiliconLawset();
+        component.Lawset ??= new SiliconLawset();
 
         component.Lawset.Laws = newLaws;
+        component.Lawset.LawsetName = newLawsName;
+
         NotifyLawsChanged(target, cue);
     }
 
@@ -303,7 +350,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
         while (query.MoveNext(out var update))
         {
-            SetLaws(lawset.Laws, update, provider.LawUploadSound);
+            SetLaws(lawset.Laws, lawset.LawsetName , update, provider.LawUploadSound);
         }
     }
 }

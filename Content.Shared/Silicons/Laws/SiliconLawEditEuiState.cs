@@ -19,11 +19,13 @@ public sealed class SiliconLawsEuiState : EuiStateBase
 public sealed class SiliconLawsSaveMessage : EuiMessageBase
 {
     public List<SiliconLaw> Laws { get; }
+    public LocId LawsetName;
     public NetEntity Target { get; }
 
-    public SiliconLawsSaveMessage(List<SiliconLaw> laws, NetEntity target)
+    public SiliconLawsSaveMessage(List<SiliconLaw> laws, LocId lawsetName , NetEntity target)
     {
         Laws = laws;
+        LawsetName = lawsetName;
         Target = target;
     }
 }
