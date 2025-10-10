@@ -1,8 +1,8 @@
 using Content.Server.Weapons.Ranged.Components;
 using Content.Server.PowerCell;
-using Content.Server.Power.Components;
 using Content.Shared.Power.Components;
 using Content.Shared.PowerCell.Components;
+using Content.Shared.Power;
 using Content.Shared.Item;
 
 namespace Content.Server.Power.EntitySystems;
