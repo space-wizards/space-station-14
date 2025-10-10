@@ -111,7 +111,6 @@ public sealed partial class TriggerSystem
             if (!_role.MindHasRole((userMindId, userMindComp), ent.Comp.UserWhitelist))
             {
                 args.Cancelled = true; // the user does not have the required role
-                return;
             }
         }
     }

@@ -11,13 +11,13 @@ namespace Content.Shared.Trigger.Components.Conditions;
 public sealed partial class WhitelistTriggerConditionComponent : BaseTriggerConditionComponent
 {
     /// <summary>
-    /// Whitelist for what entites can cause this trigger.
+    /// Whitelist for what entities can cause this trigger.
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityWhitelist? UserWhitelist;
 
     /// <summary>
-    /// Blacklist for what entites can cause this trigger.
+    /// Blacklist for what entities can cause this trigger.
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityWhitelist? UserBlacklist;
