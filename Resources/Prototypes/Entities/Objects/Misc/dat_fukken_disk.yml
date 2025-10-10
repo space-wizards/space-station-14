@@ -16,6 +16,7 @@
   - type: ArrivalsBlacklist
   - type: WarpPoint
     follow: true
+    location: nuke disk
   - type: Tag
     tags:
     - HighRiskItem
