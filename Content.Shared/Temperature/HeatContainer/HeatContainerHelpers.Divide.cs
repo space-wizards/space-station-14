@@ -26,4 +26,28 @@ public static partial class HeatContainerHelpers
 
         return newContainer;
     }
+
+    /// <summary>
+    /// Divides a source <see cref="HeatContainer"/> into a specified number of equal parts.
+    /// </summary>
+    /// <param name="c">The input <see cref="HeatContainer"/> to split.</param>
+    /// <param name="num">The number of <see cref="HeatContainer"/>s
+    /// to split the source <see cref="HeatContainer"/> into.</param>
+    /// <exception cref="ArgumentException">Thrown when attempting to divide the source container by zero.</exception>
+    /// <returns>An array of <see cref="HeatContainer"/>s equally split from the source <see cref="HeatContainer"/>.</returns>
+    public static HeatContainer[] Divide(this HeatContainer c, uint num)
+    {
+        if (num == 0)
+            throw new ArgumentException("Cannot divide by zero.", nameof(num));
+
+        var fraction = 1f / num;
+        var containers = new HeatContainer[num];
+
+        for (var i = 0; i < num; i++)
+        {
+            containers[i] = c.Divide(fraction);
+        }
+
+        return containers;
+    }
 }
