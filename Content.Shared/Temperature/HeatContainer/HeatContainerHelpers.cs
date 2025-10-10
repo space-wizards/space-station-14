@@ -46,4 +46,19 @@ public static partial class HeatContainerHelpers
         c.HeatCapacity = newHeatCapacity;
         c.Temperature = currentEnergy / c.HeatCapacity;
     }
+
+    /// <summary>
+    /// Changes the heat capacity of a <see cref="HeatContainer"/> while keeping its temperature unchanged.
+    /// Adjusts the internal energy accordingly.
+    /// </summary>
+    /// <param name="c">The <see cref="HeatContainer"/> to modify.</param>
+    /// <param name="newHeatCapacity">The new heat capacity to set.</param>
+    /// <returns>The energy in joules added to (positive) or removed from (negative) the container.</returns>
+    [PublicAPI]
+    public static float ChangeHeatCapacityKeepTemperature(this HeatContainer c, float newHeatCapacity)
+    {
+        var currentTemperature = c.Temperature;
+        c.HeatCapacity = newHeatCapacity;
+        return c.ConductHeatToTemp(currentTemperature);
+    }
 }

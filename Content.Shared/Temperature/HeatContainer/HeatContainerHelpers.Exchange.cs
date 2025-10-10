@@ -4,6 +4,8 @@ namespace Content.Shared.Temperature.HeatContainer;
 
 public static partial class HeatContainerHelpers
 {
+    #region 2-Body Exchange
+
     /// <summary>
     /// Determines the amount of heat energy that must be transferred between two containers
     /// to bring them to thermal equilibrium.
@@ -48,6 +50,10 @@ public static partial class HeatContainerHelpers
         return q;
     }
 
+    #endregion
+
+    #region N-Body Exchange
+
     /// <summary>
     /// Brings an array of <see cref="HeatContainer"/>s to thermal equilibrium.
     /// </summary>
@@ -67,7 +73,7 @@ public static partial class HeatContainerHelpers
     }
 
     /// <summary>
-    /// Determines the final temperature of a <see cref="HeatContainer"/> when it is brought to thermal equilibrium
+    /// Brings a <see cref="HeatContainer"/> to thermal equilibrium
     /// with an array of other <see cref="HeatContainer"/>s.
     /// </summary>
     /// <param name="cA">The first <see cref="HeatContainer"/> to bring to thermal equilibrium.</param>
@@ -90,7 +96,7 @@ public static partial class HeatContainerHelpers
 
     /// <summary>
     /// Determines the final temperature of a <see cref="HeatContainer"/> when it is brought to thermal equilibrium
-    /// with an array of other <see cref="HeatContainer"/>s.
+    /// with an array of other <see cref="HeatContainer"/>s. Does not modify the containers.
     /// </summary>
     /// <param name="cA">The first <see cref="HeatContainer"/> to bring to thermal equilibrium.</param>
     /// <param name="cN">The array of <see cref="HeatContainer"/>s to bring to thermal equilibrium.</param>
@@ -108,7 +114,7 @@ public static partial class HeatContainerHelpers
 
     /// <summary>
     /// Determines the final temperature of an array of <see cref="HeatContainer"/>s
-    /// when they are brought to thermal equilibrium.
+    /// when they are brought to thermal equilibrium. Does not modify the containers.
     /// </summary>
     /// <param name="cN">The array of <see cref="HeatContainer"/>s to bring to thermal equilibrium.</param>
     /// <returns>The temperature of all <see cref="HeatContainer"/>s involved in
@@ -157,7 +163,7 @@ public static partial class HeatContainerHelpers
 
     /// <summary>
     /// Determines the final temperature of an array of <see cref="HeatContainer"/>s
-    /// when they are brought to thermal equilibrium.
+    /// when they are brought to thermal equilibrium. Does not modify the containers.
     /// </summary>
     /// <param name="cN">The array of <see cref="HeatContainer"/>s to bring to thermal equilibrium.</param>
     /// <param name="dQ">The amount of heat in joules that was exchanged for each container
@@ -182,11 +188,11 @@ public static partial class HeatContainerHelpers
             kI[i] = cN[i].InternalEnergy;
         }
 
-        var tF = cN.FullyExchangeHeat();
+        var tF = cN.FullyExchangeHeatQuery();
 
         for (var i = 0; i < cN.Length; i++)
         {
-            kF[i] = cN[i].InternalEnergy;
+            kF[i] = cN[i].HeatCapacity * tF;
         }
 
         NumericsHelpers.Sub(kF, kI);
@@ -194,4 +200,6 @@ public static partial class HeatContainerHelpers
 
         return tF;
     }
+
+    #endregion
 }
