@@ -24,7 +24,7 @@
       - TegGenerator
       - TegCirculator
       - XenoArtifact
-    event: !type:ChangeComponentsSpellEvent
+    event: !type:AnimateSpellEvent
       toAdd:
       - type: Animate
       - type: MindContainer
@@ -69,7 +69,7 @@
       - type: CanEscapeInventory
       - type: MobCollision
       toRemove:
-      - RequireProjectileTarget
-      - BlockMovement
-      - Item
-      - MeleeRequiresWield
+      - type: RequireProjectileTarget
+      - type: BlockMovement
+      - type: Item
+      - type: MeleeRequiresWield
