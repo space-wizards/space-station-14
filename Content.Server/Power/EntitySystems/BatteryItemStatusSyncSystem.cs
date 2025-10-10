@@ -1,18 +1,19 @@
-using Content.Shared.Power.Components;
+using Content.Server.Weapons.Ranged.Components;
+using Content.Server.PowerCell;
 using Content.Server.Power.Components;
+using Content.Shared.Power.Components;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Item;
-using Content.Shared.Power;
-using Content.Server.Weapons.Ranged.Components;
 
 namespace Content.Server.Power.EntitySystems;
 
 /// <summary>
-/// Keeps <see cref="BatteryItemStatusComponent"/> on items with batteries up to date for item status UI,
-/// without polling every frame. Updates are driven by battery charge change events and cell insert/eject.
+/// Keeps <see cref="BatteryItemStatusComponent"/> on items with batteries up to date for item status UI.
 /// </summary>
 public sealed class BatteryItemStatusSyncSystem : EntitySystem
 {
+    [Dependency] private readonly PowerCellSystem _powerCell = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -24,10 +25,6 @@ public sealed class BatteryItemStatusSyncSystem : EntitySystem
 
     private void OnItemMapInit(EntityUid uid, ItemComponent _, MapInitEvent __)
     {
-        // Do not add battery status to guns that already show an ammo counter.
-        if (HasComp<AmmoCounterComponent>(uid))
-            return;
-
         UpdateStatus(uid);
     }
 
@@ -46,10 +43,6 @@ public sealed class BatteryItemStatusSyncSystem : EntitySystem
         if (!HasComp<ItemComponent>(uid))
             return;
 
-        // Do not add battery status to guns that already show an ammo counter.
-        if (HasComp<AmmoCounterComponent>(uid))
-            return;
-
         UpdateStatus(uid);
     }
 
@@ -59,10 +52,15 @@ public sealed class BatteryItemStatusSyncSystem : EntitySystem
     /// </summary>
     private void UpdateStatus(EntityUid uid)
     {
-        var infoEvent = new GetBatteryInfoEvent();
-        RaiseLocalEvent(uid, ref infoEvent);
+        // Do not add battery status to guns that already show an ammo counter.
+        if (HasComp<AmmoCounterComponent>(uid))
+            return;
 
-        if (!infoEvent.HasBattery)
+        var hasBattery = TryGetDirectBatteryCharge(uid, out var current, out var max) ||
+            TryGetSlottedBatteryCharge(uid, out current, out max);
+
+        // If there is no battery at all, remove the status component.
+        if (!hasBattery)
         {
             if (HasComp<BatteryItemStatusComponent>(uid))
                 RemComp<BatteryItemStatusComponent>(uid);
@@ -70,12 +68,45 @@ public sealed class BatteryItemStatusSyncSystem : EntitySystem
         }
 
         var comp = EnsureComp<BatteryItemStatusComponent>(uid);
-        var percent = (int)(infoEvent.ChargePercent * 100);
+        var percent = max > 0f ? (int)(current / max * 100) : 0;
 
         if (percent == comp.ChargePercent)
             return;
 
         comp.ChargePercent = percent;
         Dirty(uid, comp);
+    }
+
+    private bool TryGetDirectBatteryCharge(EntityUid uid, out float current, out float max)
+    {
+        current = 0f;
+        max = 0f;
+
+        if (!TryComp<BatteryComponent>(uid, out _))
+            return false;
+
+        var get = new GetChargeEvent();
+        RaiseLocalEvent(uid, ref get);
+        current = get.CurrentCharge;
+        max = get.MaxCharge;
+        return true;
+    }
+
+    private bool TryGetSlottedBatteryCharge(EntityUid uid, out float current, out float max)
+    {
+        current = 0f;
+        max = 0f;
+
+        if (!TryComp<PowerCellSlotComponent>(uid, out var slot))
+            return false;
+
+        if (!_powerCell.TryGetBatteryFromSlot(uid, out var batteryEnt, out _, slot) || batteryEnt == null)
+            return false;
+
+        var get = new GetChargeEvent();
+        RaiseLocalEvent(batteryEnt.Value, ref get);
+        current = get.CurrentCharge;
+        max = get.MaxCharge;
+        return true;
     }
 }
