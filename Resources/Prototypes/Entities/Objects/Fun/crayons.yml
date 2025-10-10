@@ -100,28 +100,14 @@
     - Trash
 
 - type: entity
-  parent: Crayon
-  id: CrayonInfinite
+  parent: CrayonRainbow
+  id: CrayonInfinite # should not be player available to prevent decal spam
   name: infinite crayon
   components:
-  - type: Sprite
-    state: rainbow
-  - type: Item
-    heldPrefix: rainbow
   - type: Crayon
-    color: Red
-    selectableColor: true
     deleteEmpty: false
-  - type: LimitedCharges
-    maxCharges: 30
   - type: AutoRecharge
     rechargeDuration: 5
-  - type: Tag
-    tags:
-    - Write
-    - Crayon
-    - Recyclable
-    - Trash
 
 - type: entity
   parent: Crayon
