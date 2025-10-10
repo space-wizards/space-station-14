@@ -228,6 +228,12 @@ public sealed partial class AnomalyComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntProtoId? CoreInertPrototype;
 
+    ///  <summary>
+    ///  All scanners entities that has reference to anomaly component
+    ///  </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public HashSet<EntityUid> Scanners = [];
+
     #region Behavior Deviations
 
     [DataField]
