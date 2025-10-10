@@ -1,8 +1,6 @@
 ﻿<Document>
-  # Core Rule 5 - No communication beyond In-Character methods
-  This is a zero tolerance rule. Until the round ends (round end summary) or is in the lobby stage, do not discuss current round details beyond IC (In-Character) methods.
-
-  You may use the LOOC (Local Out-of-Character) channel to teach gameplay mechanics and to inform of ongoing bugs.
+  # Core Rule 5 - No sharing current round information
+  This is a zero-tolerance rule. You must wait for the round to end before sharing round information beyond the game.
 
   ## Broadcasting
   When broadcasting a round through a stream or call, you must kick and ahelp others playing in the same round, as well as hide or delete current round information shared by others. Using a stream delay to reduce current round information leaks is highly recommended.
