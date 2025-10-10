@@ -764,4 +764,11 @@
   id: 92
   time: '2025-10-08T20:41:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40785
+- author: ToastEnjoyer
+  changes:
+  - message: On Plasma, added more nitrogen canisters to the maintenance hallways
+    type: Add
+  id: 93
+  time: '2025-10-10T01:11:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40794
 Order: 1
