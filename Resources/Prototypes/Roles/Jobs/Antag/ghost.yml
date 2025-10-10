@@ -1,0 +1,48 @@
+- type: job
+  id: SpaceDragon
+  name: job-name-dragon
+  playTimeTracker: JobSpaceDragon
+  setPreference: false
+
+- type: job
+  id: SpaceCarp
+  name: job-name-carp
+  playTimeTracker: JobReinforcement
+  setPreference: false
+
+- type: job
+  id: SpaceNinja
+  name: job-name-ninja
+  playTimeTracker: JobSpaceNinja
+  setPreference: false
+
+- type: job
+  id: Revenant
+  name: job-name-revenant
+  playTimeTracker: JobRevenant
+  setPreference: false
+
+- type: job
+  id: Skeleton
+  name: job-name-skeleton
+  playTimeTracker: JobSkeleton
+  setPreference: false
+
+- type: job
+  id: RatKing
+  name: job-name-rat-king
+  playTimeTracker: JobRatKing
+  setPreference: false
+
+- type: job
+  id: Spider
+  name: job-name-spider
+  playTimeTracker: JobAnimal
+  setPreference: false
+
+- type: job
+  id: Slime
+  name: job-name-wizard
+  playTimeTracker: JobAnimal
+  setPreference: false
+

@@ -1,0 +1,12 @@
+- type: job
+  id: SyndicateReinforcement
+  name: job-name-syndicate-reinforcement
+  playTimeTracker: JobReinforcement
+  setPreference: false
+
+- type: job
+  id: SyndicateReinforcement
+  name: job-name-nukie-borg
+  playTimeTracker: JobReinforcement
+  setPreference: false
+

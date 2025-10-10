@@ -1,0 +1,5 @@
+- type: job
+  id: PersonalAI
+  name: job-name-personal-AI
+  playTimeTracker: JobPersonalAI
+  setPreference: false
