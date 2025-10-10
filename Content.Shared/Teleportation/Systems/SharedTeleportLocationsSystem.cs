@@ -13,7 +13,7 @@ namespace Content.Shared.Teleportation.Systems;
 /// </summary>
 public abstract partial class SharedTeleportLocationsSystem : EntitySystem
 {
-    [Dependency] private readonly UseDelaySystem Delay = default!;
+    [Dependency] private readonly UseDelaySystem _delay = default!;
 
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
@@ -32,7 +32,7 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
 
     protected bool IsDelayed(EntityUid entityUid)
     {
-        return Delay.IsDelayed(entityUid, TeleportDelay) || Delay.IsDelayed(entityUid, TeleportFailedDelay);
+        return _delay.IsDelayed(entityUid, TeleportDelay) || _delay.IsDelayed(entityUid, TeleportFailedDelay);
     }
 
     private void OnUiOpenAttempt(Entity<TeleportLocationsComponent> ent, ref ActivatableUIOpenAttemptEvent args)
@@ -59,7 +59,7 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
         if (ChooseSafeLocation((telePointEnt.Value, telePointXForm), maxDistance: 3) is not { } safeTargetMapCoords)
         {
             // Prevent spamming effects if the target is obstructed.
-            Delay.TryResetDelay(ent.Owner, true, id: TeleportFailedDelay);
+            _delay.TryResetDelay(ent.Owner, true, id: TeleportFailedDelay);
 
             return;
         }
@@ -67,7 +67,7 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
         _xform.SetMapCoordinates(originEnt, safeTargetMapCoords);
         SpawnAtPosition(comp.TeleportEffect, originEntXForm.Coordinates);
 
-        Delay.TryResetDelay(ent.Owner, true, id: TeleportDelay);
+        _delay.TryResetDelay(ent.Owner, true, id: TeleportDelay);
 
         if (!ent.Comp.CloseAfterTeleport)
             return;
