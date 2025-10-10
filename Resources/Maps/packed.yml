@@ -88827,6 +88827,8 @@ entities:
     - type: Transform
       pos: 43.5,-4.5
       parent: 2
+- proto: VendingMachineSeedsUnlocked
+  entities:
   - uid: 7681
     components:
     - type: Transform
