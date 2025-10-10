@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Shutters and blast doors now appear welded when welded.
-    type: Fix
-  id: 8562
-  time: '2025-05-25T15:57:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37807
 - author: Stop-Signs
   changes:
   - message: Meals now better reflect the amount of ingredients put into them.
@@ -3948,3 +3941,10 @@
   id: 9064
   time: '2025-10-10T12:41:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40343
+- author: kontakt
+  changes:
+  - message: Ninjas can now have a bombing target at any warp point.
+    type: Tweak
+  id: 9065
+  time: '2025-10-10T21:27:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40726
