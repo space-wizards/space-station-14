@@ -1,0 +1,29 @@
+- files: ["monotone_button.svg.96dpi.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified from slider_outline.svg.96dpi.png by chromiumboy"
+  source: "https://github.com/chromiumboy"
+  
+- files: ["monotone_button_open_both.svg.96dpi.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified from slider_outline.svg.96dpi.png by chromiumboy"
+  source: "https://github.com/chromiumboy"
+   
+- files: ["monotone_button_open_left.svg.96dpi.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified from slider_outline.svg.96dpi.png by chromiumboy"
+  source: "https://github.com/chromiumboy"
+  
+- files: ["monotone_button_open_right.svg.96dpi.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified from slider_outline.svg.96dpi.png by chromiumboy"
+  source: "https://github.com/chromiumboy"
+
+- files: ["monotone_checkbox_checked.svg.96dpi.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified from checkbox_checked.svg.96dpi by chromiumboy"
+  source: "https://github.com/chromiumboy"
+  
+- files: ["monotone_checkbox_unchecked.svg.96dpi.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified from checkbox_unchecked.svg.96dpi by chromiumboy"
+  source: "https://github.com/chromiumboy"

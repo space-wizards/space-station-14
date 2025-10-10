@@ -1,7 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Server.Ghost;
-using Content.Server.Mind.Commands;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
@@ -62,7 +61,7 @@ public sealed class MindSystem : SharedMindSystem
         {
             TransferTo(mindId, visiting, mind: mind);
             if (TryComp(visiting, out GhostComponent? ghostComp))
-                _ghosts.SetCanReturnToBody(ghostComp, false);
+                _ghosts.SetCanReturnToBody((visiting, ghostComp), false);
             return;
         }
 
@@ -214,7 +213,7 @@ public sealed class MindSystem : SharedMindSystem
             entity = Spawn(GameTicker.ObserverPrototypeName, position);
             component = EnsureComp<MindContainerComponent>(entity.Value);
             var ghostComponent = Comp<GhostComponent>(entity.Value);
-            _ghosts.SetCanReturnToBody(ghostComponent, false);
+            _ghosts.SetCanReturnToBody((entity.Value, ghostComponent), false);
         }
 
         var oldEntity = mind.OwnedEntity;
@@ -349,7 +348,7 @@ public sealed class MindSystem : SharedMindSystem
             return;
         }
 
-        MakeSentientCommand.MakeSentient(target, EntityManager);
+        MakeSentient(target);
         TransferTo(mindId, target, ghostCheckOverride: true, mind: mind);
     }
 }

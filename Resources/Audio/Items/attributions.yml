@@ -55,12 +55,12 @@
 
 - files: ["bottle_clunk.ogg"]
   license: "CC-BY-4.0"
-  copyright: "User volivieri on freesound.org. Modified by Velcroboy on github."
+  copyright: "User volivieri on freesound.org. Modified by Velcroboy on github. Made mono by perryprog."
   source: "https://freesound.org/people/volivieri/sounds/37190/"
 
 - files: ["bottle_clunk_2.ogg"]
   license: "CC-BY-4.0"
-  copyright: "User volivieri on freesound.org. Modified by Velcroboy on github."
+  copyright: "User volivieri on freesound.org. Modified by Velcroboy on github. Silence trimmed + made mono by perryprog."
   source: "https://freesound.org/people/volivieri/sounds/37190/"
 
 - files: ["bottle_close1.ogg"]
@@ -144,3 +144,33 @@
   license: "CC0-1.0"
   copyright: "Original sound by vestibule-door on freesound.org, processed by DylanWhittingham"
   source: "https://freesound.org/people/vestibule-door/sounds/668985/"
+
+- files: [ "toolbox_close.ogg", "toolbox_open.ogg" ]
+  license: "CC0-1.0"
+  copyright: "Original sound by Nox_Sound on freesound.org. Converted to ogg and edited by themias."
+  source: "https://freesound.org/people/Nox_Sound/sounds/556648/"
+
+- files: [ "toolbox_insert.ogg" ]
+  license: "CC0-1.0"
+  copyright: "Original sound by j1987 on freesound.org. Converted to ogg and edited by themias."
+  source: "https://freesound.org/people/j1987/sounds/532137/"
+
+- files: [ "toolbox_remove.ogg" ]
+  license: "CC0-1.0"
+  copyright: "Original sound by kooust on freesound.org. Converted to ogg and edited by themias."
+  source: "https://freesound.org/people/kooust/sounds/452712/"
+
+- files: [ "flask_open1.ogg" ]
+  license: "CC-BY-3.0"
+  copyright: "Original sound by kwahmah_02 on freesound.org. Converted to ogg and edited by Prole0 (GitHub)"
+  source: "https://freesound.org/s/277503/"
+
+- files: [ "flask_close1.ogg" ]
+  license: "CC-BY-NC-4.0"
+  copyright: "Original sound by QEDionium on freesound.org. Coverted to ogg and edited by Prole0 (GitHub)"
+  source: "https://freesound.org/s/489803/"
+
+- files: ["wirebrushing.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by romulofs, converted to OGG, and edited by TiniestShark (Github)"
+  source: "https://freesound.org/s/127541/"

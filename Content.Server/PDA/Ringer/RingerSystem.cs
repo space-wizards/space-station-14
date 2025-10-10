@@ -55,7 +55,6 @@ public sealed class RingerSystem : SharedRingerSystem
     /// </summary>
     private void OnGenerateUplinkCode(Entity<RingerUplinkComponent> ent, ref GenerateUplinkCodeEvent ev)
     {
-        // Generate a new uplink code
         var code = GenerateRingtone();
 
         // Set the code on the component
@@ -72,6 +71,10 @@ public sealed class RingerSystem : SharedRingerSystem
             return false;
 
         if (!HasComp<StoreComponent>(uid))
+            return false;
+
+        // Wasn't generated yet
+        if (uplink.Code is null)
             return false;
 
         // On the server, we always check if the code matches

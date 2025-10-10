@@ -40,7 +40,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
                 if (toSpawn == 0) continue;
 
-                if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, system.PrototypeManager, system.ComponentFactory))
+                if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, system.PrototypeManager, system.EntityManager.ComponentFactory))
                 {
                     var spawned = system.EntityManager.SpawnEntity(entityId, xform.Coordinates.Offset(system.Random.NextVector2(-Offset, Offset)));
                     system.StackSystem.SetCount(spawned, toSpawn);
