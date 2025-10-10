@@ -65,7 +65,7 @@ accent-russian-words-18-4 = what the fuck
 accent-russian-words-18-5 = motherfucker
 accent-russian-words-18-6 = son of a bitch
 accent-russian-words-18-7 = bitch
-accent-russian-words-replace-18 = suka blyat
+accent-russian-words-replace-18 = cyka blyat
 
 accent-russian-words-20 = oh no
 accent-russian-words-20-2 = uh oh
