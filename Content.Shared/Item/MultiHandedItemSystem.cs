@@ -16,7 +16,7 @@ public sealed class MultiHandedItemSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<MultiHandedItemComponent, BeforeGettingEquippedHandEvent>(OnBeforeEquipped);
+        SubscribeLocalEvent<MultiHandedItemComponent, GettingPickedUpAttemptEvent>(OnAttemptPickup);
         SubscribeLocalEvent<MultiHandedItemComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
         SubscribeLocalEvent<MultiHandedItemComponent, GotEquippedHandEvent>(OnEquipped);
         SubscribeLocalEvent<MultiHandedItemComponent, GotUnequippedHandEvent>(OnUnequipped);
@@ -35,16 +35,19 @@ public sealed class MultiHandedItemSystem : EntitySystem
         _virtualItem.DeleteInHandsMatching(args.User, ent.Owner);
     }
 
-    private void OnBeforeEquipped(Entity<MultiHandedItemComponent> ent, ref BeforeGettingEquippedHandEvent args)
+    private void OnAttemptPickup(Entity<MultiHandedItemComponent> ent, ref GettingPickedUpAttemptEvent args)
     {
         if (args.Cancelled || _hands.CountFreeHands(args.User) >= ent.Comp.HandsNeeded)
             return;
 
-        args.Cancelled = true;
-        _popup.PopupPredictedCursor(Loc.GetString("multi-handed-item-pick-up-fail",
-                ("number", ent.Comp.HandsNeeded - 1),
-                ("item", ent.Owner)),
-            args.User);
+        args.Cancel();
+
+        if (args.ShowPopup)
+            _popup.PopupPredictedCursor(
+                Loc.GetString("multi-handed-item-pick-up-fail",
+                    ("number", ent.Comp.HandsNeeded - 1),
+                    ("item", ent.Owner)),
+                args.User);
     }
 
     private void OnVirtualItemDeleted(Entity<MultiHandedItemComponent> ent, ref VirtualItemDeletedEvent args)
