@@ -85872,13 +85872,15 @@ entities:
     - type: Transform
       pos: 14.5,-17.5
       parent: 2
-- proto: SurveillanceCameraRouterSecurity
+- proto: SurveillanceCameraRouterScience
   entities:
   - uid: 4644
     components:
     - type: Transform
       pos: 15.5,-19.5
       parent: 2
+- proto: SurveillanceCameraRouterSecurity
+  entities:
   - uid: 6899
     components:
     - type: Transform
