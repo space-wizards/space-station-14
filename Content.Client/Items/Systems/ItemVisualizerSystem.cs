@@ -1,4 +1,7 @@
+using Content.Client.Clothing;
+using Content.Shared.Clothing;
 using Content.Shared.Hands;
+using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Wieldable.Components;
 using Robust.Client.GameObjects;
@@ -17,13 +20,53 @@ public sealed class ItemVisualizerSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<ItemVisualizerComponent, AppearanceChangeEvent>(OnAppearanceChange);
-        SubscribeLocalEvent<ItemVisualizerComponent, GetInhandVisualsEvent>(OnGetHeldVisuals,
-            after: [typeof(ItemSystem)]);
+        SubscribeLocalEvent<ItemVisualizerComponent, GetInhandVisualsEvent>(OnGetHeldVisuals, after: [typeof(ItemSystem)]);
+        SubscribeLocalEvent<ItemVisualizerComponent, GetEquipmentVisualsEvent>(OnGetEquipmentVisuals, after: [typeof(ClientClothingSystem)]);
     }
 
     private void OnAppearanceChange(Entity<ItemVisualizerComponent> ent, ref AppearanceChangeEvent args)
     {
         _item.VisualsChanged(ent);
+    }
+
+    private void OnGetEquipmentVisuals(Entity<ItemVisualizerComponent> ent, ref GetEquipmentVisualsEvent args)
+    {
+        if (!TryComp(ent.Owner, out AppearanceComponent? appearance))
+            return;
+
+        if (!TryComp(args.Equipee, out InventoryComponent? inventory))
+            return;
+
+        List<PrototypeLayerData>? layers = null;
+
+        // attempt to get species specific data
+        if (inventory.SpeciesId != null)
+            ent.Comp.ClothingVisuals.TryGetValue($"{args.Slot}-{inventory.SpeciesId}", out layers);
+
+        // No species specific data.  Try to default to generic data.
+        if (layers == null && !ent.Comp.ClothingVisuals.TryGetValue(args.Slot, out layers))
+            return;
+
+        var i = 0;
+        var defaultKey = $"equipment-visualizer-{args.Slot.ToString().ToLowerInvariant()}";
+        foreach (var layer in layers)
+        {
+            if (layer.MapKeys == null)
+            {
+                args.Layers.Add((i == 0 ? defaultKey : $"{defaultKey}-{i}", layer));
+                i++;
+                continue;
+            }
+
+            foreach (var key in layer.MapKeys)
+            {
+                var layerdata = GetGenericLayerData(ent, appearance, layer, key);
+                var finalLayer = layerdata ?? layer;
+                var layerKey = i == 0 ? defaultKey : $"{defaultKey}-{i}";
+                args.Layers.Add((layerKey, finalLayer));
+            }
+        }
+
     }
 
     private void OnGetHeldVisuals(Entity<ItemVisualizerComponent> ent, ref GetInhandVisualsEvent args)
@@ -46,19 +89,17 @@ public sealed class ItemVisualizerSystem : EntitySystem
         {
             if (layer.MapKeys == null)
             {
+                Log.Debug("bupkis");
                 args.Layers.Add((i == 0 ? defaultKey : $"{defaultKey}-{i}", layer));
+                i++;
                 continue;
             }
 
             foreach (var key in layer.MapKeys)
             {
-                if (!_refMan.TryParseEnumReference(key, out var value))
-                    continue;
+                Log.Debug("key: " + key);
 
-                if (!_appearance.TryGetData(ent.Owner, value, out var data, appearance))
-                    continue;
-
-                var layerdata = GetGenericLayerData(ent, layer, data, value, key);
+                var layerdata = GetGenericLayerData(ent, appearance, layer, key);
 
                 var finalLayer = layerdata ?? layer;
 
@@ -68,35 +109,36 @@ public sealed class ItemVisualizerSystem : EntitySystem
                     mapKey = i == 0 ? defaultKey : $"{defaultKey}-{i}";
                     i++;
                 }
-
+                Log.Debug("visible state: " + finalLayer.Color);
                 args.Layers.Add((mapKey, finalLayer));
             }
         }
     }
 
-    private PrototypeLayerData? GetGenericLayerData(Entity<ItemVisualizerComponent> ent, PrototypeLayerData baseLayer, object data, Enum key, string mapKey)
+    private PrototypeLayerData? GetGenericLayerData(Entity<ItemVisualizerComponent> ent, AppearanceComponent appearance, PrototypeLayerData baseLayer, string mapKey)
     {
-        var visuals = ent.Comp.Visuals;
 
-        var appearanceValue = data.ToString();
-        if (string.IsNullOrEmpty(appearanceValue))
-            return null;
-
-        if (!visuals.TryGetValue(key, out var layerDict))
-            return null;
-
-        if (!string.IsNullOrEmpty(mapKey) && layerDict.TryGetValue(mapKey, out var specificLayerDataDict))
+        foreach (var (appearanceKey, layerDict) in ent.Comp.Visuals)
         {
-            if (specificLayerDataDict.TryGetValue(appearanceValue, out var overrideData))
-                return MergeLayerData(baseLayer, overrideData);
-        }
+            if (!_appearance.TryGetData(ent.Owner, appearanceKey, out var data, appearance))
+                continue;
 
-        foreach (var layerDataDict in layerDict.Values)
-        {
-            if (layerDataDict.TryGetValue(appearanceValue, out var overrideData))
-                return MergeLayerData(baseLayer, overrideData);
-        }
+            var appearanceValue = data.ToString();
+            if (string.IsNullOrEmpty(appearanceValue))
+                return null;
 
+            if (!string.IsNullOrEmpty(mapKey) && layerDict.TryGetValue(mapKey, out var specificLayerDataDict))
+            {
+                if (specificLayerDataDict.TryGetValue(appearanceValue, out var overrideData))
+                    return MergeLayerData(baseLayer, overrideData);
+            }
+
+            foreach (var layerDataDict in layerDict.Values)
+            {
+                if (layerDataDict.TryGetValue(appearanceValue, out var overrideData))
+                    return MergeLayerData(baseLayer, overrideData);
+            }
+        }
         return null;
     }
 

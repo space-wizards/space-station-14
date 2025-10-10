@@ -27,15 +27,27 @@
         startValue: 0.1
         endValue: 2.0
         isLooped: true
-  - type: ToggleableVisuals
-    spriteLayer: light
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        light:
+          True: { visible: true }
+          False: { visible: false }
+  - type: ItemVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        light:
+          True: { visible: true }
+          False: { visible: false }
     inhandVisuals:
       left:
       - state: inhand-left-light
         shader: unshaded
+        map: ["light"]
       right:
       - state: inhand-right-light
         shader: unshaded
+        map: ["light"]
   - type: ItemTogglePointLight
   - type: PowerCellSlot
     cellSlotId: cell_slot
@@ -92,14 +104,27 @@
   - type: HandheldLight
     addPrefix: false
     wattage: 0.5
-  - type: ToggleableVisuals
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        light:
+          True: { visible: true }
+          False: { visible: false }
+  - type: ItemVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        light:
+          True: { visible: true }
+          False: { visible: false }
     inhandVisuals:
       left:
       - state: inhand-left-light
         shader: unshaded
+        map: ["light"]
       right:
       - state: inhand-right-light
         shader: unshaded
+        map: ["light"]
   - type: Sprite
     sprite: Objects/Tools/seclite.rsi
     layers:

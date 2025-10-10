@@ -825,19 +825,49 @@
       - state: base
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-unshaded-4
-        map: ["enum.BatteryWeaponFireModeVisuals.State", "enum.GunVisualLayers.MagUnshaded"]
+        map: ["color", "enum.GunVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: MagazineVisuals
     magState: mag
     steps: 5
     zeroVisible: false
+  - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.BatteryWeaponFireModeVisuals.State:
-        enum.BatteryWeaponFireModeVisuals.State:
+        color:
           BulletLaserSpreadNarrow: { color: "#ff0006"}
           BulletDisablerSmgSpread: { color: "#5fcde4" }
-  - type: Appearance
+  - type: ItemVisualizer
+    sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
+    visuals:
+      enum.BatteryWeaponFireModeVisuals.State:
+        color:
+          BulletLaserSpreadNarrow: { color: "#00ff00" }
+          BulletDisablerSmgSpread: { color: "#5fcde4" }
+    inhandVisuals:
+      left:
+      - state: energy-inhand-left
+      - state: energy-inhand-left-color
+        map: [ "color" ]
+      right:
+      - state: energy-inhand-right
+      - state: energy-inhand-right-color
+        map: [ "color" ]
+    wieldedInhandVisuals:
+      left:
+      - state: wielded-energy-inhand-left-color
+        map: [ "color" ]
+      right:
+      - state: wielded-energy-inhand-right-color
+        map: [ "color" ]
+    clothingVisuals:
+      back:
+      - state: equipped-BACKPACK-color
+        map: [ "color" ]
+      suitstorage:
+      - state: equipped-SUITSTORAGE-color
+        map: [ "color" ]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
   - type: Gun
@@ -857,29 +887,6 @@
     size: Large
     sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
     heldPrefix: disabledthisfornowhehe
-  - type: ItemVisualizer
-    visuals:
-      enum.BatteryWeaponFireModeVisuals.State:
-        enum.BatteryWeaponFireModeVisuals.State:
-          BulletLaserSpreadNarrow: { color: "#ff0006" }
-          BulletDisablerSmgSpread: { color: "#5fcde4" }
-    sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
-    inhandVisuals:
-      left:
-      - state: energy-inhand-left
-      - state: energy-inhand-left-color
-        map: [ "enum.BatteryWeaponFireModeVisuals.State" ]
-      right:
-      - state: energy-inhand-right
-      - state: energy-inhand-right-color
-        map: [ "enum.BatteryWeaponFireModeVisuals.State" ]
-    wieldedInhandVisuals:
-      left:
-      - state: wielded-energy-inhand-left-color
-        map: [ "enum.BatteryWeaponFireModeVisuals.State" ]
-      right:
-      - state: wielded-energy-inhand-right-color
-        map: [ "enum.BatteryWeaponFireModeVisuals.State" ]
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Battery
     maxCharge: 480
