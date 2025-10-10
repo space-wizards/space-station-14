@@ -74,8 +74,9 @@ public sealed class CluwneSystem : EntitySystem
         {
             EnsureComp<AutoEmoteComponent>(ent.Owner);
             _autoEmote.AddEmote(ent.Owner, ent.Comp.AutoEmoteId);
-            EnsureComp<ClumsyComponent>(ent.Owner);
         }
+        
+        EnsureComp<ClumsyComponent>(ent.Owner);
 
         var transformMessage = Loc.GetString(ent.Comp.TransformMessage, ("target", ent.Owner));
 

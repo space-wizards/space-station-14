@@ -31,7 +31,7 @@ public sealed partial class CluwneComponent : Component
     };
 
     /// <summary>
-    /// Chance that the Cluwne will be knocked over and paralized.
+    /// Chance that the Cluwne will be knocked over and paralyzed.
     /// </summary>
     [DataField]
     public float KnockChance = 0.05f;
@@ -43,7 +43,7 @@ public sealed partial class CluwneComponent : Component
     public float GiggleRandomChance = 0.1f;
 
     /// <summary>
-    /// Option to disable the random emoting. admeme usful
+    /// Enable random emoting?
     /// </summary>
     [DataField]
     public bool RandomEmote = true;
@@ -100,7 +100,7 @@ public sealed partial class CluwneComponent : Component
     /// <summary>
     /// Sound to play when the Cluwne is knocked over and paralyzed
     /// </summary>
-    [DataField("knocksound")]
+    [DataField]
     public SoundSpecifier KnockSound = new SoundPathSpecifier("/Audio/Items/airhorn.ogg");
 
     /// <summary>
