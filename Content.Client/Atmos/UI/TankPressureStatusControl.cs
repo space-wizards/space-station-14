@@ -26,11 +26,16 @@ public sealed class TankPressureStatusControl : PollingItemStatusControl<TankPre
         _entityManager = entityManager;
         _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
         AddChild(_label);
+
+        // Default placeholder.
+        var markup = Loc.GetString("tank-pressure-status", ("pressure", 0));
+        markup += "\n" + Loc.GetString("tank-status-closed");
+        _label.SetMarkup(markup);
     }
 
     protected override Data PollData()
     {
-        // Try to get gas tank component
+        // Try to get gas tank component.
         if (!_entityManager.TryGetComponent(_parent.Owner, out GasTankComponent? tank))
             return default;
 

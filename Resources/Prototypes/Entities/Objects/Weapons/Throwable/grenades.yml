@@ -16,7 +16,6 @@
     - Belt
   - type: TriggerOnUse
   - type: TimerTrigger
-  - type: TimerTriggerItemStatus
     delay: 3
   - type: Damageable
     damageContainer: Inorganic

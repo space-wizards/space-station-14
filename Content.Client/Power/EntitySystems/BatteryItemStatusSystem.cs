@@ -5,7 +5,7 @@ using Content.Client.Items;
 namespace Content.Client.Power.EntitySystems;
 
 /// <summary>
-/// Wires up item status logic for <see cref="SharedBatteryItemComponent"/>.
+/// Wires up item status logic for <see cref="BatteryItemStatusComponent"/>.
 /// Shows battery charge information when examining items with batteries.
 /// </summary>
 public sealed class BatteryItemStatusSystem : EntitySystem
@@ -13,7 +13,7 @@ public sealed class BatteryItemStatusSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        Subs.ItemStatus<SharedBatteryItemComponent>(
+        Subs.ItemStatus<BatteryItemStatusComponent>(
             entity => new BatteryStatusControl(entity, EntityManager));
     }
 }

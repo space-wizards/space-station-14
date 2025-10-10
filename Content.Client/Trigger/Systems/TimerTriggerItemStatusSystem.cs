@@ -5,7 +5,7 @@ using Content.Shared.Trigger.Components;
 namespace Content.Client.Trigger.Systems;
 
 /// <summary>
-/// Wires up item status logic for <see cref="TimerTriggerItemStatusComponent"/>.
+/// Wires up item status logic for timer triggers using predicted <see cref="TimerTriggerComponent"/> state.
 /// </summary>
 /// <seealso cref="TimerTriggerStatusControl"/>
 public sealed class TimerTriggerItemStatusSystem : EntitySystem
@@ -13,7 +13,7 @@ public sealed class TimerTriggerItemStatusSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        Subs.ItemStatus<TimerTriggerItemStatusComponent>(
+        Subs.ItemStatus<TimerTriggerComponent>(
             entity => new TimerTriggerStatusControl(entity));
     }
 }

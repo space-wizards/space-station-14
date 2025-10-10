@@ -12,6 +12,4 @@ namespace Content.Client.Magazine.Components;
 /// <seealso cref="MagazineItemStatusSystem"/>
 /// <seealso cref="MagazineStatusControl"/>
 [RegisterComponent]
-public sealed partial class MagazineItemStatusComponent : Component
-{
-}
+public sealed partial class MagazineItemStatusComponent : Component;

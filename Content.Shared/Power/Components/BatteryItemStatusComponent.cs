@@ -7,7 +7,7 @@ namespace Content.Shared.Power.Components;
 /// Automatically added to items with batteries and synced from server to client.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class SharedBatteryItemComponent : Component
+public sealed partial class BatteryItemStatusComponent : Component
 {
     /// <summary>
     /// Whether to show On/Off toggle state for this battery-powered item.

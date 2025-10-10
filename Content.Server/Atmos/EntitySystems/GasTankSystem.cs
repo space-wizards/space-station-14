@@ -12,6 +12,8 @@ using Robust.Shared.Random;
 using Robust.Shared.Configuration;
 using Robust.Shared.Maths;
 using Content.Shared.CCVar;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -25,6 +27,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ThrowingSystem _throwing = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly SharedHandsSystem _hands = default!;
 
         private const float TimerDelay = 0.5f;
         private float _timer = 0f;
@@ -98,8 +101,10 @@ namespace Content.Server.Atmos.EntitySystems
                     _atmosphereSystem.React(comp.Air, comp);
                 }
 
-                // Update and network internal pressure for client UI.
-                if (comp.Air != null)
+                // Update and network internal pressure for client UI, but only while the tank in hands.
+                if (comp.Air != null
+                    && TryComp(Transform(uid).ParentUid, out HandsComponent? hands)
+                    && _hands.IsHolding((Transform(uid).ParentUid, hands), uid))
                 {
                     var newPressure = comp.Air.Pressure;
                     if (!MathHelper.CloseTo(newPressure, comp.InternalPressure, 0.1f))

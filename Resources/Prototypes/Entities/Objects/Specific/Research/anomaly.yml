@@ -198,7 +198,6 @@
         whitelist:
           components:
           - AnomalyCore
-  - type: AnomalyItemStatus
   - type: ContainerContainer
     containers:
       core_slot: !type:ContainerSlot

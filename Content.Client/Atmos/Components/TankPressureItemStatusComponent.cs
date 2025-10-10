@@ -12,12 +12,4 @@ namespace Content.Client.Atmos.Components;
 /// <seealso cref="TankPressureItemStatusSystem"/>
 /// <seealso cref="TankPressureStatusControl"/>
 [RegisterComponent]
-public sealed partial class TankPressureItemStatusComponent : Component
-{
-    /// <summary>
-    /// The name of the gas tank solution to monitor.
-    /// Defaults to "air".
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public string TankSolution = "air";
-}
+public sealed partial class TankPressureItemStatusComponent : Component;
