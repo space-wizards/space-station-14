@@ -23,7 +23,7 @@ public sealed class LubedSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<LubedComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<LubedComponent, BeforeGettingEquippedHandEvent>(OnHandPickUp, after: [typeof(MultiHandedItemSystem)]);
+        SubscribeLocalEvent<LubedComponent, BeforeGettingEquippedHandEvent>(OnHandPickUp);
         SubscribeLocalEvent<LubedComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
     }
 
