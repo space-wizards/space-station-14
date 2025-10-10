@@ -16,7 +16,7 @@ public sealed class LockOnTriggerSystem : EntitySystem
 
     private void OnTrigger(Entity<LockOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
+        if (args.Keys != null && !ent.Comp.KeysIn.Overlaps(args.Keys))
             return;
 
         var target = ent.Comp.TargetUser ? args.User : ent.Owner;
