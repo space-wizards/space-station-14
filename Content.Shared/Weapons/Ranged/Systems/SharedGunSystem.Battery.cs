@@ -80,7 +80,8 @@ public abstract partial class SharedGunSystem
     {
         if (component is ProjectileBatteryAmmoProviderComponent battery)
         {
-            if (ProtoManager.Index<EntityPrototype>(battery.Prototype).Components
+            if (ProtoManager.Index<EntityPrototype>(battery.Prototype)
+                .Components
                 .TryGetValue(Factory.GetComponentName<ProjectileComponent>(), out var projectile))
             {
                 var p = (ProjectileComponent)projectile.Component;

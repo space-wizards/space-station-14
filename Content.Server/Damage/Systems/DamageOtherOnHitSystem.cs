@@ -41,7 +41,7 @@ public sealed class DamageOtherOnHitSystem : SharedDamageOtherOnHitSystem
 
         if (dmg is { Empty: false })
         {
-            _color.RaiseEffect(Color.Red, new List<EntityUid>() { args.Target }, Filter.Pvs(args.Target, entityManager: EntityManager));
+            _color.RaiseEffect(Color.Red, [args.Target], Filter.Pvs(args.Target, entityManager: EntityManager));
         }
 
         _guns.PlayImpactSound(args.Target, dmg, null, false);

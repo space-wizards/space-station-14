@@ -10,7 +10,7 @@ namespace Content.Shared.Damage.Components;
 public sealed partial class DamageOtherOnHitComponent : Component
 {
     /// <summary>
-    /// Whether or not to ignore damage modifiers.
+    /// Whether to ignore damage modifiers.
     /// </summary>
     [DataField]
     public bool IgnoreResistances = false;
