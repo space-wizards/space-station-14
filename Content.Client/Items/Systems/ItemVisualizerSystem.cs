@@ -89,7 +89,6 @@ public sealed class ItemVisualizerSystem : EntitySystem
         {
             if (layer.MapKeys == null)
             {
-                Log.Debug("bupkis");
                 args.Layers.Add((i == 0 ? defaultKey : $"{defaultKey}-{i}", layer));
                 i++;
                 continue;
@@ -97,8 +96,6 @@ public sealed class ItemVisualizerSystem : EntitySystem
 
             foreach (var key in layer.MapKeys)
             {
-                Log.Debug("key: " + key);
-
                 var layerdata = GetGenericLayerData(ent, appearance, layer, key);
 
                 var finalLayer = layerdata ?? layer;
@@ -109,7 +106,6 @@ public sealed class ItemVisualizerSystem : EntitySystem
                     mapKey = i == 0 ? defaultKey : $"{defaultKey}-{i}";
                     i++;
                 }
-                Log.Debug("visible state: " + finalLayer.Color);
                 args.Layers.Add((mapKey, finalLayer));
             }
         }
@@ -155,7 +151,6 @@ public sealed class ItemVisualizerSystem : EntitySystem
         merged.Offset = overrideData.Offset ?? baseLayer.Offset;
         merged.Visible = overrideData.Visible ?? baseLayer.Visible;
         merged.Color = overrideData.Color ?? baseLayer.Color;
-        merged.MapKeys = overrideData.MapKeys ?? baseLayer.MapKeys;
         return merged;
     }
 }
