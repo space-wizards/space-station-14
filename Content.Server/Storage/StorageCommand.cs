@@ -20,7 +20,7 @@ public sealed class StorageCommand : ToolshedCommand
     public IEnumerable<EntityUid> StorageInsert([PipedArgument] IEnumerable<EntityUid> entsToInsert,
         EntityUid targetEnt) => entsToInsert.Where(x => StorageInsert(x, targetEnt) != null);
 
-    public EntityUid? StorageInsert(EntityUid entToInsert, EntityUid targetEnt)
+    private EntityUid? StorageInsert(EntityUid entToInsert, EntityUid targetEnt)
     {
         _storage ??= GetSys<SharedStorageSystem>();
 
@@ -53,6 +53,19 @@ public sealed class StorageCommand : ToolshedCommand
         return null;
     }
 
+    [CommandImplementation("query")]
+    public IEnumerable<EntityUid> StorageQuery([PipedArgument] IEnumerable<EntityUid> storageEnts) =>
+        storageEnts.SelectMany(StorageQuery);
 
+    public IEnumerable<EntityUid> StorageQuery([PipedArgument] EntityUid storageEnt)
+    {
+        _storage ??= GetSys<SharedStorageSystem>();
+        _container ??= GetSys<SharedContainerSystem>();
+
+        if (!EntityManager.TryGetComponent<StorageComponent>(storageEnt, out var storage))
+            return [];
+
+        return storage.Container.ContainedEntities;
+    }
 
 }
