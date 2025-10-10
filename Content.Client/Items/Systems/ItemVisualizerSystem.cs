@@ -76,10 +76,7 @@ public sealed class ItemVisualizerSystem : EntitySystem
 
     private PrototypeLayerData? GetGenericLayerData(Entity<ItemVisualizerComponent> ent, PrototypeLayerData baseLayer, object data, Enum key, string mapKey)
     {
-        if (!TryComp(ent, out GenericVisualizerComponent? genericVisualizerComponent))
-            return null;
-
-        var visuals = genericVisualizerComponent.Visuals;
+        var visuals = ent.Comp.Visuals;
 
         var appearanceValue = data.ToString();
         if (string.IsNullOrEmpty(appearanceValue))

@@ -858,6 +858,11 @@
     sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
     heldPrefix: disabledthisfornowhehe
   - type: ItemVisualizer
+    visuals:
+      enum.BatteryWeaponFireModeVisuals.State:
+        enum.BatteryWeaponFireModeVisuals.State:
+          BulletLaserSpreadNarrow: { color: "#ff0006" }
+          BulletDisablerSmgSpread: { color: "#5fcde4" }
     sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
     inhandVisuals:
       left:

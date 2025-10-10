@@ -22,4 +22,8 @@ public sealed partial class ItemVisualizerComponent : Component
     [DataField(required:true)]
     public Dictionary<HandLocation, List<PrototypeLayerData>> WieldedInhandVisuals = new();
 
+
+
+    [DataField("visuals", required:true)]
+    public Dictionary<Enum, Dictionary<string, Dictionary<string, PrototypeLayerData>>> Visuals = default!;
 }
