@@ -17,7 +17,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Forensics.Systems
 {
-    public sealed class ForensicScannerSystem : EntitySystem
+    public abstract class SharedForensicScannerSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
@@ -45,19 +45,14 @@ namespace Content.Shared.Forensics.Systems
             SubscribeLocalEvent<ForensicScannerComponent, ForensicScannerDoAfterEvent>(OnDoAfter);
         }
 
-        private void UpdateUserInterface(EntityUid uid, ForensicScannerComponent component)
+        protected virtual void UpdateUi(Entity<ForensicScannerComponent> ent)
         {
-            var state = new ForensicScannerBoundUserInterfaceState(
-                component.Fingerprints,
-                component.Fibers,
-                component.DNAs,
-                component.SolutionDNAs,
-                component.Residues,
-                component.LastScannedName,
-                component.PrintCooldown,
-                component.PrintReadyAt);
+        }
 
-            _uiSystem.SetUiState(uid, ForensicScannerUiKey.Key, state);
+        private void UpdateUserInterface(Entity<ForensicScannerComponent> ent)
+        {
+            UpdateUi((ent, ent.Comp));
+
         }
 
         private void OnDoAfter(EntityUid uid, ForensicScannerComponent component, DoAfterEvent args)
@@ -167,15 +162,14 @@ namespace Content.Shared.Forensics.Systems
             _popupSystem.PopupClient(Loc.GetString("forensic-scanner-match-none"), uid, args.User);
         }
 
-        private void OnBeforeActivatableUIOpen(EntityUid uid, ForensicScannerComponent component, BeforeActivatableUIOpenEvent args)
+        private void OnBeforeActivatableUIOpen(Entity<ForensicScannerComponent> ent, ref BeforeActivatableUIOpenEvent args)
         {
-            UpdateUserInterface(uid, component);
+            UpdateUserInterface(ent);
         }
 
         private void OpenUserInterface(EntityUid user, Entity<ForensicScannerComponent> scanner)
         {
-            UpdateUserInterface(scanner, scanner.Comp);
-
+            UpdateUserInterface(scanner);
             _uiSystem.OpenUi(scanner.Owner, ForensicScannerUiKey.Key, user);
         }
 
@@ -248,16 +242,16 @@ namespace Content.Shared.Forensics.Systems
             Dirty(uid, component);
         }
 
-        private void OnClear(EntityUid uid, ForensicScannerComponent component, ForensicScannerClearMessage args)
+        private void OnClear(Entity<ForensicScannerComponent> ent, ref ForensicScannerClearMessage args)
         {
-            component.Fingerprints = new();
-            component.Fibers = new();
-            component.DNAs = new();
-            component.SolutionDNAs = new();
-            component.LastScannedName = string.Empty;
+            ent.Comp.Fingerprints = new();
+            ent.Comp.Fibers = new();
+            ent.Comp.DNAs = new();
+            ent.Comp.SolutionDNAs = new();
+            ent.Comp.LastScannedName = string.Empty;
 
-            Dirty(uid, component);
-            UpdateUserInterface(uid, component);
+            Dirty(ent, ent.Comp);
+            UpdateUserInterface(ent);
         }
     }
 }

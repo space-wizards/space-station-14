@@ -1,6 +1,6 @@
-using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
 using Content.Shared.Forensics;
+using Content.Shared.Forensics.Components;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Forensics
@@ -40,18 +40,15 @@ namespace Content.Client.Forensics
             SendPredictedMessage(new ForensicScannerClearMessage());
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+        public override void Update()
         {
-            base.UpdateState(state);
+            base.Update();
 
-            if (_window == null)
+            if (_window == null || !EntMan.TryGetComponent(Owner, out ForensicScannerComponent? scanner))
                 return;
 
-            if (state is not ForensicScannerBoundUserInterfaceState cast)
-                return;
-
-            _printCooldown = cast.PrintCooldown;
-            _window.UpdateState(cast);
+            _printCooldown = scanner.PrintCooldown;
+            _window.UpdateState((Owner, scanner));
         }
     }
 }

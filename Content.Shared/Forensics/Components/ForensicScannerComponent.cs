@@ -6,14 +6,13 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Forensics.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), AutoGenerateComponentPause]
 public sealed partial class ForensicScannerComponent : Component
 {
-
     /// <summary>
     /// A list of fingerprint GUIDs that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public List<string> Fingerprints = new();
 
     /// <summary>
