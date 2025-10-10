@@ -1,7 +1,7 @@
 <Control xmlns="https://spacestation14.io"
          xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
          MouseFilter="Stop">
-    <PanelContainer StyleClasses="BackgroundOpenLeft"/>
+    <PanelContainer StyleClasses="BackgroundPanelOpenLeft"/>
     <PanelContainer>
         <PanelContainer.PanelOverride>
             <graphics:StyleBoxFlat BorderColor="#25252A" BorderThickness="0 0 0 3"/>
@@ -20,7 +20,7 @@
             <Label Text="{Loc news-write-ui-article-name-label}" Margin="17 10 0 9" VerticalAlignment="Center"/>
             <LineEdit Name="TitleField" Margin="6 10 0 9" MinWidth="260" MinHeight="23" Access="Public"/>
             <Control HorizontalExpand="True" />
-            <Label Name="RichTextInfoLabel" Text="?" MouseFilter="Pass" Margin="14 0" StyleClasses="LabelSecondaryColor"/>
+            <Label Name="RichTextInfoLabel" Text="?" MouseFilter="Pass" Margin="14 0" StyleClasses="LabelWeak"/>
         </BoxContainer>
         <Control Name="TextEditPanel" VerticalExpand="True" Margin="11 0 11 0">
             <PanelContainer>
@@ -43,7 +43,7 @@
         <BoxContainer Orientation="Horizontal" Margin="12 5 12 8">
             <Control>
                 <Button Name="ButtonCancel" SetHeight="32" SetWidth="85"
-                        StyleClasses="ButtonColorRed" Text="{Loc news-write-ui-cancel-text}"/>
+                        StyleClasses="negative" Text="{Loc news-write-ui-cancel-text}"/>
             </Control>
             <Control HorizontalExpand="True"/>
             <BoxContainer Orientation="Horizontal">
