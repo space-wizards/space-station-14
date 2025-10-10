@@ -5,7 +5,6 @@ using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Wieldable.Components;
 using Robust.Client.GameObjects;
-using Robust.Shared.Reflection;
 
 namespace Content.Client.Items.Systems;
 
@@ -14,7 +13,6 @@ public sealed class ItemVisualizerSystem : EntitySystem
 {
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedItemSystem _item = default!;
-    [Dependency] private readonly IReflectionManager _refMan = default!;
 
     public override void Initialize()
     {
@@ -48,7 +46,7 @@ public sealed class ItemVisualizerSystem : EntitySystem
             return;
 
         var i = 0;
-        var defaultKey = $"equipment-visualizer-{args.Slot.ToString().ToLowerInvariant()}";
+        var defaultKey = $"equipment-visualizer-{args.Slot.ToLowerInvariant()}";
         foreach (var layer in layers)
         {
             if (layer.MapKeys == null)
