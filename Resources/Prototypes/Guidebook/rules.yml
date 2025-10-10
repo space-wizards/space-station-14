@@ -335,17 +335,3 @@
   name: guide-entry-rules-m1
   ruleEntry: true
   text: "/ServerInfo/Guidebook/ServerRules/MRPRules/RuleM1DoNotPowergame.xml"
-
-# Ban-Related Guide Entries are used as hyperlinks in certain Ruleset Guide Entry explanations.
-
-- type: guideEntry
-  id: BanTypes
-  name: guide-entry-rules-ban-types
-  ruleEntry: true
-  text: "/ServerInfo/Guidebook/ServerRules/BanTypes.xml"
-
-- type: guideEntry
-  id: BanDurations
-  name: guide-entry-rules-ban-durations
-  ruleEntry: true
-  text: "/ServerInfo/Guidebook/ServerRules/BanDurations.xml"
