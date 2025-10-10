@@ -21,6 +21,23 @@ public static partial class HeatContainerHelpers
         cA = merged;
     }
 
+
+    /// <summary>
+    /// Merges an array of <see cref="HeatContainer"/>s into a single heat container, conserving total internal energy.
+    /// </summary>
+    /// <param name="cA">The first <see cref="HeatContainer"/> to merge.
+    /// This will be modified to contain the merged result.</param>
+    /// <param name="cN">The array of <see cref="HeatContainer"/>s to merge.</param>
+    [PublicAPI]
+    public static void Merge(this ref HeatContainer cA, HeatContainer[] cN)
+    {
+        var cAcN = new HeatContainer[cN.Length + 1];
+        cAcN[0] = cA;
+        cN.CopyTo(cAcN, 1);
+
+        cA = cAcN.Merge();
+    }
+
     /// <summary>
     /// Merges an array of <see cref="HeatContainer"/>s into a single heat container, conserving total internal energy.
     /// </summary>
