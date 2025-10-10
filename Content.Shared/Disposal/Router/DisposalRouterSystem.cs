@@ -22,7 +22,7 @@ public sealed partial class DisposalRouterSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DisposalRouterComponent, GetDisposalsNextDirectionEvent>(OnGetRouterNextDirection, after: new[] { typeof(DisposalTubeSystem) });
+        SubscribeLocalEvent<DisposalRouterComponent, GetDisposalsNextDirectionEvent>(OnGetRouterNextDirection, before: new[] { typeof(DisposalTubeSystem) });
 
         Subs.BuiEvents<DisposalRouterComponent>(DisposalRouterUiKey.Key, subs =>
         {
@@ -32,6 +32,9 @@ public sealed partial class DisposalRouterSystem : EntitySystem
 
     private void OnGetRouterNextDirection(Entity<DisposalRouterComponent> ent, ref GetDisposalsNextDirectionEvent args)
     {
+        if (args.Handled)
+            return;
+
         if (!TryComp<DisposalTubeComponent>(ent, out var disposalTube))
             return;
 
@@ -44,13 +47,9 @@ public sealed partial class DisposalRouterSystem : EntitySystem
         }
 
         _disposalTube.SelectNextDirection((ent, disposalTube), exits.Skip(1).ToArray(), ref args);
+        args.Handled = true;
     }
 
-    /// <summary>
-    /// Handles UI messages from the client. For things such as button presses
-    /// which interact with the world and require server action.
-    /// </summary>
-    /// <param name="msg">A user interface message from the client.</param>
     private void OnUiAction(Entity<DisposalRouterComponent> ent, ref DisposalRouterUiActionMessage msg)
     {
         if (!Exists(msg.Actor))

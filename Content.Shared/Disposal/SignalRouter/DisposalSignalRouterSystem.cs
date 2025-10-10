@@ -20,7 +20,7 @@ public sealed class DisposalSignalRouterSystem : EntitySystem
 
         SubscribeLocalEvent<DisposalSignalRouterComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<DisposalSignalRouterComponent, SignalReceivedEvent>(OnSignalReceived);
-        SubscribeLocalEvent<DisposalSignalRouterComponent, GetDisposalsNextDirectionEvent>(OnGetNextDirection, after: new[] { typeof(DisposalTubeSystem) });
+        SubscribeLocalEvent<DisposalSignalRouterComponent, GetDisposalsNextDirectionEvent>(OnGetNextDirection, before: new[] { typeof(DisposalTubeSystem) });
     }
 
     private void OnInit(Entity<DisposalSignalRouterComponent> ent, ref ComponentInit args)
@@ -42,6 +42,9 @@ public sealed class DisposalSignalRouterSystem : EntitySystem
 
     private void OnGetNextDirection(Entity<DisposalSignalRouterComponent> ent, ref GetDisposalsNextDirectionEvent args)
     {
+        if (args.Handled)
+            return;
+
         if (!TryComp<DisposalTubeComponent>(ent, out var disposalTube))
             return;
 
@@ -54,5 +57,6 @@ public sealed class DisposalSignalRouterSystem : EntitySystem
         }
 
         _disposalTube.SelectNextDirection((ent, disposalTube), exits.Skip(1).ToArray(), ref args);
+        args.Handled = true;
     }
 }

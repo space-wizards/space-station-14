@@ -51,6 +51,9 @@ public sealed partial class DisposalTubeSystem : EntitySystem
     /// <param name="args">The args for the 'get next direction' event.</param>
     public void SelectNextDirection(Entity<DisposalTubeComponent> ent, Direction[] exits, ref GetDisposalsNextDirectionEvent args)
     {
+        if (args.Handled)
+            return;
+
         if (exits.Length == 0)
             return;
 

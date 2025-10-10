@@ -145,4 +145,9 @@ public record struct GetDisposalsNextDirectionEvent(Entity<DisposalHolderCompone
     /// The next direction to move in.
     /// </summary>
     public Direction Next = Direction.Invalid;
+
+    /// <summary>
+    /// Sets whether the event has been handled by another system.
+    /// </summary>
+    public bool Handled;
 }
