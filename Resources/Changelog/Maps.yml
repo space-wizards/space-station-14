@@ -771,4 +771,11 @@
   id: 93
   time: '2025-10-10T01:11:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40794
+- author: opl
+  changes:
+  - message: On Packed, prisoners can now use the Megaseed in brig.
+    type: Fix
+  id: 94
+  time: '2025-10-10T20:33:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40821
 Order: 1
