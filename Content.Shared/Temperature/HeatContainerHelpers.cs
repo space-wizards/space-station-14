@@ -6,7 +6,7 @@ namespace Content.Shared.Temperature;
 /// Class containing helper methods for working with <see cref="HeatContainer"/>s.
 /// Use these classes instead of implementing your own heat transfer logic.
 /// </summary>
-public static class HeatContainerHelpers
+public static partial class HeatContainerHelpers
 {
     /// <summary>
     /// Adds or removes heat energy from the container.
@@ -75,6 +75,153 @@ public static class HeatContainerHelpers
         cA.ChangeHeat(q);
         cB.ChangeHeat(-q);
         return q;
+    }
+
+    /// <summary>
+    /// Brings an array of <see cref="HeatContainer"/>s to thermal equilibrium.
+    /// </summary>
+    /// <param name="cN">The array of <see cref="HeatContainer"/>s to bring to thermal equilibrium.</param>
+    /// <returns>The temperature of all <see cref="HeatContainer"/>s involved in
+    /// the equilibrium.</returns>
+    [PublicAPI]
+    public static float FullyExchangeHeat(this HeatContainer[] cN)
+    {
+        var tF = cN.FullyExchangeHeatQuery();
+        for (var i = 0; i < cN.Length; i++)
+        {
+            cN[i].Temperature = tF;
+        }
+
+        return tF;
+    }
+
+    /// <summary>
+    /// Determines the final temperature of a <see cref="HeatContainer"/> when it is brought to thermal equilibrium
+    /// with an array of other <see cref="HeatContainer"/>s.
+    /// </summary>
+    /// <param name="cA">The first <see cref="HeatContainer"/> to bring to thermal equilibrium.</param>
+    /// <param name="cN">The array of <see cref="HeatContainer"/>s to bring to thermal equilibrium.</param>
+    /// <returns>The temperature of all <see cref="HeatContainer"/>s involved in
+    /// the equilibrium.</returns>
+    [PublicAPI]
+    public static float FullyExchangeHeat(this HeatContainer cA, HeatContainer[] cN)
+    {
+        var tF = cA.FullyExchangeHeatQuery(cN);
+
+        cA.Temperature = tF;
+        for (var i = 0; i < cN.Length; i++)
+        {
+            cN[i].Temperature = tF;
+        }
+
+        return tF;
+    }
+
+    /// <summary>
+    /// Determines the final temperature of a <see cref="HeatContainer"/> when it is brought to thermal equilibrium
+    /// with an array of other <see cref="HeatContainer"/>s.
+    /// </summary>
+    /// <param name="cA">The first <see cref="HeatContainer"/> to bring to thermal equilibrium.</param>
+    /// <param name="cN">The array of <see cref="HeatContainer"/>s to bring to thermal equilibrium.</param>
+    /// <returns>The temperature of all <see cref="HeatContainer"/>s involved in
+    /// the equilibrium.</returns>
+    [PublicAPI]
+    public static float FullyExchangeHeatQuery(this HeatContainer cA, HeatContainer[] cN)
+    {
+        var cAll = new HeatContainer[cN.Length + 1];
+        cAll[0] = cA;
+        cN.CopyTo(cAll, 1);
+
+        return cAll.FullyExchangeHeatQuery();
+    }
+
+    /// <summary>
+    /// Determines the final temperature of an array of <see cref="HeatContainer"/>s
+    /// when they are brought to thermal equilibrium.
+    /// </summary>
+    /// <param name="cN">The array of <see cref="HeatContainer"/>s to bring to thermal equilibrium.</param>
+    /// <returns>The temperature of all <see cref="HeatContainer"/>s involved in
+    /// the equilibrium.</returns>
+    [PublicAPI]
+    public static float FullyExchangeHeatQuery(this HeatContainer[] cN)
+    {
+        /*
+         The solution is derived via the following:
+
+         1. Heat exchange between a body is defined by the equation Q = mc \Delta T
+         which is equivalent to Q = k \Delta T where k is the heat capacity.
+
+         2. Heat must be preserved, so the sum of all heat changes must equal zero.
+         Therefore, \sum Q = 0.
+
+         3. Substitute and expand.
+         \sum_{i=1}^{N} k_n (T_f - T_i)
+
+         4. Unroll and expand.
+         k_1(T_f - T_1) + k_2(T_f - T_2) + k_n(T_f - T_n) ... = 0
+         k_1 T_f - k_1 T_1 + k_2 T_f - k_2 T_2 + k_n T_f - k_n T_n ... = 0
+
+         5. Group like terms.
+         T_f(k_1 + k_2 + k_n) - (k_1 T_1 + k_2 T_2 + k_n T_n) = 0
+
+         6. Solve.
+         T_f(k_1 + k_2 + k_n) = (k_1 T_1 + k_2 T_2 + k_n T_n)
+         T_f = \frac{k_1 T_1 + k_2 T_2 + k_n T_n}{k_1 + k_2 + k_n}
+
+         7. Summation.
+         T_f = \frac{\sum(k_n T_n)}{\sum(k_n)}
+         */
+
+        var numerator = 0f;
+        var denominator = 0f;
+
+        foreach (var c in cN)
+        {
+            numerator += c.HeatCapacity * c.Temperature;
+            denominator += c.HeatCapacity;
+        }
+
+        return numerator / denominator;
+    }
+
+    /// <summary>
+    /// Determines the final temperature of an array of <see cref="HeatContainer"/>s
+    /// when they are brought to thermal equilibrium.
+    /// </summary>
+    /// <param name="cN">The array of <see cref="HeatContainer"/>s to bring to thermal equilibrium.</param>
+    /// <param name="dQ">The amount of heat in joules that was exchanged for each container
+    /// to reach thermal equilibrium.</param>
+    /// <returns>The temperature of all <see cref="HeatContainer"/>s involved in
+    /// the equilibrium.</returns>
+    [PublicAPI]
+    public static float FullyExchangeHeatQuery(this HeatContainer[] cN, out float[] dQ)
+    {
+        /*
+         For finding the total heat exchanged during the equalization between a body and a group of bodies,
+         take the difference of the internal energy before and after the exchange.
+
+         dQ = (k T_f - k T_i)
+         */
+
+        var kI = new float[cN.Length];
+        var kF = new float[cN.Length];
+
+        for (var i = 0; i < cN.Length; i++)
+        {
+            kI[i] = cN[i].InternalEnergy;
+        }
+
+        var tF = cN.FullyExchangeHeat();
+
+        for (var i = 0; i < cN.Length; i++)
+        {
+            kF[i] = cN[i].InternalEnergy;
+        }
+
+        NumericsHelpers.Sub(kF, kI);
+        dQ = kF;
+
+        return tF;
     }
 
     /// <summary>
