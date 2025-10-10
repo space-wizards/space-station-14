@@ -392,10 +392,12 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
         if (_timing.ApplyingState)
             return;
 
-        if (ent.Comp.Container == null || !_container.Remove(toRemove, ent.Comp.Container))
-            return;
-
-        _climb.Climb(toRemove, toRemove, ent, silent: true);
+        if (!Terminating(toRemove) &&
+            ent.Comp.Container != null &&
+            !_container.Remove(toRemove, ent.Comp.Container))
+        {
+            _climb.Climb(toRemove, toRemove, ent, silent: true);
+        }
 
         RecalculateFlushTime(ent);
         UpdateVisualState(ent);
