@@ -32,4 +32,13 @@ public static class UlamSpiral
 
         return new Vector2i(k, k - (m - n - t));
     }
+
+    /// <summary>
+    ///     Returns the largest value for which <see cref="Point"> will generate a point within a <paramref name="maxDistance"> Chebyshev distance from origin.
+    /// </summary>
+    public static int PointsForMaxDistance(int maxDistance)
+    {
+        var x = maxDistance * 2 + 1;
+        return x * x;
+    }
 }
