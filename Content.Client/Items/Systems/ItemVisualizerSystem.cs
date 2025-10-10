@@ -95,24 +95,20 @@ public sealed class ItemVisualizerSystem : EntitySystem
             foreach (var key in layer.MapKeys)
             {
                 var layerdata = GetGenericLayerData(ent, appearance, layer, key);
-
                 var finalLayer = layerdata ?? layer;
-
-                var mapKey = key;
-                if (string.IsNullOrEmpty(mapKey))
-                {
-                    mapKey = i == 0 ? defaultKey : $"{defaultKey}-{i}";
-                    i++;
-                }
+                var mapKey = i == 0 ? defaultKey : $"{defaultKey}-{i}";
                 args.Layers.Add((mapKey, finalLayer));
+                i++;
             }
         }
     }
 
     private PrototypeLayerData? GetGenericLayerData(Entity<ItemVisualizerComponent> ent, AppearanceComponent appearance, PrototypeLayerData baseLayer, string mapKey)
     {
+        if (!TryComp<GenericVisualizerComponent>(ent, out var genericVisuals))
+            return null;
 
-        foreach (var (appearanceKey, layerDict) in ent.Comp.Visuals)
+        foreach (var (appearanceKey, layerDict) in genericVisuals.Visuals)
         {
             if (!_appearance.TryGetData(ent.Owner, appearanceKey, out var data, appearance))
                 continue;

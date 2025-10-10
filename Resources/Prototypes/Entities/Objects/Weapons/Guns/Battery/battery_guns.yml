@@ -840,11 +840,6 @@
           BulletDisablerSmgSpread: { color: "#5fcde4" }
   - type: ItemVisualizer
     sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
-    visuals:
-      enum.BatteryWeaponFireModeVisuals.State:
-        color:
-          BulletLaserSpreadNarrow: { color: "#00ff00" }
-          BulletDisablerSmgSpread: { color: "#5fcde4" }
     inhandVisuals:
       left:
       - state: energy-inhand-left
