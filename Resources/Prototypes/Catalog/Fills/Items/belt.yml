@@ -50,7 +50,6 @@
     - id: Handcuffs
     - id: HoloprojectorSecurity
     - id: RadioHandheldSecurity
-    - id: FlashlightSeclite
 
 - type: entity
   id: ClothingBeltSecurityFilled
