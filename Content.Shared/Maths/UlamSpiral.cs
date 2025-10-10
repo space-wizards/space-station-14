@@ -5,10 +5,13 @@ public static class UlamSpiral
     /// <summary>
     ///     Algorithm for mapping scalars to 2D positions in the same pattern as an Ulam Spiral.
     /// </summary>
-    /// <param name="n">Scalar to map to a 2D position. Must be greater than or equal to 1.</param>
+    /// <param name="n">Scalar to map to a 2D position. Returns a zero vector for values smaller than 1.</param>
     /// <returns>The mapped 2D position for the scalar.</returns>
-    private Vector2i UlamSpiral(int n)
+    public static Vector2i Point(int n)
     {
+        if (n <= 0)
+            return new Vector2i(0, 0);
+
         var k = (int)MathF.Ceiling((MathF.Sqrt(n) - 1) / 2);
         var t = 2 * k + 1;
         var m = (int)MathF.Pow(t, 2);
