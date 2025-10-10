@@ -149,7 +149,7 @@ public sealed partial class CargoSystem
         return true;
     }
 
-    private void GetPalletGoods(EntityUid gridUid, out HashSet<EntityUid> toSell,  out HashSet<(EntityUid, OverrideSellComponent?, double)> goods)
+    private void GetPalletGoods(EntityUid gridUid, out HashSet<EntityUid> toSell, out HashSet<(EntityUid, OverrideSellComponent?, double)> goods)
     {
         goods = new HashSet<(EntityUid, OverrideSellComponent?, double)>();
         toSell = new HashSet<EntityUid>();
@@ -177,9 +177,6 @@ public sealed partial class CargoSystem
                     continue;
                 }
 
-                if (_blacklistQuery.HasComponent(ent))
-                    continue;
-
                 var price = _pricing.GetPrice(ent);
                 if (price == 0)
                     continue;
@@ -191,10 +188,8 @@ public sealed partial class CargoSystem
 
     private bool CanSell(EntityUid uid, TransformComponent xform)
     {
-        if (_mobQuery.HasComponent(uid))
-        {
+        if (_blacklistQuery.HasComponent(uid))
             return false;
-        }
 
         var complete = IsBountyComplete(uid, out var bountyEntities);
 

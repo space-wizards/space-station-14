@@ -64,6 +64,7 @@
   - type: MobMover
   - type: ZombieImmune
   - type: ProtectedFromStepTriggers
+  - type: CargoSellBlacklist
 
 - type: entity
   abstract: true
