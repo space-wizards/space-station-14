@@ -1,5 +1,4 @@
 using Content.Shared.Physics.EntitySystems;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Physics.Components;
