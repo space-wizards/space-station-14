@@ -60,10 +60,10 @@ public sealed partial class PickNearbyDisposableOperator : HTNOperator
 
         foreach (var entity in _lookup.GetEntitiesInRange(owner, range))
         {
-            if (!disposalUnitQuery.TryGetComponent(entity, out var disposalComp))
+            if (!disposalUnitQuery.HasComponent(entity))
                 continue;
             // dont want the mail boxes
-            if (mailingUnitQuery.TryGetComponent(entity, out var mailingComp))
+            if (mailingUnitQuery.HasComponent(entity))
                 continue;
 
             //checking if there is anyone NEAR the bin we found

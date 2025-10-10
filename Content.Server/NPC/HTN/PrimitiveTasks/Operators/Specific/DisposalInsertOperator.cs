@@ -1,7 +1,5 @@
 using Content.Server.Disposal.Unit;
 using Content.Shared.Disposal.Components;
-using Content.Shared.Interaction;
-using Robust.Server.Containers;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
@@ -45,7 +43,7 @@ public sealed partial class DisposalInsertOperator : HTNOperator
         if (!blackboard.TryGetValue<EntityUid>(DisposalTargetKey, out var disposalUnitTarget, _entManager) || _entManager.Deleted(target))
             return HTNOperatorStatus.Failed;
 
-        if (!_entManager.TryGetComponent<DisposalUnitComponent>(disposalUnitTarget, out var disposalComp))
+        if (!_entManager.HasComponent<DisposalUnitComponent>(disposalUnitTarget))
             return HTNOperatorStatus.Failed;
 
         if (!_disposalSystem.TryInsert(disposalUnitTarget, target, owner))
