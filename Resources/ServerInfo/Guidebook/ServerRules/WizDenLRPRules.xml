@@ -1,6 +1,8 @@
 ﻿<Document>
   # Server Rules
-  This is a Wizard's Den server, one of the official Space Station 14 servers. If you are banned on this server, you will be banned on all official servers.
+  This is a Wizard's Den LRP (Low-Roleplay) server. MRP Amendments DO NOT apply.
+
+  Failure to follow server rules will result in a ban from all Wizard's Den servers.
 
   Click on each rule for more details.
 
@@ -23,13 +25,9 @@
   - [textlink="10. Players must be at least 16 years old and act mature" link="RuleC10"]
 
   ## Roleplay Rules
-  These rules only apply during a round. A round ends only when the round summary has appeared. All of these rules apply fully until the moment that the round summary appears, even while the arrivals shuttle is in transit.
+  These rules apply during rounds for all game modes, excluding Deathmatch and Sandbox. Roleplay rules DO NOT apply to ghosts/spectators.
 
-  The deathmatch and sandbox game modes are exempt from these rules. Players who choose to not follow these rules are entirely responsible for knowing if an exempt game mode is active.
-
-  Roleplay rules do not apply to ghosts/spectators/observers while they are ghosts/spectators/observers. Dead chat is considered to be an in-game out of character chat channel.
-
-  See the list of [textlink="role types" link="RoleTypes"] for more information about the different types of roles.
+  Information for each [textlink="role type" link="RoleTypes"].
 
   - [textlink="1. Silicons must follow Silicon Rules" link="RuleR1"]
   - [textlink="2. Familiars must obey their master" link="RuleR2"]
@@ -49,7 +47,7 @@
   - [textlink="16. Use appropriate names for characters" link="RuleR16"]
 
   ## Silicon Rules
-  You are only silicon if the game clearly and explicitly tells you that you are a silicon. For players who are silicons, these Silicon Rules override all roleplay rules if there is any conflict. Silicon Rules do not override core rules.
+  When two rules conflict, Silicon Rules override Roleplay Rules. Silicon Rules DO NOT override Core Rules.
 
   - [textlink="1. Your silicon laws are rules" link="RuleS1"]
   - [textlink="2. Laws must be prioritized by their order" link="RuleS2"]
