@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Stop-Signs
-  changes:
-  - message: Meals now better reflect the amount of ingredients put into them.
-    type: Tweak
-  id: 8563
-  time: '2025-05-25T18:02:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34138
 - author: brainfood1183
   changes:
   - message: Kangaroos can now be equipped with northstars and knuckle dusters.
@@ -3948,3 +3941,12 @@
   id: 9065
   time: '2025-10-10T21:27:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40726
+- author: frigid-dev
+  changes:
+  - message: Ore Crabs now collide with the player if mob collisions are enabled.
+    type: Tweak
+  - message: Ore Crabs now show they are stunned
+    type: Fix
+  id: 9066
+  time: '2025-10-10T23:31:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40764
