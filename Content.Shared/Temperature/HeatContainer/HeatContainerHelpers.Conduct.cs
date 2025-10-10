@@ -85,8 +85,9 @@ public static partial class HeatContainerHelpers
     [PublicAPI]
     public static float ConductHeatToTemp(this HeatContainer c, float targetTemp)
     {
+        var dQ = ConductHeatToTempQuery(c, targetTemp);
         c.Temperature = targetTemp;
-        return ConductHeatToTempQuery(c, targetTemp);
+        return dQ;
     }
 
     /// <summary>
