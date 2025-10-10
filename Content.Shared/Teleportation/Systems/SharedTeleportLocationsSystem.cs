@@ -13,13 +13,14 @@ namespace Content.Shared.Teleportation.Systems;
 /// </summary>
 public abstract partial class SharedTeleportLocationsSystem : EntitySystem
 {
-    [Dependency] protected readonly UseDelaySystem Delay = default!;
+    [Dependency] private readonly UseDelaySystem Delay = default!;
 
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
 
     protected const string TeleportDelay = "TeleportDelay";
+    protected const string TeleportFailedDelay = "TeleportFailedDelay";
 
     public override void Initialize()
     {
@@ -29,9 +30,14 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
         SubscribeLocalEvent<TeleportLocationsComponent, TeleportLocationDestinationMessage>(OnTeleportToLocationRequest);
     }
 
+    protected bool IsDelayed(EntityUid entityUid)
+    {
+        return Delay.IsDelayed(entityUid, TeleportDelay) || Delay.IsDelayed(entityUid, TeleportFailedDelay);
+    }
+
     private void OnUiOpenAttempt(Entity<TeleportLocationsComponent> ent, ref ActivatableUIOpenAttemptEvent args)
     {
-        if (!Delay.IsDelayed(ent.Owner, TeleportDelay))
+        if (!IsDelayed(ent))
             return;
 
         args.Cancel();
@@ -39,19 +45,24 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
 
     protected virtual void OnTeleportToLocationRequest(Entity<TeleportLocationsComponent> ent, ref TeleportLocationDestinationMessage args)
     {
-        if (!TryGetEntity(args.NetEnt, out var telePointEnt) || TerminatingOrDeleted(telePointEnt) || !HasComp<WarpPointComponent>(telePointEnt) || Delay.IsDelayed(ent.Owner, TeleportDelay))
+        if (!TryGetEntity(args.NetEnt, out var telePointEnt) || TerminatingOrDeleted(telePointEnt) || !HasComp<WarpPointComponent>(telePointEnt) || IsDelayed(ent))
             return;
 
         var comp = ent.Comp;
         var originEnt = args.Actor;
         var telePointXForm = Transform(telePointEnt.Value);
 
-        if (ChooseSafeLocation((telePointEnt.Value, telePointXForm), maxDistance: 3) is not { } safeTargetMapCoords)
-            return;
-
+        // Spawn effect even if the target is unsafe - the failure is funny.
         var originEntXForm = Transform(originEnt);
-
         SpawnAtPosition(comp.TeleportEffect, originEntXForm.Coordinates);
+
+        if (ChooseSafeLocation((telePointEnt.Value, telePointXForm), maxDistance: 3) is not { } safeTargetMapCoords)
+        {
+            // Prevent spamming effects if the target is obstructed.
+            Delay.TryResetDelay(ent.Owner, true, id: TeleportFailedDelay);
+
+            return;
+        }
 
         _xform.SetMapCoordinates(originEnt, safeTargetMapCoords);
         SpawnAtPosition(comp.TeleportEffect, originEntXForm.Coordinates);
