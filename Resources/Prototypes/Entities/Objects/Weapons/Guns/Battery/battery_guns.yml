@@ -841,11 +841,9 @@
   - type: ItemVisualizer
     inhandVisuals:
       left:
-      - state: energy-inhand-left
       - state: energy-inhand-left-color
         map: [ "color" ]
       right:
-      - state: energy-inhand-right
       - state: energy-inhand-right-color
         map: [ "color" ]
     wieldedInhandVisuals:
@@ -880,7 +878,7 @@
   - type: Item
     size: Large
     sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
-    heldPrefix: disabledthisfornowhehe
+    heldPrefix: energy
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Battery
     maxCharge: 480
