@@ -258,7 +258,9 @@
   components:
   - type: Sprite
     state: silver_crab
+  - type: MeleeWeapon
     damage:
+      types:
         Blunt: 5
   - type: Destructible
     thresholds:
