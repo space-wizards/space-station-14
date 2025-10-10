@@ -1,53 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: The "Escape alive and unrestrained" objective now counts as partially
-      complete if you show up handcuffed. Being dead still has it count as a total
-      fail!
-    type: Tweak
-  id: 8556
-  time: '2025-05-22T03:25:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37680
-- author: EmoGarbage404
-  changes:
-  - message: Added cargo orders for gold and silver ingots.
-    type: Add
-  - message: Reduced prices of cardboard and paper material crate.
-    type: Tweak
-  id: 8557
-  time: '2025-05-22T08:42:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37713
-- author: ArtisticRoomba
-  changes:
-  - message: The volume of large gas canisters have been increased to 1500L to encourage
-      their usage in resolving pressure problems in spaced rooms. The gas that starts
-      inside of the tanks and the price of them has increased to compensate.
-    type: Tweak
-  id: 8558
-  time: '2025-05-22T18:12:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37564
-- author: Hitlinemoss
-  changes:
-  - message: Liquid soap is now slippery.
-    type: Fix
-  id: 8559
-  time: '2025-05-23T21:57:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37747
-- author: CoconutThunder
-  changes:
-  - message: The Chief Medical Officer should now appear with the correct precedence
-      in the crew manifest.
-    type: Fix
-  id: 8560
-  time: '2025-05-24T05:10:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37774
-- author: TiniestShark
-  changes:
-  - message: Added inhand sprites for the bartender utensils and mugs.
-    type: Add
-  id: 8561
-  time: '2025-05-24T17:32:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37771
 - author: K-Dynamic
   changes:
   - message: Shutters and blast doors now appear welded when welded.
@@ -3954,3 +3905,46 @@
   id: 9058
   time: '2025-10-08T22:27:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40783
+- author: ToastEnjoyer
+  changes:
+  - message: On fland, the wardens enforcer has been removed.
+    type: Remove
+  id: 9059
+  time: '2025-10-08T23:45:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40786
+- author: SlamBamActionman
+  changes:
+  - message: Nocturine now slows the target down, with a longer duration and shorter
+      delay before activating.
+    type: Tweak
+  id: 9060
+  time: '2025-10-09T13:32:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40797
+- author: Princess-Cheeseballs
+  changes:
+  - message: Dying while asleep shouldn't permanently blind you anymore.
+    type: Fix
+  id: 9061
+  time: '2025-10-09T13:46:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40366
+- author: kontakt
+  changes:
+  - message: Bulldog magazines are now only accessible through emagged fabricators.
+    type: Tweak
+  id: 9062
+  time: '2025-10-09T14:00:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40790
+- author: Princess-Cheeseballs
+  changes:
+  - message: The thieving beacon can now detect the officer's handgun objective.
+    type: Fix
+  id: 9063
+  time: '2025-10-10T04:59:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40811
+- author: Hitlinemoss
+  changes:
+  - message: The Paladin AI lawset has been rewritten.
+    type: Tweak
+  id: 9064
+  time: '2025-10-10T12:41:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40343
