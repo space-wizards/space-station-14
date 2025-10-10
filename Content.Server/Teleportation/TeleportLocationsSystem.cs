@@ -63,7 +63,7 @@ public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSys
             if (_whitelist.IsBlacklistPass(warpPointComp.Blacklist, warpEnt) || string.IsNullOrWhiteSpace(warpPointComp.Location))
                 continue;
 
-            ent.Comp.AvailableWarps.Add(new TeleportPoint(warpPointComp.Location, GetNetEntity(warpEnt)));
+            ent.Comp.AvailableWarps.Add(new TeleportPoint(Loc.GetString(warpPointComp.Location), GetNetEntity(warpEnt)));
         }
 
         Dirty(ent);

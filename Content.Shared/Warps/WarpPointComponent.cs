@@ -10,7 +10,7 @@ namespace Content.Shared.Warps;
 public sealed partial class WarpPointComponent : Component
 {
     [DataField]
-    public string? Location;
+    public LocId? Location;
 
     /// <summary>
     /// If true, ghosts warping to this entity will begin following it.

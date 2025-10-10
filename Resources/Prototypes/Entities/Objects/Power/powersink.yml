@@ -53,7 +53,7 @@
       tags:
       - GhostOnlyWarp
     - type: WarpPoint
-      location: powersink
+      location: location-powersink
       blacklist:
         tags:
         - GhostOnlyWarp

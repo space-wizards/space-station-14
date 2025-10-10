@@ -122,7 +122,7 @@
   - type: StaticPrice
     price: 800
   - type: WarpPoint
-    location: Mothership Core
+    location: location-mothership-core
     follow: true
   - type: VoiceOverride
     nameOverride: MOTHERSHIP CORE
