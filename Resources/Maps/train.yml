@@ -73,6 +73,7 @@ entities:
       saturation: 1.15
       strength: 0.65
       tintColor: '#400080'
+    
   - uid: 2
     components:
     - type: MetaData

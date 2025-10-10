@@ -1,0 +1,16 @@
+- type: entity
+  id: DesertMirageMarker
+  name: Desert Mirage Marker
+  parent: MarkerBase
+  description: Enables the desert mirage heat haze overlay for this map.
+  components:
+  - type: Sprite
+    sprite: Objects/Markers/spawn_marker.rsi
+    state: green
+  - type: DesertMirageMap
+    enabled: true
+    # Optional overrides (uncomment to tweak)
+    # strength: 0.7
+    # speed: 1.0
+    # distortScale: 1.0
+    # verticalBias: 0.6

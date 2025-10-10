@@ -1,0 +1,17 @@
+- type: entity
+  parent: BaseObjective
+  id: AssassinEliminateCargoObjective
+  name: Eliminate everyone else
+  description: Be the last one standing. Eliminate all other players except yourself.
+  components:
+  - type: Objective
+    issuer: objective-issuer-syndicate
+    difficulty: 3.0
+    icon:
+      sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+      state: icon
+  - type: RoleRequirement
+    roles:
+    - AssassinRole
+  - type: KillAllOthersCondition
+    requireDead: true

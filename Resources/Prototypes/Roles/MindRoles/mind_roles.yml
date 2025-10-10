@@ -80,6 +80,18 @@
     antagPrototype: GenericSiliconAntagonist
     sortWeight: 30
 
+# Assassin
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleAssassin
+  name: Assassin Role
+  components:
+  - type: MindRole
+    antagPrototype: Assassin
+    roleType: SoloAntagonist
+    subtype: role-subtype-assassin
+  - type: AssassinRole
+
 - type: entity
   parent: [ BaseMindRoleAntag, MindRoleGhostRoleNeutral ]
   id: MindRoleGhostRoleSoloAntagonist

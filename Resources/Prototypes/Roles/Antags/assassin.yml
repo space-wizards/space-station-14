@@ -1,0 +1,7 @@
+- type: antag
+  id: Assassin
+  name: roles-antag-assassin-name
+  antagonist: true
+  setPreference: true
+  objective: roles-antag-assassin-objective
+  guides: [ Traitors ]

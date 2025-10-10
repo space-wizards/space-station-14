@@ -24,13 +24,13 @@ public sealed class BodycamOverlay : Overlay
     public float ScanlineStrength { get; set; } = 0.0f; // disable scanlines
     public float VignetteStrength { get; set; } = 0.40f; // disable vignette
     public float AberrationStrength { get; set; } = 0.1f; // disable color fringe/outline by default
-    public float GrainStrength { get; set; } = 0.30f; // keep only noise
+    public float GrainStrength { get; set; } = 0.1f; // keep only noise
     public float DistortionStrength { get; set; } = 0.0f; // disabled; fisheye replaces it
     public float CornerRadius { get; set; } = 0.30f;   // UV units (~3% of width/height)
     public float CornerFeather { get; set; } = 0.35f;  // soft edge
     // GoPro-like fixed parameters (no controls)
-    public float FisheyeStrength { get; set; } = 0.02f;    // low fisheye
-    public float EdgeBlurStrength { get; set; } = 0.40f;   // subtle edge blur
+    public float FisheyeStrength { get; set; } = 0.01f;    // low fisheye
+    public float EdgeBlurStrength { get; set; } = 0.05f;   // subtle edge blur
 
     public BodycamOverlay()
     {

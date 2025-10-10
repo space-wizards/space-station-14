@@ -66,6 +66,12 @@ entities:
       saturation: 1.15
       strength: 0.65
       tintColor: '#FFDC85FF'
+    - type: MapAutoGameRule
+      rules:
+        - AutoRoundEndingRule
+        - AutoRoundRestartRule
+      addInLobby: true
+      startOnRoundStart: true
   - uid: 2
     components:
     - type: MetaData

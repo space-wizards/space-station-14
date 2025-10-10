@@ -1,0 +1,28 @@
+- type: entity
+  id: AutoRoundController
+  name: auto round controller
+  suffix: Map Controller
+  abstract: false
+  description: Enables automatic in-round end and post-round restart when present on a map.
+  components:
+  - type: AutoRoundController
+    # Default values shown for reference; override in map if desired
+    inRoundDelay: 180
+    postRoundDelay: 15
+    inRoundWarnThreshold: 30
+    postRoundWarnThreshold: 5
+    senderName: "Мировая арена"
+    enableInRoundAutoEnd: true
+    enablePostRoundAutoRestart: true
+
+- type: entity
+  id: AutoRoundControllerFast
+  parent: AutoRoundController
+  name: auto round controller (fast)
+  suffix: 60s/10s
+  components:
+  - type: AutoRoundController
+    inRoundDelay: 60
+    postRoundDelay: 10
+    inRoundWarnThreshold: 15
+    postRoundWarnThreshold: 3

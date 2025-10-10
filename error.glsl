@@ -232,23 +232,15 @@ varying highp vec4 VtxModulate;
 // TODO CLYDE consistent shader variable naming
 uniform sampler2D lightMap;
 
+const ARRAY_HIGHP float TimeScale =  1.0;
 uniform sampler2D SCREEN_TEXTURE;
-uniform ARRAY_LOWP float time;
-uniform ARRAY_LOWP float scanlineStrength;
-uniform ARRAY_LOWP float vignetteStrength;
-uniform ARRAY_LOWP float aberrationStrength;
-uniform ARRAY_LOWP float grainStrength;
-uniform ARRAY_LOWP float distortionStrength;
-uniform ARRAY_LOWP float cornerRadius;
-uniform ARRAY_LOWP float cornerFeather;
-uniform ARRAY_LOWP float fisheyeStrength;
-uniform ARRAY_LOWP float edgeBlurStrength;
+uniform ARRAY_HIGHP float Strength;
+uniform ARRAY_HIGHP float Speed;
+uniform ARRAY_HIGHP float DistortScale;
+uniform ARRAY_HIGHP float VerticalBias;
+uniform ARRAY_HIGHP float Zoom;
 
 
-ARRAY_LOWP float hash( ARRAY_LOWP vec2 co) {
- return fract ( sin ( dot ( co , vec2 ( 12.9898 , 78.233 ) ) ) * 43758.5453 ) ;
-
-}
 
 
 void main()
@@ -283,62 +275,26 @@ void main()
     // Requires breaking changes.
     lowp vec3 lightSample = LIGHT.xyz;
 
-     lowp vec2 uv = UV ;
- lowp vec2 uvScreen = UV ;
- lowp vec2 center = vec2 ( 0.5 , 0.5 ) ;
- {
- lowp vec2 ruv = uv - center ;
- lowp float r = length ( ruv ) ;
- lowp float rn = min ( r / 0.70710678 , 1.0 ) ;
- lowp float curved = mix ( rn , sin ( rn * 1.57079633 ) , clamp ( fisheyeStrength , 0.0 , 1.0 ) ) ;
- lowp float scale = r > 1 e - 5 ? ( curved / rn ) : 1.0 ;
- uv = center + ruv * scale ;
- }
- lowp float ab = aberrationStrength * 0.0015 ;
- lowp float r = zTextureSpec ( SCREEN_TEXTURE , uv + vec2 ( + ab , 0.0 ) ) . r ;
- lowp float g = zTextureSpec ( SCREEN_TEXTURE , uv ) . g ;
- lowp float b = zTextureSpec ( SCREEN_TEXTURE , uv + vec2 ( - ab , 0.0 ) ) . b ;
- lowp vec3 col = vec3 ( r , g , b ) ;
- if ( edgeBlurStrength > 0.0 ) {
- lowp vec2 ruv2 = uv - center ;
- lowp float rn2 = min ( length ( ruv2 ) / 0.70710678 , 1.0 ) ;
- lowp float w = smoothstep ( 0.75 , 1.0 , rn2 ) * edgeBlurStrength ;
- if ( w > 0.0 ) {
- lowp float rad = 0.0015 * edgeBlurStrength ;
- lowp vec3 acc = col ;
- acc += zTextureSpec ( SCREEN_TEXTURE , uv + vec2 ( rad , 0.0 ) ) . rgb ;
- acc += zTextureSpec ( SCREEN_TEXTURE , uv + vec2 ( - rad , 0.0 ) ) . rgb ;
- acc += zTextureSpec ( SCREEN_TEXTURE , uv + vec2 ( 0.0 , rad ) ) . rgb ;
- acc += zTextureSpec ( SCREEN_TEXTURE , uv + vec2 ( 0.0 , - rad ) ) . rgb ;
- acc *= 0.2 ;
- col = mix ( col , acc , w ) ;
- }
- }
- if ( scanlineStrength > 0.0 ) {
- lowp float band = step ( 0.5 , fract ( uvScreen . y * 720.0 ) ) ;
- lowp float mod = mix ( 1.0 , 0.85 , band ) ;
- col *= mix ( 1.0 , mod , clamp ( scanlineStrength , 0.0 , 1.0 ) ) ;
- }
- if ( vignetteStrength > 0.0 ) {
- lowp float d = distance ( uv , center ) ;
- lowp float vig = smoothstep ( 0.6 , 0.9 , d ) ;
- col *= mix ( 1.0 , 1.0 - vig * 0.35 , clamp ( vignetteStrength , 0.0 , 1.0 ) ) ;
- }
- if ( grainStrength > 0.0 ) {
- lowp float n = hash ( uv * vec2 ( 1920.0 , 1080.0 ) + time * 12.345 ) ;
- lowp float g2 = ( n - 0.5 ) * 0.07 ;
- col += g2 * clamp ( grainStrength , 0.0 , 1.0 ) ;
- }
- if ( cornerRadius > 0.0 ) {
- lowp vec2 p = uv - vec2 ( 0.5 ) ;
- lowp vec2 b = vec2 ( 0.5 ) - vec2 ( max ( cornerRadius , 0.0 ) + 0.005 ) ;
- lowp vec2 q = abs ( p ) - b ;
- lowp float d = length ( max ( q , vec2 ( 0.0 ) ) ) - cornerRadius ;
- lowp float feath = max ( cornerFeather , 0.001 ) ;
- lowp float mask = 1.0 - smoothstep ( 0.0 , feath , d ) ;
- col *= mask ;
- }
- COLOR = vec4 ( col , 1.0 ) ;
+     highp vec2 uv = Pos ;
+ highp vec2 px = SCREEN_PIXEL_SIZE . xy ;
+ highp vec2 aspect = vec2 ( 1.0 / px . x , 1.0 / px . y ) ;
+ highp float t = TIME * Speed * TimeScale ;
+ highp float z = max ( Zoom , 1 e - 3 ) ;
+ highp float scale = DistortScale / z ;
+ highp float w1 = sin ( uv . y * 12.0 * scale + t * 1.3 ) ;
+ highp float w2 = sin ( ( uv . y * 22.0 + uv . x * 3.0 ) * scale + t * 2.1 + 1.0 ) ;
+ highp float w3 = sin ( ( uv . y * 6.0 + uv . x * 5.0 ) * scale + t * 0.9 + 2.7 ) ;
+ highp float bias = clamp ( 1.0 - uv . y , 0.0 , 1.0 ) ;
+ bias = mix ( 1.0 , bias , VerticalBias ) ;
+ highp float offsetX = ( w1 * 0.35 + w2 * 0.4 + w3 * 0.25 ) * Strength * 0.004 * bias ;
+ highp float offsetY = ( w1 * 0.15 + w2 * 0.2 + w3 * 0.1 ) * Strength * 0.003 * bias ;
+ highp vec2 uvR = uv + vec2 ( offsetX * 1.15 , offsetY * 0.8 ) ;
+ highp vec2 uvG = uv + vec2 ( offsetX * 1.00 , offsetY * 1.0 ) ;
+ highp vec2 uvB = uv + vec2 ( offsetX * 0.85 , offsetY * 1.2 ) ;
+ highp float r = texture2D ( SCREEN_TEXTURE , uvR ) . r ;
+ highp float g = texture2D ( SCREEN_TEXTURE , uvG ) . g ;
+ highp float b = texture2D ( SCREEN_TEXTURE , uvB ) . b ;
+ COLOR = vec4 ( r , g , b , 1.0 ) ;
 
 
     LIGHT.xyz = lightSample;

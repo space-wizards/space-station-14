@@ -100,6 +100,8 @@ public sealed partial class GameTicker
         if (DummyTicker)
             return;
 
+        
+
         if (resetDelay is not null)
         {
             ResetCountdown = resetDelay.Value;

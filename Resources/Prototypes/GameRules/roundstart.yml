@@ -230,6 +230,31 @@
       - MindRoleTraitorReinforcement
 
 - type: entity
+  id: Assassin
+  parent: BaseGameRule
+  components:
+  - type: GameRule
+    minPlayers: 1
+  - type: AntagSelection
+    selectionTime: IntraPlayerSpawn
+    agentName: assassin-round-end-agent-name
+    definitions:
+    - prefRoles: [ Assassin ]
+      max: 1
+      playerRatio: 20
+      briefing:
+        text: assassin-role-greeting
+        color: Crimson
+        sound: "/Audio/Misc/holyshit.ogg"
+      mindRoles:
+      - MindRoleAssassin
+  - type: AntagObjectives
+    objectives:
+    - AssassinEliminateCargoObjective
+  - type: DynamicRuleCost
+    cost: 100
+
+- type: entity
   id: Changeling
   parent: BaseGameRule
   components:
@@ -245,7 +270,7 @@
       briefing:
         text: changeling-role-greeting
         color: Red
-        sound: /Audio/Ambience/Antag/changeling_start.ogg
+        sound: "/Audio/Ambience/Antag/changeling_start.ogg"
       components:
       - type: ChangelingDevour
       - type: ChangelingIdentity
@@ -526,13 +551,28 @@
 - type: entity
   parent: BaseGameRule
   id: AutoRoundRestart
-  name: Auto Round Restart System #by chatgpt (edited by vadim666pro) ДА Я ВАЙБКОДЕР И МНЕ ПОХ
+  name: Auto Round Restart System
   components:
     - type: AutoRoundRestartRule
 
 - type: entity
   parent: BaseGameRule
   id: AutoRoundEnding
-  name: Auto Round Ending System #by vadim666pro
+  name: Auto Round Ending System 
+  components:
+    - type: AutoRoundEndingRule
+
+# Aliases used by MapAutoGameRule spawner entries
+- type: entity
+  parent: BaseGameRule
+  id: AutoRoundRestartRule
+  name: Auto Round Restart Rule Alias
+  components:
+    - type: AutoRoundRestartRule
+
+- type: entity
+  parent: BaseGameRule
+  id: AutoRoundEndingRule
+  name: Auto Round Ending Rule Alias
   components:
     - type: AutoRoundEndingRule

@@ -67,6 +67,7 @@ entities:
       tintColor: '#fae9bb'
     - type: MapLight
       ambientLightColor: '#FAEFCFFF'
+    
   - uid: 2
     components:
     - type: BecomesStation

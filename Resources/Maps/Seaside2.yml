@@ -63,6 +63,7 @@ entities:
     - type: GasTileOverlay
     - type: Parallax
       parallax: SillyIsland
+    
   - uid: 2
     components:
     - type: MetaData

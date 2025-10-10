@@ -13,4 +13,12 @@
           availableJobs:
             Janitor: [ -1, -1 ]
             ServiceWorker: [-1, -1 ]
+        - type: AutoRoundController
+          inRoundDelay: 180
+          postRoundDelay: 15
+          inRoundWarnThreshold: 30
+          postRoundWarnThreshold: 5
+          senderName: "Мировая арена"
+          enableInRoundAutoEnd: true
+          enablePostRoundAutoRestart: true
 
