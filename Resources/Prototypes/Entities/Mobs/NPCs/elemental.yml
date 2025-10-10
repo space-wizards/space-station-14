@@ -59,7 +59,7 @@
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
       types:
-        Blunt: 5
+        Blunt: 6
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
     baseSprintSpeed : 2.5
@@ -93,10 +93,6 @@
             max: 4
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 6
 
 - type: entity
   parent: MobOreCrab
@@ -106,6 +102,10 @@
   components:
   - type: Sprite
     state: iron_crab
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 5
   - type: MovementSpeedModifier
     baseWalkSpeed : 1.5
     baseSprintSpeed : 2
@@ -193,10 +193,6 @@
     radius: 2
     energy: 3
     color: "#06DF24"
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 6
 
 - type: entity
   parent: MobOreCrab
@@ -262,6 +258,8 @@
   components:
   - type: Sprite
     state: silver_crab
+    damage:
+        Blunt: 5
   - type: Destructible
     thresholds:
     - trigger:
@@ -287,6 +285,10 @@
   components:
   - type: Sprite
     state: gold_crab
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 5
   - type: Destructible
     thresholds:
     - trigger:
