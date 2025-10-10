@@ -41,7 +41,7 @@
     - type: PowerSink
     - type: Battery
       maxCharge: 250000000
-      pricePerJoule: 0.0000003
+      pricePerJoule: 0.000009
     - type: ExaminableBattery
     - type: PowerConsumer
       voltage: High
