@@ -2,7 +2,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Temperature;
+namespace Content.Shared.Temperature.HeatContainer;
 
 /// <summary>
 /// A general-purpose container for heat energy.
