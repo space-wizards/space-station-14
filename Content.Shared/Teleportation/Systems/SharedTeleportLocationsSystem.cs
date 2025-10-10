@@ -76,13 +76,22 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
         _ui.CloseUi(ent.Owner, TeleportLocationUiKey.Key);
     }
 
+    /// <remarks>
+    /// The result of this overload might be different between the client and server due to PVS.
+    /// </remarks>
     private MapCoordinates? ChooseSafeLocation(Entity<TransformComponent> targetEntity, int maxDistance)
     {
         // If the target point is on a grid, use that grid's rotation.
         var gridTransform = targetEntity.Comp.GridUid is { } grid
             ? Matrix3Helpers.CreateTransform(Vector2.Zero, _xform.GetWorldRotation(Transform(grid)))
             : Matrix3x2.Identity;
-        return ChooseSafeLocation(_xform.GetMapCoordinates(targetEntity), maxDistance, gridTransform);
+
+        var targetCoords = _xform.GetMapCoordinates(targetEntity);
+        // The entity might've left PVS on the client.
+        if (targetCoords.MapId == MapId.Nullspace)
+            return null;
+
+        return ChooseSafeLocation(targetCoords, maxDistance, gridTransform);
     }
 
     private MapCoordinates? ChooseSafeLocation(MapCoordinates targetCoords, int maxDistance, Matrix3x2 gridTransform)
