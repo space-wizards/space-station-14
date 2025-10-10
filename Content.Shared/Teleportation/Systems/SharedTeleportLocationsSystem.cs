@@ -1,7 +1,10 @@
-﻿using Content.Shared.Teleportation.Components;
+﻿using Content.Shared.Maths;
+using Content.Shared.Teleportation.Components;
 using Content.Shared.Timing;
 using Content.Shared.UserInterface;
 using Content.Shared.Warps;
+using Robust.Shared.Map;
+using System.Numerics;
 
 namespace Content.Shared.Teleportation.Systems;
 
@@ -12,6 +15,7 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
 {
     [Dependency] protected readonly UseDelaySystem Delay = default!;
 
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
 
@@ -42,11 +46,15 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
         var originEnt = args.Actor;
         var telePointXForm = Transform(telePointEnt.Value);
 
-        SpawnAtPosition(comp.TeleportEffect, Transform(originEnt).Coordinates);
+        if (ChooseSafeLocation((telePointEnt.Value, telePointXForm), maxDistance: 3) is not { } safeTargetMapCoords)
+            return;
 
-        _xform.SetMapCoordinates(originEnt, _xform.GetMapCoordinates(telePointEnt.Value, telePointXForm));
+        var originEntXForm = Transform(originEnt);
 
-        SpawnAtPosition(comp.TeleportEffect, telePointXForm.Coordinates);
+        SpawnAtPosition(comp.TeleportEffect, originEntXForm.Coordinates);
+
+        _xform.SetMapCoordinates(originEnt, safeTargetMapCoords);
+        SpawnAtPosition(comp.TeleportEffect, originEntXForm.Coordinates);
 
         Delay.TryResetDelay(ent.Owner, true, id: TeleportDelay);
 
@@ -55,5 +63,36 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
 
         // Teleport's done, now tell the BUI to close if needed.
         _ui.CloseUi(ent.Owner, TeleportLocationUiKey.Key);
+    }
+
+    private MapCoordinates? ChooseSafeLocation(Entity<TransformComponent> targetEntity, int maxDistance)
+    {
+        // If the target point is on a grid, use that grid's rotation.
+        var gridTransform = targetEntity.Comp.GridUid is { } grid
+            ? Matrix3Helpers.CreateTransform(Vector2.Zero, _xform.GetWorldRotation(Transform(grid)))
+            : Matrix3x2.Identity;
+        return ChooseSafeLocation(_xform.GetMapCoordinates(targetEntity), maxDistance, gridTransform);
+    }
+
+    private MapCoordinates? ChooseSafeLocation(MapCoordinates targetCoords, int maxDistance, Matrix3x2 gridTransform)
+    {
+        var maxAttempts = UlamSpiral.PointsForMaxDistance(maxDistance);
+        // Transforms an offset from the target entity into the final world space position.
+        var worldToGridSpacePlusTargetPos = gridTransform * Matrix3x2.CreateTranslation(targetCoords.Position);
+
+        for (var attempt = 0; attempt <= maxAttempts; attempt++)
+        {
+            var offset = UlamSpiral.Point(attempt);
+            var offsetWorldPos = Vector2.Transform(new Vector2(offset.X, offset.Y), worldToGridSpacePlusTargetPos);
+            var offsetCoords = new MapCoordinates(offsetWorldPos, targetCoords.MapId);
+
+            if (!_lookup.AnyEntitiesIntersecting(offsetCoords, LookupFlags.Static))
+            {
+                // Selected location is not inside a wall.
+                return offsetCoords;
+            }
+        }
+
+        return null;
     }
 }
