@@ -10,7 +10,6 @@ namespace Content.Shared.Item;
 [NetworkedComponent]
 public sealed partial class ItemVisualizerComponent : Component
 {
-
     [DataField]
     public Dictionary<HandLocation, List<PrototypeLayerData>> InhandVisuals = new();
 
@@ -19,5 +18,4 @@ public sealed partial class ItemVisualizerComponent : Component
 
     [DataField]
     public Dictionary<string, List<PrototypeLayerData>> ClothingVisuals = new();
-
 }

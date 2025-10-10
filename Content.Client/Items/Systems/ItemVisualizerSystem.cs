@@ -64,7 +64,6 @@ public sealed class ItemVisualizerSystem : EntitySystem
                 args.Layers.Add((layerKey, finalLayer));
             }
         }
-
     }
 
     private void OnGetHeldVisuals(Entity<ItemVisualizerComponent> ent, ref GetInhandVisualsEvent args)

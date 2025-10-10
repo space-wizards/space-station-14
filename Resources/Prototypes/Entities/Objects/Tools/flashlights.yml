@@ -34,11 +34,6 @@
           True: { visible: true }
           False: { visible: false }
   - type: ItemVisualizer
-    visuals:
-      enum.ToggleableVisuals.Enabled:
-        light:
-          True: { visible: true }
-          False: { visible: false }
     inhandVisuals:
       left:
       - state: inhand-left-light
