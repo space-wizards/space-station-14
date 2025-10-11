@@ -1,3 +1,9 @@
+# Head
+- type: loadout
+  id: AtmosphericTechnicianHardhatBlue
+  equipment:
+    head: ClothingHeadHatHardhatBlue
+
 # Jumpsuit
 - type: loadout
   id: AtmosphericTechnicianJumpsuit
