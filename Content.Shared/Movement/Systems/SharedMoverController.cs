@@ -10,6 +10,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Tag;
+using Content.Shared.Wieldable.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
@@ -346,6 +347,34 @@ public abstract partial class SharedMoverController : VirtualController
                 else
                 {
                     _audio.PlayPredicted(sound, uid, uid, audioParams);
+                }
+
+                // Play sounds for held items that has FootstepModifierComponent set to true
+                if (EntityManager.TryGetComponent(uid, out Content.Shared.Hands.Components.HandsComponent? hands))
+                {
+                    foreach (var (name, _) in hands.Hands)
+                    {
+                        if (!_container.TryGetContainer(uid, name, out var container))
+                            continue;
+
+                        if (container.ContainedEntities.Count == 0)
+                            continue;
+
+                        var heldEntity = container.ContainedEntities[0];
+
+                        // Skip if the item is wielded
+                        if (TryComp<WieldableComponent>(heldEntity, out var wieldable) && wieldable.Wielded)
+                            continue;
+
+                        var heldModifier = FootstepModifierQuery.CompOrNull(heldEntity);
+                        if (heldModifier == null || !heldModifier.PlayInHand || heldModifier.FootstepSoundCollection == null)
+                            continue;
+
+                        var heldParams = heldModifier.FootstepSoundCollection.Params
+                            .WithVolume(heldModifier.FootstepSoundCollection.Params.Volume)
+                            .WithVariation(heldModifier.FootstepSoundCollection.Params.Variation ?? mobMover.FootstepVariation);
+                        _audio.PlayPredicted(heldModifier.FootstepSoundCollection, uid, uid, heldParams);
+                    }
                 }
             }
         }
