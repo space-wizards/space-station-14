@@ -1,19 +1,18 @@
-using Content.Server.Atmos.EntitySystems;
-using Content.Server.Body.Components;
+using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
+using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Clothing;
 using Content.Shared.Inventory.Events;
-using BreathToolComponent = Content.Shared.Atmos.Components.BreathToolComponent;
-using InternalsComponent = Content.Shared.Body.Components.InternalsComponent;
 
-namespace Content.Server.Body.Systems;
+namespace Content.Shared.Body.Systems;
 
 public sealed class LungSystem : EntitySystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmos = default!;
-    [Dependency] private readonly InternalsSystem _internals = default!;
+    [Dependency] private readonly SharedAtmosphereSystem _atmos = default!;
+    [Dependency] private readonly SharedInternalsSystem _internals = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
     public static string LungSolutionName = "Lung";

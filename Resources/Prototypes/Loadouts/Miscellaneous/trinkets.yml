@@ -106,6 +106,31 @@
     - CigarGold
   groupBy: "smokeables"
 
+# Folders
+- type: loadout
+  id: BoxFolderBaseThreePapers
+  storage:
+    back:
+    - BoxFolderBaseThreePapers
+  groupBy: "folders"
+
+- type: loadout
+  id: BoxFolderPlasticClipboardThreePapers
+  storage:
+    back:
+    - BoxFolderPlasticClipboardThreePapers
+  groupBy: "folders"
+
+- type: loadout
+  id: BoxFolderClipboardThreePapers
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Command
+  storage:
+    back:
+    - BoxFolderClipboardThreePapers
+  groupBy: "folders"
+
 # Pins
 - type: loadout
   id: ClothingNeckLGBTPin
