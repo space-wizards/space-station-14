@@ -83,7 +83,7 @@
           !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
         mask:
-        - MachineMask
+        - Impassable
         layer:
         - MachineLayer
         density: 200
