@@ -50,7 +50,7 @@
   parent: ClothingOuterArmorBase
   id: ClothingOuterArmorBulletproof
   name: ballistic vest
-  description: A Type-III protective vest, its steel plates offer excellent protection against firearms. It has better coverage than typical vests, protecting the shoulders and groin.
+  description: A Type-III protective vest, its thick steel plates offer excellent protection against firearms.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/bulletproof.rsi
