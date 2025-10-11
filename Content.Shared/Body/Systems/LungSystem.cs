@@ -18,8 +18,6 @@ public sealed class LungSystem : EntitySystem
     [Dependency] private readonly SharedInternalsSystem _internals = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
-    public static string LungSolutionName = "Lung";
-
     public override void Initialize()
     {
         base.Initialize();

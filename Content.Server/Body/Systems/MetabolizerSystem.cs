@@ -36,7 +36,7 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
 
     private EntityQuery<OrganComponent> _organQuery;
     private EntityQuery<SolutionContainerManagerComponent> _solutionQuery;
-    private ProtoId<MetabolismGroupPrototype> _gas = "Gas";
+    private static readonly ProtoId<MetabolismGroupPrototype> Gas = "Gas";
 
     public override void Initialize()
     {
@@ -47,18 +47,12 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
 
         SubscribeLocalEvent<MetabolizerComponent, ComponentInit>(OnMetabolizerInit);
         SubscribeLocalEvent<MetabolizerComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<MetabolizerComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<MetabolizerComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
     }
 
     private void OnMapInit(Entity<MetabolizerComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.AdjustedUpdateInterval;
-    }
-
-    private void OnUnpaused(Entity<MetabolizerComponent> ent, ref EntityUnpausedEvent args)
-    {
-        ent.Comp.NextUpdate += args.PausedTime;
     }
 
     private void OnMetabolizerInit(Entity<MetabolizerComponent> entity, ref ComponentInit args)
@@ -185,7 +179,7 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
 
                 // TODO: This is a very stupid workaround to lungs heavily relying on scale = reagent quantity. Needs lung and metabolism refactors to remove.
                 // TODO: Lungs just need to have their scale be equal to the mols consumed, scale needs to be not hardcoded either and configurable per metabolizer...
-                if (group.Id != _gas)
+                if (group.Id != Gas)
                     scale /= (float) entry.MetabolismRate;
 
                 // if it's possible for them to be dead, and they are,
