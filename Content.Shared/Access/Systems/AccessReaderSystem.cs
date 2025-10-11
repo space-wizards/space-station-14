@@ -70,9 +70,10 @@ public sealed class AccessReaderSystem : EntitySystem
             }
         }
 
+        var examiner = args.Examiner;
         var canSeeAccessModification = accessHasBeenModified &&
-            (HasComp<ShowAccessReaderSettingsComponent>(ent) ||
-            _inventorySystem.TryGetInventoryEntity<ShowAccessReaderSettingsComponent>(args.Examiner, out _));
+                                       (HasComp<ShowAccessReaderSettingsComponent>(examiner) ||
+                                        _inventorySystem.TryGetInventoryEntity<ShowAccessReaderSettingsComponent>(examiner, out _));
 
         if (canSeeAccessModification)
         {
