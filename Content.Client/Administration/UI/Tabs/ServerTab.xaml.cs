@@ -34,15 +34,12 @@ namespace Content.Client.Administration.UI.Tabs
             SetLoocButton.Pressed = value;
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void ExitedTree()
         {
-            base.Dispose(disposing);
+            base.ExitedTree();
 
-            if (disposing)
-            {
-                _config.UnsubValueChanged(CCVars.OocEnabled, OocEnabledChanged);
-                _config.UnsubValueChanged(CCVars.LoocEnabled, LoocEnabledChanged);
-            }
+            _config.UnsubValueChanged(CCVars.OocEnabled, OocEnabledChanged);
+            _config.UnsubValueChanged(CCVars.LoocEnabled, LoocEnabledChanged);
         }
     }
 }
