@@ -148,7 +148,9 @@ public sealed partial class ParcelWrappingSystem
         bool parcelMaintainsWrappedShape = true
     )
     {
-        var spawned = PredictedSpawnAtPosition(parcelProto ?? DefaultWrappedParcel, Transform(toWrap).Coordinates);
+        var toWrapXform = Transform(toWrap);
+        var spawned = PredictedSpawnAtPosition(parcelProto ?? DefaultWrappedParcel, toWrapXform.Coordinates);
+        _transform.SetLocalRotation(spawned, toWrapXform.LocalRotation);
 
         // If this wrap maintains the size when wrapping, set the parcel's size to the target's size. Otherwise use the
         // wrap's fallback size.
@@ -179,14 +181,19 @@ public sealed partial class ParcelWrappingSystem
             _container.InsertOrDrop((spawned, null, null), containerOfTarget);
         }
 
-        // Insert the target into the parcel.
         var parcel = EnsureComp<WrappedParcelComponent>(spawned);
-        if (!_container.Insert(toWrap, parcel.Contents))
+        if (!IsClientSide(spawned))
         {
-            DebugTools.Assert(
-                $"Failed to insert target entity into newly spawned parcel. target={PrettyPrint.PrintUserFacing(toWrap)}");
-            QueueDel(spawned);
-            return null;
+            // Insert the target into the parcel.
+            // This can only be done on the server as the client-predicted parcel will be deleted, deleting the
+            // contained entity as well, desynchronizing the client's from the server's state.
+            if (!_container.Insert(toWrap, parcel.Contents))
+            {
+                DebugTools.Assert(
+                    $"Failed to insert target entity into newly spawned parcel. target={PrettyPrint.PrintUserFacing(toWrap)}");
+                QueueDel(spawned);
+                return null;
+            }
         }
 
         return (spawned, parcel);
