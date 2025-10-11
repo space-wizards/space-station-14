@@ -10,25 +10,25 @@ namespace Content.Client.FeedbackPopup;
 [GenerateTypedNameReferences]
 public sealed partial class FeedbackEntry : Control
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IUriOpener _uri = default!;
+    [Dependency] private readonly IPrototypeManager _proto = null!;
+    [Dependency] private readonly IUriOpener _uri = null!;
 
-    private readonly FeedbackPopupPrototype? _feedbackpopup;
+    private readonly FeedbackPopupPrototype? _prototype;
 
     public FeedbackEntry(ProtoId<FeedbackPopupPrototype> popupProto)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        _feedbackpopup = _proto.Index(popupProto);
+        _prototype = _proto.Index(popupProto);
 
         // Title
-        TitleLabel.Text = _feedbackpopup.Title;
-        DescriptionLabel.Text = _feedbackpopup.Description;
-        TypeLabel.Text = _feedbackpopup.ResponseType;
+        TitleLabel.Text = _prototype.Title;
+        DescriptionLabel.Text = _prototype.Description;
+        TypeLabel.Text = _prototype.ResponseType;
 
         // link button
-        if (!string.IsNullOrEmpty(_feedbackpopup.ResponseLink))
+        if (!string.IsNullOrEmpty(_prototype.ResponseLink))
         {
             LinkButton.OnPressed += OnButtonPressed;
         }
@@ -36,8 +36,8 @@ public sealed partial class FeedbackEntry : Control
 
     private void OnButtonPressed(BaseButton.ButtonEventArgs args)
     {
-        if (!string.IsNullOrWhiteSpace(_feedbackpopup?.ResponseLink))
-            _uri.OpenUri(_feedbackpopup.ResponseLink);
+        if (!string.IsNullOrWhiteSpace(_prototype?.ResponseLink))
+            _uri.OpenUri(_prototype.ResponseLink);
     }
 
     protected override void Resized()

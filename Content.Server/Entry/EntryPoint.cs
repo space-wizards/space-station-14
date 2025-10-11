@@ -23,6 +23,7 @@ using Content.Server.ServerInfo;
 using Content.Server.ServerUpdates;
 using Content.Server.Voting.Managers;
 using Content.Shared.CCVar;
+using Content.Shared.FeedbackSystem;
 using Content.Shared.Kitchen;
 using Content.Shared.Localizations;
 using Robust.Server;
@@ -76,6 +77,7 @@ namespace Content.Server.Entry
         [Dependency] private readonly ServerApi _serverApi = default!;
         [Dependency] private readonly ServerInfoManager _serverInfo = default!;
         [Dependency] private readonly ServerUpdateManager _updateManager = default!;
+        [Dependency] private readonly SharedFeedbackManager _feedbackManager = null!;
 
         public override void PreInit()
         {
@@ -165,6 +167,7 @@ namespace Content.Server.Entry
             _connection.PostInit();
             _multiServerKick.Initialize();
             _cvarCtrl.Initialize();
+            _feedbackManager.Initialize();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)
@@ -198,6 +201,7 @@ namespace Content.Server.Entry
                 _dbManager.Shutdown();
             }
 
+            _feedbackManager.Dispose();
             _serverApi.Shutdown();
 
             // TODO Should this be awaited?

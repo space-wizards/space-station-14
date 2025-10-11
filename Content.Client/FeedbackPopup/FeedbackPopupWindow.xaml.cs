@@ -14,15 +14,15 @@ public sealed partial class FeedbackPopupWindow : FancyWindow
         RobustXamlLoader.Load(this);
     }
 
-    public void Update(List<ProtoId<FeedbackPopupPrototype>> popupProtos)
+    public void Update(IReadOnlyCollection<ProtoId<FeedbackPopupPrototype>> prototypes)
     {
         NotificationContainer.RemoveAllChildren();
 
-        foreach (var proto in popupProtos)
+        foreach (var proto in prototypes)
         {
             NotificationContainer.AddChild(new FeedbackEntry(proto));
         }
 
-        NumNotifications.Text = Loc.GetString("feedbackpopup-control-total-surveys", ("num", popupProtos.Count));
+        NumNotifications.Text = Loc.GetString("feedbackpopup-control-total-surveys", ("num", prototypes.Count));
     }
 }

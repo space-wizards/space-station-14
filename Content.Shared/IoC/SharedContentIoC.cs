@@ -1,4 +1,5 @@
-﻿using Content.Shared.Humanoid.Markings;
+﻿using Content.Shared.FeedbackSystem;
+using Content.Shared.Humanoid.Markings;
 using Content.Shared.Localizations;
 
 namespace Content.Shared.IoC
@@ -9,6 +10,7 @@ namespace Content.Shared.IoC
         {
             deps.Register<MarkingManager, MarkingManager>();
             deps.Register<ContentLocalizationManager, ContentLocalizationManager>();
+            deps.Register<SharedFeedbackManager>();
         }
     }
 }

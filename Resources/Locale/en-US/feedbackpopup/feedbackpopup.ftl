@@ -9,6 +9,8 @@ feedbackpopup-control-total-surveys = {$num ->
 feedbackpopup-control-ui-footer = Let us know what you think!
 
 # Command strings
+command-description-showFeedbackPopup = Open the feedback popup window.
+
 feedbackpopup-give-command-name = givefeedbackpopup
 feedbackpopup-show-command-name = showfeedbackpopup
 cmd-givefeedbackpopup-desc = Gives the targeted player a feedback popup.
