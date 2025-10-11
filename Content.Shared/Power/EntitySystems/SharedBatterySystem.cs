@@ -41,4 +41,10 @@ public abstract class SharedBatterySystem : EntitySystem
     {
         return false;
     }
+
+    public void TransferCharge(Entity<BatteryComponent> charger, Entity<BatteryComponent> target, float amount)
+    {
+        ChangeCharge(charger, -amount, charger.Comp);
+        ChangeCharge(target, amount, target.Comp);
+    }
 }
