@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Simyon
-  changes:
-  - message: Capacitors and Matter bins have been combined into the Manipulator.
-    type: Remove
-  id: 8574
-  time: '2025-05-27T11:47:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37725
 - author: PicklOH
   changes:
   - message: Gas Pipes are now named as such in the construction menu.
@@ -3947,3 +3940,10 @@
   id: 9076
   time: '2025-10-11T21:46:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40837
+- author: cloudyias
+  changes:
+  - message: Added the ability for droppers to be printed via autolathes and medfabs
+    type: Add
+  id: 9077
+  time: '2025-10-11T23:15:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40074
