@@ -12,9 +12,9 @@ namespace Content.Shared.EntityConditions.Conditions;
 /// Returns true if this entity has any of the specified jobs. False if the entity has no mind, none of the specified jobs, or is jobless.
 /// </summary>
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
-public sealed partial class HasJobEntityConditionSystem : EntityConditionSystem<MindContainerComponent, HasJob>
+public sealed partial class HasJobEntityConditionSystem : EntityConditionSystem<MindContainerComponent, JobCondition>
 {
-    protected override void Condition(Entity<MindContainerComponent> entity, ref EntityConditionEvent<HasJob> args)
+    protected override void Condition(Entity<MindContainerComponent> entity, ref EntityConditionEvent<JobCondition> args)
     {
         // We need a mind in our mind container...
         if (!TryComp<MindComponent>(entity.Comp.Mind, out var mind))
@@ -47,7 +47,7 @@ public sealed partial class HasJobEntityConditionSystem : EntityConditionSystem<
 }
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class HasJob : EntityConditionBase<HasJob>
+public sealed partial class JobCondition : EntityConditionBase<JobCondition>
 {
     [DataField(required: true)] public List<ProtoId<JobPrototype>> Jobs = [];
 

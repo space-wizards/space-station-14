@@ -158,7 +158,7 @@
       effects:
       - !type:Vomit
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: SodiumHydroxide
           min: 5
         probability: 0.1

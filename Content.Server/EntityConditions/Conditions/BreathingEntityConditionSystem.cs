@@ -9,10 +9,10 @@ namespace Content.Server.EntityConditions.Conditions;
 /// Returns true if this entity is both able to breathe and is currently breathing.
 /// </summary>
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
-public sealed partial class IsBreathingEntityConditionSystem : EntityConditionSystem<RespiratorComponent, IsBreathing>
+public sealed partial class IsBreathingEntityConditionSystem : EntityConditionSystem<RespiratorComponent, BreathingCondition>
 {
     [Dependency] private readonly RespiratorSystem _respirator = default!;
-    protected override void Condition(Entity<RespiratorComponent> entity, ref EntityConditionEvent<IsBreathing> args)
+    protected override void Condition(Entity<RespiratorComponent> entity, ref EntityConditionEvent<BreathingCondition> args)
     {
         args.Result = _respirator.IsBreathing(entity.AsNullable());
     }

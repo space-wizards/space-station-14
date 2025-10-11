@@ -63,7 +63,7 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:MetabolizerType
+        - !type:MetabolizerTypeCondition
           type: [ Arachnid ]
           inverted: true
         damage:
@@ -73,7 +73,7 @@
       effects:
       - !type:ModifyBloodLevel
         conditions:
-        - !type:MetabolizerType
+        - !type:MetabolizerTypeCondition
           type: [ Arachnid ]
         amount: 0.4
 
@@ -153,7 +153,7 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:MetabolizerType
+        - !type:MetabolizerTypeCondition
           type: [ Arachnid ]
         damage:
           types:
@@ -162,7 +162,7 @@
       effects:
       - !type:ModifyBloodLevel
         conditions:
-        - !type:MetabolizerType
+        - !type:MetabolizerTypeCondition
           type: [ Arachnid ]
           inverted: true
         amount: 0.4

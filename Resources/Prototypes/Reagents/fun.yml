@@ -21,7 +21,7 @@
       # Hail the madman logic, if it has CARP, means it helps against CARPs
       - !type:AdjustReagent
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: CarpoToxin
           min: 1
         reagent: CarpoToxin
@@ -39,7 +39,7 @@
       effects:
       - !type:SatiateHunger
         conditions:
-        - !type:MetabolizerType
+        - !type:MetabolizerTypeCondition
           type: [ Moth ]
 
 - type: reagent
@@ -75,10 +75,10 @@
         - "buzzochloricbees-effect-squeaky-clean"
         probability: 0.1
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           max: 0
           reagent: Histamine
-        - !type:HasTag
+        - !type:TagCondition
           inverted: true
           tag: Bee
       - !type:PopupMessage
@@ -92,10 +92,10 @@
           - "buzzochloricbees-effect-squeaky-clean"
         probability: 0.05
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           min: 0.01
           reagent: Histamine
-        - !type:HasTag
+        - !type:TagCondition
           inverted: true
           tag: Bee
       - !type:PopupMessage
@@ -108,10 +108,10 @@
           - "buzzochloricbees-effect-licoxide-buzzes"
         probability: 0.05
         conditions:
-        - !type:HasTag
+        - !type:TagCondition
           inverted: true
           tag: Bee
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           min: 0.01
           reagent: Licoxide
       - !type:PopupMessage
@@ -121,10 +121,10 @@
           - "buzzochloricbees-effect-fiber-soft"
         probability: 0.05
         conditions:
-        - !type:HasTag
+        - !type:TagCondition
           inverted: true
           tag: Bee
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           min: 0.01
           reagent: Fiber
       - !type:HealthChange
@@ -133,7 +133,7 @@
             Poison: 2
             Piercing: 2
         conditions:
-        - !type:HasTag
+        - !type:TagCondition
           inverted: true
           tag: Bee
 
@@ -240,7 +240,7 @@
             Cold: 0.05
       - !type:AdjustTemperature
         conditions:
-        - !type:Temperature
+        - !type:TemperatureCondition
           min: 160.15
         amount: -30000
     Extinguish:
@@ -258,7 +258,7 @@
              Heat: -3 # ghetto burn chem. i don't think anyone would use this intentionally but it's funny
       - !type:PopupMessage
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Fresium
           max: 35
         type: Local
@@ -267,7 +267,7 @@
         probability: 0.05
       - !type:PopupMessage
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Fresium
           max: 35
         type: Local
@@ -276,26 +276,26 @@
         probability: 0.2
       - !type:AdjustTemperature
         conditions:
-        - !type:Temperature
+        - !type:TemperatureCondition
           min: 160.15 # not quite enough for cryo, but can speed it up if you wanna take the risk
         amount: -10000
       - !type:MovementSpeedModifier
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Fresium
           max: 40 # slows when less than 40
         walkSpeedModifier: 0.6
         sprintSpeedModifier: 0.6
       - !type:MovementSpeedModifier
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Fresium
           min: 40 # your legs stop working when above 40
         walkSpeedModifier: 0.00
         sprintSpeedModifier: 0.00
       - !type:PopupMessage
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Fresium
           min: 40
         type: Local
@@ -347,17 +347,17 @@
       - !type:Polymorph
         prototype: ArtifactLizard # Does the same thing as the original YML I made for this reagent.
         conditions:
-        - !type:MetabolizerType
+        - !type:MetabolizerTypeCondition
           type: [Animal]
           inverted: true
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: JuiceThatMakesYouWeh
           min: 50
       - !type:AdjustReagent
         reagent: JuiceThatMakesYouWeh
         amount: -20
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: JuiceThatMakesYouWeh
           min: 50
 
@@ -382,17 +382,17 @@
       - !type:Polymorph
         prototype: ArtifactLizard
         conditions:
-        - !type:MetabolizerType
+        - !type:MetabolizerTypeCondition
           type: [ Animal ]
           inverted: true
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: JuiceThatMakesYouHew
           min: 50
       - !type:AdjustReagent
         reagent: JuiceThatMakesYouHew
         amount: -20
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: JuiceThatMakesYouHew
           min: 50
 
@@ -410,7 +410,7 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: CorgiJuice
           min: 15
         damage:
@@ -419,13 +419,13 @@
       - !type:Polymorph
         prototype: SmartCorgiMorph
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: CorgiJuice
           min: 50
       - !type:AdjustReagent
         reagent: CorgiJuice
         amount: -20
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: CorgiJuice
           min: 50

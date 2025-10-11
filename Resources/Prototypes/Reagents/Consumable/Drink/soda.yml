@@ -274,7 +274,7 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:MetabolizerType
+        - !type:MetabolizerTypeCondition
           type: [Slime]
           inverted: true
         damage:

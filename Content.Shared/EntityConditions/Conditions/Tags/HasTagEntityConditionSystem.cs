@@ -7,18 +7,18 @@ namespace Content.Shared.EntityConditions.Conditions.Tags;
 /// Returns true if this entity has the listed tag.
 /// </summary>
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
-public sealed partial class HasTagEntityConditionSystem : EntityConditionSystem<TagComponent, HasTag>
+public sealed partial class HasTagEntityConditionSystem : EntityConditionSystem<TagComponent, TagCondition>
 {
     [Dependency] private readonly TagSystem _tag = default!;
 
-    protected override void Condition(Entity<TagComponent> entity, ref EntityConditionEvent<HasTag> args)
+    protected override void Condition(Entity<TagComponent> entity, ref EntityConditionEvent<TagCondition> args)
     {
         args.Result = _tag.HasTag(entity.Comp, args.Condition.Tag);
     }
 }
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class HasTag : EntityConditionBase<HasTag>
+public sealed partial class TagCondition : EntityConditionBase<TagCondition>
 {
     [DataField(required: true)]
     public ProtoId<TagPrototype> Tag;

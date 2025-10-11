@@ -9,18 +9,13 @@ namespace Content.Server.EntityConditions.Conditions;
 /// Returns true if this entity has any of the listed metabolizer types.
 /// </summary>
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
-public sealed partial class MetabolizerTypeEntityConditionSystem : EntityConditionSystem<MetabolizerComponent, MetabolizerType>
+public sealed partial class MetabolizerTypeEntityConditionSystem : EntityConditionSystem<MetabolizerComponent, MetabolizerTypeCondition>
 {
-    protected override void Condition(Entity<MetabolizerComponent> entity, ref EntityConditionEvent<MetabolizerType> args)
+    protected override void Condition(Entity<MetabolizerComponent> entity, ref EntityConditionEvent<MetabolizerTypeCondition> args)
     {
         if (entity.Comp.MetabolizerTypes == null)
             return;
 
-        var intersect = entity.Comp.MetabolizerTypes.Intersect(args.Condition.Type);
-
-        if (!intersect.Any())
-            return;
-
-        args.Result = true;
+        args.Result = entity.Comp.MetabolizerTypes.Overlaps(args.Condition.Type);
     }
 }

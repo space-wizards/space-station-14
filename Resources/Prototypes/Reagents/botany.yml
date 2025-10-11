@@ -14,7 +14,7 @@
       effects:
       - !type:SatiateHunger
         conditions:
-        - !type:MetabolizerType
+        - !type:MetabolizerTypeCondition
           type: [Plant]
 
 - type: reagent
@@ -38,14 +38,14 @@
       effects:
       - !type:SatiateHunger
         conditions:
-        - !type:MetabolizerType
+        - !type:MetabolizerTypeCondition
           type: [Plant]
       - !type:HealthChange
         damage:
           types:
             Poison: 1
         conditions:
-        - !type:MetabolizerType
+        - !type:MetabolizerTypeCondition
           type: [Plant]
 
 - type: reagent
@@ -69,7 +69,7 @@
           types:
             Poison: 3
         conditions:
-        - !type:MetabolizerType
+        - !type:MetabolizerTypeCondition
           type: [Plant]
 
 - type: reagent
@@ -100,7 +100,7 @@
             Slash: 1
             Piercing: 1
         conditions:
-        - !type:MetabolizerType
+        - !type:MetabolizerTypeCondition
           type: [Plant]
 
 - type: reagent
@@ -132,13 +132,13 @@
             Slash: -3
             Piercing: -3
         conditions:
-        - !type:MetabolizerType
+        - !type:MetabolizerTypeCondition
           type: [Plant]
       - !type:HealthChange
         conditions:
-        - !type:MetabolizerType
+        - !type:MetabolizerTypeCondition
           type: [Plant]
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: RobustHarvest
           min: 30
         damage:
@@ -151,9 +151,9 @@
       - !type:Polymorph
         prototype: TreeMorph
         conditions:
-          - !type:MetabolizerType
+          - !type:MetabolizerTypeCondition
             type: [Plant]
-          - !type:ReagentThreshold
+          - !type:ReagentCondition
             reagent: RobustHarvest
             min: 80
 
@@ -194,7 +194,7 @@
           types:
             Poison: 4
         conditions:
-        - !type:MetabolizerType
+        - !type:MetabolizerTypeCondition
           type: [Plant]
 
 - type: reagent
@@ -223,10 +223,10 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:MetabolizerType
+        - !type:MetabolizerTypeCondition
           type: [ Rat ]
           inverted: true
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Ammonia
           min: 1
         ignoreResistances: true
@@ -236,10 +236,10 @@
       - !type:Vomit
         probability: 0.12
         conditions:
-        - !type:MetabolizerType
+        - !type:MetabolizerTypeCondition
           type: [ Rat, Vox ]
           inverted: true
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Ammonia
           min: 0.8
       - !type:PopupMessage
@@ -248,14 +248,14 @@
         messages: [ "ammonia-smell" ]
         probability: 0.1
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Ammonia
           min: 0.25
       - !type:HealthChange
         conditions:
-        - !type:MetabolizerType
+        - !type:MetabolizerTypeCondition
           type: [ Rat ]
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Ammonia
           min: 1
         scaling: true
@@ -268,7 +268,7 @@
             Bloodloss: -5
       - !type:Oxygenate # ammonia displaces nitrogen in vox blood
         conditions:
-        - !type:MetabolizerType
+        - !type:MetabolizerTypeCondition
           type: [ Vox ]
         factor: -4
 

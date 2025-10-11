@@ -59,7 +59,7 @@
       effects:
       - !type:Vomit
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: SoapReagent
           min: 6
         probability: 0.20
@@ -67,7 +67,7 @@
       effects:
       - !type:Vomit
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: SoapReagent
           min: 6
         probability: 0.20

@@ -456,7 +456,7 @@
         scaling: true
         ignoreResistances: true
         conditions:
-        - !type:MetabolizerType
+        - !type:MetabolizerTypeCondition
           type: [ Slime ]
         damage:
           types:

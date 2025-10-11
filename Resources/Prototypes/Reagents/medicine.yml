@@ -35,7 +35,7 @@
             Poison: -1
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Dylovene
           min: 20
         damage:
@@ -43,12 +43,12 @@
             Brute: 2
       - !type:Jitter
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Dylovene
           min: 20
       - !type:PopupMessage
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Dylovene
           min: 20
         type: Local
@@ -57,13 +57,13 @@
         probability: 0.2
       - !type:Vomit
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Dylovene
           min: 20
         probability: 0.02
       - !type:Drunk
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Dylovene
           min: 15
   plantMetabolism:
@@ -153,7 +153,7 @@
           Brute: -1.5
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Bicaridine
           min: 15
         damage:
@@ -162,13 +162,13 @@
             Poison: 1.5
       - !type:Vomit
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Bicaridine
           min: 30
         probability: 0.02
       - !type:Jitter
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Bicaridine
           min: 15
       - !type:Drunk
@@ -192,7 +192,7 @@
       effects:
         - !type:HealthChange
           conditions:
-          - !type:Temperature
+          - !type:TemperatureCondition
             # this is a little arbitrary but they gotta be pretty cold
             max: 213.0
           damage:
@@ -216,7 +216,7 @@
       effects:
         - !type:HealthChange
           conditions:
-          - !type:Temperature
+          - !type:TemperatureCondition
             max: 213.0
           damage:
             types:
@@ -241,7 +241,7 @@
             Cold: -1.5
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Dermaline
           min: 10
         damage:
@@ -252,7 +252,7 @@
             Brute: 0.5
       - !type:Jitter
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Dermaline
           min: 10
 
@@ -274,7 +274,7 @@
             Bloodloss: -0.5
       - !type:HealthChange
         conditions:
-          - !type:ReagentThreshold
+          - !type:ReagentCondition
             reagent: Dexalin
             min: 20
         damage:
@@ -300,14 +300,14 @@
             Bloodloss: -3
       - !type:AdjustReagent
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: HeartbreakerToxin
           min: 1
         reagent: HeartbreakerToxin
         amount: -3
       - !type:HealthChange
         conditions:
-          - !type:ReagentThreshold
+          - !type:ReagentCondition
             reagent: DexalinPlus
             min: 25
         damage:
@@ -329,7 +329,7 @@
       effects:
       - !type:AdjustReagent
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Histamine
           min: 45
         reagent: Histamine
@@ -337,9 +337,9 @@
       - !type:HealthChange
         conditions:
           # they gotta be in crit first
-        - !type:IsMobState
+        - !type:MobStateCondition
           mobstate: Critical
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Epinephrine
           max: 20
         damage:
@@ -351,7 +351,7 @@
             Burn: -0.5
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Epinephrine
           min: 20
         damage:
@@ -363,7 +363,7 @@
         amount: -2
       - !type:AdjustReagent
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: HeartbreakerToxin
           min: 1
         reagent: Epinephrine
@@ -371,7 +371,7 @@
       - !type:AdjustReagent
         probability: 0.1
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: HeartbreakerToxin
           min: 1
         reagent: Histamine
@@ -407,7 +407,7 @@
         probability: 0.02
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Hyronalin
           min: 30
         damage:
@@ -415,7 +415,7 @@
            Heat: 2
       - !type:Jitter
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Hyronalin
           min: 30
 
@@ -434,7 +434,7 @@
       effects:
       - !type:Vomit
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Ipecac
           min: 4
         probability: 0.3
@@ -454,7 +454,7 @@
       - !type:HealthChange
         conditions:
           # they gotta be in crit first
-        - !type:IsMobState
+        - !type:MobStateCondition
           mobstate: Critical
         damage:
           types:
@@ -482,7 +482,7 @@
       - !type:SatiateThirst
         factor: -10
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Kelotane
           min: 30
       - !type:PopupMessage
@@ -493,7 +493,7 @@
         - generic-reagent-effect-parched
         probability: 0.1
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Kelotane
           min: 25
 
@@ -514,12 +514,12 @@
             Cold: -4
       - !type:AdjustTemperature
         conditions:
-        - !type:Temperature
+        - !type:TemperatureCondition
           max: 293.15
         amount: 100000 # thermal energy, not temperature!
       - !type:AdjustTemperature
         conditions:
-        - !type:Temperature
+        - !type:TemperatureCondition
           min: 293.15
         amount: -10000
       - !type:PopupMessage
@@ -549,7 +549,7 @@
             Heat: 0.5
       - !type:HealthChange
         conditions:
-          - !type:ReagentThreshold
+          - !type:ReagentCondition
             reagent: Barozine
             min: 30
         damage:
@@ -558,7 +558,7 @@
       - !type:Vomit
         probability: 0.15
         conditions:
-          - !type:ReagentThreshold
+          - !type:ReagentCondition
             reagent: Barozine
             min: 30
       - !type:GenericStatusEffect
@@ -590,7 +590,7 @@
       amount: 6
     - !type:PlantPhalanximine
       conditions:
-      - !type:ReagentThreshold
+      - !type:ReagentCondition
         reagent: Phalanximine
         min: 4
   metabolisms:
@@ -605,7 +605,7 @@
             Caustic: 0.15
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Phalanximine
           min: 11
         damage:
@@ -613,7 +613,7 @@
             Radiation: 0.2
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Arithrazine
           min: 1
         damage:
@@ -639,7 +639,7 @@
             Asphyxiation: -2.5
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: PolypyryliumOligomers
           min: 30
         damage:
@@ -661,7 +661,7 @@
       effects:
         - !type:CureZombieInfection
           conditions:
-            - !type:ReagentThreshold
+            - !type:ReagentCondition
               reagent: Ambuzol
               min: 10
 
@@ -679,7 +679,7 @@
         - !type:CureZombieInfection
           innoculate: true
           conditions:
-            - !type:ReagentThreshold
+            - !type:ReagentCondition
               reagent: AmbuzolPlus
               min: 5
 
@@ -746,7 +746,7 @@
             Poison: -4
       - !type:AdjustReagent
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Amatoxin
           min: 1
         reagent: Amatoxin
@@ -796,7 +796,7 @@
         amount: -1.5
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: TranexamicAcid
           min: 15
         damage:
@@ -816,7 +816,7 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:TotalDamage
+        - !type:TotalDamageCondition
           max: 50
         damage:
           groups:
@@ -876,7 +876,7 @@
       effects:
       - !type:EvenHealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Ultravasculine
           min: 0
           max: 20
@@ -884,7 +884,7 @@
           Toxin: -6
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Ultravasculine
           min: 0
           max: 20
@@ -893,14 +893,14 @@
             Brute: 1.5
       - !type:EvenHealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Ultravasculine
           min: 20
         damage:
           Toxin: -2
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Ultravasculine
           min: 20
         damage:
@@ -908,14 +908,14 @@
             Brute: 6
       - !type:AdjustReagent
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Histamine
           min: 1
         reagent: Histamine
         amount: -1
       - !type:AdjustReagent
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Histamine
           min: 1
         reagent: Ultravasculine
@@ -947,7 +947,7 @@
       effects:
       - !type:MakeSentient
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Cognizine
           min: 5
 
@@ -972,7 +972,7 @@
         type: Remove
       - !type:ResetNarcolepsy
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Ethyloxyephedrine
           min: 10
       - !type:PopupMessage
@@ -998,7 +998,7 @@
         type: Remove
       - !type:ResetNarcolepsy
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Diphenylmethylamine
           min: 5
       - !type:PopupMessage
@@ -1025,7 +1025,7 @@
             Caustic: -1.25 # 5 per u
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Sigynate
           min: 16
         damage:
@@ -1033,12 +1033,12 @@
             Heat: 1 # 4 per u
       - !type:Jitter
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Sigynate
           min: 20
       - !type:PopupMessage
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Sigynate
           min: 20
         type: Local
@@ -1047,19 +1047,19 @@
         probability: 0.2
       - !type:Vomit
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Sigynate
           min: 30
         probability: 0.02
       - !type:Vomit
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Arithrazine
           min: 1
         probability: 0.1
       - !type:PopupMessage
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Arithrazine
           min: 1
         type: Local
@@ -1086,7 +1086,7 @@
             Heat: 0.2 # 0.8 per u
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Lacerinol
           min: 12
         damage:
@@ -1112,7 +1112,7 @@
             Radiation: 0.05 # 0.2 per u, 3 for 15u
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Puncturase
           min: 12
         damage:
@@ -1139,7 +1139,7 @@
         factor: -1
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Bruizine
           min: 10.5
         damage:
@@ -1162,7 +1162,7 @@
         factor: 3
       - !type:HealthChange
         conditions:
-        - !type:TotalDamage
+        - !type:TotalDamageCondition
           max: 50
         damage:
           types:
@@ -1210,7 +1210,7 @@
       # od causes massive bleeding
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Pyrazine
           min: 20
         damage:
@@ -1219,13 +1219,13 @@
             Piercing: 0.5
       - !type:Vomit
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Pyrazine
           min: 15
         probability: 0.1
       - !type:Emote
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Pyrazine
           min: 20
         emote: Scream
@@ -1260,7 +1260,7 @@
       # od makes you freeze to death
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Insuzine
           min: 12
         damage:
@@ -1268,13 +1268,13 @@
             Cold: 1 # 4 per u
       - !type:AdjustTemperature
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Insuzine
           min: 12
         amount: -30000
       - !type:Jitter
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Insuzine
           min: 12
 
@@ -1294,9 +1294,9 @@
           seconds: 20
           conditions:
           #Patient must be dead and in a cryo tube (or something cold)
-          - !type:Temperature
+          - !type:TemperatureCondition
             max: 150.0
-          - !type:IsMobState
+          - !type:MobStateCondition
             mobstate: Dead
 
 - type: reagent
@@ -1319,7 +1319,7 @@
       effects:
         - !type:HealthChange
           conditions:
-          - !type:Temperature
+          - !type:TemperatureCondition
             max: 213.0
           damage:
             groups:
@@ -1342,7 +1342,7 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:Temperature
+        - !type:TemperatureCondition
           max: 213.0
         damage:
           types:
@@ -1364,7 +1364,7 @@
       effects:
       - !type:PopupMessage
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Mannitol
           min: 15
         type: Local
@@ -1385,7 +1385,7 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Psicodine
           min: 30
         damage:
@@ -1394,7 +1394,7 @@
       - !type:ModifyStatusEffect
         effectProto: StatusEffectSeeingRainbow
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Psicodine
           min: 30
         type: Add
@@ -1434,7 +1434,7 @@
         type: Add
       - !type:HealthChange
         conditions:
-          - !type:ReagentThreshold
+          - !type:ReagentCondition
             reagent: PotassiumIodide
             min: 20
         damage:

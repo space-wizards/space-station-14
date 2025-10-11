@@ -8,11 +8,11 @@ namespace Content.Shared.EntityConditions.Conditions.Body;
 /// Returns true if this entity's hunger is within a specified minimum and maximum.
 /// </summary>
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
-public sealed partial class TotalHungerEntityConditionSystem : EntityConditionSystem<HungerComponent, TotalHunger>
+public sealed partial class TotalHungerEntityConditionSystem : EntityConditionSystem<HungerComponent, HungerCondition>
 {
     [Dependency] private readonly HungerSystem _hunger = default!;
 
-    protected override void Condition(Entity<HungerComponent> entity, ref EntityConditionEvent<TotalHunger> args)
+    protected override void Condition(Entity<HungerComponent> entity, ref EntityConditionEvent<HungerCondition> args)
     {
         var total = _hunger.GetHunger(entity.Comp);
         args.Result = total >= args.Condition.Min && total <= args.Condition.Max;
@@ -20,7 +20,7 @@ public sealed partial class TotalHungerEntityConditionSystem : EntityConditionSy
 }
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class TotalHunger : EntityConditionBase<TotalHunger>
+public sealed partial class HungerCondition : EntityConditionBase<HungerCondition>
 {
     [DataField]
     public float Min;

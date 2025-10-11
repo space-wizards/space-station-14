@@ -19,7 +19,6 @@ public sealed class LungSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
     public static string LungSolutionName = "Lung";
-    public static ProtoId<MetabolismGroupPrototype> GasPrototype = "Gas";
 
     public override void Initialize()
     {

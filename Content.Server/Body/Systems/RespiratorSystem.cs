@@ -351,7 +351,7 @@ public sealed class RespiratorSystem : EntitySystem
             // TODO: Use Metabolism Public API to do this instead, once that API has been built.
             foreach (var cond in effect.Conditions)
             {
-                if (cond is MetabolizerType organ && !_entityConditions.TryCondition(lung, organ))
+                if (cond is MetabolizerTypeCondition organ && !_entityConditions.TryCondition(lung, organ))
                     return false;
             }
 

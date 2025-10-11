@@ -18,7 +18,7 @@
             Poison: 0.75
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Desoxyephedrine
           min: 30
         damage:
@@ -43,7 +43,7 @@
         type: Remove
       - !type:ModifyStatusEffect
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Haloperidol
           max: 0.01
         effectProto: StatusEffectDrowsiness
@@ -53,7 +53,7 @@
       effects:
       - !type:ResetNarcolepsy
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Desoxyephedrine
           min: 20
 
@@ -76,7 +76,7 @@
         sprintSpeedModifier: 1.25
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Ephedrine
           min: 20
         damage:
@@ -93,7 +93,7 @@
         type: Remove
       - !type:ModifyStatusEffect
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Haloperidol
           max: 0.01
         effectProto: StatusEffectDrowsiness
@@ -108,7 +108,7 @@
       effects:
       - !type:ResetNarcolepsy
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Ephedrine
           min: 30
 
@@ -132,7 +132,7 @@
         sprintSpeedModifier: 1.3
       - !type:HealthChange
         conditions:
-          - !type:ReagentThreshold
+          - !type:ReagentCondition
             reagent: Stimulants
             min: 80 #please wait 3 minutes before using another stimpack
         damage:
@@ -140,7 +140,7 @@
             Poison: 1
       - !type:AdjustReagent
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: ChloralHydrate
           min: 1
         reagent: ChloralHydrate
@@ -162,7 +162,7 @@
         type: Remove
       - !type:ModifyStatusEffect
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Haloperidol
           max: 0.01
         effectProto: StatusEffectDrowsiness
@@ -178,7 +178,7 @@
           factor: 1
         - !type:HealthChange
           conditions:
-          - !type:TotalDamage
+          - !type:TotalDamageCondition
             min: 70 # only heals when you're more dead than alive
           damage: # heals at the same rate as tricordrazine, doesn't heal poison because if you OD'd I'm not giving you a safety net
             groups:
@@ -299,7 +299,7 @@
         sprintSpeedModifier: 0.65
       - !type:ModifyStatusEffect
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Nocturine
           min: 8
         effectProto: StatusEffectForcedSleeping
@@ -359,7 +359,7 @@
         - norepinephricacid-effect-darkness
         - norepinephricacid-effect-blindness
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: NorepinephricAcid
           min: 20
         probability: 0.03
@@ -368,7 +368,7 @@
         key: TemporaryBlindness
         component: TemporaryBlindness
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: NorepinephricAcid
           min: 20
 
@@ -411,7 +411,7 @@
         emote: Scream
         probability: 0.08
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: TearGas
           min: 4
       - !type:Emote
@@ -421,7 +421,7 @@
         key: TemporaryBlindness
         component: TemporaryBlindness
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: TearGas
           min: 4
       - !type:MovementSpeedModifier
@@ -429,7 +429,7 @@
         sprintSpeedModifier: 0.65
         time: 1.5
         conditions: # because of the remainding after effect, threshold is given so the effects ends simultaniously
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: TearGas
           min: 4
 
@@ -449,7 +449,7 @@
         showInChat: true
         probability: 0.1
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Happiness
           max: 20
       - !type:Emote
@@ -457,7 +457,7 @@
         showInChat: true
         probability: 0.1
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Happiness
           max: 20
       - !type:Emote
@@ -465,7 +465,7 @@
         showInChat: true
         probability: 0.1
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Happiness
           min: 20
       - !type:PopupMessage # we dont have sanity/mood so this will have to do
@@ -477,7 +477,7 @@
         - "psicodine-effect-at-peace"
         probability: 0.2
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Happiness
           max: 20
       - !type:ModifyStatusEffect
