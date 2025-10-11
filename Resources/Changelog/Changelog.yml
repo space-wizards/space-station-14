@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: AsnDen
-  changes:
-  - message: Tile-aligned bar sign version was added.
-    type: Add
-  - message: Bar signs now have proper collision.
-    type: Fix
-  id: 8566
-  time: '2025-05-25T18:36:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37756
 - author: Fildrance
   changes:
   - message: Spray nozzle now can consume liquids from puddles and put it right into
@@ -3952,3 +3943,11 @@
   id: 9068
   time: '2025-10-11T00:20:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40149
+- author: slarticodefast
+  changes:
+  - message: The artifact analysis console no longer breaks when trying to link it
+      to multiple artifact analyzers or vice versa.
+    type: Fix
+  id: 9069
+  time: '2025-10-11T00:33:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39984
