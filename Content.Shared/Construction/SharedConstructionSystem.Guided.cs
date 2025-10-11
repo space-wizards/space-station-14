@@ -1,35 +1,20 @@
-using Content.Server.Construction.Components;
-using Content.Shared.Construction;
+using Content.Shared.Construction.Components;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Examine;
-using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Construction
+namespace Content.Shared.Construction
 {
-    public sealed partial class ConstructionSystem
+    public abstract partial class SharedConstructionSystem
     {
-        [Dependency] private readonly SharedPopupSystem _popup = default!;
-
         private readonly Dictionary<ConstructionPrototype, ConstructionGuide> _guideCache = new();
 
         private void InitializeGuided()
         {
-            SubscribeNetworkEvent<RequestConstructionGuide>(OnGuideRequested);
             SubscribeLocalEvent<ConstructionComponent, GetVerbsEvent<Verb>>(AddDeconstructVerb);
             SubscribeLocalEvent<ConstructionComponent, ExaminedEvent>(HandleConstructionExamined);
-        }
-
-        private void OnGuideRequested(RequestConstructionGuide msg, EntitySessionEventArgs args)
-        {
-            if (!PrototypeManager.TryIndex(msg.ConstructionId, out ConstructionPrototype? prototype))
-                return;
-
-            if(GetGuide(prototype) is {} guide)
-                RaiseNetworkEvent(new ResponseConstructionGuide(msg.ConstructionId, guide), args.SenderSession.Channel);
         }
 
         private void AddDeconstructVerb(EntityUid uid, ConstructionComponent component, GetVerbsEvent<Verb> args)
@@ -66,11 +51,11 @@ namespace Content.Server.Construction
                 if (component.TargetNode == null)
                 {
                     // Maybe check, but on the flip-side a better solution might be to not make it undeconstructible in the first place, no?
-                    _popup.PopupEntity(Loc.GetString("deconstructible-verb-activate-no-target-text"), uid, uid);
+                    Popup.PopupClient(Loc.GetString("deconstructible-verb-activate-no-target-text"), uid);
                 }
                 else
                 {
-                    _popup.PopupEntity(Loc.GetString("deconstructible-verb-activate-text"), args.User, args.User);
+                    Popup.PopupClient(Loc.GetString("deconstructible-verb-activate-text"), args.User);
                 }
             };
 
@@ -122,7 +107,6 @@ namespace Content.Server.Construction
                         edge.Steps[component.StepIndex].DoExamine(args);
                 }
             }
-
         }
 
 
@@ -134,7 +118,7 @@ namespace Content.Server.Construction
         ///                            from its starting node to its ending node to be able to generate a guide for it.</param>
         /// <returns>The guide for the given construction, or null if we can't pathfind from the start node to the
         ///          end node on that construction.</returns>
-        private ConstructionGuide? GetGuide(ConstructionPrototype construction)
+        public ConstructionGuide? GetGuide(ConstructionPrototype construction)
         {
             // NOTE: This method might be allocate a fair bit, but do not worry!
             // This method is specifically designed to generate guides once and cache the results,

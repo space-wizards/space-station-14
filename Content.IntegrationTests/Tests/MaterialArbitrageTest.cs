@@ -8,6 +8,7 @@ using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Server.Lathe;
 using Content.Server.Stack;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Construction.Components;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.FixedPoint;
