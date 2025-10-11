@@ -255,6 +255,7 @@
 - type: latheRecipe
   id: MaterialDurathread
   result: MaterialDurathread1
+  applyMaterialDiscount: false
   completetime: 0
   materials:
     Cloth: 100
