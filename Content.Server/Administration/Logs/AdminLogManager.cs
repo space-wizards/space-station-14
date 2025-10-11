@@ -383,6 +383,11 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         return players;
     }
 
+    /// <summary>
+    /// Get a list of coordinates from the <see cref="LogStringHandler"/>s values. Will transform all coordinate types
+    /// to map coordinates!
+    /// </summary>
+    /// <returns>A list of map coordinates that were found in the value input, can return an empty list.</returns>
     private List<MapCoordinates> GetCoordinates(Dictionary<string, object?> values)
     {
         List<MapCoordinates> coordList = new();
@@ -477,7 +482,9 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             if (CreateTpLinks(playerNetEnts, out var tpLinks))
                 _chat.SendAdminAlertNoFormatOrEscape(tpLinks);
 
-            if (CreateCordLinks(handler, out var cordLinks))
+            var cords = GetCoordinates(handler.Values);
+
+            if (CreateCordLinks(cords, out var cordLinks))
                 _chat.SendAdminAlertNoFormatOrEscape(cordLinks);
         }
     }
@@ -506,11 +513,12 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         return true;
     }
 
-    private bool CreateCordLinks(LogStringHandler handler, out string outString)
+    /// <summary>
+    /// Creates a list of toto command links for the given map coordinates.
+    /// </summary>
+    private bool CreateCordLinks(List<MapCoordinates> cords, out string outString)
     {
         outString = string.Empty;
-
-        var cords = GetCoordinates(handler.Values);
 
         if (cords.Count == 0)
             return false;
@@ -529,9 +537,8 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         return true;
     }
 
-
     /// <summary>
-    /// Escape the given text to not allow breakouts of the command tags
+    /// Escape the given text to not allow breakouts of the cmdlink tags.
     /// </summary>
     private string EscapeText(string text)
     {

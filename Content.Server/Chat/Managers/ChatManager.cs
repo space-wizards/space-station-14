@@ -170,10 +170,6 @@ internal sealed partial class ChatManager : IChatManager
         SendAdminAlertNoFormatOrEscape(wrappedMessage);
     }
 
-    /// <summary>
-    /// This is a dangerous function! Only pass in property escaped text.
-    /// See: <see cref="SendAdminAlert(string)"/>
-    /// </summary>
     public void SendAdminAlertNoFormatOrEscape(string message)
     {
         var clients = _adminManager.ActiveAdmins.Select(p => p.Channel);
