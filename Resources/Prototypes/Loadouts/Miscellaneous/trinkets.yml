@@ -50,22 +50,14 @@
     - CandleBlue
     - CandleGreenSmall
 
-# Lighters
+# Smokeables
 - type: loadout
   id: Lighter
   storage:
     back:
     - Lighter
-  groupBy: "lighters"
+  groupBy: "smokeables"
 
-- type: loadout
-  id: CheapLighter
-  storage:
-    back:
-    - CheapLighter
-  groupBy: "lighters"
-
-# Smokeables
 - type: loadout
   id: CigPackGreen
   storage:
