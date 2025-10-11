@@ -9,3 +9,12 @@ metabolizer-type-plant = Plant
 metabolizer-type-dwarf = Dwarf
 metabolizer-type-moth = Moth
 metabolizer-type-arachnid = Arachnid
+
+metabolizer-type-oxygen-breather = Oxygen-breathing
+metabolizer-type-nitrogen-breather = Nitrogen-breathing
+metabolizer-type-oxygen-allergic = Oxygen-allergic
+metabolizer-type-carbon-dioxide-breather = Carbon Dioxide-breathing
+metabolizer-type-carbon-dioxide-immune = Carbon Dioxide-resistant
+metabolizer-type-ammonia-healer = Ammonia-receptive
+metabolizer-type-ammonia-resistant = Ammonia-resistant
+metabolizer-type-nitrous-oxide-immune = Nitrous Oxide-resistant
