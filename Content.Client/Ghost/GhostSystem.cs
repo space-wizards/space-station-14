@@ -201,5 +201,10 @@ namespace Content.Client.Ghost
         {
             GhostVisibility = visibility ?? !GhostVisibility;
         }
+
+        public void SetGhostVisibility(bool value)
+        {
+            GhostVisibility = value;
+        }
     }
 }

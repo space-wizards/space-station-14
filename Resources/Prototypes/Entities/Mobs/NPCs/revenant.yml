@@ -85,6 +85,8 @@
   - type: Reactive
     groups:
       Acidic: [Touch]
+  - type: GhostObserver # Can See Ghosts
+  - type: DeadHearing # Can hear Nearby Ghosts
   - type: Tag
     tags:
     - SlowImmune
