@@ -17,6 +17,7 @@
     rules: ghost-role-information-space-dragon-rules
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
+    job: SpaceDragon
     raffle:
       settings: default
   - type: GhostTakeoverAvailable

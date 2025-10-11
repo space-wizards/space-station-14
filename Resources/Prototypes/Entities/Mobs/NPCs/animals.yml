@@ -489,6 +489,7 @@
     rules: ghost-role-information-freeagent-rules
     mindRoles:
     - MindRoleGhostRoleFreeAgentHarmless
+    job: Animal
   - type: Fixtures
     fixtures:
       fix1:
@@ -1285,6 +1286,7 @@
     name: ghost-role-information-kangaroo-name
     description: ghost-role-information-kangaroo-description
     rules: ghost-role-information-nonantagonist-rules
+    job: Animal
   - type: GhostTakeoverAvailable
   - type: Vocal
     sounds:
@@ -1464,6 +1466,7 @@
     name: ghost-role-information-monkey-name
     description: ghost-role-information-monkey-description
     rules: ghost-role-information-nonantagonist-rules
+    job: Animal
   - type: GhostTakeoverAvailable
   - type: Clumsy
     gunShootFailDamage:
@@ -1640,6 +1643,7 @@
     name: ghost-role-information-kobold-name
     description: ghost-role-information-kobold-description
     rules: ghost-role-information-nonantagonist-rules
+    job: Kobold
 
 - type: entity
   name: kobold
@@ -1718,6 +1722,7 @@
     rules: ghost-role-information-freeagent-rules
     mindRoles:
     - MindRoleGhostRoleFreeAgentHarmless
+    job: Animal
   - type: GhostTakeoverAvailable
   - type: Speech
     speechSounds: Squeak
@@ -2568,6 +2573,7 @@
     rules: ghost-role-information-giant-spider-rules
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
+    job: Spider
     raffle:
       settings: short
   - type: GhostTakeoverAvailable
@@ -3151,6 +3157,7 @@
     rules: ghost-role-information-SyndiCat-rules
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
+    job: SyndicateReinforcement
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
@@ -3393,6 +3400,7 @@
     name: ghost-role-information-hamster-name
     description: ghost-role-information-hamster-description
     rules: ghost-role-information-nonantagonist-rules
+    job: Animal
   - type: GhostTakeoverAvailable
   - type: Speech
     speechVerb: SmallMob

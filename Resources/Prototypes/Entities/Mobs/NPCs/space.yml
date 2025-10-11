@@ -392,6 +392,7 @@
     rules: ghost-role-information-freeagent-rules
     mindRoles:
     - MindRoleGhostRoleFreeAgentHarmless
+    job: Animal
   - type: GhostTakeoverAvailable
   - type: Emoting
   - type: Sprite

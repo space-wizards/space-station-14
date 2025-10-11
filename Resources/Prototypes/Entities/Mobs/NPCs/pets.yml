@@ -635,6 +635,7 @@
     name: ghost-role-information-hamlet-name
     description: ghost-role-information-hamlet-description
     rules: ghost-role-information-nonantagonist-rules
+    job: Animal
   - type: GhostTakeoverAvailable
   - type: InteractionPopup
     successChance: 1
@@ -851,6 +852,7 @@
     description: ghost-role-information-smile-description
     rules: ghost-role-information-nonantagonist-rules
     raffle: null
+    job: Animal
   - type: Grammar
     attributes:
       proper: true
@@ -870,6 +872,7 @@
     name: ghost-role-information-punpun-name
     description: ghost-role-information-punpun-description
     rules: ghost-role-information-nonantagonist-rules
+    job: Bartender
   - type: GhostTakeoverAvailable
   - type: Butcherable
     butcheringType: Spike

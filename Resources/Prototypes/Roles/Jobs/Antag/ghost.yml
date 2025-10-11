@@ -35,6 +35,12 @@
   setPreference: false
 
 - type: job
+  id: Wizard
+  name: job-name-wizard
+  playTimeTracker: JobWizard
+  setPreference: false
+
+- type: job
   id: Spider
   name: job-name-spider
   playTimeTracker: JobAnimal
@@ -42,7 +48,12 @@
 
 - type: job
   id: Slime
-  name: job-name-wizard
+  name: job-name-slime
   playTimeTracker: JobAnimal
   setPreference: false
 
+- type: job
+  id: ParadoxClone
+  name: job-name-paradox-clone
+  playTimeTracker: JobParadoxClone
+  setPreference: false

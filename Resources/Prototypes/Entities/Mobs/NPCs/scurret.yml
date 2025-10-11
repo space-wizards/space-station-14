@@ -202,6 +202,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: default
+      job: Animal
     - type: GhostTakeoverAvailable
 
 # Spawnable ESS have a ghost role, equipment, a random name and a random colour.

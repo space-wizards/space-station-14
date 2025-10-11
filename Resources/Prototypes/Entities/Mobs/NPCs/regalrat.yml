@@ -96,6 +96,7 @@
     - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
+    Job: RatKing
   - type: GhostTakeoverAvailable
   - type: Tag
     tags:

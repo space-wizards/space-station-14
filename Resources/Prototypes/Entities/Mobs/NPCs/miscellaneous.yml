@@ -92,6 +92,7 @@
     rules: ghost-role-information-familiar-rules
     raffle:
       settings: short
+    job: Animal
   - type: GhostTakeoverAvailable
   - type: CanEscapeInventory
     baseResistTime: 3

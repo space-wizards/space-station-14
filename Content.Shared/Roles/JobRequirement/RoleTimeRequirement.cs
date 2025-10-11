@@ -43,35 +43,47 @@ public sealed partial class RoleTimeRequirement : JobRequirement
         if (!entManager.EntitySysManager.TryGetEntitySystem(out SharedJobSystem? jobSystem))
             return false;
 
-        var jobProto = jobSystem.GetJobPrototype(proto);
+        var jobProtos = jobSystem.GetJobPrototypes(proto);
 
-        if (jobSystem.TryGetDepartment(jobProto, out var departmentProto))
-            departmentColor = departmentProto.Color;
+        var jobs = "";
 
-        if (!protoManager.TryIndex<JobPrototype>(jobProto, out var indexedJob))
-            return false;
-
-        if (!Inverted)
+        for (var jobIndex = 0; jobIndex < jobProtos.Count; jobIndex++)
         {
+            var jobProto = jobProtos[jobIndex];
+
+            if (jobSystem.TryGetDepartment(jobProto, out var departmentProto))
+                departmentColor = departmentProto.Color;
+
+            if (!protoManager.TryIndex<JobPrototype>(jobProto, out var indexedJob))
+                continue;
+
+            jobs += (Loc.GetString("role-timer-role-job",
+                ("job", indexedJob.LocalizedName),
+                ("departmentColor", departmentColor.ToHex())));
+
+            if (jobIndex != jobProtos.Count - 1)
+                jobs += Loc.GetString("role-timer-role-job-separator");
+
+            if (!Inverted)
+            {
+                if (roleDiff <= 0)
+                    return true;
+
+                reason = FormattedMessage.FromMarkupPermissive(Loc.GetString(
+                    "role-timer-role-insufficient",
+                    ("time", formattedRoleDiff),
+                    ("jobs", jobs)));
+                return false;
+            }
+
             if (roleDiff <= 0)
-                return true;
-
-            reason = FormattedMessage.FromMarkupPermissive(Loc.GetString(
-                "role-timer-role-insufficient",
-                ("time", formattedRoleDiff),
-                ("job", indexedJob.LocalizedName),
-                ("departmentColor", departmentColor.ToHex())));
-            return false;
-        }
-
-        if (roleDiff <= 0)
-        {
-            reason = FormattedMessage.FromMarkupPermissive(Loc.GetString(
-                "role-timer-role-too-high",
-                ("time", formattedRoleDiff),
-                ("job", indexedJob.LocalizedName),
-                ("departmentColor", departmentColor.ToHex())));
-            return false;
+            {
+                reason = FormattedMessage.FromMarkupPermissive(Loc.GetString(
+                    "role-timer-role-too-high",
+                    ("time", formattedRoleDiff),
+                    ("jobs", jobs)));
+                return false;
+            }
         }
 
         return true;

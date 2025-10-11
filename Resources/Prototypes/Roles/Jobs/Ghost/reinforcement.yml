@@ -5,8 +5,13 @@
   setPreference: false
 
 - type: job
-  id: SyndicateReinforcement
+  id: NuclearOperativeCyborg
   name: job-name-nukie-borg
   playTimeTracker: JobReinforcement
   setPreference: false
 
+- type: job
+  id: WizardSummon
+  name: job-name-wizard-summon
+  playTimeTracker: JobReinforcement
+  setPreference: false

@@ -27,6 +27,7 @@
     - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
+    job: RatKing
   - type: GhostRoleMobSpawner
     prototype: MobRatKing
   - type: Sprite
@@ -50,6 +51,7 @@
     - MindRoleGhostRoleFamiliar
     raffle:
       settings: short
+    job: Animal
   - type: GhostRoleMobSpawner
     prototype: MobBatRemilia
   - type: Sprite
@@ -71,6 +73,7 @@
     rules: ghost-role-information-familiar-rules
     mindRoles:
     - MindRoleGhostRoleFamiliar
+    job: SyndicateReinforcement
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -93,6 +96,7 @@
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
     - MindRoleNukeops
+    job: NuclearOperative
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -115,6 +119,7 @@
     rules: ghost-role-information-loneop-rules
     mindRoles:
     - MindRoleLoneops
+    job: NuclearOperative
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -133,6 +138,7 @@
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
     - MindRoleNukeopsCommander
+    job: NuclearOperativeCommander
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -145,6 +151,7 @@
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
     - MindRoleNukeopsMedic
+    job: NuclearOperativeCorpsman
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -157,6 +164,7 @@
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
     - MindRoleNukeops
+    job: NuclearOperative
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -169,6 +177,7 @@
     rules: ghost-role-information-space-dragon-rules
     mindRoles:
     - MindRoleDragon
+    job: SpaceDragon
   - type: Sprite
     layers:
     - state: green
@@ -186,6 +195,7 @@
     rules: ghost-role-information-antagonist-rules
     mindRoles:
     - MindRoleNinja
+    job: SpaceNinja
     raffle:
       settings: default
   - type: Sprite
@@ -206,6 +216,7 @@
     rules: ghost-role-information-antagonist-rules
     mindRoles:
     - MindRoleParadoxClone
+    job: ParadoxClone
     raffle:
       settings: default
   - type: Sprite
@@ -307,6 +318,7 @@
     description: ghost-role-information-wizard-desc
     mindRoles:
     - MindRoleWizard
+    job: Wizard
     raffle:
       settings: default
   - type: Sprite

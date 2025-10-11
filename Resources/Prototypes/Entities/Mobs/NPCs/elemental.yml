@@ -347,6 +347,7 @@
     - MindRoleGhostRoleTeamAntagonist
     raffle:
       settings: short
+    job: Slime
   - type: NpcFactionMember
     factions:
     - SimpleHostile

@@ -1,17 +1,17 @@
 - type: job
-  id: PersonalAI
+  id: NuclearOperative
   name: job-name-nukie-operative
   playTimeTracker: JobNuclearOperative
   setPreference: false
 
 - type: job
-  id: PersonalAI
+  id: NuclearOperativeCorpsman
   name: job-name-nukie-corpsman
   playTimeTracker: JobNuclearOperative
   setPreference: false
 
 - type: job
-  id: PersonalAI
+  id: NuclearOperativeCommander
   name: job-name-nukie-commander
   playTimeTracker: JobNuclearOperative
   setPreference: false

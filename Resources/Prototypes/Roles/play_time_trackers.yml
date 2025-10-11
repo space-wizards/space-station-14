@@ -116,6 +116,9 @@
   id: JobPersonalAI
 
 - type: playTimeTracker
+  id: JobParadoxClone
+
+- type: playTimeTracker
   id: JobParamedic
 
 - type: playTimeTracker

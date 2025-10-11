@@ -3,3 +3,9 @@
   name: job-name-personal-AI
   playTimeTracker: JobPersonalAI
   setPreference: false
+
+- type: job
+  id: Robot
+  name: job-name-robot
+  playTimeTracker: JobRobot
+  setPreference: false

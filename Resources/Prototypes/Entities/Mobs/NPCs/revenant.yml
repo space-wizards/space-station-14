@@ -43,6 +43,7 @@
     - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
+    job: Revenant
   - type: GhostTakeoverAvailable
   - type: Revenant
     malfunctionWhitelist:

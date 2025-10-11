@@ -86,7 +86,10 @@ job-name-rat-king = Rat King
 job-name-spider = Spider
 job-name-slime = Slime
 job-name-wizard = Wizard
+job-name-wizard-summon = Wizard Summon
 job-name-personal-AI = Personal AI
+job-name-paradox-clone = Paradox Clone
+job-name-robot = Robot
 
 # Role timers - Make these alphabetical or I cut you
 JobAnimal = Animal
@@ -124,6 +127,7 @@ JobMime = Mime
 JobMusician = Musician
 JobSpaceNinja = Space Ninja
 JobNuclearOperative = Nuclear Operative
+JobParadoxClone = Paradox Clone
 JobParamedic = Paramedic
 JobPassenger = Passenger
 JobPersonalAI = Personal AI
@@ -135,6 +139,7 @@ JobResearchAssistant = Research Assistant
 JobResearchDirector = Research Director
 JobReinforcement = Reinforcement
 JobRevenant = Revenant
+JobRobot = Robot
 JobSalvageSpecialist = Salvage Specialist
 JobScientist = Scientist
 JobSecurityCadet = Security Cadet
