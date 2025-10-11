@@ -1,3 +1,5 @@
+using Robust.Shared.Map;
+
 namespace Content.Shared.Actions.Events;
 
 /// <summary>
@@ -10,9 +12,19 @@ namespace Content.Shared.Actions.Events;
 public struct ActionValidateEvent
 {
     /// <summary>
-    /// Request event the client sent.
+    /// Action being attempted to be used
     /// </summary>
-    public RequestPerformActionEvent Input;
+    public EntityUid Action;
+
+    /// <summary>
+    /// Possible target action is being used on
+    /// </summary>
+    public EntityUid? EntityTarget;
+
+    /// <summary>
+    /// Possible coordinates action is being used on
+    /// </summary>
+    public EntityCoordinates? EntityCoordinatesTarget;
 
     /// <summary>
     /// User trying to use the action.
