@@ -174,9 +174,9 @@ public abstract class SharedInjectorSystem : EntitySystem
 
         // Injections take 0.5 seconds longer per 5u of possible space/content
         // First 5u(MinimumTransferAmount) doesn't incur delay
-        actualDelay += injector.Comp.DelayPerVolume * FixedPoint2.Max(0, amountToInject - injector.Comp.TransferAmounts.Min()).Double();
+        actualDelay += injector.Comp.DelayPerVolume * FixedPoint2.Max(0, amountToInject - 5).Double();
 
-        // Ensure that minimum delay before incapacitation checks is 1 seconds
+        // Ensure that the minimum delay before incapacitation checks is 1 seconds
         actualDelay = MathHelper.Max(actualDelay, TimeSpan.FromSeconds(1));
 
         if (user != target) // injecting someone else
@@ -186,12 +186,12 @@ public abstract class SharedInjectorSystem : EntitySystem
             if (injector.Comp.ToggleState == InjectorToggleMode.Draw)
             {
                 _popup.PopupEntity(Loc.GetString("injector-component-drawing-target",
-    ("user", userName)), user, target);
+                    ("user", userName)), user, target);
             }
             else
             {
                 _popup.PopupEntity(Loc.GetString("injector-component-injecting-target",
-    ("user", userName)), user, target);
+                    ("user", userName)), user, target);
             }
 
 
