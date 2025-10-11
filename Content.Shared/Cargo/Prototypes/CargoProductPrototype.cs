@@ -17,9 +17,15 @@ namespace Content.Shared.Cargo.Prototypes
         [AbstractDataField]
         public bool Abstract { get; private set; }
 
-        [DataField("name")] private string _name = string.Empty;
+        [DataField("name")]
+        private LocId? _nameLoc;
 
-        [DataField("description")] private string _description = string.Empty;
+        private string _name = string.Empty;
+
+        [DataField("description")]
+        private LocId? _descLoc;
+
+        private string _description = string.Empty;
 
         [ViewVariables]
         [IdDataField]
@@ -36,7 +42,11 @@ namespace Content.Shared.Cargo.Prototypes
                 if (_name.Trim().Length != 0)
                     return _name;
 
-                if (IoCManager.Resolve<IPrototypeManager>().Resolve(Product, out EntityPrototype? prototype))
+                if (_nameLoc is { } nameLoc)
+                {
+                    _name = Loc.GetString(nameLoc);
+                }
+                else if (IoCManager.Resolve<IPrototypeManager>().Resolve(Product, out var prototype))
                 {
                     _name = prototype.Name;
                 }
@@ -56,7 +66,11 @@ namespace Content.Shared.Cargo.Prototypes
                 if (_description.Trim().Length != 0)
                     return _description;
 
-                if (IoCManager.Resolve<IPrototypeManager>().Resolve(Product, out EntityPrototype? prototype))
+                if (_descLoc is { } descLoc)
+                {
+                    _description = Loc.GetString(descLoc);
+                }
+                else if (IoCManager.Resolve<IPrototypeManager>().Resolve(Product, out var prototype))
                 {
                     _description = prototype.Description;
                 }
@@ -76,6 +90,9 @@ namespace Content.Shared.Cargo.Prototypes
         /// </summary>
         [DataField]
         public EntProtoId Product { get; private set; } = string.Empty;
+
+        [DataField]
+        public bool UseParcelWrap;
 
         /// <summary>
         ///     The point cost of the product.

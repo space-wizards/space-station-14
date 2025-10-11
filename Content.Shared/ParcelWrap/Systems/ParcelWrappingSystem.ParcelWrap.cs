@@ -1,8 +1,10 @@
+using System.Linq;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.ParcelWrap.Components;
 using Content.Shared.Verbs;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.ParcelWrap.Systems;
@@ -10,11 +12,35 @@ namespace Content.Shared.ParcelWrap.Systems;
 // This part handles Parcel Wrap.
 public sealed partial class ParcelWrappingSystem
 {
+    [Dependency]
+    private readonly IPrototypeManager _proto = default!;
+
+    private static readonly EntProtoId<WrappedParcelComponent> DefaultWrappedParcel = "WrappedParcel";
+    private static ProtoId<ItemSizePrototype> _fallbackParcelSize = "Ginormous";
+
     private void InitializeParcelWrap()
     {
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypeReload);
+
         SubscribeLocalEvent<ParcelWrapComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<ParcelWrapComponent, GetVerbsEvent<UtilityVerb>>(OnGetVerbsForParcelWrap);
         SubscribeLocalEvent<ParcelWrapComponent, ParcelWrapItemDoAfterEvent>(OnWrapItemDoAfter);
+
+        SetFallbackParcelSize();
+    }
+
+    private void OnPrototypeReload(PrototypesReloadedEventArgs args)
+    {
+        if (args.WasModified<ItemSizePrototype>())
+            SetFallbackParcelSize();
+    }
+
+    private void SetFallbackParcelSize()
+    {
+        if (_proto.EnumeratePrototypes<ItemSizePrototype>().Max() is { } size)
+        {
+            _fallbackParcelSize = size;
+        }
     }
 
     private void OnAfterInteract(Entity<ParcelWrapComponent> entity, ref AfterInteractEvent args)
@@ -52,7 +78,7 @@ public sealed partial class ParcelWrappingSystem
 
         if (args.Target is { } target)
         {
-            WrapInternal(args.User, wrapper, target);
+            Wrap(args.User, wrapper, target);
             args.Handled = true;
         }
     }
@@ -79,57 +105,90 @@ public sealed partial class ParcelWrappingSystem
     /// <param name="user">The entity using <paramref name="wrapper"/> to wrap <paramref name="target"/>.</param>
     /// <param name="wrapper">The wrapping being used. Determines appearance of the spawned parcel.</param>
     /// <param name="target">The entity being wrapped.</param>
-    private void WrapInternal(EntityUid user, Entity<ParcelWrapComponent> wrapper, EntityUid target)
+    private void Wrap(EntityUid user,
+        Entity<ParcelWrapComponent> wrapper,
+        EntityUid target
+    )
     {
-        if (_net.IsServer)
-        {
-            var spawned = Spawn(wrapper.Comp.ParcelPrototype, Transform(target).Coordinates);
-
-            // If this wrap maintains the size when wrapping, set the parcel's size to the target's size. Otherwise use the
-            // wrap's fallback size.
-            TryComp(target, out ItemComponent? targetItemComp);
-            var size = wrapper.Comp.FallbackItemSize;
-            if (wrapper.Comp.WrappedItemsMaintainSize && targetItemComp is not null)
-            {
-                size = targetItemComp.Size;
-            }
-
-            // ParcelWrap's spawned entity should always have an `ItemComp`. As of writing, the only use has it hardcoded on
-            // its prototype.
-            var item = Comp<ItemComponent>(spawned);
-            _item.SetSize(spawned, size, item);
-            _appearance.SetData(spawned, WrappedParcelVisuals.Size, size.Id);
-
-            // If this wrap maintains the shape when wrapping and the item has a shape override, copy the shape override to
-            // the parcel.
-            if (wrapper.Comp.WrappedItemsMaintainShape && targetItemComp is { Shape: { } shape })
-            {
-                _item.SetShape(spawned, shape, item);
-            }
-
-            // If the target's in a container, try to put the parcel in its place in the container.
-            if (_container.TryGetContainingContainer((target, null, null), out var containerOfTarget))
-            {
-                _container.Remove(target, containerOfTarget);
-                _container.InsertOrDrop((spawned, null, null), containerOfTarget);
-            }
-
-            // Insert the target into the parcel.
-            var parcel = EnsureComp<WrappedParcelComponent>(spawned);
-            if (!_container.Insert(target, parcel.Contents))
-            {
-                DebugTools.Assert(
-                    $"Failed to insert target entity into newly spawned parcel. target={PrettyPrint.PrintUserFacing(target)}");
-                QueueDel(spawned);
-            }
-        }
+        var parcel = Wrap(
+            target,
+            wrapper.Comp.ParcelPrototype,
+            wrapper.Comp.WrappedItemsMaintainSize,
+            wrapper.Comp.WrappedItemsMaintainShape
+        );
+        if (parcel is null)
+            return;
 
         // Consume a `use` on the wrapper, and delete the wrapper if it's empty.
         _charges.TryUseCharges(wrapper.Owner, 1);
-        if (_net.IsServer && _charges.IsEmpty(wrapper.Owner))
-            QueueDel(wrapper);
+        if (_charges.IsEmpty(wrapper.Owner))
+            PredictedQueueDel(wrapper);
 
         // Play a wrapping sound.
         _audio.PlayPredicted(wrapper.Comp.WrapSound, target, user);
+    }
+
+    /// <summary>
+    /// Wraps <paramref name="toWrap"/> into a parcel. This spawns <paramref name="parcelProto"/>
+    /// (or <see cref="DefaultWrappedParcel"/>) and inserts <paramref name="toWrap"/> into it, and then returns the
+    /// spawned parcel entity. If insertion fails, the parcel is deleted and <c>null</c> is returned.
+    /// </summary>
+    /// <param name="toWrap">The entity to insert into the parcel</param>
+    /// <param name="parcelProto">The prototype of the parcel to spawn. If null, uses <see cref="DefaultWrappedParcel"/></param>
+    /// <param name="parcelMaintainsWrappedSize">
+    /// If true, the spawned parcel's size is set to <paramref name="toWrap"/>'s size. If false, or if
+    /// <paramref name="toWrap"/> is not an <see cref="ItemComponent">item</see>, the parcel's size is not modified from
+    /// whatever is on its prototype.
+    /// </param>
+    /// <param name="parcelMaintainsWrappedShape">Works the same as <see cref="parcelMaintainsWrappedSize"/>, but for shape.</param>
+    public Entity<WrappedParcelComponent>? Wrap(
+        EntityUid toWrap,
+        EntProtoId<WrappedParcelComponent>? parcelProto = null,
+        bool parcelMaintainsWrappedSize = true,
+        bool parcelMaintainsWrappedShape = true
+    )
+    {
+        var spawned = PredictedSpawnAtPosition(parcelProto ?? DefaultWrappedParcel, Transform(toWrap).Coordinates);
+
+        // If this wrap maintains the size when wrapping, set the parcel's size to the target's size. Otherwise use the
+        // wrap's fallback size.
+        TryComp(toWrap, out ItemComponent? targetItemComp);
+        var size = _fallbackParcelSize;
+        if (parcelMaintainsWrappedSize && targetItemComp is not null)
+        {
+            size = targetItemComp.Size;
+        }
+
+        // ParcelWrap's spawned entity should always have an `ItemComp`. As of writing, the only use has it hardcoded on
+        // its prototype.
+        var item = Comp<ItemComponent>(spawned);
+        _item.SetSize(spawned, size, item);
+        _appearance.SetData(spawned, WrappedParcelVisuals.Size, size.Id);
+
+        // If this wrap maintains the shape when wrapping and the item has a shape override, copy the shape override to
+        // the parcel.
+        if (parcelMaintainsWrappedShape && targetItemComp is { Shape: { } shape })
+        {
+            _item.SetShape(spawned, shape, item);
+        }
+
+        // If the target's in a container, try to put the parcel in its place in the container.
+        if (_container.TryGetContainingContainer((toWrap, null, null), out var containerOfTarget))
+        {
+            _container.Remove(toWrap, containerOfTarget);
+            _container.InsertOrDrop((spawned, null, null), containerOfTarget);
+        }
+
+        // Insert the target into the parcel.
+        var parcel = EnsureComp<WrappedParcelComponent>(spawned);
+        if (!_container.Insert(toWrap, parcel.Contents))
+        {
+            DebugTools.Assert(
+                $"Failed to insert target entity into newly spawned parcel. target={PrettyPrint.PrintUserFacing(toWrap)}");
+            QueueDel(spawned);
+            return null;
+        }
+
+        return (spawned, parcel);
     }
 }

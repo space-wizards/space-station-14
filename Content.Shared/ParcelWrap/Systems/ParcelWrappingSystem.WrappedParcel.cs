@@ -102,10 +102,6 @@ public sealed partial class ParcelWrappingSystem
         var containedEntity = parcel.Comp.Contents.ContainedEntity;
         _audio.PlayPredicted(parcel.Comp.UnwrapSound, parcel, user);
 
-        // If we're on the client, just return the contained entity and don't try to despawn the parcel.
-        if (!_net.IsServer)
-            return containedEntity;
-
         var parcelTransform = Transform(parcel);
 
         if (containedEntity is { } parcelContents)
@@ -128,11 +124,11 @@ public sealed partial class ParcelWrappingSystem
         // Spawn unwrap trash.
         if (parcel.Comp.UnwrapTrash is { } trashProto)
         {
-            var trash = Spawn(trashProto, parcelTransform.Coordinates);
+            var trash = PredictedSpawnAtPosition(trashProto, parcelTransform.Coordinates);
             _transform.DropNextTo((trash, null), (parcel, parcelTransform));
         }
 
-        QueueDel(parcel);
+        PredictedQueueDel(parcel);
 
         return containedEntity;
     }
