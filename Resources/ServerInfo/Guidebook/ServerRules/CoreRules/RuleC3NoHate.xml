@@ -1,15 +1,17 @@
 ﻿<Document>
   # Core Rule 3 - No discrimination
+  [color=SlateGray][italic]Revision A, 2025-10-11[/italic][/color]
+
   There is zero tolerance for discriminatory language, actions, and dog whistles against real or fictional social groups. (Social groups includes race, ethnicity, species, gender identity, sexual orientation, disability, religious beliefs, and other intrinsic attributes.)
 
   ## Examples
   [color=#449944]Appropriate:[/color]
   - Using common terms such as "gay", "trans", or "disabled"
-  - Using potentially offensive terms such as "retard" within technical and ahelp (admin help) contexts
+  - Using potentially offensive terms such as "retard" within technical context
 
   [color=#994444]Prohibited:[/color]
   - Misusing common terms as an insult
-  - Misusing potentially offensive terms beyond technical and ahelp contexts
+  - Misusing potentially offensive terms as slurs or with frequency
   - Giving preferential to or unfair treatment against social groups
   - Expressing hatred or harm against social groups
 </Document>
