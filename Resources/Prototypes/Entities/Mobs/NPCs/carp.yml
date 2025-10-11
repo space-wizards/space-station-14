@@ -74,9 +74,12 @@
       proto: alien
     - type: Tag
       tags:
-        - Carp
-        - DoorBumpOpener
-        - CannotSuicide
+      - Carp
+      - CannotSuicide
+      - DoorBumpOpener
+      - StunImmune
+      - VimPilot
+      - SimpleMobStorage
     - type: ReplacementAccent
       accent: genericAggressive
     - type: Speech
