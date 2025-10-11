@@ -46,6 +46,13 @@ namespace Content.Shared.FixedPoint
             return new(value * ShiftConstant);
         }
 
+        // Begin Offbrand
+        public static FixedPoint2 FromRaw(int value)
+        {
+            return new(value);
+        }
+        // End Offbrand
+
         public static FixedPoint2 FromCents(int value) => new(value);
 
         public static FixedPoint2 FromHundredths(int value) => new(value);

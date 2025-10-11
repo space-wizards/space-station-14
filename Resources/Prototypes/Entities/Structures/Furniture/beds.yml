@@ -83,7 +83,7 @@
     node: medicalbed
   - type: GuideHelp
     guides:
-    - MedicalDoctor
+    - OffbrandPhysician # Offbrand
 
 - type: entity
   parent: Bed

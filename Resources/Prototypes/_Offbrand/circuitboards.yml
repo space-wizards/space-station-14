@@ -1,0 +1,10 @@
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: OperatingTableCircuitboard
+  name: operating table machine board
+  description: A machine printed circuit board for an operating table.
+  components:
+  - type: Sprite
+    state: medical
+  - type: MachineBoard
+    prototype: OperatingTable

@@ -1,0 +1,456 @@
+- type: reagent
+  id: Paracetamol
+  name: reagent-name-paracetamol
+  group: Medicine
+  desc: reagent-desc-paracetamol
+  flavor: medicine
+  color: "#c8a5dc"
+  physicalDesc: reagent-physical-desc-opaque
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.05
+      statusEffects:
+      - statusEffect: StatusEffectPainkillersMildParacetamol
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Tramadol
+          max: 1
+        - !type:ReagentThreshold
+          reagent: Oxycodone
+          max: 1
+      - statusEffect: StatusEffectPainkillersMildParacetamolOverdose
+        conditions:
+        - !type:ReagentThreshold
+          min: 10
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 10
+        damage:
+          types:
+            Poison: 0.05
+
+- type: reagent
+  id: Tramadol
+  name: reagent-name-tramadol
+  group: Medicine
+  desc: reagent-desc-tramadol
+  flavor: medicine
+  color: "#cb68fc"
+  physicalDesc: reagent-physical-desc-opaque
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.05
+      statusEffects:
+      - statusEffect: StatusEffectPainkillersTramadol
+      - statusEffect: StatusEffectPainkillersTramadolOverdose
+        conditions:
+        - !type:ReagentThreshold
+          min: 15
+        - !type:ReagentThreshold
+          reagent: Oxycodone
+          max: 1
+      - statusEffect: StatusEffectHeartStrainTramadolAlcohol
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Ethanol
+          min: 1
+      effects:
+      - !type:Drunk
+        boozePower: 1
+        conditions:
+        - !type:ReagentThreshold
+          min: 15.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 25
+        damage:
+          types:
+            Asphyxiation: 0.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Ethanol
+          min: 1
+        damage:
+          types:
+            Asphyxiation: 0.75
+
+- type: reagent
+  id: Oxycodone
+  name: reagent-name-oxycodone
+  group: Medicine
+  desc: reagent-desc-oxycodone
+  flavor: medicine
+  color: "#800080"
+  physicalDesc: reagent-physical-desc-opaque
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.15
+      statusEffects:
+      - statusEffect: StatusEffectPainkillersStrongOxycodone
+      - statusEffect: StatusEffectPainkillersStrongOxycodoneOverdose
+        conditions:
+        - !type:ReagentThreshold
+          min: 10
+      - statusEffect: StatusEffectHeartStrainOxycodoneAlcohol
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Ethanol
+          min: 1
+      effects:
+      - !type:Drunk
+        boozePower: 2
+        conditions:
+        - !type:ReagentThreshold
+          min: 10
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 15
+        damage:
+          types:
+            Asphyxiation: 0.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Ethanol
+          min: 1
+        damage:
+          types:
+            Asphyxiation: 0.75
+
+- type: reagent
+  id: Synthflesh
+  name: reagent-name-synthflesh
+  group: Medicine
+  desc: reagent-desc-synthflesh
+  flavor: meaty
+  flavorMinimum: 0.01
+  color: "#FFEBEB"
+  physicalDesc: reagent-physical-desc-oily
+
+- type: reagent
+  id: Sanguine
+  name: reagent-name-sanguine
+  group: Medicine
+  desc: reagent-desc-sanguine
+  flavor: bitter
+  flavorMinimum: 0.01
+  color: "#770101"
+  physicalDesc: reagent-physical-desc-oily
+  metabolisms:
+    Medicine:
+      metabolismRate: 1
+      effects:
+      - !type:ModifyBloodLevel
+        amount: 6
+        conditions:
+        - !type:ReagentThreshold
+          max: 1
+
+- type: reagent
+  id: Peridaxon
+  name: reagent-name-peridaxon
+  group: Medicine
+  desc: reagent-desc-peridaxon
+  physicalDesc: reagent-physical-desc-shiny
+  flavor: bitter
+  flavorMinimum: 0.02
+  color: "#561ec3"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.05
+      effects:
+      - !type:ModifyHeartDamage
+        amount: -0.4
+        conditions:
+        - !type:HeartDamage
+          max: 50
+      - !type:ModifyLungDamage
+        amount: -0.4
+        conditions:
+        - !type:LungDamage
+          max: 50
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 5.5
+        damage:
+          types:
+            Poison: 0.05
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 5.5
+      - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          min: 5.5
+        probability: 0.1
+
+- type: reagent
+  id: Cloneoxadone
+  name: reagent-name-cloneoxadone
+  group: Medicine
+  desc: reagent-desc-cloneoxadone
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: medicine
+  color: "#4053b0"
+  metabolisms:
+    Medicine:
+      statusEffects:
+      - statusEffect: StatusEffectMajorOxygenationCloneoxadone
+        conditions:
+        - !type:Temperature
+          max: 170.0
+      - statusEffect: StatusEffectHeartStabilizationCloneoxadone
+        conditions:
+        - !type:Temperature
+          max: 170.0
+      effects:
+      - !type:ModifyHeartDamage
+        amount: -0.6
+        conditions:
+        - !type:Temperature
+          max: 170.0
+      - !type:ModifyLungDamage
+        amount: -0.6
+        conditions:
+        - !type:Temperature
+          max: 170.0
+      - !type:EvenHealthChange
+        conditions:
+        - !type:Temperature
+          max: 170.0
+        damage:
+          Airloss: -12
+          Brute: -8
+          Burn: -8
+          Toxin: -8
+
+- type: reagent
+  id: SalineGlucose
+  name: reagent-name-saline-glucose
+  group: Medicine
+  desc: reagent-desc-saline-glucose
+  physicalDesc: reagent-physical-desc-salty
+  flavor: salty
+  flavorMinimum: 0.01
+  color: "#f7d896"
+  metabolisms:
+    Medicine:
+      metabolismRate: 1
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+        conditions:
+        - !type:ReagentThreshold
+          max: 1
+      - !type:ModifyBloodLevel
+        amount: 0.5
+        conditions:
+        - !type:ReagentThreshold
+          max: 1
+      - !type:SatiateHunger
+        factor: 0.5
+        conditions:
+        - !type:ReagentThreshold
+          max: 1
+      - !type:HealthChange
+        damage:
+          groups:
+            Brute: -2
+          types:
+            Poison: -0.6
+            Heat: -0.6
+            Shock: -0.6
+            Cold: -0.6
+        conditions:
+        - !type:ReagentThreshold
+          max: 1
+
+- type: reagent
+  id: Coagulant
+  name: reagent-name-coagulant
+  group: Medicine
+  desc: reagent-desc-coagulant
+  physicalDesc: reagent-physical-desc-viscous
+  flavor: metallic
+  color: "#bf0000"
+  contrabandSeverity: Syndicate
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.2
+      effects:
+      - !type:ClampWounds
+        chance: 0.4
+      - !type:RemoveStatusEffect
+        effectProto: WoundArterialBleeding
+        probability: 0.2
+
+- type: reagent
+  id: Osseous
+  name: reagent-name-osseous
+  group: Medicine
+  desc: reagent-desc-osseous
+  physicalDesc: reagent-physical-desc-putrid
+  flavor: meaty
+  color: "#c9abab"
+  contrabandSeverity: Syndicate
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:RemoveStatusEffect
+        effectProto: WoundFracture
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 5
+      - !type:AdjustReagent
+        reagent: Osseous
+        amount: -5
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 5
+
+- type: reagent
+  id: Convermol
+  name: reagent-name-convermol
+  group: Medicine
+  desc: reagent-desc-convermol
+  physicalDesc: reagent-physical-desc-abrasive
+  flavor: chalky
+  color: "#afe1ed"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Asphyxiation: -4
+            Blunt: 1
+        conditions:
+        - !type:TotalGroupDamage
+          group: Airloss
+          min: 4
+      - !type:HealthChange
+        damage:
+          types:
+            Asphyxiation: -4
+            Blunt: 1
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 10
+        - !type:TotalGroupDamage
+          group: Airloss
+          min: 4
+      - !type:ModifyLungDamage
+        amount: 0.05
+
+- type: reagent
+  id: SalicylicAcid
+  name: reagent-name-salicylic-acid
+  group: Medicine
+  desc: reagent-desc-salicylic-acid
+  physicalDesc: reagent-physical-desc-putrid
+  flavor: bitter
+  color: "#f7d9c0"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.2
+      statusEffects:
+      - statusEffect: StatusEffectPainkillersSalicylicAcid
+        conditions:
+        - !type:TotalGroupDamage
+          group: Brute
+          min: 35
+      effects:
+      - !type:EvenHealthChange
+        damage:
+          Brute: -2
+        conditions:
+        - !type:TotalGroupDamage
+          group: Brute
+          min: 35
+        - !type:MetaboliteThreshold
+          max: 15
+      - !type:EvenHealthChange
+        damage:
+          Brute: -2
+          Burn: 2
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 15
+      - !type:EvenHealthChange
+        damage:
+          Brute: -0.5
+        conditions:
+        - !type:TotalGroupDamage
+          group: Brute
+          max: 35
+      - !type:RemoveStatusEffect
+        effectProto: WoundBoneDeath
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 50
+      - !type:EvenHealthChange
+        damage:
+          Burn: 1
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 35
+
+- type: reagent
+  id: Oxandrolone
+  name: reagent-name-oxandrolone
+  group: Medicine
+  desc: reagent-desc-oxandrolone
+  physicalDesc: reagent-physical-desc-frosty
+  flavor: bitter
+  color: "#b8e3cb"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.2
+      statusEffects:
+      - statusEffect: StatusEffectPainkillersOxandrolone
+        conditions:
+        - !type:TotalGroupDamage
+          group: Burn
+          min: 35
+      effects:
+      - !type:EvenHealthChange
+        damage:
+          Burn: -3
+        conditions:
+        - !type:TotalGroupDamage
+          group: Burn
+          min: 35
+        - !type:MetaboliteThreshold
+          max: 15
+      - !type:EvenHealthChange
+        damage:
+          Burn: -3
+          Brute: 3
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 15
+      - !type:EvenHealthChange
+        damage:
+          Burn: -0.5
+        conditions:
+        - !type:TotalGroupDamage
+          group: Burn
+          max: 35
+      - !type:RemoveStatusEffect
+        effectProto: WoundHusking
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 50
+      - !type:EvenHealthChange
+        damage:
+          Brute: 1
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 35
