@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: You no longer face items for a single frame when clicking while moving.
-    type: Tweak
-  id: 8573
-  time: '2025-05-27T11:34:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37874
 - author: Simyon
   changes:
   - message: Capacitors and Matter bins have been combined into the Manipulator.
@@ -3947,3 +3940,10 @@
   id: 9075
   time: '2025-10-11T21:32:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40838
+- author: Hitlinemoss
+  changes:
+  - message: Autolathes can now print durathread.
+    type: Add
+  id: 9076
+  time: '2025-10-11T21:46:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40837
