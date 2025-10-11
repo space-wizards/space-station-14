@@ -27,6 +27,7 @@ namespace Content.Server.Cargo.Systems
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
         [Dependency] private readonly EmagSystem _emag = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly ParcelWrappingSystem _parcelWrapping = default!;
 
         private void InitializeConsole()
         {
@@ -610,9 +611,6 @@ namespace Content.Server.Cargo.Systems
 
             return FulfillOrder(order, account, spawn, paperProto);
         }
-
-        [Dependency]
-        private readonly ParcelWrappingSystem _parcelWrapping = default!;
 
         /// <summary>
         /// Fulfills the specified cargo order and spawns paper attached to it.
