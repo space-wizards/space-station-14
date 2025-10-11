@@ -78,8 +78,6 @@
 - type: entity
   parent: DefaultStationBeaconNoTeleport
   id: DefaultStationBeacon  # You can teleport to this Beacon using a teleport scroll.
-  placement:
-    mode: SnapgridCenter
   suffix: Teleport point
   components:
   - type: Tag
@@ -88,6 +86,14 @@
   - type: Construction
     graph: StationBeaconPart
     node: complete
+
+- type: entity
+  parent: DefaultStationBeaconNoTeleport
+  id: DefaultStationBeaconNinjaBombingTarget  # The ninja's objective is to bomb this location.
+  components:
+  - type: Tag
+    tags:
+    - NinjaBombingTarget
 
 - type: entity
   parent: DefaultStationBeacon
@@ -126,7 +132,7 @@
 
 # Prototypes for various default beacon configurations.
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconCommand
   suffix: Teleport point, Command
   components:
@@ -175,7 +181,7 @@
     defaultText: station-beacon-hop
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconSecurity
   suffix: Teleport point, Security
   components:
@@ -264,7 +270,7 @@
     defaultText: station-beacon-security-checkpoint
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconMedical
   suffix: Teleport point, Medical
   components:
@@ -337,7 +343,7 @@
     defaultText: station-beacon-clinic
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconScience
   suffix: Teleport point, Science
   components:
@@ -394,7 +400,7 @@
     defaultText: station-beacon-anomaly-gen
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconSupply
   suffix: Teleport point, Supply
   components:
@@ -435,7 +441,7 @@
     defaultText: station-beacon-salvage
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconEngineering
   suffix: Teleport point, Engineering
   components:
@@ -460,18 +466,16 @@
     defaultText: station-beacon-ame
 
 - type: entity
-  parent: DefaultStationBeaconEngineering
+  parent: DefaultStationBeacon
   id: DefaultStationBeaconSolars
   suffix: Teleport point, Solars
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-solars
-  - type: Tag
-    tags:
-    - NinjaBombingTargetBlocker
+    color: "#EFB341"
 
 - type: entity
-  parent: DefaultStationBeaconEngineering
+  parent: DefaultStationBeaconSolars
   id: DefaultStationBeaconSolarsN
   suffix: Teleport point, Solars, North
   components:
@@ -479,7 +483,7 @@
     defaultText: station-beacon-solars-N
 
 - type: entity
-  parent: DefaultStationBeaconEngineering
+  parent: DefaultStationBeaconSolars
   id: DefaultStationBeaconSolarsNE
   suffix: Teleport point, Solars, Northeast
   components:
@@ -487,7 +491,7 @@
     defaultText: station-beacon-solars-NE
 
 - type: entity
-  parent: DefaultStationBeaconEngineering
+  parent: DefaultStationBeaconSolars
   id: DefaultStationBeaconSolarsE
   suffix: Teleport point, Solars, East
   components:
@@ -495,7 +499,7 @@
     defaultText: station-beacon-solars-E
 
 - type: entity
-  parent: DefaultStationBeaconEngineering
+  parent: DefaultStationBeaconSolars
   id: DefaultStationBeaconSolarsSE
   suffix: Teleport point, Solars, Southeast
   components:
@@ -503,7 +507,7 @@
     defaultText: station-beacon-solars-SE
 
 - type: entity
-  parent: DefaultStationBeaconEngineering
+  parent: DefaultStationBeaconSolars
   id: DefaultStationBeaconSolarsS
   suffix: Teleport point, Solars, South
   components:
@@ -511,7 +515,7 @@
     defaultText: station-beacon-solars-S
 
 - type: entity
-  parent: DefaultStationBeaconEngineering
+  parent: DefaultStationBeaconSolars
   id: DefaultStationBeaconSolarsSW
   suffix: Teleport point, Solars, Southwest
   components:
@@ -519,7 +523,7 @@
     defaultText: station-beacon-solars-SW
 
 - type: entity
-  parent: DefaultStationBeaconEngineering
+  parent: DefaultStationBeaconSolars
   id: DefaultStationBeaconSolarsW
   suffix: Teleport point, Solars, West
   components:
@@ -527,7 +531,7 @@
     defaultText: station-beacon-solars-W
 
 - type: entity
-  parent: DefaultStationBeaconEngineering
+  parent: DefaultStationBeaconSolars
   id: DefaultStationBeaconSolarsNW
   suffix: Teleport point, Solars, Northwest
   components:
@@ -599,7 +603,7 @@
     defaultText: station-beacon-tech-vault
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconService
   suffix: Teleport point, Service
   components:
@@ -640,7 +644,7 @@
     defaultText: station-beacon-janitor
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconAI
   suffix: Teleport point, AI
   components:
@@ -687,12 +691,9 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-arrivals
-  - type: Tag
-    tags:
-    - NinjaBombingTargetBlocker
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconEvac
   suffix: Teleport point, Evac
   components:
@@ -700,7 +701,7 @@
     defaultText: station-beacon-evac
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconDockingArm
   suffix: Teleport point, Docking Arm
   components:
@@ -708,7 +709,7 @@
     defaultText: station-beacon-docking-arm
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconEVAStorage
   suffix: Teleport point, EVA Storage
   components:
@@ -716,7 +717,7 @@
     defaultText: station-beacon-eva-storage
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconChapel
   suffix: Teleport point, Chapel
   components:
@@ -724,7 +725,7 @@
     defaultText: station-beacon-chapel
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconLibrary
   suffix: Teleport point, Library
   components:
@@ -732,7 +733,7 @@
     defaultText: station-beacon-library
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconReporter
   suffix: Teleport point, Reporter
   components:
@@ -740,7 +741,7 @@
     defaultText: station-beacon-reporter
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconTheater
   suffix: Teleport point, Theater
   components:
@@ -748,7 +749,7 @@
     defaultText: station-beacon-theater
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconDorms
   suffix: Teleport point, Dorms
   components:
@@ -756,7 +757,7 @@
     defaultText: station-beacon-dorms
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconToolRoom
   suffix: Teleport point, Tool Room
   components:
@@ -764,7 +765,7 @@
     defaultText: station-beacon-tools
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconDisposals
   suffix: Teleport point, Disposals
   components:
@@ -778,12 +779,9 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-cryosleep
-  - type: Tag
-    tags:
-    - NinjaBombingTargetBlocker
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconEscapePod
   suffix: Teleport point, Escape Pod
   components:
@@ -791,7 +789,7 @@
     defaultText: station-beacon-escape-pod
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconEscapePodN
   suffix: Teleport point, Escape Pod, North
   components:
@@ -799,7 +797,7 @@
     defaultText: station-beacon-escape-pod-N
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconEscapePodNE
   suffix: Teleport point, Escape Pod, Northeast
   components:
@@ -807,7 +805,7 @@
     defaultText: station-beacon-escape-pod-NE
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconEscapePodE
   suffix: Teleport point, Escape Pod, East
   components:
@@ -815,7 +813,7 @@
     defaultText: station-beacon-escape-pod-E
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconEscapePodSE
   suffix: Teleport point, Escape Pod, Southeast
   components:
@@ -823,7 +821,7 @@
     defaultText: station-beacon-escape-pod-SE
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconEscapePodS
   suffix: Teleport point, Escape Pod, South
   components:
@@ -831,7 +829,7 @@
     defaultText: station-beacon-escape-pod-S
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconEscapePodSW
   suffix: Teleport point, Escape Pod, Southwest
   components:
@@ -839,7 +837,7 @@
     defaultText: station-beacon-escape-pod-SW
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconEscapePodW
   suffix: Teleport point, Escape Pod, West
   components:
@@ -847,7 +845,7 @@
     defaultText: station-beacon-escape-pod-W
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconEscapePodNW
   suffix: Teleport point, Escape Pod, Northwest
   components:
@@ -855,7 +853,7 @@
     defaultText: station-beacon-escape-pod-NW
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: [ DefaultStationBeacon, DefaultStationBeaconNinjaBombingTarget ]
   id: DefaultStationBeaconVox
   suffix: Teleport point, Vox
   components:

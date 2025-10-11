@@ -1021,7 +1021,7 @@
 
 ## N ##
 - type: Tag
-  id: NinjaBombingTargetBlocker # Ninjas will not target this warp point
+  id: NinjaBombingTarget # Ninjas will target this warp point
 
 - type: Tag
   id: NoBlockAnchoring

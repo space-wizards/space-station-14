@@ -51,10 +51,9 @@
       sprite: Objects/Weapons/Bombs/spidercharge.rsi
       state: icon
   - type: SpiderChargeCondition
-    blacklist:
+    whitelist:
       tags:
-      - GhostOnlyWarp
-      - NinjaBombingTargetBlocker
+      - NinjaBombingTarget
 
 - type: entity
   parent: [BaseNinjaObjective, BaseSurviveObjective]
