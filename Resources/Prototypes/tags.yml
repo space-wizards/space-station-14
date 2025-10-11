@@ -565,6 +565,9 @@
   id: Enzyme # Storage whitelist: ClothingBeltChef. ItemMapper: ClothingBeltChef
 
 - type: Tag
+  id: EvilGlove # Gloves that will get knocked off when punched with normal boxing gloves
+
+- type: Tag
   id: ExCable # Placement blacklist on CableDetStack. Placement whitelist on WiredDetonator
 
 - type: Tag
