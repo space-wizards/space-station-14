@@ -9,7 +9,6 @@
   - type: FlavorProfile
     flavors:
       - sweet
-  - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/cake.rsi
   - type: SolutionContainerManager

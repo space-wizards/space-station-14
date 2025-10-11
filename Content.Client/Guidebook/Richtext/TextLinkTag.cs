@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -12,6 +12,11 @@ namespace Content.Client.Guidebook.RichText;
 [UsedImplicitly]
 public sealed class TextLinkTag : IMarkupTagHandler
 {
+    [Dependency] private readonly ILogManager _logManager = default!;
+
+    private ISawmill Sawmill => _sawmill ??= _logManager.GetSawmill(Name);
+    private ISawmill? _sawmill;
+
     public static Color LinkColor => Color.CornflowerBlue;
 
     public string Name => "textlink";
@@ -53,7 +58,7 @@ public sealed class TextLinkTag : IMarkupTagHandler
         if (control.TryGetParentHandler<ILinkClickHandler>(out var handler))
             handler.HandleClick(link);
         else
-            Logger.Warning("Warning! No valid ILinkClickHandler found.");
+            Sawmill.Warning("Warning! No valid ILinkClickHandler found.");
     }
 }
 

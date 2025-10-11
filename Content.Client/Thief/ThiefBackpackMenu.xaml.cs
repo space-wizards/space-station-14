@@ -29,7 +29,7 @@ public sealed partial class ThiefBackpackMenu : FancyWindow
 
     public void UpdateState(ThiefBackpackBoundUserInterfaceState state)
     {
-        SetsGrid.DisposeAllChildren();
+        SetsGrid.RemoveAllChildren();
         var selectedNumber = 0;
         foreach (var (set, info) in state.Sets)
         {

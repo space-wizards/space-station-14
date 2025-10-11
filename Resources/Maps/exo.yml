@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 266.0.0
+  engineVersion: 267.1.0
   forkId: ""
   forkVersion: ""
-  time: 09/10/2025 20:15:35
-  entityCount: 19959
+  time: 09/25/2025 21:06:16
+  entityCount: 19960
 maps:
 - 1
 grids:
@@ -8820,6 +8820,15 @@ entities:
     - type: Transform
       pos: -13.5,-69.5
       parent: 2
+    - type: AccessReader
+      accessListsOriginal: []
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        18143:
+        - - DoorStatus
+          - InputB
 - proto: AirlockExternalGlass
   entities:
   - uid: 543
@@ -9049,6 +9058,13 @@ entities:
     - type: Transform
       pos: -16.5,-69.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        18143:
+        - - DoorStatus
+          - InputA
   - uid: 16699
     components:
     - type: Transform
@@ -9059,6 +9075,16 @@ entities:
     - type: Transform
       pos: -15.5,-72.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        5745:
+        - - DoorStatus
+          - DoorBolt
+        5774:
+        - - DoorStatus
+          - DoorBolt
 - proto: AirlockExternalGlassLocked
   entities:
   - uid: 201
@@ -9091,6 +9117,11 @@ entities:
     - type: Transform
       pos: -11.5,-81.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        6303:
+        - - DoorStatus
+          - DoorBolt
   - uid: 1649
     components:
     - type: Transform
@@ -9138,6 +9169,8 @@ entities:
     - type: Transform
       pos: -11.5,-78.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
     - type: DeviceLinkSource
       linkedPorts:
         1487:
@@ -10045,7 +10078,7 @@ entities:
       pos: 11.5,-30.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -244104.44
+      secondsUntilStateChange: -245383
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10401,7 +10434,7 @@ entities:
       pos: 34.5,-36.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -19602.13
+      secondsUntilStateChange: -20880.693
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -47068,7 +47101,6 @@ entities:
     - type: Transform
       pos: -20.5,-25.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconAtmospherics
   entities:
   - uid: 16227
@@ -47097,7 +47129,6 @@ entities:
     - type: Transform
       pos: -48.5,-45.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconBrigMed
   entities:
   - uid: 18105
@@ -47112,7 +47143,6 @@ entities:
     - type: Transform
       pos: -42.5,-54.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconCargoBay
   entities:
   - uid: 16244
@@ -47120,7 +47150,6 @@ entities:
     - type: Transform
       pos: 24.5,-97.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconCargoReception
   entities:
   - uid: 16243
@@ -47149,7 +47178,6 @@ entities:
     - type: Transform
       pos: 19.5,-72.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconCMORoom
   entities:
   - uid: 16267
@@ -47157,7 +47185,6 @@ entities:
     - type: Transform
       pos: 11.5,-16.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconCryosleep
   entities:
   - uid: 16223
@@ -47244,7 +47271,6 @@ entities:
     - type: Transform
       pos: 14.5,-59.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconHOSRoom
   entities:
   - uid: 18071
@@ -47259,7 +47285,6 @@ entities:
     - type: Transform
       pos: -8.5,-51.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconKitchen
   entities:
   - uid: 16228
@@ -47288,7 +47313,6 @@ entities:
     - type: Transform
       pos: 14.5,-29.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconMorgue
   entities:
   - uid: 8744
@@ -47303,7 +47327,6 @@ entities:
     - type: Transform
       pos: 46.5,-17.5
       parent: 2
-    - type: BombingTarget
     - type: NavMapBeacon
       defaultText: Genpop
 - proto: DefaultStationBeaconPowerBank
@@ -47320,7 +47343,6 @@ entities:
     - type: Transform
       pos: 9.5,-88.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconRDRoom
   entities:
   - uid: 5092
@@ -47349,7 +47371,6 @@ entities:
     - type: Transform
       pos: -6.5,-21.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconSecurity
   entities:
   - uid: 18001
@@ -47378,7 +47399,6 @@ entities:
     - type: Transform
       pos: -23.5,-71.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconSolarsE
   entities:
   - uid: 8642
@@ -88100,6 +88120,22 @@ entities:
       parent: 2
 - proto: LogicGateOr
   entities:
+  - uid: 18143
+    components:
+    - type: Transform
+      anchored: True
+      pos: -14.5,-70.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        18305:
+        - - Output
+          - DoorBolt
+    - type: Physics
+      canCollide: False
+      bodyType: Static
   - uid: 18350
     components:
     - type: Transform

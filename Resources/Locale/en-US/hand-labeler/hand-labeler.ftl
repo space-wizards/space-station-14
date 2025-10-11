@@ -15,3 +15,7 @@ hand-labeler-has-label = This object has a label on it, which reads '{$label}'
 # Verb text
 hand-labeler-remove-label-text = Remove label
 hand-labeler-add-label-text = Apply label
+
+# Shown when the labeler is examined
+hand-labeler-examine-blank = The label text is blank.
+hand-labeler-examine-label-text = The label text is '{$label-text}'.

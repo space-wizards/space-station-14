@@ -62,6 +62,7 @@
     sprite: Structures/Machines/microwave.rsi
     drawdepth: SmallObjects
     snapCardinals: true
+    offset: "0.0,0.2"
     layers:
     - state: mw0
       map: ["enum.MicrowaveVisualizerLayers.Base"]
@@ -112,6 +113,38 @@
     guides:
     - Chef
     - FoodRecipes
+  - type: Item
+    sprite: Structures/Machines/microwave.rsi
+    size: Ginormous
+  - type: MultiHandedItem
+  - type: MeleeWeapon
+    attackRate: 0.5
+    soundHit:
+      collection: MetalBreak
+    damage:
+      types:
+        Blunt: 25
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 10
+  - type: DamageOnHit
+    damage:
+      types:
+        Blunt: 10
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 50
+  - type: EmitSoundOnLand
+    sound:
+      collection: MetalBreak
+      params:
+        variation: 0.25
+  - type: HeldSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
+  - type: DamageExaminable
 
 - type: entity
   id: SyndicateMicrowave
@@ -135,3 +168,24 @@
     providedRecipes:
     - RecipeBaguetteSword
     - RecipeThrowingCroissant
+  - type: Item
+    sprite: Structures/Machines/microwave_syndie.rsi
+    size: Ginormous
+  - type: MeleeWeapon
+    attackRate: 0.75
+    damage:
+      types:
+        Blunt: 30
+        Shock: 5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 15
+  - type: DamageOnHit
+    damage:
+      types:
+        Blunt: 5
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 25

@@ -1,5 +1,6 @@
 ﻿using Robust.Shared.Containers;
 using Robust.Shared.Enums;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.IdentityManagement.Components;
 
@@ -10,7 +11,7 @@ namespace Content.Shared.IdentityManagement.Components;
 /// <remarks>
 ///     This is a <see cref="ContainerSlot"/> and not just a datum entity because we do sort of care that it gets deleted and sent with the user.
 /// </remarks>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class IdentityComponent : Component
 {
     [ViewVariables]

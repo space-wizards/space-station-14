@@ -4,7 +4,6 @@ lathe-category-clothing = Clothing
 lathe-category-lights = Lights
 lathe-category-machines = Machines
 lathe-category-parts = Parts
-lathe-category-tiles = Tiles
 lathe-category-tools = Tools
 lathe-category-weapons = Weapons
 
@@ -24,13 +23,16 @@ lathe-category-service = Service
 lathe-category-supply = Supply
 
 # Cutter
-lathe-category-concrete = Concrete
-lathe-category-dark = Dark
-lathe-category-maints = Maints
-lathe-category-steel = Steel
-lathe-category-white = White
-lathe-category-wood = Wood
+lathe-category-tiles = Tiles
+lathe-category-circuit-tile = Circuit
+lathe-category-concrete-tile = Concrete
+lathe-category-dark-tile = Dark
+lathe-category-faux-tile = Faux
+lathe-category-maints-tile = Maints
 lathe-category-marble = Marble
+lathe-category-steel-tile = Steel
+lathe-category-white-tile = White
+lathe-category-wood-tile = Wood
 
 # Science
 lathe-category-mechs = Mechs

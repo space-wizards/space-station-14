@@ -38,6 +38,111 @@
       - id: MusicBoxInstrument
       - id: ViolaInstrument
 
+- type: entityTable
+  id: VarietyInstrumentTable
+  table: !type:GroupSelector
+    children:
+    - id: SynthesizerInstrument
+    - id: AcousticGuitarInstrument
+    - id: TrumpetInstrument
+    - id: AccordionInstrument
+    - id: HarmonicaInstrument
+    - id: RecorderInstrument
+    - id: GlockenspielInstrument
+
+- type: entityTable
+  id: BrassInstrumentTable
+  table: !type:GroupSelector
+    children:
+    - id: TrumpetInstrument
+    - id: TromboneInstrument
+    - id: FrenchHornInstrument
+    - id: EuphoniumInstrument
+    - id: TubaInstrument
+
+- type: entityTable
+  id: StringInstrumentTable
+  table: !type:GroupSelector
+    children:
+      - id: AcousticGuitarInstrument
+      - id: ElectricGuitarInstrument
+      - id: BassGuitarInstrument
+      - id: RockGuitarInstrument
+      - id: BanjoInstrument
+      - id: ViolinInstrument
+      - id: CelloInstrument
+      - id: ViolaInstrument
+      - id: HarpInstrument
+
+- type: entityTable
+  id: WoodwindInstrumentTable
+  table: !type:GroupSelector
+    children:
+      - id: RecorderInstrument
+      - id: BagpipeInstrument
+      - id: ClarinetInstrument
+      - id: FluteInstrument
+      - id: HarmonicaInstrument
+      - id: SaxophoneInstrument
+      - id: OcarinaInstrument
+      - id: PanFluteInstrument
+
+- type: entityTable
+  id: KeyedPercussionInstrumentTable
+  table: !type:GroupSelector
+    children:
+      - id: SynthesizerInstrument
+      - id: AccordionInstrument
+      - id: KalimbaInstrument
+      - id: WoodblockInstrument
+      - id: GlockenspielInstrument
+      - id: VibraphoneInstrument
+
+- type: entityTable
+  id: SpecialInstrumentTable
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector
+      weight: 1
+      children:
+      - id: BikeHornInstrument
+      - id: MusicBoxInstrument
+      - id: SeashellInstrument
+      - id: XylophoneInstrument
+      - id: GunpetInstrument
+      - id: MicrophoneInstrument
+      - id: HelicopterInstrument
+      - id: BirdToyInstrument
+      - id: MusicalLungInstrument
+      - id: ReverseCymbalsInstrument
+    - !type:GroupSelector
+      weight: 0.1
+      children:
+      - id: DawInstrumentMachineCircuitboard
+    - !type:GroupSelector
+      weight: 0.05
+      children:
+      - id: SuperSynthesizerInstrument
+
+- type: entityTable
+  id: SalvageInstrumentTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: VarietyInstrumentTable
+    - !type:NestedSelector
+      tableId: BrassInstrumentTable
+    - !type:NestedSelector
+      tableId: StringInstrumentTable
+    - !type:NestedSelector
+      tableId: KeyedPercussionInstrumentTable
+    - !type:NestedSelector
+      tableId: WoodwindInstrumentTable
+    - !type:NestedSelector
+      tableId: SpecialInstrumentTable
+    - id: SuperSynthesizerInstrument
+      weight: 0.3
+
 - type: entity
   id: RandomInstruments
   name: random instruments spawner

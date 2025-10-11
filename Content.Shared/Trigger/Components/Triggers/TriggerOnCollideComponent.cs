@@ -20,4 +20,10 @@ public sealed partial class TriggerOnCollideComponent : BaseTriggerOnXComponent
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool IgnoreOtherNonHard = true;
+
+    /// <summary>
+    /// If not null, limits the amount of times this component can trigger.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int? MaxTriggers = null;
 }

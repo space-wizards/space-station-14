@@ -235,13 +235,13 @@
 
 - type: entity
   id: CrateTechBoardRandom
-  parent: CrateEngineering
+  parent: ToteBase
   name: surplus boards
   description: Surplus boards from somewhere.
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:NestedSelector
+      storagebase: !type:NestedSelector
         tableId: RandomTechBoardTable
         rolls: !type:RangeNumberSelector
           range: 6, 8

@@ -36,7 +36,7 @@ public sealed class JointVisualsOverlay : Overlay
             if (xform.MapID != args.MapId)
                 continue;
 
-            var other = _entManager.GetEntity(visuals.Target);
+            var other = visuals.Target;
 
             if (!xformQuery.TryGetComponent(other, out var otherXform))
                 continue;
@@ -45,7 +45,7 @@ public sealed class JointVisualsOverlay : Overlay
                 continue;
 
             var texture = spriteSystem.Frame0(visuals.Sprite);
-            var width = texture.Width / (float) EyeManager.PixelsPerMeter;
+            var width = texture.Width / (float)EyeManager.PixelsPerMeter;
 
             var coordsA = xform.Coordinates;
             var coordsB = otherXform.Coordinates;
@@ -58,7 +58,7 @@ public sealed class JointVisualsOverlay : Overlay
 
             var posA = xformSystem.ToMapCoordinates(coordsA).Position;
             var posB = xformSystem.ToMapCoordinates(coordsB).Position;
-            var diff = (posB - posA);
+            var diff = posB - posA;
             var length = diff.Length();
 
             var midPoint = diff / 2f + posA;

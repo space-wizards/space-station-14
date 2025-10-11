@@ -1243,6 +1243,23 @@
         color: "#F7E3A3"
 
 - type: entity
+  parent: FoodMeatChickenFried
+  id: FoodMeatChickenFriedVox
+  name: mystery fried chicken
+  description: “Eleven secret herbs and… oh no. That’s not chicken."
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 5
+        - ReagentId: Ammonia
+          Quantity: 3
+
+- type: entity
   parent: FoodMeatBase
   id: FoodMeatDuckCooked
   name: cooked duck

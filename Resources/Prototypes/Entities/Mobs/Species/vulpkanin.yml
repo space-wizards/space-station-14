@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   abstract: true
   save: false
   parent: [BaseMobSpeciesOrganic]
@@ -172,9 +172,7 @@
 - type: entity
   parent: [BaseSpeciesDummy]
   id: MobVulpkaninDummy
-  name: Vulpkanin Dummy
   categories: [ HideSpawnMenu ]
-  description: A dummy Vulpkanin meant to be used in character setup.
   components:
   - type: HumanoidAppearance
     species: Vulpkanin

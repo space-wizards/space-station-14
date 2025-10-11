@@ -69,13 +69,15 @@
           buckledLayer:
             True: {visible: true}
             False: {visible: false}
+          unfoldedLayer:
+            True: { visible: false }
+            False: { visible: true }
         enum.FoldedVisuals.State: # Copypasta from BaseFoldable b/c collections don't merge when overriding component prototypes.
           foldedLayer:
             True: {visible: true}
             False: {visible: false}
           unfoldedLayer:
             True: {visible: false}
-            False: {visible: true}
     - type: StaticPrice
       price: 120
 

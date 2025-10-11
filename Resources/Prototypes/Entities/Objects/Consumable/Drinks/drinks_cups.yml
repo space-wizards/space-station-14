@@ -22,22 +22,16 @@
 # A mug is a type of cup.[2]
 - type: entity
   abstract: true
-  parent: [ DrinkBaseMaterialPorcelain, DrinkBaseCup ] # todo Should use DrinkVisualsFill, but inheritors have no in-hand and state names are wrong
+  parent: [ DrinkBaseMaterialPorcelain, DrinkBaseCup, DrinkVisualsFill ]
   id: DrinkBaseMug
   name: mug
   description: A mug.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug.rsi
-    layers:
-      - state: icon-0
-      - state: icon-3
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
-  - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 3
-    fillBaseName: icon-
+    inHandsFillBaseName: null
 
 ## Misc Cups
 
@@ -53,18 +47,13 @@
     price: 125
 
 - type: entity
-  parent: DrinkBaseMug
+  parent: DrinkBaseMug # a teacup is basically a mug
   id: DrinkTeacupEmpty
   name: teacup
   description: A plain white porcelain teacup.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teacup.rsi
-    layers:
-    - state: icon-0
-    - state: icon-4
-      map: ["enum.SolutionContainerLayers.Fill"]
-      visible: false
   - type: SolutionContainerVisuals
     maxFillLevels: 4
 
@@ -76,20 +65,11 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_coupe_shape.rsi
-    layers:
-    - state: icon # todo add "icon_empty" state to match DrinkVisualsFillOverlay
-      map: [ "enum.SolutionContainerLayers.Base" ]
-    - state: fill1
-      map: [ "enum.SolutionContainerLayers.Fill" ]
-      visible: false
-    - state: icon-front
-      map: [ "enum.SolutionContainerLayers.Overlay" ]
   - type: SolutionContainerVisuals
-    fillBaseName: fill # todo rename to "fill-" to match DrinkVisualsFillOverlay
     inHandsMaxFillLevels: 1
 
 - type: entity
-  parent: [DrinkBaseMaterialCardboard, DrinkBaseCup] # TODO should use DrinkVisualsFill but state names are wrong and no inhand
+  parent: [DrinkBaseMaterialCardboard, DrinkBaseCup, DrinkBaseEmptyTrash, DrinkVisualsFill]
   id: DrinkWaterCup
   name: water cup
   description: A paper water cup.
@@ -102,22 +82,14 @@
     size: Tiny
   - type: Sprite
     sprite: Objects/Consumable/Drinks/water_cup.rsi
-    layers:
-    - state: icon-0
-    - state: icon-1
-      map: ["enum.SolutionContainerLayers.Fill"]
-      visible: false
   - type: SolutionContainerVisuals
     maxFillLevels: 1
-    fillBaseName: icon-
+    inHandsFillBaseName: null
   - type: Tag
     tags:
     - Trash
     - DrinkCup
     - WhitelistChameleon
-  - type: Appearance
-  - type: TrashOnSolutionEmpty
-    solution: drink
   - type: Clothing
     slots:
     - HEAD
@@ -240,16 +212,13 @@
         - ReagentId: HotCocoa
           Quantity: 20
   - type: Icon
-    sprite: Objects/Consumable/Drinks/hot_coco.rsi
-    state: icon-vend
+    sprite: Objects/Consumable/Drinks/mug.rsi
+    state: icon-vend-brown
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/hot_coco.rsi
     layers:
-      - state: icon-0
-      - map: ["enum.SolutionContainerLayers.Fill"]
-        state: icon-4
-  - type: SolutionContainerVisuals
-    maxFillLevels: 4
+    - state: icon
+    - state: fill-3
+      map: ["enum.SolutionContainerLayers.Fill"]
   - type: TrashOnSolutionEmpty
     solution: drink
 
@@ -267,16 +236,13 @@
         - ReagentId: Coffee
           Quantity: 20
   - type: Icon
-    sprite: Objects/Consumable/Drinks/hot_coffee.rsi
-    state: icon-vend
+    sprite: Objects/Consumable/Drinks/mug.rsi
+    state: icon-vend-brown
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/hot_coffee.rsi
     layers:
-      - state: icon-0
-      - map: ["enum.SolutionContainerLayers.Fill"]
-        state: icon-4
-  - type: SolutionContainerVisuals
-    maxFillLevels: 4
+    - state: icon
+    - state: fill-3
+      map: ["enum.SolutionContainerLayers.Fill"]
   - type: TrashOnSolutionEmpty
     solution: drink
 
@@ -293,16 +259,17 @@
         reagents:
         - ReagentId: CafeLatte
           Quantity: 20
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/cafe_latte.rsi
+    state: icon-vend
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cafe_latte.rsi
     layers:
-      - state: icon_empty
-      - state: fill-1
-        map: ["enum.SolutionContainerLayers.Fill"]
-  - type: Appearance
+    - state: icon
+    - state: fill-1
+      map: ["enum.SolutionContainerLayers.Fill"]
   - type: SolutionContainerVisuals
     maxFillLevels: 1
-    fillBaseName: fill-
     changeColor: false
   - type: TrashOnSolutionEmpty
     solution: drink

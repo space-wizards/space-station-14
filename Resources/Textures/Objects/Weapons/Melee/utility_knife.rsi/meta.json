@@ -1,0 +1,36 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Icon sprited for SS14 by GitHub user sudobeans. Inhand sprites sprited for SS14 by Github user TiniestShark.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "utility_knife_blade"
+        },
+        {
+            "name": "utility_knife_handle"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-blade",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-blade",
+            "directions": 4
+        }
+    ]
+}

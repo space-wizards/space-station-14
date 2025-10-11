@@ -19,7 +19,7 @@ public sealed partial class ReactionMixerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ReactionMixerComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<ReactionMixerComponent, AfterInteractEvent>(OnAfterInteract, before: [typeof(IngestionSystem)]);
         SubscribeLocalEvent<ReactionMixerComponent, ShakeEvent>(OnShake);
         SubscribeLocalEvent<ReactionMixerComponent, ReactionMixDoAfterEvent>(OnDoAfter);
     }
@@ -29,12 +29,13 @@ public sealed partial class ReactionMixerSystem : EntitySystem
         if (!args.Target.HasValue || !args.CanReach || !entity.Comp.MixOnInteract)
             return;
 
-        if (!MixAttempt(entity, args.Target.Value, out var solution))
+        if (!MixAttempt(entity, args.Target.Value, out _))
             return;
 
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, entity.Comp.TimeToMix, new ReactionMixDoAfterEvent(), entity, args.Target.Value, entity);
 
         _doAfterSystem.TryStartDoAfter(doAfterArgs);
+        args.Handled = true;
     }
 
     private void OnDoAfter(Entity<ReactionMixerComponent> entity, ref ReactionMixDoAfterEvent args)

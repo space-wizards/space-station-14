@@ -1,7 +1,7 @@
 ## Static
 
 - type: latheRecipePack
-  id: FloorTilesStatic
+  id: FloorDarkTilesStatic
   recipes:
   - FloorTileItemDark
   - FloorTileItemDarkDiagonalMini
@@ -12,8 +12,10 @@
   - FloorTileItemDarkPavement
   - FloorTileItemDarkPavementVertical
   - FloorTileItemDarkOffset
-  - FloorTileItemDarkSquiggly
-  - FloorTileItemSteelCheckerDark
+
+- type: latheRecipePack
+  id: FloorSteelTilesStatic
+  recipes:
   - FloorTileItemSteel
   - FloorTileItemSteelOffset
   - FloorTileItemSteelDiagonalMini
@@ -23,6 +25,12 @@
   - FloorTileItemSteelMono
   - FloorTileItemSteelPavement
   - FloorTileItemSteelPavementVertical
+  - FloorTileItemSteelCheckerDark
+  - FloorTileItemSteelCheckerLight
+
+- type: latheRecipePack
+  id: FloorWhiteTilesStatic
+  recipes:
   - FloorTileItemWhite
   - FloorTileItemWhiteOffset
   - FloorTileItemWhiteDiagonalMini
@@ -32,14 +40,25 @@
   - FloorTileItemWhiteMono
   - FloorTileItemWhitePavement
   - FloorTileItemWhitePavementVertical
-  - FloorTileItemSteelCheckerLight
+
+- type: latheRecipePack
+  id: FloorMaintsTilesStatic
+  recipes:
   - FloorTileItemGratingMaint
   - FloorTileItemTechmaint
   - FloorTileItemSteelMaint
   - FloorTileItemTechmaintDark
+
+- type: latheRecipePack
+  id: FloorWoodTilesStatic
+  recipes:
   - FloorTileItemWood
   - FloorTileItemWoodLarge
   - FloorTileItemWoodPattern
+
+- type: latheRecipePack
+  id: FloorConcreteTilesStatic
+  recipes:
   - FloorTileItemConcrete
   - FloorTileItemConcreteMono
   - FloorTileItemConcreteSmooth
@@ -49,5 +68,31 @@
   - FloorTileItemOldConcrete
   - FloorTileItemOldConcreteMono
   - FloorTileItemOldConcreteSmooth
+
+- type: latheRecipePack
+  id: CircuitFloorsStatic
+  recipes:
+  - FloorGreenCircuit
+  - FloorBlueCircuit
+  - FloorRedCircuit
+
+- type: latheRecipePack
+  id: FloorMarbleTilesStatic
+  recipes:
   - FloorTileItemWhiteMarble
   - FloorTileItemDarkMarble
+
+## Dynamic
+
+- type: latheRecipePack
+  id: FauxTiles
+  recipes:
+  - FauxTileAstroGrass
+  - FauxTileMowedAstroGrass
+  - FauxTileJungleAstroGrass
+  - FauxTileDarkAstroGrass
+  - FauxTileLightAstroGrass
+  - FauxTileAstroIce
+  - FauxTileAstroSnow
+  - FauxTileAstroAsteroidSand
+  - FauxTileDesertAstroSand

@@ -47,6 +47,12 @@ public sealed partial class RadioJammerComponent : Component
     public RadioJamSetting[] Settings;
 
     /// <summary>
+    /// Frequencies that are NOT jammed by this jammer.
+    /// </summary>
+    [DataField]
+    public HashSet<int> FrequenciesExcluded = [];
+
+    /// <summary>
     /// Index of the currently selected setting.
     /// </summary>
     [DataField]

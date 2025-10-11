@@ -1,0 +1,41 @@
+name: Report an issue
+description: For issues that are not related to any other issue form.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to fill out an issue. This template is intended for any issues that do not fit other issue templates.
+        For feedback or help running Space Station 14, please join our [Discord](https://discord.gg/rGvu9hKffJ).
+  - type: input
+    attributes:
+      label: What version did the issue occur in?
+      description: You can find the version by opening the changelog in-game and looking at the bottom right corner of the changelog window.
+      placeholder: wizards/aa1337b
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Description
+      description: |
+        A clear and concise description of what the issue is.
+        If the issue is visual in nature, consider posting a screenshot.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Reproduction
+      description: List the steps required to reproduce the issue.
+      placeholder: |
+        1.
+        2.
+        3.
+        ...
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Additional Context
+      description: Add any other additional context about the issue here.
+    validations:
+      required: false
+

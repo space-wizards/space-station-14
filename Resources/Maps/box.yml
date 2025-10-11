@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 266.0.0
+  engineVersion: 267.2.0
   forkId: ""
   forkVersion: ""
-  time: 09/06/2025 03:51:25
-  entityCount: 28793
+  time: 10/08/2025 20:15:18
+  entityCount: 28790
 maps:
 - 780
 grids:
@@ -10936,8 +10936,8 @@ entities:
           id: docking46345
           localAnchorB: -0.5,-1
           localAnchorA: -66.5,22
-          damping: 42.40102
-          stiffness: 380.5907
+          damping: 42.401035
+          stiffness: 380.59082
     - type: OccluderTree
     - type: Shuttle
       dampingModifier: 0.25
@@ -23111,18 +23111,6 @@ entities:
     components:
     - type: Transform
       pos: 7.3923097,47.786827
-      parent: 8364
-- proto: BoxShotgunSlug
-  entities:
-  - uid: 7852
-    components:
-    - type: Transform
-      pos: -7.2934785,34.60984
-      parent: 8364
-  - uid: 9144
-    components:
-    - type: Transform
-      pos: -7.289858,34.610893
       parent: 8364
 - proto: BoxSterileMask
   entities:
@@ -182974,15 +182962,6 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: WeaponShotgunEnforcer
-  entities:
-  - uid: 9086
-    components:
-    - type: Transform
-      pos: -7.4221897,34.38881
-      parent: 8364
-    - type: BallisticAmmoProvider
-      proto: ShellShotgunSlug
 - proto: WeaponShotgunKammerer
   entities:
   - uid: 26308

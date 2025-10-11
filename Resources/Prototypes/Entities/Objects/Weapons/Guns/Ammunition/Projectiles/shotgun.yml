@@ -68,8 +68,8 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 3
-        Heat: 7
+        Piercing: 7
+        Heat: 3
   - type: IgnitionSource
     ignited: true
 

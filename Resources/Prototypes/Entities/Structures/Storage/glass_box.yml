@@ -1,8 +1,11 @@
 ﻿- type: entity
-  parent: [BaseStructureDynamic, BaseItemCabinetGlass]
+  parent: BaseStructureDynamic
   id: BaseGlassBox
   abstract: true
   components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Storage/glassbox.rsi
   - type: Transform
     anchored: true
   - type: Physics
@@ -24,20 +27,18 @@
     delay: 4
 
 - type: entity
+  parent: [BaseGlassBox, BaseItemCabinetGlass]
   id: GlassBox
   name: glass box
   description: A sturdy showcase for an expensive exhibit.
-  parent: BaseGlassBox
   abstract: true # TODO: Temporarily abstract. Remove it after item scaling in cabinets is implemented.
   components:
   - type: Sprite
-    noRot: true
-    sprite: Structures/Storage/glassbox.rsi
     layers:
     - state: base
     - state: caplaser # TODO: Remove it after item scaling in cabinets is implemented.
       map: ["enum.ItemCabinetVisuals.Layer"]
-      visible: true
+      visible: false
     - state: glass
       map: ["enum.OpenableVisuals.Layer"]
     - state: locked
@@ -116,8 +117,8 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  id: GlassBoxLaser
   parent: GlassBox
+  id: GlassBoxLaser
   suffix: AntiqueLaser
   components:
   - type: AccessReader
@@ -135,8 +136,8 @@
         ejectSound: /Audio/Machines/machine_switch.ogg
 
 - type: entity
-  id: GlassBoxLaserOpen
   parent: GlassBoxLaser
+  id: GlassBoxLaserOpen
   suffix: AntiqueLaser, Open
   components:
   - type: Openable
@@ -145,8 +146,8 @@
     locked: false
 
 - type: entity
-  id: GlassBoxLaserFilled
   parent: GlassBoxLaser
+  id: GlassBoxLaserFilled
   suffix: AntiqueLaser, Filled
   components:
   - type: ContainerFill
@@ -160,15 +161,13 @@
   suffix: AntiqueLaser, Filled, Open
 
 - type: entity
+  parent: BaseGlassBox
   id: GlassBoxFrame
   name: glass box frame
   description: A glassless sturdy showcase for an expensive exhibit.
-  parent: BaseGlassBox
   suffix: Frame
   components:
   - type: Sprite
-    noRot: true
-    sprite: Structures/Storage/glassbox.rsi
     layers:
     - state: base
   - type: Construction
@@ -204,14 +203,13 @@
         acts: ["Destruction"]
 
 - type: entity
+  parent: GlassBoxFrame
   id: GlassBoxBroken
   name: broken glass box
   description: A broken showcase for a stolen expensive exhibit.
-  parent: GlassBoxFrame
   suffix: Broken
   components:
   - type: Sprite
-    sprite: Structures/Storage/glassbox.rsi
     layers:
     - state: base
     - state: glass-broken

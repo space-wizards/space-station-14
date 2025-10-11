@@ -20,6 +20,7 @@
   id: Status
   name: signal-port-name-status-transmitter
   description: signal-port-description-status-transmitter
+  defaultLinks: [ Toggle ]
 
 - type: sourcePort
   id: Left

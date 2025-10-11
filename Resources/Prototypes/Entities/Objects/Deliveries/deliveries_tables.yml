@@ -105,6 +105,8 @@
       - id: Ointment
       - id: Gauze
       - id: Bloodpack
+    - id: SyndicateBusinessCard
+      weight: 0.5
 
 # Packages
 # TODO: Currently mostly maints loot, should be updated in the future.
@@ -138,6 +140,9 @@
       weight: 0.2
       rolls: !type:RangeNumberSelector
         range: 2, 3
+    - !type:NestedSelector
+      tableId: InsulsTable #Uncommon since it's weighted towards budget/fingerless
+      weight: 0.2
 
 - type: entityTable # TODO: Add more variety!
   id: PackageRareEntityTable
@@ -157,3 +162,4 @@
     - !type:NestedSelector
       tableId: SyndieMaintLoot
       weight: 0.5
+      

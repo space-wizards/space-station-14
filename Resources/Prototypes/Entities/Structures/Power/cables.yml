@@ -1,6 +1,6 @@
 ﻿- type: entity
   abstract: true
-  id: CableBase
+  id: CablePhysBase
   placement:
     mode: SnapgridCenter
   components:
@@ -13,11 +13,21 @@
   - type: Transform
     anchored: true
     noRot: true
-  # TODO: Remove both of these, same with CollideOnAnchor
+    # TODO: Remove both of these, same with CollideOnAnchor
   - type: Physics
     bodyType: Static
     canCollide: false
   - type: Fixtures
+  - type: CollideOnAnchor
+  - type: Appearance
+
+- type: entity
+  abstract: true
+  parent: CablePhysBase
+  id: CableBase
+  components:
+  - type: Visibility
+    layer: 1
   - type: Sprite
     drawdepth: ThinWire
     visible: false
@@ -33,8 +43,6 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: SubFloorHide
-  - type: CollideOnAnchor
-  - type: Appearance
   - type: Electrified
     onHandInteract: false
     onInteractUsing: false # wire-cutting handled separately.
@@ -215,3 +223,72 @@
   components:
   - type: Cable
     cuttingQuality: null
+
+# Explosive cable below
+- type: entity
+  id: CableDet
+  parent: [ CablePhysBase, BaseSecurityContraband ]
+  name: explosive cord
+  description: Spaghetti for people who hate walls.
+  components:
+  - type: Cable
+    cableDroppedOnCutPrototype: CableDetStack1
+    cableType: ExCable
+  - type: Sprite
+#    color: white # maybe change this later and move the stripes to the CableVisualizerComp layer instead
+    sprite: Structures/Power/Cables/ex_cable.rsi
+    state: excable_0
+  - type: Icon
+    sprite: Structures/Power/Cables/ex_cable.rsi
+    state: excable_4
+  - type: Damageable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Structural #this is as close as we can get to only letting explosives set it off.
+        damage: 120
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:ExplodeBehavior
+    - trigger:
+        !type:DamageTrigger #A fallback that deletes it but doesnt explode in case something somehow gets here without exploding violently enough.
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 35
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          CableDetStack1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: CableVis
+    node: cordage
+  - type: NodeContainer
+    nodes:
+      cordage:
+        !type:CableNode
+        nodeGroupID: ExCable
+  - type: CableVisualizer
+    statePrefix: excable_
+  - type: Explosive
+    explosionType: DemolitionCharge
+    totalIntensity: 10
+    intensitySlope: 5
+    maxIntensity: 5
+    canCreateVacuum: false
+  - type: ExplodeOnTrigger
+  - type: Construction
+    graph: DetCable
+    node: detonationCable
+  - type: Tag
+    tags:
+    - ExCable

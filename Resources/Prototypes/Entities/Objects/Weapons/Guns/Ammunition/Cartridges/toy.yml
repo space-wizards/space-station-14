@@ -6,7 +6,6 @@
   components:
   - type: Tag
     tags:
-      - Cartridge
       - CartridgeCap
   - type: CartridgeAmmo
   - type: Sprite

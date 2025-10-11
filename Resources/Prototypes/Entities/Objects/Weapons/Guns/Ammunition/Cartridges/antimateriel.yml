@@ -5,7 +5,6 @@
   components:
   - type: Tag
     tags:
-    - Cartridge
     - CartridgeAntiMateriel
   - type: CartridgeAmmo
     proto: BulletAntiMateriel

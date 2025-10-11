@@ -11,7 +11,7 @@ steal-target-groups-captain-id-card = captain ID card
 steal-target-groups-jetpack-captain-filled = captain's jetpack
 steal-target-groups-weapon-antique-laser = antique laser pistol
 steal-target-groups-nuke-disk = nuclear authentication disk
-steal-target-groups-weapon-energy-shot-gun = energy shotgun
+steal-target-groups-weapon-energy-magnum = energy magnum
 
 # Thief Collection
 steal-target-groups-figurines = figurine

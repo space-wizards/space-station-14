@@ -1,0 +1,115 @@
+# Explosive cable below
+- type: entity
+  parent: [ CableStack, BaseSecurityContraband ]
+  id: CableDetStack
+  name: explosive cord
+  suffix: Full
+  description: Explosive cord for removing whatever is in your way.
+  components:
+  - type: Stack
+    stackType: CableDet
+    baseLayer: base
+    layerStates:
+    - coilex-10
+    - coilex-20
+    - coilex-30
+  - type: Sprite
+    state: coilex-30
+    layers:
+    - state: coilex-30
+      map: ["base"]
+  - type: Item
+    heldPrefix: coilex
+  - type: CablePlacer
+    cablePrototypeID: CableDet
+    blockingWireType: ExCable
+    blacklist:
+      tags:
+      - ExCable
+    overTile: true
+  - type: Appearance
+  - type: Extractable
+    grindableSolutionName: excable
+  - type: SolutionContainerManager
+    solutions:
+      mvcable:
+        reagents:
+        - ReagentId: Thermite
+          Quantity: 3
+        - ReagentId: Charcoal
+          Quantity: 2
+  - type: Damageable
+    damageContainer: StructuralInorganic
+  - type: Destructible # should have the same general explosive behavior as in cables.yml & detonator.yml
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Structural # as close as we can get to only letting explosives trigger it.
+        damage: 120
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:ExplodeBehavior
+    - trigger:
+        !type:DamageTrigger # the idea here is to prevent you from just beating it until it explodes.
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Explosive
+    explosionType: DemolitionCharge
+    totalIntensity: 60
+    intensitySlope: 5
+    maxIntensity: 30
+    canCreateVacuum: false
+  - type: Tag
+    tags:
+    - Payload
+  # - type: Sticky #While cool, this doesn't actually work because the structure prevents the explosion from the cable reaching the stickied wire.
+    # stickDelay: 5
+    # unstickDelay: 5
+    # whitelist:
+      # components:
+      # - Airlock
+      # tags:
+      # - Window
+      # - Wall
+  # - type: StickyVisualizer
+
+- type: entity
+  parent: CableDetStack
+  id: CableDetStack10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: coilex-10
+  - type: Stack
+    count: 10
+  - type: Explosive # TODO: some how make stacking logic handle the explosion scaling. Maybe also something for lingering stacks.
+    explosionType: DemolitionCharge
+    totalIntensity: 30
+    intensitySlope: 5
+    maxIntensity: 15
+    canCreateVacuum: false
+  - type: Tag
+    tags:
+    - Payload
+
+- type: entity
+  parent: CableDetStack
+  id: CableDetStack1
+  suffix: 1
+  components:
+  - type: Sprite
+    state: coilex-10
+  - type: Stack
+    count: 1
+  - type: Explosive
+    explosionType: DemolitionCharge
+    totalIntensity: 10
+    intensitySlope: 5
+    maxIntensity: 5
+    canCreateVacuum: false
+  - type: Tag
+    tags:
+    - Payload
