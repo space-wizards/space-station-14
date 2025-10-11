@@ -26,14 +26,19 @@ public sealed class FeedbackPopupUIController : UIController
 
         _feedbackManager.DisplayedPopupsChanged += OnPopupsChanged;
 
-        CommandBinds.Builder
-            .Bind(ContentKeyFunctions.OpenFeedbackPopup,
-                InputCmdHandler.FromDelegate(_ => ToggleFeedbackPopup()))
-            .Register<FeedbackPopupUIController>();
+        //CommandBinds.Builder
+        //    .Bind(ContentKeyFunctions.OpenFeedbackPopup,
+        //        InputCmdHandler.FromDelegate(_ => ToggleFeedbackPopup()))
+        //    .Register<FeedbackPopupUIController>();
     }
 
     private void OnRoundEnd(RoundEndMessageEvent ev)
     {
+        // Add round end prototypes.
+        var roundEndPrototypes = _feedbackManager.GetOriginFeedbackPrototypes(true);
+        _feedbackManager.Display(roundEndPrototypes);
+
+        // Even if no new prototypes were added, we still want to open the window.
         if (!_window.IsOpen)
             _window.OpenCentered();
     }
@@ -46,7 +51,7 @@ public sealed class FeedbackPopupUIController : UIController
             _window.OpenCentered();
     }
 
-    private void OnPrototypesReloaded(ref PrototypesReloadedEventArgs ev)
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs ev)
     {
         UpdateWindow(_feedbackManager.DisplayedPopups);
     }

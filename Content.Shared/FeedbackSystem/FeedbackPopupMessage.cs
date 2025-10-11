@@ -50,3 +50,14 @@ public sealed class FeedbackPopupMessage : NetMessage
         }
     }
 }
+
+/// <summary>
+/// Sent from the server to open the feedback popup.
+/// </summary>
+public sealed class OpenFeedbackPopupMessage : NetMessage
+{
+    public override MsgGroups MsgGroup => MsgGroups.Command;
+    public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer) { }
+
+    public override void WriteToBuffer(NetOutgoingMessage buffer, IRobustSerializer serializer) { }
+}

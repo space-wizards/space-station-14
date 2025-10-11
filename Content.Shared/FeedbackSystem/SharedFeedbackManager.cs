@@ -30,6 +30,7 @@ public sealed partial class SharedFeedbackManager : IDisposable
     public void Initialize()
     {
         _netManager.RegisterNetMessage<FeedbackPopupMessage>(ReceivedPopupMessage, NetMessageAccept.Client);
+        _netManager.RegisterNetMessage<OpenFeedbackPopupMessage>(_ => Open(), NetMessageAccept.Client);
         InitSubscriptions();
     }
 
@@ -39,10 +40,22 @@ public sealed partial class SharedFeedbackManager : IDisposable
     }
 
     /// <summary>
+    /// Opens the feedback popup window.
+    /// </summary>
+    public void Open()
+    {
+        DisplayedPopupsChanged?.Invoke(true);
+    }
+
+    /// <summary>
     /// Adds the specified popup prototypes to the displayed popups on the client..
     /// </summary>
     /// <param name="prototypes">A list of popup prototype IDs to be added to the displayed prototypes</param>
-    /// <remarks>This does nothing on the server</remarks>
+    /// <remarks>
+    /// This does nothing on the server.
+    /// <br/>
+    /// Use this if you want to add a popup from a shared or client-side entity system.
+    /// </remarks>
     public void Display(List<ProtoId<FeedbackPopupPrototype>>? prototypes)
     {
         if (prototypes == null || !_netManager.IsClient)
@@ -82,6 +95,7 @@ public sealed partial class SharedFeedbackManager : IDisposable
     /// <param name="uid">The unique identifier of the entity to send the feedback popups to.</param>
     /// <param name="popupPrototypes">The list of feedback popup prototypes to send to the entity.</param>
     /// <returns>Returns true if the feedback popups were successfully sent, otherwise false.</returns>
+    /// <remarks>This does nothing on the client.</remarks>
     public bool Send(EntityUid uid, List<ProtoId<FeedbackPopupPrototype>> popupPrototypes)
     {
         if (!_player.TryGetSessionByEntity(uid, out var session))
@@ -96,6 +110,7 @@ public sealed partial class SharedFeedbackManager : IDisposable
     /// </summary>
     /// <param name="session">The session to which the feedback popups will be sent.</param>
     /// <param name="popupPrototypes">A list of feedback popup prototype IDs to send to the session.</param>
+    /// <remarks>This does nothing on the client.</remarks>
     public void SendToSession(ICommonSession session, List<ProtoId<FeedbackPopupPrototype>> popupPrototypes)
     {
         if (!_netManager.IsServer)
@@ -113,6 +128,7 @@ public sealed partial class SharedFeedbackManager : IDisposable
     /// Sends the specified feedback popup prototypes to all connected client sessions.
     /// </summary>
     /// <param name="popupPrototypes">A list of popup prototype IDs to be sent to all connected sessions.</param>
+    /// <remarks>This does nothing on the client.</remarks>
     public void SendToAllSessions(List<ProtoId<FeedbackPopupPrototype>> popupPrototypes)
     {
         if (!_netManager.IsServer)
@@ -123,6 +139,33 @@ public sealed partial class SharedFeedbackManager : IDisposable
             FeedbackPrototypes = popupPrototypes,
         };
 
+        _netManager.ServerSendToAll(msg);
+    }
+
+    /// <summary>
+    /// Opens the feedback popup for a specific session.
+    /// </summary>
+    /// <param name="session">The session for which the feedback popup should be opened.</param>
+    /// <remarks>This does nothing on the client.</remarks>
+    public void OpenForSession(ICommonSession session)
+    {
+        if (!_netManager.IsServer)
+            return;
+
+        var msg = new OpenFeedbackPopupMessage();
+        _netManager.ServerSendMessage(msg, session.Channel);
+    }
+
+    /// <summary>
+    /// Opens the feedback popup for all connected sessions.
+    /// </summary>
+    /// <remarks>This does nothing on the client.</remarks>
+    public void OpenForAllSessions()
+    {
+        if (!_netManager.IsServer)
+            return;
+
+        var msg = new OpenFeedbackPopupMessage();
         _netManager.ServerSendToAll(msg);
     }
 
