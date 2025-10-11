@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Southbridge
-  changes:
-  - message: On Amber, gave security its missing beacon and barriers.
-    type: Fix
-  id: 8568
-  time: '2025-05-26T07:29:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37700
 - author: jessicamaybe
   changes:
   - message: NPC Gorillas can now pry open doors and vault/smash tables!
@@ -3951,3 +3944,11 @@
   id: 9070
   time: '2025-10-11T00:52:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39375
+- author: Centronias
+  changes:
+  - message: The HugBot, which is similar in purpose and construction to other small
+      robots like the CleanBot.
+    type: Add
+  id: 9071
+  time: '2025-10-11T01:05:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37557
