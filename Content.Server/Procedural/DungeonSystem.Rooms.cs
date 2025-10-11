@@ -113,7 +113,7 @@ public sealed partial class DungeonSystem
         return roomRotation;
     }
 
-    public DungeonData SpawnRoom(
+    public void SpawnRoom(
         EntityUid gridUid,
         MapGridComponent grid,
         Matrix3x2 roomTransform,
@@ -126,7 +126,6 @@ public sealed partial class DungeonSystem
         var templateMapUid = _maps.GetMapOrInvalid(roomMap);
         var templateGrid = Comp<MapGridComponent>(templateMapUid);
         var roomDimensions = room.Size;
-        var data = new DungeonData();
 
         var finalRoomRotation = roomTransform.Rotation();
 
@@ -155,7 +154,6 @@ public sealed partial class DungeonSystem
                 }
 
                 _tiles.Add((rounded, tileRef.Tile));
-                data.Tiles[rounded] = tileRef.Tile;
 
                 if (clearExisting)
                 {
@@ -188,7 +186,6 @@ public sealed partial class DungeonSystem
 
             // TODO: Copy the templated entity as is with serv
             var ent = Spawn(protoId, new EntityCoordinates(gridUid, childPos));
-            data.Entities.Add(ent, childPos.Floored());
 
             var childXform = _xformQuery.GetComponent(ent);
             var anchored = templateXform.Anchored;
@@ -259,18 +256,14 @@ public sealed partial class DungeonSystem
                 var result = _decals.TryAddDecal(
                     decal.Id,
                     new EntityCoordinates(gridUid, position),
-                    out var did,
+                    out _,
                     decal.Color,
                     angle,
                     decal.ZIndex,
                     decal.Cleanable);
 
-                data.Decals.Add(did, position);
-
                 DebugTools.Assert(result);
             }
         }
-
-        return data;
     }
 }

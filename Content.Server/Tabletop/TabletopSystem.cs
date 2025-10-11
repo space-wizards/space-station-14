@@ -191,7 +191,7 @@ namespace Content.Server.Tabletop
                 if (!TryComp(uid, out ActorComponent? actor))
                 {
                     RemComp<TabletopGamerComponent>(uid);
-                    continue;
+                    return;
                 }
 
                 if (actor.PlayerSession.Status != SessionStatus.InGame || !CanSeeTable(uid, gamer.Tabletop))

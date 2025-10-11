@@ -414,6 +414,8 @@
       - id: ClothingShoesClownLarge
       - id: ClothingHeadHatMagician
       - id: BeachBall
+      - id: TennisBall
+        amount: 2
       - id: ClothingShoesSkates
       - id: RubberChicken
 
@@ -462,7 +464,7 @@
   name: hydrated scurret
   description: Wait, what?
   id: CrateFunScurret
-  parent: CratePlastic
+  parent: CrateLivestock
   components:
   - type: StorageFill
     contents:

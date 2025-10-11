@@ -52,8 +52,6 @@ public sealed partial class DungeonJob
                 }
             }
         }
-
-        dungeon.RefreshAllTiles();
     }
 
     private void WidenCorridor(Dungeon dungeon, float width, ICollection<Vector2i> corridorTiles)

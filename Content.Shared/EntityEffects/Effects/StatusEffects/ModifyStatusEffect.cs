@@ -34,7 +34,7 @@ public sealed partial class ModifyStatusEffect : EntityEffect
     /// <inheritdoc />
     public override void Effect(EntityEffectBaseArgs args)
     {
-        var statusSys = args.EntityManager.EntitySysManager.GetEntitySystem<SharedStatusEffectsSystem>();
+        var statusSys = args.EntityManager.EntitySysManager.GetEntitySystem<StatusEffectsSystem>();
 
         var time = Time;
         if (args is EntityEffectReagentArgs reagentArgs)

@@ -17,14 +17,10 @@
     drawdepth: BelowFloor
     layers:
       - state: shoreline_water
-  - type: BiomeForceUnload
-  #- type: ContainerContainer
-  #  containers:
-  #    solution@pool: !type:ContainerSlot
   - type: SolutionContainerManager
     solutions:
       pool:
-        maxVol: 9999999 #.inf seems to break the whole yaml file, but would definitely be preferable.
+        maxVol: 9999999 #.inf seems to break the whole yaml file, but would definitely be preferable. 
         reagents:
         - ReagentId: Water
           Quantity: 9999999

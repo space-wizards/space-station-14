@@ -1,122 +1,67 @@
-- type: dungeonConfig
+- type: biomeMarkerLayer
   id: Lizards
-  layers:
-  - !type:ChunkDunGen
-    size: 128
-  - !type:EntityTableDunGen
-    table: !type:EntSelector
-      id: MobLizard
-      amount: !type:RangeNumberSelector
-        range: 3, 5
+  prototype: MobLizard
+  minGroupSize: 3
+  maxGroupSize: 5
 
-
-- type: dungeonConfig
+- type: biomeMarkerLayer
   id: WatchersLavaland
-  layers:
-  - !type:ChunkDunGen
-    size: 128
-  - !type:EntityTableDunGen
-    table: !type:EntSelector
-      id: MobWatcherLavaland
-      amount: !type:RangeNumberSelector
-        range: 3, 3
+  prototype: MobWatcherLavaland
+  minGroupSize: 3
+  maxGroupSize: 3
 
-- type: dungeonConfig
+- type: biomeMarkerLayer
   id: WatchersIcewing
-  layers:
-  - !type:ChunkDunGen
-    size: 128
-  - !type:EntityTableDunGen
-    table: !type:EntSelector
-      id: MobWatcherIcewing
-      amount: !type:RangeNumberSelector
-        range: 3, 3
+  prototype: MobWatcherIcewing
+  minGroupSize: 3
+  maxGroupSize: 3
 
-- type: dungeonConfig
+- type: biomeMarkerLayer
   id: WatchersMagmawing
-  layers:
-  - !type:ChunkDunGen
-    size: 128
-  - !type:EntityTableDunGen
-    table: !type:EntSelector
-      id: MobWatcherMagmawing
-      amount: !type:RangeNumberSelector
-        range: 3, 3
+  prototype: MobWatcherMagmawing
+  minGroupSize: 3
+  maxGroupSize: 3
 
-- type: dungeonConfig
+- type: biomeMarkerLayer
   id: Cows
-  layers:
-  - !type:ChunkDunGen
-    size: 128
-  - !type:EntityTableDunGen
-    table: !type:EntSelector
-      id: MobCow
-      amount: !type:RangeNumberSelector
-        range: 1, 2
+  prototype: MobCow
+  minGroupSize: 1
+  maxGroupSize: 2
 
-- type: dungeonConfig
+- type: biomeMarkerLayer
   id: Chickens
-  layers:
-  - !type:ChunkDunGen
-    size: 128
-  - !type:EntityTableDunGen
-    table: !type:EntSelector
-      id: MobChicken
-      amount: !type:RangeNumberSelector
-        range: 1, 2
+  prototype: MobChicken
+  minGroupSize: 1
+  maxGroupSize: 2
 
-- type: dungeonConfig
+- type: biomeMarkerLayer
   id: Pigs
-  layers:
-  - !type:ChunkDunGen
-    size: 128
-  - !type:EntityTableDunGen
-    table: !type:EntSelector
-      id: MobPig
-      amount: !type:RangeNumberSelector
-        range: 1, 2
+  prototype: MobPig
+  minGroupSize: 1
+  maxGroupSize: 2
 
-- type: dungeonConfig
+- type: biomeMarkerLayer
   id: Foxes
-  layers:
-  - !type:ChunkDunGen
-    size: 128
-  - !type:EntityTableDunGen
-    table: !type:EntSelector
-      id: MobFox
-      amount: !type:RangeNumberSelector
-        range: 1, 1
+  prototype: MobFox
+  minGroupSize: 1
+  maxGroupSize: 1
 
-- type: dungeonConfig
+- type: biomeMarkerLayer
   id: Goats
-  layers:
-  - !type:ChunkDunGen
-    size: 128
-  - !type:EntityTableDunGen
-    table: !type:EntSelector
-      id: MobGoat
-      amount: !type:RangeNumberSelector
-        range: 1, 1
+  prototype: MobGoat
+  minGroupSize: 1
+  maxGroupSize: 1
 
-- type: dungeonConfig
-  id: Carps
-  layers:
-  - !type:ChunkDunGen
-    size: 128
-  - !type:EntityTableDunGen
-    table: !type:EntSelector
-      id: MobCarp
-      amount: !type:RangeNumberSelector
-        range: 1, 2
-
-- type: dungeonConfig
+# TODO: Needs to be more robust
+- type: biomeMarkerLayer
   id: Xenos
-  layers:
-  - !type:ChunkDunGen
-    size: 128
-  - !type:EntityTableDunGen
-    table: !type:EntSelector
-      id: MobXeno
-      amount: !type:RangeNumberSelector
-        range: 1, 2
+  prototype: MobXeno
 
+- type: biomeMarkerLayer
+  id: Carps
+  prototype: MobCarpDungeon
+
+
+#- type: biomeMarkerLayer
+#  id: Experiment
+#  proto: DungeonMarkerExperiment
