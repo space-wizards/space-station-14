@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: The TEG now outputs smoother power when pressure across the circulators
-      flutter. (This was causing epilepsy in extreme circumstances).
-    type: Fix
-  id: 8571
-  time: '2025-05-26T12:07:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37658
 - author: chromiumboy
   changes:
   - message: Sentry turret control panels can now be found adjacent to rooms containing
@@ -3950,3 +3942,10 @@
   id: 9073
   time: '2025-10-11T17:32:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40621
+- author: HTMLSystem
+  changes:
+  - message: Added infectious anom sprites for moths and arachnids.
+    type: Add
+  id: 9074
+  time: '2025-10-11T18:01:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39508
