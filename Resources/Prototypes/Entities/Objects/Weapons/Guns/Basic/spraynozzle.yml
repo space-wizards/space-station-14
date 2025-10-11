@@ -1,6 +1,6 @@
 - type: entity
   id: WeaponSprayNozzle
-  parent: BaseItem
+  parent: [BaseItem, BaseGunMeleeSmall]
   name: spray nozzle
   description: A high-powered spray nozzle used in conjunction with a backpack-mounted water tank.
   components:
