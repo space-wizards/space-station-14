@@ -35,6 +35,7 @@ public static partial class HeatContainerHelpers
     /// to split the source <see cref="HeatContainer"/> into.</param>
     /// <exception cref="ArgumentException">Thrown when attempting to divide the source container by zero.</exception>
     /// <returns>An array of <see cref="HeatContainer"/>s equally split from the source <see cref="HeatContainer"/>.</returns>
+    [PublicAPI]
     public static HeatContainer[] Divide(this HeatContainer c, uint num)
     {
         if (num == 0)
