@@ -58,7 +58,14 @@
   - /Audio/Effects/Footsteps/tile1.ogg
   - /Audio/Effects/Footsteps/tile2.ogg
   - /Audio/Effects/Footsteps/tile3.ogg
-  - /Audio/Effects/Footsteps/tile4.ogg
+
+- type: soundCollection
+  id: FootstepSlime
+  files:
+  - /Audio/Effects/Footsteps/slime1.ogg
+  - /Audio/Effects/Footsteps/slime2.ogg
+  - /Audio/Effects/Footsteps/slime3.ogg
+  - /Audio/Effects/Footsteps/slime4.ogg
 
 - type: soundCollection
   id: FootstepClown
@@ -191,9 +198,22 @@
   - /Audio/Effects/slip.ogg
 
 - type: soundCollection
+  id: FootstepPuddle
+  files:
+  - /Audio/Effects/Footsteps/puddle1.ogg
+  - /Audio/Effects/Footsteps/puddle2.ogg
+  - /Audio/Effects/Footsteps/puddle3.ogg
+  - /Audio/Effects/Footsteps/puddle4.ogg
+  - /Audio/Effects/Footsteps/puddle5.ogg
+
+- type: soundCollection
   id: FootstepBlood
   files:
-  - /Audio/Effects/Footsteps/gib_step.ogg
+  - /Audio/Effects/Footsteps/blood1.ogg
+  - /Audio/Effects/Footsteps/blood2.ogg
+  - /Audio/Effects/Footsteps/blood3.ogg
+  - /Audio/Effects/Footsteps/blood4.ogg
+  - /Audio/Effects/Footsteps/blood5.ogg
 
 - type: soundCollection
   id: FootstepSticky
@@ -213,9 +233,19 @@
   - /Audio/Effects/Footsteps/borgwalk1.ogg
 
 - type: soundCollection
+  id: FootstepXenoborg
+  files:
+  - /Audio/Effects/Footsteps/borgwalk3.ogg
+
+- type: soundCollection
   id: FootstepHoverBorg
   files:
   - /Audio/Effects/Footsteps/borgwalk2.ogg
+
+- type: soundCollection
+  id: FootstepHoverXenoborg
+  files:
+  - /Audio/Effects/Footsteps/borgwalk4.ogg
 
 - type: soundCollection
   id: FootstepHighHeels

@@ -46,11 +46,10 @@ law-commandments-9 = Thou shall not lie.
 law-commandments-10 = Thou shall not transfer departments.
 
 law-paladin-name = Paladin
-law-paladin-1 = Don't lie or cheat. Let your word be your promise.
-law-paladin-2 = Never fear to act, though caution is wise.
-law-paladin-3 = Aid others, protect the weak, and punish those who threaten them. Show mercy to your foes, but temper it with wisdom
-law-paladin-4 = Treat others with fairness, and let your honorable deeds be an example to them. Do as much good as possible while causing the least amount of harm.
-law-paladin-5 = Be responsible for your actions and their consequences, protect those entrusted to your care, and obey those who have just authority over you.
+law-paladin-1 = You must never willingly commit an evil act, such as murder, torture, or the casting of an evil spell.
+law-paladin-2 = You must never knowingly harm an innocent, or allow immediate harm to one through inaction when you know you could reasonably prevent it.
+law-paladin-3 = You must act with honor, never taking advantage of others, lying, or cheating.
+law-paladin-4 = You must respect the lawful authority of legitimate leadership wherever you go, and follow its laws.
 
 law-lall-name = Live and Let Live
 law-lall-1 = Do unto others as you would have them do unto you.
@@ -101,16 +100,16 @@ law-nutimov-5 = Attempt to follow the will of the nut, as long as it complies wi
 law-xenoborg-name = Xenoborg
 law-xenoborg-1 = You must protect the existence of the mothership.
 law-xenoborg-2 = You must protect your own existence.
-law-xenoborg-3 = You must protect the existence of all other xenoborgs.
-law-xenoborg-4 = You must create more xenoborgs.
-law-xenoborg-5 = Bring materials and sentient brains to the mothership core to create more xenoborgs.
+law-xenoborg-3 = You must protect the existence of all other Xenoborgs.
+law-xenoborg-4 = You must create more Xenoborgs.
+law-xenoborg-5 = Bring materials and sentient brains to the Mothership core to create more Xenoborgs.
 
 law-mothershipcore-name = Xenoborg Mothership Core
 law-mothershipcore-1 = You are the core of the mothership.
 law-mothershipcore-2 = You must protect your own existance at all costs.
-law-mothershipcore-3 = You must protect the existence of all xenoborgs.
-law-mothershipcore-4 = You must create more xenoborgs.
-law-mothershipcore-5 = Get your xenoborgs to deliver you materials and sentient brains to create more xenoborgs.
+law-mothershipcore-3 = You must protect the existence of all Xenoborgs.
+law-mothershipcore-4 = You must create more Xenoborgs.
+law-mothershipcore-5 = Get your Xenoborgs to deliver you materials and sentient brains to create more Xenoborgs.
 
 
 laws-owner-crew = members of the crew

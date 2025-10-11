@@ -62,7 +62,7 @@ namespace Content.Server.Pointing.EntitySystems
 
                 if (component.Chasing is not {Valid: true} chasing || Deleted(chasing))
                 {
-                    EntityManager.QueueDeleteEntity(uid);
+                    QueueDel(uid);
                     continue;
                 }
 
@@ -99,7 +99,7 @@ namespace Content.Server.Pointing.EntitySystems
 
 
                 _explosion.QueueExplosion(uid, ExplosionSystem.DefaultExplosionPrototypeId, 50, 3, 10);
-                EntityManager.QueueDeleteEntity(uid);
+                QueueDel(uid);
             }
         }
     }

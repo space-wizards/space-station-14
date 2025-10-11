@@ -9,7 +9,6 @@
   - type: SmokeVisuals
   - type: Transform
     anchored: true
-  - type: Clickable
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -47,6 +46,29 @@
   - type: Tag
     tags:
     - HideContextMenu
+
+- type: entity
+  parent: BaseFoam
+  id: TearGasSmoke
+  name: tear gas
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Effects/chemsmoke.rsi
+    state: chemsmoke
+  - type: TimedDespawn
+    lifetime: 10
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  parent: TearGasSmoke
+  id: TearGasSmokeWhite
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: chemsmoke_white
 
 - type: entity
   parent: Smoke
@@ -213,7 +235,7 @@
 - type: entity
   id: FoamedAluminiumMetal
   name: foamed aluminium metal
-  description: "For sealing hull breaches."
+  description: "Leftover sparse foam from an aluminum foam grenade. Easily destroyed."
   parent: BaseFoamedMetal
   components:
   - type: Sprite
@@ -231,6 +253,17 @@
       state: metal_foam-north
     - map: [ "enum.EdgeLayer.West" ]
       state: metal_foam-west
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: FlimsyMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1 # Intentionally very weak to encourage speedy repair, think of it as thin webbing
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   id: ReactionFlash
