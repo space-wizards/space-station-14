@@ -81,7 +81,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 });
 
                 // Test to ensure cuffed players register the handcuffs
-                cuffableSys.TryAddNewCuffs(human, human, cuffs, cuffed);
+                cuffableSys.TryAddNewCuffs(human, human, cuffs);
                 Assert.That(cuffed.CuffedHandCount, Is.GreaterThan(0), "Handcuffing a player did not result in their hands being cuffed");
 
                 // Test to ensure a player with 4 hands will still only have 2 hands cuffed
@@ -95,7 +95,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 });
 
                 // Test to give a player with 4 hands 2 sets of cuffs
-                cuffableSys.TryAddNewCuffs(human, human, secondCuffs, cuffed);
+                cuffableSys.TryAddNewCuffs(human, human, secondCuffs);
                 Assert.That(cuffed.CuffedHandCount, Is.EqualTo(4), "Player doesn't have correct amount of hands cuffed");
             });
 
