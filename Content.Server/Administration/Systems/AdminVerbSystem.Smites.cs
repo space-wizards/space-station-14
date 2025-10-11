@@ -1,4 +1,3 @@
-using System.Threading;
 using Content.Server.Administration.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
@@ -6,8 +5,8 @@ using Content.Server.Body.Systems;
 using Content.Server.Electrocution;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.GhostKick;
-using Content.Server.Medical;
 using Content.Server.Nutrition.EntitySystems;
+using Content.Server.Physics.Components;
 using Content.Server.Pointing.Components;
 using Content.Server.Polymorph.Systems;
 using Content.Server.Popups;
@@ -22,8 +21,8 @@ using Content.Shared.Administration.Components;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
-using Content.Shared.Clumsy;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Clumsy;
 using Content.Shared.Cluwne;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
@@ -32,6 +31,7 @@ using Content.Shared.Electrocution;
 using Content.Shared.Gravity;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Medical;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -54,7 +54,10 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Spawners;
 using Robust.Shared.Utility;
+using System.Numerics;
+using System.Threading;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Administration.Systems;
@@ -63,7 +66,7 @@ public sealed partial class AdminVerbSystem
 {
     private readonly ProtoId<PolymorphPrototype> LizardSmite = "AdminLizardSmite";
     private readonly ProtoId<PolymorphPrototype> VulpkaninSmite = "AdminVulpSmite";
-  
+
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
@@ -143,7 +146,6 @@ public sealed partial class AdminVerbSystem
             {
                 _sharedGodmodeSystem.EnableGodmode(args.Target); // So they don't suffocate.
                 EnsureComp<TabletopDraggableComponent>(args.Target);
-                RemComp<PhysicsComponent>(args.Target); // So they can be dragged around.
                 var xform = Transform(args.Target);
                 _popupSystem.PopupEntity(Loc.GetString("admin-smite-chess-self"), args.Target,
                     args.Target, PopupType.LargeCaution);
@@ -1006,5 +1008,63 @@ public sealed partial class AdminVerbSystem
             Message = string.Join(": ", siliconName, Loc.GetString("admin-smite-silicon-laws-bound-description"))
         };
         args.Verbs.Add(silicon);
+
+        var homingRodName = Loc.GetString("admin-smite-homing-rod-name").ToLowerInvariant();
+        Verb homingRod = new()
+        {
+            Text = homingRodName,
+            Category = VerbCategory.Smite,
+            Icon = new SpriteSpecifier.Rsi(new("Objects/Specific/Security/target.rsi"), "target_s"),
+            Act = () =>
+            {
+                var speed = 25f; // It don't miss brother.
+                var distance = 350f;
+                HomingLaunchSequence(args.Target, "ImmovableRodKeepTiles", distance, speed); // todo: swap the proto for an EntityTable GetSpawns once rod rule rework
+            },
+            Impact = LogImpact.Extreme,
+            Message = string.Join(": ", homingRodName, Loc.GetString("admin-smite-homing-rod-description"))
+        };
+        args.Verbs.Add(homingRod);
+
+        var homingRodSlowName = Loc.GetString("admin-smite-homing-rod-slow-name").ToLowerInvariant();
+        Verb homingRodSlow = new()
+        {
+            Text = homingRodSlowName,
+            Category = VerbCategory.Smite,
+            Icon = new SpriteSpecifier.Rsi(new("Objects/Specific/Security/target.rsi"), "target_c"),
+            Act = () =>
+            {
+                var speed = 5f; // slightly faster than default sprint speed 4.5
+                if (TryComp<MovementSpeedModifierComponent>(args.Target, out var movement))
+                    speed = movement.CurrentSprintSpeed + 0.001f;// run
+                var distance = 200f; // its kinda slow so were just gonna cheat a bit.
+                HomingLaunchSequence(args.Target, "ImmovableRodKeepTiles", distance, speed);
+            },
+            Impact = LogImpact.Extreme,
+            Message = string.Join(": ", homingRodSlowName, Loc.GetString("admin-smite-homing-rod-slow-description"))
+        };
+        args.Verbs.Add(homingRodSlow);
+    }
+
+    public void HomingLaunchSequence(EntityUid target, EntProtoId proto, float distance, float speed)
+    {
+        // ToDo: Reuse some spawning code from whereever the rod rule ends up.
+        // I would do it now but theres a massive rod rewrite, and I don't wanna poke it for this.
+        // find reasonable spawn location (use gamerule and find rod?) but respect map not on grid etc etc
+
+        var offset = new Random(target.Id).NextAngle().RotateVec(new Vector2(distance, 0));
+        var spawnCoords = _transformSystem.GetMapCoordinates(target).Offset(offset);
+        var rod = Spawn(proto, spawnCoords);
+        // Here we abuse the ChasingWalkComp by making it skip targetting logic and dialling its frequency up
+        EnsureComp<ChasingWalkComponent>(rod, out var chasingComp);
+        chasingComp.NextChangeVectorTime = TimeSpan.MaxValue; // we just want it to never change
+        chasingComp.ChasingEntity = target;
+        chasingComp.ImpulseInterval = .1f; // skrrt skrrrrrrt skrrrt
+        chasingComp.RotateWithImpulse = true;
+        chasingComp.MaxSpeed = speed;
+        chasingComp.Speed = speed; // tell me lies, tell me sweet little lies.
+
+        if (TryComp<TimedDespawnComponent>(rod, out var despawn))
+            despawn.Lifetime = offset.Length() / speed * 3; // exists thrice as long as it takes to get to you.
     }
 }
