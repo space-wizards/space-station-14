@@ -16,7 +16,7 @@ RELEASE_DIR = "release"
 # Forks should change these to publish to their own infrastructure.
 #
 ROBUST_CDN_URL = "https://cdn.simplestation14.org/"
-FORK_ID = "SpaceBreak"
+FORK_ID = "spacebreak"
 
 def main():
     parser = argparse.ArgumentParser()
