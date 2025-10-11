@@ -388,3 +388,22 @@
   category: cargoproduct-category-name-fun
   group: market
 
+- type: cargoProduct
+  id: FunBiggerCheckers
+  icon:
+    sprite: Objects/Fun/Tabletop/checker_pieces.rsi
+    state: w_checker_crown
+  product: CrateFunBiggerCheckers
+  cost: 3000
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
+  id: FunBigCheckers
+  icon:
+    sprite: Objects/Fun/Tabletop/checker_pieces.rsi
+    state: b_checker_crown
+  product: CrateFunBigCheckers
+  cost: 2000
+  category: cargoproduct-category-name-fun
+  group: market
