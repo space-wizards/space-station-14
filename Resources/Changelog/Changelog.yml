@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Fildrance
-  changes:
-  - message: Spray nozzle now can consume liquids from puddles and put it right into
-      backpacked tank.
-    type: Add
-  id: 8567
-  time: '2025-05-26T03:36:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30600
 - author: Southbridge
   changes:
   - message: On Amber, gave security its missing beacon and barriers.
@@ -3951,3 +3943,11 @@
   id: 9069
   time: '2025-10-11T00:33:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39984
+- author: qwerltaz
+  changes:
+  - message: The ID card computer now has buttons to grant or revoke all access from
+      the target ID card.
+    type: Add
+  id: 9070
+  time: '2025-10-11T00:52:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39375
