@@ -44,6 +44,12 @@
     additionalKeys:
     - walls
     base: web_
+  - type: SpeedModifierContacts
+    walkSpeedModifier: 0.5
+    sprintSpeedModifier: 0.5
+    ignoreWhitelist:
+      components:
+      - IgnoreSpiderWeb
 
 - type: entity
   id: SpiderWeb
@@ -82,12 +88,6 @@
           MaterialWebSilk:
             min: 0
             max: 1
-  - type: SpeedModifierContacts
-    walkSpeedModifier: 0.5
-    sprintSpeedModifier: 0.5
-    ignoreWhitelist:
-      components:
-      - IgnoreSpiderWeb
 
 - type: entity
   id: SpiderWebClown
