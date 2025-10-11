@@ -72,7 +72,7 @@ public sealed partial class EvenHealthChange : EntityEffect
         var healsordeals = heals ? (deals ? "both" : "heals") : (deals ? "deals" : "none");
         return Loc.GetString("reagent-effect-guidebook-even-health-change",
             ("chance", Probability),
-            ("changes", ContentLocalizationManager.FormatList(damages)),
+            ("changes", damages),
             ("healsordeals", healsordeals));
     }
 

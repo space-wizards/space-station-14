@@ -860,11 +860,9 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             if (recognized.Count == 0)
                 return;
 
-            var msg = ContentLocalizationManager.FormatList(recognized);
-
             // Finally push the full message
             args.PushMarkup(Loc.GetString(entity.Comp.LocRecognizableReagents,
-                ("recognizedString", msg)));
+                ("recognizedString", recognized)));
         }
     }
 
