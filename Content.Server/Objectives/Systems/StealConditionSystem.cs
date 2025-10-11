@@ -1,17 +1,19 @@
+using Content.Server.GameTicking;
 using Content.Server.Objectives.Components;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.Interaction;
 using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
+using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
+using Content.Shared.Stacks;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Content.Shared.Mind.Components;
-using Content.Shared.Mobs.Systems;
-using Content.Shared.Mobs.Components;
-using Content.Shared.Movement.Pulling.Components;
-using Content.Shared.Stacks;
+using Robust.Shared.Map;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -24,6 +26,7 @@ public sealed class StealConditionSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
 
     private EntityQuery<ContainerManagerComponent> _containerQuery;
 
@@ -44,11 +47,32 @@ public sealed class StealConditionSystem : EntitySystem
     /// start checks of target acceptability, and generation of start values.
     private void OnAssigned(Entity<StealConditionComponent> condition, ref ObjectiveAssignedEvent args)
     {
+        // Select map: owner map if requested and available, otherwise default map
+        var filterByMap = condition.Comp.FilterByMap;
+        MapId selectedMapId = default;
+        var hasSelectedMap = false;
+        if (filterByMap)
+        {
+            if (condition.Comp.UseOwnerMap && args.Mind.OwnedEntity != null &&
+                TryComp<TransformComponent>(args.Mind.OwnedEntity.Value, out var ownerXform))
+            {
+                selectedMapId = ownerXform.MapID;
+                hasSelectedMap = true;
+            }
+            else
+            {
+                selectedMapId = _gameTicker.DefaultMap;
+                hasSelectedMap = true;
+            }
+        }
         List<StealTargetComponent?> targetList = new();
 
-        var query = AllEntityQuery<StealTargetComponent>();
-        while (query.MoveNext(out var target))
+        var query = AllEntityQuery<StealTargetComponent, TransformComponent>();
+        while (query.MoveNext(out var target, out var transform))
         {
+            if (filterByMap && hasSelectedMap && transform.MapID != selectedMapId)
+                continue;
+
             if (condition.Comp.StealGroup != target.StealGroup)
                 continue;
 

@@ -350,3 +350,4 @@
   - type: StealCondition
     stealGroup: NukeDisk
     owner: objective-condition-steal-station
+    filterByMap: false

@@ -23,6 +23,19 @@ public sealed partial class StealConditionComponent : Component
     public bool VerifyMapExistence = true;
 
     /// <summary>
+    /// If true, only consider targets on a specific map during assignment.
+    /// Can be disabled for objectives where targets may be off-station (e.g., nukies).
+    /// </summary>
+    [DataField]
+    public bool FilterByMap = true;
+
+    /// <summary>
+    /// If filtering by map, use the mind owner's current map instead of the default map.
+    /// </summary>
+    [DataField]
+    public bool UseOwnerMap = false;
+
+    /// <summary>
     /// If true, counts objects that are close to steal areas.
     /// </summary>
     [DataField]
