@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: jessicamaybe
-  changes:
-  - message: NPC Gorillas can now pry open doors and vault/smash tables!
-    type: Tweak
-  id: 8569
-  time: '2025-05-26T10:49:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37822
 - author: ArtisticRoomba
   changes:
   - message: The TEG's efficiency in extracting power from gasses has been tweaked
@@ -3952,3 +3945,10 @@
   id: 9071
   time: '2025-10-11T01:05:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37557
+- author: PicklOH
+  changes:
+  - message: Added more Syndie ammo to the EMAG lathe inventory
+    type: Add
+  id: 9072
+  time: '2025-10-11T05:14:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40822
