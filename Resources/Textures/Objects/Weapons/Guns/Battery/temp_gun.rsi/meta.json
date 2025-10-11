@@ -30,7 +30,15 @@
             "directions": 4
         },
         {
+            "name": "inhand-left-color",
+            "directions": 4
+        },
+        {
             "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-color",
             "directions": 4
         },
         {
@@ -38,7 +46,15 @@
             "directions": 4
         },
         {
+            "name": "wielded-inhand-left-color",
+            "directions": 4
+        },
+        {
             "name": "wielded-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "wielded-inhand-right-color",
             "directions": 4
         },
         {
@@ -47,6 +63,14 @@
         },
         {
             "name": "equipped-SUITSTORAGE",
+            "directions": 4
+        },
+        {
+            "name": "equipped-BACKPACK-color",
+            "directions": 4
+        },
+        {
+            "name": "equipped-SUITSTORAGE-color",
             "directions": 4
         }
     ]
