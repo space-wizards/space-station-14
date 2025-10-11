@@ -7,6 +7,8 @@ namespace Content.Server.Botany.Systems;
 
 public sealed partial class BotanySystem
 {
+    [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
+
     public void ProduceGrown(EntityUid uid, ProduceComponent produce)
     {
         if (!TryGetSeed(produce, out var seed))
@@ -15,10 +17,7 @@ public sealed partial class BotanySystem
         foreach (var mutation in seed.Mutations)
         {
             if (mutation.AppliesToProduce)
-            {
-                var args = new EntityEffectBaseArgs(uid, EntityManager);
-                mutation.Effect.Effect(args);
-            }
+                _entityEffects.TryApplyEffect(uid, mutation.Effect);
         }
 
         if (!_solutionContainerSystem.EnsureSolution(uid,
