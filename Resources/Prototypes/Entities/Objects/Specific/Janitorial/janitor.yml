@@ -362,7 +362,6 @@
     - type: Tag
       tags:
         - Mop
-    - type: CleansForensics
     - type: Fiber
       fiberColor: fibers-white
     - type: DnaSubstanceTrace
