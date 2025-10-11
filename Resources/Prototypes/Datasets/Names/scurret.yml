@@ -1,0 +1,11 @@
+﻿- type: localizedDataset
+  id: NamesFirstScurret
+  values:
+    prefix: names-scurret-first-dataset-
+    count: 50
+
+- type: localizedDataset
+  id: NamesLastScurret
+  values:
+    prefix: names-scurret-last-dataset-
+    count: 50

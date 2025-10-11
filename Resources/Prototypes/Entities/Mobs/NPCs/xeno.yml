@@ -79,7 +79,6 @@
       groups:
         Brute: 6
   - type: DamageStateVisuals
-    rotate: true
     states:
       Alive:
         Base: running
@@ -394,6 +393,7 @@
   - type: NpcFactionMember
     factions:
     - Xeno
+    - SimpleHostile
   - type: MeleeWeapon
     angle: 0
     animation: WeaponArcBite
@@ -458,8 +458,8 @@
 # Mob mapped to Xeno Station that can not be ghostrole / pry
 
 - type: entity
-  name: lone praetorian
-  description: The last of its kind.
+  name: '"Dale"'
+  description: A praetorian left over from the station's initial security sweep. Has a pair of bloodied dog tags engraved with the name "Pvt. Dale" stuck in its maw.
   parent: SimpleSpaceMobBase
   id: MobXenoLonePraetorianNoGhost
   components:
@@ -504,7 +504,6 @@
      groups:
        Brute: 5
   - type: DamageStateVisuals
-    rotate: true
     states:
       Alive:
         Base: running

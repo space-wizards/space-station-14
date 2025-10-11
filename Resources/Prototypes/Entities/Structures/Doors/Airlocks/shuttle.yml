@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   parent: AirlockRCDResistant
   id: AirlockShuttle
   suffix: Docking
@@ -52,28 +52,23 @@
   - type: Tag
     tags:
       - ForceNoFixRotations
-  - type: PaintableAirlock
-    group: Shuttle
-    department: null
   - type: Construction
     graph: AirlockShuttle
     node: airlock
   - type: StaticPrice
     price: 350
+  - type: Paintable
+    group: null
 
 - type: entity
   id: AirlockGlassShuttle
   parent: AirlockShuttle
-  name: external airlock
   suffix: Glass, Docking
-  description: Necessary for connecting two space craft together.
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/shuttle.rsi
   - type: Occluder
     enabled: false
-  - type: PaintableAirlock
-    group: ShuttleGlass
   - type: Door
     occludes: false
   - type: Fixtures
@@ -104,9 +99,6 @@
 - type: entity
   id: AirlockGlassShuttleSyndicate
   parent: AirlockGlassShuttle
-  name: external airlock
-  suffix: Glass, Docking
-  description: Necessary for connecting two space craft together.
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/shuttle_syndicate.rsi
@@ -114,9 +106,13 @@
 - type: entity
   parent: AirlockShuttle
   id: AirlockShuttleSyndicate
-  suffix: Docking
-  name: external airlock
-  description: Necessary for connecting two space craft together.
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/shuttle_syndicate.rsi
+
+- type: entity
+  parent: AirlockShuttle
+  id: AirlockShuttleXenoborg
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/shuttle_xenoborg.rsi
