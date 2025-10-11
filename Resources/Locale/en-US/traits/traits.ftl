@@ -60,6 +60,9 @@ trait-italian-desc = Mamma mia! You seem to have lived in space Italy!
 trait-french-name = French accent
 trait-french-desc = Your accent seems to have a certain «je ne sais quoi».
 
+trait-russian-accent-name = Russian Accent
+trait-russian-accent-desc = In space, Russian accent finds you.
+
 trait-spanish-name = Spanish accent
 trait-spanish-desc = Hola señor, donde esta la biblioteca.
 
