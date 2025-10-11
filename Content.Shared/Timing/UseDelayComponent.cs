@@ -25,6 +25,12 @@ public sealed partial class UseDelayComponent : Component
     /// </remarks>
     [DataField]
     public TimeSpan Delay = TimeSpan.FromSeconds(1);
+
+    /// <summary>
+    /// If false doesn't prevent UseInHand interactions while on cooldown.
+    /// </summary>
+    [DataField]
+    public bool PreventUseInHand = true;
 }
 
 [Serializable, NetSerializable]
