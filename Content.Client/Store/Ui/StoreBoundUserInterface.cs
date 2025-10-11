@@ -1,6 +1,7 @@
 using Content.Shared.Store;
 using JetBrains.Annotations;
 using System.Linq;
+using Content.Shared.Backmen.Store; // Backmen
 using Content.Shared.Store.Components;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
@@ -10,7 +11,7 @@ namespace Content.Client.Store.Ui;
 [UsedImplicitly]
 public sealed class StoreBoundUserInterface : BoundUserInterface
 {
-    private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!; // DS14
 
     [ViewVariables]
     private StoreMenu? _menu;
@@ -23,6 +24,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
 
     public StoreBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
+        IoCManager.InjectDependencies(this); // DS14
     }
 
     protected override void Open()
@@ -68,7 +70,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         {
             case StoreUpdateState msg:
                 // start-backmen: bank
-                _menu?.SetCanBuyFromBank(IoCManager.Resolve<EntityManager>().HasComponent<Content.Shared.Backmen.Store.BuyStoreBankComponent>(Owner)); // backmen: currency
+                _menu?.SetCanBuyFromBank(EntMan.HasComponent<BuyStoreBankComponent>(Owner)); // backmen: currency
                 // end-backmen: bank
 
                 _listings = msg.Listings;
