@@ -44,27 +44,27 @@ namespace Content.Client.Atmos.EntitySystems
             {
                 // is this a delta or full state?
                 case GasTileOverlayDeltaState delta:
-                {
-                    modifiedChunks = delta.ModifiedChunks;
-                    foreach (var index in comp.Chunks.Keys)
                     {
-                        if (!delta.AllChunks.Contains(index))
-                            comp.Chunks.Remove(index);
-                    }
+                        modifiedChunks = delta.ModifiedChunks;
+                        foreach (var index in comp.Chunks.Keys)
+                        {
+                            if (!delta.AllChunks.Contains(index))
+                                comp.Chunks.Remove(index);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
                 case GasTileOverlayState state:
-                {
-                    modifiedChunks = state.Chunks;
-                    foreach (var index in comp.Chunks.Keys)
                     {
-                        if (!state.Chunks.ContainsKey(index))
-                            comp.Chunks.Remove(index);
-                    }
+                        modifiedChunks = state.Chunks;
+                        foreach (var index in comp.Chunks.Keys)
+                        {
+                            if (!state.Chunks.ContainsKey(index))
+                                comp.Chunks.Remove(index);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
                 default:
                     return;
             }
