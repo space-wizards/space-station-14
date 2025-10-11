@@ -19,6 +19,7 @@
       - !type:AddToSolutionReaction
         solution: cube
   - type: Rehydratable
+    EnforceCatalystWhitelist: true
   - type: CollisionWake
     enabled: false
   - type: Fixtures
