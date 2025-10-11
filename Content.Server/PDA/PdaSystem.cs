@@ -71,14 +71,6 @@ namespace Content.Server.PDA
             SubscribeLocalEvent<PdaComponent, InventoryRelayedEvent<ChameleonControllerOutfitSelectedEvent>>(ChameleonControllerOutfitItemSelected);
         }
 
-        // DS14-start
-        public override void Update(float frameTime)
-        {
-            base.Update(frameTime);
-            if (_roundEndSystem.IsRoundEndRequested()) UpdateAllPdaUisOnStation();
-        }
-        // DS14-end
-
         private void ChameleonControllerOutfitItemSelected(Entity<PdaComponent> ent, ref InventoryRelayedEvent<ChameleonControllerOutfitSelectedEvent> args)
         {
             // Relay it to your ID so it can update as well.
