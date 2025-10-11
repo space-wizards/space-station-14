@@ -22,7 +22,7 @@ public sealed class FeedbackPopupUIController : UIController
         _window = UIManager.CreateWindow<FeedbackPopupWindow>();
 
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
-        SubscribeLocalEvent<RoundEndMessageEvent>(OnRoundEnd);
+        SubscribeNetworkEvent<RoundEndMessageEvent>(OnRoundEnd);
 
         _feedbackManager.DisplayedPopupsChanged += OnPopupsChanged;
 
@@ -32,10 +32,25 @@ public sealed class FeedbackPopupUIController : UIController
         //    .Register<FeedbackPopupUIController>();
     }
 
-    private void OnRoundEnd(RoundEndMessageEvent ev)
+    public void ToggleWindow()
+    {
+        if (_window.IsOpen)
+        {
+            _window.Close();
+        }
+        else
+        {
+            _window.OpenCentered();
+        }
+    }
+
+    private void OnRoundEnd(RoundEndMessageEvent ev, EntitySessionEventArgs _)
     {
         // Add round end prototypes.
         var roundEndPrototypes = _feedbackManager.GetOriginFeedbackPrototypes(true);
+        if (roundEndPrototypes.Count == 0)
+            return;
+
         _feedbackManager.Display(roundEndPrototypes);
 
         // Even if no new prototypes were added, we still want to open the window.
@@ -54,18 +69,6 @@ public sealed class FeedbackPopupUIController : UIController
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs ev)
     {
         UpdateWindow(_feedbackManager.DisplayedPopups);
-    }
-
-    private void ToggleFeedbackPopup()
-    {
-        if (_window.IsOpen)
-        {
-            _window.Close();
-        }
-        else
-        {
-            _window.OpenCentered();
-        }
     }
 
     private void UpdateWindow(IReadOnlyCollection<ProtoId<FeedbackPopupPrototype>> prototypes)

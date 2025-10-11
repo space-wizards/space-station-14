@@ -1,7 +1,20 @@
 ﻿- type: feedbackPopup
-  id: FeedbackPopupFeedbackPopup
+  id: FeedbackPopup
   popupOrigin: wizden_master
   title: "[bold]Feedback on the new feedback popup system[/bold]"
-  description: "This is a new system to get feedback on features. It will give popups at the end of the round! Share your thoughts through the forums below! Log in with your ss14 account (You might also need to apply for a whitelist)."
+  description: >-
+    This is a new system to get feedback on features. It will give popups at the end of the round!
+    Share your thoughts through the forums below! Log in with your ss14 account
+    (You might also need to apply for a whitelist)."
   responseType: "Feedback Thread"
   responseLink: "https://forum.spacestation14.com/t/feedback-popup-feedback/22858"
+
+- type: feedbackPopup
+  id: GeneralFeedback
+  popupOrigin: wizden_master
+  title: "[bold]General feedback for the game[/bold]"
+  description: >-
+    If you have any feedback on the game, feel free to create a thread in the feedback forum category.
+  responseType: "General Feedback"
+  responseLink: "https://forum.spacestation14.com/c/development/feedback/51"
+  ShowRoundEnd: false
