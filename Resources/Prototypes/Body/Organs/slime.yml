@@ -36,8 +36,11 @@
     - type: Item
       size: Small
       heldPrefix: brain
+    - type: ReactionMixer
+      reactionTypes:
+      - Digestion
 
-      
+
 - type: entity
   id: OrganSlimeLungs
   parent: BaseHumanOrgan

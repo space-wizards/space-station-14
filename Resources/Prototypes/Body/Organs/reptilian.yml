@@ -21,3 +21,6 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
+  - type: ReactionMixer
+    reactionTypes:
+    - CarnivoreDigestion

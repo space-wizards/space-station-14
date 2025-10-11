@@ -14,8 +14,10 @@
       food:
         maxVol: 20
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 15
+        - ReagentId: Protein
+          Quantity: 10
+        - ReagentId: Fat
+          Quantity: 5
   - type: Openable
     openableByHand: false
     sound:
@@ -85,6 +87,13 @@
     storedOffset: 0,-3
   - type: Sprite
     sprite: Objects/Consumable/Food/Tins/peaches.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 15
   - type: FlavorProfile
     flavors:
     - sweet
@@ -151,6 +160,15 @@
     storedOffset: 0,-3
   - type: Sprite
     sprite: Objects/Consumable/Food/Tins/beans.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 10
+        - ReagentId: Protein
+          Quantity: 5
   - type: FlavorProfile
     flavors:
     - savory
@@ -184,6 +202,17 @@
     - 0,0,0,0
   - type: Sprite
     sprite: Objects/Consumable/Food/Tins/meat.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 7.5
+        - ReagentId: Protein
+          Quantity: 3.25
+        - ReagentId: Fat
+          Quantity: 3.25
   # the convenient pull tab
   - type: Openable
     openableByHand: true
