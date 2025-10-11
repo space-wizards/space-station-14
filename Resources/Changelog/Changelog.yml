@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Moomoobeef
-  changes:
-  - message: Added new variants to dirty tiles.
-    type: Tweak
-  id: 8565
-  time: '2025-05-25T18:11:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37800
 - author: AsnDen
   changes:
   - message: Tile-aligned bar sign version was added.
@@ -3950,3 +3943,12 @@
   id: 9067
   time: '2025-10-11T00:03:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39937
+- author: Hitlinemoss
+  changes:
+  - message: Ice now satiates thirst.
+    type: Tweak
+  - message: Ice now evaporates.
+    type: Tweak
+  id: 9068
+  time: '2025-10-11T00:20:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40149
