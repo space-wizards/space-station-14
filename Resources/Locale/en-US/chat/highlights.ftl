@@ -46,7 +46,6 @@ highlights-passenger = Passenger, Greytider, "Tider"
 highlights-service-worker = Service Worker
 
 # Station-specific
-highlights-boxer = Boxer
 highlights-reporter = Reporter, Journalist
 highlights-zookeeper = Zookeeper
 highlights-psychologist = Psychologist, Psychology
