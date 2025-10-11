@@ -22,6 +22,7 @@ public sealed partial class ParcelWrappingSystem
         if (args.Handled ||
             args.Target is not { } target ||
             !args.CanReach ||
+            args.User == args.Target ||
             !IsWrappable(entity, target))
             return;
 
