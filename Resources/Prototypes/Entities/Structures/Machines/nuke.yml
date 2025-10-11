@@ -107,15 +107,9 @@
       Nuke: !type:ContainerSlot
   - type: StealTarget
     stealGroup: NuclearBomb
-  - type: Tag
-    tags:
-    - GhostOnlyWarp
   - type: WarpPoint
     follow: true
     location: nuclear bomb
-    blacklist:
-      tags:
-      - GhostOnlyWarp
   - type: FTLSmashImmune
 
 - type: entity

@@ -1,4 +1,4 @@
-﻿using Content.Server.Chat.Systems;
+using Content.Server.Chat.Systems;
 using Content.Shared.Teleportation;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;
@@ -60,7 +60,7 @@ public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSys
 
         while (allEnts.MoveNext(out var warpEnt, out var warpPointComp))
         {
-            if (_whitelist.IsBlacklistPass(warpPointComp.Blacklist, warpEnt) || string.IsNullOrWhiteSpace(warpPointComp.Location))
+            if (_whitelist.IsWhitelistFail(ent.Comp.Whitelist, warpEnt) || string.IsNullOrWhiteSpace(warpPointComp.Location))
                 continue;
 
             ent.Comp.AvailableWarps.Add(new TeleportPoint(warpPointComp.Location, GetNetEntity(warpEnt)));
