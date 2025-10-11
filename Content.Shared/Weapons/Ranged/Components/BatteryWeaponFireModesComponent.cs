@@ -35,7 +35,7 @@ public sealed partial class BatteryWeaponFireMode
     /// The projectile prototype associated with this firing mode
     /// </summary>
     [DataField("proto", required: true)]
-    public EntProtoId Prototype = default!;
+    public EntProtoId Prototype;
 
     /// <summary>
     /// The battery cost to fire the projectile associated with this firing mode
