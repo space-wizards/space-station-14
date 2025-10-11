@@ -24,7 +24,7 @@ namespace Content.Shared.Roles
         ///     Who is the supervisor for this job.
         /// </summary>
         [DataField]
-        public string Supervisors { get; private set; } = "job-supervisors-nobody";
+        public LocId Supervisors = "job-supervisors-nobody";
 
         /// <summary>
         ///     The name of this job as displayed to players.
