@@ -1,0 +1,9 @@
+﻿Order: 1
+# Do NOT put anything after the Entries section, in order to prevent merge conflict with new CL entries
+Entries:
+- author: Errant
+  changes:
+  - message: Tab created.
+    type: Add
+  id: 1
+  time: '2025-10-11'
