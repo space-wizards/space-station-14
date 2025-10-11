@@ -28,6 +28,8 @@
       tags:
       - Trash
     isSpecialDigestibleExclusive: false
+  - type: Sprite
+    sprite: Mobs/Species/Vox/organs.rsi
 
 - type: entity
   parent: OrganHumanLiver
@@ -37,6 +39,8 @@
   components:
   - type: Metabolizer
     metabolizerTypes: [Vox]
+  - type: Sprite
+    sprite: Mobs/Species/Vox/organs.rsi
 
 - type: entity
   parent: OrganHumanHeart
@@ -46,3 +50,49 @@
   components:
   - type: Metabolizer
     metabolizerTypes: [Vox]
+  - type: Sprite
+    sprite: Mobs/Species/Vox/organs.rsi
+
+- type: entity
+  parent: OrganHumanKidneys
+  id: OrganVoxKidneys
+  name: kidney
+  description: "Smells flammable."
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [Vox]
+  - type: Sprite
+    sprite: Mobs/Species/Vox/organs.rsi
+
+- type: entity
+  id: OrganVoxEyes
+  parent: OrganHumanEyes
+  name: eyes
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Vox/organs.rsi
+  - type: Item
+    size: Small
+    heldPrefix: eyeballs
+
+- type: entity
+  id: OrganVoxTongueA
+  parent: OrganHumanTongue
+  name: tongue
+  description: "A fleshy muscle mostly used for screaming."
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Vox/organs.rsi
+  - type: Item
+    size: Small
+
+- type: entity
+  id: OrganVoxTongueB
+  parent: OrganHumanTongue
+  name: tongue
+  description: "A fleshy muscle mostly used for screaming."
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Vox/organs.rsi
+  - type: Item
+    size: Small
