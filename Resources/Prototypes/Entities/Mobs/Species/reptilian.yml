@@ -24,7 +24,6 @@
     prototype: Reptilian
     requiredLegs: 2
   - type: Butcherable
-    butcheringType: Spike
     spawned:
     - id: FoodMeatLizard
       amount: 5

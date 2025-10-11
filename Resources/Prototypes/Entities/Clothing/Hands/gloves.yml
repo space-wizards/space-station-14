@@ -300,9 +300,8 @@
     sprite: Clothing/Hands/Gloves/mercbattle.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/mercbattle.rsi
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
+  - type: Sliceable
+    slices:
     - id: ClothingHandsGlovesMercFingerless
   - type: Fiber
     fiberMaterial: fibers-insulative
