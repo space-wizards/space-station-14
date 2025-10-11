@@ -73,7 +73,8 @@
   icon:
     sprite: Objects/Fun/crayons.rsi
     state: box
-  product: CrateFunArtSupplies
+  product: CrayonBox
+  useParcelWrap: true
   cost: 500
   category: cargoproduct-category-name-fun
   group: market

@@ -53,7 +53,8 @@
   icon:
     sprite: Objects/Devices/mousetrap.rsi
     state: mousetrap
-  product: CrateMousetrapBoxes
+  product: BoxMousetrap
+  useParcelWrap: true
   cost: 500
   category: cargoproduct-category-name-service
   group: market
