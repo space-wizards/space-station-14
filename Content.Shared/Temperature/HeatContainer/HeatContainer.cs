@@ -43,7 +43,11 @@ public partial struct HeatContainer : IRobustCloneable<HeatContainer>
     [ViewVariables]
     public float InternalEnergy => Temperature * HeatCapacity;
 
-    public HeatContainer(HeatContainer c)
+    /// <summary>
+    /// Copy constructor for implementing ICloneable.
+    /// </summary>
+    /// <param name="c">The HeatContainer to copy.</param>
+    private HeatContainer(HeatContainer c)
     {
         HeatCapacity = c.HeatCapacity;
         Temperature = c.Temperature;
