@@ -32,6 +32,7 @@
 - type: latheRecipe
   id: SheetRGlass
   result: SheetRGlass1
+  applyMaterialDiscount: false # obvious dupe capabilities
   completetime: 0
   materials:
     Glass: 100
