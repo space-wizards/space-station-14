@@ -125,7 +125,6 @@
     maxItemSize: Large
     whitelist:
       tags:
-      - Wrench
       - Bottle
       - Spray
       - Soap
@@ -151,10 +150,6 @@
         whitelist:
           tags:
           - Spray
-      wrench:
-        whitelist:
-          tags:
-          - Wrench
   - type: Appearance
 
 - type: entity
@@ -170,7 +165,6 @@
   - type: Storage
     whitelist:
       tags:
-      - Wrench
       - Bottle
       - Spray
       - Brutepack
@@ -213,14 +207,6 @@
       #   whitelist:
       #     tags:
       #     - SprayMedical
-      # wrench_medical:
-      #   whitelist:
-      #     tags:
-      #     - WrenchMedical
-      wrench:
-        whitelist:
-          tags:
-          - Wrench
   - type: Appearance
 
 - type: entity
