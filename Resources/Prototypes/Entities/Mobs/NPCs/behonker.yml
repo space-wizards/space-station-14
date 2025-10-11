@@ -13,6 +13,7 @@
       rules: ghost-role-information-antagonist-rules
       mindRoles:
       - MindRoleGhostRoleSoloAntagonist
+      - MindRoleGhostRoleProtected # This mob can speak.
       raffle:
         settings: default
     - type: GhostTakeoverAvailable
