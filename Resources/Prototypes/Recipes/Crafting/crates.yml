@@ -58,6 +58,15 @@
   objectType: Item
 
 - type: construction
+  id: ToteBase
+  name: construction-recipe-box-tote
+  graph: ToteBase
+  startNode: start
+  targetNode: totebase
+  category: construction-category-storage
+  objectType: Item
+
+- type: construction
   id: FoodBoxPizza
   graph: FoodBoxPizza
   startNode: start
