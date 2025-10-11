@@ -94,8 +94,7 @@ public sealed class CharacterSelectionTest
                 .AsEnabled(Enabled)
                 .WithJobPreferences(Jobs)
                 .WithAntagPreferences(IsTraitor ? [Traitor] : []);
-            profile.EnsureValid(pair.Player!, pair.Client.InstanceDependencyCollection);
-            return profile;
+            return profile.Validated(pair.Player!, pair.Client.InstanceDependencyCollection) as HumanoidCharacterProfile;
         }
     }
 
