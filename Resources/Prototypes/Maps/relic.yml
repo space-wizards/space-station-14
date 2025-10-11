@@ -58,7 +58,7 @@
             SecurityCadet: [ 2, 2 ] #intern, not counted
             Lawyer: [ 1, 1 ]
             #supply (0)
-            #civilian (1+)
+            #civilian (0+)
             Passenger: [ -1, -1 ] #infinite, not counted
             #silicon (1)
             StationAi: [ 1, 1 ]
