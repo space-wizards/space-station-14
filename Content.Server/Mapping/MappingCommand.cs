@@ -27,11 +27,11 @@ namespace Content.Server.Mapping
             switch (args.Length)
             {
                 case 1:
-                    return CompletionResult.FromHint(Loc.GetString("cmd-hint-mapping-id"));
+                    return CompletionResult.FromHint(Loc.GetString("cmd-mapping-hint-id"));
                 case 2:
                     var opts = CompletionHelper.UserFilePath(args[1], _resourceMgr.UserData)
                         .Concat(CompletionHelper.ContentFilePath(args[1], _resourceMgr));
-                    return CompletionResult.FromHintOptions(opts, Loc.GetString("cmd-hint-mapping-path"));
+                    return CompletionResult.FromHintOptions(opts, Loc.GetString("cmd-mapping-hint-path"));
                 case 3:
                     return CompletionResult.FromHintOptions(["false", "true"], Loc.GetString("cmd-mapping-hint-grid"));
             }

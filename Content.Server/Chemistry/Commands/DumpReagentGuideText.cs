@@ -31,7 +31,7 @@ public sealed class DumpReagentGuideText : LocalizedEntityCommands
 
         if (reagent.Metabolisms is null)
         {
-            shell.WriteLine(Loc.GetString($"cmd-dumpreagentguidetext-nothing-to-dump"));
+            shell.WriteLine(Loc.GetString("cmd-dumpreagentguidetext-nothing-to-dump"));
             return;
         }
 
@@ -40,7 +40,7 @@ public sealed class DumpReagentGuideText : LocalizedEntityCommands
             foreach (var effect in entry.Effects)
             {
                 shell.WriteLine(effect.GuidebookEffectDescription(_prototype, EntityManager.EntitySysManager) ??
-                                Loc.GetString($"cmd-dumpreagentguidetext-skipped", ("effect", effect.GetType())));
+                                Loc.GetString("cmd-dumpreagentguidetext-skipped", ("effect", effect.GetType())));
             }
         }
     }

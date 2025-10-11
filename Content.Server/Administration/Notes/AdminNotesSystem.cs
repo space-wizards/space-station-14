@@ -44,7 +44,7 @@ public sealed class AdminNotesSystem : EntitySystem
             Text = Loc.GetString("admin-notes-verb-text"),
             Category = VerbCategory.Admin,
             Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/examine.svg.192dpi.png")),
-            Act = () => _console.RemoteExecuteCommand(user, $"{OpenAdminNotesCommand.CommandName} \"{target.UserId}\""),
+            Act = () => _console.RemoteExecuteCommand(user, $"adminnotes \"{target.UserId}\""),
             Impact = LogImpact.Low
         };
 

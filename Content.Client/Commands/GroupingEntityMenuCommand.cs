@@ -23,19 +23,19 @@ public sealed class GroupingEntityMenuCommand : LocalizedCommands
 
         if (!int.TryParse(args[0], out var id))
         {
-            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error", ("arg", args[0])));
+            shell.WriteError(LocalizationManager.GetString("cmd-entitymenug-error", ("arg", args[0])));
             return;
         }
 
         if (id < 0 || id > EntityMenuUIController.GroupingTypesCount - 1)
         {
-            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error", ("arg", args[0])));
+            shell.WriteError(LocalizationManager.GetString("cmd-entitymenug-error", ("arg", args[0])));
             return;
         }
 
         var cvar = CCVars.EntityMenuGroupingType;
 
         _configurationManager.SetCVar(cvar, id);
-        shell.WriteLine(LocalizationManager.GetString($"cmd-{Command}-notify", ("cvar", _configurationManager.GetCVar(cvar))));
+        shell.WriteLine(LocalizationManager.GetString("cmd-entitymenug-notify", ("cvar", _configurationManager.GetCVar(cvar))));
     }
 }

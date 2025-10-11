@@ -36,7 +36,7 @@ public sealed class ZoomCommand : LocalizedCommands
             zoom = new(arg0, arg0);
         else
         {
-            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error"));
+            shell.WriteError(LocalizationManager.GetString("cmd-zoom-error"));
             return;
         }
 
@@ -52,7 +52,7 @@ public sealed class ZoomCommand : LocalizedCommands
                 zoom.Y = arg1;
             else
             {
-                shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error"));
+                shell.WriteError(LocalizationManager.GetString("cmd-zoom-error"));
                 return;
             }
         }
