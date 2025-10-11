@@ -1,5 +1,8 @@
 using JetBrains.Annotations;
+using Robust.Client.Graphics;
+using Robust.Client.UserInterface;
 using Robust.Shared.Console;
+using System.Linq;
 
 namespace Content.Client.UserInterface.Systems.Chat;
 
@@ -7,9 +10,9 @@ namespace Content.Client.UserInterface.Systems.Chat;
 /// Command which creates a window containing a chatbox
 /// </summary>
 [UsedImplicitly]
-public sealed class ChatWindowCommand : LocalizedCommands
+public sealed class ChatPanelCommand : LocalizedCommands
 {
-    public override string Command => "chatwindow";
+    public override string Command => "chatpanel";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -17,6 +20,39 @@ public sealed class ChatWindowCommand : LocalizedCommands
         window.OpenCentered();
     }
 }
+
+[UsedImplicitly]
+public sealed class ChatWindowCommand : LocalizedCommands
+{
+    public override string Command => "chatwindow";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        var clyde = IoCManager.Resolve<IClyde>();
+        var monitor = clyde.EnumerateMonitors().First();
+        if (args.Length > 0)
+        {
+            var id = int.Parse(args[0]);
+            monitor = clyde.EnumerateMonitors().Single(m => m.Id == id);
+        }
+
+        var window = clyde.CreateWindow(new WindowCreateParameters
+        {
+            //Maximized = true,
+            Title = "Chat Window",
+            //Monitor = monitor,
+        });
+        var root = IoCManager.Resolve<IUserInterfaceManager>().CreateWindowRoot(window);
+        window.DisposeOnClose = true;
+
+        var control = new ChatWindow();
+
+        control.OnClose += () => window.Dispose();
+
+        root.AddChild(control);
+    }
+}
+
 
 /// <summary>
 /// Command which creates a window containing a chatbox configured for admin use
