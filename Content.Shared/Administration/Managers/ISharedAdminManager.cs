@@ -7,6 +7,8 @@ namespace Content.Shared.Administration.Managers;
 /// </summary>
 public interface ISharedAdminManager
 {
+    void Initialize();
+
     /// <summary>
     ///     Gets the admin data for a player, if they are an admin.
     /// </summary>
@@ -41,11 +43,7 @@ public interface ISharedAdminManager
     ///     Whether to check flags even for admins that are current de-adminned.
     /// </param>
     /// <returns>True if the player is and admin and has the specified flags.</returns>
-    bool HasAdminFlag(EntityUid player, AdminFlags flag, bool includeDeAdmin = false)
-    {
-        var data = GetAdminData(player, includeDeAdmin);
-        return data != null && data.HasFlag(flag, includeDeAdmin);
-    }
+    bool HasAdminFlag(EntityUid player, AdminFlags flag, bool includeDeAdmin = false);
 
     /// <summary>
     ///     See if a player has an admin flag.
@@ -57,11 +55,7 @@ public interface ISharedAdminManager
     ///     Whether to check flags even for admins that are current de-adminned.
     /// </param>
     /// <returns>True if the player is and admin and has the specified flags.</returns>
-    bool HasAdminFlag(ICommonSession player, AdminFlags flag, bool includeDeAdmin = false)
-    {
-        var data = GetAdminData(player, includeDeAdmin);
-        return data != null && data.HasFlag(flag, includeDeAdmin);
-    }
+    bool HasAdminFlag(ICommonSession player, AdminFlags flag, bool includeDeAdmin = false);
 
     /// <summary>
     ///     Checks if a player is an admin.
@@ -73,10 +67,7 @@ public interface ISharedAdminManager
     ///     Whether to return admin data for admins that are current de-adminned.
     /// </param>
     /// <returns>true if the player is an admin, false otherwise.</returns>
-    bool IsAdmin(EntityUid uid, bool includeDeAdmin = false)
-    {
-        return GetAdminData(uid, includeDeAdmin) != null;
-    }
+    bool IsAdmin(EntityUid uid, bool includeDeAdmin = false);
 
     /// <summary>
     ///     Checks if a player is an admin.
@@ -88,8 +79,8 @@ public interface ISharedAdminManager
     ///     Whether to return admin data for admins that are current de-adminned.
     /// </param>
     /// <returns>true if the player is an admin, false otherwise.</returns>
-    bool IsAdmin(ICommonSession session, bool includeDeAdmin = false)
-    {
-        return GetAdminData(session, includeDeAdmin) != null;
-    }
+    bool IsAdmin(ICommonSession session, bool includeDeAdmin = false);
+
+    void ReloadCommandPermissions();
+    void ReloadToolshedPermissions();
 }
