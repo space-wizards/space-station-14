@@ -25,6 +25,13 @@ public sealed partial class HyposprayComponent : Component
     public FixedPoint2 TransferAmount = FixedPoint2.New(5);
 
     /// <summary>
+    /// Whether or not the hypospray is able to draw from containers or if it's a single use
+    /// device that can only inject.
+    /// </summary>
+    [DataField]
+    public float DrawDelay = 0f;
+
+    /// <summary>
     ///     Sound that will be played when injecting.
     /// </summary>
     [DataField]

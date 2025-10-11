@@ -14,4 +14,10 @@ public sealed partial class DrainableSolutionComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string Solution = "default";
+
+    /// <summary>
+    /// The drain doafter time required to transfer reagents from the solution.
+    /// </summary>
+    [DataField]
+    public TimeSpan DrainTime = TimeSpan.Zero;
 }
