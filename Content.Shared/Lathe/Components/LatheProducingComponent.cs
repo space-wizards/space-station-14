@@ -1,9 +1,11 @@
-namespace Content.Server.Lathe.Components;
+using Robust.Shared.GameStates;
+
+namespace Content.Shared.Lathe.Components;
 
 /// <summary>
 /// For EntityQuery to keep track of which lathes are producing
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class LatheProducingComponent : Component
 {
     /// <summary>
