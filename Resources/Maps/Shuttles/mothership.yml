@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/14/2025 23:46:23
-  entityCount: 435
+  time: 08/21/2025 13:34:57
+  entityCount: 440
 maps: []
 grids:
 - 1
@@ -1747,6 +1747,35 @@ entities:
     components:
     - type: Transform
       pos: -9.5,1.5
+      parent: 1
+- proto: SpawnPointMothershipCore
+  entities:
+  - uid: 436
+    components:
+    - type: Transform
+      pos: 0.5,0.5
+      parent: 1
+- proto: SpawnPointXenoborg
+  entities:
+  - uid: 438
+    components:
+    - type: Transform
+      pos: -0.5,4.5
+      parent: 1
+  - uid: 439
+    components:
+    - type: Transform
+      pos: 1.5,4.5
+      parent: 1
+  - uid: 440
+    components:
+    - type: Transform
+      pos: 2.5,4.5
+      parent: 1
+  - uid: 437
+    components:
+    - type: Transform
+      pos: -1.5,4.5
       parent: 1
 - proto: SubstationBasic
   entities:
