@@ -247,6 +247,7 @@
   shouldCelebrate:
     !type:WeekdayInMonth
     weekday: Friday
+    occurrence: 1
   beginMonth: August
 
 - type: holiday
