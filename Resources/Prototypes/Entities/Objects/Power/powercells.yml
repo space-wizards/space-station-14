@@ -397,3 +397,25 @@
       visible: false
   - type: Battery
     startingCharge: 0
+
+# Powerbanks - Used primarily to recharge non-cell based battery users.
+
+- type: entity
+  name: powerbank
+  description: A rechargeable bank, capable of charging other items on the go.
+  id: powerbank
+  suffix: Full
+  parent: BasePowerCell
+  components:
+  - type: Item
+    size: Normal
+    storedRotation: 0
+  - type: Sprite
+    sprite: Objects/Power/powerbanks.rsi
+    layers:
+    - state: powerbank_base
+  - type: Battery
+    maxCharge: 2000 # Two full Laser Carbine recharges.
+    startingCharge: 2000
+  - type: Powerbank
+    transferAmount: 250 # 1/4th of a Laser Carbine total charge.
