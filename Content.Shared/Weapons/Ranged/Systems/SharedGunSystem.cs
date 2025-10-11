@@ -65,6 +65,8 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] private   readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
+    private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
+
     private const float InteractNextFire = 0.3f;
     private const double SafetyNextFire = 0.5;
     private const float EjectOffset = 0.4f;
@@ -452,6 +454,21 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         cartridge.Spent = spent;
         Appearance.SetData(uid, AmmoVisuals.Spent, spent);
+
+        UpdateCartridgeTrashTag((uid, cartridge));
+    }
+
+    private void UpdateCartridgeTrashTag(Entity<CartridgeAmmoComponent> entity)
+    {
+        if (!entity.Comp.MarkSpentAsTrash)
+            return;
+
+        if (entity.Comp.Spent)
+        {
+            TagSystem.AddTag(entity, TrashTag);
+            return;
+        }
+        TagSystem.RemoveTag(entity, TrashTag);
     }
 
     /// <summary>
