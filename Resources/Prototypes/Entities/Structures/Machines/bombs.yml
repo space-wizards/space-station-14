@@ -144,6 +144,23 @@
       canCreateVacuum: false
 
 - type: entity
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: BoxSyndicateBombFake
+  name: fake syndicate bomb box
+  description: A box containing an unarmed fake syndicate bomb. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/boxicons.rsi
+    state: syndiebombfake
+  - type: Item
+    size: Huge
+  - type: SpawnItemsOnUse
+    items:
+    - id: SyndicateBombFake
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
   parent: SyndicateBomb
   id: DebugHardBomb
   name: debug bomb
