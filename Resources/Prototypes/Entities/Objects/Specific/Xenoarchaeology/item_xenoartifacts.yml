@@ -53,14 +53,7 @@
     graph: Artifact
     node: done
   - type: XenoArtifact
-    effectsTable: !type:GroupSelector
-      children:
-      - !type:NestedSelector
-        tableId: XenoArtifactEffectsDefaultTable
-        weight: 54
-      - !type:NestedSelector
-        tableId: XenoArtifactEffectsHandheldOnlyTable
-        weight: 2
+    effectsWeights: XenoArtifactEffectsDefaultWeightedTableHandheld
 
 - type: entity
   parent: BaseXenoArtifactItem
