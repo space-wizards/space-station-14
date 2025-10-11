@@ -1,26 +1,34 @@
-﻿<PanelContainer xmlns="https://spacestation14.io"
-                HorizontalExpand="True">
-    <Button Name="MainButton"
-            ToolTip=""
-            Access="Public"
-            HorizontalExpand="True"
-            VerticalExpand="True"
-            StyleClasses="OpenBoth"/>
-    <BoxContainer Orientation="Horizontal"
-                  HorizontalExpand="True">
-        <TextureRect Name="Icon"
-                     Access="Public"
-                     MinSize="32 32"
-                     RectClipContent="True" />
-        <Label Name="ProductName"
-               Access="Public"
-               HorizontalExpand="True" />
-        <PanelContainer StyleClasses="BackgroundDark">
-            <Label Name="PointCost"
+<BoxContainer xmlns="https://spacestation14.io"
+    HorizontalExpand="True">
+    <PanelContainer HorizontalExpand="True">
+        <!-- Btn position hardcoded (args.Button.Parent?.Parent type) in CargoConsoleBUI 71 line -->
+        <Button Name="MainButton"
+                ToolTip=""
+                Access="Public"
+                VerticalExpand="False"
+                StyleClasses="OpenBoth" />
+
+        <!-- Icon & Name -->
+        <BoxContainer Orientation="Horizontal"
+                      HorizontalExpand="True"
+                      Margin="4 0">
+
+            <TextureRect Name="Icon"
+                         Access="Public"
+                         MinSize="32 32"
+                         RectClipContent="True" />
+
+            <Label Name="ProductName"
                    Access="Public"
-                   MinSize="52 32"
-                   Align="Right"
-                   Margin="0 0 5 0"/>
-        </PanelContainer>
-    </BoxContainer>
-</PanelContainer>
+                   HorizontalExpand="True"
+                   ClipText="True" />
+        </BoxContainer>
+    </PanelContainer>
+
+    <Label Name="PointCost"
+           Access="Public"
+           MinSize="56 32"
+           Align="Right"
+           Margin="0 0 5 0"
+           HorizontalAlignment="Right"/>
+</BoxContainer>
