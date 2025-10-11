@@ -31,7 +31,7 @@
 - type: latheRecipe
   id: Dropper
   result: Dropper
-  completetime: .8
+  completetime: 2
   materials:
     Glass: 50
     Plastic: 50
