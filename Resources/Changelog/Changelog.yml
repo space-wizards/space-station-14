@@ -1,4 +1,5 @@
-﻿Entries:
+# Do NOT put anything after the Entries section, in order to prevent merge conflict with new CL entries
+Entries:
 - author: ArtisticRoomba
   changes:
   - message: The TEG's efficiency in extracting power from gasses has been tweaked
