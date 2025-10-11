@@ -7,7 +7,7 @@
     size: Tiny
   - type: Openable
     sound:
-      collection: bottleCloseSounds
+      collection: bottleCloseSounds # closed when opened? What'll they think of next
     closeable: true
     closeSound:
       collection: bottleCloseSounds
@@ -45,19 +45,20 @@
     price: 100
   - type: Destructible
     thresholds:
-    - trigger:
+    - trigger: &DamageTrigger100
         !type:DamageTrigger
-        damage: 200
-      behaviors:
+        damage: 100
+      behaviors: &OverkillBehavior
+      - &SoundGlassBreak !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 15 # stronger than base
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
+      - *SoundGlassBreak
       - !type:SpillBehavior { }
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -94,19 +95,13 @@
       Glass: 10
   - type: Destructible # remove glass shard spawn
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+    - trigger: *DamageTrigger100
+      behaviors: *OverkillBehavior
     - trigger:
         !type:DamageTrigger
         damage: 10 # smaller so weaker
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
+      - *SoundGlassBreak
       - !type:SpillBehavior { }
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -128,7 +123,7 @@
         - ReagentId: Vestine
           Quantity: 30
   - type: Tag
-    tags: &vialTag # Remove trash tag
+    tags: &vialTag # Remove trash tag when we have a filled solution
     - CentrifugeCompatible
 
 - type: entity
