@@ -44,7 +44,7 @@ public sealed class FeedbackPopupUIController : UIController
         }
     }
 
-    private void OnRoundEnd(RoundEndMessageEvent ev, EntitySessionEventArgs _)
+    private void OnRoundEnd(RoundEndMessageEvent ev, EntitySessionEventArgs args)
     {
         // Add round end prototypes.
         var roundEndPrototypes = _feedbackManager.GetOriginFeedbackPrototypes(true);
