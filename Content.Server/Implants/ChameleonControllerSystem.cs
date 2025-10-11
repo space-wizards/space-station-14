@@ -2,16 +2,14 @@
 using Content.Server.Preferences.Managers;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Humanoid;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
-using Content.Shared.Interaction;
 using Content.Shared.Inventory;
-using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Station;
 using Content.Shared.Timing;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Implants;
@@ -24,6 +22,7 @@ public sealed class ChameleonControllerSystem : SharedChameleonControllerSystem
     [Dependency] private readonly ChameleonClothingSystem _chameleonClothingSystem = default!;
     [Dependency] private readonly IServerPreferencesManager _preferences = default!;
     [Dependency] private readonly UseDelaySystem _delay = default!;
+    [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidAppearanceSystem = default!;
 
     public override void Initialize()
     {
@@ -69,7 +68,7 @@ public sealed class ChameleonControllerSystem : SharedChameleonControllerSystem
     // E.g. the players profile, the default equipment for that job etc...
     private void GetJobEquipmentInformation(
         JobPrototype? jobPrototype,
-        EntityUid? user,
+        EntityUid user,
         out RoleLoadout? customRoleLoadout,
         out RoleLoadout? defaultRoleLoadout,
         out StartingGearPrototype? jobStartingGearPrototype)
@@ -83,13 +82,9 @@ public sealed class ChameleonControllerSystem : SharedChameleonControllerSystem
 
         _proto.Resolve(jobPrototype.StartingGear, out jobStartingGearPrototype);
 
-        if (!TryComp<ActorComponent>(user, out var actorComponent))
-            return;
+        var profile = _humanoidAppearanceSystem.GetBaseProfile(user);
 
-        var userId = actorComponent.PlayerSession.UserId;
-        var prefs = _preferences.GetPreferences(userId);
-
-        if (prefs.SelectedCharacter is not HumanoidCharacterProfile profile)
+        if (profile is null)
             return;
 
         var jobProtoId = LoadoutSystem.GetJobPrototype(jobPrototype.ID);

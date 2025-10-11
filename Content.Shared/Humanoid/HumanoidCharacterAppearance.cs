@@ -159,7 +159,8 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
             _ => strategy.ClosestSkinColor(new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1)),
         };
 
-        return new HumanoidCharacterAppearance(newHairStyle, newHairColor, newFacialHairStyle, newHairColor, newEyeColor, newSkinColor, new());
+        var appearance = new HumanoidCharacterAppearance(newHairStyle, newHairColor, newFacialHairStyle, newHairColor, newEyeColor, newSkinColor, new());
+        return EnsureValid(appearance, species, sex);
 
         float RandomizeColor(float channel)
         {
