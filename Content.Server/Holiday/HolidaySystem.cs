@@ -1,132 +1,91 @@
-using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
-using Content.Shared.CCVar;
 using Content.Shared.Holiday;
-using Robust.Shared.Configuration;
+using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Holiday
+namespace Content.Server.Holiday;
+
+/// <inheritdoc />
+public sealed class HolidaySystem : SharedHolidaySystem
 {
-    public sealed class HolidaySystem : EntitySystem
+    [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+    /// <inheritdoc/>
+    public override void Initialize()
     {
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        base.Initialize();
 
-        [ViewVariables]
-        private readonly List<HolidayPrototype> _currentHolidays = new();
+        SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
+    }
 
-        [ViewVariables]
-        private bool _enabled = true;
+    #region Internal
 
-        public override void Initialize()
+    /// <summary>
+    /// At round start, create the current holidays list and run holiday specific code.
+    /// </summary>
+    private void OnRunLevelChanged(GameRunLevelChangedEvent eventArgs)
+    {
+        if (eventArgs.New != GameRunLevel.InRound)
+            return;
+
+        RefreshCurrentHolidays();
+        DoCelebrate();
+    }
+
+    /// <summary>
+    /// Send a chat message to the server announcing the holidays.
+    /// </summary>
+    private void DoGreet()
+    {
+        if (!TryGetInstance(out var singleton) || !singleton.Value.Comp.Enabled)
+            return;
+
+        foreach (var holidayId in singleton.Value.Comp.CurrentHolidays)
         {
-            Subs.CVar(_configManager, CCVars.HolidaysEnabled, OnHolidaysEnableChange);
-            SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
-            SubscribeLocalEvent<HolidayVisualsComponent, ComponentInit>(OnVisualsInit);
-        }
-
-        public void RefreshCurrentHolidays()
-        {
-            _currentHolidays.Clear();
-
-            if (!_enabled)
-            {
-                RaiseLocalEvent(new HolidaysRefreshedEvent(Enumerable.Empty<HolidayPrototype>()));
-                return;
-            }
-
-            var now = DateTime.Now;
-
-            foreach (var holiday in _prototypeManager.EnumeratePrototypes<HolidayPrototype>())
-            {
-                if (holiday.ShouldCelebrate(now))
-                {
-                    _currentHolidays.Add(holiday);
-                }
-            }
-
-            RaiseLocalEvent(new HolidaysRefreshedEvent(_currentHolidays));
-        }
-
-        public void DoGreet()
-        {
-            foreach (var holiday in _currentHolidays)
-            {
-                _chatManager.DispatchServerAnnouncement(holiday.Greet());
-            }
-        }
-
-        public void DoCelebrate()
-        {
-            foreach (var holiday in _currentHolidays)
-            {
-                holiday.Celebrate();
-            }
-        }
-
-        public IEnumerable<HolidayPrototype> GetCurrentHolidays()
-        {
-            return _currentHolidays;
-        }
-
-        public bool IsCurrentlyHoliday(string holiday)
-        {
-            if (!_prototypeManager.TryIndex(holiday, out HolidayPrototype? prototype))
-                return false;
-
-            return _currentHolidays.Contains(prototype);
-        }
-
-        private void OnHolidaysEnableChange(bool enabled)
-        {
-            _enabled = enabled;
-
-            RefreshCurrentHolidays();
-        }
-
-        private void OnRunLevelChanged(GameRunLevelChangedEvent eventArgs)
-        {
-            if (!_enabled) return;
-
-            switch (eventArgs.New)
-            {
-                case GameRunLevel.PreRoundLobby:
-                    RefreshCurrentHolidays();
-                    break;
-                case GameRunLevel.InRound:
-                    DoGreet();
-                    DoCelebrate();
-                    break;
-                case GameRunLevel.PostRound:
-                    break;
-            }
-        }
-
-        private void OnVisualsInit(Entity<HolidayVisualsComponent> ent, ref ComponentInit args)
-        {
-            foreach (var (key, holidays) in ent.Comp.Holidays)
-            {
-                if (!holidays.Any(h => IsCurrentlyHoliday(h)))
-                    continue;
-                _appearance.SetData(ent, HolidayVisuals.Holiday, key);
-                break;
-            }
+            var holiday = _prototypeManager.Index(holidayId);
+            _chatManager.DispatchServerAnnouncement(holiday.Greet());
         }
     }
 
     /// <summary>
-    ///     Event for when the list of currently active holidays has been refreshed.
+    /// Function called at round start to run shenanigans (code) stored by each active holiday.
     /// </summary>
-    public sealed class HolidaysRefreshedEvent : EntityEventArgs
+    private void DoCelebrate()
     {
-        public readonly IEnumerable<HolidayPrototype> Holidays;
+        if (!TryGetInstance(out var singleton) || !singleton.Value.Comp.Enabled)
+            return;
 
-        public HolidaysRefreshedEvent(IEnumerable<HolidayPrototype> holidays)
+        foreach (var holidayId in singleton.Value.Comp.CurrentHolidays)
         {
-            Holidays = holidays;
+            var holiday = _prototypeManager.Index(holidayId);
+            holiday.Celebrate();
         }
     }
+
+    #endregion
+    #region Public API
+
+    /// <inheritdoc />
+    [PublicAPI]
+    public override void RefreshCurrentHolidays(bool announce = true)
+    {
+        SetActiveHolidays(DateTime.Today);
+
+        if (announce)
+            DoGreet();
+    }
+
+    /// <inheritdoc />
+    [PublicAPI]
+    public override void RefreshCurrentHolidays(DateTime date, bool announce = true)
+    {
+        base.RefreshCurrentHolidays(date, announce);
+
+        if (announce)
+            DoGreet();
+    }
+
+    #endregion
 }

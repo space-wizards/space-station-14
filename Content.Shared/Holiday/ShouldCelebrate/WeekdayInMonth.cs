@@ -1,17 +1,19 @@
 using System.Globalization;
 using JetBrains.Annotations;
 
-namespace Content.Server.Holiday.ShouldCelebrate
+namespace Content.Shared.Holiday.ShouldCelebrate
 {
     /// <summary>
-    ///     For a holiday that happens the first instance of a weekday on a month.
+    ///     For a holiday that happens on X occurrence of Y weekday in a month.
     /// </summary>
     [UsedImplicitly]
     public sealed partial class WeekdayInMonth : DefaultHolidayShouldCelebrate
     {
-        [DataField("weekday")] private DayOfWeek _weekday = DayOfWeek.Monday;
+        [DataField("weekday", required: true)]
+        private DayOfWeek _weekday;
 
-        [DataField("occurrence")] private uint _occurrence = 1;
+        [DataField("occurrence", required: true)]
+        private uint _occurrence;
 
         public override bool ShouldCelebrate(DateTime date, HolidayPrototype holiday)
         {
