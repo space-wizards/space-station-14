@@ -327,4 +327,20 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         return msg;
     }
     #endregion
+
+    public void AppendScanner(EntityUid anomaly, EntityUid scanner,  AnomalyScannerComponent? scannerComp = null, AnomalyComponent? anomalyComp = null)
+    {
+        if (!Resolve(scanner, ref scannerComp) || !Resolve(anomaly, ref anomalyComp))
+            return;
+
+        anomalyComp.Scanners.Add(scanner);
+    }
+
+    public void RemoveScanner(EntityUid anomaly, EntityUid scanner,  AnomalyScannerComponent? scannerComp = null, AnomalyComponent? anomalyComp = null)
+    {
+        if (!Resolve(scanner, ref scannerComp) || !Resolve(anomaly, ref anomalyComp))
+            return;
+
+        anomalyComp.Scanners.Remove(scanner);
+    }
 }
