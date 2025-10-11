@@ -16,7 +16,7 @@
     - Belt
   - type: TriggerOnUse
   - type: TimerTrigger
-    delay: 3
+    delay: 3.5
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -210,7 +210,6 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/singularitygrenade.rsi
   - type: TimerTrigger
-    delay: 3
     beepInterval: 0.46
     beepSound:
       path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
@@ -281,7 +280,6 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/whiteholegrenade.rsi
   - type: TimerTrigger
-    delay: 3
     beepInterval: 0.69
   - type: EmitSoundOnTrigger
     keysIn:
@@ -341,7 +339,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/nukenade.rsi
   - type: TimerTrigger
-    delay: 5
+    delay: 5 # Just long enough to escape the blast radius
   - type: ExplodeOnTrigger
     keysIn:
     - timer
@@ -536,8 +534,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/metalfoam.rsi
-  - type: TimerTrigger
-    delay: 5
   - type: SmokeOnTrigger
     keysIn:
     - timer
@@ -562,8 +558,6 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Items/smoke_grenade_prime.ogg
-  - type: TimerTrigger
-    delay: 3
   - type: ReleaseGasOnTrigger
     keysIn:
     - timer
