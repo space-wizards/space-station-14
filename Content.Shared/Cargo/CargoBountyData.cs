@@ -28,4 +28,17 @@ public readonly partial record struct CargoBountyData
         Bounty = bounty.ID;
         Id = $"{bounty.IdPrefix}{uniqueIdentifier:D3}";
     }
+
+    [DataField]
+    public string ClaimedBy { get; init; } = string.Empty;
+
+    [DataField]
+    public CargoBountyStatus Status { get; init; } = CargoBountyStatus.Undelivered;
+}
+
+public enum CargoBountyStatus
+{
+    Undelivered,
+    Waiting,
+    OnShuttle,
 }
