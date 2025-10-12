@@ -110,8 +110,9 @@ public sealed partial class SharedFeedbackManager : IDisposable
     /// </summary>
     /// <param name="session">The session to which the feedback popups will be sent.</param>
     /// <param name="popupPrototypes">A list of feedback popup prototype IDs to send to the session.</param>
+    /// <param name="remove">When true, removes the specified prototypes instead of adding them</param>
     /// <remarks>This does nothing on the client.</remarks>
-    public void SendToSession(ICommonSession session, List<ProtoId<FeedbackPopupPrototype>> popupPrototypes)
+    public void SendToSession(ICommonSession session, List<ProtoId<FeedbackPopupPrototype>> popupPrototypes, bool remove = false)
     {
         if (!_netManager.IsServer)
             return;
@@ -119,6 +120,7 @@ public sealed partial class SharedFeedbackManager : IDisposable
         var msg = new FeedbackPopupMessage
         {
             FeedbackPrototypes = popupPrototypes,
+            Remove = remove,
         };
 
         _netManager.ServerSendMessage(msg, session.Channel);
@@ -128,8 +130,9 @@ public sealed partial class SharedFeedbackManager : IDisposable
     /// Sends the specified feedback popup prototypes to all connected client sessions.
     /// </summary>
     /// <param name="popupPrototypes">A list of popup prototype IDs to be sent to all connected sessions.</param>
+    /// <param name="remove">When true, removes the specified prototypes instead of adding them</param>
     /// <remarks>This does nothing on the client.</remarks>
-    public void SendToAllSessions(List<ProtoId<FeedbackPopupPrototype>> popupPrototypes)
+    public void SendToAllSessions(List<ProtoId<FeedbackPopupPrototype>> popupPrototypes, bool remove = false)
     {
         if (!_netManager.IsServer)
             return;
@@ -137,6 +140,7 @@ public sealed partial class SharedFeedbackManager : IDisposable
         var msg = new FeedbackPopupMessage
         {
             FeedbackPrototypes = popupPrototypes,
+            Remove = remove,
         };
 
         _netManager.ServerSendToAll(msg);

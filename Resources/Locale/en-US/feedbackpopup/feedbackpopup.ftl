@@ -9,9 +9,10 @@ feedbackpopup-control-total-surveys = {$num ->
 feedbackpopup-control-ui-footer = Let us know what you think!
 
 # Command strings
-command-description-showfeedbackpopup = Open the feedback popup window for the given sessions or for all sessions if none are passed.
 command-description-openfeedbackpopup = Open the feedback popup window.
-command-description-addfeedbackpopup = Adds a feedback popup prototype to the given clients and opens the popup window if the client didn't already have the prototype listed.
+command-description-feedback-show = Opens the feedback popup window for the given sessions.
+command-description-feedback-add = Adds a feedback popup prototype to the given clients and opens the popup window if the client didn't already have the prototype listed.
+command-description-feedback-remove = Removes a feedback popup prototype from the given clients.
 
 feedbackpopup-give-command-name = givefeedbackpopup
 feedbackpopup-show-command-name = showfeedbackpopup
