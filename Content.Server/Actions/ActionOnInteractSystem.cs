@@ -61,14 +61,14 @@ public sealed class ActionOnInteractSystem : EntitySystem
         // TODO: use predicted random and move to shared?
         var (actId, action, comp) = _random.Pick(options);
 
-        if (!TryUseCharge((uid, component)))
+        if (EmptyCharges((uid, component)))
         {
             return;
         }
 
         if (!_actions.TryPerformAction(args.User, (actId, action), predicted: false))
         {
-            AddCharge((uid, component)); // If no interaction occurs, charge should be refunded
+            RemoveCharge((uid, component));
         }
 
         args.Handled = true;
@@ -100,7 +100,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
 
             if (entOptions.Count > 0)
             {
-                if (!TryUseCharge((uid, component)))
+                if (EmptyCharges((uid, component)))
                 {
                     return;
                 }
@@ -110,7 +110,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
 
                 if (!_actions.TryPerformAction(args.User, (actionId, action), predicted: false))
                 {
-                    AddCharge((uid, component)); // If no interaction occurs, charge should be refunded
+                    RemoveCharge((uid, component));
                 }
 
                 args.Handled = true;
@@ -131,7 +131,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
             return;
         }
 
-        if (!TryUseCharge((uid, component)))
+        if (EmptyCharges((uid, component)))
         {
             return;
         }
@@ -145,7 +145,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
 
         if (!_actions.TryPerformAction(args.User, (actId, comp), predicted: false))
         {
-            AddCharge((uid, component)); // If no interaction occurs, charge should be refunded
+            RemoveCharge((uid, component));
         }
 
         args.Handled = true;
@@ -173,7 +173,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
         return valid;
     }
 
-    private bool TryUseCharge(Entity<ActionOnInteractComponent> ent)
+    private bool EmptyCharges(Entity<ActionOnInteractComponent> ent)
     {
         if (!ent.Comp.RequiresCharge)
         {
@@ -181,16 +181,12 @@ public sealed class ActionOnInteractSystem : EntitySystem
         }
 
         Entity<LimitedChargesComponent?> charges = ent.Owner;
-        if (_charges.IsEmpty(charges))
-        {
-            return false;
-        }
 
-        _charges.TryUseCharge(charges);
-        return true;
+        return _charges.IsEmpty(charges);
     }
 
-    private void AddCharge(Entity<ActionOnInteractComponent> ent)
+    // No interaction, no charge removal
+    private void RemoveCharge(Entity<ActionOnInteractComponent> ent)
     {
         if (!ent.Comp.RequiresCharge)
         {
@@ -199,7 +195,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
 
         Entity<LimitedChargesComponent?> charges = ent.Owner;
 
-        _charges.AddCharges(charges, 1);
+        _charges.AddCharges(charges, -1);
         return;
     }
 }
