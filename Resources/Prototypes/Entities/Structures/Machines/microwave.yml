@@ -189,3 +189,10 @@
     damage:
       types:
         Blunt: 25
+
+- type: entity
+  id: SyndicateMicrowaveUnanchored
+  parent: SyndicateMicrowave
+  components:
+  - type: Transform
+  anchored: false
