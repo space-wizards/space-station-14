@@ -87,8 +87,8 @@
     - Goliath
     - FootstepSound
   - type: NoSlip
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeatGoliath
       amount: 3
     - id: MaterialGoliathHide1
@@ -244,8 +244,8 @@
         9
       NavSmash: !type:Bool
         true
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodHivelordRemains
 
 - type: entity
@@ -420,8 +420,8 @@
     reflectProb: 1
     reflects:
     - Energy
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: DiamondOre1
       amount: 1
       maxAmount: 3

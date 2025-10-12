@@ -310,9 +310,8 @@
       - state: inhand-right
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/black.rsi
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
+  - type: Sliceable
+    slices:
     - id: ClothingHandsGlovesFingerless
   - type: Fiber
     fiberColor: fibers-black
@@ -330,9 +329,8 @@
     sprite: Clothing/Hands/Gloves/Color/yellow.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/yellow.rsi
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
+  - type: Sliceable
+    slices:
     - id: ClothingHandsGlovesFingerlessInsulated
   - type: Insulated
   - type: Fiber

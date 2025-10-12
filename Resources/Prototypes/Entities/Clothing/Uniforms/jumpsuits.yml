@@ -1194,9 +1194,8 @@
     sprite: Clothing/Uniforms/Jumpsuit/web.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/web.rsi
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
+  - type: Sliceable
+    slices:
     - id: MaterialWebSilk1
       amount: 8
   - type: FlavorProfile
