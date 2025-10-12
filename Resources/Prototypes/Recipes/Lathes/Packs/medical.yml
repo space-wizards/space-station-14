@@ -17,6 +17,7 @@
   - HandLabeler
   - ChemistryEmptyVial
   - ChemistryEmptyVialSmall
+  - Dropper
 
 - type: latheRecipePack
   parent: BasicChemistryStatic
