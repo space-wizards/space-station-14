@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Seismic Charges now trigger the timer when sent a signal, instead of
-      detonating instantly.
-    type: Tweak
-  - message: Signal Triggers for modular grenades now detonate after a 3 second delay.
-    type: Tweak
-  id: 8578
-  time: '2025-05-28T07:31:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34465
 - author: Minemoder5000
   changes:
   - message: Grape juice cups now contain grape juice.
@@ -3947,3 +3937,10 @@
   id: 9080
   time: '2025-10-12T01:29:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38412
+- author: GovnokradZXC
+  changes:
+  - message: New hair named Pigtail (Over Eye)
+    type: Add
+  id: 9081
+  time: '2025-10-12T05:45:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39850
