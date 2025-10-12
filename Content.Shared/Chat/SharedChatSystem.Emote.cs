@@ -1,27 +1,14 @@
 using System.Collections.Frozen;
-using Content.Server.Popups;
 using Content.Shared.Chat.Prototypes;
-using Content.Shared.Emoting;
 using Content.Shared.Speech;
 using Robust.Shared.Audio;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Server.Chat.Systems;
+namespace Content.Shared.Chat;
 
-// emotes using emote prototype
-public partial class ChatSystem
+public abstract partial class SharedChatSystem
 {
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-
     private FrozenDictionary<string, EmotePrototype> _wordEmoteDict = FrozenDictionary<string, EmotePrototype>.Empty;
-
-    protected override void OnPrototypeReload(PrototypesReloadedEventArgs obj)
-    {
-        base.OnPrototypeReload(obj);
-        if (obj.WasModified<EmotePrototype>())
-            CacheEmotes();
-    }
 
     private void CacheEmotes()
     {
@@ -47,7 +34,7 @@ public partial class ChatSystem
     }
 
     /// <summary>
-    ///     Makes selected entity to emote using <see cref="EmotePrototype"/> and sends message to chat.
+    /// Makes the selected entity emote using the given <see cref="EmotePrototype"/> and sends a message to chat.
     /// </summary>
     /// <param name="source">The entity that is speaking</param>
     /// <param name="emoteId">The id of emote prototype. Should has valid <see cref="EmotePrototype.ChatMessages"/></param>
@@ -66,13 +53,13 @@ public partial class ChatSystem
         bool forceEmote = false
         )
     {
-        if (!_prototypeManager.TryIndex<EmotePrototype>(emoteId, out var proto))
+        if (!_prototypeManager.Resolve<EmotePrototype>(emoteId, out var proto))
             return false;
         return TryEmoteWithChat(source, proto, range, hideLog: hideLog, nameOverride, ignoreActionBlocker: ignoreActionBlocker, forceEmote: forceEmote);
     }
 
     /// <summary>
-    ///     Makes selected entity to emote using <see cref="EmotePrototype"/> and sends message to chat.
+    /// Makes the selected entity emote using the given <see cref="EmotePrototype"/> and sends a message to chat.
     /// </summary>
     /// <param name="source">The entity that is speaking</param>
     /// <param name="emote">The emote prototype. Should has valid <see cref="EmotePrototype.ChatMessages"/></param>
@@ -109,19 +96,19 @@ public partial class ChatSystem
     }
 
     /// <summary>
-    ///     Makes selected entity to emote using <see cref="EmotePrototype"/> without sending any messages to chat.
+    /// Makes the selected entity emote using the given <see cref="EmotePrototype"/> without sending any messages to chat.
     /// </summary>
     /// <returns>True if an emote was performed. False if the emote is unvailable, cancelled, etc.</returns>
     public bool TryEmoteWithoutChat(EntityUid uid, string emoteId, bool ignoreActionBlocker = false)
     {
-        if (!_prototypeManager.TryIndex<EmotePrototype>(emoteId, out var proto))
+        if (!_prototypeManager.Resolve<EmotePrototype>(emoteId, out var proto))
             return false;
 
         return TryEmoteWithoutChat(uid, proto, ignoreActionBlocker);
     }
 
     /// <summary>
-    ///     Makes selected entity to emote using <see cref="EmotePrototype"/> without sending any messages to chat.
+    /// Makes the selected entity emote using the given <see cref="EmotePrototype"/> without sending any messages to chat.
     /// </summary>
     /// <returns>True if an emote was performed. False if the emote is unvailable, cancelled, etc.</returns>
     public bool TryEmoteWithoutChat(EntityUid uid, EmotePrototype proto, bool ignoreActionBlocker = false)
@@ -133,7 +120,7 @@ public partial class ChatSystem
     }
 
     /// <summary>
-    ///     Tries to find and play relevant emote sound in emote sounds collection.
+    /// Tries to find and play the relevant emote sound in an emote sounds collection.
     /// </summary>
     /// <returns>True if emote sound was played.</returns>
     public bool TryPlayEmoteSound(EntityUid uid, EmoteSoundsPrototype? proto, EmotePrototype emote, AudioParams? audioParams = null)
@@ -142,7 +129,7 @@ public partial class ChatSystem
     }
 
     /// <summary>
-    ///     Tries to find and play relevant emote sound in emote sounds collection.
+    /// Tries to find and play the relevant emote sound in an emote sounds collection.
     /// </summary>
     /// <returns>True if emote sound was played.</returns>
     public bool TryPlayEmoteSound(EntityUid uid, EmoteSoundsPrototype? proto, string emoteId, AudioParams? audioParams = null)
@@ -170,7 +157,7 @@ public partial class ChatSystem
     /// <param name="uid"></param>
     /// <param name="textInput"></param>
     /// <returns>True if the chat message should be displayed (because the emote was explicitly cancelled), false if it should not be.</returns>
-    private bool TryEmoteChatInput(EntityUid uid, string textInput)
+    protected bool TryEmoteChatInput(EntityUid uid, string textInput)
     {
         var actionTrimmedLower = TrimPunctuation(textInput.ToLower());
         if (!_wordEmoteDict.TryGetValue(actionTrimmedLower, out var emote))
@@ -181,22 +168,6 @@ public partial class ChatSystem
 
         return TryInvokeEmoteEvent(uid, emote);
 
-        static string TrimPunctuation(string textInput)
-        {
-            var trimEnd = textInput.Length;
-            while (trimEnd > 0 && char.IsPunctuation(textInput[trimEnd - 1]))
-            {
-                trimEnd--;
-            }
-
-            var trimStart = 0;
-            while (trimStart < trimEnd && char.IsPunctuation(textInput[trimStart]))
-            {
-                trimStart++;
-            }
-
-            return textInput[trimStart..trimEnd];
-        }
     }
     /// <summary>
     /// Checks if we can use this emote based on the emotes whitelist, blacklist, and availibility to the entity.
@@ -204,7 +175,7 @@ public partial class ChatSystem
     /// <param name="source">The entity that is speaking</param>
     /// <param name="emote">The emote being used</param>
     /// <returns></returns>
-    private bool AllowedToUseEmote(EntityUid source, EmotePrototype emote)
+    public bool AllowedToUseEmote(EntityUid source, EmotePrototype emote)
     {
         // If emote is in AllowedEmotes, it will bypass whitelist and blacklist
         if (TryComp<SpeechComponent>(source, out var speech) &&
@@ -214,8 +185,8 @@ public partial class ChatSystem
         }
 
         // Check the whitelist and blacklist
-        if (_whitelistSystem.IsWhitelistFail(emote.Whitelist, source) ||
-            _whitelistSystem.IsBlacklistPass(emote.Blacklist, source))
+        if (_whitelist.IsWhitelistFail(emote.Whitelist, source) ||
+            _whitelist.IsBlacklistPass(emote.Blacklist, source))
         {
             return false;
         }
@@ -244,9 +215,13 @@ public partial class ChatSystem
 
         if (beforeEv.Cancelled)
         {
+            // Chat is not predicted anyways, so no need to predict this popup either.
+            if (_net.IsClient)
+                return false;
+
             if (beforeEv.Blocker != null)
             {
-                _popupSystem.PopupEntity(
+                _popup.PopupEntity(
                     Loc.GetString(
                         "chat-system-emote-cancelled-blocked",
                         ("emote", Loc.GetString(proto.Name).ToLower()),
@@ -258,7 +233,7 @@ public partial class ChatSystem
             }
             else
             {
-                _popupSystem.PopupEntity(
+                _popup.PopupEntity(
                     Loc.GetString("chat-system-emote-cancelled-generic",
                         ("emote", Loc.GetString(proto.Name).ToLower())),
                     uid,
@@ -274,20 +249,21 @@ public partial class ChatSystem
 
         return true;
     }
-}
 
-/// <summary>
-///     Raised by chat system when entity made some emote.
-///     Use it to play sound, change sprite or something else.
-/// </summary>
-[ByRefEvent]
-public sealed class EmoteEvent : HandledEntityEventArgs
-{
-    public readonly EmotePrototype Emote;
-
-    public EmoteEvent(EmotePrototype emote)
+    private string TrimPunctuation(string textInput)
     {
-        Emote = emote;
-        Handled = false;
+        var trimEnd = textInput.Length;
+        while (trimEnd > 0 && char.IsPunctuation(textInput[trimEnd - 1]))
+        {
+            trimEnd--;
+        }
+
+        var trimStart = 0;
+        while (trimStart < trimEnd && char.IsPunctuation(textInput[trimStart]))
+        {
+            trimStart++;
+        }
+
+        return textInput[trimStart..trimEnd];
     }
 }
