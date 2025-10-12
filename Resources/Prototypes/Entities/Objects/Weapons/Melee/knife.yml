@@ -347,7 +347,9 @@
     components:
     - type: Execution
       doAfterDuration: 4.0
-    - type: Sharp
+    - type: Tool
+      qualities:
+      - Slicing
     - type: Utensil
       types:
       - Knife
