@@ -123,12 +123,12 @@
     capacity: 10 # DS14-value
     proto: CartridgeAntiMateriel
   - type: SpeedModifiedOnWield
-    walkModifier: 0.25
-    sprintModifier: 0.25
+    walkModifier: 0.6 # DS14-value
+    sprintModifier: 0.6 # DS14-value
   - type: CursorOffsetRequiresWield
   - type: EyeCursorOffset
-    maxOffset: 3
-    pvsIncrease: 0.3
+    maxOffset: 7 # DS14, prev 3
+    pvsIncrease: 0.5 # DS14, prev 0.3
   - type: StaticPrice
     price: 3500
 

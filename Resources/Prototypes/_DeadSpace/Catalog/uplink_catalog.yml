@@ -396,6 +396,60 @@
       - NukeOpsUplink
 
 - type: listing
+  id: UplinkCarbineSKSBundleAgent
+  name: Набор "СКС"
+  description: Содержит в себе модифицированный самозарядный карабин с пластиковым ложе, а так же 1 дополнительный магазин на 20 патрон
+  icon: { sprite: /Textures/_DeadSpace/Objects/Weapons/Guns/Carbines/sks_scope.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSyndicateFilledCarbineSKSAgent
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 9
+  cost:
+    Telecrystal: 12
+  categories:
+  - UplinkWeaponry
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+        - NukeOpsUplink
+
+- type: listing
+  id: UplinkCarbineSKSBundle
+  name: Набор "СКС"
+  description: Отлично подходит для поддержи первой линии наступления. Содержит в себе модифицированный самозарядный карабин с пластиковым ложе, а так же 4 магазина на 20 патрон
+  icon: { sprite: /Textures/_DeadSpace/Objects/Weapons/Guns/Carbines/sks_scope.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSyndicateFilledCarbineSKS
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 8
+  cost:
+    Telecrystal: 11
+  categories:
+  - UplinkWeaponry
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+        - NukeOpsUplink
+
+- type: listing
+  id: UplinkMagazineCarbineSKSAmmo
+  name: Магазин для СКС
+  description: Магазин для СКС на 20 патрон (7.62х39 мм винтовочные)
+  icon: { sprite: /Textures/_DeadSpace/Objects/Weapons/Guns/Ammunition/Magazine/Carbines/sks_scope.rsi, state: red }
+  productEntity: MagazineCarbineSKS
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkAmmo
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
   id: UplinkReagentContainerAmatoxin
   name: uplink-reagent-container-amatoxin-name
   description: uplink-reagent-container-amatoxin-desc
