@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
 namespace Content.Shared.Preferences.Loadouts;
 
@@ -22,6 +23,12 @@ public sealed partial class LoadoutGroupPrototype : IPrototype
     /// </summary>
     [DataField]
     public int MinLimit = 1;
+    
+    /// <summary>
+    /// Minimum number of loadouts that need to be specified by default.
+    /// </summary>
+    [DataField]
+    public int MinDefault = 0;
 
     /// <summary>
     /// Maximum limit for the category.
@@ -35,6 +42,17 @@ public sealed partial class LoadoutGroupPrototype : IPrototype
     [DataField]
     public bool Hidden;
 
+    /// <summary>
+    /// The prototype we inherit from.
+    /// </summary>
+    [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<EntityPrototype>))]
+    public string[]? Parents { get; }
+
+    [NeverPushInheritance]
+    [AbstractDataField]
+    public bool Abstract { get; }
+
+    [AlwaysPushInheritance]
     [DataField(required: true)]
     public List<ProtoId<LoadoutPrototype>> Loadouts = new();
 }

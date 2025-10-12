@@ -228,13 +228,13 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
             var loadouts = new List<Loadout>();
             SelectedLoadouts[group] = loadouts;
 
-            if (groupProto.MinLimit > 0)
+            if (groupProto.MinLimit > 0 || loadouts.Count < groupProto.MinDefault)
             {
                 // Apply any loadouts we can.
                 foreach (var protoId in groupProto.Loadouts)
                 {
                     // Reached the limit, time to stop
-                    if (loadouts.Count >= groupProto.MinLimit)
+                    if (loadouts.Count >= groupProto.MinLimit && loadouts.Count >= groupProto.MinDefault)
                         break;
 
                     if (!protoManager.TryIndex(protoId, out var loadoutProto))
