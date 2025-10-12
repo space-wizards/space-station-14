@@ -1,0 +1,82 @@
+- type: entity
+  parent: [ BaseItem, BaseSyndicateContraband ]
+  id: MantisBladesSyndicate
+  name: клинки богомола
+  description: От лезвий струится дымчатый аромат киберпсихоза. Готовы пустить под клинок стаю корпоративных крыс?
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Melee/mantis_blades.rsi
+    scale: 0.9, 0.9
+    layers:
+    - state: icon
+    - state: animation-icon
+      visible: true
+      map: [ "empty-icon" ]
+  - type: Item
+    sprite: _DeadSpace/Objects/Weapons/Melee/mantis_blades.rsi
+    size: Large
+  - type: Wieldable
+    useDelayOnWield: true
+    wieldSound:
+      collection: mantis_reflect
+    unwieldSound:
+      collection: mantis_reflect
+  - type: UseDelay
+    delay: 1.5
+  - type: ComponentToggler
+    components:
+    - type: Reflect
+      inRightPlace: True
+      reflectProb: 0.35
+      spread: 90
+      soundOnReflect:
+        collection: mantis_reflect
+    - type: PointLight
+      color: "#a02139"
+      radius: 3
+      energy: 1.5
+  - type: MeleeRequiresWield
+  - type: ItemToggle
+    onUse: false
+    onActivate: false
+  - type: MeleeWeapon
+    attackRate: 3
+    autoAttack: true
+    damage:
+      types:
+        Slash: 7
+        Structural: 20
+    animation: WeaponArcClaw
+    wideAnimation: WeaponArcStatic
+    soundHit:
+      collection: mantis_attack
+    soundNoDamage:
+      collection: mantis_attack
+    soundSwing:
+      collection: mantis_attack
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: Razorium
+          Quantity: 999999
+  - type: MeleeChemicalInjector
+    solution: melee
+    transferAmount: 1.5
+  - type: Sharp
+  - type: Execution
+    doAfterDuration: 4.0
+  - type: JumpAbility
+    jumpDistance: 1
+    jumpSound:
+      collection: mantis_rush
+  - type: ActionGrant
+    actions:
+    - ActionMantisJump
+  - type: ItemActionGrant
+    actions:
+    - ActionMantisJump
+  - type: Tag
+    tags:
+      - MantisBlades

@@ -57,6 +57,26 @@
       - SurplusBundle
 
 - type: listing
+  id: UplinkMantisBladesBundle
+  name: uplink-mantisblades-name
+  description: uplink-mantisblades-desc
+  icon: { sprite: _DeadSpace/Objects/Weapons/Melee/mantis_blades.rsi, state: icon }
+  productEntity: MantisBladesImplanter
+  cost:
+    Telecrystal: 20
+  categories:
+  - UplinkWeaponry
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+    - !type:BuyerWhitelistCondition
+      blacklist:
+        components:
+          - SurplusBundle
+
+- type: listing
   id: UplinkSyndieSabre
   name: uplink-syndiesabre-name
   description: uplink-syndiesabre-desc

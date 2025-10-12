@@ -38,3 +38,25 @@
       sprite: _DeadSpace/Objects/Specific/Autosurgeon/autosurgeon.rsi
       layers:
       - state: iconAfter
+
+- type: entity
+  parent: BaseImplantOnlyImplanterSyndi
+  id: MantisBladesImplanter
+  name: имплантер
+  suffix: клинки богомола
+  components:
+  - type: Implanter
+    implant: MantisBladesImplant
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: MantisBladesImplant
+  name: военный имплант
+  description: Нелегальный военный имплант, производимый корпорацией Cybersun. Устанавливает в руки пару клинков богомола.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+    implantAction: ActionRetractableItemMantisBladesImplant
+    whitelist:
+      components:
+      - Hands

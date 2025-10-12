@@ -15,3 +15,40 @@
     checkCanInteract: false
   - type: InstantAction
     event: !type:UseAdrenalImplantEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionRetractableItemMantisBladesImplant
+  name: "[color=red]Переключить клинки богомола[/color]"
+  description: Пустите их под клинок.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 1
+    raiseOnAction: true
+    itemIconStyle: BigAction
+    icon:
+      sprite: _DeadSpace/Objects/Weapons/Melee/mantis_blades.rsi
+      state: icon
+  - type: InstantAction
+    event: !type:OnRetractableItemActionEvent
+  - type: RetractableItemAction
+    spawnedPrototype: MantisBladesSyndicate
+    summonSounds:
+      collection: mantis_extend
+    retractSounds:
+      collection: mantis_retract
+
+- type: entity
+  parent: BaseAction
+  id: ActionMantisJump
+  name: "[color=red]Рывок богомола[/color]"
+  description: Набросьтесь на врага со всей ненавистью.
+  components:
+  - type: Action
+    useDelay: 2
+    icon:
+      sprite: Interface/Actions/jump.rsi
+      state: icon
+  - type: InstantAction
+    event: !type:GravityJumpEvent {}

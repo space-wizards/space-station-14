@@ -1,0 +1,28 @@
+- type: soundCollection
+  id: mantis_extend
+  files:
+    - /Audio/_DeadSpace/Weapons/Melee/MantisBlades/extend.ogg
+
+- type: soundCollection
+  id: mantis_retract
+  files:
+    - /Audio/_DeadSpace/Weapons/Melee/MantisBlades/retract.ogg
+
+- type: soundCollection
+  id: mantis_attack
+  files:
+    - /Audio/_DeadSpace/Weapons/Melee/MantisBlades/attack1.ogg
+    - /Audio/_DeadSpace/Weapons/Melee/MantisBlades/attack2.ogg
+    - /Audio/_DeadSpace/Weapons/Melee/MantisBlades/attack3.ogg
+    - /Audio/_DeadSpace/Weapons/Melee/MantisBlades/attack4.ogg
+    - /Audio/_DeadSpace/Weapons/Melee/MantisBlades/attack5.ogg
+
+- type: soundCollection
+  id: mantis_rush
+  files:
+    - /Audio/_DeadSpace/Weapons/Melee/MantisBlades/rush.ogg
+
+- type: soundCollection
+  id: mantis_reflect
+  files:
+    - /Audio/_DeadSpace/Weapons/Melee/MantisBlades/reflect.ogg
