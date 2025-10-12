@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ProfRenderer
-  changes:
-  - message: Cluwne ID cards now have a job icon.
-    type: Tweak
-  id: 8576
-  time: '2025-05-27T16:39:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37834
 - author: Moomoobeef
   changes:
   - message: Bookshelves now contain a more reasonable amount of books.
@@ -3947,3 +3940,10 @@
   id: 9078
   time: '2025-10-12T00:15:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39037
+- author: SuperGDPWYL
+  changes:
+  - message: Added the Syndicate ID Card to the uplink for 1 TC.
+    type: Add
+  id: 9079
+  time: '2025-10-12T00:56:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38381
