@@ -163,6 +163,11 @@
           tags:
           - TrashBag
         insertOnInteract: false
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: [ ]
+      trashbag_slot: !type:ContainerSlot { }
   - type: Appearance
 
 - type: entity
