@@ -7,7 +7,7 @@ namespace Content.Shared.Preferences.Loadouts;
 /// Corresponds to a set of loadouts for a particular slot.
 /// </summary>
 [Prototype]
-public sealed partial class LoadoutGroupPrototype : IPrototype
+public sealed partial class LoadoutGroupPrototype : IPrototype, IInheritingPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = string.Empty;
@@ -45,7 +45,7 @@ public sealed partial class LoadoutGroupPrototype : IPrototype
     /// <summary>
     /// The prototype we inherit from.
     /// </summary>
-    [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<EntityPrototype>))]
+    [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<LoadoutGroupPrototype>))]
     public string[]? Parents { get; }
 
     [NeverPushInheritance]
