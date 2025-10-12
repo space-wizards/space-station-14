@@ -84,6 +84,9 @@
     - IPS
   randomizeName: false
   components:
+    - type: NpcFactionMember
+      factions:
+      - CentralCommand
     - type: AutoImplant
       implants:
       - TrackingImplant
@@ -121,6 +124,9 @@
     implants:
     - FreedomImplant
     - DeathAcidifierImplant
+  - type: NpcFactionMember
+    factions:
+    - CentralCommand
   - type: GhostRole
     name: ghost-role-information-Death-Squad-name
     description: ghost-role-information-Death-Squad-description

@@ -1,0 +1,16 @@
+- type: npcFaction
+  id: CentralCommand
+  hostile:
+  - NanoTrasen
+  - SimpleHostile
+  - Syndicate
+  - Xeno
+  - Zombie
+  - Revolutionary
+  - Dragon
+  - AllHostile
+  - Wizard
+  - Xenoborg
+  - Necromorfs # DS14
+  - SpiderTerror # DS14
+  - Blob # DS14
