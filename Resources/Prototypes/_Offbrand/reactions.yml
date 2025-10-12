@@ -1,0 +1,235 @@
+- type: reaction
+  id: Tramadol
+  reactants:
+    Inaprovaline:
+      amount: 1
+    Ethanol:
+      amount: 1
+    Acetone:
+      amount: 1
+  products:
+    Tramadol: 3
+
+- type: reaction
+  id: Paracetamol
+  reactants:
+    Tramadol:
+      amount: 1
+    Sugar:
+      amount: 1
+    Water:
+      amount: 2
+  products:
+    Paracetamol: 2
+
+- type: reaction
+  id: Oxycodone
+  reactants:
+    Tramadol:
+      amount: 1
+    Ethanol:
+      amount: 2
+    Plasma:
+      amount: 1
+      catalyst: true
+  products:
+    Oxycodone: 2
+
+- type: reaction
+  id: Synthflesh
+  reactants:
+    SulfuricAcid:
+      amount: 1
+    Oxygen:
+      amount: 1
+    Acetone:
+      amount: 1
+  products:
+    Synthflesh: 4
+
+- type: reaction
+  id: Sanguine
+  reactants:
+    Synthflesh:
+      amount: 1
+    DexalinPlus:
+      amount: 1
+    Iron:
+      amount: 1
+  products:
+    Sanguine: 3
+
+- type: reaction
+  id: SalineGlucose
+  reactants:
+    Saline:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    SalineGlucose: 1
+
+- type: reaction
+  id: Cloneoxadone
+  reactants:
+    Cryoxadone:
+      amount: 1
+    Sodium:
+      amount: 1
+    Inaprovaline:
+      amount: 1
+  products:
+    Cloneoxadone: 3
+
+- type: reaction
+  id: Peridaxon
+  reactants:
+    Bicaridine:
+      amount: 1
+    Cryoxadone:
+      amount: 1
+    Plasma:
+      amount: 1
+      catalyst: true
+  products:
+    Peridaxon: 2
+
+- type: reaction
+  id: RomerolCharcoalCancellation
+  reactants:
+    Romerol:
+      amount: 1
+    Charcoal:
+      amount: 1
+  products:
+    Romerol: 1
+
+- type: reaction
+  id: Coagulant
+  reactants:
+    TranexamicAcid:
+      amount: 1
+    Lead:
+      amount: 1
+      catalyst: true
+  products:
+    Coagulant: 1
+
+- type: reaction
+  id: Osseous
+  reactants:
+    Milk:
+      amount: 1
+    SodaWater:
+      amount: 1
+    Lead:
+      amount: 1
+      catalyst: true
+  products:
+    Osseous: 2
+
+- type: reaction
+  id: Convermol
+  reactants:
+    Fluorine:
+      amount: 1
+    Aluminium:
+      amount: 1
+    Dexalin:
+      amount: 1
+  products:
+    Convermol: 3
+
+- type: reaction
+  id: SalicylicAcid
+  reactants:
+    Phenol:
+      amount: 1
+    Bicaridine:
+      amount: 1
+    SulfuricAcid:
+      amount: 1
+  products:
+    SalicylicAcid: 3
+
+- type: reaction
+  id: SalicylicAcidBruizine
+  reactants:
+    SalicylicAcid:
+      amount: 1
+    Bruizine:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: SalicylicAcidLacerinol
+  reactants:
+    SalicylicAcid:
+      amount: 1
+    Lacerinol:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: SalicylicAcidPuncturase
+  reactants:
+    SalicylicAcid:
+      amount: 1
+    Puncturase:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: Oxandrolone
+  reactants:
+    Phenol:
+      amount: 1
+    Dermaline:
+      amount: 1
+    Fluorine:
+      amount: 1
+  products:
+    Oxandrolone: 3
+
+- type: reaction
+  id: OxandrolonePyrazine
+  reactants:
+    Oxandrolone:
+      amount: 1
+    Pyrazine:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: OxandroloneInsuzine
+  reactants:
+    Oxandrolone:
+      amount: 1
+    Insuzine:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: OxandroloneSigynate
+  reactants:
+    Oxandrolone:
+      amount: 1
+    Sigynate:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: OxandroloneLeporazine
+  reactants:
+    Oxandrolone:
+      amount: 1
+    Leporazine:
+      amount: 1
+  products:
+    Razorium: 1

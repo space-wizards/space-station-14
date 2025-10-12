@@ -279,6 +279,12 @@ namespace Content.Shared.Chemistry.Reagent
         public FixedPoint2 MetabolismRate = FixedPoint2.New(0.5f);
 
         /// <summary>
+        /// Offbrand: Status effects to apply whilst this reagent is metabolising
+        /// </summary>
+        [DataField]
+        public List<ReagentStatusEffectEntry> StatusEffects = new();
+
+        /// <summary>
         ///     A list of effects to apply when these reagents are metabolized.
         /// </summary>
         [JsonPropertyName("effects")]
@@ -290,11 +296,50 @@ namespace Content.Shared.Chemistry.Reagent
             return new ReagentEffectsGuideEntry(MetabolismRate,
                 Effects
                     .Select(x => x.GuidebookEffectDescription(prototype, entSys)) // hate.
+                    .Concat(StatusEffects.Select(x => x.Describe(prototype, entSys))) // Offbrand
                     .Where(x => x is not null)
                     .Select(x => x!)
                     .ToArray());
         }
     }
+
+    // Begin Offbrand
+    [DataDefinition]
+    public sealed partial class ReagentStatusEffectEntry
+    {
+        [DataField]
+        public EntityEffectCondition[]? Conditions;
+
+        [DataField]
+        public EntProtoId StatusEffect;
+
+        public bool ShouldApplyStatusEffect(EntityEffectBaseArgs args)
+        {
+            if (Conditions != null)
+            {
+                foreach (var cond in Conditions)
+                {
+                    if (!cond.Condition(args))
+                        return false;
+                }
+            }
+
+            return true;
+        }
+
+        public string? Describe(IPrototypeManager prototype, IEntitySystemManager entSys)
+        {
+            if (!prototype.Resolve(StatusEffect, out var effectProtoData))
+                return null;
+
+            return Loc.GetString("reagent-guidebook-status-effect", ("effect", effectProtoData.Name ?? string.Empty),
+                ("conditionCount", Conditions?.Length ?? 0),
+                ("conditions",
+                    Content.Shared.Localizations.ContentLocalizationManager.FormatList(Conditions?.Select(x => x.GuidebookExplanation(prototype)).ToList() ??
+                                                            new List<string>())));
+        }
+    }
+    // End Offbrand
 
     [Serializable, NetSerializable]
     public struct ReagentEffectsGuideEntry

@@ -10,7 +10,7 @@
         amount: 2
       - id: Gauze
         amount: 2
-      - id: Bloodpack
+      - id: ChemistryBottleParacetamol # Offbrand
         amount: 2
       - id: BoxLatexGloves
       - id: BoxSterileMask
@@ -67,6 +67,10 @@
       - id: Drill
       - id: Saw
       - id: Hemostat
+      - id: BoneGel # Offbrand
+      - id: BoneSetter # Offbrand
+      - id: VascularRecoupler # Offbrand
+      - id: Suture # Offbrand
       - id: ClothingMaskSterile
 
 - type: entity

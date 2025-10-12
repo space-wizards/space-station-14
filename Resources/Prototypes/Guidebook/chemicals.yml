@@ -4,7 +4,7 @@
   text: "/ServerInfo/Guidebook/Chemicals.xml"
   children:
   - Elements
-  - Medicine
+  - OffbrandMedicineList # Offbrand
   - Narcotics
   - Pyrotechnic
   - Toxins

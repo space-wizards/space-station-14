@@ -77,6 +77,24 @@ namespace Content.Shared.Damage
             return false;
         }
 
+        // Begin Offbrand
+        /// <summary>
+        /// Returns true if the specifier contains any negative damage values.
+        /// Differs from <see cref="Empty"/> as a damage specifier might contain entries with zeroes.
+        /// This also returns false if the specifier only contains negative values.
+        /// </summary>
+        public bool AnyNegative()
+        {
+            foreach (var value in DamageDict.Values)
+            {
+                if (value < FixedPoint2.Zero)
+                    return true;
+            }
+
+            return false;
+        }
+        // End Offbrand
+
         /// <summary>
         ///     Whether this damage specifier has any entries.
         /// </summary>

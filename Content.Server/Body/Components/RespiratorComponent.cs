@@ -14,7 +14,7 @@ namespace Content.Server.Body.Components
         ///     Volume of our breath in liters
         /// </summary>
         [DataField]
-        public float BreathVolume = Atmospherics.BreathVolume;
+        public float BreathVolume = 0.75f; // Offbrand
 
         /// <summary>
         ///     How much of the gas we inhale is metabolized? Value range is (0, 1]
@@ -33,7 +33,7 @@ namespace Content.Server.Body.Components
         ///     so a full cycle takes twice as long.
         /// </summary>
         [DataField]
-        public TimeSpan UpdateInterval = TimeSpan.FromSeconds(2);
+        public TimeSpan UpdateInterval = TimeSpan.FromSeconds(2.5); // Offbrand
 
         /// <summary>
         /// Multiplier applied to <see cref="UpdateInterval"/> for adjusting based on metabolic rate multiplier.
@@ -42,17 +42,47 @@ namespace Content.Server.Body.Components
         public float UpdateIntervalMultiplier = 1f;
 
         /// <summary>
+        /// Offbrand - Multiplier applied to <see cref="UpdateInterval"/> for adjusting based on body respiratory rate
+        /// </summary>
+        [DataField]
+        public float BreathRateMultiplier = 1f;
+
+        /// <summary>
+        /// Offbrand - Multiplier applied to exhalation to determine how efficient the purging of gases from the body is
+        /// </summary>
+        [DataField]
+        public float ExhaleEfficacyModifier = 1f;
+
+        /// <summary>
+        /// Offbrand - Multiplier that determines if an entity is hyperventilating (should audibly breathe)
+        /// </summary>
+        [DataField]
+        public float HyperventilationThreshold = 0.6f;
+
+        /// <summary>
+        /// Offbrand - Multiplier applied to <see cref="BreathVolume"/> for adjusting based on body respiratory rate
+        /// </summary>
+        [ViewVariables]
+        public float AdjustedBreathVolume => BreathVolume * BreathRateMultiplier * BreathRateMultiplier;
+
+        /// <summary>
+        /// Adjusted update interval based only on body factors, no e.g. stasis
+        /// </summary>
+        [ViewVariables]
+        public TimeSpan BodyAdjustedUpdateInterval => UpdateInterval * BreathRateMultiplier; // Offbrand
+
+        /// <summary>
         /// Adjusted update interval based off of the multiplier value.
         /// </summary>
         [ViewVariables]
-        public TimeSpan AdjustedUpdateInterval => UpdateInterval * UpdateIntervalMultiplier;
+        public TimeSpan OverallAdjustedUpdateInterval => UpdateInterval * UpdateIntervalMultiplier * BreathRateMultiplier; // Offbrand
 
         /// <summary>
         ///     Saturation level. Reduced by UpdateInterval each tick.
         ///     Can be thought of as 'how many seconds you have until you start suffocating' in this configuration.
         /// </summary>
         [DataField]
-        public float Saturation = 5.0f;
+        public float Saturation = 8.0f; // Offbrand
 
         /// <summary>
         ///     At what level of saturation will you begin to suffocate?
@@ -61,7 +91,7 @@ namespace Content.Server.Body.Components
         public float SuffocationThreshold;
 
         [DataField]
-        public float MaxSaturation = 5.0f;
+        public float MaxSaturation = 8.0f; // Offbrand
 
         [DataField]
         public float MinSaturation = -2.0f;

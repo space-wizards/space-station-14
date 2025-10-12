@@ -1396,6 +1396,7 @@
     - id: ChemistryBottleDexalinPlus
     - id: ChemistryBottleSaline
     - id: ChemistryBottleTricordrazine
+    - id: ChemistryBottleParacetamol # Offbrand
 
 - type: entityTable
   id: SpecialtyMedicineReagentBottleTable
@@ -1409,6 +1410,7 @@
     - id: ChemistryBottleTricordrazine
     - id: ChemistryBottleTranexamicAcid
     - id: ChemistryBottleOculine
+    - id: ChemistryBottleTramadol # Offbrand
 
 - type: entityTable
   id: AllMedicineReagentBottlesTable
@@ -1464,3 +1466,5 @@
     - id: ChemistryBottleTranexamicAcid
     - id: ChemistryBottleTricordrazine
     - id: ChemistryBottleUltravasculine
+    - id: ChemistryBottleParacetamol # Offbrand
+    - id: ChemistryBottleTramadol # Offbrand

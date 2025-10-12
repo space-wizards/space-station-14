@@ -16,6 +16,16 @@ public sealed partial class MobStateCondition : EntityEffectCondition
             if (mobState.CurrentState == Mobstate)
                 return true;
         }
+        // Begin Offbrand
+        if (Mobstate == MobState.Critical)
+        {
+            if (args.EntityManager.System<Content.Shared._Offbrand.Wounds.HealthRankingSystem>()
+                .IsCritical(args.TargetEntity))
+            {
+                return true;
+            }
+        }
+        // End Offbrand
 
         return false;
     }

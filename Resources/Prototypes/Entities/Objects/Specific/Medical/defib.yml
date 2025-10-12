@@ -39,7 +39,7 @@
       price: 30
     - type: GuideHelp
       guides:
-      - MedicalDoctor
+      - OffbrandBody # Offbrand
 
 - type: entity
   id: Defibrillator
