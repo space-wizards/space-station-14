@@ -29,7 +29,7 @@
     Biomass: 10
 
 - type: latheRecipe
-  id: BioGenMaterialCardboard1
+  id: BioGenMaterialCardboard1 # This version for the biogenerator; autolathe version in sheet.yml
   result: MaterialCardboard1
   categories:
   - Materials
