@@ -34,7 +34,7 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
             return;
 
         scannerComp.ScannedAnomaly = anomaly;
-        _anomaly.AppendScanner(anomaly, scanner);
+        AnomalySystem.AppendScanner(new Entity<AnomalyComponent>(anomaly, anomalyComp), new Entity<AnomalyScannerComponent>(scanner, scannerComp));
         UpdateScannerUi(scanner, scannerComp);
 
         TryComp<AppearanceComponent>(scanner, out var appearanceComp);
@@ -167,24 +167,20 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
         }
     }
 
-    private void UpdateScannerPulseTimers(Entity<AnomalyComponent> anomalyUid, double secondsUntilNextPulse)
+    private void UpdateScannerPulseTimers(Entity<AnomalyComponent> anomalyEnt, double secondsUntilNextPulse)
     {
         if (secondsUntilNextPulse > 5)
             return;
 
         var rounded = Math.Max(0, (int)Math.Ceiling(secondsUntilNextPulse));
 
-        if (!TryComp<AnomalyComponent>(anomalyUid, out var anomalyComponent))
-            return;
-
-        foreach (var scannerUid in anomalyComponent.Scanners)
+        foreach (var scannerUid in anomalyEnt.Comp.Scanners)
         {
-            if (!TryComp<AnomalyScannerComponent>(scannerUid, out var scannerComponent))
-                continue;
+            var scannerComponent = Comp<AnomalyScannerComponent>(scannerUid);
 
-            if (scannerComponent.ScannedAnomaly != anomalyUid)
+            if (scannerComponent.LifeStage == ComponentLifeStage.Deleted || scannerComponent.ScannedAnomaly != anomalyEnt)
             {
-                _anomaly.RemoveScanner(anomalyUid, scannerUid);
+                AnomalySystem.RemoveScanner(anomalyEnt, new Entity<AnomalyScannerComponent>(scannerUid, scannerComponent));
                 continue;
             }
 
