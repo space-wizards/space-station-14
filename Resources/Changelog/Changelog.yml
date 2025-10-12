@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: sowelipililimute
-  changes:
-  - message: Plants can process nutrition again
-    type: Fix
-  - message: Plants can process robust harvest again
-    type: Fix
-  id: 8582
-  time: '2025-05-28T22:51:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37912
 - author: mhamster
   changes:
   - message: Chameleon clothes are now affected by any kind of EMP explosion, which
@@ -3763,7 +3754,7 @@
   url: https://github.com/space-wizards/space-station-14/pull/40786
 - author: SlamBamActionman
   changes:
-  - message: Nocturine now slows the target down, with a longer duration and shorter
+  - message: EXPERIMENTAL Nocturine now slows the target down, with a longer duration and shorter
       delay before activating.
     type: Tweak
   id: 9060
@@ -3945,3 +3936,21 @@
   id: 9084
   time: '2025-10-12T11:14:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39359
+- author: Callmore
+  changes:
+  - message: Bullet casings can now be picked up again.
+    type: Fix
+  id: 9085
+  time: '2025-10-12T18:45:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40829
+- author: CoconutThunder
+  changes:
+  - message: Fixed lubed items being thrown when looking at the pickup verb.
+    type: Fix
+  - message: Fixed multihanded items showing a popup when looking at the pickup verb.
+    type: Fix
+  - message: Fixed a bug with lubed handcuffs.
+    type: Fix
+  id: 9086
+  time: '2025-05-25T05:10:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38705
