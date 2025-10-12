@@ -46,9 +46,6 @@
             <ContainerButton Name="StationAlertLevelInstructionsButton">
                 <RichTextLabel Name="StationAlertLevelInstructions" Access="Public"/>
             </ContainerButton>
-            <ContainerButton Name="EvacTimeButton">
-                <RichTextLabel Name="EvacTimeLabel" Access="Public"/>
-            </ContainerButton>
         </BoxContainer>
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
             <BoxContainer Orientation="Vertical"

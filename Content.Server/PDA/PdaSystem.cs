@@ -22,10 +22,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
-using Content.Shared.CCVar;
-using Content.Server.RoundEnd;
-using Content.Server.Shuttles.Systems;
-using Robust.Shared.Configuration;
 
 namespace Content.Server.PDA
 {
@@ -41,11 +37,6 @@ namespace Content.Server.PDA
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
         [Dependency] private readonly ContainerSystem _containerSystem = default!;
         [Dependency] private readonly IdCardSystem _idCard = default!;
-        // DS14-start
-        [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
-        [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttleSystem = default!;
-        // DS14-end
 
         public override void Initialize()
         {
@@ -67,7 +58,6 @@ namespace Content.Server.PDA
             SubscribeLocalEvent<StationRenamedEvent>(OnStationRenamed);
             SubscribeLocalEvent<EntityRenamedEvent>(OnEntityRenamed, after: new[] { typeof(IdCardSystem) });
             SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
-            SubscribeLocalEvent<RoundEndSystemChangedEvent>(OnRoundEndChanged); // DS14
             SubscribeLocalEvent<PdaComponent, InventoryRelayedEvent<ChameleonControllerOutfitSelectedEvent>>(ChameleonControllerOutfitItemSelected);
         }
 
@@ -153,13 +143,6 @@ namespace Content.Server.PDA
             UpdateAllPdaUisOnStation();
         }
 
-        // DS14-start
-        private void OnRoundEndChanged(RoundEndSystemChangedEvent ev)
-        {
-            UpdateAllPdaUisOnStation();
-        }
-        // DS14-end
-
         private void UpdateAllPdaUisOnStation()
         {
             var query = AllEntityQuery<PdaComponent>();
@@ -214,13 +197,6 @@ namespace Content.Server.PDA
             // TODO don't make this depend on cartridge loader!?!?
             if (!TryComp(uid, out CartridgeLoaderComponent? loader))
                 return;
-            // DS14-start
-            var shuttleDockTime = TimeSpan.FromSeconds(_configManager.GetCVar(CCVars.EmergencyShuttleDockTime));
-            shuttleDockTime *= _emergencyShuttleSystem.Multiplier;
-
-            var expectedCountdownEnd = _roundEndSystem.ExpectedCountdownEnd;
-            var isRoundEndRequested = _roundEndSystem.IsRoundEndRequested();
-            // DS14-end
             var programs = _cartridgeLoader.GetAvailablePrograms(uid, loader);
             var id = CompOrNull<IdCardComponent>(pda.ContainedId);
             var state = new PdaUpdateState(
@@ -240,13 +216,7 @@ namespace Content.Server.PDA
                 pda.StationName,
                 showUplink,
                 hasInstrument,
-                address,
-                // DS14-start
-                expectedCountdownEnd,
-                isRoundEndRequested,
-                shuttleDockTime
-                // DS14-end
-                );
+                address);
 
             _ui.SetUiState(uid, PdaUiKey.Key, state);
         }
