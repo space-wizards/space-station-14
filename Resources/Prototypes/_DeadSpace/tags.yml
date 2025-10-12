@@ -29,6 +29,9 @@
   id: CleanerGrenade
 
 - type: Tag
+  id: CompactDefibrillator
+
+- type: Tag
   id: DockCentcommERT
 
 - type: Tag
