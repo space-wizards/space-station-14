@@ -1,6 +1,17 @@
 ﻿Entries:
 - author: CoconutThunder
   changes:
+  - message: Fixed lubed items being thrown when looking at the pickup verb.
+    type: Fix
+  - message: Fixed multihanded items showing a popup when looking at the pickup verb.
+    type: Fix
+  - message: Fixed a bug with lubed handcuffs.
+    type: Fix
+  id: 8561
+  time: '2025-05-25T05:10:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38705
+- author: CoconutThunder
+  changes:
   - message: The Chief Medical Officer should now appear with the correct precedence
       in the crew manifest.
     type: Fix
