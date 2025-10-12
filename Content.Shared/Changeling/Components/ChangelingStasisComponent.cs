@@ -7,7 +7,7 @@ namespace Content.Shared.Changeling.Components;
 
 /// <summary>
 /// Component responsible for Changelings Regenerative Stasis.
-/// Allows the user to fake "death" and get up afterward.
+/// Allows the user to fake "death" and heal afterwards.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(ChangelingStasisSystem))]
@@ -34,25 +34,25 @@ public sealed partial class ChangelingStasisComponent : Component
     public TimeSpan StasisCooldown = TimeSpan.FromSeconds(30);
 
     /// <summary>
-    /// Time added to the stasis cooldown, based on the entity's sustained and StasisDamageDelta.
+    /// Time added to the stasis cooldown, based on the entity's sustained damage and StasisDamageDelta.
     /// </summary>
     [DataField, AutoNetworkedField]
     public TimeSpan BonusStasisCooldown = TimeSpan.FromSeconds(60);
 
     /// <summary>
-    /// Maximum amount of damage on an entity allowed before adding entire BonusStasisCooldown to the cooldown.
+    /// Maximum amount of damage on an entity allowed before adding the entire BonusStasisCooldown to the cooldown.
     /// </summary>
     [DataField, AutoNetworkedField]
     public int StasisDamageDelta = 400; // at 200 damage, the cooldown should be 60s
 
     /// <summary>
-    /// The Action for devouring
+    /// The action entity for the stasis action.
     /// </summary>
     [DataField]
     public EntProtoId? RegenStasisAction = "ActionChangelingStasis";
 
     /// <summary>
-    /// The action entity associated with devouring
+    /// The EntityUid of the action given by this component.
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? RegenStasisActionEntity;

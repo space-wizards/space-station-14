@@ -1,4 +1,6 @@
 ﻿using Content.Shared.Actions;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Damage;
 using Content.Shared.Ghost;
@@ -17,6 +19,8 @@ public sealed class ChangelingStasisSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly MobStateSystem _mobs = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
+    [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
+    [Dependency] private readonly SharedDeathgaspSystem _deathgasp = default!;
 
     public override void Initialize()
     {
@@ -49,7 +53,7 @@ public sealed class ChangelingStasisSystem : EntitySystem
     private void OnStateChanged(Entity<ChangelingStasisComponent> ent, ref MobStateChangedEvent args)
     {
         if (args.NewMobState == MobState.Alive && ent.Comp.IsInStasis)
-            CancelStasis(ent);
+            CancelStasis((ent, ent.Comp));
     }
 
     private void OnMoveGhost(Entity<ChangelingStasisComponent> ent, ref GhostAttemptEvent args)
@@ -64,24 +68,30 @@ public sealed class ChangelingStasisSystem : EntitySystem
     {
         if (ent.Comp.IsInStasis)
         {
-            ExitStasis(ent);
+            ExitStasis((ent, ent.Comp));
             args.Handled = true; //Only handle when exiting, as we don't need the useDelay otherwise.
             return;
         }
 
-        EnterStasis(ent);
+        EnterStasis((ent, ent.Comp));
     }
 
-    private void EnterStasis(Entity<ChangelingStasisComponent> ent)
+    public void EnterStasis(Entity<ChangelingStasisComponent?> ent)
     {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return;
+
         if (ent.Comp.RegenStasisActionEntity == null)
             return;
 
         if (ent.Comp.IsInStasis)
             return;
 
-        if (_mobs.IsAlive(ent))
+        if (!_mobs.IsDead(ent))
+        {
+            _deathgasp.Deathgasp(ent);
             _mobs.ChangeMobState(ent.Owner, MobState.Dead);
+        }
 
         _popup.PopupClient(Loc.GetString("changeling-stasis-enter"), ent.Owner, ent.Owner, PopupType.MediumCaution);
 
@@ -106,8 +116,11 @@ public sealed class ChangelingStasisSystem : EntitySystem
         _actions.SetCooldown(ent.Comp.RegenStasisActionEntity, stasisDuration);
     }
 
-    private void ExitStasis(Entity<ChangelingStasisComponent> ent)
+    public void ExitStasis(Entity<ChangelingStasisComponent?> ent)
     {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
         if (ent.Comp.RegenStasisActionEntity == null)
             return;
 
@@ -116,6 +129,12 @@ public sealed class ChangelingStasisSystem : EntitySystem
 
         // We remove all the damage.
         _damage.SetAllDamage(ent.Owner, 0);
+
+        if (TryComp<BloodstreamComponent>(ent, out var bloodstream))
+        {
+            _bloodstream.TryModifyBloodLevel((ent, bloodstream), bloodstream.BloodMaxVolume);
+            _bloodstream.TryModifyBleedAmount((ent, bloodstream), -bloodstream.BleedAmount);
+        }
 
         _mobs.ChangeMobState(ent.Owner, MobState.Alive);
 
@@ -134,8 +153,11 @@ public sealed class ChangelingStasisSystem : EntitySystem
         Dirty(ent);
     }
 
-    private void CancelStasis(Entity<ChangelingStasisComponent> ent)
+    public void CancelStasis(Entity<ChangelingStasisComponent?> ent)
     {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
         if (ent.Comp.RegenStasisActionEntity == null || !ent.Comp.IsInStasis)
             return;
 
