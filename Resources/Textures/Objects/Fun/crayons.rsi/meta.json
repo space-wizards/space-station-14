@@ -40,6 +40,17 @@
       "name": "box-inhand-right",
       "directions": 4
     },
+	{
+      "name": "professional_box"
+    },
+    {
+      "name": "professional_box-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "professional_box-inhand-right",
+      "directions": 4
+    },
     {
       "name": "green"
     },
@@ -151,6 +162,18 @@
     },
     {
       "name": "white_box"
+    },
+	{
+      "name": "1_professional_box"
+    },
+	{
+      "name": "2_professional_box"
+    },
+	{
+      "name": "3_professional_box"
+    },
+	{
+      "name": "4_professional_box"
     }
   ]
 }

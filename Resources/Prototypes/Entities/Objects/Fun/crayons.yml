@@ -304,3 +304,48 @@
           tags:
           - CrayonWhite
   - type: Appearance
+  
+- type: entity
+  parent: CrayonBox
+  id: ProfessionalCrayonBox
+  name: professional crayon box
+  description: It's a box of rainbow crayons.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/crayons.rsi
+    state: professional_box
+  - type: Storage
+    grid:
+    - 0,0,5,0
+    maxItemSize: Tiny
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: Small
+    heldPrefix: professional_box
+  - type: StorageFill
+    contents:
+    - id: CrayonRainbow
+    - id: CrayonRainbow
+    - id: CrayonRainbow
+    - id: CrayonRainbow
+    - id: CrayonRainbow
+    - id: CrayonRainbow
+  - type: ItemMapper
+    mapLayers:
+      1_professional_box:
+        whitelist:
+          tags:
+          - Crayon
+      2_professional_box:
+        whitelist:
+          tags:
+          - Crayon
+      3_professional_box:
+        whitelist:
+          tags:
+          - Crayon
+      4_professional_box:
+        whitelist:
+          tags:
+          - Crayon
+  - type: Appearance
