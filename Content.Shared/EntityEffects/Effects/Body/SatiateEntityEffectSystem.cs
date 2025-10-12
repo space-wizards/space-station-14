@@ -45,7 +45,7 @@ public abstract partial class Satiate<T> : EntityEffectBase<T> where T : EntityE
     ///     Change in satiation.
     /// </summary>
     [DataField]
-    public float Factor = -1.5f;
+    public float Factor = 1.5f;
 }
 
 /// <inheritdoc cref="Satiate{T}"/>
