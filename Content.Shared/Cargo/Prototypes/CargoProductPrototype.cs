@@ -1,5 +1,6 @@
+using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
 
@@ -91,8 +92,11 @@ namespace Content.Shared.Cargo.Prototypes
         [DataField]
         public EntProtoId Product { get; private set; } = string.Empty;
 
+        /// <summary>
+        /// The entity to spawn and insert the product into. If null, just the product is spawned.
+        /// </summary>
         [DataField]
-        public bool UseParcelWrap;
+        public CargoProductContainer? Container;
 
         /// <summary>
         ///     The point cost of the product.
@@ -111,5 +115,22 @@ namespace Content.Shared.Cargo.Prototypes
         /// </summary>
         [DataField]
         public ProtoId<CargoMarketPrototype> Group { get; private set; } = "market";
+    }
+
+    /// <see cref="CargoProductPrototype.Container"/>
+    [DataDefinition, Serializable, NetSerializable]
+    public sealed partial class CargoProductContainer
+    {
+        /// <summary>
+        /// What entity to spawn as the container.
+        /// </summary>
+        [DataField(required: true)]
+        public EntProtoId<ContainerManagerComponent> Entity;
+
+        /// <summary>
+        /// What container in <see cref="Entity"/> the product should be inserted into.
+        /// </summary>
+        [DataField(required: true)]
+        public string ContainerId;
     }
 }

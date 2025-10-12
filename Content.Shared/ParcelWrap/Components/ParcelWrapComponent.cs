@@ -22,20 +22,6 @@ public sealed partial class ParcelWrapComponent : Component
     public EntProtoId<WrappedParcelComponent> ParcelPrototype;
 
     /// <summary>
-    /// If true, parcels created by this will have the same <see cref="ItemSizePrototype">size</see> as the item they
-    /// contain. If false, parcels created by this will always have the size specified by <see cref="ParcelWrappingSystem._fallbackParcelSize"/>.
-    /// </summary>
-    [DataField]
-    public bool WrappedItemsMaintainSize = true;
-
-    /// <summary>
-    /// If true, parcels created by this will have the same shape as the item they contain. If false, parcels created by
-    /// this will have the default shape for their size.
-    /// </summary>
-    [DataField]
-    public bool WrappedItemsMaintainShape;
-
-    /// <summary>
     /// How long it takes to use this to wrap something.
     /// </summary>
     [DataField(required: true)]

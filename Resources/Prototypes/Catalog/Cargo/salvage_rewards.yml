@@ -56,7 +56,9 @@
     sprite: Objects/Tanks/Jetpacks/void.rsi
     state: icon
   product: JetpackVoidFilled
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 4000
   category: cargoproduct-category-name-cargo
   group: SalvageJobReward3
@@ -67,7 +69,9 @@
     sprite: Objects/Weapons/Melee/crusher_glaive.rsi
     state: icon
   product: WeaponCrusherGlaive
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 8000
   category: cargoproduct-category-name-cargo
   group: SalvageJobReward3
@@ -80,7 +84,9 @@
     sprite: Clothing/Neck/Cloaks/miner.rsi
     state: icon
   product: ClothingNeckCloakSalvagerSupreme
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 25000
   category: cargoproduct-category-name-cargo
   group: SalvageJobRewardMAX

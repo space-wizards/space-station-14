@@ -12,7 +12,9 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: VendingMachineRestockBooze
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 3500
   category: cargoproduct-category-name-service
   group: market
@@ -23,7 +25,9 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: VendingMachineRestockChefvend
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 680
   category: cargoproduct-category-name-service
   group: market
@@ -34,7 +38,9 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: VendingMachineRestockClothes
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 2500
   category: cargoproduct-category-name-service
   group: market
@@ -45,7 +51,9 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: VendingMachineRestockCostumes
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 2500
   category: cargoproduct-category-name-service
   group: market
@@ -56,7 +64,9 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: VendingMachineRestockDinnerware
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 2000
   category: cargoproduct-category-name-service
   group: market
@@ -67,7 +77,9 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: VendingMachineRestockCondimentStation
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 300
   category: cargoproduct-category-name-service
   group: market
@@ -88,7 +100,9 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: VendingMachineRestockGames
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 750
   category: cargoproduct-category-name-service
   group: market
@@ -99,7 +113,9 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: VendingMachineRestockHotDrinks
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 600
   category: cargoproduct-category-name-service
   group: market
@@ -140,7 +156,9 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: VendingMachineRestockPTech
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 1200
   category: cargoproduct-category-name-service
   group: market
@@ -151,7 +169,9 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: VendingMachineRestockRobustSoftdrinks
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 600
   category: cargoproduct-category-name-service
   group: market
@@ -162,7 +182,9 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: VendingMachineRestockSalvageEquipment
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 1500
   category: cargoproduct-category-name-engineering
   group: market
@@ -193,7 +215,9 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: VendingMachineRestockSmokes
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 600
   category: cargoproduct-category-name-service
   group: market
@@ -204,7 +228,9 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: VendingMachineRestockVendomat
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 1200
   category: cargoproduct-category-name-service
   group: market
@@ -225,7 +251,9 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: VendingMachineRestockTankDispenser
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 1000
   category: cargoproduct-category-name-atmospherics
   group: market
@@ -236,7 +264,9 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: VendingMachineRestockHappyHonk
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 1050
   category: cargoproduct-category-name-service
   group: market
@@ -247,7 +277,9 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: VendingMachineRestockGetmoreChocolateCorp
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 600
   category: cargoproduct-category-name-service
   group: market
@@ -258,7 +290,9 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: VendingMachineRestockChang
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 600
   category: cargoproduct-category-name-service
   group: market
@@ -269,7 +303,9 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: VendingMachineRestockDiscountDans
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 600
   category: cargoproduct-category-name-service
   group: market
@@ -280,7 +316,9 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: VendingMachineRestockDonut
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 600
   category: cargoproduct-category-name-service
   group: market

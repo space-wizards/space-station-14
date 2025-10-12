@@ -1,6 +1,7 @@
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Item;
 using Content.Shared.Materials;
 using Content.Shared.ParcelWrap.Components;
 using Content.Shared.Popups;
@@ -15,6 +16,7 @@ public sealed partial class ParcelWrappingSystem
     private void InitializeWrappedParcel()
     {
         SubscribeLocalEvent<WrappedParcelComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<WrappedParcelComponent, EntInsertedIntoContainerMessage>(OnEntInsertedIntoContainer);
         SubscribeLocalEvent<WrappedParcelComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<WrappedParcelComponent, GetVerbsEvent<InteractionVerb>>(OnGetVerbsForWrappedParcel);
         SubscribeLocalEvent<WrappedParcelComponent, UnwrapWrappedParcelDoAfterEvent>(OnUnwrapParcelDoAfter);
@@ -25,6 +27,33 @@ public sealed partial class ParcelWrappingSystem
     private void OnComponentInit(Entity<WrappedParcelComponent> entity, ref ComponentInit args)
     {
         entity.Comp.Contents = _container.EnsureContainer<ContainerSlot>(entity, entity.Comp.ContainerId);
+    }
+
+    private void OnEntInsertedIntoContainer(
+        Entity<WrappedParcelComponent> entity,
+        ref EntInsertedIntoContainerMessage args
+    )
+    {
+        if (args.Container != entity.Comp.Contents ||
+            !TryComp<ItemComponent>(entity, out var parcelItemComp))
+            return;
+
+        // If this wrap maintains the size when wrapping, set the parcel's size to the target's size, or the fallback
+        // size if the target does not have a size.
+        TryComp<ItemComponent>(args.Entity, out var targetItemComp);
+        if (entity.Comp.GetsSizeFromContent)
+        {
+            var size = targetItemComp?.Size ?? _fallbackParcelSize;
+            _item.SetSize(entity, size, parcelItemComp);
+            _appearance.SetData(entity, WrappedParcelVisuals.Size, size.Id);
+        }
+
+        // If this wrap maintains the shape when wrapping and the item has a shape override, copy the shape override to
+        // the parcel.
+        if (entity.Comp.GetsShapeFromContent)
+        {
+            _item.SetShape(entity, targetItemComp?.Shape, parcelItemComp);
+        }
     }
 
     private void OnUseInHand(Entity<WrappedParcelComponent> entity, ref UseInHandEvent args)

@@ -105,17 +105,9 @@ public sealed partial class ParcelWrappingSystem
     /// <param name="user">The entity using <paramref name="wrapper"/> to wrap <paramref name="target"/>.</param>
     /// <param name="wrapper">The wrapping being used. Determines appearance of the spawned parcel.</param>
     /// <param name="target">The entity being wrapped.</param>
-    private void Wrap(EntityUid user,
-        Entity<ParcelWrapComponent> wrapper,
-        EntityUid target
-    )
+    private void Wrap(EntityUid user, Entity<ParcelWrapComponent> wrapper, EntityUid target)
     {
-        var parcel = Wrap(
-            target,
-            wrapper.Comp.ParcelPrototype,
-            wrapper.Comp.WrappedItemsMaintainSize,
-            wrapper.Comp.WrappedItemsMaintainShape
-        );
+        var parcel = Wrap(target, wrapper.Comp.ParcelPrototype);
         if (parcel is null)
             return;
 
@@ -135,50 +127,20 @@ public sealed partial class ParcelWrappingSystem
     /// </summary>
     /// <param name="toWrap">The entity to insert into the parcel</param>
     /// <param name="parcelProto">The prototype of the parcel to spawn. If null, uses <see cref="DefaultWrappedParcel"/></param>
-    /// <param name="parcelMaintainsWrappedSize">
-    /// If true, the spawned parcel's size is set to <paramref name="toWrap"/>'s size. If false, or if
-    /// <paramref name="toWrap"/> is not an <see cref="ItemComponent">item</see>, the parcel's size is not modified from
-    /// whatever is on its prototype.
-    /// </param>
-    /// <param name="parcelMaintainsWrappedShape">Works the same as <see cref="parcelMaintainsWrappedSize"/>, but for shape.</param>
     public Entity<WrappedParcelComponent>? Wrap(
         EntityUid toWrap,
-        EntProtoId<WrappedParcelComponent>? parcelProto = null,
-        bool parcelMaintainsWrappedSize = true,
-        bool parcelMaintainsWrappedShape = true
+        EntProtoId<WrappedParcelComponent>? parcelProto = null
     )
     {
         var toWrapXform = Transform(toWrap);
         var spawned = PredictedSpawnAtPosition(parcelProto ?? DefaultWrappedParcel, toWrapXform.Coordinates);
         _transform.SetLocalRotation(spawned, toWrapXform.LocalRotation);
 
-        // If this wrap maintains the size when wrapping, set the parcel's size to the target's size. Otherwise use the
-        // wrap's fallback size.
-        TryComp(toWrap, out ItemComponent? targetItemComp);
-        var size = _fallbackParcelSize;
-        if (parcelMaintainsWrappedSize && targetItemComp is not null)
-        {
-            size = targetItemComp.Size;
-        }
-
-        // ParcelWrap's spawned entity should always have an `ItemComp`. As of writing, the only use has it hardcoded on
-        // its prototype.
-        var item = Comp<ItemComponent>(spawned);
-        _item.SetSize(spawned, size, item);
-        _appearance.SetData(spawned, WrappedParcelVisuals.Size, size.Id);
-
-        // If this wrap maintains the shape when wrapping and the item has a shape override, copy the shape override to
-        // the parcel.
-        if (parcelMaintainsWrappedShape && targetItemComp is { Shape: { } shape })
-        {
-            _item.SetShape(spawned, shape, item);
-        }
-
         // If the target's in a container, try to put the parcel in its place in the container.
         if (_container.TryGetContainingContainer((toWrap, null, null), out var containerOfTarget))
         {
             _container.Remove(toWrap, containerOfTarget);
-            _container.InsertOrDrop((spawned, null, null), containerOfTarget);
+            _container.InsertOrDrop(spawned, containerOfTarget);
         }
 
         var parcel = EnsureComp<WrappedParcelComponent>(spawned);

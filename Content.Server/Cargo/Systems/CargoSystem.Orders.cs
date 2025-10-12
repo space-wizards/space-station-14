@@ -626,9 +626,26 @@ namespace Content.Server.Cargo.Systems
             // Ensure the item doesn't start anchored
             _transformSystem.Unanchor(item, Transform(item));
 
-            if (product.UseParcelWrap &&
-                _parcelWrapping.Wrap(item) is {} parcel)
-                item = parcel;
+            // Spawn container and insert the item into it if a container is defined.
+            if (product.Container is { } productContainer)
+            {
+                var itemXForm = Transform(item);
+                var containerEntity = Spawn(productContainer.Entity, itemXForm.Coordinates);
+                _transformSystem.SetLocalRotation(containerEntity, itemXForm.LocalRotation);
+
+
+                if (!_container.TryGetContainer(containerEntity, productContainer.ContainerId, out var container1) ||
+                    !_container.Insert(item, container1, force: true))
+                {
+                    DebugTools.Assert(
+                        $"Failed to insert cargo product into its specified container. This indicates an error in the cargo product definition's YAML as the product should be insertable into its container. {nameof(CargoProductPrototype)}: {(ProtoId<CargoProductPrototype>)order.Product.Id}");
+                    QueueDel(containerEntity);
+                }
+                else
+                {
+                    item = containerEntity;
+                }
+            }
 
             // Create a sheet of paper to write the order details on
             var printed = Spawn(paperProto, spawn);

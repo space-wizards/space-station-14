@@ -46,7 +46,9 @@
     sprite: Objects/Materials/Sheets/metal.rsi
     state: plasteel_3
   product: SheetPlasteel
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 1600
   category: cargoproduct-category-name-materials
   group: market
@@ -59,7 +61,9 @@
     sprite: Objects/Materials/ingots.rsi
     state: gold_3
   product: IngotGold
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 3225
   category: cargoproduct-category-name-materials
   group: market
@@ -72,7 +76,9 @@
     sprite: Objects/Materials/ingots.rsi
     state: silver_3
   product: IngotSilver
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 2580
   category: cargoproduct-category-name-materials
   group: market

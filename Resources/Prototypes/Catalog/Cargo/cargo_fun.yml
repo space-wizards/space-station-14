@@ -74,7 +74,9 @@
     sprite: Objects/Fun/crayons.rsi
     state: box
   product: CrayonBox
-  useParcelWrap: true
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 500
   category: cargoproduct-category-name-fun
   group: market
