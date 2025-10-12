@@ -20,8 +20,10 @@ public sealed partial class GlowEntityEffectSystem : EntityEffectSystem<MetaData
         if (color == Color.Black)
         {
             // TODO: When we get proper predicted RNG remove this check...
-            if (_net.IsServer)
-                color = _random.Pick(Colors);
+            if (_net.IsClient)
+                return;
+
+            color = _random.Pick(Colors);
         }
 
         var light = _lightSystem.EnsureLight(entity);

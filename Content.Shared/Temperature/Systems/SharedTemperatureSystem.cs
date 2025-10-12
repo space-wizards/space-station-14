@@ -80,24 +80,9 @@ public abstract class SharedTemperatureSystem : EntitySystem
         }
     }
 
-    public void ChangeHeat(EntityUid uid, float heatAmount, bool ignoreHeatResistance = false,
-        TemperatureComponent? temperature = null)
+    public virtual void ChangeHeat(EntityUid uid, float heatAmount, bool ignoreHeatResistance = false, TemperatureComponent? temperature = null)
     {
-        if (!Resolve(uid, ref temperature, false))
-            return;
 
-        if (!ignoreHeatResistance)
-        {
-            var ev = new ModifyChangedTemperatureEvent(heatAmount);
-            RaiseLocalEvent(uid, ev);
-            heatAmount = ev.TemperatureDelta;
-        }
-
-        float lastTemp = temperature.CurrentTemperature;
-        temperature.CurrentTemperature += heatAmount / GetHeatCapacity(uid, temperature);
-        float delta = temperature.CurrentTemperature - lastTemp;
-
-        RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta), true);
     }
 
     public float GetHeatCapacity(EntityUid uid, TemperatureComponent? comp = null, PhysicsComponent? physics = null)

@@ -18,9 +18,20 @@ public sealed partial class SpawnEntityInContainerOrDropEntityEffectSystem : Ent
         var container = args.Effect.ContainerName;
 
         var xform = Transform(entity);
-        for (var i = 0; i < quantity; i++)
+
+        if (args.Effect.Predicted)
         {
-            PredictedSpawnInContainerOrDrop(proto, entity, container, xform, entity.Comp);
+            for (var i = 0; i < quantity; i++)
+            {
+                PredictedSpawnInContainerOrDrop(proto, entity, container, xform, entity.Comp);
+            }
+        }
+        else
+        {
+            for (var i = 0; i < quantity; i++)
+            {
+                SpawnInContainerOrDrop(proto, entity, container, xform, entity.Comp);
+            }
         }
     }
 }

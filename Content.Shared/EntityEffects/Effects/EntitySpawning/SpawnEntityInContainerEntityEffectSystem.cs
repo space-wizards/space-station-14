@@ -16,11 +16,23 @@ public sealed partial class SpawnEntityInContainerEntityEffectSystem : EntityEff
         var proto = args.Effect.Entity;
         var container = args.Effect.ContainerName;
 
-        for (var i = 0; i < quantity; i++)
+        if (args.Effect.Predicted)
         {
-            // Stop trying to spawn if it fails
-            if (!PredictedTrySpawnInContainer(proto, entity, container, out _, entity.Comp))
-                return;
+            for (var i = 0; i < quantity; i++)
+            {
+                // Stop trying to spawn if it fails
+                if (!PredictedTrySpawnInContainer(proto, entity, container, out _, entity.Comp))
+                    return;
+            }
+        }
+        else
+        {
+            for (var i = 0; i < quantity; i++)
+            {
+                // Stop trying to spawn if it fails
+                if (!TrySpawnInContainer(proto, entity, container, out _, entity.Comp))
+                    return;
+            }
         }
     }
 }

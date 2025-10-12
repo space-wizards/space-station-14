@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
@@ -14,10 +15,11 @@ namespace Content.Shared.EntityEffects.Effects.Solution;
 public sealed partial class AdjustReagentsByGroupEntityEffectSystem : EntityEffectSystem<SolutionComponent, AdjustReagentsByGroup>
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
     protected override void Effect(Entity<SolutionComponent> entity, ref EntityEffectEvent<AdjustReagentsByGroup> args)
     {
-        var amount = args.Effect.Amount * args.Scale;
+        var quantity = args.Effect.Amount * args.Scale;
         var group = args.Effect.Group;
         var solution = entity.Comp.Solution;
 
@@ -27,10 +29,10 @@ public sealed partial class AdjustReagentsByGroupEntityEffectSystem : EntityEffe
             if (proto.Metabolisms == null || !proto.Metabolisms.ContainsKey(group))
                 continue;
 
-            if (amount < 0)
-                solution.RemoveReagent(quant.Reagent, -amount);
+            if (quantity > 0)
+                _solutionContainer.TryAddReagent(entity, proto.ID, quantity);
             else
-                solution.AddReagent(quant.Reagent, amount);
+                _solutionContainer.RemoveReagent(entity, proto.ID, -quantity);
         }
     }
 }

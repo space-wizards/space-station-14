@@ -12,9 +12,19 @@ public sealed partial class SpawnEntityEntityEffectSystem : EntityEffectSystem<T
         var quantity = args.Effect.Number * (int)Math.Floor(args.Scale);
         var proto = args.Effect.Entity;
 
-        for (var i = 0; i < quantity; i++)
+        if (args.Effect.Predicted)
         {
-            PredictedSpawnNextToOrDrop(proto, entity, entity.Comp);
+            for (var i = 0; i < quantity; i++)
+            {
+                PredictedSpawnNextToOrDrop(proto, entity, entity.Comp);
+            }
+        }
+        else
+        {
+            for (var i = 0; i < quantity; i++)
+            {
+                SpawnNextToOrDrop(proto, entity, entity.Comp);
+            }
         }
     }
 }

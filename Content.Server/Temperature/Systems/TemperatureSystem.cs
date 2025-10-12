@@ -125,6 +125,25 @@ public sealed class TemperatureSystem : SharedTemperatureSystem
             true);
     }
 
+    public override void ChangeHeat(EntityUid uid, float heatAmount, bool ignoreHeatResistance = false, TemperatureComponent? temperature = null)
+    {
+        if (!Resolve(uid, ref temperature, false))
+            return;
+
+        if (!ignoreHeatResistance)
+        {
+            var ev = new ModifyChangedTemperatureEvent(heatAmount);
+            RaiseLocalEvent(uid, ev);
+            heatAmount = ev.TemperatureDelta;
+        }
+
+        float lastTemp = temperature.CurrentTemperature;
+        temperature.CurrentTemperature += heatAmount / GetHeatCapacity(uid, temperature);
+        float delta = temperature.CurrentTemperature - lastTemp;
+
+        RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta), true);
+    }
+
     private void OnAtmosExposedUpdate(EntityUid uid, TemperatureComponent temperature,
         ref AtmosExposedUpdateEvent args)
     {

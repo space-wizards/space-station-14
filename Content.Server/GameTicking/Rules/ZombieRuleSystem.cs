@@ -148,7 +148,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         component.NextRoundEndCheck = _timing.CurTime + component.EndCheckDelay;
     }
 
-    private void OnZombifySelf(EntityUid uid, Shared.Zombies.IncurableZombieComponent component, ZombifySelfActionEvent args)
+    private void OnZombifySelf(EntityUid uid, IncurableZombieComponent component, ZombifySelfActionEvent args)
     {
         _zombie.ZombifyEntity(uid);
         if (component.Action != null)

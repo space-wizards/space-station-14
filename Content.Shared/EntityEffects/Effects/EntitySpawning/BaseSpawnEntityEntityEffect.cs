@@ -21,6 +21,13 @@ public abstract partial class BaseSpawnEntityEntityEffect<T> : EntityEffectBase<
     [DataField (required: true)]
     public EntProtoId Entity;
 
+    /// <summary>
+    /// Whether this spawning is predicted. Set false to not predict the spawn.
+    /// Entities with animations or that have random elements when spawned should set this to false.
+    /// </summary>
+    [DataField]
+    public bool Predicted = true;
+
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-spawn-entity",
             ("chance", Probability),
