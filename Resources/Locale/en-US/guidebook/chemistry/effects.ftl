@@ -85,7 +85,7 @@ reagent-effect-guidebook-health-change =
                     [deals] deal
                     *[both] modify health by
                  }
-    } { $changes }
+    } { LIST($changes) }
 
 reagent-effect-guidebook-even-health-change =
     { $chance ->
@@ -99,7 +99,7 @@ reagent-effect-guidebook-even-health-change =
             [deals] evenly deal
             *[both] evenly modify health by
         }
-    } { $changes }
+    } { LIST($changes) }
 
 
 reagent-effect-guidebook-status-effect =

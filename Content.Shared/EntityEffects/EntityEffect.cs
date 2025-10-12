@@ -58,10 +58,7 @@ public abstract partial class EntityEffect
             return null;
 
         return Loc.GetString(ReagentEffectFormat, ("effect", effect), ("chance", Probability),
-            ("conditionCount", Conditions?.Length ?? 0),
-            ("conditions",
-                ContentLocalizationManager.FormatList(Conditions?.Select(x => x.GuidebookExplanation(prototype)).ToList() ??
-                                                        new List<string>())));
+            ("conditions", Conditions?.Select(x => x.GuidebookExplanation(prototype)) ?? Enumerable.Empty<string>()));
     }
 }
 

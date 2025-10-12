@@ -2,9 +2,9 @@
     {$chance ->
         [1] { $effect }
         *[other] Has a { NATURALPERCENT($chance, 2) } chance to { $effect }
-    }{ $conditionCount ->
+    }{ COUNT($conditions) ->
         [0] .
-        *[other] {" "}when { $conditions }.
+        *[other] {" "}when { LIST($conditions) }.
     }
 
 guidebook-reagent-name = [bold][color={$color}]{CAPITALIZE($name)}[/color][/bold]
@@ -20,10 +20,10 @@ guidebook-reagent-plant-metabolisms-rate = [bold]Plant Metabolism[/bold] [color=
 guidebook-reagent-physical-description = [italic]Seems to be {$description}.[/italic]
 guidebook-reagent-recipes-mix-info = {$minTemp ->
     [0] {$hasMax ->
-            [true] {CAPITALIZE($verb)} below {NATURALFIXED($maxTemp, 2)}K
-            *[false] {CAPITALIZE($verb)}
+            [true] {CAPITALIZE(LIST($verb))} below {NATURALFIXED($maxTemp, 2)}K
+            *[false] {CAPITALIZE(LIST($verb))}
         }
-    *[other] {CAPITALIZE($verb)} {$hasMax ->
+    *[other] {CAPITALIZE(LIST($verb))} {$hasMax ->
             [true] between {NATURALFIXED($minTemp, 2)}K and {NATURALFIXED($maxTemp, 2)}K
             *[false] above {NATURALFIXED($minTemp, 2)}K
         }

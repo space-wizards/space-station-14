@@ -83,7 +83,7 @@ namespace Content.Shared.EntityEffects.Effects
 
             return Loc.GetString("reagent-effect-guidebook-health-change",
                 ("chance", Probability),
-                ("changes", ContentLocalizationManager.FormatList(damages)),
+                ("changes", damages),
                 ("healsordeals", healsordeals));
         }
 

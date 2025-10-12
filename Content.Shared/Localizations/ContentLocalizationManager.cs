@@ -107,35 +107,6 @@ namespace Content.Shared.Localizations
             }
         }
 
-        // TODO: allow fluent to take in lists of strings so this can be a format function like it should be.
-        /// <summary>
-        /// Formats a list as per english grammar rules.
-        /// </summary>
-        public static string FormatList(List<string> list)
-        {
-            return list.Count switch
-            {
-                <= 0 => string.Empty,
-                1 => list[0],
-                2 => $"{list[0]} and {list[1]}",
-                _ => $"{string.Join(", ", list.GetRange(0, list.Count - 1))}, and {list[^1]}"
-            };
-        }
-
-        /// <summary>
-        /// Formats a list as per english grammar rules, but uses or instead of and.
-        /// </summary>
-        public static string FormatListToOr(List<string> list)
-        {
-            return list.Count switch
-            {
-                <= 0 => string.Empty,
-                1 => list[0],
-                2 => $"{list[0]} or {list[1]}",
-                _ => $"{string.Join(", ", list.GetRange(0, list.Count - 1))}, or {list[^1]}"
-            };
-        }
-
         /// <summary>
         /// Formats a direction struct as a human-readable string.
         /// </summary>
@@ -157,7 +128,11 @@ namespace Content.Shared.Localizations
 
         private static ILocValue FormatLoc(LocArgs args)
         {
-            var id = ((LocValueString) args.Args[0]).Value;
+            LocId id = args.Args[0] switch
+            {
+                LocValueLocId locId => locId.Value,
+                LocValueString str => str.Value,
+            };
 
             return new LocValueString(Loc.GetString(id, args.Options.Select(x => (x.Key, x.Value.Value!)).ToArray()));
         }
