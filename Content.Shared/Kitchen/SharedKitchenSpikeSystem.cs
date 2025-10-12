@@ -27,7 +27,6 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Tools.Components;
-using Robust.Shared.Random;
 
 namespace Content.Shared.Kitchen;
 
@@ -49,7 +48,6 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
 
     public override void Initialize()

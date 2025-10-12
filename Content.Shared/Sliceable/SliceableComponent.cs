@@ -1,8 +1,8 @@
 using Content.Shared.Tools;
 using Robust.Shared.Audio;
 using Content.Shared.Storage;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Sliceable;
 
@@ -19,7 +19,7 @@ public sealed partial class SliceableComponent : Component
     public List<EntitySpawnEntry> Slices = [];
 
     /// <summary>
-    /// If true, entity will transfer splitted solution into <see cref"Slices"/>.
+    /// If true, entity will transfer split solution into <see cref="Slices"/>.
     /// </summary>
     [DataField]
     public bool TransferSolution = true;
@@ -27,8 +27,8 @@ public sealed partial class SliceableComponent : Component
     /// <summary>
     /// ToolQuality for slicing.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
-    public string ToolQuality = "Slicing";
+    [DataField]
+    public ProtoId<ToolQualityPrototype> ToolQuality = "Slicing";
 
     /// <summary>
     /// Sound that will be played after slicing.

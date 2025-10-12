@@ -347,17 +347,12 @@
     components:
     - type: Execution
       doAfterDuration: 4.0
-    - type: Tool
-      qualities:
-      - Slicing
     - type: Utensil
       types:
       - Knife
     - type: Tool
       qualities:
       - Slicing
-      useSound:
-        path: /Audio/Items/Culinary/chop.ogg
   - type: Item
     size: Tiny
     sprite: Objects/Weapons/Melee/utility_knife.rsi
