@@ -1,0 +1,18 @@
+- type: entity
+  parent: BoxCardboard
+  id: BoxGrenadeCleanade
+  name: коробка чистящих снарядов
+  description: Коробка, что заполнена чистящими снарядами.
+  components:
+  - type: StorageFill
+    contents:
+      - id: GrenadeCleanade
+        amount: 6
+  - type: Sprite
+    layers:
+      - state: box
+      - state: flashbang
+  - type: Storage
+    maxItemSize: Small
+    grid:
+    - 0,0,2,3

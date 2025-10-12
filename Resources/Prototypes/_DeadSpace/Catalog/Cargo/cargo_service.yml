@@ -1,0 +1,19 @@
+- type: cargoProduct
+  id: CrateServiceBoxGrenadeCleanadeJanitorial
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    state: cleanade
+  product: CrateServiceBoxGrenadeCleanade
+  cost: 1000
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
+  id: CrateServiceHydraJanitorial
+  icon:
+    sprite: Objects/Weapons/Guns/Launchers/hydra_launcher.rsi
+    state: icon
+  product: CrateServiceHydra
+  cost: 3500
+  category: cargoproduct-category-name-service
+  group: market

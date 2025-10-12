@@ -44,6 +44,9 @@
   id: FittableInBackpackCase
 
 - type: Tag
+  id: GrenadeCleanade
+
+- type: Tag
   id: HardHat
 
 - type: Tag
