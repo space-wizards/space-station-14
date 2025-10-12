@@ -29,6 +29,17 @@
     maxCharges: 30
 
 - type: entity
+  parent: ParcelWrap
+  id: ParcelWrapAdmeme
+  name: bluespace wrap
+  suffix: Admeme
+  description: Paper used contain items for transport. This one seems to be able to store an unusual amount of space within it.
+  components:
+  - type: ParcelWrap
+    whitelist: null
+    blacklist: null
+
+- type: entity
   parent: BaseItem
   id: WrappedParcel
   categories: [ HideSpawnMenu ]
@@ -38,6 +49,7 @@
   - type: ContainerContainer
     containers:
       contents: !type:ContainerSlot
+      paper_label: !type:ContainerSlot
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -49,11 +61,25 @@
           "Large": { state: "parcel-medium" }
           "Huge": { state: "parcel-large" }
           "Ginormous": { state: "parcel-large" }
+      enum.PaperLabelVisuals.HasLabel:
+        enum.PaperLabelVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PaperLabelVisuals.LabelType:
+        enum.PaperLabelVisuals.Layer:
+          Paper: { state: paper }
+          Bounty: { state: bounty }
+          CaptainsPaper: { state: captains_paper }
+          Invoice: { state: invoice }
   - type: Sprite
     sprite: Objects/Misc/ParcelWrap/wrapped_parcel.rsi
     layers:
     - state: parcel-medium
       map: [ "enum.WrappedParcelVisuals.Layer" ]
+    - state: paper
+      visible: false
+      sprite: Objects/Misc/ParcelWrap/paper_labels.rsi
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: WrappedParcel
     unwrapDelay: 0.5
     unwrapSound:
@@ -61,6 +87,17 @@
       params:
         volume: -4
     unwrapTrash: ParcelWrapTrash
+  - type: ItemSlots
+  - type: PaperLabel
+    labelSlot:
+      insertVerbText: comp-paper-label-insert
+      ejectVerbText: comp-paper-label-eject
+      whitelist:
+        components:
+        - Paper
+      blacklist:
+        tags:
+        - Book
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
