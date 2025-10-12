@@ -10,7 +10,7 @@
     tags:
       - Egg
       - Meat
-  - type: Food
+  - type: Edible
     trash:
     - Eggshells
   - type: Sprite
