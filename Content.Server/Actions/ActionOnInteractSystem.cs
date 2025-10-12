@@ -66,7 +66,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
             return;
         }
 
-        if (!_actions.TryPerformAction(args.User, (actId, action), predicted: false))
+        if (_actions.TryPerformAction(args.User, (actId, action), predicted: false))
         {
             RemoveCharge((uid, component));
         }
@@ -108,7 +108,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
                 var (actionId, action, _) = _random.Pick(entOptions);
                 _actions.SetEventTarget(actionId, target);
 
-                if (!_actions.TryPerformAction(args.User, (actionId, action), predicted: false))
+                if (_actions.TryPerformAction(args.User, (actionId, action), predicted: false))
                 {
                     RemoveCharge((uid, component));
                 }
@@ -143,7 +143,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
             worldEv.Entity = HasComp<EntityTargetActionComponent>(actId) ? args.Target : null;
         }
 
-        if (!_actions.TryPerformAction(args.User, (actId, comp), predicted: false))
+        if (_actions.TryPerformAction(args.User, (actId, comp), predicted: false))
         {
             RemoveCharge((uid, component));
         }
@@ -177,7 +177,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
     {
         if (!ent.Comp.RequiresCharge)
         {
-            return true;
+            return false;
         }
 
         Entity<LimitedChargesComponent?> charges = ent.Owner;
