@@ -293,6 +293,12 @@ public abstract partial class SharedStunSystem : EntitySystem
         if (!_status.TryAddStatusEffectDuration(uid, StunId, duration))
             return false;
 
+        if (EntityManager.HasComponent<MetaDataComponent>(uid) &&
+            EntityManager.GetComponent<MetaDataComponent>(uid).EntityPrototype?.ID == "MobHoloparasite")
+        {
+            return false;
+        }
+
         // We can't exit knockdown when we're stunned, so this prevents knockdown lasting longer than the stun.
         Knockdown(uid, null, false, true, true);
         OnStunnedSuccessfully(uid, duration);
