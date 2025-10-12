@@ -455,8 +455,13 @@ public abstract partial class SharedGunSystem : EntitySystem
         cartridge.Spent = spent;
         Appearance.SetData(uid, AmmoVisuals.Spent, spent);
 
-        if (cartridge.MarkSpentAsTrash)
+        if (!cartridge.MarkSpentAsTrash)
+            return;
+
+        if (spent)
             TagSystem.AddTag(uid, TrashTag);
+        else
+            TagSystem.RemoveTag(uid, TrashTag);
     }
 
     /// <summary>
