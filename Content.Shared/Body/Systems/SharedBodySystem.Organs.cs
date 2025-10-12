@@ -158,7 +158,28 @@ public partial class SharedBodySystem
     }
 
     /// <summary>
-    /// Returns a list of Entity<<see cref="T"/>, <see cref="OrganComponent"/>>
+    /// Returns whether a given entity 1) has a body and 2) has an organ which has the component <see cref="T"/>.
+    /// </summary>
+    /// <param name="ent">The entity to be searched.</param>
+    /// <typeparam name="T">The component that must exist on at least one organ.</typeparam>
+    /// <returns>False if and only if the entity has no BodyComponent or the organ couldn't be found.</returns>
+    public bool BodyHasOrganWithComp<T>(Entity<BodyComponent?> ent) where T : IComponent
+    {
+        if (!Resolve(ent, ref ent.Comp, logMissing: false))
+            return false;
+
+        var query = GetEntityQuery<T>();
+        foreach (var organ in GetBodyOrgans(ent, ent.Comp))
+        {
+            if (query.HasComp(organ.Id))
+                return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Returns a list of Entity&lt;<see cref="T"/>, <see cref="OrganComponent"/>&gt;
     /// for each organ of the body
     /// </summary>
     /// <typeparam name="T">The component that we want to return</typeparam>
@@ -167,8 +188,8 @@ public partial class SharedBodySystem
         Entity<BodyComponent?> entity)
         where T : IComponent
     {
-        if (!Resolve(entity, ref entity.Comp))
-            return new List<Entity<T, OrganComponent>>();
+        if (!Resolve(entity, ref entity.Comp, logMissing: false))
+            return [];
 
         var query = GetEntityQuery<T>();
         var list = new List<Entity<T, OrganComponent>>(3);
@@ -185,9 +206,8 @@ public partial class SharedBodySystem
     ///     Tries to get a list of ValueTuples of <see cref="T"/> and OrganComponent on each organs
     ///     in the given body.
     /// </summary>
-    /// <param name="uid">The body entity id to check on.</param>
+    /// <param name="entity">The body entity id to check on.</param>
     /// <param name="comps">The list of components.</param>
-    /// <param name="body">The body to check for organs on.</param>
     /// <typeparam name="T">The component to check for.</typeparam>
     /// <returns>Whether any were found.</returns>
     public bool TryGetBodyOrganEntityComps<T>(
@@ -195,7 +215,7 @@ public partial class SharedBodySystem
         [NotNullWhen(true)] out List<Entity<T, OrganComponent>>? comps)
         where T : IComponent
     {
-        if (!Resolve(entity.Owner, ref entity.Comp))
+        if (!Resolve(entity.Owner, ref entity.Comp, logMissing: false))
         {
             comps = null;
             return false;
