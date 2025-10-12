@@ -126,6 +126,7 @@
     - PaperworkStatic
     - TowelsStatic
     - CargoStatic
+    - CargoMailStatic
     - MaterialsStatic
     - BasicChemistryStatic
     - RollerBedsStatic

@@ -8,6 +8,12 @@
   - UtilityKnife
 
 - type: latheRecipePack
+  id: CargoMailStatic
+  recipes:
+  - Envelope
+  - ParcelWrap
+
+- type: latheRecipePack
   id: CargoBoardsStatic
   recipes:
   - OreProcessorMachineCircuitboard

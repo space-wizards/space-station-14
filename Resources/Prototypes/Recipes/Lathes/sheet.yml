@@ -37,6 +37,23 @@
     Glass: 100
     Steel: 50
 
+- type: latheRecipe
+  id: MaterialCardboard
+  result: MaterialCardboard1
+  applyMaterialDiscount: false
+  completetime: 0
+  materials:
+    Paper: 250
+
+- type: latheRecipe
+  id: MaterialDurathread
+  result: MaterialDurathread1
+  applyMaterialDiscount: false
+  completetime: 0
+  materials:
+    Cloth: 100
+    Plastic: 100
+
 # This version is for the ore processor
 - type: latheRecipe
   id: SheetRGlassRaw
@@ -251,12 +268,3 @@
   completetime: 1
   materials:
     Cotton: 200 #my pyrocloth keeps catching on fire whenever I make it!
-
-- type: latheRecipe
-  id: MaterialDurathread
-  result: MaterialDurathread1
-  applyMaterialDiscount: false
-  completetime: 0
-  materials:
-    Cloth: 100
-    Plastic: 100

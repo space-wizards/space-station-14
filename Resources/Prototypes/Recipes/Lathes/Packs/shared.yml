@@ -4,6 +4,7 @@
   id: MaterialsStatic
   recipes:
   - SheetRGlass
+  - MaterialCardboard
   - MaterialDurathread
 
 - type: latheRecipePack
@@ -44,6 +45,7 @@
   recipes:
   - BoxFolderClipboardEmpty
   - BoxFolderPlasticClipboardEmpty
+  - Paper
 
 - type: latheRecipePack
   id: TowelsStatic # This is used for both the autolathe and the uniform printer, so "unique" towels that only HoP can print shouldn't be included!

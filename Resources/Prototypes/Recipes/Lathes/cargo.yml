@@ -1,3 +1,5 @@
+# Basic cargo items
+
 - type: latheRecipe
   id: ConveyorBeltAssembly
   result: ConveyorBeltAssembly
@@ -19,3 +21,19 @@
   completetime: 2
   materials:
     Steel: 100
+
+# Mail-related items (included here since mail delivery is Cargo's department)
+
+- type: latheRecipe
+  id: Envelope
+  result: Envelope
+  completetime: 2
+  materials:
+    Paper: 100
+
+- type: latheRecipe
+  id: ParcelWrap
+  result: ParcelWrap
+  completetime: 2
+  materials:
+    Paper: 500 # One roll of parcel wrap can wrap like 30 items, so the number here is hard... if this is lathe-printable now maybe it should have less charges?

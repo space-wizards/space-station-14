@@ -233,6 +233,13 @@
     Steel: 25
 
 - type: latheRecipe
+  id: Paper
+  result: Paper
+  completetime: 1
+  materials:
+    Paper: 100
+
+- type: latheRecipe
   id: TowelColorWhite
   result: TowelColorWhite
   completetime: 2
