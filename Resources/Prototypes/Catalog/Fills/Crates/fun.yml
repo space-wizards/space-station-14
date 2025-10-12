@@ -504,17 +504,6 @@
     - id: ClothingNeckMantleQM
     - id: ClothingHeadsetCargo
 
-- type: entity
-  parent: CratePlastic
-  id: CrateFunBigChess
-  name: big chess set
-  description: Perfect for any high profile chess game. Comes with a spray painter to make a board. Pawns compressed for shipping reasons.
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage: !type:NestedSelector
-        tableId: BigChess
-
 - type: entityTable
   id: BigChess
   table: !type:AllSelector
@@ -554,21 +543,21 @@
 
 - type: entity
   parent: CratePlastic
-  id: CrateFunBigCheckers
-  name: big checkers set
-  description: Perfect for any high profile checkers game. Comes with a spray painter to make a board.
+  id: CrateFunBigChess
+  name: big chess set
+  description: Perfect for any high profile chess game. Comes with a spray painter to make a board. Pawns compressed for shipping reasons.
   components:
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:NestedSelector
-        tableId: BigCheckers
+        tableId: BigChess
 
 - type: entityTable
   id: BigCheckers
   table: !type:AllSelector
     children:
     - !type:EntSelector
-      - id: SprayPainter
+      id: SprayPainter
     - !type:EntSelector
       id: LargeBlackChecker12
     - !type:EntSelector
@@ -577,4 +566,15 @@
       id: LargeWhiteChecker12
     - !type:EntSelector
       id: LargeWhiteCheckerKing12
+
+- type: entity
+  parent: CratePlastic
+  id: CrateFunBigCheckers
+  name: big checkers set
+  description: Perfect for any high profile checkers game. Comes with a spray painter to make a board.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: BigCheckers
 

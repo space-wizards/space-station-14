@@ -1,4 +1,4 @@
-﻿# Base item for large pieces (regular tabletop ones are exploitable)
+# Base item for large pieces (regular tabletop ones are exploitable)
 - type: entity
   abstract: true
   parent: BaseItem
@@ -184,7 +184,7 @@
   - type: Stack
     stackType: LargeBlackCheckerKing
 
-# Stacks 
+# Stacks
 
 - type: entity
   parent: LargeWhitePawn
