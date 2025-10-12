@@ -10,7 +10,8 @@ namespace Content.Shared.Localizations
         [Dependency] private readonly ILocalizationManager _loc = default!;
 
         // If you want to change your codebase's language, do it here.
-        private const string Culture = "en-US";
+        private const string Culture = "ru-RU"; // SCP-Localization
+        private const string FallbackCulture = "en-US"; // SCP-Localization
 
         /// <summary>
         /// Custom format strings used for parsing and displaying minutes:seconds timespans.
@@ -26,8 +27,12 @@ namespace Content.Shared.Localizations
         public void Initialize()
         {
             var culture = new CultureInfo(Culture);
+            var fallbackCulture = new CultureInfo(FallbackCulture); // SCP-Localization
 
             _loc.LoadCulture(culture);
+            _loc.LoadCulture(fallbackCulture); // SCP-Localization
+            _loc.SetFallbackCluture(fallbackCulture); // SCP-Localization
+            _loc.AddFunction(culture, "MANY", FormatMany); // SCP-Localization
             _loc.AddFunction(culture, "PRESSURE", FormatPressure);
             _loc.AddFunction(culture, "POWERWATTS", FormatPowerWatts);
             _loc.AddFunction(culture, "POWERJOULES", FormatPowerJoules);
@@ -54,22 +59,22 @@ namespace Content.Shared.Localizations
 
         private ILocValue FormatMany(LocArgs args)
         {
-            var count = ((LocValueNumber) args.Args[1]).Value;
+            var count = ((LocValueNumber)args.Args[1]).Value;
 
             if (Math.Abs(count - 1) < 0.0001f)
             {
-                return (LocValueString) args.Args[0];
+                return (LocValueString)args.Args[0];
             }
             else
             {
-                return (LocValueString) FormatMakePlural(args);
+                return (LocValueString)FormatMakePlural(args);
             }
         }
 
         private ILocValue FormatNaturalPercent(LocArgs args)
         {
-            var number = ((LocValueNumber) args.Args[0]).Value * 100;
-            var maxDecimals = (int)Math.Floor(((LocValueNumber) args.Args[1]).Value);
+            var number = ((LocValueNumber)args.Args[0]).Value * 100;
+            var maxDecimals = (int)Math.Floor(((LocValueNumber)args.Args[1]).Value);
             var formatter = (NumberFormatInfo)NumberFormatInfo.GetInstance(CultureInfo.GetCultureInfo(Culture)).Clone();
             formatter.NumberDecimalDigits = maxDecimals;
             return new LocValueString(string.Format(formatter, "{0:N}", number).TrimEnd('0').TrimEnd(char.Parse(formatter.NumberDecimalSeparator)) + "%");
@@ -77,8 +82,8 @@ namespace Content.Shared.Localizations
 
         private ILocValue FormatNaturalFixed(LocArgs args)
         {
-            var number = ((LocValueNumber) args.Args[0]).Value;
-            var maxDecimals = (int)Math.Floor(((LocValueNumber) args.Args[1]).Value);
+            var number = ((LocValueNumber)args.Args[0]).Value;
+            var maxDecimals = (int)Math.Floor(((LocValueNumber)args.Args[1]).Value);
             var formatter = (NumberFormatInfo)NumberFormatInfo.GetInstance(CultureInfo.GetCultureInfo(Culture)).Clone();
             formatter.NumberDecimalDigits = maxDecimals;
             return new LocValueString(string.Format(formatter, "{0:N}", number).TrimEnd('0').TrimEnd(char.Parse(formatter.NumberDecimalSeparator)));
@@ -88,7 +93,7 @@ namespace Content.Shared.Localizations
 
         private ILocValue FormatMakePlural(LocArgs args)
         {
-            var text = ((LocValueString) args.Args[0]).Value;
+            var text = ((LocValueString)args.Args[0]).Value;
             var split = text.Split(" ", 1);
             var firstWord = split[0];
             if (PluralEsRule.IsMatch(firstWord))
@@ -157,7 +162,7 @@ namespace Content.Shared.Localizations
 
         private static ILocValue FormatLoc(LocArgs args)
         {
-            var id = ((LocValueString) args.Args[0]).Value;
+            var id = ((LocValueString)args.Args[0]).Value;
 
             return new LocValueString(Loc.GetString(id, args.Options.Select(x => (x.Key, x.Value.Value!)).ToArray()));
         }
@@ -165,7 +170,7 @@ namespace Content.Shared.Localizations
         private static ILocValue FormatToString(CultureInfo culture, LocArgs args)
         {
             var arg = args.Args[0];
-            var fmt = ((LocValueString) args.Args[1]).Value;
+            var fmt = ((LocValueString)args.Args[1]).Value;
 
             var obj = arg.Value;
             if (obj is IFormattable formattable)
@@ -180,7 +185,7 @@ namespace Content.Shared.Localizations
             Func<double, double>? transformValue = null)
         {
             const int maxPlaces = 5; // Matches amount in _lib.ftl
-            var pressure = ((LocValueNumber) args.Args[0]).Value;
+            var pressure = ((LocValueNumber)args.Args[0]).Value;
 
             if (transformValue != null)
                 pressure = transformValue(pressure);
@@ -219,16 +224,16 @@ namespace Content.Shared.Localizations
 
         private static ILocValue FormatUnits(LocArgs args)
         {
-            if (!Units.Types.TryGetValue(((LocValueString) args.Args[0]).Value, out var ut))
-                throw new ArgumentException($"Unknown unit type {((LocValueString) args.Args[0]).Value}");
+            if (!Units.Types.TryGetValue(((LocValueString)args.Args[0]).Value, out var ut))
+                throw new ArgumentException($"Unknown unit type {((LocValueString)args.Args[0]).Value}");
 
-            var fmtstr = ((LocValueString) args.Args[1]).Value;
+            var fmtstr = ((LocValueString)args.Args[1]).Value;
 
             double max = Double.NegativeInfinity;
             var iargs = new double[args.Args.Count - 1];
             for (var i = 2; i < args.Args.Count; i++)
             {
-                var n = ((LocValueNumber) args.Args[i]).Value;
+                var n = ((LocValueNumber)args.Args[i]).Value;
                 if (n > max)
                     max = n;
 
