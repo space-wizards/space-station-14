@@ -146,6 +146,9 @@
   id: JobReinforcement
 
 - type: playTimeTracker
+  id: JobRobot
+
+- type: playTimeTracker
   id: JobSalvageSpecialist
 
 - type: playTimeTracker
@@ -183,3 +186,6 @@
 
 - type: playTimeTracker
   id: JobZookeeper
+
+- type: playTimeTracker
+  id: JobWizard
