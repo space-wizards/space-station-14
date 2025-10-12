@@ -53,3 +53,27 @@
   id: FloorTileDarkOffset
   name: stack-offset-dark-steel-tile
   spawn: FloorTileItemDarkOffset
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileDarkVerticalSlatsBordered
+  name: stack-dark-vertical-slats-tile-bordered
+  spawn: FloorTileItemDarkVerticalSlatsBordered
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileDarkVerticalSlatsContinuous
+  name: stack-dark-vertical-slats-tile-continuous
+  spawn: FloorTileItemDarkVerticalSlatsContinuous
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileDarkHorizontalSlatsBordered
+  name: stack-dark-horizontal-slats-tile-bordered
+  spawn: FloorTileItemDarkHorizontalSlatsBordered
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileDarkHorizontalSlatsContinuous
+  name: stack-dark-horizontal-slats-tile-continuous
+  spawn: FloorTileItemDarkHorizontalSlatsContinuous
