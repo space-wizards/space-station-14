@@ -131573,7 +131573,7 @@ entities:
       pos: -14.584713,16.470493
       parent: 2
     - type: MeleeWeapon
-      attackRate: 10
+      attackRate: 2
       autoAttack: True
     - type: Item
       size: Huge
