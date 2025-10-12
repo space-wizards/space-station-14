@@ -3754,7 +3754,7 @@
   url: https://github.com/space-wizards/space-station-14/pull/40786
 - author: SlamBamActionman
   changes:
-  - message: Nocturine now slows the target down, with a longer duration and shorter
+  - message: EXPERIMENTAL Nocturine now slows the target down, with a longer duration and shorter
       delay before activating.
     type: Tweak
   id: 9060
