@@ -204,10 +204,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         }
     }
 
-    protected override void Added(EntityUid uid,
-        AntagSelectionComponent component,
-        GameRuleComponent gameRule,
-        GameRuleAddedEvent args)
+    protected override void Added(EntityUid uid, AntagSelectionComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
         base.Added(uid, component, gameRule, args);
 
@@ -227,10 +224,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         }
     }
 
-    protected override void Started(EntityUid uid,
-        AntagSelectionComponent component,
-        GameRuleComponent gameRule,
-        GameRuleStartedEvent args)
+    protected override void Started(EntityUid uid, AntagSelectionComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
 
@@ -242,8 +236,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             return;
 
         var players = _playerManager.Sessions
-            .Where(x => GameTicker.PlayerGameStatuses.TryGetValue(x.UserId, out var status)
-                        && status == PlayerGameStatus.JoinedGame)
+            .Where(x => GameTicker.PlayerGameStatuses.TryGetValue(x.UserId, out var status) &&
+                        status == PlayerGameStatus.JoinedGame)
             .ToList();
 
         ChooseAntags((uid, component), players, midround: true);
@@ -279,9 +273,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         bool midround = false)
     {
         var playerPool = GetPlayerPool(ent, pool, def);
-        var existingAntagCount = ent.Comp.PreSelectedSessions.TryGetValue(def, out var existingAntags)
-            ? existingAntags.Count
-            : 0;
+        var existingAntagCount = ent.Comp.PreSelectedSessions.TryGetValue(def, out var existingAntags) ?  existingAntags.Count : 0;
         var count = GetTargetAntagCount(ent, GetTotalPlayerCount(pool), def) - existingAntagCount;
 
         // if there is both a spawner and players getting picked, let it fall back to a spawner.
@@ -292,8 +284,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             // prevent antag selection from happening if the round is on-going, requiring a spawner if used midround.
             // this is so rules like nukies, if added by an admin midround, dont make random living people nukies
             Log.Info($"Antags for rule {ent:?} get picked pre-spawn so only spawners will be made.");
-            DebugTools.Assert(def.SpawnerPrototype != null,
-                $"Rule {ent:?} had no spawner for pre-spawn rule added mid-round!");
+            DebugTools.Assert(def.SpawnerPrototype != null, $"Rule {ent:?} had no spawner for pre-spawn rule added mid-round!");
             picking = false;
         }
 
@@ -352,7 +343,6 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         ent.Comp.AssignmentComplete = true;
     }
 
-
     /// <summary>
     /// Tries to make a given player into the specified antagonist.
     /// </summary>
@@ -391,6 +381,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (session != null)
         {
             ent.Comp.PreSelectedSessions.GetOrNew(def).Add(session.UserId);
+            ent.Comp.AssignedSessions.Add(session.UserId);
 
             // we shouldn't be blocking the entity if they're just a ghost or smth.
             if (!HasComp<GhostComponent>(session.AttachedEntity))
