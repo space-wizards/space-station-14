@@ -95,7 +95,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
     private void OnInsertAttempt(Entity<KitchenSpikeComponent> ent, ref ContainerIsInsertingAttemptEvent args)
     {
-        if (args.Cancelled)
+        if (args.Cancelled || TryComp<ButcherableComponent>(args.EntityUid, out _))
             return;
 
         args.Cancel();
@@ -152,7 +152,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
         args.Handled = true;
 
-        if (!TryComp<ToolComponent>(ent, out var tool) || !_toolSystem.HasQuality(ent, ent.Comp.RequiredToolQuality, tool))
+        if (!TryComp<ToolComponent>(args.Used, out var tool) || !_toolSystem.HasQuality(args.Used, ent.Comp.RequiredToolQuality, tool))
         {
             _popupSystem.PopupClient(Loc.GetString("butcherable-need-knife",
                     ("target", Identity.Entity(victim.Value, EntityManager))),
