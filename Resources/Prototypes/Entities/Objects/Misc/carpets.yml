@@ -1,9 +1,8 @@
 # TODO once tiles can be smoothed and carpets ported over to that, add them to the FloorTile outputs
 - type: entity
-  name: carpet
   parent: FloorTileItemBase
   id: FloorCarpetItemRed
-  suffix: Red
+  name: carpet (red)
   components:
   - type: Sprite
     state: carpet-red
@@ -22,7 +21,7 @@
 - type: entity
   parent: FloorCarpetItemRed
   id: FloorCarpetItemBlack
-  suffix: Black
+  name: carpet (black)
   components:
   - type: Sprite
     state: carpet-black
@@ -38,7 +37,7 @@
 - type: entity
   parent: FloorCarpetItemRed
   id: FloorCarpetItemBlue
-  suffix: Blue
+  name: carpet (blue)
   components:
   - type: Sprite
     state: carpet-blue
@@ -54,7 +53,7 @@
 - type: entity
   parent: FloorCarpetItemRed
   id: FloorCarpetItemGreen
-  suffix: Green
+  name: carpet (green)
   components:
   - type: Sprite
     state: carpet-green
@@ -70,7 +69,7 @@
 - type: entity
   parent: FloorCarpetItemRed
   id: FloorCarpetItemOrange
-  suffix: Orange
+  name: carpet (orange)
   components:
   - type: Sprite
     state: carpet-orange
@@ -86,7 +85,7 @@
 - type: entity
   parent: FloorCarpetItemRed
   id: FloorCarpetItemSkyBlue
-  suffix: Sky Blue
+  name: carpet (sky blue)
   components:
   - type: Sprite
     state: carpet-skyblue
@@ -102,7 +101,7 @@
 - type: entity
   parent: FloorCarpetItemRed
   id: FloorCarpetItemPurple
-  suffix: Purple
+  name: carpet (purple)
   components:
   - type: Sprite
     state: carpet-purple
@@ -118,7 +117,7 @@
 - type: entity
   parent: FloorCarpetItemRed
   id: FloorCarpetItemPink
-  suffix: Pink
+  name: carpet (pink)
   components:
   - type: Sprite
     state: carpet-pink
@@ -134,7 +133,7 @@
 - type: entity
   parent: FloorCarpetItemRed
   id: FloorCarpetItemCyan
-  suffix: Cyan
+  name: carpet (cyan)
   components:
   - type: Sprite
     state: carpet-cyan
@@ -150,7 +149,7 @@
 - type: entity
   parent: FloorCarpetItemRed
   id: FloorCarpetItemWhite
-  suffix: White
+  name: carpet (white)
   components:
   - type: Sprite
     state: carpet-white

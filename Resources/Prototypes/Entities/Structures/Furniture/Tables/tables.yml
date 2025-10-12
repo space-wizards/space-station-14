@@ -1,7 +1,7 @@
 - type: entity
-  id: TableFrame
   # BaseStructure and not BaseTable, since these shouldn't be climbable/placeable.
   parent: BaseStructure
+  id: TableFrame
   name: table frame
   description: Pieces of metal that make the frame of a table.
   components:
@@ -56,8 +56,8 @@
     node: TableFrame
 
 - type: entity
-  id: CounterWoodFrame
   parent: BaseStructure
+  id: CounterWoodFrame
   name: wooden counter frame
   description: Pieces of wood that make the frame of a table.
   components:
@@ -111,8 +111,8 @@
     node: CounterWoodFrame
 
 - type: entity
-  id: CounterMetalFrame
   parent: CounterWoodFrame
+  id: CounterMetalFrame
   name: metal counter frame
   description: Pieces of metal that make the frame of a table.
   components:
@@ -156,8 +156,8 @@
     node: CounterMetalFrame
 
 - type: entity
-  id: Table
   parent: TableBase
+  id: Table
   name: table
   description: A square piece of metal standing on four metal legs.
   components:
@@ -200,8 +200,8 @@
     node: Table
 
 - type: entity
-  id: TableReinforced
   parent: TableBase
+  id: TableReinforced
   name: reinforced table
   description: A square piece of metal standing on four metal legs. Extra robust.
   components:
@@ -247,8 +247,8 @@
     bonkTime: 3
 
 - type: entity
-  id: TableGlass
   parent: TableBase
+  id: TableGlass
   name: glass table
   description: A square piece of glass, standing on four metal legs.
   components:
@@ -301,8 +301,8 @@
       collection: FootstepTile
 
 - type: entity
-  id: TableCard
   parent: TableBase
+  id: TableCard
   name: cardboard table
   description: Cardboard sheets wrapped around a metal table frame.
   components:
@@ -356,8 +356,8 @@
       collection: FootstepTile
 
 - type: entity
-  id: TableReinforcedGlass
   parent: TableBase
+  id: TableReinforcedGlass
   name: reinforced glass table
   description: A square piece of glass, standing on four metal legs. Extra robust.
   components:
@@ -413,8 +413,8 @@
       collection: FootstepTile
 
 - type: entity
-  id: TablePlasmaGlass
   parent: TableBase
+  id: TablePlasmaGlass
   name: plasma glass table
   description: A square piece of plasma glass, standing on four metal legs. Pretty!
   components:
@@ -470,8 +470,8 @@
       collection: FootstepTile
 
 - type: entity
-  id: TableBrass
   parent: TableBase
+  id: TableBrass
   name: brass table
   description: A shiny, corrosion resistant brass table. Steampunk!
   components:
@@ -513,8 +513,8 @@
     node: TableBrass
 
 - type: entity
-  id: TableWood
   parent: TableBase
+  id: TableWood
   name: wood table
   description: Do not apply fire to this. Rumour says it burns easily.
   components:
@@ -562,8 +562,8 @@
       collection: FootstepWood
 
 - type: entity
-  id: TableCarpet
   parent: TableBase
+  id: TableCarpet
   name: gambling table
   description: Play em' cowboy.
   components:
@@ -614,8 +614,8 @@
       collection: FootstepCarpet
 
 - type: entity
-  id: TableStone
   parent: TableBase
+  id: TableStone
   name: stone table
   description: Literally the sturdiest thing you have ever seen.
   components:
@@ -641,8 +641,8 @@
       collection: FootstepFloor
 
 - type: entity
-  id: TableWeb
   parent: TableBase
+  id: TableWeb
   name: web table
   description: Really smooth and surprisingly durable.
   components:
@@ -705,10 +705,9 @@
 # Fancy tables
 
 - type: entity
-  id: TableFancyBase
   abstract: true
   parent: TableBase
-  name: fancy table
+  id: TableFancyBase
   description: Expensive and rich.
   components:
   - type: Damageable
@@ -742,9 +741,9 @@
       collection: FootstepCarpet
 
 - type: entity
-  id: TableFancyBlue
   parent: TableFancyBase
-  suffix: Blue
+  id: TableFancyBlue
+  name: fancy table (blue)
   components:
   - type: Sprite
     sprite: Structures/Furniture/Tables/Fancy/blue.rsi
@@ -757,9 +756,9 @@
     key: fancytableblue
 
 - type: entity
-  id: TableFancyCyan
   parent: TableFancyBase
-  suffix: Cyan
+  id: TableFancyCyan
+  name: fancy table (cyan)
   components:
   - type: Sprite
     sprite: Structures/Furniture/Tables/Fancy/cyan.rsi
@@ -772,9 +771,9 @@
     key: fancytablecyan
 
 - type: entity
-  id: TableFancyBlack
   parent: TableFancyBase
-  suffix: Black
+  id: TableFancyBlack
+  name: fancy table (black)
   components:
   - type: Sprite
     sprite: Structures/Furniture/Tables/Fancy/black.rsi
@@ -787,9 +786,9 @@
     key: fancytableblack
 
 - type: entity
-  id: TableFancyRed
   parent: TableFancyBase
-  suffix: Red
+  id: TableFancyRed
+  name: fancy table (red)
   components:
   - type: Sprite
     sprite: Structures/Furniture/Tables/Fancy/red.rsi
@@ -802,9 +801,9 @@
     key: fancytablered
 
 - type: entity
-  id: TableFancyPurple
   parent: TableFancyBase
-  suffix: Purple
+  id: TableFancyPurple
+  name: fancy table (purple)
   components:
   - type: Sprite
     sprite: Structures/Furniture/Tables/Fancy/purple.rsi
@@ -817,9 +816,9 @@
     key: fancytablepurple
 
 - type: entity
-  id: TableFancyPink
   parent: TableFancyBase
-  suffix: Pink
+  id: TableFancyPink
+  name: fancy table (pink)
   components:
   - type: Sprite
     sprite: Structures/Furniture/Tables/Fancy/pink.rsi
@@ -832,9 +831,9 @@
     key: fancytablepink
 
 - type: entity
-  id: TableFancyGreen
   parent: TableFancyBase
-  suffix: Green
+  id: TableFancyGreen
+  name: fancy table (green)
   components:
   - type: Sprite
     sprite: Structures/Furniture/Tables/Fancy/green.rsi
@@ -847,9 +846,9 @@
     key: fancytablegreen
 
 - type: entity
-  id: TableFancyOrange
   parent: TableFancyBase
-  suffix: Orange
+  id: TableFancyOrange
+  name: fancy table (orange)
   components:
   - type: Sprite
     sprite: Structures/Furniture/Tables/Fancy/orange.rsi
@@ -862,9 +861,9 @@
     key: fancytableorange
 
 - type: entity
-  id: TableFancyWhite
   parent: TableFancyBase
-  suffix: White
+  id: TableFancyWhite
+  name: fancy table (white)
   components:
   - type: Sprite
     sprite: Structures/Furniture/Tables/Fancy/white.rsi
@@ -879,11 +878,11 @@
 #Debug
 
 - type: entity
-  id: TableDebug
   parent: TableBase
+  id: TableDebug
   name: table
-  description: PUT ON THEM CODERSOCKS!!
   suffix: DEBUG
+  description: PUT ON THEM CODERSOCKS!!
   components:
   - type: Tag
     tags:
@@ -904,8 +903,8 @@
 # counters
 
 - type: entity
-  id: TableCounterWood
   parent: CounterBase
+  id: TableCounterWood
   name: wood counter
   description: Do not apply fire to this. Rumour says it burns easily.
   components:
@@ -950,8 +949,8 @@
       collection: FootstepWood
 
 - type: entity
-  id: TableCounterMetal
   parent: CounterBase
+  id: TableCounterMetal
   name: metal counter
   description: Looks like a good place to put a drink down.
   components:

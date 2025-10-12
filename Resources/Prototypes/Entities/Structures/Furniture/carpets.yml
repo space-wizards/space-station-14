@@ -1,10 +1,10 @@
 # TODO move all of this to tiles once tile smoothing is supported
 - type: entity
-  id: CarpetBase
+  abstract: true
   parent: BaseStructure
+  id: CarpetBase
   name: carpet
   description: "Fancy walking surface."
-  abstract: true
   components:
   - type: Sprite
     drawdepth: FloorTiles
@@ -39,9 +39,9 @@
   - type: TrayScanReveal
 
 - type: entity
-  id: Carpet
   parent: CarpetBase
-  suffix: Red
+  id: Carpet
+  name: carpet (red)
   components:
   - type: Sprite
     sprite: Structures/Furniture/Carpets/red_carpet.rsi
@@ -68,9 +68,9 @@
                 max: 1
 
 - type: entity
-  id: CarpetBlack
   parent: CarpetBase
-  suffix: Black
+  id: CarpetBlack
+  name: carpet (black)
   components:
   - type: Clickable
   - type: Sprite
@@ -98,9 +98,9 @@
                 max: 1
 
 - type: entity
-  id: CarpetPink
   parent: CarpetBase
-  suffix: Pink
+  id: CarpetPink
+  name: carpet (pink)
   components:
   - type: Clickable
   - type: Sprite
@@ -128,9 +128,9 @@
                 max: 1
 
 - type: entity
-  id: CarpetBlue
   parent: CarpetBase
-  suffix: Blue
+  id: CarpetBlue
+  name: carpet (blue)
   components:
   - type: Clickable
   - type: Sprite
@@ -158,9 +158,9 @@
                 max: 1
 
 - type: entity
-  id: CarpetGreen
   parent: CarpetBase
-  suffix: Green
+  id: CarpetGreen
+  name: carpet (green)
   components:
   - type: Clickable
   - type: Sprite
@@ -188,9 +188,9 @@
                 max: 1
 
 - type: entity
-  id: CarpetOrange
   parent: CarpetBase
-  suffix: Orange
+  id: CarpetOrange
+  name: carpet (orange)
   components:
   - type: Clickable
   - type: Sprite
@@ -218,9 +218,9 @@
                 max: 1
 
 - type: entity
-  id: CarpetSBlue
   parent: CarpetBase
-  suffix: Sky Blue
+  id: CarpetSBlue
+  name: carpet (sky blue)
   components:
   - type: Clickable
   - type: Sprite
@@ -248,9 +248,9 @@
                 max: 1
 
 - type: entity
-  id: CarpetPurple
   parent: CarpetBase
-  suffix: Purple
+  id: CarpetPurple
+  name: carpet (purple)
   components:
   - type: Clickable
   - type: Sprite
@@ -278,9 +278,9 @@
                 max: 1
 
 - type: entity
-  id: CarpetCyan
   parent: CarpetBase
-  suffix: Cyan
+  id: CarpetCyan
+  name: carpet (cyan)
   components:
   - type: Clickable
   - type: Sprite
@@ -308,9 +308,9 @@
                 max: 1
 
 - type: entity
-  id: CarpetWhite
   parent: CarpetBase
-  suffix: White
+  id: CarpetWhite
+  name: carpet (white)
   components:
   - type: Clickable
   - type: Sprite
@@ -339,8 +339,8 @@
 
 # TODO nuke this once tiles support rotating sprites
 - type: entity
-  id: CarpetChapel
   parent: BaseStructure
+  id: CarpetChapel
   name: "chapel's carpet"
   components:
   - type: Sprite
@@ -370,8 +370,8 @@
 #cardpet
 
 - type: entity
-  id: CarpetCard
   parent: BaseStructure
+  id: CarpetCard
   name: cardboard "carpet"
   description: "Even lino is better."
   components:
