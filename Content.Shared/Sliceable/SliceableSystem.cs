@@ -10,6 +10,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Storage;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
@@ -17,10 +18,10 @@ using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Sliceable;
@@ -31,14 +32,13 @@ public sealed class SliceableSystem : EntitySystem
     [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedDestructibleSystem _destructible = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     public override void Initialize()
     {
@@ -58,7 +58,6 @@ public sealed class SliceableSystem : EntitySystem
         if (_toolSystem.HasQuality(args.Used, comp.ToolQuality))
         {
             CreateDoAfter(uid, args.User, args.Used, comp.SliceTime.Seconds, comp.ToolQuality);
-            return;
         }
     }
 
@@ -126,7 +125,8 @@ public sealed class SliceableSystem : EntitySystem
             uid,
             time,
             qualities,
-            new TrySliceDoAfterEvent());
+            new TrySliceDoAfterEvent()
+        );
     }
 
     private void AfterSlicing(Entity<SliceableComponent> ent, ref TrySliceDoAfterEvent args)
@@ -144,38 +144,39 @@ public sealed class SliceableSystem : EntitySystem
             Loc.GetString("slice-butchered-success-others", ("user", args.User), ("target", ent.Owner), ("tool", args.Used.Value)),
             args.User, args.User, popupType);
 
-        if (TrySlice(ent.Owner, args.User))
+        if (TrySlice(ent, args.User))
         {
             var ev = new SliceEvent();
             RaiseLocalEvent(ent, ref ev);
 
-            _body.GibBody(ent);
-            _destructible.DestroyEntity(ent);
+            var giblings = _body.GibBody(ent);
+            if(giblings.Count == 0)
+                _destructible.DestroyEntity(ent);
         }
     }
 
-    private bool TrySlice(Entity<TransformComponent?, SliceableComponent?, EdibleComponent?> ent, EntityUid user)
+    private bool TrySlice(Entity<SliceableComponent> ent, EntityUid user)
     {
-        if (!Resolve(ent, ref ent.Comp1, ref ent.Comp2))
-            return false;
+        var slices = EntitySpawnCollection.GetSpawns(ent.Comp.Slices);
 
-        var slices = EntitySpawnCollection.GetSpawns(ent.Comp2.Slices);
+        var rndSeed = SharedRandomExtensions.HashCodeCombine(new List<int> { unchecked((int) _gameTiming.CurTick.Value), user.Id, ent.Owner.Id });
+        var rng = new System.Random(rndSeed);
 
         foreach (var sliceProto in slices)
         {
             var sliceUid = PredictedSpawnNextToOrDrop(sliceProto, ent);
             _transform.SetLocalRotation(sliceUid, 0);
 
-            if (_net.IsServer && slices.Count != 0 && !_container.IsEntityOrParentInContainer(sliceUid))
+            if (slices.Count != 0 && !_container.IsEntityOrParentInContainer(sliceUid))
             {
-                var randVect = _random.NextVector2(2.0f, 2.5f);
+                var randVect = rng.NextPolarVector2(2.0f, 2.5f);
                 _physics.SetLinearVelocity(sliceUid, randVect);
             }
 
             // Fills new slice if comp allows.
-            if (ent.Comp2.TransferSolution && Resolve(ent, ref ent.Comp3))
+            if (ent.Comp.TransferSolution && TryComp<EdibleComponent>(ent, out var edible))
             {
-                if (!_solutionContainer.TryGetSolution(ent.Owner, ent.Comp3.Solution, out var soln, out var solution))
+                if (!_solutionContainer.TryGetSolution(ent.Owner, edible.Solution, out var soln, out var solution))
                     return false;
 
                 var sliceVolume = solution.Volume / FixedPoint2.New(slices.Count);
@@ -185,7 +186,8 @@ public sealed class SliceableSystem : EntitySystem
             }
         }
 
-        _audio.PlayPvs(ent.Comp2.Sound, ent.Comp1.Coordinates, AudioParams.Default.WithVolume(-2));
+        var transform = Transform(ent);
+        _audio.PlayPvs(ent.Comp.Sound, transform.Coordinates, AudioParams.Default.WithVolume(-2));
 
         var ev = new BeforeFullySlicedEvent
         {
