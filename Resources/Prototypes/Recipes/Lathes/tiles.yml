@@ -287,7 +287,6 @@
   id: FloorTileItemWhitePavementVertical
   result: FloorTileItemWhitePavementVertical
 
-<<<<<<< HEAD
 - type: latheRecipe
   parent: BaseWhiteTileRecipe
   id: FloorTileItemWhiteVerticalSlatsContinuous
