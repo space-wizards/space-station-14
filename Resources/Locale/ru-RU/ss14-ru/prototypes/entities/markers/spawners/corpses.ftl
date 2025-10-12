@@ -1,0 +1,16 @@
+ent-SalvageHumanCorpseSpawner = спавнер труп человека
+    .desc = { ent-MarkerBase.desc }
+ent-RandomServiceCorpseSpawner = спавнер случайный сервис труп
+    .desc = { ent-SalvageHumanCorpseSpawner.desc }
+ent-RandomEngineerCorpseSpawner = спавнер случайный инженер труп
+    .desc = { ent-SalvageHumanCorpseSpawner.desc }
+ent-RandomCargoCorpseSpawner = спавнер случайный снабжение труп
+    .desc = { ent-SalvageHumanCorpseSpawner.desc }
+ent-RandomMedicCorpseSpawner = спавнер случайный медик труп
+    .desc = { ent-SalvageHumanCorpseSpawner.desc }
+ent-RandomScienceCorpseSpawner = спавнер случайный учёный труп
+    .desc = { ent-SalvageHumanCorpseSpawner.desc }
+ent-RandomSecurityCorpseSpawner = спавнер случайный служба безопасности труп
+    .desc = { ent-SalvageHumanCorpseSpawner.desc }
+ent-RandomCommandCorpseSpawner = спавнер случайный командование труп
+    .desc = { ent-SalvageHumanCorpseSpawner.desc }
