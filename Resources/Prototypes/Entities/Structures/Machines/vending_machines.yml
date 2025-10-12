@@ -1226,7 +1226,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineSovietSoda
-  name: BODA
+  name: GAZIROVANNAYA VODA
   description: An old vending machine containing sweet water.
   components:
   - type: VendingMachine
