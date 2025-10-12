@@ -14,6 +14,6 @@ public sealed partial class TileEntityEffectComponent : Component
     /// <summary>
     /// List of effects that should be applied.
     /// </summary>
-    [DataField]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public List<EntityEffect> Effects = default!;
 }

@@ -14,7 +14,7 @@
       delay: 1
     - type: GuideHelp
       guides:
-      - Xenoarchaeology
+      - ArtifactReports
     - type: ActivatableUI
       key: enum.NodeScannerUiKey.Key
       singleUser: true

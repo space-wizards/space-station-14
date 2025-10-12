@@ -250,6 +250,11 @@
   order: 4
   lawString: law-paladin-4
 
+- type: siliconLaw
+  id: Paladin5
+  order: 5
+  lawString: law-paladin-5
+
 
 - type: siliconLawset
   id: PaladinLawset
@@ -258,6 +263,7 @@
   - Paladin2
   - Paladin3
   - Paladin4
+  - Paladin5
   obeysTo: laws-owner-crew
 
  # Live and Let Live laws

@@ -35,12 +35,6 @@ public sealed partial class CartridgeAmmoComponent : AmmoComponent
     public bool Spent;
 
     /// <summary>
-    /// Is this cartridge automatically marked as trash once spent?
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool MarkSpentAsTrash = true;
-
-    /// <summary>
     /// Caseless ammunition.
     /// </summary>
     [DataField]

@@ -16,8 +16,7 @@
     - reagents: [Water]
       methods: [Touch, Ingestion, Injection]
       effects:
-      - !type:AddReagentToSolution
-        reagent: Water
+      - !type:AddToSolutionReaction
         solution: cube
   - type: Rehydratable
   - type: CollisionWake
@@ -187,8 +186,7 @@
     - reagents: [Blood]
       methods: [Touch, Ingestion, Injection]
       effects:
-      - !type:AddReagentToSolution
-        reagent: Blood
+      - !type:AddToSolutionReaction
         solution: cube
   - type: Rehydratable
     catalyst: Blood # blood is fuel

@@ -20,8 +20,7 @@
 
         - !type:HTNPrimitiveTask
           operator: !type:SpeakOperator
-            speech: !type:SingleSpeakOperatorSpeech
-              line: medibot-start-inject
+            speech: medibot-start-inject
             hidden: true
 
         - !type:HTNPrimitiveTask

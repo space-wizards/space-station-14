@@ -81,9 +81,9 @@ public enum LogType
     ChemicalReaction = 17,
 
     /// <summary>
-    /// EntityEffect related interactions.
+    /// Reagent effects related interactions.
     /// </summary>
-    EntityEffect = 18,
+    ReagentEffect = 18,
 
     /// <summary>
     /// Canister valve was opened or closed.

@@ -38,10 +38,7 @@ public sealed partial class ParcelWrappingSystem
     private void OnGetVerbsForWrappedParcel(Entity<WrappedParcelComponent> entity,
         ref GetVerbsEvent<InteractionVerb> args)
     {
-        if (!args.CanAccess || !args.CanComplexInteract)
-            return;
-
-        if (entity.Comp.Contents.Contains(args.User))
+        if (!args.CanAccess)
             return;
 
         // "Capture" the values from `args` because C# doesn't like doing the capturing for `ref` values.

@@ -166,7 +166,7 @@ public sealed class AdminLogsEui : BaseEui
         ClydeWindow = _clyde.CreateWindow(new WindowCreateParameters
         {
             Maximized = false,
-            Title = Loc.GetString("admin-logs-title"),
+            Title = "Admin Logs",
             Monitor = monitor,
             Width = 1100,
             Height = 400

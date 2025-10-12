@@ -33,13 +33,13 @@
     - reagents: [Water]
       methods: [Touch]
       effects:
-      - !type:SpawnEntityInInventory
+      - !type:WearableReaction
         slot: head
-        entity: WaterDropletHat
+        prototypeID: WaterDropletHat
     - reagents: [Water, SpaceCleaner]
       methods: [Touch]
       effects:
-      - !type:WashCreamPie
+      - !type:WashCreamPieReaction
   # Damage (Self)
   - type: Bloodstream
     bloodReagent: CopperBlood

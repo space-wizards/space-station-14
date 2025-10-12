@@ -41,8 +41,7 @@
         damage:
           types:
             Poison: -1
-      - !type:CleanBloodstream
-        excluded: Charcoal
+      - !type:ChemCleanBloodstream
         cleanseRate: 3
 
 - type: reagent
@@ -95,7 +94,9 @@
       methods: [ Touch ]
       effects:
       - !type:ArtifactUnlock
-        minScale: 5
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
 
 - type: reagent
   parent: Artifexium
@@ -110,7 +111,9 @@
       methods: [ Touch ]
       effects:
       - !type:ArtifactDurabilityRestore
-        minScale: 5
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
 
 - type: reagent
   id: Benzene
@@ -156,10 +159,9 @@
             Heat: 1.5
     Medicine:
       effects:
-      - !type:Vomit
+      - !type:ChemVomit
         conditions:
-        - !type:ReagentCondition
-          reagent: SodiumHydroxide
+        - !type:ReagentThreshold
           min: 5
         probability: 0.1
 

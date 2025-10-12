@@ -52,8 +52,7 @@
     - reagents: [Water]
       methods: [Touch, Ingestion, Injection]
       effects:
-      - !type:AddReagentToSolution
-        reagent: Water
+      - !type:AddToSolutionReaction
         solution: soil
   - type: Appearance
   - type: PlantHolderVisuals

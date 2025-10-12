@@ -617,8 +617,7 @@
     - reagents: [ Water ]
       methods: [ Touch ]
       effects:
-      - !type:AddReagentToSolution
-        reagent: Water
+      - !type:AddToSolutionReaction
         solution: plushie
   - type: Fixtures
     fixtures:

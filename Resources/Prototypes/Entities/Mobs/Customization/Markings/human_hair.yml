@@ -1405,10 +1405,3 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: longwithbangs
-- type: marking
-  id: HumanHairOverEyePigtail
-  bodyPart: Hair
-  markingCategory: Hair
-  sprites:
-  - sprite: Mobs/Customization/human_hair.rsi
-    state: overeyepigtail

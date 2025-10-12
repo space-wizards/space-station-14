@@ -214,4 +214,6 @@ public sealed partial class RevenantComponent : Component
     [DataField("harvestingState")]
     public string HarvestingState = "harvesting";
     #endregion
+
+    [DataField] public EntityUid? Action;
 }

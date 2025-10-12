@@ -5,6 +5,7 @@ using Content.Server.NPC.Queries.Considerations;
 using Content.Server.NPC.Queries.Curves;
 using Content.Server.NPC.Queries.Queries;
 using Content.Server.Nutrition.Components;
+using Content.Server.Temperature.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
@@ -29,7 +30,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Content.Shared.Atmos.Components;
 using System.Linq;
-using Content.Shared.Temperature.Components;
 
 namespace Content.Server.NPC.Systems;
 
@@ -512,12 +512,11 @@ public sealed class NPCUtilitySystem : EntitySystem
                 {
                     foreach (var comp in compFilter.Components)
                     {
-                        var hasComp = HasComp(ent, comp.Value.Component.GetType());
-                        if (!compFilter.RetainWithComp == hasComp)
-                        {
-                            _entityList.Add(ent);
-                            break;
-                        }
+                        if (HasComp(ent, comp.Value.Component.GetType()))
+                            continue;
+
+                        _entityList.Add(ent);
+                        break;
                     }
                 }
 

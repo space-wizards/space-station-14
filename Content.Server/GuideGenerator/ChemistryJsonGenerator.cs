@@ -5,7 +5,6 @@ using System.Text.Json.Serialization;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
-using Content.Shared.EntityConditions;
 using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
@@ -43,7 +42,7 @@ public sealed class ChemistryJsonGenerator
             Converters =
             {
                 new UniversalJsonConverter<EntityEffect>(),
-                new UniversalJsonConverter<EntityCondition>(),
+                new UniversalJsonConverter<EntityEffectCondition>(),
                 new UniversalJsonConverter<ReagentEffectsEntry>(),
                 new UniversalJsonConverter<DamageSpecifier>(),
                 new FixedPointJsonConverter()

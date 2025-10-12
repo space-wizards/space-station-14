@@ -67,16 +67,16 @@
         emote: Yawn
         showInChat: true
         probability: 0.1
-      - !type:MovementSpeedModifier
+      - !type:MovespeedModifier
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
       - !type:ModifyStatusEffect
         effectProto: StatusEffectDrowsiness
         time: 4
-        type: Update
+        type: Add
       - !type:HealthChange
         conditions:
-        - !type:ReagentCondition
+        - !type:ReagentThreshold
           reagent: ChloralHydrate
           min: 20
         damage:
@@ -98,10 +98,9 @@
           damage:
             types:
               Poison: 2
-        - !type:Vomit
+        - !type:ChemVomit
           conditions:
-          - !type:ReagentCondition
-            reagent: GastroToxin
+          - !type:ReagentThreshold
             min: 2
           probability: 0.2
 
@@ -145,7 +144,7 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaling: true
+        scaleByQuantity: true
         ignoreResistances: false
         damage:
           types:
@@ -184,7 +183,7 @@
       - !type:SatiateThirst
         factor: -1.5
       - !type:HealthChange
-        scaling: true
+        scaleByQuantity: true
         ignoreResistances: true
         damage:
           types:
@@ -207,7 +206,7 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaling: true
+        scaleByQuantity: true
         ignoreResistances: false
         damage:
           types:
@@ -257,7 +256,7 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaling: true
+        scaleByQuantity: true
         ignoreResistances: false
         damage:
           types:
@@ -379,8 +378,7 @@
       # todo: cough, sneeze
       - !type:HealthChange
         conditions:
-        - !type:ReagentCondition
-          reagent: Histamine
+        - !type:ReagentThreshold
           min: 45
         damage:
           groups:
@@ -394,8 +392,7 @@
         probability: 0.1
       - !type:PopupMessage
         conditions:
-        - !type:ReagentCondition
-          reagent: Histamine
+        - !type:ReagentThreshold
           min: 45
         type: Local
         visualType: Medium
@@ -417,16 +414,16 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:MetabolizerTypeCondition
-          type: [Animal] # Applying damage to the mobs with lower metabolism capabilities
+        - !type:OrganType
+          type: Animal # Applying damage to the mobs with lower metabolism capabilities
         damage:
           types:
             Poison: 0.4
-      - !type:Vomit
+      - !type:ChemVomit
         probability: 0.04 #Scaled for time, not metabolismrate.
         conditions:
-          - !type:MetabolizerTypeCondition
-            type: [Animal]
+          - !type:OrganType
+            type: Animal
 
 - type: reagent
   id: Amatoxin
@@ -476,8 +473,7 @@
       effects:
         - !type:CauseZombieInfection
           conditions:
-            - !type:ReagentCondition
-              reagent: Romerol
+            - !type:ReagentThreshold
               min: 5
 
 - type: reagent
@@ -493,37 +489,46 @@
       effects:
       - !type:PopupMessage
         conditions:
-        - !type:MetabolizerTypeCondition
-          type: [ Animal, Vox ]
-          inverted: true
+          - !type:OrganType
+            type: Animal
+            shouldHave: false
+          - !type:OrganType
+            type: Vox
+            shouldHave: false
         type: Local
         visualType: MediumCaution
         messages: [ "generic-reagent-effect-sick" ]
         probability: 0.5
-      - !type:Vomit
+      - !type:ChemVomit
         probability: 0.1
         conditions:
-        - !type:MetabolizerTypeCondition
-          type: [ Animal, Vox ]
-          inverted: true
+          - !type:OrganType
+            type: Animal
+            shouldHave: false
+          - !type:OrganType
+            type: Vox
+            shouldHave: false
       - !type:HealthChange
         conditions:
-        - !type:MetabolizerTypeCondition
-          type: [ Animal, Vox ]
-          inverted: true
+        - !type:OrganType
+          type: Animal
+          shouldHave: false
+        - !type:OrganType
+          type: Vox
+          shouldHave: false
         damage:
           types:
             Poison: 1
       - !type:AdjustReagent
         conditions:
-        - !type:MetabolizerTypeCondition
-          type: [ Animal ]
+        - !type:OrganType
+          type: Animal
         reagent: Protein
         amount: 0.5
       - !type:AdjustReagent
         conditions:
-        - !type:MetabolizerTypeCondition
-          type: [ Vox ]
+        - !type:OrganType
+          type: Vox
         reagent: Protein
         amount: 0.25
 
@@ -541,11 +546,10 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:ReagentCondition
-          reagent: Allicin
+        - !type:ReagentThreshold
           min: 1
-        - !type:MetabolizerTypeCondition
-          type: [Animal]
+        - !type:OrganType
+          type: Animal
         damage:
           types:
             Poison: 0.06
@@ -568,6 +572,7 @@
       - !type:GenericStatusEffect
         key: Pacified
         component: Pacified
+        type: Add
         time: 4
 
 - type: reagent
@@ -590,11 +595,10 @@
         probability: 0.2
       - !type:HealthChange
         conditions:
-        - !type:ReagentCondition
-          reagent: Honk
+        - !type:ReagentThreshold
           min: 1
-        - !type:MetabolizerTypeCondition
-          type: [ Animal ]
+        - !type:OrganType
+          type: Animal
         damage:
           types:
             Poison: 0.06
@@ -648,10 +652,9 @@
       effects:
       - !type:Jitter
         conditions:
-        - !type:ReagentCondition
-          reagent: Vestine
+        - !type:ReagentThreshold
           min: 5
-      - !type:MovementSpeedModifier
+      - !type:MovespeedModifier
         walkSpeedModifier: 0.8
         sprintSpeedModifier: 0.8
       - !type:HealthChange
@@ -689,7 +692,7 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:HungerCondition
+        - !type:Hunger
           max: 50
         damage:
           types:
@@ -713,30 +716,30 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:MetabolizerTypeCondition
-          type: [Arachnid]
-          inverted: true
+        - !type:OrganType
+          type: Arachnid
+          shouldHave: false
         damage:
           types:
             Poison: 1.6
-      - !type:MovementSpeedModifier
+      - !type:MovespeedModifier
         conditions:
-        - !type:ReagentCondition
+        - !type:ReagentThreshold
           reagent: Mechanotoxin
           min: 2
-        - !type:MetabolizerTypeCondition
-          type: [Arachnid]
-          inverted: true
+        - !type:OrganType
+          type: Arachnid
+          shouldHave: false
         walkSpeedModifier: 0.8
         sprintSpeedModifier: 0.8
-      - !type:MovementSpeedModifier
+      - !type:MovespeedModifier
         conditions:
-        - !type:ReagentCondition
+        - !type:ReagentThreshold
           reagent: Mechanotoxin
           min: 4
-        - !type:MetabolizerTypeCondition
-          type: [Arachnid]
-          inverted: true
+        - !type:OrganType
+          type: Arachnid
+          shouldHave: false
         walkSpeedModifier: 0.4
         sprintSpeedModifier: 0.4
 
@@ -753,5 +756,5 @@
       - !type:SatiateHunger
         factor: 1
         conditions:
-        - !type:MetabolizerTypeCondition
-          type: [Vox]
+        - !type:OrganType
+          type: Vox

@@ -149,6 +149,7 @@
     minCollectionSize: 2
     maxCollectionSize: 5
     verifyMapExistence: false
+    checkStealAreas: false
   - type: Objective
     difficulty: 1.2
 

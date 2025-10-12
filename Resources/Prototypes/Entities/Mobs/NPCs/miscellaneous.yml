@@ -104,36 +104,36 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaling: true
+        scaleByQuantity: true
         damage:
           groups:
-            Brute: -0.15
+            Brute: -0.25
     - reagents: [ Blood ]
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaling: true
+        scaleByQuantity: true
         damage:
           groups:
-            Brute: -0.25
-            Burn: -0.25
+            Brute: -0.5
+            Burn: -0.5
     - reagents: [ RobustHarvest ]
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaling: true
+        scaleByQuantity: true
         damage:
           groups:
-            Brute: -1
-            Burn: -1
+            Brute: -2
+            Burn: -2
     - reagents: [ WeedKiller, PlantBGone ]
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaling: true
+        scaleByQuantity: true
         damage:
           types:
-            Heat: 1
+            Heat: 2
   - type: ReplacementAccent
     accent: tomatoKiller
   - type: Item

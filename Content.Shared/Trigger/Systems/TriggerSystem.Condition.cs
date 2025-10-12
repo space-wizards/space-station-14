@@ -10,36 +10,31 @@ public sealed partial class TriggerSystem
     private void InitializeCondition()
     {
         SubscribeLocalEvent<WhitelistTriggerConditionComponent, AttemptTriggerEvent>(OnWhitelistTriggerAttempt);
-        SubscribeLocalEvent<UseDelayTriggerConditionComponent, AttemptTriggerEvent>(OnUseDelayTriggerAttempt);
-        SubscribeLocalEvent<ToggleTriggerConditionComponent, AttemptTriggerEvent>(OnToggleTriggerAttempt);
-        SubscribeLocalEvent<RandomChanceTriggerConditionComponent, AttemptTriggerEvent>(OnRandomChanceTriggerAttempt);
-        SubscribeLocalEvent<MindRoleTriggerConditionComponent, AttemptTriggerEvent>(OnMindRoleTriggerAttempt);
 
+        SubscribeLocalEvent<UseDelayTriggerConditionComponent, AttemptTriggerEvent>(OnUseDelayTriggerAttempt);
+
+        SubscribeLocalEvent<ToggleTriggerConditionComponent, AttemptTriggerEvent>(OnToggleTriggerAttempt);
         SubscribeLocalEvent<ToggleTriggerConditionComponent, GetVerbsEvent<AlternativeVerb>>(OnToggleGetAltVerbs);
+
+        SubscribeLocalEvent<RandomChanceTriggerConditionComponent, AttemptTriggerEvent>(OnRandomChanceTriggerAttempt);
     }
 
     private void OnWhitelistTriggerAttempt(Entity<WhitelistTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.Keys.Contains(args.Key))
-            return;
-
-        args.Cancelled |= !_whitelist.CheckBoth(args.User, ent.Comp.UserBlacklist, ent.Comp.UserWhitelist);
+        if (args.Key == null || ent.Comp.Keys.Contains(args.Key))
+            args.Cancelled |= !_whitelist.CheckBoth(args.User, ent.Comp.UserBlacklist, ent.Comp.UserWhitelist);
     }
 
     private void OnUseDelayTriggerAttempt(Entity<UseDelayTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.Keys.Contains(args.Key))
-            return;
-
-        args.Cancelled |= _useDelay.IsDelayed(ent.Owner, ent.Comp.UseDelayId);
+        if (args.Key == null || ent.Comp.Keys.Contains(args.Key))
+            args.Cancelled |= _useDelay.IsDelayed(ent.Owner, ent.Comp.UseDelayId);
     }
 
     private void OnToggleTriggerAttempt(Entity<ToggleTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.Keys.Contains(args.Key))
-            return;
-
-        args.Cancelled |= !ent.Comp.Enabled;
+        if (args.Key == null || ent.Comp.Keys.Contains(args.Key))
+            args.Cancelled |= !ent.Comp.Enabled;
     }
 
     private void OnToggleGetAltVerbs(Entity<ToggleTriggerConditionComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
@@ -67,51 +62,19 @@ public sealed partial class TriggerSystem
     private void OnRandomChanceTriggerAttempt(Entity<RandomChanceTriggerConditionComponent> ent,
         ref AttemptTriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.Keys.Contains(args.Key))
-            return;
-
-        // TODO: Replace with RandomPredicted once the engine PR is merged
-        var hash = new List<int>
+        if (args.Key == null || ent.Comp.Keys.Contains(args.Key))
         {
-            (int)_timing.CurTick.Value,
-            GetNetEntity(ent).Id,
-            args.User == null ? 0 : GetNetEntity(args.User.Value).Id,
-        };
-        var seed = SharedRandomExtensions.HashCodeCombine(hash);
-        var rand = new System.Random(seed);
+            // TODO: Replace with RandomPredicted once the engine PR is merged
+            var hash = new List<int>
+            {
+                (int)_timing.CurTick.Value,
+                GetNetEntity(ent).Id,
+                args.User == null ? 0 : GetNetEntity(args.User.Value).Id,
+            };
+            var seed = SharedRandomExtensions.HashCodeCombine(hash);
+            var rand = new System.Random(seed);
 
-        args.Cancelled |= !rand.Prob(ent.Comp.SuccessChance); // When not successful, Cancelled = true
-    }
-    private void OnMindRoleTriggerAttempt(Entity<MindRoleTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
-    {
-        if (args.Key != null && !ent.Comp.Keys.Contains(args.Key))
-            return;
-
-        if (ent.Comp.EntityWhitelist != null)
-        {
-            if (!_mind.TryGetMind(ent.Owner, out var entMindId, out var entMindComp))
-            {
-                args.Cancelled = true; // the entity has no mind
-                return;
-            }
-            if (!_role.MindHasRole((entMindId, entMindComp), ent.Comp.EntityWhitelist))
-            {
-                args.Cancelled = true; // the entity does not have the required role
-                return;
-            }
-        }
-
-        if (ent.Comp.UserWhitelist != null)
-        {
-            if (args.User == null || !_mind.TryGetMind(args.User.Value, out var userMindId, out var userMindComp))
-            {
-                args.Cancelled = true; // no user or the user has no mind
-                return;
-            }
-            if (!_role.MindHasRole((userMindId, userMindComp), ent.Comp.UserWhitelist))
-            {
-                args.Cancelled = true; // the user does not have the required role
-            }
+            args.Cancelled |= !rand.Prob(ent.Comp.SuccessChance); // When not successful, Cancelled = true
         }
     }
 }

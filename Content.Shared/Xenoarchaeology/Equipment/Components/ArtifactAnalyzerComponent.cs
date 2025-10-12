@@ -1,6 +1,5 @@
-using Content.Shared.DeviceLinking;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Xenoarchaeology.Equipment.Components;
 
@@ -36,10 +35,4 @@ public sealed partial class ArtifactAnalyzerComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public bool ReadyToPrint = false;
-
-    /// <summary>
-    /// The machine linking port for linking the analyzer with the console.
-    /// </summary>
-    [DataField]
-    public ProtoId<SinkPortPrototype> LinkingPort = "ArtifactAnalyzerReceiver";
 }

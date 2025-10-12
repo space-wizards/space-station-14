@@ -14,8 +14,8 @@
       effects:
       - !type:SatiateHunger
         conditions:
-        - !type:MetabolizerTypeCondition
-          type: [Plant]
+        - !type:OrganType
+          type: Plant
 
 - type: reagent
   id: Left4Zed
@@ -38,15 +38,15 @@
       effects:
       - !type:SatiateHunger
         conditions:
-        - !type:MetabolizerTypeCondition
-          type: [Plant]
+        - !type:OrganType
+          type: Plant
       - !type:HealthChange
         damage:
           types:
             Poison: 1
         conditions:
-        - !type:MetabolizerTypeCondition
-          type: [Plant]
+        - !type:OrganType
+          type: Plant
 
 - type: reagent
   id: PestKiller
@@ -69,8 +69,8 @@
           types:
             Poison: 3
         conditions:
-        - !type:MetabolizerTypeCondition
-          type: [Plant]
+        - !type:OrganType
+          type: Plant
 
 - type: reagent
   id: PlantBGone
@@ -100,8 +100,8 @@
             Slash: 1
             Piercing: 1
         conditions:
-        - !type:MetabolizerTypeCondition
-          type: [Plant]
+        - !type:OrganType
+          type: Plant
 
 - type: reagent
   id: RobustHarvest
@@ -132,14 +132,13 @@
             Slash: -3
             Piercing: -3
         conditions:
-        - !type:MetabolizerTypeCondition
-          type: [Plant]
+        - !type:OrganType
+          type: Plant
       - !type:HealthChange
         conditions:
-        - !type:MetabolizerTypeCondition
-          type: [Plant]
-        - !type:ReagentCondition
-          reagent: RobustHarvest
+        - !type:OrganType
+          type: Plant
+        - !type:ReagentThreshold
           min: 30
         damage:
           types:
@@ -151,10 +150,9 @@
       - !type:Polymorph
         prototype: TreeMorph
         conditions:
-          - !type:MetabolizerTypeCondition
-            type: [Plant]
-          - !type:ReagentCondition
-            reagent: RobustHarvest
+          - !type:OrganType
+            type: Plant
+          - !type:ReagentThreshold
             min: 80
 
 - type: reagent
@@ -194,8 +192,8 @@
           types:
             Poison: 4
         conditions:
-        - !type:MetabolizerTypeCondition
-          type: [Plant]
+        - !type:OrganType
+          type: Plant
 
 - type: reagent
   id: Ammonia
@@ -223,23 +221,26 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:MetabolizerTypeCondition
-          type: [ Rat ]
-          inverted: true
-        - !type:ReagentCondition
+        - !type:OrganType
+          type: Rat
+          shouldHave: false
+        - !type:ReagentThreshold
           reagent: Ammonia
           min: 1
         ignoreResistances: true
         damage:
           types:
             Poison: 0.25
-      - !type:Vomit
+      - !type:ChemVomit
         probability: 0.12
         conditions:
-        - !type:MetabolizerTypeCondition
-          type: [ Rat, Vox ]
-          inverted: true
-        - !type:ReagentCondition
+        - !type:OrganType
+          type: Rat
+          shouldHave: false
+        - !type:OrganType
+          type: Vox
+          shouldHave: false
+        - !type:ReagentThreshold
           reagent: Ammonia
           min: 0.8
       - !type:PopupMessage
@@ -248,28 +249,28 @@
         messages: [ "ammonia-smell" ]
         probability: 0.1
         conditions:
-        - !type:ReagentCondition
+        - !type:ReagentThreshold
           reagent: Ammonia
           min: 0.25
       - !type:HealthChange
         conditions:
-        - !type:MetabolizerTypeCondition
-          type: [ Rat ]
-        - !type:ReagentCondition
+        - !type:OrganType
+          type: Rat
+        - !type:ReagentThreshold
           reagent: Ammonia
           min: 1
-        scaling: true
+        scaleByQuantity: true
         ignoreResistances: true
         damage:
           groups:
-            Brute: -2.5
-            Burn: -2.5
+            Brute: -5
+            Burn: -5
           types:
             Bloodloss: -5
       - !type:Oxygenate # ammonia displaces nitrogen in vox blood
         conditions:
-        - !type:MetabolizerTypeCondition
-          type: [ Vox ]
+        - !type:OrganType
+          type: Vox
         factor: -4
 
 

@@ -23,6 +23,7 @@ public abstract class SharedRoleSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] protected readonly ISharedPlayerManager Player = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly SharedMindSystem _minds = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
@@ -399,7 +400,7 @@ public abstract class SharedRoleSystem : EntitySystem
 
         foreach (var role in delete)
         {
-            PredictedDel(role);
+            _entityManager.DeleteEntity(role);
         }
 
         var update = MindRolesUpdate(mind);

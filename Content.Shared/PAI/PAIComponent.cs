@@ -1,4 +1,8 @@
+using Content.Shared.FixedPoint;
+using Content.Shared.Store;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.PAI;
 
@@ -12,7 +16,7 @@ namespace Content.Shared.PAI;
 ///  and there's not always enough players and ghost roles to justify it.
 /// All logic in PAISystem.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class PAIComponent : Component
 {
     /// <summary>
@@ -21,6 +25,12 @@ public sealed partial class PAIComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? LastUser;
+
+    [DataField]
+    public EntProtoId ShopActionId = "ActionPAIOpenShop";
+
+    [DataField, AutoNetworkedField]
+    public EntityUid? ShopAction;
 
     /// <summary>
     /// When microwaved there is this chance to brick the pai, kicking out its player and preventing it from being used again.

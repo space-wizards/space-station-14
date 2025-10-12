@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Add this to .git/config:
 # [merge "mapping-merge-driver"]

@@ -559,7 +559,7 @@
     color: "#b53ca1"
   - type: GuideHelp
     guides:
-    - AnalysisConsole
+    - Xenoarchaeology
 
 - type: entity
   parent: BaseComputerAiAccess
