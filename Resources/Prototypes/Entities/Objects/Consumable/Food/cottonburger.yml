@@ -17,7 +17,7 @@
       food:
         maxVol: 10
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 3.33
         - ReagentId: Fiber
           Quantity: 3.33
@@ -68,7 +68,7 @@
         maxVol: 5
         canReact: false # Dont want cause reactions inside burgers after merging ingredients
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 1.665
         - ReagentId: Fiber
           Quantity: 1.665
@@ -95,7 +95,7 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 1.665
         - ReagentId: Fiber
           Quantity: 1.665

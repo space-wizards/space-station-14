@@ -17,7 +17,7 @@
       food:
         maxVol: 25
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 20
 
 # Noodles
@@ -56,8 +56,10 @@
       food:
         maxVol: 40
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 35
+        - ReagentId: Carbohydrate
+          Quantity: 25
+        - ReagentId: Sugar
+          Quantity: 10
   - type: Tag
     tags:
     - Fruit
@@ -87,7 +89,7 @@
       food:
         maxVol: 80
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 70
 # Tastes like pasta, bad humor.
 
@@ -108,12 +110,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 25
+        maxVol: 40
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 15
+        - ReagentId: Carbohydrate
+          Quantity: 25
         - ReagentId: Protein
-          Quantity: 6
+          Quantity: 10
   - type: Tag
     tags:
     - Meat
@@ -136,10 +138,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 25
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 8
+        - ReagentId: Carbohydrate
+          Quantity: 10
+        - ReagentId: Protein
+          Quantity: 5
         - ReagentId: Vitamin
           Quantity: 6
 # Tastes like pasta, meat.
@@ -163,12 +167,14 @@
       food:
         maxVol: 50
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 20
         - ReagentId: Protein
-          Quantity: 6
+          Quantity: 10
+        - ReagentId: Sugar
+          Quantity: 10
         - ReagentId: Vitamin
-          Quantity: 20
+          Quantity: 10
 # Tastes like pasta, tomato.
 
 - type: entity
@@ -188,8 +194,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 25
+        maxVol: 30
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 23
+        - ReagentId: Carbohydrate
+          Quantity: 15
+        - ReagentId: Oil
+          Quantity: 8
 # Tastes like pasta, butter.

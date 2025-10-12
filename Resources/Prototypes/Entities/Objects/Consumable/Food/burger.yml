@@ -16,7 +16,7 @@
       food:
         maxVol: 10
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 6.66 # 1/3 of a loaf of bread, technically losing 0.01 nutriment per batch of three buns over making bread loaves/slices
   - type: Butcherable
     butcherDelay: 1
@@ -57,7 +57,7 @@
         maxVol: 5
         canReact: false # Dont want cause reactions inside burgers after merging ingredients
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 3.3 # 1/2 of a bun
 
 - type: entity
@@ -75,7 +75,7 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 3.3 # 1/2 of a bun
   - type: FoodSequenceElement
     entries:
@@ -99,8 +99,10 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 7
+        - ReagentId: Protein
+          Quantity: 4
+        - ReagentId: Carbohydrate
+          Quantity: 3
         - ReagentId: Vitamin
           Quantity: 3
   - type: Item
@@ -160,10 +162,8 @@
       food:
         maxVol: 20
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
         - ReagentId: Protein
-          Quantity: 6
+          Quantity: 8
         - ReagentId: Vitamin
           Quantity: 6
   - type: Tag
@@ -202,8 +202,10 @@
       food:
         maxVol: 30
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 19
+        - ReagentId: Protein
+          Quantity: 10
+        - ReagentId: Carbohydrate
+          Quantity: 9
         - ReagentId: Vitamin
           Quantity: 5
   - type: Tag
@@ -242,7 +244,7 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 3
         - ReagentId: Protein
           Quantity: 5
@@ -286,7 +288,7 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 3
         - ReagentId: Protein
           Quantity: 6
@@ -322,7 +324,7 @@
       food:
         maxVol: 45
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 18
         - ReagentId: Protein
           Quantity: 18
@@ -359,7 +361,7 @@
       food:
         maxVol: 20
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 6
         - ReagentId: Protein
           Quantity: 6
@@ -397,7 +399,7 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 6
         - ReagentId: Protein
           Quantity: 3
@@ -425,10 +427,12 @@
       food:
         maxVol: 26
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 7
         - ReagentId: Vitamin
-          Quantity: 7
+          Quantity: 4
+        - ReagentId: Fat
+          Quantity: 3
         - ReagentId: Protein
           Quantity: 10
   - type: Tag
@@ -467,7 +471,7 @@
       food:
         maxVol: 20
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 5
         - ReagentId: Protein
           Quantity: 7
@@ -518,7 +522,7 @@
       food:
         maxVol: 20
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 4
         - ReagentId: Protein
           Quantity: 6
@@ -576,7 +580,7 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 4
         - ReagentId: Protein
           Quantity: 5
@@ -629,7 +633,7 @@
       food:
         maxVol: 65
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 31
         - ReagentId: Protein
           Quantity: 15
@@ -675,7 +679,7 @@
       food:
         maxVol: 20
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 15
         - ReagentId: Protein
           Quantity: 5
@@ -708,7 +712,7 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 8
         - ReagentId: Licoxide
           Quantity: 5
@@ -773,7 +777,7 @@
       food:
         maxVol: 55
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 25
         - ReagentId: Protein
           Quantity: 5
@@ -826,10 +830,14 @@
       food:
         maxVol: 25
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 7
         - ReagentId: Vitamin
-          Quantity: 12
+          Quantity: 4
+        - ReagentId: Protein
+          Quantity: 4
+        - ReagentId: Fiber
+          Quantity: 4
   - type: Tag
     tags:
       - ClothMade
@@ -853,7 +861,7 @@
       food:
         maxVol: 20
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 5
         - ReagentId: Protein
           Quantity: 6
@@ -901,7 +909,7 @@
       food:
         maxVol: 20
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 5
         - ReagentId: Protein
           Quantity: 8
@@ -931,7 +939,7 @@
       food:
         maxVol: 30
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 11
         - ReagentId: Protein
           Quantity: 10
@@ -975,7 +983,7 @@
       food:
         maxVol: 25
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 6
         - ReagentId: Protein
           Quantity: 9
@@ -1008,7 +1016,7 @@
       food:
         maxVol: 25
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 2
         - ReagentId: Protein
           Quantity: 6
@@ -1041,7 +1049,7 @@
       food:
         maxVol: 20
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 6
         - ReagentId: Protein
           Quantity: 6
@@ -1079,8 +1087,10 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
+        - ReagentId: Carbohydrate
+          Quantity: 3
+        - ReagentId: Oil
+          Quantity: 2
         - ReagentId: SulfuricAcid
           Quantity: 5
   - type: Tag
@@ -1136,7 +1146,7 @@
       food:
         maxVol: 20
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 13
         - ReagentId: Vitamin
           Quantity: 5
@@ -1169,7 +1179,7 @@
       food:
         maxVol: 20
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 4
         - ReagentId: Protein
           Quantity: 5
@@ -1203,10 +1213,16 @@
       food:
         maxVol: 90
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 44
+        - ReagentId: Carbohydrate
+          Quantity: 22
+        - ReagentId: Protein
+          Quantity: 22
         - ReagentId: Vitamin
           Quantity: 24
+        - ReagentId: Oil
+          Quantity: 12
+        - ReagentId: Fat
+          Quantity: 12
         - ReagentId: TableSalt
           Quantity: 5
         - ReagentId: Blackpepper
@@ -1235,7 +1251,7 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 8
         - ReagentId: Protein
           Quantity: 3
@@ -1273,7 +1289,7 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 3
         - ReagentId: Protein
           Quantity: 6
@@ -1327,7 +1343,7 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 3
         - ReagentId: Protein
           Quantity: 4

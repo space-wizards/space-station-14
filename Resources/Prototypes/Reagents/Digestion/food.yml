@@ -1,0 +1,23 @@
+- type: reaction
+  id: EggDigestion
+  source: true
+  requiredMixerCategories:
+  - Digestion
+  reactants:
+    Egg:
+      amount: 2
+  products:
+    UncookedAnimalProteins: 1
+    Fat: 1
+
+- type: reaction
+  id: EggCookedDigestion
+  source: true
+  requiredMixerCategories:
+  - Digestion
+  reactants:
+    EggCooked:
+      amount: 2
+  products:
+    Protein: 1
+    Fat: 1

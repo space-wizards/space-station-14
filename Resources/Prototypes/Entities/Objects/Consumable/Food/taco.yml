@@ -22,7 +22,7 @@
         canReact: false # Dont want cause reactions inside tacos after merging ingredients
         maxVol: 10
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 6.66
   - type: FoodSequenceStartPoint
     key: Taco
@@ -53,12 +53,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 25
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
+        - ReagentId: Carbohydrate
+          Quantity: 5
         - ReagentId: Vitamin
-          Quantity: 4
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
   - type: Item
     sprite: Objects/Consumable/Food/taco.rsi
     shape:
@@ -101,12 +103,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 25
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
+        - ReagentId: Carbohydrate
+          Quantity: 5
         - ReagentId: Vitamin
-          Quantity: 6
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 10
 
 - type: entity
   name: rat taco
@@ -119,12 +123,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 25
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
+        - ReagentId: Carbohydrate
+          Quantity: 5
         - ReagentId: Vitamin
-          Quantity: 4
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
 
 - type: entity
   name: beef taco supreme
@@ -137,12 +143,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 25
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 22
+        - ReagentId: Carbohydrate
+          Quantity: 5
         - ReagentId: Vitamin
-          Quantity: 6
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 10
 
 - type: entity
   name: chicken taco supreme
@@ -155,12 +163,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 25
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 22
+        - ReagentId: Carbohydrate
+          Quantity: 5
         - ReagentId: Vitamin
-          Quantity: 6
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 10
 
 - type: entity
   parent: FoodTacoBase
@@ -179,16 +189,18 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 32
+        maxVol: 35
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 14
+        - ReagentId: Carbohydrate
+          Quantity: 5
         - ReagentId: Vitamin
-          Quantity: 4
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 10
         - ReagentId: Ichor
-          Quantity: 4
+          Quantity: 5
         - ReagentId: CapsaicinOil
-          Quantity: 6
+          Quantity: 5
 
 - type: entity
   name: soft taco
@@ -207,12 +219,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 5
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 10
         - ReagentId: Vitamin
-          Quantity: 18
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 10
+        - ReagentId: Fat
+          Quantity: 5
   - type: Tag
     tags:
       - Meat

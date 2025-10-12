@@ -13,7 +13,7 @@
       food:
         maxVol: 6
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 5
   - type: Item
     size: Tiny
@@ -35,12 +35,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 15
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 2
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: Sugar
+          Quantity: 10
   - type: FlavorProfile
     flavors:
       - sweet
@@ -58,10 +58,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 18
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: Sugar
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 2
         - ReagentId: JuiceBerry
@@ -81,10 +83,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 18
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: Sugar
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 2
         - ReagentId: JuiceCherry
@@ -95,7 +99,7 @@
 
 - type: entity
   name: bluecherry muffin
-  parent: FoodBakedMuffin
+  parent: FoodBakedMuffinCherry
   id: FoodBakedMuffinBluecherry
   description: Blue cherries inside a delicious muffin.
   components:
@@ -116,10 +120,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 18
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: Sugar
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 2
         - ReagentId: CocoaPowder
@@ -136,10 +142,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 18
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: Sugar
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 2
         - ReagentId: JuiceBanana
@@ -158,6 +166,17 @@
   components:
   - type: Sprite
     state: bun-honey
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 16
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: Sugar
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 2
 
 - type: entity
   name: hotcross bun
@@ -181,8 +200,10 @@
       food:
         maxVol: 10
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: Protein
+          Quantity: 2
         - ReagentId: Vitamin
           Quantity: 2
 
@@ -210,7 +231,7 @@
       food:
         maxVol: 8
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 1
@@ -226,10 +247,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 8
+        maxVol: 15
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: Sugar
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 1
   - type: Tag
@@ -274,8 +297,8 @@
       food:
         maxVol: 8
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
+        - ReagentId: Fat
+          Quantity: 4
         - ReagentId: Protein
           Quantity: 2
         - ReagentId: Vitamin
@@ -444,10 +467,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 8
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 5
+        - ReagentId: Sugar
+          Quantity: 3
         - ReagentId: Theobromine
           Quantity: 1
 
@@ -466,8 +491,10 @@
       food:
         maxVol: 20
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 8
+        - ReagentId: Carbohydrate
+          Quantity: 5
+        - ReagentId: Sugar
+          Quantity: 5
         - ReagentId: Vitamin
           Quantity: 1
 
@@ -486,8 +513,10 @@
       food:
         maxVol: 20
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
+        - ReagentId: Carbohydrate
+          Quantity: 5
+        - ReagentId: Sugar
+          Quantity: 5
         - ReagentId: Vitamin
           Quantity: 1
 
@@ -506,8 +535,10 @@
       food:
         maxVol: 20
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
+        - ReagentId: Carbohydrate
+          Quantity: 5
+        - ReagentId: Sugar
+          Quantity: 5
         - ReagentId: Vitamin
           Quantity: 1
 
@@ -526,8 +557,10 @@
       food:
         maxVol: 20
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 8
+        - ReagentId: Carbohydrate
+          Quantity: 5
+        - ReagentId: Sugar
+          Quantity: 5
         - ReagentId: Vitamin
           Quantity: 2
 
@@ -555,7 +588,7 @@
       food:
         maxVol: 20
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 1
@@ -573,10 +606,10 @@
       food:
         maxVol: 20
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 8
+        - ReagentId: Carbohydrate
+          Quantity: 5
         - ReagentId: Protein
-          Quantity: 2
+          Quantity: 5
   - type: FlavorProfile
     flavors:
       - meaty
@@ -604,10 +637,10 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Protein
           Quantity: 2
-        - ReagentId: Vitamin
-          Quantity: 0.5
+        - ReagentId: Fat
+          Quantity: 2
 
 - type: entity
   name: cotton chèvre chaud
@@ -634,7 +667,7 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 1
         - ReagentId: Fiber
           Quantity: 1
@@ -662,8 +695,12 @@
       food:
         maxVol: 78
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 30
+        - ReagentId: Carbohydrate
+          Quantity: 18
+        - ReagentId: Fat
+          Quantity: 6
+        - ReagentId: Sugar
+          Quantity: 6
         - ReagentId: Theobromine
           Quantity: 18
   - type: SliceableFood
@@ -687,10 +724,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 13
+        maxVol: 15
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
+        - ReagentId: Carbohydrate
+          Quantity: 3
+        - ReagentId: Fat
+          Quantity: 2
+        - ReagentId: Sugar
+          Quantity: 2
         - ReagentId: Theobromine
           Quantity: 3
   - type: Tag
@@ -719,8 +760,12 @@
       food:
         maxVol: 228
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 30
+        - ReagentId: Carbohydrate
+          Quantity: 18
+        - ReagentId: Fat
+          Quantity: 6
+        - ReagentId: Sugar
+          Quantity: 6
         - ReagentId: Theobromine
           Quantity: 18
         - ReagentId: THC
@@ -748,8 +793,12 @@
       food:
         maxVol: 38
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
+        - ReagentId: Carbohydrate
+          Quantity: 3
+        - ReagentId: Fat
+          Quantity: 1
+        - ReagentId: Sugar
+          Quantity: 1
         - ReagentId: Theobromine
           Quantity: 3
         - ReagentId: THC
@@ -775,7 +824,7 @@
         food:
           maxVol: 4
           reagents:
-          - ReagentId: Nutriment
+          - ReagentId: Carbohydrate
             Quantity: 1
           - ReagentId: Allicin
             Quantity: 1
@@ -805,7 +854,7 @@
       food:
         maxVol: 7
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 3
         - ReagentId: Butter
           Quantity: 2
@@ -844,7 +893,7 @@
       food:
         maxVol: 7
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 1.5
         - ReagentId: Fiber
           Quantity: 1.5
@@ -875,8 +924,10 @@
       food:
         maxVol: 21
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 11
+        - ReagentId: Carbohydrate
+          Quantity: 6
+        - ReagentId: Fat
+          Quantity: 5
         - ReagentId: Butter
           Quantity: 2
         - ReagentId: Vitamin
@@ -906,7 +957,7 @@
       food:
         maxVol: 21
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 6
         - ReagentId: Fiber
           Quantity: 5

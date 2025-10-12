@@ -17,8 +17,12 @@
       food:
         maxVol: 60
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 40
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Protein
+          Quantity: 10
+        - ReagentId: Fat
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 10
 
