@@ -95,6 +95,25 @@
       paper_label: !type:ContainerSlot
   - type: StaticPrice
     price: 50
+# DS14-start
+  - type: Damageable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 60
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:EmptyContainersBehaviour
+        containers:
+        - entity_storage
+        - paper_label
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/poster_broken.ogg
+# DS14-end
 
 - type: entity
   id: BodyBagFolded
