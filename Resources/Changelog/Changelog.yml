@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Moomoobeef
-  changes:
-  - message: Made high-viz vest less visible.
-    type: Tweak
-  id: 8580
-  time: '2025-05-28T09:39:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37869
 - author: deltanedas
   changes:
   - message: Diona "Gib yourself!" action now has a suicide warning like microbombs.
@@ -3944,3 +3937,10 @@
   id: 9082
   time: '2025-10-12T10:47:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39304
+- author: PJB3005
+  changes:
+  - message: The patrons list in the in-game credits works again.
+    type: Fix
+  id: 9083
+  time: '2025-10-12T11:02:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40840
