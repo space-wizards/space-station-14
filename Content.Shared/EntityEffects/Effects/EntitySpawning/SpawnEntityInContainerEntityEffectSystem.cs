@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.Containers;
+using Robust.Shared.Network;
 
 namespace Content.Shared.EntityEffects.Effects.EntitySpawning;
 
@@ -10,6 +11,8 @@ namespace Content.Shared.EntityEffects.Effects.EntitySpawning;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class SpawnEntityInContainerEntityEffectSystem : EntityEffectSystem<ContainerManagerComponent, SpawnEntityInContainer>
 {
+    [Dependency] private readonly INetManager _net = default!;
+
     protected override void Effect(Entity<ContainerManagerComponent> entity, ref EntityEffectEvent<SpawnEntityInContainer> args)
     {
         var quantity = args.Effect.Number * (int)Math.Floor(args.Scale);
@@ -25,7 +28,7 @@ public sealed partial class SpawnEntityInContainerEntityEffectSystem : EntityEff
                     return;
             }
         }
-        else
+        else if (_net.IsServer)
         {
             for (var i = 0; i < quantity; i++)
             {

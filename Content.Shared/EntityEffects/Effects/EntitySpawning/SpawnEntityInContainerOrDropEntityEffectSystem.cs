@@ -1,5 +1,5 @@
 ﻿using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Network;
 
 namespace Content.Shared.EntityEffects.Effects.EntitySpawning;
 
@@ -11,6 +11,8 @@ namespace Content.Shared.EntityEffects.Effects.EntitySpawning;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class SpawnEntityInContainerOrDropEntityEffectSystem : EntityEffectSystem<ContainerManagerComponent, SpawnEntityInContainerOrDrop>
 {
+    [Dependency] private readonly INetManager _net = default!;
+
     protected override void Effect(Entity<ContainerManagerComponent> entity, ref EntityEffectEvent<SpawnEntityInContainerOrDrop> args)
     {
         var quantity = args.Effect.Number * (int)Math.Floor(args.Scale);
@@ -26,7 +28,7 @@ public sealed partial class SpawnEntityInContainerOrDropEntityEffectSystem : Ent
                 PredictedSpawnInContainerOrDrop(proto, entity, container, xform, entity.Comp);
             }
         }
-        else
+        else if (_net.IsServer)
         {
             for (var i = 0; i < quantity; i++)
             {
