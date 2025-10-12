@@ -34,7 +34,7 @@
   icon:
     sprite: Structures/Machines/gravity_generator_mini.rsi
     state: on
-  product: GravityGeneratorMini
+  product: CrateEngineeringMiniGravityGen # DS14
   cost: 4000
   category: cargoproduct-category-name-shuttle
   group: market
