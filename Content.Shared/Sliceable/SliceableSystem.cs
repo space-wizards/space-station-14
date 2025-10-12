@@ -187,7 +187,7 @@ public sealed class SliceableSystem : EntitySystem
         }
 
         var transform = Transform(ent);
-        _audio.PlayPvs(ent.Comp.Sound, transform.Coordinates, AudioParams.Default.WithVolume(-2));
+        _audio.PlayPredicted(ent.Comp.Sound, transform.Coordinates, user, AudioParams.Default.WithVolume(-2));
 
         var ev = new BeforeFullySlicedEvent
         {
