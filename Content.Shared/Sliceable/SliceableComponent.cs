@@ -2,7 +2,6 @@ using Content.Shared.Tools;
 using Robust.Shared.Audio;
 using Content.Shared.Storage;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Sliceable;
 
@@ -39,6 +38,6 @@ public sealed partial class SliceableComponent : Component
     /// <summary>
     /// Time of slicing.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan SliceTime;
+    [DataField]
+    public TimeSpan SliceTime = TimeSpan.FromSeconds(1);
 }
