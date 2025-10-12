@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: sowelipililimute
-  changes:
-  - message: Plants can process nutrition again
-    type: Fix
-  - message: Plants can process robust harvest again
-    type: Fix
-  id: 8582
-  time: '2025-05-28T22:51:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37912
 - author: mhamster
   changes:
   - message: Chameleon clothes are now affected by any kind of EMP explosion, which
@@ -3945,3 +3936,10 @@
   id: 9084
   time: '2025-10-12T11:14:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39359
+- author: Callmore
+  changes:
+  - message: Bullet casings can now be picked up again.
+    type: Fix
+  id: 9085
+  time: '2025-10-12T18:45:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40829
