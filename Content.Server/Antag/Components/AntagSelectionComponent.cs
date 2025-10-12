@@ -175,6 +175,12 @@ public partial struct AntagSelectionDefinition()
     public List<EntProtoId>? MindRoles;
 
     /// <summary>
+    /// Job to add to the player's mind
+    /// </summary>
+    [DataField]
+    public ProtoId<JobPrototype>? job = null;
+
+    /// <summary>
     /// A set of starting gear that's equipped to the player.
     /// </summary>
     [DataField]

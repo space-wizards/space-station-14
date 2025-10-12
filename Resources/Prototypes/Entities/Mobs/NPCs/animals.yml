@@ -1523,6 +1523,8 @@
     # make the player a traitor once its taken
   - type: AutoTraitor
     profile: TraitorReinforcement
+  - type: GhostRole # not just in the parent cause some jank with the reinforcement chooser
+    job: SyndicateReinforcement
 
 - type: entity
   id: MobMonkeySyndicateAgentNukeops # Reinforcement exclusive to nukeops uplink
@@ -1530,6 +1532,8 @@
   suffix: NukeOps
   components:
   - type: NukeOperative
+  - type: GhostRole # not just in the parent cause some jank with the reinforcement chooser
+    job: SyndicateReinforcement
 
 - type: entity
   name: kobold

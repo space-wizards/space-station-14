@@ -27,7 +27,6 @@
     - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
-    job: RatKing
   - type: GhostRoleMobSpawner
     prototype: MobRatKing
   - type: Sprite
@@ -51,7 +50,6 @@
     - MindRoleGhostRoleFamiliar
     raffle:
       settings: short
-    job: Animal
   - type: GhostRoleMobSpawner
     prototype: MobBatRemilia
   - type: Sprite
@@ -73,7 +71,6 @@
     rules: ghost-role-information-familiar-rules
     mindRoles:
     - MindRoleGhostRoleFamiliar
-    job: SyndicateReinforcement
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -96,7 +93,6 @@
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
     - MindRoleNukeops
-    job: NuclearOperative
     raffle:
       settings: default
   - type: GhostRoleMobSpawner

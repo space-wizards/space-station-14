@@ -2,12 +2,26 @@
 
 ### Visitors with Visitor ID
 
+- type: randomHumanoidSettings
+  id: BaseVisitor
+  parent: EventHumanoid
+  components:
+    - type: GhostRole
+      job: Visitor
+
 # Command
 # Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
 
 - type: randomHumanoidSettings
-  id: VisitorHead
+  id: BaseVisitorMindshielded
   parent: EventHumanoidMindShielded
+  components:
+    - type: GhostRole
+      job: Visitor
+
+- type: randomHumanoidSettings
+  id: VisitorHead
+  parent: BaseVisitorMindshielded
   components:
     - type: GhostRole
       name: ghost-role-information-command-name
@@ -98,7 +112,7 @@
 
 - type: randomHumanoidSettings
   id: VisitorSecurity
-  parent: EventHumanoidMindShielded
+  parent: BaseVisitorMindshielded
   components:
     - type: GhostRole
       name: ghost-role-information-security-name
@@ -151,7 +165,7 @@
 
 - type: randomHumanoidSettings
   id: VisitorCargonian
-  parent: EventHumanoid
+  parent: BaseVisitor
   components:
     - type: GhostRole
       name: ghost-role-information-cargo-name
@@ -184,7 +198,7 @@
 
 - type: randomHumanoidSettings
   id: VisitorEngineering
-  parent: EventHumanoid
+  parent: BaseVisitor
   components:
     - type: GhostRole
       name: ghost-role-information-engineering-name
@@ -227,7 +241,7 @@
 
 - type: randomHumanoidSettings
   id: VisitorMedical
-  parent: EventHumanoid
+  parent: BaseVisitor
   components:
     - type: GhostRole
       name: ghost-role-information-medical-name
@@ -320,7 +334,7 @@
 
 - type: randomHumanoidSettings
   id: VisitorScience
-  parent: EventHumanoid
+  parent: BaseVisitor
   components:
     - type: GhostRole
       name: ghost-role-information-science-name
@@ -353,7 +367,7 @@
 
 - type: randomHumanoidSettings
   id: VisitorCivilian
-  parent: EventHumanoid
+  parent: BaseVisitor
   components:
     - type: GhostRole
       name: ghost-role-information-civilian-name
@@ -560,7 +574,7 @@
 
 - type: randomHumanoidSettings
   id: ChallengeVictimCaptain
-  parent: EventHumanoidMindShielded
+  parent: BaseVisitorMindshielded
   randomizeName: false
   components:
     - type: GhostRole
@@ -581,7 +595,7 @@
 
 - type: randomHumanoidSettings
   id: ChallengeVictimChiefEngineer
-  parent: EventHumanoidMindShielded
+  parent: BaseVisitorMindshielded
   randomizeName: false
   components:
     - type: GhostRole
@@ -602,7 +616,7 @@
 
 - type: randomHumanoidSettings
   id: ChallengeVictimCMO
-  parent: EventHumanoidMindShielded
+  parent: BaseVisitorMindshielded
   randomizeName: false
   components:
     - type: GhostRole
@@ -623,7 +637,7 @@
 
 - type: randomHumanoidSettings
   id: ChallengeVictimHeadOfPersonnel
-  parent: EventHumanoidMindShielded
+  parent: BaseVisitorMindshielded
   randomizeName: false
   components:
     - type: GhostRole
@@ -644,7 +658,7 @@
 
 - type: randomHumanoidSettings
   id: ChallengeVictimHeadOfSecurity
-  parent: EventHumanoidMindShielded
+  parent: BaseVisitorMindshielded
   randomizeName: false
   components:
     - type: GhostRole
@@ -665,7 +679,7 @@
 
 - type: randomHumanoidSettings
   id: ChallengeVictimResearchDirector
-  parent: EventHumanoidMindShielded
+  parent: BaseVisitorMindshielded
   randomizeName: false
   components:
     - type: GhostRole
@@ -686,7 +700,7 @@
 
 - type: randomHumanoidSettings
   id: ChallengeVictimQuartermaster
-  parent: EventHumanoidMindShielded
+  parent: BaseVisitorMindshielded
   randomizeName: false
   components:
     - type: GhostRole
@@ -712,6 +726,7 @@
 
 - type: randomHumanoidSettings
   id: ChallengeCargoTechnician
+  parent: BaseVisitor
   randomizeName: false
   components:
     - type: GhostRole
@@ -756,6 +771,7 @@
       rules: ghost-role-information-rules-team-antagonist
       mindRoles:
       - MindRoleGhostRoleTeamAntagonist
+      job: SyndicateReinforcement
       raffle:
         settings: default
     - type: Loadout
@@ -776,6 +792,7 @@
       rules: ghost-role-information-rules-team-antagonist
       mindRoles:
       - MindRoleGhostRoleTeamAntagonist
+      job: SyndicateReinforcement
       raffle:
         settings: default
     - type: Loadout
@@ -784,7 +801,7 @@
 
 - type: randomHumanoidSettings
   id: SyndieVisitor
-  parent: EventHumanoid
+  parent: BaseVisitor
   components:
     - type: NpcFactionMember
       factions:
@@ -843,7 +860,7 @@
 
 - type: randomHumanoidSettings
   id: VisitorBlackmarketeer
-  parent: EventHumanoid
+  parent: BaseVisitor
   components:
     - type: GhostRole
       name: ghost-role-information-blackmarketeer-name
@@ -859,7 +876,7 @@
 
 - type: randomHumanoidSettings
   id: Cossack
-  parent: EventHumanoid
+  parent: BaseVisitor
   components:
     - type: RussianAccent
     - type: ScrambledAccent

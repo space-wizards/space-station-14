@@ -264,6 +264,7 @@
         nameFormat: name-format-ninja
       mindRoles:
       - MindRoleNinja
+      job: SpaceNinja
   - type: DynamicRuleCost
     cost: 75
 
@@ -302,6 +303,7 @@
         sound: /Audio/Misc/paradox_clone_greeting.ogg
       mindRoles:
       - MindRoleParadoxClone
+      job: ParadoxClone
   - type: DynamicRuleCost
     cost: 50
 
@@ -355,6 +357,7 @@
         nameFormat: name-format-wizard
       mindRoles:
       - MindRoleWizard
+      job: Wizard
 
 # disabled until event is rewritten to be more interesting
 #- type: entity
@@ -593,6 +596,7 @@
         - Syndicate
       mindRoles:
       - MindRoleLoneops
+      job: NuclearOperative
   - type: DynamicRuleCost
     cost: 75
 

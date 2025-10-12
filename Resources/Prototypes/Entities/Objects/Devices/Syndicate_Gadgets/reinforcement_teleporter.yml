@@ -30,7 +30,6 @@
     - MindRoleGhostRoleTeamAntagonist
     raffle:
       settings: default
-    Job: SyndicateReinforcement
   - type: GhostRoleMobSpawner
     prototype: MobHumanSyndicateAgentSpy
     selectablePrototypes: ["SyndicateAgentMedic", "SyndicateAgentSpy", "SyndicateAgentThief"]
@@ -48,7 +47,6 @@
     rules: ghost-role-information-nukeop-reinforcement-rules
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
-    job: NuclearOperative
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -66,7 +64,6 @@
     rules: ghost-role-information-syndicate-reinforcement-rules
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
-    job: NuclearOperative
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -96,7 +93,6 @@
     rules: ghost-role-information-syndicate-reinforcement-rules
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
-    job: NuclearOperative
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -119,6 +115,5 @@
       - MindRoleGhostRoleSilicon
       raffle:
         settings: default
-      job: NuclearOperativeCyborg
     - type: GhostRoleMobSpawner
-      prototype: PlayerBorgSyndicateAssaultBattery
+      prototype: PlayerBorgSyndicateAssaultGhostRole
