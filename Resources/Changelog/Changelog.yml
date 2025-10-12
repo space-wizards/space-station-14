@@ -1,17 +1,6 @@
 ﻿Entries:
 - author: CoconutThunder
   changes:
-  - message: Fixed lubed items being thrown when looking at the pickup verb.
-    type: Fix
-  - message: Fixed multihanded items showing a popup when looking at the pickup verb.
-    type: Fix
-  - message: Fixed a bug with lubed handcuffs.
-    type: Fix
-  id: 8561
-  time: '2025-05-25T05:10:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38705
-- author: CoconutThunder
-  changes:
   - message: The Chief Medical Officer should now appear with the correct precedence
       in the crew manifest.
     type: Fix
@@ -3960,3 +3949,183 @@
   id: 9062
   time: '2025-10-09T14:00:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40790
+- author: Princess-Cheeseballs
+  changes:
+  - message: The thieving beacon can now detect the officer's handgun objective.
+    type: Fix
+  id: 9063
+  time: '2025-10-10T04:59:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40811
+- author: Hitlinemoss
+  changes:
+  - message: The Paladin AI lawset has been rewritten.
+    type: Tweak
+  id: 9064
+  time: '2025-10-10T12:41:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40343
+- author: kontakt
+  changes:
+  - message: Ninjas can now have a bombing target at any warp point.
+    type: Tweak
+  id: 9065
+  time: '2025-10-10T21:27:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40726
+- author: frigid-dev
+  changes:
+  - message: Ore Crabs now collide with the player if mob collisions are enabled.
+    type: Tweak
+  - message: Ore Crabs now show they are stunned
+    type: Fix
+  id: 9066
+  time: '2025-10-10T23:31:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40764
+- author: Crude Oil
+  changes:
+  - message: Removed 'Activate Holopad Projector' verb from the station AI core.
+    type: Fix
+  id: 9067
+  time: '2025-10-11T00:03:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39937
+- author: Hitlinemoss
+  changes:
+  - message: Ice now satiates thirst.
+    type: Tweak
+  - message: Ice now evaporates.
+    type: Tweak
+  id: 9068
+  time: '2025-10-11T00:20:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40149
+- author: slarticodefast
+  changes:
+  - message: The artifact analysis console no longer breaks when trying to link it
+      to multiple artifact analyzers or vice versa.
+    type: Fix
+  id: 9069
+  time: '2025-10-11T00:33:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39984
+- author: qwerltaz
+  changes:
+  - message: The ID card computer now has buttons to grant or revoke all access from
+      the target ID card.
+    type: Add
+  id: 9070
+  time: '2025-10-11T00:52:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39375
+- author: Centronias
+  changes:
+  - message: The HugBot, which is similar in purpose and construction to other small
+      robots like the CleanBot.
+    type: Add
+  id: 9071
+  time: '2025-10-11T01:05:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37557
+- author: PicklOH
+  changes:
+  - message: Added more Syndie ammo to the EMAG lathe inventory
+    type: Add
+  id: 9072
+  time: '2025-10-11T05:14:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40822
+- author: TrixxedHeart
+  changes:
+  - message: Updated Xenoarchaeology guidebook page to current system.
+    type: Tweak
+  id: 9073
+  time: '2025-10-11T17:32:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40621
+- author: HTMLSystem
+  changes:
+  - message: Added infectious anom sprites for moths and arachnids.
+    type: Add
+  id: 9074
+  time: '2025-10-11T18:01:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39508
+- author: ScarKy0
+  changes:
+  - message: Mice, cockroaches and other small mobs can no longer unwrap parcels.
+    type: Fix
+  id: 9075
+  time: '2025-10-11T21:32:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40838
+- author: Hitlinemoss
+  changes:
+  - message: Autolathes can now print durathread.
+    type: Add
+  id: 9076
+  time: '2025-10-11T21:46:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40837
+- author: cloudyias
+  changes:
+  - message: Added the ability for droppers to be printed via autolathes and medfabs
+    type: Add
+  id: 9077
+  time: '2025-10-11T23:15:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40074
+- author: jessicamaybe
+  changes:
+  - message: Added swabs and an emag inventory to the biogenerator
+    type: Tweak
+  id: 9078
+  time: '2025-10-12T00:15:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39037
+- author: SuperGDPWYL
+  changes:
+  - message: Added the Syndicate ID Card to the uplink for 1 TC.
+    type: Add
+  id: 9079
+  time: '2025-10-12T00:56:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38381
+- author: aada
+  changes:
+  - message: Cannabis no longer stacks infinitely. Sorry, botanists!
+    type: Fix
+  id: 9080
+  time: '2025-10-12T01:29:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38412
+- author: GovnokradZXC
+  changes:
+  - message: New hair named Pigtail (Over Eye)
+    type: Add
+  id: 9081
+  time: '2025-10-12T05:45:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39850
+- author: Princess-Cheeseballs
+  changes:
+  - message: Meat Kudzu gasps less often.
+    type: Tweak
+  id: 9082
+  time: '2025-10-12T10:47:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39304
+- author: PJB3005
+  changes:
+  - message: The patrons list in the in-game credits works again.
+    type: Fix
+  id: 9083
+  time: '2025-10-12T11:02:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40840
+- author: DrSmugleaf
+  changes:
+  - message: Fixed species not being ordered alphabetically in the character customization
+      UI.
+    type: Fix
+  id: 9084
+  time: '2025-10-12T11:14:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39359
+- author: Callmore
+  changes:
+  - message: Bullet casings can now be picked up again.
+    type: Fix
+  id: 9085
+  time: '2025-10-12T18:45:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40829
+- author: CoconutThunder
+  changes:
+  - message: Fixed lubed items being thrown when looking at the pickup verb.
+    type: Fix
+  - message: Fixed multihanded items showing a popup when looking at the pickup verb.
+    type: Fix
+  - message: Fixed a bug with lubed handcuffs.
+    type: Fix
+  id: 9086
+  time: '2025-05-25T05:10:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38705
