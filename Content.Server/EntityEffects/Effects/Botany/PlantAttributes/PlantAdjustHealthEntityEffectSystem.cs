@@ -14,7 +14,7 @@ public sealed partial class PlantAdjustHealthEntityEffectSystem : EntityEffectSy
         if (entity.Comp.Seed == null || entity.Comp.Dead)
             return;
 
-        entity.Comp.MutationLevel += args.Effect.Amount * entity.Comp.MutationMod;
+        entity.Comp.Health += args.Effect.Amount;
         _plantHolder.CheckHealth(entity, entity.Comp);
     }
 }
