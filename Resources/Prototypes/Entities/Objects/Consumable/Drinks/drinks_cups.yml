@@ -363,35 +363,6 @@
 
 - type: entity
   parent: DrinkBaseCup
-  id: DrinkWaterCup
-  name: water cup
-  description: A paper water cup.
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/water_cup.rsi
-    layers:
-      - state: icon-0
-      - map: ["enum.SolutionContainerLayers.Fill"]
-        state: icon-1
-  - type: Appearance
-  - type: SolutionContainerVisuals
-    maxFillLevels: 1
-    fillBaseName: icon-
-  - type: Tag
-    tags:
-    - Trash
-    - WhitelistChameleon
-  - type: TrashOnSolutionEmpty
-    solution: drink
-  - type: Clothing
-    slots:
-    - HEAD
-    quickEquip: false
-    sprite: Clothing/Head/Hats/party_water_cup.rsi
-
-- type: entity
-  parent: DrinkBaseCup
   id: DrinkLemonLimeClownJuiceCup
   name: Smite Clown Juice cup
   description: You asked for SMITE. They gave you Clown Juice.
