@@ -1,8 +1,8 @@
 # Miscellaneous
 - type: loadoutGroup
+  parent: [ TrinketSmokeables, TrinketFolders, TrinketPins, TrinketCanes, TrinketTowels ]
   id: Trinkets
   name: loadout-group-trinkets
-  parent: [ TrinketSmokeables, TrinketFolders, TrinketPins, TrinketCanes, TrinketTowels ]
   minLimit: 0
   maxLimit: 3
   loadouts:
@@ -14,8 +14,8 @@
   - ThreeCandles
 
 - type: loadoutGroup
-  id: TrinketSmokeables
   abstract: true
+  id: TrinketSmokeables
   loadouts:
   - Lighter
   - CigPackGreen
@@ -26,16 +26,16 @@
   - CigarGold
 
 - type: loadoutGroup
-  id: TrinketFolders
   abstract: true
+  id: TrinketFolders
   loadouts:
   - BoxFolderBaseThreePapers
   - BoxFolderPlasticClipboardThreePapers
   - BoxFolderClipboardThreePapers
 
 - type: loadoutGroup
-  id: TrinketPins
   abstract: true
+  id: TrinketPins
   loadouts:
   - ClothingNeckLGBTPin
   - ClothingNeckAllyPin
@@ -57,8 +57,8 @@
   - ClothingNeckGoldAutismPin
 
 - type: loadoutGroup
-  id: TrinketCanes
   abstract: true
+  id: TrinketCanes
   loadouts:  
   - OffsetCane
   - OffsetCaneWood
@@ -68,8 +68,8 @@
   - Cane
   
 - type: loadoutGroup
-  id: TrinketTowels
   abstract: true
+  id: TrinketTowels
   loadouts:  
   - TowelColorBlack
   - TowelColorDarkBlue
