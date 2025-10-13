@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chat.Prototypes;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Inventory;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -16,7 +16,7 @@ public sealed class BeforeEmoteEvent(EntityUid source, EmotePrototype emote)
     public readonly EmotePrototype Emote = emote;
 
     /// <summary>
-    ///     The equipment that is blocking emoting. Should only be non-null if the event was canceled.
+    /// The equipment that is blocking emoting. Should only be non-null if the event was canceled.
     /// </summary>
     public EntityUid? Blocker = null;
 
