@@ -471,7 +471,7 @@ namespace Content.Server.Voting.Managers
             var webhookState = _voteWebhooks.CreateWebhookIfConfigured(options, _cfg.GetCVar(CCVars.DiscordVotekickWebhook), Loc.GetString("votekick-webhook-name"), options.Title + "\n" + Loc.GetString("votekick-webhook-description", ("initiator", initiatorName), ("target", targetSession)));
 
             // Time out the vote now that we know it will happen
-            TimeoutStandardVote(StandardVoteType.Votekick);
+            TimeoutStandardVote(StandardVoteType.Votekick, TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VotekickTimeout)));
 
             vote.OnFinished += (_, eventArgs) =>
             {
@@ -578,13 +578,9 @@ namespace Content.Server.Voting.Managers
             }
         }
 
-        private void TimeoutStandardVote(StandardVoteType type)
+        private void TimeoutStandardVote(StandardVoteType type, TimeSpan? timeoutOverride = null)
         {
-            var timeout = TimeSpan.FromSeconds(type switch
-            {
-                StandardVoteType.Votekick => _cfg.GetCVar(CCVars.VotekickTimeout),
-                _ => _cfg.GetCVar(CCVars.VoteSameTypeTimeout)
-            });
+            var timeout = timeoutOverride ?? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteSameTypeTimeout));
             _standardVoteTimeout[type] = _timing.RealTime + timeout;
             DirtyCanCallVoteAll();
         }
