@@ -1,4 +1,3 @@
-using Content.Shared.Access.Components;
 using Content.Shared.DoAfter;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -47,7 +46,19 @@ public sealed partial class LockComponent : Component
     public bool UnlockOnClick = true;
 
     /// <summary>
-    /// Whether the lock requires access validation through <see cref="AccessReaderComponent"/>
+    /// Whether or not the lock is locked when used it hand.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool LockInHand;
+
+    /// <summary>
+    /// Whether or not the lock is unlocked when used in hand.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool UnlockInHand;
+
+    /// <summary>
+    /// Whether access requirements should be checked for this lock.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool UseAccess = true;
@@ -96,6 +107,12 @@ public sealed partial class LockComponent : Component
     [DataField]
     [AutoNetworkedField]
     public TimeSpan UnlockTime;
+
+    /// <summary>
+    /// Whether this lock can be locked again after being unlocked.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool AllowRepeatedLocking = true;
 }
 
 /// <summary>

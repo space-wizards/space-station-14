@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Forensics.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Lock;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 
@@ -11,6 +12,30 @@ public sealed class FingerprintReaderSystem : EntitySystem
 {
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<FingerprintReaderComponent, FindAvailableLocksEvent>(OnFindAvailableLocks);
+        SubscribeLocalEvent<FingerprintReaderComponent, CheckUserHasLockAccessEvent>(OnCheckLockAccess);
+    }
+
+    private void OnFindAvailableLocks(Entity<FingerprintReaderComponent> ent, ref FindAvailableLocksEvent args)
+    {
+        args.FoundLocks |= LockTypes.Fingerprint;
+    }
+
+    private void OnCheckLockAccess(Entity<FingerprintReaderComponent> ent, ref CheckUserHasLockAccessEvent args)
+    {
+        // Are we looking for a fingerprint lock?
+        if (!args.FoundLocks.HasFlag(LockTypes.Fingerprint))
+            return;
+
+        // If the user has access to this lock, we pass it into the event.
+        if (IsAllowed(ent.Owner, args.User))
+            args.HasAccess |= LockTypes.Fingerprint;
+    }
 
     /// <summary>
     /// Checks if the given user has fingerprint access to the target entity.

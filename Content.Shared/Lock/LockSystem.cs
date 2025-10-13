@@ -1,5 +1,3 @@
-using Content.Shared.Access.Components;
-using Content.Shared.Access.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Construction.Components;
 using Content.Shared.DoAfter;
@@ -7,6 +5,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
@@ -16,6 +15,7 @@ using Content.Shared.Wires;
 using Content.Shared.Item.ItemToggle.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Lock;
@@ -26,7 +26,6 @@ namespace Content.Shared.Lock;
 [UsedImplicitly]
 public sealed class LockSystem : EntitySystem
 {
-    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
@@ -42,6 +41,7 @@ public sealed class LockSystem : EntitySystem
 
         SubscribeLocalEvent<LockComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<LockComponent, ActivateInWorldEvent>(OnActivated, before: [typeof(ActivatableUISystem)]);
+        SubscribeLocalEvent<LockComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<LockComponent, StorageOpenAttemptEvent>(OnStorageOpenAttempt);
         SubscribeLocalEvent<LockComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<LockComponent, GetVerbsEvent<AlternativeVerb>>(AddToggleLockVerb);
@@ -78,6 +78,24 @@ public sealed class LockSystem : EntitySystem
             TryUnlock(uid, args.User, lockComp);
         }
         else if (!lockComp.Locked && lockComp.LockOnClick)
+        {
+            args.Handled = true;
+            TryLock(uid, args.User, lockComp);
+        }
+    }
+
+    private void OnUseInHand(EntityUid uid, LockComponent lockComp, UseInHandEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        // Only attempt an unlock by default on Activate
+        if (lockComp.Locked && lockComp.UnlockInHand)
+        {
+            args.Handled = true;
+            TryUnlock(uid, args.User, lockComp);
+        }
+        else if (!lockComp.Locked && lockComp.LockInHand)
         {
             args.Handled = true;
             TryLock(uid, args.User, lockComp);
@@ -273,29 +291,48 @@ public sealed class LockSystem : EntitySystem
     /// Raises an event for other components to check whether or not
     /// the entity can be locked in its current state.
     /// </summary>
-    public bool CanToggleLock(EntityUid uid, EntityUid user, bool quiet = true)
+    public bool CanToggleLock(Entity<LockComponent?> ent, EntityUid user, bool quiet = true)
     {
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
         if (!_actionBlocker.CanComplexInteract(user))
             return false;
 
+        if (!ent.Comp.Locked && !ent.Comp.AllowRepeatedLocking)
+            return false;
+
         var ev = new LockToggleAttemptEvent(user, quiet);
-        RaiseLocalEvent(uid, ref ev, true);
+        RaiseLocalEvent(ent, ref ev, true);
         if (ev.Cancelled)
             return false;
 
-        var userEv = new UserLockToggleAttemptEvent(uid, quiet);
+        var userEv = new UserLockToggleAttemptEvent(ent, quiet);
         RaiseLocalEvent(user, ref userEv, true);
         return !userEv.Cancelled;
     }
 
-    // TODO: this should be a helper on AccessReaderSystem since so many systems copy paste it
-    private bool HasUserAccess(EntityUid uid, EntityUid user, AccessReaderComponent? reader = null, bool quiet = true)
+    /// <summary>
+    /// Checks whether the user has access to locks on an entity.
+    /// </summary>
+    /// <param name="uid">The entity we check for locks.</param>
+    /// <param name="user">The user we check for access.</param>
+    /// <param name="quiet">Whether to display a popup if user has no access.</param>
+    /// <returns>True if the user has access, otherwise False.</returns>
+    [PublicAPI]
+    public bool HasUserAccess(EntityUid uid, EntityUid user, bool quiet = true)
     {
-        // Not having an AccessComponent means you get free access. woo!
-        if (!Resolve(uid, ref reader, false))
+        var lockEv = new FindAvailableLocksEvent(user);
+        RaiseLocalEvent(uid, ref lockEv);
+
+        // If no locks are found, you have access. Woo!
+        if (lockEv.FoundLocks == LockTypes.None)
             return true;
 
-        if (_accessReader.IsAllowed(user, uid, reader))
+        var accessEv = new CheckUserHasLockAccessEvent(user, lockEv.FoundLocks);
+        RaiseLocalEvent(uid, ref accessEv);
+
+        if (accessEv.HasAccess == lockEv.FoundLocks)
             return true;
 
         if (!quiet)
@@ -465,4 +502,30 @@ public sealed class LockSystem : EntitySystem
                 args.User);
         }
     }
+}
+
+/// <summary>
+/// Raised on an entity to check whether it has any locks that can prevent it from being opened.
+/// </summary>
+/// <param name="User">The person attempting to open the entity.</param>
+/// <param name="FoundLocks">What locks were found. This should not be set when raising the event.</param>
+[ByRefEvent]
+public record struct FindAvailableLocksEvent(EntityUid User, LockTypes FoundLocks = LockTypes.None);
+
+/// <summary>
+/// Raised on an entity to check if the user has access (ID, Fingerprint, etc) to said entity.
+/// </summary>
+/// <param name="User">The user we are checking.</param>
+/// <param name="FoundLocks">What locks we are attempting to verify access for.</param>
+/// <param name="HasAccess">Which locks the user has access to. This should not be set when raising the event.</param>
+[ByRefEvent]
+public record struct CheckUserHasLockAccessEvent(EntityUid User, LockTypes FoundLocks = LockTypes.None, LockTypes HasAccess = LockTypes.None);
+
+[Flags]
+[Serializable, NetSerializable]
+public enum LockTypes : byte
+{
+    None,
+    Access,
+    Fingerprint,
 }
