@@ -234,7 +234,7 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
                 foreach (var protoId in groupProto.Loadouts)
                 {
                     // Reached the limit, time to stop
-                    if (loadouts.Count >= groupProto.MinLimit && loadouts.Count >= groupProto.MinDefault)
+                    if (loadouts.Count >= Math.Max(groupProto.MinLimit, groupProto.MinDefault))
                         break;
 
                     if (!protoManager.TryIndex(protoId, out var loadoutProto))
