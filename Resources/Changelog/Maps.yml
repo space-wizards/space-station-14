@@ -731,4 +731,58 @@
   id: 88
   time: '2025-09-25T21:36:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40546
+- author: Absotively
+  changes:
+  - message: Updated Elkridge's burn chambers for safer delta pressure handling
+    type: Tweak
+  id: 89
+  time: '2025-09-30T03:45:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40590
+- author: ToastEnjoyer
+  changes:
+  - message: On Marathon, added various improvements to engineering, parts of maints,
+      and some service improvements.
+    type: Tweak
+  - message: On Marathon, the security front has been fixed so that power is there
+      roundstart.
+    type: Fix
+  id: 90
+  time: '2025-10-07T02:21:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40725
+- author: Vortebo
+  changes:
+  - message: On Relic, some small changes to address unintended gameplay issues and
+      further increase historical accuracy.
+    type: Tweak
+  id: 91
+  time: '2025-10-08T16:59:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40537
+- author: ToastEnjoyer
+  changes:
+  - message: On box, the wardens enforcer has been removed from their office.
+    type: Remove
+  id: 92
+  time: '2025-10-08T20:41:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40785
+- author: ToastEnjoyer
+  changes:
+  - message: On Plasma, added more nitrogen canisters to the maintenance hallways
+    type: Add
+  id: 93
+  time: '2025-10-10T01:11:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40794
+- author: opl
+  changes:
+  - message: On Packed, prisoners can now use the Megaseed in brig.
+    type: Fix
+  id: 94
+  time: '2025-10-10T20:33:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40821
+- author: CoconutThunder
+  changes:
+  - message: Reduced frequency of syndicate shark attacks
+    type: Tweak
+  id: 95
+  time: '2025-10-12T18:45:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40855
 Order: 1
