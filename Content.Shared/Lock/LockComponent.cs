@@ -64,6 +64,13 @@ public sealed partial class LockComponent : Component
     public bool UseAccess = true;
 
     /// <summary>
+    /// What locks should be checked to determine if an entity has access.
+    /// If null, all possible locks are checked.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public LockTypes? CheckedLocks;
+
+    /// <summary>
     /// The sound played when unlocked.
     /// </summary>
     [DataField("unlockingSound"), ViewVariables(VVAccess.ReadWrite)]

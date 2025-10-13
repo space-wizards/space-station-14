@@ -41,7 +41,7 @@ public sealed class LockSystem : EntitySystem
 
         SubscribeLocalEvent<LockComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<LockComponent, ActivateInWorldEvent>(OnActivated, before: [typeof(ActivatableUISystem)]);
-        SubscribeLocalEvent<LockComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<LockComponent, UseInHandEvent>(OnUseInHand, before: [typeof(ActivatableUISystem)]);
         SubscribeLocalEvent<LockComponent, StorageOpenAttemptEvent>(OnStorageOpenAttempt);
         SubscribeLocalEvent<LockComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<LockComponent, GetVerbsEvent<AlternativeVerb>>(AddToggleLockVerb);
@@ -143,7 +143,7 @@ public sealed class LockSystem : EntitySystem
         if (!CanToggleLock(uid, user, quiet: false))
             return false;
 
-        if (lockComp.UseAccess && !HasUserAccess(uid, user, quiet: false))
+        if (lockComp.UseAccess && !HasUserAccess(uid, user, quiet: false, lockComp.CheckedLocks))
             return false;
 
         if (!skipDoAfter && lockComp.LockTime != TimeSpan.Zero)
@@ -242,7 +242,7 @@ public sealed class LockSystem : EntitySystem
         if (!CanToggleLock(uid, user, quiet: false))
             return false;
 
-        if (lockComp.UseAccess && !HasUserAccess(uid, user, quiet: false))
+        if (lockComp.UseAccess && !HasUserAccess(uid, user, quiet: false, lockComp.CheckedLocks))
             return false;
 
         if (!skipDoAfter && lockComp.UnlockTime != TimeSpan.Zero)
@@ -315,28 +315,37 @@ public sealed class LockSystem : EntitySystem
     /// <summary>
     /// Checks whether the user has access to locks on an entity.
     /// </summary>
-    /// <param name="uid">The entity we check for locks.</param>
+    /// <param name="ent">The entity we check for locks.</param>
     /// <param name="user">The user we check for access.</param>
     /// <param name="quiet">Whether to display a popup if user has no access.</param>
+    /// <param name="checkedLocks">What locks we're looking for, if null, all available locks will be used.</param>
     /// <returns>True if the user has access, otherwise False.</returns>
     [PublicAPI]
-    public bool HasUserAccess(EntityUid uid, EntityUid user, bool quiet = true)
+    public bool HasUserAccess(Entity<LockComponent?> ent, EntityUid user, bool quiet = true, LockTypes? checkedLocks = null)
     {
-        var lockEv = new FindAvailableLocksEvent(user);
-        RaiseLocalEvent(uid, ref lockEv);
-
-        // If no locks are found, you have access. Woo!
-        if (lockEv.FoundLocks == LockTypes.None)
+        // Entity literally has no lock. Congratulations.
+        if (!Resolve(ent, ref ent.Comp, false))
             return true;
 
-        var accessEv = new CheckUserHasLockAccessEvent(user, lockEv.FoundLocks);
-        RaiseLocalEvent(uid, ref accessEv);
+        if (checkedLocks is null)
+        {
+            var lockEv = new FindAvailableLocksEvent(user);
+            RaiseLocalEvent(ent, ref lockEv);
+            checkedLocks = lockEv.FoundLocks;
+        }
 
-        if (accessEv.HasAccess == lockEv.FoundLocks)
+        // If no locks are found, you have access. Woo!
+        if (checkedLocks == LockTypes.None)
+            return true;
+
+        var accessEv = new CheckUserHasLockAccessEvent(user, checkedLocks.Value);
+        RaiseLocalEvent(ent, ref accessEv);
+
+        if (accessEv.HasAccess == checkedLocks)
             return true;
 
         if (!quiet)
-            _sharedPopupSystem.PopupClient(Loc.GetString("lock-comp-has-user-access-fail"), uid, user);
+            _sharedPopupSystem.PopupClient(Loc.GetString("lock-comp-has-user-access-fail"), ent, user);
         return false;
     }
 
@@ -528,4 +537,5 @@ public enum LockTypes : byte
     None,
     Access,
     Fingerprint,
+    All = Access | Fingerprint,
 }
