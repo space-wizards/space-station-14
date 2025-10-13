@@ -143,7 +143,7 @@ public sealed class LockSystem : EntitySystem
         if (!CanToggleLock(uid, user, quiet: false))
             return false;
 
-        if (lockComp.UseAccess && !HasUserAccess(uid, user, quiet: false, lockComp.CheckedLocks))
+        if (lockComp.UseAccess && !HasUserAccess(uid, user, false, lockComp.CheckedLocks, lockComp.CheckForAnyReaders))
             return false;
 
         if (!skipDoAfter && lockComp.LockTime != TimeSpan.Zero)
@@ -242,7 +242,7 @@ public sealed class LockSystem : EntitySystem
         if (!CanToggleLock(uid, user, quiet: false))
             return false;
 
-        if (lockComp.UseAccess && !HasUserAccess(uid, user, quiet: false, lockComp.CheckedLocks))
+        if (lockComp.UseAccess && !HasUserAccess(uid, user, false, lockComp.CheckedLocks, lockComp.CheckForAnyReaders))
             return false;
 
         if (!skipDoAfter && lockComp.UnlockTime != TimeSpan.Zero)
@@ -319,9 +319,10 @@ public sealed class LockSystem : EntitySystem
     /// <param name="user">The user we check for access.</param>
     /// <param name="quiet">Whether to display a popup if user has no access.</param>
     /// <param name="checkedLocks">What locks we're looking for, if null, all available locks will be used.</param>
+    /// <param name="checkForAny">Whether the user needs to access ANY of the readers, instead of all of them.</param>
     /// <returns>True if the user has access, otherwise False.</returns>
     [PublicAPI]
-    public bool HasUserAccess(Entity<LockComponent?> ent, EntityUid user, bool quiet = true, LockTypes? checkedLocks = null)
+    public bool HasUserAccess(Entity<LockComponent?> ent, EntityUid user, bool quiet = true, LockTypes? checkedLocks = null, bool checkForAny = false)
     {
         // Entity literally has no lock. Congratulations.
         if (!Resolve(ent, ref ent.Comp, false))
@@ -331,7 +332,7 @@ public sealed class LockSystem : EntitySystem
         {
             var lockEv = new FindAvailableLocksEvent(user);
             RaiseLocalEvent(ent, ref lockEv);
-            checkedLocks = lockEv.FoundLocks;
+            checkedLocks = lockEv.FoundReaders;
         }
 
         // If no locks are found, you have access. Woo!
@@ -340,6 +341,10 @@ public sealed class LockSystem : EntitySystem
 
         var accessEv = new CheckUserHasLockAccessEvent(user, checkedLocks.Value);
         RaiseLocalEvent(ent, ref accessEv);
+
+        // If we check for any, as long as user has access to any of the locks we grant access.
+        if (accessEv.HasAccess != LockTypes.None && checkForAny)
+            return true;
 
         if (accessEv.HasAccess == checkedLocks)
             return true;
@@ -514,21 +519,21 @@ public sealed class LockSystem : EntitySystem
 }
 
 /// <summary>
-/// Raised on an entity to check whether it has any locks that can prevent it from being opened.
+/// Raised on an entity to check whether it has any readers that can prevent it from being opened.
 /// </summary>
 /// <param name="User">The person attempting to open the entity.</param>
-/// <param name="FoundLocks">What locks were found. This should not be set when raising the event.</param>
+/// <param name="FoundReaders">What readers were found. This should not be set when raising the event.</param>
 [ByRefEvent]
-public record struct FindAvailableLocksEvent(EntityUid User, LockTypes FoundLocks = LockTypes.None);
+public record struct FindAvailableLocksEvent(EntityUid User, LockTypes FoundReaders = LockTypes.None);
 
 /// <summary>
 /// Raised on an entity to check if the user has access (ID, Fingerprint, etc) to said entity.
 /// </summary>
 /// <param name="User">The user we are checking.</param>
-/// <param name="FoundLocks">What locks we are attempting to verify access for.</param>
-/// <param name="HasAccess">Which locks the user has access to. This should not be set when raising the event.</param>
+/// <param name="FoundReaders">What readers we are attempting to verify access for.</param>
+/// <param name="HasAccess">Which readers the user has access to. This should not be set when raising the event.</param>
 [ByRefEvent]
-public record struct CheckUserHasLockAccessEvent(EntityUid User, LockTypes FoundLocks = LockTypes.None, LockTypes HasAccess = LockTypes.None);
+public record struct CheckUserHasLockAccessEvent(EntityUid User, LockTypes FoundReaders = LockTypes.None, LockTypes HasAccess = LockTypes.None);
 
 [Flags]
 [Serializable, NetSerializable]

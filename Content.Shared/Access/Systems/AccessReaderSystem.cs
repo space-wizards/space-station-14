@@ -174,13 +174,13 @@ public sealed class AccessReaderSystem : EntitySystem
 
     private void OnFindAvailableLocks(Entity<AccessReaderComponent> ent, ref FindAvailableLocksEvent args)
     {
-        args.FoundLocks |= LockTypes.Access;
+        args.FoundReaders |= LockTypes.Access;
     }
 
     private void OnCheckLockAccess(Entity<AccessReaderComponent> ent, ref CheckUserHasLockAccessEvent args)
     {
         // Are we looking for an access lock?
-        if (!args.FoundLocks.HasFlag(LockTypes.Access))
+        if (!args.FoundReaders.HasFlag(LockTypes.Access))
             return;
 
         // If the user has access to this lock, we pass it into the event.

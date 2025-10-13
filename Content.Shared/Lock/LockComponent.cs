@@ -64,11 +64,18 @@ public sealed partial class LockComponent : Component
     public bool UseAccess = true;
 
     /// <summary>
-    /// What locks should be checked to determine if an entity has access.
-    /// If null, all possible locks are checked.
+    /// What readers should be checked to determine if an entity has access.
+    /// If null, all possible readers are checked.
     /// </summary>
     [DataField, AutoNetworkedField]
     public LockTypes? CheckedLocks;
+
+    /// <summary>
+    /// Whether any reader needs to be accessed to operate this lock.
+    /// By default, all readers need to be able to be accessed.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool CheckForAnyReaders;
 
     /// <summary>
     /// The sound played when unlocked.

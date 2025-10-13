@@ -23,13 +23,13 @@ public sealed class FingerprintReaderSystem : EntitySystem
 
     private void OnFindAvailableLocks(Entity<FingerprintReaderComponent> ent, ref FindAvailableLocksEvent args)
     {
-        args.FoundLocks |= LockTypes.Fingerprint;
+        args.FoundReaders |= LockTypes.Fingerprint;
     }
 
     private void OnCheckLockAccess(Entity<FingerprintReaderComponent> ent, ref CheckUserHasLockAccessEvent args)
     {
         // Are we looking for a fingerprint lock?
-        if (!args.FoundLocks.HasFlag(LockTypes.Fingerprint))
+        if (!args.FoundReaders.HasFlag(LockTypes.Fingerprint))
             return;
 
         // If the user has access to this lock, we pass it into the event.
