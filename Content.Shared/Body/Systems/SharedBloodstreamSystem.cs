@@ -324,6 +324,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         // Fill blood solution with BLOOD
         // The DNA string might not be initialized yet, but the reagent data gets updated in the GenerateDnaEvent subscription
         bloodSolution.AddReagent(new ReagentId(entity.Comp.BloodReagent, GetEntityBloodData(entity.Owner)), entity.Comp.BloodMaxVolume - bloodSolution.Volume);
+        Dirty(entity, entity.Comp);
     }
 
     private void OnDnaGenerated(Entity<BloodstreamComponent> entity, ref GenerateDnaEvent args)
@@ -336,6 +337,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
                 reagentData.RemoveAll(x => x is DnaData);
                 reagentData.AddRange(GetEntityBloodData(entity.Owner));
             }
+            Dirty(entity, entity.Comp);
         }
         else
             Log.Error("Unable to set bloodstream DNA, solution entity could not be resolved");
