@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
@@ -23,6 +24,7 @@ public sealed class DamageableSystem : EntitySystem
     [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly SharedChemistryGuideDataSystem _chemistryGuideData = default!;
+    [Dependency] private readonly SharedExplosionSystem _explosion = default!;
 
     private EntityQuery<AppearanceComponent> _appearanceQuery;
     private EntityQuery<DamageableComponent> _damageableQuery;
@@ -59,6 +61,7 @@ public sealed class DamageableSystem : EntitySystem
             {
                 UniversalAllDamageModifier = value;
                 _chemistryGuideData.ReloadAllReagentPrototypes();
+                _explosion.ReloadMap();
             },
             true
         );
@@ -119,7 +122,11 @@ public sealed class DamageableSystem : EntitySystem
         Subs.CVar(
             _config,
             CCVars.PlaytestExplosionDamageModifier,
-            value => UniversalExplosionDamageModifier = value,
+            value =>
+            {
+                UniversalExplosionDamageModifier = value;
+                _explosion.ReloadMap();
+            },
             true
         );
         Subs.CVar(
@@ -149,7 +156,7 @@ public sealed class DamageableSystem : EntitySystem
     {
         if (
             ent.Comp.DamageContainerID is null ||
-            !_prototypeManager.TryIndex(ent.Comp.DamageContainerID, out var damageContainerPrototype)
+            !_prototypeManager.Resolve(ent.Comp.DamageContainerID, out var damageContainerPrototype)
         )
         {
             // No DamageContainerPrototype was given. So we will allow the container to support all damage types
@@ -251,7 +258,8 @@ public sealed class DamageableSystem : EntitySystem
         DamageSpecifier damage,
         bool ignoreResistances = false,
         bool interruptsDoAfters = true,
-        EntityUid? origin = null
+        EntityUid? origin = null,
+        bool ignoreGlobalModifiers = false
     )
     {
         if (damage.Empty)
@@ -268,15 +276,14 @@ public sealed class DamageableSystem : EntitySystem
         {
             if (
                 ent.Comp.DamageModifierSetId != null &&
-                _prototypeManager.TryIndex(ent.Comp.DamageModifierSetId,
-                    out var modifierSet)
+                _prototypeManager.Resolve(ent.Comp.DamageModifierSetId, out var modifierSet)
             )
             {
-                // TODO DAMAGE PERFORMANCE
-                // use a local private field instead of creating a new dictionary here..
                 damage = DamageSpecifier.ApplyModifierSet(damage, modifierSet);
             }
 
+            // TODO DAMAGE
+            // byref struct event.
             var ev = new DamageModifyEvent(damage, origin);
             RaiseLocalEvent(ent, ev);
             damage = ev.Damage;
@@ -285,11 +292,9 @@ public sealed class DamageableSystem : EntitySystem
                 return false;
         }
 
-        damage = ApplyUniversalAllModifiers(damage);
+        if (!ignoreGlobalModifiers)
+            damage = ApplyUniversalAllModifiers(damage);
 
-        // TODO DAMAGE PERFORMANCE
-        // Consider using a local private field instead of creating a new dictionary here.
-        // Would need to check that nothing ever tries to cache the delta.
         var delta = new DamageSpecifier();
         delta.DamageDict.EnsureCapacity(damage.DamageDict.Count);
 
@@ -421,6 +426,8 @@ public sealed class DamageableSystem : EntitySystem
             );
         }
 
+        // TODO DAMAGE
+        // byref struct event.
         RaiseLocalEvent(ent, new DamageChangedEvent(ent.Comp, damageDelta, interruptsDoAfters, origin));
     }
 
@@ -434,6 +441,9 @@ public sealed class DamageableSystem : EntitySystem
                 ent.Comp.DamageModifierSetId,
                 ent.Comp.HealthBarThreshold
             );
+            // TODO BODY SYSTEM pass damage onto body system
+            // BOBBY WHEN? 😭
+            // BOBBY SOON 🫡
 
             return;
         }

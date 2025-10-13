@@ -114,6 +114,7 @@
       - id: ToySkeleton
       - id: Basketball
       - id: Football
+      - id: TennisBall
       - id: BalloonNT
       - id: BalloonCorgi
       - id: MysteryFigureBox
@@ -328,6 +329,7 @@
       weight: 95
       children:
       - id: Machete
+      - id: Claymore
       - id: BaseBallBat
       - id: CombatKnife
       - id: Spear
