@@ -15,8 +15,7 @@ namespace Content.Server.GameTicking.Commands
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IAdminManager _admin
-        Manager = default!;
+        [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
         [Dependency] private readonly StationJobsSystem _stationJobsSystem = default!;
