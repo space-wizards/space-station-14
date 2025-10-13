@@ -51,8 +51,8 @@ public abstract class SharedHailerSystem : EntitySystem
         SubscribeLocalEvent<HailerComponent, ClothingGotEquippedEvent>(OnEquip);
         SubscribeLocalEvent<HailerComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<HailerComponent, ClothingGotUnequippedEvent>(OnUnequip);
-        //SubscribeLocalEvent<HailerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
-        //SubscribeLocalEvent<HailerComponent, GotEmaggedEvent>(OnEmagging);
+        SubscribeLocalEvent<HailerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
+        SubscribeLocalEvent<HailerComponent, GotEmaggedEvent>(OnEmagging);
         SubscribeLocalEvent<HailerComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<HailerComponent, SecHailerToolDoAfterEvent>(OnToolDoAfter);
 
@@ -234,25 +234,24 @@ public abstract class SharedHailerSystem : EntitySystem
 
     protected virtual void IncreaseAggressionLevel(Entity<HailerComponent> ent)
     {
-       
     }
 
-    //private void OnEmagging(Entity<HailerComponent> ent, ref GotEmaggedEvent args)
-    //{
-    //    if (args.Handled || HasComp<EmaggedComponent>(ent))
-    //        return;
+    private void OnEmagging(Entity<HailerComponent> ent, ref GotEmaggedEvent args)
+    {
+        if (args.Handled || HasComp<EmaggedComponent>(ent))
+            return;
 
-    //    if (ent.Comp.User.HasValue && ent.Comp.User != args.UserUid)
-    //        return;
+        if (ent.Comp.User.HasValue && ent.Comp.User != args.UserUid)
+            return;
 
-    //    _popup.PopupEntity(Loc.GetString("sec-gas-mask-emagged"), ent.Owner);
+        _popup.PopupEntity(Loc.GetString("sechail-gas-mask-emagged"), ent.Owner);
 
-    //    args.Type = EmagType.Interaction;
+        args.Type = EmagType.Interaction;
 
-    //    Dirty(ent);
-    //    args.Handled = true;
+        Dirty(ent);
+        args.Handled = true;
 
-    //}
+    }
 
     private void OnExamine(Entity<HailerComponent> ent, ref ExaminedEvent args)
     {
@@ -264,110 +263,44 @@ public abstract class SharedHailerSystem : EntitySystem
             args.PushMarkup(Loc.GetString($"sechail-gas-mask-examined", ("level", ent.Comp.CurrentHailLevel.Name)));
     }
 
-    //private void OnGetVerbs(Entity<HailerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
-    //{
-    //    //Cooldown to prevent spamming
-    //    //Probably should put a cooldown effect on the mask to show the player, but no idea how to do that !
-    //    if (_gameTiming.CurTime < ent.Comp.TimeVerbReady)
-    //        return;
+    private void OnGetVerbs(Entity<HailerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        //Cooldown to prevent spamming
+        if (_gameTiming.CurTime < ent.Comp.TimeVerbReady)
+            return;
 
-    //    if (!args.CanAccess || !args.CanInteract || ent.Comp.User != args.User)
-    //        return;
+        if (!args.CanAccess || !args.CanInteract || ent.Comp.User != args.User)
+            return;
 
-    //    //If ERT, they don't switch aggression level
-    //    if (ent.Comp.IsERT)
-    //        return;
+        if (ent.Comp.HailLevels.Count <= 1)
+            return;
 
-    //    var user = args.User;
+        var user = args.User;
 
-    //    args.Verbs.Add(new AlternativeVerb()
-    //    {
-    //        Text = Loc.GetString("sec-gas-mask-verb"),
-    //        Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
-    //        Act = () =>
-    //        {
-    //            UseVerbSwitchAggression(ent, user);
-    //        }
-    //    });
-    //}
+        args.Verbs.Add(new AlternativeVerb()
+        {
+            Text = Loc.GetString("sechail-gas-mask-verb"),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
+            Act = () =>
+            {
+                UseVerbSwitchAggression(ent, user);
+            }
+        });
+    }
 
-    //private void UseVerbSwitchAggression(Entity<HailerComponent> ent, EntityUid userActed)
-    //{
-    //    ent.Comp.TimeVerbReady = _gameTiming.CurTime + ent.Comp.VerbCooldown;
+    private void UseVerbSwitchAggression(Entity<HailerComponent> ent, EntityUid userActed)
+    {
+        ent.Comp.TimeVerbReady = _gameTiming.CurTime + ent.Comp.VerbCooldown;
 
-    //    if (!_access.IsAllowed(userActed, ent.Owner))
-    //    {
-    //        _sharedAudio.PlayPvs(ent.Comp.SettingError, ent.Owner, AudioParams.Default.WithVariation(0.15f));
-    //        _popup.PopupEntity(Loc.GetString("sec-gas-mask-wrong_access"), userActed);
-    //        return;
-    //    }
+        if (!_access.IsAllowed(userActed, ent.Owner))
+        {
+            _sharedAudio.PlayPvs(ent.Comp.SettingError, ent.Owner, AudioParams.Default.WithVariation(0.15f));
+            _popup.PopupEntity(Loc.GetString("sechail-gas-mask-wrong_access"), userActed);
+            return;
+        }
 
-    //    _sharedAudio.PlayPvs(ent.Comp.SettingBeep, ent.Owner, AudioParams.Default.WithVolume(0.5f).WithVariation(0.15f));
-    //    IncreaseAggressionLevel(ent);
-    //    Dirty(ent);
-    //}
-
-    ///// <summary>
-    ///// Play the compliance voice line  of the hailer
-    ///// </summary>
-    ///// <param name="ent"></param>
-    ///// <returns>Index of the chosen line from the SoundCollection</returns>
-    //protected int PlayVoiceLineSound(Entity<HailerComponent> ent)
-    //{
-    //    //Move to shared for predictions purposes. Is this good ?
-    //    var (uid, comp) = ent;
-
-    //    SoundSpecifier currentSpecifier;
-    //    if (comp.IsERT)
-    //        currentSpecifier = comp.ERTAggressionSounds;
-    //    else if (HasComp<EmaggedComponent>(ent))
-    //        currentSpecifier = ent.Comp.EmagAggressionSounds;
-    //    else
-    //    {
-    //        currentSpecifier = comp.AggresionLevel switch
-    //        {
-    //            AggresionState.Medium => comp.MediumAggressionSounds,
-    //            AggresionState.High => comp.HighAggressionSounds,
-    //            _ => comp.LowAggressionSounds,
-    //        };
-    //    }
-    //    = new SoundCollectionSpecifier("Screwdriver");
-    //    var resolver = _sharedAudio.ResolveSound(currentSpecifier);
-    //    if (resolver is not ResolvedCollectionSpecifier collectionResolver)
-    //        return -1;
-
-    //    //Replace voice line
-    //    if (comp.IsHOS && comp.AggresionLevel == AggresionState.High && collectionResolver.Index == comp.SecHailHighIndexForHOS) // MAGIC NUMBER !!!
-    //    {
-    //        //There is only one sound replacement at the moment, no need to check indexes
-    //        resolver = (ResolvedCollectionSpecifier)_sharedAudio.ResolveSound(comp.HOSReplaceSounds);
-    //    }
-
-    //    _sharedAudio.PlayPvs(resolver, ent.Owner, audioParams: new AudioParams().WithVolume(-3f));
-
-    //    return collectionResolver.Index;
-    //}
-
-    ///// <summary>
-    ///// Get the locale string format of the index given based on the context of the hailer
-    ///// </summary>
-    ///// <param name="ent"></param>
-    ///// <param name="index"></param>
-    ///// <returns></returns>
-    //protected string GetLineFormat(Entity<HailerComponent> ent, int index)
-    //{
-    //    string finalLine = String.Empty;
-    //    if (HasComp<EmaggedComponent>(ent))
-    //        finalLine = $"hail-emag-{index}";
-    //    else if (ent.Comp.IsERT)
-    //        finalLine = $"hail-ERT-{index}";
-    //    else
-    //        finalLine = $"hail-{ent.Comp.AggresionLevel.ToString().ToLower()}-{index}";
-
-    //    //In case of replacement for HOS
-    //    if (ent.Comp.IsHOS && ent.Comp.ReplaceVoicelinesLocalizeForHOS.ContainsKey(finalLine))
-    //        finalLine = ent.Comp.ReplaceVoicelinesLocalizeForHOS[finalLine];
-
-    //    return finalLine;
-    //}
+        _sharedAudio.PlayPvs(ent.Comp.SettingBeep, ent.Owner, AudioParams.Default.WithVolume(0.5f).WithVariation(0.15f));
+        IncreaseAggressionLevel(ent);
+        Dirty(ent);
+    }
 }
