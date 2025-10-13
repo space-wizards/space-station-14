@@ -1,8 +1,8 @@
-using Content.Server.Speech.Components;
-using Content.Shared.Emoting;
+using Content.Shared.Chat;
 using Content.Shared.Inventory;
+using Content.Shared.Speech.Components;
 
-namespace Content.Server.Speech.EntitySystems;
+namespace Content.Shared.Speech.EntitySystems;
 
 public sealed class EmoteBlockerSystem : EntitySystem
 {
