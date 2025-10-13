@@ -34,7 +34,7 @@ public sealed class SpeakOnTriggerSystem : EntitySystem
             message = Loc.GetString(ent.Comp.Text);
         else
         {
-            if (!_prototypeManager.TryIndex(ent.Comp.Pack, out var messagePack))
+            if (!_prototypeManager.Resolve(ent.Comp.Pack, out var messagePack))
                 return;
             message = Loc.GetString(_random.Pick(messagePack.Values));
         }
