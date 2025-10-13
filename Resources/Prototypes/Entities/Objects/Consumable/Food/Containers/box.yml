@@ -354,7 +354,7 @@
   parent: BoxCardboard
   id: FoodBoxDonkpocket
   name: box of donk-pockets
-  description: Instructions: Heat in microwave. Product will cool if not eaten within seven minutes.
+  description: 'Instructions: Heat in microwave. Product will cool if not eaten within seven minutes.'
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
