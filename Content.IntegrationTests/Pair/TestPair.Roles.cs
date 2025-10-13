@@ -1,9 +1,13 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameTicking;
 using Content.Server.Preferences.Managers;
+using Content.Shared.GameTicking;
+using Content.Shared.Mind;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Roles.Jobs;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
@@ -81,5 +85,26 @@ public sealed partial class TestPair
         var newProfile = profile.WithJobPriorities(dictionary);
         _modifiedProfiles.Add(user);
         await Server.WaitPost(() => prefMan.SetProfile(user, 0, newProfile).Wait());
+    }
+
+    public void AssertJob(ProtoId<JobPrototype> job, NetUserId? user = null, bool isAntag = false)
+    {
+        var jobSys = Server.System<SharedJobSystem>();
+        var mindSys = Server.System<SharedMindSystem>();
+        var roleSys = Server.System<SharedRoleSystem>();
+        var ticker = Server.System<GameTicker>();
+
+        user ??= Client.User!.Value;
+
+        Assert.That(ticker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
+        Assert.That(ticker.PlayerGameStatuses[user.Value], Is.EqualTo(PlayerGameStatus.JoinedGame));
+
+        var uid = Server.PlayerMan.SessionsDict.GetValueOrDefault(user.Value)?.AttachedEntity;
+        Assert.That(Server.EntMan.EntityExists(uid));
+        var mind = mindSys.GetMind(uid!.Value);
+        Assert.That(Server.EntMan.EntityExists(mind));
+        Assert.That(jobSys.MindTryGetJobId(mind, out var actualJob));
+        Assert.That(actualJob, Is.EqualTo(job));
+        Assert.That(roleSys.MindIsAntagonist(mind), Is.EqualTo(isAntag));
     }
 }
