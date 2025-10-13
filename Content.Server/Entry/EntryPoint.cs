@@ -2,6 +2,7 @@ using Content.Server.Acz;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
+using Content.Server.Administration.Managers.Bwoink;
 using Content.Server.Afk;
 using Content.Server.Chat.Managers;
 using Content.Server.Connection;
@@ -50,6 +51,7 @@ namespace Content.Server.Entry
         private IServerDbManager? _dbManager;
         private IWatchlistWebhookManager _watchlistWebhookManager = default!;
         private IConnectionManager? _connectionManager;
+        private ServerBwoinkManager _serverBwoink = default!;
 
         /// <inheritdoc />
         public override void Init()
@@ -98,6 +100,7 @@ namespace Content.Server.Entry
                 _sysMan = IoCManager.Resolve<IEntitySystemManager>();
                 _dbManager = IoCManager.Resolve<IServerDbManager>();
                 _watchlistWebhookManager = IoCManager.Resolve<IWatchlistWebhookManager>();
+                _serverBwoink = IoCManager.Resolve<ServerBwoinkManager>();
 
                 logManager.GetSawmill("Storage").Level = LogLevel.Info;
                 logManager.GetSawmill("db.ef").Level = LogLevel.Info;
@@ -159,6 +162,7 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<IConnectionManager>().PostInit();
                 IoCManager.Resolve<MultiServerKickManager>().Initialize();
                 IoCManager.Resolve<CVarControlManager>().Initialize();
+                _serverBwoink.Initialize();
             }
         }
 
@@ -192,6 +196,7 @@ namespace Content.Server.Entry
 
             IoCManager.Resolve<DiscordLink>().Shutdown();
             IoCManager.Resolve<DiscordChatLink>().Shutdown();
+            _serverBwoink.Shutdown();
         }
 
         private static void LoadConfigPresets(IConfigurationManager cfg, IResourceManager res, ISawmill sawmill)

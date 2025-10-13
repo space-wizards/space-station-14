@@ -1,6 +1,7 @@
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
+using Content.Server.Administration.Managers.Bwoink;
 using Content.Server.Administration.Notes;
 using Content.Server.Afk;
 using Content.Server.Chat.Managers;
@@ -76,6 +77,7 @@ namespace Content.Server.IoC
             IoCManager.Register<ConnectionManager>();
             IoCManager.Register<MultiServerKickManager>();
             IoCManager.Register<CVarControlManager>();
+            IoCManager.Register<ServerBwoinkManager>();
 
             IoCManager.Register<DiscordLink>();
             IoCManager.Register<DiscordChatLink>();
