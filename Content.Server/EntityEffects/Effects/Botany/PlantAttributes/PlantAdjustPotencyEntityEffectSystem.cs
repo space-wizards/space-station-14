@@ -13,7 +13,9 @@ public sealed partial class PlantAdjustPotencyEntityEffectSystem : EntityEffectS
         if (entity.Comp.Seed == null || entity.Comp.Dead)
             return;
 
-        _plantHolder.EnsureUniqueSeed(entity, entity.Comp);
-        entity.Comp.Seed.Potency = Math.Max(entity.Comp.Seed.Potency + args.Effect.Amount, 1);
+        if (!TryComp<PlantTraitsComponent>(entity, out var traits))
+            return;
+
+        traits.Potency = Math.Max(traits.Potency + args.Effect.Amount, 1);
     }
 }

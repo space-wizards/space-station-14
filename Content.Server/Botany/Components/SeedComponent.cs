@@ -12,7 +12,7 @@ public sealed partial class SeedComponent : SharedSeedComponent
     ///     null, will instead attempt to get data from a seed prototype, if one is defined. See <see
     ///     cref="SeedId"/>.
     /// </summary>
-    [DataField("seed")]
+    [DataField]
     public SeedData? Seed;
 
     /// <summary>
@@ -24,6 +24,6 @@ public sealed partial class SeedComponent : SharedSeedComponent
     /// <summary>
     ///     Name of a base seed prototype that is used if <see cref="Seed"/> is null.
     /// </summary>
-    [DataField("seedId", customTypeSerializer: typeof(PrototypeIdSerializer<SeedPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SeedPrototype>))]
     public string? SeedId;
 }

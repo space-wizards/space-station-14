@@ -1,5 +1,5 @@
-using Content.Server.Botany;
 using Content.Server.Botany.Components;
+using Content.Server.Botany.Systems;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects.Botany;
 
@@ -12,13 +12,14 @@ public sealed partial class PlantMutateHarvestEntityEffectSystem : EntityEffectS
         if (entity.Comp.Seed == null)
             return;
 
-        switch (entity.Comp.Seed.HarvestRepeat)
+        var harvest = EnsureComp<HarvestComponent>(entity);
+        switch (harvest.HarvestRepeat)
         {
             case HarvestType.NoRepeat:
-                entity.Comp.Seed.HarvestRepeat = HarvestType.Repeat;
+                harvest.HarvestRepeat = HarvestType.Repeat;
                 break;
             case HarvestType.Repeat:
-                entity.Comp.Seed.HarvestRepeat = HarvestType.SelfHarvest;
+                harvest.HarvestRepeat = HarvestType.SelfHarvest;
                 break;
         }
     }

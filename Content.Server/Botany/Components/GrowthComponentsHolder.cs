@@ -7,28 +7,28 @@ namespace Content.Server.Botany.Components;
 [DataDefinition]
 public sealed partial class GrowthComponentsHolder
 {
-    [DataField("plantTraits")]
+    [DataField]
     public PlantTraitsComponent? PlantTraits { get; set; }
 
-    [DataField("basicGrowth")]
+    [DataField]
     public BasicGrowthComponent? BasicGrowth { get; set; }
 
-    [DataField("toxins")]
+    [DataField]
     public ToxinsComponent? Toxins { get; set; }
 
-    [DataField("harvest")]
+    [DataField]
     public HarvestComponent? Harvest { get; set; }
 
-    [DataField("atmosphericGrowth")]
+    [DataField]
     public AtmosphericGrowthComponent? AtmosphericGrowth { get; set; }
 
-    [DataField("consumeExudeGasGrowth")]
+    [DataField]
     public ConsumeExudeGasGrowthComponent? ConsumeExudeGasGrowth { get; set; }
 
-    [DataField("weedPestGrowth")]
+    [DataField]
     public WeedPestGrowthComponent? WeedPestGrowth { get; set; }
 
-    [DataField("unviableGrowth")]
+    [DataField]
     public UnviableGrowthComponent? UnviableGrowth { get; set; }
 
     /// <summary>

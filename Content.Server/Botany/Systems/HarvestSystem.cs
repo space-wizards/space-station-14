@@ -1,13 +1,8 @@
 using Content.Server.Botany.Components;
 using Content.Server.Hands.Systems;
 using Content.Server.Popups;
-using Content.Shared.Botany;
-using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Popups;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -41,9 +36,6 @@ public sealed class HarvestSystem : EntitySystem
     [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
 
     public override void Initialize()
@@ -130,7 +122,7 @@ public sealed class HarvestSystem : EntitySystem
         var yield = traits.Yield;
         if (plantHolder.Seed?.ProductPrototypes != null)
         {
-            for (int i = 0; i < yield; i++)
+            for (var i = 0; i < yield; i++)
             {
                 foreach (var productPrototype in plantHolder.Seed.ProductPrototypes)
                 {

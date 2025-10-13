@@ -512,4 +512,3 @@ reagent-effect-guidebook-plant-mutate-consume-gasses =
         [1] Mutates
         *[other] mutate
     } the plant to consume gases between {$minValue} and {$maxValue} moles
-
