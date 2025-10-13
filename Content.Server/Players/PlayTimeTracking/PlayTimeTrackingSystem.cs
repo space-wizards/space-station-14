@@ -238,13 +238,14 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     /// <returns>Returns true if all requirements were met or there were no requirements.</returns>
     public bool IsAllowed(ICommonSession player, ProtoId<JobPrototype> job)
     {
-        if (!_cfg.GetCVar(CCVars.GameRoleTimers))
-            return true;
-
-        if (!_tracking.TryGetTrackerTimes(player, out var playTimes))
+        Dictionary<string, TimeSpan>? playTimes = null;
+        if (_cfg.GetCVar(CCVars.GameRoleTimers))
         {
-            Log.Error($"Unable to check playtimes {Environment.StackTrace}");
-            playTimes = new Dictionary<string, TimeSpan>();
+            if (!_tracking.TryGetTrackerTimes(player, out playTimes))
+            {
+                Log.Error($"Unable to check playtimes {Environment.StackTrace}");
+                playTimes = new Dictionary<string, TimeSpan>();
+            }
         }
 
         var requirements = _roles.GetRoleRequirements(job);
@@ -266,13 +267,14 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     /// <returns>Returns true if all requirements were met or there were no requirements.</returns>
     public bool IsAllowed(ICommonSession player, ProtoId<AntagPrototype> antag)
     {
-        if (!_cfg.GetCVar(CCVars.GameRoleTimers))
-            return true;
-
-        if (!_tracking.TryGetTrackerTimes(player, out var playTimes))
+        Dictionary<string, TimeSpan>? playTimes = null;
+        if (_cfg.GetCVar(CCVars.GameRoleTimers))
         {
-            Log.Error($"Unable to check playtimes {Environment.StackTrace}");
-            playTimes = new Dictionary<string, TimeSpan>();
+            if (!_tracking.TryGetTrackerTimes(player, out playTimes))
+            {
+                Log.Error($"Unable to check playtimes {Environment.StackTrace}");
+                playTimes = new Dictionary<string, TimeSpan>();
+            }
         }
 
         var requirements = _roles.GetRoleRequirements(antag);
@@ -289,13 +291,14 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     public HashSet<ProtoId<JobPrototype>> GetDisallowedJobs(ICommonSession player)
     {
         var roles = new HashSet<ProtoId<JobPrototype>>();
-        if (!_cfg.GetCVar(CCVars.GameRoleTimers))
-            return roles;
-
-        if (!_tracking.TryGetTrackerTimes(player, out var playTimes))
+        Dictionary<string, TimeSpan>? playTimes = null;
+        if (_cfg.GetCVar(CCVars.GameRoleTimers))
         {
-            Log.Error($"Unable to check playtimes {Environment.StackTrace}");
-            playTimes = new Dictionary<string, TimeSpan>();
+            if (!_tracking.TryGetTrackerTimes(player, out playTimes))
+            {
+                Log.Error($"Unable to check playtimes {Environment.StackTrace}");
+                playTimes = new Dictionary<string, TimeSpan>();
+            }
         }
 
         foreach (var job in _prototypes.EnumeratePrototypes<JobPrototype>())
@@ -309,15 +312,16 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
     public void RemoveDisallowedJobs(NetUserId userId, List<ProtoId<JobPrototype>> jobs)
     {
-        if (!_cfg.GetCVar(CCVars.GameRoleTimers))
-            return;
-
-        var player = _playerManager.GetSessionById(userId);
-        if (!_tracking.TryGetTrackerTimes(player, out var playTimes))
+        Dictionary<string, TimeSpan>? playTimes = null;
+        if (_cfg.GetCVar(CCVars.GameRoleTimers))
         {
-            // Sorry mate but your playtimes haven't loaded.
-            Log.Error($"Playtimes weren't ready yet for {player} on roundstart!");
-            playTimes ??= new Dictionary<string, TimeSpan>();
+            var player = _playerManager.GetSessionById(userId);
+            if (!_tracking.TryGetTrackerTimes(player, out playTimes))
+            {
+                // Sorry mate but your playtimes haven't loaded.
+                Log.Error($"Playtimes weren't ready yet for {player} on roundstart!");
+                playTimes = new Dictionary<string, TimeSpan>();
+            }
         }
 
         for (var i = 0; i < jobs.Count; i++)
