@@ -4,6 +4,8 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Physics;
 using Robust.Shared.Audio;
+using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -37,8 +39,8 @@ public sealed partial class GunOperator : HTNOperator, IHtnConditionalShutdown
     /// <summary>
     /// Collision group(s) that block line of sight to the target.
     /// </summary>
-    [DataField]
-    public CollisionGroup BlockingGroup = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
+    [DataField(customTypeSerializer: typeof(FlagSerializer<CollisionLayer>))]
+    public int BlockingGroup = (int)(CollisionGroup.Impassable | CollisionGroup.InteractImpassable);
 
     // Like movement we add a component and pass it off to the dedicated system.
 
@@ -66,7 +68,7 @@ public sealed partial class GunOperator : HTNOperator, IHtnConditionalShutdown
 
         var ranged = _entManager.EnsureComponent<NPCRangedCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
         ranged.Target = blackboard.GetValue<EntityUid>(TargetKey);
-        ranged.BlockingGroup = BlockingGroup;
+        ranged.BlockingGroup = (CollisionGroup)BlockingGroup;
 
         if (blackboard.TryGetValue<float>(NPCBlackboard.RotateSpeed, out var rotSpeed, _entManager))
         {

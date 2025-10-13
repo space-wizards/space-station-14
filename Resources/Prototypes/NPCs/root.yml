@@ -52,10 +52,12 @@
             - !type:TargetInLOSPrecondition
               targetKey: Target
               rangeKey: RangedRange
-              blockingGroup: BlocksVision
+              blockingGroup:
+              - BlocksVision
           operator: !type:GunOperator
             targetKey: Target
-            blockingGroup: BlocksVision
+            blockingGroup:
+            - BlocksVision
           services:
             - !type:UtilityService
               id: RangedService
