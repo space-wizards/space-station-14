@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Seam_Less
-  changes:
-  - message: Added practice magazines to the Secfab as a roundstart recipe
-    type: Add
-  id: 8585
-  time: '2025-05-30T01:24:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37710
 - author: Beck, SlamBamActionman
   changes:
   - message: Added a chameleon controller implant that allows you to quickly switch
@@ -3947,3 +3940,10 @@
   id: 9087
   time: '2025-10-13T01:24:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40857
+- author: PotentiallyTom
+  changes:
+  - message: Added a page in the guidebook listing common AI and silicon lawsets.
+    type: Add
+  id: 9088
+  time: '2025-10-13T11:55:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38225
