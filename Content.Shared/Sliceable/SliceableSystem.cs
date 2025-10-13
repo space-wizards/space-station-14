@@ -66,15 +66,15 @@ public sealed class SliceableSystem : EntitySystem
         if (!args.CanInteract || !args.CanAccess)
             return;
 
-        var verbText = Loc.GetString("slice-verb-name");
         var verbDisabled = false;
         var verbMessage = Loc.GetString("slice-verb-message-default");
         EntityUid tool;
 
+        var user = args.User;
         if (args.Using is not null)
         {
             var used = args.Using.Value;
-            if (!TryComp<ToolComponent>(used, out var toolComp))
+            if (!TryComp<ToolComponent>(used, out _))
                 return;
 
             if (!_toolSystem.HasQuality(used, comp.ToolQuality))
@@ -84,18 +84,20 @@ public sealed class SliceableSystem : EntitySystem
             }
             tool = used;
         }
-        else if (_toolSystem.HasQuality(args.User, comp.ToolQuality))
+        else if (_toolSystem.HasQuality(user, comp.ToolQuality))
         {
-            tool = args.User;
+            tool = user;
         }
         else
         {
             return;
         }
 
+        var verbName = Loc.GetString("slice-verb-name");
+
         if (TryComp<MobStateComponent>(uid, out var mobState))
         {
-            verbText = Loc.GetString("slice-verb-name-red");
+            verbName = Loc.GetString("slice-verb-name-red");
             if (!_mob.IsDead(uid, mobState))
             {
                 verbDisabled = true;
@@ -105,13 +107,13 @@ public sealed class SliceableSystem : EntitySystem
 
         InteractionVerb verb = new()
         {
-            Text = verbText,
+            Text = verbName,
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png")),
             Disabled = verbDisabled,
             Message = verbMessage,
             Act = () =>
             {
-                CreateDoAfter(uid, args.User, tool, comp.SliceTime.Seconds, comp.ToolQuality);
+                CreateDoAfter(uid, user, tool, comp.SliceTime.Seconds, comp.ToolQuality);
             },
         };
         args.Verbs.Add(verb);
@@ -119,14 +121,7 @@ public sealed class SliceableSystem : EntitySystem
 
     private void CreateDoAfter(EntityUid uid, EntityUid user, EntityUid used, float time, string qualities)
     {
-        _toolSystem.UseTool(
-            used,
-            user,
-            uid,
-            time,
-            qualities,
-            new TrySliceDoAfterEvent()
-        );
+        _toolSystem.UseTool(used, user, uid, time, qualities, new TrySliceDoAfterEvent());
     }
 
     private void AfterSlicing(Entity<SliceableComponent> ent, ref TrySliceDoAfterEvent args)
@@ -140,18 +135,25 @@ public sealed class SliceableSystem : EntitySystem
             ? PopupType.LargeCaution
             : PopupType.Small;
 
-        _popup.PopupPredicted(Loc.GetString("slice-butchered-success", ("target", ent.Owner), ("tool", args.Used.Value)),
-            Loc.GetString("slice-butchered-success-others", ("user", args.User), ("target", ent.Owner), ("tool", args.Used.Value)),
-            args.User, args.User, popupType);
-
+        var slicingDoneMessageForUser = Loc.GetString(
+            "slice-butchered-success",
+            ("target", ent.Owner),
+            ("tool", args.Used.Value)
+        );
+        var slicingDoneMessageForOthers = Loc.GetString(
+            "slice-butchered-success-others",
+            ("user", args.User),
+            ("target", ent.Owner),
+            ("tool", args.Used.Value)
+        );
+        _popup.PopupPredicted(slicingDoneMessageForUser, slicingDoneMessageForOthers, args.User, args.User, popupType);
         if (TrySlice(ent, args.User))
         {
             var ev = new SliceEvent();
             RaiseLocalEvent(ent, ref ev);
 
-            var giblings = _body.GibBody(ent);
-            if(giblings.Count == 0)
-                _destructible.DestroyEntity(ent);
+            _body.GibBody(ent);
+            _destructible.DestroyEntity(ent);
         }
     }
 
