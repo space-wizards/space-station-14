@@ -166,6 +166,21 @@
     canCollide: false
 
 - type: entity
+  id: CurtainsSkyBlueOpen
+  parent: CurtainsSkyBlue
+  suffix: Open, Fancy sky blue
+  components:
+  - type: Door
+    state: Open
+  - type: Occluder
+    enabled: false
+  - type: Construction
+    graph: Curtains
+    node: CurtainsSkyBlueOpen
+  - type: Physics
+    canCollide: false
+
+- type: entity
   id: CurtainsCyan
   parent: BaseCurtains
   suffix: Fancy cyan
