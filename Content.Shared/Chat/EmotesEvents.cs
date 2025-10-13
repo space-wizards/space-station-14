@@ -42,7 +42,7 @@ public record struct EmoteEvent(EmotePrototype Emote)
 }
 
 /// <summary>
-/// Send by the client when requesting the server to play a specific emote selected from the emote radial menu.
+/// Sent by the client when requesting the server to play a specific emote selected from the emote radial menu.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class PlayEmoteMessage(ProtoId<EmotePrototype> protoId) : EntityEventArgs
