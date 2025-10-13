@@ -139,7 +139,7 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
 
         foreach (var exemption in exemptions)
         {
-            _adminLogger.Add(LogType.Chat, LogImpact.Medium, $"{ToPrettyString(user)} set {ToPrettyString(ent)} targeting of {exemption} to {enabled}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Extreme, $"{ToPrettyString(user)} set {ToPrettyString(ent)} authorization of {exemption} to {enabled}");
         }
 
         _deviceNetwork.QueuePacket(ent, null, payload, device: device);
