@@ -1,0 +1,9 @@
+- files: ["bullet_miss1.ogg", "bullet_miss2.ogg", "bullet_miss3.ogg", "bullet_miss4.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from CM-SS13"
+  source: "https://github.com/cmss13-devs/cmss13/tree/0535055a7abcd3016123f2be2cd3db428c122dac/sound/bullets"
+
+- files: ["energy_miss1.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from CM-SS13"
+  source: "https://github.com/cmss13-devs/cmss13/tree/0535055a7abcd3016123f2be2cd3db428c122dac/sound/bullets"

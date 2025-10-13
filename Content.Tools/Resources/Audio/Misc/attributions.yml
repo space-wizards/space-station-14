@@ -1,0 +1,59 @@
+- files: ["tension_session.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Created by qwertyquerty"
+  source: "https://www.youtube.com/@qwertyquerty"
+
+- files: ["ninja_greeting.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Chillyconmor"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Misc/ninja_greeting.ogg"
+
+- files: ["nparadox_clone_greeting.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by ps3moira"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Misc/ninja_greeting.ogg"
+
+- files: ["thief_greeting.ogg"]
+  license: "CC-BY-NC-4.0"
+  copyright: "Taken from SergeQuadrado via freesound.org, edit and mono by TheShuEd"
+  source: "https://freesound.org/people/SergeQuadrado/sounds/683504/"
+
+- files: ["narsie_rises.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from TG station."
+  source: "https://github.com/tgstation/tgstation/blob/b44fcdedfb7c7d8425bd75b9caf71644a86375d1/sound/creatures/narsie_rises.ogg"
+
+- files: ["ratvar_rises.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from TG station."
+  source: "https://github.com/tgstation/tgstation/blob/2f63c779cb43543cfde76fa7ddaeacfde185fded/sound/effects/ratvar_rises.ogg"
+
+- files: ["ratvar_reveal.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from TG station."
+  source: "https://github.com/tgstation/tgstation/blob/2f63c779cb43543cfde76fa7ddaeacfde185fded/sound/effects/ratvar_reveal.ogg"
+
+- files: ["cryo_warning.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from TG station."
+  source: "https://github.com/tgstation/tgstation/blob/00cf2da5f785c110b9930077b3202f1a4638e1fd/sound/machines/cryo_warning.ogg"
+
+- files: ["epsilon.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by dj-34 (https://github.com/dj-34)"
+  source: "https://github.com/ss220-space/Paradise/blob/05043bcfb35c2e7bcf1efbdbfbf976e1a2504bc2/sound/effects/epsilon.ogg"
+
+- files: ["gamma.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by Bhijin & Myr for Space Station 14"
+  source: "https://github.com/space-wizards/space-station-14"
+
+- files: ["redalert.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from Citadel Station 13"
+  source: "https://github.com/Skyrat-SS13/Skyrat13/commit/2d4f2d1b489590b559e4073f41b126cef56f4c50"
+
+- files: ["bluealert.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from Citadel Station 13"
+  source: "https://github.com/Skyrat-SS13/Skyrat13/commit/2d4f2d1b489590b559e4073f41b126cef56f4c50"

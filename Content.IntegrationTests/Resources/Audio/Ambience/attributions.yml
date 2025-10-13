@@ -1,0 +1,123 @@
+- files: ["anomaly_drone.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by Joao_Janz, edited and converted to Mono by EmoGarbage"
+  source: "https://freesound.org/people/Joao_Janz/sounds/478472/"
+
+- files: ["ambiatmos.ogg,
+          ambiatmos2.ogg,
+          ambicave.ogg,
+          ambicha1.ogg,
+          ambicha2.ogg,
+          ambicha3.ogg,
+          ambicha4.ogg,
+          ambidanger.ogg,
+          ambidanger2.ogg,
+          ambigen1.ogg,
+          ambigen2.ogg,
+          ambigen3.ogg,
+          ambigen4.ogg,
+          ambigen5.ogg,
+          ambigen6.ogg,
+          ambigen7.ogg,
+          ambigen8.ogg,
+          ambigen9.ogg,
+          ambigen10.ogg,
+          ambigen11.ogg,
+          ambigen12.ogg,
+          ambigen13.ogg,
+          ambigen14.ogg,
+          ambigen15.ogg,
+          ambiholy.ogg,
+          ambiholy2.ogg,
+          ambiholy3.ogg,
+          ambilava1.ogg,
+          ambilava2.ogg,
+          ambilava3.ogg,
+          ambimaint1.ogg,
+          ambimaint2.ogg,
+          ambimaint3.ogg,
+          ambimaint4.ogg,
+          ambimaint5.ogg,
+          ambimine.ogg,
+          ambimo1.ogg,
+          ambimo2.ogg,
+          ambimystery.ogg,
+          ambinice.ogg,
+          ambiodd.ogg,
+          ambireebe1.ogg,
+          ambireebe3.ogg,
+          ambiruin.ogg,
+          ambiruin2.ogg,
+          ambiruin3.ogg,
+          ambiruin4.ogg,
+          ambiruin5.ogg,
+          ambiruin6.ogg,
+          ambiruin7.ogg,
+          ambisin1.ogg,
+          ambisin2.ogg,
+          ambisin3.ogg,
+          ambisin4.ogg,
+          ambitech.ogg,
+          ambitech2.ogg,
+          ambitech3.ogg,
+          maintambience.ogg,
+          ambispace2.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from /tg/station"
+  source: "https://github.com/tgstation/tgstation/tree/ae9767664701396501af5dcef8e34c4b5add3d47/sound/ambience"
+
+- files: ["shipambience.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from /tg/station (see source), which took it from CEV Eris (commit https://github.com/discordia-space/CEV-Eris/blob/e4e40d38424afe88c8a81cf0e3857d8af4ef077f/sound/ambience/shipambience.ogg)"
+  source: "https://github.com/tgstation/tgstation/blob/66a625e6df15eaa97e599248a2281c74238ce26e/sound/ambience/shipambience.ogg"
+
+- files: ["starlight.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from BeeStation"
+  source: "https://github.com/BeeStation/BeeStation-Hornet/commit/5228e20df942bb45e9469358022e2451bb9c0efe"
+
+- files: ["constellations.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from BeeStation"
+  source: "https://github.com/BeeStation/BeeStation-Hornet/commit/bdf79fbf44f776b7380ceec62a9f112a002b4121"
+
+- files: ["drifting.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from BeeStation"
+  source: "https://github.com/BeeStation/BeeStation-Hornet/commit/cf8c667dcca196c0e81af37ed0c27b9bdee9c888"
+
+- files: ["voyage_neverending.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by Discord handle derflerp"
+  source: "https://discord.com/channels/310555209753690112/536955542913024015/1162982443645665371"
+
+- files: ["unanchored.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Discord handle pigeonpeas, Soundcloud handle pigeonbeans"
+  source: "https://soundcloud.com/pigeonbeans/unanchored"
+
+- files: ["spookyspace1.ogg,
+          spookyspace2.ogg"]
+  license: "CC0-1.0"
+  copyright: "Taken from /vg/station"
+  source: "https://github.com/vgstation-coders/vgstation13/commit/23303188abe6fe31b114a218a1950d7325a23730"
+
+- files: ["ambitrain1.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Created by Badgie42 on Freesound.com, converted to Mono by TheShuEd"
+  source: "https://freesound.org/people/Badgie42/sounds/399876/"
+
+- files: ["ambitrain2.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by Hallkom on Freesound.com, cropped and converted to Mono by TheShuEd"
+  source: "https://freesound.org/people/Hallkom/sounds/588486/"
+
+- files: ["ambitrain3.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by ldezem on Freesound.com, cropped and converted to Mono by TheShuEd"
+  source: "https://freesound.org/people/ldezem/sounds/528238/"
+
+- files: ["anomaly_scary.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by dimbark1, edited and converted to mono by TheShuEd"
+  source: "https://freesound.org/people/dimbark1/sounds/316797/"
