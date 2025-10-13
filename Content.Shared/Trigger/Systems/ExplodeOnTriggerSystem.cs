@@ -32,7 +32,7 @@ public sealed class ExplodeOnTriggerSystem : EntitySystem
     private void OnQueueExplosionTrigger(Entity<ExplosionOnTriggerComponent> ent, ref TriggerEvent args)
     {
         var (uid, comp) = ent;
-        if (args.Key != null && !comp.KeysIn.Contains(args.Key))
+        if (args.Keys != null && !comp.KeysIn.Overlaps(args.Keys))
             return;
 
         var target = comp.TargetUser ? args.User : uid;
