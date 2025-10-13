@@ -25,8 +25,10 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Timing;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
+using Content.Shared.EntityEffects;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Labels.Components;
 using System.Linq;
@@ -51,6 +53,7 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly ISerializationManager _copier = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
 
 
     private static readonly ProtoId<TagPrototype> HoeTag = "Hoe";
@@ -570,7 +573,7 @@ public sealed class PlantHolderSystem : EntitySystem
             foreach (var entry in _solutionContainerSystem.RemoveEachReagent(component.SoilSolution.Value, amt))
             {
                 var reagentProto = _prototype.Index<ReagentPrototype>(entry.Reagent.Prototype);
-                reagentProto.ReactionPlant(uid, entry, solution, EntityManager, _random, _adminLogger);
+                _entityEffects.ApplyEffects(uid, reagentProto.PlantMetabolisms.ToArray());
             }
         }
 

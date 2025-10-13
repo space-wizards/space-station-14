@@ -7,6 +7,7 @@ namespace Content.Shared.Trigger.Components.Effects;
 /// Spawns a protoype when triggered.
 /// If TargetUser is true it will be spawned at their location.
 /// </summary>
+/// <seealso cref="SpawnEntityTableOnTriggerComponent"/>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class SpawnOnTriggerComponent : BaseXOnTriggerComponent
 {

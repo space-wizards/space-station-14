@@ -1,8 +1,5 @@
 using Content.Server.Botany.Components;
-using Content.Server.Botany.Systems;
-using Content.Server.EntityEffects;
 using Content.Shared.Database;
-using Content.Shared.EntityEffects;
 using Content.Shared.Random;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -25,27 +22,36 @@ public partial struct SeedChemQuantity
     /// <summary>
     /// Minimum amount of chemical that is added to produce, regardless of the potency
     /// </summary>
-    [DataField("Min")] public int Min;
+    [DataField]
+    public int Min;
 
     /// <summary>
     /// Maximum amount of chemical that can be produced after taking plant potency into account.
     /// </summary>
-    [DataField("Max")] public int Max;
+    [DataField]
+    public int Max;
 
     /// <summary>
     /// When chemicals are added to produce, the potency of the seed is divided with this value. Final chemical amount is the result plus the `Min` value.
     /// Example: PotencyDivisor of 20 with seed potency of 55 results in 2.75, 55/20 = 2.75. If minimum is 1 then final result will be 3.75 of that chemical, 55/20+1 = 3.75.
     /// </summary>
-    [DataField("PotencyDivisor")] public int PotencyDivisor;
+    [DataField]
+    public int PotencyDivisor;
 
     /// <summary>
     /// Inherent chemical is one that is NOT result of mutation or crossbreeding. These chemicals are removed if species mutation is executed.
     /// </summary>
-    [DataField("Inherent")] public bool Inherent = true;
+    [DataField]
+    public bool Inherent = true;
 }
 
 [Virtual, DataDefinition]
-[Access(typeof(BotanySystem), typeof(PlantHolderSystem), typeof(SeedExtractorSystem), typeof(EntityEffectSystem), typeof(MutationSystem), typeof(HarvestSystem), typeof(PlantTraitsSystem), typeof(BotanySwabSystem), typeof(BasicGrowthSystem))]
+// TODO Make Botany ECS and give it a proper API. I removed the limited access of this class because it's egregious how many systems needed access to it due to a lack of an actual API.
+/// <remarks>
+/// SeedData is no longer restricted because the number of friends is absolutely unreasonable.
+/// This entire data definition is unreasonable. I felt genuine fear looking at this, this is horrific. Send help.
+/// </remarks>
+// TODO: Hit Botany with hammers
 public partial class SeedData
 {
     #region Tracking
@@ -74,7 +80,8 @@ public partial class SeedData
     /// <summary>
     /// If true, the properties of this seed cannot be modified.
     /// </summary>
-    [DataField] public bool Immutable;
+    [DataField]
+    public bool Immutable;
 
     /// <summary>
     /// If true, there is only a single reference to this seed and it's properties can be directly modified without
@@ -95,9 +102,10 @@ public partial class SeedData
     /// The entity prototypes that are spawned when this type of seed is harvested.
     /// </summary>
     [DataField(customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-    public List<string> ProductPrototypes = new();
+    public List<string> ProductPrototypes = [];
 
-    [DataField] public Dictionary<string, SeedChemQuantity> Chemicals = new();
+    [DataField]
+    public Dictionary<string, SeedChemQuantity> Chemicals = [];
 
     #endregion
 
@@ -112,7 +120,8 @@ public partial class SeedData
     [DataField(required: true)]
     public ResPath PlantRsi { get; set; } = default!;
 
-    [DataField] public string PlantIconState { get; set; } = "produce";
+    [DataField]
+    public string PlantIconState { get; set; } = "produce";
 
     /// <summary>
     /// Screams random sound from collection SoundCollectionSpecifier
@@ -123,20 +132,22 @@ public partial class SeedData
     /// <summary>
     /// Which kind of kudzu this plant will turn into if it kuzuifies.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))] public string KudzuPrototype = "WeakKudzu";
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string KudzuPrototype = "WeakKudzu";
 
     #endregion
 
     /// <summary>
     /// The mutation effects that have been applied to this plant.
     /// </summary>
-    [DataField] public List<RandomPlantMutation> Mutations { get; set; } = new();
+    [DataField]
+    public List<RandomPlantMutation> Mutations { get; set; } = [];
 
     /// <summary>
     /// The seed prototypes this seed may mutate into when prompted to.
     /// </summary>
     [DataField(customTypeSerializer: typeof(PrototypeIdListSerializer<SeedPrototype>))]
-    public List<string> MutationPrototypes = new();
+    public List<string> MutationPrototypes = [];
 
     /// <summary>
     /// The growth components used by this seed.
@@ -178,7 +189,7 @@ public partial class SeedData
 
             PlantRsi = PlantRsi,
             PlantIconState = PlantIconState,
-            Mutations = new List<RandomPlantMutation>(),
+            Mutations = new List<RandomPlantMutation>(Mutations),
 
             // Newly cloned seed is unique. No need to unnecessarily clone if repeatedly modified.
             Unique = true,
