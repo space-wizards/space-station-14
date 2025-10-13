@@ -535,12 +535,17 @@ public record struct FindAvailableLocksEvent(EntityUid User, LockTypes FoundRead
 [ByRefEvent]
 public record struct CheckUserHasLockAccessEvent(EntityUid User, LockTypes FoundReaders = LockTypes.None, LockTypes HasAccess = LockTypes.None);
 
+/// <summary>
+/// Enum of all readers a lock can be "locked" by.
+/// Used to determine what you need in order to access the lock.
+/// For example, an entity with <see cref="AccessReaderComponent"/> will have the Access type, which is gathered by an event and handled by the respective system.
+/// </summary>
 [Flags]
 [Serializable, NetSerializable]
 public enum LockTypes : byte
 {
-    None,
-    Access,
-    Fingerprint,
+    None, // Default state, means the lock is not restricted.
+    Access, // Means there is an AccessReader currently present.
+    Fingerprint, // Means there is a FingerprintReader currently present.
     All = Access | Fingerprint,
 }
