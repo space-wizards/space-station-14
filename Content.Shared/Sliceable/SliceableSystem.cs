@@ -42,8 +42,6 @@ public sealed class SliceableSystem : EntitySystem
 
     public override void Initialize()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<SliceableComponent, TrySliceDoAfterEvent>(AfterSlicing);
         SubscribeLocalEvent<SliceableComponent, GetVerbsEvent<InteractionVerb>>(AddSliceVerb);
         SubscribeLocalEvent<SliceableComponent, InteractUsingEvent>(OnInteraction);
@@ -54,9 +52,9 @@ public sealed class SliceableSystem : EntitySystem
         if (args.Handled)
             return;
 
-        args.Handled = true;
         if (_toolSystem.HasQuality(args.Used, comp.ToolQuality))
         {
+            args.Handled = true;
             CreateDoAfter(uid, args.User, args.Used, comp.SliceTime.Seconds, comp.ToolQuality);
         }
     }
@@ -202,8 +200,8 @@ public sealed class SliceableSystem : EntitySystem
 
     private void FillSlice(EntityUid sliceUid, Solution solution)
     {
-        if (TryComp<EdibleComponent>(sliceUid, out var sliceFoodComp) &&
-            _solutionContainer.TryGetSolution(sliceUid, sliceFoodComp.Solution, out var itsSoln, out var itsSolution))
+        if (TryComp<EdibleComponent>(sliceUid, out var sliceFoodComp)
+            && _solutionContainer.TryGetSolution(sliceUid, sliceFoodComp.Solution, out var itsSoln, out var itsSolution))
         {
             _solutionContainer.RemoveAllSolution(itsSoln.Value);
 
