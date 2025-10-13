@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-NC-SA-3.0",
-    "copyright": "Sprite by LinkUyx#6557",
+    "copyright": "Sprite by LinkUyx#6557, inhand and helmet sprites by TiniestShark (github)",
     "size": {
         "x": 32,
         "y": 32
@@ -9,6 +9,22 @@
     "states": [
         {
             "name": "icon"
+        },
+        {
+            "name": "equipped-HELMET",
+            "directions": 4
+        },
+        {
+            "name": "equipped-HELMET-vox",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
         }
     ]
 }

@@ -15,6 +15,9 @@ namespace Content.Client.Outline;
 /// </summary>
 public sealed class TargetOutlineSystem : EntitySystem
 {
+    private static readonly ProtoId<ShaderPrototype> ShaderTargetValid = "SelectionOutlineInrange";
+    private static readonly ProtoId<ShaderPrototype> ShaderTargetInvalid = "SelectionOutline";
+
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
@@ -70,12 +73,6 @@ public sealed class TargetOutlineSystem : EntitySystem
 
     private Vector2 LookupVector => new(LookupSize, LookupSize);
 
-    [ValidatePrototypeId<ShaderPrototype>]
-    private const string ShaderTargetValid = "SelectionOutlineInrange";
-
-    [ValidatePrototypeId<ShaderPrototype>]
-    private const string ShaderTargetInvalid = "SelectionOutline";
-
     private ShaderInstance? _shaderTargetValid;
     private ShaderInstance? _shaderTargetInvalid;
 
@@ -85,8 +82,8 @@ public sealed class TargetOutlineSystem : EntitySystem
     {
         base.Initialize();
 
-        _shaderTargetValid = _prototypeManager.Index<ShaderPrototype>(ShaderTargetValid).InstanceUnique();
-        _shaderTargetInvalid = _prototypeManager.Index<ShaderPrototype>(ShaderTargetInvalid).InstanceUnique();
+        _shaderTargetValid = _prototypeManager.Index(ShaderTargetValid).InstanceUnique();
+        _shaderTargetInvalid = _prototypeManager.Index(ShaderTargetInvalid).InstanceUnique();
     }
 
     public void Disable()

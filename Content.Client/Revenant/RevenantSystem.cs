@@ -1,4 +1,6 @@
 using Content.Client.Alerts;
+using Content.Shared.Alert;
+using Content.Shared.Alert.Components;
 using Content.Shared.Revenant;
 using Content.Shared.Revenant.Components;
 using Robust.Client.GameObjects;
@@ -15,7 +17,7 @@ public sealed class RevenantSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<RevenantComponent, AppearanceChangeEvent>(OnAppearanceChange);
-        SubscribeLocalEvent<RevenantComponent, UpdateAlertSpriteEvent>(OnUpdateAlert);
+        SubscribeLocalEvent<RevenantComponent, GetGenericAlertCounterAmountEvent>(OnGetCounterAmount);
     }
 
     private void OnAppearanceChange(EntityUid uid, RevenantComponent component, ref AppearanceChangeEvent args)
@@ -40,14 +42,14 @@ public sealed class RevenantSystem : EntitySystem
         }
     }
 
-    private void OnUpdateAlert(Entity<RevenantComponent> ent, ref UpdateAlertSpriteEvent args)
+    private void OnGetCounterAmount(Entity<RevenantComponent> ent, ref GetGenericAlertCounterAmountEvent args)
     {
-        if (args.Alert.ID != ent.Comp.EssenceAlert)
+        if (args.Handled)
             return;
 
-        var essence = Math.Clamp(ent.Comp.Essence.Int(), 0, 999);
-        _sprite.LayerSetRsiState(args.SpriteViewEnt.AsNullable(), RevenantVisualLayers.Digit1, $"{(essence / 100) % 10}");
-        _sprite.LayerSetRsiState(args.SpriteViewEnt.AsNullable(), RevenantVisualLayers.Digit2, $"{(essence / 10) % 10}");
-        _sprite.LayerSetRsiState(args.SpriteViewEnt.AsNullable(), RevenantVisualLayers.Digit3, $"{essence % 10}");
+        if (ent.Comp.EssenceAlert != args.Alert)
+            return;
+
+        args.Amount = ent.Comp.Essence.Int();
     }
 }

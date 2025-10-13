@@ -7,7 +7,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Anomaly;
 
-public sealed class AnomalySystem : SharedAnomalySystem
+public sealed partial class AnomalySystem : SharedAnomalySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly FloatingVisualizerSystem _floating = default!;
@@ -24,6 +24,7 @@ public sealed class AnomalySystem : SharedAnomalySystem
 
         SubscribeLocalEvent<AnomalySupercriticalComponent, ComponentShutdown>(OnShutdown);
     }
+
     private void OnStartup(EntityUid uid, AnomalyComponent component, ComponentStartup args)
     {
         _floating.FloatAnimation(uid, component.FloatingOffset, component.AnimationKey, component.AnimationTime);
@@ -62,11 +63,11 @@ public sealed class AnomalySystem : SharedAnomalySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<AnomalySupercriticalComponent, SpriteComponent>();
+        var query = EntityQueryEnumerator<AnomalyComponent, AnomalySupercriticalComponent, SpriteComponent>();
 
-        while (query.MoveNext(out var uid, out var super, out var sprite))
+        while (query.MoveNext(out var uid, out var anomaly, out var super, out var sprite))
         {
-            var completion = 1f - (float)((super.EndTime - _timing.CurTime) / super.SupercriticalDuration);
+            var completion = 1f - (float) ((super.EndTime - _timing.CurTime) / anomaly.SupercriticalDuration);
             var scale = completion * (super.MaxScaleAmount - 1f) + 1f;
             _sprite.SetScale((uid, sprite), new Vector2(scale, scale));
 
