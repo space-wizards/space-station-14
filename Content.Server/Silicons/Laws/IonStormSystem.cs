@@ -271,7 +271,7 @@ public sealed class IonStormSystem : EntitySystem
     /// </summary>
     private ProtoId<LawFormatPrototype> PickFormatCorruption(ProtoId<WeightedRandomPrototype>? possibleFormatCorruptions)
     {
-        if (!_proto.TryIndex(possibleFormatCorruptions, out var formatCorruptions) || formatCorruptions.Weights.Count == 0)
+        if (!_proto.Resolve(possibleFormatCorruptions, out var formatCorruptions) || formatCorruptions.Weights.Count == 0)
             return FallbackFormatCorruption;
 
         return new ProtoId<LawFormatPrototype>(formatCorruptions.Pick(_robustRandom));
