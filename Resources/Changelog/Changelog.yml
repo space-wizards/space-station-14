@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Nox38
-  changes:
-  - message: Assault Rifles can now be switched between semi and full auto.
-    type: Tweak
-  id: 8588
-  time: '2025-05-30T15:50:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34907
 - author: Alpaccalypse
   changes:
   - message: Absinthe makes you mildly hallucinate.
@@ -3943,3 +3936,11 @@
   id: 9090
   time: '2025-10-13T17:18:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39761
+- author: ScarKy0
+  changes:
+  - message: Station AI can no longer control bolts, emergency access and electrify
+      status on doors it has no access to.
+    type: Fix
+  id: 9091
+  time: '2025-10-13T20:53:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38444
