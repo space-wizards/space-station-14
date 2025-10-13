@@ -28,6 +28,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Access.Systems;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Silicons.StationAi;
@@ -39,6 +40,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     [Dependency] private readonly   INetManager _net = default!;
     [Dependency] private readonly   ItemSlotsSystem _slots = default!;
     [Dependency] private readonly   ItemToggleSystem _toggles = default!;
+    [Dependency] private readonly   AccessReaderSystem _access = default!;
     [Dependency] private readonly   ActionBlockerSystem _blocker = default!;
     [Dependency] private readonly   MetaDataSystem _metadata = default!;
     [Dependency] private readonly   SharedAirlockSystem _airlocks = default!;

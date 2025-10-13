@@ -1,4 +1,3 @@
-using Content.Shared.Access.Systems;
 using Content.Shared.Doors.Components;
 using Robust.Shared.Serialization;
 using Content.Shared.Electrocution;
@@ -8,8 +7,6 @@ namespace Content.Shared.Silicons.StationAi;
 // Handles airlock radial
 public abstract partial class SharedStationAiSystem
 {
-    [Dependency] private readonly AccessReaderSystem _access = default!;
-
     private void InitializeAirlock()
     {
         SubscribeLocalEvent<DoorBoltComponent, StationAiBoltEvent>(OnAirlockBolt);
@@ -22,9 +19,15 @@ public abstract partial class SharedStationAiSystem
     /// </summary>
     private void OnAirlockBolt(EntityUid ent, DoorBoltComponent component, StationAiBoltEvent args)
     {
-        if (component.BoltWireCut || !_access.IsAllowed(args.User, ent))
+        if (component.BoltWireCut)
         {
             ShowDeviceNotRespondingPopup(args.User);
+            return;
+        }
+
+        if (!_access.IsAllowed(args.User, ent))
+        {
+            ShowDeviceNoAccessPopup(args.User);
             return;
         }
 
@@ -40,9 +43,15 @@ public abstract partial class SharedStationAiSystem
     /// </summary>
     private void OnAirlockEmergencyAccess(EntityUid ent, AirlockComponent component, StationAiEmergencyAccessEvent args)
     {
-        if (!PowerReceiver.IsPowered(ent) || !_access.IsAllowed(args.User, ent))
+        if (!PowerReceiver.IsPowered(ent))
         {
             ShowDeviceNotRespondingPopup(args.User);
+            return;
+        }
+
+        if (!_access.IsAllowed(args.User, ent))
+        {
+            ShowDeviceNoAccessPopup(args.User);
             return;
         }
 
@@ -54,9 +63,15 @@ public abstract partial class SharedStationAiSystem
     /// </summary>
     private void OnElectrified(EntityUid ent, ElectrifiedComponent component, StationAiElectrifiedEvent args)
     {
-        if (component.IsWireCut || !PowerReceiver.IsPowered(ent) || !_access.IsAllowed(args.User, ent))
+        if (component.IsWireCut || !PowerReceiver.IsPowered(ent))
         {
             ShowDeviceNotRespondingPopup(args.User);
+            return;
+        }
+
+        if (!_access.IsAllowed(args.User, ent))
+        {
+            ShowDeviceNoAccessPopup(args.User);
             return;
         }
 
