@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Fluids;
 
@@ -19,7 +20,22 @@ public abstract partial class SharedPuddleSystem
 
     public string[] GetAbsorbentReagents(Solution solution)
     {
+        return GetAbsorbentReagentsString(solution);
+    }
+
+    public string[] GetAbsorbentReagentsString(Solution solution)
+    {
         var absorbentReagents = new List<string>();
+        foreach (ReagentPrototype solProto in solution.GetReagentPrototypes(_prototypeManager).Keys)
+        {
+            if (solProto.Absorbent)
+                absorbentReagents.Add(solProto.ID);
+        }
+        return absorbentReagents.ToArray();
+    }
+    public ProtoId<ReagentPrototype>[] GetAbsorbentReagentsProtoId(Solution solution)
+    {
+        var absorbentReagents = new List<ProtoId<ReagentPrototype>>();
         foreach (ReagentPrototype solProto in solution.GetReagentPrototypes(_prototypeManager).Keys)
         {
             if (solProto.Absorbent)
