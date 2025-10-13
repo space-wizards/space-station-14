@@ -1226,7 +1226,7 @@
   components:
   - type: Sprite
     layers:
-    - state: black
+    - state: centcom
     - state: stripe_top
       color: *color-centcomm-top
     - state: stripe_bottom
