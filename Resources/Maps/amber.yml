@@ -4,8 +4,8 @@ meta:
   engineVersion: 267.2.0
   forkId: ""
   forkVersion: ""
-  time: 10/06/2025 07:02:56
-  entityCount: 24854
+  time: 10/13/2025 20:41:56
+  entityCount: 24853
 maps:
 - 1
 grids:
@@ -70421,10 +70421,10 @@ entities:
     - type: Transform
       pos: 39.5,-36.5
       parent: 2
-  - uid: 18509
+  - uid: 17891
     components:
     - type: Transform
-      pos: 95.5,-44.5
+      pos: 95.5,-45.5
       parent: 2
 - proto: CrateMaterialSilo
   entities:
@@ -121313,10 +121313,10 @@ entities:
     - type: Transform
       pos: -1.5,-23.5
       parent: 2
-  - uid: 17891
+  - uid: 17936
     components:
     - type: Transform
-      pos: 95.5,-45.5
+      pos: 96.5,-41.5
       parent: 2
 - proto: PortableGeneratorSuperPacman
   entities:
@@ -140431,12 +140431,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 30.5,-35.5
-      parent: 2
-  - uid: 17936
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 96.5,-41.5
       parent: 2
 - proto: StationAiUploadComputer
   entities:
