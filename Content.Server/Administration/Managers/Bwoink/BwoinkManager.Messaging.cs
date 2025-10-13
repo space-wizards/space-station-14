@@ -86,25 +86,3 @@ public sealed partial class ServerBwoinkManager
         _netManager.ServerSendMessage(msgNonAdminBwoink, PlayerManager.GetSessionById(target).Channel);
     }
 }
-
-public sealed class AHelpMessage(
-    string username,
-    string message,
-    bool isAdmin,
-    string roundTime,
-    GameRunLevel roundState,
-    bool playedSound,
-    bool adminOnly = false,
-    bool noReceivers = false,
-    string? icon = null)
-{
-    public string Username { get; set; } = username;
-    public string Message { get; set; } = message;
-    public bool IsAdmin { get; set; } = isAdmin;
-    public string RoundTime { get; set; } = roundTime;
-    public GameRunLevel RoundState { get; set; } = roundState;
-    public bool PlayedSound { get; set; } = playedSound;
-    public readonly bool AdminOnly = adminOnly;
-    public bool NoReceivers { get; set; } = noReceivers;
-    public string? Icon { get; set; } = icon;
-}
