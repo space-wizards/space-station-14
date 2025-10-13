@@ -17,6 +17,8 @@ public sealed partial class TriggerSystem
         SubscribeLocalEvent<ToggleTriggerConditionComponent, GetVerbsEvent<AlternativeVerb>>(OnToggleGetAltVerbs);
 
         SubscribeLocalEvent<RandomChanceTriggerConditionComponent, AttemptTriggerEvent>(OnRandomChanceTriggerAttempt);
+
+        SubscribeLocalEvent<MindRoleTriggerConditionComponent, AttemptTriggerEvent>(OnMindRoleTriggerAttempt);
     }
 
     /// <summary>
@@ -122,5 +124,38 @@ public sealed partial class TriggerSystem
         var cancel = !rand.Prob(ent.Comp.SuccessChance); // When not successful, cancel = true
 
         TriggerConditionSuffix(ent.Comp, cancel, ref args);
+    }
+
+    private void OnMindRoleTriggerAttempt(Entity<MindRoleTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
+    {
+        if (!TriggerConditionPrefix(ent.Comp, ref args))
+            return;
+
+        if (ent.Comp.EntityWhitelist != null)
+        {
+            if (!_mind.TryGetMind(ent.Owner, out var entMindId, out var entMindComp))
+            {
+                TriggerConditionSuffix(ent.Comp, true, ref args); // the entity has no mind
+                return;
+            }
+            if (!_role.MindHasRole((entMindId, entMindComp), ent.Comp.EntityWhitelist))
+            {
+                TriggerConditionSuffix(ent.Comp, true, ref args); // the entity does not have the required role
+                return;
+            }
+        }
+
+        if (ent.Comp.UserWhitelist != null)
+        {
+            if (args.User == null || !_mind.TryGetMind(args.User.Value, out var userMindId, out var userMindComp))
+            {
+                TriggerConditionSuffix(ent.Comp, true, ref args); // no user or the user has no mind
+                return;
+            }
+            if (!_role.MindHasRole((userMindId, userMindComp), ent.Comp.UserWhitelist))
+            {
+                TriggerConditionSuffix(ent.Comp, true, ref args); // the user does not have the required role
+            }
+        }
     }
 }
