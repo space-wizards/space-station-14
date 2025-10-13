@@ -322,31 +322,31 @@ public sealed class LockSystem : EntitySystem
     /// <param name="checkForAny">Whether the user needs to access ANY of the readers, instead of all of them.</param>
     /// <returns>True if the user has access, otherwise False.</returns>
     [PublicAPI]
-    public bool HasUserAccess(Entity<LockComponent?> ent, EntityUid user, bool quiet = true, LockTypes? checkedLocks = null, bool checkForAny = false)
+    public bool HasUserAccess(Entity<LockComponent?> ent, EntityUid user, bool quiet = true, LockTypes? checkedReaders = null, bool checkForAny = false)
     {
         // Entity literally has no lock. Congratulations.
         if (!Resolve(ent, ref ent.Comp, false))
             return true;
 
-        if (checkedLocks is null)
+        if (checkedReaders is null)
         {
             var lockEv = new FindAvailableLocksEvent(user);
             RaiseLocalEvent(ent, ref lockEv);
-            checkedLocks = lockEv.FoundReaders;
+            checkedReaders = lockEv.FoundReaders;
         }
 
         // If no locks are found, you have access. Woo!
-        if (checkedLocks == LockTypes.None)
+        if (checkedReaders == LockTypes.None)
             return true;
 
-        var accessEv = new CheckUserHasLockAccessEvent(user, checkedLocks.Value);
+        var accessEv = new CheckUserHasLockAccessEvent(user, checkedReaders.Value);
         RaiseLocalEvent(ent, ref accessEv);
 
         // If we check for any, as long as user has access to any of the locks we grant access.
         if (accessEv.HasAccess != LockTypes.None && checkForAny)
             return true;
 
-        if (accessEv.HasAccess == checkedLocks)
+        if (accessEv.HasAccess == checkedReaders)
             return true;
 
         if (!quiet)
