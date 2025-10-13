@@ -25,10 +25,10 @@ public sealed partial class LoadoutGroupPrototype : IPrototype, IInheritingProto
     public int MinLimit = 1;
     
     /// <summary>
-    /// Minimum number of loadouts that need to be specified by default.
+    /// Number of loadouts that are selected by default.
     /// </summary>
     [DataField]
-    public int MinDefault = 0;
+    public int DefaultSelected = 0;
 
     /// <summary>
     /// Maximum limit for the category.
