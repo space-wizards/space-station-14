@@ -336,8 +336,9 @@ public abstract class SharedBloodstreamSystem : EntitySystem
                 List<ReagentData> reagentData = reagent.Reagent.EnsureReagentData();
                 reagentData.RemoveAll(x => x is DnaData);
                 reagentData.AddRange(GetEntityBloodData(entity.Owner));
+                Dirty(entity, entity.Comp);
             }
-            Dirty(entity, entity.Comp);
+
         }
         else
             Log.Error("Unable to set bloodstream DNA, solution entity could not be resolved");
