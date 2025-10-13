@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: mhamster
-  changes:
-  - message: Chameleon clothes are now affected by any kind of EMP explosion, which
-      makes them go wild and change your current outfit to a random mess once.
-    type: Tweak
-  id: 8583
-  time: '2025-05-30T00:06:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30924
-- author: brainfood1183
-  changes:
-  - message: Bananium Rock Anomaly added
-    type: Add
-  id: 8584
-  time: '2025-05-30T01:16:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37787
 - author: Seam_Less
   changes:
   - message: Added practice magazines to the Secfab as a roundstart recipe
@@ -3754,8 +3739,8 @@
   url: https://github.com/space-wizards/space-station-14/pull/40786
 - author: SlamBamActionman
   changes:
-  - message: EXPERIMENTAL Nocturine now slows the target down, with a longer duration and shorter
-      delay before activating.
+  - message: EXPERIMENTAL Nocturine now slows the target down, with a longer duration
+      and shorter delay before activating.
     type: Tweak
   id: 9060
   time: '2025-10-09T13:32:34.0000000+00:00'
@@ -3954,3 +3939,11 @@
   id: 9086
   time: '2025-05-25T05:10:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38705
+- author: GitHubUser53123
+  changes:
+  - message: Zombies that aren't supposed to spread the zombie virus now don't do
+      so on mobs in critical state.
+    type: Fix
+  id: 9087
+  time: '2025-10-13T01:24:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40857
