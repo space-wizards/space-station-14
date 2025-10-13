@@ -58,6 +58,9 @@
     - Common
   - type: DoAfter
   - type: Actions
+  - type: ActionGrant
+    actions:
+    - ActionPAIOpenShop
   - type: Store
     categories:
     - PAIAbilities
@@ -188,15 +191,10 @@
     node: potatoai
 
 - type: entity
-  parent: BaseMentalAction
+  parent: ActionIntrinsicStore
   id: ActionPAIOpenShop
   name: Software Catalog
   description: Install new software to assist your owner.
-  components:
-  - type: Action
-    icon: Interface/Actions/shop.png
-  - type: InstantAction
-    event: !type:PAIShopActionEvent
 
 - type: entity
   parent: BaseMentalAction
