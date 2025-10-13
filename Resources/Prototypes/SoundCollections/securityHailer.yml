@@ -1,152 +1,130 @@
-# - type: soundCollection
-#   id: SecHailLow
-#   files:
-#     - /Audio/Voice/SecurityHails/NT_law.ogg
-#     - /Audio/Voice/SecurityHails/game_over.ogg
-#     - /Audio/Voice/SecurityHails/citizen.ogg
-#     - /Audio/Voice/SecurityHails/coming.ogg
-#     - /Audio/Voice/SecurityHails/compliance.ogg
-#     - /Audio/Voice/SecurityHails/freeze.ogg
-#     - /Audio/Voice/SecurityHails/halt.ogg
-#     - /Audio/Voice/SecurityHails/in_the_name.ogg
-#     - /Audio/Voice/SecurityHails/resistance.ogg
-#     - /Audio/Voice/SecurityHails/running.ogg
-#     - /Audio/Voice/SecurityHails/justice.ogg
-
-# - type: soundCollection
-#   id: SecHailMedium
-#   files:
-#     - /Audio/Voice/SecurityHails/asshole.ogg
-#     - /Audio/Voice/SecurityHails/batong.ogg
-#     - /Audio/Voice/SecurityHails/authoritah.ogg
-#     - /Audio/Voice/SecurityHails/bash.ogg
-#     - /Audio/Voice/SecurityHails/dredd.ogg
-#     - /Audio/Voice/SecurityHails/go_ahead.ogg
-#     - /Audio/Voice/SecurityHails/harry.ogg
-#     - /Audio/Voice/SecurityHails/knees.ogg
-#     - /Audio/Voice/SecurityHails/toolbox.ogg
-#     - /Audio/Voice/SecurityHails/imperial.ogg
-#     - /Audio/Voice/SecurityHails/scumbag.ogg
-
-# - type: soundCollection
-#   id: SecHailHigh
-#   files:
-#     - /Audio/Voice/SecurityHails/mald.ogg
-#     - /Audio/Voice/SecurityHails/STFU.ogg
-#     - /Audio/Voice/SecurityHails/buried.ogg
-#     - /Audio/Voice/SecurityHails/drop.ogg
-#     - /Audio/Voice/SecurityHails/bully.ogg
-#     - /Audio/Voice/SecurityHails/HOS.ogg
-#     - /Audio/Voice/SecurityHails/JJE.ogg
-#     - /Audio/Voice/SecurityHails/right.ogg
-#     - /Audio/Voice/SecurityHails/safeword.ogg
-#     - /Audio/Voice/SecurityHails/shitsec.ogg
-#     - /Audio/Voice/SecurityHails/robocop.ogg
-
-# - type: soundCollection
-#   id: SecHailHighHOS
-#   files:
-#     - /Audio/Voice/SecurityHails/mald.ogg
-#     - /Audio/Voice/SecurityHails/STFU.ogg
-#     - /Audio/Voice/SecurityHails/buried.ogg
-#     - /Audio/Voice/SecurityHails/drop.ogg
-#     - /Audio/Voice/SecurityHails/bully.ogg
-#     - /Audio/Voice/SecurityHails/hos_centcom.ogg
-#     - /Audio/Voice/SecurityHails/JJE.ogg
-#     - /Audio/Voice/SecurityHails/right.ogg
-#     - /Audio/Voice/SecurityHails/safeword.ogg
-#     - /Audio/Voice/SecurityHails/shitsec.ogg
-#     - /Audio/Voice/SecurityHails/robocop.ogg
-
-# - type: soundCollection
-#   id: SecHailERT
-#   files:
-#     - /Audio/Voice/SecurityHails/ERT/centcom.ogg
-#     - /Audio/Voice/SecurityHails/ERT/dangerous.ogg
-#     - /Audio/Voice/SecurityHails/ERT/dimwit.ogg
-#     - /Audio/Voice/SecurityHails/ERT/mandatory.ogg
-#     - /Audio/Voice/SecurityHails/ERT/obey.ogg
-#     - /Audio/Voice/SecurityHails/ERT/fucked_up.ogg
-
-## NEW LINES BELOW, OLD TO BE DELETED
-
 ##  ATTENTION ! ##
 - type: soundCollection
   id: hailsec-attention-low
   files:
-    - /Audio/Voice/SecurityHails/citizen.ogg
+    - Audio/Voice/Hailer/Security/citizen.ogg
+    - Audio/Voice/Hailer/Security/in_the_name.ogg
+    - Audio/Voice/Hailer/Security/compliance.ogg
+    - Audio/Voice/Hailer/Security/freeze.ogg
+    - Audio/Voice/Hailer/Security/halt.ogg
 
 - type: soundCollection
   id: hailsec-attention-med
   files:
-    - /Audio/Voice/SecurityHails/freeze.ogg
+    - Audio/Voice/Hailer/Security/authoritah.ogg
+    - Audio/Voice/Hailer/Security/bash.ogg
+    - Audio/Voice/Hailer/Security/muscle.ogg
+    - Audio/Voice/Hailer/Security/full_attention.ogg
 
 - type: soundCollection
   id: hailsec-attention-high
   files:
-    - /Audio/Voice/SecurityHails/justice.ogg
+    - Audio/Voice/Hailer/Security/dead_or_alive.ogg
+    - Audio/Voice/Hailer/Security/ruin.ogg
+    - Audio/Voice/Hailer/Security/stay_or_die.ogg
+    - Audio/Voice/Hailer/Security/break_legs.ogg
 
-##  ONE LINERS ##
+##  ONE LINERS / AGGRESSION ##
 - type: soundCollection
   id: hailsec-oneliner-low
   files:
-    - /Audio/Voice/SecurityHails/batong.ogg
+    - Audio/Voice/Hailer/Security/running.ogg
+    - Audio/Voice/Hailer/Security/game_over.ogg
+    - Audio/Voice/Hailer/Security/justice.ogg
+    - Audio/Voice/Hailer/Security/nowhere.ogg
 
 - type: soundCollection
   id: hailsec-oneliner-med
   files:
-    - /Audio/Voice/SecurityHails/drop.ogg
+    - Audio/Voice/Hailer/Security/batong.ogg
+    - Audio/Voice/Hailer/Security/space_law.ogg
+    - Audio/Voice/Hailer/Security/harry.ogg
+    - Audio/Voice/Hailer/Security/brig_stay.ogg 
 
 - type: soundCollection
   id: hailsec-oneliner-high
   files:
-    - /Audio/Voice/SecurityHails/safeword.ogg
+    - Audio/Voice/Hailer/Security/bold.ogg
+    - Audio/Voice/Hailer/Security/safeword.ogg
+    - Audio/Voice/Hailer/Security/leash.ogg
+    - Audio/Voice/Hailer/Security/time_to_die.ogg
 
-##  COMPLIANCE ##
+##  DISPERSE ##
 - type: soundCollection
   id: hailsec-compliance-low
   files:
-    - /Audio/Voice/SecurityHails/compliance.ogg
+    - Audio/Voice/Hailer/Security/move_along.ogg
+    - Audio/Voice/Hailer/Security/authorized.ogg
+    - Audio/Voice/Hailer/Security/move.ogg
+    - Audio/Voice/Hailer/Security/disperse.ogg
+    - Audio/Voice/Hailer/Security/sweep.ogg
 
 - type: soundCollection
   id: hailsec-compliance-med
   files:
-    - /Audio/Voice/SecurityHails/authoritah.ogg
+    - Audio/Voice/Hailer/Security/twenty.ogg
+    - Audio/Voice/Hailer/Security/vacate.ogg
+    - Audio/Voice/Hailer/Security/controlled_zone.ogg
 
 - type: soundCollection
   id: hailsec-compliance-high
   files:
-    - /Audio/Voice/SecurityHails/right.ogg
+    - Audio/Voice/Hailer/Security/loiter.ogg
+    - Audio/Voice/Hailer/Security/back_off.ogg
+    - Audio/Voice/Hailer/Security/legs.ogg
 
-##  AGGRESSION ##
+##  ARREST ##
 - type: soundCollection
   id: hailsec-aggression-low
   files:
-    - /Audio/Voice/SecurityHails/running.ogg
+    - Audio/Voice/Hailer/Security/detained.ogg
+    - Audio/Voice/Hailer/Security/NT_laws.ogg
+    - Audio/Voice/Hailer/Security/resistance.ogg
+    - Audio/Voice/Hailer/Security/attorney.ogg
 
 - type: soundCollection
   id: hailsec-aggression-med
   files:
-    - /Audio/Voice/SecurityHails/scumbag.ogg
+    - Audio/Voice/Hailer/Security/asshole.ogg
+    - Audio/Voice/Hailer/Security/knees.ogg
+    - Audio/Voice/Hailer/Security/imperial.ogg
+    - Audio/Voice/Hailer/Security/scumbag.ogg
 
 - type: soundCollection
   id: hailsec-aggression-high
   files:
-    - /Audio/Voice/SecurityHails/mald.ogg
+    - Audio/Voice/Hailer/Security/mald.ogg
+    - Audio/Voice/Hailer/Security/stfu.ogg
+    - Audio/Voice/Hailer/Security/drop_weapon.ogg
 
 ##  EMAG ##
 - type: soundCollection
   id: hailsec-emag
   files:
-    - /Audio/Voice/SecurityHails/cybersun.ogg
-    - /Audio/Voice/SecurityHails/can.ogg
-    - /Audio/Voice/SecurityHails/death_spam.ogg
-    - /Audio/Voice/SecurityHails/silent_forever.ogg
-    - /Audio/Voice/SecurityHails/disease.ogg
-    - /Audio/Voice/SecurityHails/tide.ogg
-    - /Audio/Voice/SecurityHails/uniform.ogg
-    - /Audio/Voice/SecurityHails/viva.ogg
-    - /Audio/Voice/SecurityHails/wew.ogg
-    - /Audio/Voice/SecurityHails/meow.ogg
-    - /Audio/Voice/SecurityHails/f_you.ogg
+  - Audio/Voice/Hailer/Security/cybersun.ogg
+  - Audio/Voice/Hailer/Security/can.ogg
+  - Audio/Voice/Hailer/Security/disease.ogg
+  - Audio/Voice/Hailer/Security/error.ogg
+  - Audio/Voice/Hailer/Security/rev.ogg
+  - Audio/Voice/Hailer/Security/wew.ogg
+  - Audio/Voice/Hailer/Security/meow.ogg
+  - Audio/Voice/Hailer/Security/f_you.ogg
 
+
+##  ERT / ATTENTION ##
+- type: soundCollection
+  id: hailsec-attention-ERT
+  files:
+  - Audio/Voice/Hailer/ERT/cooperate.ogg
+  - Audio/Voice/Hailer/ERT/interfere.ogg
+  - Audio/Voice/Hailer/ERT/obey.ogg
+  - Audio/Voice/Hailer/ERT/stand_clear.ogg
+
+  ##  ERT / COMBAT ##
+- type: soundCollection
+  id: hailsec-combat-ERT
+  files:
+  - Audio/Voice/Hailer/ERT/danger.ogg
+  - Audio/Voice/Hailer/ERT/hostile.ogg
+  - Audio/Voice/Hailer/ERT/suppress.ogg
+  - Audio/Voice/Hailer/ERT/threat.ogg
