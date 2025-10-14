@@ -97,10 +97,9 @@ public sealed partial class BwoinkPanel : BoxContainer
         {
             var info = _bwoinkManager.GetOrCreatePlayerPropertiesForChannel(_channel.ID, _managingFor.Value);
             info.LastMessage = message.SentAt;
-            if (!TextOutput.VisibleInTree) // for some fucking reason, we OURSELVES are not visible, never. Our text output is tho????
+            if (!Visible)
                 info.Unread++;
         }
-
 
         TextOutput.AddMessage(FormatMessage(message));
     }

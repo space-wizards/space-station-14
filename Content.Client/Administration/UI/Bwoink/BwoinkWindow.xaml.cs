@@ -29,9 +29,19 @@ public sealed partial class BwoinkWindow : DefaultWindow
         _playerManager = playerManager;
         _bwoinkManager = clientBwoinkManager;
 
-        clientBwoinkManager.ReloadedData += Regenerate;
-
         Regenerate();
+    }
+
+    protected override void EnteredTree()
+    {
+        base.EnteredTree();
+        _bwoinkManager.ReloadedData += Regenerate;
+    }
+
+    protected override void ExitedTree()
+    {
+        base.ExitedTree();
+        _bwoinkManager.ReloadedData -= Regenerate;
     }
 
     private void Regenerate()
@@ -48,6 +58,8 @@ public sealed partial class BwoinkWindow : DefaultWindow
             {
                 var control = new BwoinkControl(this, channel, _bwoinkManager);
                 Channels.AddChild(control);
+                control.ChannelSelector.StopFiltering();
+                control.ChannelSelector.PopulateList();
             }
             else
             {

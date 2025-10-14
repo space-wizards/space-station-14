@@ -36,6 +36,8 @@ public sealed partial class BwoinkControl : Control
     private readonly BwoinkChannelPrototype _channel;
     private readonly ClientBwoinkManager _clientBwoinkManager;
 
+    private int _newPlayerThreshold = 0;
+
     public BwoinkControl(BwoinkWindow parentWindow, BwoinkChannelPrototype channel, ClientBwoinkManager clientBwoinkManager)
     {
         RobustXamlLoader.Load(this);
@@ -50,122 +52,15 @@ public sealed partial class BwoinkControl : Control
         _channel = channel;
         _clientBwoinkManager = clientBwoinkManager;
 
-        var newPlayerThreshold = 0;
-        _cfg.OnValueChanged(CCVars.NewPlayerThreshold, (val) => { newPlayerThreshold = val; }, true);
+        _cfg.OnValueChanged(CCVars.NewPlayerThreshold, (val) => { _newPlayerThreshold = val; }, true);
 
         _adminManager.AdminStatusUpdated += UpdateButtons;
         UpdateButtons();
 
-        ChannelSelector.OnSelectionChanged += sel =>
-        {
-            _currentPlayer = sel;
-            SwitchToChannel(sel?.SessionId);
-            ChannelSelector.PlayerListContainer.DirtyList();
+        ChannelSelector.OnSelectionChanged += OnSelectionChanged;
 
-            if (sel is null)
-            {
-                parentWindow.Title = Loc.GetString("bwoink-title-none-selected");
-                return;
-            }
-
-            parentWindow.Title = $"{sel.CharacterName} / {sel.Username} | {Loc.GetString("generic-playtime-title")}: ";
-
-            parentWindow.Title += sel.OverallPlaytime != null ? sel.PlaytimeString : Loc.GetString("generic-unknown-title");
-        };
-
-        ChannelSelector.OverrideText += (info, text) =>
-        {
-            var sb = new StringBuilder();
-
-            if (info.Connected)
-                sb.Append(info.ActiveThisRound ? '⚫' : '◐');
-            else
-                sb.Append(info.ActiveThisRound ? '⭘' : '·');
-
-            sb.Append(' ');
-            var channelProperties = _clientBwoinkManager.GetOrCreatePlayerPropertiesForChannel(_channel.ID, info.SessionId);
-            if (channelProperties.Unread > 0)
-            {
-                if (channelProperties.Unread < 11)
-                    sb.Append(new Rune('➀' + (channelProperties.Unread-1)));
-                else
-                    sb.Append(new Rune(0x2639)); // ☹
-                sb.Append(' ');
-            }
-
-            // Mark antagonists with symbol
-            if (info.Antag && info.ActiveThisRound)
-                sb.Append(new Rune(0x1F5E1)); // 🗡
-
-            // Mark new players with symbol
-            if (IsNewPlayer(info, newPlayerThreshold))
-                sb.Append(new Rune(0x23F2)); // ⏲
-
-            sb.AppendFormat("\"{0}\"", text);
-
-            return sb.ToString();
-        };
-
-        // <summary>
-        // Returns true if the player's overall playtime is under the set threshold
-        // </summary>
-
-        ChannelSelector.Comparison = (a, b) =>
-        {
-            EnsurePanel(a.SessionId);
-            EnsurePanel(b.SessionId);
-            var ach = _clientBwoinkManager.GetOrCreatePlayerPropertiesForChannel(_channel.ID, a.SessionId);
-            var bch = _clientBwoinkManager.GetOrCreatePlayerPropertiesForChannel(_channel.ID, b.SessionId);
-
-            // Pinned players first
-            if (a.IsPinned != b.IsPinned)
-                return a.IsPinned ? -1 : 1;
-
-            // Then, any chat with unread messages.
-            var aUnread = ach.Unread > 0;
-            var bUnread = bch.Unread > 0;
-            if (aUnread != bUnread)
-                return aUnread ? -1 : 1;
-
-            // Then, any chat with recent messages from the current round
-            var aRecent = a.ActiveThisRound && ach.LastMessage != DateTime.MinValue;
-            var bRecent = b.ActiveThisRound && bch.LastMessage != DateTime.MinValue;
-            if (aRecent != bRecent)
-                return aRecent ? -1 : 1;
-
-            // Sort by connection status. Disconnected players will be last.
-            if (a.Connected != b.Connected)
-                return a.Connected ? -1 : 1;
-
-            // Sort connected players by whether they have joined the round, then by New Player status, then by Antag status
-            if (a.Connected && b.Connected)
-            {
-                var aNewPlayer = IsNewPlayer(a, newPlayerThreshold);
-                var bNewPlayer = IsNewPlayer(b, newPlayerThreshold);
-
-                //  Players who have joined the round will be listed before players in the lobby
-                if (a.ActiveThisRound != b.ActiveThisRound)
-                    return a.ActiveThisRound ? -1 : 1;
-
-                //  Within both the joined group and lobby group, new players will be grouped and listed first
-                if (aNewPlayer != bNewPlayer)
-                    return aNewPlayer ? -1 : 1;
-
-                //  Within all four previous groups, antagonists will be listed first.
-                if (a.Antag != b.Antag)
-                    return a.Antag ? -1 : 1;
-            }
-
-            // Sort disconnected players by participation in the round
-            if (!a.Connected && !b.Connected)
-            {
-                if (a.ActiveThisRound != b.ActiveThisRound)
-                    return a.ActiveThisRound ? -1 : 1;
-            }
-
-            // Finally, sort by the most recent message.
-            return bch.LastMessage.CompareTo(ach.LastMessage);
-        };
+        ChannelSelector.OverrideText += OnChannelSelectorOverrideText;
+        ChannelSelector.Comparison = ChannelSelectorComparison;
 
         Playerpanel.OnPressed += _ =>
         {
@@ -174,7 +69,121 @@ public sealed partial class BwoinkControl : Control
         };
 
         ChannelSelector.StopFiltering();
-        PopulateList();
+        ChannelSelector.PopulateList();
+    }
+
+    private void OnSelectionChanged(PlayerInfo? sel)
+    {
+        _currentPlayer = sel;
+        SwitchToChannel(sel?.SessionId);
+        ChannelSelector.PlayerListContainer.DirtyList();
+
+        if (sel is null)
+        {
+            _parentWindow.Title = Loc.GetString("bwoink-title-none-selected");
+            return;
+        }
+
+        _parentWindow.Title = $"{sel.CharacterName} / {sel.Username} | {Loc.GetString("generic-playtime-title")}: ";
+
+        _parentWindow.Title += sel.OverallPlaytime != null ? sel.PlaytimeString : Loc.GetString("generic-unknown-title");
+    }
+
+    private int ChannelSelectorComparison(PlayerInfo a, PlayerInfo b)
+    {
+        EnsurePanel(a.SessionId);
+        EnsurePanel(b.SessionId);
+        var ach = _clientBwoinkManager.GetOrCreatePlayerPropertiesForChannel(_channel.ID, a.SessionId);
+        var bch = _clientBwoinkManager.GetOrCreatePlayerPropertiesForChannel(_channel.ID, b.SessionId);
+
+        // Pinned players first
+        if (a.IsPinned != b.IsPinned)
+            return a.IsPinned ? -1 : 1;
+
+        // Then, any chat with unread messages.
+        var aUnread = ach.Unread > 0;
+        var bUnread = bch.Unread > 0;
+        if (aUnread != bUnread)
+            return aUnread ? -1 : 1;
+
+        // Then, any chat with recent messages from the current round
+        var aRecent = a.ActiveThisRound && ach.LastMessage != DateTime.MinValue;
+        var bRecent = b.ActiveThisRound && bch.LastMessage != DateTime.MinValue;
+        if (aRecent != bRecent)
+            return aRecent ? -1 : 1;
+
+        // Sort by connection status. Disconnected players will be last.
+        if (a.Connected != b.Connected)
+            return a.Connected ? -1 : 1;
+
+        // Sort connected players by whether they have joined the round, then by New Player status, then by Antag status
+        if (a.Connected && b.Connected)
+        {
+            var aNewPlayer = IsNewPlayer(a, _newPlayerThreshold);
+            var bNewPlayer = IsNewPlayer(b, _newPlayerThreshold);
+
+            //  Players who have joined the round will be listed before players in the lobby
+            if (a.ActiveThisRound != b.ActiveThisRound)
+                return a.ActiveThisRound ? -1 : 1;
+
+            //  Within both the joined group and lobby group, new players will be grouped and listed first
+            if (aNewPlayer != bNewPlayer)
+                return aNewPlayer ? -1 : 1;
+
+            //  Within all four previous groups, antagonists will be listed first.
+            if (a.Antag != b.Antag)
+                return a.Antag ? -1 : 1;
+        }
+
+        // Sort disconnected players by participation in the round
+        if (!a.Connected && !b.Connected)
+        {
+            if (a.ActiveThisRound != b.ActiveThisRound)
+                return a.ActiveThisRound ? -1 : 1;
+        }
+
+        // Finally, sort by the most recent message.
+        return bch.LastMessage.CompareTo(ach.LastMessage);
+    }
+
+    protected override void ExitedTree()
+    {
+        base.ExitedTree();
+        _clientBwoinkManager.MessageReceived -= MessageReceived;
+        _adminManager.AdminStatusUpdated -= UpdateButtons;
+    }
+
+    private string OnChannelSelectorOverrideText(PlayerInfo info, string text)
+    {
+        var sb = new StringBuilder();
+
+        if (info.Connected)
+            sb.Append(info.ActiveThisRound ? '⚫' : '◐');
+        else
+            sb.Append(info.ActiveThisRound ? '⭘' : '·');
+
+        sb.Append(' ');
+        var channelProperties = _clientBwoinkManager.GetOrCreatePlayerPropertiesForChannel(_channel.ID, info.SessionId);
+        if (channelProperties.Unread > 0)
+        {
+            if (channelProperties.Unread < 11)
+                sb.Append(new Rune('➀' + (channelProperties.Unread - 1)));
+            else
+                sb.Append(new Rune(0x2639)); // ☹
+            sb.Append(' ');
+        }
+
+        // Mark antagonists with symbol
+        if (info.Antag && info.ActiveThisRound)
+            sb.Append(new Rune(0x1F5E1)); // 🗡
+
+        // Mark new players with symbol
+        if (IsNewPlayer(info, _newPlayerThreshold))
+            sb.Append(new Rune(0x23F2)); // ⏲
+
+        sb.Append($"\"{text}\"");
+
+        return sb.ToString();
     }
 
     private void MessageReceived(ProtoId<BwoinkChannelPrototype> sender, (NetUserId person, BwoinkMessage message) args)
@@ -188,6 +197,9 @@ public sealed partial class BwoinkControl : Control
         OnBwoink(args.person);
     }
 
+    /// <summary>
+    /// Returns true if the player's overall playtime is under the set threshold
+    /// </summary>
     private bool IsNewPlayer(PlayerInfo info, int newPlayerThreshold)
     {
         // Don't show every disconnected player as new, don't show 0-minute players as new if threshold is
@@ -245,24 +257,5 @@ public sealed partial class BwoinkControl : Control
             var panel = EnsurePanel(ch.Value);
             panel.Visible = true;
         }
-    }
-
-    public void PopulateList()
-    {
-        // Maintain existing pin statuses
-        var pinnedPlayers = ChannelSelector.PlayerInfo.Where(p => p.IsPinned).ToDictionary(p => p.SessionId);
-
-        ChannelSelector.PopulateList();
-
-        // Restore pin statuses
-        foreach (var player in ChannelSelector.PlayerInfo)
-        {
-            if (pinnedPlayers.TryGetValue(player.SessionId, out var pinnedPlayer))
-            {
-                player.IsPinned = pinnedPlayer.IsPinned;
-            }
-        }
-
-        UpdateButtons();
     }
 }
