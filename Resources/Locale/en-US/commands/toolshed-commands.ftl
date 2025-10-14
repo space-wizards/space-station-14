@@ -14,7 +14,7 @@ command-description-bank-adjust =
     Adjusts the money for the given bank account.
 command-description-bank-set =
     Sets the money for the given bank account.
-command-description-bank-amount =
+command-description-bank-ammount =
     Returns the money for the given bank account.
 command-description-jobs-jobs =
     Returns all jobs on a station.
