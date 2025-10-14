@@ -1,7 +1,9 @@
 using Content.Shared.DoAfter;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.ParcelWrap.Components;
+using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 
@@ -63,6 +65,10 @@ public sealed partial class ParcelWrappingSystem
 
         if (TryComp<ParcelWrapOverrideComponent>(target, out var overrideComp) && overrideComp.WrapDelay != null)
             duration = overrideComp.WrapDelay.Value;
+
+        // In case the target is a player inform them with a popup.
+        var msg = Loc.GetString("parcel-wrap-popup-being-wrapped", ("user", Identity.Entity(user, EntityManager)));
+        _popup.PopupEntity(msg, target, target, PopupType.MediumCaution);
 
         return _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager,
             user,
@@ -138,6 +144,9 @@ public sealed partial class ParcelWrappingSystem
 
         // Insert the target into the parcel.
         var parcel = EnsureComp<WrappedParcelComponent>(spawned);
+        parcel.CanSelfUnwrap = wrapper.Comp.CanSelfUnwrap;
+        Dirty(spawned, parcel);
+
         if (!_container.Insert(target, parcel.Contents))
         {
             DebugTools.Assert(

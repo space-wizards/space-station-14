@@ -39,6 +39,7 @@
   - type: ParcelWrap
     whitelist: null
     blacklist: null
+    canSelfUnwrap: false # admins held me at gunpoint until I added this bool
 
 - type: entity
   abstract: true

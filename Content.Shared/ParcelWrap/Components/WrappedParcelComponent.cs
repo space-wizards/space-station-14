@@ -47,6 +47,7 @@ public sealed partial class WrappedParcelComponent : Component
 
     /// <summary>
     /// If a player trapped inside this parcel can escape from it by unwrapping it.
+    /// This is set by the <see cref="ParcelWrapComponent" /> used to create the parcel.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool CanSelfUnwrap = true;
