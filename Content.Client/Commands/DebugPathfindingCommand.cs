@@ -27,12 +27,12 @@ public sealed class DebugPathfindingCommand : LocalizedCommands
         {
             if (!Enum.TryParse<PathfindingDebugMode>(arg, out var mode))
             {
-                shell.WriteError(LocalizationManager.GetString("cmd-pathfinder-error", ("arg", arg)));
+                shell.WriteError(Loc.GetString("cmd-pathfinder-error", ("arg", arg)));
                 continue;
             }
 
             system.Modes ^= mode;
-            shell.WriteLine(LocalizationManager.GetString("cmd-pathfinder-notify", ("arg", arg), ("newMode", (system.Modes & mode) != 0x0)));
+            shell.WriteLine(Loc.GetString("cmd-pathfinder-notify", ("arg", arg), ("newMode", (system.Modes & mode) != 0x0)));
         }
     }
 

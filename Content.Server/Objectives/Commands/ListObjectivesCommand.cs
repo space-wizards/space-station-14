@@ -65,7 +65,7 @@ namespace Content.Server.Objectives.Commands
         {
             if (args.Length == 1)
             {
-                return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), LocalizationManager.GetString("shell-argument-username-hint"));
+                return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), Loc.GetString("shell-argument-username-hint"));
             }
 
             return CompletionResult.Empty;

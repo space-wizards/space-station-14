@@ -33,7 +33,7 @@ public sealed class OpenAHelpCommand : LocalizedCommands
             }
             else
             {
-                shell.WriteError(LocalizationManager.GetString("cmd-openahelp-error"));
+                shell.WriteError(Loc.GetString("cmd-openahelp-error"));
             }
         }
     }

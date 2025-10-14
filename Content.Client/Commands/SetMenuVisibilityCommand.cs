@@ -43,7 +43,7 @@ internal sealed class SetMenuVisibilityCommand : LocalizedCommands
                     visibility |= MenuVisibility.All;
                     break;
                 default:
-                    shell.WriteError(LocalizationManager.GetString("cmd-menuvis-error", ("arg", arg)));
+                    shell.WriteError(Loc.GetString("cmd-menuvis-error", ("arg", arg)));
                     return false;
             }
         }
