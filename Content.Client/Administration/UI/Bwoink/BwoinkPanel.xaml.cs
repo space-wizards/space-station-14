@@ -60,6 +60,8 @@ public sealed partial class BwoinkPanel : BoxContainer
 
     public void UpdateAllLines(List<BwoinkMessage> messages)
     {
+        TextOutput.Clear();
+
         foreach (var message in messages)
         {
             TextOutput.AddMessage(FormatMessage(message));
