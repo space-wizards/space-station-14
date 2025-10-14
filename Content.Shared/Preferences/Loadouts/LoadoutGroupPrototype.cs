@@ -12,6 +12,15 @@ public sealed partial class LoadoutGroupPrototype : IPrototype, IInheritingProto
     [IdDataField]
     public string ID { get; private set; } = string.Empty;
 
+    /// <inheritdoc />
+    [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<LoadoutGroupPrototype>))]
+    public string[]? Parents { get; }
+
+    /// <inheritdoc />
+    [NeverPushInheritance]
+    [AbstractDataField]
+    public bool Abstract { get; }
+
     /// <summary>
     /// User-friendly name for the group.
     /// </summary>
@@ -41,16 +50,6 @@ public sealed partial class LoadoutGroupPrototype : IPrototype, IInheritingProto
     /// </summary>
     [DataField]
     public bool Hidden;
-
-    /// <summary>
-    /// The prototype we inherit from.
-    /// </summary>
-    [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<LoadoutGroupPrototype>))]
-    public string[]? Parents { get; }
-
-    [NeverPushInheritance]
-    [AbstractDataField]
-    public bool Abstract { get; }
 
     [AlwaysPushInheritance]
     [DataField(required: true)]
