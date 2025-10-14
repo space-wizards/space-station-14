@@ -2,12 +2,10 @@ using System.Collections.Generic;
 using Content.Client.Lobby;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Server.GameTicking;
-using Content.Server.Preferences.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
-using Content.Shared.Humanoid;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Round;
