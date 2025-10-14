@@ -7,9 +7,9 @@ namespace Content.Server.Speech.EntitySystems
 {
     public sealed class SpanishAccentSystem : EntitySystem
     {
-        private static readonly Regex RegexLowersC = new(@"(?<!\w)(s+[bcdfgjklmnpqrtvwxz])");
-        private static readonly Regex RegexUpperSC = new(@"(?<!\w)S(s*[bcdfgjklmnpqrtvwxz])");
-        private static readonly Regex RegexCapsSC = new(@"(?<!\w)(S[BCDFGJKLMNPQRTVWXZ])");
+        private static readonly Regex RegexLowersC = new(@"(?<!\w)(s+h*[bcdfgjklmnpqrtvwxz])");
+        private static readonly Regex RegexUpperSC = new(@"(?<!\w)S(s*h*[bcdfgjklmnpqrtvwxz])");
+        private static readonly Regex RegexCapsSC = new(@"(?<!\w)(SH*[BCDFGJKLMNPQRTVWXZ])");
 
         public override void Initialize()
         {
