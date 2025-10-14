@@ -6,6 +6,6 @@
   features:
   - !type:SoundOnMessage
     sound: !type:SoundPathSpecifier
-      path: /Audio/Effects/adminhelp.ogg
+      path: /Audio/Animals/cat_meow.ogg
   - !type:RequiredFlags
     flags: Adminhelp
