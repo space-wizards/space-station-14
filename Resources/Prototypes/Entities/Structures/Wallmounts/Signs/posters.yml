@@ -1135,7 +1135,7 @@
   parent: PosterBase
   id: PosterLegitBotanyFear
   name: "Fear of hydroponics"
-  description: "A poster warning about the red dangers of hydroponics, which fortunately is not SSSP."
+  description: "Think three times before opening the airlock to hydroponics, a red threat might be hiding there."
   components:
   - type: Sprite
     state: poster56_legit
