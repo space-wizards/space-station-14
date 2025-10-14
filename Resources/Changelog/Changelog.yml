@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Centronias
-  changes:
-  - message: Headphones show animated music notes when activated again.
-    type: Fix
-  id: 8593
-  time: '2025-05-30T23:53:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35341
 - author: beck-thompson
   changes:
   - message: Removed the keep alive traitor objective.
@@ -3943,3 +3936,10 @@
   id: 9095
   time: '2025-10-14T11:41:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40880
+- author: aada
+  changes:
+  - message: Geiger counters can now be placed on a utility belt.
+    type: Fix
+  id: 9096
+  time: '2025-10-14T12:12:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40898
