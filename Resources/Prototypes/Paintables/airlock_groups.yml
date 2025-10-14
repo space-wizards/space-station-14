@@ -12,6 +12,7 @@
     engineering: AirlockEngineering
     freezer: AirlockFreezer
     hydroponics: AirlockHydroponics
+    lawyer: AirlockLawyer # DS14
     maintenance: AirlockMaint
     medical: AirlockMedical
     salvage: AirlockSalvage
@@ -32,6 +33,7 @@
     command: AirlockCommandGlass
     engineering: AirlockEngineeringGlass
     hydroponics: AirlockHydroponicsGlass
+    lawyer: AirlockLawyerGlass # DS14
     maintenance: AirlockMaintGlass
     medical: AirlockMedicalGlass
     salvage: AirlockSalvageGlass
