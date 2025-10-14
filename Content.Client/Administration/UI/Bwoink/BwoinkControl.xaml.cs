@@ -83,10 +83,11 @@ public sealed partial class BwoinkControl : Control
                 sb.Append(info.ActiveThisRound ? '⭘' : '·');
 
             sb.Append(' ');
-            if (_panels.TryGetValue(info.SessionId, out var panel) && panel.Unread > 0)
+            var channelProperties = _clientBwoinkManager.GetOrCreatePlayerPropertiesForChannel(_channel.ID, info.SessionId);
+            if (channelProperties.Unread > 0)
             {
-                if (panel.Unread < 11)
-                    sb.Append(new Rune('➀' + (panel.Unread-1)));
+                if (channelProperties.Unread < 11)
+                    sb.Append(new Rune('➀' + (channelProperties.Unread-1)));
                 else
                     sb.Append(new Rune(0x2639)); // ☹
                 sb.Append(' ');
@@ -111,8 +112,10 @@ public sealed partial class BwoinkControl : Control
 
         ChannelSelector.Comparison = (a, b) =>
         {
-            var ach = EnsurePanel(a.SessionId);
-            var bch = EnsurePanel(b.SessionId);
+            EnsurePanel(a.SessionId);
+            EnsurePanel(b.SessionId);
+            var ach = _clientBwoinkManager.GetOrCreatePlayerPropertiesForChannel(_channel.ID, a.SessionId);
+            var bch = _clientBwoinkManager.GetOrCreatePlayerPropertiesForChannel(_channel.ID, b.SessionId);
 
             // Pinned players first
             if (a.IsPinned != b.IsPinned)
@@ -179,10 +182,10 @@ public sealed partial class BwoinkControl : Control
         if (_channel.ID != sender.Id)
             return; // Not our bwoink
 
-        OnBwoink(args.person);
-
         var panel = EnsurePanel(args.person);
         panel.ReceiveLine(args.message);
+
+        OnBwoink(args.person);
     }
 
     private bool IsNewPlayer(PlayerInfo info, int newPlayerThreshold)
@@ -205,7 +208,7 @@ public sealed partial class BwoinkControl : Control
         if (_panels.TryGetValue(user, out var panel))
             return panel;
 
-        var newPanel = new BwoinkPanel(_parentWindow, _channel, _clientBwoinkManager, false);
+        var newPanel = new BwoinkPanel(_parentWindow, _channel, _clientBwoinkManager, true, user);
         _panels.Add(user, newPanel);
         BwoinkArea.AddChild(newPanel);
         newPanel.Visible = false;

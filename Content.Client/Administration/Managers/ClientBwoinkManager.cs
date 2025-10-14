@@ -19,6 +19,10 @@ public sealed class ClientBwoinkManager : SharedBwoinkManager
     [Dependency] private readonly IAudioManager _audio = default!;
     [Dependency] private readonly IClientAdminManager _adminManager = default!;
 
+    [ViewVariables]
+    public readonly Dictionary<ProtoId<BwoinkChannelPrototype>, Dictionary<NetUserId, PlayerChannelProperties>>
+        PlayerChannels = new();
+
     /// <summary>
     /// Dictionary that contains the sounds to play for a specified channel, source may be null.
     /// </summary>
@@ -43,6 +47,17 @@ public sealed class ClientBwoinkManager : SharedBwoinkManager
     private void StatusUpdated()
     {
         RequestSync();
+    }
+
+    public PlayerChannelProperties GetOrCreatePlayerPropertiesForChannel(ProtoId<BwoinkChannelPrototype> channel, NetUserId userId)
+    {
+        PlayerChannels.TryAdd(channel, new Dictionary<NetUserId, PlayerChannelProperties>());
+
+        if (PlayerChannels[channel].TryGetValue(userId, out var value))
+            return value;
+
+        PlayerChannels[channel].Add(userId, new PlayerChannelProperties());
+        return PlayerChannels[channel][userId];
     }
 
     protected override void UpdatedChannels()
@@ -130,4 +145,10 @@ public sealed class ClientBwoinkManager : SharedBwoinkManager
         Log.Info("Resetting Bwoink state!");
         _netManager.ClientSendMessage(new MsgBwoinkSyncRequest());
     }
+}
+
+public sealed class PlayerChannelProperties
+{
+    public DateTime LastMessage { get; set; } = DateTime.MinValue;
+    public int Unread { get; set; } = 0;
 }

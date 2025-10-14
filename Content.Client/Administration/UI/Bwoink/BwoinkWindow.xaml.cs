@@ -51,7 +51,7 @@ public sealed partial class BwoinkWindow : DefaultWindow
             }
             else
             {
-                var control = new BwoinkPanel(this, channel, _bwoinkManager, true);
+                var control = new BwoinkPanel(this, channel, _bwoinkManager, false, null);
                 _bwoinkManager.MessageReceived += (sender, args) =>
                 {
                     if (sender.Id != channel.ID)
