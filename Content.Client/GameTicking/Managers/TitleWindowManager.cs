@@ -21,12 +21,6 @@ public sealed class TitleWindowManager
         _client.RunLevelChanged += (_, _) => OnHostnameChange();
     }
 
-    public void Shutdown()
-    {
-        _cfg.UnsubValueChanged(CVars.GameHostName, _ => OnHostnameChange());
-        _cfg.UnsubValueChanged(CCVars.GameHostnameInTitlebar, _ => OnHostnameChange());
-    }
-
     private void OnHostnameChange()
     {
         var defaultWindowTitle = _gameController.GameTitle();
