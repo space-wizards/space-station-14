@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: The TEG now shows its capable peak power output on inspect, making it
-      easier for engineers to match the TEG's power output with the current grid demand
-      (to save fuel!).
-    type: Add
-  id: 8592
-  time: '2025-05-30T21:41:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37957
 - author: Centronias
   changes:
   - message: Headphones show animated music notes when activated again.
@@ -3944,3 +3935,11 @@
   id: 9094
   time: '2025-10-14T10:35:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40899
+- author: SirWarock
+  changes:
+  - message: Made Bodybags slightly harder to drag, and rollerbeds slightly easier.
+      They have wheels.
+    type: Tweak
+  id: 9095
+  time: '2025-10-14T11:41:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40880
