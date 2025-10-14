@@ -62,7 +62,7 @@ public abstract class SharedCargoSystem : EntitySystem
     /// </summary>
     /// <param name="station">Station to get bank account info from.</param>
     /// <param name="accountPrototypeId">Bank account prototype ID to get info for.</param>
-    /// <param name="money">The ammount of money in the account</param>
+    /// <param name="money">The amount of money in the account</param>
     /// <returns>Whether or not the bank account exists.</returns>
     public bool TryGetAccount(Entity<StationBankAccountComponent?> station, ProtoId<CargoAccountPrototype> accountPrototypeId, out int money)
     {
