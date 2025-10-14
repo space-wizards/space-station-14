@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Content.Server.GameTicking;
 using Content.Shared.Administration.Managers.Bwoink;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -12,6 +11,21 @@ public sealed partial class ServerBwoinkManager
     {
         _netManager.RegisterNetMessage<MsgBwoinkNonAdmin>(BwoinkAttempted);
         _netManager.RegisterNetMessage<MsgBwoink>(AdminBwoinkAttempted);
+        _netManager.RegisterNetMessage<MsgBwoinkSyncRequest>(SyncBwoinks);
+        _netManager.RegisterNetMessage<MsgBwoinkSync>();
+
+        _netManager.Connected += NetManagerOnConnected;
+    }
+
+    private void NetManagerOnConnected(object? _, NetChannelArgs e)
+    {
+        // A player connected, we send their ahelp history.
+        SynchronizeMessages(PlayerManager.GetSessionByChannel(e.Channel));
+    }
+
+    private void SyncBwoinks(MsgBwoinkSyncRequest message)
+    {
+        SynchronizeMessages(PlayerManager.GetSessionByChannel(message.MsgChannel));
     }
 
     private void AdminBwoinkAttempted(MsgBwoink message)

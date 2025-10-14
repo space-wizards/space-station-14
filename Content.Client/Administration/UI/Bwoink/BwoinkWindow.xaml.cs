@@ -15,25 +15,47 @@ namespace Content.Client.Administration.UI.Bwoink;
 [GenerateTypedNameReferences]
 public sealed partial class BwoinkWindow : DefaultWindow
 {
+    private readonly IPrototypeManager _prototypeManager;
+    private readonly IPlayerManager _playerManager;
+    private readonly ClientBwoinkManager _bwoinkManager;
+
     public BwoinkWindow(ClientBwoinkManager clientBwoinkManager,
         IPrototypeManager prototypeManager,
         IPlayerManager playerManager)
     {
         RobustXamlLoader.Load(this);
 
-        var channels = prototypeManager.EnumeratePrototypes<BwoinkChannelPrototype>();
+        _prototypeManager = prototypeManager;
+        _playerManager = playerManager;
+        _bwoinkManager = clientBwoinkManager;
+
+        clientBwoinkManager.ReloadedData += () =>
+        {
+            Regenerate();
+        };
+
+        Regenerate();
+    }
+
+    private void Regenerate()
+    {
+        // We now nuke all the channels we already have. This *does* loose us any input and state we have previously.
+        // Frankly, I call this a skill issue when admins upload prototypes on live.
+        Channels.RemoveAllChildren();
+
+        var channels = _prototypeManager.EnumeratePrototypes<BwoinkChannelPrototype>();
         foreach (var channel in channels.OrderBy(x => x.Order))
         {
-            var canManage = clientBwoinkManager.CanManageChannel(channel, playerManager.LocalSession!);
+            var canManage = _bwoinkManager.CanManageChannel(channel, _playerManager.LocalSession!);
             if (canManage)
             {
-                var control = new BwoinkControl(this, channel, clientBwoinkManager);
+                var control = new BwoinkControl(this, channel, _bwoinkManager);
                 Channels.AddChild(control);
             }
             else
             {
-                var control = new BwoinkPanel(this, channel, clientBwoinkManager);
-                clientBwoinkManager.MessageReceived += (sender, args) =>
+                var control = new BwoinkPanel(this, channel, _bwoinkManager);
+                _bwoinkManager.MessageReceived += (sender, args) =>
                 {
                     if (sender.Id != channel.ID)
                         return;
@@ -44,12 +66,12 @@ public sealed partial class BwoinkWindow : DefaultWindow
                 // Needed since the bwoinkpanel expects itself to be nested within a "proper" container.
                 control.Margin = new Thickness(0.3f);
 
-                if (clientBwoinkManager.Conversations[channel].TryGetValue(playerManager.LocalSession!.UserId, out var existingConvo))
+                if (_bwoinkManager.Conversations[channel].TryGetValue(_playerManager.LocalSession!.UserId, out var existingConvo))
                 {
                     control.UpdateAllLines(existingConvo.Messages);
                 }
 
-                control.MessageSent += text => clientBwoinkManager.SendMessageNonAdmin(channel, text);
+                control.MessageSent += text => _bwoinkManager.SendMessageNonAdmin(channel, text);
                 Channels.AddChild(control);
             }
         }

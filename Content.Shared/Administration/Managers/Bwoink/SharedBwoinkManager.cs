@@ -124,6 +124,43 @@ public abstract class SharedBwoinkManager : IPostInjectInit
     }
 
     /// <summary>
+    /// Gets the conversation for the specified user and channel.
+    /// </summary>
+    /// <param name="userId">The user you are filtering for.</param>
+    /// <param name="channel">The channel you are filtering for.</param>
+    /// <param name="filterSender">If the sender should be hidden.</param>
+    public Conversation? GetFilteredConversation(
+        NetUserId userId,
+        ProtoId<BwoinkChannelPrototype> channel,
+        bool filterSender)
+    {
+        if (!Conversations.TryGetValue(channel, out var conversations))
+        {
+            DebugTools.Assert($"Conversations for key {channel.Id} not found.");
+            Log.Error($"Conversations for key {channel.Id} not found.");
+            return null;
+        }
+
+        if (!conversations.TryGetValue(userId, out var conversation))
+            return null;
+
+        if (!filterSender)
+            return conversation;
+
+        foreach (var message in conversation.Messages)
+        {
+            message.SenderId = null;
+        }
+
+        return conversation;
+    }
+
+    public Dictionary<NetUserId, Conversation> GetConversationsForChannel(ProtoId<BwoinkChannelPrototype> channel)
+    {
+        return Conversations[channel];
+    }
+
+    /// <summary>
     /// Called once the channels are updated.
     /// </summary>
     protected virtual void UpdatedChannels() { }
@@ -167,7 +204,7 @@ public sealed record BwoinkMessage(string Sender, NetUserId? SenderId, DateTime 
     /// The User ID of the sender. This is may be null on the client if the true sender is hidden or the "system".
     /// </summary>
     [ViewVariables]
-    public NetUserId? SenderId { get; init; } = SenderId;
+    public NetUserId? SenderId { get; set; } = SenderId;
 
     /// <summary>
     /// The time (in utc) when this message was sent.

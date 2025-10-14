@@ -1,11 +1,112 @@
-﻿using System.IO;
-using Lidgren.Network;
+﻿using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Administration.Managers.Bwoink;
+
+/// <summary>
+/// Message used by the client and server to synchronize the <see cref="SharedBwoinkManager.Conversations"/> dictionary.
+/// </summary>
+public sealed class MsgBwoinkSync : NetMessage
+{
+    public override MsgGroups MsgGroup => MsgGroups.Command;
+    public override NetDeliveryMethod DeliveryMethod => NetDeliveryMethod.ReliableOrdered;
+
+    public Dictionary<ProtoId<BwoinkChannelPrototype>, Dictionary<NetUserId, Conversation>> Conversations = new();
+
+    public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
+    {
+        Conversations.Clear();
+
+        var numChannels = buffer.ReadInt32();
+        for (var i = 0; i < numChannels; i++)
+        {
+            var channelId = buffer.ReadString();
+            var innerDict = new Dictionary<NetUserId, Conversation>();
+
+            var numConversations = buffer.ReadInt32();
+            for (var j = 0; j < numConversations; j++)
+            {
+                var userId = new NetUserId(buffer.ReadGuid());
+                var who = new NetUserId(buffer.ReadGuid());
+
+                var messages = new List<BwoinkMessage>();
+                var numMessages = buffer.ReadInt32();
+
+                for (var k = 0; k < numMessages; k++)
+                {
+                    var sender = buffer.ReadString();
+
+                    NetUserId? senderId = null;
+                    if (buffer.ReadBoolean())
+                        senderId = new NetUserId(buffer.ReadGuid());
+
+                    var sentAt = DateTime.FromBinary(buffer.ReadInt64());
+                    var content = buffer.ReadString();
+                    var flags = (MessageFlags)buffer.ReadByte();
+
+                    messages.Add(new BwoinkMessage(sender, senderId, sentAt, content, flags));
+                }
+
+                var conversation = new Conversation(who, messages);
+
+                innerDict[userId] = conversation;
+            }
+
+            Conversations[new ProtoId<BwoinkChannelPrototype>(channelId)] = innerDict;
+        }
+    }
+
+    public override void WriteToBuffer(NetOutgoingMessage buffer, IRobustSerializer serializer)
+    {
+        buffer.Write(Conversations.Count);
+
+        foreach (var (key, conversations) in Conversations)
+        {
+            buffer.Write(key.Id);
+
+            buffer.Write(conversations.Count);
+            foreach (var (convKey, conversation) in conversations)
+            {
+                buffer.Write(convKey);
+                buffer.Write(conversation.Who); // this is most likely not needed, but whatever.
+
+                buffer.Write(conversation.Messages.Count);
+                foreach (var message in conversation.Messages)
+                {
+                    buffer.Write(message.Sender);
+                    buffer.Write(message.SenderId.HasValue);
+                    if (message.SenderId.HasValue)
+                        buffer.Write(message.SenderId.Value.UserId);
+                    buffer.Write(message.SentAt.ToBinary());
+                    buffer.Write(message.Content);
+                    buffer.Write((byte)message.Flags);
+                }
+            }
+        }
+    }
+}
+
+/// <summary>
+/// Message sent by a client to request the most up to date :tm: conversations.
+/// </summary>
+public sealed class MsgBwoinkSyncRequest : NetMessage
+{
+    public override MsgGroups MsgGroup => MsgGroups.Command;
+    public override NetDeliveryMethod DeliveryMethod => NetDeliveryMethod.ReliableOrdered;
+
+    public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
+    {
+
+    }
+
+    public override void WriteToBuffer(NetOutgoingMessage buffer, IRobustSerializer serializer)
+    {
+
+    }
+}
 
 /// <summary>
 /// Message sent to the client for receiving a bwoink and sent by a client to try to send a message.

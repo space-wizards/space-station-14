@@ -1,4 +1,6 @@
-﻿using Content.Shared.Administration.Managers.Bwoink;
+﻿using System.Linq;
+using Content.Shared.Administration.Managers;
+using Content.Shared.Administration.Managers.Bwoink;
 using Content.Shared.Administration.Managers.Bwoink.Features;
 using Robust.Client.Audio;
 using Robust.Client.ResourceManagement;
@@ -15,17 +17,32 @@ public sealed class ClientBwoinkManager : SharedBwoinkManager
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
     [Dependency] private readonly IResourceCache _res = default!;
     [Dependency] private readonly IAudioManager _audio = default!;
+    [Dependency] private readonly IClientAdminManager _adminManager = default!;
 
     /// <summary>
     /// Dictionary that contains the sounds to play for a specified channel, source may be null.
     /// </summary>
-    public Dictionary<ProtoId<BwoinkChannelPrototype>, IAudioSource?> CachedSounds = new();
+    public readonly Dictionary<ProtoId<BwoinkChannelPrototype>, IAudioSource?> CachedSounds = new();
+
+    /// <summary>
+    /// Called whenever our prototypes change, or a full state update is applied.
+    /// </summary>
+    public event Action? ReloadedData;
 
     public override void Initialize()
     {
         base.Initialize();
         _netManager.RegisterNetMessage<MsgBwoinkNonAdmin>(BwoinkAttempted);
         _netManager.RegisterNetMessage<MsgBwoink>(AdminBwoinkAttempted);
+        _netManager.RegisterNetMessage<MsgBwoinkSyncRequest>();
+        _netManager.RegisterNetMessage<MsgBwoinkSync>(SyncBwoinks);
+
+        _adminManager.AdminStatusUpdated += StatusUpdated;
+    }
+
+    private void StatusUpdated()
+    {
+        RequestSync();
     }
 
     protected override void UpdatedChannels()
@@ -48,6 +65,15 @@ public sealed class ClientBwoinkManager : SharedBwoinkManager
                 break;
             }
         }
+
+        ReloadedData?.Invoke();
+    }
+
+    private void SyncBwoinks(MsgBwoinkSync message)
+    {
+        Log.Info($"Received full state! {message.Conversations.Count} channels with {message.Conversations.Values.Select(x => x.Count).Count()} conversations.");
+        Conversations = message.Conversations;
+        ReloadedData?.Invoke();
     }
 
     private void AdminBwoinkAttempted(MsgBwoink message)
@@ -93,5 +119,15 @@ public sealed class ClientBwoinkManager : SharedBwoinkManager
             Channel = channel,
             Target = user,
         });
+    }
+
+    /// <summary>
+    /// Requests a full re-sync of all conversations we have. There is no locking so calling this while conversations are on-going may result in dropped or duplicated messages.
+    /// </summary>
+    public void RequestSync()
+    {
+        // TODO: Maybe locking???
+        Log.Info("Resetting Bwoink state!");
+        _netManager.ClientSendMessage(new MsgBwoinkSyncRequest());
     }
 }
