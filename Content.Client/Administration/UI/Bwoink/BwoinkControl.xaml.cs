@@ -30,11 +30,11 @@ public sealed partial class BwoinkControl : Control
     [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private PlayerInfo? _currentPlayer;
-    private Dictionary<NetUserId, BwoinkPanel> _panels = new();
+    private readonly Dictionary<NetUserId, BwoinkPanel> _panels = new();
 
-    private BwoinkWindow _parentWindow;
-    private BwoinkChannelPrototype _channel;
-    private ClientBwoinkManager _clientBwoinkManager;
+    private readonly BwoinkWindow _parentWindow;
+    private readonly BwoinkChannelPrototype _channel;
+    private readonly ClientBwoinkManager _clientBwoinkManager;
 
     public BwoinkControl(BwoinkWindow parentWindow, BwoinkChannelPrototype channel, ClientBwoinkManager clientBwoinkManager)
     {
