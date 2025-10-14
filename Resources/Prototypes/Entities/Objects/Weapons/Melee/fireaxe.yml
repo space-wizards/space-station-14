@@ -41,6 +41,7 @@
     qualities:
     - Prying
     - Slicing
+    - Sawing
   - type: ToolTileCompatible
   - type: Prying
   - type: UseDelay

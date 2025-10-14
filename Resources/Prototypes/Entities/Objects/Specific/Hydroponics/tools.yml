@@ -86,6 +86,7 @@
   - type: Tool
     qualities:
     - Slicing
+    - Sawing
   - type: Tag
     tags:
     - BotanyHatchet

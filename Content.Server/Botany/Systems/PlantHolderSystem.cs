@@ -11,7 +11,6 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
-using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -23,10 +22,8 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
-using Content.Shared.Kitchen.Components;
 using Content.Shared.Labels.Components;
 using Content.Shared.Tools.Systems;
 
@@ -321,7 +318,8 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
         }
 
-        if (_tool.HasQuality(args.Used, entity.Comp.HarvestToolQuality))
+        var harvestToolQuality = entity.Comp.HarvestToolQuality;
+        if (harvestToolQuality.HasValue && _tool.HasQuality(args.Used, harvestToolQuality.Value))
         {
             args.Handled = true;
             DoHarvest(uid, args.User, component);

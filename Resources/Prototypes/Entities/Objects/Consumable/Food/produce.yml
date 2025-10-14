@@ -207,6 +207,7 @@
   - type: Produce
     seedId: towercap
   - type: Sliceable
+    toolQuality: Sawing
     slices:
     - id: MaterialWoodPlank1
       amount: 2

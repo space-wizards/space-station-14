@@ -130,6 +130,10 @@
     - Plastic
     - Trash
     - Knife
+  - type: Tool
+    speedModifier: 0.15
+    qualities:
+    - Slicing
 
 - type: entity
   parent: UtensilBase

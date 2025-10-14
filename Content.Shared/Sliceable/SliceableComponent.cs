@@ -8,7 +8,7 @@ namespace Content.Shared.Sliceable;
 /// <summary>
 /// Allows slice entity via different tools. Slicing by default.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(SliceableSystem))]
 public sealed partial class SliceableComponent : Component
 {
     /// <summary>
