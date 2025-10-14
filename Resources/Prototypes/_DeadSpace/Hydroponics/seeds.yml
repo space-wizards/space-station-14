@@ -1,0 +1,31 @@
+- type: seed
+  id: sakura
+  name: seeds-sakura-name
+  noun: seeds-noun-seeds
+  displayName: seeds-sakura-display-name
+  plantRsi: _DeadSpace/Objects/Specific/Hydroponics/sakura_plant.rsi
+  packetPrototype: SakuraSeeds
+  productPrototypes:
+    - FoodSakuraFlower
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 3
+  yield: 3
+  potency: 10
+  idealLight: 8
+  growthStages: 4
+  waterConsumption: 0.60
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 20
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+    SakuraJuice:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 5

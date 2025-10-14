@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/sojourn-13/sojourn-station/tree/1942e36ccfd4758b3ede97fde47d5ce7bfee2d6a",
+  "size": {
+    "x": 64,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "angel"
+    }
+  ]
+}

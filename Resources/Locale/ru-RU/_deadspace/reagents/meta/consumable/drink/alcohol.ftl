@@ -4,3 +4,7 @@ reagent-name-sontse = солнечный смузи
 reagent-desc-sontse = Сегодня будет солнечно.
 reagent-name-uplink = cтранный напиток
 reagent-desc-uplink = Ни слова по русски.
+reagent-name-cherryblossom = расцвет сакуры
+reagent-desc-cherryblossom = Сладковатая прозрачная жидкость с лёгким розоватым оттенком.
+reagent-name-sakurajuice = сок сакуры
+reagent-desc-sakurajuice = Прозрачная розоватая жидкость, слегка сладковатая и цветочная.

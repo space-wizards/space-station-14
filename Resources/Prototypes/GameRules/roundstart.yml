@@ -508,6 +508,8 @@
     - id: BasicTrashVariationPass
     - id: SolidWallRustingVariationPass
     - id: ReinforcedWallRustingVariationPass
+    - id: SolidWallVineVariationPass # DS14
+    - id: ReinforcedWallVineVariationPass # DS14
     - id: BasicPuddleMessVariationPass
       prob: 0.99
       orGroup: puddleMess

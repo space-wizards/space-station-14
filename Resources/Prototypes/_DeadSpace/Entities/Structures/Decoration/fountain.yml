@@ -1,0 +1,44 @@
+- type: entity
+  id: Fountain
+  parent: BaseStructure
+  name: фонтан
+  description: Огромный фонтан из белого камня с кристально прозрачным водой.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _DeadSpace/Structures/Decoration/fountain.rsi
+    state: fountain
+    drawdepth: Mobs
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.80
+          position: 0,0
+        density: 600
+        mask:
+        - FullTileMask
+        layer:
+        - HighImpassable
+        - FullTileLayer
+  - type: AmbientSound
+    volume: 3
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/flowing_water_open.ogg
+  - type: SolutionContainerManager
+    solutions:
+      pool:
+        maxVol: 1000
+        reagents:
+        - ReagentId: Water
+          Quantity: 1000
+  - type: SolutionRegeneration
+    solution: tank
+    generated:
+      reagents:
+      - ReagentId: Water
+        Quantity: 100
+  - type: DrainableSolution
+    solution: pool
+  - type: Clickable

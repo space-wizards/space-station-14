@@ -1,0 +1,175 @@
+- type: entity
+  parent: BaseStructureDynamic
+  id: Aquarium
+  name: аквариум
+  description: Стеклянный аквариум для содержания декоративных рыбок.
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: InteractionOutline
+  - type: Sprite
+    noRot: true
+    sprite: _DeadSpace/Structures/Decoration/aquarium.rsi
+    layers:
+    - state: base
+    - state: sand
+    - state: seaweeds_back
+    - state: rocks
+    - state: treasure
+    - state: seaweeds_front
+    - state: angelfish_small
+      map: ["fish"]
+    - state: glass
+      visible: true
+  - type: RandomSprite
+    available:
+    - fish:
+        angelfish_small: ""
+        clownfish_small: ""
+        holo_clownfish_small: ""
+        lubefish_small: ""
+        needlefish_small: ""
+        armorfish_small: ""
+        chrab_small: ""
+        arctic_chrab_small: ""
+        crab_small: ""
+        half_fish_small: ""
+        slimefish_small: ""
+        bonemass_small: ""
+        mastodon_small: ""
+        sludgefish_small: ""
+        sludgefish_purple_small: ""
+        starfish_small: ""
+        jumpercable_small: ""
+        lava_loop_small: ""
+        soul_small: ""
+        skin_crab_small: ""
+        arctic_char_small: ""
+        stingray_small: ""
+        sockeye_small: ""
+        swordfish_small: ""
+        chainsaw_small: ""
+        bumpy_small: ""
+        sand_surfer_small: ""
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 500
+        mask:
+        - MachineMask
+        layer:
+        - LowImpassable
+        - MidImpassable
+        - BulletImpassable
+  - type: Anchorable
+    delay: 4
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Glass
+  - type: DamageVisuals
+    thresholds: [4, 8, 12]
+    damageDivisor: 7.555
+    trackAllDamage: true
+    damageOverlay:
+      sprite: _DeadSpace/Structures/Decoration/aquarium.rsi
+  - type: Appearance
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        collection: GlassSmash
+  - type: Repairable
+    fuelCost: 10
+    doAfterDelay: 3
+  - type: AmbientSound
+    volume: -1
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/flowing_water_open.ogg
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: WindowShatter
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            ShardGlass:
+              min: 2
+              max: 3
+            AquariumBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+
+- type: entity
+  parent: BaseStructureDynamic
+  id: AquariumBroken
+  name: разбитый аквариум
+  description: Останки некогда красивого аквариума.
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: InteractionOutline
+  - type: Sprite
+    noRot: true
+    sprite: _DeadSpace/Structures/Decoration/aquarium.rsi
+    layers:
+    - state: base
+    - state: sand
+    - state: seaweeds_back
+    - state: rocks
+    - state: treasure
+    - state: glass_broken
+      visible: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 500
+        mask:
+        - MachineMask
+        layer:
+        - LowImpassable
+        - MidImpassable
+        - BulletImpassable
+  - type: Anchorable
+    delay: 4
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Glass
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        collection: GlassSmash
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: WindowShatter
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            ShardGlass:
+              min: 2
+              max: 3
+            SheetSteel:
+              min: 2
+              max: 3
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]

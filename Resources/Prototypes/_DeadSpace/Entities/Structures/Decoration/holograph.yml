@@ -1,0 +1,60 @@
+- type: entity
+  parent: BaseMachinePowered
+  id: Holograph
+  name: голограф
+  description: Устройство для отображения голографических изображений.
+  components:
+  - type: Transform
+    anchored: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        mask:
+        - Impassable
+  - type: ApcPowerReceiver
+    powerLoad: 300
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/holograph.rsi
+    drawdepth: Items
+    snapCardinals: true
+    layers:
+    - state: base
+    - state: unpowered
+      map: ["Powered"]
+    - state: ray
+      map: ["lights"]
+      shader: unshaded
+    - state: hologram
+      map: ["hologram"]
+      shader: unshaded
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          False: { visible: true }
+          True: { visible: false }
+        lights:
+          False: { visible: false }
+          True: { visible: true }
+        hologram:
+          False: { visible: false }
+          True: { visible: true }
+  - type: PointLight
+    radius: 1.3
+    energy: 1.8
+    color: "#afe1fe"
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

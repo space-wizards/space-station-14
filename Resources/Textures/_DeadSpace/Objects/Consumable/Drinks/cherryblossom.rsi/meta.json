@@ -1,0 +1,59 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/PolarisSS13/Polaris/tree/22a69019d452dd91cee594d44409237c9f26dace. Fill levels by andrew_fenriz (discord) for Space Station 14 server Мёртвый Космос.",
+    "states":
+    [
+        {
+            "name": "icon",
+            "delays":
+            [
+                [
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "icon-empty"
+        },
+        {
+            "name": "fill-1",
+            "delays":
+            [
+                [
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "fill-2",
+            "delays":
+            [
+                [
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "fill-3",
+            "delays":
+            [
+                [
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        }
+    ]
+}

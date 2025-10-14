@@ -1,0 +1,20 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://morc0s.itch.io/2d-pixel-art-trees at free demo version, edited by andrew_fenriz (discord) for Space Station 14 server Мёртвый Космос",
+    "size": {
+        "x": 128,
+        "y": 128
+    },
+    "states": [
+        {
+            "name": "treeautumn01"
+        },
+        {
+            "name": "treeautumn02"
+        },
+        {
+            "name": "treeautumn03"
+        }
+    ]
+}

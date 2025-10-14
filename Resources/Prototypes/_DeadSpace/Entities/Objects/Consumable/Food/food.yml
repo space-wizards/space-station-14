@@ -442,3 +442,56 @@
           Quantity: 2
   - type: Item
     sprite: /Textures/_DeadSpace/Objects/Consumable/Food/mashed-potatoes.rsi
+
+- type: entity
+  id: FoodSakuraFlower
+  parent: FoodBase
+  name: цветок сакуры
+  description: Источает аромат любви и романтических вечеров.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Hydroponics/sakura.rsi
+    state: produce
+  - type: Clothing
+    slots:
+    - HEAD
+    quickEquip: false
+  - type: FlavorProfile
+    flavors:
+      - sweet
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: SakuraJuice
+          Quantity: 5
+
+- type: entity
+  parent: FoodCakePlain
+  id: FoodSakuraCake
+  name: торт из цветов сакуры
+  description: Нежный торт, источающий аромат лепестков сакуры.
+  components:
+  - type: SliceableFood
+    slice: FoodSakuraCakeSlice
+  - type: FlavorProfile
+    flavors:
+      - sweetdough
+      - sakura
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/Objects/Consumable/Food/sakura_cake.rsi
+    state: sakuracake
+
+- type: entity
+  name: кусок торта из цветов сакуры
+  parent: FoodCakeSliceBase
+  id: FoodSakuraCakeSlice
+  description: Кусочек торта, вдохновляющего на романтическое настроение.
+  components:
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/Objects/Consumable/Food/sakura_cake.rsi
+    state: sakuracake_slice
+  - type: FlavorProfile
+    flavors:
+      - sweetdough
+      - sakura

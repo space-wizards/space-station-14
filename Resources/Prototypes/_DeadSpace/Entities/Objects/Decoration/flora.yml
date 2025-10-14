@@ -1,0 +1,83 @@
+- type: entity
+  parent: BaseTreeLarge
+  id: AutumnTreeLarge
+  name: осеннее дерево
+  description: Да, это дерево.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Decoration/Flora/autumn_tree.rsi
+    layers:
+    - state: treeautumn01
+      map: ["random"]
+  - type: RandomSprite
+    available:
+    - random:
+        treeautumn01: ""
+        treeautumn02: ""
+        treeautumn03: ""
+
+- type: entity
+  parent: BaseTreeLarge
+  id: SakuraTreeLarge
+  name: сакура
+  description: Пышное дерево с розовыми листьями, покрытое нежными цветами. Источает романтическую атмосферу.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Decoration/Flora/space_sakura.rsi
+    layers:
+    - state: spacesakura
+    - state: spacesakura-overlay
+      shader: unshaded
+  - type: PointLight
+    enabled: true
+    radius: 3.5
+    energy: 0.3
+    color: "#FF9CFCFF"
+    offset: 0, 0.5
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/tree_fell.ogg
+          params:
+            volume: 5
+            variation: 0.05
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Log:
+            min: 2
+            max: 8
+          FoodSakuraFlower:
+            min: 2
+            max: 3
+  - type: Fixtures
+    fixtures:
+      portalFixture:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.1,0.1,0.1"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        hard: false
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.4
+        density: 1000
+        layer:
+        - HalfWallLayer
+        - Opaque

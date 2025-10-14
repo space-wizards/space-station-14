@@ -1,0 +1,59 @@
+- type: reagent
+  id: BluespaceHot
+  name: reagent-name-bluespace-hot
+  parent: BaseAlcohol
+  desc: reagent-desc-bluespace-hot
+  physicalDesc: reagent-physical-desc-fizzy-and-creamy
+  flavor: gargleblaster
+  color: "#110e9e"
+  metamorphicSprite:
+    sprite: /Textures/_DeadSpace/Objects/Consumable/Drinks/bluespacehotglass.rsi
+    state: icon
+
+- type: reagent
+  id: Sontse
+  name: reagent-name-sontse
+  parent: BaseAlcohol
+  desc: reagent-desc-sontse
+  physicalDesc: reagent-physical-desc-fizzy-and-creamy
+  flavor: gargleblaster
+  color: "#929e0e"
+  metamorphicSprite:
+    sprite: /Textures/_DeadSpace/Objects/Consumable/Drinks/sontse.rsi
+    state: icon
+
+- type: reagent
+  id: UplinkDrink
+  name: reagent-name-uplink
+  parent: BaseAlcohol
+  desc: reagent-desc-uplink
+  physicalDesc: reagent-physical-desc-fizzy-and-creamy
+  flavor: gargleblaster
+  color: "#9e0e0e"
+  metamorphicSprite:
+    sprite: /Textures/_DeadSpace/Objects/Consumable/Drinks/uplinkglass.rsi
+    state: icon
+
+- type: reagent
+  id: SakuraJuice
+  name: reagent-name-sakurajuice
+  parent: BaseAlcohol
+  desc: reagent-desc-sakurajuice
+  physicalDesc: reagent-physical-desc-aromatic
+  flavor: sakura
+  color: "#d2a2bc"
+
+- type: reagent
+  id: CherryBlossom
+  name: reagent-name-cherryblossom
+  parent: BaseAlcohol
+  desc: reagent-desc-cherryblossom
+  physicalDesc: reagent-physical-desc-aromatic
+  flavor: cherryblossom
+  color: "#e2bed2"
+  metamorphicSprite:
+    sprite: /Textures/_DeadSpace/Objects/Consumable/Drinks/cherryblossom.rsi
+    state: icon-empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false

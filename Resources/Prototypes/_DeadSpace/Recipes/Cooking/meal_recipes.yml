@@ -179,3 +179,13 @@
     Milk: 10
   solids:
     FoodPotato: 2
+
+- type: microwaveMealRecipe
+  id: RecipeSakuraCake
+  name: sakura cake recipe
+  result: FoodSakuraCake
+  time: 15
+  group: Cake
+  solids:
+    FoodCakePlain: 1
+    FoodSakuraFlower: 3

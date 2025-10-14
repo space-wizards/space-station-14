@@ -1,0 +1,96 @@
+- type: entity
+  id: GarlandEmpty
+  name: гирлянда
+  description: Мерцающая гирлянда, горящая мягким светом. Создаёт уют и праздничную атмосферу.
+  parent: PoweredlightEmpty
+  suffix: Пустая
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Structures/Wallmounts/garland.rsi
+      state: empty
+    - type: PointLight
+      enabled: false
+    - type: RgbLightController
+      layers: [1]
+      cycleRate: 0.5
+    - type: PoweredLight
+      bulb: Bulb
+    - type: Construction
+      graph: Garland
+      node: garlandLight
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.3,0.3,0.3,0.2"
+          density: 100
+          mask:
+            - None
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 40
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+
+- type: entity
+  id: Garland
+  name: гирлянда
+  description: Мерцающая гирлянда, горящая мягким светом. Создаёт уют и праздничную атмосферу.
+  parent: GarlandEmpty
+  suffix: ""
+  components:
+    - type: Sprite
+      state: base
+    - type: PointLight
+      enabled: true
+    - type: RgbLightController
+      layers: [1]
+      cycleRate: 0.5
+    - type: PoweredLight
+      hasLampOnSpawn: LedLightBulb
+
+- type: entity
+  id: GarlandAlwaysPowered
+  name: гирлянда
+  description: Мерцающая гирлянда, горящая мягким светом. Создаёт уют и праздничную атмосферу.
+  parent: AlwaysPoweredWallLight
+  suffix: Всегда запитанная
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Structures/Wallmounts/garland.rsi
+      state: base
+    - type: PointLight
+      energy: 1.0
+      radius: 6
+      softness: 1.1
+      enabled: true
+    - type: RgbLightController
+      layers: [1]
+      cycleRate: 0.5
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.3,0.3,0.3,0.2"
+          density: 100
+          mask:
+            - None
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 40
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak

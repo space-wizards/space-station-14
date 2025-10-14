@@ -1,0 +1,9 @@
+- type: entity
+  parent: SeedBase
+  name: пакет семян сакуры
+  id: SakuraSeeds
+  components:
+    - type: Seed
+      seedId: sakura
+    - type: Sprite
+      sprite: _DeadSpace/Objects/Specific/Hydroponics/sakura.rsi

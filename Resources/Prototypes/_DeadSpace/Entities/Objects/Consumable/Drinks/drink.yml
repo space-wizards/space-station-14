@@ -14,18 +14,6 @@
   - type: Sprite
     sprite: /Textures/_DeadSpace/Objects/Consumable/Drinks/bluespacehotglass.rsi
 
-- type: reagent
-  id: BluespaceHot
-  name: reagent-name-bluespace-hot
-  parent: BaseAlcohol
-  desc: reagent-desc-bluespace-hot
-  physicalDesc: reagent-physical-desc-fizzy-and-creamy
-  flavor: gargleblaster
-  color: "#110e9e"
-  metamorphicSprite:
-    sprite: /Textures/_DeadSpace/Objects/Consumable/Drinks/bluespacehotglass.rsi
-    state: icon
-
 - type: entity
   parent: DrinkGlassBase
   id: SontseGlass
@@ -41,18 +29,6 @@
           Quantity: 30
   - type: Sprite
     sprite: /Textures/_DeadSpace/Objects/Consumable/Drinks/sontse.rsi
-
-- type: reagent
-  id: Sontse
-  name: reagent-name-sontse
-  parent: BaseAlcohol
-  desc: reagent-desc-sontse
-  physicalDesc: reagent-physical-desc-fizzy-and-creamy
-  flavor: gargleblaster
-  color: "#929e0e"
-  metamorphicSprite:
-    sprite: /Textures/_DeadSpace/Objects/Consumable/Drinks/sontse.rsi
-    state: icon
 
 - type: entity
   parent: DrinkGlassBase
@@ -70,14 +46,35 @@
   - type: Sprite
     sprite: /Textures/_DeadSpace/Objects/Consumable/Drinks/uplinkglass.rsi
 
-- type: reagent
-  id: UplinkDrink
-  name: reagent-name-uplink
-  parent: BaseAlcohol
-  desc: reagent-desc-uplink
-  physicalDesc: reagent-physical-desc-fizzy-and-creamy
-  flavor: gargleblaster
-  color: "#9e0e0e"
-  metamorphicSprite:
-    sprite: /Textures/_DeadSpace/Objects/Consumable/Drinks/uplinkglass.rsi
+- type: entity
+  parent: DrinkGlass
+  id: DrinkSakuraJuice
+  suffix: сок сакуры
+  name: стакан-метаморф
+  description: Свежий сок с нежным вкусом и ароматом цветков сакуры.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: SakuraJuice
+          Quantity: 30
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkCherryBlossom
+  suffix: расцвет сакуры
+  name: стакан-метаморф
+  description: Лёгкий освежающий напиток с нежным ароматом цветущей сакуры.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: CherryBlossom
+          Quantity: 30
+  - type: Icon
+    sprite: _DeadSpace/Objects/Consumable/Drinks/cherryblossom.rsi
     state: icon

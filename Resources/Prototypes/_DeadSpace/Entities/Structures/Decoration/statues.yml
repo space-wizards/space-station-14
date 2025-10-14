@@ -1,0 +1,24 @@
+- type: entity
+  id: StatueAngel
+  parent: BaseStructure
+  name: статуя ангела
+  description: Статуя из чёрного мрамора, изображающая мрачного ангела.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _DeadSpace/Structures/Decoration/statues.rsi
+    state: angel
+    drawdepth: Mobs
+    offset: "0.0,0.5"
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.10,0.25,0.40"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
