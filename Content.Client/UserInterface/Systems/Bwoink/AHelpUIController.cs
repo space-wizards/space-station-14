@@ -62,7 +62,8 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
             return;
 
         // are we a manager for this channel? if so, we do not open the window itself.
-        if (!_bwoinkManager.CanManageChannel(sender, _playerManager.LocalSession))
+        var isManager = _bwoinkManager.CanManageChannel(sender, _playerManager.LocalSession);
+        if (!isManager)
             EnsureUIHelper();
 
         if (!_clyde.IsFocused) // wake up samurai, we have a city to burn
@@ -71,6 +72,11 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
         if (_bwoinkSoundEnabled)
         {
             _bwoinkManager.CachedSounds[sender]?.Restart();
+        }
+
+        if (!IsOpen && isManager)
+        {
+            _bwoinkManager.GetOrCreatePlayerPropertiesForChannel(sender, args.person).Unread++;
         }
     }
 
