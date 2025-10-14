@@ -12,6 +12,7 @@ namespace Content.Server.Atmos.Commands;
 public sealed class AddMapAtmosCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
 
     public override string Command => "setmapatmos";
 
@@ -65,8 +66,7 @@ public sealed class AddMapAtmosCommand : LocalizedEntityCommands
             mix.AdjustMoles(i, moles);
         }
 
-        var atmos = EntityManager.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
-        atmos.SetMapAtmosphere(map, space, mix);
+        _atmosphere.SetMapAtmosphere(map, space, mix);
         shell.WriteLine(Loc.GetString("cmd-setmapatmos-updated", ("map", id)));
     }
 

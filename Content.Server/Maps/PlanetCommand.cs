@@ -1,20 +1,11 @@
 using System.Linq;
 using Content.Server.Administration;
-using Content.Server.Atmos;
-using Content.Server.Atmos.Components;
-using Content.Server.Atmos.EntitySystems;
 using Content.Server.Parallax;
 using Content.Shared.Administration;
-using Content.Shared.Atmos;
-using Content.Shared.Gravity;
-using Content.Shared.Movement.Components;
 using Content.Shared.Parallax.Biomes;
-using Robust.Shared.Audio;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 
 namespace Content.Server.Maps;
 
@@ -26,6 +17,7 @@ public sealed class PlanetCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly BiomeSystem _biome = default!;
 
     public override string Command => "planet";
 
@@ -56,9 +48,8 @@ public sealed class PlanetCommand : LocalizedEntityCommands
             return;
         }
 
-        var biomeSystem = EntityManager.System<BiomeSystem>();
         var mapUid = _map.GetMapOrInvalid(mapId);
-        biomeSystem.EnsurePlanet(mapUid, biomeTemplate);
+        _biome.EnsurePlanet(mapUid, biomeTemplate);
 
         shell.WriteLine(Loc.GetString("cmd-planet-success", ("mapId", mapId)));
     }

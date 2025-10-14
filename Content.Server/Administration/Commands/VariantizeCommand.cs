@@ -9,6 +9,10 @@ namespace Content.Server.Administration.Commands;
 [AdminCommand(AdminFlags.Mapping)]
 public sealed class VariantizeCommand : LocalizedEntityCommands
 {
+    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private readonly TileSystem _tile = default!;
+
     public override string Command => "variantize";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
@@ -31,15 +35,11 @@ public sealed class VariantizeCommand : LocalizedEntityCommands
             return;
         }
 
-        var mapsSystem = EntityManager.System<SharedMapSystem>();
-        var tileSystem = EntityManager.System<TileSystem>();
-        var turfSystem = EntityManager.System<TurfSystem>();
-
-        foreach (var tile in mapsSystem.GetAllTiles(euid.Value, gridComp))
+        foreach (var tile in _map.GetAllTiles(euid.Value, gridComp))
         {
-            var def = turfSystem.GetContentTileDefinition(tile);
-            var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, tileSystem.PickVariant(def), tile.Tile.RotationMirroring);
-            mapsSystem.SetTile(euid.Value, gridComp, tile.GridIndices, newTile);
+            var def = _turf.GetContentTileDefinition(tile);
+            var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, _tile.PickVariant(def), tile.Tile.RotationMirroring);
+            _map.SetTile(euid.Value, gridComp, tile.GridIndices, newTile);
         }
     }
 }
