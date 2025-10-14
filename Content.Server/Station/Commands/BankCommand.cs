@@ -42,40 +42,29 @@ public sealed class BankCommand : ToolshedCommand
         => stations.Select(x => Account(x, account));
 
     [CommandImplementation("adjust")]
-    public BankAccount Adjust([PipedArgument] BankAccount @ref, int by)
-    {
-        _cargo ??= GetSys<CargoSystem>();
-        _cargo.TryAdjustBankAccount(@ref.Station, @ref.Account, by, true);
-        return @ref;
-    }
-
-    [CommandImplementation("adjust")]
     public IEnumerable<BankAccount> Adjust([PipedArgument] IEnumerable<BankAccount> @ref, int by)
-        => @ref.Select(x => Adjust(x, by));
-
-    [CommandImplementation("set")]
-    public BankAccount Set([PipedArgument] BankAccount @ref, int by)
     {
         _cargo ??= GetSys<CargoSystem>();
-        _cargo.TrySetBankAccount(@ref.Station, @ref.Account, by, true);
+        @ref.Select(bankAccount => _cargo.TryAdjustBankAccount(bankAccount.Station, bankAccount.Account, by, true));
         return @ref;
     }
 
     [CommandImplementation("set")]
     public IEnumerable<BankAccount> Set([PipedArgument] IEnumerable<BankAccount> @ref, int by)
-        => @ref.Select(x => Set(x, by));
-
-    [CommandImplementation("amount")]
-    public int Ammount([PipedArgument] BankAccount @ref)
     {
         _cargo ??= GetSys<CargoSystem>();
-        _cargo.TryGetAccount(@ref.Station, @ref.Account, out var money);
-        return money;
+        @ref.Select(bankAccount => _cargo.TrySetBankAccount(bankAccount.Station, bankAccount.Account, by, true));
+        return @ref;
     }
 
     [CommandImplementation("amount")]
     public IEnumerable<int> Ammount([PipedArgument] IEnumerable<BankAccount> @ref)
-        => @ref.Select(Ammount);
+    {
+        _cargo ??= GetSys<CargoSystem>();
+        return @ref.Select(bankAccount => (success: _cargo.TryGetAccount(bankAccount.Station, bankAccount.Account, out var money), money))
+        .Where(result => result.success)
+        .Select(result => result.money);
+    }
 }
 
 public readonly record struct BankAccount(
