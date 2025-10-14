@@ -181,6 +181,9 @@ public sealed record BwoinkMessage(string Sender, NetUserId? SenderId, DateTime 
     [ViewVariables]
     public string Content { get; init; } = Content;
 
+    /// <summary>
+    /// The flags this message has.
+    /// </summary>
     [ViewVariables]
     public MessageFlags Flags { get; init; } = Flags;
 }
