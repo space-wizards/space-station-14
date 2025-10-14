@@ -29,10 +29,7 @@ public sealed partial class BwoinkWindow : DefaultWindow
         _playerManager = playerManager;
         _bwoinkManager = clientBwoinkManager;
 
-        clientBwoinkManager.ReloadedData += () =>
-        {
-            Regenerate();
-        };
+        clientBwoinkManager.ReloadedData += Regenerate;
 
         Regenerate();
     }
