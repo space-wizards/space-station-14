@@ -112,7 +112,7 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
             [CmdSetArmamemtState] = armamentState,
         };
 
-        _adminLogger.Add(LogType.Chat, LogImpact.Medium, $"{ToPrettyString(user)} set {ToPrettyString(ent)} to {armamentState}");
+        _adminLogger.Add(LogType.ItemConfigure, LogImpact.Medium, $"{ToPrettyString(user)} set {ToPrettyString(ent)} to {armamentState}");
 
         _deviceNetwork.QueuePacket(ent, null, payload, device: device);
     }
@@ -139,7 +139,7 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
 
         foreach (var exemption in exemptions)
         {
-            _adminLogger.Add(LogType.Chat, LogImpact.Medium, $"{ToPrettyString(user)} set {ToPrettyString(ent)} authorization of {exemption} to {enabled}");
+            _adminLogger.Add(LogType.ItemConfigure, LogImpact.Medium, $"{ToPrettyString(user)} set {ToPrettyString(ent)} authorization of {exemption} to {enabled}");
         }
 
         _deviceNetwork.QueuePacket(ent, null, payload, device: device);
