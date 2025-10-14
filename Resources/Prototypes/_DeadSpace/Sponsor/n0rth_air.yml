@@ -30,6 +30,10 @@
     - id: ClothingUniformJumpsuitN0rthAir
     - id: ClothingEyesGlassesN0rthAir
     - id: JetpackVoidFilledN0rthAir
+    - id: DefibrillatorCompact
+    - id: MedkitAdvancedFilled
+    - id: BodyBagFolded
+      amount: 2
     - id: PaperLawN0rthAir
   - type: Tag
     tags: []
@@ -72,13 +76,23 @@
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/N0rthAir/cloak.rsi
-    scale: 0.5,0.5
+    scale: 0.5, 0.5
+  - type: Item
+    sprite: _DeadSpace/Sponsor/N0rthAir/cloak.rsi
+    size: Small
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        scale: 0.5, 0.5
+      right:
+      - state: inhand-right
+        scale: 0.5, 0.5
   - type: Clothing
     sprite: _DeadSpace/Sponsor/N0rthAir/cloak.rsi
     clothingVisuals:
       neck:
       - state: equipped-NECK
-        scale: 0.5,0.5
+        scale: 0.5, 0.5
   - type: Tag
     tags: []
 
@@ -115,7 +129,7 @@
 
 # Helmet
 - type: entity
-  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitN0rthAir
   name: шлем скафандра Vitezstvi
   description: Мощный шлем с интегрированными сенсорами, внушающий уверенность и решимость.
@@ -123,12 +137,51 @@
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/N0rthAir/helmet.rsi
+    layers:
+    - state: icon
+    - state: icon-flash
+      visible: false
+      map: [ "light" ]
   - type: Clothing
     sprite: _DeadSpace/Sponsor/N0rthAir/helmet.rsi
+    equippedPrefix: off
   - type: PointLight
-    color: "#e9baff"
-    radius: 7
+    color: "#f5da41"
+    radius: 5
     energy: 3
+    autoRot: true
+    netsync: false
+  - type: ToggleableVisuals
+    spriteLayer: light
+  - type: ItemTogglePointLight
+  - type: Appearance
+  - type: HandheldLight
+    addPrefix: true
+    blinkingBehaviourId: blinking
+    radiatingBehaviourId: radiating
+  - type: LightBehaviour
+    behaviours:
+      - !type:FadeBehaviour
+        id: radiating
+        interpolate: Linear
+        maxDuration: 2.0
+        startValue: 3.0
+        endValue: 2.0
+        isLooped: true
+        reverseWhenFinished: true
+      - !type:PulseBehaviour
+        id: blinking
+        interpolate: Nearest
+        maxDuration: 1.0
+        startValue: 0.1
+        endValue: 2.0
+        isLooped: true
+  - type: Battery
+    maxCharge: 600
+    startingCharge: 600
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 2
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
