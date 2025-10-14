@@ -30,10 +30,12 @@
     shoes: ClothingShoesBootsLaceup
     head: ClothingHeadHatCentcomcap
     # eyes: ClothingEyesGlassesSecurity
-    gloves: ClothingHandsGlovesDominator
+    gloves: ClothingHandsGlovesCentcomNaval
+    outerClothing: ClothingOuterArmorCentcommCarapace
     id: CentcomAdministratorPDA
     ears: ClothingHeadsetAltCentCom
     neck: ClothingNeckCloakCentcom
+    belt: ADTClothingBeltSupremeSheathFilled
     pocket1: RubberStampCentcom
     pocket2: ClothingMaskGasCentcom
 

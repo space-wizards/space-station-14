@@ -9,13 +9,6 @@
     sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_tactick.rsi
   - type: Clothing
     sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_tactick.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.8
-        Slash: 0.9
-        Piercing: 0.85
-        Heat: 0.8
 
 #Mercenary
 - type: entity

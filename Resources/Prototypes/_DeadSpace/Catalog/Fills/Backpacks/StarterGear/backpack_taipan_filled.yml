@@ -1,7 +1,0 @@
-- type: entity
-  parent: ClothingBackpackSatchelTaipan
-  id: ClothingBackpackSatchelTaipanFilled
-  components:
-  - type: StorageFill
-    contents:
-      - id: BoxSurvival

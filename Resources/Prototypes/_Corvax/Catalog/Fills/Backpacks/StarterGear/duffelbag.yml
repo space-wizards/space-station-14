@@ -1,8 +1,0 @@
-- type: entity
-  categories: [ HideSpawnMenu ]
-  parent: ClothingBackpackDuffel
-  id: ClothingBackpackDuffelIAAFilled
-  components:
-    - type: StorageFill
-      contents:
-        - id: BoxSurvival

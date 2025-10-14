@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseItem
   id: JanaHypo
-  name: экспериментальный гипоспрей Яны
+  name: экспериментальный гипоспрей
   description: Был сконструирован и улучшен благодаря Джолин. Пахнет как бикаридин.
   components:
   - type: Sprite

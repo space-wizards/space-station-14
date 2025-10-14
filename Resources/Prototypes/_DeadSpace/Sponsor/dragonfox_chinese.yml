@@ -421,7 +421,7 @@
 - type: entity
   id: ClothingBeltSheathJianDragonFoxFilled
   parent: ClothingBeltSheathJianDragonFox
-  suffix: Filled
+  suffix: Заполненный
   components:
   - type: ContainerFill
     containers:

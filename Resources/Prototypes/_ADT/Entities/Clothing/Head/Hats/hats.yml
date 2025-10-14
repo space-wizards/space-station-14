@@ -12,17 +12,6 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ADTClothingHeadHatsDungeonMasterHat
-  name: фуражка Мастера
-  description: Для настоящих Dungeon Masters.
-  components:
-  - type: Sprite
-    sprite: _ADT/Clothing/Head/Hats/dungeon_master.rsi
-  - type: Clothing
-    sprite: _ADT/Clothing/Head/Hats/dungeon_master.rsi
-
-- type: entity
-  parent: ClothingHeadBase
   id: ADTClothingHeadMarineBeret
   name: берет лейтенанта морской пехоты
   description: Этот берет содержит эмблему Морской Пехоты ТСФ, 417-го полка, 2-го батальона, отряда «Браво».
