@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Content.Server.Objectives.Components;
+using Content.Server.GameTicking;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
@@ -13,6 +14,7 @@ namespace Content.Server.Objectives.Systems;
 public sealed class KillAllOthersConditionSystem : EntitySystem
 {
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly GameTicker _ticker = default!;
 
     public override void Initialize()
     {
@@ -39,8 +41,16 @@ public sealed class KillAllOthersConditionSystem : EntitySystem
         var satisfied = minds.Count(m => _mind.IsCharacterDeadIc(m.Comp));
 
         var progress = total == 0 ? 1f : (float) satisfied / total;
-        if (progress < 1f)
-            progress = MathF.Min(progress, 0.99f);
+        if (progress >= 1f)
+        {
+            args.Progress = 1f;
+            // Transition the round to PostRound when objective is complete
+            if (_ticker.RunLevel == GameRunLevel.InRound)
+                _ticker.EndRound("Assassin objective completed.");
+            return;
+        }
+
+        progress = MathF.Min(progress, 0.99f);
         args.Progress = progress;
     }
 }

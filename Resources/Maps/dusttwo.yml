@@ -68,8 +68,9 @@ entities:
       tintColor: '#FFDC85FF'
     - type: MapAutoGameRule
       rules:
-        - AutoRoundEndingRule
-        - AutoRoundRestartRule
+        - AutoRoundEndingRuleCS
+        - AutoRoundRestartRuleCS
+        - RoundstartPlaySoundCS
       addInLobby: true
       startOnRoundStart: true
   - uid: 2

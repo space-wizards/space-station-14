@@ -22,7 +22,7 @@ public sealed partial class AutoRoundRestartComponent : Component
     /// <summary>
     /// Sender name for announcements.
     /// </summary>
-    [DataField("senderName")] public string SenderName = "Мировая арена";
+    [DataField("senderName")] public string? SenderName = null;
 
     /// <summary>
     /// Master enable switch.

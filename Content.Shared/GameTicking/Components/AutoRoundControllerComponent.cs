@@ -16,11 +16,15 @@ public sealed partial class AutoRoundControllerComponent : Component
     // In-round auto end
     [DataField] public float InRoundDelay = 180f;
     [DataField] public float InRoundWarnThreshold = 30f;
+    // Announcement template for in-round warning. Use {remaining} placeholder for seconds.
+    [DataField] public string InRoundWarnMessage = ""; // set in prototype, empty = no announcement
 
     // Post-round auto restart
     [DataField] public float PostRoundDelay = 15f;
     [DataField] public float PostRoundWarnThreshold = 5f;
+    // Announcement template for post-round warning. Use {remaining} placeholder.
+    [DataField] public string PostRoundWarnMessage = ""; // set in prototype, empty = no announcement
 
     // Announcer name
-    [DataField] public string SenderName = "Мировая арена";
+    [DataField] public string SenderName = ""; // set in prototype
 }

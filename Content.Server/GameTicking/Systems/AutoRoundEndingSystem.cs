@@ -23,6 +23,8 @@ public sealed class AutoRoundEndingSystem : EntitySystem
     private TimeSpan? _roundStartTime;
     private bool _inRoundActive;
     private bool _warned;
+    private readonly HashSet<float> _warnedThresholds = new();
+    private bool _startAnnounced;
 
     public override void Initialize()
     {
@@ -38,13 +40,37 @@ public sealed class AutoRoundEndingSystem : EntitySystem
 
     private bool TryGetRuleConfig([NotNullWhen(true)] out AutoRoundEndingRuleComponent? cfg)
     {
-        cfg = EntityQuery<AutoRoundEndingRuleComponent, ActiveGameRuleComponent>().Select(t => t.Item1).FirstOrDefault();
+        // If there is a MapAutoGameRule configured, prefer an active rule whose prototype ID is listed there.
+        cfg = null;
+        var active = EntityQuery<AutoRoundEndingRuleComponent, ActiveGameRuleComponent>().ToList();
+        if (active.Count == 0)
+            return false;
+
+        var mapCfg = EntityQuery<MapAutoGameRuleComponent>().FirstOrDefault();
+        if (mapCfg != null && mapCfg.Rules.Count > 0)
+        {
+            foreach (var (ruleComp, activeComp) in active)
+            {
+                if (!TryComp<MetaDataComponent>(activeComp.Owner, out var meta))
+                    continue;
+                var id = meta.EntityPrototype?.ID;
+                if (id != null && mapCfg.Rules.Contains(id))
+                {
+                    cfg = ruleComp;
+                    break;
+                }
+            }
+        }
+
+        // Fallback: first active rule
+        cfg ??= active.FirstOrDefault().Item1;
         return cfg != null;
     }
 
     private void OnRunLevelChanged(GameRunLevelChangedEvent ev)
     {
-        if (!ControllerPresent(out _))
+        // Only react to run-level changes if a rule prototype is active.
+        if (!TryGetRuleConfig(out _))
             return;
 
         switch (ev.New)
@@ -53,13 +79,39 @@ public sealed class AutoRoundEndingSystem : EntitySystem
                 _inRoundActive = true;
                 _roundStartTime = _gameTiming.CurTime;
                 _warned = false;
+                _warnedThresholds.Clear();
+                _startAnnounced = false;
                 Sawmill.Info($"[ARE] Entered InRound. Starting timer at {_roundStartTime}");
+                // Optional start announcement configured via AutoRoundEndingRule
+                if (TryGetRuleConfig(out var startCfg) && !string.IsNullOrWhiteSpace(startCfg.StartMessage))
+                {
+                    // At round start, remaining time equals the full delay
+                    var startMsg = FormatRemaining(startCfg.StartMessage, startCfg.InRoundDelay);
+                    Announce(startMsg, startCfg.SenderName);
+                    Sawmill.Info("[ARE] Start message announced from rule config.");
+                    _startAnnounced = true;
+                }
+                // Broadcast HUD info to clients
+                if (TryGetRuleConfig(out var hudCfg))
+                {
+                    var hudEv = new AutoRoundEndingHudEvent(
+                        _roundStartTime!.Value,
+                        hudCfg.InRoundDelay,
+                        string.IsNullOrWhiteSpace(hudCfg.HudLabel) ? null : hudCfg.HudLabel,
+                        hudCfg.HudIconRsi,
+                        hudCfg.HudIconState);
+                    RaiseNetworkEvent(hudEv);
+                }
                 break;
             default:
                 _inRoundActive = false;
                 _roundStartTime = null;
                 _warned = false;
+                _warnedThresholds.Clear();
+                _startAnnounced = false;
                 Sawmill.Info("[ARE] Exited InRound or reset state.");
+                // Clear HUD on clients
+                RaiseNetworkEvent(new AutoRoundEndingHudClearEvent());
                 break;
         }
     }
@@ -69,8 +121,7 @@ public sealed class AutoRoundEndingSystem : EntitySystem
         base.Update(frameTime);
 
         var hasRule = TryGetRuleConfig(out var ruleEarly);
-        var hasComp = ControllerPresent(out var comp);
-        if (!hasRule && !hasComp)
+        if (!hasRule)
             return;
 
         // Sync state in case component spawns late
@@ -81,43 +132,77 @@ public sealed class AutoRoundEndingSystem : EntitySystem
 
         var now = _gameTiming.CurTime;
         var elapsed = (float)(now - _roundStartTime.Value).TotalSeconds;
-        // Prefer rule config if present, else map component defaults
+        // Use only the active rule prototype. Without it, no announcements are allowed.
         float inRoundDelay;
         float warnThreshold;
         string sender;
-        string warnMessage = "Стороны не продвигаются в бою. До сосредоточенного авиаудара: {remaining} секунд.";
-        string endMessage = "Авиаудар нанесен. Бой окончен.";
+        string? warnMessage = null; // Only from prototype
+        string? endMessage = null;  // Only from prototype
+        List<float>? thresholdsList = null;
+        List<string>? thresholdMessages = null;
 
-        if (hasRule && ruleEarly != null)
+        inRoundDelay = ruleEarly!.InRoundDelay;
+        warnThreshold = ruleEarly.InRoundWarnThreshold;
+        sender = ruleEarly.SenderName;
+        warnMessage = string.IsNullOrWhiteSpace(ruleEarly.WarnMessage) ? null : ruleEarly.WarnMessage;
+        endMessage = string.IsNullOrWhiteSpace(ruleEarly.EndMessage) ? null : ruleEarly.EndMessage;
+        thresholdsList = ruleEarly.WarnThresholds is { Count: > 0 } ? ruleEarly.WarnThresholds : null;
+        thresholdMessages = ruleEarly.WarnMessages;
+
+        // Late start-message path: if rules were started after the event, send it once here.
+        if (!_startAnnounced && !string.IsNullOrWhiteSpace(ruleEarly.StartMessage))
         {
-            inRoundDelay = ruleEarly.InRoundDelay;
-            warnThreshold = ruleEarly.InRoundWarnThreshold;
-            sender = ruleEarly.SenderName;
-            warnMessage = ruleEarly.WarnMessage;
-            endMessage = ruleEarly.EndMessage;
-        }
-        else
-        {
-            // hasComp must be true here by earlier guard
-            inRoundDelay = comp!.InRoundDelay;
-            warnThreshold = comp.InRoundWarnThreshold;
-            sender = comp.SenderName;
+            var startMsg = FormatRemaining(ruleEarly.StartMessage, ruleEarly.InRoundDelay);
+            Announce(startMsg, ruleEarly.SenderName);
+            _startAnnounced = true;
+            Sawmill.Info("[ARE] Start message announced late from rule config.");
         }
 
         var remaining = inRoundDelay - elapsed;
 
-        if (!_warned && remaining <= warnThreshold && remaining > 0f)
+        // Multi-threshold support (prototype-configured). If provided, supersedes single-threshold logic.
+        if (thresholdsList != null && thresholdsList.Count > 0)
         {
-            Announce(FormatRemaining(warnMessage, remaining), sender);
-            _warned = true;
-            Sawmill.Info($"[ARE] Warned with {remaining:F1}s remaining.");
+            // sort descending so higher thresholds trigger earlier
+            foreach (var th in thresholdsList.OrderByDescending(t => t))
+            {
+                if (remaining <= th && remaining > 0f && !_warnedThresholds.Contains(th))
+                {
+                    string msg;
+                    if (thresholdMessages != null && thresholdMessages.Count == thresholdsList.Count)
+                    {
+                        // map message by index
+                        var idx = thresholdsList.IndexOf(th);
+                        msg = thresholdMessages[idx];
+                    }
+                    else
+                    {
+                        msg = warnMessage ?? string.Empty;
+                    }
+                    if (!string.IsNullOrWhiteSpace(msg))
+                        Announce(FormatRemaining(msg, remaining), sender);
+                    _warnedThresholds.Add(th);
+                    Sawmill.Info($"[ARE] Warned at threshold {th}s with {remaining:F1}s remaining.");
+                }
+            }
+        }
+        else
+        {
+            if (!_warned && remaining <= warnThreshold && remaining > 0f && !string.IsNullOrWhiteSpace(warnMessage))
+            {
+                Announce(FormatRemaining(warnMessage, remaining), sender);
+                _warned = true;
+                Sawmill.Info($"[ARE] Warned with {remaining:F1}s remaining.");
+            }
         }
 
         if (elapsed >= inRoundDelay)
         {
             Sawmill.Info("[ARE] InRound delay elapsed. Ending round.");
             if (!string.IsNullOrWhiteSpace(endMessage))
-                Announce(endMessage, sender);
+                Announce(endMessage!, sender);
+            // Clear HUD before ending
+            RaiseNetworkEvent(new AutoRoundEndingHudClearEvent());
             _gameTicker.EndRound();
             _inRoundActive = false;
             _roundStartTime = null;
@@ -136,14 +221,28 @@ public sealed class AutoRoundEndingSystem : EntitySystem
                     _inRoundActive = true;
                     _roundStartTime = _gameTiming.CurTime;
                     _warned = false;
+                    _startAnnounced = false;
                     Sawmill.Info($"[ARE] Sync -> InRound at {_roundStartTime}");
+                    // Also push HUD on sync in case clients joined late
+                    if (TryGetRuleConfig(out var hudCfg))
+                    {
+                        var hudEv = new AutoRoundEndingHudEvent(
+                            _roundStartTime!.Value,
+                            hudCfg.InRoundDelay,
+                            string.IsNullOrWhiteSpace(hudCfg.HudLabel) ? null : hudCfg.HudLabel,
+                            hudCfg.HudIconRsi,
+                            hudCfg.HudIconState);
+                        RaiseNetworkEvent(hudEv);
+                    }
                 }
                 break;
             default:
                 _inRoundActive = false;
                 _roundStartTime = null;
                 _warned = false;
+                _startAnnounced = false;
                 // No spam log here to reduce noise.
+                RaiseNetworkEvent(new AutoRoundEndingHudClearEvent());
                 break;
         }
     }

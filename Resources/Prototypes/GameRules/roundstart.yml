@@ -229,6 +229,7 @@
       mindRoles:
       - MindRoleTraitorReinforcement
 
+# CS TTT GAMEMODE
 - type: entity
   id: Assassin
   parent: BaseGameRule
@@ -565,14 +566,85 @@
 # Aliases used by MapAutoGameRule spawner entries
 - type: entity
   parent: BaseGameRule
-  id: AutoRoundRestartRule
+  id: AutoRoundRestartRuleCS
   name: Auto Round Restart Rule Alias
   components:
     - type: AutoRoundRestartRule
+      postRoundDelay: 15
+      postRoundWarnThreshold: 5
+      senderName: "Мировая арена"
+      warnMessage: "Конец боя через: {remaining} секунд."
+      restartMessage: "Новый раунд начинается!"
 
 - type: entity
   parent: BaseGameRule
-  id: AutoRoundEndingRule
+  id: AutoRoundEndingRuleCS
   name: Auto Round Ending Rule Alias
   components:
     - type: AutoRoundEndingRule
+      inRoundDelay: 180
+      inRoundWarnThreshold: 30
+      warnThresholds: [60, 30, 15, 5]
+      warnMessages:
+        - "До сосредоточенного авиаудара: {remaining} секунд."
+        - "Внимание! До сосредоточенного авиаудара: {remaining} секунд."
+        - "Срочно! До сосредоточенного авиаудара: {remaining} секунд."
+        - "Последние {remaining} секунд до авиаудара!"
+      senderName: "Мировая арена"
+      warnMessage: "Стороны не продвигаются в бою. До сосредоточенного авиаудара: {remaining} секунд."
+      endMessage: "Авиаудар нанесен. Бой окончен."
+      startMessage: "Бой начался"
+      hudLabel: "До авиаудара"
+      hudIconRsi: "Objects/counterstrike/Other/interface.rsi"
+      hudIconState: "cs"
+
+- type: entity
+  id: AutoRoundEndingRuleTTT
+  components:
+    - type: GameRule
+    - type: AutoRoundEndingRule
+      inRoundDelay: 180
+      inRoundWarnThreshold: 30
+      warnThresholds: [60, 30]
+      warnMessages:
+        - "До прибытия полиции: {remaining} секунд."
+        - "Внимание! До прибытия полиции: {remaining} секунд."
+        - "Срочно! До прибытия полиции: {remaining} секунд."
+        - "Последние {remaining} секунд до авиаудара!"
+      senderName: "Полиция"
+      warnMessage: "До прибытия полиции: {remaining} секунд."
+      endMessage: "Полиция прибыла."
+      startMessage: "Полиция скоро прибудет"
+      hudLabel: "До прибытия полиции"
+      hudIconRsi: "Objects/counterstrike/Other/interface.rsi"
+      hudIconState: "ttt"
+
+- type: entity
+  id: AutoRoundRestartRuleTTT
+  components:
+    - type: GameRule
+    - type: AutoRoundRestartRule
+      postRoundDelay: 15
+      postRoundWarnThreshold: 5
+      senderName: "Полиция"
+      warnMessage: "Конец раунда: {remaining} секунд."
+      restartMessage: "Новый раунд начинается!"
+
+# Roundstart sound rules (configurable sound to play at round start)
+- type: entity
+  parent: BaseGameRule
+  id: RoundstartPlaySoundCS
+  name: Roundstart Play Sound (CS)
+  components:
+  - type: RoundstartPlaySoundRule
+    sound: "/Audio/Weapons/counterstrike/other/roundstart/cs.ogg"
+    volume: 10
+
+- type: entity
+  parent: BaseGameRule
+  id: RoundstartPlaySoundTTT
+  name: Roundstart Play Sound (TTT)
+  components:
+  - type: RoundstartPlaySoundRule
+    sound: "/Audio/Weapons/counterstrike/other/roundstart/ttt.ogg"
+    volume: 10

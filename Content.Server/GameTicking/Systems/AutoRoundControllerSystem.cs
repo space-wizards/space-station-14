@@ -3,6 +3,7 @@ using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
+using Content.Server.GameTicking.Rules.Components;
 using Robust.Shared.Timing;
 
 namespace Content.Server.GameTicking.Systems;
@@ -78,6 +79,12 @@ public sealed class AutoRoundControllerSystem : EntitySystem
         if (!ControllerPresent())
             return;
 
+        // If the new GameRules are active, make this legacy controller inert to avoid duplicate messages/actions.
+        var hasEndingRule = EntityQuery<AutoRoundEndingRuleComponent, ActiveGameRuleComponent>().Any();
+        var hasRestartRule = EntityQuery<AutoRoundRestartRuleComponent, ActiveGameRuleComponent>().Any();
+        if (hasEndingRule || hasRestartRule)
+            return;
+
         // Ensure our internal state matches the current RunLevel even if the controller
         // spawned after the last RunLevel change (e.g., from station initialization).
         SyncStateWithCurrentRunLevel();
@@ -97,7 +104,8 @@ public sealed class AutoRoundControllerSystem : EntitySystem
 
             if (!_inRoundWarned && remaining <= controller.InRoundWarnThreshold && remaining > 0f)
             {
-                Announce($"Стороны не продвигаются в бою. До сосредоточенного авиаудара: {MathF.Ceiling(remaining)} секунд.", controller.SenderName);
+                if (!string.IsNullOrWhiteSpace(controller.InRoundWarnMessage))
+                    Announce(FormatRemaining(controller.InRoundWarnMessage, remaining), controller.SenderName);
                 _inRoundWarned = true;
             }
 
@@ -119,7 +127,8 @@ public sealed class AutoRoundControllerSystem : EntitySystem
 
             if (!_postRoundWarned && remaining <= controller.PostRoundWarnThreshold && remaining > 0f)
             {
-                Announce($"Авиаудар нанесен. Конец боя через: {MathF.Ceiling(remaining)} секунд!", controller.SenderName);
+                if (!string.IsNullOrWhiteSpace(controller.PostRoundWarnMessage))
+                    Announce(FormatRemaining(controller.PostRoundWarnMessage, remaining), controller.SenderName);
                 _postRoundWarned = true;
             }
 
@@ -138,6 +147,12 @@ public sealed class AutoRoundControllerSystem : EntitySystem
     {
         _chat.DispatchGlobalAnnouncement(msg, sender: sender);
         Sawmill.Info($"[AutoRoundController] {msg}");
+    }
+
+    private static string FormatRemaining(string template, float remaining)
+    {
+        var rem = MathF.Ceiling(MathF.Max(0f, remaining));
+        return template.Replace("{remaining}", rem.ToString());
     }
 
     private void SyncStateWithCurrentRunLevel()

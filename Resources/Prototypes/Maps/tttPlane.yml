@@ -1,0 +1,16 @@
+- type: gameMap
+  id: TTTplane
+  mapName: 'TTT_plane'
+  mapPath: /Maps/tttPlane.yml
+  minPlayers: 0
+  stations:
+   TTTplane:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: "Airbus A333"
+        - type: StationJobs
+          availableJobs:
+            CargoTechnician: [ -1, -1 ]
+            Quartermaster: [-1, -1 ]
+

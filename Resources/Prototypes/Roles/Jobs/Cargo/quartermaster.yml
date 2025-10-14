@@ -6,44 +6,32 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobCargoTechnician
-      time: 18000 #5 hrs
+      time: 0 #5 hrs
     - !type:RoleTimeRequirement
       role: JobSalvageSpecialist
-      time: 9000 #2.5 hrs
+      time: 0 #2.5 hrs
     - !type:DepartmentTimeRequirement
       department: Cargo
-      time: 36000 #10 hours
+      time: 0 #10 hours
   weight: 10
   startingGear: QuartermasterGear
   icon: "JobIconQuarterMaster"
   supervisors: job-supervisors-captain
   canBeAntag: false
+  accessGroups:
+  - AllAccess
   access:
-  - Cargo
-  - Salvage
-  - Quartermaster
-  - Maintenance
-  - External
-  - Command
-  - Brig
-  - Cryogenics
-  special:
-  - !type:AddImplantSpecial
-    implants: [ MindShieldImplant ]
-  - !type:AddComponentSpecial
-    components:
-      - type: CommandStaff
+  - CentralCommand
 
 - type: startingGear
   id: QuartermasterGear
   equipment:
-    id: QuartermasterPDA
-    ears: ClothingHeadsetQM
-    belt: BoxFolderClipboard
-    pocket1: AppraisalTool
-  storage:
-    back:
-    - Flash
+    id: PassengerPDA
+    ears: ClothingHeadsetService
+    outerClothing: ClothingOuterVestWebMerc
+    pocket1: WeaponPistolFiveseven
+    pocket2: MagazinePistolHighCapacity
+    shoes: ClothingShoesColorBlack
 
 - type: chameleonOutfit
   id: QuartermasterChameleonOutfit

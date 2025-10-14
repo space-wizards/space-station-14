@@ -56,7 +56,7 @@ public sealed class AutoRoundEndingRuleSystem : GameRuleSystem<AutoRoundEndingRu
 
         if (!_notified && secondsLeft <= 5f && secondsLeft > 0f)
         {
-            NotifyPlayers($"Авиаудар нанесен. Конец боя через: {MathF.Ceiling(secondsLeft)} секунд!");
+            // Announcement disabled: handled by prototype-driven systems.
             _notified = true;
         }
 
@@ -74,13 +74,13 @@ public sealed class AutoRoundEndingRuleSystem : GameRuleSystem<AutoRoundEndingRu
         _roundEnded = true;
         _roundEndTime = _gameTiming.CurTime;
         _notified = false;
-        NotifyPlayers($"Сосредоточенный авиаудар через: {_restartDelay} секунд.");
+        // Announcement disabled: handled by prototype-driven systems.
     }
 
     private void NotifyPlayers(string message)
     {
-        _chatSystem.DispatchGlobalAnnouncement(message, sender: "Мировая арена");
-        Sawmill.Info($"[AutoRoundRestart] {message}");
+        // Disabled: announcements must be driven by prototype-based systems (AutoRoundEnding/Restart systems).
+        // Intentionally no chat dispatch and no message echo here to avoid hardcoded phrases.
     }
 
     private void RestartRound()

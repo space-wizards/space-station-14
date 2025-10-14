@@ -63,3 +63,30 @@
     sprite: Objects/counterstrike/Clothing/Uniform/bdsm.rsi
   - type: Clothing
     sprite: Objects/counterstrike/Clothing/Uniform/bdsm.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCity17
+  name: City 17 uniform
+  description: Combine-enforced city uniform.
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Uniform/city17.rsi
+    layers:
+    - state: icon
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Uniform/city17.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: blue
+        map: [ "base" ]
+  - type: RandomSprite
+    available:
+      - base:
+          blue: ""
+          red: ""
+          green: ""
+          yellow: ""
+          pink: ""
+          purple: ""
+          cyan: ""

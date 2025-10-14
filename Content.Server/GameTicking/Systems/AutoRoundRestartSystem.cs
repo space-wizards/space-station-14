@@ -22,6 +22,7 @@ public sealed class AutoRoundRestartSystem : EntitySystem
     private TimeSpan? _roundEndTime;
     private bool _postRoundActive;
     private bool _warned;
+    private readonly HashSet<float> _warnedThresholds = new();
 
     public override void Initialize()
     {
@@ -37,13 +38,37 @@ public sealed class AutoRoundRestartSystem : EntitySystem
 
     private bool TryGetRuleConfig([NotNullWhen(true)] out AutoRoundRestartRuleComponent? cfg)
     {
-        cfg = EntityQuery<AutoRoundRestartRuleComponent, ActiveGameRuleComponent>().Select(t => t.Item1).FirstOrDefault();
+        // Prefer an active rule whose prototype ID is present in the current map's MapAutoGameRule rules.
+        cfg = null;
+        var active = EntityQuery<AutoRoundRestartRuleComponent, ActiveGameRuleComponent>().ToList();
+        if (active.Count == 0)
+            return false;
+
+        var mapCfg = EntityQuery<MapAutoGameRuleComponent>().FirstOrDefault();
+        if (mapCfg != null && mapCfg.Rules.Count > 0)
+        {
+            foreach (var (ruleComp, activeComp) in active)
+            {
+                if (!TryComp<MetaDataComponent>(activeComp.Owner, out var meta))
+                    continue;
+                var id = meta.EntityPrototype?.ID;
+                if (id != null && mapCfg.Rules.Contains(id))
+                {
+                    cfg = ruleComp;
+                    break;
+                }
+            }
+        }
+
+        // Fallback to first active rule if none matched.
+        cfg ??= active.FirstOrDefault().Item1;
         return cfg != null;
     }
 
     private void OnRunLevelChanged(GameRunLevelChangedEvent ev)
     {
-        if (!ControllerPresent(out _))
+        // Only react if an AutoRoundRestartRule prototype is active.
+        if (!TryGetRuleConfig(out _))
             return;
 
         switch (ev.New)
@@ -52,11 +77,13 @@ public sealed class AutoRoundRestartSystem : EntitySystem
                 _postRoundActive = true;
                 _roundEndTime = _gameTiming.CurTime;
                 _warned = false;
+                _warnedThresholds.Clear();
                 break;
             default:
                 _postRoundActive = false;
                 _roundEndTime = null;
                 _warned = false;
+                _warnedThresholds.Clear();
                 break;
         }
     }
@@ -66,8 +93,7 @@ public sealed class AutoRoundRestartSystem : EntitySystem
         base.Update(frameTime);
 
         var hasRule = TryGetRuleConfig(out var ruleEarly);
-        var hasComp = ControllerPresent(out var comp);
-        if (!hasRule && !hasComp)
+        if (!hasRule)
             return;
 
         // Sync state in case component spawns late
@@ -78,41 +104,61 @@ public sealed class AutoRoundRestartSystem : EntitySystem
 
         var now = _gameTiming.CurTime;
         var elapsed = (float)(now - _roundEndTime.Value).TotalSeconds;
-        // Prefer rule config if present
+        // Use only the active rule prototype. Without it, no announcements are allowed.
         float postDelay;
         float warnThreshold;
         string sender;
-        string warnMessage = "Авиаудар нанесен. Конец боя через: {remaining} секунд!";
-        string restartMessage = "Новый раунд начинается!";
+        string? warnMessage = null;    // Only from prototype
+        string? restartMessage = null; // Only from prototype
+        List<float>? thresholdsList = null;
+        List<string>? thresholdMessages = null;
 
-        if (hasRule && ruleEarly != null)
-        {
-            postDelay = ruleEarly.PostRoundDelay;
-            warnThreshold = ruleEarly.PostRoundWarnThreshold;
-            sender = ruleEarly.SenderName;
-            warnMessage = ruleEarly.WarnMessage;
-            restartMessage = ruleEarly.RestartMessage;
-        }
-        else
-        {
-            // hasComp must be true here by earlier guard
-            postDelay = comp!.PostRoundDelay;
-            warnThreshold = comp.PostRoundWarnThreshold;
-            sender = comp.SenderName;
-        }
+        postDelay = ruleEarly!.PostRoundDelay;
+        warnThreshold = ruleEarly.PostRoundWarnThreshold;
+        sender = ruleEarly.SenderName;
+        warnMessage = string.IsNullOrWhiteSpace(ruleEarly.WarnMessage) ? null : ruleEarly.WarnMessage;
+        restartMessage = string.IsNullOrWhiteSpace(ruleEarly.RestartMessage) ? null : ruleEarly.RestartMessage;
+        thresholdsList = ruleEarly.WarnThresholds is { Count: > 0 } ? ruleEarly.WarnThresholds : null;
+        thresholdMessages = ruleEarly.WarnMessages;
 
         var remaining = postDelay - elapsed;
 
-        if (!_warned && remaining <= warnThreshold && remaining > 0f)
+        // Multi-threshold support like ending system
+        if (thresholdsList != null && thresholdsList.Count > 0)
         {
-            Announce(FormatRemaining(warnMessage, remaining), sender);
-            _warned = true;
+            foreach (var th in thresholdsList.OrderByDescending(t => t))
+            {
+                if (remaining <= th && remaining > 0f && !_warnedThresholds.Contains(th))
+                {
+                    string msg;
+                    if (thresholdMessages != null && thresholdMessages.Count == thresholdsList.Count)
+                    {
+                        var idx = thresholdsList.IndexOf(th);
+                        msg = thresholdMessages[idx];
+                    }
+                    else
+                    {
+                        msg = warnMessage ?? string.Empty;
+                    }
+                    if (!string.IsNullOrWhiteSpace(msg))
+                        Announce(FormatRemaining(msg, remaining), sender);
+                    _warnedThresholds.Add(th);
+                }
+            }
+        }
+        else
+        {
+            if (!_warned && remaining <= warnThreshold && remaining > 0f && !string.IsNullOrWhiteSpace(warnMessage))
+            {
+                Announce(FormatRemaining(warnMessage!, remaining), sender);
+                _warned = true;
+            }
         }
 
         if (elapsed >= postDelay)
         {
             if (!string.IsNullOrWhiteSpace(restartMessage))
-                Announce(restartMessage, sender);
+                Announce(restartMessage!, sender);
             _gameTicker.RestartRound();
             _postRoundActive = false;
             _roundEndTime = null;

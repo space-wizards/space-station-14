@@ -62,9 +62,9 @@ public sealed class AutoRoundRestartRuleSystem : GameRuleSystem<AutoRoundRestart
         var timeSinceStart = _gameTiming.CurTime - _roundStartTime.Value; // время с начала рунда
         var secondsLeft = _restartDelay - (float)timeSinceStart.TotalSeconds; //время до рестарта
 
+        // Уведомление на 30 секунд отключено (сообщения теперь задаются в прототипах других правил)
         if (!_notified && secondsLeft <= 30f && secondsLeft > 0f)
         {
-            NotifyPlayers($"Стороны не продвигаются в бою. До сосредоточенного авиаудара: { MathF.Ceiling(secondsLeft)} секунд."); //уведомление
             _notified = true;
         }
 
@@ -80,13 +80,13 @@ public sealed class AutoRoundRestartRuleSystem : GameRuleSystem<AutoRoundRestart
         _roundStarted = true;
         _roundStartTime = _gameTiming.CurTime;
         _notified = false;
-        NotifyPlayers($"Бой начался. До сосредоточенного авиаудара: {_restartDelay} секунд");
+        // Стартовое сообщение отключено. Старт уведомлений и логов не отправляется.
     }
 
     private void NotifyPlayers(string message) //уведомление
     {
-        _chatSystem.DispatchGlobalAnnouncement(message, sender: "Мировая арена");
-        Sawmill.Info($"[AutoRoundRestart] {message}");
+        // Disabled: announcements must be driven by prototype-based systems (AutoRoundEnding/Restart systems).
+        // Intentionally no chat dispatch and no message echo here to avoid hardcoded phrases.
     }
 
     private void RestartRound() //отвечает за перезапуск раунда

@@ -162,31 +162,13 @@
 - type: roleLoadout
   id: JobQuartermaster
   groups:
-  - GroupTankHarness
-  - QuartermasterHead
-  - QuartermasterNeck
   - QuartermasterJumpsuit
-  - CargoTechnicianBackpack
-  - QuartermasterOuterClothing
-  - QuartermasterShoes
-  - Glasses
-  - Survival
-  - Trinkets
-  - GroupSpeciesBreathTool
 
 - type: roleLoadout
   id: JobCargoTechnician
   groups:
-  - GroupTankHarness
-  - CargoTechnicianHead
   - CargoTechnicianJumpsuit
-  - CargoTechnicianBackpack
-  - CargoTechnicianOuterClothing
   - CargoTechnicianShoes
-  - Glasses
-  - Survival
-  - Trinkets
-  - GroupSpeciesBreathTool
 
 - type: roleLoadout
   id: JobSalvageSpecialist

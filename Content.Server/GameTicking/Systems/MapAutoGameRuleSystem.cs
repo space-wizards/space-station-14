@@ -22,6 +22,8 @@ public sealed class MapAutoGameRuleSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
+        // Process current level in case this system initializes mid-round
+        HandleLevel(_gameTicker.RunLevel);
     }
 
     private bool TryGetConfig([NotNullWhen(true)] out MapAutoGameRuleComponent? comp)
@@ -32,14 +34,20 @@ public sealed class MapAutoGameRuleSystem : EntitySystem
 
     private void OnRunLevelChanged(GameRunLevelChangedEvent ev)
     {
+        HandleLevel(ev.New);
+    }
+
+    private void HandleLevel(GameRunLevel level)
+    {
         if (!TryGetConfig(out var comp))
             return;
 
-        switch (ev.New)
+        switch (level)
         {
             case GameRunLevel.PreRoundLobby:
                 if (!_added && comp.AddInLobby)
                 {
+                    Sawmill.Info($"[MAGR] Adding rules in lobby: [{string.Join(", ", comp.Rules)}]");
                     foreach (var id in comp.Rules)
                     {
                         _gameTicker.AddGameRule(id);
@@ -53,6 +61,17 @@ public sealed class MapAutoGameRuleSystem : EntitySystem
             case GameRunLevel.InRound:
                 if (!_started && comp.StartOnRoundStart)
                 {
+                    // If rules weren't added in lobby (e.g., map loaded mid-round), try to add them now before starting.
+                    if (!_added)
+                    {
+                        Sawmill.Info($"[MAGR] Late-adding rules at InRound: [{string.Join(", ", comp.Rules)}]");
+                        foreach (var id in comp.Rules)
+                        {
+                            _gameTicker.AddGameRule(id);
+                            Sawmill.Info($"[MAGR] Late-added rule '{id}'.");
+                        }
+                        _added = true;
+                    }
                     foreach (var id in comp.Rules)
                     {
                         _gameTicker.StartGameRule(id);

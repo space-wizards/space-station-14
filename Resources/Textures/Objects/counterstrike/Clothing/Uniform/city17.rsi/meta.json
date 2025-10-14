@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by legendaghetto",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "blue",
+      "directions": 4
+    },
+    {
+      "name": "red",
+      "directions": 4
+    },
+    {
+      "name": "green",
+      "directions": 4
+    },
+    {
+      "name": "yellow",
+      "directions": 4
+    },
+    {
+      "name": "pink",
+      "directions": 4
+    },
+    {
+      "name": "purple",
+      "directions": 4
+    },
+    {
+      "name": "cyan",
+      "directions": 4
+    }
+  ]
+}

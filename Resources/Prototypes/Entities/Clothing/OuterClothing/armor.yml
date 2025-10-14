@@ -216,9 +216,9 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.7 #slightly better overall protection but slightly worse than bulletproof armor against bullets seems sensible
-        Slash: 0.7
-        Piercing: 0.5
+        Blunt: 0.8 #slightly better overall protection but slightly worse than bulletproof armor against bullets seems sensible
+        Slash: 0.8
+        Piercing: 0.7
         Heat: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.9
