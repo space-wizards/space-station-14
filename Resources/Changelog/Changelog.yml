@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: spanky-spanky
-  changes:
-  - message: Secret door sprites now display correctly when facing all directions.
-    type: Fix
-  id: 8591
-  time: '2025-05-30T18:11:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37914
 - author: ArtisticRoomba
   changes:
   - message: The TEG now shows its capable peak power output on inspect, making it
@@ -3943,3 +3936,11 @@
   id: 9093
   time: '2025-10-14T04:21:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40842
+- author: MilenVolf
+  changes:
+  - message: Fixed some physics bugs that could cause the grappling hook to teleport
+      entities.
+    type: Fix
+  id: 9094
+  time: '2025-10-14T10:35:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40899
