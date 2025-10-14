@@ -12,13 +12,11 @@ public sealed class FeedbackPopupMessage : NetMessage
 {
     public override MsgGroups MsgGroup => MsgGroups.Command;
 
-    /**
-     * <summary>
-     * When true, the popup prototypes specified in this message will be removed from the client's list of feedback popups.
-     * If no prototypes are specified, all popups will be removed.
-     * </summary>
-     * <remarks>If this is false and the list of prototypes is empty, the message will be ignored</remarks>
-     */
+    /// <summary>
+    /// When true, the popup prototypes specified in this message will be removed from the client's list of feedback popups.
+    /// If no prototypes are specified, all popups will be removed.
+    /// </summary>
+    /// <remarks>If this is false and the list of prototypes is empty, the message will be ignored</remarks>
     public bool Remove { get; set; }
     public List<ProtoId<FeedbackPopupPrototype>>? FeedbackPrototypes;
     public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)

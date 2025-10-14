@@ -5,47 +5,18 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.FeedbackSystem;
 
-public sealed partial class SharedFeedbackManager : IDisposable
+/// <summary>
+/// SharedFeedbackManager handles feedback popup management and distribution across sessions.
+/// It manages the state of displayed popups and provides mechanisms for opening, displaying, removing,
+/// and sending popups to specified sessions or all sessions.
+/// </summary>
+public interface ISharedFeedbackManager
 {
-    [Dependency] private readonly ISharedPlayerManager _player = null!;
-    [Dependency] private readonly IPrototypeManager _proto = null!;
-    [Dependency] private readonly INetManager _netManager = null!;
-
     /// <summary>
     /// An event that is triggered whenever the set of displayed feedback popups changes.<br/>
     /// The boolean parameter is true if new popups have been added
     /// </summary>
-    public event Action<bool>? DisplayedPopupsChanged;
-
-    /// <summary>
-    /// A read-only set representing the currently displayed feedback popups.
-    /// </summary>
-    /// <remarks>This shouldn't be used on the server</remarks>
-    public IReadOnlySet<ProtoId<FeedbackPopupPrototype>> DisplayedPopups => _displayedPopups;
-
-    private readonly HashSet<ProtoId<FeedbackPopupPrototype>> _displayedPopups = [];
-
-    private List<string> _validOrigins = [];
-
-    public void Initialize()
-    {
-        _netManager.RegisterNetMessage<FeedbackPopupMessage>(ReceivedPopupMessage, NetMessageAccept.Client);
-        _netManager.RegisterNetMessage<OpenFeedbackPopupMessage>(_ => Open(), NetMessageAccept.Client);
-        InitSubscriptions();
-    }
-
-    public void Dispose()
-    {
-        DisposeSubscriptions();
-    }
-
-    /// <summary>
-    /// Opens the feedback popup window.
-    /// </summary>
-    public void Open()
-    {
-        DisplayedPopupsChanged?.Invoke(true);
-    }
+    event Action<bool>? DisplayedPopupsChanged;
 
     /// <summary>
     /// Adds the specified popup prototypes to the displayed popups on the client..
@@ -56,15 +27,7 @@ public sealed partial class SharedFeedbackManager : IDisposable
     /// <br/>
     /// Use this if you want to add a popup from a shared or client-side entity system.
     /// </remarks>
-    public void Display(List<ProtoId<FeedbackPopupPrototype>>? prototypes)
-    {
-        if (prototypes == null || !_netManager.IsClient)
-            return;
-
-        var count = _displayedPopups.Count;
-        _displayedPopups.UnionWith(prototypes);
-        DisplayedPopupsChanged?.Invoke(_displayedPopups.Count > count);
-    }
+    void Display(List<ProtoId<FeedbackPopupPrototype>>? prototypes) {}
 
     /// <summary>
     /// Removes the specified popup prototypes from the displayed popups on the client.
@@ -72,22 +35,7 @@ public sealed partial class SharedFeedbackManager : IDisposable
     /// <param name="prototypes">A list of popup prototype IDs to be removed from the displayed prototypes.
     /// If null, all displayed popups will be cleared.</param>
     /// <remarks>This does nothing on the server.</remarks>
-    public void Remove(List<ProtoId<FeedbackPopupPrototype>>? prototypes)
-    {
-        if (!_netManager.IsClient)
-            return;
-
-        if (prototypes == null)
-        {
-            _displayedPopups.Clear();
-        }
-        else
-        {
-            _displayedPopups.ExceptWith(prototypes);
-        }
-
-        DisplayedPopupsChanged?.Invoke(false);
-    }
+    void Remove(List<ProtoId<FeedbackPopupPrototype>>? prototypes) {}
 
     /// <summary>
     /// Sends a list of feedback popup prototypes to a specific entity, identified by its EntityUid.
@@ -96,13 +44,9 @@ public sealed partial class SharedFeedbackManager : IDisposable
     /// <param name="popupPrototypes">The list of feedback popup prototypes to send to the entity.</param>
     /// <returns>Returns true if the feedback popups were successfully sent, otherwise false.</returns>
     /// <remarks>This does nothing on the client.</remarks>
-    public bool Send(EntityUid uid, List<ProtoId<FeedbackPopupPrototype>> popupPrototypes)
+    bool Send(EntityUid uid, List<ProtoId<FeedbackPopupPrototype>> popupPrototypes)
     {
-        if (!_player.TryGetSessionByEntity(uid, out var session))
-            return false;
-
-        SendToSession(session, popupPrototypes);
-        return true;
+        return false;
     }
 
     /// <summary>
@@ -112,19 +56,7 @@ public sealed partial class SharedFeedbackManager : IDisposable
     /// <param name="popupPrototypes">A list of feedback popup prototype IDs to send to the session.</param>
     /// <param name="remove">When true, removes the specified prototypes instead of adding them</param>
     /// <remarks>This does nothing on the client.</remarks>
-    public void SendToSession(ICommonSession session, List<ProtoId<FeedbackPopupPrototype>> popupPrototypes, bool remove = false)
-    {
-        if (!_netManager.IsServer)
-            return;
-
-        var msg = new FeedbackPopupMessage
-        {
-            FeedbackPrototypes = popupPrototypes,
-            Remove = remove,
-        };
-
-        _netManager.ServerSendMessage(msg, session.Channel);
-    }
+    void SendToSession(ICommonSession session, List<ProtoId<FeedbackPopupPrototype>> popupPrototypes, bool remove = false) {}
 
     /// <summary>
     /// Sends the specified feedback popup prototypes to all connected client sessions.
@@ -132,46 +64,65 @@ public sealed partial class SharedFeedbackManager : IDisposable
     /// <param name="popupPrototypes">A list of popup prototype IDs to be sent to all connected sessions.</param>
     /// <param name="remove">When true, removes the specified prototypes instead of adding them</param>
     /// <remarks>This does nothing on the client.</remarks>
-    public void SendToAllSessions(List<ProtoId<FeedbackPopupPrototype>> popupPrototypes, bool remove = false)
-    {
-        if (!_netManager.IsServer)
-            return;
-
-        var msg = new FeedbackPopupMessage
-        {
-            FeedbackPrototypes = popupPrototypes,
-            Remove = remove,
-        };
-
-        _netManager.ServerSendToAll(msg);
-    }
+    void SendToAllSessions(List<ProtoId<FeedbackPopupPrototype>> popupPrototypes, bool remove = false) {}
 
     /// <summary>
     /// Opens the feedback popup for a specific session.
     /// </summary>
     /// <param name="session">The session for which the feedback popup should be opened.</param>
     /// <remarks>This does nothing on the client.</remarks>
-    public void OpenForSession(ICommonSession session)
-    {
-        if (!_netManager.IsServer)
-            return;
-
-        var msg = new OpenFeedbackPopupMessage();
-        _netManager.ServerSendMessage(msg, session.Channel);
-    }
+    void OpenForSession(ICommonSession session) {}
 
     /// <summary>
     /// Opens the feedback popup for all connected sessions.
     /// </summary>
     /// <remarks>This does nothing on the client.</remarks>
-    public void OpenForAllSessions()
-    {
-        if (!_netManager.IsServer)
-            return;
+    void OpenForAllSessions() {}
+}
 
-        var msg = new OpenFeedbackPopupMessage();
-        _netManager.ServerSendToAll(msg);
+/// <inheritdoc cref="ISharedFeedbackManager" />
+public abstract partial class SharedFeedbackManager : ISharedFeedbackManager
+{
+    [Dependency] private readonly IPrototypeManager _proto = null!;
+    [Dependency] protected readonly INetManager NetManager = null!;
+
+
+    public virtual IReadOnlySet<ProtoId<FeedbackPopupPrototype>>? DisplayedPopups => null;
+
+    // <inheritdoc />
+    public event Action<bool>? DisplayedPopupsChanged;
+
+    private List<string> _validOrigins = [];
+
+    [MustCallBase]
+    public virtual void Initialize()
+    {
+        InitSubscriptions();
     }
+
+    /// <inheritdoc />
+    public virtual void Display(List<ProtoId<FeedbackPopupPrototype>>? prototypes) {}
+
+    /// <inheritdoc />
+    public virtual void Remove(List<ProtoId<FeedbackPopupPrototype>>? prototypes) {}
+
+    /// <inheritdoc />
+    public virtual bool Send(EntityUid uid, List<ProtoId<FeedbackPopupPrototype>> popupPrototypes)
+    {
+        return false;
+    }
+
+    /// <inheritdoc />
+    public virtual void SendToSession(ICommonSession session, List<ProtoId<FeedbackPopupPrototype>> popupPrototypes, bool remove = false) {}
+
+    /// <inheritdoc />
+    public virtual void SendToAllSessions(List<ProtoId<FeedbackPopupPrototype>> popupPrototypes, bool remove = false) {}
+
+    /// <inheritdoc />
+    public virtual void OpenForSession(ICommonSession session) {}
+
+    /// <inheritdoc />
+    public virtual void OpenForAllSessions() {}
 
     /// <summary>
     /// Get a list of feedback prototypes that match the current valid origins.
@@ -189,14 +140,8 @@ public sealed partial class SharedFeedbackManager : IDisposable
         return feedbackProtypes;
     }
 
-    private void ReceivedPopupMessage(FeedbackPopupMessage message)
+    protected void InvokeDisplayedPopupsChanged(bool show)
     {
-        if (message.Remove)
-        {
-            Remove(message.FeedbackPrototypes);
-            return;
-        }
-
-        Display(message.FeedbackPrototypes);
+        DisplayedPopupsChanged?.Invoke(show);
     }
 }

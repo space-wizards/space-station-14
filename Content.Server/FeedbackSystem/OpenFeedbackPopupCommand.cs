@@ -5,13 +5,13 @@ using Robust.Shared.Toolshed;
 namespace Content.Server.FeedbackSystem;
 
 /// <summary>
-/// Open the feedback popup window
+/// Opens the feedback popup window for the executing session
 /// </summary>
 [AnyCommand]
 [ToolshedCommand]
 public sealed class OpenFeedbackPopupCommand : ToolshedCommand
 {
-    [Dependency] private readonly SharedFeedbackManager _feedback = null!;
+    [Dependency] private readonly ISharedFeedbackManager _feedback = null!;
 
     [CommandImplementation]
     public void Execute(IInvocationContext context)

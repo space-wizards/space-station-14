@@ -7,11 +7,14 @@ using Robust.Shared.Toolshed;
 
 namespace Content.Server.FeedbackSystem;
 
+/// <summary>
+/// Adds, removes, and displays feedback for specified sessions.
+/// </summary>
 [ToolshedCommand]
-[AdminCommand(AdminFlags.Server)]
+[AdminCommand(AdminFlags.Debug)]
 public sealed class FeedbackCommand : ToolshedCommand
 {
-    [Dependency] private readonly SharedFeedbackManager _feedback = null!;
+    [Dependency] private readonly ISharedFeedbackManager _feedback = null!;
 
     [CommandImplementation("show")]
     public void ExecuteShow([CommandArgument] ICommonSession session)
