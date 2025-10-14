@@ -24,14 +24,14 @@ namespace Content.Server.Administration.Commands
         {
             if (args.Length < 4)
             {
-                shell.WriteLine(Loc.GetString("cmd-addreagent-not-enough-args"));
+                shell.WriteLine(Loc.GetString("shell-need-minimum-arguments", ("minimum", 4)));
                 shell.WriteLine(Help);
                 return;
             }
 
             if (!NetEntity.TryParse(args[0], out var uidNet) || !_entManager.TryGetEntity(uidNet, out var uid))
             {
-                shell.WriteLine(Loc.GetString("cmd-addreagent-invalid-id"));
+                shell.WriteLine(Loc.GetString("shell-invalid-entity-uid", ("uid", args[0])));
                 return;
             }
 
