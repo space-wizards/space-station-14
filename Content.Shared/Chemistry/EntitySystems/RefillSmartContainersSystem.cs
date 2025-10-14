@@ -143,7 +143,7 @@ public sealed class RefillSmartContainersSystem : EntitySystem
         Entity<SmartSolutionContainerComponent> smartEntity, EntityUid user)
     {
         _popup.PopupClient(
-            Loc.GetString(TryRefill(refillComp, smartEntity) ? "successful-singular-refill" : "failed-refill"), user);
+            Loc.GetString(TryRefill(refillComp, smartEntity) ? "refiller-successful-singular-refill" : "refiller-failed-refill"), user);
     }
 
     private void RefillStorage(RefillSmartContainersComponent refillComp, StorageComponent storageComp, EntityUid user)
@@ -168,7 +168,7 @@ public sealed class RefillSmartContainersSystem : EntitySystem
         // None succeeded.
         else if (refillFailed)
             _popup.PopupClient(Loc.GetString("refiller-failed-refill"), user);
-        // No smart containers in belt.
+        // No smart containers in storage item.
         else
             _popup.PopupClient(Loc.GetString("refiller-no-smart-containers-in-storage"), user);
     }
