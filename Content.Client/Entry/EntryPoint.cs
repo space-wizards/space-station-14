@@ -3,6 +3,7 @@ using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
 using Content.Client.DebugMon;
 using Content.Client.Eui;
+using Content.Client.FeedbackPopup;
 using Content.Client.Fullscreen;
 using Content.Client.GameTicking.Managers;
 using Content.Client.GhostKick;
@@ -77,7 +78,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly TitleWindowManager _titleWindowManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private readonly ClientsidePlaytimeTrackingManager _clientsidePlaytimeManager = default!;
-        [Dependency] private readonly SharedFeedbackManager _feedbackManager = null!;
+        [Dependency] private readonly ClientFeedbackManager _feedbackManager = null!;
 
         public override void PreInit()
         {
@@ -156,7 +157,6 @@ namespace Content.Client.Entry
         public override void Shutdown()
         {
             base.Shutdown();
-            _feedbackManager.Dispose();
             _titleWindowManager.Shutdown();
         }
 

@@ -10,17 +10,16 @@ namespace Content.Client.FeedbackPopup;
 [GenerateTypedNameReferences]
 public sealed partial class FeedbackEntry : Control
 {
-    [Dependency] private readonly IPrototypeManager _proto = null!;
-    [Dependency] private readonly IUriOpener _uri = null!;
+    private readonly IUriOpener _uri;
 
     private readonly FeedbackPopupPrototype? _prototype;
 
-    public FeedbackEntry(ProtoId<FeedbackPopupPrototype> popupProto)
+    public FeedbackEntry(ProtoId<FeedbackPopupPrototype> popupProto, IPrototypeManager proto, IUriOpener uri)
     {
         RobustXamlLoader.Load(this);
-        IoCManager.InjectDependencies(this);
+        _uri = uri;
 
-        _prototype = _proto.Index(popupProto);
+        _prototype = proto.Index(popupProto);
 
         // Title
         TitleLabel.Text = _prototype.Title;

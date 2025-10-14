@@ -1,9 +1,8 @@
 using Content.Shared.FeedbackSystem;
 using Content.Shared.GameTicking;
 using Robust.Client.UserInterface.Controllers;
-using Robust.Shared.Input.Binding;
-using Content.Shared.Input;
 using JetBrains.Annotations;
+using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.FeedbackPopup;
@@ -14,13 +13,15 @@ namespace Content.Client.FeedbackPopup;
 [UsedImplicitly]
 public sealed class FeedbackPopupUIController : UIController
 {
-    [Dependency] private readonly SharedFeedbackManager _feedbackManager = null!;
+    [Dependency] private readonly ClientFeedbackManager _feedbackManager = null!;
+    [Dependency] private readonly IPrototypeManager _proto = null!;
+    [Dependency] private readonly IUriOpener _uri = null!;
 
     private FeedbackPopupWindow _window = null!;
 
     public override void Initialize()
     {
-        _window = UIManager.CreateWindow<FeedbackPopupWindow>();
+        _window = new FeedbackPopupWindow(_proto, _uri);
 
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
         SubscribeNetworkEvent<RoundEndMessageEvent>(OnRoundEnd);
