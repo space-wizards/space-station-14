@@ -16,12 +16,15 @@ public sealed partial class BwoinkPanel : BoxContainer
     private List<string> PeopleTyping { get; set; } = [];
     public event Action<string>? InputTextChanged;
     public event Action<string>? MessageSent;
+    private BwoinkChannelPrototype _channel;
 
     public BwoinkPanel(BwoinkWindow parentWindow, BwoinkChannelPrototype channel, ClientBwoinkManager clientBwoinkManager)
     {
         RobustXamlLoader.Load(this);
         // TODO: dont use static Loc for this.
         Name = Loc.GetString(channel.Name);
+
+        _channel = channel;
 
         var helpText = new FormattedMessage(1);
         helpText.AddMarkupOrThrow(Loc.GetString(channel.HelpText));
@@ -61,6 +64,11 @@ public sealed partial class BwoinkPanel : BoxContainer
     public void UpdateAllLines(List<BwoinkMessage> messages)
     {
         TextOutput.Clear();
+
+        // TODO: dont use static Loc for this.
+        var helpText = new FormattedMessage(1);
+        helpText.AddMarkupOrThrow(Loc.GetString(_channel.HelpText));
+        TextOutput.AddMessage(helpText);
 
         foreach (var message in messages)
         {
