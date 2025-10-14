@@ -191,7 +191,7 @@ public sealed record BwoinkMessage(string Sender, NetUserId? SenderId, DateTime 
 public delegate void EventHandler<in TSender, in TArgs>(TSender sender, TArgs args);
 
 [Flags]
-public enum MessageFlags
+public enum MessageFlags : byte
 {
     None = 0,
 
