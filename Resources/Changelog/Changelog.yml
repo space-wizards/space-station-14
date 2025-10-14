@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Priority mail now grants slightly more spesos if delivered on time, and
-      slightly less if done otherwise.
-    type: Tweak
-  - message: Bomb mail now explodes way after and deals slightly more damage.
-    type: Tweak
-  id: 8595
-  time: '2025-06-01T04:28:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37986
 - author: TheFlyingSentry
   changes:
   - message: Added a new disability called Monochromacy, total colorblindness.
@@ -3943,3 +3933,10 @@
   id: 9097
   time: '2025-10-14T18:27:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40896
+- author: B_Kirill
+  changes:
+  - message: Fixed blocked rotation of zombie NPCs.
+    type: Fix
+  id: 9098
+  time: '2025-10-14T19:12:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40812
