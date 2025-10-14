@@ -638,71 +638,71 @@
 ## G ##
 
 - type: Tag
-  id: Galaxythistle
+  id: Galaxythistle # CargoBounty: BountyGalaxyThistle
 
 - type: Tag
-  id: GasScrubber
+  id: GasScrubber # Used by AtmosAlarmableComponent for syncing devices.
 
 - type: Tag
-  id: GasTank
+  id: GasTank # Unused (Exists on GasTankBase)
 
 - type: Tag
-  id: GasVent
+  id: GasVent # Used by AtmosAlarmableComponent for syncing devices.
 
 - type: Tag
-  id: Gauze
+  id: Gauze # Storage whitelist: ClothingBeltMedical
 
 - type: Tag
-  id: GeigerCounter
+  id: GeigerCounter # Storage whitelist: BaseClothingBeltEngineering
 
 # Used for warps
 - type: Tag
   id: GhostOnlyWarp
 
 - type: Tag
-  id: GenderPin
+  id: GenderPin # ChameleonClothing key.
 
 - type: Tag
-  id: GlassAirlock
+  id: GlassAirlock # Used in ConstructionGraph "Airlock" to navigate between regular, glass, and highsec airlocks.
 
 - type: Tag
-  id: GlassBeaker
+  id: GlassBeaker # This tag exists for the purpose of being a common ingredient in the construction of various machines.
 
 - type: Tag
-  id: GlassShard
+  id: GlassShard # ConstructionGraph: BladedFlatcapBrown, BladedFlatcapGrey, ImprovisedArrow, ImprovisedShotgunShellGraph, Shiv, Spear
 
 - type: Tag
-  id: Goat
+  id: Goat # Reproductive partner key
 
 - type: Tag
-  id: GoldenPlunger
+  id: GoldenPlunger # Storage whitelist: JanitorialTrolley. ItemMapper: JanitorialTrolley
 
 - type: Tag
-  id: Goliath
+  id: Goliath # Blacklist on GoliathTentacle to prevent tagged entity from getting stunned (by itself)
 
 - type: Tag
-  id: GoliathPlate
+  id: GoliathPlate # CargoBounty: BountyGoliathPlates
 
 - type: Tag
-  id: GPS
+  id: GPS # Storage whitelist: BaseClothingBeltEngineering
+
+- type: Tag # Exists for propelled explosives, not hand grenades.
+  id: Grenade # Ammo: ShuttleGunFriendship, WeaponLauncherChinaLake, WeaponLauncherHydra, BaseMagazineGrenade
 
 - type: Tag
-  id: Grenade
+  id: GrenadeFlashBang # Storage whitelist: ClusterBang
 
 - type: Tag
-  id: GrenadeFlashBang
+  id: GuideEmbeded # Applied by GuideEntityEmbed and used by GuidebookSystem. This tag hides the guidebook link when examining an entity inside a guide book.
 
 - type: Tag
-  id: GuideEmbeded
+  id: GunUpgradeDamage # Used by PKAUpgradeDamage:GunUpgrade to ensure mutually exclusive upgrades.
 
 - type: Tag
-  id: GunUpgradeDamage
+  id: GunUpgradeRange # Used by PKAUpgradeRange:GunUpgrade to ensure mutually exclusive upgrades.
 
 - type: Tag
-  id: GunUpgradeRange
-
-- type: Tag
-  id: GunUpgradeReloadSpeed
+  id: GunUpgradeReloadSpeed # Used by PKAUpgradeFireRate:GunUpgrade to ensure mutually exclusive upgrades.
 
 ## H ##
 
