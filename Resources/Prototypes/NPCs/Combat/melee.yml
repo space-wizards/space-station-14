@@ -50,6 +50,32 @@
         - !type:HTNCompoundTask
           task: PickupMeleeCompound
 
+    # Wield melee weapon
+    - preconditions:
+        - !type:ActiveHandComponentPrecondition
+          components:
+            - type: MeleeWeapon
+              damage:
+                types:
+                  Blunt: 0
+        - !type:CanWieldPrecondition
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:WieldOperator
+
+    # Activate toggleable weapons
+    - preconditions:
+        - !type:ActiveHandComponentPrecondition
+          components:
+            - type: MeleeWeapon
+              damage:
+                types:
+                  Blunt: 0
+        - !type:NeedToActivateWeaponPrecondition
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:ActivateWeaponOperator
+
     # Melee combat (unarmed or otherwise)
     - tasks:
         - !type:HTNCompoundTask
