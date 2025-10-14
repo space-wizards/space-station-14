@@ -57,7 +57,7 @@ public sealed class BankCommand : ToolshedCommand
         return @ref;
     }
 
-    [CommandImplementation("amount")]
+    [CommandImplementation("ammount")]
     public IEnumerable<int> Ammount([PipedArgument] IEnumerable<BankAccount> @ref)
     {
         _cargo ??= GetSys<CargoSystem>();
