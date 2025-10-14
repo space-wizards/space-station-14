@@ -8,7 +8,6 @@ namespace Content.Server.Salvage;
 [AdminCommand(AdminFlags.Admin)]
 sealed class SalvageRulerCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly IMapManager _maps = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
@@ -36,7 +35,7 @@ sealed class SalvageRulerCommand : LocalizedEntityCommands
             return;
         }
 
-        var entityTransform = _entities.GetComponent<TransformComponent>(entity.Value);
+        var entityTransform = EntityManager.GetComponent<TransformComponent>(entity.Value);
         var total = Box2.UnitCentered;
         var first = true;
         foreach (var mapGrid in _maps.GetAllGrids(entityTransform.MapID))

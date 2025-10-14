@@ -12,7 +12,6 @@ namespace Content.Server.Construction.Commands;
 [AdminCommand(AdminFlags.Mapping)]
 public sealed class FixRotationsCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
 
     private static readonly ProtoId<TagPrototype> ForceFixRotationsTag = "ForceFixRotations";
@@ -26,21 +25,21 @@ public sealed class FixRotationsCommand : LocalizedEntityCommands
     {
         var player = shell.Player;
         EntityUid? gridId;
-        var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
+        var xformQuery = EntityManager.GetEntityQuery<TransformComponent>();
 
         switch (args.Length)
         {
             case 0:
                 if (player?.AttachedEntity is not { Valid: true } playerEntity)
                 {
-                    shell.WriteError(Loc.GetString("cmd-fixrotations-only-player"));
+                    shell.WriteError(Loc.GetString("shell-only-players-can-run-this-command"));
                     return;
                 }
 
                 gridId = xformQuery.GetComponent(playerEntity).GridUid;
                 break;
             case 1:
-                if (!NetEntity.TryParse(args[0], out var idNet) || !_entManager.TryGetEntity(idNet, out var id))
+                if (!NetEntity.TryParse(args[0], out var idNet) || !EntityManager.TryGetEntity(idNet, out var id))
                 {
                     shell.WriteError(Loc.GetString("cmd-fixrotations-invalid-entity", ("entity", args[0])));
                     return;
@@ -53,13 +52,13 @@ public sealed class FixRotationsCommand : LocalizedEntityCommands
                 return;
         }
 
-        if (!_entManager.TryGetComponent(gridId, out MapGridComponent? grid))
+        if (!EntityManager.TryGetComponent(gridId, out MapGridComponent? grid))
         {
             shell.WriteError(Loc.GetString("cmd-fixrotations-no-grid", ("gridId", (gridId?.ToString() ?? string.Empty))));
             return;
         }
 
-        if (!_entManager.EntityExists(gridId))
+        if (!EntityManager.EntityExists(gridId))
         {
             shell.WriteError(Loc.GetString("cmd-fixrotations-grid-no-entity", ("gridId", (gridId?.ToString() ?? string.Empty))));
             return;
@@ -70,7 +69,7 @@ public sealed class FixRotationsCommand : LocalizedEntityCommands
         var enumerator = xformQuery.GetComponent(gridId.Value).ChildEnumerator;
         while (enumerator.MoveNext(out var child))
         {
-            if (!_entManager.EntityExists(child))
+            if (!EntityManager.EntityExists(child))
             {
                 continue;
             }
@@ -79,14 +78,14 @@ public sealed class FixRotationsCommand : LocalizedEntityCommands
 
             // Occluders should only count if the state of it right now is enabled.
             // This prevents issues with edge firelocks.
-            if (_entManager.TryGetComponent<OccluderComponent>(child, out var occluder))
+            if (EntityManager.TryGetComponent<OccluderComponent>(child, out var occluder))
             {
                 valid |= occluder.Enabled;
             }
             // low walls & grilles
-            valid |= _entManager.HasComponent<SharedCanBuildWindowOnTopComponent>(child);
+            valid |= EntityManager.HasComponent<SharedCanBuildWindowOnTopComponent>(child);
             // cables
-            valid |= _entManager.HasComponent<CableComponent>(child);
+            valid |= EntityManager.HasComponent<CableComponent>(child);
             // anything else that might need this forced
             valid |= _tagSystem.HasTag(child, ForceFixRotationsTag);
             // override

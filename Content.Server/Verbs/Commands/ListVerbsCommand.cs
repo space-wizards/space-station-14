@@ -9,7 +9,6 @@ namespace Content.Server.Verbs.Commands
     [AdminCommand(AdminFlags.Moderator)]
     public sealed class ListVerbsCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
 
         public override string Command => "listverbs";
@@ -39,7 +38,7 @@ namespace Content.Server.Verbs.Commands
             }
             else
             {
-                _entManager.TryGetEntity(new NetEntity(intPlayerUid), out playerEntity);
+                EntityManager.TryGetEntity(new NetEntity(intPlayerUid), out playerEntity);
             }
 
             // gets the target entity
@@ -57,7 +56,7 @@ namespace Content.Server.Verbs.Commands
 
             var targetNet = new NetEntity(intUid);
 
-            if (!_entManager.TryGetEntity(targetNet, out var target))
+            if (!EntityManager.TryGetEntity(targetNet, out var target))
             {
                 shell.WriteError(Loc.GetString("cmd-listverbs-invalid-target-entity"));
                 return;

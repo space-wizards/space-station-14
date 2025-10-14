@@ -16,7 +16,7 @@ namespace Content.Server.NPC.Commands
         {
             if (args.Length != 2)
             {
-                shell.WriteError(Loc.GetString("cmd-addnpc-wrong-number"));
+                shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
                 return;
             }
 
@@ -24,7 +24,7 @@ namespace Content.Server.NPC.Commands
 
             if (!_entities.TryGetEntity(nent, out var entId))
             {
-                shell.WriteError(Loc.GetString("cmd-addnpc-invalid-entity", ("entity", nent)));
+                shell.WriteError(Loc.GetString("shell-invalid-entity-uid", ("uid", args[0])));
                 return;
             }
 

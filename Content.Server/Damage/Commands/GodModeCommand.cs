@@ -8,7 +8,6 @@ namespace Content.Server.Damage.Commands
     [AdminCommand(AdminFlags.Fun)]
     public sealed class GodModeCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly SharedGodmodeSystem _godmodeSystem = default!;
 
         public override string Command => "godmode";
@@ -36,13 +35,13 @@ namespace Content.Server.Damage.Commands
                     entity = player.AttachedEntity.Value;
                     break;
                 case 1:
-                    if (!NetEntity.TryParse(args[0], out var idNet) || !_entManager.TryGetEntity(idNet, out var id))
+                    if (!NetEntity.TryParse(args[0], out var idNet) || !EntityManager.TryGetEntity(idNet, out var id))
                     {
                         shell.WriteLine(Loc.GetString("cmd-godmode-invalid-entity-uid", ("uid", args[0])));
                         return;
                     }
 
-                    if (!_entManager.EntityExists(id))
+                    if (!EntityManager.EntityExists(id))
                     {
                         shell.WriteLine(Loc.GetString("cmd-godmode-entity-not-found", ("id", id)));
                         return;
@@ -57,7 +56,7 @@ namespace Content.Server.Damage.Commands
 
             var enabled = _godmodeSystem.ToggleGodmode(entity);
 
-            var name = _entManager.GetComponent<MetaDataComponent>(entity).EntityName;
+            var name = EntityManager.GetComponent<MetaDataComponent>(entity).EntityName;
 
             shell.WriteLine(enabled
                 ? Loc.GetString("cmd-godmode-enabled", ("name", name), ("entity", entity))

@@ -17,7 +17,7 @@ public sealed class AdminLogBulk : LocalizedCommands
     {
         if (shell.Player?.AttachedEntity is not { } entity)
         {
-            shell.WriteError(Loc.GetString("cmd-adminlogbulk-player-only"));
+            shell.WriteError(Loc.GetString("shell-must-be-attached-to-entity"));
             return;
         }
 

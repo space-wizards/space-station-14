@@ -17,7 +17,7 @@ public sealed class ShowFluidsCommand : LocalizedEntityCommands
         var player = shell.Player;
         if (player == null)
         {
-            shell.WriteLine(Loc.GetString("cmd-showfluids-must-be-player"));
+            shell.WriteLine(Loc.GetString("shell-only-players-can-run-this-command"));
             return;
         }
 

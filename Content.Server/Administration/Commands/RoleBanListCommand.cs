@@ -24,7 +24,8 @@ public sealed class RoleBanListCommand : LocalizedCommands
     {
         if (args.Length != 1 && args.Length != 2)
         {
-            shell.WriteLine(Loc.GetString("cmd-rolebanlist-invalid-args", ("help", Help)));
+            shell.WriteLine(Loc.GetString("shell-wrong-arguments-number"));
+            shell.WriteLine(Help);
             return;
         }
 
@@ -39,7 +40,7 @@ public sealed class RoleBanListCommand : LocalizedCommands
 
         if (data == null)
         {
-            shell.WriteError(Loc.GetString("cmd-rolebanlist-player-not-found"));
+            shell.WriteError(Loc.GetString("shell-target-player-does-not-exist"));
             return;
         }
 

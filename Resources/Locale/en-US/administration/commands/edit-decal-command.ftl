@@ -8,11 +8,9 @@ cmd-editdecal-help = Usage: {$command} <gridId> <uid> <mode>
                      - zindex <zIndex>
                      - clean <cleanable>
 
-cmd-editdecal-expected-at-least-arguments = Expected at least {$expected} arguments.
 cmd-editdecal-failed-parsing-gridId = Failed parsing gridId.
 cmd-editdecal-failed-parsing-uid = Failed parsing uid.
 cmd-editdecal-no-grid-with-gridId = No grid with gridId {$gridId} exists.
-cmd-editdecal-expected-arguments = Expected {$expected} arguments.
 cmd-editdecal-failed-parsing-position = Failed parsing position.
 cmd-editdecal-failed-changing-decalposition = Failed changing decalposition.
 cmd-editdecal-failed-parsing-color = Failed parsing color.

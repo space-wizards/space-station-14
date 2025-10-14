@@ -12,7 +12,9 @@ public sealed class OpenAdminNotesCommand : LocalizedCommands
     [Dependency] private readonly IAdminNotesManager _adminNotes = default!;
     [Dependency] private readonly IPlayerLocator _locator = default!;
 
-    public override string Command => "adminnotes";
+    public const string CommandName = "adminnotes";
+
+    public override string Command => CommandName;
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {

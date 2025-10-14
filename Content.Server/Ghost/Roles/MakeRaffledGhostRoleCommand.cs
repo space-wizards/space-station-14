@@ -22,20 +22,20 @@ namespace Content.Server.Ghost.Roles
         {
             if (args.Length is < 4 or > 7)
             {
-                shell.WriteError(Loc.GetString("cmd-makeghostroleraffled-invalid-args"));
+                shell.WriteError(Loc.GetString("shell-need-between-arguments", ("lower", 4), ("upper", 7)));
                 shell.WriteLine(Help);
                 return;
             }
 
             if (!NetEntity.TryParse(args[0], out var uidNet) || !_entManager.TryGetEntity(uidNet, out var uid))
             {
-                shell.WriteError(Loc.GetString("cmd-makeghostroleraffled-invalid-entity-uid", ("entity", args[0])));
+                shell.WriteError(Loc.GetString("shell-invalid-entity-uid", ("uid", args[0])));
                 return;
             }
 
             if (!_entManager.TryGetComponent(uid, out MetaDataComponent? metaData))
             {
-                shell.WriteError(Loc.GetString("cmd-makeghostroleraffled-entity-not-found", ("entity", uid)));
+                shell.WriteError(Loc.GetString("shell-could-not-find-entity-with-uid", ("uid", uid)));
                 return;
             }
 

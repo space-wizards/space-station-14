@@ -9,7 +9,6 @@ namespace Content.Server.Atmos.Commands
     [AdminCommand(AdminFlags.Debug)]
     public sealed class RemoveGasCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         public override string Command => "removegas";
@@ -22,7 +21,7 @@ namespace Content.Server.Atmos.Commands
             if (!int.TryParse(args[0], out var x)
                || !int.TryParse(args[1], out var y)
                || !NetEntity.TryParse(args[2], out var idNet)
-               || !_entManager.TryGetEntity(idNet, out var id)
+               || !EntityManager.TryGetEntity(idNet, out var id)
                || !float.TryParse(args[3], out var amount)
                || !bool.TryParse(args[4], out var ratio))
             {

@@ -12,7 +12,6 @@ namespace Content.Server.Body.Commands
     [AdminCommand(AdminFlags.Fun)]
     public sealed class RemoveHandCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
@@ -24,21 +23,21 @@ namespace Content.Server.Body.Commands
             var player = shell.Player;
             if (player == null)
             {
-                shell.WriteLine(Loc.GetString("cmd-removehand-only-player-run"));
+                shell.WriteLine(Loc.GetString("shell-only-players-can-run-this-command"));
                 return;
             }
 
             if (player.AttachedEntity == null)
             {
-                shell.WriteLine(Loc.GetString("cmd-removehand-no-entity"));
+                shell.WriteLine(Loc.GetString("shell-must-be-attached-to-entity"));
                 return;
             }
 
-            if (!_entManager.TryGetComponent(player.AttachedEntity, out BodyComponent? body))
+            if (!EntityManager.TryGetComponent(player.AttachedEntity, out BodyComponent? body))
             {
                 var text = Loc.GetString(
-                "cmd-removehand-no-body",
-                ("random", _random.Prob(0.2f) ? Loc.GetString("cmd-removehand-no-body-must-scream") : "."));
+                    "cmd-removehand-no-body",
+                    ("random", _random.Prob(0.2f) ? Loc.GetString("cmd-removehand-no-body-must-scream") : "."));
 
                 shell.WriteLine(text);
                 return;

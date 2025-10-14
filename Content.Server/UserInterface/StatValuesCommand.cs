@@ -21,7 +21,6 @@ namespace Content.Server.UserInterface;
 public sealed class StatValuesCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly EuiManager _eui = default!;
-    [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly PricingSystem _priceSystem = default!;
     [Dependency] private readonly ItemSystem _itemSystem = default!;
@@ -88,8 +87,8 @@ public sealed class StatValuesCommand : LocalizedEntityCommands
 
         var values = new List<string[]>();
         var prices = new HashSet<string>(256);
-        var metaQuery = _entManager.GetEntityQuery<MetaDataComponent>();
-        var ents = _entManager.GetEntities().ToArray();
+        var metaQuery = EntityManager.GetEntityQuery<MetaDataComponent>();
+        var ents = EntityManager.GetEntities().ToArray();
 
         foreach (var entity in ents)
         {
@@ -131,10 +130,10 @@ public sealed class StatValuesCommand : LocalizedEntityCommands
     private StatValuesEuiMessage GetItem()
     {
         var values = new List<string[]>();
-        var metaQuery = _entManager.GetEntityQuery<MetaDataComponent>();
-        var itemQuery = _entManager.GetEntityQuery<ItemComponent>();
+        var metaQuery = EntityManager.GetEntityQuery<MetaDataComponent>();
+        var itemQuery = EntityManager.GetEntityQuery<ItemComponent>();
         var items = new HashSet<string>(1024);
-        var ents = _entManager.GetEntities().ToArray();
+        var ents = EntityManager.GetEntities().ToArray();
 
         foreach (var entity in ents)
         {
@@ -176,8 +175,8 @@ public sealed class StatValuesCommand : LocalizedEntityCommands
     private StatValuesEuiMessage GetMelee()
     {
         var values = new List<string[]>();
-        var meleeName = _entManager.ComponentFactory.GetComponentName<MeleeWeaponComponent>();
-        var increaseDamageName = _entManager.ComponentFactory.GetComponentName<IncreaseDamageOnWieldComponent>();
+        var meleeName = EntityManager.ComponentFactory.GetComponentName<MeleeWeaponComponent>();
+        var increaseDamageName = EntityManager.ComponentFactory.GetComponentName<IncreaseDamageOnWieldComponent>();
 
         foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())
         {
@@ -278,7 +277,7 @@ public sealed class StatValuesCommand : LocalizedEntityCommands
     private StatValuesEuiMessage GetDrawRateMessage()
     {
         var values = new List<string[]>();
-        var powerName = _entManager.ComponentFactory.GetComponentName<ApcPowerReceiverComponent>();
+        var powerName = EntityManager.ComponentFactory.GetComponentName<ApcPowerReceiverComponent>();
 
         foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())
         {

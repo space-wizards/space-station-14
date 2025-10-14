@@ -23,7 +23,7 @@ namespace Content.Server.GameTicking.Commands
 
             if (_gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
             {
-                shell.WriteError(Loc.GetString("cmd-observe-wait-round-start"));
+                shell.WriteError(Loc.GetString("shell-can-only-run-while-round-is-active"));
                 return;
             }
 

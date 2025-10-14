@@ -11,7 +11,6 @@ namespace Content.Server.Atmos.Commands;
 [AdminCommand(AdminFlags.Admin)]
 public sealed class AddMapAtmosCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
 
     public override string Command => "setmapatmos";
@@ -40,7 +39,7 @@ public sealed class AddMapAtmosCommand : LocalizedEntityCommands
 
         if (space || args.Length < 4)
         {
-            _entities.RemoveComponent<MapAtmosphereComponent>(map);
+            EntityManager.RemoveComponent<MapAtmosphereComponent>(map);
             shell.WriteLine(Loc.GetString("cmd-setmapatmos-removed", ("map", id)));
             return;
         }
@@ -66,7 +65,7 @@ public sealed class AddMapAtmosCommand : LocalizedEntityCommands
             mix.AdjustMoles(i, moles);
         }
 
-        var atmos = _entities.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
+        var atmos = EntityManager.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
         atmos.SetMapAtmosphere(map, space, mix);
         shell.WriteLine(Loc.GetString("cmd-setmapatmos-updated", ("map", id)));
     }
@@ -74,7 +73,7 @@ public sealed class AddMapAtmosCommand : LocalizedEntityCommands
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
-            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(_entities), Loc.GetString($"{Command}-hint-map"));
+            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(EntityManager), Loc.GetString($"{Command}-hint-map"));
 
         if (args.Length == 2)
             return CompletionResult.FromHintOptions(new[] { "false", "true" }, Loc.GetString($"{Command}-hint-space"));

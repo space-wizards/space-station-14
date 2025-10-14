@@ -10,7 +10,6 @@ namespace Content.Server.Atmos.Commands
     [AdminCommand(AdminFlags.Debug)]
     public sealed class SetTemperatureCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         public override string Command => "settemp";
@@ -23,7 +22,7 @@ namespace Content.Server.Atmos.Commands
             if (!int.TryParse(args[0], out var x)
                 || !int.TryParse(args[1], out var y)
                 || !NetEntity.TryParse(args[2], out var gridIdNet)
-                || !_entities.TryGetEntity(gridIdNet, out var gridId)
+                || !EntityManager.TryGetEntity(gridIdNet, out var gridId)
                 || !float.TryParse(args[3], out var temperature))
             {
                 return;
@@ -35,7 +34,7 @@ namespace Content.Server.Atmos.Commands
                 return;
             }
 
-            if (!_entities.HasComponent<MapGridComponent>(gridId))
+            if (!EntityManager.HasComponent<MapGridComponent>(gridId))
             {
                 shell.WriteError(Loc.GetString("cmd-settemp-invalid-grid"));
                 return;

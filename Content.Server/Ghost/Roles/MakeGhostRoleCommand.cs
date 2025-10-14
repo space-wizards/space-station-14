@@ -17,20 +17,20 @@ namespace Content.Server.Ghost.Roles
         {
             if (args.Length < 3 || args.Length > 4)
             {
-                shell.WriteError(Loc.GetString("cmd-makeghostrole-invalid-args"));
+                shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
                 shell.WriteLine(Help);
                 return;
             }
 
             if (!NetEntity.TryParse(args[0], out var uidNet) || !_entManager.TryGetEntity(uidNet, out var uid))
             {
-                shell.WriteError(Loc.GetString("cmd-makeghostrole-invalid-entity-uid", ("entity", args[0])));
+                shell.WriteError(Loc.GetString("shell-invalid-entity-uid", ("uid", args[0])));
                 return;
             }
 
             if (!_entManager.TryGetComponent(uid, out MetaDataComponent? metaData))
             {
-                shell.WriteError(Loc.GetString("cmd-makeghostrole-entity-not-found", ("entity", uid)));
+                shell.WriteError(Loc.GetString("shell-could-not-find-entity-with-uid", ("uid", uid)));
                 return;
             }
 

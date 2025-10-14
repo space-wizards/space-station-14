@@ -11,7 +11,6 @@ namespace Content.Server.Chat.Commands
     [AnyCommand]
     internal sealed class SuicideCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly SharedMindSystem _mindSystem = default!;
         [Dependency] private readonly SuicideSystem _suicideSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -37,7 +36,7 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
-            if (_entManager.HasComponent<AdminFrozenComponent>(victim))
+            if (EntityManager.HasComponent<AdminFrozenComponent>(victim))
             {
                 var deniedMessage = Loc.GetString("cmd-suicide-denied");
                 shell.WriteLine(deniedMessage);

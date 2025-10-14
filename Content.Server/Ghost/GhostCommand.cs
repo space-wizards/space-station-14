@@ -10,7 +10,6 @@ namespace Content.Server.Ghost
     [AnyCommand]
     public sealed class GhostCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
         [Dependency] private readonly SharedMindSystem _mindSystem = default!;
         [Dependency] private readonly GhostSystem _ghostSystem = default!;
@@ -35,7 +34,7 @@ namespace Content.Server.Ghost
             }
 
             if (player.AttachedEntity is { Valid: true } frozen &&
-                _entities.HasComponent<AdminFrozenComponent>(frozen))
+                EntityManager.HasComponent<AdminFrozenComponent>(frozen))
             {
                 var deniedMessage = Loc.GetString("cmd-ghost-denied");
                 shell.WriteLine(deniedMessage);
@@ -46,7 +45,7 @@ namespace Content.Server.Ghost
             if (!_mindSystem.TryGetMind(player, out var mindId, out var mind))
             {
                 mindId = _mindSystem.CreateMind(player.UserId);
-                mind = _entities.GetComponent<MindComponent>(mindId);
+                mind = EntityManager.GetComponent<MindComponent>(mindId);
             }
 
             if (!_ghostSystem.OnGhostAttempt(mindId, true, true, mind: mind))

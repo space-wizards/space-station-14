@@ -17,7 +17,7 @@ namespace Content.Server.Atmos.Commands
             var player = shell.Player;
             if (player == null)
             {
-                shell.WriteLine(Loc.GetString("cmd-showatmos-must-be-player"));
+                shell.WriteLine(Loc.GetString("shell-only-players-can-run-this-command"));
                 return;
             }
 

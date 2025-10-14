@@ -9,7 +9,6 @@ namespace Content.Server.Verbs.Commands
     [AdminCommand(AdminFlags.Admin)]
     public sealed class InvokeVerbCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
 
         public override string Command => "invokeverb";
@@ -38,7 +37,7 @@ namespace Content.Server.Verbs.Commands
             }
             else
             {
-                _entManager.TryGetEntity(new NetEntity(intPlayerUid), out playerEntity);
+                EntityManager.TryGetEntity(new NetEntity(intPlayerUid), out playerEntity);
             }
 
             // gets the target entity
@@ -56,7 +55,7 @@ namespace Content.Server.Verbs.Commands
 
             var targetNet = new NetEntity(intUid);
 
-            if (!_entManager.TryGetEntity(targetNet, out var target))
+            if (!EntityManager.TryGetEntity(targetNet, out var target))
             {
                 shell.WriteError(Loc.GetString("cmd-invokeverb-invalid-target-entity"));
                 return;

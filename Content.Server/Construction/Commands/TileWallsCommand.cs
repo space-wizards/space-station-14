@@ -13,7 +13,6 @@ namespace Content.Server.Construction.Commands;
 [AdminCommand(AdminFlags.Mapping)]
 public sealed class TileWallsCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly MapSystem _mapSystem = default!;
@@ -35,14 +34,14 @@ public sealed class TileWallsCommand : LocalizedEntityCommands
             case 0:
                 if (player?.AttachedEntity is not { Valid: true } playerEntity)
                 {
-                    shell.WriteError(Loc.GetString("cmd-tilewalls-only-player"));
+                    shell.WriteError(Loc.GetString("shell-only-players-can-run-this-command"));
                     return;
                 }
 
-                gridId = _entManager.GetComponent<TransformComponent>(playerEntity).GridUid;
+                gridId = EntityManager.GetComponent<TransformComponent>(playerEntity).GridUid;
                 break;
             case 1:
-                if (!NetEntity.TryParse(args[0], out var idNet) || !_entManager.TryGetEntity(idNet, out var id))
+                if (!NetEntity.TryParse(args[0], out var idNet) || !EntityManager.TryGetEntity(idNet, out var id))
                 {
                     shell.WriteError(Loc.GetString("cmd-tilewalls-invalid-entity", ("entity", args[0])));
                     return;
@@ -55,13 +54,13 @@ public sealed class TileWallsCommand : LocalizedEntityCommands
                 return;
         }
 
-        if (!_entManager.TryGetComponent(gridId, out MapGridComponent? grid))
+        if (!EntityManager.TryGetComponent(gridId, out MapGridComponent? grid))
         {
             shell.WriteError(Loc.GetString("cmd-tilewalls-no-grid", ("gridId", (gridId?.ToString() ?? string.Empty))));
             return;
         }
 
-        if (!_entManager.EntityExists(gridId))
+        if (!EntityManager.EntityExists(gridId))
         {
             shell.WriteError(Loc.GetString("cmd-tilewalls-grid-no-entity", ("gridId", (gridId?.ToString() ?? string.Empty))));
             return;
@@ -70,10 +69,10 @@ public sealed class TileWallsCommand : LocalizedEntityCommands
         var underplating = _tileDefManager[TilePrototypeId];
         var underplatingTile = new Tile(underplating.TileId);
         var changed = 0;
-        var enumerator = _entManager.GetComponent<TransformComponent>(gridId.Value).ChildEnumerator;
+        var enumerator = EntityManager.GetComponent<TransformComponent>(gridId.Value).ChildEnumerator;
         while (enumerator.MoveNext(out var child))
         {
-            if (!_entManager.EntityExists(child))
+            if (!EntityManager.EntityExists(child))
             {
                 continue;
             }
@@ -88,7 +87,7 @@ public sealed class TileWallsCommand : LocalizedEntityCommands
                 continue;
             }
 
-            var childTransform = _entManager.GetComponent<TransformComponent>(child);
+            var childTransform = EntityManager.GetComponent<TransformComponent>(child);
 
             if (!childTransform.Anchored)
             {

@@ -9,7 +9,6 @@ namespace Content.Server.Commands;
 [AdminCommand(AdminFlags.Fun)]
 internal sealed class UpgradeActionCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly ActionUpgradeSystem _actionUpgradeSystem = default!;
 
     public override string Command => "upgradeaction";
@@ -36,13 +35,13 @@ internal sealed class UpgradeActionCommand : LocalizedEntityCommands
             return;
         }
 
-        if (!_entManager.TryGetEntity(nuid, out var uid))
+        if (!EntityManager.TryGetEntity(nuid, out var uid))
         {
             shell.WriteLine(Loc.GetString("cmd-upgradeaction-entity-does-not-exist"));
             return;
         }
 
-        if (!_entManager.TryGetComponent<ActionUpgradeComponent>(uid, out var actionUpgradeComponent))
+        if (!EntityManager.TryGetComponent<ActionUpgradeComponent>(uid, out var actionUpgradeComponent))
         {
             shell.WriteLine(Loc.GetString("cmd-upgradeaction-entity-is-not-action"));
             return;

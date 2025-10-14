@@ -8,7 +8,6 @@ namespace Content.Server.Decals.Commands
     [AdminCommand(AdminFlags.Mapping)]
     public sealed class RemoveDecalCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly DecalSystem _decalSystem = default!;
 
         public override string Command => "rmdecal";
@@ -29,8 +28,8 @@ namespace Content.Server.Decals.Commands
             }
 
             if (!NetEntity.TryParse(args[1], out var rawGridIdNet) ||
-                !_entManager.TryGetEntity(rawGridIdNet, out var rawGridId) ||
-                !_entManager.HasComponent<MapGridComponent>(rawGridId))
+                !EntityManager.TryGetEntity(rawGridIdNet, out var rawGridId) ||
+                !EntityManager.HasComponent<MapGridComponent>(rawGridId))
             {
                 shell.WriteError(Loc.GetString("cmd-rmdecal-error-gridId"));
                 return;

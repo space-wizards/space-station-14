@@ -18,7 +18,7 @@ namespace Content.Server.Alert.Commands
             var player = shell.Player;
             if (player?.AttachedEntity == null)
             {
-                shell.WriteLine(Loc.GetString("cmd-clearalert-no-entity"));
+                shell.WriteLine(Loc.GetString("shell-only-players-can-run-this-command"));
                 return;
             }
 

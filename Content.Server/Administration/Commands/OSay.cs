@@ -40,7 +40,7 @@ public sealed class OSay : LocalizedCommands
     {
         if (args.Length < 3)
         {
-            shell.WriteLine(Loc.GetString("cmd-osay-error-args"));
+            shell.WriteLine(Loc.GetString("shell-need-minimum-arguments", ("minimum", 3)));
             return;
         }
 

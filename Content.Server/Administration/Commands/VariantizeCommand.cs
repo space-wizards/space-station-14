@@ -9,8 +9,6 @@ namespace Content.Server.Administration.Commands;
 [AdminCommand(AdminFlags.Mapping)]
 public sealed class VariantizeCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-
     public override string Command => "variantize";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
@@ -21,21 +19,21 @@ public sealed class VariantizeCommand : LocalizedEntityCommands
             return;
         }
 
-        if (!NetEntity.TryParse(args[0], out var euidNet) || !_entManager.TryGetEntity(euidNet, out var euid))
+        if (!NetEntity.TryParse(args[0], out var euidNet) || !EntityManager.TryGetEntity(euidNet, out var euid))
         {
             shell.WriteError(Loc.GetString("cmd-variantize-parse-failed", ("arg", args[0])));
             return;
         }
 
-        if (!_entManager.TryGetComponent(euid, out MapGridComponent? gridComp))
+        if (!EntityManager.TryGetComponent(euid, out MapGridComponent? gridComp))
         {
             shell.WriteError(Loc.GetString("cmd-variantize-not-grid", ("euid", euid)));
             return;
         }
 
-        var mapsSystem = _entManager.System<SharedMapSystem>();
-        var tileSystem = _entManager.System<TileSystem>();
-        var turfSystem = _entManager.System<TurfSystem>();
+        var mapsSystem = EntityManager.System<SharedMapSystem>();
+        var tileSystem = EntityManager.System<TileSystem>();
+        var turfSystem = EntityManager.System<TurfSystem>();
 
         foreach (var tile in mapsSystem.GetAllTiles(euid.Value, gridComp))
         {

@@ -24,7 +24,7 @@ namespace Content.Server.Administration.Commands
             var player = shell.Player;
             if (player == null)
             {
-                shell.WriteLine(Loc.GetString("cmd-warp-only-players"));
+                shell.WriteLine(Loc.GetString("shell-only-players-can-run-this-command"));
                 return;
             }
 

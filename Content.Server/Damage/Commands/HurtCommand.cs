@@ -13,7 +13,6 @@ namespace Content.Server.Damage.Commands
     [AdminCommand(AdminFlags.Fun)]
     sealed class DamageCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
@@ -107,7 +106,7 @@ namespace Content.Server.Damage.Commands
 
             if (args.Length == 4)
             {
-                if (!_entManager.TryParseNetEntity(args[3], out target) || !_entManager.EntityExists(target))
+                if (!EntityManager.TryParseNetEntity(args[3], out target) || !EntityManager.EntityExists(target))
                 {
                     shell.WriteLine(Loc.GetString("cmd-damage-error-euid", ("arg", args[3])));
                     return;

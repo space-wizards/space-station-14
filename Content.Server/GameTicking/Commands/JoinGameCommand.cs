@@ -13,7 +13,6 @@ namespace Content.Server.GameTicking.Commands
     [AnyCommand]
     sealed class JoinGameCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -46,7 +45,7 @@ namespace Content.Server.GameTicking.Commands
 
             if (_gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
             {
-                shell.WriteLine(Loc.GetString("cmd-joingame-round-not-started"));
+                shell.WriteLine(Loc.GetString("shell-can-only-run-while-round-is-active"));
                 return;
             }
             else if (_gameTicker.RunLevel == GameRunLevel.InRound)
@@ -58,9 +57,9 @@ namespace Content.Server.GameTicking.Commands
                     shell.WriteError(Loc.GetString("shell-argument-must-be-number"));
                 }
 
-                var station = _entManager.GetEntity(new NetEntity(sid));
+                var station = EntityManager.GetEntity(new NetEntity(sid));
                 var jobPrototype = _prototypeManager.Index<JobPrototype>(id);
-                if(_stationJobsSystem.TryGetJobSlot(station, jobPrototype, out var slots) == false || slots == 0)
+                if (_stationJobsSystem.TryGetJobSlot(station, jobPrototype, out var slots) == false || slots == 0)
                 {
                     shell.WriteLine(Loc.GetString("cmd-joingame-no-available-slots", ("job", jobPrototype.LocalizedName)));
                     return;

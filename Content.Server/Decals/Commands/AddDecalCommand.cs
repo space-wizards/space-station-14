@@ -14,7 +14,6 @@ namespace Content.Server.Decals.Commands
     [AdminCommand(AdminFlags.Mapping)]
     public sealed class AddDecalCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly TurfSystem _turfSystem = default!;
         [Dependency] private readonly MapSystem _mapSystem = default!;
@@ -49,8 +48,8 @@ namespace Content.Server.Decals.Commands
             }
 
             if (!NetEntity.TryParse(args[3], out var gridIdNet) ||
-                !_entManager.TryGetEntity(gridIdNet, out var gridIdRaw) ||
-                !_entManager.TryGetComponent(gridIdRaw, out MapGridComponent? grid))
+                !EntityManager.TryGetEntity(gridIdNet, out var gridIdRaw) ||
+                !EntityManager.TryGetComponent(gridIdRaw, out MapGridComponent? grid))
             {
                 shell.WriteError(Loc.GetString("cmd-adddecal-failed-parsing-gridId", ("gridId", args[3])));
                 return;

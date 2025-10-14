@@ -5,5 +5,4 @@ cmd-osay-arg-uid = source uid
 cmd-osay-arg-type = type
 cmd-osay-arg-message = message
 
-cmd-osay-error-args = Invalid number of arguments
 cmd-osay-error-euid = {$arg} is not a valid entity uid.

@@ -17,7 +17,7 @@ public sealed class EditDecalCommand : LocalizedCommands
     {
         if (args.Length < 4)
         {
-            shell.WriteError(Loc.GetString("cmd-editdecal-expected-at-least-arguments", ("expected", 5)));
+            shell.WriteError(Loc.GetString("shell-need-minimum-arguments", ("minimum", 5)));
             return;
         }
 
@@ -43,9 +43,9 @@ public sealed class EditDecalCommand : LocalizedCommands
         switch (args[2].ToLower())
         {
             case "position":
-                if(args.Length != 5)
+                if (args.Length != 5)
                 {
-                    shell.WriteError(Loc.GetString("cmd-editdecal-expected-arguments", ("expected", 6)));
+                    shell.WriteError(Loc.GetString("shell-need-minimum-arguments", ("minimum", 6)));
                     return;
                 }
 
@@ -61,9 +61,9 @@ public sealed class EditDecalCommand : LocalizedCommands
                 }
                 break;
             case "color":
-                if(args.Length != 4)
+                if (args.Length != 4)
                 {
-                    shell.WriteError(Loc.GetString("cmd-editdecal-expected-arguments", ("expected", 5)));
+                    shell.WriteError(Loc.GetString("shell-need-minimum-arguments", ("minimum", 5)));
                     return;
                 }
 
@@ -79,9 +79,9 @@ public sealed class EditDecalCommand : LocalizedCommands
                 }
                 break;
             case "id":
-                if(args.Length != 4)
+                if (args.Length != 4)
                 {
-                    shell.WriteError(Loc.GetString("cmd-editdecal-expected-arguments", ("expected", 5)));
+                    shell.WriteError(Loc.GetString("shell-need-minimum-arguments", ("minimum", 5)));
                     return;
                 }
 
@@ -91,7 +91,7 @@ public sealed class EditDecalCommand : LocalizedCommands
                 }
                 break;
             case "rotation":
-                if(args.Length != 4)
+                if (args.Length != 4)
                 {
                     shell.WriteError(Loc.GetString("cmd-editdecal-expected-arguments", ("expected", 5)));
                     return;
@@ -109,9 +109,9 @@ public sealed class EditDecalCommand : LocalizedCommands
                 }
                 break;
             case "zindex":
-                if(args.Length != 4)
+                if (args.Length != 4)
                 {
-                    shell.WriteError(Loc.GetString("cmd-editdecal-expected-arguments", ("expected", 5)));
+                    shell.WriteError(Loc.GetString("shell-need-minimum-arguments", ("minimum", 5)));
                     return;
                 }
 
@@ -127,9 +127,9 @@ public sealed class EditDecalCommand : LocalizedCommands
                 }
                 break;
             case "clean":
-                if(args.Length != 4)
+                if (args.Length != 4)
                 {
-                    shell.WriteError(Loc.GetString("cmd-editdecal-expected-arguments", ("expected", 5)));
+                    shell.WriteError(Loc.GetString("shell-need-minimum-arguments", ("minimum", 5)));
                     return;
                 }
 
