@@ -142,7 +142,11 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
 
         _window = new BwoinkWindow(_bwoinkManager, _prototypeManager, _playerManager);
         _window.OpenCentered();
-        _window.OnClose += () => _window = null;
+        _window.OnClose += () =>
+        {
+            _window = null;
+            SetAHelpPressed(false);
+        };
 
         SetAHelpPressed(true);
     }
