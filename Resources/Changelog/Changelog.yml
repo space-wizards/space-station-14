@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: chromiumboy
-  changes:
-  - message: Atmospheric pipes can now be built on three different sublayers, allowing
-      for multiple pipe networks on a single tile
-    type: Add
-  - message: Pipe manifolds can now be constructed to connect pipes across different
-      sublayers
-    type: Add
-  id: 8599
-  time: '2025-06-02T05:01:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36124
 - author: ScarKy0
   changes:
   - message: Air Grenades can now be ordered from your request consoles.
@@ -3941,3 +3930,10 @@
   id: 9100
   time: '2025-10-14T22:46:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40435
+- author: SlamBamActionman
+  changes:
+  - message: Lying trait now features more grammatically correct lying.
+    type: Fix
+  id: 9101
+  time: '2025-10-14T23:13:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39370
