@@ -76,7 +76,9 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
 
         if (!IsOpen && isManager)
         {
-            _bwoinkManager.GetOrCreatePlayerPropertiesForChannel(sender, args.person).Unread++;
+            var info = _bwoinkManager.GetOrCreatePlayerPropertiesForChannel(sender, args.person);
+            info.Unread++;
+            info.LastMessage = args.message.SentAt;
         }
     }
 
