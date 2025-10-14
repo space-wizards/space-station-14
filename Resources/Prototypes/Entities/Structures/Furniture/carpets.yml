@@ -26,8 +26,6 @@
           !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
         density: 5
-        layer:
-        - DoorPassable
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
