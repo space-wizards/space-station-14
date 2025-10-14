@@ -469,19 +469,7 @@
        whitelist:
           components:
            - SprayPainter
-    - item: CrayonRainbow
-      hand:
-        emptyRepresentative: CrayonRainbow
-        emptyLabel: borg-slot-crayon-empty
-        whitelist:
-          tags:
-          - Crayon
-    - hand:
-        emptyRepresentative: CrayonYellow
-        emptyLabel: borg-slot-crayon-empty
-        whitelist:
-          tags:
-          - Crayon
+    - item: CrayonBorg
     - hand:
         emptyRepresentative: SprayPainterAmmo
         emptyLabel: borg-slot-painter-ammo-empty

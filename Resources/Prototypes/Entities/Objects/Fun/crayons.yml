@@ -111,6 +111,30 @@
 
 - type: entity
   parent: Crayon
+  id: CrayonBorg
+  name: electric crayon
+  components:
+  - type: Sprite
+    state: electric
+  - type: Item
+    heldPrefix: electric
+  - type: Crayon
+    deleteEmpty: false
+    color: Red
+    selectableColor: true
+  - type: LimitedCharges
+    maxCharges: 30
+  - type: AutoRecharge
+    rechargeDuration: 5
+  - type: Tag
+    tags:
+    - Write
+    - Crayon
+    - Recyclable
+    - Trash
+
+- type: entity
+  parent: Crayon
   id: CrayonBlack
   name: black crayon
   components:
