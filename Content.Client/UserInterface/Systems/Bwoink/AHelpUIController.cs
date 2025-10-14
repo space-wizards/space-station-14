@@ -29,7 +29,6 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IClyde _clyde = default!;
-    [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
     [Dependency] private readonly ClientBwoinkManager _bwoinkManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IInputManager _input = default!;
