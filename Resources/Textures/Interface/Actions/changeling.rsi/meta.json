@@ -1,7 +1,7 @@
 ﻿{
     "version": 1,
     "license": "CC0-1.0",
-    "copyright": "Created by TiniestShark (github). stasis_enter and stasis_exit taken from tgstation at https://github.com/tgstation/tgstation/commit/855b447c7ebbf150ee063f51d1fc52b5d9545ad6",
+    "copyright": "Created by TiniestShark (github).",
     "size": {
         "x": 32,
         "y": 32
