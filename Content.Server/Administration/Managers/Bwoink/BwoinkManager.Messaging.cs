@@ -91,10 +91,10 @@ public sealed partial class ServerBwoinkManager
             .Select(x => x.Channel)
             .ToList();
 
+        _netManager.ServerSendToMany(msgBwoink, managers);
+
         if (CanManageChannel(channel, PlayerManager.GetSessionById(target)))
             return; // Don't need to send it to the admin client.
-
-        _netManager.ServerSendToMany(msgBwoink, managers);
 
         // TODO: Predict on client, so that we don't have to send the message back to the client here.
         _netManager.ServerSendMessage(msgNonAdminBwoink, PlayerManager.GetSessionById(target).Channel);
