@@ -205,7 +205,7 @@ public sealed partial class BwoinkControl : Control
         if (_panels.TryGetValue(user, out var panel))
             return panel;
 
-        var newPanel = new BwoinkPanel(_parentWindow, _channel, _clientBwoinkManager);
+        var newPanel = new BwoinkPanel(_parentWindow, _channel, _clientBwoinkManager, false);
         _panels.Add(user, newPanel);
         BwoinkArea.AddChild(newPanel);
         newPanel.Visible = false;

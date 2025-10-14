@@ -17,18 +17,23 @@ public sealed partial class BwoinkPanel : BoxContainer
     public event Action<string>? InputTextChanged;
     public event Action<string>? MessageSent;
     private BwoinkChannelPrototype _channel;
+    private bool _sendHelpText;
 
-    public BwoinkPanel(BwoinkWindow parentWindow, BwoinkChannelPrototype channel, ClientBwoinkManager clientBwoinkManager)
+    public BwoinkPanel(BwoinkWindow parentWindow, BwoinkChannelPrototype channel, ClientBwoinkManager clientBwoinkManager, bool sendHelpText)
     {
         RobustXamlLoader.Load(this);
         // TODO: dont use static Loc for this.
         Name = Loc.GetString(channel.Name);
 
         _channel = channel;
+        _sendHelpText = sendHelpText;
 
-        var helpText = new FormattedMessage(1);
-        helpText.AddMarkupOrThrow(Loc.GetString(channel.HelpText));
-        TextOutput.AddMessage(helpText);
+        if (sendHelpText)
+        {
+            var helpText = new FormattedMessage(1);
+            helpText.AddMarkupOrThrow(Loc.GetString(channel.HelpText));
+            TextOutput.AddMessage(helpText);
+        }
 
         var msg = new FormattedMessage();
         msg.PushColor(Color.LightGray);
@@ -65,10 +70,13 @@ public sealed partial class BwoinkPanel : BoxContainer
     {
         TextOutput.Clear();
 
-        // TODO: dont use static Loc for this.
-        var helpText = new FormattedMessage(1);
-        helpText.AddMarkupOrThrow(Loc.GetString(_channel.HelpText));
-        TextOutput.AddMessage(helpText);
+        if (_sendHelpText)
+        {
+            // TODO: dont use static Loc for this.
+            var helpText = new FormattedMessage(1);
+            helpText.AddMarkupOrThrow(Loc.GetString(_channel.HelpText));
+            TextOutput.AddMessage(helpText);
+        }
 
         foreach (var message in messages)
         {
