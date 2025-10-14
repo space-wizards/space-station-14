@@ -91,7 +91,7 @@ uplink-pistol-magazine-name = Pistol Magazine (.35 auto)
 uplink-pistol-magazine-desc = Pistol magazine with 10 cartridges. Compatible with the Viper.
 
 uplink-pistol-magazine-c20r-name = SMG magazine (.35 auto)
-uplink-pistol-magazine-c20r-desc = Rifle magazine with 30 cartridges. Compatible with C-20r.
+uplink-pistol-magazine-c20r-desc = SMG magazine with 30 cartridges. Compatible with C-20r.
 
 uplink-magazine-bulldog-pellet-name = Drum magazine (.50 pellet)
 uplink-magazine-bulldog-pellet-desc = Shotgun magazine with 8 shells filled with buckshot. Compatible with the Bulldog.
@@ -137,6 +137,9 @@ uplink-access-breaker-desc = A hacked access configurator and a good friend of t
 
 uplink-agent-id-card-name = Agent ID Card
 uplink-agent-id-card-desc = A modified ID card that can copy accesses from other cards and change its name and job title at-will.
+
+uplink-syndicate-id-card-name = Syndicate ID Card
+uplink-syndicate-id-card-desc = A Syndicate ID card, with Syndicate access. Unlikely to be useful on its own, but goes great with reconfigured doors. Does not come with access-copying functionality.
 
 uplink-black-jetpack-name = Black Jetpack
 uplink-black-jetpack-desc = A black jetpack. It allows you to fly around in space. Refills not included, use your fuel wisely.
