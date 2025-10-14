@@ -413,7 +413,7 @@
             acts: [ "Destruction" ]
           - !type:SpawnEntitiesBehavior
             spawn:
-              MaterialCardboard:
+              MaterialCardboard1:
                 min: 1
                 max: 1
   - type: Butcherable
@@ -423,3 +423,4 @@
     - id: MaterialCardboard1
       amount: 1
   - type: TrayScanReveal
+
