@@ -97,14 +97,21 @@ public sealed partial class BwoinkPanel : BoxContainer
 
     private FormattedMessage FormatMessage(BwoinkMessage message)
     {
-        var formatted = new FormattedMessage(1);
-        // TODO: Proper name handling.
-        // TODO: Escape markdown.
-        var color = "white";
-        if (message.Flags.HasFlag(MessageFlags.Manager))
-            color = "red";
+        var formatted = new FormattedMessage();
 
-        formatted.AddMarkupOrThrow($"[color=gray]{message.SentAt.ToShortTimeString()}[/color] [color={color}]{message.Sender}[/color] {message.Content}");
+        var color = Color.White;
+        if (message.Flags.HasFlag(MessageFlags.Manager))
+            color = Color.Red;
+
+        formatted.PushColor(Color.Gray);
+        formatted.AddText($"{message.SentAt.ToShortTimeString()} ");
+        formatted.Pop();
+
+        formatted.PushColor(color);
+        formatted.AddText($"{message.Sender} ");
+        formatted.Pop();
+
+        formatted.AddText(message.Content);
 
         return formatted;
     }
