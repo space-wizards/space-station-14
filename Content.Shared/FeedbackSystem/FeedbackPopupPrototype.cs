@@ -10,33 +10,33 @@ public sealed partial class FeedbackPopupPrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; } = null!;
 
     /// <summary>
     /// What server the popup is from, you must edit the ccvar to include this for the popup to appear!
     /// </summary>
     [DataField(required: true)]
-    public string PopupOrigin = "";
+    public string PopupOrigin = string.Empty;
 
     /// <summary>
     /// Title of the popup. This supports rich text so you can use colors and stuff.
     /// </summary>
     [DataField(required: true)]
-    public string Title = "";
+    public string Title = string.Empty;
 
     /// <summary>
     /// List of "paragraphs" that are placed in the middle of the popup. Put any relevant information about what to give
     /// feedback on here! [bold]Rich text is allowed[/bold]
     /// </summary>
     [DataField(required: true)]
-    public string Description = "";
+    public string Description = string.Empty;
 
     /// <summary>
     /// The kind of response the player should expect to give; good examples are "Survey", "Discord Channel", "Feedback Thread" etc.
     /// Will be listed near the "Open Link" button; rich text is not allowed.
     /// </summary>
     [DataField]
-    public string ResponseType = "";
+    public string ResponseType = string.Empty;
 
     /// <summary>
     /// A link leading to where you want players to give feedback. Discord channel, form etc...
