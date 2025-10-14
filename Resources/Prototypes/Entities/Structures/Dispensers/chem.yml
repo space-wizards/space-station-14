@@ -14,8 +14,6 @@
     whitelist:
       tags:
       - ChemDispensable
-  - type: ApcPowerReceiver
-  - type: ExtensionCableReceiver
   - type: Destructible
     thresholds:
     - trigger:
@@ -77,3 +75,45 @@
       - id: JugSilicon
       - id: JugSodium
       - id: JugSulfur
+
+- type: entity
+  id: MedicinalRefiller
+  name: medicinal refiller
+  description: A sterile refiller for pharmaceutical reagents.
+  parent: ChemDispenserEmpty
+  components:
+  - type: DeployableBarrier
+    fixture: dispenser
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25, -0.4, 0.25, 0.4"
+        density: 100 # Heavy machine, but it has wheels
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Lock
+    locked: false
+    unlockOnClick: false
+    lockTime: 0
+    unlockTime: 0
+  - type: AccessReader
+    access: [ [ "Medical" ] ]
+  - type: Sprite
+    sprite: Structures/Machines/Medical/medicinal_refiller.rsi
+    state: base
+    snapCardinals: true
+  - type: ActivatableUIRequiresAccess
+  - type: StorageRequiresAccess
+  - type: RefillSmartContainers
+  - type: ReagentDispenser
+    beakerSlot:
+      whitelist:
+        components:
+        - FitsInDispenser
+      priority: 9
+  - type: Machine
+    board: MedicinalRefillerMachineCircuitboard
