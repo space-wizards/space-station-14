@@ -1,10 +1,9 @@
-﻿using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Database;
 using Content.Shared.EntityConditions;
-using Content.Shared.Localizations;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -119,11 +118,11 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
         if (!effect.Scaling)
             scale = Math.Min(scale, 1f);
 
-        if (effect.ShouldLog)
+        if (effect.Impact is {} level)
         {
             _adminLog.Add(
-                LogType.EntityEffect,
-                effect.LogImpact,
+                effect.LogType,
+                level,
                 $"Entity effect {effect.GetType().Name:effect}"
                 + $" applied on entity {target:entity}"
                 + $" at {Transform(target).Coordinates:coordinates}"
@@ -213,22 +212,16 @@ public abstract partial class EntityEffect
     [DataField]
     public float Probability = 1.0f;
 
-    /// <summary>
-    /// The description of this entity effect that shows in guidebooks.
-    /// </summary>
     public virtual string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => null;
-
-    /// <summary>
-    /// Whether this effect should be logged in admin logs.
-    /// </summary>
-    [ViewVariables]
-    public virtual bool ShouldLog => true;
 
     /// <summary>
     /// If this effect is logged, how important is the log?
     /// </summary>
     [ViewVariables]
-    public virtual LogImpact LogImpact => LogImpact.Low;
+    public virtual LogImpact? Impact => null;
+
+    [ViewVariables]
+    public virtual LogType LogType => LogType.EntityEffect;
 }
 
 /// <summary>
