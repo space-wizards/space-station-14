@@ -239,5 +239,5 @@
     Singulo:
       amount: 30
   effects:
-    - !type:CreateEntityReactionEffect
-      entity: SingularityToy
+  - !type:CreateEntityReactionEffect
+    entity: SingularityToy
