@@ -48,10 +48,10 @@ public sealed partial class AddReagentToSolution : EntityEffectBase<AddReagentTo
     [DataField]
     public float StrengthModifier = 1.0f;
 
-    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys, ILocalizationManager loc)
     {
         return prototype.Resolve(Reagent, out ReagentPrototype? proto)
-            ? Loc.GetString("entity-effect-guidebook-add-to-solution-reaction",
+            ? loc.GetString("entity-effect-guidebook-add-to-solution-reaction",
                 ("chance", Probability),
                 ("reagent", proto.LocalizedName))
             : null;

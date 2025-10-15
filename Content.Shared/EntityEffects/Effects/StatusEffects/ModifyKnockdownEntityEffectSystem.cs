@@ -60,10 +60,10 @@ public sealed partial class ModifyKnockdown : BaseStatusEntityEffect<ModifyKnock
     [DataField]
     public bool Drop;
 
-    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
+    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys, ILocalizationManager loc) =>
         Time == null
         ? null
-        : Loc.GetString(
+        : loc.GetString(
             "entity-effect-guidebook-knockdown",
             ("chance", Probability),
             ("type", Type),

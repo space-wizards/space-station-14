@@ -216,6 +216,9 @@ public abstract partial class EntityEffect
     /// <summary>
     /// The description of this entity effect that shows in guidebooks.
     /// </summary>
+    public virtual string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys, ILocalizationManager loc) => null;
+
+    [Obsolete("Use variant with ILocalizationManager")]
     public virtual string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => null;
 
     /// <summary>

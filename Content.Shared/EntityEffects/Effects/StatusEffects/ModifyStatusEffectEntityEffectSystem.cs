@@ -48,15 +48,15 @@ public sealed partial class ModifyStatusEffect : BaseStatusEntityEffect<ModifySt
     [DataField(required: true)]
     public EntProtoId EffectProto;
 
-    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
+    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys, ILocalizationManager loc) =>
         Time == null
-            ? Loc.GetString(
+            ? loc.GetString(
                 "entity-effect-guidebook-status-effect-indef",
                 ("chance", Probability),
                 ("type", Type),
                 ("key", prototype.Index(EffectProto).Name),
                 ("delay", Delay.TotalSeconds))
-            : Loc.GetString(
+            : loc.GetString(
                 "entity-effect-guidebook-status-effect",
                 ("chance", Probability),
                 ("type", Type),

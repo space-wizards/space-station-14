@@ -28,8 +28,8 @@ public sealed partial class SetSolutionTemperature : EntityEffectBase<SetSolutio
     [DataField(required: true)]
     public float Temperature;
 
-    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Loc.GetString("entity-effect-guidebook-set-solution-temperature-effect",
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys, ILocalizationManager loc)
+        => loc.GetString("entity-effect-guidebook-set-solution-temperature-effect",
             ("chance", Probability),
             ("temperature", Temperature));
 }
@@ -73,8 +73,8 @@ public sealed partial class AdjustSolutionTemperature : EntityEffectBase<AdjustS
     [DataField]
     public float MaxTemp = float.PositiveInfinity;
 
-    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Loc.GetString("entity-effect-guidebook-adjust-solution-temperature-effect",
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys, ILocalizationManager loc)
+        => loc.GetString("entity-effect-guidebook-adjust-solution-temperature-effect",
             ("chance", Probability),
             ("deltasign", MathF.Sign(Delta)),
             ("mintemp", MinTemp),
@@ -136,8 +136,8 @@ public sealed partial class AdjustSolutionThermalEnergy : EntityEffectBase<Adjus
     [DataField]
     public float MaxTemp = float.PositiveInfinity;
 
-    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Loc.GetString("entity-effect-guidebook-adjust-solution-temperature-effect",
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys, ILocalizationManager loc)
+        => loc.GetString("entity-effect-guidebook-adjust-solution-temperature-effect",
             ("chance", Probability),
             ("deltasign", MathF.Sign(Delta)),
             ("mintemp", MinTemp),

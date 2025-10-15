@@ -22,6 +22,6 @@ public sealed partial class WashCreamPieEntityEffectSystem : EntityEffectSystem<
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class WashCreamPie : EntityEffectBase<WashCreamPie>
 {
-    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Loc.GetString("entity-effect-guidebook-wash-cream-pie-reaction", ("chance", Probability));
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys, ILocalizationManager loc)
+        => loc.GetString("entity-effect-guidebook-wash-cream-pie-reaction", ("chance", Probability));
 }

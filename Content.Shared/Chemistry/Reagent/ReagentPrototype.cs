@@ -208,22 +208,35 @@ namespace Content.Shared.Chemistry.Reagent
             return removed;
         }
 
-        public IEnumerable<string> GuidebookReagentEffectsDescription(IPrototypeManager prototype, IEntitySystemManager entSys, IEnumerable<EntityEffect> effects, FixedPoint2? metabolism = null)
+        public IEnumerable<string> GuidebookReagentEffectsDescription(
+            IPrototypeManager prototype,
+            IEntitySystemManager entSys,
+            ILocalizationManager loc,
+            IEnumerable<EntityEffect> effects,
+            FixedPoint2? metabolism = null)
         {
-            return effects.Select(x => GuidebookReagentEffectDescription(prototype, entSys, x, metabolism))
+            return effects.Select(x => GuidebookReagentEffectDescription(prototype, entSys, loc, x, metabolism))
                 .Where(x => x is not null)
-                .Select(x => x!)
-                .ToArray();
+                .Select(x => x!);
         }
 
-        public string? GuidebookReagentEffectDescription(IPrototypeManager prototype, IEntitySystemManager entSys, EntityEffect effect, FixedPoint2? metabolism)
+        public string? GuidebookReagentEffectDescription(
+            IPrototypeManager prototype,
+            IEntitySystemManager entSys,
+            ILocalizationManager loc,
+            EntityEffect effect,
+            FixedPoint2? metabolism)
         {
-            if (effect.EntityEffectGuidebookText(prototype, entSys) is not { } description)
+#pragma warning disable CS0618 // Type or member is obsolete
+            var desc = effect.EntityEffectGuidebookText(prototype, entSys, loc) ?? effect.EntityEffectGuidebookText(prototype, entSys);
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            if (desc is not { } description)
                 return null;
 
             var quantity = metabolism == null ? 0f : (double) (effect.MinScale * metabolism);
 
-            return Loc.GetString(
+            return loc.GetString(
                 "guidebook-reagent-effect-description",
                 ("reagent", LocalizedName),
                 ("quantity", quantity),
@@ -247,16 +260,16 @@ namespace Content.Shared.Chemistry.Reagent
 
         public List<string>? PlantMetabolisms = null;
 
-        public ReagentGuideEntry(ReagentPrototype proto, IPrototypeManager prototype, IEntitySystemManager entSys)
+        public ReagentGuideEntry(ReagentPrototype proto, IPrototypeManager prototype, IEntitySystemManager entSys, ILocalizationManager loc)
         {
             ReagentPrototype = proto.ID;
             GuideEntries = proto.Metabolisms?
-                .Select(x => (x.Key, x.Value.MakeGuideEntry(prototype, entSys, proto)))
+                .Select(x => (x.Key, x.Value.MakeGuideEntry(prototype, entSys, proto, loc)))
                 .ToDictionary(x => x.Key, x => x.Item2);
             if (proto.PlantMetabolisms.Count > 0)
             {
                 PlantMetabolisms =
-                    new List<string>(proto.GuidebookReagentEffectsDescription(prototype, entSys, proto.PlantMetabolisms));
+                    new List<string>(proto.GuidebookReagentEffectsDescription(prototype, entSys, loc, proto.PlantMetabolisms));
             }
         }
     }
@@ -279,11 +292,9 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("effects", required: true)]
         public EntityEffect[] Effects = default!;
 
-        public string EntityEffectFormat => "guidebook-reagent-effect-description";
-
-        public ReagentEffectsGuideEntry MakeGuideEntry(IPrototypeManager prototype, IEntitySystemManager entSys, ReagentPrototype proto)
+        public ReagentEffectsGuideEntry MakeGuideEntry(IPrototypeManager prototype, IEntitySystemManager entSys, ReagentPrototype proto, ILocalizationManager loc)
         {
-            return new ReagentEffectsGuideEntry(MetabolismRate, proto.GuidebookReagentEffectsDescription(prototype, entSys, Effects, MetabolismRate).ToArray());
+            return new ReagentEffectsGuideEntry(MetabolismRate, proto.GuidebookReagentEffectsDescription(prototype, entSys, loc, Effects, MetabolismRate).ToArray());
         }
     }
 

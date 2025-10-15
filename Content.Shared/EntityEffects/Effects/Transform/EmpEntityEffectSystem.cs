@@ -49,8 +49,8 @@ public sealed partial class Emp : EntityEffectBase<Emp>
     [DataField]
     public TimeSpan Duration = TimeSpan.FromSeconds(15);
 
-    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Loc.GetString("entity-effect-guidebook-emp-reaction-effect", ("chance", Probability));
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys, ILocalizationManager loc)
+        => loc.GetString("entity-effect-guidebook-emp-reaction-effect", ("chance", Probability));
 
     public override bool ShouldLog => true;
 

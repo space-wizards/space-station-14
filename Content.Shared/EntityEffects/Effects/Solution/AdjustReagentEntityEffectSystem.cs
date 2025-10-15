@@ -39,10 +39,10 @@ public sealed partial class AdjustReagent : EntityEffectBase<AdjustReagent>
     [DataField(required: true)]
     public FixedPoint2 Amount;
 
-    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys, ILocalizationManager loc)
     {
         return prototype.Resolve(Reagent, out ReagentPrototype? proto)
-            ? Loc.GetString("entity-effect-guidebook-adjust-reagent-reagent",
+            ? loc.GetString("entity-effect-guidebook-adjust-reagent-reagent",
                 ("chance", Probability),
                 ("deltasign", MathF.Sign(Amount.Float())),
                 ("reagent", proto.LocalizedName),

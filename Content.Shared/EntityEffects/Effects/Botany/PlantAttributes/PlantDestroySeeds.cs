@@ -7,6 +7,6 @@ namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 /// </summary>
 public sealed partial class PlantDestroySeeds : EntityEffectBase<PlantDestroySeeds>
 {
-    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
-        Loc.GetString("entity-effect-guidebook-plant-seeds-remove", ("chance", Probability));
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys, ILocalizationManager loc) =>
+        loc.GetString("entity-effect-guidebook-plant-seeds-remove", ("chance", Probability));
 }

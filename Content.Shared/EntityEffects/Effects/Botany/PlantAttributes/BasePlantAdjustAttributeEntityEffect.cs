@@ -28,8 +28,8 @@ public abstract partial class BasePlantAdjustAttribute<T> : EntityEffectBase<T> 
     [DataField]
     public virtual bool GuidebookIsAttributePositive { get; protected set; } = true;
 
-    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
-        Loc.GetString("entity-effect-guidebook-plant-attribute",
+    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys, ILocalizationManager loc) =>
+        loc.GetString("entity-effect-guidebook-plant-attribute",
         ("attribute", Loc.GetString(GuidebookAttributeName)),
         ("amount", Amount.ToString("0.00")),
         ("positive", GuidebookIsAttributePositive),

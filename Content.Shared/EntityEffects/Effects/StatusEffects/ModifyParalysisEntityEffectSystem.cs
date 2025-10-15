@@ -40,10 +40,10 @@ public sealed partial class ModifyParalysisEntityEffectSystem : EntityEffectSyst
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class ModifyParalysis : BaseStatusEntityEffect<ModifyParalysis>
 {
-    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
+    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys, ILocalizationManager loc) =>
         Time == null
             ? null // Not gonna make a whole new looc for something that shouldn't ever exist.
-            : Loc.GetString(
+            : loc.GetString(
             "entity-effect-guidebook-paralyze",
             ("chance", Probability),
             ("time", Time.Value.TotalSeconds)
