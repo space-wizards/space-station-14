@@ -84,7 +84,7 @@ public sealed partial class ResearchSystem
             if (ent.Comp.Server is not null)
                 return;
 
-            if (GetServers(ent).FirstOrNull() is {} server)
+            if (GetServers(ent).FirstOrNull() is { } server)
                 RegisterClient(ent, server, ent, server);
         }
         else
