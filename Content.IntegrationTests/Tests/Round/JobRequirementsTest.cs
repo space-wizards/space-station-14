@@ -6,6 +6,7 @@ using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Traits;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Round;
@@ -76,6 +77,35 @@ public sealed class JobRequirementsTest
         - type: roleLoadout
           id: JobFreezerHead
 
+        - type: playTimeTracker
+          id: PlayTimeDummyRadioAnnouncer
+
+        - type: job
+          id: RadioAnnouncer
+          playTimeTracker: PlayTimeDummyRadioAnnouncer
+          requirements:
+          - !type:TraitsRequirement
+            inverted: true
+            traits:
+            - Muted
+
+        - type: roleLoadout
+          id: JobRadioAnnouncer
+
+        - type: playTimeTracker
+          id: PlayTimeDummyDaredevil
+
+        - type: job
+          id: Daredevil
+          playTimeTracker: PlayTimeDummyDaredevil
+          requirements:
+          - !type:TraitsRequirement
+            traits:
+            - Unrevivable
+
+        - type: roleLoadout
+          id: JobDaredevil
+
         - type: gameMap
           id: JobRequirementsTestMap
           mapName: JobRequirementsTestMap
@@ -93,6 +123,8 @@ public sealed class JobRequirementsTest
                     Twenties: [ -1, -1 ]
                     Wehngineer: [ -1, -1 ]
                     FreezerHead: [ -1, -1 ]
+                    RadioAnnouncer: [ -1, -1 ]
+                    Daredevil: [ -1, -1 ]
         """;
 
     /// <summary>
@@ -204,6 +236,74 @@ public sealed class JobRequirementsTest
         humanoidZero = cPref.Preferences!.Characters[0] as HumanoidCharacterProfile;
         Assert.That(humanoidZero, Is.Not.Null);
         Assert.That(humanoidZero.Species.Id, Is.EqualTo(species));
+
+        Assert.That(ticker.PlayerGameStatuses[pair.Client.User!.Value], Is.EqualTo(PlayerGameStatus.NotReadyToPlay));
+        ticker.ToggleReadyAll(true);
+        Assert.That(ticker.PlayerGameStatuses[pair.Client.User!.Value], Is.EqualTo(PlayerGameStatus.ReadyToPlay));
+        await pair.Server.WaitPost(() => ticker.StartRound());
+        await pair.RunTicksSync(10);
+
+        pair.AssertJob(expectedJob ? wantedJob : "Passenger");
+
+        await pair.Server.WaitPost(() => ticker.RestartRound());
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>
+    /// Generic test for traits requirements
+    /// </summary>
+    /// <param name="trait1">A trait of the created profile; null if no traits</param>
+    /// <param name="trait2">A trait of the created profile; null if zero or one traits</param>
+    /// <param name="wantedJob">Job preference of the created profile</param>
+    /// <param name="expectedJob">If true, assert that the job was assigned.
+    /// If false, assert that job was not given</param>
+    [Test]
+    [TestCase("Unrevivable", "PirateAccent", "RadioAnnouncer")]
+    [TestCase("Muted", "Unrevivable", "RadioAnnouncer", false)]
+    [TestCase("Muted", "PirateAccent", "Daredevil", false)]
+    [TestCase("Muted", "Unrevivable", "Daredevil")]
+    public async Task TraitsRequirementsTest(string? trait1, string? trait2, string wantedJob, bool expectedJob = true)
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings
+        {
+            DummyTicker = false,
+            Connected = true,
+            InLobby = true,
+        });
+        pair.Server.CfgMan.SetCVar(CCVars.GameRoleTimers, false);   // should not need timers to test species requirement
+        pair.Server.CfgMan.SetCVar(CCVars.GameMap, _map);
+        var ticker = pair.Server.System<GameTicker>();
+        var cPref = pair.Client.ResolveDependency<IClientPreferencesManager>();
+        var protoMan = pair.Server.ResolveDependency<IPrototypeManager>();
+
+        await pair.ReallyBeIdle();
+
+        var humanoidZero = cPref.Preferences!.Characters[0] as HumanoidCharacterProfile;
+        Assert.That(humanoidZero, Is.Not.Null);
+
+        var priorities = new Dictionary<ProtoId<JobPrototype>, JobPriority>
+        {
+            { wantedJob, JobPriority.High },
+            { "Passenger", JobPriority.Low },
+        };
+
+        await pair.Client.WaitAssertion(() =>
+        {
+            if (trait1 != null)
+                humanoidZero = humanoidZero.WithTraitPreference(trait1, protoMan);
+            if (trait2 != null)
+                humanoidZero = humanoidZero.WithTraitPreference(trait2, protoMan);
+            cPref.UpdateCharacter(humanoidZero.WithJobPriorities(priorities), 0);
+        });
+
+        await pair.ReallyBeIdle();
+
+        humanoidZero = cPref.Preferences!.Characters[0] as HumanoidCharacterProfile;
+        Assert.That(humanoidZero, Is.Not.Null);
+        if (trait1 != null)
+            Assert.That(humanoidZero.TraitPreferences.Contains(trait1));
+        if (trait2 != null)
+            Assert.That(humanoidZero.TraitPreferences.Contains(trait2));
 
         Assert.That(ticker.PlayerGameStatuses[pair.Client.User!.Value], Is.EqualTo(PlayerGameStatus.NotReadyToPlay));
         ticker.ToggleReadyAll(true);
