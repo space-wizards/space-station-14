@@ -67,8 +67,16 @@ public sealed partial class ParcelWrappingSystem
             duration = overrideComp.WrapDelay.Value;
 
         // In case the target is a player inform them with a popup.
-        var msg = Loc.GetString("parcel-wrap-popup-being-wrapped", ("user", Identity.Entity(user, EntityManager)));
-        _popup.PopupEntity(msg, target, target, PopupType.MediumCaution);
+        if (target == user)
+        {
+            var selfMsg = Loc.GetString("parcel-wrap-popup-being-wrapped-self");
+            _popup.PopupClient(selfMsg, user, user);
+        }
+        else
+        {
+            var othersMsg = Loc.GetString("parcel-wrap-popup-being-wrapped", ("user", Identity.Entity(user, EntityManager)));
+            _popup.PopupEntity(othersMsg, target, target, PopupType.MediumCaution);
+        }
 
         return _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager,
             user,
