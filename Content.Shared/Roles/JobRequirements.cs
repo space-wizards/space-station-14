@@ -9,10 +9,10 @@ namespace Content.Shared.Roles;
 public static class JobRequirements
 {
     /// <summary>
-    /// Checks if the requirements of the job are met by the provided play-times.
+    /// Checks if the requirements of the job are met.
     /// </summary>
     /// <param name="job"> The job to test. </param>
-    /// <param name="playTimes"> The playtimes used for the check. </param>
+    /// <param name="playTimes"> Playtimes for the playtime check; null if role timers are off. </param>
     /// <param name="reason"> If the requirements were not met, details are provided here. </param>
     /// <returns>Returns true if all requirements were met or there were no requirements.</returns>
     public static bool TryRequirementsMet(
@@ -29,10 +29,10 @@ public static class JobRequirements
     }
 
     /// <summary>
-    /// Checks if the list of requirements are met by the provided play-times.
+    /// Checks if the list of requirements are met.
     /// </summary>
     /// <param name="requirements"> The requirements to test. </param>
-    /// <param name="playTimes"> The playtimes used for the check. </param>
+    /// <param name="playTimes"> Playtimes for the playtime check; null if role timers are off. </param>
     /// <param name="reason"> If the requirements were not met, details are provided here. </param>
     /// <returns>Returns true if all requirements were met or there were no requirements.</returns>
     public static bool TryRequirementsMet(
