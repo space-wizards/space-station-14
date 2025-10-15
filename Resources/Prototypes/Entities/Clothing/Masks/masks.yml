@@ -51,9 +51,8 @@
     - name: low
     - name: med
     - name: high
-    - name: emag
-      cyclable: false
     hailLevelIndex: 0
+    emagLevelPrefix: hailer-emag
     orders:
     - name: attention
       description: blah blah blah

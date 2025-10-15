@@ -3,8 +3,10 @@ using Content.Shared.Clothing;
 using Content.Shared.Clothing.ActionEvent;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.Emag.Components;
 using Content.Shared.Labels;
 using Robust.Client.GameObjects;
+using System;
 
 namespace Content.Client.Clothing.Systems;
 public sealed class HailerSystem : SharedHailerSystem
@@ -30,7 +32,6 @@ public sealed class HailerSystem : SharedHailerSystem
         }
         else if (TryComp<MaskComponent>(ent, out var mask))
         {
-
             if (!mask.IsToggled && !ent.Comp.AreWiresCut)
             {
                 _ui.TryOpenUi(ent.Owner, HailerUiKey.Key, ev.Performer, predicted: true);

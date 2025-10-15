@@ -3,6 +3,7 @@ using Content.Server.Popups;
 using Content.Shared.Clothing.ActionEvent;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.Emag.Systems;
 using Content.Shared.Popups;
 using JetBrains.FormatRipper.Elf;
 
@@ -42,13 +43,12 @@ public sealed class HailerSystem : SharedHailerSystem
     protected override void IncreaseAggressionLevel(Entity<HailerComponent> ent)
     {
         //Up the aggression level or reset it
-        do
-        {
-            ent.Comp.HailLevelIndex++;
-            if (ent.Comp.HailLevelIndex >= ent.Comp.HailLevels.Count)
-                ent.Comp.HailLevelIndex = 0;
-        } while (!ent.Comp.CurrentHailLevel.Cyclable);
+        ent.Comp.HailLevelIndex++;
+        if (ent.Comp.HailLevelIndex >= ent.Comp.HailLevels.Count)
+            ent.Comp.HailLevelIndex = 0;
 
         _popup.PopupEntity(Loc.GetString("hailer-gas-mask-screwed", ("level", ent.Comp.CurrentHailLevel.Name.ToLower())), ent.Owner);
     }
+
+
 }

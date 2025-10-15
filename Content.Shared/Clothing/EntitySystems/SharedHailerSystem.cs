@@ -1,3 +1,4 @@
+using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Clothing.ActionEvent;
@@ -24,6 +25,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
@@ -44,6 +46,9 @@ public abstract class SharedHailerSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
 
+    [Dependency] private readonly EmagSystem _emag = default!;
+
+
     public override void Initialize()
     {
         base.Initialize();
@@ -52,7 +57,7 @@ public abstract class SharedHailerSystem : EntitySystem
         SubscribeLocalEvent<HailerComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<HailerComponent, ClothingGotUnequippedEvent>(OnUnequip);
         SubscribeLocalEvent<HailerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
-        SubscribeLocalEvent<HailerComponent, GotEmaggedEvent>(OnEmagging);
+        SubscribeLocalEvent<HailerComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<HailerComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<HailerComponent, SecHailerToolDoAfterEvent>(OnToolDoAfter);
 
@@ -71,20 +76,26 @@ public abstract class SharedHailerSystem : EntitySystem
 
     private void OnHailOrder(EntityUid uid, HailerComponent comp, HailerOrderMessage args)
     {
-        Entity<HailerComponent> ent = (uid, comp);
         string soundCollection;
         string localeText;
+        Entity<HailerComponent> ent = (uid, comp);
 
-        var orderUsed = comp.Orders[args.Index];
-        var hailLevel = comp.CurrentHailLevel.Name;
-        soundCollection = orderUsed.SoundCollection + "-" + hailLevel;
-        localeText = orderUsed.LocalePrefix + "-" + hailLevel;
+        if (HasComp<EmaggedComponent>(ent) && comp.EmagLevelPrefix != null)
+        {
+            localeText = soundCollection = comp.EmagLevelPrefix;
+        }
+        else
+        {
+            var orderUsed = comp.Orders[args.Index];
+            var hailLevel = comp.CurrentHailLevel.Name;
+            soundCollection = orderUsed.SoundCollection + "-" + hailLevel;
+            localeText = orderUsed.LocalePrefix + "-" + hailLevel;
+        }
 
         //Play voice etc...
-        var index = PlayVoiceLineSound(ent, soundCollection);
-        SubmitChatMessage(ent, localeText, index);
+        var index = PlayVoiceLineSound((uid, comp), soundCollection);
+        SubmitChatMessage((uid, comp), localeText, index);
     }
-
 
     private int PlayVoiceLineSound(Entity<HailerComponent> ent, string soundCollection)
     {
@@ -140,16 +151,25 @@ public abstract class SharedHailerSystem : EntitySystem
         if (ent.Comp.User.HasValue && ent.Comp.User != args.User)
             return;
 
-        //Is it a wirecutter, a screwdriver or an EMAG ?
+        //Is it a wirecutter or a screwdriver ?
         if (_tool.HasQuality(args.Used, SharedToolSystem.CutQuality))
+        {
             OnInteractCutting(ent, ref args);
+            args.Handled = true;
+        }
         else if (_tool.HasQuality(args.Used, SharedToolSystem.ScrewQuality))
+        {
             OnInteractScrewing(ent, ref args);
-        else
-            return;
+            args.Handled = true;
+        }
+
+        return;
     }
     private void OnInteractCutting(Entity<HailerComponent> ent, ref InteractUsingEvent args)
     {
+        if (!args.Handled)
+            return;
+
         ProtoId<ToolQualityPrototype> quality = CUTTING_QUALITY;
         StartADoAfter(ent, args, quality);
     }
@@ -159,6 +179,9 @@ public abstract class SharedHailerSystem : EntitySystem
         //If it's emagged we don't change it
         if (HasComp<EmaggedComponent>(ent) || ent.Comp.AreWiresCut)
             return;
+        if (!args.Handled)
+            return;
+
         ProtoId<ToolQualityPrototype> quality = SCREWING_QUALITY;
         StartADoAfter(ent, args, quality);
     }
@@ -188,14 +211,14 @@ public abstract class SharedHailerSystem : EntitySystem
             BreakOnMove = true,
             NeedHand = true,
         });
-
-        args.Handled = true;
     }
 
     private void OnToolDoAfter(Entity<HailerComponent> ent, ref SecHailerToolDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || !HasComp<HailerComponent>(args.Args.Target))
             return;
+
+        args.Handled = true;
 
         switch (args.ToolQuality)
         {
@@ -221,7 +244,6 @@ public abstract class SharedHailerSystem : EntitySystem
         var state = comp.AreWiresCut ? "WiresCut" : "Intact";
         _appearance.SetData(ent, SecMaskVisuals.State, state);
         Dirty(ent);
-        args.Handled = true;
     }
 
     private void OnScrewingDoAfter(Entity<HailerComponent> ent, ref SecHailerToolDoAfterEvent args)
@@ -229,28 +251,10 @@ public abstract class SharedHailerSystem : EntitySystem
         _sharedAudio.PlayPvs(ent.Comp.ScrewedSounds, ent.Owner);
 
         IncreaseAggressionLevel(ent);
-        args.Handled = true;
     }
 
     protected virtual void IncreaseAggressionLevel(Entity<HailerComponent> ent)
     {
-    }
-
-    private void OnEmagging(Entity<HailerComponent> ent, ref GotEmaggedEvent args)
-    {
-        if (args.Handled || HasComp<EmaggedComponent>(ent))
-            return;
-
-        if (ent.Comp.User.HasValue && ent.Comp.User != args.UserUid)
-            return;
-
-        _popup.PopupEntity(Loc.GetString("hailer-gas-mask-emagged"), ent.Owner);
-
-        args.Type = EmagType.Interaction;
-
-        Dirty(ent);
-        args.Handled = true;
-
     }
 
     private void OnExamine(Entity<HailerComponent> ent, ref ExaminedEvent args)
@@ -288,6 +292,22 @@ public abstract class SharedHailerSystem : EntitySystem
         });
     }
 
+    private void OnEmagged(Entity<HailerComponent> ent, ref GotEmaggedEvent args)
+    {
+        if (args.Handled || HasComp<EmaggedComponent>(ent) || ent.Comp.EmagLevelPrefix == null)
+            return;
+
+        if (ent.Comp.User.HasValue && ent.Comp.User != args.UserUid)
+            return;
+
+        _popup.PopupEntity(Loc.GetString("hailer-gas-mask-emagged"), ent.Owner);
+
+        args.Type = EmagType.Interaction;
+
+        args.Handled = true;
+        Dirty(ent);
+    }
+
     private void UseVerbSwitchAggression(Entity<HailerComponent> ent, EntityUid userActed)
     {
         ent.Comp.TimeVerbReady = _gameTiming.CurTime + ent.Comp.VerbCooldown;
@@ -299,8 +319,11 @@ public abstract class SharedHailerSystem : EntitySystem
             return;
         }
 
-        _sharedAudio.PlayPvs(ent.Comp.SettingBeep, ent.Owner, AudioParams.Default.WithVolume(0.5f).WithVariation(0.15f));
-        IncreaseAggressionLevel(ent);
-        Dirty(ent);
+        if (!HasComp<EmaggedComponent>(ent) && !ent.Comp.AreWiresCut)
+        {
+            _sharedAudio.PlayPvs(ent.Comp.SettingBeep, ent.Owner, AudioParams.Default.WithVolume(0.5f).WithVariation(0.15f));
+            IncreaseAggressionLevel(ent);
+            Dirty(ent);
+        }
     }
 }

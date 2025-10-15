@@ -65,7 +65,7 @@ public sealed partial class HailerComponent : Component
     /// How long until you can use the verb again to change aggression level
     /// </summary>
     [DataField]
-    public TimeSpan VerbCooldown = TimeSpan.FromSeconds(2);
+    public TimeSpan VerbCooldown = TimeSpan.FromSeconds(1);
 
     /// <summary>
     /// Time where the verb will be ready to be used again
@@ -124,6 +124,12 @@ public sealed partial class HailerComponent : Component
     [DataField, AutoNetworkedField]
     public int HailLevelIndex;
 
+    /// <summary>
+    /// Locale prefix for emag lines
+    /// </summary>
+    [DataField]
+    public string EmagLevelPrefix;
+
     [DataField]
     public List<HailOrder> Orders = [];
 
@@ -143,13 +149,8 @@ public enum SecMaskVisuals : byte
 [DataRecord, Serializable, NetSerializable]
 public record struct HailLevel
 {
-    public HailLevel() => Name = String.Empty;
-
     [DataField]
     public string Name;
-
-    [DataField]
-    public bool Cyclable = true;
 }
 
 [DataRecord, Serializable, NetSerializable]
