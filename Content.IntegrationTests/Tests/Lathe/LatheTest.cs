@@ -28,7 +28,7 @@ public sealed class LatheTest
         var whitelistSystem = server.System<EntityWhitelistSystem>();
         var latheSystem = server.System<SharedLatheSystem>();
 
-        await server.WaitAssertion(() =>
+        await server.WaitAssertion((Action)(() =>
         {
             // Find all the lathes
             var latheProtos = protoMan.EnumeratePrototypes<EntityPrototype>()
@@ -49,7 +49,7 @@ public sealed class LatheTest
                 materialEntities.Add(entMan.SpawnEntity(materialEntityProto.ID, mapData.GridCoords));
             }
 
-            Assert.Multiple(() =>
+            Assert.Multiple((TestDelegate)(() =>
             {
                 // Check each lathe individually
                 foreach (var latheProto in latheProtos)
@@ -109,8 +109,8 @@ public sealed class LatheTest
                             Assert.That(totalQuantity, Is.LessThanOrEqualTo(storageComp.StorageLimit), $"Lathe {latheProto.ID} has recipe {recipeId} which calls for {totalQuantity} units of materials but can only hold {storageComp.StorageLimit}");
                     }
                 }
-            });
-        });
+            }));
+        }));
 
         await pair.CleanReturnAsync();
     }
