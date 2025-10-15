@@ -45,8 +45,12 @@ public sealed class BankCommand : ToolshedCommand
     public IEnumerable<BankAccount> Adjust([PipedArgument] IEnumerable<BankAccount> @ref, int by)
     {
         _cargo ??= GetSys<CargoSystem>();
-        @ref.Select(bankAccount => _cargo.TryAdjustBankAccount(bankAccount.Station, bankAccount.Account, by, true));
-        return @ref;
+        var bankAccounts = @ref.ToList();
+        foreach (var bankAccount in bankAccounts.ToList())
+        {
+            _cargo.TryAdjustBankAccount(bankAccount.Station, bankAccount.Account, by, true);
+        }
+        return bankAccounts;
     }
 
     [CommandImplementation("set")]
