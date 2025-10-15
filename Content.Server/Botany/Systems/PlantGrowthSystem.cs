@@ -1,6 +1,4 @@
 using Content.Server.Botany.Components;
-using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Botany.Systems;
 
@@ -8,13 +6,11 @@ namespace Content.Server.Botany.Systems;
 public readonly record struct OnPlantGrowEvent;
 
 /// <summary>
-/// Base system for plant growth mechanics. Provides common functionality for all plant growth systems.
+/// Base for botany growth systems, providing shared helpers and constants used by
+/// per-trait/per-environment growth handlers.
 /// </summary>
 public abstract class PlantGrowthSystem : EntitySystem
 {
-    [Dependency] protected readonly IRobustRandom _random = default!;
-    [Dependency] protected readonly IGameTiming _gameTiming = default!;
-
     /// <summary>
     /// Multiplier for plant growth speed in hydroponics.
     /// </summary>
@@ -38,10 +34,7 @@ public abstract class PlantGrowthSystem : EntitySystem
         if (!Resolve(uid, ref component) || component.Seed == null)
             return;
 
-        PlantTraitsComponent? traits = null;
-        Resolve<PlantTraitsComponent>(uid, ref traits);
-
-        if (traits == null)
+        if (!TryComp<PlantTraitsComponent>(uid, out var traits))
             return;
 
         // Synchronize harvest status with HarvestComponent if present

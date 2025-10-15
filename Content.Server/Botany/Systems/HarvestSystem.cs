@@ -3,9 +3,6 @@ using Content.Server.Hands.Systems;
 using Content.Server.Popups;
 using Content.Shared.Interaction;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Botany.Systems;
 
@@ -30,6 +27,10 @@ public enum HarvestType
     SelfHarvest
 }
 
+/// <summary>
+/// Manages harvest readiness and execution for plants, including repeat/self-harvest
+/// logic and produce spawning, responding to growth and interaction events.
+/// </summary>
 public sealed class HarvestSystem : EntitySystem
 {
     [Dependency] private readonly BotanySystem _botany = default!;
@@ -41,14 +42,19 @@ public sealed class HarvestSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<HarvestComponent, OnPlantGrowEvent>(OnPlantGrow);
         SubscribeLocalEvent<HarvestComponent, InteractHandEvent>(OnInteractHand);
     }
 
-    private void OnPlantGrow(EntityUid uid, HarvestComponent component, OnPlantGrowEvent args)
+    private void OnPlantGrow(Entity<HarvestComponent> ent, ref OnPlantGrowEvent args)
     {
-        if (!TryComp<PlantHolderComponent>(uid, out var plantHolder) ||
-            !TryComp<PlantTraitsComponent>(uid, out var traits))
+        var uid = ent.Owner;
+        var component = ent.Comp;
+
+        PlantHolderComponent? plantHolder = null;
+        PlantTraitsComponent? traits = null;
+        if (!Resolve(uid, ref plantHolder, ref traits))
             return;
 
         if (plantHolder.Dead || plantHolder.Seed == null)
@@ -76,10 +82,14 @@ public sealed class HarvestSystem : EntitySystem
         }
     }
 
-    private void OnInteractHand(EntityUid uid, HarvestComponent component, InteractHandEvent args)
+    private void OnInteractHand(Entity<HarvestComponent> ent, ref InteractHandEvent args)
     {
-        if (!TryComp<PlantHolderComponent>(uid, out var plantHolder) ||
-            !TryComp<PlantTraitsComponent>(uid, out var traits))
+        var uid = ent.Owner;
+        var component = ent.Comp;
+
+        PlantHolderComponent? plantHolder = null;
+        PlantTraitsComponent? traits = null;
+        if (!Resolve(uid, ref plantHolder, ref traits))
             return;
 
         if (!component.ReadyForHarvest || plantHolder.Dead)
@@ -98,24 +108,28 @@ public sealed class HarvestSystem : EntitySystem
         }
 
         // Perform harvest
-        DoHarvest(uid, args.User, component, plantHolder, traits);
+        DoHarvest(ent);
     }
 
-    public void DoHarvest(EntityUid plantUid, EntityUid user, HarvestComponent? harvestComp = null,
-        PlantHolderComponent? plantHolder = null, PlantTraitsComponent? traits = null)
+    public void DoHarvest(Entity<HarvestComponent> ent)
     {
-        if (!Resolve(plantUid, ref harvestComp, ref plantHolder, ref traits))
+        var uid = ent.Owner;
+        var component = ent.Comp;
+
+        PlantHolderComponent? plantHolder = null;
+        PlantTraitsComponent? traits = null;
+        if (!Resolve(uid, ref plantHolder, ref traits))
             return;
 
         if (plantHolder.Dead)
         {
             // Remove dead plant
-            _plantHolder.RemovePlant(plantUid, plantHolder);
-            AfterHarvest(plantUid, harvestComp, plantHolder);
+            _plantHolder.RemovePlant(uid, plantHolder);
+            AfterHarvest((uid, plantHolder));
             return;
         }
 
-        if (!harvestComp.ReadyForHarvest)
+        if (!component.ReadyForHarvest)
             return;
 
         // Spawn products
@@ -126,7 +140,7 @@ public sealed class HarvestSystem : EntitySystem
             {
                 foreach (var productPrototype in plantHolder.Seed.ProductPrototypes)
                 {
-                    var product = Spawn(productPrototype, Transform(plantUid).Coordinates);
+                    var product = Spawn(productPrototype, Transform(uid).Coordinates);
 
                     // Apply mutations to product
                     if (TryComp<ProduceComponent>(product, out var produce))
@@ -138,42 +152,45 @@ public sealed class HarvestSystem : EntitySystem
         }
 
         // Handle harvest type
-        switch (harvestComp.HarvestRepeat)
+        switch (component.HarvestRepeat)
         {
             case HarvestType.NoRepeat:
-                _plantHolder.RemovePlant(plantUid, plantHolder);
+                _plantHolder.RemovePlant(uid, plantHolder);
                 break;
             case HarvestType.Repeat:
             case HarvestType.SelfHarvest:
-                harvestComp.ReadyForHarvest = false;
-                harvestComp.LastHarvestTime = plantHolder.Age;
+                component.ReadyForHarvest = false;
+                component.LastHarvestTime = plantHolder.Age;
                 plantHolder.Harvest = false;
                 break;
         }
 
-        AfterHarvest(plantUid, harvestComp, plantHolder);
+        AfterHarvest((uid, plantHolder));
     }
 
-    private void AfterHarvest(EntityUid uid, HarvestComponent component, PlantHolderComponent plantHolder)
+    private void AfterHarvest(Entity<PlantHolderComponent> ent)
     {
+        var uid = ent.Owner;
+        var component = ent.Comp;
+
         // Play scream sound if applicable
-        if (TryComp<PlantTraitsComponent>(uid, out var traits) && traits.CanScream && plantHolder.Seed != null)
+        if (TryComp<PlantTraitsComponent>(uid, out var traits) && traits.CanScream && component.Seed != null)
         {
-            _audio.PlayPvs(plantHolder.Seed.ScreamSound, uid);
+            _audio.PlayPvs(component.Seed.ScreamSound, uid);
         }
 
         // Update sprite
-        _plantHolder.UpdateSprite(uid, plantHolder);
+        _plantHolder.UpdateSprite(uid, component);
     }
 
-    public void AutoHarvest(EntityUid uid, HarvestComponent? component = null)
+    /// <summary>
+    /// Auto-harvests a plant.
+    /// </summary>
+    public void AutoHarvest(Entity<HarvestComponent> ent)
     {
-        if (!Resolve(uid, ref component))
+        if (!ent.Comp.ReadyForHarvest)
             return;
 
-        if (!component.ReadyForHarvest)
-            return;
-
-        DoHarvest(uid, uid, component);
+        DoHarvest(ent);
     }
 }

@@ -3,6 +3,11 @@ using Content.Server.Botany.Components;
 using Content.Shared.Atmos;
 
 namespace Content.Server.Botany.Systems;
+
+/// <summary>
+/// Consumes and emits configured gases around plants each growth tick, then merges
+/// the adjusted gas mixture back into the environment.
+/// </summary>
 public sealed class ConsumeExudeGasGrowthSystem : PlantGrowthSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
@@ -10,13 +15,17 @@ public sealed class ConsumeExudeGasGrowthSystem : PlantGrowthSystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ConsumeExudeGasGrowthComponent, OnPlantGrowEvent>(OnPlantGrow);
     }
 
-    private void OnPlantGrow(EntityUid uid, ConsumeExudeGasGrowthComponent component, OnPlantGrowEvent args)
+    private void OnPlantGrow(Entity<ConsumeExudeGasGrowthComponent> ent, ref OnPlantGrowEvent args)
     {
+        var uid = ent.Owner;
+        var component = ent.Comp;
+
         PlantHolderComponent? holder = null;
-        Resolve<PlantHolderComponent>(uid, ref holder);
+        Resolve(uid, ref holder);
 
         if (holder == null || holder.Seed == null || holder.Dead)
             return;

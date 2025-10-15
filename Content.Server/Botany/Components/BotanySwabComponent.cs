@@ -1,3 +1,4 @@
+using System;
 using Content.Server.Botany.Components;
 
 namespace Content.Server.Botany;
@@ -9,10 +10,10 @@ namespace Content.Server.Botany;
 public sealed partial class BotanySwabComponent : Component
 {
     /// <summary>
-    /// Delay in seconds between swab uses.
+    /// Delay between swab uses.
     /// </summary>
     [DataField]
-    public float SwabDelay = 2f;
+    public TimeSpan SwabDelay = TimeSpan.FromSeconds(2);
 
     /// <summary>
     /// SeedData from the first plant that got swabbed.

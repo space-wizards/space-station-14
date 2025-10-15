@@ -1,23 +1,27 @@
-using System;
 using Content.Server.Botany.Components;
 
 namespace Content.Server.Botany.Systems;
 
 /// <summary>
-/// Handles toxin tolerance and damage for plants.
+/// Handles toxin accumulation and tolerance for plants, applying health damage
+/// and decrementing toxins based on per-tick uptake.
 /// </summary>
 public sealed class ToxinsSystem : PlantGrowthSystem
 {
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ToxinsComponent, OnPlantGrowEvent>(OnPlantGrow);
     }
 
-    private void OnPlantGrow(EntityUid uid, ToxinsComponent component, OnPlantGrowEvent args)
+    private void OnPlantGrow(Entity<ToxinsComponent> ent, ref OnPlantGrowEvent args)
     {
+        var uid = ent.Owner;
+        var component = ent.Comp;
+
         PlantHolderComponent? holder = null;
-        Resolve<PlantHolderComponent>(uid, ref holder);
+        Resolve(uid, ref holder);
 
         if (holder == null || holder.Seed == null || holder.Dead)
             return;

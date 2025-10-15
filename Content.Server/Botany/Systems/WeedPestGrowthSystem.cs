@@ -1,22 +1,32 @@
 using Content.Server.Botany.Components;
 using Content.Shared.Coordinates.Helpers;
-using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 
 namespace Content.Server.Botany.Systems;
+
+/// <summary>
+/// Manages weed growth and pest damage per growth tick, and handles tray-level
+/// weed spawning and kudzu transformation based on conditions.
+/// </summary>
 public sealed class WeedPestGrowthSystem : PlantGrowthSystem
 {
+    [Dependency] private readonly IRobustRandom _random = default!;
+
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<WeedPestGrowthComponent, OnPlantGrowEvent>(OnPlantGrow);
         SubscribeLocalEvent<PlantHolderComponent, OnPlantGrowEvent>(OnTrayUpdate);
     }
 
-    private void OnPlantGrow(EntityUid uid, WeedPestGrowthComponent component, OnPlantGrowEvent args)
+    private void OnPlantGrow(Entity<WeedPestGrowthComponent> ent, ref OnPlantGrowEvent args)
     {
+        var uid = ent.Owner;
+        var component = ent.Comp;
+
         PlantHolderComponent? holder = null;
-        Resolve<PlantHolderComponent>(uid, ref holder);
+        Resolve(uid, ref holder);
 
         if (holder == null || holder.Seed == null || holder.Dead)
             return;
@@ -41,8 +51,11 @@ public sealed class WeedPestGrowthSystem : PlantGrowthSystem
     /// <summary>
     /// Handles weed growth and kudzu transformation for plant holder trays.
     /// </summary>
-    private void OnTrayUpdate(EntityUid uid, PlantHolderComponent component, OnPlantGrowEvent args)
+    private void OnTrayUpdate(Entity<PlantHolderComponent> ent, ref OnPlantGrowEvent args)
     {
+        var uid = ent.Owner;
+        var component = ent.Comp;
+
         // Weeds like water and nutrients! They may appear even if there's not a seed planted
         if (component.WaterLevel > 10 && component.NutritionLevel > 5)
         {

@@ -4,23 +4,26 @@ using Robust.Shared.Random;
 namespace Content.Server.Botany.Systems;
 
 /// <summary>
-/// System that handles plant traits like lifespan, maturation, production, yield, potency, and growth stages.
+/// Applies plant trait effects on growth ticks.
 /// </summary>
 public sealed class PlantTraitsSystem : PlantGrowthSystem
 {
-    [Dependency] private readonly BotanySystem _botany = default!;
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<PlantTraitsComponent, OnPlantGrowEvent>(OnPlantGrow);
     }
 
-    private void OnPlantGrow(EntityUid uid, PlantTraitsComponent component, OnPlantGrowEvent args)
+    private void OnPlantGrow(Entity<PlantTraitsComponent> ent, ref OnPlantGrowEvent args)
     {
+        var uid = ent.Owner;
+        var component = ent.Comp;
+
         PlantHolderComponent? holder = null;
-        Resolve<PlantHolderComponent>(uid, ref holder);
+        Resolve(uid, ref holder);
 
         if (holder == null || holder.Seed == null || holder.Dead)
             return;
@@ -32,5 +35,15 @@ public sealed class PlantTraitsSystem : PlantGrowthSystem
             if (holder.DrawWarnings)
                 holder.UpdateSpriteAfterUpdate = true;
         }
+    }
+
+    /// <summary>
+    /// Adjusts the potency of a plant traits component.
+    /// </summary>
+    public void AdjustPotency(Entity<PlantTraitsComponent> ent, float delta)
+    {
+        ref var traits = ref ent.Comp;
+        traits.Potency = Math.Max(traits.Potency + delta, 1);
+        Dirty(ent);
     }
 }

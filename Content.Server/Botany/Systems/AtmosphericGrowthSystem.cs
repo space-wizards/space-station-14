@@ -1,24 +1,33 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
 using Content.Shared.Atmos;
+using Robust.Shared.Random;
 
 namespace Content.Server.Botany.Systems;
+
+/// <summary>
+/// Applies atmospheric temperature and pressure effects to plants during growth ticks.
+/// Uses current tile gas mixture to penalize or clear warnings based on tolerances.
+/// </summary>
 public sealed class AtmosphericGrowthSystem : PlantGrowthSystem
 {
-    [Dependency] private readonly BotanySystem _botany = default!;
-    [Dependency] private readonly PlantHolderSystem _plantHolderSystem = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<AtmosphericGrowthComponent, OnPlantGrowEvent>(OnPlantGrow);
     }
 
-    private void OnPlantGrow(EntityUid uid, AtmosphericGrowthComponent component, OnPlantGrowEvent args)
+    private void OnPlantGrow(Entity<AtmosphericGrowthComponent> ent, ref OnPlantGrowEvent args)
     {
+        var uid = ent.Owner;
+        var component = ent.Comp;
+
         PlantHolderComponent? holder = null;
-        Resolve<PlantHolderComponent>(uid, ref holder);
+        Resolve(uid, ref holder);
 
         if (holder == null || holder.Seed == null || holder.Dead)
             return;
