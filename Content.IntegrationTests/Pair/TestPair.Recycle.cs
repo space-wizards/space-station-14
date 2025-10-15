@@ -1,6 +1,7 @@
 #nullable enable
 using System.IO;
 using System.Linq;
+using Content.Client.Lobby;
 using Content.Server.GameTicking;
 using Content.Server.Preferences.Managers;
 using Content.Shared.CCVar;
@@ -23,13 +24,14 @@ public sealed partial class TestPair
 
     private async Task ResetModifiedPreferences()
     {
-        var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
-        foreach (var user in _modifiedProfiles)
-        {
-            await Server.WaitPost(() => prefMan.SetProfile(user, 0, new HumanoidCharacterProfile()).Wait());
-        }
+        // reset through the client so that the client's cached preferences get updated
+        var prefMan = Client.ResolveDependency<IClientPreferencesManager>();
+        var prefs = prefMan.Preferences;
 
-        _modifiedProfiles.Clear();
+        await Client.WaitAssertion(() =>
+        {
+            prefMan.UpdateCharacter(new HumanoidCharacterProfile(), 0);
+        });
     }
 
     protected override async Task Recycle(PairSettings next, TextWriter testOut)
