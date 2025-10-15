@@ -27,13 +27,17 @@ public sealed partial class RackBoltOperator : HTNOperator
 
         var gunSystem = _entManager.System<SharedGunSystem>();
 
-        if (chamberMagazine.BoltClosed == null)
+        if (chamberMagazine.CanRack)
         {
             gunSystem.UseChambered(gunUid.Value, chamberMagazine, owner);
         }
-        else
+        else if (chamberMagazine.BoltClosed != null)
         {
             gunSystem.ToggleBolt(gunUid.Value, chamberMagazine, owner);
+        }
+        else
+        {
+            return HTNOperatorStatus.Failed;
         }
 
         return HTNOperatorStatus.Finished;
