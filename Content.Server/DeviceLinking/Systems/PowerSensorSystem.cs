@@ -110,7 +110,7 @@ public sealed class PowerSensorSystem : EntitySystem
         var cables = deviceNode.GetReachableNodes(xform, _nodeQuery, _xformQuery, grid, EntityManager);
         foreach (var node in cables)
         {
-            if (node.NodeGroup == null)
+            if (node.NodeGroup == null || node.NodeGroupID != deviceNode.NodeGroupID)
                 continue;
 
             var group = (IBasePowerNet) node.NodeGroup;
