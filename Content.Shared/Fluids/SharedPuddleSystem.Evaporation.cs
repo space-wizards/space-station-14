@@ -17,13 +17,14 @@ public abstract partial class SharedPuddleSystem
 
     private void UpdateEvaporation(EntityUid uid, Solution solution)
     {
-        if (HasComp<EvaporationComponent>(uid))
+        if (_evaporationQuery.HasComp(uid))
             return;
 
         if (solution.GetTotalPrototypeQuantity(GetEvaporatingReagents(solution)) > FixedPoint2.Zero)
         {
             var evaporation = AddComp<EvaporationComponent>(uid);
             evaporation.NextTick = _timing.CurTime + EvaporationCooldown;
+            Dirty<EvaporationComponent>((uid, evaporation));
             return;
         }
 
@@ -68,7 +69,7 @@ public abstract partial class SharedPuddleSystem
             if (puddleSolution.Volume == FixedPoint2.Zero)
             {
                 // Spawn a *sparkle*
-                PredictedSpawnAttachedTo(evaporation.EvaporationEffect, Transform(uid).Coordinates);
+                SpawnAttachedTo(evaporation.EvaporationEffect, Transform(uid).Coordinates);
                 PredictedQueueDel(uid);
             }
 

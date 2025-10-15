@@ -135,13 +135,13 @@ public abstract partial class SharedPuddleSystem
         // First update the hit count so anything that is not reactive wont count towards the total!
         foreach (var hit in args.HitEntities)
         {
-            if (!HasComp<ReactiveComponent>(hit))
+            if (!_reactiveQuery.HasComp(hit))
                 hitCount -= 1;
         }
 
         foreach (var hit in args.HitEntities)
         {
-            if (!HasComp<ReactiveComponent>(hit))
+            if (!_reactiveQuery.HasComp(hit))
                 continue;
 
             var splitSolution = _solutionContainerSystem.SplitSolution(soln.Value, totalSplit / hitCount);

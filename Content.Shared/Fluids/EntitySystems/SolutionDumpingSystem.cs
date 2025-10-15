@@ -43,7 +43,7 @@ public sealed class SolutionDumpingSystem : EntitySystem
         SubscribeLocalEvent<DrainableSolutionComponent, CanDropDraggedEvent>(OnDrainableCanDragDropped);
         SubscribeLocalEvent<RefillableSolutionComponent, CanDropDraggedEvent>(OnRefillableCanDropDragged);
 
-        SubscribeLocalEvent<RefillableSolutionComponent, DragDropDraggedEvent>(OnRefillableDragged);
+        //SubscribeLocalEvent<RefillableSolutionComponent, DragDropDraggedEvent>(OnRefillableDragged); For if you want to refill a container by dragging it into another one. Can't find a use for that currently.
         SubscribeLocalEvent<DrainableSolutionComponent, DragDropDraggedEvent>(OnDrainableDragged);
 
         // We use queries for these since CanDropDraggedEvent gets called pretty rapidly
@@ -83,71 +83,68 @@ public sealed class SolutionDumpingSystem : EntitySystem
         args.Handled = true;
     }
 
+    /// <summary>
+    /// For when you are pouring out something from the container.
+    /// </summary>
     private void OnDrainableDragged(Entity<DrainableSolutionComponent> sourceContainer, ref DragDropDraggedEvent args)
     {
-        // We only allow dragging drainable solutions which are items onto refillable solutions
-        if (!_refillableQuery.TryComp(args.Target, out var targetRefillComp)
-            || !_itemQuery.HasComp(sourceContainer))
-            return;
-
-        // Bail if target is refillable but doesn't have a solution
-        if (!_solContainer.TryGetRefillableSolution((args.Target, targetRefillComp),
-                out var targetSolEnt,
-                out var targetSol))
-            return;
-
-        // Check openness, hands, source being empty, and target being full.
-        if (!DragInteractionChecks(args,
-                sourceContainer,
-                sourceContainer.Comp.Solution,
-                targetSol,
-                out var sourceEnt))
-            return;
-
-        _solContainer.TryAddSolution(targetSolEnt.Value,
-            _solContainer.SplitSolution(sourceEnt.Value, targetSol.AvailableVolume));
-
-        _audio.PlayPredicted(AbsorbentComponent.DefaultTransferSound, args.Target, args.User);
-    }
-
-    private void OnRefillableDragged(Entity<RefillableSolutionComponent> sourceContainer, ref DragDropDraggedEvent args)
-    {
-        // We only allow dragging refillable solutions onto DumpableSolutions
-        if (!_dumpQuery.TryComp(args.Target, out var targetDumpComp))
-            return;
-
-        // Target has DumpableSolution but we couldn't get its solution. Oh well.
-        if (!_solContainer.TryGetDumpableSolution((args.Target, targetDumpComp, null),
-                out var targetSolEnt,
-                out var targetSol))
-            return;
-
-        // Check openness, hands, source being empty, and target being full.
-        if (!DragInteractionChecks(args,
-                sourceContainer,
-                sourceContainer.Comp.Solution,
-                targetSol,
-                out var sourceSolEnt))
-            return;
-
-        if (targetDumpComp.Unlimited)
+        // We're dumping the entire contents of the container.
+        if (_dumpQuery.TryComp(args.Target, out var targetDumpComp))
         {
-            // Unlimited means we're dumping into an infinite buffer, so we
-            // have to be careful that we don't trigger any reactions. This
-            // means SolutionContainerSystem.AddSolution can't be used!
-            targetSol.AddSolution(
-                _solContainer.SplitSolution(sourceSolEnt.Value, sourceSolEnt.Value.Comp.Solution.Volume),
-                _protoMan);
-            // Solution.AddSolution doesn't dirty targetSol for us
-            Dirty(targetSolEnt.Value);
+            if (!_solContainer.TryGetDumpableSolution((args.Target, targetDumpComp, null),
+                    out var dumpTargetSolEnt,
+                    out var dumpTargetSol))
+                return;
+
+            if (!DragInteractionChecks(args,
+                    sourceContainer,
+                    sourceContainer.Comp.Solution,
+                    dumpTargetSol,
+                    out var sourceSolEnt,
+                    !targetDumpComp.Unlimited))
+                return;
+
+            if (targetDumpComp.Unlimited)
+            {
+                // Unlimited means we're dumping into an infinite buffer, so we
+                // have to be careful that we don't trigger any reactions. This
+                // means SolutionContainerSystem.AddSolution can't be used!
+                // TODO: This should be replaced with proper support for unlimited solutions, rather than cheating by bypassing UpdateChemicals using AddSolution. We can already avoid reactions using CanReact = false, this cheat just bypasses solution overflow.
+                dumpTargetSol.AddSolution(
+                    _solContainer.SplitSolution(sourceSolEnt.Value, sourceSolEnt.Value.Comp.Solution.Volume),
+                    _protoMan);
+                // Solution.AddSolution doesn't dirty targetSol for us
+                Dirty(dumpTargetSolEnt.Value);
+            }
+            else
+            {
+                _solContainer.TryAddSolution(dumpTargetSolEnt.Value,
+                    _solContainer.SplitSolution(sourceSolEnt.Value, dumpTargetSol.AvailableVolume));
+            }
+
+            _audio.PlayPredicted(AbsorbentComponent.DefaultTransferSound, args.Target, args.User);
         }
-        else
+        else if (_refillableQuery.TryComp(args.Target, out var targetRefillComp)
+                 && _itemQuery.HasComp(sourceContainer))
         {
+            if (!_solContainer.TryGetRefillableSolution((args.Target, targetRefillComp),
+                    out var targetSolEnt,
+                    out var targetSol))
+                return;
+
+            // Check openness, hands, source being empty, and target being full.
+            if (!DragInteractionChecks(args,
+                    sourceContainer,
+                    sourceContainer.Comp.Solution,
+                    targetSol,
+                    out var sourceEnt))
+                return;
+
             _solContainer.TryAddSolution(targetSolEnt.Value,
-                _solContainer.SplitSolution(sourceSolEnt.Value, targetSol.AvailableVolume));
-        }
+                _solContainer.SplitSolution(sourceEnt.Value, targetSol.AvailableVolume));
 
-        _audio.PlayPredicted(AbsorbentComponent.DefaultTransferSound, args.Target, args.User);
+            _audio.PlayPredicted(AbsorbentComponent.DefaultTransferSound, args.Target, args.User);
+        }
     }
 
     // Common checks between dragging handlers.
@@ -156,7 +153,8 @@ public sealed class SolutionDumpingSystem : EntitySystem
         EntityUid sourceContainer,
         string sourceSolutionName,
         Solution targetSol,
-        [NotNullWhen(true)] out Entity<SolutionComponent>? sourceSolEnt)
+        [NotNullWhen(true)] out Entity<SolutionComponent>? sourceSolEnt,
+        bool checkAvailableVolume = true)
     {
         sourceSolEnt = null;
         if (!_actionBlocker.CanComplexInteract(args.User))
@@ -174,14 +172,14 @@ public sealed class SolutionDumpingSystem : EntitySystem
             return false;
         }
 
-        if (targetSol.AvailableVolume == FixedPoint2.Zero)
+        if (checkAvailableVolume && targetSol.AvailableVolume == FixedPoint2.Zero)
         {
             _popup.PopupClient(Loc.GetString("mopping-system-full", ("used", args.Target)), args.Target, args.User);
             return false;
         }
 
         // Both things need to be open.
-        return _openable.IsOpen(sourceContainer, args.User, predicted: true)
-               && _openable.IsOpen(args.Target, args.User, predicted: true);
+        return !_openable.IsClosed(sourceContainer, args.User, predicted: true)
+               && !_openable.IsClosed(args.Target, args.User, predicted: true);
     }
 }

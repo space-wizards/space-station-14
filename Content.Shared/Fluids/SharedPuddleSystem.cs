@@ -3,6 +3,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -54,6 +55,10 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     // loses & then gains reagents in a single tick.
     private HashSet<EntityUid> _deletionQueue = [];
 
+    private EntityQuery<StepTriggerComponent> _stepTriggerQuery;
+    private EntityQuery<ReactiveComponent> _reactiveQuery;
+    private EntityQuery<EvaporationComponent> _evaporationQuery;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -67,6 +72,10 @@ public abstract partial class SharedPuddleSystem : EntitySystem
         SubscribeLocalEvent<EvaporationComponent, MapInitEvent>(OnEvaporationMapInit);
 
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
+
+        _stepTriggerQuery = GetEntityQuery<StepTriggerComponent>();
+        _reactiveQuery = GetEntityQuery<ReactiveComponent>();
+        _evaporationQuery = GetEntityQuery<EvaporationComponent>();
 
         CacheStandsout();
         InitializeSpillable();
@@ -139,12 +148,12 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     {
         using (args.PushGroup(nameof(PuddleComponent)))
         {
-            if (TryComp<StepTriggerComponent>(entity, out var slippery) && slippery.Active)
+            if (_stepTriggerQuery.TryComp(entity, out var slippery) && slippery.Active)
             {
                 args.PushMarkup(Loc.GetString("puddle-component-examine-is-slippery-text"));
             }
 
-            if (HasComp<EvaporationComponent>(entity) &&
+            if (_evaporationQuery.HasComp(entity) &&
                 _solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.SolutionName,
                     ref entity.Comp.Solution, out var solution))
             {
@@ -216,7 +225,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
 
     private void UpdateSlip(Entity<PuddleComponent> entity, Solution solution)
     {
-        if (!TryComp<StepTriggerComponent>(entity, out var comp))
+        if (!_stepTriggerQuery.TryComp(entity, out var comp))
             return;
 
         // Ensure we actually have the component
