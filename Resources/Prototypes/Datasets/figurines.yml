@@ -261,6 +261,7 @@
   values:
     prefix: figurines-hamlet-
     count: 8
+
 - type: localizedDataset
   id: FigurinesThief
   values:

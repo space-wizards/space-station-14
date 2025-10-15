@@ -319,9 +319,9 @@ figurines-hamlet-8 = NOT THE MICROWAVE!
 
 figurines-thief-1 = You don't have a warrant!
 figurines-thief-2 = This is just a normal beacon!
-figurines-thief-3 = Theres nothing suspicious about this satchel at all officer.
-figurines-thief-4 = I have NO idea where your pet is..
-figurines-thief-5 = Huh, I didn't know that wall could open up..
+figurines-thief-3 = Theres nothing suspicious about this satchel at all, officer.
+figurines-thief-4 = I have NO idea where your pet is...
+figurines-thief-5 = Huh, I didn't know that wall could open up...
 
 figurines-skeleton-1 = ACK ACK!
 figurines-skeleton-2 = Ugh, that locker was cramped!
