@@ -58,11 +58,12 @@
       softness: 1
       autoRot: true
       castShadows: false
-    - type: Lightning
-      canArc: false
     - type: Electrified
       requirePower: false
       shockDamage: 30
+    - type: Lightning
+      canArc: false
+
 
 - type: entity
   name: charged lightning

@@ -58,8 +58,9 @@
       - EmagSiliconLaw
   - type: PointLight
     color: MediumPurple
+    energy: 0.4
     radius: 6
-    softness: 1
+    falloff: 10
   - type: UserInterface
     interfaces:
       enum.StoreUiKey.Key:

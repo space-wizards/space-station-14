@@ -87,7 +87,7 @@ public sealed partial class RevenantComponent : Component
     /// <summary>
     /// The amount of essence that is needed to use the ability.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("appearCost")]
+    [DataField]
     public FixedPoint2 AppearCost = 0;
 
     /// <summary>
@@ -95,7 +95,7 @@ public sealed partial class RevenantComponent : Component
     /// the first float corresponds to amount of time the entity is stunned.
     /// the second corresponds to the amount of time the entity is made solid.
     /// </summary>
-    [DataField("appearDebuffs")]
+    [DataField]
     public Vector2 AppearDebuffs = new(0, 5);
     #endregion
 
@@ -142,7 +142,7 @@ public sealed partial class RevenantComponent : Component
     ///<summary>
     /// The amount that is given to the revenant each time it flashes a light
     ///</summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("lightFlashEssenceAmount")]
+    [DataField]
     public float LightFlashEssenceAmount = 1;
     #endregion
 
