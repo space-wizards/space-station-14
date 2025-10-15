@@ -244,7 +244,7 @@ public abstract class SharedHailerSystem : EntitySystem
         if (ent.Comp.User.HasValue && ent.Comp.User != args.UserUid)
             return;
 
-        _popup.PopupEntity(Loc.GetString("sechail-gas-mask-emagged"), ent.Owner);
+        _popup.PopupEntity(Loc.GetString("hailer-gas-mask-emagged"), ent.Owner);
 
         args.Type = EmagType.Interaction;
 
@@ -256,11 +256,11 @@ public abstract class SharedHailerSystem : EntitySystem
     private void OnExamine(Entity<HailerComponent> ent, ref ExaminedEvent args)
     {
         if (HasComp<EmaggedComponent>(ent))
-            args.PushMarkup(Loc.GetString("sechail-gas-mask-emag"));
+            args.PushMarkup(Loc.GetString("hailer-gas-mask-emag"));
         else if (ent.Comp.AreWiresCut)
-            args.PushMarkup(Loc.GetString("sechail-gas-mask-wires-cut"));
+            args.PushMarkup(Loc.GetString("hailer-gas-mask-wires-cut"));
         else
-            args.PushMarkup(Loc.GetString($"sechail-gas-mask-examined", ("level", ent.Comp.CurrentHailLevel.Name)));
+            args.PushMarkup(Loc.GetString($"hailer-gas-mask-examined", ("level", ent.Comp.CurrentHailLevel.Name)));
     }
 
     private void OnGetVerbs(Entity<HailerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
@@ -279,7 +279,7 @@ public abstract class SharedHailerSystem : EntitySystem
 
         args.Verbs.Add(new AlternativeVerb()
         {
-            Text = Loc.GetString("sechail-gas-mask-verb"),
+            Text = Loc.GetString("hailer-gas-mask-verb"),
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
             Act = () =>
             {
@@ -295,7 +295,7 @@ public abstract class SharedHailerSystem : EntitySystem
         if (!_access.IsAllowed(userActed, ent.Owner))
         {
             _sharedAudio.PlayPvs(ent.Comp.SettingError, ent.Owner, AudioParams.Default.WithVariation(0.15f));
-            _popup.PopupEntity(Loc.GetString("sechail-gas-mask-wrong_access"), userActed);
+            _popup.PopupEntity(Loc.GetString("hailer-gas-mask-wrong_access"), userActed);
             return;
         }
 

@@ -49,6 +49,6 @@ public sealed class HailerSystem : SharedHailerSystem
                 ent.Comp.HailLevelIndex = 0;
         } while (!ent.Comp.CurrentHailLevel.Cyclable);
 
-        _popup.PopupEntity(Loc.GetString("sechail-gas-mask-screwed", ("level", ent.Comp.CurrentHailLevel.Name.ToLower())), ent.Owner);
+        _popup.PopupEntity(Loc.GetString("hailer-gas-mask-screwed", ("level", ent.Comp.CurrentHailLevel.Name.ToLower())), ent.Owner);
     }
 }
