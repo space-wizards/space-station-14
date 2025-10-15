@@ -8,7 +8,7 @@
   parent: BaseAction
   id: ActionRevenantAppear
   name: Apparate
-  description: Reveal yourself
+  description: Reveal yourself.
   components:
   - type: Action
     useDelay: 15
