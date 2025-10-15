@@ -6,7 +6,6 @@
   components:
   - type: Tag
     tags:
-      - Cartridge
       - CartridgeRifle
   - type: CartridgeAmmo
     proto: BulletRifle
