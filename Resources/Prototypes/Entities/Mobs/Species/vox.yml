@@ -169,6 +169,7 @@
         32:
           sprite: Mobs/Species/Vox/displacement.rsi
           state: hand_r
+  - type: Wagging
 
 - type: entity
   parent: BaseSpeciesDummy
