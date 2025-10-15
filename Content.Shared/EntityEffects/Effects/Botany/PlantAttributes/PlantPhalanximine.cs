@@ -5,6 +5,6 @@ namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 public sealed partial class PlantPhalanximine : EntityEffectBase<PlantPhalanximine>
 {
     /// <inheritdoc/>
-    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
-        Loc.GetString("entity-effect-guidebook-plant-phalanximine", ("chance", Probability));
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys, ILocalizationManager loc) =>
+        loc.GetString("entity-effect-guidebook-plant-phalanximine", ("chance", Probability));
 }

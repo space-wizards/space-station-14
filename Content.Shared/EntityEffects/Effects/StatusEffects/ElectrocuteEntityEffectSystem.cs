@@ -46,6 +46,6 @@ public sealed partial class Electrocute : EntityEffectBase<Electrocute>
     /// </summary>
     [DataField] public bool BypassInsulation = true;
 
-    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Loc.GetString("entity-effect-guidebook-electrocute", ("chance", Probability), ("time", ElectrocuteTime.TotalSeconds));
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys, ILocalizationManager loc)
+        => loc.GetString("entity-effect-guidebook-electrocute", ("chance", Probability), ("time", ElectrocuteTime.TotalSeconds));
 }

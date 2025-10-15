@@ -49,8 +49,8 @@ public sealed partial class ExplosionEffect : EntityEffectBase<ExplosionEffect>
     [DataField]
     public float TileBreakScale = 1f;
 
-    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Loc.GetString("entity-effect-guidebook-explosion-reaction-effect", ("chance", Probability));
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys, ILocalizationManager loc)
+        => loc.GetString("entity-effect-guidebook-explosion-reaction-effect", ("chance", Probability));
 
     public override bool ShouldLog => true;
 

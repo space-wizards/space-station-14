@@ -13,8 +13,8 @@ public sealed partial class RobustHarvest : EntityEffectBase<RobustHarvest>
     [DataField]
     public int PotencySeedlessThreshold = 30;
 
-    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
-        Loc.GetString("entity-effect-guidebook-plant-robust-harvest",
+    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys, ILocalizationManager loc) =>
+        loc.GetString("entity-effect-guidebook-plant-robust-harvest",
             ("seedlesstreshold", PotencySeedlessThreshold),
             ("limit", PotencyLimit),
             ("increase", PotencyIncrease),

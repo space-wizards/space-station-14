@@ -44,8 +44,8 @@ public sealed partial class CureZombieInfectionEntityEffectsSystem : EntityEffec
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class CauseZombieInfection : EntityEffectBase<CauseZombieInfection>
 {
-    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Loc.GetString("entity-effect-guidebook-cause-zombie-infection", ("chance", Probability));
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys, ILocalizationManager loc)
+        => loc.GetString("entity-effect-guidebook-cause-zombie-infection", ("chance", Probability));
 }
 
 /// <inheritdoc cref="EntityEffect"/>
@@ -57,11 +57,11 @@ public sealed partial class CureZombieInfection : EntityEffectBase<CureZombieInf
     [DataField]
     public bool Innoculate;
 
-    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys, ILocalizationManager loc)
     {
         if (Innoculate)
-            return Loc.GetString("entity-effect-guidebook-innoculate-zombie-infection", ("chance", Probability));
+            return loc.GetString("entity-effect-guidebook-innoculate-zombie-infection", ("chance", Probability));
 
-        return Loc.GetString("entity-effect-guidebook-cure-zombie-infection", ("chance", Probability));
+        return loc.GetString("entity-effect-guidebook-cure-zombie-infection", ("chance", Probability));
     }
 }

@@ -29,8 +29,8 @@ public sealed partial class ReduceRotting : EntityEffectBase<ReduceRotting>
     [DataField]
     public TimeSpan Seconds = TimeSpan.FromSeconds(10);
 
-    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Loc.GetString("entity-effect-guidebook-reduce-rotting",
+    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys, ILocalizationManager loc)
+        => loc.GetString("entity-effect-guidebook-reduce-rotting",
             ("chance", Probability),
             ("time", Seconds.TotalSeconds));
 }
