@@ -227,7 +227,10 @@ namespace Content.Shared.Chemistry.Reagent
             EntityEffect effect,
             FixedPoint2? metabolism)
         {
-            var desc = effect.EntityEffectGuidebookText(prototype, entSys, loc);
+#pragma warning disable CS0618 // Type or member is obsolete
+            var desc = effect.EntityEffectGuidebookText(prototype, entSys, loc) ?? effect.EntityEffectGuidebookText(prototype, entSys);
+#pragma warning restore CS0618 // Type or member is obsolete
+
             if (desc is not { } description)
                 return null;
 

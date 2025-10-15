@@ -218,6 +218,9 @@ public abstract partial class EntityEffect
     /// </summary>
     public virtual string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys, ILocalizationManager loc) => null;
 
+    [Obsolete("Use variant with ILocalizationManager")]
+    public virtual string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => null;
+
     /// <summary>
     /// Whether this effect should be logged in admin logs.
     /// </summary>
