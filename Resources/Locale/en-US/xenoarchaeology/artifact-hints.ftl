@@ -68,6 +68,22 @@ xenoarch-trigger-tip-blood = Blood
 xenoarch-trigger-tip-throw = Being thrown
 xenoarch-trigger-tip-death = Death
 xenoarch-trigger-tip-magnet = Magnetic waves
+xenoarch-trigger-tip-acid = Toxic acid
+xenoarch-trigger-tip-benzene = Benzene
+xenoarch-trigger-tip-bleach = Bleach
+xenoarch-trigger-tip-cryoxadone = Cryoxadone
+xenoarch-trigger-tip-dexalin = Dexalin
+xenoarch-trigger-tip-diethylamine = Diethylamine
+xenoarch-trigger-tip-ephedrine = Ephedrine
+xenoarch-trigger-tip-ethanol = Ethanol
+xenoarch-trigger-tip-eznutrient = EZ Nutrient
+xenoarch-trigger-tip-fersilicite = Fersilicite
+xenoarch-trigger-tip-hydroxide = Hydroxide
+xenoarch-trigger-tip-kelotane = Kelotane
+xenoarch-trigger-tip-mannitol = Mannitol
+xenoarch-trigger-tip-mindbreakertoxin = Mindbreaker Toxin
+xenoarch-trigger-tip-spacecleaner = Space Cleaner
+xenoarch-trigger-tip-thc = THC
 
 ### Description hints
 xenoarch-trigger-examine-wrenching = There's a loose bit spinning around.

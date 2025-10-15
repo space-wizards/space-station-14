@@ -27,6 +27,22 @@
     TriggerThrow: 1
     TriggerDeath: 1
     TriggerMagnet: 1
+    TriggerAcid: 0.1
+    TriggerBenzene: 0.25
+    TriggerBleach: 0.25
+    TriggerCryoxadone: 0.25
+    TriggerDexalin: 0.25
+    TriggerDiethylamine: 0.25
+    TriggerEphedrine: 0.1
+    TriggerEthanol: 0.5
+    TriggerEZNutrient: 0.25
+    TriggerFersilicite: 0.25
+    TriggerHydroxide: 0.25
+    TriggerKelotane: 0.25
+    TriggerMannitol: 0.25
+    TriggerMindbreakerToxin: 0.25
+    TriggerSpaceCleaner: 0.5
+    TriggerTHC: 0.1
 
 - type: xenoArchTrigger
   id: TriggerMusic
@@ -264,3 +280,136 @@
   tip: xenoarch-trigger-tip-magnet
   components:
   - type: XATMagnet
+
+- type: xenoArchTrigger
+  id: TriggerAcid
+  tip: xenoarch-trigger-tip-acid
+  components:
+  - type: XATReactive
+    reagents:
+    - PolytrinicAcid
+    - FerrochromicAcid
+    - FluorosulfuricAcid
+    - SulfuricAcid
+    - NorepinephricAcid
+
+- type: xenoArchTrigger
+  id: TriggerBenzene
+  tip: xenoarch-trigger-tip-benzene
+  components:
+  - type: XATReactive
+    reagents:
+    - Benzene
+
+- type: xenoArchTrigger
+  id: TriggerBleach
+  tip: xenoarch-trigger-tip-bleach
+  components:
+  - type: XATReactive
+    reagents:
+    - Bleach
+
+- type: xenoArchTrigger
+  id: TriggerCryoxadone
+  tip: xenoarch-trigger-tip-cryoxadone
+  components:
+  - type: XATReactive
+    reagents:
+    - Cryoxadone
+
+- type: xenoArchTrigger
+  id: TriggerDexalin
+  tip: xenoarch-trigger-tip-dexalin
+  components:
+  - type: XATReactive
+    reagents:
+    - Dexalin
+
+- type: xenoArchTrigger
+  id: TriggerDiethylamine
+  tip: xenoarch-trigger-tip-diethylamine
+  components:
+  - type: XATReactive
+    reagents:
+    - Diethylamine
+
+- type: xenoArchTrigger
+  id: TriggerEphedrine
+  tip: xenoarch-trigger-tip-ephedrine
+  components:
+  - type: XATReactive
+    reagents:
+    - Ephedrine
+    - Desoxyephedrine
+
+- type: xenoArchTrigger
+  id: TriggerEthanol
+  tip: xenoarch-trigger-tip-ethanol
+  components:
+  - type: XATReactive
+    reagents:
+    - Ethanol
+
+- type: xenoArchTrigger
+  id: TriggerEZNutrient
+  tip: xenoarch-trigger-tip-eznutrient
+  components:
+  - type: XATReactive
+    reagents:
+    - EZNutrient
+
+- type: xenoArchTrigger
+  id: TriggerFersilicite
+  tip: xenoarch-trigger-tip-fersilicite
+  components:
+  - type: XATReactive
+    reagents:
+    - Fersilicite
+
+- type: xenoArchTrigger
+  id: TriggerHydroxide
+  tip: xenoarch-trigger-tip-hydroxide
+  components:
+  - type: XATReactive
+    reagents:
+    - Hydroxide
+
+- type: xenoArchTrigger
+  id: TriggerKelotane
+  tip: xenoarch-trigger-tip-kelotane
+  components:
+  - type: XATReactive
+    reagents:
+    - Kelotane
+
+- type: xenoArchTrigger
+  id: TriggerMannitol
+  tip: xenoarch-trigger-tip-mannitol
+  components:
+  - type: XATReactive
+    reagents:
+    - Mannitol
+
+- type: xenoArchTrigger
+  id: TriggerMindbreakerToxin
+  tip: xenoarch-trigger-tip-mindbreakertoxin
+  components:
+  - type: XATReactive
+    reagents:
+    - MindbreakerToxin
+
+- type: xenoArchTrigger
+  id: TriggerSpaceCleaner
+  tip: xenoarch-trigger-tip-spacecleaner
+  components:
+  - type: XATReactive
+    reagents:
+    - SpaceCleaner
+
+- type: xenoArchTrigger
+  id: TriggerTHC
+  tip: xenoarch-trigger-tip-thc
+  components:
+  - type: XATReactive
+    reagents:
+    - THC
