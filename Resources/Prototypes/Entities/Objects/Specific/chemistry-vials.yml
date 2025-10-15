@@ -189,9 +189,6 @@
     sprite: Objects/Specific/Chemistry/smart_vial.rsi
     shape:
     - 0,0,0,0
-  - type: PhysicalComposition
-    materialComposition:
-      Glass: 25
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     fillBaseName: base-
