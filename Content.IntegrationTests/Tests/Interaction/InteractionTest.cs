@@ -156,7 +156,7 @@ public abstract partial class InteractionTest
   - type: CombatMode
 ";
 
-    protected static PoolSettings Default => new() {Connected = true, Dirty = true};
+    protected static PoolSettings Default => new() { Connected = true, Dirty = true };
     protected virtual PoolSettings Settings => Default;
 
     [SetUp]

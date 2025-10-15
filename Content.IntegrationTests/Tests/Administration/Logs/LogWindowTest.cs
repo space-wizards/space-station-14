@@ -13,7 +13,7 @@ namespace Content.IntegrationTests.Tests.Administration.Logs;
 
 public sealed class LogWindowTest : InteractionTest
 {
-    protected override PoolSettings Settings => new() {Connected = true, Dirty = true, AdminLogsEnabled = true, DummyTicker = false};
+    protected override PoolSettings Settings => new() { Connected = true, Dirty = true, AdminLogsEnabled = true, DummyTicker = false };
 
     [Test]
     public async Task TestAdminLogsWindow()
