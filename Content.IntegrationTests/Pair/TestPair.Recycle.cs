@@ -31,6 +31,14 @@ public sealed partial class TestPair
         await Client.WaitAssertion(() =>
         {
             prefMan.UpdateCharacter(new HumanoidCharacterProfile(), 0);
+            prefMan.SelectCharacter(0);
+
+            foreach (var slot in prefs!.Characters.Keys)
+            {
+                if (slot == 0)
+                    continue;
+                prefMan.DeleteCharacter(slot);
+            }
         });
     }
 
