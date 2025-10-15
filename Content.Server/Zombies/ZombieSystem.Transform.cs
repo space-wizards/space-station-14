@@ -156,7 +156,6 @@ public sealed partial class ZombieSystem
         var combat = EnsureComp<CombatModeComponent>(target);
         RemComp<PacifiedComponent>(target);
         _combat.SetCanDisarm(target, false, combat);
-        _combat.SetInCombatMode(target, true, combat);
 
         //This is the actual damage of the zombie. We assign the visual appearance
         //and range here because of stuff we'll find out later
