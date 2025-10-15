@@ -24,6 +24,11 @@ public sealed partial class TestPair
 
     private async Task ResetModifiedPreferences()
     {
+        if (Player == null)
+            return;
+
+        await ReallyBeIdle();
+
         // reset through the client so that the client's cached preferences get updated
         var prefMan = Client.ResolveDependency<IClientPreferencesManager>();
         var prefs = prefMan.Preferences;
@@ -40,6 +45,8 @@ public sealed partial class TestPair
                 prefMan.DeleteCharacter(slot);
             }
         });
+
+        await ReallyBeIdle();
     }
 
     protected override async Task Recycle(PairSettings next, TextWriter testOut)
