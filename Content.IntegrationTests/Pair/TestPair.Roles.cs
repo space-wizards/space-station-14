@@ -33,7 +33,6 @@ public sealed partial class TestPair
 
         var profile = (HumanoidCharacterProfile) prefs.Characters[0];
         var newProfile = profile.WithAntagPreference(id, value);
-        _modifiedProfiles.Add(userId);
         await Server.WaitPost(() => prefMan.SetProfile(userId, 0, newProfile).Wait());
     }
 
@@ -83,7 +82,6 @@ public sealed partial class TestPair
         }
 
         var newProfile = profile.WithJobPriorities(dictionary);
-        _modifiedProfiles.Add(user);
         await Server.WaitPost(() => prefMan.SetProfile(user, 0, newProfile).Wait());
     }
 
