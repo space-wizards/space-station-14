@@ -27,22 +27,14 @@
     TriggerThrow: 1
     TriggerDeath: 1
     TriggerMagnet: 1
-    TriggerAcid: 0.1
-    TriggerBenzene: 0.25
-    TriggerBleach: 0.25
-    TriggerCryoxadone: 0.25
-    TriggerDexalin: 0.25
-    TriggerDiethylamine: 0.25
-    TriggerEphedrine: 0.1
-    TriggerEthanol: 0.5
-    TriggerEZNutrient: 0.25
-    TriggerFersilicite: 0.25
-    TriggerHydroxide: 0.25
-    TriggerKelotane: 0.25
-    TriggerMannitol: 0.25
-    TriggerMindbreakerToxin: 0.25
-    TriggerSpaceCleaner: 0.5
-    TriggerTHC: 0.1
+    TriggerAlcohol: 0.25
+    TriggerBaseElement: 0.25
+    TriggerBotany: 0.25
+    TriggerCleaning: 0.25
+    TriggerMedicine: 0.25
+    TriggerNarcotic: 0.25
+    TriggerPyrotechnic: 0.25
+    TriggerToxin: 0.25
 
 - type: xenoArchTrigger
   id: TriggerMusic
@@ -282,134 +274,312 @@
   - type: XATMagnet
 
 - type: xenoArchTrigger
-  id: TriggerAcid
-  tip: xenoarch-trigger-tip-acid
+  id: TriggerBaseElement
+  tip: xenoarch-trigger-tip-baseelement
   components:
   - type: XATReactive
     reagents:
-    - PolytrinicAcid
+    - Aluminium
+    - Carbon
+    - Chlorine
+    - Copper
+    - Fluorine
+    - Gold
+    - Hydrogen
+    - Iodine
+    - Iron
+    - Lead
+    - Lithium
+    - Mercury
+    - Phosphorus
+    - Potassium
+    - Radium
+    - Silicon
+    - Silver
+    - Sodium
+    - Sulfur
+    - Uranium
+    - Zinc
+
+- type: xenoArchTrigger
+  id: TriggerMedicine
+  tip: xenoarch-trigger-tip-medicine
+  components:
+  - type: XATReactive
+    reagents:
+    - Aloxadone
+    - Ambuzol
+    - AmbuzolPlus
+    - Arithrazine
+    - Barozine
+    - Bicaridine
+    - Bruizine
+    - Cognizine
+    - Cryoxadone
+    - Cryptobiolin
+    - Dermaline
+    - Dexalin
+    - DexalinPlus
+    - Diphenhydramine
+    - Diphenylmethylamine
+    - Doxarubixadone
+    - Dylovene
+    - Epinephrine
+    - Ethyloxyephedrine
+    - Ethylredoxrazine
+    - Haloperidol
+    - Holywater
+    - Hyronalin
+    - Inaprovaline
+    - Insuzine
+    - Ipecac
+    - Kelotane
+    - Lacerinol
+    - Leporazine
+    - Lipozine
+    - Mannitol
+    - Necrosol
+    - Oculine
+    - Omnizine
+    - Opporozidone
+    - Phalanximine
+    - PolypyryliumOligomers
+    - PotassiumIodide
+    - Psicodine
+    - PulpedBananaPeel
+    - Puncturase
+    - Pyrazine
+    - Saline
+    - Siderlac
+    - Sigynate
+    - Stellibinin
+    - Synaptizine
+    - TranexamicAcid
+    - Tricordrazine
+    - Ultravasculine
+
+- type: xenoArchTrigger
+  id: TriggerToxin
+  tip: xenoarch-trigger-tip-toxin
+  components:
+  - type: XATReactive
+    reagents:
+    - Amatoxin
+    - Bungotoxin
+    - BuzzochloricBees
+    - CarpoToxin
+    - ChloralHydrate
+    - CorgiJuice
     - FerrochromicAcid
     - FluorosulfuricAcid
+    - Fresium
+    - GastroToxin
+    - HeartbreakerToxin
+    - Histamine
+    - Honk
+    - JuiceThatMakesYouHew
+    - JuiceThatMakesYouWeh
+    - Lead
+    - Lexorin
+    - Licoxide
+    - Lipolicide
+    - Mechanotoxin
+    - MindbreakerToxin
+    - Mold
+    - PolytrinicAcid
+    - Razorium
+    - Romerol
     - SulfuricAcid
-    - NorepinephricAcid
+    - Tazinide
+    - Theobromine
+    - Toxin
+    - ToxinTrash
+    - UnstableMutagen
+    - VentCrud
+    - Vestine
 
 - type: xenoArchTrigger
-  id: TriggerBenzene
-  tip: xenoarch-trigger-tip-benzene
+  id: TriggerNarcotic
+  tip: xenoarch-trigger-tip-narcotic
   components:
   - type: XATReactive
     reagents:
-    - Benzene
+    - Bananadine
+    - Desoxyephedrine
+    - Ephedrine
+    - Happiness
+    - Impedrezene
+    - MuteToxin
+    - Nicotine
+    - Nocturine
+    - NorepinephricAcid
+    - Pax
+    - SpaceDrugs
+    - TearGas
+    - THC
 
 - type: xenoArchTrigger
-  id: TriggerBleach
-  tip: xenoarch-trigger-tip-bleach
+  id: TriggerPyrotechnic
+  tip: xenoarch-trigger-tip-pyrotechnic
+  components:
+  - type: XATReactive
+    reagents:
+    - ChlorineTrifluoride
+    - Fluorosurfactant
+    - FoamingAgent
+    - Napalm
+    - Phlogiston
+    - Thermite
+    - WeldingFuel
+
+- type: xenoArchTrigger
+  id: TriggerCleaning
+  tip: xenoarch-trigger-tip-cleaning
   components:
   - type: XATReactive
     reagents:
     - Bleach
-
-- type: xenoArchTrigger
-  id: TriggerCryoxadone
-  tip: xenoarch-trigger-tip-cryoxadone
-  components:
-  - type: XATReactive
-    reagents:
-    - Cryoxadone
-
-- type: xenoArchTrigger
-  id: TriggerDexalin
-  tip: xenoarch-trigger-tip-dexalin
-  components:
-  - type: XATReactive
-    reagents:
-    - Dexalin
-
-- type: xenoArchTrigger
-  id: TriggerDiethylamine
-  tip: xenoarch-trigger-tip-diethylamine
-  components:
-  - type: XATReactive
-    reagents:
-    - Diethylamine
-
-- type: xenoArchTrigger
-  id: TriggerEphedrine
-  tip: xenoarch-trigger-tip-ephedrine
-  components:
-  - type: XATReactive
-    reagents:
-    - Ephedrine
-    - Desoxyephedrine
-
-- type: xenoArchTrigger
-  id: TriggerEthanol
-  tip: xenoarch-trigger-tip-ethanol
-  components:
-  - type: XATReactive
-    reagents:
-    - Ethanol
-
-- type: xenoArchTrigger
-  id: TriggerEZNutrient
-  tip: xenoarch-trigger-tip-eznutrient
-  components:
-  - type: XATReactive
-    reagents:
-    - EZNutrient
-
-- type: xenoArchTrigger
-  id: TriggerFersilicite
-  tip: xenoarch-trigger-tip-fersilicite
-  components:
-  - type: XATReactive
-    reagents:
-    - Fersilicite
-
-- type: xenoArchTrigger
-  id: TriggerHydroxide
-  tip: xenoarch-trigger-tip-hydroxide
-  components:
-  - type: XATReactive
-    reagents:
-    - Hydroxide
-
-- type: xenoArchTrigger
-  id: TriggerKelotane
-  tip: xenoarch-trigger-tip-kelotane
-  components:
-  - type: XATReactive
-    reagents:
-    - Kelotane
-
-- type: xenoArchTrigger
-  id: TriggerMannitol
-  tip: xenoarch-trigger-tip-mannitol
-  components:
-  - type: XATReactive
-    reagents:
-    - Mannitol
-
-- type: xenoArchTrigger
-  id: TriggerMindbreakerToxin
-  tip: xenoarch-trigger-tip-mindbreakertoxin
-  components:
-  - type: XATReactive
-    reagents:
-    - MindbreakerToxin
-
-- type: xenoArchTrigger
-  id: TriggerSpaceCleaner
-  tip: xenoarch-trigger-tip-spacecleaner
-  components:
-  - type: XATReactive
-    reagents:
+    - SoapReagent
     - SpaceCleaner
+    - SpaceGlue
+    - SpaceLube
 
 - type: xenoArchTrigger
-  id: TriggerTHC
-  tip: xenoarch-trigger-tip-thc
+  id: TriggerBotany
+  tip: xenoarch-trigger-tip-botany
   components:
   - type: XATReactive
     reagents:
-    - THC
+    - Ammonia
+    - Diethylamine
+    - EZNutrient
+    - Left4Zed
+    - PestKiller
+    - PlantBGone
+    - RobustHarvest
+    - Sedin
+    - WeedKiller
+
+- type: xenoArchTrigger
+  id: TriggerAlcohol
+  tip: xenoarch-trigger-tip-alcohol
+  components:
+  - type: XATReactive
+    reagents:
+    - Absinthe
+    - AcidSpit
+    - Ale
+    - AlienBrainHemorrhage
+    - AlliesCocktail
+    - Aloe
+    - Amasec
+    - Andalusia
+    - Antifreeze
+    - AtomicBomb
+    - B52
+    - BacchusBlessing
+    - BahamaMama
+    - BananaHonk
+    - Barefoot
+    - BeepskySmash
+    - Beer
+    - BlackRussian
+    - BloodyMary
+    - BlueCuracao
+    - BlueHawaiian
+    - Booger
+    - BraveBull
+    - Bronx
+    - BudgetInsulsDrink
+    - Caipirinha
+    - Champagne
+    - Martini
+    - CoconutRum
+    - CoffeeLiqueur
+    - CogChamp
+    - Cognac
+    - Cosmopolitan
+    - CrushDepth
+    - CubaLibre
+    - Daiquiri
+    - DarkandStormy
+    - DeadRum
+    - DeathInTheAfternoon
+    - DemonsBlood
+    - DevilsKiss
+    - DriestMartini
+    - Eggnog
+    - ElectricShark
+    - Empress75
+    - ErikaSurprise
+    - EspressoMartini
+    - Ethanol
+    - Gildlager
+    - Gin
+    - GinTonic
+    - GinFizz
+    - IrishSlammer
+    - Grog
+    - HippiesDelight
+    - Hooch
+    - IcedBeer
+    - IrishBool
+    - IrishCream
+    - JackRose
+    - JungleBird
+    - Kalimotxo
+    - LongIslandIcedTea
+    - Manhattan
+    - ManhattanProject
+    - ManlyDorf
+    - Margarita
+    - Mayojito
+    - Mead
+    - MelonLiquor
+    - Mimeosa
+    - Mimosa
+    - Mojito
+    - MonkeyBusiness
+    - Moonshine
+    - MoscowMule
+    - Neurotoxin
+    - Painkiller
+    - GargleBlaster
+    - Patron
+    - PinaColada
+    - PoisonWine
+    - Radler
+    - RedMead
+    - Rubberneck
+    - Rum
+    - Sake
+    - Sbiten
+    - ScrewdriverCocktail
+    - Silencer
+    - Singulo
+    - SnowWhite
+    - SuiDream
+    - SyndicateBomb
+    - Tequila
+    - TequilaSunrise
+    - DoctorsDelight
+    - TheMartinez
+    - TheSunAlsoRises
+    - ThreeMileIsland
+    - ToxinsSpecial
+    - Vampiro
+    - Vermouth
+    - Vodka
+    - VodkaMartini
+    - VodkaRedBool
+    - VodkaTonic
+    - WatermelonWakeup
+    - Whiskey
+    - WhiskeyCola
+    - WhiskeySoda
+    - WhiskeySour
+    - WhiteGilgamesh
+    - WhiteRussian
+    - Wine
+    - XenoBasher
+    - ZombieCocktail
