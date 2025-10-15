@@ -169,7 +169,7 @@ public sealed class ChargedElectrovaeManager : EntitySystem
                 var powerScale = Math.Min(intensity * 2, 1.0f);
                 var empRadius = Atmospherics.ChargedElectrovaeEmpRadius;
                 var empEnergy = Atmospherics.ChargedElectrovaeEmpEnergy * powerScale;
-                var empDuration = Atmospherics.ChargedElectrovaeEmpDuration * powerScale;
+                var empDuration = TimeSpan.FromSeconds(Atmospherics.ChargedElectrovaeEmpDuration * powerScale);
 
                 // Trigger EMP pulse at the tile position with enhanced parameters
                 _emp.EmpPulse(mapCoords, empRadius, empEnergy, empDuration);
