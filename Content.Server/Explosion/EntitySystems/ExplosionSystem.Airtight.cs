@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Runtime.InteropServices;
 using Content.Server.Atmos.Components;
 using Content.Server.Explosion.Components;
@@ -96,6 +97,8 @@ public sealed partial class ExplosionSystem
             GetExplosionTolerance(uid.Value, tolerance);
         }
 
+        // Log.Info($"UPDATE {gridId}/{tile}: {blockedDirections}");
+
         if (blockedDirections == AtmosDirection.Invalid)
         {
             // No longer airtight
@@ -174,11 +177,12 @@ public sealed partial class ExplosionSystem
 
         if (cacheEntry.RefCount == 0)
         {
+            var prevValue = cacheEntry.Values;
             cacheEntry.Values = default;
             cacheEntry.RefCount = _freeListHead;
             _freeListHead = index;
 
-            var result = _toleranceIndex.Remove(cacheEntry.Values);
+            var result = _toleranceIndex.Remove(prevValue);
             DebugTools.Assert(result, "Failed to removed 0 refcounted index!");
         }
     }
@@ -284,6 +288,43 @@ public sealed partial class ExplosionSystem
             foreach (var pos in airtightComp.Tiles.Keys)
             {
                 UpdateAirtightMap(uid, pos, mapGrid);
+            }
+        }
+    }
+
+    private void ValidateIntegrity()
+    {
+        var freeEntries = new HashSet<int>();
+        for (var i = _freeListHead; i >= 0; i = _toleranceData[i].RefCount)
+        {
+            freeEntries.Add(i);
+        }
+
+        var usedEntries = new Dictionary<int, int>();
+
+        foreach (var airtightGrid in EntityQuery<ExplosionAirtightGridComponent>())
+        {
+            foreach (var tile in airtightGrid.Tiles.Values)
+            {
+                if (tile.BlockedDirections == AtmosDirection.Invalid)
+                    throw new Exception("Tile directions are invalid!");
+
+                ref var e = ref CollectionsMarshal.GetValueRefOrAddDefault(usedEntries, tile.ToleranceCacheIndex, out _);
+                e += 1;
+            }
+        }
+
+        if (freeEntries.Intersect(usedEntries.Keys).Any())
+        {
+            throw new Exception("Overlapping free/used entries!");
+        }
+
+        foreach (var (key, refCount) in usedEntries)
+        {
+            ref var entry = ref _toleranceData[key];
+            if (refCount != entry.RefCount)
+            {
+                throw new Exception("Refcount mismatch!");
             }
         }
     }
