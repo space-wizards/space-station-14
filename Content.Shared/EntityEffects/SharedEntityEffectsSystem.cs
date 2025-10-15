@@ -215,12 +215,6 @@ public abstract partial class EntityEffect
     public virtual string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => null;
 
     /// <summary>
-    /// Whether this effect should be logged in admin logs.
-    /// </summary>
-    [ViewVariables, MemberNotNullWhen(true, nameof(Impact))]
-    public bool ShouldLog => Impact != null;
-
-    /// <summary>
     /// If this effect is logged, how important is the log?
     /// </summary>
     [ViewVariables]
