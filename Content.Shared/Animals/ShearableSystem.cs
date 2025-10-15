@@ -45,8 +45,7 @@ public sealed class SharedShearableSystem : EntitySystem
     /// <summary>
     ///     Checks if the target entity can currently be sheared.
     /// </summary>
-    /// <param name="ent">The shearable entity that will be checked.</param>
-    /// <param name="comp">The shearable component (e.g. ent.Comp).</param>
+    /// <param name="ent">The shearable entity that will be checked, and the ShearableComponent combined with it.</param>
     /// <param name="shearedProduct">An out variable of the resolved sheared product prototype.</param>
     /// <param name="shearingSolutionState">An out variable of the resolved sheared product solution.</param>
     /// <param name="shearingSolutionEnt">An out variable of the resolved sheared product solution entity.</param>
@@ -57,19 +56,19 @@ public sealed class SharedShearableSystem : EntitySystem
     ///     A <c>ShearableComponent.CheckShearReturns</c> enum of the result.
     /// </returns>
     /// <seealso cref="CheckShearReturns"/>
-    public CheckShearReturns CheckShear(EntityUid ent, ShearableComponent comp, out EntityPrototype shearedProduct, out Solution? shearingSolutionState, out Entity<SolutionComponent>? shearingSolutionEnt, out FixedPoint2? shearingSolutionToRemove, EntityUid? usedItem = null, bool checkItem = true)
+    public CheckShearReturns CheckShear(Entity<ShearableComponent> ent, out EntityPrototype shearedProduct, out Solution? shearingSolutionState, out Entity<SolutionComponent>? shearingSolutionEnt, out FixedPoint2? shearingSolutionToRemove, EntityUid? usedItem = null, bool checkItem = true)
     {
         // Set these to null in-case we return early.
-        shearedProduct = _proto.Index(comp.ShearedProductID);
+        shearedProduct = _proto.Index(ent.Comp.ShearedProductID);
         shearingSolutionState = null;
         shearingSolutionEnt = null;
         shearingSolutionToRemove = null;
 
         // Are we checking items? Has a toolQuality been defined?
         // Even if we are checking items, if no toolQuality has been defined, then they're allowed to use anything, including an empty hand.
-        if (checkItem && comp.ToolQuality is not null &&
+        if (checkItem && ent.Comp.ToolQuality is not null &&
             // If so, is the player holding anything at all, and does that item have the correct toolQuality?
-            (usedItem == null || !_tool.HasQuality(usedItem.Value, comp.ToolQuality)))
+            (usedItem == null || !_tool.HasQuality(usedItem.Value, ent.Comp.ToolQuality)))
         {
             return CheckShearReturns.WrongTool;
         }
@@ -79,7 +78,7 @@ public sealed class SharedShearableSystem : EntitySystem
         // If so, True, otherwise False.
 
         // Resolves the targetSolutionName as a solution inside the shearable creature. Outputs the "solution" variable.
-        if (!_solutionContainer.ResolveSolution(ent, comp.TargetSolutionName, ref shearingSolutionEnt, out shearingSolutionState))
+        if (!_solutionContainer.ResolveSolution(ent.Owner, ent.Comp.TargetSolutionName, ref shearingSolutionEnt, out shearingSolutionState))
         {
             return CheckShearReturns.Error;
         }
@@ -89,14 +88,14 @@ public sealed class SharedShearableSystem : EntitySystem
 
         // Solution is measured in units but the actual value for 1u is 1000 reagent, so multiply it by 100.
         // Then, divide by 1 because it's the reagent needed for 1 product.
-        var productsPerSolution = (int)(1 / comp.ProductsPerSolution * 100);
+        var productsPerSolution = (int)(1 / ent.Comp.ProductsPerSolution * 100);
 
         // Work out the maximum number of products to spawn.
         var maxProductsToSpawn = (float)productsPerSolution;
         // If a limit has been defined, use that.
-        if (comp.MaximumProductsSpawned is not null)
+        if (ent.Comp.MaximumProductsSpawned is not null)
         {
-            maxProductsToSpawn = (float)comp.MaximumProductsSpawned;
+            maxProductsToSpawn = (float)ent.Comp.MaximumProductsSpawned;
         }
 
         // Modulus the targetSolutionQuantity so no solution is wasted if it can't be divided evenly.
@@ -131,6 +130,37 @@ public sealed class SharedShearableSystem : EntitySystem
     }
 
     /// <summary>
+    ///     Checks if the target entity can currently be sheared. Overload function that requires only the shearedProduct out variable.
+    /// </summary>
+    /// <param name="ent">The shearable entity that will be checked, and the ShearableComponent combined with it.</param>
+    /// <param name="shearedProduct">An out variable of the resolved sheared product prototype.</param>
+    /// <param name="usedItem">The held item that is being used to shear the target entity.</param>
+    /// <param name="checkItem">If false then skip checking for the correct shearing tool.</param>
+    /// <returns>
+    ///     A <c>ShearableComponent.CheckShearReturns</c> enum of the result.
+    /// </returns>
+    /// <seealso cref="CheckShearReturns"/>
+    public CheckShearReturns CheckShear(Entity<ShearableComponent> ent, out EntityPrototype shearedProduct, EntityUid? usedItem = null, bool checkItem = true)
+    {
+        return CheckShear(ent, out shearedProduct, out _, out _, out _, usedItem, checkItem);
+    }
+
+    /// <summary>
+    ///     Checks if the target entity can currently be sheared. Overload function that requires no out variables.
+    /// </summary>
+    /// <param name="ent">The shearable entity that will be checked, and the ShearableComponent combined with it.</param>
+    /// <param name="usedItem">The held item that is being used to shear the target entity.</param>
+    /// <param name="checkItem">If false then skip checking for the correct shearing tool.</param>
+    /// <returns>
+    ///     A <c>ShearableComponent.CheckShearReturns</c> enum of the result.
+    /// </returns>
+    /// <seealso cref="CheckShearReturns"/>
+    public CheckShearReturns CheckShear(Entity<ShearableComponent> ent, EntityUid? usedItem = null, bool checkItem = true)
+    {
+        return CheckShear(ent, out _, out _, out _, out _, usedItem, checkItem);
+    }
+
+    /// <summary>
     ///     Handles shearing when the player left-clicks an entity.
     ///     Doesn't run any checks, those are handled by AttemptShear.
     /// </summary>
@@ -149,7 +179,7 @@ public sealed class SharedShearableSystem : EntitySystem
     private void AttemptShear(Entity<ShearableComponent> ent, EntityUid userUid, EntityUid? toolUsed)
     {
         // Run all shearing checks.
-        switch (CheckShear(ent, ent.Comp, out var shearedProduct, out _, out _, out _, toolUsed))
+        switch (CheckShear(ent, out var shearedProduct, toolUsed))
         {
             case CheckShearReturns.Success:
                 // ALL SYSTEMS GO!
@@ -185,7 +215,7 @@ public sealed class SharedShearableSystem : EntitySystem
             return;
 
         // Check again and this time get the objects we need.
-        if (CheckShear(ent.Owner, ent.Comp, out var shearedProduct, out var shearingSolutionState, out var shearingSolutionEnt, out var shearingSolutionToRemove, null, false) != CheckShearReturns.Success
+        if (CheckShear(ent, out var shearedProduct, out var shearingSolutionState, out var shearingSolutionEnt, out var shearingSolutionToRemove, null, false) != CheckShearReturns.Success
             // these must all be resolved.
             || shearingSolutionState is null
             || shearingSolutionEnt is null
@@ -246,7 +276,7 @@ public sealed class SharedShearableSystem : EntitySystem
         var toolUsed = args.Using;
 
         // Check.
-        if (CheckShear(ent.Owner, ent.Comp, out _, out _, out _, out _, toolUsed, true) != CheckShearReturns.Success)
+        if (CheckShear(ent, toolUsed, true) != CheckShearReturns.Success)
         {
             // Still adds the verb but it's disabled.
             verbDisabled = true;
@@ -285,7 +315,7 @@ public sealed class SharedShearableSystem : EntitySystem
         }
 
         // Checks whether the entity can be sheared and applies appropriate examine additions.
-        switch (CheckShear(ent, ent.Comp, out _, out _, out _, out _, checkItem: false))
+        switch (CheckShear(ent, checkItem: false))
         {
             case CheckShearReturns.Success:
                 // Check again if this description has been set.
