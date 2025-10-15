@@ -51,7 +51,7 @@
             Brute: -0.5
             Burn: -0.5
       # Helps you stop bleeding to an extent.
-      - !type:ModifyBleedAmount
+      - !type:ModifyBleed
         amount: -0.25
   # Lets plants benefit too
   plantMetabolism:
