@@ -1,0 +1,13 @@
+The files below are licensed under Creative Commons Attribution-ShareAlike 3.0 (CC-BY-SA 3.0) by the author, Tyler Jalbert, @Froxxin.
+
+icon.ico
+icon/icon-16x16.png
+icon/icon-24x24.png
+icon/icon-32x32.png
+icon/icon-48x48.png
+icon/icon-64x64.png
+icon/icon-128x128.png
+icon/icon-256x256.png
+logo.png
+slashlogo.png
+
