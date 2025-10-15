@@ -27,14 +27,14 @@
     TriggerThrow: 1
     TriggerDeath: 1
     TriggerMagnet: 1
-    TriggerAlcohol: 0.25
-    TriggerBaseElement: 0.25
-    TriggerBotany: 0.25
-    TriggerCleaning: 0.25
-    TriggerMedicine: 0.25
-    TriggerNarcotic: 0.25
-    TriggerPyrotechnic: 0.25
-    TriggerToxin: 0.25
+    TriggerAlcohol: 0.125
+    TriggerBaseElement: 0.125
+    TriggerBotany: 0.125
+    TriggerCleaning: 0.125
+    TriggerMedicine: 0.125
+    TriggerNarcotic: 0.125
+    TriggerPyrotechnic: 0.125
+    TriggerToxin: 0.125
 
 - type: xenoArchTrigger
   id: TriggerMusic
