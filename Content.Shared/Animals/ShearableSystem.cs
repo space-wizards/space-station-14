@@ -362,10 +362,10 @@ public sealed class SharedShearableSystem : EntitySystem
     {
 
         // The minimum solution required to spawn one product.
-        var minimumSol = 1 / ent.Comp.ProductsPerSolution;
+        var minimumSol = 100 / ent.Comp.ProductsPerSolution;
 
         // If solution is less than the minimum then disable the shearable layer.
-        if (sol.Volume.Value < minimumSol * 100)
+        if (sol.Volume.Value < minimumSol)
         {
             // Remove wool layer
             _appearance.SetData(ent.Owner, ShearableVisuals.Shearable, false);
