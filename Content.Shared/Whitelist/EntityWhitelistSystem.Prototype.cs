@@ -7,17 +7,25 @@ namespace Content.Shared.Whitelist;
 public sealed partial class EntityWhitelistSystem
 {
     /// <summary>
-    /// Checks whether a given entity prototype satisfies a whitelist.
+    /// Checks whether a given EntProtoId satisfies a whitelist.
     /// </summary>
     public bool IsValid(EntityWhitelist list, [ForbidLiteral] EntProtoId protoId)
     {
-        var prototype = _proto.Index(protoId);
+        return IsValid(list, _proto.Index(protoId));
+    }
 
-        if (list.Components != null)
+    /// <summary>
+    /// Checks whether a given EntityPrototype satisfies a whitelist.
+    /// </summary>
+    public bool IsValid(EntityWhitelist list, EntityPrototype prototype)
+    {
+        list.Registrations ??= StringsToRegs(list.Components);
+
+        if (list.Registrations != null)
         {
-            foreach (var comp in list.Components)
+            foreach (var reg in list.Registrations)
             {
-                if (prototype.Components.ContainsKey(comp))
+                if (prototype.Components.ContainsKey(reg.Name))
                 {
                     if (!list.RequireAll)
                         return true;
@@ -27,13 +35,13 @@ public sealed partial class EntityWhitelistSystem
             }
         }
 
-        if (list.Sizes != null && prototype.TryGetComponent<ItemComponent>(out var itemComp, Factory))
+        if (list.Sizes != null && prototype.TryGetComponent(_itemComponentName, out ItemComponent? itemComp))
         {
             if (list.Sizes.Contains(itemComp.Size))
                 return true;
         }
 
-        if (list.Tags != null && prototype.TryGetComponent<TagComponent>(out var tagComp, Factory))
+        if (list.Tags != null && prototype.TryGetComponent(_tagComponentName, out TagComponent? tagComp))
         {
             return list.RequireAll
                 ? _tag.HasAllTags(tagComp, list.Tags)
@@ -51,10 +59,21 @@ public sealed partial class EntityWhitelistSystem
     /// </summary>
     public bool CheckBoth([ForbidLiteral] EntProtoId protoId, EntityWhitelist? blacklist = null, EntityWhitelist? whitelist = null)
     {
-        if (blacklist != null && IsValid(blacklist, protoId))
+        return CheckBoth(_proto.Index(protoId), blacklist, whitelist);
+    }
+
+    /// <summary>
+    /// Checks whether a given EntityPrototype is allowed by a whitelist and not blocked by a blacklist.
+    /// If a blacklist is provided and it matches then this returns false.
+    /// If a whitelist is provided and it does not match then this returns false.
+    /// If either list is null it does not get checked.
+    /// </summary>
+    public bool CheckBoth(EntityPrototype prototype, EntityWhitelist? blacklist = null, EntityWhitelist? whitelist = null)
+    {
+        if (blacklist != null && IsValid(blacklist, prototype))
             return false;
 
-        return whitelist == null || IsValid(whitelist, protoId);
+        return whitelist == null || IsValid(whitelist, prototype);
     }
 
     /// <summary>
@@ -69,6 +88,17 @@ public sealed partial class EntityWhitelistSystem
     }
 
     /// <summary>
+    /// Helper function to determine if a whitelist is not null and the EntityPrototype is on the list.
+    /// </summary>
+    public bool IsWhitelistPass(EntityWhitelist? whitelist, EntityPrototype prototype)
+    {
+        if (whitelist == null)
+            return false;
+
+        return IsValid(whitelist, prototype);
+    }
+
+    /// <summary>
     /// Helper function to determine if a whitelist is not null and the EntProtoId is not on the list.
     /// </summary>
     public bool IsWhitelistFail(EntityWhitelist? whitelist, [ForbidLiteral] EntProtoId protoId)
@@ -77,6 +107,17 @@ public sealed partial class EntityWhitelistSystem
             return false;
 
         return !IsValid(whitelist, protoId);
+    }
+
+    /// <summary>
+    /// Helper function to determine if a whitelist is not null and the EntityPrototype is not on the list.
+    /// </summary>
+    public bool IsWhitelistFail(EntityWhitelist? whitelist, EntityPrototype prototype)
+    {
+        if (whitelist == null)
+            return false;
+
+        return !IsValid(whitelist, prototype);
     }
 
     /// <summary>
@@ -91,6 +132,17 @@ public sealed partial class EntityWhitelistSystem
     }
 
     /// <summary>
+    /// Helper function to determine if a whitelist is either null or the EntityPrototype is on the list.
+    /// </summary>
+    public bool IsWhitelistPassOrNull(EntityWhitelist? whitelist, EntityPrototype prototype)
+    {
+        if (whitelist == null)
+            return true;
+
+        return IsValid(whitelist, prototype);
+    }
+
+    /// <summary>
     /// Helper function to determine if a whitelist is either null or the EntProtoId is not on the list.
     /// </summary>
     public bool IsWhitelistFailOrNull(EntityWhitelist? whitelist, [ForbidLiteral] EntProtoId protoId)
@@ -102,38 +154,13 @@ public sealed partial class EntityWhitelistSystem
     }
 
     /// <summary>
-    /// Helper function to determine if a blacklist is not null and the EntProtoId is on the list.
-    /// Duplicate of equivalent whitelist function.
+    /// Helper function to determine if a whitelist is either null or the EntityPrototype is not on the list.
     /// </summary>
-    public bool IsBlacklistPass(EntityWhitelist? blacklist, [ForbidLiteral] EntProtoId protoId)
+    public bool IsWhitelistFailOrNull(EntityWhitelist? whitelist, EntityPrototype prototype)
     {
-        return IsWhitelistPass(blacklist, protoId);
-    }
+        if (whitelist == null)
+            return true;
 
-    /// <summary>
-    /// Helper function to determine if a blacklist is not null and EntProtoId is not on the list.
-    /// Duplicate of equivalent whitelist function.
-    /// </summary>
-    public bool IsBlacklistFail(EntityWhitelist? blacklist, [ForbidLiteral] EntProtoId protoId)
-    {
-        return IsWhitelistFail(blacklist, protoId);
-    }
-
-    /// <summary>
-    /// Helper function to determine if a blacklist is either null or the EntProtoId is on the list.
-    /// Duplicate of equivalent whitelist function.
-    /// </summary>
-    public bool IsBlacklistPassOrNull(EntityWhitelist? blacklist, [ForbidLiteral] EntProtoId protoId)
-    {
-        return IsWhitelistPassOrNull(blacklist, protoId);
-    }
-
-    /// <summary>
-    /// Helper function to determine if a blacklist is either null or the EntProtoId is not on the list.
-    /// Duplicate of equivalent whitelist function.
-    /// </summary>
-    public bool IsBlacklistFailOrNull(EntityWhitelist? blacklist, [ForbidLiteral] EntProtoId protoId)
-    {
-        return IsWhitelistFailOrNull(blacklist, protoId);
+        return !IsValid(whitelist, prototype);
     }
 }

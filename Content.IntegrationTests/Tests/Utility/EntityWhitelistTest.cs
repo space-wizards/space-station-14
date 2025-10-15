@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Whitelist;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Utility
 {
@@ -10,11 +11,11 @@ namespace Content.IntegrationTests.Tests.Utility
         private const string InvalidComponent = "Sprite";
         private const string ValidComponent = "Physics";
 
-        private const string WhitelistDummyId = "WhitelistDummy";
-        private const string ValidComponentDummyId = "ValidComponentDummy";
-        private const string WhitelistTestValidTagDummyId = "WhitelistTestValidTagDummy";
-        private const string InvalidComponentDummyId = "InvalidComponentDummy";
-        private const string WhitelistTestInvalidTagDummyId = "WhitelistTestInvalidTagDummy";
+        private const string WhitelistProtoId = "WhitelistDummy";
+        private const string ValidComponentProtoId = "ValidComponentDummy";
+        private const string WhitelistTestValidTagProtoId = "WhitelistTestValidTagDummy";
+        private const string InvalidComponentProtoId = "InvalidComponentDummy";
+        private const string WhitelistTestInvalidTagProtoId = "WhitelistTestInvalidTagDummy";
 
         [TestPrototypes]
         private const string Prototypes = $@"
@@ -25,38 +26,36 @@ namespace Content.IntegrationTests.Tests.Utility
   id: WhitelistTestInvalidTag
 
 - type: entity
-  id: {WhitelistDummyId}
+  id: {WhitelistProtoId}
   components:
   - type: ItemSlots
     slots:
       slotName:
         whitelist:
-          prototypes:
-          - ValidPrototypeDummy
           components:
           - {ValidComponent}
           tags:
           - WhitelistTestValidTag
 
 - type: entity
-  id: {InvalidComponentDummyId}
+  id: {InvalidComponentProtoId}
   components:
   - type: {InvalidComponent}
 
 - type: entity
-  id: {WhitelistTestInvalidTagDummyId}
+  id: {WhitelistTestInvalidTagProtoId}
   components:
   - type: Tag
     tags:
     - WhitelistTestInvalidTag
 
 - type: entity
-  id: {ValidComponentDummyId}
+  id: {ValidComponentProtoId}
   components:
   - type: {ValidComponent}
 
 - type: entity
-  id: {WhitelistTestValidTagDummyId}
+  id: {WhitelistTestValidTagProtoId}
   components:
   - type: Tag
     tags:
@@ -76,11 +75,17 @@ namespace Content.IntegrationTests.Tests.Utility
 
             await server.WaitAssertion(() =>
             {
-                var validComponent = sEntities.SpawnEntity(ValidComponentDummyId, mapCoordinates);
-                var whitelistTestValidTag = sEntities.SpawnEntity(WhitelistTestValidTagDummyId, mapCoordinates);
+                var prototypeManager = server.ResolveDependency<IPrototypeManager>();
 
-                var invalidComponent = sEntities.SpawnEntity(InvalidComponentDummyId, mapCoordinates);
-                var whitelistTestInvalidTag = sEntities.SpawnEntity(WhitelistTestInvalidTagDummyId, mapCoordinates);
+                var validComponentProto = prototypeManager.Index(ValidComponentProtoId);
+                var whitelistTestValidTagProto = prototypeManager.Index(WhitelistTestValidTagProtoId);
+                var invalidComponentProto = prototypeManager.Index(InvalidComponentProtoId);
+                var whitelistTestInvalidTagProto = prototypeManager.Index(WhitelistTestInvalidTagProtoId);
+
+                var validComponentUid = sEntities.SpawnEntity(ValidComponentProtoId, mapCoordinates);
+                var whitelistTestValidTagUid = sEntities.SpawnEntity(WhitelistTestValidTagProtoId, mapCoordinates);
+                var invalidComponentUid = sEntities.SpawnEntity(InvalidComponentProtoId, mapCoordinates);
+                var whitelistTestInvalidTagUid = sEntities.SpawnEntity(WhitelistTestInvalidTagProtoId, mapCoordinates);
 
                 // Test instantiated on its own
                 var whitelistInst = new EntityWhitelist
@@ -91,19 +96,25 @@ namespace Content.IntegrationTests.Tests.Utility
 
                 Assert.Multiple(() =>
                 {
-                    Assert.That(sys.IsValid(whitelistInst, validComponent), Is.True);
-                    Assert.That(sys.IsValid(whitelistInst, ValidComponentDummyId), Is.True);
-                    Assert.That(sys.IsValid(whitelistInst, whitelistTestValidTag), Is.True);
-                    Assert.That(sys.IsValid(whitelistInst, WhitelistTestValidTagDummyId), Is.True);
+                    Assert.That(sys.IsValid(whitelistInst, validComponentUid), Is.True);
+                    Assert.That(sys.IsValid(whitelistInst, validComponentProto), Is.True);
+                    Assert.That(sys.IsValid(whitelistInst, ValidComponentProtoId), Is.True);
 
-                    Assert.That(sys.IsValid(whitelistInst, invalidComponent), Is.False);
-                    Assert.That(sys.IsValid(whitelistInst, InvalidComponentDummyId), Is.False);
-                    Assert.That(sys.IsValid(whitelistInst, whitelistTestInvalidTag), Is.False);
-                    Assert.That(sys.IsValid(whitelistInst, WhitelistTestInvalidTagDummyId), Is.False);
+                    Assert.That(sys.IsValid(whitelistInst, whitelistTestValidTagUid), Is.True);
+                    Assert.That(sys.IsValid(whitelistInst, whitelistTestValidTagProto), Is.True);
+                    Assert.That(sys.IsValid(whitelistInst, WhitelistTestValidTagProtoId), Is.True);
+
+                    Assert.That(sys.IsValid(whitelistInst, invalidComponentUid), Is.False);
+                    Assert.That(sys.IsValid(whitelistInst, invalidComponentProto), Is.False);
+                    Assert.That(sys.IsValid(whitelistInst, InvalidComponentProtoId), Is.False);
+
+                    Assert.That(sys.IsValid(whitelistInst, whitelistTestInvalidTagUid), Is.False);
+                    Assert.That(sys.IsValid(whitelistInst, whitelistTestInvalidTagProto), Is.False);
+                    Assert.That(sys.IsValid(whitelistInst, WhitelistTestInvalidTagProtoId), Is.False);
                 });
 
                 // Test from serialized
-                var dummy = sEntities.SpawnEntity(WhitelistDummyId, mapCoordinates);
+                var dummy = sEntities.SpawnEntity(WhitelistProtoId, mapCoordinates);
                 var whitelistSer = sEntities.GetComponent<ItemSlotsComponent>(dummy).Slots.Values.First().Whitelist;
                 Assert.That(whitelistSer, Is.Not.Null);
 
@@ -115,15 +126,21 @@ namespace Content.IntegrationTests.Tests.Utility
 
                 Assert.Multiple(() =>
                 {
-                    Assert.That(sys.IsValid(whitelistSer, validComponent), Is.True);
-                    Assert.That(sys.IsValid(whitelistInst, ValidComponentDummyId), Is.True);
-                    Assert.That(sys.IsValid(whitelistSer, whitelistTestValidTag), Is.True);
-                    Assert.That(sys.IsValid(whitelistInst, WhitelistTestValidTagDummyId), Is.True);
+                    Assert.That(sys.IsValid(whitelistSer, validComponentUid), Is.True);
+                    Assert.That(sys.IsValid(whitelistSer, validComponentProto), Is.True);
+                    Assert.That(sys.IsValid(whitelistSer, ValidComponentProtoId), Is.True);
 
-                    Assert.That(sys.IsValid(whitelistSer, invalidComponent), Is.False);
-                    Assert.That(sys.IsValid(whitelistInst, InvalidComponentDummyId), Is.False);
-                    Assert.That(sys.IsValid(whitelistSer, whitelistTestInvalidTag), Is.False);
-                    Assert.That(sys.IsValid(whitelistInst, WhitelistTestInvalidTagDummyId), Is.False);
+                    Assert.That(sys.IsValid(whitelistSer, whitelistTestValidTagUid), Is.True);
+                    Assert.That(sys.IsValid(whitelistSer, whitelistTestValidTagProto), Is.True);
+                    Assert.That(sys.IsValid(whitelistSer, WhitelistTestValidTagProtoId), Is.True);
+
+                    Assert.That(sys.IsValid(whitelistSer, invalidComponentUid), Is.False);
+                    Assert.That(sys.IsValid(whitelistSer, invalidComponentProto), Is.False);
+                    Assert.That(sys.IsValid(whitelistSer, InvalidComponentProtoId), Is.False);
+
+                    Assert.That(sys.IsValid(whitelistSer, whitelistTestInvalidTagUid), Is.False);
+                    Assert.That(sys.IsValid(whitelistSer, whitelistTestInvalidTagProto), Is.False);
+                    Assert.That(sys.IsValid(whitelistSer, WhitelistTestInvalidTagProtoId), Is.False);
                 });
             });
             await pair.CleanReturnAsync();

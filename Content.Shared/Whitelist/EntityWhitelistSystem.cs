@@ -11,12 +11,18 @@ public sealed partial class EntityWhitelistSystem : EntitySystem
     [Dependency] private readonly TagSystem _tag = default!;
 
     private EntityQuery<ItemComponent> _itemQuery;
+    private string _itemComponentName = string.Empty;
+    private string _tagComponentName = string.Empty;
 
     public override void Initialize()
     {
         base.Initialize();
 
         _itemQuery = GetEntityQuery<ItemComponent>();
+
+        // caching for minor performance improvement
+        _itemComponentName = Factory.GetComponentName<ItemComponent>();
+        _tagComponentName = Factory.GetComponentName<TagComponent>();
     }
 
     /// <summary>
