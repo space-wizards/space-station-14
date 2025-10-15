@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.Administration.UI.Bwoink;
 using Content.Client.Administration.UI.CustomControls;
 using Content.Client.Administration.UI.Notes;
@@ -27,9 +28,8 @@ public sealed class NotesControlTest : InteractionTest
         var players = bwoink.Bwoink.ChannelSelector.PlayerListContainer;
 
         // Check that the player is in the menu, and make sure it is selected
-        Assert.That(players.Data.Count, Is.EqualTo(1));
-        Assert.That((players.Data[0] as PlayerListData)?.Info.SessionId, Is.EqualTo(ClientSession.UserId));
-        await Client.WaitPost(() => players.Select(players.Data[0]));
+        var entry = players.Data.Cast<PlayerListData>().Single(x => x.Info.SessionId == ServerSession.UserId);
+        await Client.WaitPost(() => players.Select(entry));
 
         // Open their notes
         await ClickControl(bwoink.Bwoink.Notes);
