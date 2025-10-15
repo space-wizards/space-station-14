@@ -155,6 +155,7 @@
     - atanpi
     - pick
     - tee
+    - nudge
 
 - Flags: HOST
   Commands:
