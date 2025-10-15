@@ -227,3 +227,17 @@
       amount: 1
   products:
     CorgiJuice: 2
+
+
+# holy
+
+- type: reaction
+  id: SingularityToy
+  impact: Low
+  requiredMixerCategories: [ Holy ]
+  reactants:
+    Singulo:
+      amount: 30
+  effects:
+  - !type:CreateEntityReactionEffect
+    entity: SingularityToy
