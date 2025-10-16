@@ -121,7 +121,7 @@ public sealed class BasicGrowthSystem : PlantGrowthSystem
             }
             else
             {
-                AffectGrowth(uid, -1, holder);
+                AffectGrowth((uid, holder), -1);
                 holder.Health -= healthMod;
             }
 
@@ -131,7 +131,7 @@ public sealed class BasicGrowthSystem : PlantGrowthSystem
             }
             else
             {
-                AffectGrowth(uid, -1, holder);
+                AffectGrowth((uid, holder), -1);
                 holder.Health -= healthMod;
             }
         }

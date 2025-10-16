@@ -29,9 +29,12 @@ public abstract class PlantGrowthSystem : EntitySystem
     /// <summary>
     /// Affects the growth of a plant by modifying its age or production timing.
     /// </summary>
-    public void AffectGrowth(EntityUid uid, int amount, PlantHolderComponent? component = null)
+    public void AffectGrowth(Entity<PlantHolderComponent> ent, int amount)
     {
-        if (!Resolve(uid, ref component) || component.Seed == null)
+        var uid = ent.Owner;
+        var component = ent.Comp;
+
+        if (component.Seed == null)
             return;
 
         if (!TryComp<PlantTraitsComponent>(uid, out var traits))

@@ -14,6 +14,6 @@ public sealed partial class PlantAffectGrowthEntityEffectSystem : EntityEffectSy
         if (entity.Comp.Seed == null || entity.Comp.Dead)
             return;
 
-        _plantGrowth.AffectGrowth(entity, (int)args.Effect.Amount, entity.Comp);
+        _plantGrowth.AffectGrowth(entity, (int)args.Effect.Amount);
     }
 }
