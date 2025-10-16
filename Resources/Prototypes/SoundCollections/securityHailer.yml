@@ -113,7 +113,7 @@
 
 ##  ERT / ATTENTION ##
 - type: soundCollection
-  id: hailer-attention-ERT
+  id: hailer-ERT-attention
   files:
   - /Audio/Voice/Hailer/ERT/cooperate.ogg
   - /Audio/Voice/Hailer/ERT/interfere.ogg
@@ -122,7 +122,7 @@
 
   ##  ERT / COMBAT ##
 - type: soundCollection
-  id: hailer-combat-ERT
+  id: hailer-ERT-combat
   files:
   - /Audio/Voice/Hailer/ERT/danger.ogg
   - /Audio/Voice/Hailer/ERT/hostile.ogg

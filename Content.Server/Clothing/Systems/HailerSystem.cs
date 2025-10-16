@@ -42,12 +42,16 @@ public sealed class HailerSystem : SharedHailerSystem
 
     protected override void IncreaseAggressionLevel(Entity<HailerComponent> ent)
     {
-        //Up the aggression level or reset it
-        ent.Comp.HailLevelIndex++;
-        if (ent.Comp.HailLevelIndex >= ent.Comp.HailLevels.Count)
-            ent.Comp.HailLevelIndex = 0;
+        if (ent.Comp.HailLevels != null)
+        {
+            //Up the aggression level or reset it
+            ent.Comp.HailLevelIndex++;
+            if (ent.Comp.HailLevelIndex >= ent.Comp.HailLevels.Count)
+                ent.Comp.HailLevelIndex = 0;
 
-        _popup.PopupEntity(Loc.GetString("hailer-gas-mask-screwed", ("level", ent.Comp.CurrentHailLevel.Name.ToLower())), ent.Owner);
+            if (ent.Comp.CurrentHailLevel.HasValue)
+                _popup.PopupEntity(Loc.GetString("hailer-gas-mask-screwed", ("level", ent.Comp.CurrentHailLevel.Value.Name.ToLower())), ent.Owner);
+        }
     }
 
 

@@ -117,12 +117,12 @@ hailer-emag-7 = FUCKYOUFUCKYOUFUCKYOUFUCKYOUFUCKYOUFUCKYOUFU-!!
 
 ## ERT ##
 
-hailer-attention-ERT-0 = ERT units moving in, cooperate!!
-hailer-attention-ERT-1 = Do not interfere with ERT operations!!
-hailer-attention-ERT-2 = ERT on site!! Obey commands!!
-hailer-attention-ERT-3 = Emergency response in progress, stand clear!!
+hailer-ERT-attention-0 = ERT units moving in, cooperate!!
+hailer-ERT-attention-1 = Do not interfere with ERT operations!!
+hailer-ERT-attention-2 = ERT on site!! Obey commands!!
+hailer-ERT-attention-3 = Emergency response in progress, stand clear!!
 
-hailer-combat-ERT-0 = Eyes up!! Danger incoming!!
-hailer-combat-ERT-1 = Hostile entity detected, free to engage!!
-hailer-combat-ERT-2 = Supress, flank, neutralize!!
-hailer-combat-ERT-3 = Threat confirmed, containment active!!
+hailer-ERT-combat-0 = Eyes up!! Danger incoming!!
+hailer-ERT-combat-1 = Hostile entity detected, free to engage!!
+hailer-ERT-combat-2 = Supress, flank, neutralize!!
+hailer-ERT-combat-3 = Threat confirmed, containment active!!

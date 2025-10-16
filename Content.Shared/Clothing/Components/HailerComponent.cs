@@ -20,19 +20,18 @@ public sealed partial class HailerComponent : Component
     public EntityUid? User;
 
     /// <summary>
-    /// Can the wires of the hailer be cut ?
+    /// Are the wires of the hailer currently cut ?
     /// </summary>
-    [DataField, AutoNetworkedField]
     public bool AreWiresCut = false;
 
     /// <summary>
-    /// Can the wires be cut ?
+    /// Can the interaction with tools happen ? (Screwing/Cutting)
     /// </summary>
     [DataField]
-    public bool CanCutWires = true;
+    public bool IsToolInteractible = true;
 
     /// <summary>
-    /// Locale for the description when examined
+    /// Locale text for the description when examined
     /// </summary>
     [DataField]
     public string DescriptionLocale;
@@ -50,13 +49,13 @@ public sealed partial class HailerComponent : Component
     public string ChatName;
 
     /// <summary>
-    /// Delay when the hailer is screwed to change aggression level
+    /// Delay when the hailer is used with a screwing tool to change aggression level
     /// </summary>
     [DataField]
     public float ScrewingDoAfterDelay = 3f;
 
     /// <summary>
-    /// Delay when the hailer has its wires cut
+    /// Delay when the hailer is used with a cutting tool
     /// </summary>
     [DataField]
     public float CuttingDoAfterDelay = 5f;
@@ -93,9 +92,10 @@ public sealed partial class HailerComponent : Component
 
     /// <summary>
     /// Soundcollection when interacting with the verb to increase aggression level and it fails
+    /// In machines.yml
     /// </summary>
     [DataField]
-    public SoundSpecifier SettingError = new SoundCollectionSpecifier("CargoError"); //Beep when hailer is used with verb  and it FAILS !! In machines.yml
+    public SoundSpecifier SettingError = new SoundCollectionSpecifier("CargoError");
 
     /// <summary>
     /// The action that gets displayed when the gas mask is equipped.
@@ -104,7 +104,7 @@ public sealed partial class HailerComponent : Component
     public EntProtoId Action = "ActionSecHailer";
 
     /// <summary>
-    /// Reference to the action.
+    /// Reference to the action for hailing.
     /// </summary>
     [DataField]
     public EntityUid? ActionEntity;
@@ -115,26 +115,41 @@ public sealed partial class HailerComponent : Component
     [DataField]
     public EntProtoId ExclamationEffect = "WhistleExclamation";
 
+    /// <summary>
+    /// The levels/states of hailing. Determines what soundcollection to use
+    /// </summary>
     [DataField]
-    public List<HailLevel> HailLevels = [];
+    public List<HailLevel>? HailLevels = [];
 
     /// <summary>
-    /// Index for HailsLevels
+    /// Index for HailsLevels property
     /// </summary>
     [DataField, AutoNetworkedField]
-    public int HailLevelIndex;
+    public int? HailLevelIndex;
 
     /// <summary>
-    /// Locale prefix for emag lines
+    /// Locale text prefix for emag lines
     /// </summary>
     [DataField]
-    public string EmagLevelPrefix;
+    public string? EmagLevelPrefix;
 
+    /// <summary>
+    /// Orders shown on the BUI radial menu and determines what soundcollection to use
+    /// </summary>
     [DataField]
     public List<HailOrder> Orders = [];
 
-    public HailLevel CurrentHailLevel => HailLevels[HailLevelIndex];
-
+    public HailLevel? CurrentHailLevel
+    {
+        get
+        {
+            if (HailLevels != null && HailLevelIndex != null)
+            {
+                return HailLevels[(int)HailLevelIndex];
+            }
+            return null;
+        }
+    }
 }
 
 [Serializable, NetSerializable]
@@ -159,15 +174,29 @@ public record struct HailOrder
     [DataField]
     public string? Name;
 
+    /// <summary>
+    /// What will be shown on the BUI radial menu ?
+    /// </summary>
     [DataField]
     public string? Description;
 
+    /// <summary>
+    /// Icon shown on the BUI
+    /// </summary>
     [DataField, AutoNetworkedField]
-    public SpriteSpecifier? Icon; //= new SpriteSpecifier.Texture(new("Interface/Actions/scream.png"));
+    public SpriteSpecifier? Icon;
 
+    /// <summary>
+    /// What sound collection to use
+    /// Will add the hail level if relevant
+    /// </summary>
     [DataField]
     public string? SoundCollection;
 
+    /// <summary>
+    /// What locale text to use
+    /// Will add the hail level if relevant
+    /// </summary>
     [DataField]
     public string? LocalePrefix;
 }

@@ -25,6 +25,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 
 namespace Content.Shared.Clothing.EntitySystems;
@@ -37,16 +38,12 @@ public abstract class SharedHailerSystem : EntitySystem
     [Dependency] private readonly AccessReaderSystem _access = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _sharedAudio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedToolSystem _tool = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
-
-    [Dependency] private readonly EmagSystem _emag = default!;
 
 
     public override void Initialize()
@@ -58,10 +55,9 @@ public abstract class SharedHailerSystem : EntitySystem
         SubscribeLocalEvent<HailerComponent, ClothingGotUnequippedEvent>(OnUnequip);
         SubscribeLocalEvent<HailerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
         SubscribeLocalEvent<HailerComponent, GotEmaggedEvent>(OnEmagged);
+        SubscribeLocalEvent<HailerComponent, HailerOrderMessage>(OnHailOrder);
         SubscribeLocalEvent<HailerComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<HailerComponent, SecHailerToolDoAfterEvent>(OnToolDoAfter);
-
-        SubscribeLocalEvent<HailerComponent, HailerOrderMessage>(OnHailOrder);
     }
 
 
@@ -87,9 +83,9 @@ public abstract class SharedHailerSystem : EntitySystem
         else
         {
             var orderUsed = comp.Orders[args.Index];
-            var hailLevel = comp.CurrentHailLevel.Name;
-            soundCollection = orderUsed.SoundCollection + "-" + hailLevel;
-            localeText = orderUsed.LocalePrefix + "-" + hailLevel;
+            var hailLevel = comp.CurrentHailLevel != null ? "-" + comp.CurrentHailLevel.Value.Name : String.Empty;
+            soundCollection = orderUsed.SoundCollection + hailLevel;
+            localeText = orderUsed.LocalePrefix + hailLevel;
         }
 
         //Play voice etc...
@@ -143,7 +139,7 @@ public abstract class SharedHailerSystem : EntitySystem
 
     private void OnInteractUsing(Entity<HailerComponent> ent, ref InteractUsingEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !ent.Comp.IsToolInteractible)
             return;
 
         //If someone else is wearing it and someone use a tool on it, ignore it
@@ -262,7 +258,14 @@ public abstract class SharedHailerSystem : EntitySystem
         else if (ent.Comp.AreWiresCut)
             args.PushMarkup(Loc.GetString("hailer-gas-mask-wires-cut"));
         else
-            args.PushMarkup(Loc.GetString($"hailer-gas-mask-examined", ("level", ent.Comp.CurrentHailLevel.Name)));
+        {
+            string desc;
+            if (ent.Comp.CurrentHailLevel.HasValue)
+                desc = Loc.GetString(ent.Comp.DescriptionLocale, ("level", ent.Comp.CurrentHailLevel.Value.Name));
+            else
+                desc = Loc.GetString(ent.Comp.DescriptionLocale);
+            args.PushMarkup(desc);
+        }
     }
 
     private void OnGetVerbs(Entity<HailerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
@@ -274,20 +277,20 @@ public abstract class SharedHailerSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || ent.Comp.User != args.User)
             return;
 
-        if (ent.Comp.HailLevels.Count <= 1)
-            return;
-
-        var user = args.User;
-
-        args.Verbs.Add(new AlternativeVerb()
+        if (ent.Comp.HailLevels != null && ent.Comp.HailLevels.Count > 1)
         {
-            Text = Loc.GetString("hailer-gas-mask-verb"),
-            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
-            Act = () =>
+            var user = args.User;
+
+            args.Verbs.Add(new AlternativeVerb()
             {
-                UseVerbSwitchAggression(ent, user);
-            }
-        });
+                Text = Loc.GetString("hailer-gas-mask-verb"),
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
+                Act = () =>
+                {
+                    UseVerbSwitchAggression(ent, user);
+                }
+            });
+        }
     }
 
     private void OnEmagged(Entity<HailerComponent> ent, ref GotEmaggedEvent args)

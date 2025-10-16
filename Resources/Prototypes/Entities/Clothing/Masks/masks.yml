@@ -504,6 +504,7 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+    - EmagImmune 
   - type: HideLayerClothing
     slots:
     - Hair
@@ -518,11 +519,37 @@
         Slash: 0.95
         Piercing: 0.95
         Heat: 0.95
-  # - type: SecurityHailer #For security ERT and because it's fitting really
-  #   distance: 5
-  #   aggresionLevel: High #This is just for examination purposes
-  #   isERT: true
-  #   chatName: ERT hailer
+  - type: Hailer
+    isToolInteractible: false
+    orders:
+    - name: attention
+      description: Pay attention !
+      soundCollection: hailer-ERT-attention
+      localePrefix: hailer-ERT-attention
+      icon:
+        sprite: Objects/Fun/whistles.rsi
+        state: whistle
+    - name: combat
+      description: Hostile detected !
+      soundCollection: hailer-ERT-combat
+      localePrefix: hailer-ERT-combat
+      icon:
+        sprite: Actions/Implants/implants.rsi
+        state: explosive
+    chatName: "ERT Hailer"
+    distance: 5
+    descriptionLocale: hailer-ert-mask-examined
+  - type: ActionGrant
+    actions:
+    - ActionSecHailer
+  - type: ItemActionGrant
+    actions:
+    - ActionSecHailer
+    activeIfWorn: true
+  - type: UserInterface
+    interfaces:
+      enum.HailerUiKey.Key:
+        type: HailerBoundUserInterface
 
 - type: entity
   parent: ClothingMaskGasERT
