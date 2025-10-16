@@ -55,33 +55,33 @@
     emagLevelPrefix: hailer-emag
     orders:
     - name: attention
-      description: blah blah blah
+      description: Pay attention !
       soundCollection: hailer-attention
       localePrefix: hailer-attention
       icon:
-        sprite: Actions/Implants/implants.rsi
-        state: freedom
+        sprite: Objects/Fun/whistles.rsi
+        state: sec
     - name: oneliner
-      description: blah blah blah
+      description: Say a cool oneliner !
       soundCollection: hailer-oneliner
       localePrefix: hailer-oneliner
       icon:
         sprite: Clothing/Eyes/Glasses/sunglasses.rsi
         state: icon
     - name: disperse
-      description: blah blah blah
+      description: Crowd, disperse !
       soundCollection: hailer-disperse
       localePrefix: hailer-disperse
       icon:
-        sprite: Objects/Weapons/Melee/stunbaton.rsi
-        state: stunbaton_on
+        sprite: Structures/Wallmounts/signs.rsi
+        state: securearea
     - name: arrest
-      description: blah blah blah
+      description: You're under arrest !
       soundCollection: hailer-arrest
       localePrefix: hailer-arrest
       icon:
-        sprite: Actions/Implants/implants.rsi
-        state: explosive
+        sprite: Objects/Misc/handcuffs.rsi
+        state: handcuff
     chatName: "Security Hailer"
     distance: 5
     descriptionLocale: hailer-gas-mask-examined

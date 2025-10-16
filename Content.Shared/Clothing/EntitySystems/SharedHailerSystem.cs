@@ -167,7 +167,7 @@ public abstract class SharedHailerSystem : EntitySystem
     }
     private void OnInteractCutting(Entity<HailerComponent> ent, ref InteractUsingEvent args)
     {
-        if (!args.Handled)
+        if (args.Handled)
             return;
 
         ProtoId<ToolQualityPrototype> quality = CUTTING_QUALITY;
@@ -177,9 +177,7 @@ public abstract class SharedHailerSystem : EntitySystem
     private void OnInteractScrewing(Entity<HailerComponent> ent, ref InteractUsingEvent args)
     {
         //If it's emagged we don't change it
-        if (HasComp<EmaggedComponent>(ent) || ent.Comp.AreWiresCut)
-            return;
-        if (!args.Handled)
+        if (HasComp<EmaggedComponent>(ent) || ent.Comp.AreWiresCut || args.Handled)
             return;
 
         ProtoId<ToolQualityPrototype> quality = SCREWING_QUALITY;

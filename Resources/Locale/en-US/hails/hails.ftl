@@ -66,7 +66,7 @@ hailer-oneliner-low-3 = Nowhere to run, nowhere to hide!!
 hailer-oneliner-med-0 = My batong is itching!!
 hailer-oneliner-med-1 = I AM THE SPACE LAW!!
 hailer-oneliner-med-2 = Go ahead, make my day!!
-hailer-oneliner-med-4 = You've just earned yourself a brig stay, genius!!
+hailer-oneliner-med-3 = You've just earned yourself a brig stay, genius!!
 
 hailer-oneliner-high-0 = You think you're bad ? I've buried guys like you!!
 hailer-oneliner-high-1 = The safeword is "police brutality"!!
