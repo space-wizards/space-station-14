@@ -462,24 +462,6 @@
       - state: hos
 
 - type: entity
-  parent: MarkerBase
-  id: SpawnPointHeadOfSecurityWeapon
-  name: head of security weapon spawner
-  components:
-  - type: EntityTableSpawner
-    table: !type:AllSelector
-      children:
-      - id: WeaponSubMachineGunWt550
-      - id: MagazinePistolSubMachineGunTopMounted
-      - id: MagazinePistolSubMachineGunTopMounted
-  - type: Sprite
-    sprite: Markers/jobs.rsi
-    layers:
-    - state: green
-    - sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
-      state: icon
-
-- type: entity
   id: SpawnPointWarden
   parent: SpawnPointJobBase
   name: warden
