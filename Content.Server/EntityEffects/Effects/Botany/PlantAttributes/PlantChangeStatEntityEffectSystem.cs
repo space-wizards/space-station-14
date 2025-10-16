@@ -21,26 +21,16 @@ public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSyst
 
         var targetValue = args.Effect.TargetValue;
 
-        // Build the list of the seed's growth components.
-        var growthHolder = entity.Comp.Seed.GrowthComponents;
-        growthHolder.EnsureGrowthComponents();
-
-        foreach (var prop in typeof(GrowthComponentsHolder).GetProperties())
+        // Scan live plant growth components and mutate the first matching field.
+        foreach (var growthComp in EntityManager.GetComponents<PlantGrowthComponent>(entity.Owner))
         {
-            if (prop.GetValue(growthHolder) is not PlantGrowthComponent)
-                continue;
-
-            var componentType = prop.PropertyType;
-            if (!EntityManager.HasComponent(entity, componentType))
-                continue;
-
-            var component = EntityManager.GetComponent(entity, componentType);
+            var componentType = growthComp.GetType();
             var field = componentType.GetField(targetValue);
 
             if (field == null)
                 continue;
 
-            var currentValue = field.GetValue(component);
+            var currentValue = field.GetValue(growthComp);
             if (currentValue == null)
                 continue;
 
@@ -48,20 +38,20 @@ public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSyst
             {
                 var floatVal = (float)currentValue;
                 MutateFloat(ref floatVal, args.Effect.MinValue, args.Effect.MaxValue, args.Effect.Steps);
-                field.SetValue(component, floatVal);
+                field.SetValue(growthComp, floatVal);
                 return;
             }
             else if (field.FieldType == typeof(int))
             {
                 var intVal = (int)currentValue;
                 MutateInt(ref intVal, (int)args.Effect.MinValue, (int)args.Effect.MaxValue, args.Effect.Steps);
-                field.SetValue(component, intVal);
+                field.SetValue(growthComp, intVal);
                 return;
             }
             else if (field.FieldType == typeof(bool))
             {
                 var boolVal = (bool)currentValue;
-                field.SetValue(component, !boolVal);
+                field.SetValue(growthComp, !boolVal);
                 return;
             }
         }

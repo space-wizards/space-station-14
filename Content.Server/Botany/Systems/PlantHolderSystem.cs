@@ -680,6 +680,7 @@ public sealed class PlantHolderSystem : EntitySystem
 
     /// <summary>
     /// Removes all growth-related components from a plant.
+    /// TODO: Delete after plants transition to entities
     /// </summary>
     private void RemoveAllGrowthComponents(EntityUid uid)
     {

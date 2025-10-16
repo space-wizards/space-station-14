@@ -151,6 +151,7 @@ public partial class SeedData
 
     /// <summary>
     /// The growth components used by this seed.
+    /// TODO: Delete after plants transition to entities
     /// </summary>
     [DataField]
     public GrowthComponentsHolder GrowthComponents = new();

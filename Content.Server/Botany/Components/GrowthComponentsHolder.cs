@@ -1,8 +1,7 @@
 namespace Content.Server.Botany.Components;
 
 /// <summary>
-/// Holder for plant growth settings serialized from YAML as a map under "growthComponents".
-/// Each property corresponds to a concrete growth component type.
+/// TODO: Delete after plants transition to entities
 /// </summary>
 [DataDefinition]
 public sealed partial class GrowthComponentsHolder
