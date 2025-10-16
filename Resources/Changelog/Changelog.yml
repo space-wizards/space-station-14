@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Krunklehorn
-  changes:
-  - message: Animals can no longer fiddle with guns, radiation collectors, emitters,
-      welders, stun batons, cameras and camera routers.
-    type: Fix
-  - message: Animals can no longer rotate and flip buildings or unbuckle others.
-    type: Fix
-  id: 8605
-  time: '2025-06-02T17:06:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37246
 - author: ManuelGusmao
   changes:
   - message: Fixed wall-mounted objects so that after their deconstruction they don't
@@ -3933,3 +3923,10 @@
   id: 9106
   time: '2025-10-15T23:59:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34935
+- author: DinnerCalzone
+  changes:
+  - message: ID card sprites have been tweaked to unsquish their job icons.
+    type: Tweak
+  id: 9107
+  time: '2025-10-16T03:35:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40414
