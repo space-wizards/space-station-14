@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ManuelGusmao
-  changes:
-  - message: Fixed wall-mounted objects so that after their deconstruction they don't
-      spawn the result inside a wall, or on the other side of it.
-    type: Fix
-  id: 8606
-  time: '2025-06-02T21:20:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36353
 - author: ScarKy0
   changes:
   - message: Directional reinforced plasma and uranium windows are now correctly more
@@ -3930,3 +3922,10 @@
   id: 9107
   time: '2025-10-16T03:35:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40414
+- author: redmushie
+  changes:
+  - message: Fixed power sensors not respecting their configured network setting
+    type: Fix
+  id: 9108
+  time: '2025-10-16T12:38:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40934
