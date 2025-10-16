@@ -14,7 +14,7 @@
     Extinguish:
       methods: [ Touch ]
       effects:
-      - !type:ExtinguishReaction
+      - !type:Extinguish
   plantMetabolism:
   - !type:PlantAdjustWater
     amount: 1
@@ -63,7 +63,7 @@
     Flammable:
       methods: [ Touch ]
       effects:
-      - !type:FlammableReaction
+      - !type:Flammable
   tileReactions:
   - !type:FlammableTileReaction
     temperatureMultiplier: 1.35

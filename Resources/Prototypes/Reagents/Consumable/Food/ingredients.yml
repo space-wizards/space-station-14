@@ -122,9 +122,9 @@
         emote: Cough
         showInGuidebook: true
         conditions:
-        - !type:Breathing
-        - !type:Internals
-          usingInternals: false
+        - !type:BreathingCondition
+        - !type:InternalsCondition
+          inverted: true
 
 - type: reagent
   id: Vinegar
@@ -144,10 +144,11 @@
       - !type:AdjustReagent
         reagent: Vitamin
         amount: 0.1
-      - !type:ChemVomit
+      - !type:Vomit
         probability: 0.1
         conditions:
-          - !type:ReagentThreshold
+          - !type:ReagentCondition
+            reagent: Vinegar
             min: 6
 
 - type: reagent
@@ -225,7 +226,8 @@
           amount: 250 # thermal energy, not temp
         - !type:HealthChange
           conditions:
-            - !type:ReagentThreshold
+            - !type:ReagentCondition
+              reagent: CapsaicinOil
               min: 5
           damage:
             types:
@@ -250,7 +252,7 @@
       - !type:Satiate
         satiationType: Hunger
         conditions:
-        - !type:ReagentThreshold #Only satiates when eaten with nutriment
+        - !type:ReagentCondition #Only satiates when eaten with nutriment
           reagent: Nutriment
           min: 0.1
         factor: 1
@@ -318,7 +320,8 @@
         amount: -250 # thermal energy, not temp
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
+          reagent: FrostOil
           min: 5
         damage:
           types:
