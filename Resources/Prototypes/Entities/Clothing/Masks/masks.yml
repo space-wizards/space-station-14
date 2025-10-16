@@ -461,17 +461,60 @@
         Slash: 0.90
         Piercing: 0.95
         Heat: 0.95
-  # - type: SecurityHailer #Because the HOS has this one
-  #   distance: 5
-  #   aggresionLevel: High
-  #   isHOS: true
-  #   replaceVoicelinesLocalizeForHOS:
-  #     hail-high-5: hail-high-HOS
-  #   secHailHighIndexForHOS: 5
+  - type: Hailer
+    hailLevels:
+    - name: low
+    - name: med
+    - name: high
+    hailLevelIndex: 0
+    emagLevelPrefix: hailer-emag
+    orders:
+    - name: attention
+      description: Pay attention !
+      soundCollection: hailer-attention
+      localePrefix: hailer-attention
+      icon:
+        sprite: Objects/Fun/whistles.rsi
+        state: sec
+    - name: oneliner
+      description: Say a cool oneliner !
+      soundCollection: hailer-oneliner
+      localePrefix: hailer-oneliner
+      icon:
+        sprite: Clothing/Eyes/Glasses/sunglasses.rsi
+        state: icon
+    - name: disperse
+      description: Crowd, disperse !
+      soundCollection: hailer-disperse
+      localePrefix: hailer-disperse
+      icon:
+        sprite: Structures/Wallmounts/signs.rsi
+        state: securearea
+    - name: arrest
+      description: You're under arrest !
+      soundCollection: hailer-arrest
+      localePrefix: hailer-arrest
+      icon:
+        sprite: Objects/Misc/handcuffs.rsi
+        state: handcuff
+    chatName: "Security Hailer"
+    distance: 5
+    descriptionLocale: hailer-gas-mask-examined
   - type: AccessReader
     access: [["HeadOfSecurity"]]
     loggingDisabled: true
     breakOnAccessBreaker: false
+  - type: ActionGrant
+    actions:
+    - ActionSecHailer
+  - type: ItemActionGrant
+    actions:
+    - ActionSecHailer
+    activeIfWorn: true
+  - type: UserInterface
+    interfaces:
+      enum.HailerUiKey.Key:
+        type: HailerBoundUserInterface
 
 - type: entity
   parent: [ ClothingMaskGas, BaseSecurityCargoContraband ]
