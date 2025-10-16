@@ -14,13 +14,13 @@ public sealed class StorageRequiresAccessSystem : EntitySystem
     [Dependency] private readonly AccessReaderSystem _access = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<StorageRequiresAccessComponent, StorageInteractUsingAttemptEvent>(OnStorageInsertWithItemAttempt);
         SubscribeLocalEvent<StorageRequiresAccessComponent, StorageOpenUIAttemptEvent>(OnStorageOpenAttempt);
-
     }
 
     /// <summary>
@@ -36,8 +36,7 @@ public sealed class StorageRequiresAccessSystem : EntitySystem
         if (!_access.IsAllowed(args.User, openedStorage))
         {
             args.Cancel();
-            if (openedStorage.Comp.PopupMessage != null)
-                _popup.PopupPredicted(Loc.GetString(openedStorage.Comp.PopupMessage), openedStorage, args.User);
+            _popup.PopupPredicted(Loc.GetString(openedStorage.Comp.PopupMessage), openedStorage, args.User);
             _audio.PlayPredicted(openedStorage.Comp.SoundDeny, openedStorage.Owner, args.User);
         }
     }
@@ -55,8 +54,7 @@ public sealed class StorageRequiresAccessSystem : EntitySystem
         if (!_access.IsAllowed(args.User, insertedStorage))
         {
             args.Cancelled = true;
-            if (insertedStorage.Comp.PopupMessage != null)
-                _popup.PopupClient(Loc.GetString(insertedStorage.Comp.PopupMessage), insertedStorage, args.User);
+            _popup.PopupClient(Loc.GetString(insertedStorage.Comp.PopupMessage), insertedStorage, args.User);
         }
     }
 }

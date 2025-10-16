@@ -8,7 +8,7 @@ namespace Content.Shared.Access.Components;
 public sealed partial class StorageRequiresAccessComponent : Component
 {
     [DataField]
-    public LocId? PopupMessage = "lock-comp-has-user-access-fail";
+    public LocId PopupMessage = "lock-comp-has-user-access-fail";
 
     [DataField]
     // Yoinked from: https://github.com/discordia-space/CEV-Eris/blob/35bbad6764b14e15c03a816e3e89aa1751660ba9/sound/machines/Custom_deny.ogg
