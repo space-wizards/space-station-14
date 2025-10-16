@@ -118,9 +118,6 @@ public sealed class SolutionDumpingSystem : EntitySystem
                 _solContainer.SplitSolution(sourceEnt.Value, targetSol.AvailableVolume));
         }
 
-        _solContainer.TryAddSolution(targetSolEnt.Value,
-            _solContainer.SplitSolution(sourceEnt.Value, targetSol.AvailableVolume));
-
         _audio.PlayPredicted(AbsorbentComponent.DefaultTransferSound, ent, args.User);
     }
 
