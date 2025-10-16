@@ -129,6 +129,7 @@ namespace Content.Shared.Construction
                 && construction.NodePathfinding != null)
                 construction.TargetEdgeIndex = (currentNode.GetEdgeIndex(construction.NodePathfinding.Peek()));
 
+            Dirty(uid, construction);
             return true;
         }
 
@@ -145,6 +146,7 @@ namespace Content.Shared.Construction
             construction.TargetNode = null;
             construction.TargetEdgeIndex = null;
             construction.NodePathfinding = null;
+            Dirty(uid, construction);
         }
     }
 }
