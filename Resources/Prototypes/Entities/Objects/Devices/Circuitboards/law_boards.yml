@@ -1,8 +1,8 @@
 - type: entity
-  id: BaseSiliconLawboard
-  parent: BaseElectronics
-  description: An electronics board containing a silicon lawset.
   abstract: true
+  parent: BaseElectronics
+  id: BaseSiliconLawboard
+  description: An electronics board containing a silicon lawset.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
