@@ -1,5 +1,4 @@
 - type: entity
-  abstract: true
   parent: ClothingOuterArmorBase
   id: CadianFlakArmor
   name: cadian flak vest
