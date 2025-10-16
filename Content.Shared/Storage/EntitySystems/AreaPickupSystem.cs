@@ -33,6 +33,7 @@ public sealed partial class AreaPickupSystem : EntitySystem
     private EntityQuery<TransformComponent> _xformQuery;
 
     private const string DelayId = "areaPickup";
+    private const int FallbackItemWeight = 1;
 
     private static readonly AudioParams AudioParams = AudioParams.Default
         .WithMaxDistance(7f)
@@ -98,17 +99,9 @@ public sealed partial class AreaPickupSystem : EntitySystem
 
         DebugTools.Assert(ev.Handled, "Non-zero entities to pickup means this event should be handled.");
 
-        // Calculate do after delay based on combined weight of all items to pick up.
-        var delay = TimeSpan.Zero;
-        foreach (var entityToPickUp in ev.EntitiesToPickUp)
-        {
-            var weight = _prototype.TryIndex(entityToPickUp.Comp.Size, out var itemSize) ? itemSize.Weight : 1;
-            delay += weight * AreaPickupComponent.DelayPerItemWeight;
-        }
-
         var doAfterArgs = new DoAfterArgs(EntityManager,
             args.User,
-            delay,
+            ev.EntitiesToPickUp.Sum(GetWeight) * AreaPickupComponent.DelayPerItemWeight,
             new AreaPickupDoAfterEvent(GetNetEntityList(_entitiesInRange)),
             entity,
             target: entity)
@@ -227,5 +220,11 @@ public sealed partial class AreaPickupSystem : EntitySystem
             args.User
         );
         return true;
+    }
+
+    private int GetWeight(Entity<ItemComponent> entity)
+    {
+        _prototype.Resolve(entity.Comp.Size, out var itemSize);
+        return itemSize?.Weight ?? FallbackItemWeight;
     }
 }

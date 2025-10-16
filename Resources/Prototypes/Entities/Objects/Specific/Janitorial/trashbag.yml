@@ -18,7 +18,6 @@
       collection: trashBagRustle
     whitelist:
       tags:
-        - Cartridge
         - Trash
   - type: QuickPickup
   - type: AreaPickup
