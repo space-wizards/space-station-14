@@ -5,8 +5,8 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.GPS.Components;
 
 /// <summary>
-/// This component add coordinate displaying behavior to its owning entity. Specifically, the entity can be examined to
-/// show its coordinates, or it can be held in and and its title viewed to see the coordinates quickly. This component
+/// This component adds coordinate displaying behavior to its owning entity. Specifically, the entity can be examined to
+/// show its coordinates, or it can be held in hand and its title viewed to see the coordinates quickly. This component
 /// supports various <see cref="HandheldGpsMode"/>s, which change exactly how its displayed coordinates are calculated
 /// and what they're considered relative to.
 /// </summary>
