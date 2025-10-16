@@ -34,6 +34,8 @@ public sealed class LockSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
 
+    private readonly LocId _defaultDenyReason = "lock-comp-has-user-access-fail";
+
     /// <inheritdoc />
     public override void Initialize()
     {
@@ -88,8 +90,7 @@ public sealed class LockSystem : EntitySystem
     {
         if (args.Handled)
             return;
-
-        // Only attempt an unlock by default on Activate
+        
         if (lockComp.Locked && lockComp.UnlockInHand)
         {
             args.Handled = true;
@@ -143,7 +144,7 @@ public sealed class LockSystem : EntitySystem
         if (!CanToggleLock(uid, user, quiet: false))
             return false;
 
-        if (lockComp.UseAccess && !HasUserAccess(uid, user, false, lockComp.CheckedLocks, lockComp.CheckForAnyReaders))
+        if (lockComp.UseAccess && !HasUserAccess(uid, user, false))
             return false;
 
         if (!skipDoAfter && lockComp.LockTime != TimeSpan.Zero)
@@ -242,7 +243,7 @@ public sealed class LockSystem : EntitySystem
         if (!CanToggleLock(uid, user, quiet: false))
             return false;
 
-        if (lockComp.UseAccess && !HasUserAccess(uid, user, false, lockComp.CheckedLocks, lockComp.CheckForAnyReaders))
+        if (lockComp.UseAccess && !HasUserAccess(uid, user, false))
             return false;
 
         if (!skipDoAfter && lockComp.UnlockTime != TimeSpan.Zero)
@@ -318,17 +319,16 @@ public sealed class LockSystem : EntitySystem
     /// <param name="ent">The entity we check for locks.</param>
     /// <param name="user">The user we check for access.</param>
     /// <param name="quiet">Whether to display a popup if user has no access.</param>
-    /// <param name="checkedLocks">What locks we're looking for, if null, all available locks will be used.</param>
-    /// <param name="checkForAny">Whether the user needs to access ANY of the readers, instead of all of them.</param>
     /// <returns>True if the user has access, otherwise False.</returns>
     [PublicAPI]
-    public bool HasUserAccess(Entity<LockComponent?> ent, EntityUid user, bool quiet = true, LockTypes? checkedReaders = null, bool checkForAny = false)
+    public bool HasUserAccess(Entity<LockComponent?> ent, EntityUid user, bool quiet = true)
     {
         // Entity literally has no lock. Congratulations.
         if (!Resolve(ent, ref ent.Comp, false))
             return true;
 
-        if (checkedReaders is null)
+        var checkedReaders = LockTypes.None;
+        if (ent.Comp.CheckedLocks is null)
         {
             var lockEv = new FindAvailableLocksEvent(user);
             RaiseLocalEvent(ent, ref lockEv);
@@ -339,18 +339,22 @@ public sealed class LockSystem : EntitySystem
         if (checkedReaders == LockTypes.None)
             return true;
 
-        var accessEv = new CheckUserHasLockAccessEvent(user, checkedReaders.Value);
+        var accessEv = new CheckUserHasLockAccessEvent(user, checkedReaders);
         RaiseLocalEvent(ent, ref accessEv);
 
         // If we check for any, as long as user has access to any of the locks we grant access.
-        if (accessEv.HasAccess != LockTypes.None && checkForAny)
+        if (accessEv.HasAccess != LockTypes.None && ent.Comp.CheckForAnyReaders)
             return true;
 
         if (accessEv.HasAccess == checkedReaders)
             return true;
 
         if (!quiet)
-            _sharedPopupSystem.PopupClient(Loc.GetString("lock-comp-has-user-access-fail"), ent, user);
+        {
+            var denyReason = accessEv.DenyReason ?? _defaultDenyReason;
+            _sharedPopupSystem.PopupClient(denyReason, ent, user);
+        }
+
         return false;
     }
 
@@ -533,7 +537,7 @@ public record struct FindAvailableLocksEvent(EntityUid User, LockTypes FoundRead
 /// <param name="FoundReaders">What readers we are attempting to verify access for.</param>
 /// <param name="HasAccess">Which readers the user has access to. This should not be set when raising the event.</param>
 [ByRefEvent]
-public record struct CheckUserHasLockAccessEvent(EntityUid User, LockTypes FoundReaders = LockTypes.None, LockTypes HasAccess = LockTypes.None);
+public record struct CheckUserHasLockAccessEvent(EntityUid User, LockTypes FoundReaders = LockTypes.None, LockTypes HasAccess = LockTypes.None, string? DenyReason = null);
 
 /// <summary>
 /// Enum of all readers a lock can be "locked" by.
