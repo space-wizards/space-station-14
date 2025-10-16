@@ -12,7 +12,6 @@ public sealed partial class TriggerSystem
     private void InitializeVoice()
     {
         SubscribeLocalEvent<TriggerOnVoiceComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<TriggerOnVoiceComponent, ComponentInit>(OnVoiceInit);
         SubscribeLocalEvent<TriggerOnVoiceComponent, ExaminedEvent>(OnVoiceExamine);
         SubscribeLocalEvent<TriggerOnVoiceComponent, ListenEvent>(OnListen);
         SubscribeLocalEvent<TriggerOnVoiceComponent, GetVerbsEvent<AlternativeVerb>>(OnVoiceGetAltVerbs);
@@ -20,17 +19,12 @@ public sealed partial class TriggerSystem
 
     private void OnMapInit(Entity<TriggerOnVoiceComponent> ent, ref MapInitEvent args)
     {
-        if (!string.IsNullOrEmpty(ent.Comp.DefaultKeyPhrase))
+        if (ent.Comp.DefaultKeyPhrase != null)
         {
             ent.Comp.KeyPhrase = Loc.GetString(ent.Comp.DefaultKeyPhrase);
             Dirty(ent);
         }
 
-        UpdateListening(ent);
-    }
-
-    private void OnVoiceInit(Entity<TriggerOnVoiceComponent> ent, ref ComponentInit args)
-    {
         UpdateListening(ent);
     }
 
@@ -103,7 +97,7 @@ public sealed partial class TriggerSystem
             Priority = 1
         });
 
-        if (!string.IsNullOrEmpty(ent.Comp.DefaultKeyPhrase)
+        if (ent.Comp.DefaultKeyPhrase != null
             && ent.Comp.KeyPhrase != Loc.GetString(ent.Comp.DefaultKeyPhrase))
         {
             args.Verbs.Add(new AlternativeVerb
@@ -200,16 +194,15 @@ public sealed partial class TriggerSystem
     /// <summary>
     /// Resets the current key phrase to default.
     /// </summary>
-    public void SetToDefault(Entity<TriggerOnVoiceComponent> ent, EntityUid user)
+    public void SetToDefault(Entity<TriggerOnVoiceComponent> ent, EntityUid? user = null)
     {
-        if (string.IsNullOrEmpty(ent.Comp.DefaultKeyPhrase))
+        if (ent.Comp.DefaultKeyPhrase == null)
             return;
 
         ent.Comp.KeyPhrase = Loc.GetString(ent.Comp.DefaultKeyPhrase);
         ent.Comp.IsRecording = false;
         Dirty(ent);
-
-        EnsureComp<ActiveListenerComponent>(ent).Range = ent.Comp.ListenRange;
+        UpdateListening(ent);
 
         _adminLogger.Add(LogType.Trigger, LogImpact.Low,
             $"A voice-trigger on {ToPrettyString(ent):entity} has been reset to default keyphrase: '{ent.Comp.KeyPhrase}'. User: {ToPrettyString(user):speaker}");
