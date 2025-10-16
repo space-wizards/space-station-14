@@ -3,8 +3,7 @@ using Robust.Shared.Serialization.Manager;
 namespace Content.Server.Botany.Components;
 
 [RegisterComponent]
-[DataDefinition]
-public sealed partial class PlantGrowthComponent : Component
+public abstract partial class PlantGrowthComponent : Component
 {
     /// <summary>
     /// Creates a copy of this component.
