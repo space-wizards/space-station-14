@@ -90,7 +90,7 @@ public sealed class LockSystem : EntitySystem
     {
         if (args.Handled)
             return;
-        
+
         if (lockComp.Locked && lockComp.UnlockInHand)
         {
             args.Handled = true;
