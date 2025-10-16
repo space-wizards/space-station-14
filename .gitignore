@@ -306,9 +306,3 @@ Resources/MapImages
 
 # Direnv stuff
 .direnv/
-
-# Vim swap files
-*.sw?
-
-# Git merge stuff
-*.orig
