@@ -5,8 +5,8 @@ uniform highp float visibility; // number between -1 and 1
 uniform highp float shimmer_frequency;
 uniform mediump vec2 reference;
 
-const mediump float time_scale = 1.0/4.0;
-const mediump float distance_scale = 1.0/8.0;
+const mediump float time_scale = 0.25;
+const mediump float distance_scale = 0.125;
 
 void fragment() {
 
