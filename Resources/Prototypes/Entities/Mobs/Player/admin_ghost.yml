@@ -99,7 +99,6 @@
     stealthy: true
   - type: Stripping
   - type: SolutionScanner
-  - type: IgnoreUIRange
   - type: ShowAntagIcons
   - type: ShowContrabandDetails
   - type: Inventory
