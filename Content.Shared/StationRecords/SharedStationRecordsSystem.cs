@@ -53,7 +53,7 @@ public abstract class SharedStationRecordsSystem : EntitySystem
     /// <param name="records">Station record component.</param>
     /// <typeparam name="T">Type to get from the record set.</typeparam>
     /// <returns>True if the record was obtained, false otherwise. Always false on client.</returns>
-    public bool TryGetRecord<T>(StationRecordKey key, [NotNullWhen(true)] out T? entry, StationRecordsComponent? records = null)
+    public bool TryGetRecord<T>(StationRecordKey key, [NotNullWhen(true)] out T? entry, StationRecordsComponent? records = null) where T : StationRecord
     {
         entry = default;
 
