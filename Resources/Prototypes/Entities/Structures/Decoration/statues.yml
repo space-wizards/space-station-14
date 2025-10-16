@@ -43,10 +43,10 @@
     node: bananiumStatue
 
 - type: entity
-  id: StatueIronsandSmall
   parent: BaseStructure
+  id: StatueIronsandSmall
   name: ironsand small statue
-  description: A mysterious statue found in a desert of iron sand
+  description: A mysterious statue found in a desert of iron sand.
   components:
   - type: Sprite
     noRot: true
@@ -55,10 +55,10 @@
     drawdepth: Mobs
 
 - type: entity
-  id: StatueIronsandSmall2
   parent: BaseStructure
+  id: StatueIronsandSmall2
   name: ironsand small statue
-  description: A mysterious statue found in a desert of iron sand
+  description: A mysterious statue found in a desert of iron sand.
   components:
   - type: Sprite
     noRot: true
@@ -67,10 +67,10 @@
     drawdepth: Mobs
 
 - type: entity
-  id: StatueIronsandTall
   parent: BaseStructure
+  id: StatueIronsandTall
   name: ironsand tall statue
-  description: A mysterious statue found in a desert of iron sand
+  description: A mysterious statue found in a desert of iron sand.
   components:
   - type: Sprite
     noRot: true
@@ -80,10 +80,10 @@
     offset: "0.0,0.5"
 
 - type: entity
-  id: StatueIronsandTall2
   parent: BaseStructure
+  id: StatueIronsandTall2
   name: ironsand tall statue
-  description: A mysterious statue found in a desert of iron sand
+  description: A mysterious statue found in a desert of iron sand.
   components:
   - type: Sprite
     noRot: true
