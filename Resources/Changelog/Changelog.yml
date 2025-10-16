@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Cryo sleep units no longer pin players against walls.
-    type: Fix
-  id: 8610
-  time: '2025-06-03T18:13:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37979
 - author: ScarKy0
   changes:
   - message: Increased the health of uranium windows, making them a reasonable upgrade
@@ -3932,3 +3925,11 @@
   id: 9111
   time: '2025-10-16T17:03:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39210
+- author: MilenVolf
+  changes:
+  - message: Go go hat's activation phrase can be reset to the default without having
+      to record it manually to reset the phrase.
+    type: Tweak
+  id: 9112
+  time: '2025-10-16T18:47:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35636
