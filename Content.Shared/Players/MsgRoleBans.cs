@@ -11,24 +11,40 @@ public sealed class MsgRoleBans : NetMessage
 {
     public override MsgGroups MsgGroup => MsgGroups.EntityEvent;
 
-    public List<string> Bans = new();
+    public List<string> JobBans = new();
+    public List<string> AntagBans = new();
 
     public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
     {
-        var count = buffer.ReadVariableInt32();
-        Bans.EnsureCapacity(count);
+        var jobCount = buffer.ReadVariableInt32();
+        JobBans.EnsureCapacity(jobCount);
 
-        for (var i = 0; i < count; i++)
+        for (var i = 0; i < jobCount; i++)
         {
-            Bans.Add(buffer.ReadString());
+            JobBans.Add(buffer.ReadString());
+        }
+
+        var antagCount = buffer.ReadVariableInt32();
+        AntagBans.EnsureCapacity(antagCount);
+
+        for (var i = 0; i < antagCount; i++)
+        {
+            AntagBans.Add(buffer.ReadString());
         }
     }
 
     public override void WriteToBuffer(NetOutgoingMessage buffer, IRobustSerializer serializer)
     {
-        buffer.WriteVariableInt32(Bans.Count);
+        buffer.WriteVariableInt32(JobBans.Count);
 
-        foreach (var ban in Bans)
+        foreach (var ban in JobBans)
+        {
+            buffer.Write(ban);
+        }
+
+        buffer.WriteVariableInt32(AntagBans.Count);
+
+        foreach (var ban in AntagBans)
         {
             buffer.Write(ban);
         }
