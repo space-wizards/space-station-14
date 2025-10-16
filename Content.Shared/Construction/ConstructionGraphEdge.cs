@@ -9,7 +9,7 @@ namespace Content.Shared.Construction
         [DataField("steps")]
         private ConstructionGraphStep[] _steps = Array.Empty<ConstructionGraphStep>();
 
-        [DataField("conditions", serverOnly: true)]
+        [DataField("conditions")]
         private IGraphCondition[] _conditions = Array.Empty<IGraphCondition>();
 
         [DataField("completed", serverOnly: true)]
