@@ -107,7 +107,7 @@ public sealed class PowerSensorSystem : EntitySystem
         if (!TryComp(xform.GridUid, out MapGridComponent? grid))
             return;
 
-        var cables = deviceNode.GetReachableNodes(xform, _nodeQuery, _xformQuery, grid, EntityManager);
+        var cables = deviceNode.GetReachableNodes((uid, xform), _nodeQuery, _xformQuery, (xform.GridUid.Value, grid), EntityManager);
         foreach (var node in cables)
         {
             if (node.NodeGroup == null)
