@@ -7,12 +7,15 @@ using Content.Shared.ParcelWrap.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.ParcelWrap.Systems;
 
 // This part handles Wrapped Parcels
 public sealed partial class ParcelWrappingSystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
+
     private void InitializeWrappedParcel()
     {
         SubscribeLocalEvent<WrappedParcelComponent, ComponentInit>(OnComponentInit);
@@ -34,6 +37,11 @@ public sealed partial class ParcelWrappingSystem
         ref EntInsertedIntoContainerMessage args
     )
     {
+        // If the entity was inserted because of a server state application, assume that the item's state is applied
+        // correctly as well and that deriving them from the contents is unneeded.
+        if (_timing.ApplyingState)
+            return;
+
         if (args.Container != entity.Comp.Contents ||
             !TryComp<ItemComponent>(entity, out var parcelItemComp))
             return;
@@ -138,11 +146,13 @@ public sealed partial class ParcelWrappingSystem
 
         if (containedEntity is { } parcelContents)
         {
-            _container.Remove(parcelContents,
+            _container.Remove(
+                parcelContents,
                 parcel.Comp.Contents,
                 true,
                 true,
-                parcelTransform.Coordinates);
+                parcelTransform.Coordinates
+            );
 
             // If the parcel is in a container, try to put the unwrapped contents in that container.
             if (_container.TryGetContainingContainer((parcel, null, null), out var outerContainer))

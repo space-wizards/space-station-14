@@ -19,6 +19,6 @@ public sealed partial class ParcelWrapOverrideComponent : Component
     /// <summary>
     /// How long it takes to use this to wrap something.
     /// </summary>
-    [DataField(required: true), AutoNetworkedField]
-    public TimeSpan WrapDelay = TimeSpan.Zero;
+    [DataField, AutoNetworkedField]
+    public TimeSpan? WrapDelay;
 }

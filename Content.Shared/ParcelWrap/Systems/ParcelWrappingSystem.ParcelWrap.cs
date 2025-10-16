@@ -89,8 +89,9 @@ public sealed partial class ParcelWrappingSystem
     {
         var duration = wrapper.Comp.WrapDelay;
 
-        if (TryComp<ParcelWrapOverrideComponent>(target, out var overrideComp))
-            duration = overrideComp.WrapDelay;
+        if (TryComp<ParcelWrapOverrideComponent>(target, out var overrideComp) &&
+            overrideComp.WrapDelay is { } wrapDelayOverride)
+            duration = wrapDelayOverride;
 
         // In case the target is a player inform them with a popup.
         if (target == user)
@@ -100,7 +101,10 @@ public sealed partial class ParcelWrappingSystem
         }
         else
         {
-            var othersMsg = Loc.GetString("parcel-wrap-popup-being-wrapped", ("user", Identity.Entity(user, EntityManager)));
+            var othersMsg = Loc.GetString(
+                "parcel-wrap-popup-being-wrapped",
+                ("user", Identity.Entity(user, EntityManager))
+            );
             _popup.PopupEntity(othersMsg, target, target, PopupType.MediumCaution);
         }
 
@@ -168,8 +172,8 @@ public sealed partial class ParcelWrappingSystem
     )
     {
         // If an override is defined on the target, use that.
-        if (TryComp<ParcelWrapOverrideComponent>(target, out var overrideComp))
-            return overrideComp.ParcelPrototype;
+        if (TryComp(target, out target.Comp))
+            return target.Comp.ParcelPrototype;
 
         return wrapper.Comp.ParcelPrototype;
     }
