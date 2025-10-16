@@ -29,7 +29,7 @@ public sealed partial class HailerRadialMenu : RadialMenu
         {
             var line = lines[i];
             var tooltip = line.Description;
-            var button = new RadialMenuTextureButton()
+            var button = new RadialMenuButton()
             {
                 StyleClasses = { "RadialMenuButton" },
                 SetSize = new Vector2(64f, 64f),
