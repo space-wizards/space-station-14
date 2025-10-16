@@ -109,11 +109,10 @@ hailer-arrest-high-3 = You are about five seconds from being a training video!!
 hailer-emag-0 = Glory to cybersun!!
 hailer-emag-1 = Pick up that can!!
 hailer-emag-2 = You're a disease... and I'm the cure!!
-hailer-emag-3 = ERR - NT_LINE_EE21_COMPL- ERROR!!
-hailer-emag-4 = Viva la revolution!!
-hailer-emag-5 = Whiskey. Echo. Whiskey!!
-hailer-emag-6 = Mrrow. Meow. Mrrrp!!
-hailer-emag-7 = FUCKYOUFUCKYOUFUCKYOUFUCKYOUFUCKYOUFUCKYOUFU-!!
+hailer-emag-3 = Viva la revolution!!
+hailer-emag-4 = Whiskey. Echo. Whiskey!!
+hailer-emag-5 = Mrrow. Meow. Mrrrp!!
+hailer-emag-6 = FUCKYOUFUCKYOUFUCKYOUFUCKYOUFUCKYOUFUCKYOUFU-!!
 
 ## ERT ##
 
