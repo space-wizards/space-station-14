@@ -6,7 +6,6 @@ using Content.Shared.Popups;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Network;
 
 namespace Content.Shared.ParcelWrap.Systems;
 
