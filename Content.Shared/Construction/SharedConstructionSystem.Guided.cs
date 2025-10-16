@@ -51,11 +51,11 @@ namespace Content.Shared.Construction
                 if (component.TargetNode == null)
                 {
                     // Maybe check, but on the flip-side a better solution might be to not make it undeconstructible in the first place, no?
-                    Popup.PopupClient(Loc.GetString("deconstructible-verb-activate-no-target-text"), uid);
+                    Popup.PopupClient(Loc.GetString("deconstructible-verb-activate-no-target-text"), uid, uid);
                 }
                 else
                 {
-                    Popup.PopupClient(Loc.GetString("deconstructible-verb-activate-text"), args.User);
+                    Popup.PopupClient(Loc.GetString("deconstructible-verb-activate-text"), args.User, args.User);
                 }
             };
 
