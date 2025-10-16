@@ -19,7 +19,7 @@ public sealed class RefillSmartContainersSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-    
+
     public override void Initialize()
     {
         base.Initialize();

@@ -25,11 +25,11 @@ public sealed partial class SmartSolutionContainerComponent : Component
     /// Cached Solution for Performance Reasons.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    public Entity<SolutionComponent>? Solution;
+    public Entity<SolutionComponent>? Solution = null;
 
     /// <summary>
     /// Cached SolutionManager for Performance Reasons.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    public SolutionContainerManagerComponent? SolutionManager;
+    public SolutionContainerManagerComponent? SolutionManager = null;
 }
