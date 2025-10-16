@@ -1,9 +1,9 @@
 ﻿- type: entity
-  id: BaseCurtains
+  abstract: true
   parent: BaseStructure
+  id: BaseCurtains
   name: curtains
   description: Hides what others shouldn't see.
-  abstract: true
   placement:
     mode: SnapgridCenter
   components:
@@ -60,8 +60,8 @@
     arc: 360
 
 - type: entity
-  id: HospitalCurtains
   parent: BaseCurtains
+  id: HospitalCurtains
   suffix: Hospital
   description: Contains less than 1% mercury.
   components:
@@ -76,8 +76,8 @@
     node: Curtains
 
 - type: entity
-  id: HospitalCurtainsOpen
   parent: HospitalCurtains
+  id: HospitalCurtainsOpen
   suffix: Open, Hospital
   components:
   - type: Door
@@ -91,9 +91,9 @@
     canCollide: false
 
 - type: entity
-  id: CurtainsBlack
   parent: BaseCurtains
-  suffix: Fancy black
+  id: CurtainsBlack
+  name: fancy curtains (black)
   components:
   - type: Sprite
     snapCardinals: true
@@ -106,9 +106,9 @@
     node: CurtainsBlack
 
 - type: entity
-  id: CurtainsBlackOpen
   parent: CurtainsBlack
-  suffix: Open, Fancy black
+  id: CurtainsBlackOpen
+  suffix: Open
   components:
   - type: Door
     state: Open
@@ -121,9 +121,9 @@
     canCollide: false
 
 - type: entity
-  id: CurtainsBlue
   parent: BaseCurtains
-  suffix: Fancy blue
+  id: CurtainsBlue
+  name: fancy curtains (blue)
   components:
   - type: Sprite
     snapCardinals: true
@@ -136,9 +136,9 @@
     node: CurtainsBlue
 
 - type: entity
-  id: CurtainsBlueOpen
   parent: CurtainsBlue
-  suffix: Open, Fancy blue
+  id: CurtainsBlueOpen
+  suffix: Open
   components:
   - type: Door
     state: Open
@@ -151,9 +151,9 @@
     canCollide: false
 
 - type: entity
-  id: CurtainsCyan
   parent: BaseCurtains
-  suffix: Fancy cyan
+  id: CurtainsCyan
+  name: fancy curtains (cyan)
   components:
   - type: Sprite
     snapCardinals: true
@@ -166,9 +166,9 @@
     node: CurtainsCyan
 
 - type: entity
-  id: CurtainsCyanOpen
   parent: CurtainsCyan
-  suffix: Open, Fancy cyan
+  id: CurtainsCyanOpen
+  suffix: Open
   components:
   - type: Door
     state: Open
@@ -181,9 +181,9 @@
     canCollide: false
 
 - type: entity
-  id: CurtainsGreen
   parent: BaseCurtains
-  suffix: Fancy green
+  id: CurtainsGreen
+  name: fancy curtains (green)
   components:
   - type: Sprite
     snapCardinals: true
@@ -196,9 +196,9 @@
     node: CurtainsGreen
 
 - type: entity
-  id: CurtainsGreenOpen
   parent: CurtainsGreen
-  suffix: Open, Fancy green
+  id: CurtainsGreenOpen
+  suffix: Open
   components:
   - type: Door
     state: Open
@@ -211,9 +211,9 @@
     canCollide: false
 
 - type: entity
-  id: CurtainsOrange
   parent: BaseCurtains
-  suffix: Fancy orange
+  id: CurtainsOrange
+  name: fancy curtains (orange)
   components:
   - type: Sprite
     snapCardinals: true
@@ -226,9 +226,9 @@
     node: CurtainsOrange
 
 - type: entity
-  id: CurtainsOrangeOpen
   parent: CurtainsOrange
-  suffix: Open, Fancy orange
+  id: CurtainsOrangeOpen
+  suffix: Open
   components:
   - type: Door
     state: Open
@@ -241,9 +241,9 @@
     canCollide: false
 
 - type: entity
-  id: CurtainsPink
   parent: BaseCurtains
-  suffix: Fancy pink
+  id: CurtainsPink
+  name: fancy curtains (pink)
   components:
   - type: Sprite
     snapCardinals: true
@@ -256,9 +256,9 @@
     node: CurtainsPink
 
 - type: entity
-  id: CurtainsPinkOpen
   parent: CurtainsPink
-  suffix: Open, Fancy pink
+  id: CurtainsPinkOpen
+  suffix: Open
   components:
   - type: Door
     state: Open
@@ -271,9 +271,9 @@
     canCollide: false
 
 - type: entity
-  id: CurtainsPurple
   parent: BaseCurtains
-  suffix: Fancy purple
+  id: CurtainsPurple
+  name: fancy curtains (purple)
   components:
   - type: Sprite
     snapCardinals: true
@@ -286,9 +286,9 @@
     node: CurtainsPurple
 
 - type: entity
-  id: CurtainsPurpleOpen
   parent: CurtainsPurple
-  suffix: Open, Fancy purple
+  id: CurtainsPurpleOpen
+  suffix: Open
   components:
   - type: Door
     state: Open
@@ -301,9 +301,9 @@
     canCollide: false
 
 - type: entity
-  id: CurtainsRed
   parent: BaseCurtains
-  suffix: Fancy red
+  id: CurtainsRed
+  name: fancy curtains (red)
   components:
   - type: Sprite
     snapCardinals: true
@@ -316,9 +316,9 @@
     node: CurtainsRed
 
 - type: entity
-  id: CurtainsRedOpen
   parent: CurtainsRed
-  suffix: Open, Fancy red
+  id: CurtainsRedOpen
+  suffix: Open
   components:
   - type: Door
     state: Open
@@ -331,9 +331,9 @@
     canCollide: false
 
 - type: entity
-  id: CurtainsWhite
   parent: BaseCurtains
-  suffix: Fancy white
+  id: CurtainsWhite
+  name: fancy curtains (white)
   components:
   - type: Sprite
     snapCardinals: true
@@ -346,9 +346,9 @@
     node: CurtainsWhite
 
 - type: entity
-  id: CurtainsWhiteOpen
   parent: CurtainsWhite
-  suffix: Open, Fancy white
+  id: CurtainsWhiteOpen
+  suffix: Open
   components:
   - type: Door
     state: Open
