@@ -17,12 +17,11 @@ public sealed partial class PickNearbyInjectableOperator : HTNOperator
     private MedibotSystem _medibot = default!;
     private PathfindingSystem _pathfinding = default!;
 
-    private EntityQuery<DamageableComponent> damageQuery = default!;
-    private EntityQuery<InjectableSolutionComponent> injectQuery = default!;
-    private EntityQuery<NPCRecentlyInjectedComponent> recentlyInjected = default!;
-    private EntityQuery<MobStateComponent> mobState = default!;
-    private EntityQuery<EmaggedComponent> emaggedQuery = default!;
-    private EntityQuery<MedibotComponent> medibotQuery = default!;
+    private EntityQuery<DamageableComponent> _damageQuery = default!;
+    private EntityQuery<InjectableSolutionComponent> _injectQuery = default!;
+    private EntityQuery<NPCRecentlyInjectedComponent> _recentlyInjected = default!;
+    private EntityQuery<MobStateComponent> _mobState = default!;
+    private EntityQuery<EmaggedComponent> _emaggedQuery = default!;
 
     [DataField("rangeKey")] public string RangeKey = NPCBlackboard.MedibotInjectRange;
 
@@ -44,11 +43,11 @@ public sealed partial class PickNearbyInjectableOperator : HTNOperator
         _medibot = sysManager.GetEntitySystem<MedibotSystem>();
         _pathfinding = sysManager.GetEntitySystem<PathfindingSystem>();
 
-        damageQuery = _entManager.GetEntityQuery<DamageableComponent>();
-        injectQuery = _entManager.GetEntityQuery<InjectableSolutionComponent>();
-        recentlyInjected = _entManager.GetEntityQuery<NPCRecentlyInjectedComponent>();
-        mobState = _entManager.GetEntityQuery<MobStateComponent>();
-        emaggedQuery = _entManager.GetEntityQuery<EmaggedComponent>();
+        _damageQuery = _entManager.GetEntityQuery<DamageableComponent>();
+        _injectQuery = _entManager.GetEntityQuery<InjectableSolutionComponent>();
+        _recentlyInjected = _entManager.GetEntityQuery<NPCRecentlyInjectedComponent>();
+        _mobState = _entManager.GetEntityQuery<MobStateComponent>();
+        _emaggedQuery = _entManager.GetEntityQuery<EmaggedComponent>();
     }
 
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
@@ -68,10 +67,10 @@ public sealed partial class PickNearbyInjectableOperator : HTNOperator
 
         foreach (var (entity, _) in patients)
         {
-            if (mobState.TryGetComponent(entity, out var state) &&
-                injectQuery.HasComponent(entity) &&
-                damageQuery.TryGetComponent(entity, out var damage) &&
-                !recentlyInjected.HasComponent(entity))
+            if (_mobState.TryGetComponent(entity, out var state) &&
+                _injectQuery.HasComponent(entity) &&
+                _damageQuery.TryGetComponent(entity, out var damage) &&
+                !_recentlyInjected.HasComponent(entity))
             {
                 // no treating dead bodies
                 if (!_medibot.TryGetTreatment(medibot, state.CurrentState, out var treatment))
@@ -80,7 +79,7 @@ public sealed partial class PickNearbyInjectableOperator : HTNOperator
                 // Only go towards a target if the bot can actually help them or if the medibot is emagged
                 // note: this and the actual injecting don't check for specific damage types so for example,
                 // radiation damage will trigger injection but the tricordrazine won't heal it.
-                if (!emaggedQuery.HasComponent(entity) && !treatment.IsValid(damage.TotalDamage))
+                if (!_emaggedQuery.HasComponent(entity) && !treatment.IsValid(damage.TotalDamage))
                     continue;
 
                 //Needed to make sure it doesn't sometimes stop right outside it's interaction range

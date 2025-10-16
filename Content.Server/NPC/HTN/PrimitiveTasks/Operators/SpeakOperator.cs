@@ -48,9 +48,8 @@ public sealed partial class SpeakOperator : HTNOperator
     {
         if (Cooldown != TimeSpan.Zero && CooldownID != string.Empty)
         {
-            if (blackboard.TryGetValue<TimeSpan>(CooldownID, out var nextSpeechTime, _entMan))
-                if (_gameTiming.CurTime < nextSpeechTime)
-                    return base.Update(blackboard, frameTime);
+            if (blackboard.TryGetValue<TimeSpan>(CooldownID, out var nextSpeechTime, _entMan) && _gameTiming.CurTime < nextSpeechTime)
+                return base.Update(blackboard, frameTime);
 
             blackboard.SetValue(CooldownID, _gameTiming.CurTime + Cooldown);
         }

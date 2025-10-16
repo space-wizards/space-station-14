@@ -18,11 +18,6 @@ public sealed partial class EnsureComponentOperator : HTNOperator
     [DataField("components")]
     public ComponentRegistry Components = new();
 
-    public override void Initialize(IEntitySystemManager sysManager)
-    {
-        base.Initialize(sysManager);
-    }
-
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {
         if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target, _entMan))
