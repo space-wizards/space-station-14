@@ -312,6 +312,7 @@ public abstract class SharedHailerSystem : EntitySystem
     private void UseVerbSwitchAggression(Entity<HailerComponent> ent, EntityUid userActed)
     {
         ent.Comp.TimeVerbReady = _gameTiming.CurTime + ent.Comp.VerbCooldown;
+        Dirty(ent);
 
         if (!_access.IsAllowed(userActed, ent.Owner))
         {
