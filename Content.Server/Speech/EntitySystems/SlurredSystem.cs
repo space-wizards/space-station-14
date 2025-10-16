@@ -23,11 +23,12 @@ public sealed class SlurredSystem : SharedSlurredSystem
     }
 
     /// <summary>
-    ///     Slur chance scales with "drunkeness", which is just measured using the time remaining on the status effect.
+    ///     Slur chance scales with the time remaining on any status effect with the SlurredAccentComponent.
+    ///     Typically, this is equivalent to "drunkenness" on the DrunkStatusEffect
     /// </summary>
     private float GetProbabilityScale(EntityUid uid)
     {
-        if (!_status.TryGetMaxTime<DrunkStatusEffectComponent>(uid, out var time))
+        if (!_status.TryGetMaxTime<SlurredAccentComponent>(uid, out var time))
             return 0;
 
         // This is a magic number. Why this value? No clue it was made 3 years before I refactored this.
