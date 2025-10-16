@@ -333,15 +333,15 @@
   id: BookAILawCompendium
   parent: BaseGuidebook
   name: My, Robot
-  description: An dictionary of all the ways silicons can go wrong. Written by Isaac Crewsimov
+  description: A dictionary of all the ways silicons can go wrong. By Isaac Crewsimov.
   components:
   - type: Sprite
     layers:
     - state: paper
     - state: cover_strong
-      color: "#444444"
+      color: "#A8162B"
     - state: icon_borg
-      color: "#E5E5E5"
+      color: "#916161"
     - state: detail_rivets
       color: "#DDDDDD"
   - type: GuideHelp
