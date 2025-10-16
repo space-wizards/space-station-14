@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Chemistry.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(RefillSmartContainersSystem))]
 public sealed partial class SmartSolutionContainerComponent : Component
 {
     /// <summary>
