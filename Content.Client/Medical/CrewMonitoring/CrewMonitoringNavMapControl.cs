@@ -66,10 +66,10 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
                 continue;
 
             if (!LocalizedNames.TryGetValue(netEntity, out var name))
-                name = Loc.GetString("crew-monitoring-user-interface-identity-unknown");
+                name = Loc.GetString("navmap-unknown-entity");
 
             var location = Loc.GetString(
-                "crew-monitoring-user-interface-location-coordinates",
+                "navmap-location",
                 ("x", (int)blip.Coordinates.X),
                 ("y", (int)blip.Coordinates.Y)
             );
