@@ -1,10 +1,15 @@
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Damage;
+using Content.Shared.DoAfter;
+using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.NPC.Components;
+using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Serialization;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Silicons.Bots;
@@ -15,62 +20,31 @@ namespace Content.Shared.Silicons.Bots;
 public sealed class MedibotSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-
-    private EntityQuery<InjectorComponent> _injectorQuery = default!;
-    private EntityQuery<MobStateComponent> _mobStateQuery = default!;
-    private EntityQuery<MedibotComponent> _medibotQuery = default!;
+    [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<EmaggableMedibotComponent, GotEmaggedEvent>(OnEmagged);
-        SubscribeLocalEvent<MedibotComponent, UserActivateInWorldEvent>(OnActivateInWorld);
-        SubscribeLocalEvent<MedibotComponent, InjectorDoAfterEvent>(OnDoAfter);
-
-        _injectorQuery = GetEntityQuery<InjectorComponent>();
-        _mobStateQuery = GetEntityQuery<MobStateComponent>();
-        _medibotQuery = GetEntityQuery<MedibotComponent>();
-    }
-
-    private void OnDoAfter(Entity<MedibotComponent> ent, ref InjectorDoAfterEvent args)
-    {
-        if (!_solutionContainer.TryGetSolution(ent.Owner, "injector", out var solution))
-            return;
-
-        // Empty the "syringe" after a doafter, to stop people from duping trico and inaprov
-        _solutionContainer.RemoveAllSolution(solution.Value);
-    }
-
-    private void OnActivateInWorld(Entity<MedibotComponent> ent, ref UserActivateInWorldEvent args)
-    {
-        if (!TryComp(args.Target, out TransformComponent? xform))
-            return;
-
-        if(!TryGetTreatment(ent, args.Target, out var treatment))
-            return;
-
-        if (!_injectorQuery.TryComp(ent.Owner, out var injector))
-            return;
-
-        if (!_solutionContainer.TryGetSolution(ent.Owner, "injector", out var solution))
-            return;
-
-        _solutionContainer.TryAddReagent(solution.Value, treatment.Reagent, treatment.Quantity, out var quantityAdded);
-        injector.ToggleState = InjectorToggleMode.Inject;
-
-        _interactionSystem.InteractDoAfter(ent, ent, args.Target, xform.Coordinates, true);
-        args.Handled = true;
+        SubscribeLocalEvent<MedibotComponent, UserActivateInWorldEvent>(OnInteract);
+        SubscribeLocalEvent<MedibotComponent, MedibotInjectDoAfterEvent>(OnInject);
     }
 
     private void OnEmagged(EntityUid uid, EmaggableMedibotComponent comp, ref GotEmaggedEvent args)
     {
-        if (!TryComp<MedibotComponent>(uid, out var medibot))
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
             return;
 
-        _audio.PlayPredicted(comp.SparkSound, uid, args.UserUid);
+        if (_emag.CheckFlag(uid, EmagType.Interaction))
+            return;
+
+        if (!TryComp<MedibotComponent>(uid, out var medibot))
+            return;
 
         foreach (var (state, treatment) in comp.Replacements)
         {
@@ -80,20 +54,23 @@ public sealed class MedibotSystem : EntitySystem
         args.Handled = true;
     }
 
-    public bool TryGetTreatment(EntityUid ent, EntityUid target, [NotNullWhen(true)] out MedibotTreatment? treatment)
+    private void OnInteract(Entity<MedibotComponent> medibot, ref UserActivateInWorldEvent args)
     {
-        treatment = null;
+        if (!CheckInjectable(medibot!, args.Target, true)) return;
 
-        if (!_mobStateQuery.TryComp(target, out var MobState))
-            return false;
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, 2f, new MedibotInjectDoAfterEvent(), args.User, args.Target)
+        {
+            BlockDuplicate = true,
+            BreakOnMove = true,
+        });
+    }
 
-        if (!_medibotQuery.TryComp(ent, out var medibot))
-            return false;
+    private void OnInject(EntityUid uid, MedibotComponent comp, ref MedibotInjectDoAfterEvent args)
+    {
+        if (args.Cancelled) return;
 
-        if(!TryGetTreatment(medibot, MobState.CurrentState, out treatment))
-            return false;
-
-        return true;
+        if (args.Target is { } target)
+            TryInject(uid, target);
     }
 
     /// <summary>
@@ -106,4 +83,66 @@ public sealed class MedibotSystem : EntitySystem
     {
         return comp.Treatments.TryGetValue(state, out treatment);
     }
+
+    /// <summary>
+    /// Checks if the target can be injected.
+    /// </summary>
+    public bool CheckInjectable(Entity<MedibotComponent?> medibot, EntityUid target, bool manual = false)
+    {
+        if (!Resolve(medibot, ref medibot.Comp, false)) return false;
+
+        if (HasComp<NPCRecentlyInjectedComponent>(target))
+        {
+            _popup.PopupClient(Loc.GetString("medibot-recently-injected"), medibot, medibot);
+            return false;
+        }
+
+        if (!TryComp<MobStateComponent>(target, out var mobState)) return false;
+        if (!TryComp<DamageableComponent>(target, out var damageable)) return false;
+        if (!_solutionContainer.TryGetInjectableSolution(target, out _, out _)) return false;
+
+        if (mobState.CurrentState != MobState.Alive && mobState.CurrentState != MobState.Critical)
+        {
+            _popup.PopupClient(Loc.GetString("medibot-target-dead"), medibot, medibot);
+            return false;
+        }
+
+        var total = damageable.TotalDamage;
+        if (total == 0 && !HasComp<EmaggedComponent>(medibot))
+        {
+            _popup.PopupClient(Loc.GetString("medibot-target-healthy"), medibot, medibot);
+            return false;
+        }
+
+        if (!TryGetTreatment(medibot.Comp, mobState.CurrentState, out var treatment) || !treatment.IsValid(total) && !manual) return false;
+
+        return true;
+    }
+
+    /// <summary>
+    /// Tries to inject the target.
+    /// </summary>
+    public bool TryInject(Entity<MedibotComponent?> medibot, EntityUid target)
+    {
+        if (!Resolve(medibot, ref medibot.Comp, false)) return false;
+
+        if (!_interaction.InRangeUnobstructed(medibot.Owner, target)) return false;
+
+        if (!TryComp<MobStateComponent>(target, out var mobState)) return false;
+        if (!TryGetTreatment(medibot.Comp, mobState.CurrentState, out var treatment)) return false;
+        if (!_solutionContainer.TryGetInjectableSolution(target, out var injectable, out _)) return false;
+
+        EnsureComp<NPCRecentlyInjectedComponent>(target);
+        _solutionContainer.TryAddReagent(injectable.Value, treatment.Reagent, treatment.Quantity, out _);
+
+        _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
+        _popup.PopupClient(Loc.GetString("medibot-target-injected"), medibot, medibot);
+
+        _audio.PlayPredicted(medibot.Comp.InjectSound, medibot, medibot);
+
+        return true;
+    }
 }
+
+[Serializable, NetSerializable]
+public sealed partial class MedibotInjectDoAfterEvent : SimpleDoAfterEvent { }

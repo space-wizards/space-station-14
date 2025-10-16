@@ -22,6 +22,12 @@ public sealed partial class ChamberMagazineAmmoProviderComponent : MagazineAmmoP
     [ViewVariables(VVAccess.ReadWrite), DataField("autoCycle"), AutoNetworkedField]
     public bool AutoCycle = true;
 
+    /// <summary>
+    /// Can the gun be racked, which opens and then instantly closes the bolt to cycle a round.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("canRack"), AutoNetworkedField]
+    public bool CanRack = true;
+
     [ViewVariables(VVAccess.ReadWrite), DataField("soundBoltClosed"), AutoNetworkedField]
     public SoundSpecifier? BoltClosedSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg");
 

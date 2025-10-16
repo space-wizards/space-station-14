@@ -42,6 +42,20 @@
     damage:
       types:
         Piercing: 3
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          vertices:
+          - -0.3,0.1
+          - -0.1,0.3
+          - 0.3,-0.1
+          - 0.1,-0.3
+        density: 20 # derived from base_item
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
 
 #TODO: I want the luxury pen to write a cool font like Merriweather in the future.
 
@@ -90,6 +104,8 @@
     state: overpriced_pen
   - type: Item
     heldPrefix: overpriced_pen
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   name: CentComm pen
@@ -119,3 +135,17 @@
   components:
   - type: Sprite
     state: pen_hop
+
+- type: entity
+  name: wizard's magical pen
+  parent: [ PenEmbeddable, BaseMagicalContraband ]
+  id: PenWiz
+  description: A luxurious fountain pen. Seems to have a magical crystal eraser.
+  components:
+  - type: Sprite
+    state: pen_wizard
+  - type: Tag
+    tags:
+    - WriteIgnoreStamps
+    - Write
+    - Pen

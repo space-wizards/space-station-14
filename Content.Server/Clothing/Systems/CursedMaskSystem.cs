@@ -51,7 +51,8 @@ public sealed class CursedMaskSystem : SharedCursedMaskSystem
         }
 
         var npcFaction = EnsureComp<NpcFactionMemberComponent>(wearer);
-        ent.Comp.OldFactions = npcFaction.Factions;
+        ent.Comp.OldFactions.Clear();
+        ent.Comp.OldFactions.UnionWith(npcFaction.Factions);
         _npcFaction.ClearFactions((wearer, npcFaction), false);
         _npcFaction.AddFaction((wearer, npcFaction), ent.Comp.CursedMaskFaction);
 
@@ -81,7 +82,7 @@ public sealed class CursedMaskSystem : SharedCursedMaskSystem
             {
                 _mind.TransferTo(ent.Comp.StolenMind.Value, args.Wearer);
                 _adminLog.Add(LogType.Action,
-                    LogImpact.Extreme,
+                    LogImpact.Medium,
                     $"{ToPrettyString(args.Wearer):player} was restored to their body after the removal of {ToPrettyString(ent):entity}.");
                 ent.Comp.StolenMind = null;
             }

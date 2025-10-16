@@ -73,10 +73,10 @@
           amount: 6
 
 - type: entity
-  id: CrateSlimepersonLifeSupport
+  id: CrateNitrogenInternals
   parent: CrateInternals
-  name: slimeperson life support crate
-  description: Contains four breath masks and four large nitrogen tanks.
+  name: internals crate (nitrogen)
+  description: Contains four breath masks and four large nitrogen tanks. Intended for Slimepeople and Vox.
   components:
   - type: StorageFill
     contents:

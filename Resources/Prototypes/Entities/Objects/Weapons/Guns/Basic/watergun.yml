@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: WeaponWaterGunBase
   abstract: true
   parent: BaseItem
@@ -56,6 +56,11 @@
   name: water pistol
   description: The dinkiest of water-based weaponry. You swear the trigger doesn't do anything.
   components:
+  - type: Item
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+    storedOffset: -4,-4
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
     layers:
@@ -71,7 +76,7 @@
   id: WeaponWaterBlaster
   parent: WeaponWaterGunBase
   name: water blaster
-  description: With this bad boy, you'll be the cooleste kid at the summer barbecue.
+  description: With this bad boy, you'll be the coolest kid at the summer barbecue.
   components:
   - type: Gun
     cameraRecoilScalar: 0 #no recoil
@@ -95,7 +100,9 @@
       map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: Item
     sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
-    size: Normal
+    size: Large
+    shape:
+    - 0,0,2,1
   - type: RandomSprite
     getAllGroups: true
     available:
@@ -132,7 +139,9 @@
       map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: Item
     sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
-    size: Normal
+    size: Large
+    shape: # SMG size.
+    - 0,0,2,1
   - type: RandomSprite
     getAllGroups: true
     available:

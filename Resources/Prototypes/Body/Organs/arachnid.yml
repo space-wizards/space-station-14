@@ -28,7 +28,6 @@
 - type: entity
   id: OrganArachnidStomach
   parent: OrganAnimalStomach
-  name: stomach
   description: "Gross. This is hard to stomach."
   components:
   - type: Sprite
@@ -38,7 +37,7 @@
     size: Small
     heldPrefix: stomach
   - type: Stomach
-    updateInterval: 1.5
+    digestionDelay: 30
   - type: SolutionContainerManager
     solutions:
       stomach:

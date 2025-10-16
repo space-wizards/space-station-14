@@ -34,7 +34,8 @@
       tasks:
         - !type:HTNPrimitiveTask
           operator: !type:SpeakOperator
-            speech: medibot-start-inject
+            speech: !type:SingleSpeakOperatorSpeech
+              line: medibot-start-inject
             hidden: true
             cooldownID: medibot-start-inject
             cooldown: 5

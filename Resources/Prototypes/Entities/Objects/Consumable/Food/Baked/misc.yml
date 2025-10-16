@@ -6,7 +6,6 @@
   id: FoodBakedBase
   abstract: true
   components:
-  - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/misc.rsi
   - type: SolutionContainerManager
@@ -19,44 +18,84 @@
   - type: Item
     size: Tiny
 
-# Muffins/Buns
+# Muffins
 
 - type: entity
   name: muffin
-  parent: FoodBakedBase
+  parent: FoodInjectableBase
   id: FoodBakedMuffin
   description: A delicious and spongy little cake.
   components:
+  - type: Edible
+    trash:
+    - FoodPlateMuffinTin
   - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/misc.rsi
     state: muffin
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 2
+  - type: FlavorProfile
+    flavors:
+      - sweet
+  - type: Item
+    size: Tiny
 
 - type: entity
   name: berry muffin
-  parent: FoodBakedBase
+  parent: FoodBakedMuffin
   id: FoodBakedMuffinBerry
   description: A delicious and spongy little cake, with berries.
   components:
   - type: Sprite
     state: muffin-berry
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: JuiceBerry
+          Quantity: 2
   - type: Tag
     tags:
     - Fruit
 
 - type: entity
   name: cherry muffin
-  parent: FoodBakedBase
+  parent: FoodBakedMuffin
   id: FoodBakedMuffinCherry
   description: A sweet muffin with cherry bits.
   components:
   - type: Sprite
     state: muffin-cherry
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: JuiceCherry
+          Quantity: 2
   - type: Tag
     tags:
     - Fruit
 
 - type: entity
   name: bluecherry muffin
-  parent: FoodBakedBase
+  parent: FoodBakedMuffin
   id: FoodBakedMuffinBluecherry
   description: Blue cherries inside a delicious muffin.
   components:
@@ -65,6 +104,51 @@
   - type: Tag
     tags:
     - Fruit
+
+- type: entity
+  name: chocolate muffin
+  parent: FoodBakedMuffin
+  id: FoodBakedMuffinChocolate
+  description: A delicious and spongy chocolate muffin.
+  components:
+  - type: Sprite
+    state: muffin-chocolate
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: CocoaPowder
+          Quantity: 2
+
+- type: entity
+  name: banana muffin
+  parent: FoodBakedMuffin
+  id: FoodBakedMuffinBanana
+  description: A delicious and spongy banana muffin.
+  components:
+  - type: Sprite
+    state: muffin-banana
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: JuiceBanana
+          Quantity: 2
+  - type: Tag
+    tags:
+    - Fruit
+
+# Buns
 
 - type: entity
   name: honey bun #TODO honey
@@ -172,6 +256,7 @@
   - type: Tag
     tags:
       - Nugget
+      - Meat
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/nuggets.rsi
     layers:
@@ -525,11 +610,46 @@
           Quantity: 0.5
 
 - type: entity
-  name: brownies
+  name: cotton chèvre chaud
+  parent: FoodBakedChevreChaud
+  id: FoodBakedChevreChaudCotton
+  description: A disk of slightly melted chèvre flopped on top of a... cotton crostini, and toasted all-round.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - bread
+    - nutty
+    - creamy
+    - smokey
+    - cotton
+  - type: Sprite
+    state: chevrechaud-cotton
+  - type: Edible
+    requiresSpecialDigestion: true
+  - type: Tag
+    tags:
+    - ClothMade
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1
+        - ReagentId: Fiber
+          Quantity: 1
+        - ReagentId: Vitamin
+          Quantity: 0.5
+
+- type: entity
   parent: FoodBakedBase
   id: FoodBakedBrownieBatch
+  name: brownies
   description: A pan of brownies.
   components:
+  - type: Item
+    size: Normal
+    storedOffset: 0,-3
   - type: FlavorProfile
     flavors:
       - sweet
@@ -578,11 +698,14 @@
     - Slice
 
 - type: entity
-  name: special brownies
   parent: FoodBakedBase
   id: FoodBakedCannabisBrownieBatch
+  name: special brownies
   description: A pan of "special" brownies.
   components:
+  - type: Item
+    size: Normal
+    storedOffset: 0,-3
   - type: FlavorProfile
     flavors:
       - sweet
@@ -607,9 +730,9 @@
     slice: FoodBakedCannabisBrownie
 
 - type: entity
-  name: special brownie
   parent: FoodBakedBase
   id: FoodBakedCannabisBrownie
+  name: special brownie
   description: A "special" brownie.
   components:
   - type: FlavorProfile
@@ -660,11 +783,17 @@
             Quantity: 1
 
 - type: entity
-  name: croissant
   parent: FoodBakedBase
   id: FoodBakedCroissant
+  name: croissant
   description: Buttery, flaky goodness.
   components:
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+    storedOffset: -2,-4
   - type: FlavorProfile
     flavors:
       - bread
@@ -686,3 +815,126 @@
     damage:
       types:
         Blunt: 0 # so the damage stats icon doesn't immediately give away the syndie ones
+
+- type: entity
+  parent: FoodBakedCroissant
+  id: FoodBakedCroissantCotton
+  name: cotton croissant
+  description: Buttery, flaky, fibery goodness.
+  components:
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+  - type: FlavorProfile
+    flavors:
+    - bread
+    - butter
+    - cotton
+  - type: Sprite
+    state: croissant-cotton
+  - type: Edible
+    requiresSpecialDigestion: true
+  - type: Tag
+    tags:
+    - ClothMade
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 7
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1.5
+        - ReagentId: Fiber
+          Quantity: 1.5
+        - ReagentId: Butter
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 1
+
+- type: entity
+  parent: FoodBakedBase
+  id: FoodBakedGrilledCheeseSandwich
+  name: grilled cheese sandwich
+  description: Bread and cheese toasted with butter, perfect for a chilly day in space.
+  components:
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - bread
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/misc.rsi
+    state: grilled-cheese
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 21
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 11
+        - ReagentId: Butter
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 3
+
+- type: entity
+  parent: FoodBakedGrilledCheeseSandwich
+  id: FoodBakedGrilledCheeseSandwichCotton
+  name: cotton grilled cheese sandwich
+  description: Cotton bread slightly burnt in butter, with melted cheese. Moths find it difficult to resist this combination.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - cheesy
+    - bread
+    - cotton
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/misc.rsi
+    state: grilled-cheese-cotton
+  - type: Edible
+    requiresSpecialDigestion: true
+  - type: Tag
+    tags:
+    - ClothMade
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 21
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Fiber
+          Quantity: 5
+        - ReagentId: Butter
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 3
+
+# Entity Tables
+
+- type: entityTable
+  id: FoodRandomCakeTable
+  table: !type:GroupSelector
+    children:
+    - id: FoodCakeApple
+    - id: FoodCakeBirthday
+    - id: FoodCakeBlueberry
+    - id: FoodCakePlain
+    - id: FoodCakeCarrot
+    - id: FoodCakeCheese
+    - id: FoodCakeChocolate
+    - id: FoodCakeChristmas
+    - id: FoodCakeClown
+    - id: FoodCakeLemon
+    - id: FoodCakeLime
+    - id: FoodCakeOrange
+    - id: FoodCakePumpkin
+    - id: FoodCakeSlime
+    - id: FoodCakeSpaceman
+    - id: FoodCakeVanilla
+    - id: FoodCakeLemoon

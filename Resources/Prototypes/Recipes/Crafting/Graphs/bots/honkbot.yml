@@ -10,23 +10,23 @@
         icon:
           sprite: Objects/Storage/Happyhonk/clown.rsi
           state: box
-        name: happy honk meal
+        name: construction-graph-tag-happy-honk-meal
       - tag: BikeHorn
         icon:
             sprite: Objects/Fun/bikehorn.rsi
             state: icon
-        name: bike horn
+        name: construction-graph-tag-clown-bike-horn
         doAfter: 2
       - tag: ProximitySensor
         icon:
           sprite: Objects/Misc/proximity_sensor.rsi
           state: icon
-        name: proximity sensor
+        name: construction-graph-tag-proximity-sensor
       - tag: BorgArm
         icon:
           sprite: Mobs/Silicon/drone.rsi
           state: l_hand
-        name: borg arm
+        name: construction-graph-tag-borg-arm
         doAfter: 2
   - node: bot
     entity: MobHonkBot
@@ -43,23 +43,23 @@
         icon:
           sprite: Objects/Storage/Happyhonk/cluwne.rsi
           state: box
-        name: woeful cluwne meal
+        name: construction-graph-tag-woeful-cluwne-meal
       - tag: CluwneHorn
         icon:
           sprite: Objects/Fun/cluwnehorn.rsi
           state: icon
-        name: broken bike horn
+        name: construction-graph-tag-clowne-horn
         doAfter: 2
       - tag: ProximitySensor
         icon:
           sprite: Objects/Misc/proximity_sensor.rsi
           state: icon
-        name: proximity sensor
+        name: construction-graph-tag-proximity-sensor
       - tag: BorgArm
         icon:
           sprite: Mobs/Silicon/drone.rsi
           state: l_hand
-        name: borg arm
+        name: construction-graph-tag-borg-arm
         doAfter: 2
   - node: bot
     entity: MobJonkBot

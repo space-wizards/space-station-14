@@ -11,8 +11,9 @@ public sealed partial class ComponentFilter : UtilityQueryFilter
     public ComponentRegistry Components = new();
 
     /// <summary>
-    /// Remove entities which have this component
+    /// If true, this filter retains entities with ALL of the specified components. If false, this filter removes
+    /// entities with ANY of the specified components.
     /// </summary>
-    [DataField("excludedComponents")]
-    public ComponentRegistry ExcludedComponents = new();
+    [DataField]
+    public bool RetainWithComp = true;
 }

@@ -5,5 +5,7 @@
     FoodDonutApple: 3
     FoodDonutPink: 3
     FoodDonutBungo: 3
-  emaggedInventory:
+  contrabandInventory:
+    FoodBagel: 2
+    FoodBagelPoppy: 2
     FoodDonutPoison: 1

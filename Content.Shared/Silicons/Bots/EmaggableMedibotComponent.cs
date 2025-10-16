@@ -16,13 +16,4 @@ public sealed partial class EmaggableMedibotComponent : Component
     /// </summary>
     [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
     public Dictionary<MobState, MedibotTreatment> Replacements = new();
-
-    /// <summary>
-    /// Sound to play when the bot has been emagged
-    /// </summary>
-    [DataField]
-    public SoundSpecifier SparkSound = new SoundCollectionSpecifier("sparks")
-    {
-        Params = AudioParams.Default.WithVolume(8f)
-    };
 }
