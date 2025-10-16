@@ -12,7 +12,8 @@ namespace Content.Shared.ParcelWrap.Components;
 /// destroying this entity and releasing <see cref="Contents"/>.
 /// </summary>
 /// <seealso cref="ParcelWrapComponent"/>
-[RegisterComponent, NetworkedComponent, Access(typeof(ParcelWrappingSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(ParcelWrappingSystem))]
 public sealed partial class WrappedParcelComponent : Component
 {
     /// <summary>
@@ -24,19 +25,19 @@ public sealed partial class WrappedParcelComponent : Component
     /// <summary>
     /// Specifies the entity to spawn when this parcel is unwrapped.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntProtoId? UnwrapTrash;
 
     /// <summary>
     /// How long it takes to unwrap this parcel.
     /// </summary>
-    [DataField(required: true)]
+    [DataField(required: true), AutoNetworkedField]
     public TimeSpan UnwrapDelay = TimeSpan.FromSeconds(1);
 
     /// <summary>
     /// Sound played when unwrapping this parcel.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier? UnwrapSound;
 
     /// <summary>
@@ -50,13 +51,20 @@ public sealed partial class WrappedParcelComponent : Component
     /// into <see cref="Container"/>. If the contents do not have a size,
     /// <see cref="ParcelWrappingSystem._fallbackParcelSize"/> is used instead.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField, ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
     public bool GetsSizeFromContent = true;
 
     /// <summary>
     /// If true, the owner of this entity has its <see cref="ItemComponent.Shape"/> set to the shape of any item
     /// inserted into <see cref="Container"/>.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField, ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
     public bool GetsShapeFromContent;
+
+    /// <summary>
+    /// If a player trapped inside this parcel can escape from it by unwrapping it.
+    /// This is set by the <see cref="ParcelWrapComponent" /> used to create the parcel.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool CanSelfUnwrap = true;
 }

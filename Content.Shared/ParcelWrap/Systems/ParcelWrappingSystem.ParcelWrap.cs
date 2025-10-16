@@ -1,8 +1,10 @@
 using System.Linq;
 using Content.Shared.DoAfter;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.ParcelWrap.Components;
+using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -78,16 +80,33 @@ public sealed partial class ParcelWrappingSystem
 
         if (args.Target is { } target)
         {
-            Wrap(args.User, wrapper, target);
+            WrapInternal(args.User, wrapper, target);
             args.Handled = true;
         }
     }
 
     private bool TryStartWrapDoAfter(EntityUid user, Entity<ParcelWrapComponent> wrapper, EntityUid target)
     {
+        var duration = wrapper.Comp.WrapDelay;
+
+        if (TryComp<ParcelWrapOverrideComponent>(target, out var overrideComp) && overrideComp.WrapDelay != null)
+            duration = overrideComp.WrapDelay.Value;
+
+        // In case the target is a player inform them with a popup.
+        if (target == user)
+        {
+            var selfMsg = Loc.GetString("parcel-wrap-popup-being-wrapped-self");
+            _popup.PopupClient(selfMsg, user, user);
+        }
+        else
+        {
+            var othersMsg = Loc.GetString("parcel-wrap-popup-being-wrapped", ("user", Identity.Entity(user, EntityManager)));
+            _popup.PopupEntity(othersMsg, target, target, PopupType.MediumCaution);
+        }
+
         return _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager,
             user,
-            wrapper.Comp.WrapDelay,
+            duration,
             new ParcelWrapItemDoAfterEvent(),
             wrapper, // Raise the event on the wrapper because that's what the event handler expects.
             target,
@@ -105,12 +124,8 @@ public sealed partial class ParcelWrappingSystem
     /// <param name="user">The entity using <paramref name="wrapper"/> to wrap <paramref name="target"/>.</param>
     /// <param name="wrapper">The wrapping being used. Determines appearance of the spawned parcel.</param>
     /// <param name="target">The entity being wrapped.</param>
-    private void Wrap(EntityUid user, Entity<ParcelWrapComponent> wrapper, EntityUid target)
+    private void WrapInternal(EntityUid user, Entity<ParcelWrapComponent> wrapper, EntityUid target)
     {
-        var parcel = Wrap(target, wrapper.Comp.ParcelPrototype);
-        if (parcel is null)
-            return;
-
         // Consume a `use` on the wrapper, and delete the wrapper if it's empty.
         _charges.TryUseCharges(wrapper.Owner, 1);
         if (_charges.IsEmpty(wrapper.Owner))
@@ -118,46 +133,59 @@ public sealed partial class ParcelWrappingSystem
 
         // Play a wrapping sound.
         _audio.PlayPredicted(wrapper.Comp.WrapSound, target, user);
-    }
 
-    /// <summary>
-    /// Wraps <paramref name="toWrap"/> into a parcel. This spawns <paramref name="parcelProto"/>
-    /// (or <see cref="DefaultWrappedParcel"/>) and inserts <paramref name="toWrap"/> into it, and then returns the
-    /// spawned parcel entity. If insertion fails, the parcel is deleted and <c>null</c> is returned.
-    /// </summary>
-    /// <param name="toWrap">The entity to insert into the parcel</param>
-    /// <param name="parcelProto">The prototype of the parcel to spawn. If null, uses <see cref="DefaultWrappedParcel"/></param>
-    public Entity<WrappedParcelComponent>? Wrap(
-        EntityUid toWrap,
-        EntProtoId<WrappedParcelComponent>? parcelProto = null
-    )
-    {
-        var toWrapXform = Transform(toWrap);
-        var spawned = PredictedSpawnAtPosition(parcelProto ?? DefaultWrappedParcel, toWrapXform.Coordinates);
-        _transform.SetLocalRotation(spawned, toWrapXform.LocalRotation);
+        if (_net.IsClient)
+            return; // Predicted spawns can't be interacted with yet.
 
-        // If the target's in a container, try to put the parcel in its place in the container.
-        if (_container.TryGetContainingContainer((toWrap, null, null), out var containerOfTarget))
+        EntityUid spawned;
+        var targetTransform = Transform(target);
+        // Check if the target has a pre-defined parcel type to be used.
+        if (TryComp<ParcelWrapOverrideComponent>(target, out var overrideComp))
         {
-            _container.Remove(toWrap, containerOfTarget);
-            _container.InsertOrDrop(spawned, containerOfTarget);
+            spawned = Spawn(overrideComp.ParcelPrototype, targetTransform.Coordinates);
+        }
+        else // Create a parcel with the same size and generic sprites instead.
+        {
+            spawned = Spawn(wrapper.Comp.ParcelPrototype, targetTransform.Coordinates);
+
+            // If this wrap maintains the size when wrapping, set the parcel's size to the target's size. Otherwise use the
+            // wrap's fallback size.
+            TryComp(target, out ItemComponent? targetItemComp);
+            var size = wrapper.Comp.FallbackItemSize;
+            if (wrapper.Comp.WrappedItemsMaintainSize && targetItemComp is not null)
+                size = targetItemComp.Size;
+
+            // ParcelWrap's spawned entity should always have an `ItemComp`. As of writing, the only use has it hardcoded on
+            // its prototype.
+            var item = Comp<ItemComponent>(spawned);
+            _item.SetSize(spawned, size, item);
+            _appearance.SetData(spawned, WrappedParcelVisuals.Size, size.Id);
+
+            // If this wrap maintains the shape when wrapping and the item has a shape override, copy the shape override to
+            // the parcel.
+            if (wrapper.Comp.WrappedItemsMaintainShape && targetItemComp is { Shape: { } shape })
+                _item.SetShape(spawned, shape, item);
         }
 
-        var parcel = EnsureComp<WrappedParcelComponent>(spawned);
-        if (!IsClientSide(spawned))
+        _transform.SetLocalRotation(spawned, targetTransform.LocalRotation);
+
+        // If the target is in a container, try to put the parcel in its place in the container.
+        if (_container.TryGetContainingContainer((target, null, null), out var containerOfTarget))
         {
+                _container.Remove(target, containerOfTarget);
+                _container.InsertOrDrop((spawned, null, null), containerOfTarget);
+        }
+
             // Insert the target into the parcel.
-            // This can only be done on the server as the client-predicted parcel will be deleted, deleting the
-            // contained entity as well, desynchronizing the client's from the server's state.
-            if (!_container.Insert(toWrap, parcel.Contents))
-            {
-                DebugTools.Assert(
-                    $"Failed to insert target entity into newly spawned parcel. target={PrettyPrint.PrintUserFacing(toWrap)}");
-                QueueDel(spawned);
-                return null;
-            }
-        }
+        var parcel = EnsureComp<WrappedParcelComponent>(spawned);
+        parcel.CanSelfUnwrap = wrapper.Comp.CanSelfUnwrap;
+        Dirty(spawned, parcel);
 
-        return (spawned, parcel);
+        if (!_container.Insert(target, parcel.Contents))
+        {
+            DebugTools.Assert(
+                $"Failed to insert target entity into newly spawned parcel. target={PrettyPrint.PrintUserFacing(target)}");
+            PredictedDel(spawned);
+        }
     }
 }
