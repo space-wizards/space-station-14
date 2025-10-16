@@ -1,0 +1,172 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                      Title="{Loc 'station-ai-fixer-console-window'}"
+                      Resizable="False">
+    <BoxContainer Orientation="Vertical" VerticalExpand="True">
+        <BoxContainer VerticalExpand="True" HorizontalExpand="True" Orientation="Horizontal">
+
+            <!-- Left side - AI display -->
+            <BoxContainer VerticalExpand="True" HorizontalExpand="True" Orientation="Vertical" MinWidth="225" Margin="20 15 20 20">
+
+                <!-- AI panel -->
+                <PanelContainer>
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                    </PanelContainer.PanelOverride>
+
+                    <BoxContainer Orientation="Vertical">
+                        <!-- AI name -->
+                        <Label Name="StationAiNameLabel"
+                               HorizontalAlignment="Center"
+                               Margin="0 5 0 0"
+                               Text="{Loc 'station-ai-fixer-console-window-no-station-ai'}"/>
+
+                        <!-- AI portrait -->
+                        <AnimatedTextureRect Name="StationAiPortraitTexture" VerticalAlignment="Center" SetSize="128 128" />
+                    </BoxContainer>
+                </PanelContainer>
+
+                <!-- AI status panel-->
+                <PanelContainer Name="StationAiStatus">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#757575" />
+                    </PanelContainer.PanelOverride>
+
+                    <!-- AI name -->
+                    <Label Name="StationAiStatusLabel"
+                           HorizontalAlignment="Center"
+                           Text="{Loc 'station-ai-fixer-console-window-no-station-ai-status'}"/>
+                </PanelContainer>
+            </BoxContainer>
+
+            <!-- Central divider -->
+            <PanelContainer StyleClasses="LowDivider" VerticalExpand="True" Margin="0 0 0 0" SetWidth="2"/>
+
+            <!-- Right side - control panel -->
+            <BoxContainer VerticalExpand="True" HorizontalExpand="True" Orientation="Vertical" MinWidth="225" Margin="10 10 10 10">
+
+                <!-- Locked controls -->
+                <BoxContainer Name="LockScreen"
+                              VerticalExpand="True"
+                              HorizontalExpand="True"
+                              Orientation="Vertical"
+                              ReservesSpace="False">
+
+                    <controls:StripeBack VerticalExpand="True" HorizontalExpand="True" Margin="0 0 0 5">
+                    <PanelContainer VerticalExpand="True" HorizontalExpand="True">
+                        <BoxContainer VerticalExpand="True" HorizontalExpand="True" Orientation="Vertical">
+                            <Control VerticalExpand="True"/>
+                            <TextureRect VerticalAlignment="Center"
+                                         HorizontalAlignment="Center"
+                                         SetSize="64 64"
+                                         Stretch="KeepAspectCentered"
+                                         TexturePath="/Textures/Interface/VerbIcons/lock.svg.192dpi.png">
+                            </TextureRect>
+                            <Label Text="{Loc 'station-ai-fixer-console-window-controls-locked'}"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Margin="0 5 0 0"/>
+                            <Control VerticalExpand="True"/>
+                        </BoxContainer>
+                    </PanelContainer>
+                    </controls:StripeBack>
+                </BoxContainer>
+
+                <!-- Action progress screen -->
+                <BoxContainer Name="ActionProgressScreen"
+                              VerticalExpand="True"
+                              HorizontalExpand="True"
+                              Orientation="Vertical"
+                              ReservesSpace="False"
+                              Visible="False">
+
+                    <Control VerticalExpand="True" Margin="0 0 0 0"/>
+                    <Label Name="ActionInProgressLabel" Text="???" HorizontalAlignment="Center"/>
+                    <ProgressBar Name="ActionProgressBar"
+                                 MinValue="0"
+                                 MaxValue="1"
+                                 SetHeight="20"
+                                 Margin="5 10 5 10">
+                    </ProgressBar>
+                    <Label Name="ActionProgressEtaLabel" Text="???" HorizontalAlignment="Center"/>
+
+                    <!-- Cancel button -->
+                    <Button Name="CancelButton" HorizontalExpand="True" Margin="0 20 0 10" SetHeight="40"
+                            Text="{Loc 'station-ai-fixer-console-window-cancel-action'}">
+                        <TextureRect HorizontalAlignment="Left"
+                                     VerticalAlignment="Center"
+                                     SetSize="24 24"
+                                     Stretch="KeepAspectCentered"
+                                     TexturePath="/Textures/Interface/Nano/cross.svg.png">
+                        </TextureRect>
+                    </Button>
+                </BoxContainer>
+
+                <!-- Visible controls -->
+                <BoxContainer Name="MainControls"
+                              VerticalExpand="True"
+                              HorizontalExpand="True"
+                              Orientation="Vertical"
+                              ReservesSpace="False"
+                              Visible="False">
+
+                    <controls:StripeBack>
+                        <PanelContainer>
+                            <Label Text="{Loc 'Controls'}"
+                                   HorizontalExpand="True"
+                                   HorizontalAlignment="Center"/>
+                        </PanelContainer>
+                    </controls:StripeBack>
+
+                    <!-- Eject button -->
+                    <Button Name="EjectButton" HorizontalExpand="True" Margin="0 10 0 0" SetHeight="40"
+                            Text="{Loc 'station-ai-fixer-console-window-station-ai-eject'}">
+                        <TextureRect HorizontalAlignment="Left"
+                                     VerticalAlignment="Center"
+                                     SetSize="32 32"
+                                     Stretch="KeepAspectCentered"
+                                     TexturePath="/Textures/Interface/VerbIcons/eject.svg.192dpi.png">
+                        </TextureRect>
+                    </Button>
+
+                    <!-- Repair button -->
+                    <Button Name="RepairButton" HorizontalExpand="True" Margin="0 10 0 0" SetHeight="40"
+                            Text="{Loc 'station-ai-fixer-console-window-station-ai-repair'}">
+                        <TextureRect HorizontalAlignment="Left"
+                                     VerticalAlignment="Center"
+                                     SetSize="32 32"
+                                     Stretch="KeepAspectCentered"
+                                     TexturePath="/Textures/Interface/hammer_scaled.svg.192dpi.png">
+                        </TextureRect>
+                    </Button>
+
+                    <!-- Purge button -->
+                    <Button Name="PurgeButton" HorizontalExpand="True" Margin="0 10 0 0" SetHeight="40"
+                            Text="{Loc 'station-ai-fixer-console-window-station-ai-purge'}">
+                        <TextureRect HorizontalAlignment="Left"
+                                     VerticalAlignment="Center"
+                                     SetSize="32 32"
+                                     Stretch="KeepAspectCentered"
+                                     TexturePath="/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png">
+                        </TextureRect>
+                    </Button>
+
+                </BoxContainer>
+            </BoxContainer>
+        </BoxContainer>
+
+        <!-- Footer -->
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer StyleClasses="LowDivider" />
+            <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
+                <Label Text="{Loc 'station-ai-fixer-console-window-flavor-left'}" StyleClasses="WindowFooterText" />
+                <Label Text="{Loc 'station-ai-fixer-console-window-flavor-right'}" StyleClasses="WindowFooterText"
+                       HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
+                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
+                       VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>
