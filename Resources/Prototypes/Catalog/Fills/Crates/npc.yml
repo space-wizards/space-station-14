@@ -285,5 +285,12 @@
         prob: 0.1
         orGroup: MobSheep
       - id: MobSheepSpace
-        prob: 0.2
+        prob: 0.1
+        orGroup: MobSheep
+        # teehee get plushied
+      - id: PlushieSheep
+        prob: 0.001
+        orGroup: MobSheep
+      - id: PlushieSpaceSheep
+        prob: 0.001
         orGroup: MobSheep
