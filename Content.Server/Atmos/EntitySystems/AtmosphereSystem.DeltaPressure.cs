@@ -39,17 +39,34 @@ public sealed partial class AtmosphereSystem
          so simple vector operations like min/max/abs can be performed on them.
          */
 
+        var airtightComp = _airtightQuery.Comp(ent);
+        var currentPos = airtightComp.LastPosition.Tile;
         var tiles = new TileAtmosphere?[Atmospherics.Directions];
         for (var i = 0; i < Atmospherics.Directions; i++)
         {
             var direction = (AtmosDirection)(1 << i);
-            var offset = ent.Comp.CurrentPosition.Offset(direction);
+            var offset = currentPos.Offset(direction);
             tiles[i] = gridAtmosComp.Tiles.GetValueOrDefault(offset);
         }
 
         Span<float> pressures = stackalloc float[Atmospherics.Directions];
 
         GetBulkTileAtmospherePressures(tiles, pressures);
+
+        // This entity could be airtight but still be able to contain air on the tile it's on (ex. directional windows).
+        // As such, substitute the pressure of the pressure on top of the entity for the directions that it can accept air from.
+        // (Or rather, don't do so for directions that it blocks air from.)
+        if (!airtightComp.NoAirWhenFullyAirBlocked)
+        {
+            for (var i = 0; i < Atmospherics.Directions; i++)
+            {
+                var direction = (AtmosDirection)(1 << i);
+                if (!airtightComp.AirBlockedDirection.HasFlag(direction))
+                {
+                    pressures[i] = gridAtmosComp.Tiles.GetValueOrDefault(currentPos)?.Air?.Pressure ?? 0f;
+                }
+            }
+        }
 
         Span<float> opposingGroupA = stackalloc float[DeltaPressurePairCount];
         Span<float> opposingGroupB = stackalloc float[DeltaPressurePairCount];
