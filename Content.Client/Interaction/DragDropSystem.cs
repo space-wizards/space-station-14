@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Numerics;
 using Content.Client.CombatMode;
 using Content.Client.Gameplay;

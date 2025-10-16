@@ -1,4 +1,4 @@
-﻿// Global usings for Content.Server
+﻿// SPDX-License-Identifier: MIT
 
 global using System;
 global using System.Collections.Generic;

@@ -1,4 +1,6 @@
-﻿using Content.Shared.Stealth;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Stealth;
 
 namespace Content.Server.Stealth;
 

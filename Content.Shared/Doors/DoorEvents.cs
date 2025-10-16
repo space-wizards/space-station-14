@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Doors.Components;
 
 namespace Content.Shared.Doors

@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Diagnostics;
 using Content.Server.Administration;
 using Content.Server.Chat.V2.Repository;
 using Content.Shared.Administration;

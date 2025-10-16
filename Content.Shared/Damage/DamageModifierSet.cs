@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;

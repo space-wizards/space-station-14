@@ -1,4 +1,6 @@
-﻿using System.Collections.Immutable;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Collections.Immutable;
 using Content.Server.GameTicking.Events;
 using Content.Server.Station.Events;
 using Content.Shared.CCVar;

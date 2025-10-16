@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Linq;
 using Content.Server.Administration;
 using Content.Server.GameTicking.Rules;
 using Content.Shared.Administration;

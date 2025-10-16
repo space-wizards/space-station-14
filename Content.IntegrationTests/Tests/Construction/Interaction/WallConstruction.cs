@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.IntegrationTests.Tests.Interaction;
 
 namespace Content.IntegrationTests.Tests.Construction.Interaction;

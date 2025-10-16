@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 #if NETCOREAPP
 using System.Runtime.Intrinsics;
 using System.Runtime.Intrinsics.X86;

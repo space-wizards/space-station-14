@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Vapor;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Chasm;
 using Content.Shared.Speech.Components;
 using Content.Shared.Speech.Muting;

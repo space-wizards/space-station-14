@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Interactable.Components;
 using Content.Client.StatusIcon;
 using Content.Shared.Stealth;

@@ -1,4 +1,6 @@
-﻿using Content.Shared.CharacterInfo;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.CharacterInfo;
 using Content.Shared.Objectives;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;

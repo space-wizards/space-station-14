@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Access.Systems;

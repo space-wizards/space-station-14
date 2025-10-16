@@ -1,4 +1,6 @@
-﻿using Content.Shared.Emag.Systems;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Emag.Systems;
 
 namespace Content.Server.NPC.HTN.Preconditions;
 

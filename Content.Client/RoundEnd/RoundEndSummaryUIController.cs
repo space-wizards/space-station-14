@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.GameTicking.Managers;
 using Content.Shared.GameTicking;
 using Content.Shared.Input;

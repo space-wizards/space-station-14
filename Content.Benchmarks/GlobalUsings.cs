@@ -1,3 +1,3 @@
-// Global usings for Content.Benchmarks
+// SPDX-License-Identifier: MIT
 
 global using Robust.UnitTesting.Pool;

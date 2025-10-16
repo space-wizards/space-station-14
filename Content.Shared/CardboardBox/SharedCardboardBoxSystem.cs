@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.CardboardBox;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.CardboardBox;
 
 public abstract class SharedCardboardBoxSystem : EntitySystem
 {

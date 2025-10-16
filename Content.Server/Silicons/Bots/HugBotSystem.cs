@@ -1,4 +1,6 @@
-﻿using Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 using Content.Shared.Silicons.Bots;
 using Robust.Shared.Timing;
 

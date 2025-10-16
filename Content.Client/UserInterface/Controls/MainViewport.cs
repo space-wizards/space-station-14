@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Numerics;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using Robust.Client.UserInterface;

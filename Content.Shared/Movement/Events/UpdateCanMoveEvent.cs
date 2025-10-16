@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Movement.Components;
 
 namespace Content.Shared.Movement.Events;

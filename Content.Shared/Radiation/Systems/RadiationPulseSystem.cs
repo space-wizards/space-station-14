@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Radiation.Components;
 using Robust.Shared.Spawners;
 using Robust.Shared.Timing;

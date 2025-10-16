@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Sprite;

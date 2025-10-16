@@ -1,4 +1,6 @@
-﻿using Content.Shared.StatusEffect;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.StatusEffect;
 
 namespace Content.Shared.Speech.EntitySystems;
 

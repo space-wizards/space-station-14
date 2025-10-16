@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Numerics;
 using Content.Shared.Salvage.Fulton;
 using Robust.Shared.Containers;

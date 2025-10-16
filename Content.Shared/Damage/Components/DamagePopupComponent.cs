@@ -1,4 +1,6 @@
-﻿using Content.Shared.Damage.Systems;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Damage.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 

@@ -1,4 +1,6 @@
-﻿using System.Collections.Frozen;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Collections.Frozen;
 using System.Linq;
 using System.Text;
 using System.Text.Unicode;

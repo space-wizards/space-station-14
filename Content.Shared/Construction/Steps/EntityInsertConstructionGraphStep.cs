@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Construction.Steps
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Construction.Steps
 {
     [ImplicitDataDefinitionForInheritors]
     public abstract partial class EntityInsertConstructionGraphStep : ConstructionGraphStep

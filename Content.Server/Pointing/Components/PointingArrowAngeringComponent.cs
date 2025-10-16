@@ -1,4 +1,6 @@
-﻿namespace Content.Server.Pointing.Components;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Server.Pointing.Components;
 
 /// <summary>
 /// Causes pointing arrows to go mode and murder this entity.

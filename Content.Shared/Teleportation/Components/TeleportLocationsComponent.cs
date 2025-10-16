@@ -1,4 +1,6 @@
-﻿using Content.Shared.Teleportation.Systems;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Teleportation.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;

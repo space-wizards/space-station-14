@@ -1,4 +1,6 @@
-﻿using Content.Shared.Damage.Prototypes;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Dataset;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;

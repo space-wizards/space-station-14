@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Rotation;
 using Content.Shared.Buckle;
 using Content.Shared.Buckle.Components;

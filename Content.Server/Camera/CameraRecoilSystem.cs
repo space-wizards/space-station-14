@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Numerics;
 using Content.Shared.Camera;
 using Robust.Shared.Player;

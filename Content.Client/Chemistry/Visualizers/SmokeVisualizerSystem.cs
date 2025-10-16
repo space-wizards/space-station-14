@@ -1,4 +1,6 @@
-﻿using Content.Shared.Smoking;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Smoking;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Chemistry.Visualizers;

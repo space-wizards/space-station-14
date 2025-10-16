@@ -1,4 +1,6 @@
-﻿using Content.Shared.GhostKick;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.GhostKick;
 using Robust.Client;
 using Robust.Shared;
 using Robust.Shared.Configuration;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.StationEvents.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.GameTicking.Components;

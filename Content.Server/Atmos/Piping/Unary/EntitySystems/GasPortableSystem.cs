@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Unary.Components;

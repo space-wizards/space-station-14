@@ -1,4 +1,6 @@
-﻿using Content.Shared.Interaction;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Interaction;
 
 namespace Content.Shared.MouseRotator;
 

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Shuttles.Components;
 using Robust.Shared.Map;
 

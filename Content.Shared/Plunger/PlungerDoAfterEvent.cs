@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 
 using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Linq;
 using Content.Client.Administration.UI.Notes;
 using Content.Client.UserInterface.Controls;

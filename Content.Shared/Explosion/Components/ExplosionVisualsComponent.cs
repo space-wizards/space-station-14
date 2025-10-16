@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Numerics;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;

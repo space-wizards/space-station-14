@@ -1,4 +1,6 @@
-﻿using Content.Server.StationEvents.Events;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.StationEvents.Events;
 using Content.Shared.Destructible.Thresholds;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;

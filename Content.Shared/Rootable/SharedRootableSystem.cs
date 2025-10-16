@@ -1,4 +1,6 @@
-﻿using Content.Shared.Actions;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Alert;
 using Content.Shared.Cloning.Events;

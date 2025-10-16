@@ -1,4 +1,6 @@
-﻿namespace Content.Server.Power.Events;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Server.Power.Events;
 
 /// <summary>
 ///     Invoked on a target entity, when it was pulsed with an energy.

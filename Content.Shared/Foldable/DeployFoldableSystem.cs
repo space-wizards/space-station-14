@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;

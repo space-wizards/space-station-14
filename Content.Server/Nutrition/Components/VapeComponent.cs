@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Atmos;

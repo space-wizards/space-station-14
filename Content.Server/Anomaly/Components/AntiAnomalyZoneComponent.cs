@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 
 namespace Content.Server.Anomaly.Components;
 

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Linq;
 using Content.Shared.Buckle.Components;
 using Content.Shared.DoAfter;

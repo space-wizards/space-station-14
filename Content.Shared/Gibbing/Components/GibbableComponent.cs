@@ -1,4 +1,6 @@
-﻿using Content.Shared.Gibbing.Systems;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Gibbing.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;

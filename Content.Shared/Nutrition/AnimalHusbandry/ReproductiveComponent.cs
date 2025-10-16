@@ -1,4 +1,6 @@
-﻿using Content.Shared.Storage;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Storage;
 using Content.Shared.Whitelist;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 

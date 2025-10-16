@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;

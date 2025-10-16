@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Gameplay;
 using Robust.Client.UserInterface.Controllers;
 

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.AlertLevel;
 using Content.Server.Audio;
 using Content.Server.Light.Components;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 namespace Content.Shared.Speech
 {
     public sealed class SpeechSystem : EntitySystem

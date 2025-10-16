@@ -1,4 +1,6 @@
-﻿using Content.Shared.Mobs.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Mobs.Components;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Mobs;

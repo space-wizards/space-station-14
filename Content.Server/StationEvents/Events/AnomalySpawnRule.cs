@@ -1,4 +1,6 @@
-﻿using Content.Server.Anomaly;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.Anomaly;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;

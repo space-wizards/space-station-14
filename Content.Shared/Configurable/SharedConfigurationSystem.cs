@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Interaction;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Containers;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.CCVar;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Configuration;

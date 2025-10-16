@@ -1,4 +1,6 @@
-﻿using Robust.Shared.Random;
+﻿// SPDX-License-Identifier: MIT
+
+using Robust.Shared.Random;
 
 namespace Content.Shared;
 

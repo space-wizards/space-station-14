@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿// SPDX-License-Identifier: MIT
+
+using System.IO;
 using System.Linq;
 using Content.Client.Administration.UI.CustomControls;
 using Content.Client.Eui;

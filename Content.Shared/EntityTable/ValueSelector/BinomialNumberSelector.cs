@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Robust.Shared.Random;
 
 namespace Content.Shared.EntityTable.ValueSelector;

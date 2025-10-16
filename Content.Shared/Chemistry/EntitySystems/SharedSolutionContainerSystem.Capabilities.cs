@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;

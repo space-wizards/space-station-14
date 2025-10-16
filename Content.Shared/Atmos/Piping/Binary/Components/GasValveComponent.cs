@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Atmos.Piping.Binary.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Storage;
 
 namespace Content.Server.Medical.BiomassReclaimer

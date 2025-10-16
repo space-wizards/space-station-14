@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Sticky;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Sticky;
 
 /// <summary>
 ///     Risen on sticky entity to see if it can stick to another entity.

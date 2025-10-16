@@ -1,4 +1,6 @@
-﻿using Robust.Shared.Utility;
+﻿// SPDX-License-Identifier: MIT
+
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Stunnable;
 

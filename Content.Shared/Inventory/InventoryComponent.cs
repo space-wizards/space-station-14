@@ -1,4 +1,6 @@
-﻿using Content.Shared.DisplacementMap;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.DisplacementMap;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;

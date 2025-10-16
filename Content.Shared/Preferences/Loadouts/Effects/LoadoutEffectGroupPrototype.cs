@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Preferences.Loadouts.Effects;

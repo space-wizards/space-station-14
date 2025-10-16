@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Slippery;
 using Content.Shared.Trigger.Components.Triggers;
 

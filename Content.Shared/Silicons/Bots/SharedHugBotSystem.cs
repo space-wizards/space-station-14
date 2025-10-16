@@ -1,4 +1,6 @@
-﻿using Content.Shared.Emag.Systems;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Emag.Systems;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Silicons.Bots;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
 using Content.Server.Buckle.Systems;

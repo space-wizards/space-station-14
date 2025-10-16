@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using SpeakOnUIClosedComponent = Content.Shared.Advertise.Components.SpeakOnUIClosedComponent;
 
 namespace Content.Shared.Advertise.Systems;

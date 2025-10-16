@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 namespace Content.Shared.Shuttles.Components;
 using Robust.Shared.GameStates;
 

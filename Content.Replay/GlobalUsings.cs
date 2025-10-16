@@ -1,4 +1,4 @@
-// Global usings for Content.Replay
+// SPDX-License-Identifier: MIT
 
 global using System;
 global using System.Collections.Generic;

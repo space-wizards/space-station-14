@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Speech;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Speech;
 
 public sealed class AccentGetEvent : EntityEventArgs
 {

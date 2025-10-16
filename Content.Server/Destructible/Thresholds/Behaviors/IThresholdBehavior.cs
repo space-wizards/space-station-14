@@ -1,4 +1,6 @@
-﻿using Content.Shared.Database;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Database;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
 {

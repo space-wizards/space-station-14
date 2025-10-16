@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Bed;
 
 namespace Content.Client.Bed;

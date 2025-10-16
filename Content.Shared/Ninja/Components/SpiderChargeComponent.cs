@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Ninja.Systems;
 using Robust.Shared.GameStates;
 

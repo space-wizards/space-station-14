@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.IntegrationTests.Tests.Movement;
 using Content.Server.NPC.HTN;
 using Content.Shared.Damage;

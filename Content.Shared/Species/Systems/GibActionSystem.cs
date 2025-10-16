@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Species.Components;
 using Content.Shared.Actions;
 using Content.Shared.Body.Systems;

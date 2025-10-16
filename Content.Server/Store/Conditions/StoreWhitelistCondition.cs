@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Store;
 using Content.Shared.Whitelist;
 

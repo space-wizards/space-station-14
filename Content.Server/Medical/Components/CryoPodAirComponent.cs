@@ -1,4 +1,6 @@
-﻿using Content.Server.Atmos;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.Atmos;
 using Content.Shared.Atmos;
 
 namespace Content.Server.Medical.Components;

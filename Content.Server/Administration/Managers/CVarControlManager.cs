@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Linq;
 using System.Reflection;
 using Content.Shared.CCVar.CVarAccess;
 using Robust.Shared.Configuration;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Tesla.EntitySystems;
 using Content.Shared.Explosion;
 using Content.Shared.FixedPoint;

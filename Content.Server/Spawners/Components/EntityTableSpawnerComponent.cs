@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Spawners.EntitySystems;
 using Content.Shared.EntityTable.EntitySelectors;
 using Robust.Shared.Prototypes;

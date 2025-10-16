@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Ghost.Roles.Raffles;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Ghost.Roles.Raffles;
 
 /// <summary>
 /// Defines settings for a ghost role raffle.

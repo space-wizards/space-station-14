@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Morgue;
 using Content.Shared.Morgue.Components;
 using Content.Shared.Storage.Components;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Pinpointer;

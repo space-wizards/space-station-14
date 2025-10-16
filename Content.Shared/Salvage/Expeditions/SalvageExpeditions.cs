@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Salvage.Expeditions.Modifiers;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;

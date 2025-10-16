@@ -1,4 +1,6 @@
-﻿using Content.Shared.CCVar;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Communications;
 using Robust.Client.UserInterface;

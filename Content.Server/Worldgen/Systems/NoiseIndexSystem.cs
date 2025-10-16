@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Numerics;
 using Content.Server.Worldgen.Components;
 using Content.Server.Worldgen.Prototypes;
 using Robust.Shared.Prototypes;

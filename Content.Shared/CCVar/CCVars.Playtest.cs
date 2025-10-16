@@ -1,4 +1,6 @@
-﻿using Content.Shared.Administration;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Administration;
 using Content.Shared.CCVar.CVarAccess;
 using Content.Shared.Roles;
 using Robust.Shared.Configuration;

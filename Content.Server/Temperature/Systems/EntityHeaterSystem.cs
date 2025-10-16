@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Power.Components;
 using Content.Shared.Placeable;
 using Content.Shared.Temperature;

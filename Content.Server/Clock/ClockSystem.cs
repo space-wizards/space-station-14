@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.GameTicking.Events;
 using Content.Shared.Clock;
 using Content.Shared.Destructible;

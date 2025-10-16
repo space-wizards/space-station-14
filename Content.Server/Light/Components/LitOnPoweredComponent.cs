@@ -1,4 +1,6 @@
-﻿using Content.Server.Light.EntitySystems;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.Light.EntitySystems;
 
 namespace Content.Server.Light.Components
 {

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Singularity.EntitySystems;
 using Content.Shared.Atmos;
 

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.VendingMachines;
 using Content.Shared.VendingMachines;
 

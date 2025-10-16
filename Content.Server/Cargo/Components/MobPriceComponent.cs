@@ -1,4 +1,6 @@
-﻿namespace Content.Server.Cargo.Components;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Server.Cargo.Components;
 
 /// <summary>
 /// This is used for calculating the price of mobs.

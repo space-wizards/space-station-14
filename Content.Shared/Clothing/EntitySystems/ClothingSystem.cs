@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Clothing.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;

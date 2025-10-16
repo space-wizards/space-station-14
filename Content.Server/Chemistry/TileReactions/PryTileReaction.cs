@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Maps;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;

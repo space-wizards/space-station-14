@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Ninja.Events;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Damage;

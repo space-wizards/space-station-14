@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Defusable.Components;
 using Content.Server.Defusable.Systems;
 using Content.Server.Doors.Systems;

@@ -1,4 +1,6 @@
-﻿using Content.Shared.Dataset;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Dataset;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Players.PlayTimeTracking;

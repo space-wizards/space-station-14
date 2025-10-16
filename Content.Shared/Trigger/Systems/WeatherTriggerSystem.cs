@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Trigger.Components.Effects;
 using Content.Shared.Weather;
 using Robust.Shared.Prototypes;

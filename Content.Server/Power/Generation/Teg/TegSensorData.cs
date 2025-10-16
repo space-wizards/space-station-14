@@ -1,4 +1,6 @@
-﻿using Content.Server.Power.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.Power.Components;
 
 namespace Content.Server.Power.Generation.Teg;
 

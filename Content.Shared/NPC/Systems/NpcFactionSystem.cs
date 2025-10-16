@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Prototypes;
 using Robust.Shared.Prototypes;

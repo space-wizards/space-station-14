@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Traitor.Systems;
 using Robust.Shared.Prototypes;
 

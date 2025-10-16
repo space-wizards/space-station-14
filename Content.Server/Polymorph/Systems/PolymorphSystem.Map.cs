@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.GameTicking;
 
 namespace Content.Server.Polymorph.Systems;

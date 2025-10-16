@@ -1,4 +1,6 @@
-﻿namespace Content.Server.Destructible.Thresholds.Behaviors
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Server.Destructible.Thresholds.Behaviors
 {
     [Serializable]
     [DataDefinition]

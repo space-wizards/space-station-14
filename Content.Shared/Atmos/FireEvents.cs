@@ -1,4 +1,6 @@
-﻿using Content.Shared.Inventory;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Inventory;
 using Content.Shared.Nutrition.Components;
 
 namespace Content.Shared.Atmos;

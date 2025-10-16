@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Threading.Tasks;
 using Content.Shared.Doors.Components;
 using Content.Shared.Procedural;

@@ -1,4 +1,6 @@
-﻿#nullable enable
+﻿// SPDX-License-Identifier: MIT
+
+#nullable enable
 using Content.Server.Body.Systems;
 using Robust.Shared.GameObjects;
 

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.GameTicking.Rules;
 using Content.Shared.Whitelist;
 using Robust.Shared.Map;

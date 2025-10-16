@@ -1,4 +1,6 @@
-﻿using Content.Shared.Ghost.Roles.Raffles;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Ghost.Roles.Raffles;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Ghost.Roles.Raffles;

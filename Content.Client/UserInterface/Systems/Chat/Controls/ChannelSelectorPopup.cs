@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Chat;
 using Robust.Client.UserInterface.Controls;
 using static Robust.Client.UserInterface.Controls.BaseButton;

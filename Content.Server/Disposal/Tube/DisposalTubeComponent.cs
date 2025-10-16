@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Disposal.Unit;
 using Content.Shared.Damage;
 using Robust.Shared.Audio;

@@ -1,4 +1,6 @@
-﻿using Content.Shared.Atmos;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Atmos;
 
 namespace Content.Server.Power.Generation.Teg;
 

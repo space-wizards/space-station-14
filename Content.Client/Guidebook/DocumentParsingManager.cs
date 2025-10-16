@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Linq;
 using Content.Client.Guidebook.Controls;
 using Content.Client.Guidebook.Richtext;

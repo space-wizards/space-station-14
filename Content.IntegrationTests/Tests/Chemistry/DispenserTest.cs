@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Chemistry.UI;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Chemistry;

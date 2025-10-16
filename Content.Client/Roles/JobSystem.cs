@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Roles.Jobs;
 
 namespace Content.Client.Roles;

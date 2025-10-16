@@ -1,4 +1,6 @@
-﻿using Content.Shared.Physics;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Physics;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 

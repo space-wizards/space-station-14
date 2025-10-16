@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.IgnitionSource.Components;

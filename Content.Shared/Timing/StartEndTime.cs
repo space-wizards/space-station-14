@@ -1,4 +1,6 @@
-﻿using Robust.Shared.Timing;
+﻿// SPDX-License-Identifier: MIT
+
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Timing;
 

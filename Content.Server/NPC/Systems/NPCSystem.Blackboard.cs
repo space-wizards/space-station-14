@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.NPC.HTN;
 
 namespace Content.Server.NPC.Systems;

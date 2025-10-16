@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Atmos.Components;
 using Robust.Client.GameObjects;
 using Content.Shared.Atmos.Piping;

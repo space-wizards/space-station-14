@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Numerics;
 using Content.Client.ContextMenu.UI;
 using Content.Shared.Verbs;

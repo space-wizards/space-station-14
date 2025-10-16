@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Numerics;
 using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;

@@ -1,4 +1,6 @@
-﻿using Content.Shared.Materials;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Materials;
 using Content.Shared.Power.Generator;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 

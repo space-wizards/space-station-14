@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Database;

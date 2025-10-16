@@ -1,4 +1,6 @@
-﻿using Content.Server.MassMedia.Systems;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.MassMedia.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 

@@ -1,4 +1,6 @@
-﻿namespace Content.Server.Electrocution;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Server.Electrocution;
 
 /// <summary>
 /// Component for virtual electrocution entities (representing an in-progress shock).

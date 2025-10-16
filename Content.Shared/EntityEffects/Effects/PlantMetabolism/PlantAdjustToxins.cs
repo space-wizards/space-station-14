@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 namespace Content.Shared.EntityEffects.Effects.PlantMetabolism;
 
 public sealed partial class PlantAdjustToxins : PlantAdjustAttribute<PlantAdjustToxins>

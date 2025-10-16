@@ -1,4 +1,6 @@
-﻿using Content.Shared.Decals;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Decals;
 
 namespace Content.MapRenderer.Painters;
 

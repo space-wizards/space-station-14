@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Silicons.StationAi;
 using Robust.Client.UserInterface;
 

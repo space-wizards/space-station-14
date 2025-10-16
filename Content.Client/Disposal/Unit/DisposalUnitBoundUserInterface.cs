@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Disposal.Mailing;
 using Content.Client.Power.EntitySystems;
 using Content.Shared.Disposal.Components;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Threading.Tasks;
 using Content.Client.Replay.UI.Loading;
 using Robust.Client.Replays.Loading;

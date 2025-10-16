@@ -1,4 +1,6 @@
-﻿using Content.Server.Inventory;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.Inventory;
 using Content.Shared.Inventory;
 using Content.Shared.Radio.Components;
 using Content.Shared.Silicons.Borgs;

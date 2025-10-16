@@ -1,4 +1,6 @@
-﻿using Content.Shared.Trigger.Components.Triggers;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Trigger.Components.Triggers;
 using Content.Shared.StepTrigger.Systems;
 using Robust.Shared.Physics.Events;
 

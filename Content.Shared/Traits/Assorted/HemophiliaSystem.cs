@@ -1,4 +1,6 @@
-﻿using Content.Shared.Body.Events;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Body.Events;
 
 namespace Content.Shared.Traits.Assorted;
 

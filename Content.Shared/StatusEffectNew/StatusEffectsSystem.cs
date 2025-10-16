@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Rejuvenate;
 using Content.Shared.StatusEffectNew.Components;

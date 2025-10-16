@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Body.Events;
 using Content.Shared.Emoting;
 using Content.Shared.Hands;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Stylesheets;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;

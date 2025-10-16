@@ -1,4 +1,6 @@
-﻿using Content.Shared.Objectives;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Objectives;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.CharacterInfo;

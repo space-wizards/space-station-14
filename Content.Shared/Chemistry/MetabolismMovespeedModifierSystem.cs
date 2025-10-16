@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Timing;

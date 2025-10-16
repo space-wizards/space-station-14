@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.ActionBlocker;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory.Events;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.GameTicking;
 using Robust.Shared.Prototypes;

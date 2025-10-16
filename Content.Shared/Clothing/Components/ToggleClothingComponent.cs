@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Actions.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Item.ItemToggle.Components;

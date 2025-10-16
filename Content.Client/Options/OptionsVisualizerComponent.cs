@@ -1,4 +1,6 @@
-﻿using Content.Shared.CCVar;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.CCVar;
 
 namespace Content.Client.Options;
 

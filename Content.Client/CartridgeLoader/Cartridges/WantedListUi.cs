@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.UserInterface.Fragments;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Robust.Client.UserInterface;

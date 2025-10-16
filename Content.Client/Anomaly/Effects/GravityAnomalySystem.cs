@@ -1,4 +1,6 @@
-﻿using Content.Shared.Anomaly.Effects;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Anomaly.Effects;
 
 namespace Content.Client.Anomaly.Effects;
 

@@ -1,4 +1,6 @@
-﻿using Content.Shared.ProximityDetection.Systems;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.ProximityDetection.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;

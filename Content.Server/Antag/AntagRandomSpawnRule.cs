@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Antag.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Server.GameTicking.Rules;

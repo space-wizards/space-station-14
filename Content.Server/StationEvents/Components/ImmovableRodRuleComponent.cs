@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.StationEvents.Events;
 using Content.Shared.Storage;
 using Robust.Shared.Prototypes;

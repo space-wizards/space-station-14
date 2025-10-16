@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Robust.Server.ServerStatus;

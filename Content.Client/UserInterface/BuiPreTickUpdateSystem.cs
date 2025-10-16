@@ -1,4 +1,6 @@
-﻿using Robust.Client.GameObjects;
+﻿// SPDX-License-Identifier: MIT
+
+using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Timing;

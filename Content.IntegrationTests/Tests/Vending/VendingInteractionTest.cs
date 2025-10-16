@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Linq;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Server.VendingMachines;

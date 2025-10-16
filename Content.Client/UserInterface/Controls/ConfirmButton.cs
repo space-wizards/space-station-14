@@ -1,4 +1,6 @@
-﻿using Robust.Client.UserInterface.Controls;
+﻿// SPDX-License-Identifier: MIT
+
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface.Controls;

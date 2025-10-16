@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.MagicMirror;
 using Robust.Client.GameObjects;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Robust.Client.GameObjects;
 using Content.Shared.Speech.Components;
 using Robust.Client.UserInterface;

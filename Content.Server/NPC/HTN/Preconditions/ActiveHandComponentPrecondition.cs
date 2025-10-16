@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Hands.Systems;
 using Robust.Shared.Prototypes;
 

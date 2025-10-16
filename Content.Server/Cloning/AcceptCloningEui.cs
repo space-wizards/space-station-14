@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.EUI;
 using Content.Shared.Cloning;
 using Content.Shared.Eui;

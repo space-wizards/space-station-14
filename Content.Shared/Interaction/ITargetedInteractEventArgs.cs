@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Interaction
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Interaction
 {
     public interface ITargetedInteractEventArgs
     {

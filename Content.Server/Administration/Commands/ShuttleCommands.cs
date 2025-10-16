@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.RoundEnd;
 using Content.Shared.Administration;
 using Content.Shared.Localizations;

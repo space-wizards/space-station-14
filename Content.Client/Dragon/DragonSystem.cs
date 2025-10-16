@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Dragon;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameStates;

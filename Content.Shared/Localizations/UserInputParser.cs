@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Globalization;
 
 namespace Content.Shared.Localizations;

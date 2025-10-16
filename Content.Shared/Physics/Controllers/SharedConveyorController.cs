@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Numerics;
 using Content.Shared.Conveyor;
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Components;

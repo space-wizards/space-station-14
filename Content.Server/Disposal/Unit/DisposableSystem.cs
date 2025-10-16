@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Tube;
 using Content.Shared.Body.Components;

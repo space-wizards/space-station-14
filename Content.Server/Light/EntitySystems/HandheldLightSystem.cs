@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Actions;
 using Content.Server.Popups;
 using Content.Server.Power.EntitySystems;

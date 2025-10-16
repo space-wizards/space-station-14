@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Effects;
 using Content.Client.Smoking;
 using Content.Shared.Chemistry.Components;

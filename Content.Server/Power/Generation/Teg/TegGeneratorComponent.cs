@@ -1,4 +1,6 @@
-﻿namespace Content.Server.Power.Generation.Teg;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Server.Power.Generation.Teg;
 
 /// <summary>
 /// The centerpiece for the thermo-electric generator (TEG).

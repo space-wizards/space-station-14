@@ -1,4 +1,6 @@
-﻿using Content.Server.Station.Systems;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.Station.Systems;
 
 namespace Content.Server.Station.Components;
 

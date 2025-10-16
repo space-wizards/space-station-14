@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Destructible.Thresholds;
 
 namespace Content.Server.Xenoarchaeology.Artifact.XAE.Components;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Xenoarchaeology.Artifact.XAE.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;

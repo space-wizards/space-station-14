@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Chat.Managers;

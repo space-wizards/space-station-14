@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 namespace Content.Shared.Shuttles.UI.MapObjects;
 
 /// <summary>

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.NPC.Systems;
 
 namespace Content.Server.NPC.Queries.Queries;

@@ -1,4 +1,6 @@
-﻿using Content.Shared.Administration;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Administration;
 using Robust.Shared.Toolshed;
 
 namespace Content.Server.Administration.Toolshed;

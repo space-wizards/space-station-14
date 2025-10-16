@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Pulling;
 using PullingSystem = Content.Shared.Movement.Pulling.Systems.PullingSystem;
 

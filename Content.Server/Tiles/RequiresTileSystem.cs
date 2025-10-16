@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Tiles;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Map.Enumerators;

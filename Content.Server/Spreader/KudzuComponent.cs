@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Damage;
 
 namespace Content.Server.Spreader;

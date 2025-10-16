@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿// SPDX-License-Identifier: MIT
+
+using System.IO;
 using System.Linq;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;

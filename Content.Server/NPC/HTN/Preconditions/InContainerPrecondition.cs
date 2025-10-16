@@ -1,4 +1,6 @@
-﻿using Robust.Server.Containers;
+﻿// SPDX-License-Identifier: MIT
+
+using Robust.Server.Containers;
 
 namespace Content.Server.NPC.HTN.Preconditions;
 

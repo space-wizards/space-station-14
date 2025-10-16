@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System;
 using Content.Shared.Dataset;
 using NUnit.Framework;

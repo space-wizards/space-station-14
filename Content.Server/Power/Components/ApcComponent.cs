@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Power.NodeGroups;
 using Content.Shared.APC;
 using Robust.Shared.Audio;

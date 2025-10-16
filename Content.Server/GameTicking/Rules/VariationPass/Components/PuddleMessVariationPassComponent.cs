@@ -1,4 +1,6 @@
-﻿using Content.Shared.Random;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Random;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameTicking.Rules.VariationPass.Components;

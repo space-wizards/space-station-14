@@ -1,4 +1,6 @@
-﻿using Content.Shared.RatKing;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.RatKing;
 
 namespace Content.Client.RatKing;
 

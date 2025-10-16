@@ -1,4 +1,6 @@
-﻿using Content.Server.Power.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.Power.Components;
 using Content.Server.Power.Pow3r;
 
 namespace Content.Server.Power.NodeGroups

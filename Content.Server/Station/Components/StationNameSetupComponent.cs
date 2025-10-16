@@ -1,4 +1,6 @@
-﻿using Content.Server.Maps.NameGenerators;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.Maps.NameGenerators;
 
 namespace Content.Server.Station.Components;
 

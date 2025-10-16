@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Chat.Managers;
 using Content.Shared.Administration;
 using Robust.Shared.Console;

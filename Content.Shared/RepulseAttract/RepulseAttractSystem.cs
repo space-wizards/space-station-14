@@ -1,4 +1,6 @@
-﻿using Content.Shared.Physics;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Physics;
 using Content.Shared.Throwing;
 using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee.Events;

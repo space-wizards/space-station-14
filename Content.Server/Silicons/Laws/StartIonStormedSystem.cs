@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;

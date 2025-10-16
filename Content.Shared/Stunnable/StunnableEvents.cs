@@ -1,4 +1,6 @@
-﻿using Content.Shared.Alert;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Alert;
 using Content.Shared.DoAfter;
 using Content.Shared.Popups;
 using Robust.Shared.Serialization;

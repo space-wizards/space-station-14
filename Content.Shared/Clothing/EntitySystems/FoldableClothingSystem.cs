@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Clothing.Components;
 using Content.Shared.Foldable;
 using Content.Shared.Inventory;

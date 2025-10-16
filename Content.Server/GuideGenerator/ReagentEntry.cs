@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Linq;
 using System.Text.Json.Serialization;
 using Content.Server.Body.Components;

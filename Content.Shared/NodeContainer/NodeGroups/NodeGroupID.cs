@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 namespace Content.Shared.NodeContainer.NodeGroups;
 
 public enum NodeGroupID : byte

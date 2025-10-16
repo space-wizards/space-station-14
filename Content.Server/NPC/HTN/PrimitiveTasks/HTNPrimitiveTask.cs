@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.NPC.HTN.Preconditions;
 using Content.Server.NPC.Queries;
 using Robust.Shared.Prototypes;

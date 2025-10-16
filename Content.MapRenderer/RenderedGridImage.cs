@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Numerics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using SixLabors.ImageSharp;

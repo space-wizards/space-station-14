@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.DisplacementMap;
 using Content.Shared.CCVar;
 using Content.Shared.Humanoid;

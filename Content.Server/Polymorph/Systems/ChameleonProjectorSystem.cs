@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Polymorph.Systems;
 
 namespace Content.Server.Polymorph.Systems;

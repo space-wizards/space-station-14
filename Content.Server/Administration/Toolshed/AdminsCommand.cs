@@ -1,4 +1,6 @@
-﻿using Content.Server.Administration.Managers;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Robust.Shared.Player;
 using Robust.Shared.Toolshed;

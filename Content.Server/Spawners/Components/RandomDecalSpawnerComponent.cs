@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Robust.Shared.Prototypes;
 using Content.Shared.Maps;
 using Content.Shared.Decals;

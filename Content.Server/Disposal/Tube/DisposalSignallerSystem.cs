@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.DeviceLinking.Systems;
 
 namespace Content.Server.Disposal.Tube;

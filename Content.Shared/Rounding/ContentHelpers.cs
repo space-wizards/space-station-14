@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Rounding
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Rounding
 {
     public static class ContentHelpers
     {

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Trigger.Components.Effects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;

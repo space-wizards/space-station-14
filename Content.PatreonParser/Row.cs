@@ -1,4 +1,6 @@
-﻿using CsvHelper.Configuration.Attributes;
+﻿// SPDX-License-Identifier: MIT
+
+using CsvHelper.Configuration.Attributes;
 
 namespace Content.PatreonParser;
 

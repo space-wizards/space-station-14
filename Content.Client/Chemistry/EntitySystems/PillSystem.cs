@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Chemistry.Components;
 using Robust.Client.GameObjects;
 

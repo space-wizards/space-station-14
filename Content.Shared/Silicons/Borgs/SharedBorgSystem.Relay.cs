@@ -1,4 +1,6 @@
-﻿using Content.Shared.Damage;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Damage;
 using Content.Shared.Silicons.Borgs.Components;
 
 namespace Content.Shared.Silicons.Borgs;

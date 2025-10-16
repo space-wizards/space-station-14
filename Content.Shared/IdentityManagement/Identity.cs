@@ -1,4 +1,6 @@
-﻿using Content.Shared.Ghost;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Ghost;
 using Content.Shared.IdentityManagement.Components;
 
 namespace Content.Shared.IdentityManagement;

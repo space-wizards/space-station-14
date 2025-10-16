@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 #nullable enable annotations
 using System.Numerics;
 using Content.Server.Interaction;

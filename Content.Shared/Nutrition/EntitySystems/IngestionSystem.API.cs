@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;

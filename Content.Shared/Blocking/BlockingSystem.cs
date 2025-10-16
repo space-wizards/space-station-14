@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Damage;
 using Content.Shared.Examine;

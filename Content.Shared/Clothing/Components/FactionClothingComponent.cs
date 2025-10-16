@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.NPC.Prototypes;
 using Robust.Shared.GameStates;

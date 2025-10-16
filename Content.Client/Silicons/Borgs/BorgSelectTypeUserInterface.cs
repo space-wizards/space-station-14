@@ -1,4 +1,6 @@
-﻿using Content.Shared.Silicons.Borgs.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Silicons.Borgs.Components;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 

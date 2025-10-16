@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 namespace Content.Client.Power.SMES;
 
 [RegisterComponent]

@@ -1,4 +1,6 @@
-﻿using System;
+﻿// SPDX-License-Identifier: MIT
+
+using System;
 using System.Net;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;

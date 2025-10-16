@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;

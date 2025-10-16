@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Pointing.Components;
 using Content.Shared.Pointing;
 using Robust.Client.Animations;

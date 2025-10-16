@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Connection.Whitelist;
 using Content.Server.Connection.Whitelist.Conditions;

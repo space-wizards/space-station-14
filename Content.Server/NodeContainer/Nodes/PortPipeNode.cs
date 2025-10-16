@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.NodeContainer;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;

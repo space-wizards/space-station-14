@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Shuttles.UI.MapObjects;
 using Robust.Shared.Serialization;
 

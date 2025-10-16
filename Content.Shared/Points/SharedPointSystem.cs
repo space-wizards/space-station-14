@@ -1,4 +1,6 @@
-﻿using Content.Shared.FixedPoint;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.FixedPoint;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 

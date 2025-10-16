@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.GPS;
 

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Stunnable;
 
 namespace Content.Server.Stunnable;

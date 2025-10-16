@@ -1,4 +1,6 @@
-﻿using Robust.Client.UserInterface.CustomControls;
+﻿// SPDX-License-Identifier: MIT
+
+using Robust.Client.UserInterface.CustomControls;
 
 namespace Content.Client.Viewport
 {

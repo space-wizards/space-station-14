@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Components;
 using Content.Server.Maps;

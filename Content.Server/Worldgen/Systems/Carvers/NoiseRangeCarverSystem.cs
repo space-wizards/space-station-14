@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Worldgen.Components.Carvers;
 using Content.Server.Worldgen.Systems.Debris;
 

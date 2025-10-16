@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Drugs;
 using Content.Shared.StatusEffectNew;
 using Robust.Client.Graphics;

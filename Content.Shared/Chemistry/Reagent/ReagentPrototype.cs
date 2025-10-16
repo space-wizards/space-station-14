@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Collections.Frozen;
 using System.Linq;
 using Content.Shared.FixedPoint;

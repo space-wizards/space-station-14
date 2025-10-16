@@ -1,4 +1,6 @@
-﻿using Robust.Shared.Prototypes;
+﻿// SPDX-License-Identifier: MIT
+
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Prototypes;

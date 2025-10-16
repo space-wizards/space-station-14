@@ -1,4 +1,6 @@
-﻿using Content.Shared.Administration.Logs;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
 using Content.Shared.Mind.Components;

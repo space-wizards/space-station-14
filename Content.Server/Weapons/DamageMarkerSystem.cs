@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Weapons.Marker;
 
 namespace Content.Server.Weapons;

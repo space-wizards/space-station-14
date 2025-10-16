@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Construction.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;

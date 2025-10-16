@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Linq;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Components;

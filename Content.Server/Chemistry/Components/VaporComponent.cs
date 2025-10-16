@@ -1,4 +1,6 @@
-﻿using Robust.Shared.Map;
+﻿// SPDX-License-Identifier: MIT
+
+using Robust.Shared.Map;
 
 namespace Content.Server.Chemistry.Components
 {

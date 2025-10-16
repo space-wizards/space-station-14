@@ -1,4 +1,6 @@
-﻿using Content.Server.Nutrition.EntitySystems;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Nutrition.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Item;

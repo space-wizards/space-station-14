@@ -1,4 +1,6 @@
-﻿using Content.Server.Stack;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.Stack;
 using Content.Shared.Construction;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Actions;
 using Content.Client.Items;
 using Content.Client.Message;

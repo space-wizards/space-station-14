@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.StatusEffect;
 using Content.Shared.Inventory;
 using Content.Shared.Eye.Blinding.Components;

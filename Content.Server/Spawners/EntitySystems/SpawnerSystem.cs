@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Spawners.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;

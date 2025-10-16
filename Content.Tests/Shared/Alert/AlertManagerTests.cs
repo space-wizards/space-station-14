@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.IO;
 using Content.Client.Alerts;
 using Content.Shared.Alert;

@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Linq;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Atmos.Prototypes;
 using Content.Shared.Body.Part;

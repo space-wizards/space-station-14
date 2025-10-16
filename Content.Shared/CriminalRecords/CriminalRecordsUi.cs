@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Security;
 using Content.Shared.StationRecords;
 using Robust.Shared.Serialization;

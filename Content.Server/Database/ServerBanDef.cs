@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Net;
 using Content.Shared.CCVar;
 using Content.Shared.Database;

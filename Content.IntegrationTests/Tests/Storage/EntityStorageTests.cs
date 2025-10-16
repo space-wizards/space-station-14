@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Damage;
 using Robust.Shared.Containers;

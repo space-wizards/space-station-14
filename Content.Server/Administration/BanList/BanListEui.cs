@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Database;
 using Content.Server.EUI;

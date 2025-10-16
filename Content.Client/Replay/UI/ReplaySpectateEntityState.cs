@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Systems.Chat;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;

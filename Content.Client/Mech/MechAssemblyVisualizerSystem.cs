@@ -1,4 +1,6 @@
-﻿using Content.Shared.Mech;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Mech;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Mech;

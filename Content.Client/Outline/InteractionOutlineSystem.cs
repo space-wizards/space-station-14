@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.ContextMenu.UI;
 using Content.Client.Gameplay;
 using Content.Client.Interactable.Components;

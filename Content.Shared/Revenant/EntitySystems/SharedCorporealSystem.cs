@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Physics;
 using Robust.Shared.Physics;
 using System.Linq;

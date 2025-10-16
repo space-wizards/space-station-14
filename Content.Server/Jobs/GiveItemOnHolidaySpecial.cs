@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Holiday;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Roles;

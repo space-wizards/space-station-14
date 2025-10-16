@@ -1,4 +1,6 @@
-﻿namespace Content.Server.Station.Components;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Server.Station.Components;
 
 /// <summary>
 /// This is used for event eligibility.

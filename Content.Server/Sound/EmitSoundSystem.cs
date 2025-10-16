@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Sound;
 using Content.Shared.Sound.Components;
 using Robust.Shared.Timing;

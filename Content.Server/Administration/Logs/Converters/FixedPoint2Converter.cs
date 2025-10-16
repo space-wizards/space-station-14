@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Text.Json;
 using Content.Shared.FixedPoint;
 
 namespace Content.Server.Administration.Logs.Converters;

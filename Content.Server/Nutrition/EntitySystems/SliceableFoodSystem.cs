@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.DoAfter;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.EntitySystems;

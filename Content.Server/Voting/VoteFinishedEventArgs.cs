@@ -1,4 +1,6 @@
-﻿using System.Collections.Immutable;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Collections.Immutable;
 
 
 namespace Content.Server.Voting

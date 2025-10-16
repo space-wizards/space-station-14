@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 namespace Content.Shared.DeviceLinking.Events;
 
 public sealed class LinkAttemptEvent : CancellableEntityEventArgs

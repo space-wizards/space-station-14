@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Alert;
 
 namespace Content.Shared.Abilities.Mime;

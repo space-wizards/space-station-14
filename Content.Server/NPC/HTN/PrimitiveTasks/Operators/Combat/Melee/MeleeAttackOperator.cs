@@ -1,4 +1,6 @@
-﻿using Content.Server.NPC.HTN.PrimitiveTasks.Operators.Interactions;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.NPC.HTN.PrimitiveTasks.Operators.Interactions;
 using Content.Shared.CombatMode;
 using Content.Shared.Weapons.Melee;
 

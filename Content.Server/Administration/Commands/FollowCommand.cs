@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Administration;
 using Content.Shared.Follower;
 using Robust.Shared.Console;

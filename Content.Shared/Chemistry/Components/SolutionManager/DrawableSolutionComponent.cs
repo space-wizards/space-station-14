@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Chemistry.Components.SolutionManager;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Chemistry.Components.SolutionManager;
 
 /// <summary>
 ///     Denotes the solution that can removed  be with syringes.

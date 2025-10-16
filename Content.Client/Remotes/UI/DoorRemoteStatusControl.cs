@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Message;
 using Content.Client.Stylesheets;
 using Content.Shared.Remotes.Components;

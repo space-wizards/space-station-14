@@ -1,4 +1,6 @@
-﻿using Content.Shared.Construction.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Construction.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;

@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Power.Generator;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Power.Generator;
 
 /// <summary>
 /// This handles small, portable generators that run off a material fuel.

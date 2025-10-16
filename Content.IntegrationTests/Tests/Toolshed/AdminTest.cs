@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Collections.Generic;
 using System.Reflection;
 using Content.Server.Administration.Managers;
 using Robust.Shared.Toolshed;

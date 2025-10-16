@@ -1,4 +1,6 @@
-﻿using Content.Shared.Silicons.Bots;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Silicons.Bots;
 
 namespace Content.Client.Silicons.Bots;
 

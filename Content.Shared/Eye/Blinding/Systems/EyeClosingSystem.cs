@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Actions;
 using Content.Shared.Eye.Blinding.Components;
 using Robust.Shared.Audio.Systems;

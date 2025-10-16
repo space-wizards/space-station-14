@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Damage.Components;
 
 namespace Content.IntegrationTests.Tests.Damageable;

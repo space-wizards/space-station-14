@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.GameStates;
 

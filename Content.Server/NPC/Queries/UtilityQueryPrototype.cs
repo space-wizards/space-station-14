@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.NPC.Queries.Considerations;
 using Content.Server.NPC.Queries.Queries;
 using Robust.Shared.Prototypes;

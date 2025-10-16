@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.IO.Compression;
 using System.Linq;
 using Content.Client.Message;

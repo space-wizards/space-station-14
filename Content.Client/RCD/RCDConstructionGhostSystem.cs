@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Hands.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.RCD;

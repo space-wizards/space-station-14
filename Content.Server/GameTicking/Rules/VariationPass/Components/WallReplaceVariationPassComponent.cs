@@ -1,4 +1,6 @@
-﻿namespace Content.Server.GameTicking.Rules.VariationPass.Components;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Server.GameTicking.Rules.VariationPass.Components;
 
 
 [RegisterComponent]

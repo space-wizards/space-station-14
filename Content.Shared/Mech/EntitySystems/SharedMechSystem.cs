@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Linq;
 using Content.Shared.Access.Components;
 using Content.Shared.ActionBlocker;

@@ -1,4 +1,6 @@
-﻿using Content.Shared.CCVar;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.CCVar;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC;

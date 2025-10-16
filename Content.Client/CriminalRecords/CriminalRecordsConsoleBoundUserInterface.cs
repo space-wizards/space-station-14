@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Access.Systems;
 using Content.Shared.CriminalRecords;
 using Content.Shared.CriminalRecords.Components;

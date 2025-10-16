@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Whitelist;
 using Content.Shared.Containers.ItemSlots;
 using Content.Server.Chemistry.EntitySystems;

@@ -1,4 +1,6 @@
-﻿using Content.Shared.Beam.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Beam.Components;
 
 namespace Content.Client.Beam.Components;
 [RegisterComponent]

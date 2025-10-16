@@ -1,4 +1,6 @@
-﻿using Content.Client.Administration.Managers;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Client.Administration.Managers;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Actions;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.UserInterface;

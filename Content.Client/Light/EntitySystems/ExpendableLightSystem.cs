@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Light.Components;
 using Content.Shared.Light.Components;
 using Robust.Client.GameObjects;

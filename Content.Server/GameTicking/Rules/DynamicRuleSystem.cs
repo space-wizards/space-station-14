@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Diagnostics;
 using Content.Server.Administration.Logs;
 using Content.Server.RoundEnd;

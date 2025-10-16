@@ -1,4 +1,6 @@
-﻿using Robust.Shared.Audio;
+﻿// SPDX-License-Identifier: MIT
+
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Chasm;

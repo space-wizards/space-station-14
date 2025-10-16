@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Collections.Generic;
 using Content.Server.Construction;
 using Content.Shared.Construction;

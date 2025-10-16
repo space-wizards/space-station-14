@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Thief.Systems;
 using Content.Shared.Thief;
 using Robust.Shared.Audio;

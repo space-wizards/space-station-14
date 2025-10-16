@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Robust.Shared.Audio;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;

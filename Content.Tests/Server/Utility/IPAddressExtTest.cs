@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Net;
 using Content.Server.IP;
 using NUnit.Framework;
 

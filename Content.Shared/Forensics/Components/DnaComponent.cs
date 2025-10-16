@@ -1,4 +1,6 @@
-﻿using Robust.Shared.GameStates;
+﻿// SPDX-License-Identifier: MIT
+
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Forensics.Components;
 

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Examine;
 using Content.Shared.Coordinates.Helpers;
 using Content.Server.PowerCell;

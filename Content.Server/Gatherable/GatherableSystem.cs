@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Destructible;
 using Content.Server.Gatherable.Components;
 using Content.Shared.EntityTable;

@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Chat;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Chat;
 
 public static class ChatChannelExtensions
 {

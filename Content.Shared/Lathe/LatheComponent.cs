@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Lathe.Prototypes;
 using Content.Shared.Research.Prototypes;

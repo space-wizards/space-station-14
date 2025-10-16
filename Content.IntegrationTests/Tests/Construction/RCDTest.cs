@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Numerics;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Charges.Systems;

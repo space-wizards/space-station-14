@@ -1,4 +1,6 @@
-﻿using Content.Shared.Damage.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Damage.Components;
 
 namespace Content.Shared.Damage.Systems;
 

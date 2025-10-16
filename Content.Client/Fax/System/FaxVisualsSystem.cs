@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Robust.Client.GameObjects;
 using Content.Shared.Fax.Components;
 using Content.Shared.Fax;

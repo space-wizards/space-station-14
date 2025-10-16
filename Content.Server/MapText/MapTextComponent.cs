@@ -1,4 +1,6 @@
-﻿using Content.Shared.MapText;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.MapText;
 
 namespace Content.Server.MapText;
 

@@ -1,4 +1,6 @@
-﻿using Content.Shared.Sticky.Systems;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Sticky.Systems;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Utility;

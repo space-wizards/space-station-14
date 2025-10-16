@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Stylesheets;
 using Content.Shared.Power;
 using Robust.Client.Graphics;

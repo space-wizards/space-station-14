@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Wires;
 using Content.Shared.VendingMachines;
 using Content.Shared.Wires;

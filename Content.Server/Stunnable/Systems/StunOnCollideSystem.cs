@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Stunnable.Components;
 using Content.Shared.Movement.Systems;
 using JetBrains.Annotations;

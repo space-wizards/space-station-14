@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Damage.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;

@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿// SPDX-License-Identifier: MIT
+
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Content.Shared.Mapping;

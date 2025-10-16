@@ -1,4 +1,6 @@
-﻿using Content.Shared.SensorMonitoring;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.SensorMonitoring;
 using Robust.Shared.Collections;
 using ConsoleUIState = Content.Shared.SensorMonitoring.SensorMonitoringConsoleBoundInterfaceState;
 using Content.Shared.DeviceNetwork.Components;

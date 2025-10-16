@@ -1,4 +1,6 @@
-﻿using Content.Server.Chat.Systems;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.Chat.Systems;
 using Content.Shared.Chat;
 using Robust.Shared.Prototypes;
 

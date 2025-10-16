@@ -1,4 +1,6 @@
-﻿using Content.Shared.Body.Systems;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Body.Systems;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;

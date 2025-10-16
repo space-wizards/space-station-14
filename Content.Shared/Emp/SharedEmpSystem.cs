@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Examine;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.Audio;

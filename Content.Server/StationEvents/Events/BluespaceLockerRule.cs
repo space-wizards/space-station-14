@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Resist;
 using Content.Server.StationEvents.Components;
 using Content.Server.Storage.Components;

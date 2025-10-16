@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Discord;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;

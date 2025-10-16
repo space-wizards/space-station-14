@@ -1,4 +1,6 @@
-﻿using Content.Server.Actions;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.Actions;
 using Content.Server.Humanoid;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Humanoid;

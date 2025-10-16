@@ -1,4 +1,6 @@
-﻿using Content.Server.Chat.Managers;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.Chat.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using NetCord.Gateway;

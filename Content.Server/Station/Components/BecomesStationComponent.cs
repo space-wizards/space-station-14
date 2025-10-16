@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.GameTicking;
 
 namespace Content.Server.Station.Components;

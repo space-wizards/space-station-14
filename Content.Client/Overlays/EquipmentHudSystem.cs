@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;

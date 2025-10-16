@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Physics;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Collision.Shapes;

@@ -1,4 +1,6 @@
-﻿using Content.Shared.EntityTable.EntitySelectors;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.EntityTable.EntitySelectors;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 

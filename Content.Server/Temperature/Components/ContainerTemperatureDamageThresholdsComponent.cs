@@ -1,4 +1,6 @@
-﻿namespace Content.Server.Temperature.Components;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Server.Temperature.Components;
 
 [RegisterComponent]
 public sealed partial class ContainerTemperatureDamageThresholdsComponent: Component

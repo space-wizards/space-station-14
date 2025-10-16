@@ -1,4 +1,6 @@
-﻿using Content.Shared.Eui;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Eui;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Administration.BanList;

@@ -1,4 +1,6 @@
-﻿namespace Content.Packaging;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Packaging;
 
 public sealed class SharedPackaging
 {

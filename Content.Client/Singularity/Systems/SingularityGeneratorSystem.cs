@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Singularity.EntitySystems;
 using Content.Shared.Singularity.Components;
 

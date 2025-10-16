@@ -1,4 +1,6 @@
-﻿using Content.Client.UserInterface;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Client.UserInterface;
 using Content.Shared.Power;
 using JetBrains.Annotations;
 using Robust.Client.Timing;

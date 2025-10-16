@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.CharacterAppearance.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Preferences;

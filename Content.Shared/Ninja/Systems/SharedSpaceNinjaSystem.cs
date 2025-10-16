@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Clothing.Components;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Weapons.Melee.Events;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Trigger.Components;
 using Content.Shared.Trigger.Systems;

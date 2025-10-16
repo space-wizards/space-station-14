@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Destructible;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;

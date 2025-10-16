@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.GameTicking.Rules.VariationPass.Components;
 using Content.Server.GameTicking.Rules.VariationPass.Components.ReplacementMarkers;
 

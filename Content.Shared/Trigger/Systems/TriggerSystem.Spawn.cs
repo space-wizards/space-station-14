@@ -1,4 +1,6 @@
-﻿using Content.Shared.GameTicking;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.GameTicking;
 using Content.Shared.Trigger.Components.Effects;
 using Content.Shared.Trigger.Components.Triggers;
 using Robust.Shared.Prototypes;

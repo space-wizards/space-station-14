@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Robust.Shared.GameStates;

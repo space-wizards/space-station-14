@@ -1,4 +1,6 @@
-﻿using Robust.Shared.CPUJob.JobQueues.Queues;
+﻿// SPDX-License-Identifier: MIT
+
+using Robust.Shared.CPUJob.JobQueues.Queues;
 
 namespace Content.Server.CPUJob.JobQueues.Queues
 {

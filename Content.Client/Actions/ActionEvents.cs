@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Actions.Components;
 using static Robust.Shared.Input.Binding.PointerInputCmdHandler;
 

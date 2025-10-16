@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Numerics;
 using Content.Shared.Jittering;
 using Robust.Client.Animations;

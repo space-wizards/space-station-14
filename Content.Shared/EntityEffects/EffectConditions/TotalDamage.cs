@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.EntityEffects;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;

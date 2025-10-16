@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.DeviceLinking.Components;
 
 namespace Content.Server.DeviceLinking.Systems;

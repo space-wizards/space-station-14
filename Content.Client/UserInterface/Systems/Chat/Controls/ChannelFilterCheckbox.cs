@@ -1,4 +1,6 @@
-﻿using Content.Shared.Chat;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Chat;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Systems.Chat.Controls;

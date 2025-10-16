@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceNetwork.Systems;
 using Robust.Shared.Audio;

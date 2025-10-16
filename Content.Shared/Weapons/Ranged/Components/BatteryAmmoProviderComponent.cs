@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 namespace Content.Shared.Weapons.Ranged.Components;
 
 public abstract partial class BatteryAmmoProviderComponent : AmmoProviderComponent

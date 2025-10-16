@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Defusable.Components;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;

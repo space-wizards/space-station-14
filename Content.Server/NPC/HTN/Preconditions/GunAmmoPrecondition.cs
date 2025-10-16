@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Weapons.Ranged.Events;
 

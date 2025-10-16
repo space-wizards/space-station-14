@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Numerics;
 using Content.Server.Beam.Components;
 using Content.Shared.Beam;
 using Content.Shared.Beam.Components;

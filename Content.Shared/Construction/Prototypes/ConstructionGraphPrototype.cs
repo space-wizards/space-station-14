@@ -1,4 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;

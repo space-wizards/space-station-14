@@ -1,4 +1,6 @@
-﻿using System.Collections.Immutable;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Collections.Immutable;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.CartridgeLoader;

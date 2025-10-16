@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.HotPotato;
 using Robust.Shared.Random;
 using Robust.Shared.Prototypes;

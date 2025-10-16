@@ -1,4 +1,6 @@
-﻿namespace Content.Server.Atmos
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Server.Atmos
 {
     public struct Hotspot
     {

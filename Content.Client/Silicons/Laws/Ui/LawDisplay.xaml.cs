@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Chat.Managers;
 using Content.Client.Message;
 using Content.Shared.Chat;

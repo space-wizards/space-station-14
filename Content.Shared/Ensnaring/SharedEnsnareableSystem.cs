@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Alert;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Damage.Components;

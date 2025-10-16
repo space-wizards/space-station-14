@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Popups;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Access.Systems;

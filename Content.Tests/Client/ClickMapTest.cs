@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Clickable;
 using NUnit.Framework;
 using SixLabors.ImageSharp;

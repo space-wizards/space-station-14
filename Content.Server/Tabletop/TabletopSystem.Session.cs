@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Numerics;
 using Content.Server.Tabletop.Components;
 using Content.Shared.Tabletop.Events;

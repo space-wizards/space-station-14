@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Database;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Database;
 
 // DO NOT CHANGE THE NUMERIC VALUES OF THESE
 [Serializable]

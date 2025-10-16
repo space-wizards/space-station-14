@@ -1,4 +1,6 @@
-﻿using Content.Server.Explosion.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.Explosion.Components;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Trigger;
 using Robust.Server.GameObjects;

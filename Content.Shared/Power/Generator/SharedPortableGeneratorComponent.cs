@@ -1,4 +1,6 @@
-﻿using Robust.Shared.Audio;
+﻿// SPDX-License-Identifier: MIT
+
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Power.Generator;

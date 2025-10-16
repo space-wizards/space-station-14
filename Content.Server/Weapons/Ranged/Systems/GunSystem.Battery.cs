@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Power;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Weapons.Ranged.Components;

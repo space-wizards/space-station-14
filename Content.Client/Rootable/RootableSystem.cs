@@ -1,4 +1,6 @@
-﻿using Content.Shared.Rootable;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Rootable;
 
 namespace Content.Client.Rootable;
 

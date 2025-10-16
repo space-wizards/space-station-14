@@ -1,4 +1,6 @@
-﻿using Content.Shared.Power;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Power;
 using Content.Shared.SMES;
 using Robust.Client.GameObjects;
 

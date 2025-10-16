@@ -1,4 +1,6 @@
-﻿using Content.Server.GameTicking;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.GameTicking;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Systems;
 using Robust.Shared.Map;

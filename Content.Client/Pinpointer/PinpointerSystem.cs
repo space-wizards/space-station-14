@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Pinpointer;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;

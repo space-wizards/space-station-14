@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Diagnostics;
 using System.Linq;
 using Content.Server.Administration.Managers;

@@ -1,4 +1,6 @@
-﻿using Content.Shared.Armor;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Armor;
 
 namespace Content.Client.Armor;
 

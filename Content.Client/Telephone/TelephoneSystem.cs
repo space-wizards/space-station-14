@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Telephone;
 
 namespace Content.Client.Telephone;

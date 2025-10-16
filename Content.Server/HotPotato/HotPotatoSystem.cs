@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.HotPotato;
 
 namespace Content.Server.HotPotato;

@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Light.Components;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Light.Components;
 
 /// <summary>
 /// A component which applies a specific behaviour to a PointLightComponent on its owner.

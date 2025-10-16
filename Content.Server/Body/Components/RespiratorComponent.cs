@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Body.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Chat.Prototypes;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.Shuttles.UI.MapObjects;
 using Content.Shared.Timing;

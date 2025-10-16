@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Ninja.Events;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Systems;

@@ -1,4 +1,6 @@
-﻿using Content.Shared.Administration.Logs;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Administration.Logs;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 

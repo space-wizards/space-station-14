@@ -1,4 +1,6 @@
-﻿using JetBrains.Annotations;
+﻿// SPDX-License-Identifier: MIT
+
+using JetBrains.Annotations;
 
 namespace Content.Server.Administration.Logs.Converters;
 

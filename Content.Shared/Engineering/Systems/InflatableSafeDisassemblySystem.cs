@@ -1,4 +1,6 @@
-﻿using Content.Shared.Engineering.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Engineering.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Balloon;

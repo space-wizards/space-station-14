@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Text.Json.Serialization;
 
 namespace Content.Server.Discord;
 

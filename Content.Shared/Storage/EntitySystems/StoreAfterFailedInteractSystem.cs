@@ -1,4 +1,6 @@
-﻿using Content.Shared.Storage.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Storage.Components;
 using Content.Shared.Storage.Events;
 
 namespace Content.Shared.Storage.EntitySystems;

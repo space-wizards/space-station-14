@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.StationEvents.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Collections;

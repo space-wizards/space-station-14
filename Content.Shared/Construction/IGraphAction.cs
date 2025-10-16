@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Construction
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Construction
 {
     [ImplicitDataDefinitionForInheritors]
     public partial interface IGraphAction

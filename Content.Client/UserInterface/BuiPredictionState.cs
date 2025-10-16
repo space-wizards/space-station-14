@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Linq;
 using Robust.Client.Timing;
 using Robust.Shared.Timing;
 

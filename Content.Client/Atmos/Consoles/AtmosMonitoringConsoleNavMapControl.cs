@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Pinpointer.UI;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Pinpointer;

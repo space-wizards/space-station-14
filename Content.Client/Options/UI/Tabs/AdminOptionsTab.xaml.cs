@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Administration;
 using Content.Client.Administration.UI.Tabs.PlayerTab;
 using Content.Shared.CCVar;

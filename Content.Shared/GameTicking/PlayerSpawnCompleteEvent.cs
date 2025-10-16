@@ -1,4 +1,6 @@
-﻿using Content.Shared.Preferences;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Preferences;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 

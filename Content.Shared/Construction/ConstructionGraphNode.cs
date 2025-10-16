@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Construction.NodeEntities;
 using Content.Shared.Construction.Serialization;

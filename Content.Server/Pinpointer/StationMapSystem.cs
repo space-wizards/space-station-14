@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.PowerCell;
 using Content.Shared.Pinpointer;
 using Robust.Server.GameObjects;

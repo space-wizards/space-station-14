@@ -1,4 +1,6 @@
-﻿using Content.Shared.Actions;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Actions;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Shared.UserInterface;

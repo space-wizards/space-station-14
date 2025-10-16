@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Gateway.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.UserInterface;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Research.Components;
 using Content.Shared.Xenoarchaeology.Equipment.Components;
 using Robust.Client.UserInterface;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;

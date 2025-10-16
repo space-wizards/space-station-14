@@ -1,4 +1,6 @@
-﻿using Content.Shared.Singularity.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Singularity.Components;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.ParticleAccelerator.UI

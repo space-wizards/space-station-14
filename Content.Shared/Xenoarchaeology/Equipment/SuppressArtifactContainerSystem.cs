@@ -1,4 +1,6 @@
-﻿using Content.Shared.Xenoarchaeology.Artifact;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Equipment.Components;
 using Robust.Shared.Containers;

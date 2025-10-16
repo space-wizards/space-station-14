@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 #nullable enable
 using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 // ReSharper disable ArrangeTrailingCommaInMultilineLists
 namespace Content.Server.Entry
 {

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Linq;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;

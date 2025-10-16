@@ -1,4 +1,6 @@
-﻿using Content.Shared.Power.Generator;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Power.Generator;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;

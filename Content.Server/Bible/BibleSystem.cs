@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Bible.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Popups;

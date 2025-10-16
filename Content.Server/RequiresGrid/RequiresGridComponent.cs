@@ -1,4 +1,6 @@
-﻿namespace Content.Server.RequiresGrid;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Server.RequiresGrid;
 
 /// <summary>
 /// Destroys an entity when they no longer are part of a Grid

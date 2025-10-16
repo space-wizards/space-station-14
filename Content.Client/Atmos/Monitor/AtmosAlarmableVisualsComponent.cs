@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Atmos.Monitor;
 
 namespace Content.Client.Atmos.Monitor;

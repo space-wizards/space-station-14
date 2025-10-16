@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Networking

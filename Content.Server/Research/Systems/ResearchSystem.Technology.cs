@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Database;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;

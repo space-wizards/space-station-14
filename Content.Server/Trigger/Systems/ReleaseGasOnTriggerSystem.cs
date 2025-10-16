@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Trigger.Components.Effects;
 using Content.Shared.Trigger.Systems;

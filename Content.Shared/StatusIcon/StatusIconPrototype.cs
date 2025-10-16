@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Stealth.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;

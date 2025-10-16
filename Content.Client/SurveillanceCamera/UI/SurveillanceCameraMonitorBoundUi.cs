@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Eye;
 using Content.Shared.SurveillanceCamera;
 using Robust.Client.GameObjects;

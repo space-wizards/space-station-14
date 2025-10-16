@@ -1,4 +1,6 @@
-﻿using Content.Shared.Nutrition.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Nutrition.Components;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry.Components.SolutionManager;

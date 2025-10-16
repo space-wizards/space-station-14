@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Humanoid.Components;
 using Content.Server.RandomMetadata;
 using Content.Shared.Humanoid.Prototypes;

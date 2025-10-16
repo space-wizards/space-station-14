@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Clothing;
 using Robust.Shared.GameStates;
 

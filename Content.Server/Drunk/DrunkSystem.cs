@@ -1,4 +1,6 @@
-﻿using Content.Shared.Drunk;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Drunk;
 
 namespace Content.Server.Drunk;
 

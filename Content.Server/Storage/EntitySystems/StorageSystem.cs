@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Explosion;
 using Content.Shared.Hands;
 using Content.Shared.Storage;

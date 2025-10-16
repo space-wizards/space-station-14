@@ -1,4 +1,6 @@
-﻿using Content.Shared.Throwing;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Throwing;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;

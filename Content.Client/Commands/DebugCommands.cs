@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Markers;
 using Content.Client.Popups;
 using Content.Client.SubFloor;

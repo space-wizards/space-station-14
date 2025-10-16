@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Radio;
 using Robust.Shared.Random;

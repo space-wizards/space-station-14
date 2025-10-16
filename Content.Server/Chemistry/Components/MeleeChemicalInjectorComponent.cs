@@ -1,4 +1,6 @@
-﻿namespace Content.Server.Chemistry.Components;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Server.Chemistry.Components;
 
 /// <summary>
 /// Used for melee weapon entities that should try to inject a

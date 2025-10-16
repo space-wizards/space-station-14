@@ -1,4 +1,6 @@
-﻿using Content.Shared.Chat.Prototypes;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Chat.V2;
 using Content.Shared.Radio;
 

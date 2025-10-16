@@ -1,4 +1,6 @@
-﻿using Content.Shared.Trigger.Components.Effects;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Trigger.Components.Effects;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Trigger.Systems;

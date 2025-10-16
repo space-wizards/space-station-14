@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;

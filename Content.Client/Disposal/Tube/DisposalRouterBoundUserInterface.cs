@@ -1,4 +1,6 @@
-﻿using JetBrains.Annotations;
+﻿// SPDX-License-Identifier: MIT
+
+using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using static Content.Shared.Disposal.Components.SharedDisposalRouterComponent;
 

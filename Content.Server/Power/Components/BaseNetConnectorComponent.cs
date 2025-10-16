@@ -1,4 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.NodeGroups;

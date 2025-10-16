@@ -1,4 +1,6 @@
-﻿using Content.Client.Gameplay;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Client.Gameplay;
 using Content.Client.Mapping;
 using Robust.Client.State;
 

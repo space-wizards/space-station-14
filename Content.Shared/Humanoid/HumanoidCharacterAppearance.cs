@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Linq;
 using System.Numerics;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;

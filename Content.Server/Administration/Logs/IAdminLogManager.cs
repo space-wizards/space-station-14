@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Text.Json;
 using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Server.GameTicking;

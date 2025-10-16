@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Chemistry.Components;
 using Content.Shared.Chemistry.Events;
 using Content.Shared.Projectiles;

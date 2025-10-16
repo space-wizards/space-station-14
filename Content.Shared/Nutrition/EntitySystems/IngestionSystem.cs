@@ -1,4 +1,6 @@
-﻿using Content.Shared.Administration.Logs;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Systems;

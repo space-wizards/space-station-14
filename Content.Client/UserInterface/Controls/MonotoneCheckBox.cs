@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Controls;

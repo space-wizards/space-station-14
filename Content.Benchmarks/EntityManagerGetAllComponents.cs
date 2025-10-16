@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using BenchmarkDotNet.Attributes;
 using Moq;
 using Robust.Shared.Analyzers;

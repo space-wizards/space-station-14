@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.CriminalRecords.Systems;
 
 namespace Content.Client.CriminalRecords.Systems;

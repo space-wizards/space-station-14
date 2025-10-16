@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Weapons.Marker;
 using Robust.Client.GameObjects;
 using Robust.Shared.Timing;

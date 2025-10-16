@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Decals.Overlays;
 using Content.Shared.Decals;
 using Robust.Client.GameObjects;

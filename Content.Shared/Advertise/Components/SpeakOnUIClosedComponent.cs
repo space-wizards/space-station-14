@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Advertise.Systems;
 using Content.Shared.Dataset;
 using Robust.Shared.GameStates;

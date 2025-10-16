@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Polymorph.Systems;
 using Content.Shared.Polymorph;
 using Content.Shared.Trigger;

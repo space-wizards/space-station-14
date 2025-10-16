@@ -1,4 +1,6 @@
-﻿using Content.Shared.Gravity;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Gravity;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 

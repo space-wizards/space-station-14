@@ -1,4 +1,6 @@
-﻿using Content.Shared.Anomaly;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Anomaly;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 

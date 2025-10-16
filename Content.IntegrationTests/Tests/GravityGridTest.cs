@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Gravity;
 using Content.Server.Power.Components;
 using Content.Shared.Gravity;

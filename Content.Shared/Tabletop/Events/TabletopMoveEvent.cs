@@ -1,4 +1,6 @@
-﻿using Content.Shared.Tabletop.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Tabletop.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 

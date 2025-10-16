@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Collections;
 using System.Text;
 using Robust.Shared.Audio.Midi;

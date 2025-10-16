@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Access.Components;
 using Content.Server.Humanoid.Systems;
 using Content.Server.PDA;

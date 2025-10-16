@@ -1,4 +1,6 @@
-﻿using Content.Shared.Containers.ItemSlots;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;

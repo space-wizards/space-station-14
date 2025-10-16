@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Item;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;

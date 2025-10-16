@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Nutrition.AnimalHusbandry;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Nutrition.AnimalHusbandry;
 
 /// <summary>
 /// This is used for denoting entities which are

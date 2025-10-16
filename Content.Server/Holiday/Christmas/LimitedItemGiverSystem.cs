@@ -1,4 +1,6 @@
-﻿using Content.Server.Hands.Systems;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.Hands.Systems;
 using Content.Server.Popups;
 using Content.Shared.Interaction;
 using Content.Shared.Storage;

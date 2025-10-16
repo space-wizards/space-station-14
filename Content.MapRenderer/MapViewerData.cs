@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Collections.Generic;
 using System.Numerics;
 using System.Text.Json.Serialization;
 using Robust.Shared.ContentPack;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Arcade;
 using Content.Shared.Dataset;
 using Robust.Shared.Audio;

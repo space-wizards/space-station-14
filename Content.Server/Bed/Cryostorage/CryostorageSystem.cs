@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Globalization;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;

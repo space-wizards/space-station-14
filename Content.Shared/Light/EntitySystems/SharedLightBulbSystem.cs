@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Destructible;
 using Content.Shared.Light.Components;
 using Content.Shared.Throwing;

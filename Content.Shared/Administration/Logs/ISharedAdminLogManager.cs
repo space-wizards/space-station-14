@@ -1,4 +1,6 @@
-﻿using System.Runtime.CompilerServices;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Runtime.CompilerServices;
 using Content.Shared.Database;
 
 namespace Content.Shared.Administration.Logs;

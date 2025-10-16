@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Movement.Systems;
 using Content.Shared.Standing;
 using Content.Shared.Throwing;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Guidebook;
 using Content.Client.Guidebook.Richtext;
 using Robust.Shared.ContentPack;

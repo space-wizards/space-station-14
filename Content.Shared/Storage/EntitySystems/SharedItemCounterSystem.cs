@@ -1,4 +1,6 @@
-﻿using Content.Shared.Stacks;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Stacks;
 using Content.Shared.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;

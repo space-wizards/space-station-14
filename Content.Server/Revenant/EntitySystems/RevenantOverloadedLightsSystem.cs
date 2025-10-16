@@ -1,4 +1,6 @@
-﻿using Content.Server.Beam;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.Beam;
 using Content.Shared.Revenant.Components;
 using Content.Shared.Revenant.EntitySystems;
 

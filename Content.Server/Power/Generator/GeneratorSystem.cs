@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Linq;
 using Content.Server.Audio;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Materials;

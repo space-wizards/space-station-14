@@ -1,4 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;

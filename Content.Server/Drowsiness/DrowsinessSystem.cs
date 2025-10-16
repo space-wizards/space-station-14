@@ -1,4 +1,6 @@
-﻿using Content.Shared.Bed.Sleep;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Drowsiness;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.StatusEffectNew.Components;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Damage.Components;
 using Content.Shared.Damage;
 using Content.Shared.Throwing;

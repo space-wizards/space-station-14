@@ -1,4 +1,6 @@
-﻿using System;
+﻿// SPDX-License-Identifier: MIT
+
+using System;
 using BenchmarkDotNet.Running;
 using BenchmarkDotNet.Configs;
 using Robust.Benchmarks.Configs;

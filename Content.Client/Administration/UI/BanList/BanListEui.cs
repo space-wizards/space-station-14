@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Numerics;
 using Content.Client.Administration.UI.BanList.Bans;
 using Content.Client.Administration.UI.BanList.RoleBans;
 using Content.Client.Eui;

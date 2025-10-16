@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Shared.IoC;

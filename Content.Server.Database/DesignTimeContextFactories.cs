@@ -1,4 +1,6 @@
-﻿#if TOOLS
+﻿// SPDX-License-Identifier: MIT
+
+#if TOOLS
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;

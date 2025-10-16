@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 #nullable enable
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Actions;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
 

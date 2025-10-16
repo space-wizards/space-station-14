@@ -1,4 +1,6 @@
-﻿using Content.Shared.GameTicking;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.GameTicking;
 using Content.Shared.Gibbing.Components;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Systems;

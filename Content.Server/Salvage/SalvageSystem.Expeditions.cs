@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Linq;
 using System.Threading;
 using Content.Server.Salvage.Expeditions;

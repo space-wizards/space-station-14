@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Rejuvenate;
 using Content.Shared.StatusEffect;
 using Robust.Shared.Timing;

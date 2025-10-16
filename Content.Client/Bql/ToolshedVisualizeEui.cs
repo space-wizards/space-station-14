@@ -1,4 +1,6 @@
-﻿using Content.Client.Eui;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Client.Eui;
 using Content.Shared.Bql;
 using Content.Shared.Eui;
 using JetBrains.Annotations;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Remote.UI;
 using Content.Client.Items;
 using Content.Shared.Remotes.EntitySystems;

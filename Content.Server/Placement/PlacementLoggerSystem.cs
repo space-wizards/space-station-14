@@ -1,4 +1,6 @@
-﻿using Content.Server.Administration.Logs;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.Administration.Logs;
 using Content.Shared.Database;
 using Robust.Shared.Map;
 using Robust.Shared.Placement;

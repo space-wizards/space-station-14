@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Random.Helpers;
 using Content.Shared.StatusEffectNew;

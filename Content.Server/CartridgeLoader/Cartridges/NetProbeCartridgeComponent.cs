@@ -1,4 +1,6 @@
-﻿using Content.Shared.CartridgeLoader.Cartridges;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.CartridgeLoader.Cartridges;
 using Robust.Shared.Audio;
 
 namespace Content.Server.CartridgeLoader.Cartridges;

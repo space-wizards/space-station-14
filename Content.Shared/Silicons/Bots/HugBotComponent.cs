@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Silicons.Bots;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Silicons.Bots;
 
 /// <summary>
 /// This component describes how a HugBot hugs.

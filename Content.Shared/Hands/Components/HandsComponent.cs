@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.DisplacementMap;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Whitelist;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Items;
 using Content.Client.Radiation.UI;
 using Content.Shared.Radiation.Components;

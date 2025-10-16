@@ -1,4 +1,6 @@
-﻿namespace Content.Server.Disposal.Tube;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Server.Disposal.Tube;
 
 [ByRefEvent]
 public record struct GetDisposalsConnectableDirectionsEvent

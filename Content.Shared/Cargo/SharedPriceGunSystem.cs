@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Cargo.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;

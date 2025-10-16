@@ -1,4 +1,6 @@
-﻿using Content.Shared.Atmos.Rotting;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Atmos.Rotting;
 
 namespace Content.Client.Atmos.Rotting;
 

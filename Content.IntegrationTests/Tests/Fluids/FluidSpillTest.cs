@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 #nullable enable
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Spreader;

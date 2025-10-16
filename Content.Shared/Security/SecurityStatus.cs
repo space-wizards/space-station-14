@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Security;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Security;
 
 /// <summary>
 /// Status used in Criminal Records.

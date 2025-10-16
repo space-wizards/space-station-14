@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 namespace Content.Server.Disposal.Tube
 {
     // TODO: Different types of tubes eject in random direction with no exit point

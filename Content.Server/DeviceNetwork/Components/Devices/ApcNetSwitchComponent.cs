@@ -1,4 +1,6 @@
-﻿using Content.Server.DeviceNetwork.Systems.Devices;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.DeviceNetwork.Systems.Devices;
 
 namespace Content.Server.DeviceNetwork.Components.Devices
 {

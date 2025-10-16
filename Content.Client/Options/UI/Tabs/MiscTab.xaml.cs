@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Linq;
 using Content.Client.UserInterface.Screens;
 using Content.Shared.CCVar;
 using Content.Shared.HUD;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Revenant.Components;
 using Content.Shared.Examine;
 using Content.Shared.Mind.Components;

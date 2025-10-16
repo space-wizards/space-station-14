@@ -1,4 +1,6 @@
-﻿using Robust.Shared.Physics.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.Movement.Pulling.Events;
 

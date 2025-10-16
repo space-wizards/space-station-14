@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Random;
 using Robust.Shared.Audio.Systems;

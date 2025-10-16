@@ -1,4 +1,6 @@
-﻿using Content.Client.Hands.UI;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Client.Hands.UI;
 using Content.Client.Items;
 using Content.Shared.Inventory.VirtualItem;
 

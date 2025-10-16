@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Eye;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;

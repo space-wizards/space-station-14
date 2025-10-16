@@ -1,4 +1,6 @@
-﻿using Content.Shared.Standing;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Standing;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.Medical.Cryogenics;

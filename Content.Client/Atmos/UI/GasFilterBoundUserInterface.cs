@@ -1,4 +1,6 @@
-﻿using Content.Client.Atmos.EntitySystems;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Trinary.Components;
 using Content.Shared.Localizations;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Charges.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Item;

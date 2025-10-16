@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Mind;
 
 namespace Content.Server.Cloning.Components

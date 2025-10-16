@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.EUI;
 using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Administration;

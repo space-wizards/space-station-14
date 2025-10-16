@@ -1,4 +1,6 @@
-﻿using Content.Shared.Mind;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Mind;
 
 namespace Content.Shared.Roles;
 

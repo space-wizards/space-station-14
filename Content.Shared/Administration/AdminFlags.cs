@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Administration
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Administration
 {
     /// <summary>
     ///     Permissions that admins can have.

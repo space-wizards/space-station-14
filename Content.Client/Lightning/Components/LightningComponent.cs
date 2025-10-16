@@ -1,4 +1,6 @@
-﻿using Content.Shared.Lightning.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Lightning.Components;
 
 namespace Content.Client.Lightning.Components;
 [RegisterComponent]

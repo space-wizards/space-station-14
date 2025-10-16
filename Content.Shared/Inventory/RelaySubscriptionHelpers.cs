@@ -1,4 +1,6 @@
-﻿using Content.Shared.Hands;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Hands;
 
 namespace Content.Shared.Inventory;
 

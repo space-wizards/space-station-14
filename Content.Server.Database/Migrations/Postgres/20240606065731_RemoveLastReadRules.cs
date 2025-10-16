@@ -1,4 +1,6 @@
-﻿using System;
+﻿// SPDX-License-Identifier: MIT
+
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable

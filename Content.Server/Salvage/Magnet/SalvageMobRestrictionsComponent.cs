@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 namespace Content.Server.Salvage.Magnet;
 
 // This is dumb

@@ -1,4 +1,6 @@
-﻿using Content.Client.Storage.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Client.Storage.Components;
 using Content.Shared.Rounding;
 using Content.Shared.Storage;
 using Robust.Client.GameObjects;

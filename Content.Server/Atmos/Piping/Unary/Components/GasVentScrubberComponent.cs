@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Linq;
 using Content.Server.Atmos.Piping.Unary.EntitySystems;
 using Content.Shared.Atmos;

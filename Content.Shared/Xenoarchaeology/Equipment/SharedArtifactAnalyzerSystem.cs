@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Smoking;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;

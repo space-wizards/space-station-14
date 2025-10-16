@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Interaction;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;

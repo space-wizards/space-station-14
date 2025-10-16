@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Administration;
 using Content.Server.Machines.EntitySystems;
 using Content.Server.ParticleAccelerator.Components;

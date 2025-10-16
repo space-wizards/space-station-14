@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Materials;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Materials;
 
 /// <summary>
 /// Valid items that collide with an entity with this component

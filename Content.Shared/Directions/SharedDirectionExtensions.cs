@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Collections;
 using System.Linq;
 using Robust.Shared.Map;
 using Robust.Shared.Random;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.NPC.HTN.PrimitiveTasks;
 
 namespace Content.Server.NPC.HTN;

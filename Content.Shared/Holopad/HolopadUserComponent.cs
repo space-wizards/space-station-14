@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Chat.TypingIndicator;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;

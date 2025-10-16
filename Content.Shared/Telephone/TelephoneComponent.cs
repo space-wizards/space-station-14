@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Chat;
 using Content.Shared.Speech;
 using Robust.Shared.Audio;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Dice;
 using Robust.Client.GameObjects;
 

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Diagnostics.Contracts;
 using Content.Shared.Light.Components;
 using Content.Shared.Maps;

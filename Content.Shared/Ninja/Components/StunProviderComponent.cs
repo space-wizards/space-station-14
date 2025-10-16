@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Damage;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Whitelist;

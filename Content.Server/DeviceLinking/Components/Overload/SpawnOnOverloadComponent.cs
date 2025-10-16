@@ -1,4 +1,6 @@
-﻿using Content.Server.DeviceLinking.Systems;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.DeviceLinking.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 

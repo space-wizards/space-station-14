@@ -1,4 +1,6 @@
-﻿// using Content.Server.Botany.Systems;
+﻿// SPDX-License-Identifier: MIT
+
+// using Content.Server.Botany.Systems;
 
 namespace Content.Shared.EntityEffects.Effects.PlantMetabolism;
 

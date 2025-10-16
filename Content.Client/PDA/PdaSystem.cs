@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.PDA;
 
 namespace Content.Client.PDA;

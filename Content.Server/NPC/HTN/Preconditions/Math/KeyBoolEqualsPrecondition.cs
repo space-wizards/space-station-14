@@ -1,4 +1,6 @@
-﻿namespace Content.Server.NPC.HTN.Preconditions.Math;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Server.NPC.HTN.Preconditions.Math;
 
 /// <summary>
 /// Checks if there is a bool value for the specified <see cref="KeyBoolEqualsPrecondition.Key"/>

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Maps;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;

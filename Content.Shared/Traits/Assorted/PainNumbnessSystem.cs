@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Damage.Events;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Events;

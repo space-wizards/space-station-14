@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Numerics;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;

@@ -1,4 +1,6 @@
-﻿using Content.Client.Changelog;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Client.Changelog;
 using Content.Client.Credits;
 using Content.Shared.CCVar;
 using Robust.Client.UserInterface;

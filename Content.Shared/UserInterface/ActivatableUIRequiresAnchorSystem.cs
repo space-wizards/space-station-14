@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Popups;
 
 namespace Content.Shared.UserInterface;

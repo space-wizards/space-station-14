@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Timing;
 using Robust.Shared.GameStates;
 

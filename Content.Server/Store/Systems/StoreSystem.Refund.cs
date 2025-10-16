@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Store.Components;
 using Content.Shared.Actions.Events;
 using Content.Shared.Interaction.Events;

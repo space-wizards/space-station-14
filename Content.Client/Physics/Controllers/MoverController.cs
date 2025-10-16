@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Alert;
 using Content.Shared.CCVar;
 using Content.Shared.Friction;

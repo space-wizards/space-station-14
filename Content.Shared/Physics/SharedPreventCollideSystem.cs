@@ -1,4 +1,6 @@
-﻿using Robust.Shared.Physics.Events;
+﻿// SPDX-License-Identifier: MIT
+
+using Robust.Shared.Physics.Events;
 
 namespace Content.Shared.Physics;
 

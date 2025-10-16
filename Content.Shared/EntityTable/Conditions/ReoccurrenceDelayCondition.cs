@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿// SPDX-License-Identifier: MIT
+
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.GameTicking;

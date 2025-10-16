@@ -1,4 +1,6 @@
-﻿using Robust.Client.GameObjects;
+﻿// SPDX-License-Identifier: MIT
+
+using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.UserInterface.Fragments;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Administration;
 using Content.Server.Disposal.Tube;
 using Content.Shared.Administration;

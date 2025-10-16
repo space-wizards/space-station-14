@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Item.ItemToggle.Components;
 
 namespace Content.Shared.Item.ItemToggle;

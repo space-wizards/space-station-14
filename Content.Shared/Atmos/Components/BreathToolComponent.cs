@@ -1,4 +1,6 @@
-﻿using Content.Shared.Body.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Body.Components;
 using Content.Shared.Inventory;
 using Robust.Shared.GameStates;
 

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.CCVar;
 using Content.Shared.Chat.TypingIndicator;
 using Robust.Client.Player;

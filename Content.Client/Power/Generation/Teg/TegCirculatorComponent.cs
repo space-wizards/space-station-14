@@ -1,4 +1,6 @@
-﻿namespace Content.Client.Power.Generation.Teg;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Client.Power.Generation.Teg;
 
 /// <seealso cref="TegSystem"/>
 [RegisterComponent]

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Access;
 using Content.Shared.TurretController;
 using Robust.Client.UserInterface;

@@ -1,4 +1,6 @@
-﻿using Content.Shared.Light.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Light.Components;
 
 namespace Content.Server.Light.Components
 {

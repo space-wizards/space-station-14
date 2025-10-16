@@ -1,4 +1,6 @@
-﻿namespace Content.Client.Guidebook.Components;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Client.Guidebook.Components;
 
 /// <summary>
 /// This is used for the guidebook monkey.

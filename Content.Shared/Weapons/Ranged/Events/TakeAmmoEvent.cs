@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Robust.Shared.Map;
 
 namespace Content.Shared.Weapons.Ranged.Events;

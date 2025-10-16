@@ -1,4 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Runtime.InteropServices;
 using Content.Server.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Players.RateLimiting;

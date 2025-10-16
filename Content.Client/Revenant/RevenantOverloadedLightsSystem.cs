@@ -1,4 +1,6 @@
-﻿using Content.Shared.Revenant.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Revenant.Components;
 using Content.Shared.Revenant.EntitySystems;
 using Robust.Client.GameObjects;
 

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 namespace Content.Server.NPC.HTN.Preconditions;
 
 public sealed partial class HasOrdersPrecondition : HTNPrecondition

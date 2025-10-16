@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Antag;
 using Content.Server.Traitor.Components;
 using Content.Shared.Mind.Components;

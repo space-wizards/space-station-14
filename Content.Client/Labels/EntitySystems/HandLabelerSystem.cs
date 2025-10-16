@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Labels.UI;
 using Content.Shared.Labels;
 using Content.Shared.Labels.Components;

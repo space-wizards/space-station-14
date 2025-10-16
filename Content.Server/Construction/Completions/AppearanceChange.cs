@@ -1,4 +1,6 @@
-﻿using Content.Server.Construction.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.Construction.Components;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.ActionBlocker;
 using Content.Shared.Emoting;
 using Content.Shared.Interaction.Events;

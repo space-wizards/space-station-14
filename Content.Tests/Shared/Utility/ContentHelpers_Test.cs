@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Collections.Generic;
 using Content.Shared.Rounding;
 using NUnit.Framework;
 

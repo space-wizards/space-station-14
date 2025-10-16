@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿// SPDX-License-Identifier: MIT
+
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Content.Server.Database.Migrations.Sqlite
 {

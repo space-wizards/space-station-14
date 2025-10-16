@@ -1,4 +1,6 @@
-﻿using Content.Shared.Humanoid.Markings;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Humanoid.Markings;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Humanoid

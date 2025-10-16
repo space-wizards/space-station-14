@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Chemistry.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;

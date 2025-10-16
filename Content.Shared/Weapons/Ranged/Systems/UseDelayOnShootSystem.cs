@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Timing;
 using Content.Shared.Weapons.Ranged.Components;
 

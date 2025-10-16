@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Disposal.Components;
 
 namespace Content.Shared.Disposal.Unit;

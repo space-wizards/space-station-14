@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.DoAfter;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Audio;

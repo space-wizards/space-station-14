@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.EntityTable.Conditions;
 using Content.Shared.EntityTable.ValueSelector;
 using JetBrains.Annotations;

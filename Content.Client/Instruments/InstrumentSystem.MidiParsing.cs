@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Linq;
 using Content.Shared.Instruments;
 using Robust.Shared.Audio.Midi;
 

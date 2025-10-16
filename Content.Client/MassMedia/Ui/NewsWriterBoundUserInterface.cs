@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using JetBrains.Annotations;
 using Content.Shared.MassMedia.Systems;
 using Content.Shared.MassMedia.Components;

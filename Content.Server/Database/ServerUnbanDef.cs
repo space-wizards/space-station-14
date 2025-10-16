@@ -1,4 +1,6 @@
-﻿using Robust.Shared.Network;
+﻿// SPDX-License-Identifier: MIT
+
+using Robust.Shared.Network;
 
 namespace Content.Server.Database
 {

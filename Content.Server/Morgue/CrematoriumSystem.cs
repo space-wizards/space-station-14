@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Ghost;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;

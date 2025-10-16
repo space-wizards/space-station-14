@@ -1,4 +1,6 @@
-﻿using Content.Shared.Body.Systems;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Body.Systems;
 
 namespace Content.Shared.Body.Components;
 

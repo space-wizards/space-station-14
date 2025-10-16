@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Cloning.Events;
 using Content.Shared.Traits.Assorted;
 

@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Linq;
 using System.Runtime.InteropServices;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;

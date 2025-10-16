@@ -1,4 +1,6 @@
-﻿using Content.Shared.Physics.Controllers;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Physics.Controllers;
 
 namespace Content.Client.Physics.Controllers;
 

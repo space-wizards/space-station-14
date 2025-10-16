@@ -1,4 +1,6 @@
-﻿using System;
+﻿// SPDX-License-Identifier: MIT
+
+using System;
 using System.Buffers.Binary;
 using System.IO;
 using BenchmarkDotNet.Attributes;

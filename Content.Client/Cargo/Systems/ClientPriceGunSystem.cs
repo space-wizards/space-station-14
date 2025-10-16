@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Cargo.Components;
 using Content.Shared.Timing;
 using Content.Shared.Cargo.Systems;

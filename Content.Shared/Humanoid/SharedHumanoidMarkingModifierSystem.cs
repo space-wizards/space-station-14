@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Humanoid.Markings;
 using Robust.Shared.Serialization;
 

@@ -1,4 +1,6 @@
-﻿using Content.Server.Construction.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.Construction.Components;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
 {

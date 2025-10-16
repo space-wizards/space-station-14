@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Database;
 using Content.Shared.Administration.Notes;
 using Content.Shared.Database;

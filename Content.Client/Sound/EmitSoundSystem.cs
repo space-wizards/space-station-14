@@ -1,4 +1,6 @@
-﻿using Content.Shared.Sound;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Sound;
 
 namespace Content.Client.Sound;
 

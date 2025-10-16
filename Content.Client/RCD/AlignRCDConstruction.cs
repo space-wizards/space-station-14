@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Numerics;
 using Content.Client.Gameplay;
 using Content.Client.Hands.Systems;

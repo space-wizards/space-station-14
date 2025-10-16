@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Actions;
 using Content.Server.Humanoid;
 using Content.Server.Inventory;

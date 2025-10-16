@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Ninja.Events;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;

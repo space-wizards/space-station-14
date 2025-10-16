@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Power.Generator;
 

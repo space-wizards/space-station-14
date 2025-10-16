@@ -1,4 +1,6 @@
-﻿namespace Content.Server.Power.Components
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Server.Power.Components
 {
     [RegisterComponent]
     public sealed partial class CableVisComponent : Component

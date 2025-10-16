@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Replay;
 using Content.Replay.Menu;
 using JetBrains.Annotations;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;

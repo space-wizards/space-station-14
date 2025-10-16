@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Animals.Systems;
 using Content.Shared.Storage;
 using Robust.Shared.Audio;

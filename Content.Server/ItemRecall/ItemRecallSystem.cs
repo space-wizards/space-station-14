@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.ItemRecall;
 
 namespace Content.Server.ItemRecall;

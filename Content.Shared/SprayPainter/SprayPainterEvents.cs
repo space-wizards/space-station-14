@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Decals;
 using Content.Shared.DoAfter;
 using Content.Shared.SprayPainter.Prototypes;

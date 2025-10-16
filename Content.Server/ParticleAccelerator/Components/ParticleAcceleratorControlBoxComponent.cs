@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.ParticleAccelerator.Wires;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;

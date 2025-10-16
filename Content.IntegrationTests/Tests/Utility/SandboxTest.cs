@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.IoC;
 using Content.Client.Parallax.Managers;
 using Robust.Client;

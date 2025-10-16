@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Tag;

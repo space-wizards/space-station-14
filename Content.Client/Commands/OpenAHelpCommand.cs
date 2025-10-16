@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.UserInterface.Systems.Bwoink;
 using Content.Shared.Administration;
 using Robust.Client.UserInterface;

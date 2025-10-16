@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Net;
 using System.Net.Sockets;
 using Content.Server.Administration.Managers;

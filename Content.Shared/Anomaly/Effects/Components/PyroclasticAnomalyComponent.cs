@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Anomaly.Effects.Components;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Anomaly.Effects.Components;
 
 [RegisterComponent]
 public sealed partial class PyroclasticAnomalyComponent : Component

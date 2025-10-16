@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural;

@@ -1,4 +1,6 @@
-﻿using Content.Shared.Chemistry.EntitySystems;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 

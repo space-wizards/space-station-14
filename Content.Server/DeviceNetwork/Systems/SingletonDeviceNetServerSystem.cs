@@ -1,4 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.Medical.CrewMonitoring;
 using Content.Server.Station.Systems;

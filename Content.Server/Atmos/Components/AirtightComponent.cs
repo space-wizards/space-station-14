@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;

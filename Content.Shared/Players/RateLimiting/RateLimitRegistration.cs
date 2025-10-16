@@ -1,4 +1,6 @@
-﻿using Content.Shared.Database;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Database;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 

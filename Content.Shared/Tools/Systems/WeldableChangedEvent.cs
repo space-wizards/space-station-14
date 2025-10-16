@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Tools.Components;
 
 namespace Content.Shared.Tools.Systems;

@@ -1,4 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Diagnostics.CodeAnalysis;
 using Robust.Client.Input;
 using Robust.Shared.Input;
 using Robust.Shared.Utility;

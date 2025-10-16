@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Mobs;
 
 namespace Content.Server.NPC.Queries.Considerations;

@@ -1,4 +1,6 @@
-﻿using Content.Shared.Maths;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Maths;
 
 namespace Content.Shared.Temperature
 {

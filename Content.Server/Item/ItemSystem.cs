@@ -1,4 +1,6 @@
-﻿using Content.Shared.Item;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Item;
 
 namespace Content.Server.Item;
 

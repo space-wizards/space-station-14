@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Text;
 using Content.Server.Destructible;
 using Content.Server.PowerCell;
 using Content.Shared.Speech.Components;

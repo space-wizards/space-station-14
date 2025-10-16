@@ -1,4 +1,6 @@
-﻿using Content.Shared.Players.PlayTimeTracking;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Players.PlayTimeTracking;
 
 namespace Content.Shared.Roles;
 

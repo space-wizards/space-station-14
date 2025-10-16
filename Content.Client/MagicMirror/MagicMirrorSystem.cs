@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.MagicMirror;
 
 namespace Content.Client.MagicMirror;

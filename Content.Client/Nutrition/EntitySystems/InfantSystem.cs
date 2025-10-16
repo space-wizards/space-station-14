@@ -1,4 +1,6 @@
-﻿using Content.Shared.Nutrition.AnimalHusbandry;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Nutrition.AnimalHusbandry;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Nutrition.EntitySystems;

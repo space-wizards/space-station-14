@@ -1,4 +1,6 @@
-﻿namespace Content.Server.Atmos.Components
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Server.Atmos.Components
 {
     // not if i get there first - Flipp
     /// <summary>

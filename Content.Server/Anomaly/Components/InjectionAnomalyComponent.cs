@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Anomaly.Effects;
 using Robust.Shared.Prototypes;
 

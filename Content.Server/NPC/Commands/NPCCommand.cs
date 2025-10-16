@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Administration;
 using Content.Server.EUI;
 using Content.Server.NPC.UI;

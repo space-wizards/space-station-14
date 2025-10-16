@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Administration.Managers;
 using Content.Client.Station;
 using Content.Client.UserInterface.Controls;

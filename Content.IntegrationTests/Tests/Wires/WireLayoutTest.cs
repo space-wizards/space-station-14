@@ -1,4 +1,6 @@
-﻿using Content.Server.Doors;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.Doors;
 using Content.Server.Power;
 using Content.Server.Wires;
 using Robust.Shared.GameObjects;

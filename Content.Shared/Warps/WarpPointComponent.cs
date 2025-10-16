@@ -1,4 +1,6 @@
-﻿using Content.Shared.Whitelist;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Warps;

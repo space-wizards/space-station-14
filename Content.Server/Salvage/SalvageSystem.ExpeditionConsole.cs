@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Procedural;
 using Content.Shared.Salvage.Expeditions;

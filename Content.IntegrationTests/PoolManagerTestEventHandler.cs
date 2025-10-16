@@ -1,4 +1,6 @@
-﻿namespace Content.IntegrationTests;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.IntegrationTests;
 
 [SetUpFixture]
 public sealed class PoolManagerTestEventHandler

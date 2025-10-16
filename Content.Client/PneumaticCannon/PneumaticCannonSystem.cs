@@ -1,4 +1,6 @@
-﻿using Content.Shared.PneumaticCannon;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.PneumaticCannon;
 
 namespace Content.Client.PneumaticCannon;
 

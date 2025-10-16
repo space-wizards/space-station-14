@@ -1,4 +1,6 @@
-﻿using Content.Server.Radiation.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.Radiation.Components;
 using Content.Shared.Damage.Components;
 using Robust.Shared.Prototypes;
 

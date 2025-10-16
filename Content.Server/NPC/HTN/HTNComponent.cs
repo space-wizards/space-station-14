@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Threading;
 using Content.Server.NPC.Components;
 

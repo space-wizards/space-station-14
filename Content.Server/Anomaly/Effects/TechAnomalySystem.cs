@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Anomaly.Components;
 using Content.Server.Beam;
 using Content.Server.DeviceLinking.Systems;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Chat.Systems;
 using Content.Server.Ghost.Components;
 using Content.Shared.Random.Helpers;

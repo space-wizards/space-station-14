@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Flash;
 using Content.Shared.Flash.Components;
 using Robust.Client.Graphics;

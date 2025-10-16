@@ -1,4 +1,6 @@
-﻿using System;
+﻿// SPDX-License-Identifier: MIT
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.MapRenderer.Extensions;

@@ -1,4 +1,6 @@
-﻿using Content.Client.Eui;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Client.Eui;
 
 namespace Content.Client.Revolutionary.UI;
 

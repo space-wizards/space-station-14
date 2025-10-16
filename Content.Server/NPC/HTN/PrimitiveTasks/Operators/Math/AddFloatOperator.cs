@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Math;

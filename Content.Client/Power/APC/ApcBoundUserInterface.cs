@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Power.APC.UI;
 using Content.Shared.Access.Systems;
 using Content.Shared.APC;

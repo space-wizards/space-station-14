@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
 using Robust.Shared.Containers;

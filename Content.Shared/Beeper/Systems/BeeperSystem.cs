@@ -1,4 +1,6 @@
-﻿using Content.Shared.Beeper.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Beeper.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.PDA;
 using Content.Shared.PDA.Ringer;
 using JetBrains.Annotations;

@@ -1,4 +1,6 @@
-﻿using Robust.Shared.Prototypes;
+﻿// SPDX-License-Identifier: MIT
+
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chemistry.Reaction;
 

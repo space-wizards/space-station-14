@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Throwing
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Throwing
 {
     public sealed class ThrowAttemptEvent : CancellableEntityEventArgs
     {

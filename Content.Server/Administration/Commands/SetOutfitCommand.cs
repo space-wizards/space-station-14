@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Administration.UI;
 using Content.Server.Clothing.Systems;
 using Content.Server.EUI;

@@ -1,4 +1,6 @@
-﻿namespace Content.Server.GameTicking.Rules.Components;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Server.GameTicking.Rules.Components;
 
 /// <summary>
 /// This is used for a rule that announces kills globally.

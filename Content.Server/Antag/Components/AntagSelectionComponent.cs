@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Administration.Systems;
 using Content.Shared.Antag;
 using Content.Shared.Destructible.Thresholds;

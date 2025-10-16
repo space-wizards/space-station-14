@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Movement.Components;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;

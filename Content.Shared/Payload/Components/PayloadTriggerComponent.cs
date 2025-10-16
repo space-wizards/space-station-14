@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Trigger.Components;
 using Content.Shared.Trigger.Components.Triggers;
 using Robust.Shared.GameStates;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Power.Components;
 
 namespace Content.Client.Power.EntitySystems;

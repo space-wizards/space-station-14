@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Gatherable.Components;
 using Content.Shared.Projectiles;
 using Robust.Shared.Physics.Events;

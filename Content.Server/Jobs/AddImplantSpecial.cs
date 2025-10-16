@@ -1,4 +1,6 @@
-﻿using Content.Shared.Implants;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Implants;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;

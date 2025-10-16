@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.GameTicking;
 using Content.Server.Ghost;
 using Content.Shared.Administration;

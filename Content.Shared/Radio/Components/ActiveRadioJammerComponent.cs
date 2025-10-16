@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Radio.EntitySystems;
 using Robust.Shared.GameStates;
 

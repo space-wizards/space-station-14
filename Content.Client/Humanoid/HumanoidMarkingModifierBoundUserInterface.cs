@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Robust.Client.UserInterface;

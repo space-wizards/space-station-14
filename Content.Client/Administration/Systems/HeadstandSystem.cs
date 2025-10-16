@@ -1,4 +1,6 @@
-﻿using Content.Shared.Administration.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Administration.Components;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Administration.Systems;

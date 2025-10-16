@@ -1,4 +1,6 @@
-﻿using Content.Shared.Explosion.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Explosion.Components;
 using Content.Shared.Throwing;
 using Content.Shared.Trigger;
 using Content.Shared.Trigger.Systems;

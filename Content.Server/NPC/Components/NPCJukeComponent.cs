@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 

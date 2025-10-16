@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Power.Components;
 using Content.Server.Wires;
 using Content.Shared.DeviceLinking.Events;

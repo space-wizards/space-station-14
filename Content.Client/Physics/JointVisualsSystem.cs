@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Robust.Client.Graphics;
 
 namespace Content.Client.Physics;

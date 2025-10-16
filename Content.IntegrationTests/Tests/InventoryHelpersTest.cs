@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Stunnable;
 using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Parallax.Biomes.Layers;
 using Robust.Shared.Prototypes;
 

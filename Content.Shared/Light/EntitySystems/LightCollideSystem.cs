@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Light.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;

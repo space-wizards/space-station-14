@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Electrocution;
 using Content.Server.Emp;
 using Content.Server.Lightning;

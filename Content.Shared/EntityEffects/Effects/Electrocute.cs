@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Electrocution;
 using Robust.Shared.Prototypes;
 

@@ -1,4 +1,6 @@
-﻿using Content.Shared.Materials;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Materials;
 
 namespace Content.Client.Materials;
 

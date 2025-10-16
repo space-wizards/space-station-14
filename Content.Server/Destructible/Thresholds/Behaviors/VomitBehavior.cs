@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Medical;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors;

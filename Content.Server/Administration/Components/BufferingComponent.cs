@@ -1,4 +1,6 @@
-﻿using Content.Server.Administration.Systems;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.Administration.Systems;
 
 namespace Content.Server.Administration.Components;
 

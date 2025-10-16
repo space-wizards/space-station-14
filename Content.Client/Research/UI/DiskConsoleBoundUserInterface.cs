@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Research;
 using Content.Shared.Research.Components;
 using Robust.Client.GameObjects;

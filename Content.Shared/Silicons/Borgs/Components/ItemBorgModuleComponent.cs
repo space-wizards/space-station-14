@@ -1,4 +1,6 @@
-﻿using Content.Shared.Hands.Components;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Hands.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;

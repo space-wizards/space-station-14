@@ -1,4 +1,6 @@
-﻿using Content.Packaging;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Packaging;
 using Robust.Packaging;
 
 IPackageLogger logger = new PackageLoggerConsole();

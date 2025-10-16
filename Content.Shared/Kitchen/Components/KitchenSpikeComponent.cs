@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Nutrition.Components;

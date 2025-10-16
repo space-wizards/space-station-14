@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Radio.Ui;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;

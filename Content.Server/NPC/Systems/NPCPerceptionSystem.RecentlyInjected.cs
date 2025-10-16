@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.NPC.Components;
 
 namespace Content.Server.NPC.Systems;

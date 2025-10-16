@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.FixedPoint;
 using Content.Shared.Nutrition.Prototypes;
 using Content.Shared.Tag;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Station.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Map;

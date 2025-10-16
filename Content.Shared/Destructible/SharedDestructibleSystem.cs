@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Destructible;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Destructible;
 
 public abstract class SharedDestructibleSystem : EntitySystem
 {

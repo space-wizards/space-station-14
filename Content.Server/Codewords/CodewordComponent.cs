@@ -1,4 +1,6 @@
-﻿namespace Content.Server.Codewords;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Server.Codewords;
 
 /// <summary>
 /// Container for generated codewords.

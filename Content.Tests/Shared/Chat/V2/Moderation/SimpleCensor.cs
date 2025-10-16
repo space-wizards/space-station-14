@@ -1,4 +1,6 @@
-﻿using System.Text.Unicode;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Text.Unicode;
 using Content.Shared.Chat.V2.Moderation;
 using NUnit.Framework;
 

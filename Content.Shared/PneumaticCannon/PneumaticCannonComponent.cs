@@ -1,4 +1,6 @@
-﻿using Content.Shared.Tools;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Tools;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 

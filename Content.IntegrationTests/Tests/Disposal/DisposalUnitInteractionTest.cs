@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Server.Containers;
 using Robust.Shared.Containers;

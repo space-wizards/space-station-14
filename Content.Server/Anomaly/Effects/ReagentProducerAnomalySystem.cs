@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Anomaly.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Anomaly.Components;

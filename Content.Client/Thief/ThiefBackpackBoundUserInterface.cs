@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Thief;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;

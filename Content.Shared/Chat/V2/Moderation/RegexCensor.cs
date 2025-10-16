@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Text.RegularExpressions;
 
 namespace Content.Shared.Chat.V2.Moderation;
 

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Lock;
 
 namespace Content.Shared.Containers.ItemSlots;

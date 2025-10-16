@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 namespace Content.Server.Salvage.Expeditions;
 
 /// <summary>

@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Interaction.Events
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Interaction.Events
 {
     public sealed class UseAttemptEvent(EntityUid uid, EntityUid used) : CancellableEntityEventArgs
     {

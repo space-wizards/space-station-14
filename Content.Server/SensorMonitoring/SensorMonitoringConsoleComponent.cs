@@ -1,4 +1,6 @@
-﻿using Content.Shared.SensorMonitoring;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.SensorMonitoring;
 using Robust.Server.Player;
 using Robust.Shared.Collections;
 using Robust.Shared.Player;

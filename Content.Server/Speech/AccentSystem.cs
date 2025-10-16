@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Text.RegularExpressions;
 using Content.Server.Chat.Systems;
 using Content.Shared.Speech;

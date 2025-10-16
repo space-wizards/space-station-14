@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Lightning;
 using Content.Server.Tesla.Components;
 using Robust.Shared.Random;

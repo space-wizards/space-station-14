@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Linq;
 using Content.Shared.Body.Systems;
 using Content.Shared.Clothing.Components;

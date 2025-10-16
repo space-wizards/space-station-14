@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;

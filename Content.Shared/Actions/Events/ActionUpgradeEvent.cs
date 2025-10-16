@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Actions.Events;
+﻿// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Actions.Events;
 
 public sealed class ActionUpgradeEvent : EntityEventArgs
 {

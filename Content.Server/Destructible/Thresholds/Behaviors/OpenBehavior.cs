@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Nutrition.EntitySystems;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors;

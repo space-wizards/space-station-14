@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Explosion.Components;
 using JetBrains.Annotations;
 

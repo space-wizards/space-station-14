@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Cargo;
 using Robust.Shared.Timing;

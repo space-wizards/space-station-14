@@ -1,4 +1,6 @@
-﻿using JetBrains.Annotations;
+﻿// SPDX-License-Identifier: MIT
+
+using JetBrains.Annotations;
 using Robust.Shared.Console;
 using Robust.Shared.Toolshed;
 

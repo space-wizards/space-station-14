@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Physics.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Singularity.Components;

@@ -1,4 +1,6 @@
-﻿#nullable enable
+﻿// SPDX-License-Identifier: MIT
+
+#nullable enable
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.StatusIcon;
 using Robust.Shared.GameStates;

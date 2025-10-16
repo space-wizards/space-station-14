@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Shuttles.UI;
 using Content.Shared.Shuttles.BUIStates;
 using JetBrains.Annotations;

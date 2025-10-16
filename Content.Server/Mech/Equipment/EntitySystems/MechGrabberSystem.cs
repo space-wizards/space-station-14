@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Linq;
 using Content.Server.Interaction;
 using Content.Server.Mech.Equipment.Components;

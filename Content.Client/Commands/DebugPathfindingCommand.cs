@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.NPC;
 using Content.Shared.NPC;
 using JetBrains.Annotations;

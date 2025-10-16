@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Alerts;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Systems.Alerts.Widgets;

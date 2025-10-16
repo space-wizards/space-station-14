@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Magic.Events;
 using Content.Shared.Xenoarchaeology.Artifact.XAE.Components;
 using Robust.Shared.Timing;

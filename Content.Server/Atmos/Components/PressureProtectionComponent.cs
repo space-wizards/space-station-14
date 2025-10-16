@@ -1,4 +1,6 @@
-﻿using Content.Server.Atmos.EntitySystems;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Server.Atmos.EntitySystems;
 
 namespace Content.Server.Atmos.Components;
 

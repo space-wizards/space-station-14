@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Botany.Components;
 using Content.Shared.EntityEffects;
 using Content.Shared.Examine;

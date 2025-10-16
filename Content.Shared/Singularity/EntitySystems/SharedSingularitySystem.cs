@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Numerics;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Singularity.Components;

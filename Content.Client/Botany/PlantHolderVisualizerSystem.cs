@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Botany.Components;
 using Content.Shared.Botany;
 using Robust.Client.GameObjects;

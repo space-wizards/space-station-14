@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿// SPDX-License-Identifier: MIT
+
+using System.Numerics;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Cloning;
 using Content.Shared.Humanoid;

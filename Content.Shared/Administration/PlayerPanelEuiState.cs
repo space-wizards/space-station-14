@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Eui;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;

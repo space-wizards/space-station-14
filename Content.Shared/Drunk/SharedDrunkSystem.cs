@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.Traits.Assorted;

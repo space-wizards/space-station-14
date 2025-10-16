@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Linq;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store.Components;

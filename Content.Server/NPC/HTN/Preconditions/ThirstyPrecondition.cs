@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Hands.Components;
 using Content.Shared.Nutrition.Components;
 using Robust.Shared.Prototypes;

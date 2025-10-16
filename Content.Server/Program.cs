@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Robust.Server;
 
 namespace Content.Server

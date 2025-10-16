@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry;
 using Robust.Shared.Audio;

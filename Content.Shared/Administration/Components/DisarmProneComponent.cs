@@ -1,4 +1,6 @@
-﻿using Content.Shared.Weapons.Melee;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Weapons.Melee;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Administration.Components;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Administration.Logs;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Kitchen.Components;

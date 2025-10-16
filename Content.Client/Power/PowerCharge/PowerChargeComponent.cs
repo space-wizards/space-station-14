@@ -1,4 +1,6 @@
-﻿using Content.Shared.Power;
+﻿// SPDX-License-Identifier: MIT
+
+using Content.Shared.Power;
 
 namespace Content.Client.Power.PowerCharge;
 

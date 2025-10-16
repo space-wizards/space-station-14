@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 using System.Linq;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Store.Systems;
