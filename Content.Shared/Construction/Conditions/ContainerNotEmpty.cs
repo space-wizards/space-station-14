@@ -1,40 +1,31 @@
-using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
-using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Construction.Conditions
+namespace Content.Shared.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class ContainerEmpty : IGraphCondition
+    public sealed partial class ContainerNotEmpty : IGraphCondition
     {
-        [DataField("container")]
-        public string Container { get; private set; } = string.Empty;
-
-        [DataField("examineText")]
-        public string? ExamineText { get; private set; }
-
-        [DataField("guideStep")]
-        public string? GuideText { get; private set; }
-
-        [DataField("guideIcon")]
-        public SpriteSpecifier? GuideIcon { get; private set; }
+        [DataField("container")] public string Container { get; private set; } = string.Empty;
+        [DataField("examineText")] public string? ExamineText { get; private set; }
+        [DataField("guideText")] public string? GuideText { get; private set; }
+        [DataField("guideIcon")] public SpriteSpecifier? GuideIcon { get; private set; }
 
         public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
-            var containerSystem = entityManager.EntitySysManager.GetEntitySystem<ContainerSystem>();
+            var containerSystem = entityManager.EntitySysManager.GetEntitySystem<SharedContainerSystem>();
             if (!containerSystem.TryGetContainer(uid, Container, out var container))
                 return false;
 
-            return container.ContainedEntities.Count == 0;
+            return container.ContainedEntities.Count != 0;
         }
 
         public bool DoExamine(ExaminedEvent args)
         {
-            if (string.IsNullOrEmpty(ExamineText))
+            if (ExamineText == null)
                 return false;
 
             var entity = args.Examined;
@@ -43,15 +34,16 @@ namespace Content.Server.Construction.Conditions
             if (!entityManager.TryGetComponent(entity, out ContainerManagerComponent? containerManager) ||
                 !entityManager.System<SharedContainerSystem>().TryGetContainer(entity, Container, out var container, containerManager)) return false;
 
-            if (container.ContainedEntities.Count == 0)
+            if (container.ContainedEntities.Count != 0)
                 return false;
 
             args.PushMarkup(Loc.GetString(ExamineText));
             return true;
         }
+
         public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
         {
-            if (string.IsNullOrEmpty(GuideText))
+            if (GuideText == null)
                 yield break;
 
             yield return new ConstructionGuideEntry()
