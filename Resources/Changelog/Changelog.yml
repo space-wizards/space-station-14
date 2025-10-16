@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Directional reinforced plasma and uranium windows are now correctly more
-      durable than regular directional reinforced windows.
-    type: Fix
-  - message: Directional uranium windows can no longer be deconstructed with an RCD.
-    type: Fix
-  id: 8607
-  time: '2025-06-03T11:49:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38038
 - author: Hitlinemoss
   changes:
   - message: Most cargo food orders are now more expensive.
@@ -3929,3 +3919,12 @@
   id: 9108
   time: '2025-10-16T12:38:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40934
+- author: Quasr
+  changes:
+  - message: Sky blue fancy tables and curtains are now construct-able
+    type: Add
+  - message: Sky blue carpet is now printable
+    type: Fix
+  id: 9109
+  time: '2025-10-16T13:37:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40867
