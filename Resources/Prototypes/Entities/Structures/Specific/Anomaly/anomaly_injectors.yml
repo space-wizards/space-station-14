@@ -59,6 +59,12 @@
           Vox:
             sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
             state: fire_VOX
+          Arachnid:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: fire_ARACHNID
+          Moth:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: fire_MOTH
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -91,6 +97,12 @@
           Vox:
             sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
             state: shock_VOX
+          Arachnid:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: shock_ARACHNID
+          Moth:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: shock_MOTH
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -123,6 +135,12 @@
           Vox:
             sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
             state: shadow_VOX
+          Arachnid:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: shadow_ARACHNID
+          Moth:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: shadow_MOTH
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -155,6 +173,12 @@
           Vox:
             sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
             state: frost_VOX
+          Arachnid:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: frost_ARACHNID
+          Moth:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: frost_MOTH
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -187,6 +211,12 @@
           Vox:
             sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
             state: flora_VOX
+          Arachnid:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: flora_ARACHNID
+          Moth:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: flora_MOTH
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -219,6 +249,12 @@
           Vox:
             sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
             state: bluespace_VOX
+          Arachnid:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: bluespace_ARACHNID
+          Moth:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: bluespace_MOTH
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -251,6 +287,12 @@
           Vox:
             sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
             state: flesh_VOX
+          Arachnid:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: flesh_ARACHNID
+          Moth:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: flesh_MOTH
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -284,6 +326,12 @@
           Vox:
             sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
             state: grav_VOX
+          Arachnid:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: grav_ARACHNID
+          Moth:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: grav_MOTH
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -316,6 +364,12 @@
           Vox:
             sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
             state: tech_VOX
+          Arachnid:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: tech_ARACHNID
+          Moth:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: tech_MOTH
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -349,6 +403,12 @@
           Vox:
             sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
             state: rock_VOX
+          Arachnid:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: rock_ARACHNID
+          Moth:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: rock_MOTH
 
 - type: entity
   parent: BaseAnomalyInjector

@@ -64,6 +64,12 @@
               amount: 1
               doAfter: 1
 
+        - to: TableCard
+          steps:
+            - material: Cardboard
+              amount: 3
+              doAfter: 1
+
         - to: TableReinforcedGlass
           steps:
             - material: ReinforcedGlass
@@ -162,6 +168,18 @@
             - tool: Anchoring
               doAfter: 1
 
+    - node: TableCard
+      entity: TableCard
+      edges:
+        - to: TableFrame
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialCardboard1
+              amount: 3
+          steps:
+            - tool: Slicing
+              doAfter: 2
+
     - node: TableReinforcedGlass
       entity: TableReinforcedGlass
       edges:
@@ -224,6 +242,11 @@
         - to: TableFancyBlue
           steps:
             - material: FloorCarpetBlue
+              amount: 1
+
+        - to: TableFancySkyBlue
+          steps:
+            - material: FloorCarpetSkyBlue
               amount: 1
 
         - to: TableFancyCyan
@@ -296,6 +319,18 @@
           steps:
             - tool: Prying
               doAfter: 1
+
+    - node: TableFancySkyBlue
+      entity: TableFancySkyBlue
+      edges:
+        - to: TableWood
+          completed:
+          - !type:SpawnPrototype
+            prototype: FloorCarpetItemSkyBlue
+            amount: 1
+          steps:
+          - tool: Prying
+            doAfter: 1
 
     - node: TableFancyCyan
       entity: TableFancyCyan
