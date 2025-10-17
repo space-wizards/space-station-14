@@ -467,14 +467,3 @@
     sprite: Clothing/OuterClothing/Coats/expensive_coat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/expensive_coat.rsi
-
-- type: entity
-  parent: ClothingOuterStorageBase
-  id: ClothingOuterCoatBishop
-  name: bishop coat
-  description: bishop
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/bishop.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/bishop.rsi
