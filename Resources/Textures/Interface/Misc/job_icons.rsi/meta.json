@@ -1,196 +1,239 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/blob/e71d6c4fba5a51f99b81c295dcaec4fc2f58fb19/icons/mob/screen1.dmi | Brigmedic icon made by PuroSlavKing (Github) | Zombie icon made by RamZ | Zookeper by netwy (discort) | Rev and Head Rev icon taken from https://tgstation13.org/wiki/HUD and edited by coolmankid12345 (Discord) | Mindshield icon taken from https://github.com/tgstation/tgstation/blob/ce6beb8a4d61235d9a597a7126c407160ed674ea/icons/mob/huds/hud.dmi | Admin recolored from MedicalIntern by TsjipTsjip | StationAi resprite to 8x8 size by lunarcomets | Service Worker resprite by anno_midi (Discord) and spanky-spanky (Github) | service icons darkened by frobnic8 (Discord and Github)",
-
+    "copyright": "Taken and modified from /tg/station113 from https://github.com/tgstation/tgstation/blob/ce6beb8a4d61235d9a597a7126c407160ed674ea/icons/mob/huds/hud.dmi | Brigmedic icon made by PuroSlavKing (Github) | Zombie icon made by RamZ | Zookeper by netwy (discort) | Rev and Head Rev icon taken from https://tgstation13.org/wiki/HUD and edited by coolmankid12345 (Discord) | Admin recolored from MedicalIntern by TsjipTsjip | StationAi resprite to 8x8 size by lunarcomets | Service Worker resprite by anno_midi (Discord) and spanky-spanky (Github) | service icons darkened by frobnic8 (Discord and Github) | paradoxClone taken from tg station at commit https://github.com/tgstation/tgstation/commit/d0db1ff267557017ae7bde68e6490e70cbb6e42f and modifed by slarticodefast (Github) | Boxer, Chaplain, Janitor, Lawyer, Librarian recoloured by K-Dynamic (github) | Cluwne icon by Professor Renderer (Discord) | QuarterMaster modified by K-Dynamic (github) | Mime and Musician recolor by DinnerCalzone (github) at https://github.com/impstation/imp-station-14/commit/233161f02bab7f9f9c03f09f39638ea7c200ee24 | Wizard originally by ScarKy0 (github) at https://github.com/space-wizards/space-station-14/commit/7c6028bc8037306536dca68f3c2cdd5edec56d14, edited by DinnerCalzone (github) | SyndicateCommander/Corpsman/Operative originally by Archeel1 (github) at https://github.com/space-wizards/space-station-14/commit/1a92ada, edited by DinnerCalzone (github)",
     "size": {
         "x": 8,
         "y": 8
     },
     "states": [
         {
-            "name": "Detective"
-        },
-        {
-            "name": "QuarterMaster"
-        },
-        {
-            "name": "Botanist"
-        },
-        {
-            "name": "Borg"
-        },
-        {
-            "name": "Boxer"
+            "name": "Admin"
         },
         {
             "name": "AtmosphericTechnician"
         },
         {
-            "name": "Nanotrasen"
-        },
-        {
-            "name": "Prisoner"
-        },
-        {
-            "name": "Janitor"
-        },
-        {
-            "name": "Chemist"
-        },
-        {
-            "name": "StationEngineer"
-        },
-        {
-            "name": "SecurityOfficer"
-        },
-        {
-            "name": "NoId"
-        },
-        {
-            "name": "ChiefMedicalOfficer"
-        },
-        {
-            "name": "Roboticist"
-        },
-        {
-            "name": "Chaplain"
-        },
-        {
-            "name": "Lawyer"
-        },
-        {
-            "name": "Unknown"
-        },
-        {
-            "name": "Librarian"
-        },
-        {
-            "name": "CargoTechnician"
-        },
-        {
-            "name": "Scientist"
-        },
-        {
-            "name": "ResearchAssistant"
-        },
-        {
-            "name": "Geneticist"
-        },
-        {
-            "name": "Clown"
-        },
-        {
-            "name": "Captain"
-        },
-        {
-            "name": "HeadOfPersonnel"
-        },
-        {
-            "name": "Virologist"
-        },
-        {
-            "name": "ShaftMiner"
-        },
-        {
-            "name": "Passenger"
-        },
-        {
-            "name": "ChiefEngineer"
-        },
-        {
             "name": "Bartender"
         },
         {
-            "name": "HeadOfSecurity"
+            "name": "Borg"
+        },
+        {
+            "name": "Botanist"
+        },
+        {
+            "name": "Boxer"
         },
         {
             "name": "Brigmedic"
         },
         {
-            "name": "MedicalDoctor"
+            "name": "Captain"
         },
         {
-            "name": "Paramedic"
+            "name": "CargoTechnician"
+        },
+        {
+            "name": "CBURN"
+        },
+        {
+            "name": "Chaplain"
         },
         {
             "name": "Chef"
         },
         {
-            "name": "Warden"
+            "name": "Chemist"
         },
         {
-            "name": "ResearchDirector"
+            "name": "ChiefEngineer"
         },
         {
-            "name": "Mime"
+            "name": "ChiefMedicalOfficer"
         },
         {
-            "name": "Musician"
+            "name": "Clown"
         },
         {
-            "name": "Reporter"
+            "name": "Cluwne"
         },
         {
-            "name": "Psychologist"
+            "name": "Detective"
+        },
+        {
+            "name": "DeathSquad"
+        },
+        {
+            "name": "ERTChaplain"
+        },
+        {
+            "name": "ERTEngineer"
+        },
+        {
+            "name": "ERTJanitor"
+        },
+        {
+            "name": "ERTLeader"
+        },
+        {
+            "name": "ERTMedical"
+        },
+        {
+            "name": "ERTSecurity"
+        },
+        {
+            "name": "Geneticist"
+        },
+		{
+            "name": "HeadOfPersonnel"
+        },
+        {
+            "name": "HeadOfSecurity"
+        },
+        {
+            "name": "HeadRevolutionary"
+        },
+        {
+            "name": "InitialInfected"
+        },
+        {
+            "name": "Janitor"
+        },
+        {
+            "name": "Lawyer"
+        },
+        {
+            "name": "Librarian"
+        },
+        {
+            "name": "MedicalDoctor"
         },
         {
             "name": "MedicalIntern"
         },
         {
-            "name": "TechnicalAssistant"
+            "name": "Mime"
+        },
+        {
+            "name": "MindShield",
+            "delays": [
+                [
+                    1.0,
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "Musician"
+        },
+        {
+            "name": "Nanotrasen"
+        },
+        {
+            "name": "NoId"
+        },
+        {
+            "name": "ParadoxClone"
+        },
+        {
+            "name": "Paramedic"
+        },
+        {
+            "name": "Passenger"
+        },
+        {
+            "name": "Prisoner"
+        },
+        {
+            "name": "Psychologist"
+        },
+        {
+            "name": "QuarterMaster"
+        },
+        {
+            "name": "Reporter"
+        },
+        {
+            "name": "ResearchAssistant"
+        },
+        {
+            "name": "ResearchDirector"
+        },
+        {
+            "name": "Revolutionary"
+        },
+        {
+            "name": "Roboticist"
+        },
+        {
+            "name": "Scientist"
+        },
+        {
+            "name": "SecurityCadet"
+        },
+        {
+            "name": "SecurityOfficer"
+        },
+        {
+            "name": "SeniorEngineer"
+        },
+        {
+            "name": "SeniorOfficer"
+        },
+        {
+            "name": "SeniorPhysician"
+        },
+        {
+            "name": "SeniorResearcher"
         },
         {
             "name": "ServiceWorker"
         },
         {
-            "name": "SecurityCadet"
+            "name": "ShaftMiner"
+        },
+        {
+            "name": "StationAi"
+        },
+        {
+            "name": "StationEngineer"
+        },
+        {
+            "name": "Syndicate"
+        },
+        {
+            "name": "SyndicateCommander"
+        },
+        {
+            "name": "SyndicateCorpsman"
+        },
+        {
+            "name": "SyndicateOperative"
+        },
+        {
+            "name": "TechnicalAssistant"
+        },
+        {
+            "name": "Unknown"
+        },
+        {
+            "name": "Virologist"
+        },
+        {
+            "name": "Visitor"
+        },
+        {
+            "name": "Warden"
+        },
+        {
+            "name": "Wizard"
         },
         {
             "name": "Zombie"
         },
         {
             "name": "Zookeeper"
-        },
-        {
-            "name": "SeniorEngineer"
-        },
-        {
-            "name": "SeniorResearcher"
-        },
-        {
-            "name": "SeniorPhysician"
-        },
-        {
-            "name": "SeniorOfficer"
-        },
-        {
-            "name": "Revolutionary"
-        },
-        {
-            "name": "HeadRevolutionary"
-        },
-        {
-            "name": "MindShield",
-            "delays":
-            [
-                [1.0,1.0]
-            ]
-        },
-        {
-            "name": "StationAi"
-        },
-        {
-            "name": "Syndicate"
-        },
-        {
-            "name": "Visitor"
-        },
-        {
-            "name": "InitialInfected"
-        },
-        {
-            "name": "Admin"
         }
     ]
 }

@@ -36,35 +36,37 @@ public sealed partial class DocumentParsingManager
             .Assert(_tagControlParsers.ContainsKey, tag => $"unknown tag: {tag}")
             .Bind(tag => _tagControlParsers[tag]);
 
+        var whitespaceAndCommentParser = SkipWhitespaces.Then(Try(String("<!--").Then(Parser<char>.Any.SkipUntil(Try(String("-->"))))).SkipMany());
+
         _controlParser = OneOf(_tagParser, TryHeaderControl, ListControlParser, TextControlParser)
-            .Before(SkipWhitespaces);
+            .Before(whitespaceAndCommentParser);
 
         foreach (var typ in _reflectionManager.GetAllChildren<IDocumentTag>())
         {
             _tagControlParsers.Add(typ.Name, CreateTagControlParser(typ.Name, typ, _sandboxHelper));
         }
 
-        ControlParser = SkipWhitespaces.Then(_controlParser.Many());
+        ControlParser = whitespaceAndCommentParser.Then(_controlParser.Many());
 
         _sawmill = Logger.GetSawmill("Guidebook");
     }
 
-    public bool TryAddMarkup(Control control, ProtoId<GuideEntryPrototype> entryId, bool log = true)
+    public bool TryAddMarkup(Control control, ProtoId<GuideEntryPrototype> entryId)
     {
-        if (!_prototype.TryIndex(entryId, out var entry))
+        if (!_prototype.Resolve(entryId, out var entry))
             return false;
 
         using var file = _resourceManager.ContentFileReadText(entry.Text);
-        return TryAddMarkup(control, file.ReadToEnd(), log);
+        return TryAddMarkup(control, file.ReadToEnd());
     }
 
-    public bool TryAddMarkup(Control control, GuideEntry entry, bool log = true)
+    public bool TryAddMarkup(Control control, GuideEntry entry)
     {
         using var file = _resourceManager.ContentFileReadText(entry.Text);
-        return TryAddMarkup(control, file.ReadToEnd(), log);
+        return TryAddMarkup(control, file.ReadToEnd());
     }
 
-    public bool TryAddMarkup(Control control, string text, bool log = true)
+    public bool TryAddMarkup(Control control, string text)
     {
         try
         {

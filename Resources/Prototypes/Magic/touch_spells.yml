@@ -1,83 +1,97 @@
-﻿- type: entity
+# Smite-like spell that you click on someone else to use
+- type: entity
+  abstract: true
+  parent: BaseAction
+  id: BaseEntitySpellAction
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    useDelay: 90
+  - type: TargetAction
+    interactOnMiss: false
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - MobState
+    canTargetSelf: false
+
+- type: entity
+  abstract: true
+  parent: BaseEntitySpellAction
+  id: BaseSmiteAction
+  components:
+  - type: Magic
+    requiresClothes: true
+
+- type: entity
+  parent: BaseSmiteAction
   id: ActionSmite
   name: Smite
   description: Instantly gibs a target.
   components:
-  - type: EntityTargetAction
-    useDelay: 90
-    itemIconStyle: BigAction
-    whitelist:
-      components:
-      - Body
-    canTargetSelf: false
-    interactOnMiss: false
+  - type: Action
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/disintegrate.ogg
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: gib
+  - type: EntityTargetAction
     event: !type:SmiteSpellEvent
-      speech: action-speech-spell-smite
+  - type: SpeakOnAction
+    sentence: action-speech-spell-smite
   - type: Magic
     requiresClothes: true
 
 # For the Snail
 - type: entity
-  id: ActionSmiteNoReq
   parent: ActionSmite
-  name: Smite
-  description: Instantly gibs a target.
+  id: ActionSmiteNoReq
   components:
   - type: Magic
+    requiresClothes: false
 
 - type: entity
+  parent: BaseSmiteAction
   id: ActionCluwne
   name: Cluwne's Curse
   description: Turns someone into a Cluwne!
   components:
-  - type: EntityTargetAction
+  - type: Action
     useDelay: 120
-    itemIconStyle: BigAction
-    whitelist:
-      components:
-      - Body
-    canTargetSelf: false
-    interactOnMiss: false
     sound: !type:SoundPathSpecifier
       path: /Audio/Items/brokenbikehorn.ogg
     icon:
       sprite: Clothing/Mask/cluwne.rsi
       state: icon
+  - type: EntityTargetAction
     event: !type:ChangeComponentsSpellEvent
-      speech: action-speech-spell-cluwne
       toAdd:
       - type: Cluwne
+  - type: SpeakOnAction
+    sentence: action-speech-spell-cluwne
   - type: Magic
     requiresClothes: true
 
 - type: entity
+  parent: BaseSmiteAction
   id: ActionSlippery
   name: Slippery Slope
   description: Make someone slippery.
   components:
-  - type: EntityTargetAction
+  - type: Action
     useDelay: 60
-    itemIconStyle: BigAction
-    whitelist:
-      components:
-      - Body
-    canTargetSelf: false
-    interactOnMiss: false
     sound: !type:SoundPathSpecifier
       path: /Audio/Effects/slip.ogg
     icon:
       sprite: Objects/Specific/Janitorial/soap.rsi
       state: omega-4
+  - type: EntityTargetAction
     event: !type:ChangeComponentsSpellEvent
-      speech: action-speech-spell-slip
       toAdd:
       - type: Slippery
       - type: StepTrigger
         requiredTriggeredSpeed: -1
+  - type: SpeakOnAction
+    sentence: action-speech-spell-slip
   - type: Magic
     requiresClothes: true

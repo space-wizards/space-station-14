@@ -41,7 +41,8 @@
         damage:
           types:
             Poison: -1
-      - !type:ChemCleanBloodstream
+      - !type:CleanBloodstream
+        excluded: Charcoal
         cleanseRate: 3
 
 - type: reagent
@@ -50,6 +51,21 @@
   desc: reagent-desc-ash
   physicalDesc: reagent-physical-desc-powdery
   color: white
+
+- type: reagent
+  id: Lye
+  name: reagent-name-lye
+  desc: reagent-desc-lye
+  flavor: alkaline
+  physicalDesc: reagent-physical-desc-alkaline
+  color: "#e5420b"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Caustic: 1
 
 - type: reagent
   id: SodiumCarbonate
@@ -64,6 +80,8 @@
   desc: reagent-desc-artifexium
   flavor: metallic
   physicalDesc: reagent-physical-desc-crystalline
+  allowedDepartments:
+  - Science
   color: "#776291"
   metabolisms:
     Poison:
@@ -76,16 +94,31 @@
     Acidic:
       methods: [ Touch ]
       effects:
-      - !type:ActivateArtifact
-        conditions:
-        - !type:ReagentThreshold
-          min: 5
+      - !type:ArtifactUnlock
+        minScale: 5
+
+- type: reagent
+  parent: Artifexium
+  id: ArtifactGlue
+  name: reagent-name-artifact-glue
+  desc: reagent-desc-artifact-glue
+  flavor: artifactglue
+  physicalDesc: reagent-physical-desc-non-newtonian
+  color: "#827394"
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ArtifactDurabilityRestore
+        minScale: 5
 
 - type: reagent
   id: Benzene
   name: reagent-name-benzene
   desc: reagent-desc-benzene
   physicalDesc: reagent-physical-desc-acidic
+  allowedJobs:
+  - Chemist
   color: "#E7EA91"
   boilingPoint: 353.2
   meltingPoint: 278.7
@@ -123,9 +156,10 @@
             Heat: 1.5
     Medicine:
       effects:
-      - !type:ChemVomit
+      - !type:Vomit
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
+          reagent: SodiumHydroxide
           min: 5
         probability: 0.1
 
@@ -165,7 +199,6 @@
   flavor: bitter
   color: "#E6E6DA"
   physicalDesc: reagent-physical-desc-crystalline
-  slippery: false
 
 - type: reagent
   id: Rororium

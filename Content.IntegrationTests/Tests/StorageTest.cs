@@ -85,7 +85,7 @@ namespace Content.IntegrationTests.Tests
             var entMan = server.ResolveDependency<IEntityManager>();
             var protoMan = server.ResolveDependency<IPrototypeManager>();
             var compFact = server.ResolveDependency<IComponentFactory>();
-            var id = compFact.GetComponentName(typeof(StorageFillComponent));
+            var id = compFact.GetComponentName<StorageFillComponent>();
 
             var itemSys = entMan.System<SharedItemSystem>();
 
@@ -173,7 +173,7 @@ namespace Content.IntegrationTests.Tests
             var entMan = server.ResolveDependency<IEntityManager>();
             var protoMan = server.ResolveDependency<IPrototypeManager>();
             var compFact = server.ResolveDependency<IComponentFactory>();
-            var id = compFact.GetComponentName(typeof(StorageFillComponent));
+            var id = compFact.GetComponentName<StorageFillComponent>();
 
             var itemSys = entMan.System<SharedItemSystem>();
 

@@ -5,13 +5,13 @@
     <GuideEntityEmbed Entity="SignalControlledValve"/>
   </Box>
 
-  The signal valve is similar to the manual valve. Gas can flow unrestricted in both directions, and it can be operated manually.
+  The signal valve is similar to the manual valve. Gas can flow unrestricted in both directions and it can be operated manually.
 
   The signal valve has 3 [textlink="signal" link="Networking"] inputs, which can open, close, or toggle the valve.
 
   Signal valves can be used in a variety of applications, for example:
   - Remote control of valves in hazardous areas or areas inaccessible to crew
   - Convenient control over a valve in a hard-to-reach area
-  - Automation with other [textlink="signal-enabled" link="Networking"] machines and equipment such as [textlink="air alarms" link="AirAlarms"] and remote signallers
+  - Automation with other [textlink="signal-enabled" link="Networking"] machines and equipment such as [textlink="air alarms" link="AirAlarms"] and remote signalers
 
 </Document>

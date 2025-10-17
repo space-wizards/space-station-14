@@ -1,6 +1,17 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Grid
+  engineVersion: 248.0.2
+  forkId: ""
+  forkVersion: ""
+  time: 03/20/2025 07:20:18
+  entityCount: 793
+maps: []
+grids:
+- 768
+orphans:
+- 768
+nullspace: []
 tilemap:
   0: Space
   23: FloorCaveDrought
@@ -1359,6 +1370,11 @@ entities:
     - type: Transform
       pos: 7.5,1.5
       parent: 768
+  - uid: 793
+    components:
+    - type: Transform
+      pos: 5.5,4.5
+      parent: 768
 - proto: CableHV
   entities:
   - uid: 363
@@ -1932,6 +1948,13 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 5.5,3.5
+      parent: 768
+- proto: ClockworkShield
+  entities:
+  - uid: 782
+    components:
+    - type: Transform
+      pos: -2.780127,-2.51509
       parent: 768
 - proto: ClothingBeltUtilityFilled
   entities:
@@ -3050,6 +3073,13 @@ entities:
     - type: Transform
       pos: 2.5,-8.5
       parent: 768
+- proto: MirrorShield
+  entities:
+  - uid: 783
+    components:
+    - type: Transform
+      pos: 1.3163121,-0.3900899
+      parent: 768
 - proto: NitrogenCanister
   entities:
   - uid: 601
@@ -3702,6 +3732,56 @@ entities:
     - type: Transform
       pos: -4.5,-13.5
       parent: 768
+- proto: RandomPosterAny
+  entities:
+  - uid: 785
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -6.5,-4.5
+      parent: 768
+  - uid: 786
+    components:
+    - type: Transform
+      pos: 4.5,-8.5
+      parent: 768
+  - uid: 787
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -1.5,1.5
+      parent: 768
+  - uid: 788
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 1.5,3.5
+      parent: 768
+  - uid: 789
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -2.5,6.5
+      parent: 768
+  - uid: 790
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -7.5,4.5
+      parent: 768
+- proto: RandomPosterContraband
+  entities:
+  - uid: 767
+    components:
+    - type: Transform
+      pos: 0.5,-12.5
+      parent: 768
+  - uid: 784
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.5,-15.5
+      parent: 768
 - proto: RandomSpawner
   entities:
   - uid: 779
@@ -3989,6 +4069,14 @@ entities:
     - type: Transform
       pos: 7.5,3.5
       parent: 768
+- proto: SalvageHumanCorpseSpawner
+  entities:
+  - uid: 791
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 6.5,-1.5
+      parent: 768
 - proto: SinkWide
   entities:
   - uid: 581
@@ -4030,14 +4118,7 @@ entities:
     - type: Transform
       pos: 6.5,-2.5
       parent: 768
-- proto: SpawnPointCaptain
-  entities:
-  - uid: 767
-    components:
-    - type: Transform
-      pos: -0.5,-9.5
-      parent: 768
-- proto: SpawnPointLatejoin
+- proto: SpawnPointWizard
   entities:
   - uid: 762
     components:
