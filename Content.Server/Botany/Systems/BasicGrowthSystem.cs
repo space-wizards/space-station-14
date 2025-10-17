@@ -3,7 +3,6 @@ using Content.Shared.Swab;
 using Robust.Shared.Random;
 
 namespace Content.Server.Botany.Systems;
-// For all the very common stuff all plants are expected to do.
 
 // TODO: make CO2Boost (add potency if the plant can eat an increasing amount of CO2). separate PR post-merge
 // TODO: make GrowLight (run bonus ticks if theres a grow light nearby). separate PR post-merge.

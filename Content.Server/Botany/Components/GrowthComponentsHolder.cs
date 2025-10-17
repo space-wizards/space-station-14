@@ -1,7 +1,10 @@
 namespace Content.Server.Botany.Components;
 
 /// <summary>
-/// TODO: Delete after plants transition to entities
+/// TODO: Delete after plants transition to entities.
+/// This is an intentionally evil approach kept only to simplify the
+/// upcoming refactor: plants will become standalone entities that own these components.
+/// Once that happens, this holder is no longer needed.
 /// </summary>
 [DataDefinition]
 public sealed partial class GrowthComponentsHolder
@@ -40,7 +43,7 @@ public sealed partial class GrowthComponentsHolder
         {
             if (prop.GetValue(this) == null)
             {
-                var instance = System.Activator.CreateInstance(prop.PropertyType);
+                var instance = Activator.CreateInstance(prop.PropertyType);
                 prop.SetValue(this, instance);
             }
         }
