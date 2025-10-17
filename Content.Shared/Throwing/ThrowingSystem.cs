@@ -12,6 +12,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Throwing;
@@ -29,6 +30,8 @@ public sealed class ThrowingSystem : EntitySystem
     private float _frictionModifier;
     private float _airDamping;
 
+    private const float UnequipAllDefaultMaxThrowForce = 2.0f;
+
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -37,6 +40,7 @@ public sealed class ThrowingSystem : EntitySystem
     [Dependency] private readonly SharedCameraRecoilSystem _recoil = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -244,5 +248,52 @@ public sealed class ThrowingSystem : EntitySystem
 
         if (pushEv.Push)
             _physics.ApplyLinearImpulse(user.Value, -impulseVector / physics.Mass * pushbackRatio * MathF.Min(massLimit, physics.Mass), body: userPhysics);
+    }
+
+    /// <summary>
+    ///    Tries to throw all items in the given set, with random force and either random or defined direction cone.
+    /// </summary>
+    /// <param name="items">The items to throw.</param>
+    /// <param name="throwDirection">The direction in which to throw the items in a cone.</param>
+    /// <param name="throwCone"> The full spread angle of thrown items. Defaults to 360 degrees if
+    /// <see cref="throwDirection"/> is not defined, else 0 degrees.</param>
+    /// <param name="maxThrowImpulseModifier">Modifies how far each item will be thrown at most.</param>
+    /// <param name="scatterItems">Whether to scatter the items near their original position.</param>
+    public void TryThrowRandom(
+        HashSet<EntityUid> items,
+        Vector2? throwDirection = null,
+        Angle throwCone = default,
+        float maxThrowImpulseModifier = 1.0f,
+        bool scatterItems = false)
+    {
+        if (maxThrowImpulseModifier == 0.0f || items.Count == 0)
+        {
+            return;
+        }
+
+        var maxThrowImpulse = maxThrowImpulseModifier * UnequipAllDefaultMaxThrowForce;
+
+        foreach (var item in items)
+        {
+            if (scatterItems)
+            {
+                _transform.SetWorldPosition(item, _transform.GetWorldPosition(item) + _random.NextVector2(0.5f));
+            }
+
+            Vector2 currentDir;
+            if (throwDirection is not null)
+            {
+                var currentAngle = throwDirection.Value.ToAngle();
+                currentAngle += _random.NextAngle((-throwCone / 2.0f), (throwCone / 2.0f));
+                currentDir = currentAngle.ToVec();
+            }
+            else
+            {
+                currentDir = _random.NextAngle().ToVec();
+            }
+
+            var throwSpeed = _random.NextFloat() * maxThrowImpulse;
+            TryThrow(item, currentDir * throwSpeed, 8.0f);
+        }
     }
 }

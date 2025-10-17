@@ -37,7 +37,6 @@ public abstract partial class InventorySystem
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly SharedStrippableSystem _strippable = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -558,8 +557,8 @@ public abstract partial class InventorySystem
     /// Try to unequip all held and worn items.
     /// </summary>
     /// <param name="ent">The inventory's owner.</param>
-    /// <param name="forceUnequip">Whether to force unequipping all items, no matter what</param>
-    /// <returns></returns>
+    /// <param name="forceUnequip">Whether to force unequipping all items, no matter what.</param>
+    /// <returns>Successfully unequipped items.</returns>
     public HashSet<EntityUid> TryUnequipAll(Entity<InventoryComponent?, HandsComponent?> ent, bool forceUnequip = true)
     {
         var unequippedItems = new HashSet<EntityUid>();
@@ -627,38 +626,13 @@ public abstract partial class InventorySystem
     {
         var unequippedItems = TryUnequipAll(ent, forceUnequip);
 
-        var maxThrowImpulse = maxThrowImpulseModifier * UnequipAllDefaultMaxThrowImpulse;
+        maxThrowImpulseModifier = throwItems ? maxThrowImpulseModifier : 0.0f;
 
-        foreach (var item in unequippedItems)
-        {
-            if (scatterItems)
-            {
-                _transform.SetWorldPosition(item, _transform.GetWorldPosition(item) + _random.NextVector2(0.5f));
-            }
-
-            if (!throwItems)
-            {
-                continue;
-            }
-
-            Vector2 currentDir;
-            if (throwDirection is not null)
-            {
-                var currentAngle = throwDirection.Value.ToAngle();
-                currentAngle += _random.NextAngle((-throwCone / 2.0f), (throwCone / 2.0f));
-                currentDir = currentAngle.ToVec();
-            }
-            else
-            {
-                currentDir = _random.NextAngle().ToVec();
-            }
-
-            var throwSpeed = _random.NextFloat() * maxThrowImpulse;
-            _physicsSystem.ApplyLinearImpulse(item, currentDir * throwSpeed);
-
-            var throwRotationSpeed = _random.NextFloat() * maxThrowImpulse / 10.0f;
-            _physicsSystem.ApplyAngularImpulse(item, throwRotationSpeed);
-        }
+        _throwingSystem.TryThrowRandom(unequippedItems,
+            throwDirection,
+            throwCone,
+            maxThrowImpulseModifier,
+            scatterItems);
 
         return unequippedItems;
     }

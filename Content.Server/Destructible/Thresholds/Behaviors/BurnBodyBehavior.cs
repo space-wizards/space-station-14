@@ -17,7 +17,7 @@ public sealed partial class BurnBodyBehavior : IThresholdBehavior
         var inventorySystem = system.EntityManager.System<InventorySystem>();
         var sharedPopupSystem = system.EntityManager.System<SharedPopupSystem>();
 
-        inventorySystem.TryUnequipAllAndScatter(bodyId, true, true);
+        inventorySystem.TryUnequipAllAndScatter(bodyId, true, true, maxThrowImpulseModifier: 0.1f);
 
         var bodyIdentity = Identity.Entity(bodyId, system.EntityManager);
         sharedPopupSystem.PopupCoordinates(Loc.GetString("bodyburn-text-others", ("name", bodyIdentity)), transformSystem.GetMoverCoordinates(bodyId), PopupType.LargeCaution);
