@@ -462,13 +462,7 @@
     - state: icon-artistry
   - type: ItemBorgModule
     hands:
-    - item: SprayPainter
-      hand:
-       emptyRepresentative: SprayPainterEmpty
-       emptyLabel: borg-slot-painter-empty
-       whitelist:
-          components:
-           - SprayPainter
+    - item: SprayPainterBorg
     - item: CrayonBorg
     - hand:
         emptyRepresentative: SprayPainterAmmo

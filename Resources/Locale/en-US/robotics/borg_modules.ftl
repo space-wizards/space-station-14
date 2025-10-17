@@ -12,6 +12,4 @@ borg-slot-instruments-empty = Instruments
 borg-slot-beakers-empty = Beakers
 borg-slot-inflatable-door-empty = Inflatable Door
 borg-slot-inflatable-wall-empty = Inflatable Wall
-borg-slot-crayon-empty = Crayon
-borg-slot-painter-empty = Spray painter
 borg-slot-painter-ammo-empty = Compressed paint
