@@ -1,19 +1,18 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.Mind;
 using Content.Shared.Administration;
+using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
-
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Admin)]
-sealed class SwapMindCommand : LocalizedEntityCommands
+public sealed class SwapMindCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly MindSystem _mindSystem = default!;
+    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
 
     public override string Command => "swapmind";
 
@@ -44,22 +43,15 @@ sealed class SwapMindCommand : LocalizedEntityCommands
             return;
         }
 
-        if (!_mindSystem.TryGetMind(firstEntityUid.Value, out var firstMindId, out var firstMindComponent))
-        {
-            shell.WriteLine(Loc.GetString("cmd-swapmind-command-minds-not-found"));
-            return;
-        }
-
-        if (!_mindSystem.TryGetMind(secondEntityUid.Value, out var secondMindId, out var secondMindComponent))
-        {
-            shell.WriteLine(Loc.GetString("cmd-swapmind-command-minds-not-found"));
-            return;
-        }
+        var firstHasMind = _mindSystem.TryGetMind(firstEntityUid.Value, out var firstMindId, out var firstMindComponent);
+        var secondHasMind = _mindSystem.TryGetMind(secondEntityUid.Value, out var secondMindId, out var secondMindComponent);
 
         // Swap the minds
-        _mindSystem.TransferTo(firstMindId, secondEntityUid);
-        _mindSystem.TransferTo(secondMindId, firstEntityUid);
-        shell.WriteLine(Loc.GetString("cmd-swapmind-success-message"));
+        if (firstHasMind)
+            _mindSystem.TransferTo(firstMindId, secondEntityUid, mind: firstMindComponent);
+        if (secondHasMind)
+            _mindSystem.TransferTo(secondMindId, firstEntityUid, mind: secondMindComponent);
+        shell.WriteLine(Loc.GetString("cmd-swapmind-success-message", ("target1", firstEntityUid.Value), ("target2", secondEntityUid.Value)));
     }
 
     private bool TryParseUid(string str, IConsoleShell shell,
