@@ -90,7 +90,7 @@
           Log:
             min: 2
             max: 8
-  - type: TypingIndicator
+  - type: TypingIndicator # Add diona typing indicator here so that diona players keep the same typing bubble when polymorphed into a tree.
     proto: diona
 
 - type: entity
