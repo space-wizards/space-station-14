@@ -77,14 +77,9 @@ public sealed partial class BotanySystem : EntitySystem
         return false;
     }
 
-    public PlantTraitsComponent? GetPlantTraits(SeedData seed)
+    public static PlantTraitsComponent? GetPlantTraits(SeedData seed)
     {
         return seed.GrowthComponents.PlantTraits;
-    }
-
-    public HarvestComponent? GetHarvestComponent(SeedData seed)
-    {
-        return seed.GrowthComponents.Harvest;
     }
 
     private void OnExamined(EntityUid uid, SeedComponent component, ExaminedEvent args)

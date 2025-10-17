@@ -40,8 +40,8 @@ public abstract class PlantGrowthSystem : EntitySystem
         if (!TryComp<PlantTraitsComponent>(uid, out var traits))
             return;
 
-        // Synchronize harvest status with HarvestComponent if present
-        if (TryComp<HarvestComponent>(uid, out var harvestComp))
+        // Synchronize harvest status with PlantHarvestComponent if present
+        if (TryComp<PlantHarvestComponent>(uid, out var harvestComp))
         {
             component.Harvest = harvestComp.ReadyForHarvest;
         }

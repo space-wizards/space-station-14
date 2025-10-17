@@ -84,8 +84,8 @@ public sealed class MutationSystem : EntitySystem
 
         CrossChemicals(ref result.Chemicals, a.Chemicals);
 
-        var aTraits = _botanySystem.GetPlantTraits(a);
-        var resultTraits = _botanySystem.GetPlantTraits(result);
+        var aTraits = BotanySystem.GetPlantTraits(a);
+        var resultTraits = BotanySystem.GetPlantTraits(result);
 
         if (aTraits != null && resultTraits != null)
         {
@@ -104,7 +104,7 @@ public sealed class MutationSystem : EntitySystem
         // effective hybrid crossings.
         if (a.Name != result.Name && Random(0.7f))
         {
-            var traits = _botanySystem.GetPlantTraits(result);
+            var traits = BotanySystem.GetPlantTraits(result);
             if (traits != null)
             {
                 traits.Seedless = true;

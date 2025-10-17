@@ -12,7 +12,7 @@ public sealed partial class PlantMutateHarvestEntityEffectSystem : EntityEffectS
         if (entity.Comp.Seed == null)
             return;
 
-        var harvest = EnsureComp<HarvestComponent>(entity);
+        var harvest = EnsureComp<PlantHarvestComponent>(entity);
         switch (harvest.HarvestRepeat)
         {
             case HarvestType.NoRepeat:

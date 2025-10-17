@@ -16,10 +16,10 @@ public sealed partial class GrowthComponentsHolder
     public BasicGrowthComponent? BasicGrowth { get; set; }
 
     [DataField]
-    public ToxinsComponent? Toxins { get; set; }
+    public PlantToxinsComponent? Toxins { get; set; }
 
     [DataField]
-    public HarvestComponent? Harvest { get; set; }
+    public PlantHarvestComponent? Harvest { get; set; }
 
     [DataField]
     public AtmosphericGrowthComponent? AtmosphericGrowth { get; set; }

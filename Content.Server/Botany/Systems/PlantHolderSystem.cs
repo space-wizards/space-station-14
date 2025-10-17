@@ -193,7 +193,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 plantHolder.DrawWarnings = true;
 
                 // Get endurance from seed's PlantTraitsComponent
-                var seedTraits = _botany.GetPlantTraits(seed);
+                var seedTraits = BotanySystem.GetPlantTraits(seed);
                 if (seeds.HealthOverride != null)
                 {
                     plantHolder.Health = seeds.HealthOverride.Value;
@@ -380,7 +380,7 @@ public sealed class PlantHolderSystem : EntitySystem
             var seed = produce.Seed;
             if (seed != null)
             {
-                var seedTraits = _botany.GetPlantTraits(seed);
+                var seedTraits = BotanySystem.GetPlantTraits(seed);
                 if (seedTraits != null)
                 {
                     var nutrientBonus = seedTraits.Potency / 2.5f;
@@ -443,8 +443,8 @@ public sealed class PlantHolderSystem : EntitySystem
         CheckHealth(uid, component);
         CheckLevelSanity(uid, component);
 
-        // Synchronize harvest status between PlantHolderComponent and HarvestComponent
-        if (TryComp<HarvestComponent>(uid, out var harvestComp))
+        // Synchronize harvest status between PlantHolderComponent and PlantHarvestComponent
+        if (TryComp<PlantHarvestComponent>(uid, out var harvestComp))
         {
             component.Harvest = harvestComp.ReadyForHarvest;
         }
