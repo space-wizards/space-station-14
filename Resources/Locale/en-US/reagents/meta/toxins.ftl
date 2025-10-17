@@ -82,5 +82,5 @@ reagent-desc-lipolicide = A powerful toxin that will destroy fat cells, massivel
 reagent-name-mechanotoxin = mechanotoxin
 reagent-desc-mechanotoxin = A neurotoxin used as venom by some species of spider. Degrades movement when built up.
 
-reagent-name-toxintrash = trash 
-reagent-desc-toxintrash = An awful-smelling fluid. Deadly to non-vox.
+reagent-name-toxintrash = reprocessed material
+reagent-desc-toxintrash = An awful-smelling slurry efficiently refined from discarded matter. It represents a perfect, zero-waste conversion of salvage into Vox sustenance, though it is a violent poison to others.

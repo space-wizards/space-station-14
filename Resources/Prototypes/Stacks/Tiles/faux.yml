@@ -1,0 +1,55 @@
+# Faux tiles that mimic planet terrain
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileAstroGrass
+  name: stack-astro-grass-floor
+  spawn: FloorTileItemAstroGrass
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileMowedAstroGrass
+  name: stack-mowed-astro-grass-floor
+  spawn: FloorTileItemMowedAstroGrass
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileJungleAstroGrass
+  name: stack-jungle-astro-grass-floor
+  spawn: FloorTileItemJungleAstroGrass
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileDarkAstroGrass
+  name: stack-dark-astro-grass-floor
+  spawn: FloorTileItemDarkAstroGrass
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileLightAstroGrass
+  name: stack-light-astro-grass-floor
+  spawn: FloorTileItemLightAstroGrass
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileAstroIce
+  name: stack-astro-ice-floor
+  spawn: FloorTileItemAstroIce
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileAstroSnow
+  name: stack-astro-snow-floor
+  spawn: FloorTileItemAstroSnow
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileAstroAsteroidSand
+  name: stack-asteroid-astro-sand-floor
+  spawn: FloorTileItemAstroAsteroidSand
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileDesertAstroSand
+  name: stack-desert-astro-sand-floor
+  spawn: FloorTileItemDesertAstroSand

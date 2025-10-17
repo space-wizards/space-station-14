@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -46,7 +47,11 @@ public sealed class AutoEmoteSystem : EntitySystem
 
                 if (autoEmotePrototype.WithChat)
                 {
-                    _chatSystem.TryEmoteWithChat(uid, autoEmotePrototype.EmoteId, autoEmotePrototype.HiddenFromChatWindow ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal);
+                    _chatSystem.TryEmoteWithChat(uid,
+                        autoEmotePrototype.EmoteId,
+                        autoEmotePrototype.HiddenFromChatWindow ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal,
+                        ignoreActionBlocker: autoEmotePrototype.IgnoreActionBlocker,
+                        forceEmote: autoEmotePrototype.Force);
                 }
                 else
                 {

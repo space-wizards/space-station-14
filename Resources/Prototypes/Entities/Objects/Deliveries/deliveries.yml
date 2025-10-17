@@ -39,8 +39,6 @@
   - type: Label
     examinable: false
   - type: FingerprintReader
-    failPopup: fingerprint-reader-fail
-    failGlovesPopup: fingerprint-reader-fail-gloves
   - type: Delivery
   - type: DeliveryRandomMultiplier
   - type: ContainerContainer

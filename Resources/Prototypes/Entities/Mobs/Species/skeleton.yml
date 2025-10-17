@@ -73,7 +73,7 @@
     - reagents: [ Water, SpaceCleaner ]
       methods: [ Touch ]
       effects:
-      - !type:WashCreamPieReaction
+      - !type:WashCreamPie
     - reagents: [ Milk, MilkGoat, MilkSoy, MilkSpoiled ]
       # add new types of milk to reagents as they appear, oat milk isn't on the list
       # because turns out oat milk has 1/30th the amount of calcium in it compared to the rest
@@ -81,11 +81,11 @@
       methods: [ Touch ]
       effects: # TODO: when magic is around - make a milk transformation to a skeleton monster
       - !type:HealthChange
-        scaleByQuantity: true
+        scaling: true
         damage:
           groups:
-            Burn: -2 # healing obviously up to discussion
-            Brute: -1.5 # these groups are the only 2 possible ways to damage a skeleton
+            Burn: -1 # healing obviously up to discussion
+            Brute: -0.75 # these groups are the only 2 possible ways to damage a skeleton
       - !type:PopupMessage
         type: Local
         visualType: Large
@@ -102,6 +102,7 @@
   - type: FireVisuals
     alternateState: Standing
   - type: FlashImmunity
+    showInExamine: false
   - type: Inventory
     femaleDisplacements:
       jumpsuit:

@@ -119,10 +119,6 @@
       weight: 0.1
       children:
       - id: DawInstrumentMachineCircuitboard
-    - !type:GroupSelector
-      weight: 0.05
-      children:
-      - id: SuperSynthesizerInstrument
 
 - type: entityTable
   id: SalvageInstrumentTable
@@ -140,8 +136,6 @@
       tableId: WoodwindInstrumentTable
     - !type:NestedSelector
       tableId: SpecialInstrumentTable
-    - id: SuperSynthesizerInstrument
-      weight: 0.3
 
 - type: entity
   id: RandomInstruments

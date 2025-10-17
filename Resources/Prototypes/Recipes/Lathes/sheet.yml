@@ -32,6 +32,7 @@
 - type: latheRecipe
   id: SheetRGlass
   result: SheetRGlass1
+  applyMaterialDiscount: false # obvious dupe capabilities
   completetime: 0
   materials:
     Glass: 100
@@ -251,3 +252,12 @@
   completetime: 1
   materials:
     Cotton: 200 #my pyrocloth keeps catching on fire whenever I make it!
+
+- type: latheRecipe
+  id: MaterialDurathread
+  result: MaterialDurathread1
+  applyMaterialDiscount: false
+  completetime: 0
+  materials:
+    Cloth: 100
+    Plastic: 100

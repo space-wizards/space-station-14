@@ -2,12 +2,12 @@ using System.Linq;
 using Content.Server.Destructible;
 using Content.Server.Destructible.Thresholds;
 using Content.Server.Destructible.Thresholds.Behaviors;
-using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Content.Shared.Destructible;
+using Content.Shared.Destructible.Thresholds.Triggers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototypes;
@@ -99,9 +99,9 @@ namespace Content.IntegrationTests.Tests.Destructible
                 // Check that it matches the YAML prototype
                 Assert.That(threshold.Behaviors, Has.Count.EqualTo(3));
 
-                var soundThreshold = (PlaySoundBehavior) threshold.Behaviors[0];
-                var spawnThreshold = (SpawnEntitiesBehavior) threshold.Behaviors[1];
-                var actsThreshold = (DoActsBehavior) threshold.Behaviors[2];
+                var soundThreshold = (PlaySoundBehavior)threshold.Behaviors[0];
+                var spawnThreshold = (SpawnEntitiesBehavior)threshold.Behaviors[1];
+                var actsThreshold = (DoActsBehavior)threshold.Behaviors[2];
 
                 Assert.Multiple(() =>
                 {
@@ -164,9 +164,9 @@ namespace Content.IntegrationTests.Tests.Destructible
                 // Check that it matches the YAML prototype
                 Assert.That(threshold.Behaviors, Has.Count.EqualTo(3));
 
-                soundThreshold = (PlaySoundBehavior) threshold.Behaviors[0];
-                spawnThreshold = (SpawnEntitiesBehavior) threshold.Behaviors[1];
-                actsThreshold = (DoActsBehavior) threshold.Behaviors[2];
+                soundThreshold = (PlaySoundBehavior)threshold.Behaviors[0];
+                spawnThreshold = (SpawnEntitiesBehavior)threshold.Behaviors[1];
+                actsThreshold = (DoActsBehavior)threshold.Behaviors[2];
 
                 // Check that it matches the YAML prototype
                 Assert.Multiple(() =>
@@ -201,11 +201,11 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 // Verify the first one, should be the lowest one (20)
                 msg = sTestThresholdListenerSystem.ThresholdsReached[0];
-                var trigger = (DamageTrigger) msg.Threshold.Trigger;
+                var trigger = (DamageTrigger)msg.Threshold.Trigger;
                 Assert.Multiple(() =>
                 {
                     Assert.That(trigger, Is.Not.Null);
-                    Assert.That(trigger.Damage, Is.EqualTo(20));
+                    Assert.That(trigger.Damage, Is.EqualTo(FixedPoint2.New(20)));
                 });
 
                 threshold = msg.Threshold;
@@ -215,20 +215,20 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 // Verify the second one, should be the highest one (50)
                 msg = sTestThresholdListenerSystem.ThresholdsReached[1];
-                trigger = (DamageTrigger) msg.Threshold.Trigger;
+                trigger = (DamageTrigger)msg.Threshold.Trigger;
                 Assert.Multiple(() =>
                 {
                     Assert.That(trigger, Is.Not.Null);
-                    Assert.That(trigger.Damage, Is.EqualTo(50));
+                    Assert.That(trigger.Damage, Is.EqualTo(FixedPoint2.New(50)));
                 });
 
                 threshold = msg.Threshold;
 
                 Assert.That(threshold.Behaviors, Has.Count.EqualTo(3));
 
-                soundThreshold = (PlaySoundBehavior) threshold.Behaviors[0];
-                spawnThreshold = (SpawnEntitiesBehavior) threshold.Behaviors[1];
-                actsThreshold = (DoActsBehavior) threshold.Behaviors[2];
+                soundThreshold = (PlaySoundBehavior)threshold.Behaviors[0];
+                spawnThreshold = (SpawnEntitiesBehavior)threshold.Behaviors[1];
+                actsThreshold = (DoActsBehavior)threshold.Behaviors[2];
 
                 // Check that it matches the YAML prototype
                 Assert.Multiple(() =>

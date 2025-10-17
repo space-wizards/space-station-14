@@ -1,0 +1,19 @@
+# Tiles that are cut wood flooring
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileWood
+  name: stack-wood-floor
+  spawn: FloorTileItemWood
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileWoodPattern
+  name: stack-wood-patter-floor
+  spawn: FloorTileItemWoodPattern
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileWoodLarge
+  name: stack-large-wood-floor
+  spawn: FloorTileItemWoodLarge

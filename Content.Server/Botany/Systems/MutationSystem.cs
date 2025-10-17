@@ -13,6 +13,7 @@ public sealed class MutationSystem : EntitySystem
 
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
     private RandomPlantMutationListPrototype _randomMutations = default!;
 
     public override void Initialize()
@@ -32,10 +33,8 @@ public sealed class MutationSystem : EntitySystem
             if (Random(Math.Min(mutation.BaseOdds * severity, 1.0f)))
             {
                 if (mutation.AppliesToPlant)
-                {
-                    var args = new EntityEffectBaseArgs(plantHolder, EntityManager);
-                    mutation.Effect.Effect(args);
-                }
+                    _entityEffects.TryApplyEffect(plantHolder, mutation.Effect);
+
                 // Stat adjustments do not persist by being an attached effect, they just change the stat.
                 if (mutation.Persists && !seed.Mutations.Any(m => m.Name == mutation.Name))
                     seed.Mutations.Add(mutation);

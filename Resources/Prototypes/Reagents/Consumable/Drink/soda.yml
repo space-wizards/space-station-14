@@ -274,9 +274,9 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:OrganType
-          type: Slime
-          shouldHave: false
+        - !type:MetabolizerTypeCondition
+          type: [Slime]
+          inverted: true
         damage:
           types:
             Poison: 1

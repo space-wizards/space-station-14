@@ -8,10 +8,31 @@
     whitelist:
       components:
       - MobState
+      - MovementSpeedModifier
+      requireAll: true
     blacklist:
       tags:
       - SlowImmune
   - type: MovementModStatusEffect
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectSpeed
+  abstract: true
+  name: speed
+  components:
+  - type: StatusEffect
+    whitelist:
+      components:
+      - MobState
+      - MovementSpeedModifier
+      requireAll: true
+  - type: MovementModStatusEffect
+
+- type: entity
+  parent: StatusEffectSpeed
+  id: ReagentSpeedStatusEffect
+  name: reagent speed
 
 - type: entity
   parent: StatusEffectSlowdown

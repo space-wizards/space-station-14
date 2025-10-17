@@ -778,4 +778,31 @@
   id: 94
   time: '2025-10-10T20:33:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40821
+- author: CoconutThunder
+  changes:
+  - message: Reduced frequency of syndicate shark attacks
+    type: Tweak
+  id: 95
+  time: '2025-10-12T18:45:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40855
+- author: CoconutThunder
+  changes:
+  - message: added pressure regulator to TEG burn chamber on Plasma Station
+    type: Tweak
+  id: 96
+  time: '2025-10-13T02:35:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40874
+- author: Southbridge
+  changes:
+  - message: On Amber, redesigned the kitchen to be slightly larger.
+    type: Tweak
+  - message: On Amber, converted the method to get to the AI core from a disposal
+      chute to an actual sky-bridge.
+    type: Tweak
+  - message: On Amber, added an abundance of cameras to allow the AI to actually see
+      the station now.
+    type: Fix
+  id: 97
+  time: '2025-10-13T21:06:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40717
 Order: 1

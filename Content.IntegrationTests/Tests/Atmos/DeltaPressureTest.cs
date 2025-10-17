@@ -93,6 +93,12 @@ public sealed class DeltaPressureTest
 
     private readonly ResPath _testMap = new("Maps/Test/Atmospherics/DeltaPressure/deltapressuretest.yml");
 
+    // TODO ATMOS TESTS
+    // - Check for directional windows (partial airtight ents) properly computing pressure differences
+    // - Check for multi-tick damage (window with n damage threshold should take n ticks to destroy)
+    // - Check that all maps do not explode into a million pieces on load due to dP
+    // - Ensure that all tests work for a map that has an origin at a non zero coordinate
+
     /// <summary>
     /// Asserts that an entity with a DeltaPressureComponent with autoJoinProcessingList
     /// set to true is automatically added to the DeltaPressure processing list

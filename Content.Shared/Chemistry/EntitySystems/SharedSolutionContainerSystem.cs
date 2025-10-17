@@ -707,6 +707,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     }
 
     // Thermal energy and temperature management.
+    // TODO: ENERGY CONSERVATION!!! Nuke this once we have HeatContainers and use methods which properly conserve energy and model heat transfer correctly!
 
     #region Thermal Energy and Temperature
 
@@ -760,6 +761,26 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         var heatCap = solution.GetHeatCapacity(PrototypeManager);
         solution.Temperature += heatCap == 0 ? 0 : thermalEnergy / heatCap;
+        UpdateChemicals(soln);
+    }
+
+    /// <summary>
+    /// Same as <see cref="AddThermalEnergy"/> but clamps the value between two temperature values.
+    /// </summary>
+    /// <param name="soln">Solution we're adjusting the energy of</param>
+    /// <param name="thermalEnergy">Thermal energy we're adding or removing</param>
+    /// <param name="min">Min desired temperature</param>
+    /// <param name="max">Max desired temperature</param>
+    public void AddThermalEnergyClamped(Entity<SolutionComponent> soln, float thermalEnergy, float min, float max)
+    {
+        var solution = soln.Comp.Solution;
+
+        if (thermalEnergy == 0.0f)
+            return;
+
+        var heatCap = solution.GetHeatCapacity(PrototypeManager);
+        var deltaT = thermalEnergy / heatCap;
+        solution.Temperature = Math.Clamp(solution.Temperature + deltaT, min, max);
         UpdateChemicals(soln);
     }
 

@@ -4,36 +4,6 @@
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/Parallaxes/AspidParallaxBG.png"
-      slowness: 0.998046875
-      scale: "0.5, 0.5"
-      scrolling: "0, -0.098046875"
-    - texture:
-        !type:GeneratedParallaxTextureSource
-        id: "hq_wizard_stars"
-        configPath: "/Prototypes/Parallaxes/parallax_config_stars.toml"
-      slowness: 0.996625
-      scrolling: "0, -0.196625"
-    - texture:
-        !type:GeneratedParallaxTextureSource
-        id: "hq_wizard_stars_dim"
-        configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim.toml"
-      slowness: 0.989375
-      scrolling: "0, -0.209375"
-    - texture:
-        !type:GeneratedParallaxTextureSource
-        id: "hq_wizard_stars_faster"
-        configPath: "/Prototypes/Parallaxes/parallax_config_stars-2.toml"
-      slowness: 0.987265625
-      scrolling: "0, -0.287265625"
-    - texture:
-        !type:GeneratedParallaxTextureSource
-        id: "hq_wizard_stars_dim_faster"
-        configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim-2.toml"
-      slowness: 0.984352
-      scrolling: "0, -0.384352"
-    - texture:
-        !type:ImageParallaxTextureSource
-        path: "/Textures/Parallaxes/AspidParallaxBG.png"
       slowness: 0.978046875
       scrolling: "0, -0.578046875"
       scale: "1, 1"

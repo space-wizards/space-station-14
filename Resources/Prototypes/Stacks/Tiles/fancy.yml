@@ -1,0 +1,37 @@
+# expensive looking tiles
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileGold
+  name: stack-gold-floor
+  spawn: FloorTileItemGold
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileSilver
+  name: stack-silver-floor-tile
+  spawn: FloorTileItemSilver
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileWhiteMarble
+  name: stack-white-marble-floor
+  spawn: FloorTileItemWhiteMarble
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileDarkMarble
+  name: stack-dark-marble-floor
+  spawn: FloorTileItemDarkMarble
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTilePlasmaMarble
+  name: stack-plasma-marble-floor
+  spawn: FloorTileItemPlasmaMarble
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileUraniumMarble
+  name: stack-uranium-marble-floor
+  spawn: FloorTileItemUraniumMarble

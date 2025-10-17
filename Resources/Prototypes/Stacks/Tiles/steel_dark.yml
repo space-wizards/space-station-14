@@ -1,0 +1,55 @@
+# Dark steel tiles
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileDark
+  name: stack-dark-tile
+  spawn: FloorTileItemDark
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileDarkDiagonalMini
+  name: stack-dark-steel-diagonal-mini-tile
+  spawn: FloorTileItemDarkDiagonalMini
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileDarkDiagonal
+  name: stack-dark-steel-diagonal-tile
+  spawn: FloorTileItemDarkDiagonal
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileDarkHerringbone
+  name: stack-dark-steel-herringbone
+  spawn: FloorTileItemDarkHerringbone
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileDarkMini
+  name: stack-dark-steel-mini-tile
+  spawn: FloorTileItemDarkMini
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileDarkMono
+  name: stack-dark-steel-mono-tile
+  spawn: FloorTileItemDarkMono
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileDarkPavement
+  name: stack-dark-steel-pavement
+  spawn: FloorTileItemDarkPavement
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileDarkPavementVertical
+  name: stack-dark-steel-vertical-pavement
+  spawn: FloorTileItemDarkPavementVertical
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileDarkOffset
+  name: stack-offset-dark-steel-tile
+  spawn: FloorTileItemDarkOffset
