@@ -225,12 +225,12 @@ public sealed partial class RevenantSystem
         args.Handled = true;
     }
 
-    private void OnAppearAction(EntityUid uid, RevenantComponent component, RevenantAppearActionEvent args)
+    private void OnAppearAction(Entity<RevenantComponent> ent, ref RevenantAppearActionEvent args)
     {
         if (args.Handled)
             return;
-
-        if (!TryUseAbility(uid, component, component.AppearCost, component.AppearDebuffs))
+        var component = ent.Comp;
+        if (!TryUseAbility(ent.Owner, component, component.AppearCost, component.AppearDebuffs))
             return;
 
         args.Handled = true;
