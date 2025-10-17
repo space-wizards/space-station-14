@@ -39,6 +39,9 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: Tiny
+  - type: Tag
+    tags:
+    - Recyclable
   - type: Edible
   - type: FlavorProfile
     flavors:
