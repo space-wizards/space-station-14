@@ -1,12 +1,7 @@
-using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using Content.Shared.Actions;
-using Content.Shared.Clothing.ActionEvent;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.Event;
 using Content.Shared.Coordinates;
-using Content.Shared.Disposal;
-using Content.Shared.Disposal.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
@@ -18,15 +13,11 @@ using Content.Shared.Stealth.Components;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
-using Content.Shared.Xenoarchaeology.Equipment.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
@@ -99,7 +90,7 @@ public abstract class SharedHailerSystem : EntitySystem
         var resolver = _sharedAudio.ResolveSound(specifier);
         if (resolver is ResolvedCollectionSpecifier collectionResolver)
         {
-            _sharedAudio.PlayPvs(resolver, ent.Owner, audioParams: new AudioParams().WithVolume(-3f));
+            _sharedAudio.PlayPredicted(resolver, ent.Owner, ent.Owner, audioParams: new AudioParams().WithVolume(-3f));
             return collectionResolver.Index;
         }
         else
@@ -242,7 +233,7 @@ public abstract class SharedHailerSystem : EntitySystem
 
     private void OnScrewingDoAfter(Entity<HailerComponent> ent, ref SecHailerToolDoAfterEvent args)
     {
-        _sharedAudio.PlayPvs(ent.Comp.ScrewedSounds, ent.Owner);
+        _sharedAudio.PlayPredicted(ent.Comp.ScrewedSounds, ent.Owner, ent.Owner);
 
         IncreaseAggressionLevel(ent);
     }
@@ -301,7 +292,7 @@ public abstract class SharedHailerSystem : EntitySystem
         if (ent.Comp.User.HasValue && ent.Comp.User != args.UserUid)
             return;
 
-        _popup.PopupEntity(Loc.GetString("hailer-gas-mask-emagged"), ent.Owner);
+        _popup.PopupPredicted(Loc.GetString("hailer-gas-mask-emagged"), Loc.GetString("hailer-gas-mask-emagged"), ent.Owner, ent.Owner);
 
         args.Type = EmagType.Interaction;
 
@@ -316,14 +307,14 @@ public abstract class SharedHailerSystem : EntitySystem
 
         if (!_access.IsAllowed(userActed, ent.Owner))
         {
-            _sharedAudio.PlayPvs(ent.Comp.SettingError, ent.Owner, AudioParams.Default.WithVariation(0.15f));
-            _popup.PopupEntity(Loc.GetString("hailer-gas-mask-wrong_access"), userActed);
+            _sharedAudio.PlayPredicted(ent.Comp.SettingError, ent.Owner, ent.Owner, AudioParams.Default.WithVariation(0.15f));
+            _popup.PopupPredicted(Loc.GetString("hailer-gas-mask-wrong_access"), Loc.GetString("hailer-gas-mask-wrong_access"), userActed, userActed);
             return;
         }
 
         if (!HasComp<EmaggedComponent>(ent) && !ent.Comp.AreWiresCut)
         {
-            _sharedAudio.PlayPvs(ent.Comp.SettingBeep, ent.Owner, AudioParams.Default.WithVolume(0.5f).WithVariation(0.15f));
+            _sharedAudio.PlayPredicted(ent.Comp.SettingBeep, ent.Owner, ent.Owner, AudioParams.Default.WithVolume(0.5f).WithVariation(0.15f));
             IncreaseAggressionLevel(ent);
             Dirty(ent);
         }
