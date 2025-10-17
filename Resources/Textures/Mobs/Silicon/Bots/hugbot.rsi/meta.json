@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Original sprite made by compilatron (Discord) for SS13, relicensed for SS14/Moffstation; modified by Centronias (GitHub) to have two arms",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+    "states": [
+        {
+            "name": "hugbot"
+        }
+    ]
+}
