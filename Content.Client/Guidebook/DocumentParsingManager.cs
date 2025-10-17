@@ -7,7 +7,6 @@ using Robust.Client.UserInterface;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
-using Robust.Shared.Sandboxing;
 using Robust.Shared.Utility;
 using static Pidgin.Parser;
 
@@ -21,7 +20,7 @@ public sealed partial class DocumentParsingManager
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IReflectionManager _reflectionManager = default!;
     [Dependency] private readonly IResourceManager _resourceManager = default!;
-    [Dependency] private readonly ISandboxHelper _sandboxHelper = default!;
+    [Dependency] private readonly IDynamicTypeFactory _dynamicTypeFactory = default!;
 
     private readonly Dictionary<string, Parser<char, Control>> _tagControlParsers = new();
     private Parser<char, Control> _controlParser = default!;
@@ -36,35 +35,37 @@ public sealed partial class DocumentParsingManager
             .Assert(_tagControlParsers.ContainsKey, tag => $"unknown tag: {tag}")
             .Bind(tag => _tagControlParsers[tag]);
 
+        var whitespaceAndCommentParser = SkipWhitespaces.Then(Try(String("<!--").Then(Parser<char>.Any.SkipUntil(Try(String("-->"))))).SkipMany());
+
         _controlParser = OneOf(_tagParser, TryHeaderControl, ListControlParser, TextControlParser)
-            .Before(SkipWhitespaces);
+            .Before(whitespaceAndCommentParser);
 
         foreach (var typ in _reflectionManager.GetAllChildren<IDocumentTag>())
         {
-            _tagControlParsers.Add(typ.Name, CreateTagControlParser(typ.Name, typ, _sandboxHelper));
+            _tagControlParsers.Add(typ.Name, CreateTagControlParser(typ.Name, typ, _dynamicTypeFactory));
         }
 
-        ControlParser = SkipWhitespaces.Then(_controlParser.Many());
+        ControlParser = whitespaceAndCommentParser.Then(_controlParser.Many());
 
         _sawmill = Logger.GetSawmill("Guidebook");
     }
 
-    public bool TryAddMarkup(Control control, ProtoId<GuideEntryPrototype> entryId, bool log = true)
+    public bool TryAddMarkup(Control control, ProtoId<GuideEntryPrototype> entryId)
     {
-        if (!_prototype.TryIndex(entryId, out var entry))
+        if (!_prototype.Resolve(entryId, out var entry))
             return false;
 
         using var file = _resourceManager.ContentFileReadText(entry.Text);
-        return TryAddMarkup(control, file.ReadToEnd(), log);
+        return TryAddMarkup(control, file.ReadToEnd());
     }
 
-    public bool TryAddMarkup(Control control, GuideEntry entry, bool log = true)
+    public bool TryAddMarkup(Control control, GuideEntry entry)
     {
         using var file = _resourceManager.ContentFileReadText(entry.Text);
-        return TryAddMarkup(control, file.ReadToEnd(), log);
+        return TryAddMarkup(control, file.ReadToEnd());
     }
 
-    public bool TryAddMarkup(Control control, string text, bool log = true)
+    public bool TryAddMarkup(Control control, string text)
     {
         try
         {
@@ -85,14 +86,14 @@ public sealed partial class DocumentParsingManager
         return true;
     }
 
-    private Parser<char, Control> CreateTagControlParser(string tagId, Type tagType, ISandboxHelper sandbox)
+    private Parser<char, Control> CreateTagControlParser(string tagId, Type tagType, IDynamicTypeFactory typeFactory)
     {
         return Map(
                 (args, controls) =>
                 {
                     try
                     {
-                        var tag = (IDocumentTag) sandbox.CreateInstance(tagType);
+                        var tag = (IDocumentTag) typeFactory.CreateInstance(tagType);
                         if (!tag.TryParseTag(args, out var control))
                         {
                             _sawmill.Error($"Failed to parse {tagId} args");

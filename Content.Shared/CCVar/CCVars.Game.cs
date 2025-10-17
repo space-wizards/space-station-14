@@ -1,4 +1,4 @@
-﻿using Content.Shared.Roles;
+using Content.Shared.Roles;
 using Robust.Shared.Configuration;
 
 namespace Content.Shared.CCVar;
@@ -54,6 +54,12 @@ public sealed partial class CCVars
         GameLobbyEnableWin = CVarDef.Create("game.enablewin", true, CVar.ARCHIVE);
 
     /// <summary>
+    ///     Controls if round-end window shows whether the objective was completed or not.
+    /// </summary>
+    public static readonly CVarDef<bool>
+        GameShowGreentext = CVarDef.Create("game.showgreentext", true, CVar.ARCHIVE | CVar.SERVERONLY);
+
+    /// <summary>
     ///     Controls the maximum number of character slots a player is allowed to have.
     /// </summary>
     public static readonly CVarDef<int>
@@ -102,6 +108,12 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool>
         GameRoleTimers = CVarDef.Create("game.role_timers", true, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
+    /// If role loadout items should be restricted based on time.
+    /// </summary>
+    public static readonly CVarDef<bool>
+        GameRoleLoadoutTimers = CVarDef.Create("game.role_loadout_timers", true, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     ///     Override default role requirements using a <see cref="JobRequirementOverridePrototype"/>
@@ -279,10 +291,10 @@ public sealed partial class CCVars
 
     /// <summary>
     /// Amount of playtime in minutes to be exempt from an IP check. 0 to search everyone. 5 hours by default.
+    /// </summary>
     /// <remarks>
     /// Trust me you want one.
-    /// </remarks>>
-    /// </summary>
+    /// </remarks>
     public static readonly CVarDef<TimeSpan> GameIPIntelExemptPlaytime =
         CVarDef.Create("game.ipintel_exempt_playtime", TimeSpan.FromMinutes(300), CVar.SERVERONLY);
 
@@ -379,6 +391,12 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> ContrabandExamine =
         CVarDef.Create("game.contraband_examine", true, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
+    ///     If true, contraband examination is only possible while wearing an item with `ShowContrabandDetailsComponent`. Requires `ContrabandExamine` to be true as well.
+    /// </summary>
+    public static readonly CVarDef<bool> ContrabandExamineOnlyInHUD =
+        CVarDef.Create("game.contraband_examine_only_in_hud", false, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     ///     Size of the lookup area for adding entities to the context menu

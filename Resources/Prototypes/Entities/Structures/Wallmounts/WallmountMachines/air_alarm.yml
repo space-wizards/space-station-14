@@ -1,0 +1,175 @@
+- type: entity
+  parent: BaseWallmountMachine
+  id: AirAlarm
+  name: air alarm
+  description: An air alarm. Alarms... air?
+  components:
+  - type: StationAiWhitelist
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
+  - type: DeviceNetwork
+    deviceNetId: AtmosDevices
+    receiveFrequencyId: AtmosMonitor
+    transmitFrequencyId: AtmosMonitor
+    prefix: device-address-prefix-air-alarm
+    sendBroadcastAttemptEvent: true
+  - type: WiredNetworkConnection
+  # for output status ports
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceList
+  - type: DeviceNetworkRequiresPower
+  - type: DeviceLinkSource
+    ports:
+    - AirDanger
+    - AirWarning
+    - AirNormal
+    lastSignals:
+      AirDanger: false
+      AirWarning: false
+      AirNormal: false
+  - type: AtmosAlarmable
+    syncWith:
+    - AirAlarm
+    - AirSensor
+    - GasVent
+    - GasScrubber
+  - type: AtmosAlarmableVisuals
+    layerMap: "airAlarmState"
+    alarmStates:
+      Normal: alarm0
+      Warning: alarm1
+      Danger: alarm2
+    hideOnDepowered: [ "airAlarmState" ]
+  - type: Tag
+    tags:
+      - AirAlarm
+  - type: AtmosDevice
+  - type: AirAlarm
+  - type: AtmosAlertsDevice
+    group: AirAlarm
+  - type: Clickable
+  - type: InteractionOutline
+  - type: UserInterface
+    interfaces:
+      enum.SharedAirAlarmInterfaceKey.Key:
+        type: AirAlarmBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: WiresPanel
+  - type: Wires
+    boardName: wires-board-name-airalarm
+    layoutId: AirAlarm
+  - type: AccessReader
+    access: [["Atmospherics"]]
+  - type: ContainerFill
+    containers:
+      board: [ AirAlarmElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+  - type: Appearance
+  - type: WiresVisuals
+  - type: Sprite
+    sprite: Structures/Wallmounts/air_monitors.rsi
+    layers:
+    - state: alarmp
+      map: ["airAlarmBase"]
+    - state: alarm0
+      map: ["airAlarmState"] # TODO: fire alarm enum
+    - state: alarmx
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Construction
+    graph: AirAlarm
+    node: air_alarm
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 200
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalGlassBreak
+              params:
+                volume: -4
+  - type: GuideHelp
+    guides:
+    - AirAlarms
+    - DeviceMonitoringAndControl
+
+- type: entity
+  parent: BaseWallmountMetallic
+  id: AirAlarmAssembly
+  name: air alarm assembly
+  description: An air alarm. Doesn't look like it'll be alarming air any time soon.
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/air_monitors.rsi
+    layers:
+    - state: alarm_b1
+      map: [ "enum.ConstructionVisuals.Layer" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          assembly: { state: alarm_b1 }
+          electronics: { state: alarm_b1 }
+  - type: Construction
+    graph: AirAlarm
+    node: assembly
+  - type: Transform
+    anchored: true
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 20
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 15
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalGlassBreak
+              params:
+                volume: -4
+
+- type: entity
+  id: AirAlarmXeno
+  parent: AirAlarm
+  description: An alien air alarm. Hopefully they didn't breathe poison.
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/air_monitors_xeno.rsi
+    layers:
+    - state: alarm0
+      map: ["airAlarmBase"] # TODO: fire alarm enum
+    - state: alarmx
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+
+- type: entity
+  id: AirAlarmAssemblyXeno
+  parent: AirAlarmAssembly
+  description: An alien air alarm. Why are the wires pulsating?...
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/air_monitors_xeno.rsi

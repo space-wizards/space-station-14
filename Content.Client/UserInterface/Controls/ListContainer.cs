@@ -96,9 +96,12 @@ public class ListContainer : Control
         {
             ListContainerButton control = new(data[0], 0);
             GenerateItem?.Invoke(data[0], control);
+            // Yes this AddChild is necessary for reasons (get proper style or whatever?)
+            // without it the DesiredSize may be different to the final DesiredSize.
+            AddChild(control);
             control.Measure(Vector2Helpers.Infinity);
             _itemHeight = control.DesiredSize.Y;
-            control.Dispose();
+            control.Orphan();
         }
 
         // Ensure buttons are re-generated.
@@ -261,12 +264,6 @@ public class ListContainer : Control
             _updateChildren = false;
 
             var toRemove = new Dictionary<ListData, ListContainerButton>(_buttons);
-            foreach (var child in Children.ToArray())
-            {
-                if (child == _vScrollBar)
-                    continue;
-                RemoveChild(child);
-            }
 
             if (_data.Count > 0)
             {
@@ -289,8 +286,9 @@ public class ListContainer : Control
 
                         if (Toggle && data == _selected)
                             button.Pressed = true;
+                        AddChild(button);
                     }
-                    AddChild(button);
+                    button.SetPositionInParent(i - _topIndex);
                     button.Measure(finalSize);
                 }
             }
@@ -384,6 +382,7 @@ public sealed class ListContainerButton : ContainerButton, IEntityControl
 
     public ListContainerButton(ListData data, int index)
     {
+        AddStyleClass(StyleClassButton);
         Data = data;
         Index = index;
         // AddChild(Background = new PanelContainer

@@ -32,6 +32,50 @@
                 "/consoleloggerparameters:'ForceNoAlign;NoSummary'"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "test",
+            "command": "dotnet",
+            "type": "shell",
+            "args": [
+                "test",
+                "--no-build",
+                "--configuration",
+                "DebugOpt",
+                "Content.Tests/Content.Tests.csproj",
+                "--",
+                "NUnit.ConsoleOut=0"
+            ],
+            "group": {
+                "kind": "test"
+            },
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "integration-test",
+            "command": "dotnet",
+            "type": "shell",
+            "args": [
+                "test",
+                "--no-build",
+                "--configuration",
+                "DebugOpt",
+                "Content.IntegrationTests/Content.IntegrationTests.csproj",
+                "--",
+                "NUnit.ConsoleOut=0",
+                "NUnit.MapWarningTo=Failed.ConsoleOut=0",
+                "NUnit.MapWarningTo=Failed"
+            ],
+            "group": {
+                "kind": "test"
+            },
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$msCompile"
         }
     ]
 }

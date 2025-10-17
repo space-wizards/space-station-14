@@ -19,7 +19,7 @@ jobs:
 
     steps:
       - name: Checkout Master
-        uses: actions/checkout@v3.6.0
+        uses: actions/checkout@v4.2.2
 
       - name: Setup Submodule
         run: |
@@ -34,7 +34,7 @@ jobs:
           git submodule update --init --recursive
 
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v3.2.0
+        uses: actions/setup-dotnet@v4.1.0
         with:
           dotnet-version: 9.0.x
 
@@ -42,7 +42,7 @@ jobs:
         run: dotnet restore
 
       - name: Build Project
-        run: dotnet build Content.MapRenderer --configuration Release --no-restore /p:WarningsAsErrors=nullable /m
+        run: dotnet build Content.MapRenderer --configuration Release --no-restore /m
 
       - name: Run Map Renderer
         run: dotnet run --project Content.MapRenderer Dev

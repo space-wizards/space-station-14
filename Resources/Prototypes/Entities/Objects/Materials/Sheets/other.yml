@@ -12,6 +12,7 @@
   - type: Tag
     tags:
     - Sheet
+    - ConstructionMaterial
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -107,9 +108,10 @@
         - ReagentId: Plasma
           Quantity: 10
         canReact: false
-  - type: Tag
+  - type: Tag # Redundant
     tags:
     - Sheet
+    - ConstructionMaterial
 
 - type: entity
   parent: SheetPlasma
@@ -142,6 +144,7 @@
     tags:
     - Plastic
     - Sheet
+    - ConstructionMaterial
   - type: Material
   - type: PhysicalComposition
     materialComposition:
@@ -202,7 +205,7 @@
   suffix: Full
   components:
   - type: Material
-  - type: Food
+  - type: Edible
     transferAmount: 10
   - type: BadFood
   - type: PhysicalComposition
@@ -234,14 +237,6 @@
         - ReagentId: Radium
           Quantity: 2
         canReact: false
-  - type: RadiationSource
-    intensity: 0.1
-    slope: 3
-  - type: PointLight
-    radius: 1.2
-    energy: 0.8
-    castShadows: false
-    color: "#9be792"
 
 - type: entity
   parent: SheetUranium

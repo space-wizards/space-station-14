@@ -1,0 +1,7 @@
+<Control xmlns="https://spacestation14.io">
+    <BoxContainer Orientation="Vertical">
+        <Label Name="TitleLabel" Access="Public" />
+        <Label Name="ExampleLabel" Access="Public" />
+        <ColorSelectorSliders Name="Slider" Access="Public" HorizontalExpand="True" />
+    </BoxContainer>
+</Control>

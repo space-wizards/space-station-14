@@ -79,7 +79,7 @@ public class NoiseChannelConfig
     public float Minimum { get; private set; }
 }
 
-[Prototype("noiseChannel")]
+[Prototype]
 public sealed partial class NoiseChannelPrototype : NoiseChannelConfig, IPrototype, IInheritingPrototype
 {
     /// <inheritdoc />

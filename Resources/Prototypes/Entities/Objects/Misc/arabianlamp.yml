@@ -13,7 +13,6 @@
     breakOnAccessBreaker: false
   - type: EntityStorage
     capacity: 1 # Its smol.
-    itemCanStoreMobs: false #  just leaving this here explicitly since I know at some point someone will want to use this to hold a mob. This also prevents it from becoming His Grace.
   # - type: StorageFill
     # contents:
       # - id: PuddleSparkle # Ha! Cute. Unfortunately it despawns before the container is likely to open.
@@ -71,18 +70,18 @@
     - state: flame
       visible: false
       shader: unshaded
-      map: ["enum.ToggleVisuals.Layer"]
+      map: ["enum.ToggleableVisuals.Layer"]
   - type: GenericVisualizer
     visuals:
-      enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
           True: { visible: true }
           False: { visible: false }
   - type: EntityStorageVisuals
     stateBaseClosed: lamp
     stateDoorOpen: lamp
     stateDoorClosed: lamptop
-  - type: ToggleableLightVisuals
+  - type: ToggleableVisuals
     spriteLayer: flame
     inhandVisuals:
       left:
@@ -111,6 +110,8 @@
     solution: Welder
   - type: ExaminableSolution
     solution: Welder
+    heldOnly: true
+    exactVolume: true
   - type: SolutionRegeneration
     solution: Welder
     generated:

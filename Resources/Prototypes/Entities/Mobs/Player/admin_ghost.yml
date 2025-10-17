@@ -13,23 +13,34 @@
     - BypassInteractionRangeChecks
     - BypassDropChecks
     - NoConsoleSound
+    - SilentStorageUser
+    - PreventAccessLogging
+    - AllowBiomeLoading
   - type: Input
     context: "aghost"
   - type: Ghost
     canInteract: true
   - type: GhostHearing
   - type: Hands
+    hands:
+      hand_right:
+        location: Right
+      hand_left:
+        location: Left
+    sortedHands:
+    - hand_right
+    - hand_left
   - type: ComplexInteraction
   - type: Puller
+    needsHands: false
   - type: CombatMode
   - type: Physics
     ignorePaused: true
     bodyType: Kinematic
-  - type: Body
-    prototype: Aghost
   - type: Access
     groups:
     - AllAccess
+    - Silicon
     tags:
     - NuclearOperative
     - SyndicateAgent
@@ -73,7 +84,6 @@
   - type: RadarConsole
     followEntity: true
   - type: CargoOrderConsole
-  - type: BankClient
   - type: CrewMonitoringConsole
   - type: GeneralStationRecordConsole
     canDeleteEntries: true
@@ -91,80 +101,96 @@
   - type: SolutionScanner
   - type: IgnoreUIRange
   - type: ShowAntagIcons
+  - type: ShowContrabandDetails
   - type: Inventory
     templateId: aghost
   - type: Loadout
     prototypes: [ MobAghostGear ]
   - type: BypassInteractionChecks
+  - type: ExplosionResistance
+    damageCoefficient: 0
 
 - type: entity
+  abstract: true
+  parent: BaseAction
+  id: BaseAGhostAction
+  components:
+  - type: Action
+    icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
+    iconOn: { sprite: Structures/Machines/parts.rsi, state: box_2 }
+    keywords: [ "AI", "console", "interface" ]
+    priority: -10
+
+- type: entity
+  parent: BaseAGhostAction
   id: ActionAGhostShowSolar
   name: Solar Control Interface
   description: View a Solar Control Interface.
   components:
   - type: InstantAction
-    icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
-    iconOn: Structures/Machines/parts.rsi/box_2.png
-    keywords: [ "AI", "console", "interface" ]
-    priority: -10
     event: !type:ToggleIntrinsicUIEvent { key: enum.SolarControlConsoleUiKey.Key }
 
 - type: entity
+  parent: BaseAGhostAction
   id: ActionAGhostShowCommunications
   name: Communications Interface
   description: View a Communications Interface.
   components:
-  - type: InstantAction
+  - type: Action
     icon: { sprite: Interface/Actions/actions_ai.rsi, state: comms_console }
-    iconOn: Interface/Actions/actions_ai.rsi/comms_console.png
+    iconOn: { sprite: Interface/Actions/actions_ai.rsi, state: comms_console }
     keywords: [ "AI", "console", "interface" ]
     priority: -4
+  - type: InstantAction
     event: !type:ToggleIntrinsicUIEvent { key: enum.CommunicationsConsoleUiKey.Key }
 
 - type: entity
+  parent: BaseAGhostAction
   id: ActionAGhostShowRadar
   name: Mass Scanner Interface
   description: View a Mass Scanner Interface.
   components:
-  - type: InstantAction
+  - type: Action
     icon: { sprite: Interface/Actions/actions_ai.rsi, state: mass_scanner }
-    iconOn: Interface/Actions/actions_ai.rsi/mass_scanner.png
+    iconOn: { sprite: Interface/Actions/actions_ai.rsi, state: comms_console }
     keywords: [ "AI", "console", "interface" ]
     priority: -6
+  - type: InstantAction
     event: !type:ToggleIntrinsicUIEvent { key: enum.RadarConsoleUiKey.Key }
 
 - type: entity
+  parent: BaseAGhostAction
   id: ActionAGhostShowCargo
   name: Cargo Ordering Interface
   description: View a Cargo Ordering Interface.
   components:
   - type: InstantAction
-    icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
-    iconOn: Structures/Machines/parts.rsi/box_2.png
-    keywords: [ "AI", "console", "interface" ]
-    priority: -10
     event: !type:ToggleIntrinsicUIEvent { key: enum.CargoConsoleUiKey.Orders }
 
 - type: entity
+  parent: BaseAGhostAction
   id: ActionAGhostShowCrewMonitoring
   name: Crew Monitoring Interface
   description: View a Crew Monitoring Interface.
   components:
-  - type: InstantAction
+  - type: Action
     icon: { sprite: Interface/Actions/actions_ai.rsi, state: crew_monitor }
-    iconOn: Interface/Actions/actions_ai.rsi/crew_monitor.png
+    iconOn: { sprite: Interface/Actions/actions_ai.rsi, state: crew_monitor }
     keywords: [ "AI", "console", "interface" ]
     priority: -8
+  - type: InstantAction
     event: !type:ToggleIntrinsicUIEvent { key: enum.CrewMonitoringUIKey.Key }
 
 - type: entity
+  parent: BaseAGhostAction
   id: ActionAGhostShowStationRecords
   name: Station Records Interface
   description: View a Station Records Interface.
   components:
-  - type: InstantAction
+  - type: Action
     icon: { sprite: Interface/Actions/actions_ai.rsi, state: station_records }
-    iconOn: Interface/Actions/actions_ai.rsi/station_records.png
+    iconOn: { sprite: Interface/Actions/actions_ai.rsi, state: station_records }
     keywords: [ "AI", "console", "interface" ]
     priority: -7
+  - type: InstantAction
     event: !type:ToggleIntrinsicUIEvent { key: enum.GeneralStationRecordConsoleKey.Key }
