@@ -1,4 +1,5 @@
 - type: entity
+  parent: BaseFloorDecoration
   id: IronsandStep
   name: ironsand step
   description: Takes your ironsand up a level.
