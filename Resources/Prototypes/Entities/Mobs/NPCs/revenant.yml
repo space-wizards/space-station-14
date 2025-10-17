@@ -58,7 +58,7 @@
       - EmagSiliconLaw
   - type: PointLight
     color: MediumPurple
-    energy: 0.4
+    energy: 0.8
     radius: 6
     falloff: 10
   - type: UserInterface
