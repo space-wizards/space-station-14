@@ -367,8 +367,6 @@
           MaterialCardboard:
             min: 3
             max: 5
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   parent: BaseMaterialDoorNavMap
