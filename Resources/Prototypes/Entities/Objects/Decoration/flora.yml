@@ -90,6 +90,8 @@
           Log:
             min: 2
             max: 8
+  - type: TypingIndicator
+    proto: diona
 
 - type: entity
   parent: BaseTree
@@ -229,8 +231,6 @@
         tree04: ""
         tree05: ""
         tree06: ""
-  - type: TypingIndicator
-    proto: diona
 
 - type: entity
   parent: BaseTreeSnow
