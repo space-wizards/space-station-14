@@ -1,4 +1,17 @@
 - type: listing
+  id: RevenantAppear
+  name: revenant-appear-name
+  description: revenant-appear-desc
+  productAction: ActionRevenantAppear
+  cost:
+    StolenEssence: 0
+  categories:
+  - RevenantAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
   id: RevenantDefile
   name: revenant-defile-name
   description: revenant-defile-desc

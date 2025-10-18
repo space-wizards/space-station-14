@@ -42,6 +42,10 @@ public sealed class HarvestDoAfterCancelled : EntityEventArgs
 {
 }
 
+public sealed partial class RevenantAppearActionEvent : InstantActionEvent
+{
+}
+
 public sealed partial class RevenantDefileActionEvent : InstantActionEvent
 {
 }
