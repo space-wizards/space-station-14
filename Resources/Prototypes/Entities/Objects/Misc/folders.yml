@@ -13,7 +13,7 @@
       color: "#1dff00"
   - type: PhysicalComposition
     materialComposition:
-      Paper: 100
+      Paper: 50
   - type: SpawnItemsOnUse
     items:
     - id: NukeCodePaper
@@ -63,7 +63,7 @@
           - Document
   - type: PhysicalComposition
     materialComposition:
-      Paper: 100
+      Paper: 50
   - type: Appearance
   - type: Tag
     tags:
@@ -311,8 +311,8 @@
     quickEquip: false
     sprite: Objects/Misc/clipboard.rsi
   - type: PhysicalComposition
-    materialComposition: # same as autolathe printing cost
-      Wood: 100
+    materialComposition: # half of autolathe printing cost
+      Wood: 50
       Steel: 25
   - type: Storage
     grid:
@@ -366,8 +366,8 @@
   - type: Clothing
     sprite: Objects/Misc/plastic_clipboard.rsi
   - type: PhysicalComposition
-    materialComposition: # same as autolathe printing cost
-      Plastic: 100
+    materialComposition: # half of autolathe printing cost
+      Plastic: 50
       Steel: 25
 
 - type: entity
@@ -400,8 +400,8 @@
   - type: Clothing
     sprite: Objects/Misc/cc-clipboard.rsi
   - type: PhysicalComposition
-    materialComposition: # same as regular clipboard + bit of cloth because it's "upholstered with green velvet"
-      Wood: 100
+    materialComposition: # same composition as regular clipboard + bit of cloth because it's "upholstered with green velvet"
+      Wood: 50
       Steel: 25
       Cloth: 25
 
