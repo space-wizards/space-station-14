@@ -27,6 +27,9 @@ public sealed partial class HumanoidAppearanceComponent : Component
     // Couldn't these be somewhere else?
 
     [DataField, AutoNetworkedField]
+    public Sex PreferredVoice;
+
+    [DataField, AutoNetworkedField]
     public Gender Gender;
 
     [DataField, AutoNetworkedField]
