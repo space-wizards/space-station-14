@@ -10,7 +10,6 @@
     - type: Transform
       anchored: true
     - type: Physics
-    - type: Edible
     - type: Kudzu
     - type: GrowingKudzu
     - type: ActiveEdgeSpreader
@@ -81,6 +80,7 @@
             types:
               Heat: 0.5
     - type: AtmosExposed
+    - type: Edible
     - type: Kudzu
       growthTickChance: 0.3
       spreadChance: 0.4
@@ -244,6 +244,7 @@
        types:
          Heat: 3
     - type: AtmosExposed
+    - type: Edible
     - type: SpeedModifierContacts
       walkSpeedModifier: 0.3
       sprintSpeedModifier: 0.3
