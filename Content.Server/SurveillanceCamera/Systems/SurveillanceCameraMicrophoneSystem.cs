@@ -62,7 +62,7 @@ public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
     public void CanListen(EntityUid uid, SurveillanceCameraMicrophoneComponent microphone, ListenAttemptEvent args)
     {
         // TODO maybe just make this a part of ActiveListenerComponent?
-        if (_whitelistSystem.IsBlacklistPass(microphone.Blacklist, args.Source))
+        if (_whitelistSystem.IsWhitelistPass(microphone.Blacklist, args.Source))
             args.Cancel();
     }
 
