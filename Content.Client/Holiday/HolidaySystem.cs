@@ -1,35 +1,41 @@
 using Content.Shared.Holiday;
-using Content.Shared.Item;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Client.Holiday;
 
-public sealed class HolidaySystem : EntitySystem
+/// <inheritdoc />
+public sealed class HolidaySystem : SharedHolidaySystem
 {
-    [Dependency] private readonly IResourceCache _rescache = default!;
+    [Dependency] private readonly IResourceCache _resCache = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<HolidayRsiSwapComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
+    /// <summary>
+    /// Swaps the rsi of particularly festive entities during the holiday.
+    /// </summary>
     private void OnAppearanceChange(Entity<HolidayRsiSwapComponent> ent, ref AppearanceChangeEvent args)
     {
+        // Get the holiday enum
         if (!_appearance.TryGetData<string>(ent, HolidayVisuals.Holiday, out var data, args.Component))
             return;
 
-        var comp = ent.Comp;
-        if (!comp.Sprite.TryGetValue(data, out var rsistring) || args.Sprite == null)
+        // Get the new rsi
+        if (args.Sprite == null || !ent.Comp.Sprite.TryGetValue(data, out var rsiString))
             return;
 
-        var path = SpriteSpecifierSerializer.TextureRoot / rsistring;
-        if (_rescache.TryGetResource(path, out RSIResource? rsi))
+        // Set the new rsi
+        var path = SpriteSpecifierSerializer.TextureRoot / rsiString;
+        if (_resCache.TryGetResource(path, out RSIResource? rsi))
             _sprite.SetBaseRsi((ent.Owner, args.Sprite), rsi.RSI);
     }
 }

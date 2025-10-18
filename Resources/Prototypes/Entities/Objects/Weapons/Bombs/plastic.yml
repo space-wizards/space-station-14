@@ -91,6 +91,7 @@
   - type: HolidayRsiSwap
     sprite:
       festive: Objects/Weapons/Bombs/c4gift.rsi
+      none: Objects/Weapons/Bombs/c4.rsi
   - type: StaticPrice
     price: 625 # 5000 for a bundle of 8
 
