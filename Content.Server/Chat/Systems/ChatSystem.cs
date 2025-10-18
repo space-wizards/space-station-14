@@ -908,17 +908,15 @@ public record ExpandICChatRecipientsEvent(EntityUid Source, float VoiceRange, Di
 /// <summary>
 ///     Raised broadcast in order to transform speech.transmit
 /// </summary>
-public sealed class TransformSpeechEvent : EntityEventArgs
+public sealed class TransformSpeechEvent : CancellableEntityEventArgs
 {
     public EntityUid Sender;
     public string Message;
-    public bool Cancelled;
 
     public TransformSpeechEvent(EntityUid sender, string message)
     {
         Sender = sender;
         Message = message;
-        Cancelled = false;
     }
 }
 

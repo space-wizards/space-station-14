@@ -50,28 +50,30 @@ public sealed class SpeakOnExceptionSystem : EntitySystem
         {
             if (_timing.CurTime >= comp.NextTimeCanSpeak && log != comp.LastLog)
             {
-                if (_random.Prob(comp.ChanceSpeakNoAccent))
-                    comp.BlockAccent = true;
-
                 _chat.TrySendInGameICMessage(uid, CensorMessage(comp), InGameICChatType.Speak, ChatTransmitRange.Normal, true);
-                comp.BlockAccent = false;
 
                 comp.NextTimeCanSpeak += comp.SpeechCooldown;
             }
 
-            // If the log changes when your in cooldown, you still want to update the log so it won't trigger immediately
+            // If the log changes when you're in cooldown, you still want to update the log so it won't trigger immediately
             comp.LastLog = log;
         }
     }
 
     private void OnTransformSpeech(Entity<SpeakOnExceptionComponent> ent, ref TransformSpeechEvent args)
     {
-        args.Cancelled |= ent.Comp.BlockAccent;
+        if (_random.Prob(ent.Comp.ChanceSpeakNoAccent))
+            args.Cancel();
     }
 
     private string CensorMessage(SpeakOnExceptionComponent comp)
     {
         return Loc.GetString(_random.Pick(_proto.Index(comp.Dataset).Values));
+    }
+
+    public override void Shutdown()
+    {
+        _log.RootSawmill.RemoveHandler(_logHandler);
     }
 }
 

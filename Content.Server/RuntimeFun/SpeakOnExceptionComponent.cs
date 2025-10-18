@@ -30,6 +30,7 @@ public sealed partial class SpeakOnExceptionComponent : Component
     /// <summary>
     /// Localized dataset used when speaking
     /// </summary>
+    [DataField]
     public ProtoId<LocalizedDatasetPrototype> Dataset = "ExceptionSpeechDataset";
 
     /// <summary>
@@ -37,9 +38,4 @@ public sealed partial class SpeakOnExceptionComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan? NextTimeCanSpeak;
-
-    /// <summary>
-    /// If this component is currently trying to block accents from working.
-    /// </summary>
-    public bool BlockAccent;
 }
