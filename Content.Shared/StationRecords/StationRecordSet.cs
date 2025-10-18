@@ -33,7 +33,7 @@ public sealed partial class StationRecordSet
     /// Dictionary between a record's type and then each record indexed by id.
     /// </summary>
     [DataField]
-    private Dictionary<Type, Dictionary<uint, object>> _tables = new();
+    private Dictionary<string, Dictionary<uint, StationRecord>> _tables = new();
 
     /// <summary>
     ///     Gets all records of a specific type stored in the record set.
@@ -42,12 +42,12 @@ public sealed partial class StationRecordSet
     /// <returns>An enumerable object that contains a pair of both a station key, and the record associated with it.</returns>
     public IEnumerable<(uint, T)> GetRecordsOfType<T>()
     {
-        if (!_tables.ContainsKey(typeof(T)))
+        if (!_tables.ContainsKey(typeof(T).Name))
         {
             yield break;
         }
 
-        foreach (var (key, entry) in _tables[typeof(T)])
+        foreach (var (key, entry) in _tables[typeof(T).Name])
         {
             if (entry is not T cast)
             {
@@ -66,11 +66,8 @@ public sealed partial class StationRecordSet
     /// </summary>
     /// <param name="entry">Entry to add.</param>
     /// <typeparam name="T">Type of the entry that's being added.</typeparam>
-    public uint? AddRecordEntry<T>(T entry)
+    public uint? AddRecordEntry<T>(T entry) where T : StationRecord
     {
-        if (entry == null)
-            return null;
-
         var key = _currentRecordId++;
         AddRecordEntry(key, entry);
         return key;
@@ -82,13 +79,10 @@ public sealed partial class StationRecordSet
     /// <param name="key">Key id for the record.</param>
     /// <param name="entry">Entry to add.</param>
     /// <typeparam name="T">Type of the entry that's being added.</typeparam>
-    public void AddRecordEntry<T>(uint key, T entry)
+    public void AddRecordEntry<T>(uint key, T entry) where T : StationRecord
     {
-        if (entry == null)
-            return;
-
         Keys.Add(key);
-        _tables.GetOrNew(typeof(T))[key] = entry;
+        _tables.GetOrNew(typeof(T).Name)[key] = entry;
     }
 
     /// <summary>
@@ -98,12 +92,12 @@ public sealed partial class StationRecordSet
     /// <param name="entry">The entry that is retrieved from the record set.</param>
     /// <typeparam name="T">The type of entry to search for.</typeparam>
     /// <returns>True if the record exists and was retrieved, false otherwise.</returns>
-    public bool TryGetRecordEntry<T>(uint key, [NotNullWhen(true)] out T? entry)
+    public bool TryGetRecordEntry<T>(uint key, [NotNullWhen(true)] out T? entry) where T : StationRecord
     {
-        entry = default;
+        entry = null;
 
         if (!Keys.Contains(key)
-            || !_tables.TryGetValue(typeof(T), out var table)
+            || !_tables.TryGetValue(typeof(T).Name, out var table)
             || !table.TryGetValue(key, out var entryObject))
         {
             return false;
@@ -124,7 +118,7 @@ public sealed partial class StationRecordSet
     public bool HasRecordEntry<T>(uint key)
     {
         return Keys.Contains(key)
-               && _tables.TryGetValue(typeof(T), out var table)
+               && _tables.TryGetValue(typeof(T).Name, out var table)
                && table.ContainsKey(key);
     }
 
