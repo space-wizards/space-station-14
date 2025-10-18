@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Shared.Conveyor;
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Components;
@@ -58,6 +58,9 @@ public abstract class SharedConveyorController : VirtualController
 
     private void OnConveyedFriction(Entity<ConveyedComponent> ent, ref TileFrictionEvent args)
     {
+        if(!ent.Comp.Conveying)
+            return;
+
         // Conveyed entities don't get friction, they just get wishdir applied so will inherently slowdown anyway.
         args.Modifier = 0f;
     }
@@ -140,7 +143,15 @@ public abstract class SharedConveyorController : VirtualController
                 continue;
 
             var physics = ent.Entity.Comp3;
+
+            if (physics.BodyStatus != BodyStatus.OnGround)
+            {
+                SetConveying(ent.Entity.Owner, ent.Entity.Comp1, false);
+                continue;
+            }
+
             var velocity = physics.LinearVelocity;
+            var angularVelocity = physics.AngularVelocity;
             var targetDir = ent.Direction;
 
             // If mob is moving with the conveyor then combine the directions.
@@ -163,6 +174,7 @@ public abstract class SharedConveyorController : VirtualController
                     // We provide a small minimum friction speed as well for those times where the friction would stop large objects
                     // snagged on corners from sliding into the centerline.
                     _mover.Friction(0.2f, frameTime: frameTime, friction: 5f, ref velocity);
+                    _mover.Friction(0f, frameTime: frameTime, friction: 5f, ref angularVelocity);
                 }
 
                 SharedMoverController.Accelerate(ref velocity, targetDir, 20f, frameTime);
@@ -172,8 +184,10 @@ public abstract class SharedConveyorController : VirtualController
                 // Need friction to outweigh the movement as it will bounce a bit against the wall.
                 // This facilitates being able to sleep entities colliding into walls.
                 _mover.Friction(0f, frameTime: frameTime, friction: 40f, ref velocity);
+                _mover.Friction(0f, frameTime: frameTime, friction: 40f, ref angularVelocity);
             }
 
+            PhysicsSystem.SetAngularVelocity(ent.Entity.Owner, angularVelocity);
             PhysicsSystem.SetLinearVelocity(ent.Entity.Owner, velocity, wakeBody: false);
 
             if (!IsConveyed((ent.Entity.Owner, ent.Entity.Comp2)))
