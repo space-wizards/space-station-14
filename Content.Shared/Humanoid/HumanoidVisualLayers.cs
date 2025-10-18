@@ -8,6 +8,7 @@ namespace Content.Shared.Humanoid
     {
         Special, // for the cat ears
         Tail,
+        TailBehind, //Tail Behind, places front and side sprites behind all body layers
         Hair,
         FacialHair,
         UndergarmentTop,

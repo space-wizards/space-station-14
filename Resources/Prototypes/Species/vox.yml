@@ -34,6 +34,7 @@
     LFoot: MobVoxLFoot
     RFoot: MobVoxRFoot
     Tail: MobHumanoidAnyMarking
+    TailBehind: MobHumanoidAnyMarking
 
 - type: markingPoints
   id: MobVoxMarkingLimits
