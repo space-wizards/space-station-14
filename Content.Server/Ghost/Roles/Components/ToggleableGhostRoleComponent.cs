@@ -87,3 +87,6 @@ public sealed partial class ToggleableGhostRoleComponent : Component
     [DataField("job")]
     public ProtoId<JobPrototype>? JobProto;
 }
+
+[ByRefEvent]
+public record ActivateToggleableGhostRole();
