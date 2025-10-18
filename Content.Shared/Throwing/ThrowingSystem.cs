@@ -273,11 +273,16 @@ public sealed class ThrowingSystem : EntitySystem
 
         var maxThrowImpulse = maxThrowImpulseModifier * UnequipAllDefaultMaxThrowForce;
 
+        // TODO: Replace with RandomPredicted once the engine PR is merged (#5849)
+        var rand = new System.Random((int)_gameTiming.CurTick.Value);
+
         foreach (var item in items)
         {
             if (scatterItems)
             {
-                _transform.SetWorldPosition(item, _transform.GetWorldPosition(item) + _random.NextVector2(0.5f));
+                _transform.SetWorldPosition(item,
+                    _transform.GetWorldPosition(item)
+                    + new Vector2(rand.NextFloat(-0.5f, 0.5f), rand.NextFloat(-0.5f, 0.5f)));
             }
 
             Vector2 currentDir;
@@ -293,7 +298,7 @@ public sealed class ThrowingSystem : EntitySystem
             }
 
             var throwSpeed = _random.NextFloat() * maxThrowImpulse;
-            TryThrow(item, currentDir * throwSpeed, 8.0f);
+            TryThrow(item, currentDir * throwSpeed, throwSpeed * 2.0f + 2.0f);
         }
     }
 }
