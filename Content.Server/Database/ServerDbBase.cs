@@ -19,6 +19,7 @@ using Content.Shared.Roles;
 using Content.Shared.Traits;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Enums;
+using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -234,6 +235,16 @@ namespace Content.Server.Database
                 }
             }
 
+            Dictionary<ProtoId<PronounTensePrototype>, string> pronouns = [];
+            foreach (var pronoun in profile.Pronouns)
+            {
+                var parsed = PronounTensePrototype.ParseFromDbString(pronoun.Tense);
+
+                if (parsed is not { } tense) continue;
+
+                pronouns.Add(tense, pronoun.Pronoun);
+            }
+
             var loadouts = new Dictionary<string, RoleLoadout>();
 
             foreach (var role in profile.Loadouts)
@@ -265,6 +276,7 @@ namespace Content.Server.Database
                 profile.Age,
                 sex,
                 gender,
+                pronouns,
                 new HumanoidCharacterAppearance
                 (
                     profile.HairName,
@@ -277,7 +289,7 @@ namespace Content.Server.Database
                 ),
                 spawnPriority,
                 jobs,
-                (PreferenceUnavailableMode) profile.PreferenceUnavailable,
+                (PreferenceUnavailableMode)profile.PreferenceUnavailable,
                 antags.ToHashSet(),
                 traits.ToHashSet(),
                 loadouts
@@ -311,6 +323,16 @@ namespace Content.Server.Database
             profile.Markings = markings;
             profile.Slot = slot;
             profile.PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable;
+
+            profile.Pronouns.Clear();
+            profile.Pronouns.AddRange(
+                humanoid.Pronouns
+                    .Select(p => new PronounSet
+                    {
+                        Tense = p.Key,
+                        Pronoun = p.Value
+                    })
+            );
 
             profile.Jobs.Clear();
             profile.Jobs.AddRange(
