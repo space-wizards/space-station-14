@@ -77,6 +77,16 @@
   cost: 500
   category: cargoproduct-category-name-fun
   group: market
+  
+- type: cargoProduct
+  id: FunProfessionalArtSupplies
+  icon:
+    sprite: Objects/Fun/crayons.rsi
+    state: professional_box
+  product: CrateFunProfessionalArtSupplies
+  cost: 850
+  category: cargoproduct-category-name-fun
+  group: market
 
 - type: cargoProduct
   id: FunParty

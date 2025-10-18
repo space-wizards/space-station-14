@@ -279,6 +279,16 @@
   - type: StorageFill
     contents:
       - id: CrayonBox
+      
+- type: entity
+  id: CrateFunProfessionalArtSupplies
+  parent: CrateGenericSteel
+  name: professional art supplies
+  description: A professional art supply to draw a good arts!
+  components:
+  - type: StorageFill
+    contents:
+      - id: ProfessionalCrayonBox
 
 - type: entity
   id: CrateFunBoardGames
