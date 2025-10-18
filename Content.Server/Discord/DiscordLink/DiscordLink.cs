@@ -4,6 +4,7 @@ using NetCord;
 using NetCord.Gateway;
 using NetCord.Rest;
 using Robust.Shared.Configuration;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Discord.DiscordLink;
 
@@ -31,10 +32,11 @@ public sealed class CommandReceivedEventArgs
 /// <summary>
 /// Handles the connection to Discord and provides methods to interact with it.
 /// </summary>
-public sealed class DiscordLink : IPostInjectInit
+public sealed partial class DiscordLink : IPostInjectInit
 {
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IConfigurationManager _configuration = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     /// <summary>
     ///    The Discord client. This is null if the bot is not connected.
@@ -53,7 +55,12 @@ public sealed class DiscordLink : IPostInjectInit
     /// <summary>
     /// If the bot is currently connected to Discord.
     /// </summary>
-    public bool IsConnected => _client != null;
+    public bool IsConnected => _client != null && _isConnectedGateway;
+
+    /// <summary>
+    /// Bool that indicates if we received a connected event. I couldn't find a "connected" property on the client itself.
+    /// </summary>
+    private bool _isConnectedGateway = false;
 
     #region Events
 
@@ -77,10 +84,17 @@ public sealed class DiscordLink : IPostInjectInit
 
     #endregion
 
+    public void Update()
+    {
+        UpdateStatus();
+    }
+
     public void Initialize()
     {
         _configuration.OnValueChanged(CCVars.DiscordGuildId, OnGuildIdChanged, true);
         _configuration.OnValueChanged(CCVars.DiscordPrefix, OnPrefixChanged, true);
+        _configuration.OnValueChanged(CCVars.DiscordStatusEnabled, OnStatusChanged, true);
+        _configuration.OnValueChanged(CCVars.DiscordStatusSwapBaseDelay, OnStatusSwapDelayChanged, true);
 
         if (_configuration.GetCVar(CCVars.DiscordToken) is not { } token || token == string.Empty)
         {
@@ -120,6 +134,19 @@ public sealed class DiscordLink : IPostInjectInit
             return default;
         };
 
+        _client.Connect += () =>
+        {
+            _isConnectedGateway = true;
+            return default;
+        };
+
+        _client.Disconnect += args =>
+        {
+            _isConnectedGateway = false;
+            _sawmillLog.Error($"We got disconnected! Possibly an authentication failure? Reconnect: {args.Reconnect}");
+            return default;
+        };
+
         Task.Run(async () =>
         {
             try
@@ -151,6 +178,8 @@ public sealed class DiscordLink : IPostInjectInit
 
         _configuration.UnsubValueChanged(CCVars.DiscordGuildId, OnGuildIdChanged);
         _configuration.UnsubValueChanged(CCVars.DiscordPrefix, OnPrefixChanged);
+        _configuration.UnsubValueChanged(CCVars.DiscordStatusEnabled, OnStatusChanged);
+        _configuration.UnsubValueChanged(CCVars.DiscordStatusSwapBaseDelay, OnStatusSwapDelayChanged);
     }
 
     void IPostInjectInit.PostInject()

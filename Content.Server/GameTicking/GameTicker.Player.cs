@@ -74,7 +74,7 @@ namespace Content.Server.GameTicking
                     if (LobbyEnabled && _roundStartCountdownHasNotStartedYetDueToNoPlayers)
                     {
                         _roundStartCountdownHasNotStartedYetDueToNoPlayers = false;
-                        _roundStartTime = _gameTiming.CurTime + LobbyDuration;
+                        RoundStartTime = _gameTiming.CurTime + LobbyDuration;
                     }
 
                     break;
