@@ -15,21 +15,21 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 0.75
+            Cellular: 0.25 # Punishment Damage Type, a major problem if you decide to chug it for 6.66666 minutes straight (0 >> Crit).
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
           reagent: Desoxyephedrine
-          min: 30
+          min: 15
         damage:
           types:
-            Poison: 2 # this is added to the base damage of the meth.
+            Poison: 4 # this is added to the base damage of the meth.
             Asphyxiation: 2
     Narcotic:
       effects:
       - !type:MovementSpeedModifier
-        walkSpeedModifier: 1.35
-        sprintSpeedModifier: 1.35
+        walkSpeedModifier: 1.25
+        sprintSpeedModifier: 1.25
       - !type:GenericStatusEffect
         key: Stutter
         component: StutteringAccent
@@ -72,8 +72,8 @@
     Narcotic:
       effects:
       - !type:MovementSpeedModifier
-        walkSpeedModifier: 1.25
-        sprintSpeedModifier: 1.25
+        walkSpeedModifier: 1.15
+        sprintSpeedModifier: 1.15
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
