@@ -1,9 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
-using Content.Server.Examine;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
-using Content.Shared.Climbing;
+using Content.Shared.Climbing.Components;
+using Content.Shared.CombatMode;
+using Content.Shared.Doors.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
 using Content.Shared.NPC;
@@ -207,19 +209,9 @@ public sealed partial class NPCSteeringSystem
             {
                 // Ignore stuck while handling obstacles.
                 ResetStuck(steering, ourCoordinates);
-                SteeringObstacleStatus status;
 
                 // Breaking behaviours and the likes.
-                lock (_obstacles)
-                {
-                    // We're still coming to a stop so wait for the do_after.
-                    if (body.LinearVelocity.LengthSquared() > 0.01f)
-                    {
-                        return true;
-                    }
-
-                    status = TryHandleFlags(uid, steering, node);
-                }
+                var status = TryHandleFlags(uid, steering, node);
 
                 // TODO: Need to handle re-pathing in case the target moves around.
                 switch (status)
@@ -496,6 +488,7 @@ public sealed partial class NPCSteeringSystem
     /// </summary>
     private void CollisionAvoidance(
         EntityUid uid,
+        NPCSteeringComponent steering,
         Angle offsetRot,
         Vector2 worldPos,
         float agentRadius,
@@ -508,20 +501,10 @@ public sealed partial class NPCSteeringSystem
         var detectionRadius = MathF.Max(0.35f, agentRadius + objectRadius);
         var ents = _entSetPool.Get();
         _lookup.GetEntitiesInRange(uid, detectionRadius, ents, LookupFlags.Dynamic | LookupFlags.Static | LookupFlags.Approximate);
-
+        // Filter out stuff that we can pry/vault/bash through
+        FilterObstacleEntities((uid, steering), mask, layer, ents, false);
         foreach (var ent in ents)
         {
-            // TODO: If we can access the door or smth.
-            if (!_physicsQuery.TryGetComponent(ent, out var otherBody) ||
-                !otherBody.Hard ||
-                !otherBody.CanCollide ||
-                otherBody.BodyType == BodyType.KinematicController ||
-                (mask & otherBody.CollisionLayer) == 0x0 &&
-                (layer & otherBody.CollisionMask) == 0x0)
-            {
-                continue;
-            }
-
             var xformB = _xformQuery.GetComponent(ent);
 
             if (!_physics.TryGetNearest(uid, ent,
@@ -561,6 +544,108 @@ public sealed partial class NPCSteeringSystem
         }
 
         _entSetPool.Return(ents);
+    }
+
+    /// <summary>
+    /// Filter down a list of entities into what can be considered obstacles.
+    ///
+    /// If allObstacles is set to false, don't filter out obstacles that can
+    /// be avoided by prying/vaulting/punching.
+    /// </summary>
+    private void FilterObstacleEntities(
+        Entity<NPCSteeringComponent> ent,
+        int mask,
+        int layer,
+        HashSet<EntityUid> nearbyEntities,
+        bool allObstacles = true)
+    {
+        if (!ent.Comp.CurrentPath.TryPeek(out var poly))
+            return;
+
+        var climbing = CompOrNull<ClimbingComponent>(ent.Owner);
+        var combatMode = CompOrNull<CombatModeComponent>(ent.Owner);
+
+        var checkDoors = (poly.Data.Flags & PathfindingBreadcrumbFlag.Door) != 0x0;
+        var checkClimbs = (poly.Data.Flags & PathfindingBreadcrumbFlag.Climb) != 0x0 &&
+                          (ent.Comp.Flags & PathFlags.Climbing) != 0x0 &&
+                          climbing != null;
+        var checkSmash = (ent.Comp.Flags & PathFlags.Smashing) != 0x0 &&
+                         combatMode != null &&
+                         _melee.TryGetWeapon(ent, out _, out var weapon) &&
+                         weapon.NextAttack <= _timing.CurTime;
+
+
+        foreach (var nearbyEnt in nearbyEntities)
+        {
+            // Get rid of stuff we can phase through
+            if (!_physicsQuery.TryGetComponent(nearbyEnt, out var otherBody) ||
+                !otherBody.Hard ||
+                !otherBody.CanCollide ||
+                otherBody.BodyType == BodyType.KinematicController ||
+                (mask & otherBody.CollisionLayer) == 0x0 &&
+                (layer & otherBody.CollisionMask) == 0x0)
+            {
+                nearbyEntities.Remove(nearbyEnt);
+                continue;
+            }
+
+            // If we just care about physical obstacles then this entity's checks are done.
+            if (allObstacles)
+                continue;
+
+            // If we're walking into a door we can handle...
+            if (checkDoors &&
+                CanHandleDoor(ent, poly.Data.Flags, nearbyEnt))
+                nearbyEntities.Remove(nearbyEnt);
+            // Then check climbability
+            else if (checkClimbs &&
+                     CanHandleClimb((ent, climbing!), nearbyEnt, out _))
+                nearbyEntities.Remove(nearbyEnt);
+            // Check if we can smash. Should also check if we can even damage the entity at some point.
+            else if (checkSmash &&
+                     _destructibleQuery.HasComponent(nearbyEnt))
+                nearbyEntities.Remove(nearbyEnt);
+        }
+    }
+
+    private bool CanHandleDoor(Entity<NPCSteeringComponent> ent,
+        PathfindingBreadcrumbFlag flags,
+        EntityUid doorUid,
+        bool allowPrying = true)
+    {
+        if (!_doorQuery.TryComp(doorUid, out var door))
+            return false;
+
+        if (door.State == DoorState.Opening)
+            return true;
+
+        var isAccessRequired = (flags & PathfindingBreadcrumbFlag.Access) != 0x0 &&
+                               !_access.IsAllowed(ent, doorUid);
+        var canInteract = (ent.Comp.Flags & PathFlags.Interact) != 0x0;
+
+        // If not access locked we're fine if it can be bumped open or we can interact
+        if (!isAccessRequired
+            && (door.BumpOpen || canInteract))
+            return true;
+
+        // Last possibility is that we can pry it open.
+        return allowPrying && (ent.Comp.Flags & PathFlags.Prying) != 0x0;
+    }
+
+    private bool CanHandleClimb(
+        Entity<ClimbingComponent> ent,
+        EntityUid climbableUid,
+        [NotNullWhen(true)] out ClimbableComponent? climbable)
+    {
+        if (!_climbableQuery.TryComp(climbableUid, out climbable))
+            return false;
+
+        // We're already climbing something, we're fine.
+        if (ent.Comp.IsClimbing || ent.Comp.NextTransition != null)
+            return true;
+
+        // Actually check if we can climb this
+        return _climb.CanVault(climbable, ent, climbableUid, out _);
     }
 
     #endregion
