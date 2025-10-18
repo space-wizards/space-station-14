@@ -52,7 +52,8 @@ public sealed class HitscanBasicRaycastSystem : EntitySystem
 
         var distanceTried = result?.Distance ?? ent.Comp.MaxDistance;
 
-        // Do visuals without an event. They should always happen and putting it on the attempt event is weird.
+        // Do visuals without an event. They should always happen and putting it on the attempt event is weird!
+        // If more stuff gets added here, it should probably be turned into an event.
         FireEffects(args.FromCoordinates, distanceTried, args.ShotDirection.ToAngle(), ent.Owner);
 
         // Admin logging
