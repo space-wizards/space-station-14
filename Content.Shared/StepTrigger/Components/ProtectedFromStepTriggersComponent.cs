@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Inventory;
 using Content.Shared.StepTrigger.Systems;
 using Robust.Shared.GameStates;

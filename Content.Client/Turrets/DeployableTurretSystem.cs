@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Client.Power;
 using Content.Shared.Turrets;
 using Robust.Client.Animations;

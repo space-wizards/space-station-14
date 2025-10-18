@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Mind.Filters;

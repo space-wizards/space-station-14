@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.ParticleAccelerator.Components;
 using Content.Shared.Popups;
 using Content.Shared.Singularity.Components;

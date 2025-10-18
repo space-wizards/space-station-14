@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Client.Parallax;
 using Content.Client.Weather;
 using Robust.Client.GameObjects;

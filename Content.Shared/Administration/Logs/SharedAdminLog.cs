@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Shared.Database;
+﻿using Content.Shared.Database;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Administration.Logs;

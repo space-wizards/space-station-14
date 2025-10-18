@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Atmos.Piping.Portable.Components;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;

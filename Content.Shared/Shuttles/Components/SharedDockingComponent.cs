@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 namespace Content.Shared.Shuttles.Components
 {
     public abstract partial class SharedDockingComponent : Component

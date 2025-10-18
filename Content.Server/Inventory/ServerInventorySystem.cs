@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Explosion;
 using Content.Shared.Inventory;
 

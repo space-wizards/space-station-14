@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Emag.Systems;
 using Robust.Shared.GameStates;
 

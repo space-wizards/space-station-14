@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Reflection;
 using Content.Shared.NodeContainer.NodeGroups;
 using Robust.Shared.Reflection;

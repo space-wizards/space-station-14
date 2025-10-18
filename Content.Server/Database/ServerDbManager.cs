@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Collections.Immutable;
 using System.IO;
 using System.Net;

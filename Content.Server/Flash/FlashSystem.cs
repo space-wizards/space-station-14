@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Flash;
 
 namespace Content.Server.Flash;

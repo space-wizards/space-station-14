@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Client.NPC.HTN;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.NPC;

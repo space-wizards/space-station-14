@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.EUI;
 using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.PowerCell;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.PowerCell;

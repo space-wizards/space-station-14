@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 #nullable enable
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.Power.Components;

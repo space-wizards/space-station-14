@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Doors.Systems;
 using Content.Server.Wires;
 using Content.Shared.Doors;

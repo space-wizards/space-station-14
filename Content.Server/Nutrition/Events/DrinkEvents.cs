@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Chemistry.Components;
 
 namespace Content.Server.Nutrition.Events;

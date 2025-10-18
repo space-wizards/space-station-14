@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Client.Administration.Managers;
 using Content.Shared.Roles;
 using Robust.Client.Graphics;

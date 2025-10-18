@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 #nullable enable
 using System.Collections.Generic;
 using Content.Shared.Item;

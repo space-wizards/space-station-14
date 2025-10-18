@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Storage;
 using Content.Shared.Lock;
 using Robust.Client.GameObjects;

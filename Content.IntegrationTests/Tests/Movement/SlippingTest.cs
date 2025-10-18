@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 #nullable enable
 using Content.IntegrationTests.Tests.Helpers;
 using Content.Shared.Movement.Components;

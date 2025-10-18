@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Linq;
 using Content.Server.Chat.Systems;
 using Content.Server.Containers;

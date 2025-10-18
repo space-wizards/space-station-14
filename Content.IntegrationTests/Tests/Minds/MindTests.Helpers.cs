@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using System.Linq;
+﻿using System.Linq;
 using Content.IntegrationTests.Pair;
 using Content.Server.GameTicking;
 using Content.Server.Mind;

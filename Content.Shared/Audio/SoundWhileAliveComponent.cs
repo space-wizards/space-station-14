@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Shared.Sound.Components;
+﻿using Content.Shared.Sound.Components;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Audio;

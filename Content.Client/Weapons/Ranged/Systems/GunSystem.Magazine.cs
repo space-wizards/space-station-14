@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Weapons.Ranged;
 
 namespace Content.Client.Weapons.Ranged.Systems;

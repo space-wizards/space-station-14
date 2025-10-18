@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Client.CharacterInfo;
+﻿using Content.Client.CharacterInfo;
 using Content.Client.Message;
 using Content.Shared.Points;
 using Robust.Client.UserInterface;

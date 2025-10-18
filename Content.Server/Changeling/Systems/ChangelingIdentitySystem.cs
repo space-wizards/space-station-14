@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Changeling.Systems;
 
 namespace Content.Server.Changeling.Systems;

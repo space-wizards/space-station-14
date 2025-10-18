@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Shared.Actions;
+﻿using Content.Shared.Actions;
 
 namespace Content.Shared.Dragon;
 

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.NodeContainer;
 using Robust.Shared.Map;

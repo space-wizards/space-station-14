@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 namespace Content.Shared.Speech;
 
 public sealed class ListenEvent : EntityEventArgs

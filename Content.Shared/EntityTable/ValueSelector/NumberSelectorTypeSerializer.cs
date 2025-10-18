@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Globalization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;

@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Shared.Database;
+﻿using Content.Shared.Database;
 
 namespace Content.Server.Connection.Whitelist.Conditions;
 

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Numerics;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;

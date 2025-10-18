@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Chat.Systems;
 using Content.Shared.Advertise.Components;
 using Content.Shared.Advertise.Systems;

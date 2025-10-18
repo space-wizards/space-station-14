@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Linq;
 using Content.Server.UserInterface;
 using Content.Shared.Arcade;

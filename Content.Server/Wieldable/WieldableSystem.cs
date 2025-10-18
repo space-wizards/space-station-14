@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Movement.Components;
 using Content.Server.Movement.Systems;
 using Content.Shared.Camera;

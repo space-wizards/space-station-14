@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Cargo.Prototypes;
 using Robust.Shared.Prototypes;
 

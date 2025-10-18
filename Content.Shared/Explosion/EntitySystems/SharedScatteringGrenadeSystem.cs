@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Shared.Explosion.Components;
+﻿using Content.Shared.Explosion.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;

@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Server.Chat.Systems;
+﻿using Content.Server.Chat.Systems;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 

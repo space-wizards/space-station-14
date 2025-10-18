@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Numerics;
 using Content.Server.Construction.Components;
 using Content.Shared.Construction.Prototypes;

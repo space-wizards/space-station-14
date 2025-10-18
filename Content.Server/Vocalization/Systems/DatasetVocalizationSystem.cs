@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Vocalization.Components;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;

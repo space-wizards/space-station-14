@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Threading;
 using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;

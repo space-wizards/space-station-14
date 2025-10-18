@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.EntityEffects;
 using Content.Shared.Popups;

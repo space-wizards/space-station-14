@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Physics;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Audio;

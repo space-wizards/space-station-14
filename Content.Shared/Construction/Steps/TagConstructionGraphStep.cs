@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Tag;
 
 namespace Content.Shared.Construction.Steps

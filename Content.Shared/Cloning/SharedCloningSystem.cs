@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 namespace Content.Shared.Cloning;
 
 public abstract partial class SharedCloningSystem : EntitySystem

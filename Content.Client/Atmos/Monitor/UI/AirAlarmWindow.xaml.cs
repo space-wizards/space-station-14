@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Client.Atmos.Monitor.UI.Widgets;
 using Content.Client.Message;
 using Content.Client.Stylesheets;

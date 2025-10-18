@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Mind;

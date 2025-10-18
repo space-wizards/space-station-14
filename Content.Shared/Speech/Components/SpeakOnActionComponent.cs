@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.GameStates;
 

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Anomaly.Components;
 using Robust.Shared.Random;
 

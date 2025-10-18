@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Linq;
 using Content.Server.Power.Components;
 using Content.Server.Solar.Components;

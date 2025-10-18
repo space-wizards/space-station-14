@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Physics.Components;

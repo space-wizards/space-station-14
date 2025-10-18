@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Console;

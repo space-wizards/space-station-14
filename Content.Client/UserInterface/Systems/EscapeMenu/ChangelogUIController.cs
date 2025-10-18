@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Client.Changelog;
 using JetBrains.Annotations;
 using Robust.Client.State;

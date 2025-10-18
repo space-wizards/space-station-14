@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Mind;
 using Content.Shared.Administration;
 using Robust.Shared.Console;

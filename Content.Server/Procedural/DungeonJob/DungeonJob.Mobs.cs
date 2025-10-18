@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Threading.Tasks;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.NPC.Components;

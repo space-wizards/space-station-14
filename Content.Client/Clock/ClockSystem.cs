@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Clock;
 using Robust.Client.GameObjects;
 

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 namespace Content.Shared.Roles.RoleCodeword;
 
 public abstract class SharedRoleCodewordSystem : EntitySystem

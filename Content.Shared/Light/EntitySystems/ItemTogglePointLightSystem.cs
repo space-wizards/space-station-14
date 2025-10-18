@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Light.Components;
 using ItemTogglePointLightComponent = Content.Shared.Light.Components.ItemTogglePointLightComponent;

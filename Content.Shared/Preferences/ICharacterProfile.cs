@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Humanoid;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;

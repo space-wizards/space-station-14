@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;

@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Shared.Database;

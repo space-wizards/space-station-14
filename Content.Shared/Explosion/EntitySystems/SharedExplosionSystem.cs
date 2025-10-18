@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Armor;
 using Content.Shared.Explosion.Components;
 using Robust.Shared.Prototypes;

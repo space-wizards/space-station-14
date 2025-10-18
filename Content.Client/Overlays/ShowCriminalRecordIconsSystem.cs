@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Overlays;
 using Content.Shared.Security.Components;
 using Content.Shared.StatusIcon;

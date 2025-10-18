@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.EntityTable.EntitySelectors;
 using JetBrains.Annotations;
 

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Client.Lobby;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Preferences;

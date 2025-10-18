@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Movement.Components;
 using Robust.Server.Player;
 using Robust.Shared.Map;

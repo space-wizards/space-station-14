@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Numerics;
 using Content.Server.Decals;
 using Content.Server.Spawners.Components;

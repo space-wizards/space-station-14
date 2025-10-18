@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.IdentityManagement;
 using Content.Shared.Lube;
 using Content.Shared.NameModifier.EntitySystems;

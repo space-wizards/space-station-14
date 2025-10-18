@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 namespace Content.Server.Fluids.Components;
 
 /// <summary>

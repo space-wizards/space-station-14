@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Server.Shuttles.Systems;
+﻿using Content.Server.Shuttles.Systems;
 
 namespace Content.Server.Shuttles.Components;
 

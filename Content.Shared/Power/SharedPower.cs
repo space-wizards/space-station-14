@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.NodeContainer.NodeGroups;
 using Robust.Shared.Serialization;
 

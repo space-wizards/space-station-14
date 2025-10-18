@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.Player;

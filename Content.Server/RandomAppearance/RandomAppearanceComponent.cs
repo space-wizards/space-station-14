@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Server.RandomAppearance;

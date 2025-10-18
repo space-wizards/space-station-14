@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Robust.Shared.Containers;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors

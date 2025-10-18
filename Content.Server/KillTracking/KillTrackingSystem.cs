@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.NPC.HTN;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Globalization;
 using System.Linq;
 using System.Text;

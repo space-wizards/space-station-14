@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Client.Administration.Managers;
 using Content.Client.Audio;
 using Content.Shared.CCVar;

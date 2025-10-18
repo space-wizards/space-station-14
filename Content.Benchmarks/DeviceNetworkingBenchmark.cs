@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Content.IntegrationTests;

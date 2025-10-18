@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Destructible.Thresholds;
 
 namespace Content.Server.Destructible

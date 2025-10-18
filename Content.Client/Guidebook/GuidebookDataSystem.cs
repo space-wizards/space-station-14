@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Guidebook;
 
 namespace Content.Client.Guidebook;

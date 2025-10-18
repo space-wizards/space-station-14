@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Body.Systems;
 using Content.Server.Destructible;
 using Content.Server.Examine;

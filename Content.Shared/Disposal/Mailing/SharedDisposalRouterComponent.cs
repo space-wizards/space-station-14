@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Disposal.Components

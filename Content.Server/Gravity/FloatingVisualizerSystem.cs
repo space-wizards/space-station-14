@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Gravity;
 using Robust.Shared.GameStates;
 

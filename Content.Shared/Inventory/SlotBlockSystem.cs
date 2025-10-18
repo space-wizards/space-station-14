@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Inventory.Events;
 
 namespace Content.Shared.Inventory;

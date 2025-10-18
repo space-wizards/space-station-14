@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Collections.Generic;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Clothing;

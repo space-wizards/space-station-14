@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.GPS.Components;
 using Content.Client.Message;
 using Content.Client.Stylesheets;

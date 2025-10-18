@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Cloning;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;

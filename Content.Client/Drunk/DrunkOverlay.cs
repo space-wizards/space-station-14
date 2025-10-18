@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Drunk;
 using Content.Shared.StatusEffect;
 using Content.Shared.StatusEffectNew;

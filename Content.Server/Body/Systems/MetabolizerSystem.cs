@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Body.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Events;

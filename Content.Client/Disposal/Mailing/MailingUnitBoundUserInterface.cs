@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Client.Disposal.Unit;
 using Content.Client.Power.EntitySystems;
 using Content.Shared.Disposal;

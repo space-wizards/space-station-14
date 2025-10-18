@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Text;
 using Content.Client.Resources;
 using Content.Shared.Access.Components;

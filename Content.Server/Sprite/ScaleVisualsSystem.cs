@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Sprite;
 
 namespace Content.Server.Sprite;

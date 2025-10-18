@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Threading;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;

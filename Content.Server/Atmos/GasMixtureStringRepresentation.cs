@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using System.Linq;
+﻿using System.Linq;
 
 namespace Content.Server.Atmos;
 

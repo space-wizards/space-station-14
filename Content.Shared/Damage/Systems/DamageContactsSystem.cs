@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Damage.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Physics.Components;

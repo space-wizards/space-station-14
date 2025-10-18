@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Atmos;
 
 namespace Content.Server.Atmos.Piping.Trinary.Components

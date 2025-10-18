@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.MassMedia.Systems;
 
 namespace Content.Client.MassMedia;

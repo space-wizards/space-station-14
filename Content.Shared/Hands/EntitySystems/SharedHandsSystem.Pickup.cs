@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Diagnostics;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.EntityEffects;
 using Robust.Shared.Serialization;
 

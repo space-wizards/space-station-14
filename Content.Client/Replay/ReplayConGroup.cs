@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Robust.Client.Console;
 
 namespace Content.Client.Replay;

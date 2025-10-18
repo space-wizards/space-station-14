@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.GridPreloader.Prototypes;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;

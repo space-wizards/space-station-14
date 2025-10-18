@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityList

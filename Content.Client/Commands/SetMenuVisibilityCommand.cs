@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Client.Verbs;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;

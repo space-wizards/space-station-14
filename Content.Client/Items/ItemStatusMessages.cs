@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Robust.Client.UserInterface;
+﻿using Robust.Client.UserInterface;
 
 namespace Content.Client.Items
 {

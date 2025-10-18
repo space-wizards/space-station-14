@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 

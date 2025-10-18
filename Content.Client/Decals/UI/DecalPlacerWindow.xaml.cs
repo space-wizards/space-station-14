@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Linq;
 using Content.Client.Stylesheets;
 using Content.Shared.Decals;

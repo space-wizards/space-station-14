@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Salvage;
 using Content.Server.Xenoarchaeology.Artifact.XAT.Components;
 using Content.Shared.Clothing;

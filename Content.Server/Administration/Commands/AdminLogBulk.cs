@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration;
 using Content.Shared.Database;

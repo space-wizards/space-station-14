@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Client.Items.UI;
 using Content.Client.Message;
 using Content.Client.Stylesheets;

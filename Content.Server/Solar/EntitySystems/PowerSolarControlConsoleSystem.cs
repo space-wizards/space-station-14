@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Solar.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Solar;

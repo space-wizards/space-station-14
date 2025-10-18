@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.NPC.Queries.Curves;
 using JetBrains.Annotations;
 

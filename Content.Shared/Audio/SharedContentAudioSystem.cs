@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Physics;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Components;

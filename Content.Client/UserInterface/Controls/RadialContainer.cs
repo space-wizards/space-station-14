@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Robust.Client.UserInterface.Controls;
 using System.Linq;
 using System.Numerics;

@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-namespace Content.Shared.Power;
+﻿namespace Content.Shared.Power;
 
 /// <summary>
 /// Component for a powered machine that slowly powers on and off over a period of time.

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Robust.Shared.GameStates;
 using Content.Shared.Drunk;
 

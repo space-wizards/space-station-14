@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Robust.Shared.Prototypes;
+﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Audio;
 
 namespace Content.Shared.Silicons.Laws.Components;

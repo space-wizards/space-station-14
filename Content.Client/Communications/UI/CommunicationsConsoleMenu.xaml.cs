@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Globalization;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.CCVar;

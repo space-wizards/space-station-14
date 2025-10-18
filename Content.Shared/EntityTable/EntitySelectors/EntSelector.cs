@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.EntityTable.ValueSelector;
 using Robust.Shared.Prototypes;
 

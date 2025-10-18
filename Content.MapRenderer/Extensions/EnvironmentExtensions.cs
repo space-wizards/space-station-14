@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-#nullable enable
+﻿#nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
 

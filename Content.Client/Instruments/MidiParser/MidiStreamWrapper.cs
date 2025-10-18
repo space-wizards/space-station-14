@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using System.IO;
+﻿using System.IO;
 using System.Text;
 
 namespace Content.Client.Instruments.MidiParser;

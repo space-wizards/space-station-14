@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Administration;
 using JetBrains.Annotations;
 using Robust.Shared.Player;

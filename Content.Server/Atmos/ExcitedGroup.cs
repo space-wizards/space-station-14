@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-namespace Content.Server.Atmos
+﻿namespace Content.Server.Atmos
 {
     public sealed class ExcitedGroup
     {

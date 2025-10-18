@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Numerics;
 using Content.Shared.Audio;
 using Robust.Shared.ComponentTrees;

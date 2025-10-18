@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Net;
 using Content.Client.Hands.Systems;
 using Content.Shared.CombatMode;

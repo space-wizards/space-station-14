@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Sticky;
 using Content.Shared.Trigger.Components.Triggers;
 

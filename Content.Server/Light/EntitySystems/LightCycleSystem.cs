@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared;
 using Content.Shared.Light.Components;
 using Content.Shared.Light.EntitySystems;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Fluids;
 
 namespace Content.Server.Fluids.EntitySystems;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Forensics;
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Cloning.Events;

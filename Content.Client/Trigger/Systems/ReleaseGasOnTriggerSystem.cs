@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Trigger.Systems;
 
 namespace Content.Client.Trigger.Systems;

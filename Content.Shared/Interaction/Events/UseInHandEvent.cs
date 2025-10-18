@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Timing;
 using JetBrains.Annotations;

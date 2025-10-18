@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Robust.Shared.Physics;
+﻿using Robust.Shared.Physics;
 
 namespace Content.Shared.Blocking;
 

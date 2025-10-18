@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.RoundEnd;
 using Content.Shared.Dataset;
 using Content.Shared.NPC.Prototypes;

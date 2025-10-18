@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Nutrition.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.Components;

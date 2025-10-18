@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Client.Stylesheets;
+﻿using Content.Client.Stylesheets;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Changelog

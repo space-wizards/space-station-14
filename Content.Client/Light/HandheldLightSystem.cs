@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Client.Items;
 using Content.Client.Light.Components;
 using Content.Shared.Light;

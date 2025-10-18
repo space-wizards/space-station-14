@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Research.Prototypes;
 using NetSerializer;
 using Robust.Shared.Prototypes;

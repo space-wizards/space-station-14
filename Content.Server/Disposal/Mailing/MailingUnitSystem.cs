@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Disposal.Mailing;
 
 namespace Content.Server.Disposal.Mailing;

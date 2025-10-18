@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Inventory;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Prototypes;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Store;
 using JetBrains.Annotations;
 using System.Linq;

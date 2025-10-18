@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-namespace Content.Shared.StatusIcon;
+﻿namespace Content.Shared.StatusIcon;
 
 public abstract class SharedStatusIconSystem : EntitySystem
 {

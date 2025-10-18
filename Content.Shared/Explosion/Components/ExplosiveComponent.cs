@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Explosion.EntitySystems;
 using Robust.Shared.Prototypes;
 

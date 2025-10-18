@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Hands.Systems;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Interactions;

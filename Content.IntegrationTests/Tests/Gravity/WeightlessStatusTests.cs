@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Gravity;
 using Content.Shared.Alert;
 using Content.Shared.Gravity;

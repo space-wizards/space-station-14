@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 #nullable enable
 using Content.Server.Stack;
 using Content.Shared.Stacks;

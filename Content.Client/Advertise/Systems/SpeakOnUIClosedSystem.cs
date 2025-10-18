@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Advertise.Systems;
 
 namespace Content.Client.Advertise.Systems;

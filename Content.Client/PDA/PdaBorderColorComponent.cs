@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-namespace Content.Client.PDA;
+﻿namespace Content.Client.PDA;
 
 /// <summary>
 /// Used for specifying the pda windows border colors

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using static Content.Shared.Atmos.Components.GasAnalyzerComponent;

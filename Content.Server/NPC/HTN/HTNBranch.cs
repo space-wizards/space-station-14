@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.NPC.HTN.Preconditions;
 
 namespace Content.Server.NPC.HTN;

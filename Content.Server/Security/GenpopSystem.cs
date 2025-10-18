@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Security.Components;
 using Content.Shared.Security.Systems;
 using Content.Shared.Wall;

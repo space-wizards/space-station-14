@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Objectives.Systems;
 using Content.Shared.Objectives;
 using Robust.Shared.Prototypes;

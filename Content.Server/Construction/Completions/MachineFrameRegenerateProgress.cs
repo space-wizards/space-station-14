@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Server.Construction.Components;
+﻿using Content.Server.Construction.Components;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 

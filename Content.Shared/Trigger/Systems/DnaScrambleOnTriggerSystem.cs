@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.DetailExaminable;
 using Content.Shared.Forensics.Systems;
 using Content.Shared.Humanoid;

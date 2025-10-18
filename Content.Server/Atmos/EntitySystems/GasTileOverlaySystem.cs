@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;

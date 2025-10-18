@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Server.StationEvents.Events;
+﻿using Content.Server.StationEvents.Events;
 using Content.Shared.Storage;
 
 namespace Content.Server.StationEvents.Components;

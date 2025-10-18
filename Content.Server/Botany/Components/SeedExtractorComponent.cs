@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Botany.Systems;
 
 namespace Content.Server.Botany.Components;

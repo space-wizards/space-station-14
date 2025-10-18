@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Flash;
 using Content.Shared.Trigger.Components.Effects;
 

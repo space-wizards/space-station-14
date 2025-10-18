@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Robust.Client.Graphics;
+﻿using Robust.Client.Graphics;
 
 namespace Content.Client.Graphics;
 

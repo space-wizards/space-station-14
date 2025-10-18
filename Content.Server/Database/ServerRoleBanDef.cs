@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Net;
 using Content.Shared.Database;
 using Robust.Shared.Network;

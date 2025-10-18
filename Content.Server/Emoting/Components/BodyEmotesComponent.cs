@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Emoting.Systems;
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Prototypes;

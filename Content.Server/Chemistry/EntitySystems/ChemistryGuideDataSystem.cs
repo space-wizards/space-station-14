@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Shared.Chemistry;
+﻿using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Server.Player;
 using Robust.Shared.Enums;

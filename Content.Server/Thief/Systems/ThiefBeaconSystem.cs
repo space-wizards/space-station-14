@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Mind;
 using Content.Server.Objectives.Components;
 using Content.Server.Thief.Components;

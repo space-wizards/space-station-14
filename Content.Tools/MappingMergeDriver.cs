@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using System;
+﻿using System;
 
 namespace Content.Tools
 {

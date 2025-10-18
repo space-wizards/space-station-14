@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Robust.Shared.Threading;
 
 namespace Content.Server.Power.Pow3r

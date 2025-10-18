@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Linq;
 using System.Text.Json.Nodes;
 using Content.Shared.CCVar;

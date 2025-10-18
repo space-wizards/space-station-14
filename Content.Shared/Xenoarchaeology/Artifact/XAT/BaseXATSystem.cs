@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Robust.Shared.Timing;
 

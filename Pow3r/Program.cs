@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using ImGuiNET;

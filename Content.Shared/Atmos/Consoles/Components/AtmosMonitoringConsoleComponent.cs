@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Atmos.Consoles;
 using Content.Shared.Pinpointer;
 using Content.Shared.Prototypes;

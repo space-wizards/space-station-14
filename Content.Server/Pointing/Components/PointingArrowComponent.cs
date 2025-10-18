@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Pointing.EntitySystems;
 using Content.Shared.Pointing.Components;
 

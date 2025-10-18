@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Doors.Components;
 using Content.Shared.Electrocution;
 using Content.Shared.Silicons.StationAi;

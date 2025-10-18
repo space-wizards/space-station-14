@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Client.BarSign.Ui;
 using Content.Shared.BarSign;
 using Content.Shared.Power;

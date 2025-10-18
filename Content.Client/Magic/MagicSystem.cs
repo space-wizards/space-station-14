@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Magic;
 using Content.Shared.Magic.Events;
 

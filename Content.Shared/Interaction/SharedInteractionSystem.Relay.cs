@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Shared.Interaction.Components;
+﻿using Content.Shared.Interaction.Components;
 
 namespace Content.Shared.Interaction;
 

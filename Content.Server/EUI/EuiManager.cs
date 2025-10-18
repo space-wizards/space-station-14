@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Eui;
 using Robust.Server.Player;
 using Robust.Shared.Enums;

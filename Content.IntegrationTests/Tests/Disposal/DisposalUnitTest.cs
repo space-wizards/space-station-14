@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 #nullable enable annotations
 using System.Linq;
 using System.Numerics;

@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-namespace Content.Server.GameTicking.Rules.Components;
+﻿namespace Content.Server.GameTicking.Rules.Components;
 
 /// <summary>
 /// Tags grid as nuke ops shuttle

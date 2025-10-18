@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Procedural;
 
 namespace Content.Shared.Salvage.Magnet;

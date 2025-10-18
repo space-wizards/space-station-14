@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Linq;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.DeviceLinking;

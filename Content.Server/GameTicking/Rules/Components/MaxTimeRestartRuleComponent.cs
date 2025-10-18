@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using System.Threading;
+﻿using System.Threading;
 
 namespace Content.Server.GameTicking.Rules.Components;
 

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Database;
 using Content.Shared.CCVar;
 using Robust.Server.Upload;

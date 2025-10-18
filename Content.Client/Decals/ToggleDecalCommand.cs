@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Robust.Shared.Console;
+﻿using Robust.Shared.Console;
 
 namespace Content.Client.Decals;
 

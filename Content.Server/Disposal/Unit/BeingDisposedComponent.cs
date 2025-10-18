@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-namespace Content.Server.Disposal.Unit;
+﻿namespace Content.Server.Disposal.Unit;
 
 /// <summary>
 ///     A component added to entities that are currently in disposals.

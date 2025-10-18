@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Shared.Dataset;
+﻿using Content.Shared.Dataset;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Damage.Components;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 namespace Content.Shared.EntityEffects;
 
 public abstract partial class EventEntityEffectCondition<T> : EntityEffectCondition where T : EventEntityEffectCondition<T>

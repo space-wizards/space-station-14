@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Shared.Power.Components;
+﻿using Content.Shared.Power.Components;
 
 namespace Content.Client.Power.Components;
 

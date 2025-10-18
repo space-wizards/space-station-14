@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Cuffs;
 using Content.Shared.Cuffs.Components;
 

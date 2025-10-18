@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Robotics.Systems;
 
 namespace Content.Client.Robotics.Systems;

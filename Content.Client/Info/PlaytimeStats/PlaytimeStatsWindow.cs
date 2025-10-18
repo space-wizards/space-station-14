@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Linq;
 using System.Text.RegularExpressions;
 using Content.Client.Players.PlayTimeTracking;

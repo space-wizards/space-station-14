@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.UserInterface;
 using Content.Shared.Communications;
 using Robust.Shared.Audio;

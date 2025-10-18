@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Forensics.Systems;
 
 namespace Content.Client.Forensics.Systems;

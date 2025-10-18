@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Medical.Components;
 using Content.Shared.CartridgeLoader;
 

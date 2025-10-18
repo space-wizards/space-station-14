@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Medical.SuitSensor;
 using Robust.Shared.Serialization;
 

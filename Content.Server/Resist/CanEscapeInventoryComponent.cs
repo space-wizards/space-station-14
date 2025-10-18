@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.DoAfter;
 
 namespace Content.Server.Resist;

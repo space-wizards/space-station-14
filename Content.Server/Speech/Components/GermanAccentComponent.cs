@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 namespace Content.Server.Speech.Components;
 
 [RegisterComponent]

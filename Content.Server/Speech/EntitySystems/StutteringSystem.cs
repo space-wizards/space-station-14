@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Text;
 using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;

@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Server.Worldgen.Components;
+﻿using Content.Server.Worldgen.Components;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Worldgen.Systems;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Robust.Shared.Exceptions;
 
 namespace Content.IntegrationTests.Tests

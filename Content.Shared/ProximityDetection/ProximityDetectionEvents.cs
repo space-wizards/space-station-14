@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Shared.ProximityDetection.Components;
+﻿using Content.Shared.ProximityDetection.Components;
 
 namespace Content.Shared.ProximityDetection;
 

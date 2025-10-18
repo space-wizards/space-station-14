@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Spawners.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Spawners;

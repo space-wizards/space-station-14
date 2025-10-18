@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.NodeContainer;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Mobs.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.Examine;

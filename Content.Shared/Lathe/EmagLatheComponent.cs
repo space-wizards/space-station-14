@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Lathe.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;

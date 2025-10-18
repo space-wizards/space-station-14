@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Numerics;
 using Content.Server.UserInterface;
 using Content.Shared.Shuttles.BUIStates;

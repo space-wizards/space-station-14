@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Implants;
 
 namespace Content.Client.Implants;

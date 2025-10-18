@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 namespace Content.Shared.Light;
 
 public sealed class LightToggleEvent(bool isOn) : EntityEventArgs

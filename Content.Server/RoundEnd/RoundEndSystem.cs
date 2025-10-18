@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.AlertLevel;

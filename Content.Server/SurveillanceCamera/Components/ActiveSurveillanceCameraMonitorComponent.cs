@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 namespace Content.Server.SurveillanceCamera;
 
 // Dummy component for active surveillance monitors.

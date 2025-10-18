@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using System.Linq;
+﻿using System.Linq;
 using Content.Shared.Roles.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Reflection;

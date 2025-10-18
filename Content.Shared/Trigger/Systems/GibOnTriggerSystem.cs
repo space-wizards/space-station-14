@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Body.Systems;
 using Content.Shared.Inventory;
 using Content.Shared.Trigger.Components.Effects;

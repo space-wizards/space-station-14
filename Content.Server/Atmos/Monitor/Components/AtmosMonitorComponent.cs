@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;

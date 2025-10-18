@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Atmos.Components;

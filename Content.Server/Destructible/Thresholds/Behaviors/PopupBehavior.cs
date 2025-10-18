@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Popups;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors;

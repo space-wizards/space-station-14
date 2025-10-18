@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Emag.Systems;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Tag;

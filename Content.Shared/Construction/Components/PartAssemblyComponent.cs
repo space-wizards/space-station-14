@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Robust.Shared.Containers;
+﻿using Robust.Shared.Containers;
 
 namespace Content.Shared.Construction.Components;
 

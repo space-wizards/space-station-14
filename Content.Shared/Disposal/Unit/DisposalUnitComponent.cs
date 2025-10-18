@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Atmos;
 using Robust.Shared.Audio;
 using Content.Shared.Whitelist;

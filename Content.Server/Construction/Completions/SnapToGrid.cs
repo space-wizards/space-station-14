@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Construction;
 using JetBrains.Annotations;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.DeviceNetwork;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;

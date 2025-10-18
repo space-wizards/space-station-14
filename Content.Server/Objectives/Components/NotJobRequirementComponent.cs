@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Objectives.Systems;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;

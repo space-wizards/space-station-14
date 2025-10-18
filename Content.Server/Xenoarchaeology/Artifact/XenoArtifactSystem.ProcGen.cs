@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Linq;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Whitelist;

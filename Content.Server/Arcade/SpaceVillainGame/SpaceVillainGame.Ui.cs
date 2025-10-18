@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using static Content.Shared.Arcade.SharedSpaceVillainArcadeComponent;
 
 namespace Content.Server.Arcade.SpaceVillain;

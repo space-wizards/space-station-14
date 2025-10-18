@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using System.Linq;
+﻿using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Shared.CCVar;
 using Robust.Server;

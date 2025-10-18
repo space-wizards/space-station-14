@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Gravity;
 using Content.Shared.Maps;
 using Content.Shared.NPC;

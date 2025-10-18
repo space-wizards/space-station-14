@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Numerics;
 using Content.Server.NPC.Components;
 using Content.Shared.CombatMode;

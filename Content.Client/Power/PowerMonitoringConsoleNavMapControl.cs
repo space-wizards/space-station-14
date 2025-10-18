@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Client.Pinpointer.UI;
 using Content.Shared.Pinpointer;
 using Content.Shared.Power;

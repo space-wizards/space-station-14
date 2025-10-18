@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Shared.Players;
+﻿using Content.Shared.Players;
 using Robust.Shared.Player;
 
 namespace Content.Client.Players;

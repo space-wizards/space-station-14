@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Power;
 using Robust.Client.GameObjects;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Buckle;
 
 namespace Content.Server.NPC.HTN.Preconditions;

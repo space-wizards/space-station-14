@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-namespace Content.Client.UserInterface.Fragments;
+﻿namespace Content.Client.UserInterface.Fragments;
 
 /// <summary>
 /// The component used for defining a ui fragment to attach to an entity

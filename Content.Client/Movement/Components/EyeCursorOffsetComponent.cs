@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Numerics;
 using Content.Client.Movement.Systems;
 using Content.Shared.Movement.Components;

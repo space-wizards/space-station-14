@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Silicons.Laws.Components;
 using Robust.Shared.Containers;
 

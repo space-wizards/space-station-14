@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 namespace Content.Shared.Movement.Pulling.Events;
 
 /// <summary>

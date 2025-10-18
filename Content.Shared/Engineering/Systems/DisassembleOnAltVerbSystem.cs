@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.DoAfter;
 using Content.Shared.Engineering.Components;
 using Content.Shared.Hands.EntitySystems;

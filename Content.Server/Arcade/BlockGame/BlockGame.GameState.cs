@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Arcade;
 using Robust.Shared.Random;
 using System.Linq;

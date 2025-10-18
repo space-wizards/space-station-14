@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 namespace Content.Shared.Atmos.Components;
 
 // Unfortunately can't be friends yet due to magboots.

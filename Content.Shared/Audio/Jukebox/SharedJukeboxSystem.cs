@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Audio.Jukebox;

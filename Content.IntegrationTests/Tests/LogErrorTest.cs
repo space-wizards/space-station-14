@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Robust.Shared.Configuration;
 using Robust.Shared.Log;
 using Robust.UnitTesting;

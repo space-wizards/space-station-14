@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Chat.Managers;
 using Content.Server.Database.Migrations.Postgres;
 using Content.Server.GameTicking.Rules.Components;

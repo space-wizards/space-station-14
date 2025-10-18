@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Server.Administration;
+﻿using Content.Server.Administration;
 using Content.Server.Chat.Systems;
 using Content.Server.Popups;
 using Content.Server.Speech.Muting;

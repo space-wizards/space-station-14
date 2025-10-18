@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-namespace Content.Shared.Administration.Logs;
+﻿namespace Content.Shared.Administration.Logs;
 
 public enum DateOrder
 {

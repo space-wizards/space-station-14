@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Atmos.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Storage.Components;
 using Content.Shared.Storage.Components;
 using Robust.Shared.Audio.Systems;

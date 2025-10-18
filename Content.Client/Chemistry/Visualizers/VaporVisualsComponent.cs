@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Robust.Client.Animations;
 
 namespace Content.Client.Chemistry.Visualizers;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Client.Audio;
 using Content.Shared.Salvage;
 using Content.Shared.Salvage.Expeditions;

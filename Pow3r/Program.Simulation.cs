@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Collections.Generic;
 using System.Diagnostics;
 using Content.Server.Power.Pow3r;

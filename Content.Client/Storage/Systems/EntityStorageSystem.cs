@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Content.Client.Storage.Components;
 using Content.Shared.Destructible;
 using Content.Shared.Foldable;

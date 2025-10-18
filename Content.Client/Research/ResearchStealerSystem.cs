@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Research.Systems;
 
 namespace Content.Client.Research;

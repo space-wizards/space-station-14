@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Emag.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Singularity.Components;

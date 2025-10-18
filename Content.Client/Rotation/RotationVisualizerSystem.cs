@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Rotation;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Net;
 using System.Threading.Tasks;
 using Content.Shared.Database;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Eye;
 using Content.Shared.SubFloor;
 using Robust.Server.Player;

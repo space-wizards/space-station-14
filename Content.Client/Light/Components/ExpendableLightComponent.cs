@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Client.Light.EntitySystems;
 using Content.Shared.Light.Components;
 using Robust.Shared.Audio;

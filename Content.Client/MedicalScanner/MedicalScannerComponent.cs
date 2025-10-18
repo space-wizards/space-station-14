@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Shared.MedicalScanner;
+﻿using Content.Shared.MedicalScanner;
 
 namespace Content.Client.MedicalScanner;
 

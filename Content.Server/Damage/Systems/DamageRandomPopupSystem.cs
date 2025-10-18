@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Damage.Components;
 using Content.Server.Popups;
 using Content.Shared.Damage;

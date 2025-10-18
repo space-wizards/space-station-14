@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Atmos.Piping.Unary.EntitySystems;
 using Content.Shared.Chemistry.Components;
 

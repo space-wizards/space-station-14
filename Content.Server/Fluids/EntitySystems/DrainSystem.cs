@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.EntitySystems;

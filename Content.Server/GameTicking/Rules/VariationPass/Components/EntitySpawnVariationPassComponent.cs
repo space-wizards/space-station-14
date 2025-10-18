@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Shared.Random;
+﻿using Content.Shared.Random;
 using Content.Shared.Storage;
 using Robust.Shared.Prototypes;
 

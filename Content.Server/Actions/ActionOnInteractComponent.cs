@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Interaction;
 using Robust.Shared.Prototypes;
 

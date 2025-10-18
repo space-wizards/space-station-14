@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Store;
 
 namespace Content.Server.Store.Conditions;

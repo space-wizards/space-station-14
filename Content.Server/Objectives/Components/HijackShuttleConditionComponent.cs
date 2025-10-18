@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Server.Objectives.Systems;
+﻿using Content.Server.Objectives.Systems;
 
 namespace Content.Server.Objectives.Components;
 

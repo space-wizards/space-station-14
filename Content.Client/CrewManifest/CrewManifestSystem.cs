@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.CrewManifest;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;

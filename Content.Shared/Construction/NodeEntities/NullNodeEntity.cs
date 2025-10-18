@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using JetBrains.Annotations;
 
 namespace Content.Shared.Construction.NodeEntities;

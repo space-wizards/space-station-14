@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Shared.Trigger.Systems;
+﻿using Content.Shared.Trigger.Systems;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors;
 

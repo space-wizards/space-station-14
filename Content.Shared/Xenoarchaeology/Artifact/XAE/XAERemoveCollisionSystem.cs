@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Xenoarchaeology.Artifact.XAE.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;

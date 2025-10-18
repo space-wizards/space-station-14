@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Linq;
 using Content.Server.Clothing.Systems;
 using Content.Server.GameTicking.Rules.Components;

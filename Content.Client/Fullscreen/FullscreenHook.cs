@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Client.Input;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Chat.TypingIndicator;
 
 namespace Content.Server.Chat.TypingIndicator;

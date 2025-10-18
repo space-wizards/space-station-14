@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 namespace Content.IntegrationTests.Tests.Destructible
 {
     public static class DestructibleTestPrototypes

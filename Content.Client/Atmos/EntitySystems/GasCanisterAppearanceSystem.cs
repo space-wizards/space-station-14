@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.SprayPainter.Prototypes;
 using Robust.Client.GameObjects;

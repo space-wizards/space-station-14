@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.EUI;
 using Content.Server.Fax.AdminUI;
 using Content.Shared.Administration;

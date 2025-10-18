@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;

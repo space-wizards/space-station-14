@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Nutrition.FoodMetamorphRules;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;

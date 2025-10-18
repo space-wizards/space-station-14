@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Client.SubFloor;
 using Content.Shared.Wires;
 using Robust.Client.GameObjects;

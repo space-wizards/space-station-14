@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-namespace Content.Shared.Emoting;
+﻿namespace Content.Shared.Emoting;
 
 public sealed class EmoteSystem : EntitySystem
 {

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Cloning.Components;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Systems;

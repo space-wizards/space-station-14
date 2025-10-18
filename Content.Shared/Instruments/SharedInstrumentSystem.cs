@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 namespace Content.Shared.Instruments;
 
 public abstract class SharedInstrumentSystem : EntitySystem

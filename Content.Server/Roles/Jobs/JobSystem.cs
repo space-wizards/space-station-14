@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using System.Globalization;
+﻿using System.Globalization;
 using Content.Server.Chat.Managers;
 using Content.Shared.Mind;
 using Content.Shared.Roles;

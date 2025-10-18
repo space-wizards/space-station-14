@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Stack;
 using Content.Shared.Construction;
 using Content.Shared.Hands.Components;

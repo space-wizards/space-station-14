@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Ame.EntitySystems;
 using Content.Shared.Ame.Components;
 

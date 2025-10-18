@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Instruments;
 using Robust.Shared.Player;
 using ActivatableUIComponent = Content.Shared.UserInterface.ActivatableUIComponent;

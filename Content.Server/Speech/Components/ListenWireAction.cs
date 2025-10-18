@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Chat.Systems;
 using Content.Shared.Radio.Components;
 using Content.Server.Radio.EntitySystems;

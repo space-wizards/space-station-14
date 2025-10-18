@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System;
 using Content.Shared.FixedPoint;
 using NUnit.Framework;

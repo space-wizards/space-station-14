@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Holiday.Interfaces;
 
 namespace Content.Server.Holiday.Greet

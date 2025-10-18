@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-namespace Content.Server.Shuttles.Events;
+﻿namespace Content.Server.Shuttles.Events;
 
 /// <summary>
 /// Raised when shuttle console approved FTL

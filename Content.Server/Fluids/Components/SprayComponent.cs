@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;

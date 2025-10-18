@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 namespace Content.Client.UserInterface.Screens;
 
 public enum ScreenType

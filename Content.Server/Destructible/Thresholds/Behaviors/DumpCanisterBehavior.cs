@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Atmos.Piping.Unary.EntitySystems;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors

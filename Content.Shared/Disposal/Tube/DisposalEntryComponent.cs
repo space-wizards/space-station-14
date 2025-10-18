@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Disposal.Unit;
 using Robust.Shared.Prototypes;
 

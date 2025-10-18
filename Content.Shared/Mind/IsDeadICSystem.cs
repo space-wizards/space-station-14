@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Mind.Components;
 
 namespace Content.Shared.Mind;

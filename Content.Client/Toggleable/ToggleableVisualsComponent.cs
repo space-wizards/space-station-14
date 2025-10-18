@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Hands.Components;
 
 namespace Content.Client.Toggleable;

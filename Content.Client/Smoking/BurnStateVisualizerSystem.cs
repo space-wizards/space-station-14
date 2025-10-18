@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Robust.Client.GameObjects;
 using Content.Shared.Smoking;
 

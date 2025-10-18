@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Client.Actions;
 using Content.Client.Markers;
 using Content.Client.SubFloor;

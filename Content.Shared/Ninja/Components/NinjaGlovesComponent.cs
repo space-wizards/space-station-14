@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Objectives.Components;
 using Robust.Shared.Audio;

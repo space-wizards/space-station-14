@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: MIT
 
 using Content.Shared.Chemistry.EntitySystems;
 

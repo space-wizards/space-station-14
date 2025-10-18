@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Damage.Systems;
 
 namespace Content.Server.Damage.Components;

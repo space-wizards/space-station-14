@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Atmos.Components;
 using Content.Shared.Examine;
 using Robust.Shared.Map.Components;

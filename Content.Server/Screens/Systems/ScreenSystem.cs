@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.TextScreen;
 using Content.Server.Screens.Components;
 using Content.Server.DeviceNetwork.Components;

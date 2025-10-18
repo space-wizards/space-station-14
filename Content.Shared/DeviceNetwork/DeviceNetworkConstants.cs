@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Robust.Shared.Utility;
 using Content.Shared.DeviceNetwork.Components;
 

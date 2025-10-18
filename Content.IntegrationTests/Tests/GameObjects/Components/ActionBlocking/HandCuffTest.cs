@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 #nullable enable
 using Content.Server.Cuffs;
 using Content.Shared.Cuffs.Components;

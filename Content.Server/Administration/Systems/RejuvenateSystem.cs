@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Shared.Rejuvenate;
+﻿using Content.Shared.Rejuvenate;
 
 namespace Content.Server.Administration.Systems;
 

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.GPS.Components;
 using Content.Shared.Examine;
 using Robust.Shared.Map;

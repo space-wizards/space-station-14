@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Voting.Managers;
 using Robust.Shared.Player;
 

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Trigger.Components.Triggers;
 using Robust.Shared.Timing;
 using Content.Shared.Inventory.Events;

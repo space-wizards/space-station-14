@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Server.Store.Systems;
+﻿using Content.Server.Store.Systems;
 
 namespace Content.Server.Store.Components;
 

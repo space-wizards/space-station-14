@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Diagnostics.Contracts;
 using System.Numerics;
 using Content.Client.GameTicking.Managers;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Collections.Generic;
 using Content.Server.Station.Systems;
 using Content.Shared.Inventory;

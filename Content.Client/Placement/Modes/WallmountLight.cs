@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Numerics;
 using Robust.Client.Placement;
 using Robust.Shared.Map;

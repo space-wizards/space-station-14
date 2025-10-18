@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Polymorph.Systems;
 using Robust.Shared.GameStates;
 

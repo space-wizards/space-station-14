@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-namespace Content.Server.Storage.Components;
+﻿namespace Content.Server.Storage.Components;
 
 [RegisterComponent]
 public sealed partial class BluespaceLockerComponent : Component

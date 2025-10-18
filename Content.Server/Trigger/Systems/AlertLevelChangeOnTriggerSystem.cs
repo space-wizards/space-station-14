@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.AlertLevel;
 using Content.Shared.Trigger;
 using Content.Shared.Trigger.Components.Effects;

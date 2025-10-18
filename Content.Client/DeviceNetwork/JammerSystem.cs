@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Radio.EntitySystems;
 
 namespace Content.Client.DeviceNetwork;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Jittering;
 
 namespace Content.Server.Jittering

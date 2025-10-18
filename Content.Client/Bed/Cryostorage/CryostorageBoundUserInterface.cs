@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Bed.Cryostorage;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;

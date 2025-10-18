@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Procedural;
 using Robust.Shared.Prototypes;
 

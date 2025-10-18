@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;

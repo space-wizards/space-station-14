@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.StationRecords.Systems;
 using Content.Shared.StationRecords;
 

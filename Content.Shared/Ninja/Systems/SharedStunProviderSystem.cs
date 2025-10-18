@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Ninja.Components;
 
 namespace Content.Shared.Ninja.Systems;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;

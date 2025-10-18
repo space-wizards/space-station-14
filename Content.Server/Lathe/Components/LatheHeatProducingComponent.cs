@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Lathe;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 

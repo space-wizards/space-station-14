@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Client.Interaction;
+﻿using Content.Client.Interaction;
 using Content.IntegrationTests.Tests.Interaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;

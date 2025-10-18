@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Singularity.Components;
 
 namespace Content.Server.ParticleAccelerator.Components;

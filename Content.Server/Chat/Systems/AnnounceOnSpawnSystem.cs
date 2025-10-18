@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Chat;
 
 namespace Content.Server.Chat.Systems;

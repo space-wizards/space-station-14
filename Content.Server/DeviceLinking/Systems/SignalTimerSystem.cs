@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.DeviceLinking.Components;
 using Content.Shared.UserInterface;
 using Content.Shared.Access.Systems;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Examine;
 using Content.Shared.Ghost;
 using Content.Shared.Xenoarchaeology.Artifact.Components;

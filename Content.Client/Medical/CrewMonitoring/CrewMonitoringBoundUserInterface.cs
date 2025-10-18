@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Medical.CrewMonitoring;
 using Robust.Client.UserInterface;
 

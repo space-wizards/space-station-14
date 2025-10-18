@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Linq;
 using Content.Client.Materials;
 using Content.Client.Materials.UI;

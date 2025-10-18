@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Audio;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;

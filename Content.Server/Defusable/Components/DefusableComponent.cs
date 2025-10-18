@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Defusable.Systems;
 using Content.Server.Explosion.Components;
 using Robust.Shared.Audio;

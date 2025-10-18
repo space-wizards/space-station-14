@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 

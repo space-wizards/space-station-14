@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Linq;
 using Content.Server.Destructible;
 using Content.Server.Destructible.Thresholds;

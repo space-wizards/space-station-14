@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Shuttles.Components;
 
 namespace Content.Server.Shuttles.Events;

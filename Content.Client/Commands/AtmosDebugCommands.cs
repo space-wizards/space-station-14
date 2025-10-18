@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;

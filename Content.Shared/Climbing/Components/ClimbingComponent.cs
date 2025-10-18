@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.DoAfter;
 using System.Numerics;
 using Robust.Shared.GameStates;

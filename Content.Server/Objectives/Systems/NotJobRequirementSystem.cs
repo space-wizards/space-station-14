@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Objectives.Components;
 using Content.Shared.Roles.Jobs;
 

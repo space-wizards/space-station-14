@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Radio;
 using Content.Shared.Robotics;
 using Content.Shared.Robotics.Systems;

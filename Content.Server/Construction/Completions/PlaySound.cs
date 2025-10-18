@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Popups;
 using Content.Server.Salvage.JobBoard;
 using Content.Shared.Cargo.Components;

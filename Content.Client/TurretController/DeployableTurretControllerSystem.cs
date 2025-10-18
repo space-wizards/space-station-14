@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.TurretController;
 
 namespace Content.Client.TurretController;

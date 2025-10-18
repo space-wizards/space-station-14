@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Damage;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Map;

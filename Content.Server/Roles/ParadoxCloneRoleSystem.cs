@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
 using Content.Shared.NameModifier.EntitySystems;

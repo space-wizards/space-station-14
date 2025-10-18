@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Ensnaring;
 using Content.Shared.Ensnaring.Components;
 using Robust.Client.GameObjects;

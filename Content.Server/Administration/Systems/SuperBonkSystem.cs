@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Administration.Components;
 using Content.Shared.Climbing.Components;
 using Content.Shared.Clumsy;

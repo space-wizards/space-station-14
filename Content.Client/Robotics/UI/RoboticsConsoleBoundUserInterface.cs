@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Robotics;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;

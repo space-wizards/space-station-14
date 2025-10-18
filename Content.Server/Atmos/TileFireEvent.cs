@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-namespace Content.Server.Atmos
+﻿namespace Content.Server.Atmos
 {
     /// <summary>
     ///     Event raised directed to an entity when it is standing on a tile that's on fire.

@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Shared.Players.RateLimiting;
+﻿using Content.Shared.Players.RateLimiting;
 using Robust.Shared.Player;
 
 namespace Content.Client.Players.RateLimiting;

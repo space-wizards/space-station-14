@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Server.Destructible;
+﻿using Content.Server.Destructible;
 
 namespace Content.Server.RequiresGrid;
 

@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using YamlDotNet.Core;
+﻿using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
 
 namespace Content.Tools

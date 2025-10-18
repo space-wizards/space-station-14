@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Anomaly.Effects;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;

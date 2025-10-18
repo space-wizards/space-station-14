@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using System.IO;
+﻿using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Client.Parallax.Data;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.SurveillanceCamera;
 
 namespace Content.Client.SurveillanceCamera;

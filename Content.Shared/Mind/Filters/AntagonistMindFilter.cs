@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Roles;
 
 namespace Content.Shared.Mind.Filters;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;
 using System.Linq;

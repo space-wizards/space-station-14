@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Forensics;
 using Content.Shared.Forensics.Components;
 using Content.Shared.Inventory;

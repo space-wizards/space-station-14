@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
 

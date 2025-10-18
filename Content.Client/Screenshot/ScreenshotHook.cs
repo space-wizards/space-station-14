@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.IO;
 using System.Threading.Tasks;
 using Content.Client.Viewport;

@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Client.Guidebook;
+﻿using Content.Client.Guidebook;
 using Content.Client.Guidebook.RichText;
 using Content.Client.UserInterface.Systems.Info;
 using Content.Shared.Guidebook;

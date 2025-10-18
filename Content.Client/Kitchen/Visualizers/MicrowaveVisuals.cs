@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 namespace Content.Client.Kitchen.Visualizers;
 
 public enum MicrowaveVisualizerLayers : byte

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Hands.Systems;

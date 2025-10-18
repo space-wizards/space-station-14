@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Materials.OreSilo;
 
 namespace Content.Client.Materials;

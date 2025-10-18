@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Administration.Systems;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 

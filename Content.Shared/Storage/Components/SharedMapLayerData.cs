@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Collections.ObjectModel;
 using Content.Shared.Whitelist;
 using Robust.Shared.Serialization;

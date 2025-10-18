@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using System.Numerics;
+﻿using System.Numerics;
 using Content.Client.Arcade.UI;
 using Content.Shared.Arcade;
 using Robust.Client.UserInterface.Controls;

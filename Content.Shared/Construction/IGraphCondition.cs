@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Shared.Examine;
+﻿using Content.Shared.Examine;
 
 namespace Content.Shared.Construction
 {

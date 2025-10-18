@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 namespace Content.Shared.Salvage.Expeditions;
 
 public enum ExpeditionStage : byte

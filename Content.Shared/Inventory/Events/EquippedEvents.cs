@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-namespace Content.Shared.Inventory.Events;
+﻿namespace Content.Shared.Inventory.Events;
 
 public abstract class EquippedEventBase : EntityEventArgs
 {

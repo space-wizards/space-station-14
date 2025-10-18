@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Radiation.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;

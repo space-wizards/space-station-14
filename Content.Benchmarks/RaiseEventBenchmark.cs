@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-#nullable enable
+﻿#nullable enable
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;

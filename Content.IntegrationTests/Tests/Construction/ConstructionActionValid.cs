@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Text;
 using Content.Server.Construction.Completions;
 using Content.Shared.Construction;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Parallax.Biomes;
 
 namespace Content.Client.Parallax;

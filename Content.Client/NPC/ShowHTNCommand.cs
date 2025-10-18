@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Client.NPC.HTN;
 using Robust.Shared.Console;
 

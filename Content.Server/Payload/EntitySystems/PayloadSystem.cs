@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Database;

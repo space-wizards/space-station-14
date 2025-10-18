@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Kitchen;
 using Content.Server.Kitchen.EntitySystems;
 using Robust.Shared.Audio;

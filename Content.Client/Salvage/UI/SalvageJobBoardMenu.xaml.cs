@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Client.Message;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Salvage.JobBoard;

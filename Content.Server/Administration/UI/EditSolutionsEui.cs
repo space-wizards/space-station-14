@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Administration.Systems;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.EUI;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
 

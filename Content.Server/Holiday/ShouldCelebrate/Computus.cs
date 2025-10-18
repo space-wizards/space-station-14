@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.IO;
 using JetBrains.Annotations;
 

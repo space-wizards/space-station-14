@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Ninja.Components;
 using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;

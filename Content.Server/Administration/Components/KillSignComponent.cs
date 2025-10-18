@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Shared.Administration.Components;
+﻿using Content.Shared.Administration.Components;
 using Robust.Shared.GameStates;
 
 namespace Content.Server.Administration.Components;

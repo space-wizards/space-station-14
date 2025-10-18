@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Threading;
 using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Containers.ItemSlots;

@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Shared.Chemistry.Components;
+﻿using Content.Shared.Chemistry.Components;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Kitchen.Components;

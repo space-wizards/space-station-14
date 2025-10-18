@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Kitchen;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 

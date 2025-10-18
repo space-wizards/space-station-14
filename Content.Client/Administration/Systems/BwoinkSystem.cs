@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-#nullable enable
+﻿#nullable enable
 using Content.Shared.Administration;
 using JetBrains.Annotations;
 using Robust.Shared.Network;

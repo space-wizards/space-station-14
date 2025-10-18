@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Administration;

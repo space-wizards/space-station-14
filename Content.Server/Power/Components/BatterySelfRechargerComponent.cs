@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System;
 
 namespace Content.Server.Power.Components

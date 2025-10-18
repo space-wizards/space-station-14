@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Client.Movement.Systems;
 using Robust.Client.Graphics;
 using Robust.Client.Player;

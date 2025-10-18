@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.SmartFridge;
 using Robust.Shared.Analyzers;
 

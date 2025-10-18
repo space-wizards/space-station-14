@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Xenoarchaeology.Equipment;
 
 namespace Content.Client.Xenoarchaeology.Equipment;

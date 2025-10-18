@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Mind.Components;
 using Robust.Shared.Prototypes;
 

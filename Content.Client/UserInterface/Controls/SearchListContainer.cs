@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using System.Linq;
+﻿using System.Linq;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Controls;

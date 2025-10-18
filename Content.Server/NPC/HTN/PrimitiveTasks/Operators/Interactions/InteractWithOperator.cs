@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Interaction;
 using Content.Shared.CombatMode;
 using Content.Shared.DoAfter;

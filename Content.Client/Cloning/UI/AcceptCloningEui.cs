@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Client.Eui;
+﻿using Content.Client.Eui;
 using Content.Shared.Cloning;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;

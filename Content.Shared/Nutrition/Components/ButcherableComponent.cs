@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Kitchen;
 using Content.Shared.Storage;
 using Robust.Shared.GameStates;

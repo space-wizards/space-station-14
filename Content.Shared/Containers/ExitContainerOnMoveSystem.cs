@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Movement.Events;
 using Robust.Shared.Containers;

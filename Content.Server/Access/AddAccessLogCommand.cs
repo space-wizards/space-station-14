@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Administration;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Runtime.Intrinsics.X86;
 using BenchmarkDotNet.Attributes;
 using Robust.Shared.Analyzers;

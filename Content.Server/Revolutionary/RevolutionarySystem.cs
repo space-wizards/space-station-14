@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Revolutionary;
 
 namespace Content.Server.Revolutionary;

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.NPC.Systems;
 using Robust.Shared.GameStates;
 

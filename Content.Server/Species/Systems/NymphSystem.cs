@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Mind;
 using Content.Shared.Species.Components;
 using Content.Shared.Body.Events;

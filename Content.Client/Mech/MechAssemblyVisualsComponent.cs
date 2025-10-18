@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-namespace Content.Client.Mech;
+﻿namespace Content.Client.Mech;
 
 /// <summary>
 /// This is used for visualizing mech constructions

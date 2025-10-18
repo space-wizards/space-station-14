@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using System.Numerics;
+﻿using System.Numerics;
 using Content.IntegrationTests.Pair;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;

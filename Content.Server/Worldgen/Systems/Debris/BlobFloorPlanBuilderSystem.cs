@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Linq;
 using Content.Server.Worldgen.Components.Debris;
 using Content.Shared.Maps;

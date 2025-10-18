@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System;
 using Robust.Client.Graphics;
 using Content.Client.Parallax.Data;

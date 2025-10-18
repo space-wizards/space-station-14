@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mech.Components;
 

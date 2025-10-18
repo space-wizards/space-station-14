@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Threading;
 using System.Threading.Tasks;
 using Robust.Shared.Random;

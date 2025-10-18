@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Abilities.Mime;
 using Content.Server.Chat.Systems;
 using Content.Server.Popups;

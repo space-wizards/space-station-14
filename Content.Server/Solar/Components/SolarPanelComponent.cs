@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Solar.EntitySystems;
 using Content.Shared.Guidebook;
 

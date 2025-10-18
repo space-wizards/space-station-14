@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Construction.Components;
 using Content.Shared.Examine;
 

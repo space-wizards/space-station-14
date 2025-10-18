@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.NPC;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;

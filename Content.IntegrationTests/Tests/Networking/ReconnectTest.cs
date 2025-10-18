@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Robust.Client.Console;
 using Robust.Shared.Network;
 

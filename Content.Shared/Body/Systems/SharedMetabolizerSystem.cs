@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Body.Events;
 
 namespace Content.Shared.Body.Systems;

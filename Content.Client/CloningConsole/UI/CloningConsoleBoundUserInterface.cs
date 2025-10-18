@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Content.Shared.Cloning.CloningConsole;

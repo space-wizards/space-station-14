@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 #nullable enable
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Presets;

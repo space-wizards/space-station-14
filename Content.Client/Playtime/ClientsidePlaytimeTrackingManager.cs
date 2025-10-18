@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.CCVar;
 using Robust.Client.Player;
 using Robust.Shared.Network;

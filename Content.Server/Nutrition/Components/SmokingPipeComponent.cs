@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Containers.ItemSlots;
 

@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Diagnostics;
 using System.IO.Compression;
 using Robust.Packaging;

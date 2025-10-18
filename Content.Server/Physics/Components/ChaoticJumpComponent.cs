@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Physics.Controllers;
 using Content.Shared.Physics;
 using Robust.Shared.Prototypes;

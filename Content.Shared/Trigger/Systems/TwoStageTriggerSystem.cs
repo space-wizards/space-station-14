@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Robust.Shared.Timing;
 using Content.Shared.Trigger.Components;
 

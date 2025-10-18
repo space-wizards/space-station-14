@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Client.Trigger.Components;
 using Content.Shared.Trigger;
 using Robust.Client.Animations;

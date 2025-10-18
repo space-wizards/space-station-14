@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-using Content.Shared.Arcade;
+﻿using Content.Shared.Arcade;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 

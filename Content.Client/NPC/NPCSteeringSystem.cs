@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Numerics;
 using Content.Client.Physics.Controllers;
 using Content.Client.PhysicsSystem.Controllers;

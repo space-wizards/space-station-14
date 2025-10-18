@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.Text.Json;
 using Robust.Shared.Player;
 

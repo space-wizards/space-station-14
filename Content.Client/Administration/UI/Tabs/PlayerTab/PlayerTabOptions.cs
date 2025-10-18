@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 namespace Content.Client.Administration.UI.Tabs.PlayerTab;
 
 public enum AdminPlayerTabColorOption

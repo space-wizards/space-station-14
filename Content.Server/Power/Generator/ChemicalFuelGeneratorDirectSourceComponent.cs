@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-namespace Content.Server.Power.Generator;
+﻿namespace Content.Server.Power.Generator;
 
 /// <summary>
 /// This is used for stuff that can directly be shoved into a generator.

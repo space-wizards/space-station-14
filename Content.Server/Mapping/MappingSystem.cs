@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using System.IO;
 using Content.Server.Administration;
 using Content.Shared.Administration;

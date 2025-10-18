@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Temperature;
 using Content.Shared.Temperature.Components;
 

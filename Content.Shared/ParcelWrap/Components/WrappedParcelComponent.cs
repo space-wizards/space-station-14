@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.ParcelWrap.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;

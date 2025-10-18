@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Holopad;
 using Content.Shared.Mobs;
 using Robust.Shared.Player;

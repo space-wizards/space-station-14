@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Mech.Systems;
 using Content.Shared.Construction;
 using Content.Shared.Mech.Components;

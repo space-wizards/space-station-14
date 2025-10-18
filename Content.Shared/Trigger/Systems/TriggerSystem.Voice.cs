@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Trigger.Components.Triggers;
 using Content.Shared.Speech;
 using Content.Shared.Speech.Components;

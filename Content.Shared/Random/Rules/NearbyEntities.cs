@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Whitelist;
 
 namespace Content.Shared.Random.Rules;

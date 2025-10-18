@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Client.ContextMenu.UI;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;

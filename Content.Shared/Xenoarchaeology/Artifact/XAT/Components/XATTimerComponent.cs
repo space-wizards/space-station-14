@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Destructible.Thresholds;
 using Robust.Shared.GameStates;
 

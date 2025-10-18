@@ -1,6 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
-
-namespace Content.Server.Power.Pow3r
+﻿namespace Content.Server.Power.Pow3r
 {
     public static class PowerSolverShared
     {

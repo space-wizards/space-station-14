@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Thief.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Item;

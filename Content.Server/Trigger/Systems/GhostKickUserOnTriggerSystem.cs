@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Trigger;
 using Content.Shared.Trigger.Components.Effects;
 using Content.Server.GhostKick;

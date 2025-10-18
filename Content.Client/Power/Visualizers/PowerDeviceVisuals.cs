@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 namespace Content.Client.Power;
 
 /// Remains in use by portable scrubbers and lathes.

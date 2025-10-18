@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Eye.Blinding.Systems;
 using Robust.Shared.Prototypes;
 
