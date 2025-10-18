@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
-using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -28,7 +27,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
     public Color EyeColor { get; set; } = Color.Black;
 
     [DataField]
-    public Color SkinColor { get; set; } = Humanoid.SkinColor.ValidHumanSkinTone;
+    public Color SkinColor { get; set; } = Color.FromHsv(new Vector4(0.07f, 0.2f, 1f, 1f));
 
     [DataField]
     public List<Marking> Markings { get; set; } = new();
@@ -93,14 +92,14 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
 
     public static HumanoidCharacterAppearance DefaultWithSpecies(string species)
     {
-        var speciesPrototype = IoCManager.Resolve<IPrototypeManager>().Index<SpeciesPrototype>(species);
-        var skinColor = speciesPrototype.SkinColoration switch
+        var protoMan = IoCManager.Resolve<IPrototypeManager>();
+        var speciesPrototype = protoMan.Index<SpeciesPrototype>(species);
+        var skinColoration = protoMan.Index(speciesPrototype.SkinColoration).Strategy;
+        var skinColor = skinColoration.InputType switch
         {
-            HumanoidSkinColor.HumanToned => Humanoid.SkinColor.HumanSkinTone(speciesPrototype.DefaultHumanSkinTone),
-            HumanoidSkinColor.Hues => speciesPrototype.DefaultSkinTone,
-            HumanoidSkinColor.TintedHues => Humanoid.SkinColor.TintedHues(speciesPrototype.DefaultSkinTone),
-            HumanoidSkinColor.VoxFeathers => Humanoid.SkinColor.ClosestVoxColor(speciesPrototype.DefaultSkinTone),
-            _ => Humanoid.SkinColor.ValidHumanSkinTone,
+            SkinColorationStrategyInput.Unary => skinColoration.FromUnary(speciesPrototype.DefaultHumanSkinTone),
+            SkinColorationStrategyInput.Color => skinColoration.ClosestSkinColor(speciesPrototype.DefaultSkinTone),
+            _ => skinColoration.ClosestSkinColor(speciesPrototype.DefaultSkinTone),
         };
 
         return new(
@@ -110,11 +109,11 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
             Color.Black,
             Color.Black,
             skinColor,
-            new ()
+            new()
         );
     }
 
-    private static IReadOnlyList<Color> RealisticEyeColors = new List<Color>
+    private static IReadOnlyList<Color> _realisticEyeColors = new List<Color>
     {
         Color.Brown,
         Color.Gray,
@@ -127,10 +126,9 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
     {
         var random = IoCManager.Resolve<IRobustRandom>();
         var markingManager = IoCManager.Resolve<MarkingManager>();
-        var proto = IoCManager.Resolve<IPrototypeManager>();
+        var hairStyles = markingManager.MarkingsByCategoryAndSpecies(MarkingCategories.Hair, species).Keys.ToList();
+        var facialHairStyles = markingManager.MarkingsByCategoryAndSpecies(MarkingCategories.FacialHair, species).Keys.ToList();
 
-        var newFacialHairStyle = HairStyles.DefaultFacialHairStyle.Id;
-        var newHairStyle = HairStyles.DefaultHairStyle.Id;
         List<Marking> newMarkings = [];
 
         // grab a completely random color.
@@ -152,55 +150,45 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
                 break;
         }
 
-        // grab the species skin coloration type.
-        var skinType = IoCManager.Resolve<IPrototypeManager>().Index<SpeciesPrototype>(species).SkinColoration;
+        // grab the skin type, and clamp it to our colour strategy.
+        var protoMan = IoCManager.Resolve<IPrototypeManager>();
+        var skinType = protoMan.Index<SpeciesPrototype>(species).SkinColoration;
+        var strategy = protoMan.Index(skinType).Strategy;
+
+        var newSkinColor = strategy.ClosestSkinColor(colorPalette[0]);
 
         // declare some defaults. ensures that the hair and eyes on hues-colored species don't match the skin or one another.
-        var newSkinColor = colorPalette[0];
         var newHairColor = colorPalette[1];
         var newEyeColor = colorPalette[2];
 
         // now we do some color logic.
-        switch (skinType)
+        if (protoMan.Index(skinType).RealisticColors)
         {
-            // if the species is HumanToned:
-            case HumanoidSkinColor.HumanToned:
-                // get a new HumanToned color, so we dont skew distribution.
-                newSkinColor = Humanoid.SkinColor.HumanSkinTone(random.Next(0, 101));
+            // pick a random realistic hair color from the list and randomize it juuuuust a little bit.
+            newHairColor = random.Pick(HairStyles.RealisticHairColors);
+            newHairColor = newHairColor
+                .WithRed(RandomizeColor(newHairColor.R))
+                .WithGreen(RandomizeColor(newHairColor.G))
+                .WithBlue(RandomizeColor(newHairColor.B));
 
-                // pick a random realistic hair color from the list and randomize it juuuuust a little bit.
-                newHairColor = random.Pick(HairStyles.RealisticHairColors);
-                newHairColor = newHairColor
-                    .WithRed(RandomizeColor(newHairColor.R))
-                    .WithGreen(RandomizeColor(newHairColor.G))
-                    .WithBlue(RandomizeColor(newHairColor.B));
+            // and pick a random realistic eye color from the list.
+            newEyeColor = random.Pick(_realisticEyeColors);
 
-                // and pick a random realistic eye color from the list.
-                newEyeColor = random.Pick(RealisticEyeColors);
-
-                // we're also going to crush the other colors down to the skin's luminosity so markings don't appear too bright on darker skin.
-                colorPalette[1] = SquashToSkinLuminosity(newSkinColor, colorPalette[1]);
-                colorPalette[2] = SquashToSkinLuminosity(newSkinColor, colorPalette[2]);
-                break;
-
-            // if the species is Hues toned: it's fine the way it is.
-            case HumanoidSkinColor.Hues:
-                break;
-
-            // if the species is TintedHues toned: tint them hues.
-            case HumanoidSkinColor.TintedHues:
-                newSkinColor = Humanoid.SkinColor.ValidTintedHuesSkinTone(newSkinColor);
-
-                // we're also going to crush the other colors down to valid TintedHues skin colors.
-                colorPalette[1] = Humanoid.SkinColor.ValidTintedHuesSkinTone(colorPalette[1]);
-                colorPalette[2] = Humanoid.SkinColor.ValidTintedHuesSkinTone(colorPalette[2]);
-                break;
-
-            // if the species is VoxFeathers toned: confine the skin color to vox limits. Bright colors are otherwise fine, so leave the marking colors alone.
-            case HumanoidSkinColor.VoxFeathers:
-                newSkinColor = Humanoid.SkinColor.ProportionalVoxColor(newSkinColor);
-                break;
+            // we're also going to crush the other colors down to the skin's luminosity so markings don't appear too bright on darker skin.
+            colorPalette[1] = SquashToSkinLuminosity(newSkinColor, colorPalette[1]);
+            colorPalette[2] = SquashToSkinLuminosity(newSkinColor, colorPalette[2]);
         }
+
+        if (protoMan.Index(skinType).SquashAllColors)
+        {
+            // crush the other colors down to valid skin colors.
+            colorPalette[1] = strategy.ClosestSkinColor(colorPalette[1]);
+            colorPalette[2] = strategy.ClosestSkinColor(colorPalette[2]);
+        }
+
+        // declare our default hair.
+        var newHairStyle = HairStyles.DefaultFacialHairStyle.Id;
+        var newFacialHairStyle = HairStyles.DefaultFacialHairStyle.Id;
 
         // now we loop through every extant marking category,
         foreach (var category in Enum.GetValues<MarkingCategories>())
@@ -213,28 +201,29 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
             foreach (var marking in markings)
                 markingWeights.Add(marking.Key, marking.Value.RandomWeight);
 
-
             // grab the markingset from our category..
             var markingSet = new Dictionary<MarkingCategories, MarkingPoints>();
-            if (proto.TryIndex(species, out SpeciesPrototype? speciesProto))
-                markingSet = new MarkingSet(speciesProto.MarkingPoints, markingManager, proto).Points;
+            if (protoMan.TryIndex(species, out SpeciesPrototype? speciesProto))
+                markingSet = new MarkingSet(speciesProto.MarkingPoints, markingManager, protoMan).Points;
 
             if (!markingSet.TryGetValue(category, out var categorySet))
                 continue;
 
             // hair and facial hair are handled different to other markings, so those get their own special treatment
-            // if it's facial hair, there are entries in the category, and the character is not female, roll & assign a random one. else bald
-            if (category == MarkingCategories.FacialHair)
-            {
-                newFacialHairStyle = markings.Count == 0 || sex == Sex.Female || !random.Prob(categorySet.Weight) ?
-                    HairStyles.DefaultFacialHairStyle : random.Pick(markingWeights);
-            }
-
             // if it's hair, and there are hair styles, roll one. else bald
             else if (category == MarkingCategories.Hair)
             {
-                newHairStyle = markings.Count == 0 || !random.Prob(categorySet.Weight) ?
-                    HairStyles.DefaultHairStyle : random.Pick(markingWeights);
+                newHairStyle = markings.Count == 0 || !random.Prob(categorySet.Weight)
+                    ? HairStyles.DefaultHairStyle.Id
+                    : random.Pick(markingWeights).Key;
+            }
+
+            // if it's facial hair, there are entries in the category, and the character is not female, roll & assign a random one. else bald
+            if (category == MarkingCategories.FacialHair)
+            {
+                newFacialHairStyle = markings.Count == 0 || sex == Sex.Female || !random.Prob(categorySet.Weight)
+                    ? HairStyles.DefaultFacialHairStyle.Id
+                    : random.Pick(markingWeights).Key;
             }
 
             // for every other category,
@@ -253,7 +242,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
                         continue;
 
                     // pick a random marking from the list
-                    var randomMarking = random.Pick(markingWeights);
+                    var randomMarking = random.Pick(markingWeights).Key;
                     if (!markings.TryGetValue(randomMarking, out var protoToAdd))
                         continue;
                     var markingToAdd = protoToAdd.AsMarking();
@@ -387,10 +376,8 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
             markingSet = new MarkingSet(appearance.Markings, speciesProto.MarkingPoints, markingManager, proto);
             markingSet.EnsureValid(markingManager);
 
-            if (!Humanoid.SkinColor.VerifySkinColor(speciesProto.SkinColoration, skinColor))
-            {
-                skinColor = Humanoid.SkinColor.ValidSkinTone(speciesProto.SkinColoration, skinColor);
-            }
+            var strategy = proto.Index(speciesProto.SkinColoration).Strategy;
+            skinColor = strategy.EnsureVerified(skinColor);
 
             markingSet.EnsureSpecies(species, skinColor, markingManager);
             markingSet.EnsureSexes(sex, markingManager);

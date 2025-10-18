@@ -33,6 +33,9 @@ alerts-walking-desc = You are walking, moving at a slow pace.
 alerts-stunned-name = [color=yellow]Stunned[/color]
 alerts-stunned-desc = You're [color=yellow]stunned[/color]! Something is impairing your ability to move or interact with objects.
 
+alerts-knockdown-name = [color=yellow]Knocked Down[/color]
+alerts-knockdown-desc = You're [color=yellow]Knocked Down[/color]! Something has slipped or pushed you over, encumbering your movement.
+
 alerts-handcuffed-name = [color=yellow]Handcuffed[/color]
 alerts-handcuffed-desc = You're [color=yellow]handcuffed[/color] and can't use your hands. If anyone drags you, you won't be able to resist.
 

@@ -1,5 +1,5 @@
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.StatusEffectNew.Components;
 
@@ -9,15 +9,14 @@ namespace Content.Shared.StatusEffectNew.Components;
 /// Can be used for tracking currently applied status effects.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(SharedStatusEffectsSystem))]
+[Access(typeof(StatusEffectsSystem))]
 public sealed partial class StatusEffectContainerComponent : Component
 {
-    [DataField]
-    public HashSet<EntityUid> ActiveStatusEffects = new();
-}
+    public const string ContainerId = "status-effects";
 
-[Serializable, NetSerializable]
-public sealed class StatusEffectContainerComponentState(HashSet<NetEntity> activeStatusEffects) : ComponentState
-{
-    public readonly HashSet<NetEntity> ActiveStatusEffects = activeStatusEffects;
+    /// <summary>
+    /// The actual container holding references to the active status effects
+    /// </summary>
+    [ViewVariables]
+    public Container? ActiveStatusEffects;
 }

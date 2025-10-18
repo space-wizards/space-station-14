@@ -82,8 +82,8 @@ public sealed class NameIdentifierSystem : EntitySystem
         randomVal = set[^1];
         set.RemoveAt(set.Count - 1);
 
-        return proto.Prefix is not null
-            ? $"{proto.Prefix}-{randomVal}"
+        return proto.Format is not null
+            ? Loc.GetString(proto.Format, ("number", randomVal))
             : $"{randomVal}";
     }
 
@@ -92,7 +92,7 @@ public sealed class NameIdentifierSystem : EntitySystem
         if (ent.Comp.Group is null)
             return;
 
-        if (!_prototypeManager.TryIndex(ent.Comp.Group, out var group))
+        if (!_prototypeManager.Resolve(ent.Comp.Group, out var group))
             return;
 
         int id;
@@ -104,8 +104,8 @@ public sealed class NameIdentifierSystem : EntitySystem
             ids.Remove(ent.Comp.Identifier))
         {
             id = ent.Comp.Identifier;
-            uniqueName = group.Prefix is not null
-                ? $"{group.Prefix}-{id}"
+            uniqueName = group.Format is not null
+                ? Loc.GetString(group.Format, ("number", id))
                 : $"{id}";
         }
         else
@@ -131,7 +131,7 @@ public sealed class NameIdentifierSystem : EntitySystem
         if (ent.Comp.LifeStage > ComponentLifeStage.Running)
             return;
 
-        if (!_prototypeManager.TryIndex(ent.Comp.Group, out var group))
+        if (!_prototypeManager.Resolve(ent.Comp.Group, out var group))
             return;
 
         var format = group.FullName ? "name-identifier-format-full" : "name-identifier-format-append";
