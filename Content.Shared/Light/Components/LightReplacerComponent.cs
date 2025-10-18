@@ -8,18 +8,18 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Light.Components;
 
 /// <summary>
-///     Device that allows user to quikly change bulbs in <see cref="PoweredLightComponent"/>
+///     Device that allows user to quickly change bulbs in <see cref="PoweredLightComponent"/>
 ///     Can be reloaded by new light tubes or light bulbs
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedLightReplacerSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(LightReplacerSystem)), AutoGenerateComponentState]
 public sealed partial class LightReplacerComponent : Component
 {
-    [DataField("sound")]
+    [DataField]
     public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Weapons/click.ogg")
     {
-        Params = new()
+        Params = new AudioParams
         {
-            Volume = -4f
+            Volume = -4f,
         }
     };
 
@@ -32,6 +32,12 @@ public sealed partial class LightReplacerComponent : Component
     /// <summary>
     /// The default starting bulbs
     /// </summary>
-    [DataField("contents")]
-    public List<EntitySpawnEntry> Contents = new();
+    [DataField]
+    public List<EntitySpawnEntry> Contents = [];
+
+    /// <summary>
+    /// This is used for predition, since FirstOrDefault() doesn't properly save the content order.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public List<EntityUid> ContentOrder = [];
 }
