@@ -77,7 +77,7 @@
     healSound: "/Audio/Effects/lightburn.ogg"
   - type: Summonable
     specialItem: SpawnPointGhostCerberus
-    respawnTime: 300
+    respawnInterval: 300
   - type: Sprite
     sprite: Objects/Specific/Chapel/necronomicon.rsi
   - type: Item
