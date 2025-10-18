@@ -1,6 +1,6 @@
 - type: entity
   name: BaseWeaponShotgun
-  parent: BaseItem
+  parent: [BaseItem, BaseGunMeleeLarge]
   id: BaseWeaponShotgun
   description: A rooty tooty point and shooty.
   abstract: true
@@ -47,7 +47,7 @@
 - type: entity
   name: Bulldog
   # Don't parent to BaseWeaponShotgun because it differs significantly
-  parent: [BaseItem, BaseGunWieldable, BaseSyndicateContraband]
+  parent: [BaseItem, BaseGunWieldable, BaseGunMeleeLarge, BaseSyndicateContraband]
   id: WeaponShotgunBulldog
   description: An automatic magazine-fed shotgun for close-quarters combat. Kicks like a mule on steroids. Uses .50 shotgun shells.
   components:
@@ -180,7 +180,7 @@
 
 - type: entity
   name: sawn-off shotgun
-  parent: [ BaseWeaponShotgun, BaseSecurityBartenderContraband ]
+  parent: [ BaseGunMeleeSmall, BaseWeaponShotgun, BaseSecurityBartenderContraband ]
   id: WeaponShotgunSawn
   description: Groovy! Uses .50 shotgun shells.
   components: # needs to be super inaccurate because you don't need to wield it
@@ -220,7 +220,7 @@
 
 - type: entity
   name: handmade pistol
-  parent: [BaseWeaponShotgun, BaseMinorContraband]
+  parent: [BaseGunMeleeSmall, BaseWeaponShotgun, BaseMinorContraband]
   id: WeaponShotgunHandmade
   description: Looks unreliable. Uses .50 shotgun shells.
   components:
