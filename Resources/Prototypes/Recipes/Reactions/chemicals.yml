@@ -119,6 +119,23 @@
       maxIntensity: 7
 
 - type: reaction
+  id: ClastineExplosion
+  impact: High
+  priority: 20
+  reactants:
+    Chlorine:
+      amount: 1
+    Clastine:
+      amount: 1
+  effects:
+    - !type:ExplosionReactionEffect
+      explosionType: Default
+      maxIntensity: 150
+      intensityPerUnit: 2
+      intensitySlope: 4
+      maxTotalIntensity: 150
+
+- type: reaction
   id: Smoke
   priority: -10
   impact: High
@@ -542,3 +559,17 @@
       amount: 1
   products:
     Lye: 2
+
+- type: reaction
+  id: Clastine
+  minTemp: 370
+  impact: High
+  reactants:
+    Vestine:
+      amount: 1
+    Chlorine:
+      amount: 2
+    Plasma:
+      amount: 2
+  products:
+    Clastine: 1
