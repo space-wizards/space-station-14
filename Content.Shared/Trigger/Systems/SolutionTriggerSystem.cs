@@ -4,7 +4,7 @@ using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed class ReagentTriggerSystem : EntitySystem
+public sealed class SolutionTriggerSystem : EntitySystem
 {
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
@@ -12,11 +12,13 @@ public sealed class ReagentTriggerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AddReagentOnTriggerComponent, TriggerEvent>(OnTriggered);
+        SubscribeLocalEvent<AddSolutionOnTriggerComponent, TriggerEvent>(OnTriggered);
     }
 
-    private void OnTriggered(Entity<AddReagentOnTriggerComponent> ent, ref TriggerEvent args)
+    private void OnTriggered(Entity<AddSolutionOnTriggerComponent> ent, ref TriggerEvent args)
     {
+        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
+            return;
 
         var target = ent.Comp.TargetUser ? args.User : ent.Owner;
 
@@ -27,5 +29,7 @@ public sealed class ReagentTriggerSystem : EntitySystem
             return;
 
         _solutionContainer.AddSolution(solutionRef.Value, ent.Comp.AddedSolution);
+
+        args.Handled = true;
     }
 }
