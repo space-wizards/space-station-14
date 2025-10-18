@@ -67,7 +67,7 @@
 - entity: SubstationBasic
   assignments:
   - 2: 4
-- entity: Poweredlight
+- entity: PoweredLightTubeFixtureFluorescent
   assignments:
   - 2: 6
 - entity: EmergencyLight
