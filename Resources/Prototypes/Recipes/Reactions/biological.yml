@@ -1,4 +1,15 @@
 - type: reaction
+  id: UncookedAnimalProteinsBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    UncookedAnimalProteins:
+      amount: 1
+  products:
+    Fluorine: 0.5
+    
+- type: reaction
   id: BloodBreakdown
   source: true
   requiredMixerCategories:
