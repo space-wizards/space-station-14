@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -5,6 +6,8 @@ using Content.Shared.Item;
 using Content.Shared.ParcelWrap.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.ParcelWrap.Systems;
@@ -12,11 +15,34 @@ namespace Content.Shared.ParcelWrap.Systems;
 // This part handles Parcel Wrap.
 public sealed partial class ParcelWrappingSystem
 {
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly INetManager _net = default!;
+
+    private static ProtoId<ItemSizePrototype> _fallbackParcelSize = "Ginormous";
+
     private void InitializeParcelWrap()
     {
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypeReload);
+
         SubscribeLocalEvent<ParcelWrapComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<ParcelWrapComponent, GetVerbsEvent<UtilityVerb>>(OnGetVerbsForParcelWrap);
         SubscribeLocalEvent<ParcelWrapComponent, ParcelWrapItemDoAfterEvent>(OnWrapItemDoAfter);
+
+        SetFallbackParcelSize();
+    }
+
+    private void OnPrototypeReload(PrototypesReloadedEventArgs args)
+    {
+        if (args.WasModified<ItemSizePrototype>())
+            SetFallbackParcelSize();
+    }
+
+    private void SetFallbackParcelSize()
+    {
+        if (_proto.EnumeratePrototypes<ItemSizePrototype>().Max() is { } size)
+        {
+            _fallbackParcelSize = size;
+        }
     }
 
     private void OnAfterInteract(Entity<ParcelWrapComponent> entity, ref AfterInteractEvent args)
@@ -63,8 +89,9 @@ public sealed partial class ParcelWrappingSystem
     {
         var duration = wrapper.Comp.WrapDelay;
 
-        if (TryComp<ParcelWrapOverrideComponent>(target, out var overrideComp) && overrideComp.WrapDelay != null)
-            duration = overrideComp.WrapDelay.Value;
+        if (TryComp<ParcelWrapOverrideComponent>(target, out var overrideComp) &&
+            overrideComp.WrapDelay is { } wrapDelayOverride)
+            duration = wrapDelayOverride;
 
         // In case the target is a player inform them with a popup.
         if (target == user)
@@ -74,7 +101,10 @@ public sealed partial class ParcelWrappingSystem
         }
         else
         {
-            var othersMsg = Loc.GetString("parcel-wrap-popup-being-wrapped", ("user", Identity.Entity(user, EntityManager)));
+            var othersMsg = Loc.GetString(
+                "parcel-wrap-popup-being-wrapped",
+                ("user", Identity.Entity(user, EntityManager))
+            );
             _popup.PopupEntity(othersMsg, target, target, PopupType.MediumCaution);
         }
 
@@ -111,43 +141,16 @@ public sealed partial class ParcelWrappingSystem
         if (_net.IsClient)
             return; // Predicted spawns can't be interacted with yet.
 
-        EntityUid spawned;
+        // Spawn the actual parcel entity.
         var targetTransform = Transform(target);
-        // Check if the target has a pre-defined parcel type to be used.
-        if (TryComp<ParcelWrapOverrideComponent>(target, out var overrideComp))
-        {
-            spawned = Spawn(overrideComp.ParcelPrototype, targetTransform.Coordinates);
-        }
-        else // Create a parcel with the same size and generic sprites instead.
-        {
-            spawned = Spawn(wrapper.Comp.ParcelPrototype, targetTransform.Coordinates);
-
-            // If this wrap maintains the size when wrapping, set the parcel's size to the target's size. Otherwise use the
-            // wrap's fallback size.
-            TryComp(target, out ItemComponent? targetItemComp);
-            var size = wrapper.Comp.FallbackItemSize;
-            if (wrapper.Comp.WrappedItemsMaintainSize && targetItemComp is not null)
-                size = targetItemComp.Size;
-
-            // ParcelWrap's spawned entity should always have an `ItemComp`. As of writing, the only use has it hardcoded on
-            // its prototype.
-            var item = Comp<ItemComponent>(spawned);
-            _item.SetSize(spawned, size, item);
-            _appearance.SetData(spawned, WrappedParcelVisuals.Size, size.Id);
-
-            // If this wrap maintains the shape when wrapping and the item has a shape override, copy the shape override to
-            // the parcel.
-            if (wrapper.Comp.WrappedItemsMaintainShape && targetItemComp is { Shape: { } shape })
-                _item.SetShape(spawned, shape, item);
-        }
-
+        var spawned = Spawn(GetParcelPrototype(wrapper, target), targetTransform.Coordinates);
         _transform.SetLocalRotation(spawned, targetTransform.LocalRotation);
 
         // If the target is in a container, try to put the parcel in its place in the container.
-        if (_container.TryGetContainingContainer((target, null, null), out var containerOfTarget))
+        if (_container.TryGetContainingContainer(target, out var containerOfTarget))
         {
             _container.Remove(target, containerOfTarget);
-            _container.InsertOrDrop((spawned, null, null), containerOfTarget);
+            _container.InsertOrDrop(spawned, containerOfTarget);
         }
 
         // Insert the target into the parcel.
@@ -161,5 +164,17 @@ public sealed partial class ParcelWrappingSystem
                 $"Failed to insert target entity into newly spawned parcel. target={PrettyPrint.PrintUserFacing(target)}");
             PredictedDel(spawned);
         }
+    }
+
+    private EntProtoId<WrappedParcelComponent> GetParcelPrototype(
+        Entity<ParcelWrapComponent> wrapper,
+        Entity<ParcelWrapOverrideComponent?> target
+    )
+    {
+        // If an override is defined on the target, use that.
+        if (TryComp(target, out target.Comp))
+            return target.Comp.ParcelPrototype;
+
+        return wrapper.Comp.ParcelPrototype;
     }
 }
