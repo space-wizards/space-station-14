@@ -111,6 +111,13 @@
     - type: Tag
       tags:
         - CannotSuicide
+    - type: StatusEffect
+      whitelist:
+        components:
+        - Mobstate
+      blacklist:
+        tags:
+        - StunImmune
 
 # From the uplink injector
 - type: entity
