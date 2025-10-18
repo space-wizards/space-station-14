@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Moomoobeef
-  changes:
-  - message: Nanotask printouts now look much nicer!
-    type: Tweak
-  id: 8612
-  time: '2025-06-04T08:16:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37805
-- author: TheCactus, ilovehans10
-  changes:
-  - message: Added text highlighting.
-    type: Add
-  id: 8613
-  time: '2025-06-04T10:12:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31442
 - author: SlamBamActionman
   changes:
   - message: Diona can now root, keeping them from slipping but absorbing fluids from
@@ -3933,3 +3919,19 @@
   id: 9113
   time: '2025-10-17T18:56:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40949
+- author: TrixxedHeart
+  changes:
+  - message: Added Enter/Leave Genpop access to Security by default, allowing them
+      to be able to fix Genpop turnstiles with the access configurator if they are
+      destroyed.
+    type: Tweak
+  id: 9114
+  time: '2025-10-18T00:28:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39515
+- author: TrixxedHeart
+  changes:
+  - message: Added Vox Chitter and Clicking emotes
+    type: Add
+  id: 9115
+  time: '2025-10-18T00:28:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40878
