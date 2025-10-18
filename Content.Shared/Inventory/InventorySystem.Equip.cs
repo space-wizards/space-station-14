@@ -14,6 +14,7 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Strip;
 using Content.Shared.Strip.Components;
+using Content.Shared.Throwing;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -39,11 +40,9 @@ public abstract partial class InventorySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly SharedStrippableSystem _strippable = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
 
     private static readonly ProtoId<ItemSizePrototype> PocketableItemSize = "Small";
-
-    private const float UnequipAllDefaultMaxThrowImpulse = 40.0f;
 
     private void InitializeEquip()
     {
@@ -609,11 +608,13 @@ public abstract partial class InventorySystem
     /// <param name="ent">The entity unequipping the items.</param>
     /// <param name="scatterItems">Whether to instantly scatter items around <see cref="ent"/>,
     /// preventing them from being all in the same exact position in the next tick.</param>
-    /// <param name="throwItems">Whether to throw items in random directions close to <see cref="ent"/></param>
-    /// <param name="maxThrowImpulseModifier">If <see cref="throwItems"/> is true, modifies max random linear impulse
-    /// applied to the thrown items. If 1, items are scattered next to <see cref="ent"/></param>
-    /// <param name="throwDirection">If <see cref="throwItems"/> is true, The direction in which to throw the items</param>
-    /// <param name="throwCone">If <see cref="throwDirection"/> is defined, the full spread angle of thrown items</param>
+    /// <param name="throwItems">Whether to throw items in random directions close to <see cref="ent"/>.</param>
+    /// <param name="maxThrowImpulseModifier">If <see cref="throwItems"/> is true, modifies the maximum random force
+    /// applied to the thrown items.</param>
+    /// <param name="throwDirection">If <see cref="throwItems"/> is true, The direction in which to throw the
+    /// items.</param>
+    /// <param name="throwCone">If <see cref="throwDirection"/> is defined, the full spread angle of thrown
+    /// items.</param>
     /// <param name="forceUnequip"> Whether to force unequipping the items no matter what.</param>
     /// <returns> All successfully unequipped items.</returns>
     public HashSet<EntityUid> TryUnequipAllAndScatter(Entity<InventoryComponent?, HandsComponent?> ent,
