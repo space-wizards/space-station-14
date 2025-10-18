@@ -1,0 +1,10 @@
+﻿using Robust.Shared.GameStates;
+
+namespace Content.Shared.Trigger.Components.Triggers;
+
+/// <summary>
+/// Component put on the hitscan entity.
+/// The user is the entity that got hit.
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class TriggerOnHitscanHitComponent : BaseTriggerOnXComponent;
