@@ -1,16 +1,16 @@
 using Content.Shared.Construction.Prototypes;
-using Content.Shared.DoAfter;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Construction.Components
+namespace Content.Shared.Construction.Components
 {
-    [RegisterComponent, Access(typeof(ConstructionSystem))]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedConstructionSystem))]
     public sealed partial class ConstructionComponent : Component
     {
-        [DataField("graph", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<ConstructionGraphPrototype>))]
+        [DataField(required:true, customTypeSerializer:typeof(PrototypeIdSerializer<ConstructionGraphPrototype>)), AutoNetworkedField]
         public string Graph { get; set; } = string.Empty;
 
-        [DataField("node", required:true)]
+        [DataField(required:true), AutoNetworkedField]
         public string Node { get; set; } = default!;
 
         [DataField("edge")]
@@ -19,16 +19,16 @@ namespace Content.Server.Construction.Components
         [DataField("step")]
         public int StepIndex { get; set; } = 0;
 
-        [DataField("containers")]
+        [DataField]
         public HashSet<string> Containers { get; set; } = new();
 
-        [DataField("defaultTarget")]
+        [DataField, AutoNetworkedField]
         public string? TargetNode { get; set; } = null;
 
-        [ViewVariables]
+        [ViewVariables, AutoNetworkedField]
         public int? TargetEdgeIndex { get; set; } = null;
 
-        [ViewVariables]
+        [ViewVariables, AutoNetworkedField]
         public Queue<string>? NodePathfinding { get; set; } = null;
 
         [DataField("deconstructionTarget")]

@@ -1,7 +1,8 @@
-using Content.Server.Construction.Components;
 using Content.Server.Stack;
 using Content.Shared.Construction;
+using Content.Shared.Construction.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
 using Robust.Shared.Random;
@@ -27,7 +28,6 @@ namespace Content.Server.Construction
 
             InitializeComputer();
             InitializeGraphs();
-            InitializeGuided();
             InitializeInteractions();
             InitializeInitial();
             InitializeMachines();

@@ -1,11 +1,10 @@
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Construction;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Construction.Conditions;
+namespace Content.Shared.Construction.Conditions;
 
 /// <summary>
 /// Requires that a certain solution has a minimum amount of a reagent to proceed.

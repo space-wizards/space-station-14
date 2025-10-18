@@ -80,36 +80,6 @@ public sealed class AckStructureConstructionMessage : EntityEventArgs
     }
 }
 
-/// <summary>
-/// Sent client -> server to request a specific construction guide.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class RequestConstructionGuide : EntityEventArgs
-{
-    public readonly string ConstructionId;
-
-    public RequestConstructionGuide(string constructionId)
-    {
-        ConstructionId = constructionId;
-    }
-}
-
-/// <summary>
-/// Sent server -> client as a response to a <see cref="RequestConstructionGuide"/> net message.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class ResponseConstructionGuide : EntityEventArgs
-{
-    public readonly string ConstructionId;
-    public readonly ConstructionGuide Guide;
-
-    public ResponseConstructionGuide(string constructionId, ConstructionGuide guide)
-    {
-        ConstructionId = constructionId;
-        Guide = guide;
-    }
-}
-
 [Serializable, NetSerializable]
 public sealed partial class ConstructionInteractDoAfterEvent : DoAfterEvent
 {

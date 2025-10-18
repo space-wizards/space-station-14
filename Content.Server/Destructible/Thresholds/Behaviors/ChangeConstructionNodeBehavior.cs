@@ -1,4 +1,4 @@
-﻿using Content.Server.Construction.Components;
+﻿using Content.Shared.Construction.Components;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
 {
