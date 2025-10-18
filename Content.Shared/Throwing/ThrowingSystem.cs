@@ -259,7 +259,7 @@ public sealed class ThrowingSystem : EntitySystem
     /// <see cref="throwDirection"/> is not defined, else 0 degrees.</param>
     /// <param name="maxThrowImpulseModifier">Modifies how far each item will be thrown at most.</param>
     /// <param name="scatterItems">Whether to scatter the items near their original position.</param>
-    public void TryThrowRandom(
+    public void TryThrowManyRandom(
         HashSet<EntityUid> items,
         Vector2? throwDirection = null,
         Angle throwCone = default,

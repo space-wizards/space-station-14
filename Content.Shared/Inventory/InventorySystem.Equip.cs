@@ -628,7 +628,7 @@ public abstract partial class InventorySystem
 
         maxThrowImpulseModifier = throwItems ? maxThrowImpulseModifier : 0.0f;
 
-        _throwingSystem.TryThrowRandom(unequippedItems,
+        _throwingSystem.TryThrowManyRandom(unequippedItems,
             throwDirection,
             throwCone,
             maxThrowImpulseModifier,
