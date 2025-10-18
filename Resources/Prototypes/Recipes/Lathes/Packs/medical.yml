@@ -98,6 +98,7 @@
   - SyringeBluespace
   - LauncherSyringe
   - MiniSyringe
+  - JetInjector
 
 - type: latheRecipePack
   id: MedicalBoards
