@@ -12,35 +12,37 @@ public sealed class HitscanReflectSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HitscanReflectComponent, HitscanRaycastFiredEvent>(OnHitscanHit);
+        SubscribeLocalEvent<HitscanReflectComponent, AttemptHitscanRaycastFiredEvent>(OnHitscanHit);
     }
 
-    private void OnHitscanHit(Entity<HitscanReflectComponent> hitscan, ref HitscanRaycastFiredEvent args)
+    private void OnHitscanHit(Entity<HitscanReflectComponent> hitscan, ref AttemptHitscanRaycastFiredEvent args)
     {
-        if (hitscan.Comp.ReflectiveType == ReflectType.None || args.HitEntity == null)
+        var data = args.Data;
+
+        if (hitscan.Comp.ReflectiveType == ReflectType.None || data.HitEntity == null)
             return;
 
         if (hitscan.Comp.CurrentReflections >= hitscan.Comp.MaxReflections)
             return;
 
-        var ev = new HitScanReflectAttemptEvent(args.Shooter ?? args.Gun, args.Gun, hitscan.Comp.ReflectiveType, args.ShotDirection, false);
-        RaiseLocalEvent(args.HitEntity.Value, ref ev);
+        var ev = new HitScanReflectAttemptEvent(data.Shooter ?? data.Gun, data.Gun, hitscan.Comp.ReflectiveType, data.ShotDirection, false);
+        RaiseLocalEvent(data.HitEntity.Value, ref ev);
 
         if (!ev.Reflected)
             return;
 
         hitscan.Comp.CurrentReflections++;
 
-        args.Canceled = true;
+        args.Cancelled = true;
 
-        var fromEffect = Transform(args.HitEntity.Value).Coordinates;
+        var fromEffect = Transform(data.HitEntity.Value).Coordinates;
 
         var hitFiredEvent = new HitscanTraceEvent
         {
             FromCoordinates = fromEffect,
             ShotDirection = ev.Direction,
-            Gun = args.Gun,
-            Shooter = args.HitEntity.Value,
+            Gun = data.Gun,
+            Shooter = data.HitEntity.Value,
         };
 
         RaiseLocalEvent(hitscan, ref hitFiredEvent);

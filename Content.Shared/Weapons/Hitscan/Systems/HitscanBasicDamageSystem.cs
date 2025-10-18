@@ -12,24 +12,24 @@ public sealed class HitscanBasicDamageSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HitscanBasicDamageComponent, HitscanRaycastFiredEvent>(OnHitscanHit, after: [ typeof(HitscanReflectSystem) ]);
+        SubscribeLocalEvent<HitscanBasicDamageComponent, HitscanRaycastFiredEvent>(OnHitscanHit);
     }
 
     private void OnHitscanHit(Entity<HitscanBasicDamageComponent> ent, ref HitscanRaycastFiredEvent args)
     {
-        if (args.Canceled || args.HitEntity == null)
+        if (args.Data.HitEntity == null)
             return;
 
         var dmg = ent.Comp.Damage * _damage.UniversalHitscanDamageModifier;
 
-        var damageDealt = _damage.TryChangeDamage(args.HitEntity, dmg, origin: args.Gun);
+        var damageDealt = _damage.TryChangeDamage(args.Data.HitEntity, dmg, origin: args.Data.Gun);
 
         if (damageDealt == null)
             return;
 
         var damageEvent = new HitscanDamageDealtEvent
         {
-            Target = args.HitEntity.Value,
+            Target = args.Data.HitEntity.Value,
             DamageDealt = damageDealt,
         };
 
