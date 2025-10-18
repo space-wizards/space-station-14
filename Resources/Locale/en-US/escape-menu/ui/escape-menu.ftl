@@ -7,4 +7,4 @@ ui-escape-guidebook = Guidebook
 ui-escape-wiki = Wiki
 ui-escape-disconnect = Disconnect
 ui-escape-quit = Quit
-
+ui-escape-feedback = Feedback
