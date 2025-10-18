@@ -18,6 +18,15 @@
   name: entity-category-name-roles
   hideSpawnMenu: true
 
+- type: entityCategory
+  id: HideSpawnMenuAllowCopy
+  name: entity-category-name-hide-allow-copy
+  description: entity-category-desc-hide-allow-copy
+  hideSpawnMenu: true
+  # Allows inheritance since this is intended for use with "alternate" versions
+  # of prototypes. (Namely, pipe layer prototypes.)
+  inheritable: true
+
 # markers, atmos fixing, etc
 - type: entityCategory
   id: Mapping
