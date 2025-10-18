@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Orsoniks
-  changes:
-  - message: Added more in-hand sprites for food items
-    type: Add
-  id: 8617
-  time: '2025-06-05T21:06:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38024
 - author: chromiumboy
   changes:
   - message: Holopads now provide less visual coverage to station AIs (1 tile radius,
@@ -3938,3 +3931,10 @@
   id: 9118
   time: '2025-10-18T13:49:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40818
+- author: MissKay1994
+  changes:
+  - message: Vox organs now have unique sprites.
+    type: Add
+  id: 9119
+  time: '2025-10-18T17:07:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40555
