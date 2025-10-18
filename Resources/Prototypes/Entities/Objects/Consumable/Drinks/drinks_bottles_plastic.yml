@@ -176,7 +176,7 @@
           Quantity: 100
   - type: Label
     currentLabel: reagent-name-energy-drink
-  # TODO new sprite
+  # TODO new sprite, parity with other soda bottless
 
 # Xtra large
 # TODO these have too much volume
@@ -191,10 +191,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 150
         reagents:
         - ReagentId: Sugar
-          Quantity: 300
+          Quantity: 150
   - type: Label
     currentLabel: reagent-name-sugar
   # TODO new sprite
@@ -208,46 +208,12 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
-        reagents:
-        - ReagentId: LemonLime
-          Quantity: 300
-  - type: Label
-    currentLabel: reagent-name-lemon-lime
-  # TODO new sprite
-
-- type: entity
-  parent: [DrinkVisualsOpenable, DrinkBottlePlasticBaseFull]
-  id: DrinkMeadJug
-  name: mead jug
-  description: Storing mead in a plastic jug should be a crime.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
         maxVol: 150
         reagents:
-        - ReagentId: Mead
+        - ReagentId: LemonLime
           Quantity: 150
   - type: Label
-    currentLabel: reagent-name-mead
-  # TODO new sprite
-
-- type: entity
-  parent: [DrinkVisualsOpenable, DrinkBottlePlasticBaseFull]
-  id: DrinkIceJug
-  name: ice jug
-  description: Stubborn water. Pretty cool.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 300
-        reagents:
-        - ReagentId: Ice
-          Quantity: 300
-  - type: Label
-    currentLabel: reagent-name-ice
+    currentLabel: reagent-name-lemon-lime
   # TODO new sprite
 
 - type: entity
@@ -259,10 +225,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 150
         reagents:
         - ReagentId: CoconutWater
-          Quantity: 300
+          Quantity: 150
   - type: Label
     currentLabel: reagent-name-coconut-water
   # TODO new sprite
@@ -276,10 +242,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 150
         reagents:
         - ReagentId: Coffee
-          Quantity: 300
+          Quantity: 150
   - type: Label
     currentLabel: reagent-name-coffee
   # TODO new sprite
@@ -293,10 +259,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 150
         reagents:
         - ReagentId: Tea
-          Quantity: 300
+          Quantity: 150
   - type: Label
     currentLabel: reagent-name-tea
   # TODO new sprite
@@ -310,10 +276,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 150
         reagents:
         - ReagentId: GreenTea
-          Quantity: 300
+          Quantity: 150
   - type: Label
     currentLabel: reagent-name-green-tea
   # TODO new sprite
@@ -327,10 +293,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 150
         reagents:
         - ReagentId: IcedTea
-          Quantity: 300
+          Quantity: 150
   - type: Label
     currentLabel: reagent-name-iced-tea
   # TODO new sprite
@@ -344,13 +310,13 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 100
         reagents:
         - ReagentId: DrGibb
-          Quantity: 300
+          Quantity: 100
   - type: Label
     currentLabel: reagent-name-dr-gibb
-  # TODO new sprite
+  # TODO new sprite, parity with other soda bottles
 
 - type: entity
   parent: [DrinkVisualsOpenable, DrinkBottlePlasticBaseFull]
@@ -361,13 +327,13 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 100
         reagents:
         - ReagentId: RootBeer
-          Quantity: 300
+          Quantity: 100
   - type: Label
     currentLabel: reagent-name-root-beer
-  # TODO new sprite
+  # TODO new sprite, parity with other soda bottles
 
 - type: entity
   parent: [DrinkVisualsOpenable, DrinkBottlePlasticBaseFull]
@@ -378,10 +344,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 150
         reagents:
         - ReagentId: JuiceWatermelon
-          Quantity: 300
+          Quantity: 150
   - type: Label
     currentLabel: reagent-name-juice-watermelon
   # TODO new sprite
