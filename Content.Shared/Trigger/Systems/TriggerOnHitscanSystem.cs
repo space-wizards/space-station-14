@@ -3,7 +3,7 @@ using Content.Shared.Weapons.Hitscan.Events;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed class TriggerOnHitscanHitSystem : EntitySystem
+public sealed class TriggerOnHitscanSystem : EntitySystem
 {
     [Dependency] private readonly TriggerSystem _trigger = default!;
 
@@ -17,6 +17,9 @@ public sealed class TriggerOnHitscanHitSystem : EntitySystem
 
     private void OnHit(Entity<TriggerOnHitscanHitComponent> ent, ref HitscanRaycastFiredEvent args)
     {
+        if (args.Data.HitEntity == null)
+            return;
+
         _trigger.Trigger(ent.Owner, args.Data.HitEntity, ent.Comp.KeyOut);
     }
 
