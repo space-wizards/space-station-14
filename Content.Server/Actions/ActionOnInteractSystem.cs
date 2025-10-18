@@ -180,9 +180,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
             return false;
         }
 
-        Entity<LimitedChargesComponent?> charges = ent.Owner;
-
-        return _charges.IsEmpty(charges);
+        return _charges.IsEmpty(ent.Owner);
     }
 
     // No interaction, no charge removal
@@ -193,9 +191,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
             return;
         }
 
-        Entity<LimitedChargesComponent?> charges = ent.Owner;
-
-        _charges.AddCharges(charges, -1);
+        _charges.AddCharges(ent.Owner, -1);
         return;
     }
 }
