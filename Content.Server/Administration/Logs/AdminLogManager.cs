@@ -482,9 +482,9 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             if (CreateTpLinks(playerNetEnts, out var tpLinks))
                 _chat.SendAdminAlertNoFormatOrEscape(tpLinks);
 
-            var cords = GetCoordinates(handler.Values);
+            var coords = GetCoordinates(handler.Values);
 
-            if (CreateCordLinks(cords, out var cordLinks))
+            if (CreateCordLinks(coords, out var cordLinks))
                 _chat.SendAdminAlertNoFormatOrEscape(cordLinks);
         }
     }
