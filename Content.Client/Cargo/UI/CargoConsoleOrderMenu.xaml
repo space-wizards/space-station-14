@@ -1,33 +1,53 @@
-﻿<DefaultWindow xmlns="https://spacestation14.io"
-            Title="{Loc 'cargo-console-order-menu-title'}">
+<DefaultWindow xmlns="https://spacestation14.io"
+               Title="{Loc 'cargo-console-order-menu-title'}"
+               MinSize="460 261">
     <BoxContainer Orientation="Vertical">
         <GridContainer Columns="2">
-            <Label Text="{Loc 'cargo-console-order-menu-product-label'}" />
+            <Label Text="{Loc 'cargo-console-order-menu-product-label'}"
+                   StyleClasses="LabelKeyText" />
+
             <Label Name="ProductName"
-                      Access="Public" />
-            <Label Text="{Loc 'cargo-console-order-menu-description-label'}" />
+                   Access="Public" />
+
+            <Label Text="{Loc 'cargo-console-order-menu-description-label'}"
+                   StyleClasses="LabelKeyText" />
+
             <RichTextLabel Name="Description"
-                        Access="Public"
-                        VerticalExpand="True"
-                        SetWidth="350"/>
-            <Label Text="{Loc 'cargo-console-order-menu-cost-label'}" />
+                           Access="Public"
+                           HorizontalExpand="True"
+                           MaxWidth="460" />
+
+            <Label Text="{Loc 'cargo-console-order-menu-cost-label'}"
+                   StyleClasses="LabelKeyText" />
+
             <Label Name="PointCost"
-                      Access="Public" />
-            <Label Text="{Loc 'cargo-console-order-menu-requester-label'}" />
+                   Access="Public" />
+
+            <Label Text="{Loc 'cargo-console-order-menu-requester-label'}"
+                   StyleClasses="LabelKeyText" />
+
             <LineEdit Name="Requester"
                       Access="Public" />
-            <Label Text="{Loc 'cargo-console-order-menu-reason-label'}" />
+
+            <Label Text="{Loc 'cargo-console-order-menu-reason-label'}"
+                   StyleClasses="LabelKeyText" />
+
             <LineEdit Name="Reason"
                       Access="Public" />
-            <Label Text="{Loc 'cargo-console-order-menu-amount-label'}" />
+
+            <Label Text="{Loc 'cargo-console-order-menu-amount-label'}"
+                   StyleClasses="LabelKeyText" />
+
             <SpinBox Name="Amount"
                      Access="Public"
                      HorizontalExpand="True"
                      Value="1" />
         </GridContainer>
+        <Control VerticalExpand="True"/>
+        <PanelContainer StyleClasses="LowDivider" Margin="0 6 0 2"/>
         <Button Name="SubmitButton"
                 Access="Public"
                 Text="{Loc 'cargo-console-order-menu-submit-button'}"
-                TextAlign="Center" />
+                VerticalAlignment="Bottom" />
     </BoxContainer>
 </DefaultWindow>
