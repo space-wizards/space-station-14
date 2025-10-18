@@ -24,10 +24,15 @@ public sealed class TargetObjectiveSystem : EntitySystem
 
     private void OnAfterAssign(EntityUid uid, TargetObjectiveComponent comp, ref ObjectiveAfterAssignEvent args)
     {
+        ChangeTitle(uid, comp, args.Meta);
+    }
+
+    public void ChangeTitle(EntityUid uid, TargetObjectiveComponent comp, MetaDataComponent meta)
+    {
         if (!GetTarget(uid, out var target, comp))
             return;
 
-        _metaData.SetEntityName(uid, GetTitle(target.Value, comp.Title), args.Meta);
+        _metaData.SetEntityName(uid, GetTitle(target.Value, comp.Title), meta);
     }
 
     /// <summary>
