@@ -214,7 +214,7 @@
           Quantity: 150
   - type: Label
     currentLabel: reagent-name-lemon-lime
-  # TODO new sprite
+  # TODO new sprite, parity with other soda bottles
 
 - type: entity
   parent: [DrinkVisualsOpenable, DrinkBottlePlasticBaseFull]
