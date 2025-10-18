@@ -176,7 +176,7 @@
           Quantity: 100
   - type: Label
     currentLabel: reagent-name-energy-drink
-  # TODO new sprite, parity with other soda bottless
+  # TODO new sprite, parity with other soda bottles
 
 # Xtra large
 # TODO these have too much volume
