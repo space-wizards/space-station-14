@@ -327,7 +327,7 @@ namespace Content.Server.Connection
                     }
 
                     var whitelistStatus = await IsWhitelisted(whitelist, e.UserData, _sawmill);
-                    if (!whitelistStatus.isWhitelisted)
+                    if (!whitelistStatus.isWhitelisted && !wasInGame)
                     {
                         // Not whitelisted.
                         return (ConnectionDenyReason.Whitelist, Loc.GetString("whitelist-fail-prefix", ("msg", whitelistStatus.denyMessage!)), null);
