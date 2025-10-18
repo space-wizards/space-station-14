@@ -20,7 +20,7 @@ public sealed class TwoStageTriggerSystem : EntitySystem
         if (ent.Comp.Triggered)
             return; // already triggered
 
-        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
+        if (args.Keys != null && !ent.Comp.KeysIn.Overlaps(args.Keys))
             return;
 
         EntityManager.AddComponents(ent, ent.Comp.Components);

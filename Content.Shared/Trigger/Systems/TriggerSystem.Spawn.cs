@@ -29,7 +29,7 @@ public sealed partial class TriggerSystem
 
     private void HandleSpawnOnTrigger(Entity<SpawnOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
+        if (args.Keys != null && !ent.Comp.KeysIn.Overlaps(args.Keys))
             return;
 
         var target = ent.Comp.TargetUser ? args.User : ent.Owner;
@@ -43,7 +43,7 @@ public sealed partial class TriggerSystem
 
     private void HandleSpawnTableOnTrigger(Entity<SpawnEntityTableOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
+        if (args.Keys != null && !ent.Comp.KeysIn.Overlaps(args.Keys))
             return;
 
         var target = ent.Comp.TargetUser ? args.User : ent.Owner;
@@ -92,7 +92,7 @@ public sealed partial class TriggerSystem
 
     private void HandleDeleteOnTrigger(Entity<DeleteOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
+        if (args.Keys != null && !ent.Comp.KeysIn.Overlaps(args.Keys))
             return;
 
         var target = ent.Comp.TargetUser ? args.User : ent.Owner;
