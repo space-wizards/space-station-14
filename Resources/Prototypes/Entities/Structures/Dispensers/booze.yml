@@ -33,6 +33,7 @@
   components:
   - type: StorageFill
     contents:
+    - id: DrinkAbsintheBottleFull
     - id: DrinkAleBottleFullGrowler
     - id: DrinkBeerGrowler
     - id: DrinkBlueCuracaoBottleFull
