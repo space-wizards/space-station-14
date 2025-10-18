@@ -13,6 +13,8 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Systems;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Body.Systems;
@@ -26,6 +28,7 @@ public partial class SharedBodySystem
      * - Each "connection" is a body part (e.g. arm, hand, etc.) and each part can also contain organs.
      */
 
+    [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly GibbingSystem _gibbingSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
@@ -298,13 +301,18 @@ public partial class SharedBodySystem
         if (!Resolve(bodyId, ref body, logMissing: false))
             return gibs;
 
+        var parts = GetBodyChildren(bodyId, body).ToArray();
+        var allInventoryItems =
+            _inventory.TryUnequipAllAndScatter(bodyId, false, launchGibs, splatModifier, splatDirection, splatCone);
+
+        gibs.EnsureCapacity(parts.Length + allInventoryItems.Count);
+        gibs.UnionWith(allInventoryItems);
+
         var root = GetRootPartOrNull(bodyId, body);
         if (root != null && TryComp(root.Value.Entity, out GibbableComponent? gibbable))
         {
             gibSoundOverride ??= gibbable.GibSound;
         }
-        var parts = GetBodyChildren(bodyId, body).ToArray();
-        gibs.EnsureCapacity(parts.Length);
         foreach (var part in parts)
         {
 
@@ -324,14 +332,6 @@ public partial class SharedBodySystem
         }
 
         var bodyTransform = Transform(bodyId);
-        if (TryComp<InventoryComponent>(bodyId, out var inventory))
-        {
-            foreach (var item in _inventory.GetHandOrInventoryEntities(bodyId))
-            {
-                SharedTransform.DropNextTo(item, (bodyId, bodyTransform));
-                gibs.Add(item);
-            }
-        }
         _audioSystem.PlayPredicted(gibSoundOverride, bodyTransform.Coordinates, null);
         return gibs;
     }
