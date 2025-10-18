@@ -137,8 +137,8 @@
     denyAnimationTime: 0.4
     animatePanel: false
     openUnlitVisible: true
-    # needed so that windoors will close regardless of whether there are people in it; it doesn't crush after all
-    safety: false
+    # needed so that windoors loop between closing and reopening less often even though they don't crush
+    safety: true
   - type: NavMapDoor
   - type: DoorBolt
   - type: Electrified
