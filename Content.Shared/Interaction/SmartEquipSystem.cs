@@ -3,6 +3,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
@@ -228,7 +229,11 @@ public sealed class SmartEquipSystem : EntitySystem
 
         // case 4 (just an item):
         if (handItem != null)
+        {
+            var ev = new SmartEquipWithItemAttemptEvent(uid, handItem.Value);
+            RaiseLocalEvent(slotEntity.Value, ref ev);
             return;
+        }
 
         if (!_inventory.CanUnequip(uid, equipmentSlot, out var inventoryReason))
         {
