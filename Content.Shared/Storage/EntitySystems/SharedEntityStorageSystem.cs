@@ -205,10 +205,8 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     public void OpenStorage(EntityUid uid, EntityStorageComponent? component = null)
     {
-        if (!ResolveStorage(uid, ref component))
-            return;
-
-        if (component.Open)
+        if (!ResolveStorage(uid, ref component)
+            || component.Open)
             return;
 
         var beforeev = new StorageBeforeOpenEvent();

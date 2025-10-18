@@ -171,6 +171,7 @@
     whitelist:
       tags:
       - Wrench
+      - CentrifugeCompatible
       - Bottle
       - Spray
       - Brutepack
