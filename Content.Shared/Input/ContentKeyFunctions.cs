@@ -103,6 +103,28 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction HotbarShift8 = "HotbarShift8";
         public static readonly BoundKeyFunction HotbarShift9 = "HotbarShift9";
 
+        public static readonly BoundKeyFunction CommandSay = "Say: ";
+        public static readonly BoundKeyFunction CommandEmote = "Emote: ";
+        public static readonly BoundKeyFunction CommandCommand = "Run Command: ";
+
+        public static readonly BoundKeyFunction CustomCommand0 = "CustomCommand0";
+        public static readonly BoundKeyFunction CustomCommand1 = "CustomCommand1";
+        public static readonly BoundKeyFunction CustomCommand2 = "CustomCommand2";
+        public static readonly BoundKeyFunction CustomCommand3 = "CustomCommand3";
+        public static readonly BoundKeyFunction CustomCommand4 = "CustomCommand4";
+        public static readonly BoundKeyFunction CustomCommand5 = "CustomCommand5";
+        public static readonly BoundKeyFunction CustomCommand6 = "CustomCommand6";
+        public static readonly BoundKeyFunction CustomCommand7 = "CustomCommand7";
+        public static readonly BoundKeyFunction CustomCommand8 = "CustomCommand8";
+        public static readonly BoundKeyFunction CustomCommand9 = "CustomCommand9";
+
+        public static BoundKeyFunction[] GetCustomCommandKeys() =>
+           new[]
+           {
+                CustomCommand0, CustomCommand1, CustomCommand2, CustomCommand3, CustomCommand4,
+                CustomCommand5, CustomCommand6, CustomCommand7, CustomCommand8, CustomCommand9
+           };
+
         public static BoundKeyFunction[] GetHotbarBoundKeys() =>
             new[]
             {
