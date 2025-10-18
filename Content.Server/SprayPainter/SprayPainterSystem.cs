@@ -165,7 +165,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
             return;
 
         if (TryComp<LimitedChargesComponent>(args.Used, out var charges)
-            && _charges.GetCurrentCharges((ent, charges)) < painter.PipeChargeCost)
+            && _charges.GetCurrentCharges((args.Used, charges)) < painter.PipeChargeCost)
         {
             var msg = Loc.GetString("spray-painter-interact-no-charges");
             _popup.PopupEntity(msg, args.User, args.User);
