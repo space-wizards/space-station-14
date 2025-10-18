@@ -25,7 +25,7 @@ public sealed class SolutionTriggerSystem : EntitySystem
         if (target == null)
             return;
 
-        if (!_solutionContainer.TryGetSolution(target.Value, ent.Comp.SolutionId, out var solutionRef, out _))
+        if (!_solutionContainer.TryGetSolution(target.Value, ent.Comp.Solution, out var solutionRef, out _))
             return;
 
         _solutionContainer.AddSolution(solutionRef.Value, ent.Comp.AddedSolution);
