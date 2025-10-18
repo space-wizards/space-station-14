@@ -99,8 +99,9 @@
   - type: GhostTakeoverAvailable
   - type: Tag
     tags:
-      - CannotSuicide
-      - FootstepSound
+    - CannotSuicide
+    - FootstepSound
+    - VimPilot
   - type: NoSlip
   - type: Rummager
   - type: RatKing
@@ -291,8 +292,10 @@
     wilhelmProbability: 0.001
   - type: Tag
     tags:
-      - CannotSuicide
-      - FootstepSound
+    - CannotSuicide
+    - SimpleMobStorage
+    - CannotSuicide
+    - FootstepSound
   - type: NoSlip
   - type: MobPrice
     price: 500 # rat wealth

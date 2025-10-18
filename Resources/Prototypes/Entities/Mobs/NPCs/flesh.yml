@@ -23,6 +23,10 @@
     - SimpleHostile
   - type: Tag
     tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - VimPilot
+    - SimpleMobStorage
     - DoorBumpOpener
     - Flesh
   - type: Sprite
@@ -222,7 +226,11 @@
     - SimpleHostile
   - type: Tag
     tags:
+    - CannotSuicide
     - DoorBumpOpener
+    - StunImmune
+    - VimPilot
+    - SimpleMobStorage
     - Flesh
   - type: Sprite
     drawdepth: Mobs
