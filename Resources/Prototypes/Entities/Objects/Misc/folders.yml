@@ -64,6 +64,8 @@
   - type: PhysicalComposition
     materialComposition:
       Paper: 50
+  - type: StaticPrice
+    price: 15 # Weirdly this is more expensive than cardboard boxes. But if I have this any lower then I get an arbitrage testfail because the raw materials are worth ~$14.
   - type: Appearance
   - type: Tag
     tags:
