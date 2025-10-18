@@ -5,15 +5,13 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class RemoveBodyPartCommand : IConsoleCommand
+    public sealed class RemoveBodyPartCommand : LocalizedCommands
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
 
-        public string Command => "rmbodypart";
-        public string Description => "Removes a given entity from it's containing body, if any.";
-        public string Help => "Usage: rmbodypart <uid>";
+        public override string Command => "rmbodypart";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
             {
@@ -30,7 +28,7 @@ namespace Content.Server.Administration.Commands
             // TODO: THIS IS JUST A MECHANISM COPYPASTE
             var xformSystem = _entManager.System<SharedTransformSystem>();
             xformSystem.AttachToGridOrMap(entityUid.Value);
-            shell.WriteLine($"Removed body part {_entManager.ToPrettyString(entityUid.Value)}");
+            shell.WriteLine(Loc.GetString("cmd-rmbodypart-removed", ("entityUid", entityUid.Value)));
         }
     }
 }

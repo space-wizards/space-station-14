@@ -13,8 +13,6 @@ public sealed class OpenAHelpCommand : LocalizedCommands
 
     public override string Command => "openahelp";
 
-    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length >= 2)
@@ -35,7 +33,7 @@ public sealed class OpenAHelpCommand : LocalizedCommands
             }
             else
             {
-                shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error"));
+                shell.WriteError(Loc.GetString("cmd-openahelp-error"));
             }
         }
     }

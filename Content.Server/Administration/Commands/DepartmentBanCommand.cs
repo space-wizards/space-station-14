@@ -10,7 +10,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Ban)]
-public sealed class DepartmentBanCommand : IConsoleCommand
+public sealed class DepartmentBanCommand : LocalizedCommands
 {
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IPlayerLocator _locator = default!;
@@ -20,11 +20,9 @@ public sealed class DepartmentBanCommand : IConsoleCommand
 
     private ISawmill? _sawmill;
 
-    public string Command => "departmentban";
-    public string Description => Loc.GetString("cmd-departmentban-desc");
-    public string Help => Loc.GetString("cmd-departmentban-help");
+    public override string Command => "departmentban";
 
-    public async void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         string target;
         string department;
@@ -105,7 +103,7 @@ public sealed class DepartmentBanCommand : IConsoleCommand
         }
     }
 
-    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         var durOpts = new CompletionOption[]
         {

@@ -5,15 +5,13 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class AddMechanismCommand : IConsoleCommand
+    public sealed class AddMechanismCommand : LocalizedCommands
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
 
-        public string Command => "addmechanism";
-        public string Description => "Adds a given entity to a containing body.";
-        public string Help => "Usage: addmechanism <entity uid> <bodypart uid>";
+        public override string Command => "addmechanism";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {
@@ -37,11 +35,11 @@ namespace Content.Server.Administration.Commands
 
             if (bodySystem.AddOrganToFirstValidSlot(partId.Value, organId.Value))
             {
-                shell.WriteLine($@"Added {organId} to {partId}.");
+                shell.WriteLine(Loc.GetString("cmd-addmechanism-added", ("organId", organId), ("partId", partId)));
             }
             else
             {
-                shell.WriteError($@"Could not add {organId} to {partId}.");
+                shell.WriteError(Loc.GetString("cmd-addmechanism-could-not-add", ("organId", organId), ("partId", partId)));
             }
         }
     }

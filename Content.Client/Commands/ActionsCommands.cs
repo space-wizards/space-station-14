@@ -40,8 +40,6 @@ public sealed class LoadActionsCommand : LocalizedCommands
 
     public override string Command => "loadacts";
 
-    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
@@ -56,7 +54,7 @@ public sealed class LoadActionsCommand : LocalizedCommands
         }
         catch
         {
-            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error"));
+            shell.WriteError(LocalizationManager.GetString("cmd-loadacts-error"));
         }
     }
 }

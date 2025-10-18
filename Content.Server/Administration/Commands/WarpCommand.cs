@@ -13,29 +13,24 @@ using Robust.Shared.Physics.Systems;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class WarpCommand : IConsoleCommand
+    public sealed class WarpCommand : LocalizedCommands
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
 
-        public string Command => "warp";
-        public string Description => "Teleports you to predefined areas on the map.";
+        public override string Command => "warp";
 
-        public string Help =>
-            "warp <location>\nLocations you can teleport to are predefined by the map. " +
-            "You can specify '?' as location to get a list of valid locations.";
-
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
             if (player == null)
             {
-                shell.WriteLine("Only players can use this command");
+                shell.WriteLine(Loc.GetString("shell-only-players-can-run-this-command"));
                 return;
             }
 
             if (args.Length != 1)
             {
-                shell.WriteLine("Expected a single argument.");
+                shell.WriteLine(Loc.GetString("shell-need-exactly-one-argument"));
                 return;
             }
 
@@ -50,7 +45,7 @@ namespace Content.Server.Administration.Commands
             {
                 if (player.Status != SessionStatus.InGame || player.AttachedEntity is not { Valid: true } playerEntity)
                 {
-                    shell.WriteLine("You are not in-game!");
+                    shell.WriteLine(Loc.GetString("cmd-warp-not-in-game"));
                     return;
                 }
 
@@ -109,7 +104,7 @@ namespace Content.Server.Administration.Commands
 
                 if (coords.EntityId == EntityUid.Invalid)
                 {
-                    shell.WriteError("That location does not exist!");
+                    shell.WriteError(Loc.GetString("cmd-warp-location-not-found"));
                     return;
                 }
 
@@ -154,13 +149,13 @@ namespace Content.Server.Administration.Commands
             return points;
         }
 
-        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             if (args.Length == 1)
             {
                 var options = new[] { "?" }.Concat(GetWarpPointNames());
 
-                return CompletionResult.FromHintOptions(options, "<warp point | ?>");
+                return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-warp-completion-hint"));
             }
 
             return CompletionResult.Empty;

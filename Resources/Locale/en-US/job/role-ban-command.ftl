@@ -1,7 +1,7 @@
 ﻿### Localization for role ban command
 
-cmd-roleban-desc = Bans a player from a role
-cmd-roleban-help = Usage: roleban <name or user ID> <job> <reason> [duration in minutes, leave out or 0 for permanent ban]
+cmd-roleban-desc = Bans a player from a role.
+cmd-roleban-help = Usage: {$command} <name or user ID> <job> <reason> [duration in minutes, leave out or 0 for permanent ban]
 
 ## Completion result hints
 cmd-roleban-hint-1 = <name or user ID>
@@ -20,10 +20,11 @@ cmd-roleban-hint-duration-6 = 1 month
 
 ### Localization for role unban command
 
-cmd-roleunban-desc = Pardons a player's role ban
-cmd-roleunban-help = Usage: roleunban <role ban id>
+cmd-roleunban-desc = Pardons a player's role ban.
+cmd-roleunban-help = Usage: {$command} <role ban id>
 cmd-roleunban-unable-to-parse-id = Unable to parse {$id} as a ban id integer.
                                    {$help}
+cmd-roleunban-no-ban-found = No ban found with id {$id}
 
 ## Completion result hints
 cmd-roleunban-hint-1 = <role ban id>
@@ -31,8 +32,12 @@ cmd-roleunban-hint-1 = <role ban id>
 
 ### Localization for roleban list command
 
-cmd-rolebanlist-desc = Lists the user's role bans
-cmd-rolebanlist-help = Usage: <name or user ID> [include unbanned]
+cmd-rolebanlist-desc = Lists the user's role bans.
+cmd-rolebanlist-help = Usage: {$command} <name or user ID> [include unbanned]
+
+cmd-rolebanlist-arg2-not-bool = Argument two ({$arg}) is not a boolean.
+cmd-rolebanlist-no-bans = No active bans found for {$user}
+cmd-rolebanlist-ban = ID: {$id}: Role: {$role} Reason: {$reason}
 
 ## Completion result hints
 cmd-rolebanlist-hint-1 = <name or user ID>
@@ -51,5 +56,5 @@ cmd-roleban-inf = permanently
 cmd-roleban-until =  until {$expires}
 
 # Department bans
-cmd-departmentban-desc = Bans a player from the roles comprising a department
-cmd-departmentban-help = Usage: departmentban <name or user ID> <department> <reason> [duration in minutes, leave out or 0 for permanent ban]
+cmd-departmentban-desc = Bans a player from the roles comprising a department.
+cmd-departmentban-help = Usage: {$command} <name or user ID> <department> <reason> [duration in minutes, leave out or 0 for permanent ban]

@@ -31,7 +31,7 @@ public sealed class DumpReagentGuideText : LocalizedEntityCommands
 
         if (reagent.Metabolisms is null)
         {
-            shell.WriteLine(Loc.GetString($"cmd-dumpreagentguidetext-nothing-to-dump"));
+            shell.WriteLine(Loc.GetString("cmd-dumpreagentguidetext-nothing-to-dump"));
             return;
         }
 

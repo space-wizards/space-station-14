@@ -28,7 +28,7 @@ public sealed class ZoomCommand : LocalizedCommands
 
         if (!float.TryParse(args[0], out var arg0))
         {
-            shell.WriteError(LocalizationManager.GetString("cmd-parse-failure-float", ("arg", args[0])));
+            shell.WriteError(Loc.GetString("cmd-parse-failure-float", ("arg", args[0])));
             return;
         }
 
@@ -36,7 +36,7 @@ public sealed class ZoomCommand : LocalizedCommands
             zoom = new(arg0, arg0);
         else
         {
-            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error"));
+            shell.WriteError(Loc.GetString("cmd-zoom-error"));
             return;
         }
 
@@ -44,7 +44,7 @@ public sealed class ZoomCommand : LocalizedCommands
         {
             if (!float.TryParse(args[1], out var arg1))
             {
-                shell.WriteError(LocalizationManager.GetString("cmd-parse-failure-float", ("arg", args[1])));
+                shell.WriteError(Loc.GetString("cmd-parse-failure-float", ("arg", args[1])));
                 return;
             }
 
@@ -52,7 +52,7 @@ public sealed class ZoomCommand : LocalizedCommands
                 zoom.Y = arg1;
             else
             {
-                shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error"));
+                shell.WriteError(Loc.GetString("cmd-zoom-error"));
                 return;
             }
         }
@@ -60,7 +60,7 @@ public sealed class ZoomCommand : LocalizedCommands
         var scalePvs = true;
         if (args.Length == 3 && !bool.TryParse(args[2], out scalePvs))
         {
-            shell.WriteError(LocalizationManager.GetString("cmd-parse-failure-bool", ("arg", args[2])));
+            shell.WriteError(Loc.GetString("cmd-parse-failure-bool", ("arg", args[2])));
             return;
         }
 

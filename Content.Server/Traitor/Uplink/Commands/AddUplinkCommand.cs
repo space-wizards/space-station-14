@@ -37,7 +37,7 @@ public sealed class AddUplinkCommand : LocalizedEntityCommands
 
         if (session?.AttachedEntity is not { } user)
         {
-            shell.WriteLine(Loc.GetString("add-uplink-command-error-1"));
+            shell.WriteLine(Loc.GetString("cmd-adduplink-error-1"));
             return;
         }
 
@@ -74,16 +74,16 @@ public sealed class AddUplinkCommand : LocalizedEntityCommands
 
         // Finally add uplink
         if (!_uplinkSystem.AddUplink(user, 20, uplinkEntity: uplinkEntity, giveDiscounts: isDiscounted))
-            shell.WriteLine(Loc.GetString("add-uplink-command-error-2"));
+            shell.WriteLine(Loc.GetString("cmd-adduplink-error-2"));
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         return args.Length switch
         {
-            1 => CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), Loc.GetString("add-uplink-command-completion-1")),
-            2 => CompletionResult.FromHint(Loc.GetString("add-uplink-command-completion-2")),
-            3 => CompletionResult.FromHint(Loc.GetString("add-uplink-command-completion-3")),
+            1 => CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), Loc.GetString("cmd-adduplink-completion-1")),
+            2 => CompletionResult.FromHint(Loc.GetString("cmd-adduplink-completion-2")),
+            3 => CompletionResult.FromHint(Loc.GetString("cmd-adduplink-completion-3")),
             _ => CompletionResult.Empty,
         };
     }

@@ -18,26 +18,26 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.UserInterface;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class StatValuesCommand : IConsoleCommand
+public sealed class StatValuesCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly EuiManager _eui = default!;
-    [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly PricingSystem _priceSystem = default!;
+    [Dependency] private readonly ItemSystem _itemSystem = default!;
 
-    public string Command => "showvalues";
-    public string Description => Loc.GetString("stat-values-desc");
-    public string Help => $"{Command} <cargosell / lathesell / melee / itemsize>";
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Command => "showvalues";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player is not { } pSession)
         {
-            shell.WriteError(Loc.GetString("stat-values-server"));
+            shell.WriteError(Loc.GetString("cmd-showvalues-server"));
             return;
         }
 
         if (args.Length != 1)
         {
-            shell.WriteError(Loc.GetString("stat-values-args"));
+            shell.WriteError(Loc.GetString("cmd-showvalues-args"));
             return;
         }
 
@@ -61,7 +61,7 @@ public sealed class StatValuesCommand : IConsoleCommand
                 message = GetDrawRateMessage();
                 break;
             default:
-                shell.WriteError(Loc.GetString("stat-values-invalid", ("arg", args[0])));
+                shell.WriteError(Loc.GetString("cmd-showvalues-invalid", ("arg", args[0])));
                 return;
         }
 
@@ -70,7 +70,7 @@ public sealed class StatValuesCommand : IConsoleCommand
         eui.SendMessage(message);
     }
 
-    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
         {
@@ -86,10 +86,9 @@ public sealed class StatValuesCommand : IConsoleCommand
         // So we'll just get the first value for each prototype ID which is probably good enough for the majority.
 
         var values = new List<string[]>();
-        var priceSystem = _entManager.System<PricingSystem>();
-        var metaQuery = _entManager.GetEntityQuery<MetaDataComponent>();
         var prices = new HashSet<string>(256);
-        var ents = _entManager.GetEntities().ToArray();
+        var metaQuery = EntityManager.GetEntityQuery<MetaDataComponent>();
+        var ents = EntityManager.GetEntities().ToArray();
 
         foreach (var entity in ents)
         {
@@ -102,7 +101,7 @@ public sealed class StatValuesCommand : IConsoleCommand
             if (id == null || !prices.Add(id))
                 continue;
 
-            var price = priceSystem.GetPrice(entity);
+            var price = _priceSystem.GetPrice(entity);
 
             if (price == 0)
                 continue;
@@ -131,11 +130,10 @@ public sealed class StatValuesCommand : IConsoleCommand
     private StatValuesEuiMessage GetItem()
     {
         var values = new List<string[]>();
-        var itemSystem = _entManager.System<ItemSystem>();
-        var metaQuery = _entManager.GetEntityQuery<MetaDataComponent>();
-        var itemQuery = _entManager.GetEntityQuery<ItemComponent>();
+        var metaQuery = EntityManager.GetEntityQuery<MetaDataComponent>();
+        var itemQuery = EntityManager.GetEntityQuery<ItemComponent>();
         var items = new HashSet<string>(1024);
-        var ents = _entManager.GetEntities().ToArray();
+        var ents = EntityManager.GetEntities().ToArray();
 
         foreach (var entity in ents)
         {
@@ -154,7 +152,7 @@ public sealed class StatValuesCommand : IConsoleCommand
             values.Add(new[]
             {
                 id,
-                $"{itemSystem.GetItemSizeLocale(itemComp.Size)}",
+                $"{_itemSystem.GetItemSizeLocale(itemComp.Size)}",
             });
         }
 
@@ -177,8 +175,8 @@ public sealed class StatValuesCommand : IConsoleCommand
     private StatValuesEuiMessage GetMelee()
     {
         var values = new List<string[]>();
-        var meleeName = _entManager.ComponentFactory.GetComponentName<MeleeWeaponComponent>();
-        var increaseDamageName = _entManager.ComponentFactory.GetComponentName<IncreaseDamageOnWieldComponent>();
+        var meleeName = EntityManager.ComponentFactory.GetComponentName<MeleeWeaponComponent>();
+        var increaseDamageName = EntityManager.ComponentFactory.GetComponentName<IncreaseDamageOnWieldComponent>();
 
         foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())
         {
@@ -240,7 +238,6 @@ public sealed class StatValuesCommand : IConsoleCommand
     private StatValuesEuiMessage GetLatheMessage()
     {
         var values = new List<string[]>();
-        var priceSystem = _entManager.System<PricingSystem>();
 
         foreach (var proto in _proto.EnumeratePrototypes<LatheRecipePrototype>())
         {
@@ -252,7 +249,7 @@ public sealed class StatValuesCommand : IConsoleCommand
                 cost += materialPrice * count;
             }
 
-            var sell = priceSystem.GetLatheRecipePrice(proto);
+            var sell = _priceSystem.GetLatheRecipePrice(proto);
 
             values.Add(new[]
             {
@@ -280,7 +277,7 @@ public sealed class StatValuesCommand : IConsoleCommand
     private StatValuesEuiMessage GetDrawRateMessage()
     {
         var values = new List<string[]>();
-        var powerName = _entManager.ComponentFactory.GetComponentName<ApcPowerReceiverComponent>();
+        var powerName = EntityManager.ComponentFactory.GetComponentName<ApcPowerReceiverComponent>();
 
         foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())
         {

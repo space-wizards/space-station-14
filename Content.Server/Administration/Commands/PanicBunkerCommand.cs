@@ -18,7 +18,7 @@ public sealed class PanicBunkerCommand : LocalizedCommands
         if (toggle == null)
             return;
 
-        shell.WriteLine(Loc.GetString(toggle.Value ? "panicbunker-command-enabled" : "panicbunker-command-disabled"));
+        shell.WriteLine(Loc.GetString(toggle.Value ? "cmd-panicbunker-enabled" : "cmd-panicbunker-disabled"));
     }
 
     public static bool? Toggle(CVarDef<bool> cvar, IConsoleShell shell, string[] args, IConfigurationManager config, ILocalizationManager loc)
@@ -61,8 +61,8 @@ public sealed class PanicBunkerDisableWithAdminsCommand : LocalizedCommands
             return;
 
         shell.WriteLine(Loc.GetString(toggle.Value
-            ? "panicbunker-command-disable-with-admins-enabled"
-            : "panicbunker-command-disable-with-admins-disabled"
+            ? "cmd-panicbunker_disable_with_admins-enabled"
+            : "cmd-panicbunker_disable_with_admins-disabled"
         ));
     }
 }
@@ -81,8 +81,8 @@ public sealed class PanicBunkerEnableWithoutAdminsCommand : LocalizedCommands
             return;
 
         shell.WriteLine(Loc.GetString(toggle.Value
-            ? "panicbunker-command-enable-without-admins-enabled"
-            : "panicbunker-command-enable-without-admins-disabled"
+            ? "cmd-panicbunker_enable_without_admins-enabled"
+            : "cmd-panicbunker_enable_without_admins-disabled"
         ));
     }
 }
@@ -101,8 +101,8 @@ public sealed class PanicBunkerCountDeadminnedCommand : LocalizedCommands
             return;
 
         shell.WriteLine(Loc.GetString(toggle.Value
-            ? "panicbunker-command-count-deadminned-admins-enabled"
-            : "panicbunker-command-count-deadminned-admins-disabled"
+            ? "cmd-panicbunker_count_deadminned_admins-enabled"
+            : "cmd-panicbunker_count_deadminned_admins-disabled"
         ));
     }
 }
@@ -121,8 +121,8 @@ public sealed class PanicBunkerShowReasonCommand : LocalizedCommands
             return;
 
         shell.WriteLine(Loc.GetString(toggle.Value
-            ? "panicbunker-command-show-reason-enabled"
-            : "panicbunker-command-show-reason-disabled"
+            ? "cmd-panicbunker_show_reason-enabled"
+            : "cmd-panicbunker_show_reason-disabled"
         ));
     }
 }
@@ -139,7 +139,7 @@ public sealed class PanicBunkerMinAccountAgeCommand : LocalizedCommands
         if (args.Length == 0)
         {
             var current = _cfg.GetCVar(CCVars.PanicBunkerMinAccountAge);
-            shell.WriteLine(Loc.GetString("panicbunker-command-min-account-age-is", ("minutes", current)));
+            shell.WriteLine(Loc.GetString("cmd-panicbunker_min_account_age-is", ("minutes", current)));
         }
 
         if (args.Length > 1)
@@ -155,7 +155,7 @@ public sealed class PanicBunkerMinAccountAgeCommand : LocalizedCommands
         }
 
         _cfg.SetCVar(CCVars.PanicBunkerMinAccountAge, minutes);
-        shell.WriteLine(Loc.GetString("panicbunker-command-min-account-age-set", ("minutes", minutes)));
+        shell.WriteLine(Loc.GetString("cmd-panicbunker_min_account_age-set", ("minutes", minutes)));
     }
 }
 
@@ -171,7 +171,7 @@ public sealed class PanicBunkerMinOverallMinutesCommand : LocalizedCommands
         if (args.Length == 0)
         {
             var current = _cfg.GetCVar(CCVars.PanicBunkerMinOverallMinutes);
-            shell.WriteLine(Loc.GetString("panicbunker-command-min-overall-minutes-is", ("minutes", current)));
+            shell.WriteLine(Loc.GetString("cmd-panicbunker_min_overall_minutes-is", ("minutes", current)));
         }
 
         if (args.Length > 1)
@@ -187,6 +187,6 @@ public sealed class PanicBunkerMinOverallMinutesCommand : LocalizedCommands
         }
 
         _cfg.SetCVar(CCVars.PanicBunkerMinOverallMinutes, minutes);
-        shell.WriteLine(Loc.GetString("panicbunker-command-min-overall-minutes-set", ("minutes", minutes)));
+        shell.WriteLine(Loc.GetString("cmd-panicbunker_min_overall_minutes-set", ("minutes", minutes)));
     }
 }
