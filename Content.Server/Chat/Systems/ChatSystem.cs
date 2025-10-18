@@ -770,7 +770,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     public string TransformSpeech(EntityUid sender, string message)
     {
         var ev = new TransformSpeechEvent(sender, message);
-        RaiseLocalEvent(ev);
+        RaiseLocalEvent(sender, ev, true);
 
         return ev.Message;
     }
@@ -908,7 +908,7 @@ public record ExpandICChatRecipientsEvent(EntityUid Source, float VoiceRange, Di
 /// <summary>
 ///     Raised broadcast in order to transform speech.transmit
 /// </summary>
-public sealed class TransformSpeechEvent : EntityEventArgs
+public sealed class TransformSpeechEvent : CancellableEntityEventArgs
 {
     public EntityUid Sender;
     public string Message;
