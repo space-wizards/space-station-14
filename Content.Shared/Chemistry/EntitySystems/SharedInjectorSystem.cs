@@ -306,6 +306,46 @@ public abstract class SharedInjectorSystem : EntitySystem
             return false;
         }
 
+        // Give the target a chance to cancel (legacy) and collect reusable whitelist.
+        var transferAttempt = new SolutionTransferAttemptEvent(injector.Owner, target);
+        RaiseLocalEvent(target, ref transferAttempt);
+        if (transferAttempt.CancelReason is { } reason)
+        {
+            _popup.PopupClient(reason, target, user);
+            return false;
+        }
+
+        // Reusable whitelist enforcement: allow systems to contribute allowed reagents.
+        var targetSolutionName = targetSolution.Comp.Solution.Name;
+        if (targetSolutionName == null)
+        {
+            if (TryComp<RefillableSolutionComponent>(target, out var targetRefillComp))
+                targetSolutionName = targetRefillComp.Solution;
+            else if (TryComp<InjectableSolutionComponent>(target, out var targetInjectComp))
+                targetSolutionName = targetInjectComp.Solution;
+        }
+        var whitelist = new GetSolutionTransferWhitelistEvent(injector.Owner, target, targetSolutionName);
+        RaiseLocalEvent(target, ref whitelist);
+        RaiseLocalEvent(injector.Owner, ref whitelist);
+        if (whitelist.Enforce)
+        {
+            // If enforced and empty, block everything.
+            if (whitelist.Allowed.Count == 0)
+            {
+                _popup.PopupClient(Loc.GetString(whitelist.Popup), target, user);
+                return false;
+            }
+
+            foreach (var rq in solution.Contents)
+            {
+                if (!whitelist.Allowed.Contains(rq.Reagent.Prototype))
+                {
+                    _popup.PopupClient(Loc.GetString(whitelist.Popup), target, user);
+                    return false;
+                }
+            }
+        }
+
         // Move units from attackSolution to targetSolution
         Solution removedSolution;
         if (TryComp<StackComponent>(target, out var stack))

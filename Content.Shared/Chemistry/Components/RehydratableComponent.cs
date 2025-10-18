@@ -2,7 +2,6 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Chemistry.Components;
 
@@ -26,10 +25,18 @@ public sealed partial class RehydratableComponent : Component
     public FixedPoint2 CatalystMinimum = FixedPoint2.Zero;
 
     /// <summary>
+    /// If true, transfers into this entity will enforce a whitelist consisting of at least the catalyst reagent.
+    /// If false, the catalyst will still be contributed to the transfer whitelist, but enforcement will only occur
+    /// if another system also sets enforcement.
+    /// </summary>
+    [DataField]
+    public bool EnforceCatalystWhitelist = true;
+
+    /// <summary>
     /// The entity to create when hydrated.
     /// </summary>
     [DataField(required: true)]
-    public List<EntProtoId> PossibleSpawns = new();
+    public List<EntProtoId> PossibleSpawns = [];
 }
 
 /// <summary>

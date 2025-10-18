@@ -22,6 +22,7 @@ public sealed class RehydratableSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<RehydratableComponent, SolutionContainerChangedEvent>(OnSolutionChange);
+        SubscribeLocalEvent<RehydratableComponent, GetSolutionTransferWhitelistEvent>(OnGetWhitelist);
     }
 
     private void OnSolutionChange(Entity<RehydratableComponent> ent, ref SolutionContainerChangedEvent args)
@@ -32,6 +33,17 @@ public sealed class RehydratableSystem : EntitySystem
         {
             Expand(ent);
         }
+    }
+
+    private void OnGetWhitelist(Entity<RehydratableComponent> ent, ref GetSolutionTransferWhitelistEvent args)
+    {
+        if (ent.Owner != args.To)
+            return;
+
+        args.Allowed.Add(ent.Comp.CatalystPrototype);
+
+        if (ent.Comp.EnforceCatalystWhitelist)
+            args.Enforce = true;
     }
 
     // Try not to make this public if you can help it.
