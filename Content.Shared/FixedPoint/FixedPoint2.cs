@@ -321,5 +321,10 @@ namespace Content.Shared.FixedPoint
 
             return acc;
         }
+
+        public static FixedPoint2 Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, FixedPoint2> selector)
+        {
+            return source.Aggregate(FixedPoint2.Zero, (acc, next) => acc + selector(next));
+        }
     }
 }
