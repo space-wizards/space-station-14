@@ -14,9 +14,11 @@ namespace Content.Server.Nuke
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
-        [Dependency] private readonly StationSystem _station = default!;
-        [Dependency] private readonly PaperSystem _paper = default!;
         [Dependency] private readonly FaxSystem _faxSystem = default!;
+        [Dependency] private readonly NukeSystem _nuke = default!;
+        [Dependency] private readonly PaperSystem _paper = default!;
+        [Dependency] private readonly StationSystem _station = default!;
+
 
         public override void Initialize()
         {
@@ -95,14 +97,25 @@ namespace Content.Server.Nuke
             bool onlyCurrentStation = false)
         {
             nukeCode = null;
+            var codesMessage = new FormattedMessage();
+            codesMessage.PushNewline();
+            if (_nuke.GlobalCodes)
+            {
+                var code = _nuke.ReturnNukeCodes();
+                if (code != null)
+                {
+                    codesMessage.AddMarkupOrThrow(Loc.GetString("nuke-code-global", ("code", code)));
+                    nukeCode = Loc.GetString("nuke-codes-message") + codesMessage;
+                    return true;
+                }
+            }
+
             if (!Resolve(uid, ref transform))
             {
                 return false;
             }
 
             var owningStation = station ?? _station.GetOwningStation(uid);
-
-            var codesMessage = new FormattedMessage();
             // Find the first nuke that matches the passed location.
             var nukes = new List<Entity<NukeComponent>>();
             var query = EntityQueryEnumerator<NukeComponent>();
@@ -123,7 +136,6 @@ namespace Content.Server.Nuke
                     continue;
                 }
 
-                codesMessage.PushNewline();
                 codesMessage.AddMarkupOrThrow(Loc.GetString("nuke-codes-list", ("name", MetaData(nukeUid).EntityName), ("code", nuke.Code)));
                 break;
             }
