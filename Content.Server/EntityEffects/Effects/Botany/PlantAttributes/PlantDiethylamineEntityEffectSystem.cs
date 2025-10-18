@@ -16,16 +16,10 @@ public sealed partial class PlantDiethylamineEntityEffectSystem : EntityEffectSy
         if (entity.Comp.Seed == null || entity.Comp.Dead || entity.Comp.Seed.Immutable)
             return;
 
-        if (_random.Prob(0.1f))
-        {
-            _plantHolder.EnsureUniqueSeed(entity, entity);
-            entity.Comp.Seed!.Lifespan++;
-        }
+        if (_random.Prob(0.1f) && TryComp<PlantTraitsComponent>(entity, out var traits))
+            traits.Lifespan++;
 
-        if (_random.Prob(0.1f))
-        {
-            _plantHolder.EnsureUniqueSeed(entity, entity);
-            entity.Comp.Seed!.Endurance++;
-        }
+        if (_random.Prob(0.1f) && TryComp<PlantTraitsComponent>(entity, out traits))
+            traits.Endurance++;
     }
 }

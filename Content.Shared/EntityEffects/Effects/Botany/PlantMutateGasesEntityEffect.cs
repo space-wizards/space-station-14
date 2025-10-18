@@ -1,3 +1,5 @@
+using Robust.Shared.Prototypes;
+
 namespace Content.Shared.EntityEffects.Effects.Botany;
 
 /// <summary>
@@ -10,6 +12,14 @@ public sealed partial class PlantMutateConsumeGases : EntityEffectBase<PlantMuta
 
     [DataField]
     public float MaxValue = 0.5f;
+
+    /// <inheritdoc/>
+    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    {
+        return Loc.GetString("reagent-effect-guidebook-plant-mutate-consume-gasses",
+                ("minValue", MinValue),
+                ("maxValue", MaxValue));
+    }
 }
 
 public sealed partial class PlantMutateExudeGases : EntityEffectBase<PlantMutateExudeGases>
@@ -19,4 +29,12 @@ public sealed partial class PlantMutateExudeGases : EntityEffectBase<PlantMutate
 
     [DataField]
     public float MaxValue = 0.5f;
+
+    /// <inheritdoc/>
+    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    {
+        return Loc.GetString("reagent-effect-guidebook-plant-mutate-exude-gasses",
+                ("minValue", MinValue),
+                ("maxValue", MaxValue));
+    }
 }
