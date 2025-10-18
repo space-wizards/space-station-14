@@ -54,7 +54,7 @@
   name: Hristov
   parent: [BaseWeaponSniper, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponSniperHristov
-  description: "A portable bolt-action anti-materiel rifle. It can be disassembled into a remarkably small package, and its integrated scope facilitates long-range engagements. While perfect for smashing through a person, wall, or armored vehicle, Waffle Corp’s lawyers maintain that the weapon is intended only for hunting very large game.\nLoads 5 rounds of .60 anti-materiel."
+  description: "A portable bolt-action anti-materiel rifle. Its removable stock and telescoping barrel allow it to be disassembled into a remarkably small package, while its integrated scope facilitates long-range engagements. Perfect for smashing through a person, wall, or armored vehicle.\nLoads 5 rounds of .60 anti-materiel."
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
