@@ -4,6 +4,7 @@ namespace Content.Shared.Trigger.Components.Triggers;
 
 /// <summary>
 /// Component put on the hitscan entity.
+/// Triggers when a hitscan raycast is fired.
 /// The user is the entity that got hit.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
