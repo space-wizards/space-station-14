@@ -54,6 +54,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedHumanoidAppearanceSystem _appearance = default!;
 
     // arbitrary random number to give late joining some mild interest.
     public const float LateJoinRandomChance = 0.5f;
@@ -347,14 +348,21 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     {
         _adminLogger.Add(LogType.AntagSelection, $"Start trying to make {session} become the antagonist: {ToPrettyString(ent)}");
 
-        if (checkPref && !ValidAntagPreference(session, def.PrefRoles))
+        if (!IsSessionValid(ent, session, def))
+        {
+            _adminLogger.Add(LogType.AntagSelection, $"{session} didn't have valid session");
             return false;
-
-        if (!IsSessionValid(ent, session, def) || !IsEntityValid(session?.AttachedEntity, def))
-            return false;
+        }
 
         if (onlyPreSelect && session != null)
         {
+            // This is preselection, so check if the PLAYER AS A WHOLE is compatible with the antagonist
+            if (checkPref && !HasPrimaryAntagPreference(session, def, ent.Comp.SelectionTime))
+            {
+                _adminLogger.Add(LogType.AntagSelection, $"{session} didn't have antagonist preference for {ToPrettyString(ent)}");
+                return false;
+            }
+
             if (!ent.Comp.PreSelectedSessions.TryGetValue(def, out var set))
                 ent.Comp.PreSelectedSessions.Add(def, set = new HashSet<ICommonSession>());
             set.Add(session);
@@ -363,6 +371,14 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         }
         else
         {
+            // This is not preselection, so check the player's actual entity to see if it's compatible with the antagonist.
+            // This function will also check the character profile's antagonist preferences.
+            if (!IsEntityValid(session?.AttachedEntity, def))
+            {
+                _adminLogger.Add(LogType.AntagSelection, $"{session} didn't have valid entity for {ToPrettyString(ent)}");
+                return false;
+            }
+
             MakeAntag(ent, session, def, ignoreSpawner);
         }
 
@@ -396,7 +412,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         if (!antagEnt.HasValue)
         {
-            var getEntEv = new AntagSelectEntityEvent(session, ent);
+            var getEntEv = new AntagSelectEntityEvent(session, ent, def);
             RaiseLocalEvent(ent, ref getEntEv, true);
             antagEnt = getEntEv.Entity;
         }
@@ -501,11 +517,11 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                 continue;
 
             // Add player to the appropriate antag pool
-            if (ValidAntagPreference(session, def.PrefRoles))
+            if (HasPrimaryAntagPreference(session, def, ent.Comp.SelectionTime))
             {
                 preferredList.Add(session);
             }
-            else if (ValidAntagPreference(session, def.FallbackRoles))
+            else if (HasFallbackAntagPreference(session, def, ent.Comp.SelectionTime))
             {
                 fallbackList.Add(session);
             }
@@ -577,6 +593,15 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (!def.AllowNonHumans && !HasComp<HumanoidAppearanceComponent>(entity))
             return false;
 
+        // Ensure that the profile has the antag preference set, if this is a late join this hasn't been checked!
+        var baseProfile = _appearance.GetBaseProfile(entity.Value);
+        if (baseProfile is not null)
+        {
+            if (!def.PrefRoles.ToHashSet().Overlaps(baseProfile.AntagPreferences) &&
+                !def.FallbackRoles.ToHashSet().Overlaps(baseProfile.AntagPreferences))
+                return false;
+        }
+
         if (def.Whitelist != null)
         {
             if (!_whitelist.IsValid(def.Whitelist, entity.Value))
@@ -607,13 +632,15 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 /// Only raised if the selected player's current entity is invalid.
 /// </summary>
 [ByRefEvent]
-public record struct AntagSelectEntityEvent(ICommonSession? Session, Entity<AntagSelectionComponent> GameRule)
+public record struct AntagSelectEntityEvent(ICommonSession? Session, Entity<AntagSelectionComponent> GameRule, AntagSelectionDefinition Def)
 {
     public readonly ICommonSession? Session = Session;
 
     public bool Handled => Entity != null;
 
     public EntityUid? Entity;
+
+    public AntagSelectionDefinition Def = Def;
 }
 
 /// <summary>
