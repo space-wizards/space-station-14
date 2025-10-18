@@ -35,9 +35,11 @@
     contents:
     - id: DrinkAleBottleFullGrowler
     - id: DrinkBeerGrowler
+    - id: DrinkBlueCuracaoBottleFull
     - id: DrinkCoffeeLiqueurBottleFull
     - id: DrinkCognacBottleFull
     - id: DrinkGinBottleFull
+    - id: DrinkMelonLiquorBottleFull
     - id: DrinkRumBottleFull
     - id: DrinkTequilaBottleFull
     - id: DrinkVermouthBottleFull
