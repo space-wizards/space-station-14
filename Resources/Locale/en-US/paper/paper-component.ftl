@@ -2,6 +2,8 @@
 ### UI
 
 paper-ui-blank-page-message = This page intentionally left blank
+paper-ui-write-button = write
+paper-ui-write-window-title = Writing...
 
 # Shown when paper with words examined details
 paper-component-examine-detail-has-words = {CAPITALIZE(THE($paper))} has something written on it.
