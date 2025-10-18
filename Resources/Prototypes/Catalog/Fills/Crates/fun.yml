@@ -43,6 +43,8 @@
     - id: PlushieArachind
     - id: PlushiePenguin
     - id: PlushieVulp
+    - id: PlushieSheep
+    - id: PlushieSpaceSheep
 
 - type: entityTable
   id: AllPottedPlantsTable

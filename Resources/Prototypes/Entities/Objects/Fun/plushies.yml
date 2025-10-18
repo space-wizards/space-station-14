@@ -1188,6 +1188,115 @@
 
 - type: entity
   parent: BasePlushie
+  id: PlushieSheep
+  name: sheep plushie
+  description: A soft, wooly, stuffed sheep. 100% cotton.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/sheep.rsi
+    state: sheeptoy
+  - type: Item
+    sprite: Objects/Fun/Plushies/carp.rsi
+    heldPrefix: sheeptoy
+    storedRotation: -90
+  - type: EmitSoundOnUse
+    sound:
+      collection: Sheep
+      params:
+        variation: 0.05
+  - type: EmitSoundOnLand
+    sound:
+      collection: Sheep
+      params:
+        variation: 0.05
+  - type: EmitSoundOnActivate
+    sound:
+      collection: Sheep
+      params:
+        variation: 0.05
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: Sheep
+      params:
+        variation: 0.05
+  - type: EmitSoundOnCollide
+    sound:
+      collection: Sheep
+      params:
+        variation: 0.05
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      collection: Sheep
+      params:
+        variation: 0.05
+  - type: MeleeWeapon
+    wideAnimationRotation: 90
+    soundHit:
+      collection: Sheep
+      params:
+        variation: 0.05
+    angle: 0
+    animation: WeaponArcFist
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: SheepPlushie
+  - type: Tag
+    tags:
+    - ClothMade
+
+- type: entity
+  parent: PlushieSheep
+  id: PlushieSpaceSheep
+  name: space sheep plushie
+  description: A soft, wooly, cosmically stuffed sheep. 100% cotton.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/sheep.rsi
+    state: spacesheeptoy
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: SheepSpacePlushie
+  - type: EmitSoundOnUse
+    sound:
+      collection: SheepSpace
+      params:
+        variation: 0.05
+  - type: EmitSoundOnLand
+    sound:
+      collection: SheepSpace
+      params:
+        variation: 0.05
+  - type: EmitSoundOnActivate
+    sound:
+      collection: SheepSpace
+      params:
+        variation: 0.05
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: SheepSpace
+      params:
+        variation: 0.05
+  - type: EmitSoundOnCollide
+    sound:
+      collection: SheepSpace
+      params:
+        variation: 0.05
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      collection: SheepSpace
+      params:
+        variation: 0.05
+  - type: MeleeWeapon
+    wideAnimationRotation: 90
+    soundHit:
+      collection: SheepSpace
+      params:
+        variation: 0.05
+
+- type: entity
+  parent: BasePlushie
   id: PlushieVulp
   name: vulpkanin plushie
   description: An adorable stuffed toy that resembles a vulpkanin. Yip! Yap!

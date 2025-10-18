@@ -269,3 +269,28 @@
     contents:
       - id: MobMothroach
         amount: 4
+
+- type: entity
+  id: CrateNPCSheep
+  parent: CrateLivestock
+  name: sheep crate
+  description: A crate containing a single sheep.
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobSheep
+        prob: 1
+        orGroup: MobSheep
+      - id: MobSheepRainbow
+        prob: 0.1
+        orGroup: MobSheep
+      - id: MobSheepSpace
+        prob: 0.1
+        orGroup: MobSheep
+        # teehee get plushied
+      - id: PlushieSheep
+        prob: 0.001
+        orGroup: MobSheep
+      - id: PlushieSpaceSheep
+        prob: 0.001
+        orGroup: MobSheep
