@@ -126,6 +126,7 @@
     name: ghost-role-information-slimes-name
     description: ghost-role-information-slimes-description
     rules: ghost-role-information-nonantagonist-rules
+    job: Slime
     raffle:
       settings: short
   - type: Speech
@@ -167,6 +168,7 @@
       rules: ghost-role-information-angry-slimes-rules
       mindRoles:
       - MindRoleGhostRoleTeamAntagonist
+      job: Slime
       raffle:
         settings: short
 
@@ -207,6 +209,7 @@
       rules: ghost-role-information-angry-slimes-rules
       mindRoles:
       - MindRoleGhostRoleTeamAntagonist
+      job: Slime
       raffle:
         settings: short
 
@@ -246,5 +249,6 @@
       rules: ghost-role-information-angry-slimes-rules
       mindRoles:
       - MindRoleGhostRoleTeamAntagonist
+      job: Slime
       raffle:
         settings: short

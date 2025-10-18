@@ -32,6 +32,12 @@
   # make the player a traitor once its taken
   - type: AutoTraitor
     profile: TraitorReinforcement
+  - type: GhostRole
+    name: ghost-role-information-syndicate-reinforcement-spy-name
+    description: ghost-role-information-syndicate-reinforcement-spy-description
+    rules: ghost-role-information-syndicate-reinforcement-rules
+    job: SyndicateReinforcement
+  - type: GhostTakeoverAvailable
 
 - type: entity
   parent: MobHumanSyndicateAgent
@@ -70,6 +76,12 @@
     nameSegments:
     - NamesSyndicateNormal
     nameFormat: name-format-nukie-operator
+  - type: GhostRole
+    name: ghost-role-information-nukeop-reinforcement-name
+    description: ghost-role-information-nukeop-reinforcement-description
+    rules: ghost-role-information-nukeop-reinforcement-rules
+    job: NuclearOperative
+  - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [SyndicateOperativeGearFullNoUplink]
 

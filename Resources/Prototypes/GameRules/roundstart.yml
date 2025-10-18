@@ -137,6 +137,7 @@
         - Syndicate
       mindRoles:
       - MindRoleNukeopsCommander
+      job: NuclearOperativeCommander
     - prefRoles: [ NukeopsMedic ]
       fallbackRoles: [ Nukeops, NukeopsCommander ]
       spawnerPrototype: SpawnPointNukeopsMedic
@@ -154,6 +155,7 @@
         - Syndicate
       mindRoles:
       - MindRoleNukeopsMedic
+      job: NuclearOperativeCorpsman
     - prefRoles: [ Nukeops ]
       fallbackRoles: [ NukeopsCommander, NukeopsMedic ]
       spawnerPrototype: SpawnPointNukeopsOperative
@@ -173,6 +175,7 @@
         - Syndicate
       mindRoles:
       - MindRoleNukeops
+      job: NuclearOperative
   - type: DynamicRuleCost
     cost: 200
 
@@ -347,6 +350,7 @@
         nameFormat: name-format-wizard
       mindRoles:
       - MindRoleWizard
+      job: Wizard
   - type: DynamicRuleCost
     cost: 150
 

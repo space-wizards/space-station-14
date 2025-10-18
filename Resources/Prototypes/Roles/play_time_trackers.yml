@@ -5,6 +5,9 @@
 
 # Jobs
 - type: playTimeTracker
+  id: JobAnimal
+
+- type: playTimeTracker
   id: JobAtmosphericTechnician
 
 - type: playTimeTracker
@@ -45,6 +48,9 @@
 
 - type: playTimeTracker
   id: JobDetective
+
+- type: playTimeTracker
+  id: JobSpaceDragon
 
 - type: playTimeTracker
   id: JobERTChaplain
@@ -98,7 +104,19 @@
   id: JobMusician
 
 - type: playTimeTracker
+  id: JobSpaceNinja
+
+- type: playTimeTracker
+  id: JobNuclearOperative
+
+- type: playTimeTracker
   id: JobPassenger
+
+- type: playTimeTracker
+  id: JobPersonalAI
+
+- type: playTimeTracker
+  id: JobParadoxClone
 
 - type: playTimeTracker
   id: JobParamedic
@@ -110,6 +128,9 @@
   id: JobQuartermaster
 
 - type: playTimeTracker
+  id: JobRatKing
+
+- type: playTimeTracker
   id: JobReporter
 
 - type: playTimeTracker
@@ -117,6 +138,15 @@
 
 - type: playTimeTracker
   id: JobResearchDirector
+
+- type: playTimeTracker
+  id: JobRevenant
+
+- type: playTimeTracker
+  id: JobReinforcement
+
+- type: playTimeTracker
+  id: JobRobot
 
 - type: playTimeTracker
   id: JobSalvageSpecialist
@@ -132,6 +162,9 @@
 
 - type: playTimeTracker
   id: JobServiceWorker
+
+- type: playTimeTracker
+  id: JobSkeleton
 
 - type: playTimeTracker
   id: JobStationAi
@@ -153,3 +186,6 @@
 
 - type: playTimeTracker
   id: JobZookeeper
+
+- type: playTimeTracker
+  id: JobWizard

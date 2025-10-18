@@ -1,0 +1,17 @@
+- type: job
+  id: Animal
+  name: job-name-animal
+  playTimeTracker: JobAnimal
+  setPreference: false
+
+- type: job
+  id: Monkey
+  name: job-name-monkey
+  playTimeTracker: JobAnimal
+  setPreference: false
+
+- type: job
+  id: Kobold
+  name: job-name-kobold
+  playTimeTracker: JobAnimal
+  setPreference: false

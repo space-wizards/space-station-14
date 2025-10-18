@@ -560,7 +560,7 @@
       rules: ghost-role-information-silicon-rules
       raffle:
         settings: default
-      job: Borg
+      job: NuclearOperativeCyborg
     - type: GhostTakeoverAvailable
 
 - type: entity

@@ -13,6 +13,7 @@
     rules: ghost-role-information-familiar-rules
     mindRoles:
     - MindRoleGhostRoleFamiliar
+    job: Animal
   - type: GhostTakeoverAvailable
   - type: Grammar
     attributes:
@@ -50,6 +51,7 @@
     - MindRoleGhostRoleFamiliar
     raffle:
       settings: default
+    job: SyndicateReinforcement
   - type: GhostTakeoverAvailable
   - type: MeleeWeapon
     altDisarm: false
