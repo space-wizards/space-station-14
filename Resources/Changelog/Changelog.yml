@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: spanky-spanky
-  changes:
-  - message: Evac repair lockers, which contain equipment to repair shuttle bombing.
-    type: Add
-  id: 8615
-  time: '2025-06-05T06:08:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38075
 - author: slarticodefast
   changes:
   - message: Fixed the game not launching in compability mode.
@@ -3934,3 +3927,14 @@
   id: 9116
   time: '2025-10-18T07:13:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39679
+- author: Hitlinemoss
+  changes:
+  - message: Folders and clipboards now recycle into sensible material components,
+      rather than only cardboard.
+    type: Fix
+  - message: Clipboards and plastic clipboards require slightly more steel to produce
+      in autolathes.
+    type: Tweak
+  id: 9117
+  time: '2025-10-18T09:25:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40954
