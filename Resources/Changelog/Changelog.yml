@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: chromiumboy
-  changes:
-  - message: Holopads now provide less visual coverage to station AIs (1 tile radius,
-      down from 7.5). Holopads must also be anchored to the floor to provide vision.
-    type: Tweak
-  id: 8618
-  time: '2025-06-05T23:15:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38059
 - author: Simyon
   changes:
   - message: Sleeper agents no longer have different codewords than round-start traitors.
@@ -3938,3 +3930,10 @@
   id: 9119
   time: '2025-10-18T17:07:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40555
+- author: Hitlinemoss
+  changes:
+  - message: Cargo orders containing beverages now ship in freezers.
+    type: Tweak
+  id: 9120
+  time: '2025-10-18T17:20:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40955
