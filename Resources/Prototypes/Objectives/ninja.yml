@@ -88,3 +88,15 @@
     icon:
       sprite: Objects/Weapons/Melee/stunbaton.rsi
       state: stunbaton_on
+
+- type: entity
+  parent: [BaseNinjaObjective]
+  id: NinjaKillLimitObjective
+  components:
+  - type: Objective
+    icon:
+      sprite: Objects/Weapons/Melee/energykatana.rsi
+      state: icon
+  - type: KillLimitCondition
+    minKillCount: 3
+    maxKillCount: 3
