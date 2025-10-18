@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Simyon
-  changes:
-  - message: Sleeper agents no longer have different codewords than round-start traitors.
-    type: Fix
-  id: 8619
-  time: '2025-06-05T23:19:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37928
 - author: Gentleman-Bird
   changes:
   - message: Fixed the "create soap" recipe so it can actually be made
@@ -3937,3 +3930,13 @@
   id: 9120
   time: '2025-10-18T17:20:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40955
+- author: perryprog
+  changes:
+  - message: Drag-and-dropping liquids between containers has been adjusted.
+    type: Tweak
+  - message: You can no longer insert liquids into foods by clicking. Using syringes
+      still works as before.
+    type: Tweak
+  id: 9121
+  time: '2025-10-18T17:58:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38871
