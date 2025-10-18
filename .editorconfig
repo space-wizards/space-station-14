@@ -4,7 +4,7 @@
 
 charset = utf-8
 
-file_header_template= SPDX-License-Identifier: MIT
+file_header_template= SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>\n\nSPDX-License-Identifier: MIT
 
 # Indentation and spacing
 indent_size = 4
