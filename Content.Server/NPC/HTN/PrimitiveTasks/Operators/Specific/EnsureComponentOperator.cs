@@ -9,13 +9,13 @@ public sealed partial class EnsureComponentOperator : HTNOperator
     /// <summary>
     /// Target entity to inject.
     /// </summary>
-    [DataField("targetKey", required: true)]
+    [DataField(required: true)]
     public string TargetKey = string.Empty;
 
     /// <summary>
     /// Components to be added
     /// </summary>
-    [DataField("components")]
+    [DataField]
     public ComponentRegistry Components = new();
 
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)

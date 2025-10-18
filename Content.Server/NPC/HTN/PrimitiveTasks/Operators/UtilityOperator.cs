@@ -16,9 +16,9 @@ public sealed partial class UtilityOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
-    [DataField("key")] public string Key = "Target";
+    [DataField] public string Key = "Target";
 
-    [DataField("returnType")] public string ReturnType = "Highest";
+    [DataField] public ReturnTypeResult ReturnType = ReturnTypeResult.Highest;
 
     /// <summary>
     /// The EntityCoordinates of the specified target.
@@ -37,7 +37,7 @@ public sealed partial class UtilityOperator : HTNOperator
 
         switch (ReturnType)
         {
-            case "Highest":
+            case ReturnTypeResult.Highest:
                 var target = result.GetHighest();
 
                 if (!target.IsValid())
@@ -53,7 +53,7 @@ public sealed partial class UtilityOperator : HTNOperator
 
                 return (true, effects);
 
-            case "EnumerableDescending":
+            case ReturnTypeResult.EnumerableDescending:
                 var targetList = result.GetEnumerable();
 
                 effects = new Dictionary<string, object>()
@@ -66,5 +66,11 @@ public sealed partial class UtilityOperator : HTNOperator
             default:
                 throw new NotImplementedException();
         }
+    }
+
+    public enum ReturnTypeResult
+    {
+        Highest,
+        EnumerableDescending
     }
 }
