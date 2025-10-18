@@ -9,7 +9,6 @@ public abstract class SharedBatterySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BatteryComponent, EmpAttemptEvent>(OnEmpAttempt);
         SubscribeLocalEvent<BatteryComponent, EmpPulseEvent>(OnEmpPulse);
     }
 
@@ -19,11 +18,6 @@ public abstract class SharedBatterySystem : EntitySystem
         UseCharge(entity, args.EnergyConsumption, entity.Comp);
         // Apply a cooldown to the entity's self recharge if needed to avoid it immediately self recharging after an EMP.
         TrySetChargeCooldown(entity);
-    }
-
-    private void OnEmpAttempt(Entity<BatteryComponent> entity, ref EmpAttemptEvent args)
-    {
-
     }
 
     public virtual float UseCharge(EntityUid uid, float value, BatteryComponent? battery = null)
