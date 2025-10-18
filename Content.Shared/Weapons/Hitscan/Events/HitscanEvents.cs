@@ -37,18 +37,11 @@ public record struct HitscanTraceEvent
     public EntityUid? Target;
 }
 
-
-
 /// <summary>
 /// All data known data for when a hitscan is actually fired.
 /// </summary>
 public record struct HitscanRaycastFiredData
 {
-    /// <summary>
-    /// Location the hitscan was fired from.
-    /// </summary>
-    public EntityCoordinates FromCoordinates;
-
     /// <summary>
     /// Direction that the ray was fired towards.
     /// </summary>
@@ -68,11 +61,6 @@ public record struct HitscanRaycastFiredData
     /// Player who shot the gun, if null the gun was fired by itself.
     /// </summary>
     public EntityUid? Shooter;
-
-    /// <summary>
-    /// How far the hitscan tried to go to intersect with a target.
-    /// </summary>
-    public float DistanceTried;
 }
 
 /// <summary>

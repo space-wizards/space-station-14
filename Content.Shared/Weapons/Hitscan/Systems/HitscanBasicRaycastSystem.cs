@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Numerics;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Damage.Components;
@@ -66,12 +65,10 @@ public sealed class HitscanBasicRaycastSystem : EntitySystem
 
         var data = new HitscanRaycastFiredData
         {
-            FromCoordinates = args.FromCoordinates,
             ShotDirection = args.ShotDirection,
             Gun = args.Gun,
             Shooter = args.Shooter,
             HitEntity = result?.HitEntity,
-            DistanceTried = distanceTried,
         };
 
         var attemptEvent = new AttemptHitscanRaycastFiredEvent { Data = data };
