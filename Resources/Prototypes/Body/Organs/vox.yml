@@ -61,8 +61,6 @@
   - type: Sprite
     sprite: Mobs/Species/Vox/organs.rsi
   - type: BorgBrain
-  - type: Sprite
-    sprite: Mobs/Species/Vox/organs.rsi
 
 - type: entity
   parent: OrganHumanKidneys
