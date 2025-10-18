@@ -208,10 +208,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 150
+        maxVol: 100
         reagents:
         - ReagentId: LemonLime
-          Quantity: 150
+          Quantity: 100
   - type: Label
     currentLabel: reagent-name-lemon-lime
   # TODO new sprite, parity with other soda bottles
