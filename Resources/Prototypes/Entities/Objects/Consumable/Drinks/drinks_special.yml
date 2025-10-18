@@ -33,6 +33,8 @@
         reagents:
         - ReagentId: Ice
           Quantity: 150
+  - type: Label
+    currentLabel: reagent-name-ice
   - type: Sprite
     sprite: Objects/Consumable/Drinks/icebucket.rsi
     state: icon
