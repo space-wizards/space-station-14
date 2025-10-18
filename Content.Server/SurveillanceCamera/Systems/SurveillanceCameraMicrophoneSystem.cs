@@ -1,6 +1,7 @@
 using Content.Server.Chat.Systems;
 using Content.Shared.Speech;
 using Content.Shared.Speech.Components;
+using Content.Shared.SurveillanceCamera.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Player;
 using static Content.Server.Chat.Systems.ChatSystem;
