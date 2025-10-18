@@ -13,7 +13,7 @@ public sealed partial class AddSolutionOnTriggerComponent : BaseXOnTriggerCompon
     /// <summary>
     /// The name of the solution to add to.
     /// </summary>
-    [DataField(required: true), AutoNetworkedField]
+    [DataField("solution", required: true), AutoNetworkedField]
     public string SolutionId = string.Empty;
 
     /// <summary>
