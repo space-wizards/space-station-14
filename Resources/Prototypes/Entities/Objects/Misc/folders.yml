@@ -11,6 +11,9 @@
     - state: folder-base
     - state: folder-stamp-inverse
       color: "#1dff00"
+  - type: PhysicalComposition
+    materialComposition:
+      Paper: 100
   - type: SpawnItemsOnUse
     items:
     - id: NukeCodePaper
