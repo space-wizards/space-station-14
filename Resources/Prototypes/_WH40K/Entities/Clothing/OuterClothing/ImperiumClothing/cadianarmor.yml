@@ -5,9 +5,9 @@
   description: Standard issue flak armor worn by Cadian shock troops. Good enough.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Armor/security.rsi
+    sprite: _WH40K\Clothing\OuterClothing\Armor\CadianFlakArmor.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Armor/security.rsi
+    sprite: _WH40K\Clothing\OuterClothing\Armor\CadianFlakArmor.rsi
   - type: Armor 
     modifiers:
       coefficients:
