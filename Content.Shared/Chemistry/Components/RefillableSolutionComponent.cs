@@ -23,4 +23,10 @@ public sealed partial class RefillableSolutionComponent : Component
     /// </summary>
     [DataField]
     public FixedPoint2? MaxRefill = null;
+
+    /// <summary>
+    /// The refill doafter time required to transfer reagents into the solution.
+    /// </summary>
+    [DataField]
+    public TimeSpan RefillTime = TimeSpan.Zero;
 }
