@@ -1,63 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Increased the health of uranium windows, making them a reasonable upgrade
-      over regular plasma.
-    type: Tweak
-  id: 8611
-  time: '2025-06-03T18:20:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38040
-- author: Moomoobeef
-  changes:
-  - message: Nanotask printouts now look much nicer!
-    type: Tweak
-  id: 8612
-  time: '2025-06-04T08:16:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37805
-- author: TheCactus, ilovehans10
-  changes:
-  - message: Added text highlighting.
-    type: Add
-  id: 8613
-  time: '2025-06-04T10:12:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31442
-- author: SlamBamActionman
-  changes:
-  - message: Diona can now root, keeping them from slipping but absorbing fluids from
-      the ground.
-    type: Add
-  id: 8614
-  time: '2025-06-04T10:53:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32782
-- author: spanky-spanky
-  changes:
-  - message: Evac repair lockers, which contain equipment to repair shuttle bombing.
-    type: Add
-  id: 8615
-  time: '2025-06-05T06:08:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38075
-- author: slarticodefast
-  changes:
-  - message: Fixed the game not launching in compability mode.
-    type: Fix
-  id: 8616
-  time: '2025-06-05T12:52:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38080
-- author: Orsoniks
-  changes:
-  - message: Added more in-hand sprites for food items
-    type: Add
-  id: 8617
-  time: '2025-06-05T21:06:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38024
-- author: chromiumboy
-  changes:
-  - message: Holopads now provide less visual coverage to station AIs (1 tile radius,
-      down from 7.5). Holopads must also be anchored to the floor to provide vision.
-    type: Tweak
-  id: 8618
-  time: '2025-06-05T23:15:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38059
 - author: Simyon
   changes:
   - message: Sleeper agents no longer have different codewords than round-start traitors.
@@ -3933,3 +3874,66 @@
   id: 9112
   time: '2025-10-16T18:47:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35636
+- author: Wolfkey-SomeoneElseTookMyUsername
+  changes:
+  - message: The recipes for grilled cheese, cotton buns, cotton cakes, and cotton
+      grilled cheese are now in the correct category in the guidebook
+    type: Fix
+  id: 9113
+  time: '2025-10-17T18:56:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40949
+- author: TrixxedHeart
+  changes:
+  - message: Added Enter/Leave Genpop access to Security by default, allowing them
+      to be able to fix Genpop turnstiles with the access configurator if they are
+      destroyed.
+    type: Tweak
+  id: 9114
+  time: '2025-10-18T00:28:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39515
+- author: TrixxedHeart
+  changes:
+  - message: Added Vox Chitter and Clicking emotes
+    type: Add
+  id: 9115
+  time: '2025-10-18T00:28:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40878
+- author: Kittygyat
+  changes:
+  - message: Added a new generic Artistry borg module!
+    type: Add
+  id: 9116
+  time: '2025-10-18T07:13:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39679
+- author: Hitlinemoss
+  changes:
+  - message: Folders and clipboards now recycle into sensible material components,
+      rather than only cardboard.
+    type: Fix
+  - message: Clipboards and plastic clipboards require slightly more steel to produce
+      in autolathes.
+    type: Tweak
+  id: 9117
+  time: '2025-10-18T09:25:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40954
+- author: PicklOH
+  changes:
+  - message: Rags can no longer be used to remove evidence.
+    type: Remove
+  id: 9118
+  time: '2025-10-18T13:49:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40818
+- author: MissKay1994
+  changes:
+  - message: Vox organs now have unique sprites.
+    type: Add
+  id: 9119
+  time: '2025-10-18T17:07:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40555
+- author: Hitlinemoss
+  changes:
+  - message: Cargo orders containing beverages now ship in freezers.
+    type: Tweak
+  id: 9120
+  time: '2025-10-18T17:20:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40955
