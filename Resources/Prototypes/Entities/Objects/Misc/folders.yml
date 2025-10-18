@@ -396,6 +396,11 @@
     sprite: Objects/Misc/cc-clipboard.rsi
   - type: Clothing
     sprite: Objects/Misc/cc-clipboard.rsi
+  - type: PhysicalComposition
+    materialComposition: # same as regular clipboard + bit of cloth because it's "upholstered with green velvet"
+      Wood: 100
+      Steel: 25
+      Cloth: 25
 
 - type: entity
   parent: [BoxFolderCentComClipboardEmpty, BoxFolderFill]
