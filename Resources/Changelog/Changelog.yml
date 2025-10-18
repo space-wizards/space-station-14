@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed the game not launching in compability mode.
-    type: Fix
-  id: 8616
-  time: '2025-06-05T12:52:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38080
 - author: Orsoniks
   changes:
   - message: Added more in-hand sprites for food items
@@ -3938,3 +3931,10 @@
   id: 9117
   time: '2025-10-18T09:25:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40954
+- author: PicklOH
+  changes:
+  - message: Rags can no longer be used to remove evidence.
+    type: Remove
+  id: 9118
+  time: '2025-10-18T13:49:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40818
