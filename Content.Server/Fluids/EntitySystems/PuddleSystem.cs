@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chemistry.TileReactions;
 using Content.Server.DoAfter;
 using Content.Server.Fluids.Components;
@@ -56,8 +57,20 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
     [Dependency] private readonly SpeedModifierContactsSystem _speedModContacts = default!;
     [Dependency] private readonly TileFrictionController _tile = default!;
+    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
+
+    [ValidatePrototypeId<ReagentPrototype>]
+    private const string Blood = "Blood";
+
+    [ValidatePrototypeId<ReagentPrototype>]
+    private const string Slime = "Slime";
+
+    [ValidatePrototypeId<ReagentPrototype>]
+    private const string CopperBlood = "CopperBlood";
+
+    private static string[] _standoutReagents = [Blood, Slime, CopperBlood];
 
     // Using local deletion queue instead of the standard queue so that we can easily "undelete" if a puddle
     // loses & then gains reagents in a single tick.
