@@ -192,14 +192,9 @@ public sealed partial class AdminNotesLine : BoxContainer
         Refresh();
     }
 
-    protected override void Dispose(bool disposing)
+    protected override void ExitedTree()
     {
-        base.Dispose(disposing);
-
-        if (!disposing)
-        {
-            return;
-        }
+        base.ExitedTree();
 
         OnClicked = null;
     }

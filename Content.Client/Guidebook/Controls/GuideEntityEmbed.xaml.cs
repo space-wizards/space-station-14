@@ -127,9 +127,9 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
         }
     }
 
-    protected override void Dispose(bool disposing)
+    protected override void ExitedTree()
     {
-        base.Dispose(disposing);
+        base.ExitedTree();
 
         if (Sprite is not null)
             _entityManager.DeleteEntity(Sprite);

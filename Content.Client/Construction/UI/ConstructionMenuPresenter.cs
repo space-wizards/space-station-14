@@ -130,7 +130,7 @@ namespace Content.Client.Construction.UI
         /// <inheritdoc />
         public void Dispose()
         {
-            _constructionView.Dispose();
+            _constructionView.Close();
 
             SystemBindingChanged(null);
             _systemManager.SystemLoaded -= OnSystemLoaded;
