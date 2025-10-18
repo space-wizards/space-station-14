@@ -27,6 +27,8 @@
   name: ice bucket
   description: A special bucket of refreshy ice. Prohibited use for challenge with the same name!
   components:
+  - type: Item
+    size: Normal
   - type: SolutionContainerManager
     solutions:
       drink:
