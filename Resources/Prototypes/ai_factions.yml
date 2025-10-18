@@ -3,6 +3,8 @@
   hostile:
   - NanoTrasen
   - Syndicate
+  - SiliconNT
+  - SiliconSyndicate
   - Xeno
   - PetsNT
   - Zombie
@@ -15,6 +17,7 @@
   hostile:
   - SimpleHostile
   - Syndicate
+  - SiliconSyndicate
   - Xeno
   - Zombie
   - Revolutionary
@@ -22,6 +25,34 @@
   - AllHostile
   - Wizard
   - Xenoborg
+
+- type: npcFaction
+  id: SiliconNT
+  hostile:
+  - SimpleHostile
+  - Syndicate
+  - SiliconSyndicate
+  - Xeno
+  - Zombie
+  - Revolutionary
+  - Dragon
+  - AllHostile
+  - Wizard
+  - Xenoborg #Xenoborgs can use Posibrains
+
+- type: npcFaction
+  id: SiliconSyndicate
+  hostile:
+  - NanoTrasen
+  - SiliconNT
+  - SimpleHostile
+  - Xeno
+  - PetsNT
+  - Zombie
+  - Dragon
+  - AllHostile
+  - Wizard
+  - Xenoborg #Xenoborgs can use Posibrains
 
 - type: npcFaction
   id: Mouse
@@ -49,6 +80,8 @@
   hostile:
   - NanoTrasen
   - Syndicate
+  - SiliconNT
+  - SiliconSyndicate
   - Passive
   - PetsNT
   - Zombie
@@ -66,6 +99,7 @@
   id: Syndicate
   hostile:
   - NanoTrasen
+  - SiliconNT
   - SimpleHostile
   - Xeno
   - PetsNT
@@ -80,6 +114,8 @@
   hostile:
   - NanoTrasen
   - Syndicate
+  - SiliconNT
+  - SiliconSyndicate
   - Passive
   - PetsNT
   - Zombie
@@ -102,7 +138,7 @@
   - AllHostile
   - Wizard
   - Dragon
-  - Xenoborg
+  - Xenoborg # 98% MMI borgs
 
 - type: npcFaction
   id: Revolutionary
@@ -126,6 +162,8 @@
   - SimpleHostile
   - SimpleNeutral
   - Syndicate
+  - SiliconNT
+  - SiliconSyndicate
   - Xeno
   - Zombie
   - Revolutionary
@@ -143,6 +181,8 @@
   - SimpleHostile
   - SimpleNeutral
   - Syndicate
+  - SiliconNT
+  - SiliconSyndicate
   - Xeno
   - Zombie
   - Revolutionary
