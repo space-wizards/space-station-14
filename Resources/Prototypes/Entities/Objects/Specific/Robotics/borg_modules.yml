@@ -464,12 +464,6 @@
     hands:
     - item: SprayPainterBorg
     - item: CrayonBorg
-    - hand:
-        emptyRepresentative: SprayPainterAmmo
-        emptyLabel: borg-slot-painter-ammo-empty
-        whitelist:
-          components:
-          - SprayPainterAmmo
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: artistry-module }
 

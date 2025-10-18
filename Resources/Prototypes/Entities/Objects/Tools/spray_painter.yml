@@ -50,7 +50,7 @@
 - type: entity
   parent: SprayPainter
   name: experimental spray painter
-  description: An experimental recharging spray painter that can infinitely replicate the paint inside, so long as some remains.
+  description: An experimental recharging spray painter that can infinitely replicate compressed paint.
   id: SprayPainterBorg
   suffix: Borg
   components:
