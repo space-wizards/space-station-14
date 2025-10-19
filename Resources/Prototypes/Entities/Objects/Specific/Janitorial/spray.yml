@@ -91,7 +91,7 @@
   description: BLAM!-brand non-foaming space cleaner!
   id: SprayBottleSpaceCleaner
   parent: SprayBottle
-  suffix: ""
+  suffix: Space Cleaner
   components:
   - type: SolutionContainerManager
     solutions:
@@ -110,7 +110,7 @@
   parent: MegaSprayBottle
   id: MegaSprayBottleSpaceCleaner
   description: BLAM!-brand non-foaming space cleaner, now in a bigger package for those huge blood puddles!
-  suffix: ""
+  suffix: Space Cleaner
   components:
   - type: SolutionContainerManager
     solutions:
