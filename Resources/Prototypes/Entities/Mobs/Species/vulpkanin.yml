@@ -17,7 +17,7 @@
   - type: Speech
     speechSounds: Vulpkanin
     speechVerb: Vulpkanin
-    allowedEmotes: [ 'Bark', 'Snarl', 'Whine', 'Howl', 'Growl' ]
+    allowedEmotes: [ 'Bark', 'Snarl', 'Howl', 'Growl' ]
   - type: Vocal
     sounds:
       Male: MaleVulpkanin
