@@ -20,8 +20,6 @@
     - Telecrystal
     balance:
       Telecrystal: 0
-  - type: Stylesheet
-    stylesheet: Syndicate
 
 - type: entity
   id: StorePresetSpellbook
