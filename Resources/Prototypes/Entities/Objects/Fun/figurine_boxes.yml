@@ -106,15 +106,21 @@
       - id: ToyFigurineNukieCommander
         prob: 0.50
         orGroup: SpacemenFig
-      - id: ToyGriffin
+      - id: ToyFigurineGriffin
         prob: 0.50
         orGroup: SpacemenFig
-      - id: ToyOwlman
+      - id: ToyFigurineOwlman
         prob: 0.50
         orGroup: SpacemenFig
-      - id: ToySkeleton
+      - id: ToyFigurineSkeleton
         prob: 0.50
         orGroup: SpacemenFig
+      - id: ToyFigurineSkeleton
+        prob: 0.50
+        orGroup: SpacemenFig
+      - id: ToyFigurineThief
+        prob: 0.30
+        orgroup: SpacemenFig
       - id: ToyFigurineRatKing
         prob: 0.30
         orGroup: SpacemenFig

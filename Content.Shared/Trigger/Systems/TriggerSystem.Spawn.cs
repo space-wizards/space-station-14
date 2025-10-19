@@ -1,4 +1,5 @@
-﻿using Content.Shared.Trigger.Components.Effects;
+﻿using Content.Shared.GameTicking;
+using Content.Shared.Trigger.Components.Effects;
 using Content.Shared.Trigger.Components.Triggers;
 using Robust.Shared.Prototypes;
 
@@ -9,6 +10,7 @@ public sealed partial class TriggerSystem
     private void InitializeSpawn()
     {
         SubscribeLocalEvent<TriggerOnSpawnComponent, MapInitEvent>(OnSpawnInit);
+        SubscribeLocalEvent<TriggerOnPlayerSpawnCompleteComponent, PlayerSpawnCompleteEvent>(OnPlayerSpawn);
 
         SubscribeLocalEvent<SpawnOnTriggerComponent, TriggerEvent>(HandleSpawnOnTrigger);
         SubscribeLocalEvent<SpawnEntityTableOnTriggerComponent, TriggerEvent>(HandleSpawnTableOnTrigger);
@@ -16,6 +18,11 @@ public sealed partial class TriggerSystem
     }
 
     private void OnSpawnInit(Entity<TriggerOnSpawnComponent> ent, ref MapInitEvent args)
+    {
+        Trigger(ent.Owner, null, ent.Comp.KeyOut);
+    }
+
+    private void OnPlayerSpawn(Entity<TriggerOnPlayerSpawnCompleteComponent> ent, ref PlayerSpawnCompleteEvent args)
     {
         Trigger(ent.Owner, null, ent.Comp.KeyOut);
     }

@@ -6,7 +6,8 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
-using Content.Shared.EntityEffects.Effects;
+using Content.Shared.EntityEffects.Effects.Solution;
+using Content.Shared.EntityEffects.Effects.Transform;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
 using Content.Shared.Forensics.Components;
@@ -149,7 +150,9 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         {
             switch (effect)
             {
-                case CreateEntityReactionEffect: // Prevent entities from spawning in the bloodstream
+                // TODO: Rather than this, ReactionAttempt should allow systems to remove effects from the list before the reaction.
+                // TODO: I think there's a PR up on the repo for this and if there isn't I'll make one -Princess
+                case EntityEffects.Effects.EntitySpawning.SpawnEntity: // Prevent entities from spawning in the bloodstream
                 case AreaReactionEffect: // No spontaneous smoke or foam leaking out of blood vessels.
                     args.Cancelled = true;
                     return;
@@ -214,7 +217,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
         // TODO: Replace with RandomPredicted once the engine PR is merged
         // Use both the receiver and the damage causing entity for the seed so that we have different results for multiple attacks in the same tick
-        var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(ent).Id, GetNetEntity(args.Origin)?.Id ?? 0 });
+        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id, GetNetEntity(args.Origin)?.Id ?? 0 );
         var rand = new System.Random(seed);
         var prob = Math.Clamp(totalFloat / 25, 0, 1);
         if (totalFloat > 0 && rand.Prob(prob))
