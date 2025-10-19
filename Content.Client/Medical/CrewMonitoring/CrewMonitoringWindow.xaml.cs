@@ -361,6 +361,17 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         MapClicked?.Invoke(coordinates);
     }
 
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            NavMap.TrackedEntitySelectedAction -= SetTrackedEntityFromNavMap;
+            NavMap.MapClicked -= OnNavMapClicked;
+        }
+
+        base.Dispose(disposing);
+    }
+
     private void UpdateSensorsTable(NetEntity? currTrackedEntity, NetEntity? prevTrackedEntity)
     {
         foreach (var sensor in SensorsTable.Children)

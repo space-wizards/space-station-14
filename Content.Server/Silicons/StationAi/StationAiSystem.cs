@@ -40,6 +40,7 @@ using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Log;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -69,6 +70,8 @@ public sealed class StationAiSystem : SharedStationAiSystem
     [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly SuitSensorSystem _suitSensors = default!;
     [Dependency] private readonly FollowerSystem _followerSystem = default!;
+
+    private readonly ISawmill _warpSawmill = Logger.GetSawmill("stationai.warp");
 
     private readonly HashSet<Entity<StationAiCoreComponent>> _stationAiCores = new();
 
@@ -105,10 +108,16 @@ public sealed class StationAiSystem : SharedStationAiSystem
     private void OnStationAiWarpRequest(StationAiWarpRequestEvent msg, EntitySessionEventArgs args)
     {
         if (args.SenderSession.AttachedEntity is not { Valid: true } actor || !HasComp<StationAiHeldComponent>(actor))
+        {
+            _warpSawmill.Debug($"Ignoring warp target request from session {args.SenderSession.UserId} without a valid Station AI entity.");
             return;
+        }
 
         if (!TryGetCore(actor, out var coreEntity) || coreEntity.Comp == null)
+        {
+            _warpSawmill.Warning($"Station AI {Name(actor)} ({actor}) requested warp targets but is not inserted into a core.");
             return;
+        }
 
         var aiStation = _station.GetOwningStation(coreEntity.Owner);
         var targets = new List<StationAiWarpTarget>();
@@ -116,21 +125,34 @@ public sealed class StationAiSystem : SharedStationAiSystem
         CollectCrewWarpTargets(actor, aiStation, targets);
         CollectLocationWarpTargets(actor, aiStation, coreEntity.Comp.RemoteEntity, targets);
 
+        if (targets.Count == 0)
+            _warpSawmill.Debug($"No warp targets available for Station AI {Name(actor)} ({actor}).");
+
         RaiseNetworkEvent(new StationAiWarpTargetsEvent(targets), args.SenderSession.Channel);
     }
 
     private void OnStationAiWarpToTarget(StationAiWarpToTargetEvent msg, EntitySessionEventArgs args)
     {
         if (args.SenderSession.AttachedEntity is not { Valid: true } actor || !HasComp<StationAiHeldComponent>(actor))
+        {
+            _warpSawmill.Debug($"Ignoring warp request from session {args.SenderSession.UserId} without a valid Station AI entity.");
             return;
+        }
 
         var target = GetEntity(msg.Target);
         if (!Exists(target))
+        {
+            _warpSawmill.Warning($"Station AI {Name(actor)} ({actor}) attempted to warp to missing entity {msg.Target}.");
             return;
+        }
 
-        TryWarpEyeToEntity(actor, target);
+        if (!TryWarpEyeToEntity(actor, target))
+            _warpSawmill.Debug($"Station AI {Name(actor)} ({actor}) warp to {Name(target)} ({target}) rejected by TryWarpEyeToEntity.");
     }
 
+    /// <summary>
+    /// Populates the warp target buffer with crew members whose suit sensors are broadcasting coordinates.
+    /// </summary>
     private void CollectCrewWarpTargets(EntityUid actor, EntityUid? aiStation, List<StationAiWarpTarget> buffer)
     {
         var processed = new HashSet<EntityUid>();
@@ -174,13 +196,19 @@ public sealed class StationAiSystem : SharedStationAiSystem
         while (query.MoveNext(out var uid, out var warp, out var _))
         {
             if (remoteEntity == uid)
+            {
+                _warpSawmill.Debug($"Skipping remote entity {uid} while building warp locations for Station AI {Name(actor)} ({actor}).");
                 continue;
+            }
 
             if (aiStation is { } station)
             {
                 var warpStation = _station.GetOwningStation(uid);
                 if (warpStation != station)
+                {
+                    _warpSawmill.Debug($"Skipping warp point {Name(uid)} ({uid}) outside AI station {station}.");
                     continue;
+                }
             }
 
             var name = warp.Location ?? Name(uid);

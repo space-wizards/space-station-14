@@ -3,6 +3,7 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
 using Robust.Shared.Map;
+using Robust.Shared.Localization;
 
 namespace Content.Client.Medical.CrewMonitoring;
 
@@ -65,7 +66,7 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
                 continue;
 
             if (!LocalizedNames.TryGetValue(netEntity, out var name))
-                name = Loc.GetString("navmap-unknown-entity");
+                name = Loc.GetString("navmap-unknown-target");
 
             var message = name + "\n" + Loc.GetString("navmap-location",
                 ("x", MathF.Round(blip.Coordinates.X)),
