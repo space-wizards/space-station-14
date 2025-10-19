@@ -79,9 +79,8 @@ namespace Content.Server.IoC
             IoCManager.Register<MultiServerKickManager>();
             IoCManager.Register<CVarControlManager>();
 
-            var bwoinkInstance = new ServerBwoinkManager(); // There HAS to be a better way of doing this.
-            IoCManager.RegisterInstance<ServerBwoinkManager>(bwoinkInstance);
-            IoCManager.RegisterInstance<SharedBwoinkManager>(bwoinkInstance);
+            IoCManager.Register<ServerBwoinkManager>();
+            IoCManager.Register<SharedBwoinkManager>();
 
             IoCManager.Register<DiscordLink>();
             IoCManager.Register<DiscordChatLink>();
