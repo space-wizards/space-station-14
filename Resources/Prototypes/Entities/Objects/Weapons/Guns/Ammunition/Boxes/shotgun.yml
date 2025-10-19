@@ -34,20 +34,24 @@
 - type: entity
   parent: AmmoProviderShotgunShell
   id: BoxBeanbag
-  name: shell box (beanbag)
+  name: ammunition box (.50 beanbag)
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunBeanbag
+    - type: MagazineVisuals
+      magState: mag-beanbag
+      steps: 5
+      zeroVisible: false
     - type: Sprite
       layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
-      - state: mag-1
+      - state: mag-beanbag-1
         map: ["enum.GunVisualLayers.Mag"]
       - state: beanbag
 
 - type: entity
-  name: shell box (lethal)
+  name: ammunition box (.50 pellet)
   parent: AmmoProviderShotgunShell
   id: BoxLethalshot
   components:
@@ -62,99 +66,115 @@
       - state: lethal
 
 - type: entity
-  name: shell box (slug)
+  name: ammunition box (.50 slug)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunSlug
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunSlug
     - type: MagazineVisuals
-      magState: mag-alt
+      magState: mag-slug
       steps: 5
       zeroVisible: false
     - type: Sprite
       layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
-      - state: mag-alt-1
+      - state: mag-slug-1
         map: ["enum.GunVisualLayers.Mag"]
       - state: slug
 
 - type: entity
-  name: shell box (flare)
+  name: ammunition box (.50 flare)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunFlare
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunFlare
+    - type: MagazineVisuals
+      magState: mag-flare
+      steps: 5
+      zeroVisible: false
     - type: Sprite
       layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
-      - state: mag-1
+      - state: mag-flare-1
         map: ["enum.GunVisualLayers.Mag"]
       - state: flare
 
 - type: entity
-  name: shell box (incendiary)
+  name: ammunition box (.50 incendiary)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunIncendiary
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunIncendiary
+    - type: MagazineVisuals
+      magState: mag-incend
+      steps: 5
+      zeroVisible: false
     - type: Sprite
       layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
-      - state: mag-1
+      - state: mag-incend-1
         map: ["enum.GunVisualLayers.Mag"]
       - state: incendiary
 
 - type: entity
-  name: shell box (uranium)
+  name: ammunition box (.50 uranium)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunUranium
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunUranium
     - type: MagazineVisuals
-      magState: mag-alt
+      magState: mag-uranium
       steps: 5
       zeroVisible: false
     - type: Sprite
       layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
-      - state: mag-alt-1
+      - state: mag-uranium-1
         map: ["enum.GunVisualLayers.Mag"]
       - state: uranium
 
 - type: entity
-  name: shell box (practice)
+  name: ammunition box (.50 practice)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunPractice
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunPractice
+    - type: MagazineVisuals
+      magState: mag-practice
+      steps: 5
+      zeroVisible: false
     - type: Sprite
       layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
-      - state: mag-1
+      - state: mag-practice-1
         map: ["enum.GunVisualLayers.Mag"]
       - state: practice
 
 - type: entity
-  name: shell box (tranquilizer)
+  name: ammunition box (.50 tranquilizer)
   parent: AmmoProviderShotgunShell
   id: BoxShellTranquilizer
   components:
     - type: BallisticAmmoProvider
       proto: ShellTranquilizer
+    - type: MagazineVisuals
+      magState: mag-tranq
+      steps: 5
+      zeroVisible: false
     - type: Sprite
       layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
-      - state: mag-1
+      - state: mag-tranq-1
         map: ["enum.GunVisualLayers.Mag"]
       - state: tranquilizer

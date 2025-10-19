@@ -89,6 +89,7 @@ holopad-medical-paramedic = Medical - Paramedic
 holopad-medical-virology = Medical - Virology
 holopad-medical-front = Medical - Front
 holopad-medical-breakroom = Medical - Breakroom
+holopad-medical-clinic = Medical - Clinic
 
 # Cargo
 holopad-cargo-front = Cargo - Front

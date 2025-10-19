@@ -62,7 +62,7 @@ public sealed class MiningOverlay : Overlay
             if (xform.MapID != args.MapId || !sprite.Visible)
                 continue;
 
-            if (!sprite.LayerMapTryGet(MiningScannerVisualLayers.Overlay, out var idx))
+            if (!_sprite.LayerMapTryGet((ore, sprite), MiningScannerVisualLayers.Overlay, out var idx, false))
                 continue;
             var layer = sprite[idx];
 
@@ -85,10 +85,10 @@ public sealed class MiningOverlay : Overlay
 
             var alpha = animTime < viewerComp.AnimationDuration
                 ? 0
-                : (float) Math.Clamp((animTime - viewerComp.AnimationDuration) / viewerComp.AnimationDuration, 0f, 1f);
+                : (float)Math.Clamp((animTime - viewerComp.AnimationDuration) / viewerComp.AnimationDuration, 0f, 1f);
             var color = Color.White.WithAlpha(alpha);
 
-            handle.DrawTexture(texture, -(Vector2) texture.Size / 2f / EyeManager.PixelsPerMeter, layer.Rotation, modulate: color);
+            handle.DrawTexture(texture, -(Vector2)texture.Size / 2f / EyeManager.PixelsPerMeter, layer.Rotation, modulate: color);
 
         }
         handle.SetTransform(Matrix3x2.Identity);

@@ -37,7 +37,7 @@ public sealed class ItemCabinetSystem : EntitySystem
     private void OnMapInit(Entity<ItemCabinetComponent> ent, ref MapInitEvent args)
     {
         // update at mapinit to avoid copy pasting locked: true and locked: false for each closed/open prototype
-        SetSlotLock(ent, !_openable.IsOpen(ent));
+        SetSlotLock(ent, _openable.IsClosed(ent, null));
     }
 
     private void UpdateAppearance(Entity<ItemCabinetComponent> ent)

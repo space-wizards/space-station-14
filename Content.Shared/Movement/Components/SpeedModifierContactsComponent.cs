@@ -4,19 +4,33 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Movement.Components;
 
-[NetworkedComponent, RegisterComponent]
-[AutoGenerateComponentState]
-[Access(typeof(SpeedModifierContactsSystem))]
+/// <summary>
+/// Component that modifies the movement speed of other entities that come into contact with the entity this component is added to.
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SpeedModifierContactsSystem))]
 public sealed partial class SpeedModifierContactsComponent : Component
 {
-    [DataField("walkSpeedModifier"), ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
+    /// <summary>
+    /// The modifier applied to the walk speed of entities that come into contact with the entity this component is added to.
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public float WalkSpeedModifier = 1.0f;
 
-    [AutoNetworkedField]
-    [DataField("sprintSpeedModifier"), ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// The modifier applied to the sprint speed of entities that come into contact with the entity this component is added to.
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public float SprintSpeedModifier = 1.0f;
 
-    [DataField("ignoreWhitelist")]
+    /// <summary>
+    /// Indicates whether this component affects the movement speed of airborne entities that come into contact with the entity this component is added to.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool AffectAirborne;
+
+    /// <summary>
+    /// A whitelist of entities that should be ignored by this component's speed modifiers.
+    /// </summary>
+    [DataField]
     public EntityWhitelist? IgnoreWhitelist;
 }

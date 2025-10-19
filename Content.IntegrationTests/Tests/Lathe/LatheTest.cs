@@ -26,6 +26,7 @@ public sealed class LatheTest
         var compFactory = server.ResolveDependency<IComponentFactory>();
         var materialStorageSystem = server.System<SharedMaterialStorageSystem>();
         var whitelistSystem = server.System<EntityWhitelistSystem>();
+        var latheSystem = server.System<SharedLatheSystem>();
 
         await server.WaitAssertion(() =>
         {
@@ -74,27 +75,31 @@ public sealed class LatheTest
                         }
                     }
 
-                    // Collect all the recipes assigned to this lathe
-                    var recipes = new List<ProtoId<LatheRecipePrototype>>();
-                    recipes.AddRange(latheComp.StaticRecipes);
-                    recipes.AddRange(latheComp.DynamicRecipes);
+                    // Collect all possible recipes assigned to this lathe
+                    var recipes = new HashSet<ProtoId<LatheRecipePrototype>>();
+                    latheSystem.AddRecipesFromPacks(recipes, latheComp.StaticPacks);
+                    latheSystem.AddRecipesFromPacks(recipes, latheComp.DynamicPacks);
                     if (latheProto.TryGetComponent<EmagLatheRecipesComponent>(out var emagRecipesComp, compFactory))
                     {
-                        recipes.AddRange(emagRecipesComp.EmagStaticRecipes);
-                        recipes.AddRange(emagRecipesComp.EmagDynamicRecipes);
+                        latheSystem.AddRecipesFromPacks(recipes, emagRecipesComp.EmagStaticPacks);
+                        latheSystem.AddRecipesFromPacks(recipes, emagRecipesComp.EmagDynamicPacks);
                     }
 
                     // Check each recipe assigned to this lathe
                     foreach (var recipeId in recipes)
                     {
-                        Assert.That(protoMan.TryIndex(recipeId, out var recipeProto));
+                        if (!protoMan.TryIndex(recipeId, out var recipeProto))
+                        {
+                            Assert.Fail($"Lathe recipe '{recipeId}' does not exist");
+                            continue;
+                        }
 
                         // Track the total material volume of the recipe
                         var totalQuantity = 0;
                         // Check each material called for by the recipe
                         foreach (var (materialId, quantity) in recipeProto.Materials)
                         {
-                            Assert.That(protoMan.TryIndex(materialId, out var materialProto));
+                            Assert.That(protoMan.HasIndex(materialId), $"Material '{materialId}' does not exist");
                             // Make sure the material is accepted by the lathe
                             Assert.That(acceptedMaterials, Does.Contain(materialId), $"Lathe {latheProto.ID} has recipe {recipeId} but does not accept any materials containing {materialId}");
                             totalQuantity += quantity;

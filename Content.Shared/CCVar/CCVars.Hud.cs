@@ -19,6 +19,15 @@ public sealed partial class CCVars
     public static readonly CVarDef<float> HudHeldItemOffset =
         CVarDef.Create("hud.held_item_offset", 28f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
+    /// <summary>
+    ///     Displays framerate counter
+    /// </summary>
     public static readonly CVarDef<bool> HudFpsCounterVisible =
         CVarDef.Create("hud.fps_counter_visible", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    ///     Displays the fork ID and version number
+    /// </summary>
+    public static readonly CVarDef<bool> HudVersionWatermark =
+        CVarDef.Create("hud.version_watermark", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 }
