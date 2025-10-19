@@ -66,8 +66,8 @@ namespace Content.Client.IoC
             collection.Register<ClientBwoinkManager>();
 
             var bwoinkInstance = new ClientBwoinkManager(); // There HAS to be a better way of doing this.
-            IoCManager.RegisterInstance<ClientBwoinkManager>(bwoinkInstance);
-            IoCManager.RegisterInstance<SharedBwoinkManager>(bwoinkInstance);
+            collection.RegisterInstance<ClientBwoinkManager>(bwoinkInstance);
+            collection.RegisterInstance<SharedBwoinkManager>(bwoinkInstance);
         }
     }
 }
