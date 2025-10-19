@@ -191,28 +191,29 @@ public sealed class CargoTest
                         // Spawn a slice
 
                         var sliceCollections = EntitySpawnCollection.GetSpawns(sliceable.Slices)
-                            .GroupBy(x => x)
-                            .Select(g => g.ToList())
-                            .ToList();
+                                                                    .GroupBy(x => x);
 
                         foreach (var sliceList in sliceCollections)
                         {
-                            foreach (var sliceProto in sliceList)
+                            var slice = entManager.SpawnEntity(sliceList.Key, coord);
+
+                            // See if the slice also counts for this bounty entry
+                            if (!cargo.IsValidBountyEntry(slice, entry))
                             {
-                                var slice = entManager.SpawnEntity(sliceProto, coord);
-
-                                // See if the slice also counts for this bounty entry
-                                if (!cargo.IsValidBountyEntry(slice, entry))
-                                {
-                                    entManager.DeleteEntity(slice);
-                                    continue;
-                                }
-
                                 entManager.DeleteEntity(slice);
-
-                                // If for some reason it can only make one slice, that's okay, I guess
-                                Assert.That(sliceList.Count, Is.EqualTo(1), $"{proto} counts as part of cargo bounty {bounty.ID} and slices into {sliceList.Count} slices which count for the same bounty!");
+                                continue;
                             }
+
+                            entManager.DeleteEntity(slice);
+
+                            // If for some reason it can only make one slice, that's okay, I guess
+                            var count = sliceList.Count();
+                            Assert.That(
+                                count,
+                                Is.EqualTo(1),
+                                $"{proto} counts as part of cargo bounty {bounty.ID} " +
+                                $"and slices into {count} slices which count for the same bounty!"
+                            );
                         }
                     }
                 }
