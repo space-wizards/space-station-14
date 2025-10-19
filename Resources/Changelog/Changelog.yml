@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Hitlinemoss
-  changes:
-  - message: The security mime mask has been added to the SecDrobe's manager inventory.
-    type: Add
-  id: 8621
-  time: '2025-06-05T23:23:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37890
 - author: ArtisticRoomba
   changes:
   - message: Most syndicate contraband have been given sell prices (depending on the
@@ -3940,3 +3933,11 @@
   id: 9122
   time: '2025-10-18T21:39:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39104
+- author: JackRyd3r
+  changes:
+  - message: You can now put the Energy Magnum to into jackboots/combat boots and
+      security belts/carriers
+    type: Fix
+  id: 9123
+  time: '2025-10-19T06:55:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40974
