@@ -22,6 +22,9 @@
             - MobLayer
           hard: true
     - type: Pullable
+    - type: Vehicle
+    - type: ContainerVehicle
+      containerId: entity_storage
     - type: CardboardBox
       effectSound: /Audio/Effects/chime.ogg
     - type: InputMover

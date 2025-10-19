@@ -9,6 +9,10 @@
   "states": [
     {
       "name": "vehicle",
+      "directions": 4
+    },
+    {
+      "name": "vehicle-moving",
       "directions": 4,
       "delays": [
         [
