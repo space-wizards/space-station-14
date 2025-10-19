@@ -6,7 +6,7 @@ using Robust.Shared.Map;
 
 namespace Content.Server.NPC.Systems;
 
-public sealed class NPCUseActionOnTargetSystem : EntitySystem
+public sealed class NpcUseActionOnTargetSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actions = default!;
 
@@ -74,7 +74,7 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
         if (ev.Invalid)
             return false;
 
-        return _actions.TryValidAction(user.Owner, actionEnt, ev.EntTarget, ev.EntityCoordinates, false);
+        return _actions.TryPerformAction(user.Owner, actionEnt, ev.EntTarget, ev.EntityCoordinates, false);
     }
 
     public override void Update(float frameTime)
@@ -107,14 +107,14 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
     {
         ev.EntTarget = ev.Target;
     }
+}
 
-    [ByRefEvent]
-    public struct ValidateNpcTargetEvent(EntityUid target)
-    {
-        public readonly EntityUid Target = target;
+[ByRefEvent]
+public struct ValidateNpcTargetEvent(EntityUid target)
+{
+    public readonly EntityUid Target = target;
 
-        public bool Invalid;
-        public EntityUid? EntTarget;
-        public EntityCoordinates? EntityCoordinates;
-    }
+    public bool Invalid;
+    public EntityUid? EntTarget;
+    public EntityCoordinates? EntityCoordinates;
 }
