@@ -1,5 +1,5 @@
 - type: entity
-  name: bible
+  name: space bible
   description: New Interstellar Version 2340.
   parent: BaseStorageItem
   id: Bible
@@ -84,11 +84,79 @@
     sprite: Objects/Specific/Chapel/necronomicon.rsi
 
 - type: entity
+  parent: BaseAction
   id: ActionBibleSummon
   name: Summon familiar
   description: Summon a familiar that will aid you and gain humanlike intelligence once inhabited by a soul.
   components:
-  - type: InstantAction
+  - type: Action
     icon: { sprite: Clothing/Head/Hats/witch.rsi, state: icon }
-    event: !type:SummonActionEvent
     useDelay: 1
+  - type: InstantAction
+    event: !type:SummonActionEvent
+
+- type: entity
+  id: BibleDruid
+  name: druidic tablet
+  parent: Bible
+  description: "It's the mystery of the druids!"
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/mysteryofthedruids.rsi
+  - type: Item
+    sprite: Objects/Specific/Chapel/mysteryofthedruids.rsi
+
+- type: entity
+  id: BibleCommunistManifesto
+  name: communist manifesto
+  parent: Bible
+  description: "Remove the mask of humanity from Capital."
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/communistmanifesto.rsi
+  - type: Item
+    sprite: Objects/Specific/Chapel/communistmanifesto.rsi
+
+- type: entity
+  id: BibleNarsie
+  name: tome of nar'sie
+  parent: Bible
+  description: "What could possibly go wrong with a book covered in blood?"
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/tomeofnarsie.rsi
+  - type: Item
+    sprite: Objects/Specific/Chapel/tomeofnarsie.rsi
+
+- type: entity
+  id: BibleNanoTrasen
+  name: codex nanotrasimus
+  parent: Bible
+  description: "A familiar book containing the Sacred Operating Procedures."
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/codexnanotrasimus.rsi
+  - type: Item
+    sprite: Objects/Specific/Chapel/codexnanotrasimus.rsi
+
+- type: entity
+  id: BibleHonk
+  name: mirth of the honkmother
+  parent: Bible
+  description: "Oh great and glorious Mother, Mistress of Mirth, Matron of Mask and Merriments, Blessed is she amongst us jesters."
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/honk.rsi
+  - type: Item
+    sprite: Objects/Specific/Chapel/honk.rsi
+
+- type: entity
+  id: BibleRatvar
+  name: tablet of ratvar
+  parent: Bible
+  description: "A holy relic of the Clockwork Cult, blessed by the Clockwork Justice, Ratvar."
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/ratvartablet.rsi
+  - type: Item
+    sprite: Objects/Specific/Chapel/ratvartablet.rsi

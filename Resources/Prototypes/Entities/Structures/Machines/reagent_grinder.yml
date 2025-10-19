@@ -32,7 +32,7 @@
         - TabletopMachineLayer
   - type: Sprite
     sprite: Structures/Machines/grinder.rsi
-    drawdepth: SmallObjects
+    drawdepth: LargeObjects
     snapCardinals: true
     offset: "0.0,0.4"
     layers:
@@ -73,6 +73,7 @@
       tags:
       - HighRiskItem #ian meat
     efficiency: 0.9
+    reclaimMaterials: false # Materials have ExtractableComponent, which is whitelisted, so we have to avoid infinite recycling loops
     onlyReclaimDrainable: false
     solutionContainerId: output
   - type: Sprite

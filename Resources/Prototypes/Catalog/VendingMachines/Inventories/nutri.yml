@@ -15,12 +15,11 @@
     ChemistryBottleRobustHarvest: 3
     ChemistryBottleEZNutrient: 3
     Bucket: 3
-    DiseaseSwab: 20
+    BoxMouthSwab: 1
     BoxAgrichem: 1
     #TO DO:
     #plant analyzer
   contrabandInventory:
     ChemistryBottleUnstableMutagen: 1
     Joint: 1
-  emaggedInventory:
     ChemistryBottleLeft4Zed: 1

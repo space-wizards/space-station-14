@@ -1,22 +1,31 @@
 ﻿using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Stacks;
 
 [Prototype]
-public sealed partial class StackPrototype : IPrototype
+public sealed partial class StackPrototype : IPrototype, IInheritingPrototype
 {
-    [ViewVariables]
+    ///  <inheritdoc />
     [IdDataField]
     public string ID { get; private set; } = default!;
+
+    ///  <inheritdoc />
+    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<StackPrototype>))]
+    public string[]? Parents { get; private set; }
+
+    ///  <inheritdoc />
+    [NeverPushInheritance]
+    [AbstractDataField]
+    public bool Abstract { get; private set; }
 
     /// <summary>
     ///     Human-readable name for this stack type e.g. "Steel"
     /// </summary>
     /// <remarks>This is a localization string ID.</remarks>
     [DataField]
-    public string Name { get; private set; } = string.Empty;
+    public LocId Name { get; private set; } = string.Empty;
 
     /// <summary>
     ///     An icon that will be used to represent this stack type.

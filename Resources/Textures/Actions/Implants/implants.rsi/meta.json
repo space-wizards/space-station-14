@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Implant icons taken from Citadel Station at commit https://github.com/Citadel-Station-13/Citadel-Station-13/commit/a2f6a7c20763da3d2f3cfb982e9ccd7922df6162",
+  "copyright": "Implant icons taken from Citadel Station at commit https://github.com/Citadel-Station-13/Citadel-Station-13/commit/a2f6a7c20763da3d2f3cfb982e9ccd7922df6162. The chameleon icon is a combination of the red beret (https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e) and the CMO beret (https://github.com/space-wizards/space-station-14/pull/13489) made by Beck",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,9 @@
     },
     {
       "name": "explosive"
+    },
+    {
+      "name": "chameleon"
     }
   ]
 }

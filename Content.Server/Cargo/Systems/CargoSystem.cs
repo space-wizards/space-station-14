@@ -1,29 +1,26 @@
 using Content.Server.Cargo.Components;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.Popups;
-using Content.Server.Shuttles.Systems;
 using Content.Server.Stack;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration.Logs;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Cargo;
-using Content.Shared.Cargo.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Paper;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 using Robust.Shared.Random;
 
 namespace Content.Server.Cargo.Systems;
 
 public sealed partial class CargoSystem : SharedCargoSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -36,7 +33,6 @@ public sealed partial class CargoSystem : SharedCargoSystem
     [Dependency] private readonly PricingSystem _pricing = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly ShuttleConsoleSystem _console = default!;
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
@@ -65,36 +61,14 @@ public sealed partial class CargoSystem : SharedCargoSystem
         InitializeShuttle();
         InitializeTelepad();
         InitializeBounty();
+        InitializeFunds();
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        UpdateConsole(frameTime);
+        UpdateConsole();
         UpdateTelepad(frameTime);
         UpdateBounty();
-    }
-
-    [PublicAPI]
-    public void UpdateBankAccount(Entity<StationBankAccountComponent?> ent, int balanceAdded)
-    {
-        if (!Resolve(ent, ref ent.Comp))
-            return;
-
-        ent.Comp.Balance += balanceAdded;
-
-        var ev = new BankBalanceUpdatedEvent(ent, ent.Comp.Balance);
-
-        var query = EntityQueryEnumerator<BankClientComponent, TransformComponent>();
-        while (query.MoveNext(out var client, out var comp, out var xform))
-        {
-            var station = _station.GetOwningStation(client, xform);
-            if (station != ent)
-                continue;
-
-            comp.Balance = ent.Comp.Balance;
-            Dirty(client, comp);
-            RaiseLocalEvent(client, ref ev);
-        }
     }
 }

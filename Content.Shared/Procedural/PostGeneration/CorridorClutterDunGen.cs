@@ -1,4 +1,6 @@
+using Content.Shared.EntityTable;
 using Content.Shared.Storage;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Procedural.PostGeneration;
 
@@ -14,5 +16,5 @@ public sealed partial class CorridorClutterDunGen : IDunGenLayer
     /// The default starting bulbs
     /// </summary>
     [DataField(required: true)]
-    public List<EntitySpawnEntry> Contents = new();
+    public ProtoId<EntityTablePrototype> Contents;
 }
