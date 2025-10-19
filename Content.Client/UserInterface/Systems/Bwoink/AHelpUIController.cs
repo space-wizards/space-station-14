@@ -68,9 +68,9 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
         if (!_clyde.IsFocused) // wake up samurai, we have a city to burn
             _clyde.RequestWindowAttention();
 
-        if (_bwoinkSoundEnabled)
+        if (_bwoinkSoundEnabled && _bwoinkManager.CachedSounds.TryGetValue(sender, out var sound))
         {
-            _bwoinkManager.CachedSounds[sender]?.Restart();
+            sound?.Restart();
         }
 
         if (!IsOpen && isManager)
