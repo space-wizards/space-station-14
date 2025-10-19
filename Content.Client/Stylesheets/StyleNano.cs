@@ -530,10 +530,8 @@ namespace Content.Client.Stylesheets
             itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
             itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
 
-            // var squareTex = resCache.GetTexture("/Textures/Interface/Nano/square.png");
             var listContainerButton = new StyleBoxFlat
             {
-                // Texture = squareTex,
                 ContentMarginLeftOverride = 10
             };
 
@@ -1302,13 +1300,6 @@ namespace Content.Client.Stylesheets
                         new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorDefault),
                     }),
 
-                // new StyleRule(
-                //     new SelectorElement(typeof(MenuButton), new[] {MenuButton.StyleClassRedTopButton}, null, new[] {Button.StylePseudoClassNormal}),
-                //     new[]
-                //     {
-                //         new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorDefaultRed),
-                //     }),
-
                 new StyleRule(
                     new SelectorElement(typeof(MenuButton), null, null, new[] {Button.StylePseudoClassNormal}),
                     new[]
@@ -1329,20 +1320,6 @@ namespace Content.Client.Stylesheets
                     {
                         new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorHovered),
                     }),
-
-                // new StyleRule(
-                //     new SelectorElement(typeof(MenuButton), new[] {MenuButton.StyleClassRedTopButton}, null, new[] {Button.StylePseudoClassHover}),
-                //     new[]
-                //     {
-                //         new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorHoveredRed),
-                //     }),
-                //
-                // new StyleRule(
-                //     new SelectorElement(typeof(Label), new[] {MenuButton.StyleClassLabelTopButton}, null, null),
-                //     new[]
-                //     {
-                //         new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
-                //     }),
 
                 // MonotoneButton (unfilled)
                 new StyleRule(
