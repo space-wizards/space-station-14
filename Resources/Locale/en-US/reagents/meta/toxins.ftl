@@ -87,3 +87,6 @@ reagent-desc-toxintrash = An awful-smelling fluid. Deadly to non-vox.
 
 reagent-name-radiatium = radiatium
 reagent-desc-radiatium = An extremely toxic and corrosive goop. Death is not an escape from it, as it metabolises in corpses.
+
+reagent-name-toxintrash = reprocessed material
+reagent-desc-toxintrash = An awful-smelling slurry efficiently refined from discarded matter. It represents a perfect, zero-waste conversion of salvage into Vox sustenance, though it is a violent poison to others.
