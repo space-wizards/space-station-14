@@ -1,0 +1,23 @@
+﻿# Actual rules
+
+- type: entity
+  id: SolidWallVineVariationPass
+  parent: BaseVariationPass
+  components:
+  - type: WallReplaceVariationPass
+  - type: EntityReplaceVariationPass
+    entitiesPerReplacementAverage: 65
+    entitiesPerReplacementStdDev: 15
+    replacements:
+    - id: WallSolidVine
+
+- type: entity
+  id: ReinforcedWallVineVariationPass
+  parent: BaseVariationPass
+  components:
+  - type: ReinforcedWallReplaceVariationPass
+  - type: EntityReplaceVariationPass
+    entitiesPerReplacementAverage: 65
+    entitiesPerReplacementStdDev: 15
+    replacements:
+    - id: WallReinforcedVine

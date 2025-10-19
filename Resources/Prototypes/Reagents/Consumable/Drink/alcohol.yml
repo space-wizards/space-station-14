@@ -169,6 +169,11 @@
         - !type:OrganType
           type: Dwarf
           shouldHave: false
+# DS14-start
+        - !type:OrganType
+          type: Xenomorph
+          shouldHave: false
+# DS14-end
         damage:
           types:
             Poison: 1

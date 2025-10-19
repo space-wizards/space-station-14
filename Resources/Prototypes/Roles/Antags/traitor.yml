@@ -48,6 +48,7 @@
     back:
     - WeaponPistolViper
     - PinpointerSyndicateNuclear
+    - PinpointerSyndicateNuclearBomb # DS14
     - DeathAcidifierImplanter
 
 - type: startingGear

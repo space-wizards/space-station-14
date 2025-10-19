@@ -1,0 +1,50 @@
+- type: entity
+  name: сабля высшего главнокомандующего
+  parent: BaseSword
+  id: ADTObjectWeaponsMeleeSupremeCommanderSabre
+  description: Даже не пытайтесь использовать её как бритву. Легенда гласит, что на её создание ушла энергия нескольких звёзд.
+  components:
+  - type: Tag
+    tags:
+    - SupremeCommanderSabre
+  - type: Sprite
+    sprite: _ADT/Objects/Weapons/Melee/supreme-commander-sabre.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.5 #Attack rate like a ScalpelShiv
+    damage:
+      types:
+        Cellular: 50
+        Radiation: 50
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+    size: Normal
+    sprite: _ADT/Objects/Weapons/Melee/supreme-commander-sabre.rsi
+  - type: DisarmMalus
+
+- type: entity
+  name: урановый клинок
+  parent: BaseSword
+  id: ADTObjectWeaponsMeleeSupremeSabre
+  description: Даже не пытайтесь использовать её как бритву. Легенда гласит, что на её создание ушла энергия нескольких звёзд.
+  components:
+  - type: Tag
+    tags:
+    - SupremeSabre
+  - type: Sprite
+    sprite: _ADT/Objects/Weapons/Melee/supreme-sabre.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.0
+    damage:
+      types:
+        Slash: 20
+        Radiation: 15
+        Blunt: -1
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+    size: Normal
+    sprite: _ADT/Objects/Weapons/Melee/supreme-sabre.rsi
+  - type: DisarmMalus

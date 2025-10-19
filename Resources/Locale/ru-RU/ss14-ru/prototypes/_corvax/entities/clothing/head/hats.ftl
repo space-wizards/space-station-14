@@ -1,9 +1,9 @@
 ent-ClothingHeadCapCentcomBlack = фуражка офицера специальных операций
     .desc = Специальная фуражка высших чинов NanoTrasen с золотой гравировкой, уже давно прошедшая не один блицкриг...
-ent-ClothingHeadCapCentcomNaval = флотская фуражка
-    .desc = Фуражка, которую носят на флоте Nanotrasen.
-ent-ClothingHeadHatBeretCentcomNaval = флотский берет
-    .desc = Берет, который носят на флоте Nanotrasen.
+ent-ClothingHeadCapCentcomNaval = фуражка Центком
+    .desc = Фуражка, которую носит персонал Nanotrasen.
+ent-ClothingHeadHatBeretCentcomNaval = берет Центком
+    .desc = Берет, который носит персонал Nanotrasen.
 ent-ClothingHeadHatERTLeaderBeret = берет лидера
     .desc = Синий берет из дюраткани со значком из золота, обозначающим его владельца как лидера ОБР.
 ent-ClothingHeadHatCapHoS = фуражка главы службы безопасности с серебренной кокардой

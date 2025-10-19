@@ -7,8 +7,6 @@
   - type: Sprite
     sprite: _ADT/Clothing/Back/ussp_attaked_backpack.rsi
     state: icon
-  - type: Item
-    size: Huge
   - type: Storage
     maxItemSize: Huge
 

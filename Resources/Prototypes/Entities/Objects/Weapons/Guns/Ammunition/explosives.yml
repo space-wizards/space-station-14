@@ -139,6 +139,12 @@
   - type: SpentAmmoVisuals
     state: frag
     suffix: false
+# DS14 start
+  - type: Tag 
+    tags:
+    - GrenadeCleanade
+# DS14 end
+
 
 - type: entity
   id: GrenadeEMP

@@ -45345,7 +45345,7 @@ entities:
     - type: Transform
       pos: -27.46916,-8.556879
       parent: 2
-- proto: ClothingNeckSith
+- proto: ClothingNeckRenegade
   entities:
   - uid: 5728
     components:

@@ -13,3 +13,9 @@
   storage:
     back:
     - ClothingNeckSecurityPilotMedal
+
+# Jumpsuit
+- type: loadout
+  id: SecurityPilotJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSecPilot

@@ -97,6 +97,26 @@
       blacklist:
         tags:
         - Book
+# DS14-start
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:EmptyContainersBehaviour
+        containers:
+        - entity_storage
+        - paper_label
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+# DS14-end
 
 - type: entity
   id: Crematorium
@@ -167,3 +187,22 @@
           False: { visible: false }
   - type: Transform
     anchored: true
+# DS14-start
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:EmptyContainersBehaviour
+        containers:
+        - entity_storage
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+# DS14-end

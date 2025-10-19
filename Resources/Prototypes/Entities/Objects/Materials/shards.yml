@@ -201,8 +201,7 @@
         Radiation: 2
   - type: ToolRefinable
     refineResult:
-    - id: SheetGlass1
-    - id: SheetUranium1
+    - id: SheetUGlass1
   - type: DamageOnTrigger
     damage:
       types:
@@ -220,7 +219,7 @@
         reagents:
         - ReagentId: Silicon
           Quantity: 5
-        - ReagentId: Uranium
+        - ReagentId: RawUranium
           Quantity: 5
   - type: Construction
     graph: UraniumShivConstruct

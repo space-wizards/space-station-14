@@ -23,8 +23,10 @@
     RadioHandheld: 6 # DS14
     ClothingNeckBodyCamera: 4 # DS14
     Bola: 2 # DS14-value
+    ClothingHeadHelmetSecurityFlashlight: 3 # DS14
   # security officers need to follow a diet regimen!
   contrabandInventory:
     FoodDonutHomer: 12
     FoodBoxDonut: 2
+    ClothingHeadHelmetBasicNeko: 1 # DS14
     #box evidence

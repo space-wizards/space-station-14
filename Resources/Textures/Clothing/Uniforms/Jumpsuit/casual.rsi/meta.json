@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by nmajask (github) for ss14, based on sprites by Tokiko (github)",
+  "copyright": "Made by nmajask (github) for ss14, based on sprites by Tokiko (github). Resprite by KingFroozy (github) for Space Station 14 server Мёртвый космос",
   "size": {
     "x": 32,
     "y": 32
@@ -14,6 +14,9 @@
       "name": "icon-jumpskirt"
     },
     {
+      "name": "icon-skirt"
+    },
+    {
       "name": "icon-shirt"
     },
     {
@@ -22,6 +25,10 @@
     },
     {
       "name": "equipped-INNERCLOTHING-jumpskirt",
+      "directions": 4
+    },
+    {
+      "name": "equipped-INNERCLOTHING-skirt",
       "directions": 4
     },
     {

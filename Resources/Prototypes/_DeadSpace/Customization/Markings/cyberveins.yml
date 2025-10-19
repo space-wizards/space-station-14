@@ -1,0 +1,47 @@
+- type: marking
+  id: AugmentsCyberveinsArmRight
+  bodyPart: RArm
+  markingCategory: Arms
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/augments/cyberveins.rsi
+    state: r_arm
+
+- type: marking
+  id: AugmentsCyberveinsArmLeft
+  bodyPart: LArm
+  markingCategory: Arms
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/augments/cyberveins.rsi
+    state: l_arm
+
+- type: marking
+  id: AugmentsCyberveinsTorso
+  bodyPart: Chest
+  markingCategory: Chest
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/augments/cyberveins.rsi
+    state: torso
+
+- type: marking
+  id: AugmentsCyberveinsLegLeft
+  bodyPart: LLeg
+  markingCategory: Legs
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/augments/cyberveins.rsi
+    state: l_leg
+
+- type: marking
+  id: AugmentsCyberveinsHead
+  bodyPart: Head
+  markingCategory: Head
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/augments/cyberveins.rsi
+    state: head
+
+- type: marking
+  id: AugmentsCyberveinsLegRight
+  bodyPart: RLeg
+  markingCategory: Legs
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/augments/cyberveins.rsi
+    state: r_leg

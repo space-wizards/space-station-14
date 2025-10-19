@@ -22,11 +22,6 @@
   equipment:
     socks: ClothingUnderwearSocksCadet
 
-- type: loadout
-  id: UnderwearWomenSocksCadet
-  equipment:
-    socks: ClothingUnderwearWomenSocksCadet
-
 # Underwear
 - type: loadout
   id: UnderwearBottomBoxersCadet

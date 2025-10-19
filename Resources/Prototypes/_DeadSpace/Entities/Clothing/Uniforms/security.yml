@@ -1,0 +1,109 @@
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitDetectiveAlt
+  name: костюм детектива с жилетом
+  description: Тот, кто носит это, олицетворяет занятость.
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/detective.rsi
+    - type: Clothing
+      sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/detective.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitDetectiveGreyAlt
+  name: нуарный костюм с жилетом
+  description: Крутой серый костюм частного сыщика с зажимом для галстука.
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/detective_grey.rsi
+    - type: Clothing
+      sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/detective_grey.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitSecPilot
+  name: комбинезон пилота службы безопасности
+  description: Комбинезон из прочного материала, обеспечивающий надёжную защиту.
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/pilot.rsi
+    - type: Clothing
+      sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/pilot.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitSecBlack
+  name: чёрный комбинезон службы безопасности
+  description: Комбинезон из прочного материала, обеспечивающий надёжную защиту.
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/security_black.rsi
+    - type: Clothing
+      sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/security_black.rsi
+
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtPencilBrigmedic
+  name: костюм-карандаш бригмедика
+  description: ифицированным и прошедшим обучение лицам. Никого не волнует, что обучение продлилось полдня.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_brigmedic.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_brigmedic.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtPencilDetectiveGrey
+  name: нуарный костюм-карандаш
+  description: Серый костюм-карандаш прекрасного сыщика с зажимом для галстука.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_detective_grey.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_detective_grey.rsi
+
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtPencilHoS
+  name: женский костюм-карандаш главы службы безопасности
+  description: С такого красивого костюма долго придёться выводить кровь.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_hos.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_hos.rsi
+
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtPencilSec
+  name: женский костюм-карандаш службы безопасности
+  description: Костюм из прочного материала, обеспечивающий надёжную защиту.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_security.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_security.rsi
+
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtPencilSeniorOfficer
+  name: женский костюм-карандаш офицера-инструктора службы безопасности
+  description: Признак мастерства и престижа.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_senior_officer.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_senior_officer.rsi
+
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtPencilWarden
+  name: женский костюм-карандаш смотрителя
+  description: Костюм-карандаш смотрителя отдела службы безопасности. Nanotrasen настоятельно не рекомендует проводить эротические игры с заключёнными.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_warden.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_warden.rsi

@@ -2,7 +2,7 @@
   parent: [BaseWeaponPowerCell, BaseGunWieldable]
   id: CartridgeLaserRifle
   name: экспериментальная лазерная винтовка
-  description: Эксперементальная лазерная винтовка которая использует энергитические картриджи для стрельбы.
+  description: Экспериментальная лазерная винтовка, которая использует энергетические картриджи для стрельбы.
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Weapons/Guns/Battery/clr.rsi
@@ -47,8 +47,8 @@
 - type: entity
   id: EnergyCartridge
   parent: BaseItem
-  name: энергитический картридж
-  description: Мощный хранитель энергии служащий для стрельбы с ЭЛВ.
+  name: энергетический картридж
+  description: Мощный хранитель энергии, служащий для стрельбы с ЭЛВ.
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Weapons/Guns/Ammunition/Magazine/energycartridge.rsi

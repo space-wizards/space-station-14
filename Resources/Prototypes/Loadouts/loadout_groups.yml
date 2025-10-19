@@ -1312,6 +1312,7 @@
   loadouts:
   - HeadofSecurityJumpsuit
   - HeadofSecurityJumpskirt
+  - HeadofSecurityJumpskirtPencil
   - HeadofSecurityTurtleneck
   - HeadofSecurityTurtleneckSkirt
   - HeadofSecurityFormalSuit
@@ -1347,7 +1348,6 @@
   name: loadout-group-head-of-security-socks
   loadouts:
   - UnderwearSocksHeadOfSecurity
-  - UnderwearWomenSocksHeadOfSecurity
 
 - type: loadoutGroup
   id: HeadofSecurityUnderwear
@@ -1373,6 +1373,7 @@
   loadouts:
   - WardenJumpsuit
   - WardenJumpskirt
+  - WardenJumpskirtPencil # DS14
 
 - type: loadoutGroup
   id: WardenOuterClothing
@@ -1386,7 +1387,6 @@
   name: loadout-group-warden-socks
   loadouts:
   - UnderwearSocksWarden
-  - UnderwearWomenSocksWarden
 
 - type: loadoutGroup
   id: WardenUnderwear
@@ -1423,6 +1423,8 @@
   - SecurityJumpskirt
   - SecurityJumpsuitGrey
   - SecurityJumpskirtGrey
+  - SecurityJumpsuitBlack # DS14
+  - SecurityJumpskirtPencil # DS14
   # - SeniorOfficerJumpsuit
   # - SeniorOfficerJumpskirt
   - TrooperUniform
@@ -1471,7 +1473,6 @@
   name: loadout-group-security-socks
   loadouts:
   - UnderwearSocksSecurityOfficer
-  - UnderwearWomenSocksSecurityOfficer
 
 - type: loadoutGroup
   id: SecurityUnderwear
@@ -1506,6 +1507,9 @@
   - DetectiveJumpskirt
   - NoirJumpsuit
   - NoirJumpskirt
+  - NoirJumpsuitAlt # DS14
+  - DetectiveJumpsuitAlt # DS14
+  - NoirJumpskirtPencil # DS14
 
 - type: loadoutGroup
   id: DetectiveBackpack
@@ -1538,7 +1542,6 @@
   name: loadout-group-detective-socks
   loadouts:
   - UnderwearSocksDetective
-  - UnderwearWomenSocksDetective
 
 - type: loadoutGroup
   id: DetectiveUnderwear
@@ -1562,7 +1565,6 @@
   name: loadout-group-security-cadet-socks
   loadouts:
   - UnderwearSocksCadet
-  - UnderwearWomenSocksCadet
 
 - type: loadoutGroup
   id: SecurityCadetUnderwear

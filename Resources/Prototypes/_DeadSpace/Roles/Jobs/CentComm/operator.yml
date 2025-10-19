@@ -14,11 +14,14 @@
   - CentralCommand
   special:
   - !type:AddImplantSpecial
-    implants: [ MindShieldImplant, TrackingImplant ]
+    implants: [ MindShieldImplant, TrackingImplant, DeathRattleImplantCentcomm ]
   - !type:AddComponentSpecial
     components:
     - type: AntagImmune
     - type: ZombieImmune
+    - type: NpcFactionMember
+      factions:
+      - CentralCommand
 
 - type: startingGear
   id: CentcomOperatorGear
@@ -26,7 +29,7 @@
     jumpsuit: ClothingUniformJumpsuitCentcomOfficial
     shoes: ClothingShoesBootsJack
     head: ClothingHeadHatCentcomcap
-    eyes: ClothingEyesGlassesSunglasses
+    # eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesColorBlack
     id: CentcomOperatorPDA
     ears: ClothingHeadsetCentCom
@@ -34,10 +37,14 @@
     belt: BoxFolderCentComClipboard
     pocket1: RubberStampCentcom
     pocket2: ClothingMaskGasCentcom
-  #   underwearb: ClothingUnderwearBottomBoxersCentcomm # DS14-Underwear
-  # underweart: ClothingUnderwearTopBraCentcomm # DS14-Underwear
-  # underwearb: ClothingUnderwearBottomPantiesCentcomm # DS14-Underwear
-  # innerClothingSkirt: ClothingUniformJumpskirtPencilCentcomOfficial
-  # storage:
-  #   back:
-  #   -
+
+- type: chameleonOutfit
+  id: CentralCommandOperatorChameleonOutfit
+  job: CentralCommandOperator
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentcomOfficial
+    shoes: ClothingShoesBootsJack
+    head: ClothingHeadHatCentcomcap
+    gloves: ClothingHandsGlovesColorBlack
+    neck: ClothingNeckTieDet
+    belt: BoxFolderCentComClipboard

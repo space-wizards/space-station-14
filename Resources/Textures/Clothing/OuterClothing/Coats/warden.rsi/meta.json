@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/2fea0a59470c476cf3f927833d3918d89cbe6af8, resprite by pyfya (discord) for Space Station 14 server Мёртвый Космос",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/2fea0a59470c476cf3f927833d3918d89cbe6af8, changed by GribGear (discord) for DS14, resprite by pyfya and inspector_jeleshka (discord) for Space Station 14 server Мёртвый Космос",
   "size": {
     "x": 32,
     "y": 32
@@ -11,22 +11,11 @@
       "name": "icon"
     },
     {
-      "name": "icon-open"
-    },
-    {
       "name": "equipped-OUTERCLOTHING",
       "directions": 4
     },
     {
       "name": "equipped-OUTERCLOTHING-vox",
-      "directions": 4
-    },
-    {
-      "name": "open-equipped-OUTERCLOTHING",
-      "directions": 4
-    },
-    {
-      "name": "open-equipped-OUTERCLOTHING-vox",
       "directions": 4
     },
     {

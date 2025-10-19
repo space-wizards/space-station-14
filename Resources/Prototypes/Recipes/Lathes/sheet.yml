@@ -124,12 +124,12 @@
     RawIron: 6000 #Twice as durable as steel, Twice the material cost
     Coal: 1000
 
-- type: latheRecipe
-  id: SheetUranium30
-  result: SheetUranium
-  completetime: 2
-  materials:
-    RawUranium: 3000
+#- type: latheRecipe
+#  id: SheetUranium30 # DS14-uranium-rework
+#  result: SheetUranium
+#  completetime: 2
+#  materials:
+#    RawUranium: 3000
 
 - type: latheRecipe
   id: SheetUGlass1
@@ -195,12 +195,12 @@
   materials:
     RawDiamond: 100
 
-- type: latheRecipe
-  id: SheetUranium1
-  result: SheetUranium1
-  completetime: 0
-  materials:
-    RawUranium: 100
+#- type: latheRecipe
+#  id: SheetUranium1 # DS14-uranium-rework
+#  result: SheetUranium1
+#  completetime: 0
+#  materials:
+#    RawUranium: 100
 
 - type: latheRecipe
   id: IngotGold1

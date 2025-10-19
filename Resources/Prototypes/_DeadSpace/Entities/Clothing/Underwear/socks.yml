@@ -439,30 +439,12 @@
 
 - type: entity
   parent: ClothingUnderwearSocksBase
-  id: ClothingUnderwearWomenSocksHeadOfSecurity
-  name: колготки главы службы безопасности
-  description: Не очень стандартные колготки главы службы безопасности.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Clothing/Underwear/Security/head_of_security/womensocks.rsi
-
-- type: entity
-  parent: ClothingUnderwearSocksBase
   id: ClothingUnderwearSocksBrigmedic
   name: носки бригмедика
   description: Стандартные носки бригмедика.
   components:
   - type: Sprite
     sprite: _DeadSpace/Clothing/Underwear/Security/brigmedic/socks.rsi
-
-- type: entity
-  parent: ClothingUnderwearSocksBase
-  id: ClothingUnderwearWomenSocksBrigmedic
-  name: колготки бригмедика
-  description: Не очень стандартные колготки бригмедика.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Clothing/Underwear/Security/brigmedic/womensocks.rsi
 
 - type: entity
   parent: ClothingUnderwearSocksBase
@@ -475,30 +457,12 @@
 
 - type: entity
   parent: ClothingUnderwearSocksBase
-  id: ClothingUnderwearWomenSocksCadet
-  name: колготки кадета СБ
-  description: Не очень стандартные колготки кадета СБ.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Clothing/Underwear/Security/cadet/womensocks.rsi
-
-- type: entity
-  parent: ClothingUnderwearSocksBase
   id: ClothingUnderwearSocksDetective
   name: носки детектива
   description: Стандартные носки детектива.
   components:
   - type: Sprite
     sprite: _DeadSpace/Clothing/Underwear/Security/detective/socks.rsi
-
-- type: entity
-  parent: ClothingUnderwearSocksBase
-  id: ClothingUnderwearWomenSocksDetective
-  name: колготки детектива
-  description: Не очень стандартные колготки детектива.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Clothing/Underwear/Security/detective/womensocks.rsi
 
 - type: entity
   parent: ClothingUnderwearSocksBase
@@ -511,15 +475,6 @@
 
 - type: entity
   parent: ClothingUnderwearSocksBase
-  id: ClothingUnderwearWomenSocksSecurityOfficer
-  name: колготки офицера СБ
-  description: Не очень стандартные колготки офицера СБ.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Clothing/Underwear/Security/security_officer/womensocks.rsi
-
-- type: entity
-  parent: ClothingUnderwearSocksBase
   id: ClothingUnderwearSocksSeniorOfficer
   name: носки инструктора СБ
   description: Стандартные носки инструктора СБ.
@@ -529,30 +484,12 @@
 
 - type: entity
   parent: ClothingUnderwearSocksBase
-  id: ClothingUnderwearWomenSocksSeniorOfficer
-  name: колготки инструктора СБ
-  description: Не очень стандартные колготки инструктора СБ.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Clothing/Underwear/Security/senior_officer/womensocks.rsi
-
-- type: entity
-  parent: ClothingUnderwearSocksBase
   id: ClothingUnderwearSocksWarden
   name: носки смотрителя
   description: Стандартные носки смотрителя.
   components:
   - type: Sprite
     sprite: _DeadSpace/Clothing/Underwear/Security/warden/socks.rsi
-
-- type: entity
-  parent: ClothingUnderwearSocksBase
-  id: ClothingUnderwearWomenSocksWarden
-  name: колготки смотрителя
-  description: Не очень стандартные колготки смотрителя.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Clothing/Underwear/Security/warden/womensocks.rsi
 
 ## Law
 - type: entity

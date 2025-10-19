@@ -1,0 +1,26 @@
+- type: constructionGraph
+  id: Garland
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: garlandLight
+          steps:
+            - material: Steel
+              amount: 4
+              doAfter: 2.0
+    - node: garlandLight
+      entity: GarlandEmpty
+      edges:
+        - to: start
+          conditions:
+            - !type:ContainerEmpty
+              container: "light_bulb"
+          steps:
+            - tool: Screwing
+              doAfter: 4.0
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 4
+            - !type:DeleteEntity {}

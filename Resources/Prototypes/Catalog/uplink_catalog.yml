@@ -700,6 +700,13 @@
     Telecrystal: 6
   categories:
   - UplinkChemicals
+# DS14-start Hypopen for agents only
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+# DS14-end
 
 - type: listing
   id: UplinkHypoDart
@@ -1734,6 +1741,20 @@
   categories:
   - UplinkWearables
 
+# TODO: Revert back to normal thieving gloves when clothes dyeing is added
+- type: listing
+  id: UplinkgClothingThievingGloves
+  name: uplink-clothing-chameleon-thieving-gloves-name
+  description: uplink-clothing-chameleon-thieving-gloves-desc
+  productEntity: ClothingHandsChameleonThief
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 3
+  cost:
+    Telecrystal: 5
+  categories:
+  - UplinkWearables
+
 - type: listing
   id: UplinkClothingOuterVestWeb
   name: uplink-clothing-outer-vest-web-name
@@ -1881,13 +1902,8 @@
   description: uplink-clothing-outer-hardsuit-juggernaut-desc
   icon: { sprite: /Textures/Structures/Storage/Crates/syndicate.rsi, state: icon }
   productEntity: CrateCybersunJuggernautBundle
-  # DS14-start
-  discountCategory: veryRareDiscounts
-  discountDownTo:
-    Telecrystal: 20
-  # DS14-end
   cost:
-    Telecrystal: 25 # DS14-value
+    Telecrystal: 45 # DS14-value
   categories:
   - UplinkWearables
   conditions:

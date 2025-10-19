@@ -72,6 +72,9 @@ public sealed partial class NecromorfSystem
 
     public void Necrofication(EntityUid target, string prototypeId, InfectionDeadStrainData strainData, MobStateComponent? mobState = null)
     {
+        if (HasComp<NecromorfComponent>(target))
+            return;
+
         if (!_protoManager.TryIndex<NecromorfPrototype>(prototypeId, out var necromorf))
             return;
 

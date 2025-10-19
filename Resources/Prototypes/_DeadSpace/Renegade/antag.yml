@@ -1,0 +1,30 @@
+- type: factionIcon
+  id: RenegadeSubordinateFaction
+  priority: 11
+  showTo:
+    components:
+    - ShowAntagIcons
+    - Renegade
+    - RenegadeSubordinate
+  icon:
+    sprite: /Textures/_DeadSpace/Renegade/job_icons.rsi
+    state: RenegadeSubordinate
+
+- type: factionIcon
+  id: RenegadeFaction
+  priority: 11
+  showTo:
+    components:
+    - ShowAntagIcons
+    - RenegadeSubordinate
+    - Renegade
+  icon:
+    sprite: /Textures/_DeadSpace/Renegade/job_icons.rsi
+    state: Renegade
+
+- type: antag
+  id: Renegade
+  name: roles-antag-renegade-name
+  antagonist: true
+  setPreference: false
+  objective: roles-antag-renegade-objective

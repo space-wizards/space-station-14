@@ -1,0 +1,9 @@
+- type: entity
+  parent: CrateEngineering
+  id: CrateEngineeringMiniGravityGen
+  name: ящик с мини генератором гравитации
+  description: Содержит упаковку, при помощи которой можно создать мини генератор гравитации.
+  components:
+  - type: StorageFill
+    contents:
+    - id: GravityGenMiniFlatpack

@@ -47,7 +47,7 @@ public sealed class SliceableFoodSystem : EntitySystem
 
         var doAfterArgs = new DoAfterArgs(EntityManager,
             args.User,
-            entity.Comp.SliceTime,
+            entity.Comp.SliceTime / utensil.SpeedModifier, // DS14
             new SliceFoodDoAfterEvent(),
             entity,
             entity,

@@ -93,7 +93,7 @@
   - type: RevolverAmmoProvider
     whitelist:
       tags:
-      - Grenade
+      - GrenadeCleanade # DS14
     proto: GrenadeCleanade
     capacity: 6
     chambers: [ True, True, True, True, True, True ]

@@ -11,3 +11,24 @@
       stackRequirements:
         Plastic : 5
         Steel : 5
+
+- type: entity
+  id: GeneratorRTGMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: РИТЭГ (машинная плата)
+  description: Из этой машинной платы собирается РИТЭГ.
+  components:
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: GeneratorRTG
+    stackRequirements:
+      Manipulator: 5
+      Steel: 10
+      Plastic: 5
+      Gold: 10
+      Silver: 10
+      CableHV: 5
+      Uranium: 30
+      Diamond: 1
+

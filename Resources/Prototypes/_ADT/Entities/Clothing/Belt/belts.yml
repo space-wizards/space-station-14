@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent: [ClothingBeltBase, ClothingSlotBase]
   id: ADTClothingBeltSupremeCommanderSheath
   name: ножны высшего главнокомандующего
   description: Где моя прелесть?
@@ -9,12 +9,17 @@
     state: sheath
   - type: Clothing
     sprite: _ADT/Clothing/Belt/supreme-commander-sheath.rsi
-  - type: Storage
-    grid:
-    - 0,0,1,1
-    whitelist:
-      tags:
-        - SupremeCommanderSabre
+  - type: ItemSlots
+    slots:
+      item:
+        name: Sabre
+        insertVerbText: sheath-insert-verb
+        ejectVerbText: sheath-eject-verb
+        insertSound: /Audio/Items/sheath.ogg
+        ejectSound: /Audio/Items/unsheath.ogg
+        whitelist:
+          tags:
+          - SupremeCommanderSabre
   - type: ItemMapper
     mapLayers:
       sheath-sabre:
@@ -24,9 +29,9 @@
   - type: Appearance
 
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent: [ClothingBeltBase, ClothingSlotBase]
   id: ADTClothingBeltSupremeSheath
-  name: ножны
+  name: хризолитовые ножны
   description: Где моя прелесть?
   components:
   - type: Sprite
@@ -34,12 +39,17 @@
     state: sheath
   - type: Clothing
     sprite: _ADT/Clothing/Belt/supreme-sheath.rsi
-  - type: Storage
-    grid:
-    - 0,0,1,1
-    whitelist:
-      tags:
-        - SupremeSabre
+  - type: ItemSlots
+    slots:
+      item:
+        name: Sabre
+        insertVerbText: sheath-insert-verb
+        ejectVerbText: sheath-eject-verb
+        insertSound: /Audio/Items/sheath.ogg
+        ejectSound: /Audio/Items/unsheath.ogg
+        whitelist:
+          tags:
+          - SupremeSabre
   - type: ItemMapper
     mapLayers:
       sheath-sabre:

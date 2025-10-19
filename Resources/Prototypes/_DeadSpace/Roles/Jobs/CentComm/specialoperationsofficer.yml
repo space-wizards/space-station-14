@@ -14,11 +14,14 @@
   - CentralCommand
   special:
   - !type:AddImplantSpecial
-    implants: [ MindShieldImplant, TrackingImplant, MacroBombImplant ]
+    implants: [ MindShieldImplant, TrackingImplant, DeathRattleImplantCentcomm, MacroBombImplant ]
   - !type:AddComponentSpecial
     components:
     - type: AntagImmune
     - type: ZombieImmune
+    - type: NpcFactionMember
+      factions:
+      - CentralCommand
 
 - type: startingGear
   id: CentcomSpecialOperationsOfficerGear
@@ -33,13 +36,7 @@
     neck: ClothingNeckCloakCentcomBlack
     id: CentcomSpecialOperationsOfficerPDA
     ears: ClothingHeadsetDeathSquad
-  #   underwearb: ClothingUnderwearBottomBoxersWhite # DS14-Underwear
-  # underweart: ClothingUnderwearTopBraWhite # DS14-Underwear
-  # underwearb: ClothingUnderwearBottomPantiesWhite # DS14-Underwear
-  # innerClothingSkirt: ClothingUniformJumpskirtPencilSpecialOperationsOfficer
-  # storage:
-  #   back:
-  #   -
+    belt: ADTClothingBeltSupremeSheathFilled
 
 - type: entity
   parent: ClothingBackpackERTLeader
@@ -80,5 +77,5 @@
     head: ClothingHeadCapCentcomBlack
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterVestWeb
+    outerClothing: ClothingOuterArmorCentcomCarapace
     neck: ClothingNeckCloakCentcomBlack

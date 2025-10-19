@@ -1,0 +1,9 @@
+- type: cargoProduct
+  id: FunAquarium
+  icon:
+    sprite: _DeadSpace/Structures/Decoration/aquarium.rsi
+    state: icon
+  product: Aquarium
+  cost: 2000
+  category: cargoproduct-category-name-fun
+  group: market

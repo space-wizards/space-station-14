@@ -139,3 +139,63 @@
         layer:
         - TableLayer # Не пропускает хитбоксы существ
   - type: Airtight
+
+- type: entity
+  parent: WallReinforced
+  id: WallReinforcedVine
+  name: укрепленная стена
+  description: Удерживает воздух внутри, а ассистентов снаружи.
+  suffix: Лоза
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Walls/solid_vine.rsi
+  - type: Icon
+    sprite: _DeadSpace/Structures/Walls/solid_vine.rsi
+    state: rgeneric
+  - type: Construction
+    graph: Girder
+    node: reinforcedWallVine
+  - type: IconSmooth
+    key: walls
+    base: reinf_over
+
+- type: entity
+  parent: WallSolid
+  id: WallSolidVine
+  name: стена
+  description: Удерживает воздух внутри, а ассистентов снаружи.
+  suffix: Лоза
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Walls/solid_vine.rsi
+  - type: Icon
+    sprite: _DeadSpace/Structures/Walls/solid_vine.rsi
+    state: full
+  - type: Construction
+    graph: Girder
+    node: wallvine
+  - type: IconSmooth
+    key: walls
+    base: solid
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]

@@ -1,0 +1,18 @@
+# Lawyer
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyLawyer
+  suffix: Юридический
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/Standard/lawyer.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyLawyerGlass
+  suffix: Юридический, Стеклянный
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/Standard/lawyer.rsi
+    state: "assembly"

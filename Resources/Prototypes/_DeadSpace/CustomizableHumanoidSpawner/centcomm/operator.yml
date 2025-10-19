@@ -16,3 +16,26 @@
     - Shark
     - Demon
     - Vulpkanin
+    - Tajaran
+
+- type: roleLoadout
+  id: JobCentralCommandOperator
+  groups:
+  # - GroupTankHarness # outerClothing slot occupied by startingGear
+  - CentralCommandOperatorLoadout
+  - Survival
+  - GroupSpeciesBreathTool
+  - CentcommOfficerUnderwear
+
+- type: loadoutGroup
+  id: CentralCommandOperatorLoadout
+  name: spawner-loadout-centcomm-operator
+  hidden: true
+  loadouts:
+  - CentralCommandOperatorLoadout
+
+- type: loadout
+  id: CentralCommandOperatorLoadout
+  equipment:
+    back: ClothingBackpackSatchelOfficial
+    eyes: ClothingEyesGlassesHiddenSecurity

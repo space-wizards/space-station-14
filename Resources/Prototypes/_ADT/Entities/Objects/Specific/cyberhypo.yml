@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseItem
   id: ADTCyberHypospray
-  name: гипоспрей Cybersun
-  description: Великолепный медицинский девайс в удобном дизайне от Cybersun!
+  name: киберсан гипоспрей
+  description: Относительно массовая модель, созданная с помощью реверс-инженеринга на основе боевого гипоспрея NT для оперативников Мародёров Горлекса. Имеет повышенную вместимость в ущерб скорости применения.
   components:
   - type: Sprite
     sprite: _ADT/Objects/Specific/cyberhypo.rsi
@@ -20,4 +20,4 @@
   - type: Hypospray
     onlyAffectsMobs: false
   - type: UseDelay
-    delay: 0.5
+    delay: 1.0

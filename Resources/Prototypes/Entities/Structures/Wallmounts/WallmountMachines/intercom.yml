@@ -39,7 +39,7 @@
   - type: Sprite
     noRot: false
     drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/intercom.rsi
+    sprite: _DeadSpace/Structures/Wallmounts/intercom.rsi # DS14-resprite
     layers:
     - state: base
     - state: unshaded
@@ -121,7 +121,7 @@
   components:
   - type: Sprite
     drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/intercom.rsi
+    sprite: _DeadSpace/Structures/Wallmounts/intercom.rsi # DS14-resprite
     layers:
     - state: build
     - state: panel
@@ -219,6 +219,24 @@
   suffix: Command
   description: An intercom. It's been reinforced with metal.
   components:
+# DS14-start: intercom resprite
+  - type: Sprite
+    layers:
+    - state: command
+    - state: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+    - state: broadcasting
+      map: ["enum.RadioDeviceVisualLayers.Broadcasting"]
+      shader: unshaded
+      visible: false
+    - state: speaker
+      map: ["enum.RadioDeviceVisualLayers.Speaker"]
+      shader: unshaded
+      visible: false
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+# DS14-end
   - type: ContainerFill
     containers:
       board:
@@ -232,6 +250,24 @@
   parent: Intercom
   suffix: Engineering
   components:
+# DS14-start: intercom resprite
+  - type: Sprite
+    layers:
+    - state: engineering
+    - state: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+    - state: broadcasting
+      map: ["enum.RadioDeviceVisualLayers.Broadcasting"]
+      shader: unshaded
+      visible: false
+    - state: speaker
+      map: ["enum.RadioDeviceVisualLayers.Speaker"]
+      shader: unshaded
+      visible: false
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+# DS14-end
   - type: ContainerFill
     containers:
       board:
@@ -245,6 +281,24 @@
   parent: Intercom
   suffix: Medical
   components:
+# DS14-start: intercom resprite
+  - type: Sprite
+    layers:
+    - state: medical
+    - state: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+    - state: broadcasting
+      map: ["enum.RadioDeviceVisualLayers.Broadcasting"]
+      shader: unshaded
+      visible: false
+    - state: speaker
+      map: ["enum.RadioDeviceVisualLayers.Speaker"]
+      shader: unshaded
+      visible: false
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+# DS14-end
   - type: ContainerFill
     containers:
       board:
@@ -258,6 +312,24 @@
   parent: Intercom
   suffix: Science
   components:
+# DS14-start: intercom resprite
+  - type: Sprite
+    layers:
+    - state: science
+    - state: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+    - state: broadcasting
+      map: ["enum.RadioDeviceVisualLayers.Broadcasting"]
+      shader: unshaded
+      visible: false
+    - state: speaker
+      map: ["enum.RadioDeviceVisualLayers.Speaker"]
+      shader: unshaded
+      visible: false
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+# DS14-end
   - type: ContainerFill
     containers:
       board:
@@ -272,6 +344,24 @@
   suffix: Security
   description: An intercom. It's been reinforced with metal from security helmets, making it a bitch-and-a-half to open.
   components:
+# DS14-start: intercom resprite
+  - type: Sprite
+    layers:
+    - state: security
+    - state: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+    - state: broadcasting
+      map: ["enum.RadioDeviceVisualLayers.Broadcasting"]
+      shader: unshaded
+      visible: false
+    - state: speaker
+      map: ["enum.RadioDeviceVisualLayers.Speaker"]
+      shader: unshaded
+      visible: false
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+# DS14-end
   - type: ContainerFill
     containers:
       board:
@@ -285,6 +375,24 @@
   parent: Intercom
   suffix: Service
   components:
+# DS14-start: intercom resprite
+  - type: Sprite
+    layers:
+    - state: service
+    - state: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+    - state: broadcasting
+      map: ["enum.RadioDeviceVisualLayers.Broadcasting"]
+      shader: unshaded
+      visible: false
+    - state: speaker
+      map: ["enum.RadioDeviceVisualLayers.Speaker"]
+      shader: unshaded
+      visible: false
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+# DS14-end
   - type: ContainerFill
     containers:
       board:
@@ -298,6 +406,24 @@
   parent: Intercom
   suffix: Supply
   components:
+# DS14-start: intercom resprite
+  - type: Sprite
+    layers:
+    - state: supply
+    - state: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+    - state: broadcasting
+      map: ["enum.RadioDeviceVisualLayers.Broadcasting"]
+      shader: unshaded
+      visible: false
+    - state: speaker
+      map: ["enum.RadioDeviceVisualLayers.Speaker"]
+      shader: unshaded
+      visible: false
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+# DS14-end
   - type: ContainerFill
     containers:
       board:
@@ -324,6 +450,24 @@
   parent: Intercom
   suffix: Freelance
   components:
+# DS14-start: intercom resprite
+  - type: Sprite
+    layers:
+    - state: freelance
+    - state: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+    - state: broadcasting
+      map: ["enum.RadioDeviceVisualLayers.Broadcasting"]
+      shader: unshaded
+      visible: false
+    - state: speaker
+      map: ["enum.RadioDeviceVisualLayers.Speaker"]
+      shader: unshaded
+      visible: false
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+# DS14-end
   - type: ContainerFill
     containers:
       board:

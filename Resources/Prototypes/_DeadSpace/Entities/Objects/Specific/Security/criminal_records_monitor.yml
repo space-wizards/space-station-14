@@ -1,0 +1,19 @@
+- type: entity
+  id: CriminalRecordsMonitor
+  parent: [ BaseItem, BaseSecurityCommandContraband ]
+  name: портативная консоль криминальных записей
+  description: Портативная консоль, позволяющая удалённо изменять статусы членов экипажа.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Devices/criminal_records_monitor.rsi
+    state: icon
+  - type: Item
+  - type: ActivatableUI
+    requireActiveHand: false
+    inHandsOnly: true
+    key: enum.CriminalRecordsConsoleKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.CriminalRecordsConsoleKey.Key:
+        type: CriminalRecordsConsoleBoundUserInterface
+  - type: CriminalRecordsConsole

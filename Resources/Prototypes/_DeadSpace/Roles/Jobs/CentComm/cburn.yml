@@ -9,7 +9,7 @@
   playTimeTracker: JobCBURNLeader
   setPreference: false
   startingGear: CBURNLeaderGear
-  icon: "JobIconNanotrasenRed"
+  icon: "JobIconERTLeader"
   supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
@@ -60,7 +60,7 @@
   playTimeTracker: JobCBURNAgent
   setPreference: false
   startingGear: CBURNAgentGear
-  icon: "JobIconNanotrasen"
+  icon: "JobIconERT"
   supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:

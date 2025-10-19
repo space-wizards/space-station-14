@@ -7,11 +7,71 @@
       "y": 32
     },
     "states": [
-        {
-            "name": "on-bread"
-          },
-          {
-            "name": "icon"
-          }
-    ]
-  }
+    {
+      "name": "bread-slice"
+    },
+    {
+      "name": "black"
+    },
+    {
+      "name": "black-on-bread"
+    },
+    {
+      "name": "green"
+    },
+    {
+      "name": "green-on-bread"
+    },
+    {
+      "name": "magic"
+    },
+    {
+      "name": "magic-on-bread"
+    },
+    {
+      "name": "white"
+    },
+    {
+      "name": "white-on-bread"
+    },
+    {
+      "name": "holo",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "holo-on-bread",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    }
+  ]
+}

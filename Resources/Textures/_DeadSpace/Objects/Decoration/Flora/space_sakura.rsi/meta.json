@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/ChaoticOnyx/OnyxBay/tree/1bd12977f08d8713a5042af83a55456ce155253e, edited by andrew_fenriz (discord) for Space Station 14 server Мёртвый Космос",
+  "size": {
+    "x": 128,
+    "y": 160
+  },
+  "states": [
+    {
+      "name": "spacesakura"
+    },
+    {
+      "name": "spacesakura-overlay"
+    }
+  ]
+}

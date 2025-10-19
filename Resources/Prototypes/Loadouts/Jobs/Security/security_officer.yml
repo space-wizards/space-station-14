@@ -76,6 +76,18 @@
   equipment: 
     jumpsuit: ClothingUniformSecurityTrooper
 
+# DS14-start
+- type: loadout
+  id: SecurityJumpsuitBlack
+  equipment: 
+    jumpsuit: ClothingUniformJumpsuitSecBlack
+
+- type: loadout
+  id: SecurityJumpskirtPencil
+  equipment: 
+    jumpsuit: ClothingUniformJumpskirtPencilSec
+# DS14 -end
+
 # - type: loadout
 #   id: SeniorOfficerJumpsuit
 #   effects:
@@ -170,11 +182,6 @@
   id: UnderwearSocksSecurityOfficer
   equipment:
     socks: ClothingUnderwearSocksSecurityOfficer
-
-- type: loadout
-  id: UnderwearWomenSocksSecurityOfficer
-  equipment:
-    socks: ClothingUnderwearWomenSocksSecurityOfficer
 
 # Underwear
 - type: loadout

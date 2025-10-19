@@ -1,14 +1,15 @@
-﻿- type: storeCategory
+﻿# Vending
+- type: storeCategory
   id: ChangInventory
-  name: store-category-vendingchang
+  name: store-category-vending-chang
 
 - type: storeCategory
   id: CigaretteMachineInventory
-  name: store-category-vendingcigs
+  name: store-category-vending-cigs
 
 - type: storeCategory
   id: VendingClothing
-  name: store-category-vendingclothing
+  name: store-category-vending-clothing
 
 - type: storeCategory
   id: HotDrinksMachineInventory
@@ -20,19 +21,19 @@
 
 - type: storeCategory
   id: DiscountDansInventory
-  name: store-category-vendingdiscount
+  name: store-category-vending-discount
 
 - type: storeCategory
   id: DonutInventory
-  name: store-category-vendingdonut
+  name: store-category-vending-donut
 
 - type: storeCategory
   id: VendingGames
-  name: store-category-vendinggames
+  name: store-category-vending-games
 
 - type: storeCategory
   id: GetmoreChocolateCorpInventory
-  name: store-category-vendingsnack
+  name: store-category-vending-snack
 
 - type: storeCategory
   id: BodaInventory
@@ -40,7 +41,7 @@
 
 - type: storeCategory
   id: VendingYouTool
-  name: store-category-vendingyoutool
+  name: store-category-vending-youtool
 
 - type: storeCategory
   id: ToysInventory
@@ -90,7 +91,7 @@
   id: HotDrinksMachineInventoryEmag
   name: store-category-emag
 
-  # Clothing
+# Clothing
 
 - type: storeCategory
   id: ClothingBackpackMachineInventory
@@ -159,35 +160,3 @@
 - type: storeCategory
   id: WinterDrobeInventoryEmag
   name: store-category-emag
-
-   #withard
-
-- type: storeCategory
-  id: WizardBooks
-  name: store-category-books
-  priority: 0
-
-- type: storeCategory
-  id: WizardArmor
-  name: store-category-armor
-  priority: 2
-
-- type: storeCategory
-  id: WizardUtility
-  name: store-category-utility
-  priority: 3
-
-- type: storeCategory
-  id: WizardBundles
-  name: store-category-bundles
-  priority: 6
-
-- type: storeCategory
-  id: WizardMisc
-  name: store-category-misc
-  priority: 7
-
-- type: storeCategory
-  id: WizardPointless
-  name: store-category-pointless
-  priority: 8

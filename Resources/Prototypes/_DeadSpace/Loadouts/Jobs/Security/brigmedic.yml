@@ -9,6 +9,11 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtBrigmedic
 
+- type: loadout
+  id: BrigmedicJumpskirtPencil
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtPencilBrigmedic
+
 # Back
 - type: loadout
   id: BrigmedicBackpack
@@ -30,11 +35,6 @@
   id: UnderwearSocksBrigmedic
   equipment:
     socks: ClothingUnderwearSocksBrigmedic
-
-- type: loadout
-  id: UnderwearWomenSocksBrigmedic
-  equipment:
-    socks: ClothingUnderwearWomenSocksBrigmedic
 
 # Underwear
 - type: loadout

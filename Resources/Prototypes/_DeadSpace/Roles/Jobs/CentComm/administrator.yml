@@ -5,7 +5,7 @@
   playTimeTracker: JobCentralCommandAdministrator
   setPreference: false
   startingGear: CentcomAdministratorGear
-  icon: "JobIconNanotrasenRed"
+  icon: "JobIconNanotrasen"
   supervisors: job-supervisors-no-one
   canBeAntag: false
   accessGroups:
@@ -14,11 +14,14 @@
   - CentralCommand
   special:
   - !type:AddImplantSpecial
-    implants: [ MindShieldImplant, TrackingImplant ]
+    implants: [ MindShieldImplant, TrackingImplant, DeathRattleImplantCentcomm, MacroBombImplant ]
   - !type:AddComponentSpecial
     components:
     - type: AntagImmune
     - type: ZombieImmune
+    - type: NpcFactionMember
+      factions:
+      - CentralCommand
 
 - type: startingGear
   id: CentcomAdministratorGear
@@ -26,17 +29,22 @@
     jumpsuit: ClothingUniformJumpsuitCentcomFormal
     shoes: ClothingShoesBootsLaceup
     head: ClothingHeadHatCentcomcap
-    eyes: ClothingEyesGlassesSecurity
-    gloves: ClothingHandsGlovesDominator
+    # eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesCentcomNaval
+    outerClothing: ClothingOuterArmorCentcommCarapace
     id: CentcomAdministratorPDA
     ears: ClothingHeadsetAltCentCom
     neck: ClothingNeckCloakCentcom
+    belt: ADTClothingBeltSupremeSheathFilled
     pocket1: RubberStampCentcom
     pocket2: ClothingMaskGasCentcom
-  #   underwearb: ClothingUnderwearBottomBoxersCentcomm # DS14-Underwear
-  # underweart: ClothingUnderwearTopBraCentcomm # DS14-Underwear
-  # underwearb: ClothingUnderwearBottomPantiesCentcomm # DS14-Underwear
-  # innerClothingSkirt: ClothingUniformJumpskirtPencilCentcomOfficial
-  # storage:
-  #   back:
-  #   -
+
+- type: chameleonOutfit
+  id: CentralCommandAdministratorChameleonOutfit
+  job: CentralCommandAdministrator
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentcomFormal
+    shoes: ClothingShoesBootsLaceup
+    head: ClothingHeadHatCentcomcap
+    gloves: ClothingHandsGlovesDominator
+    neck: ClothingNeckCloakCentcom

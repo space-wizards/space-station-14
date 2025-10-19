@@ -38,6 +38,16 @@
           groups:
             Brute: -3
             Burn: -1.25
+# DS14-start
+      - !type:HealthChange
+        conditions:
+          - !type:OrganType
+            type: Xenomorph
+        damage:
+          groups:
+            Brute: -0.50
+            Burn: -0.25
+# DS14-end
   plantMetabolism:
     - !type:PlantAdjustWater
       amount: 0.5

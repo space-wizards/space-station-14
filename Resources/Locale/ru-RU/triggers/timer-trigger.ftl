@@ -1,20 +1,20 @@
-timer-trigger-verb-set = { $time ->
+timer-trigger-verb-set = {$time} { $time ->
                         [one] секунда
                         [few] секунды
                         *[other] секунд
                         }
-timer-trigger-verb-set-current = { $time ->
+timer-trigger-verb-set-current = {$time} { $time ->
                         [one] секунда
                         [few] секунды
                         *[other] секунд
                         } (сейчас)
 timer-trigger-verb-cycle = Переключить задержку
-timer-trigger-examine = Таймер установлен на { $time ->
+timer-trigger-examine = Таймер установлен на {$time} { $time ->
                         [one] секунду
                         [few] секунды
                         *[other] секунд
                         }.
-timer-trigger-popup-set = Таймер установлен на { $time ->
+timer-trigger-popup-set = Таймер установлен на {$time} { $time ->
                         [one] секунду
                         [few] секунды
                         *[other] секунд

@@ -1,2 +1,2 @@
-ent-ClothingOuterArmorCentcomCarapace = флотский панцирь
-    .desc = Панцирь, который носят офицеры Командования флота.
+ent-ClothingOuterArmorCentcomCarapace = панцирь офицера специальных операций
+    .desc = Специальный панцирь высших чинов NanoTrasen с золотыми элементами, уже давно прошедшая не один блицкриг...

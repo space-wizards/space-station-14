@@ -7,6 +7,34 @@
     sprite: _DeadSpace/Objects/Fun/figurines.rsi
 
 - type: entity
+  parent: BaseFigurine
+  id: ToyFigurineHqdishka
+  name: игрушечная Айрис Луа
+  description: Фигурка, изображающая Айрис Луа
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/misc.rsi
+    state: hqdishka
+  - type: SpeakOnTrigger
+    pack: FigurinesHqdishkaSpeech
+  - type: TTS
+    voice: Templar
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineHacksLua
+  name: игрушечный Хакс Луа
+  description: Фигурка, изображающая Хакса Луа
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/misc.rsi
+    state: hackslua
+  - type: SpeakOnTrigger
+    pack: FigurinesHacksLuaSpeech
+  - type: TTS
+    voice: Annah
+
+- type: entity
   parent: BaseFigurineDS14
   id: ToyFigurineERTCAP
   name: фигурка Командира ОБР

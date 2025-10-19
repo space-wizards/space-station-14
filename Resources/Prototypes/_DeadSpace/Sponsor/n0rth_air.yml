@@ -1,0 +1,464 @@
+# Loadout Definitions
+- type: sponsorLoadout
+  id: N0rthAir
+  entity: ClothingBackpackN0rthAir
+  sponsorOnly: true
+
+# Backpack
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackN0rthAir
+  name: рюкзак Vitezstvi
+  description: Компактный рюкзак с технологией пространственного сжатия Vitezstvi. Всегда готов к миссии любой сложности.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/N0rthAir/backpack.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/N0rthAir/backpack.rsi
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,19,9
+  - type: StorageFill
+    contents:
+    - id: ClothingOuterHardsuitN0rthAir
+    - id: ClothingNeckN0rthAir
+    - id: ClothingBeltN0rthAir
+    - id: ClothingShoesBootsMagN0rthAir
+    - id: ClothingHandsGlovesCombatN0rthAir
+    - id: ClothingUniformJumpsuitN0rthAir
+    - id: ClothingEyesGlassesN0rthAir
+    - id: JetpackVoidFilledN0rthAir
+    - id: DefibrillatorCompact
+    - id: MedkitAdvancedFilled
+    - id: BodyBagFolded
+      amount: 2
+    - id: PaperLawN0rthAir
+  - type: Tag
+    tags: []
+
+# Belt
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltN0rthAir
+  name: РПС Vitezstvi
+  description: Универсальный пояс Vitezstvi, подбирающий идеальный инструмент под любую задачу.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/N0rthAir/belt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/N0rthAir/belt.rsi
+  - type: Item
+    size: Huge
+  - type: Storage
+    grid:
+    - 0,0,9,1
+  - type: StorageFill
+    contents:
+    - id: GasAnalyzerN0rthAir
+    - id: JawsOfLifeN0rthAir
+    - id: HandHeldMassScannerN0rthAir
+    - id: MultitoolN0rthAir
+    - id: PowerDrillN0rthAir
+    - id: AdvancedMineralScannerN0rthAir
+    - id: WelderExperimentalN0rthAir
+    - id: trayScannerN0rthAir
+
+# Neck
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckN0rthAir
+  name: знакомый плащ
+  description: Логотип на внешней стороне странно знаком, но непонятно что он напоминает. Возможно что-то мёртвое и космическое.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/N0rthAir/cloak.rsi
+    scale: 0.5, 0.5
+  - type: Item
+    sprite: _DeadSpace/Sponsor/N0rthAir/cloak.rsi
+    size: Small
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        scale: 0.5, 0.5
+      right:
+      - state: inhand-right
+        scale: 0.5, 0.5
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/N0rthAir/cloak.rsi
+    clothingVisuals:
+      neck:
+      - state: equipped-NECK
+        scale: 0.5, 0.5
+  - type: Tag
+    tags: []
+
+# Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitAtmos
+  id: ClothingOuterHardsuitN0rthAir
+  name: скафандр Vitezstvi MK5
+  description: Разработан корпорацией Vitezstvi в 2678 году и стал стандартом военной экиперовки корпорации. Странно почему-то серийные номера перебиты на корпорацию Nanotrasen...
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/N0rthAir/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/N0rthAir/hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitN0rthAir
+  - type: Item
+    size: Huge
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.4
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
+  - type: Tag
+    tags: []
+
+# Helmet
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitN0rthAir
+  name: шлем скафандра Vitezstvi
+  description: Мощный шлем с интегрированными сенсорами, внушающий уверенность и решимость.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/N0rthAir/helmet.rsi
+    layers:
+    - state: icon
+    - state: icon-flash
+      visible: false
+      map: [ "light" ]
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/N0rthAir/helmet.rsi
+    equippedPrefix: off
+  - type: PointLight
+    color: "#f5da41"
+    radius: 5
+    energy: 3
+    autoRot: true
+    netsync: false
+  - type: ToggleableVisuals
+    spriteLayer: light
+  - type: ItemTogglePointLight
+  - type: Appearance
+  - type: HandheldLight
+    addPrefix: true
+    blinkingBehaviourId: blinking
+    radiatingBehaviourId: radiating
+  - type: LightBehaviour
+    behaviours:
+      - !type:FadeBehaviour
+        id: radiating
+        interpolate: Linear
+        maxDuration: 2.0
+        startValue: 3.0
+        endValue: 2.0
+        isLooped: true
+        reverseWhenFinished: true
+      - !type:PulseBehaviour
+        id: blinking
+        interpolate: Nearest
+        maxDuration: 1.0
+        startValue: 0.1
+        endValue: 2.0
+        isLooped: true
+  - type: Battery
+    maxCharge: 600
+    startingCharge: 600
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 2
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+  - type: Tag
+    tags: []
+
+# Gloves
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGlovesCombatN0rthAir
+  name: перчатки Vitezstvi
+  description: Надёжная защита рук с усиленными углеродными нитями для всех боевых операций.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/N0rthAir/gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/N0rthAir/gloves.rsi
+  - type: Tag
+    tags: []
+
+# Magboots
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagN0rthAir
+  name: магнитные ботинки Vitezstvi
+  description: Магнитные ботинки с повышенной защитой и титановыми пластинами.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/N0rthAir/magboots.rsi
+    layers:
+    - state: icon
+      map: ["enum.ToggleableVisuals.Layer"]
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/N0rthAir/magboots.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: Tag
+    tags: []
+
+# Glasses
+- type: entity
+  parent: ClothingEyesHudMultiversal
+  id: ClothingEyesGlassesN0rthAir
+  name: визор Vitezstvi
+  description: Специализированный визор для отслеживания состояния здоровья.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/N0rthAir/hud.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/N0rthAir/hud.rsi
+  - type: EyeProtection
+  - type: IdentityBlocker
+    coverage: EYES
+  - type: Tag
+    tags: []
+
+# Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitN0rthAir
+  name: комбинезон Vitezstvi
+  description: Когда-то использовался для терморегуляции в первых промышленных скафандрах, но совместимые разъёмы давно устарели. Теперь это просто модный комбинезон.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/N0rthAir/jumpsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/N0rthAir/jumpsuit.rsi
+  - type: Tag
+    tags: []
+
+# Jetpack
+- type: entity
+  id: JetpackVoidFilledN0rthAir
+  parent: JetpackVoidFilled
+  name: джетпак Vitezstvi
+  description: Компактный джетпак с увеличенным запасом газа за счёт технологии Vitezstvi.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/N0rthAir/jetpack.rsi
+  - type: Item
+    sprite: _DeadSpace/Sponsor/N0rthAir/jetpack.rsi
+    size: Huge
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/N0rthAir/jetpack.rsi
+    slots:
+      - back
+      - suitStorage
+      - belt
+
+# JawsOfLife
+- type: entity
+  parent: SyndicateJawsOfLife
+  id: JawsOfLifeN0rthAir
+  name: челюсти жизни Vitezstvi
+  description: Надёжный инструмент для спасательных операций, улучшенный корпорацией Vitezstvi.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/N0rthAir/tools_jawsoflife.rsi
+    state: syn_jaws_pry
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: syn_inhand-left
+      right:
+      - state: syn_inhand-right
+    size: Normal
+  - type: MultipleTool
+    entries:
+    - behavior: Prying
+      sprite:
+        sprite: _DeadSpace/Sponsor/N0rthAir/tools_jawsoflife.rsi
+        state: syn_jaws_pry
+      useSound: /Audio/Items/jaws_pry.ogg
+      changeSound: /Audio/Items/change_jaws.ogg
+    - behavior: Cutting
+      sprite:
+        sprite: _DeadSpace/Sponsor/N0rthAir/tools_jawsoflife.rsi
+        state: syn_jaws_cutter
+      useSound: /Audio/Items/jaws_cut.ogg
+      changeSound: /Audio/Items/change_jaws.ogg
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 14
+
+# PowerDrill
+- type: entity
+  parent: PowerDrill
+  id: PowerDrillN0rthAir
+  name: дрель Vitezstvi
+  description: Многофункциональная дрель, улучшенная для максимальной эффективности.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/N0rthAir/tools_powerdrill.rsi
+    state: drill_screw
+  - type: Item
+    sprite: _DeadSpace/Sponsor/N0rthAir/tools_powerdrill.rsi
+    size: Small
+  - type: Tool
+    qualities:
+    - Screwing
+    speedModifier: 1.5
+    useSound: /Audio/Items/drill_use.ogg
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+    - behavior: Screwing
+      sprite:
+        sprite: _DeadSpace/Sponsor/N0rthAir/tools_powerdrill.rsi
+        state: drill_screw
+      useSound:
+        path: /Audio/Items/drill_use.ogg
+      changeSound:
+        path: /Audio/Items/change_drill.ogg
+    - behavior: Anchoring
+      sprite:
+        sprite: _DeadSpace/Sponsor/N0rthAir/tools_powerdrill.rsi
+        state: drill_bolt
+      useSound:
+        path: /Audio/Items/drill_use.ogg
+      changeSound:
+        path: /Audio/Items/change_drill.ogg
+
+# WelderExperimental
+- type: entity
+  parent: WelderExperimental
+  id: WelderExperimentalN0rthAir
+  name: сварочный аппарат Vitezstvi
+  description: Компактный сварочный аппарат, улучшенный для промышленного применения.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/N0rthAir/tools_welder.rsi
+  - type: Item
+    sprite: _DeadSpace/Sponsor/N0rthAir/tools_welder.rsi
+
+# Multitool
+- type: entity
+  parent: Multitool
+  id: MultitoolN0rthAir
+  name: мультитул Vitezstvi
+  description: Универсальный инструмент с расширенными функциями для инженеров.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/N0rthAir/tools_multitool.rsi
+
+# AdvancedMineralScanner
+- type: entity
+  parent: AdvancedMineralScanner
+  id: AdvancedMineralScannerN0rthAir
+  name: сканер минералов Vitezstvi
+  description: Улучшенный сканер минералов для точного сканирования руды.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/N0rthAir/tools_mineralscanner.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Specific/Mining/mineral_scanner.rsi
+    storedRotation: -90
+    inhandVisuals:
+      left:
+      - state: inhand-left-adv
+      right:
+      - state: inhand-right-adv
+
+# GasAnalyzer
+- type: entity
+  parent: GasAnalyzer
+  id: GasAnalyzerN0rthAir
+  name: газоанализатор Vitezstvi
+  description: Высокоточный анализатор газов с фирменной сборкой Vitezstvi.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/N0rthAir/tools_gasanalyzer.rsi
+    layers:
+    - state: icon
+      map: ["analyzer"]
+
+# HandHeldMassScanner
+- type: entity
+  parent: HandHeldMassScanner
+  id: HandHeldMassScannerN0rthAir
+  name: сканер массы Vitezstvi
+  description: Ручной сканер массы от Vitezstvi.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Item
+    sprite: _DeadSpace/Sponsor/N0rthAir/tools_massscanner.rsi
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/N0rthAir/tools_massscanner.rsi
+    state: icon
+
+# TrayScanner
+- type: entity
+  parent: trayScanner
+  id: trayScannerN0rthAir
+  name: T-лучевой сканер Vitezstvi
+  description: Персональный лучевой сканер, произведён Vitezstvi Technical.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/N0rthAir/tools_trayscanner.rsi
+    state: icon
+  - type: Item
+    sprite: _DeadSpace/Sponsor/N0rthAir/tools_trayscanner.rsi
+
+# PaperLaw
+- type: entity
+  parent: PaperPrintedCentcomm
+  id: PaperLawN0rthAir
+  name: распечатанный документ
+  description: Лист бумаги с заголовком ЦентКома. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#006600FF'
+      stampedName: Центральное Командование
+    - stampedColor: '#00BE00FF'
+      stampedName: Одобрено
+    content: paper-law-n0rthair

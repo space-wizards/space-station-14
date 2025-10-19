@@ -39,3 +39,15 @@
       amount: 1
   products:
     UplinkDrink: 4
+
+- type: reaction
+  id: CherryBlossom
+  reactants:
+    SakuraJuice:
+      amount: 1
+    SodaWater:
+      amount: 1
+    Vermouth:
+      amount: 1
+  products:
+    CherryBlossom: 3

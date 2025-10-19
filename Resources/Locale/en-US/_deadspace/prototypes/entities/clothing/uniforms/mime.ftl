@@ -1,4 +1,4 @@
-ent-ClothingUniformJumpsuitMimeSexyWhite = сексуальный костюм мима с белыми штанами
+ent-ClothingUniformJumpsuitMimeSexyWhite = застенчивый костюм мима с белыми штанами
     .desc = ...
-ent-ClothingUniformJumpsuitMimeSexyBlack = сексуальный костюм мима с чёрными штанами
+ent-ClothingUniformJumpsuitMimeSexyBlack = застенчивый костюм мима с чёрными штанами
     .desc = ...

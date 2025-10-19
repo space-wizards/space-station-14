@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation https://github.com/tgstation/tgstation",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "pulse0"
+    },
+    {
+      "name": "pulse0_bl"
+    },
+    {
+      "name": "pulse1"
+    },
+    {
+      "name": "pulse1_bl"
+    },
+    {
+      "name": "pulse_taser"
+    }
+  ]
+}

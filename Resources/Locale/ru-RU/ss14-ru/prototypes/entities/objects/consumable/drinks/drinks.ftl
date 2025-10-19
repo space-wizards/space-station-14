@@ -382,6 +382,7 @@ ent-DrinkTeaGlass = { ent-DrinkGlass }
     .suffix = Чай
     .desc = { ent-DrinkGlass.desc }
 ent-DrinkTeapot = чайник
+    .suffix = Чай
     .desc = Элегантный заварочный чайник. Он излучает теплоту.
 ent-DrinkTequilaGlass = { ent-DrinkGlass }
     .suffix = Текила

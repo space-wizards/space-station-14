@@ -1,0 +1,21 @@
+- type: entity
+  id: CrateServiceHydra
+  parent: CratePlastic
+  name: ящик с чистящей установкой "Гидра"
+  description: Вот она! Перед вами! Коробка с чистящей установкой "Гидра"! 
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponLauncherHydra
+      - id: BoxGrenadeCleanade
+
+- type: entity
+  id: CrateServiceBoxGrenadeCleanade
+  parent: CratePlastic
+  name: ящик с чистящими снарядами
+  description: Ящик с двуями коробками специальных снарядов под установку "Гидра".
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxGrenadeCleanade
+        amount: 2

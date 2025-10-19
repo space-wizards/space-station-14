@@ -467,7 +467,7 @@
               doAfter: 2
             - tool: Cutting
               doAfter: 3
-          
+
     - node: diagonalMiningWall
       entity: WallMiningDiagonal
       edges:
@@ -607,3 +607,29 @@
           steps:
             - tool: Brushing
               doAfter: 12
+
+# DS14-start: Vine walls
+    - node: wallvine
+      entity: WallSolidVine
+      edges:
+        - to: wall
+          steps:
+            - tool: Welding
+              doAfter: 5
+        - to: wall
+          steps:
+            - tool: Brushing
+              doAfter: 12
+
+    - node: reinforcedWallVine
+      entity: WallReinforcedVine
+      edges:
+        - to: reinforcedWall
+          steps:
+            - tool: Cutting
+              doAfter: 5
+        - to: reinforcedWall
+          steps:
+            - tool: Brushing
+              doAfter: 12
+# DS14-end

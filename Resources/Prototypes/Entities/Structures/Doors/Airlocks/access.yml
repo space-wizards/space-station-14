@@ -11,7 +11,7 @@
     layoutId: AirlockService
 
 - type: entity
-  parent: AirlockServiceLocked
+  parent: AirlockLawyer # DS14
   id: AirlockLawyerLocked
   suffix: Lawyer, Locked
   components:
@@ -462,7 +462,7 @@
     layoutId: AirlockService
 
 - type: entity
-  parent: AirlockServiceGlassLocked
+  parent: AirlockLawyerGlass # DS14
   id: AirlockLawyerGlassLocked
   suffix: Lawyer, Locked
   components:

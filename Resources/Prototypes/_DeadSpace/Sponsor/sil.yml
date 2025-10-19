@@ -9,6 +9,12 @@
   sponsorOnly: true
   whitelistJobs: [ChiefMedicalOfficer, SeniorPhysician, Chemist, MedicalDoctor, Paramedic, Coroner, MedicalIntern]
 
+- type: sponsorLoadout
+  id: SilWeaponCrusher
+  entity: WeaponCrusherSil
+  sponsorOnly: true
+  whitelistJobs: [SalvageSpecialist, SeniorSalvageSpecialist]
+
 # Hardsuit
 - type: entity
   parent: ClothingOuterHardsuitAtmos
@@ -118,7 +124,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitSil
-  name: комбинезон 'Зона'
+  name: комбинезон "Зона"
   description: Усиленный комбинезон из композитной ткани. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
   categories: [ HideSpawnMenu ]
   components:
@@ -132,12 +138,24 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckSil
-  name: плащ 'Ноосфера'
+  name: белый плащ "Ноосфера"
   description: Экспериментальная накидка с пси-защитным покрытием. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/Sil/cloak.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckBlackSil
+  name: чёрный плащ "Бездна"
+  description: Экспериментальная накидка с пси-защитным покрытием. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Sil/black_cloak.rsi
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
@@ -153,6 +171,36 @@
     sprite: _DeadSpace/Sponsor/Sil/gloves.rsi
   - type: Clothing
     sprite: _DeadSpace/Sponsor/Sil/gloves.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsRingMaleSil
+  name: мужское золотое кольцо с бриллиантом
+  description: Массивное золотое кольцо с крупным белым бриллиантом. На внутренней стороне виднеется клеймо "S&K".
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Sil/ring_m.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Sil/ring_m.rsi
+  - type: Item
+    size: Small
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsRingFemaleSil
+  name: женское золотое кольцо с бриллиантом
+  description: Изящное золотое кольцо с изысканным белым бриллиантом. На внутренней стороне выгравирована марка "S&K".
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Sil/ring_f.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Sil/ring_f.rsi
+  - type: Item
+    size: Small
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
@@ -186,12 +234,12 @@
   - type: GasTank
     outputPressure: 42.6
     air:
-      # 2 minutes of thrust
-      volume: 0.75
+      # 13 minutes of thrust
+      volume: 5
       temperature: 293.15
       moles:
-      - 0.153853429 # oxygen
-      - 0.153853429 # nitrogen
+      - 1.025689525 # oxygen
+      - 1.025689525 # nitrogen
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
@@ -249,7 +297,7 @@
 
 # Mask
 - type: entity
-  parent: ClothingMaskGas
+  parent: ClothingMaskGasSyndicate
   id: ClothingMaskGasSil
   name: противогаз ЗК-2М "Защитная Смерть"
   description: Противогаз который принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
@@ -259,6 +307,21 @@
     sprite: _DeadSpace/Sponsor/Sil/gasmask.rsi
   - type: Clothing
     sprite: _DeadSpace/Sponsor/Sil/gasmask.rsi
+  - type: EyeProtection
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+- type: entity
+  parent: ClothingMaskGasSyndicate
+  id: ClothingMaskGasBlackSil
+  name: тактическая маска "Тень"
+  description: Дыхательная маска которая принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Sil/black_gasmask.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Sil/black_gasmask.rsi
   - type: EyeProtection
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
@@ -281,14 +344,20 @@
     contents:
     - id: ClothingBeltSilFilled
     - id: ClothingMaskGasSil
+    - id: ClothingMaskGasBlackSil
     - id: ClothingShoesBootsSil
     - id: PDASil
     - id: AirTankSil
     - id: ClothingUniformJumpsuitSil
     - id: ClothingNeckSil
+    - id: ClothingNeckBlackSil
     - id: ClothingHandsGlovesSil
+    - id: ClothingHandsRingMaleSil
+    - id: ClothingHandsRingFemaleSil
     - id: ClothingEyesHudSil
+    - id: ClothingHeadHatBeret
     - id: PaperLawSil
+      amount: 2
     - id: ViolinInstrument
     - id: PlushieSilAily
     - id: PlushieSilAizek
@@ -310,7 +379,19 @@
     - id: PlushieSilYohanaWinter
     - id: PlushieSilGermanKvaSki
     - id: PlushieSilTimAkkerman
-    - id: PaperLawSil
+    - id: PlushieSilKiana
+    - id: PlushieSilSai
+    - id: PlushieSilZhdan
+    - id: PlushieSilElena
+    - id: PlushieSilMei
+    - id: PlushieSilRygoslav
+    - id: PlushieSilFlem
+    - id: PlushieSilMarry
+    - id: PlushieSilAleksey
+    - id: PlushieSilArevin
+    - id: PlushieSilMila
+    - id: PlushieSilRiza
+    - id: PlushieSilMuren
   - type: ToggleableClothing
     clothingPrototype: ClothingOuterHardsuitSil
     requiredSlot: BACK
@@ -571,6 +652,27 @@
   - type: UseDelay
     delay: 0.5
 
+# Crusher
+- type: entity
+  id: WeaponCrusherSil
+  parent: WeaponCrusherGlaive
+  name: крушитель "Ледяная Вспышка"
+  description: Клинок из чёрного гиперсплава пронизан голубыми энергетическими жилами, сходящимися на идеально белом острие. При движении оставляет в воздухе морозный светящийся шлейф.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Sil/crusher.rsi
+    layers:
+    - state: icon
+  - type: Item
+    sprite: _DeadSpace/Sponsor/Sil/crusher.rsi
+    size: Huge
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Sil/crusher.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+
 # Law
 - type: entity
   parent: PaperPrintedCentcomm
@@ -587,274 +689,3 @@
     - stampedColor: '#00BE00FF'
       stampedName: Одобрено
     content: paper-law-sil
-
-# Plushie toys
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieSilAily
-  name: плюшевая Айли
-  description: Плюшевая игрушка вульпканина в форме офицера специальных операций. Её хвост необычайно мягкий.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
-    state: plushie_aily
-  - type: TTS
-    voice: Karastamper
-  - type: SpeakOnTrigger
-    pack: PlushieAilySpeech
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieSilAizek
-  name: плюшевый Айзек
-  description: Плюшевая игрушка в виде человека. От фигурки веет диктатурой. По виду игрушки можно недооценить способности её оригинальной версии что может быть фатально. От фигурки веет травкой и виски.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
-    state: plushie_aizek
-  - type: TTS
-    voice: Soldier_Metro
-  - type: SpeakOnTrigger
-    pack: PlushieAizekSpeech
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieSilAzrail
-  name: плюшевый Азраил
-  description: Плюшевая игрушка главного врача резко пахнущая метом и сливками. Ни в коем случае не ложить рядом с ней осколок стекла....
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
-    state: plushie_azrail
-  - type: TTS
-    voice: Valeera
-  - type: SpeakOnTrigger
-    pack: PlushieAzrailSpeech
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieSilEmilia
-  name: плюшевая Эмилия
-  description: Плюшевая игрушка Главного врача с недовольным выражением лица. От неё веет духотой и педантичностью, а рядом с ней вам становится очень некомфортно. Почему-то вам кажется, что она постоянно наблюдает за вами, а её взгляд каждую секунду становиться всё злее и враждебнее, вызывая у вас чувство тревоги, переростающее в панику. Пожалуй, стоит отойти от неё на несколько метров. На ощупь жесткая.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
-    state: plushie_emilia
-  - type: TTS
-    voice: Kerrigan
-  - type: SpeakOnTrigger
-    pack: PlushieEmiliaSpeech
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieSilEva
-  name: плюшевая Ева
-  description: Плюшевая игрушка строгого ведущего врача, чей жизненный слоган «Нас окружают одни бандиты». Будь готов, интерн, учиться — или стать частью «корабля» медицинского отсека... От фигурки исходит тонкий аромат фиалок и никотина — как напоминание о том, что милое не всегда безопасно.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
-    state: plushie_eva
-  - type: TTS
-    voice: Lina
-  - type: SpeakOnTrigger
-    pack: PlushieEvaSpeech
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieSilKrivazora
-  name: плюшевый Кривазора
-  description: Плюшевая игрушка старшего инженера. От неё исходит легкий фрезоновый холодок, навевающий теплые воспоминания. Слегка покалывает электрическим током.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
-    state: plushie_krivazzora
-  - type: TTS
-    voice: FArgo
-  - type: SpeakOnTrigger
-    pack: PlushieKrivazoraSpeech
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieSilAzrailHardsuit
-  name: плюшевый Азраил в "СЕВЕ"
-  description: Мягкая игрушка феленида в необычном белом скафандре. На плече виднеется необычный шевроном на котором изображен человек с изображением атома. Взяв игрушку в руки вы начинаете чувствовать что вами будто повелевают...
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
-    state: plushie_azrail_hardsuit
-  - type: TTS
-    voice: Valeera
-  - type: SpeakOnTrigger
-    pack: PlushieAzrailHardsuitSpeech
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieSilSharp
-  name: плюшевый Ликаон
-  description: При виде этой игрушки, вам хочется кинуть её в стену. Пахнет космической смазкой...
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
-    state: plushie_sharp
-  - type: TTS
-    voice: Flark
-  - type: SpeakOnTrigger
-    pack: PlushieSharpSpeech
-
-# 2
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieSilRenaTakala
-  name: плюшевая Рене Такала
-  description: Плющевая игрушка в форме Квартирмейстера, на 65% состоит из чего-то синтетического и на 35% из натурального хлопка. От игрушки пахнет морепродуктами и нотками аммиака.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
-    state: plushie_rene
-  - type: TTS
-    voice: Tracer
-  - type: SpeakOnTrigger
-    pack: PlushieReneTakalaSpeech
-  - type: RoarAccent
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieSilEso
-  name: плюшевый Эсо
-  description: Плюшевая игрушка вульпканина в форме бригмедика. Пахнет фенолом. Выглядит одиноким и растерянным, словно ему чего-то не хватает…
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
-    state: plushie_eso
-  - type: TTS
-    voice: Ancano
-  - type: SpeakOnTrigger
-    pack: PlushieEsoSpeech
-  - type: RoarAccent
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieSilKel
-  name: плюшевый Кел
-  description: Плюшевая игрушка улыбающегося коронера, с большими голубыми глазами которые смотрят прямо в душу, от игрушки исходит резкий запах металла и ванили — как намек на то, что за этой милой улыбкой что-то скрывается, последнее что ты услышишь метнув ее в стену - «Коронерское проклятие»
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
-    state: plushie_kel
-  - type: TTS
-    voice: Aragorn
-  - type: SpeakOnTrigger
-    pack: PlushieKelSpeech
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieSilWeaver
-  name: плюшевый Ткач
-  description: Плюшевая игрушка немного трусливого Парамедика, который возможно спасёт ваш труп. Немного пыльная, исходит лёгкий запах сирени.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
-    state: plushie_weaver
-  - type: TTS
-    voice: Sova
-  - type: SpeakOnTrigger
-    pack: PlushieWeaverSpeech
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieSilEyrinLiht
-  name: плюшевая Эйрин Като
-  description: Это чёрная плюшевая плафеимка с лиловыми волосами. На этикетке написано "Сварим базу за 15 минут. Или? Без или."
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
-    state: plushie_eirin
-  - type: TTS
-    voice: Templar
-  - type: SpeakOnTrigger
-    pack: PlushieEyrinLihtSpeech
-  - type: RoarAccent
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieSilKelicKato1
-  name: плюшевая Келик Като
-  description: Плюшевая игрушка, на бирке написано - рыба, пахнет омега мылом.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
-    state: plushie_kelic
-  - type: SpeakOnTrigger
-    pack: PlushieKelicKatoSpeech
-  - type: RoarAccent
-  - type: TTS
-    voice: Demoman
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieSilKelicKato2
-  name: плюшевая Келик Като
-  description: Плюшевая игрушка, на бирке написано - рыба, пахнет омега мылом.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
-    state: plushie_kelic2
-  - type: SpeakOnTrigger
-    pack: PlushieKelicKatoSpeech
-  - type: RoarAccent
-  - type: TTS
-    voice: Demoman
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieSilYuliWinter
-  name: плюшевый Юлий Фон Винтер
-  description: От неё чувствуется запах трития и гари. На ощупь шереховато-мягкая.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
-    state: plushie_yliiy
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieSilEkaterinaAkkerman
-  name: плюшевый Екатерина Аккерман
-  description: От нее пахнет медикоментами. На ощпуь влажно-мягкая.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
-    state: plushie_ekaterina
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieSilYohanaWinter
-  name: плюшевый Йоханна Фон Винтер
-  description: От нее веет бюрократией. На ощупь мягкая.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
-    state: plushie_yohanna
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieSilGermanKvaSki
-  name: плюшевый Герман Ква'Ский
-  description: От нее веет медикоментами и пироманией. На ощупь мягкая.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
-    state: plushie_german
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieSilTimAkkerman
-  name: плюшевая Тимофей Аккерман
-  description: От неё чувствуется власть и ужас. На ощупь мягкая.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
-    state: plushie_timofei
-  - type: SpeakOnTrigger
-    pack: PlushieTimAkkermanSpeech

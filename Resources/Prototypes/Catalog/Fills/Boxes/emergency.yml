@@ -75,8 +75,8 @@
     contents:
     - id: Brutepack5
     - id: Ointment5
-    - id: Gauze5
     - id: Flare
+    - id: FoodSnackNutribrick
     - id: DrinkWaterBottleFull
 
 - type: entity

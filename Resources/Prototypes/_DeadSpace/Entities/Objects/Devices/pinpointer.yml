@@ -1,0 +1,22 @@
+- type: entity
+  name: пинпоинтер Синдиката
+  description: Изготовлен специально для миссий недальновидных ядерных оперативников, не потеряйте боеголовку снова!
+  suffix: Ядерная боеголовка
+  id: PinpointerSyndicateNuclearBomb
+  parent: [ PinpointerBase, BaseSyndicateContraband ]
+  components:
+  - type: Sprite
+    layers:
+    - state: pinpointer-syndicate
+      sprite: _DeadSpace/Objects/Devices/pinpointer.rsi
+      map: ["enum.PinpointerLayers.Base"]
+    - state: pinonnull
+      map: ["enum.PinpointerLayers.Screen"]
+      shader: unshaded
+      visible: false
+  - type: Icon
+    sprite: _DeadSpace/Objects/Devices/pinpointer.rsi
+    state: pinpointer-syndicate
+  - type: Pinpointer
+    component: Nuke
+    targetName: nuclear fission explosive

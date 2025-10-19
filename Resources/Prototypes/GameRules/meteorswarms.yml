@@ -253,7 +253,7 @@
     weight: 0.05
   - type: MeteorSwarm
     announcement: station-event-meteor-cow-start-announcement
-    announcementSound: /Audio/Announcements/attention.ogg
+    announcementSound: /Audio/_DeadSpace/Announcements/attention.ogg # DS14-Announcements
     meteors:
       MeteorCow: 1
     waves:
@@ -271,7 +271,7 @@
     weight: 0.05
   - type: MeteorSwarm
     announcement: station-event-meteor-clown-start-announcement
-    announcementSound: /Audio/Announcements/attention.ogg
+    announcementSound: /Audio/_DeadSpace/Announcements/attention.ogg # DS14-Announcements
     meteors:
       MeteorClown: 1
     waves:
@@ -289,7 +289,7 @@
     weight: 0.05
   - type: MeteorSwarm
     announcement: station-event-meteor-potato-start-announcement
-    announcementSound: /Audio/Announcements/attention.ogg
+    announcementSound: /Audio/_DeadSpace/Announcements/attention.ogg # DS14-Announcements
     meteors:
       MeteorPotato: 1
     waves:
@@ -307,7 +307,7 @@
     weight: 0.03
   - type: MeteorSwarm
     announcement: station-event-fun-swarm-start-announcement
-    announcementSound: /Audio/Announcements/attention.ogg
+    announcementSound: /Audio/_DeadSpace/Announcements/attention.ogg # DS14-Announcements
     meteors:
       MeteorClown: 1
       MeteorCow: 1

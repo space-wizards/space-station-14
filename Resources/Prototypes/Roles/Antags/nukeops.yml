@@ -68,6 +68,7 @@
     back:
     - WeaponPistolViper
     - PinpointerSyndicateNuclear
+    - PinpointerSyndicateNuclearBomb # DS14
     - DeathAcidifierImplanter
 
 #Nuclear Operative Gear
@@ -123,6 +124,7 @@
     - CombatKnife
     - WeaponPistolViper
     - PinpointerSyndicateNuclear
+    - PinpointerSyndicateNuclearBomb # DS14
     - HandheldHealthAnalyzer
     - CombatMedipen
     - DeathAcidifierImplanter

@@ -26,3 +26,23 @@
     contents:
       - id: MagazineDrumTommyGun
         amount: 3
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledCarbineSKS
+  components: 
+  - type: StorageFill
+    contents:
+      - id: WeaponCarbineSKS
+      - id: MagazineCarbineSKS
+        amount: 4
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledCarbineSKSAgent
+  components: 
+  - type: StorageFill
+    contents:
+      - id: WeaponCarbineSKS
+      - id: MagazineCarbineSKS
+        amount: 1

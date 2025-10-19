@@ -1,26 +1,33 @@
+- type: metabolizerType
+  id: Xenomorph
+  name: metabolizer-type-xenomorph
+
 - type: entity
   id: BaseXenoOrganUnGibbable
   parent: BaseItem
   abstract: true
+  suffix: Ксеноморф
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/organs.rsi
   - type: Organ
+  - type: Food
   - type: Extractable
     grindableSolutionName: organ
   - type: SolutionContainerManager
     solutions:
       organ:
         reagents:
-        - ReagentId: FluorosulfuricAcid
+        - ReagentId: AcidicBlood
           Quantity: 10
       food:
         maxVol: 5
         reagents:
-        - ReagentId: FluorosulfuricAcid
+        - ReagentId: AcidicBlood
           Quantity: 5
   - type: Tag
     tags:
+    - Meat
     - Trash
 
 - type: entity
@@ -33,15 +40,88 @@
 - type: entity
   id: OrganXenoBrain
   parent: BaseXenoOrganUnGibbable
-  name: мозг
-  description: "Источник невероятного, бесконечного интеллекта. Хонк."
+  name: нейроплазменный центр
+  description: Концентрированная масса специализированной ткани, обрабатывающая сенсорные данные и управляющая всеми жизненными процессами через сложные биоэлектрические сигналы.
   components:
   - type: Sprite
     state: brain_xeno
   - type: Organ
   - type: Input
-    context: "ghost"
+    context: ghost
   - type: Brain
   - type: InputMover
   - type: Examiner
   - type: BlockMovement
+
+- type: entity
+  id: OrganXenoTongue
+  parent: BaseXenoOrgan
+  name: химочувствительный жгут
+  description: Мускульный орган с плотным расположением рецепторов, анализирующих химический состав окружающих веществ, обеспечивающий безопасность и выбор продуктов для поглощения.
+  components:
+  - type: Sprite
+    state: tongue_xeno
+
+- type: entity
+  id: OrganXenoEyes
+  parent: BaseXenoOrgan
+  name: оптические фасетки
+  description: Сложные органы зрения, состоящие из множества мелких линз с возможностью восприятия широкого спектра электромагнитных волн, включая низкочастотное и ультрафиолетовое излучение.
+  components:
+  - type: Sprite
+    state: eyes_xeno
+
+- type: entity
+  id: OrganXenoHeart
+  parent: BaseXenoOrgan
+  name: гемоциркулятор
+  description: Мышечный орган со сложной камерной структурой, одновременно прокачивающий кислотную биожидкость и обеспечивающий её насыщение необходимыми компонентами через внутренние микропоры. Обеспечивает транспорт веществ и поддерживает химический гомеостаз организма.
+  components:
+  - type: Sprite
+    state: heart_xeno
+  - type: Metabolizer
+    metabolizerTypes: [Xenomorph]
+    maxReagents: 2
+    updateInterval: 1.5
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+
+- type: entity
+  id: OrganXenoStomach
+  parent: BaseXenoOrgan
+  name: биохимический реактор
+  description: Камера с внутренним покрытием, секретирующим мощную кислоту, расщепляющую пищевые и инородные вещества. Ведёт фильтрацию, поглощая и нейтрализуя токсичные остатки, поддерживая чистоту внутренней среды и метаболический баланс.
+  components:
+  - type: Sprite
+    state: stomach_xeno
+  - type: Stomach
+    digestionDelay: 30
+    specialDigestible:
+      tags:
+      - Meat
+      - ReptilianFood
+      - Pill
+      - Crayon
+      - Paper
+      - Trash
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 30
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: AcidicBlood
+          Quantity: 5
+  - type: Metabolizer
+    metabolizerTypes: [Xenomorph]
+    removeEmpty: true
+    updateInterval: 1.5
+    maxReagents: 1
+    groups:
+    - id: Food
+    - id: Drink
+    - id: Alcohol
+      rateModifier: 10 # instantly removes alcohol without effects

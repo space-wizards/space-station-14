@@ -1,0 +1,40 @@
+# centcom underwear
+- type: loadoutGroup
+  id: CentcommOfficerUnderwear
+  name: loadout-group-centcomm-officer-underwear
+  minLimit: 3
+  hidden: true
+  loadouts:
+  - UnderwearBottomBoxersCentcomm
+  - UnderwearBottomPantiesCentcomm
+  - UnderwearTopBraCentcomm
+  - SocksCentcomm
+
+- type: loadout
+  id: UnderwearBottomBoxersCentcomm
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersCentcomm
+
+- type: loadout
+  id: UnderwearBottomPantiesCentcomm
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesCentcomm
+
+- type: loadout
+  id: UnderwearTopBraCentcomm
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraCentcomm
+
+- type: loadout
+  id: SocksCentcomm
+  equipment:
+    socks: ClothingUnderwearSocksNormal

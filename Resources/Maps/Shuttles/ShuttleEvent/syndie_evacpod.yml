@@ -15,8 +15,8 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      desc: Evacuation pod
-      name: Evacuation pod
+      desc: GX-Fighter
+      name: GX-Fighter
     - type: Transform
     - type: MapGrid
       chunks:
@@ -238,6 +238,13 @@ entities:
     components:
     - type: Transform
       pos: 1.5,1.5
+      parent: 1
+- proto: BoxFolderNuclearCodes
+  entities:
+  - uid: 199
+    components:
+    - type: Transform
+      pos: -0.39414135,1.46875
       parent: 1
 - proto: CableApcExtension
   entities:
@@ -549,31 +556,6 @@ entities:
     - type: Transform
       pos: 0.5,2.5
       parent: 1
-- proto: CrateEmergencyInternals
-  entities:
-  - uid: 192
-    components:
-    - type: Transform
-      pos: -0.5,-0.5
-      parent: 1
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-        - 1.7459903
-        - 6.568249
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
 - proto: CrateSyndicate
   entities:
   - uid: 92
@@ -619,6 +601,13 @@ entities:
           showEnts: False
           occludes: True
           ent: null
+- proto: CrateSyndicateSurplusBundle
+  entities:
+  - uid: 89
+    components:
+    - type: Transform
+      pos: -0.5,-0.5
+      parent: 1
 - proto: CyberPen
   entities:
   - uid: 93
@@ -628,18 +617,13 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: FaxMachineBase
+- proto: FaxMachineSyndie
   entities:
-  - uid: 162
+  - uid: 90
     components:
-    - type: MetaData
-      desc: syndicate long range fax machine
-      name: syndicate long range fax machine
     - type: Transform
       pos: -0.5,1.5
       parent: 1
-    - type: FaxMachine
-      name: syndicate long range fax machine
 - proto: GasPassiveVent
   entities:
   - uid: 108
@@ -1015,6 +999,13 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+- proto: PhoneInstrumentSyndicate
+  entities:
+  - uid: 200
+    components:
+    - type: Transform
+      pos: -0.7221788,1.84375
+      parent: 1
 - proto: PlasmaWindowDiagonal
   entities:
   - uid: 70
@@ -1141,22 +1132,24 @@ entities:
     - type: Transform
       pos: 3.5,1.5
       parent: 1
-- proto: SyndieVisitorSpawner
+- proto: SyndieSoldierSpawner
   entities:
-  - uid: 89
-    components:
-    - type: Transform
-      pos: -1.5,1.5
-      parent: 1
-  - uid: 90
-    components:
-    - type: Transform
-      pos: 0.5,1.5
-      parent: 1
   - uid: 91
     components:
     - type: Transform
       pos: 2.5,1.5
+      parent: 1
+  - uid: 162
+    components:
+    - type: Transform
+      pos: -1.5,1.5
+      parent: 1
+- proto: SyndieSoldierTeamLeaderSpawner
+  entities:
+  - uid: 192
+    components:
+    - type: Transform
+      pos: 0.5,1.5
       parent: 1
 - proto: TableGlass
   entities:

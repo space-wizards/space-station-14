@@ -1,0 +1,324 @@
+- type: entity
+  id: AirlockTaipan
+  parent: Airlock
+  name: шлюз
+  description: Он открывается, он закрывается, и он может вас раздавить.
+  suffix: Тайпан
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/taipan.rsi
+    snapCardinals: true
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+    - state: closed_unlit
+      shader: unshaded
+      map: ["enum.DoorVisualLayers.BaseUnlit"]
+      visible: false
+    - state: welded
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: bolted_unlit
+      shader: unshaded
+      map: ["enum.DoorVisualLayers.BaseBolted"]
+    - state: emergency_unlit
+      map: ["enum.DoorVisualLayers.BaseEmergencyAccess"]
+      shader: unshaded
+    - state: panel_open
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - state: electrified_ai
+      sprite: Interface/Misc/ai_hud.rsi
+      shader: unshaded
+      visible: false
+      map: ["enum.ElectrifiedLayers.HUD"]
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      shader: unshaded
+      visible: false
+      map: ["enum.ElectrifiedLayers.Sparks"]
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipan ]
+  - type: Paintable
+    group: TaipanAirlockStandard
+
+- type: entity
+  id: AirlockTaipanGlass
+  parent: AirlockGlass
+  name: стеклянный шлюз
+  description: Он открывается, он закрывается, и он может вас раздавить.
+  suffix: Тайпан
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/taipan_glass.rsi
+  - type: Paintable
+    group: TaipanAirlockGlass
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipan ]
+
+- type: entity
+  id: HighSecDoorTaipan
+  parent: HighSecDoor
+  name: бронированная дверь
+  description: Удерживает плохих снаружи, а хороших внутри.
+  suffix: Тайпан
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/taipan_highsec.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+    - state: closed_unlit
+      shader: unshaded
+      map: ["enum.DoorVisualLayers.BaseUnlit"]
+      visible: false
+    - state: welded
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: bolted_unlit
+      shader: unshaded
+      map: ["enum.DoorVisualLayers.BaseBolted"]
+    - state: emergency_unlit
+      map: ["enum.DoorVisualLayers.BaseEmergencyAccess"]
+      shader: unshaded
+    - state: panel_open
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - state: electrified_ai
+      sprite: Interface/Misc/ai_hud.rsi
+      shader: unshaded
+      visible: false
+      map: ["enum.ElectrifiedLayers.HUD"]
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      shader: unshaded
+      visible: false
+      map: ["enum.ElectrifiedLayers.Sparks"]
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipan ]
+
+- type: entity
+  parent: AirlockHatch
+  id: AirlockHatchTaipan
+  name: герметичный люк
+  description: Он открывается, он закрывается, он может раздавить вас, а за ним лишь космос.
+  suffix: Тайпан, Внешний
+  components:
+  - type: Door
+    crushDamage:
+      types:
+        Blunt: 15
+    openSound:
+      path: /Audio/Machines/airlock_ext_open.ogg
+    closeSound:
+      path: /Audio/Machines/airlock_ext_close.ogg
+    denySound:
+      path: /Audio/Machines/airlock_deny.ogg
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/taipan_hatch.rsi
+  - type: Wires
+    layoutId: AirlockExternal
+
+- type: entity
+  parent: AirlockHatchTaipan
+  id: AirlockHatchGlassTaipan
+  suffix: Тайпан, Внешний
+  components:
+  - type: Door
+    occludes: false
+  - type: Occluder
+    enabled: false
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/taipan_glass_hatch.rsi
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49"
+        density: 100
+        mask:
+        - FullTileMask
+        layer:
+        - GlassAirlockLayer
+
+- type: entity
+  parent: AirlockTaipan
+  id: AirlockTaipanService
+  suffix: Тайпан, Сервисный
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/taipan_service.rsi
+  - type: Wires
+    layoutId: AirlockService
+
+- type: entity
+  parent: AirlockTaipan
+  id: AirlockTaipanFreezer
+  suffix: Тайпан, Холодильник
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/taipan_freezer.rsi
+  - type: Wires
+    layoutId: AirlockService
+
+- type: entity
+  parent: AirlockTaipan
+  id: AirlockTaipanEngineering
+  suffix: Тайпан, Инженерный
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/taipan_engineering.rsi
+  - type: Wires
+    layoutId: AirlockEngineering
+
+- type: entity
+  parent: AirlockTaipanEngineering
+  id: AirlockTaipanAtmospherics
+  suffix: Тайпан, Атмосферный
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/taipan_atmospherics.rsi
+
+- type: entity
+  parent: AirlockTaipan
+  id: AirlockTaipanCargo
+  suffix: Тайпан, Снабжение
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/taipan_cargo.rsi
+  - type: Wires
+    layoutId: AirlockCargo
+
+- type: entity
+  parent: AirlockTaipan
+  id: AirlockTaipanMaint
+  suffix: Тайпан, Технический
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/taipan_maint.rsi
+
+- type: entity
+  parent: AirlockTaipan
+  id: AirlockTaipanMedical
+  suffix: Тайпан, Медицинский
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/taipan_medical.rsi
+  - type: Wires
+    layoutId: AirlockMedical
+
+- type: entity
+  parent: AirlockTaipanMedical
+  id: AirlockTaipanVirology
+  suffix: Тайпан, Вирусология
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/taipan_virology.rsi
+
+- type: entity
+  parent: AirlockTaipan
+  id: AirlockTaipanScience
+  suffix: Тайпан, Научный
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/taipan_science.rsi
+  - type: Wires
+    layoutId: AirlockScience
+
+- type: entity
+  parent: AirlockTaipan
+  id: AirlockTaipanCommand
+  suffix: Тайпан, Командование
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/taipan_command.rsi
+  - type: WiresPanelSecurity
+    securityLevel: medSecurity
+  - type: Wires
+    layoutId: AirlockCommand
+
+- type: entity
+  parent: AirlockTaipanGlass
+  id: AirlockTaipanGlassService
+  suffix: Тайпан, Сервисный
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/taipan_glass_service.rsi
+  - type: Wires
+    layoutId: AirlockService
+
+- type: entity
+  parent: AirlockTaipanGlass
+  id: AirlockTaipanGlassEngineering
+  suffix: Тайпан, Инженерный
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/taipan_glass_engineering.rsi
+  - type: Wires
+    layoutId: AirlockEngineering
+
+- type: entity
+  parent: AirlockTaipanGlass
+  id: AirlockTaipanGlassMaint
+  suffix: Тайпан, Технический
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/taipan_glass_maint.rsi
+
+- type: entity
+  parent: AirlockTaipanGlassEngineering
+  id: AirlockTaipanGlassAtmospherics
+  suffix: Тайпан, Атмосферный
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/taipan_glass_atmospherics.rsi
+
+- type: entity
+  parent: AirlockTaipanGlass
+  id: AirlockTaipanGlassCargo
+  suffix: Тайпан, Снабжение
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/taipan_glass_cargo.rsi
+  - type: Wires
+    layoutId: AirlockCargo
+
+- type: entity
+  parent: AirlockTaipanGlass
+  id: AirlockTaipanGlassMedical
+  suffix: Тайпан, Медицинский
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/taipan_glass_medical.rsi
+  - type: Wires
+    layoutId: AirlockMedical
+
+- type: entity
+  parent: AirlockTaipanGlassMedical
+  id: AirlockTaipanGlassVirology
+  suffix: Тайпан, Вирусология
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/taipan_glass_virology.rsi
+
+- type: entity
+  parent: AirlockTaipanGlass
+  id: AirlockTaipanGlassScience
+  suffix: Тайпан, Научный
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/taipan_glass_science.rsi
+  - type: Wires
+    layoutId: AirlockScience
+
+- type: entity
+  parent: AirlockTaipanGlass
+  id: AirlockTaipanGlassCommand
+  suffix: Тайпан, Командование
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/taipan_glass_command.rsi
+  - type: WiresPanelSecurity
+    securityLevel: medSecurity
+  - type: Wires
+    layoutId: AirlockCommand

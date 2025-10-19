@@ -1,0 +1,14 @@
+- type: entity
+  parent: BaseFlatpack
+  id: GravityGenMiniFlatpack
+  name: упаковка мини генератора гравитации
+  description: Универсально-сборная упаковка, используемая для сборки мини генератора гравитации.
+  components:
+  - type: Flatpack
+    entity: GravityGeneratorMini
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay
+      color: "#EFB341"
+    - state: icon-default

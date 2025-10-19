@@ -5,6 +5,7 @@
   components:
   - type: EnergySword
   - type: ItemToggle
+    onActivate: false # DS14
     soundActivate:
       path: /Audio/Weapons/ebladeon.ogg
     soundDeactivate:

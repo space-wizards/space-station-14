@@ -66,17 +66,6 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ADTClothingUniformDungeonMasterSuit
-  name: костюм Мастера
-  description: Для настоящих Dungeon Masters.
-  components:
-  - type: Sprite
-    sprite: _ADT/Clothing/Uniforms/Jumpsuit/dungeon_master_suit.rsi
-  - type: Clothing
-    sprite: _ADT/Clothing/Uniforms/Jumpsuit/dungeon_master_suit.rsi
-
-- type: entity
-  parent: ClothingUniformBase
   id: ADTClothingUniformJumpsuitMaugly
   name: штурмовой костюм "Маугли"
   description: Удобный и прочный современный штурмовой костюм из плотной палаточной хлопчатобумажной ткани, который хорошо показал себя на войне в джунглях.

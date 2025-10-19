@@ -1,0 +1,72 @@
+- type: marking
+  id: AugmentsEinsteinArmRight
+  bodyPart: RArm
+  markingCategory: Arms
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/augments/einstein.rsi
+    state: r_arm
+
+- type: marking
+  id: AugmentsEinsteinHandRight
+  bodyPart: RHand
+  markingCategory: Arms
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/augments/einstein.rsi
+    state: r_hand
+
+- type: marking
+  id: AugmentsEinsteinArmLeft
+  bodyPart: LArm
+  markingCategory: Arms
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/augments/einstein.rsi
+    state: l_arm
+
+- type: marking
+  id: AugmentsEinsteinHandLeft
+  bodyPart: LHand
+  markingCategory: Arms
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/augments/einstein.rsi
+    state: l_hand
+
+- type: marking
+  id: AugmentsEinsteinTorso
+  bodyPart: Chest
+  markingCategory: Chest
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/augments/einstein.rsi
+    state: torso_f
+
+- type: marking
+  id: AugmentsEinsteinLegRight
+  bodyPart: RLeg
+  markingCategory: Legs
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/augments/einstein.rsi
+    state: r_leg
+
+- type: marking
+  id: AugmentsEinsteinFootRight
+  bodyPart: RFoot
+  markingCategory: Legs
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/augments/einstein.rsi
+    state: r_foot
+
+- type: marking
+  id: AugmentsEinsteinLegLeft
+  bodyPart: LLeg
+  markingCategory: Legs
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/augments/einstein.rsi
+    state: l_leg
+
+- type: marking
+  id: AugmentsEinsteinFootLeft
+  bodyPart: LFoot
+  markingCategory: Legs
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/augments/einstein.rsi
+    state: l_foot
+

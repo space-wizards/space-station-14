@@ -1,5 +1,14 @@
 - type: latheRecipe
   parent: BaseWeaponRecipeLong
+  id: WeaponIonRifle
+  result: WeaponIonRifle
+  materials:
+    Steel: 2000
+    Plastic: 750
+    Gold: 500
+
+- type: latheRecipe
+  parent: BaseWeaponRecipeLong
   id: WeaponLaserRifle
   result: WeaponLaserRifle
   materials:

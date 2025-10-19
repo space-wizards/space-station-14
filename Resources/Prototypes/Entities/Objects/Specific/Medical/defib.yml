@@ -94,6 +94,11 @@
     doAfterDuration: 6
   - type: DoAfter
   - type: UseDelay
+#DS14 start
+  - type: Tag
+    tags:
+    - CompactDefibrillator
+#DS14 end
 
 - type: entity
   id: DefibrillatorSyndicate
@@ -130,3 +135,8 @@
       types:
         Blunt: 5 # DS14-value
         Shock: 15 # DS14-value
+#DS14 start
+  - type: Tag
+    tags:
+    - CompactDefibrillator
+#DS14 end

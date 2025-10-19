@@ -10,9 +10,9 @@
     - Vocal
     - SlimePerson
   blacklist:
-    components:
-    - BorgChassis
-    - ComputerEmotes
+    tags:
+    - SiliconEmotes
+    - SiliconIPSIPCEmotes
   chatMessages: ["chat-emote-msg-bubbling"]
   chatTriggers:
     - громко пузыриться
@@ -29,9 +29,9 @@
     - Vocal
     - SlimePerson
   blacklist:
-    components:
-    - BorgChassis
-    - ComputerEmotes
+    tags:
+    - SiliconEmotes
+    - SiliconIPSIPCEmotes
   chatMessages: ["chat-emote-msg-pop"]
   chatTriggers:
     - издаёт хлопок
@@ -49,9 +49,9 @@
     - Vocal
     - CatVocal
   blacklist:
-    components:
-    - BorgChassis
-    - ComputerEmotes
+    tags:
+    - SiliconEmotes
+    - SiliconIPSIPCEmotes
   chatMessages: ["chat-emote-msg-hiss"]
   chatTriggers:
     - шипит
@@ -70,9 +70,9 @@
     - Vocal
     - CatVocal
   blacklist:
-    components:
-    - BorgChassis
-    - ComputerEmotes
+    tags:
+    - SiliconEmotes
+    - SiliconIPSIPCEmotes
   chatMessages: ["chat-emote-msg-meow"]
   chatTriggers:
     - мяукает
@@ -96,9 +96,9 @@
     - Vocal
     - Felinid
   blacklist:
-    components:
-    - BorgChassis
-    - ComputerEmotes
+    tags:
+    - SiliconEmotes
+    - SiliconIPSIPCEmotes
   chatMessages: ["chat-emote-msg-mew"]
   chatTriggers:
     - мявкает
@@ -117,9 +117,9 @@
     - Vocal
     - Felinid
   blacklist:
-    components:
-    - BorgChassis
-    - ComputerEmotes
+    tags:
+    - SiliconEmotes
+    - SiliconIPSIPCEmotes
   chatMessages: ["chat-emote-msg-purr"]
   chatTriggers:
     - мурлычет
@@ -142,9 +142,9 @@
     - Vocal
     - Vulpkanin
   blacklist:
-    components:
-    - BorgChassis
-    - ComputerEmotes
+    tags:
+    - SiliconEmotes
+    - SiliconIPSIPCEmotes
   chatMessages: ["chat-emote-msg-growl"]
   chatTriggers:
     - рычит
@@ -164,9 +164,9 @@
     - Vocal
     - Vulpkanin
   blacklist:
-    components:
-    - BorgChassis
-    - ComputerEmotes
+    tags:
+    - SiliconEmotes
+    - SiliconIPSIPCEmotes
   chatMessages: ["chat-emote-msg-howl"]
   chatTriggers:
     - воет

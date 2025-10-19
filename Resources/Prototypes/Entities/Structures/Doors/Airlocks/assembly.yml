@@ -80,6 +80,28 @@
     sprite: Structures/Doors/Airlocks/Glass/command.rsi
     state: "assembly"
 
+# DS14-Start
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyChemistry
+  suffix: Chemistry
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/chemistry.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyChemistryGlass
+  suffix: Chemistry, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/chemistry.rsi
+    state: "assembly"
+
+# DS14-End
+
 #Engineering
 - type: entity
   parent: AirlockAssembly

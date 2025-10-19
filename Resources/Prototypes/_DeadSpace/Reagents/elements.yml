@@ -1,0 +1,28 @@
+- type: reagent
+  id: RawUranium
+  name: reagent-name-rawuranium
+  group: Elements
+  parent: Uranium
+  desc: reagent-desc-rawuranium
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: metallic
+  color: "#475228"
+
+- type: reagent
+  id: YellowCake
+  name: reagent-name-yellowcake
+  group: Elements
+  parent: Uranium
+  desc: reagent-desc-yellowcake
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: metallic
+  color: "#b89933"
+
+- type: reagent
+  id: uraniumhexafluoride
+  name: reagent-name-uraniumhexafluoride
+  parent: Uranium
+  desc: reagent-desc-uraniumhexafluoride
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: metallic
+  color: "#b3bfb0"

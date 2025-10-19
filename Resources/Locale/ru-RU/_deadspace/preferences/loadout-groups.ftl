@@ -3,6 +3,7 @@ loadout-group-default-white-underwear = Стандартное нижнее бе
 # Command
 loadout-group-blue-shield-officer-jumpsuit = Синий щит, комбинезон
 loadout-group-blue-shield-officer-backpack = Синий щит, рюкзак
+loadout-group-blue-shield-officer-neck = Синий щит, шея
 loadout-group-blue-shield-officer-underwear = Синий щит, нижнее бельё
 # Civilian
 loadout-group-senior-administrator-jumpsuit = Менеджер, комбинезон
@@ -29,6 +30,7 @@ loadout-group-brigmedic-backpack = Бригмедик, рюкзак
 loadout-group-brigmedic-socks = Бригмедик, ноги
 loadout-group-brigmedic-underwear = Бригмедик, нижнее бельё
 loadout-group-brigmedic-medal = Бригмедик, медаль
+loadout-group-security-pilot-jumpsuit = Пилот СБ, комбинезон
 loadout-group-senior-officer-jumpsuit = Инструктор СБ, комбинезон
 loadout-group-senior-officer-backpack = Инструктор СБ, рюкзак
 loadout-group-senior-officer-outerclothing = Инструктор СБ, верхняя одежда
@@ -51,3 +53,5 @@ loadout-group-coroner-jumpsuit = Коронер, комбинезон
 loadout-group-coroner-backpack = Коронер, рюкзак
 loadout-group-coroner-head = Коронер, голова
 loadout-group-coroner-underwear = Коронер, нижнее бельё
+# Centcomm
+loadout-group-centcomm-officer-underwear = Офицер ЦК, нижнее бельё

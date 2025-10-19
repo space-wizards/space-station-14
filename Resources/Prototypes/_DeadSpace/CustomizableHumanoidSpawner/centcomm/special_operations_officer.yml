@@ -21,6 +21,7 @@
   - CentralCommandSpecialOperationsOfficerLoadout
   - Survival
   - GroupSpeciesBreathTool
+  - CentcommOfficerUnderwear
 
 - type: loadoutGroup
   id: CentralCommandSpecialOperationsOfficerLoadout

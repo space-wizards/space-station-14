@@ -5,7 +5,7 @@
   playTimeTracker: JobCentralCommandOfficial
   setPreference: false
   startingGear: CentcomGear
-  icon: "JobIconNanotrasenRed"
+  icon: "JobIconNanotrasen"
   supervisors: job-supervisors-centcom-administrator
   canBeAntag: false
   accessGroups:
@@ -14,11 +14,14 @@
   - CentralCommand
   special:
   - !type:AddImplantSpecial
-    implants: [ MindShieldImplant, TrackingImplant ]
+    implants: [ MindShieldImplant, TrackingImplant, DeathRattleImplantCentcomm ]
   - !type:AddComponentSpecial
     components:
     - type: AntagImmune
     - type: ZombieImmune
+    - type: NpcFactionMember
+      factions:
+      - CentralCommand
 
 - type: startingGear
   id: CentcomGear
@@ -26,22 +29,15 @@
     jumpsuit: ClothingUniformJumpsuitCentcomOfficial
     # back: ClothingBackpackSatchelOfficial
     shoes: ClothingShoesBootsLaceup
-    head: ClothingHeadHatCentcom
-    eyes: ClothingEyesGlassesSunglasses
-    gloves: ClothingHandsGlovesColorBlack
-    outerClothing: ClothingOuterVestWeb
+    # head: ClothingHeadHatCentcom
+    # eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesCentcomNaval
+    outerClothing: ClothingOuterArmorCentcommCarapace
     id: CentcomOfficialPDA
     ears: ClothingHeadsetAltCentCom
-    belt: WeaponPistolN1984
+    belt: ADTClothingBeltSupremeSheathFilled
     pocket1: RubberStampCentcom
-    pocket2: ClothingMaskGasCentcom
-  #   underwearb: ClothingUnderwearBottomBoxersCentcomm # DS14-Underwear
-  # underweart: ClothingUnderwearTopBraCentcomm # DS14-Underwear
-  # underwearb: ClothingUnderwearBottomPantiesCentcomm # DS14-Underwear
-  # innerClothingSkirt: ClothingUniformJumpskirtPencilCentcomOfficial
-  # storage:
-  #   back:
-  #   -
+    pocket2: WeaponPistolN1984
 
 - type: entity
   parent: ClothingBackpackSatchelHoS
