@@ -6,12 +6,21 @@ namespace Content.IntegrationTests.Tests.Hands;
 
 public sealed class WieldingRequiresMultipleHandsTest : InteractionTest
 {
-    private static readonly EntProtoId SniperMosin = "WeaponSniperMosin";
+    [TestPrototypes]
+    private const string TestProto = @"
+- type: entity
+  id: TestWieldingRequiresMultipleHandsTest
+  name: rayray
+  components:
+  - type: Item
+    size: Large
+  - type: Wieldable
+";
 
     [Test]
     public async Task TestOneHandedWielding()
     {
-        var mosinNet = await PlaceInHands(SniperMosin);
+        var mosinNet = await PlaceInHands("TestWieldingRequiresMultipleHandsTest");
         var wieldComp = Comp<WieldableComponent>(mosinNet);
 
         // The player entity by default should only have one hand.
@@ -24,6 +33,6 @@ public sealed class WieldingRequiresMultipleHandsTest : InteractionTest
             "WieldingRequiresMultipleHandsTest should be removed!");
         Assert.That(wieldComp.Wielded, Is.False, "Mosin spawned in wielded!");
         await UseInHand();
-        Assert.That(wieldComp.Wielded, Is.False, "Mosin was wielded but player only has one hand!");
+        Assert.That(wieldComp.Wielded, Is.False, "Item was wielded but player only has one hand!");
     }
 }
