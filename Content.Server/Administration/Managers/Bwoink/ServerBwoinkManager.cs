@@ -7,13 +7,23 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Administration.Managers.Bwoink;
 
+/// <summary>
+/// Handles the server side APIs for bwoinking.
+/// </summary>
+/// <seealso cref="SharedBwoinkManager"/>
 public sealed partial class ServerBwoinkManager : SharedBwoinkManager
 {
     /// <summary>
     /// The amount of time required for a person to be no longer typing.
     /// </summary>
     private static readonly TimeSpan TypingTimeout = TimeSpan.FromSeconds(3);
+    /// <summary>
+    /// Simple rate-limit for the update loop. Since we are doing a LINQ call with RemoveAll, this is a certified hot-loop rider screamed at me for.
+    /// </summary>
     private static readonly TimeSpan UpdateTimeout = TimeSpan.FromMilliseconds(500);
+    /// <summary>
+    /// When we are next going to update the typing timeouts.
+    /// </summary>
     private TimeSpan _nextUpdate = TimeSpan.MinValue;
 
     [Dependency] private readonly INetManager _netManager = default!;

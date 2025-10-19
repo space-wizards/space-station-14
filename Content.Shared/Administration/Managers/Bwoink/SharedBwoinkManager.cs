@@ -7,6 +7,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Administration.Managers.Bwoink;
 
+/// <summary>
+/// This class is responsible for managing the admin help system. See the Server and Client implementation for details.
+/// </summary>
 public abstract class SharedBwoinkManager : IPostInjectInit
 {
     [Dependency] private readonly ILogManager _logManager = default!;
@@ -17,7 +20,13 @@ public abstract class SharedBwoinkManager : IPostInjectInit
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
 
     protected ISawmill Log = default!;
+    /// <summary>
+    /// Event that gets fired for every message that gets sent. The sender is the channel this message was received in.
+    /// </summary>
     public event EventHandler<ProtoId<BwoinkChannelPrototype>, (NetUserId person, BwoinkMessage message)>? MessageReceived;
+    /// <summary>
+    /// A cache of ProtoIds for the channels resolving to a cached copy of the prototype behind it.
+    /// </summary>
     protected Dictionary<ProtoId<BwoinkChannelPrototype>, BwoinkChannelPrototype> ProtoCache = new();
 
     /// <summary>
@@ -46,6 +55,10 @@ public abstract class SharedBwoinkManager : IPostInjectInit
         PrototypeManager.PrototypesReloaded -= RefreshChannels;
     }
 
+    /// <summary>
+    /// Gets the typing statutes for a given channel and user channel.
+    /// The returned status list can be modified to affect what is stored in the <see cref="TypingStatuses"/> dict.
+    /// </summary>
     public List<TypingStatus> GetTypingStatuses(ProtoId<BwoinkChannelPrototype> channel, NetUserId userChannel)
     {
         // Ensure outer dictionary entry exists
@@ -144,12 +157,16 @@ public abstract class SharedBwoinkManager : IPostInjectInit
         Log = _logManager.GetSawmill("bwoink");
     }
 
+    /// <summary>
+    /// Checks if a given session is able to manage a given bwoink channel.
+    /// </summary>
     public bool CanManageChannel(ProtoId<BwoinkChannelPrototype> proto, ICommonSession session)
     {
         var prototype = PrototypeManager.Index(proto);
         return CanManageChannel(prototype, session);
     }
 
+    /// <inheritdoc cref="CanManageChannel(Robust.Shared.Prototypes.ProtoId{Content.Shared.Administration.Managers.Bwoink.BwoinkChannelPrototype},Robust.Shared.Player.ICommonSession)"/>
     public bool CanManageChannel(BwoinkChannelPrototype channel, ICommonSession session)
     {
         if (channel.Features.TryFirstOrDefault(bwoinkChannelFeature => bwoinkChannelFeature is RequiredFlags,
@@ -193,6 +210,9 @@ public abstract class SharedBwoinkManager : IPostInjectInit
         return conversation;
     }
 
+    /// <summary>
+    /// Returns the conversations for a given channel.
+    /// </summary>
     public Dictionary<NetUserId, Conversation> GetConversationsForChannel(ProtoId<BwoinkChannelPrototype> channel)
     {
         return Conversations[channel];
@@ -211,6 +231,11 @@ public abstract class SharedBwoinkManager : IPostInjectInit
     public Dictionary<ProtoId<BwoinkChannelPrototype>, Dictionary<NetUserId, Conversation>> Conversations = new();
 }
 
+/// <summary>
+/// Represents a conversation.
+/// </summary>
+/// <param name="Who">Who is this conversation about. This is referred to as the UserChannel in some places.</param>
+/// <param name="Messages">A list of messages in this channel.</param>
 public sealed record Conversation(NetUserId Who, List<BwoinkMessage> Messages)
 {
     /// <summary>
@@ -265,6 +290,9 @@ public sealed record BwoinkMessage(string Sender, NetUserId? SenderId, DateTime 
 
 public delegate void EventHandler<in TSender, in TArgs>(TSender sender, TArgs args);
 
+/// <summary>
+/// Flags that a <see cref="BwoinkMessage"/> can have.
+/// </summary>
 [Flags]
 public enum MessageFlags : byte
 {

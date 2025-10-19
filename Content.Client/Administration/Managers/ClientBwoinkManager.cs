@@ -11,6 +11,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Administration.Managers;
 
+/// <summary>
+/// Handles the client side APIs for bwoinking.
+/// </summary>
+/// <seealso cref="SharedBwoinkManager"/>
 public sealed class ClientBwoinkManager : SharedBwoinkManager
 {
     [Dependency] private readonly INetManager _netManager = default!;
@@ -20,6 +24,9 @@ public sealed class ClientBwoinkManager : SharedBwoinkManager
     [Dependency] private readonly IClientAdminManager _adminManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
 
+    /// <summary>
+    /// Our fancy cache of player channels. This keeps track of unread messages and when we last received a message.
+    /// </summary>
     [ViewVariables]
     public readonly Dictionary<ProtoId<BwoinkChannelPrototype>, Dictionary<NetUserId, PlayerChannelProperties>>
         PlayerChannels = new();
@@ -27,7 +34,7 @@ public sealed class ClientBwoinkManager : SharedBwoinkManager
     /// <summary>
     /// Contains the ratelimits for each userchannel we send a typing status to.
     /// </summary>
-    private Dictionary<NetUserId, TimeSpan> _typingRateLimits = new();
+    private readonly Dictionary<NetUserId, TimeSpan> _typingRateLimits = new();
 
     /// <summary>
     /// Dictionary that contains the sounds to play for a specified channel, source may be null.
@@ -40,7 +47,7 @@ public sealed class ClientBwoinkManager : SharedBwoinkManager
     public event Action? ReloadedData;
 
     /// <summary>
-    /// Called whenever we receieve a <see cref="MsgBwoinkTypings"/>
+    /// Called whenever we receive a <see cref="MsgBwoinkTypings"/>
     /// </summary>
     public event Action? TypingsUpdated;
 
@@ -68,6 +75,9 @@ public sealed class ClientBwoinkManager : SharedBwoinkManager
         RequestSync();
     }
 
+    /// <summary>
+    /// Gets the player channel properties for a given channel and user channel. If they don't already exist, a new one will be created and returned.
+    /// </summary>
     public PlayerChannelProperties GetOrCreatePlayerPropertiesForChannel(ProtoId<BwoinkChannelPrototype> channel, NetUserId userId)
     {
         PlayerChannels.TryAdd(channel, new Dictionary<NetUserId, PlayerChannelProperties>());
@@ -134,6 +144,9 @@ public sealed class ClientBwoinkManager : SharedBwoinkManager
             message.Message.Flags);
     }
 
+    /// <summary>
+    /// Attempts to send a message to a channel as a non-admin.
+    /// </summary>
     public void SendMessageNonAdmin(ProtoId<BwoinkChannelPrototype> channel, string text)
     {
         _netManager.ClientSendMessage(new MsgBwoinkNonAdmin()
@@ -144,6 +157,9 @@ public sealed class ClientBwoinkManager : SharedBwoinkManager
         });
     }
 
+    /// <summary>
+    /// Attempts to send a message *as* an admin. If called when you are not a manager of the channel, this does nothing but explode you (server rejects the packet).
+    /// </summary>
     public void SendMessageAdmin(BwoinkChannelPrototype channel, NetUserId user, string text)
     {
         _netManager.ClientSendMessage(new MsgBwoink()
@@ -206,6 +222,9 @@ public sealed class ClientBwoinkManager : SharedBwoinkManager
     }
 }
 
+/// <summary>
+/// Properties to keep track of when we last received a message on a channel.
+/// </summary>
 public sealed class PlayerChannelProperties
 {
     public DateTime LastMessage { get; set; } = DateTime.MinValue;
