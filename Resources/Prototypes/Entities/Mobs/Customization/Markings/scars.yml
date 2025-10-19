@@ -2,7 +2,7 @@
   id: ScarEyeRight
   bodyPart: Head
   markingCategory: Head
-  speciesRestriction: [Human, Dwarf, SlimePerson]
+  speciesRestriction: [Human, Dwarf, SlimePerson, Shark, Demon, Vulpkanin, Tajaran, Reptilian, Kobolt, Felinid] # DS14
   followSkinColor: true
   sprites:
   - sprite: Mobs/Customization/scars.rsi
@@ -12,7 +12,7 @@
   id: ScarEyeLeft
   bodyPart: Head
   markingCategory: Head
-  speciesRestriction: [Human, Dwarf, SlimePerson]
+  speciesRestriction: [Human, Dwarf, SlimePerson, Shark, Demon, Vulpkanin, Tajaran, Reptilian, Kobolt, Felinid] # DS14
   followSkinColor: true
   sprites:
   - sprite: Mobs/Customization/scars.rsi
@@ -84,7 +84,7 @@
   id: ScarFace1
   bodyPart: Head
   markingCategory: Head
-  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Moth]
+  speciesRestriction: [Human, Dwarf, SlimePerson, Shark, Demon, Vulpkanin, Tajaran, Reptilian, Kobolt, Moth, Felinid] # DS14
   followSkinColor: true
   sprites:
   - sprite: Mobs/Customization/scars.rsi
@@ -94,7 +94,7 @@
   id: ScarFace2
   bodyPart: Head
   markingCategory: Head
-  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Moth]
+  speciesRestriction: [Human, Dwarf, SlimePerson, Shark, Demon, Vulpkanin, Tajaran, Reptilian, Kobolt, Moth, Felinid] # DS14
   followSkinColor: true
   sprites:
   - sprite: Mobs/Customization/scars.rsi
@@ -104,7 +104,7 @@
   id: ScarEyeRightSmall
   bodyPart: Head
   markingCategory: Head
-  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson]
+  speciesRestriction: [Human, Dwarf, SlimePerson, Shark, Demon, Vulpkanin, Tajaran, Reptilian, Kobolt, Felinid] # DS14
   followSkinColor: true
   sprites:
   - sprite: Mobs/Customization/scars.rsi
@@ -114,7 +114,7 @@
   id: ScarEyeLeftSmall
   bodyPart: Head
   markingCategory: Head
-  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson]
+  speciesRestriction: [Human, Dwarf, SlimePerson, Shark, Demon, Vulpkanin, Tajaran, Reptilian, Kobolt, Felinid] # DS14
   followSkinColor: true
   sprites:
   - sprite: Mobs/Customization/scars.rsi

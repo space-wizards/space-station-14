@@ -47,6 +47,11 @@
       points: 1
       required: true
       defaultMarkings: [ LizardTailSmooth ]
+# DS14-start
+    Head:
+      points: 3
+      required: false
+# DS14-end
     Snout:
       points: 1
       required: true

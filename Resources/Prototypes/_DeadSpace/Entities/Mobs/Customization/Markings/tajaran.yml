@@ -2,7 +2,7 @@
   id: Belly1
   bodyPart: Chest
   markingCategory: Chest
-  speciesRestriction: [Tajaran]
+  speciesRestriction: [Vulpkanin, Shark, Tajaran]
   sprites:
     - sprite: Mobs/Customization/Tajaran/tajaran_chest.rsi
       state: belly1
@@ -11,7 +11,7 @@
   id: Belly2
   bodyPart: Chest
   markingCategory: Chest
-  speciesRestriction: [Tajaran]
+  speciesRestriction: [Vulpkanin, Shark, Tajaran]
   sprites:
     - sprite: Mobs/Customization/Tajaran/tajaran_chest.rsi
       state: belly2
@@ -20,7 +20,7 @@
   id: Belly3
   bodyPart: Chest
   markingCategory: Chest
-  speciesRestriction: [Tajaran]
+  speciesRestriction: [Vulpkanin, Shark, Tajaran]
   sprites:
     - sprite: Mobs/Customization/Tajaran/tajaran_chest.rsi
       state: belly3
@@ -29,7 +29,7 @@
   id: Belly4
   bodyPart: Chest
   markingCategory: Chest
-  speciesRestriction: [Tajaran]
+  speciesRestriction: [Vulpkanin, Shark, Tajaran]
   sprites:
     - sprite: Mobs/Customization/Tajaran/tajaran_chest.rsi
       state: chest
