@@ -15,7 +15,7 @@ using Content.Shared.Random.Helpers;
 using Content.Shared.RatKing;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
+using Content.Shared.Chat;
 
 namespace Content.Server.RatKing
 {
