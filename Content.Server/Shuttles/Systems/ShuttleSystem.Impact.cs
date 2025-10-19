@@ -244,23 +244,22 @@ public sealed partial class ShuttleSystem
 
         foreach (var ent in list)
         {
-            var (uid, physics) = ent;
             // don't throw if buckled
-            if (_buckle.IsBuckled(uid, _buckleQuery.CompOrNull(uid)))
+            if (_buckle.IsBuckled(ent, _buckleQuery.CompOrNull(ent)))
                 continue;
 
             // don't throw them if they have magboots
-            if (movedByPressureQuery.TryComp(uid, out var moved) && !moved.Enabled)
+            if (movedByPressureQuery.TryComp(ent, out var moved) && !moved.Enabled)
                 continue;
 
             if (direction.LengthSquared() > minsq)
             {
-                _stuns.TryCrawling(uid, knockdownTime);
-                _throwing.TryThrow(uid, direction, physics, Transform(uid), _projQuery, direction.Length(), playSound: false);
+                _stuns.TryCrawling(ent, knockdownTime);
+                _throwing.TryThrow(ent, direction, ent.Comp, Transform(ent), _projQuery, direction.Length(), playSound: false);
             }
             else
             {
-                _physics.ApplyLinearImpulse(uid, direction * physics.Mass, body: physics);
+                _physics.ApplyLinearImpulse(ent, direction * ent.Comp.Mass, body: ent.Comp);
             }
         }
     }
