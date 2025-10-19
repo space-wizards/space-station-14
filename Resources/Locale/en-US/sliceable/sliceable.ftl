@@ -4,4 +4,3 @@ slice-verb-message-default = Slice entity with sharp item.
 slice-verb-target-isnt-dead = Needs to be dead.
 slice-verb-message-tool = You are going to need a different tool to slice {$target}.
 slice-verb-name = Slice
-slice-verb-name-red = [color=red]Slice[/color]

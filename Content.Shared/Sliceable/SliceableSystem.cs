@@ -93,14 +93,10 @@ public sealed class SliceableSystem : EntitySystem
 
         var verbName = Loc.GetString("slice-verb-name");
 
-        if (TryComp<MobStateComponent>(uid, out var mobState))
+        if (TryComp<MobStateComponent>(uid, out var mobState) && !_mob.IsDead(uid, mobState))
         {
-            verbName = Loc.GetString("slice-verb-name-red");
-            if (!_mob.IsDead(uid, mobState))
-            {
-                verbDisabled = true;
-                verbMessage = Loc.GetString("slice-verb-target-isnt-dead");
-            }
+            verbDisabled = true;
+            verbMessage = Loc.GetString("slice-verb-target-isnt-dead");
         }
 
         InteractionVerb verb = new()
