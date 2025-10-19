@@ -338,7 +338,6 @@ public abstract partial class SharedChatSystem : EntitySystem
     /// <param name="nameOverride">The name to use for the speaking entity. Usually this should just be modified via <see cref="TransformSpeakerNameEvent"/>. If this is set, the event will not get raised.</param>
     /// <param name="checkRadioPrefix">Whether or not <paramref name="message"/> should be parsed with consideration of radio channel prefix text at start the start.</param>
     /// <param name="ignoreActionBlocker">If set to true, action blocker will not be considered for whether an entity can send this message.</param>
-
     public virtual void TrySendInGameICMessage(
         EntityUid source,
         string message,
@@ -421,7 +420,7 @@ public abstract partial class SharedChatSystem : EntitySystem
     /// <param name="message">The contents of the message.</param>
     /// <param name="source">The entity making the announcement (used to determine the station).</param>
     /// <param name="sender">The sender (Communications Console in Communications Console Announcement).</param>
-    /// <param name="playDefaultSound">Play the announcement sound.</param>
+    /// <param name="playSound">Play the announcement sound.</param>
     /// <param name="announcementSound">Sound to play.</param>
     /// <param name="colorOverride">Optional color for the announcement message.</param>
     public virtual void DispatchFilteredAnnouncement(

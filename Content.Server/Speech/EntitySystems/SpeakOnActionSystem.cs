@@ -6,7 +6,6 @@ using Content.Shared.Speech.Components;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.Speech.Muting;
 
-
 namespace Content.Server.Speech.EntitySystems;
 
 /// <summary>
