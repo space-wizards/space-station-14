@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Content.Shared.Administration.Managers;
 using Content.Shared.Administration.Managers.Bwoink;
 using Content.Shared.Administration.Managers.Bwoink.Features;
 using Robust.Client.Audio;
@@ -8,6 +7,7 @@ using Robust.Shared.Audio.Sources;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Administration.Managers;
 
@@ -18,10 +18,16 @@ public sealed class ClientBwoinkManager : SharedBwoinkManager
     [Dependency] private readonly IResourceCache _res = default!;
     [Dependency] private readonly IAudioManager _audio = default!;
     [Dependency] private readonly IClientAdminManager _adminManager = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     [ViewVariables]
     public readonly Dictionary<ProtoId<BwoinkChannelPrototype>, Dictionary<NetUserId, PlayerChannelProperties>>
         PlayerChannels = new();
+
+    /// <summary>
+    /// Contains the ratelimits for each userchannel we send a typing status to.
+    /// </summary>
+    private Dictionary<NetUserId, TimeSpan> _typingRateLimits = new();
 
     /// <summary>
     /// Dictionary that contains the sounds to play for a specified channel, source may be null.
@@ -33,6 +39,11 @@ public sealed class ClientBwoinkManager : SharedBwoinkManager
     /// </summary>
     public event Action? ReloadedData;
 
+    /// <summary>
+    /// Called whenever we receieve a <see cref="MsgBwoinkTypings"/>
+    /// </summary>
+    public event Action? TypingsUpdated;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -40,8 +51,16 @@ public sealed class ClientBwoinkManager : SharedBwoinkManager
         _netManager.RegisterNetMessage<MsgBwoink>(AdminBwoinkAttempted);
         _netManager.RegisterNetMessage<MsgBwoinkSyncRequest>();
         _netManager.RegisterNetMessage<MsgBwoinkSync>(SyncBwoinks);
+        _netManager.RegisterNetMessage<MsgBwoinkTypingUpdate>();
+        _netManager.RegisterNetMessage<MsgBwoinkTypings>(SyncTypings);
 
         _adminManager.AdminStatusUpdated += StatusUpdated;
+    }
+
+    private void SyncTypings(MsgBwoinkTypings message)
+    {
+        TypingStatuses[message.Channel] = message.Typings;
+        TypingsUpdated?.Invoke();
     }
 
     private void StatusUpdated()
@@ -133,6 +152,46 @@ public sealed class ClientBwoinkManager : SharedBwoinkManager
             Message = new BwoinkMessage(string.Empty, null, DateTime.UtcNow, text, MessageFlags.None),
             Channel = channel,
             Target = user,
+        });
+    }
+
+    /// <summary>
+    /// Updates your typing status for the client, this results in a <see cref="MsgBwoinkTypingUpdate"/> message.
+    /// </summary>
+    /// <remarks>
+    /// This method has an internal ratelimit of 8 seconds. This ratelimit only applies for setting the typing state to true.
+    /// </remarks>
+    public void SetTypingStatus(ProtoId<BwoinkChannelPrototype> channel, bool typing, NetUserId? userChannel)
+    {
+        const int rateLimit = 3;
+
+        userChannel ??= _playerManager.LocalUser!.Value;
+        // Check ratelimit
+        if (_typingRateLimits.TryGetValue(userChannel.Value, out var limit))
+        {
+            if (typing && _gameTiming.RealTime < limit)
+                return;
+
+            if (!typing)
+            {
+                // We are sending a "stopped typing" message. So: Remove current rate limit key so the next "i am typing" message can get through.
+                _typingRateLimits.Remove(userChannel.Value);
+            }
+            else
+            {
+                _typingRateLimits[userChannel.Value] = _gameTiming.RealTime + TimeSpan.FromSeconds(rateLimit);
+            }
+        }
+        else
+        {
+            _typingRateLimits.Add(userChannel.Value, _gameTiming.RealTime + TimeSpan.FromSeconds(rateLimit));
+        }
+
+        _netManager.ClientSendMessage(new MsgBwoinkTypingUpdate()
+        {
+            IsTyping = typing,
+            Channel = channel,
+            ChannelUserId = userChannel.Value,
         });
     }
 

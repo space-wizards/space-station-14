@@ -2,6 +2,7 @@
 using Content.Shared.Administration.Managers.Bwoink;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Managers.Bwoink;
 
@@ -13,8 +14,26 @@ public sealed partial class ServerBwoinkManager
         _netManager.RegisterNetMessage<MsgBwoink>(AdminBwoinkAttempted);
         _netManager.RegisterNetMessage<MsgBwoinkSyncRequest>(SyncBwoinks);
         _netManager.RegisterNetMessage<MsgBwoinkSync>();
+        _netManager.RegisterNetMessage<MsgBwoinkTypingUpdate>(TypingUpdated);
+        _netManager.RegisterNetMessage<MsgBwoinkTypings>();
 
         _netManager.Connected += NetManagerOnConnected;
+    }
+
+    private void TypingUpdated(MsgBwoinkTypingUpdate message)
+    {
+        if (!IsPrototypeReal(message.Channel))
+            return;
+
+        var canManage = CanManageChannel(message.Channel, PlayerManager.GetSessionByChannel(message.MsgChannel));
+        if (!canManage && message.ChannelUserId != message.MsgChannel.UserId)
+        {
+            DebugTools.Assert("Typing set in channel which isn't clients own without manager.");
+            Log.Error($"Attempted to set typing for channel without proper permissions! {message.MsgChannel.UserId}!");
+            return;
+        }
+
+        SetTypingStatus(message.Channel, message.ChannelUserId, message.MsgChannel.UserId, message.IsTyping);
     }
 
     private void NetManagerOnConnected(object? _, NetChannelArgs e)

@@ -109,6 +109,80 @@ public sealed class MsgBwoinkSyncRequest : NetMessage
 }
 
 /// <summary>
+/// Message sent by the server to give a client that list of all currently typing users.
+/// </summary>
+public sealed class MsgBwoinkTypings : NetMessage
+{
+    public override MsgGroups MsgGroup => MsgGroups.Command;
+    public override NetDeliveryMethod DeliveryMethod => NetDeliveryMethod.ReliableOrdered;
+
+    public ProtoId<BwoinkChannelPrototype> Channel { get; set; }
+    public Dictionary<NetUserId, List<TypingStatus>> Typings { get; set; } = new();
+
+    public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
+    {
+        Channel = buffer.ReadString();
+
+        var amount = buffer.ReadInt32();
+        for (var i = 0; i < amount; i++)
+        {
+            var userChannelId = new NetUserId(buffer.ReadGuid());
+            Typings.Add(userChannelId, []);
+            var statusCount = buffer.ReadInt32();
+            for (var j = 0; j < statusCount; j++)
+            {
+                Typings[userChannelId].Add(new TypingStatus(new NetUserId(buffer.ReadGuid()), buffer.ReadTimeSpan(), buffer.ReadString()));
+            }
+        }
+    }
+
+    public override void WriteToBuffer(NetOutgoingMessage buffer, IRobustSerializer serializer)
+    {
+        buffer.Write(Channel.Id);
+
+        buffer.Write(Typings.Count);
+        foreach (var (userId, statuses) in Typings)
+        {
+            buffer.Write(userId.UserId);
+            buffer.Write(statuses.Count);
+            foreach (var typingStatus in statuses)
+            {
+                buffer.Write(typingStatus.TypingUser.UserId);
+                buffer.Write(typingStatus.Timeout);
+                buffer.Write(typingStatus.Username);
+            }
+        }
+    }
+}
+
+/// <summary>
+/// Message sent by a client to indicate its typing status.
+/// </summary>
+public sealed class MsgBwoinkTypingUpdate : NetMessage
+{
+    public override MsgGroups MsgGroup => MsgGroups.Command;
+    public override NetDeliveryMethod DeliveryMethod => NetDeliveryMethod.ReliableOrdered;
+
+    public bool IsTyping { get; set; }
+    public ProtoId<BwoinkChannelPrototype> Channel { get; set; }
+    public NetUserId ChannelUserId { get; set; }
+
+    public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
+    {
+        IsTyping = buffer.ReadBoolean();
+        Channel = buffer.ReadString();
+        ChannelUserId = new NetUserId(buffer.ReadGuid());
+    }
+
+    public override void WriteToBuffer(NetOutgoingMessage buffer, IRobustSerializer serializer)
+    {
+        buffer.Write(IsTyping);
+        buffer.Write(Channel.Id);
+        buffer.Write(ChannelUserId.UserId);
+    }
+}
+
+/// <summary>
 /// Message sent to the client for receiving a bwoink and sent by a client to try to send a message.
 /// This is for non-admins.
 /// </summary>

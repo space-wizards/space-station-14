@@ -20,6 +20,17 @@ public abstract class SharedBwoinkManager : IPostInjectInit
     public event EventHandler<ProtoId<BwoinkChannelPrototype>, (NetUserId person, BwoinkMessage message)>? MessageReceived;
     protected Dictionary<ProtoId<BwoinkChannelPrototype>, BwoinkChannelPrototype> ProtoCache = new();
 
+    /// <summary>
+    /// This variable holds the people who are currently typing.
+    /// The internal dictionary holds the list of "user channels". Typing status itself has the key TypingUser which is the person who is typing.
+    /// </summary>
+    /// <remarks>
+    /// On the client this will only be filled for channels which you can manage.
+    /// The server obviously has the full list.
+    /// </remarks>
+    [ViewVariables]
+    protected readonly Dictionary<ProtoId<BwoinkChannelPrototype>, Dictionary<NetUserId, List<TypingStatus>>> TypingStatuses = new();
+
     [MustCallBase]
     public virtual void Initialize()
     {
@@ -33,6 +44,25 @@ public abstract class SharedBwoinkManager : IPostInjectInit
     public virtual void Shutdown() // the bwoinkmanager is very eepy sleepy
     {
         PrototypeManager.PrototypesReloaded -= RefreshChannels;
+    }
+
+    public List<TypingStatus> GetTypingStatuses(ProtoId<BwoinkChannelPrototype> channel, NetUserId userChannel)
+    {
+        // Ensure outer dictionary entry exists
+        if (!TypingStatuses.TryGetValue(channel, out var channelDict))
+        {
+            channelDict = new Dictionary<NetUserId, List<TypingStatus>>();
+            TypingStatuses[channel] = channelDict;
+        }
+
+        // Ensure inner list exists
+        if (!channelDict.TryGetValue(userChannel, out var list))
+        {
+            list = new List<TypingStatus>();
+            channelDict[userChannel] = list;
+        }
+
+        return list;
     }
 
     /// <summary>
@@ -98,6 +128,14 @@ public abstract class SharedBwoinkManager : IPostInjectInit
             .ForEach(x => Conversations.Add(x.ID, new Dictionary<NetUserId, Conversation>()));
 
         Log.Debug($"Added {conversationsToAdd.Count} conversations");
+
+        // Yeah, this nukes all current typing statutes, but I don't think preserving the statutes in-between reloads is that needed.
+        TypingStatuses.Clear();
+        foreach (var bwoinkChannelPrototype in protos)
+        {
+            TypingStatuses.Add(bwoinkChannelPrototype, new Dictionary<NetUserId, List<TypingStatus>>());
+        }
+
         UpdatedChannels();
     }
 
@@ -246,4 +284,31 @@ public enum MessageFlags : byte
     /// This message can only be seen by other managers of this channel.
     /// </summary>
     ManagerOnly = 4,
+}
+
+/// <summary>
+/// Represents a person who is typing.
+/// </summary>
+/// <param name="TypingUser">The person who is typing. Crazy stuff.</param>
+/// <param name="Timeout">Time until this status gets cleared.</param>
+/// <param name="Username">The username of the typing person.</param>
+public record TypingStatus(NetUserId TypingUser, TimeSpan Timeout, string Username)
+{
+    /// <summary>
+    /// The person who is typing. Crazy stuff.
+    /// </summary>
+    [ViewVariables]
+    public NetUserId TypingUser { get; init; } = TypingUser;
+
+    /// <summary>
+    /// Time until this status gets cleared.
+    /// </summary>
+    [ViewVariables]
+    public TimeSpan Timeout { get; init; } = Timeout;
+
+    /// <summary>
+    /// The username of the typing person.
+    /// </summary>
+    [ViewVariables]
+    public string Username { get; init; } = Username;
 }
