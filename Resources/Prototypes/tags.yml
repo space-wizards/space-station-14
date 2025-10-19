@@ -31,7 +31,7 @@
   id: AnomalyHost # Targeting whitelist: BaseAnomalyInjector
 
 - type: Tag
-  id: AppraisalTool # Storage whitelist: ClothingBeltUtility
+  id: AppraisalTool # Storage whitelist: BaseClothingBeltEngineering
 
 - type: Tag
   id: Apron # ConstructionGraph: scraparmor
@@ -212,7 +212,7 @@
 ## C ##
 
 - type: Tag
-  id: CableCoil # Storage whitelist: ClothingBeltUtility, BorgModuleCable
+  id: CableCoil # Storage whitelist: BaseClothingBeltEngineering, BorgModuleCable
 
 - type: Tag
   id: Candle # Storage whitelist: BoxCandle
@@ -314,7 +314,7 @@
   id: CigFilter # Storage whitelist: PackPaperRolling
 
 - type: Tag
-  id: CigPack # Storage whitelist: ClothingBeltUtility, ClothingBeltAssault, ClothingBeltChef, ClothingBeltMedical, ClothingBeltJanitor
+  id: CigPack # Storage whitelist: BaseClothingBeltEngineering, ClothingBeltAssault, ClothingBeltChef, ClothingBeltMedical, ClothingBeltJanitor
 
 - type: Tag
   id: Cleaver # Storage whitelist: ClothingBeltChef. ItemMapper: ClothingBeltChef
@@ -416,10 +416,10 @@
   id: Creamsicle # Blacklist on BountyFruit
 
 - type: Tag
-  id: Crowbar # Storage whitelist: ClothingBeltUtility, ClothingBeltChiefEngineer. ItemMapper: ClothingBeltUtility, ClothingBeltChiefEngineer
+  id: Crowbar # Storage whitelist: BaseClothingBeltEngineering, ClothingBeltChiefEngineer. ItemMapper: BaseClothingBeltEngineering, ClothingBeltChiefEngineer
 
 - type: Tag
-  id: CrowbarRed # Storage whitelist: ClothingBeltUtility, ClothingBeltChiefEngineer. ItemMapper: ClothingBeltUtility, ClothingBeltChiefEngineer
+  id: CrowbarRed # Storage whitelist: BaseClothingBeltEngineering, ClothingBeltChiefEngineer. ItemMapper: BaseClothingBeltEngineering, ClothingBeltChiefEngineer
 
 - type: Tag
   id: Cryobeaker # Unused x2
@@ -603,10 +603,10 @@
   id: FireHelmet # ConstructionGraph: FireBot
 
 - type: Tag
-  id: Flare # Storage whitelist: ClothingBeltUtility
+  id: Flare # Storage whitelist: BaseClothingBeltEngineering
 
 - type: Tag
-  id: Flashlight # Storage whitelist: ClothingBeltUtility, ClothingBeltJanitor
+  id: Flashlight # Storage whitelist: BaseClothingBeltEngineering, ClothingBeltJanitor
 
 - type: Tag
   id: Flesh # Used by FleshKudzu to ignore damage contacts on tagged entities.
@@ -857,7 +857,7 @@
 ## J ##
 
 - type: Tag
-  id: JawsOfLife
+  id: JawsOfLife # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering
 
 ## K ##
 
