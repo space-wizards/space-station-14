@@ -243,12 +243,21 @@
   id: PowerDrill
   description: A simple powered hand drill.
   components:
-  - type: Tag
-    tags:
-    - Powerdrill
+  # Sprite Stuff
   - type: Sprite
     sprite: Objects/Tools/drill.rsi
     state: drill_screw
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.MultipleToolVisuals.Sprite:
+        toollayer:
+          screwing: { state: drill_screw }
+          anchoring: { state: drill_bolt }
+  # Not sprite stuff
+  - type: Tag
+    tags:
+    - Powerdrill
   - type: Item
     sprite: Objects/Tools/drill.rsi
     size: Small
@@ -261,17 +270,13 @@
     statusShowBehavior: true
     entries:
       - behavior: Screwing
-        sprite:
-          sprite: Objects/Tools/drill.rsi
-          state: drill_screw
+        spriteState: screwing
         useSound:
           path: /Audio/Items/drill_use.ogg
         changeSound:
           path: /Audio/Items/change_drill.ogg
       - behavior: Anchoring
-        sprite:
-          sprite: Objects/Tools/drill.rsi
-          state: drill_bolt
+        spriteState: anchoring
         useSound:
           path: /Audio/Items/drill_use.ogg
         changeSound:
@@ -400,9 +405,21 @@
   id: Omnitool
   description: A drone's best friend.
   components:
+  # Sprite Stuff
   - type: Sprite
     sprite: Objects/Tools/omnitool.rsi
     state: omnitool-screwing
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.MultipleToolVisuals.Sprite:
+        toollayer:
+          screwing: { state: omnitool-screwing }
+          prying: { state: omnitool-prying }
+          anchoring: { state: omnitool-wrenching }
+          cutting: { state: omnitool-snipping }
+          pulsing: { state: omnitool-pulsing }
+  # Not sprite stuff
   - type: Item
     sprite: Objects/Tools/omnitool.rsi
     size: Normal
@@ -421,41 +438,31 @@
     statusShowBehavior: true
     entries:
       - behavior: Screwing
-        sprite:
-          sprite: Objects/Tools/omnitool.rsi
-          state: omnitool-screwing
+        spriteState: screwing
         useSound:
           path: /Audio/Items/drill_use.ogg
         changeSound:
           path: /Audio/Items/change_drill.ogg
       - behavior: Prying
-        sprite:
-          sprite: Objects/Tools/omnitool.rsi
-          state: omnitool-prying
+        spriteState: prying
         useSound:
           path: /Audio/Items/jaws_pry.ogg
         changeSound:
           path: /Audio/Items/change_drill.ogg
       - behavior: Anchoring
-        sprite:
-          sprite: Objects/Tools/omnitool.rsi
-          state: omnitool-wrenching
+        spriteState: anchoring
         useSound:
           path: /Audio/Items/ratchet.ogg
         changeSound:
           path: /Audio/Items/change_drill.ogg
       - behavior: Cutting
-        sprite:
-          sprite: Objects/Tools/omnitool.rsi
-          state: omnitool-snipping
+        spriteState: cutting
         useSound:
           path: /Audio/Items/jaws_cut.ogg
         changeSound:
           path: /Audio/Items/change_drill.ogg
       - behavior: Pulsing
-        sprite:
-          sprite: Objects/Tools/omnitool.rsi
-          state: omnitool-pulsing
+        spriteState: pulsing
         changeSound:
           path: /Audio/Items/change_drill.ogg
 

@@ -6,7 +6,7 @@ using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Robust.Client.UserInterface.Controls;
 
-namespace Content.Client.Tools.UI;
+namespace Content.Client.Tools;
 
 public sealed class WelderStatusControl : PollingItemStatusControl<WelderStatusControl.Data>
 {
