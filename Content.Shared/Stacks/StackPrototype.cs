@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Stacks;
@@ -7,11 +8,20 @@ namespace Content.Shared.Stacks;
 ///     Prototype used to combine and spawn like-entities for <see cref="SharedStackSystem"/>.
 /// </summary>
 [Prototype]
-public sealed partial class StackPrototype : IPrototype
+public sealed partial class StackPrototype : IPrototype, IInheritingPrototype
 {
-    [ViewVariables]
+    ///  <inheritdoc />
     [IdDataField]
     public string ID { get; private set; } = default!;
+
+    ///  <inheritdoc />
+    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<StackPrototype>))]
+    public string[]? Parents { get; private set; }
+
+    ///  <inheritdoc />
+    [NeverPushInheritance]
+    [AbstractDataField]
+    public bool Abstract { get; private set; }
 
     /// <summary>
     ///     Human-readable name for this stack type e.g. "Steel"

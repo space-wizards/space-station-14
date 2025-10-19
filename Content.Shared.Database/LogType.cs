@@ -81,9 +81,9 @@ public enum LogType
     ChemicalReaction = 17,
 
     /// <summary>
-    /// Reagent effects related interactions.
+    /// EntityEffect related interactions.
     /// </summary>
-    ReagentEffect = 18,
+    EntityEffect = 18,
 
     /// <summary>
     /// Canister valve was opened or closed.
@@ -464,7 +464,6 @@ public enum LogType
     /// Logs related to botany, such as planting and harvesting crops
     /// </summary>
     Botany = 100,
-
     /// <summary>
     /// Artifact node got activated.
     /// </summary>
@@ -479,9 +478,4 @@ public enum LogType
     /// Events relating to midi playback.
     /// </summary>
     Instrument = 103,
-
-    /// <summary>
-    /// For anything relating to bug reports.
-    /// </summary>
-    BugReport = 104,
 }
