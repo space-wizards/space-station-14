@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Xeri7
-  changes:
-  - message: Added ability to pick up potted plants in two hands, as well as store
-      them in crates!
-    type: Add
-  - message: Added purchasable potted plant crate!
-    type: Add
-  id: 8625
-  time: '2025-06-05T23:36:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37591
 - author: K-Dynamic
   changes:
   - message: Rifle crates with two Lecters and four magazines can be ordered from
@@ -3938,3 +3928,10 @@
   id: 9126
   time: '2025-10-19T18:37:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40985
+- author: Kittygyat
+  changes:
+  - message: Monkeys, Kobolds & Scurrets can now shove/disarm like regular species!
+    type: Tweak
+  id: 9127
+  time: '2025-10-19T19:09:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38542
