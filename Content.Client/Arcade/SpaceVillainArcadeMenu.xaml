@@ -80,23 +80,26 @@
         <!-- Spacer -->
         <BoxContainer VerticalExpand="True"/>
         <!-- Action button grid -->
-        <GridContainer
-            Columns="3"
+        <BoxContainer
+            Orientation="Horizontal"
             HorizontalAlignment="Stretch"
             HorizontalExpand="True">
             <Button
                 Name="AttackButton"
                 Text="{Loc space-villain-menu-button-attack}"
+                StyleClasses="OpenRight"
                 HorizontalExpand="True"/>
             <Button
                 Name="HealButton"
                 Text="{Loc space-villain-menu-button-heal}"
+                StyleClasses="ButtonSquare"
                 HorizontalExpand="True"/>
             <Button
                 Name="RechargeButton"
                 Text="{Loc space-villain-menu-button-recharge}"
+                StyleClasses="OpenLeft"
                 HorizontalExpand="True"/>
-        </GridContainer>
+        </BoxContainer>
         <!-- New game button -->
         <Button
             Name="NewGameButton"
