@@ -120,6 +120,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         }
     }
 
+    /// <inheritdoc />
     public override void TrySendInGameICMessage(
         EntityUid source,
         string message,
@@ -135,6 +136,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         TrySendInGameICMessage(source, message, desiredType, hideChat ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal, hideLog, shell, player, nameOverride, checkRadioPrefix, ignoreActionBlocker);
     }
 
+    /// <inheritdoc />
     public override void TrySendInGameICMessage(
         EntityUid source,
         string message,
@@ -232,6 +234,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         }
     }
 
+    /// <inheritdoc />
     public override void TrySendInGameOOCMessage(
         EntityUid source,
         string message,
@@ -281,6 +284,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     #region Announcements
 
+    /// <inheritdoc />
     public override void DispatchGlobalAnnouncement(
         string message,
         string? sender = null,
@@ -300,6 +304,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Global station announcement from {sender}: {message}");
     }
 
+    /// <inheritdoc />
     public override void DispatchFilteredAnnouncement(
         Filter filter,
         string message,
@@ -320,6 +325,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement from {sender}: {message}");
     }
 
+    /// <inheritdoc />
     public override void DispatchStationAnnouncement(
         EntityUid source,
         string message,

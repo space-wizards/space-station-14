@@ -336,7 +336,7 @@ public abstract partial class SharedChatSystem : EntitySystem
     /// <param name="shell"></param>
     /// <param name="player">The player doing the speaking.</param>
     /// <param name="nameOverride">The name to use for the speaking entity. Usually this should just be modified via <see cref="TransformSpeakerNameEvent"/>. If this is set, the event will not get raised.</param>
-    /// <param name="checkRadioPrefix"></param>
+    /// <param name="checkRadioPrefix">Whether or not <paramref name="message"/> should be parsed with consideration of radio channel prefix text at start the start.</param>
     /// <param name="ignoreActionBlocker">If set to true, action blocker will not be considered for whether an entity can send this message.</param>
 
     public virtual void TrySendInGameICMessage(
@@ -359,6 +359,7 @@ public abstract partial class SharedChatSystem : EntitySystem
     /// <param name="message">The message being spoken or emoted.</param>
     /// <param name="desiredType">The chat type.</param>
     /// <param name="range">Conceptual range of transmission, if it shows in the chat window, if it shows to far-away ghosts or ghosts at all...</param>
+    /// <param name="hideLog">Disables the admin log for this message if true. Used for entities that are not players, like vendors, cloning, etc.</param>
     /// <param name="shell"></param>
     /// <param name="player">The player doing the speaking.</param>
     /// <param name="nameOverride">The name to use for the speaking entity. Usually this should just be modified via <see cref="TransformSpeakerNameEvent"/>. If this is set, the event will not get raised.</param>
@@ -383,6 +384,7 @@ public abstract partial class SharedChatSystem : EntitySystem
     /// <param name="source">The entity that is speaking.</param>
     /// <param name="message">The message being spoken or emoted.</param>
     /// <param name="type">The chat type.</param>
+    /// <param name="hideChat">Whether or not to show the message in the chat window.</param>
     /// <param name="shell"></param>
     /// <param name="player">The player doing the speaking.</param>
     public virtual void TrySendInGameOOCMessage(
