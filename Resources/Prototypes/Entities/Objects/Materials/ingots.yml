@@ -14,6 +14,7 @@
   - type: Tag
     tags:
     - Ingot
+    - ConstructionMaterial
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
