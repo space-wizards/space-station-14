@@ -41,7 +41,7 @@ public sealed partial class StackComponent : Component
     /// When throwing this item, do we want to only throw one part of the stack or the whole stack at once?
     /// </summary>
     [DataField]
-    public bool ThrowIndividually = false;
+    public bool ThrowIndividually;
 
     /// <summary>
     /// Used by StackStatusControl in client to update UI.

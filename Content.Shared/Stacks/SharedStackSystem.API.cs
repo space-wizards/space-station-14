@@ -123,28 +123,26 @@ public abstract partial class SharedStackSystem
     /// <remarks> All setter functions should end up here. </remarks>
     public void SetCount(Entity<StackComponent?> ent, int amount)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp))
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        var (stackEnt, stackComp) = (ent.Owner, ent.Comp);
-
         // Do nothing if amount is already the same.
-        if (amount == stackComp.Count)
+        if (amount == ent.Comp.Count)
             return;
 
         // Store old value for event-raising purposes...
-        var old = stackComp.Count;
+        var old = ent.Comp.Count;
 
         // Clamp the value.
-        amount = Math.Min(amount, GetMaxCount(stackComp));
+        amount = Math.Min(amount, GetMaxCount(ent.Comp));
         amount = Math.Max(amount, 0);
 
-        stackComp.Count = amount;
-        stackComp.UiUpdateNeeded = true;
+        ent.Comp.Count = amount;
+        ent.Comp.UiUpdateNeeded = true;
         Dirty(ent);
 
-        Appearance.SetData(stackEnt, StackVisuals.Actual, stackComp.Count);
-        RaiseLocalEvent(stackEnt, new StackCountChangedEvent(old, stackComp.Count));
+        Appearance.SetData(ent.Owner, StackVisuals.Actual, ent.Comp.Count);
+        RaiseLocalEvent(ent.Owner, new StackCountChangedEvent(old, ent.Comp.Count));
 
         // Queue delete stack if count reaches zero.
         if (ent.Comp.Count <= 0)

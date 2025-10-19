@@ -470,7 +470,7 @@ public sealed class MaterialArbitrageTest
                 {
                     var ent = entManager.SpawnEntity(id, testMap.GridCoords);
                     if (entManager.TryGetComponent<StackComponent>(ent, out var stackComp))
-                        stackSys.SetCount((ent, null), 1);
+                        stackSys.SetCount((ent, stackComp), 1);
                     priceCache[id] = price = pricing.GetPrice(ent, false);
                     entManager.DeleteEntity(ent);
                 });
