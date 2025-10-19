@@ -81,7 +81,7 @@ public sealed partial class MindTests
         var testMap2 = await pair.CreateTestMap();
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
-        var mapManager = server.ResolveDependency<IMapManager>();
+        var mapSystem = server.System<SharedMapSystem>();
         var playerMan = server.ResolveDependency<IPlayerManager>();
         var player = playerMan.Sessions.Single();
 
@@ -101,7 +101,7 @@ public sealed partial class MindTests
         });
 
         await pair.RunTicksSync(5);
-        await server.WaitAssertion(() => mapManager.DeleteMap(testMap.MapId));
+        await server.WaitAssertion(() => mapSystem.DeleteMap(testMap.MapId));
         await pair.RunTicksSync(5);
 
         await server.WaitAssertion(() =>

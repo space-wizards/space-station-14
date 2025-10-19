@@ -48,7 +48,7 @@ public sealed class RoleBanListCommand : IConsoleCommand
         if (shell.Player is not { } player)
         {
 
-            var bans = await _dbManager.GetServerRoleBansAsync(data.LastAddress, data.UserId, data.LastHWId, includeUnbanned);
+            var bans = await _dbManager.GetServerRoleBansAsync(data.LastAddress, data.UserId, data.LastLegacyHWId, data.LastModernHWIds, includeUnbanned);
 
             if (bans.Count == 0)
             {

@@ -4,10 +4,9 @@ using Content.Shared.Electrocution;
 
 namespace Content.Shared.Silicons.StationAi;
 
+// Handles airlock radial
 public abstract partial class SharedStationAiSystem
 {
-    // Handles airlock radial
-
     private void InitializeAirlock()
     {
         SubscribeLocalEvent<DoorBoltComponent, StationAiBoltEvent>(OnAirlockBolt);
@@ -20,9 +19,15 @@ public abstract partial class SharedStationAiSystem
     /// </summary>
     private void OnAirlockBolt(EntityUid ent, DoorBoltComponent component, StationAiBoltEvent args)
     {
-        if (component.BoltWireCut)
+        if (component.BoltWireCut || !PowerReceiver.IsPowered(ent))
         {
             ShowDeviceNotRespondingPopup(args.User);
+            return;
+        }
+
+        if (!_access.IsAllowed(args.User, ent))
+        {
+            ShowDeviceNoAccessPopup(args.User);
             return;
         }
 
@@ -34,7 +39,7 @@ public abstract partial class SharedStationAiSystem
     }
 
     /// <summary>
-    /// Attempts to bolt door. If wire was cut (AI) or its not powered - notifies AI and does nothing.
+    /// Attempts to toggle the door's emergency access. If wire was cut (AI) or its not powered - notifies AI and does nothing.
     /// </summary>
     private void OnAirlockEmergencyAccess(EntityUid ent, AirlockComponent component, StationAiEmergencyAccessEvent args)
     {
@@ -44,20 +49,29 @@ public abstract partial class SharedStationAiSystem
             return;
         }
 
+        if (!_access.IsAllowed(args.User, ent))
+        {
+            ShowDeviceNoAccessPopup(args.User);
+            return;
+        }
+
         _airlocks.SetEmergencyAccess((ent, component), args.EmergencyAccess, args.User, predicted: true);
     }
 
     /// <summary>
-    /// Attempts to bolt door. If wire was cut (AI or for one of power-wires) or its not powered - notifies AI and does nothing.
+    /// Attempts to electrify the door. If wire was cut (AI or for one of power-wires) or its not powered - notifies AI and does nothing.
     /// </summary>
     private void OnElectrified(EntityUid ent, ElectrifiedComponent component, StationAiElectrifiedEvent args)
     {
-        if (
-            component.IsWireCut
-            || !PowerReceiver.IsPowered(ent)
-        )
+        if (component.IsWireCut || !PowerReceiver.IsPowered(ent))
         {
             ShowDeviceNotRespondingPopup(args.User);
+            return;
+        }
+
+        if (!_access.IsAllowed(args.User, ent))
+        {
+            ShowDeviceNoAccessPopup(args.User);
             return;
         }
 

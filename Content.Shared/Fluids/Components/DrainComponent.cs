@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Fluids.Components;
 
@@ -17,18 +18,17 @@ public sealed partial class DrainComponent : Component
 {
     public const string SolutionName = "drainBuffer";
 
-    [ValidatePrototypeId<TagPrototype>]
-    public const string PlungerTag = "Plunger";
+    public static readonly ProtoId<TagPrototype> PlungerTag = "Plunger";
 
-    [DataField]
+    [ViewVariables]
     public Entity<SolutionComponent>? Solution = null;
 
     [DataField]
     public float Accumulator = 0f;
 
     /// <summary>
-    /// Does this drain automatically absorb surrouding puddles? Or is it a drain designed to empty
-    /// solutions in it manually? 
+    /// If true, automatically transfers solutions from nearby puddles and drains them. True for floor drains;
+    /// false for things like toilets and sinks.
     /// </summary>
     [DataField]
     public bool AutoDrain = true;

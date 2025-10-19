@@ -1,11 +1,9 @@
 - type: entity
   id: BaseRoomMarker
-  name: Room marker
+  name: room spawner
   parent: MarkerBase
-  suffix: Weh
   components:
   - type: RoomFill
-    size: 5,5
   - type: Sprite
     layers:
       - state: red

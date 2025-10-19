@@ -27,7 +27,7 @@ cmd-banpanel-player-err = The specified player could not be found
 cmd-banlist-desc = Lists a user's active bans.
 cmd-banlist-help = Usage: banlist <name or user ID>
 cmd-banlist-empty = No active bans found for {$user}
-cmd-banlistF-hint = <name/user ID>
+cmd-banlist-hint = <name/user ID>
 
 cmd-ban_exemption_update-desc = Set an exemption to a type of ban on a player.
 cmd-ban_exemption_update-help = Usage: ban_exemption_update <player> <flag> [<flag> [...]]
@@ -77,6 +77,7 @@ ban-panel-permanent = Permanent
 ban-panel-ip-hwid-tooltip = Leave empty and check the checkbox below to use last connection's details
 ban-panel-severity = Severity:
 ban-panel-erase = Erase chat messages and player from round
+ban-panel-expiry-error = err
 
 # Ban string
 server-ban-string = {$admin} created a {$severity} severity server ban that expires {$expires} for [{$name}, {$ip}, {$hwid}], with reason: {$reason}

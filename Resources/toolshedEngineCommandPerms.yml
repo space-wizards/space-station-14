@@ -6,7 +6,6 @@
     - physics
     - player
     - splat
-    - emplace
     - bin
     - extremes
     - reduce
@@ -19,113 +18,88 @@
     - iota
     - rep
     - to
-    - iterate
 
 - Flags: DEBUG
   Commands:
     - comp
     - delete
-    - do
+    - with
+    - prototyped
     - named
     - paused
-    - with
-    - count
+    - emplace
+    - do
+    - iterate
     - select
     - where
-    - prototyped
+    - count
     - types
-    - ecscomp
     - actor
     - spawn
+    - replace
     - mappos
     - pos
     - tp
     - allcomps
-    - replace
     - entitysystemupdateorder
     - mind
-
-- Flags: HOST
-  Commands:
-    - methods
-    - ioc
-
-- Commands:
     - fuck
-    - ent
-    - as
-    - buildinfo
-    - help
-    - explain
-    - cmd
-    - stopwatch
+    - '=>'
+    - '?'
+    - 'or?'
+    - '??'
+    - rng
     - self
+    - sum
+    - take
+    - join
     - search
-    - isnull
-    - help
-    - isempty
-    - any
+    - first
     - unique
+    - any
+    - contains
+    - isnull
+    - isempty
     - cd
     - ls
-    - loc
-    - vars
-    - '=>'
-    - first
-    - val
+    - stopwatch
+    - append
+    - min
+    - max
+    - average
     - '+'
     - '-'
     - '*'
     - '/'
-    - 'min'
-    - 'max'
-    - '&'
-    - '|'
-    - '^'
-    - 'neg'
+    - '%'
+    - '%/'
+    - '&~'
+    - bitornot
+    - '^~'
+    - '~'
     - '<'
     - '>'
     - '<='
     - '>='
     - '=='
     - '!='
-    - f
-    - i
-    - s
-    - b
     - '+/'
     - '-/'
     - '*/'
     - '//'
-    - join
-    - append
-    - '?'
-    - 'or?'
-    - '??'
-    - rng
-    - 'sum'
-    - take
-    - curtick
-    - curtime
-    - realtime
-    - servertime
-    - more
-    - '%'
-    - '%/'
-    - '&~'
-    - '|~'
-    - '^~'
-    - '~'
-    - 'abs'
-    - 'average'
-    - 'bibytecount'
-    - 'shortestbitlength'
-    - 'countleadzeros'
-    - 'counttrailingzeros'
-    - 'fpi'
-    - 'fe'
-    - 'ftau'
-    - 'fepsilon'
+    - '&'
+    - bitor
+    - '^'
+    - neg
+    - abs
+    - bibytecount
+    - shortestbitlength
+    - countleadzeros
+    - counttrailingzeros
+    - fpi
+    - fe
+    - ftau
+    - fepsilon
     - dpi
     - de
     - dtau
@@ -181,3 +155,29 @@
     - atanpi
     - pick
     - tee
+
+- Flags: HOST
+  Commands:
+    - methods
+    - ioc
+
+- Commands:
+    - ent
+    - f
+    - i
+    - s
+    - b
+    - as
+    - var
+    - vars
+    - val
+    - help
+    - explain
+    - cmd
+    - buildinfo
+    - loc
+    - curtick
+    - curtime
+    - realtime
+    - servertime
+    - more

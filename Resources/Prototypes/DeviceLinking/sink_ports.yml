@@ -45,8 +45,13 @@
 
 - type: sinkPort
   id: Trigger
-  name: signal-port-name-trigger
-  description: signal-port-description-trigger
+  name: signal-port-name-trigger-receiver
+  description: signal-port-description-trigger-receiver
+
+- type: sinkPort
+  id: Timer
+  name: signal-port-name-timer
+  description: signal-port-description-timer
 
 - type: sinkPort
   id: OrderReceiver

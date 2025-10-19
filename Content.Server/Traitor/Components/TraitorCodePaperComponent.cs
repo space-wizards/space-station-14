@@ -1,3 +1,6 @@
+using Content.Server.Codewords;
+using Robust.Shared.Prototypes;
+
 namespace Content.Server.Traitor.Components;
 
 /// <summary>
@@ -6,6 +9,18 @@ namespace Content.Server.Traitor.Components;
 [RegisterComponent]
 public sealed partial class TraitorCodePaperComponent : Component
 {
+    /// <summary>
+    /// The faction to get codewords for.
+    /// </summary>
+    [DataField]
+    public ProtoId<CodewordFactionPrototype> CodewordFaction = "Traitor";
+
+    /// <summary>
+    /// The generator to use for the fake words.
+    /// </summary>
+    [DataField]
+    public ProtoId<CodewordGeneratorPrototype> CodewordGenerator = "TraitorCodewordGenerator";
+
     /// <summary>
     /// The number of codewords that should be generated on this paper.
     /// Will not extend past the max number of available codewords.

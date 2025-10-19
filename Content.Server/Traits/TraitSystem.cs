@@ -1,11 +1,10 @@
-using Content.Server.GameTicking;
+using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Roles;
 using Content.Shared.Traits;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Traits;
 
@@ -27,7 +26,7 @@ public sealed class TraitSystem : EntitySystem
     {
         // Check if player's job allows to apply traits
         if (args.JobId == null ||
-            !_prototypeManager.TryIndex<JobPrototype>(args.JobId ?? string.Empty, out var protoJob) ||
+            !_prototypeManager.Resolve<JobPrototype>(args.JobId, out var protoJob) ||
             !protoJob.ApplyTraits)
         {
             return;
@@ -37,7 +36,7 @@ public sealed class TraitSystem : EntitySystem
         {
             if (!_prototypeManager.TryIndex<TraitPrototype>(traitId, out var traitPrototype))
             {
-                Log.Warning($"No trait found with ID {traitId}!");
+                Log.Error($"No trait found with ID {traitId}!");
                 return;
             }
 
@@ -56,7 +55,7 @@ public sealed class TraitSystem : EntitySystem
                 continue;
 
             var coords = Transform(args.Mob).Coordinates;
-            var inhandEntity = EntityManager.SpawnEntity(traitPrototype.TraitGear, coords);
+            var inhandEntity = Spawn(traitPrototype.TraitGear, coords);
             _sharedHandsSystem.TryPickup(args.Mob,
                 inhandEntity,
                 checkActionBlocker: false,

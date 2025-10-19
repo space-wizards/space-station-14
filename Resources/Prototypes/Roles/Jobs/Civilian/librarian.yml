@@ -16,8 +16,19 @@
     shoes: ClothingShoesBootsLaceup
     id: LibrarianPDA
     ears: ClothingHeadsetService
-    pocket1: d10Dice
+    pocket1: d20Dice
     pocket2: HandLabeler # for making named bestsellers
   storage:
     back:
     - BookRandom
+
+- type: chameleonOutfit
+  id: LibrarianChameleonOutfit
+  job: Librarian
+  equipment:
+    head: ClothingHeadHatCanadaBeanie
+    eyes: ClothingEyesGlassesJamjar
+    mask: ClothingMaskGas
+    neck: ClothingNeckScarfStripedGreen
+    outerClothing: ClothingOuterWinterColorGreen
+    gloves: ClothingHandsGlovesColorBlack

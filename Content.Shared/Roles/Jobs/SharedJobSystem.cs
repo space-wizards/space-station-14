@@ -2,6 +2,7 @@
 using System.Linq;
 using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
+using Content.Shared.Roles.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -13,8 +14,10 @@ namespace Content.Shared.Roles.Jobs;
 /// </summary>
 public abstract class SharedJobSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly SharedPlayerSystem _playerSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
+
     private readonly Dictionary<string, string> _inverseTrackerLookup = new();
 
     public override void Initialize()
@@ -98,34 +101,82 @@ public abstract class SharedJobSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// Tries to get all the departments for a given job. Will return an empty list if none are found.
+    /// </summary>
+    public bool TryGetAllDepartments(string jobProto, out List<DepartmentPrototype> departmentPrototypes)
+    {
+        // not sorting it since there should only be 1 primary department for a job.
+        // this is enforced by the job tests.
+        var departmentProtos = _prototypes.EnumeratePrototypes<DepartmentPrototype>();
+        departmentPrototypes = new List<DepartmentPrototype>();
+        var found = false;
+
+        foreach (var department in departmentProtos)
+        {
+            if (department.Roles.Contains(jobProto))
+            {
+                departmentPrototypes.Add(department);
+                found = true;
+            }
+        }
+
+        return found;
+    }
+
+    /// <summary>
+    /// Try to get the lowest weighted department for the given job. If the job has no departments will return null.
+    /// </summary>
+    public bool TryGetLowestWeightDepartment(string jobProto, [NotNullWhen(true)] out DepartmentPrototype? departmentPrototype)
+    {
+        departmentPrototype = null;
+
+        if (!TryGetAllDepartments(jobProto, out var departmentPrototypes) || departmentPrototypes.Count == 0)
+            return false;
+
+        departmentPrototypes.Sort((x, y) => y.Weight.CompareTo(x.Weight));
+
+        departmentPrototype = departmentPrototypes[0];
+        return true;
+    }
+
     public bool MindHasJobWithId(EntityUid? mindId, string prototypeId)
     {
-        return CompOrNull<JobComponent>(mindId)?.Prototype == prototypeId;
+
+        if (mindId is null)
+            return false;
+
+        _roles.MindHasRole<JobRoleComponent>(mindId.Value, out var role);
+
+        if (role is null)
+            return false;
+
+        return role.Value.Comp1.JobPrototype == prototypeId;
     }
 
     public bool MindTryGetJob(
         [NotNullWhen(true)] EntityUid? mindId,
-        [NotNullWhen(true)] out JobComponent? comp,
         [NotNullWhen(true)] out JobPrototype? prototype)
     {
-        comp = null;
         prototype = null;
+        MindTryGetJobId(mindId, out var protoId);
 
-        return TryComp(mindId, out comp) &&
-               comp.Prototype != null &&
-               _prototypes.TryIndex(comp.Prototype, out prototype);
+        return _prototypes.Resolve(protoId, out prototype) || prototype is not null;
     }
 
-    public bool MindTryGetJobId([NotNullWhen(true)] EntityUid? mindId, out ProtoId<JobPrototype>? job)
+    public bool MindTryGetJobId(
+        [NotNullWhen(true)] EntityUid? mindId,
+        out ProtoId<JobPrototype>? job)
     {
-        if (!TryComp(mindId, out JobComponent? comp))
-        {
-            job = null;
-            return false;
-        }
+        job = null;
 
-        job = comp.Prototype;
-        return true;
+        if (mindId is null)
+            return false;
+
+        if (_roles.MindHasRole<JobRoleComponent>(mindId.Value, out var role))
+            job = role.Value.Comp1.JobPrototype;
+
+        return job is not null;
     }
 
     /// <summary>
@@ -134,7 +185,7 @@ public abstract class SharedJobSystem : EntitySystem
     /// </summary>
     public bool MindTryGetJobName([NotNullWhen(true)] EntityUid? mindId, out string name)
     {
-        if (MindTryGetJob(mindId, out _, out var prototype))
+        if (MindTryGetJob(mindId, out var prototype))
         {
             name = prototype.LocalizedName;
             return true;
@@ -161,7 +212,7 @@ public abstract class SharedJobSystem : EntitySystem
         if (_playerSystem.ContentData(player) is not { Mind: { } mindId })
             return true;
 
-        if (!MindTryGetJob(mindId, out _, out var prototype))
+        if (!MindTryGetJob(mindId, out var prototype))
             return true;
 
         return prototype.CanBeAntag;

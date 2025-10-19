@@ -10,16 +10,8 @@
           state: ano01
     - type: RandomSpawner
       prototypes:
-        - SimpleXenoArtifact
-        - MediumXenoArtifact
-        - MediumXenoArtifact
-        - MediumXenoArtifact
-        - MediumXenoArtifact
         - ComplexXenoArtifact
         - ComplexXenoArtifact
-        - ComplexXenoArtifact
-        - SimpleXenoArtifactItem
-        - MediumXenoArtifactItem
         - ComplexXenoArtifactItem
       chance: 1
 

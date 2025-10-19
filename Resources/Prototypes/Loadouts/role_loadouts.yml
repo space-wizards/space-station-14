@@ -9,6 +9,7 @@
   - CaptainOuterClothing
   - Survival
   - Trinkets
+  - CaptainJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -23,12 +24,19 @@
   - Glasses
   - Survival
   - Trinkets
+  - HoPJobTrinkets
   - GroupSpeciesBreathTool
 
 # Silicons
 - type: roleLoadout
+  id: JobBorg
+  nameDataset: NamesBorg
+  canCustomizeName: true
+
+- type: roleLoadout
   id: JobStationAi
-  nameDataset: names_ai
+  nameDataset: NamesAI
+  canCustomizeName: true
 
 # Civilian
 - type: roleLoadout
@@ -45,6 +53,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - PassengerJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -58,6 +67,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - BartenderJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -69,6 +79,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - ServiceWorkerJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -83,6 +94,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - ChefJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -94,6 +106,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - LibrarianJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -106,6 +119,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - LawyerJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -118,9 +132,11 @@
   - ChaplainJumpsuit
   - CommonBackpack
   - ChaplainOuterClothing
+  - ChaplainBible
   - Glasses
   - Survival
   - Trinkets
+  - ChaplainJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -135,6 +151,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - JanitorJobTrinkets
   - JanitorPlunger
   - GroupSpeciesBreathTool
 
@@ -149,10 +166,12 @@
   - Glasses
   - Survival
   - Trinkets
+  - BotanistJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
   id: JobClown
+  canCustomizeName: true
   groups:
   - GroupTankHarness
   - ClownHead
@@ -163,9 +182,11 @@
   - Glasses
   - SurvivalClown
   - Trinkets
+  - ClownJobTrinkets
 
 - type: roleLoadout
   id: JobMime
+  canCustomizeName: true
   groups:
   - GroupTankHarness
   - MimeHead
@@ -177,9 +198,11 @@
   - Glasses
   - SurvivalMime
   - Trinkets
+  - MimeJobTrinkets
 
 - type: roleLoadout
   id: JobMusician
+  canCustomizeName: true
   groups:
   - GroupTankHarness
   - MusicianJumpsuit
@@ -188,6 +211,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - MusicianJobTrinkets
   - Instruments
   - GroupSpeciesBreathTool
 
@@ -205,6 +229,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - QuartermasterJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -216,9 +241,11 @@
   - CargoTechnicianBackpack
   - CargoTechnicianOuterClothing
   - CargoTechnicianShoes
+  - CargoTechnicianID
   - Glasses
   - Survival
   - Trinkets
+  - CargoTechnicianJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -231,6 +258,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - SalvageSpecialistJobTrinkets
   - GroupSpeciesBreathTool
 
 # Engineering
@@ -246,6 +274,7 @@
   - ChiefEngineerShoes
   - SurvivalExtended
   - Trinkets
+  - ChiefEngineerJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -256,6 +285,7 @@
   - StationEngineerBackpack
   - SurvivalExtended
   - Trinkets
+  - TechnicalAssistantJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -270,6 +300,7 @@
   - StationEngineerID
   - SurvivalExtended
   - Trinkets
+  - StationEngineerJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -282,6 +313,7 @@
   - AtmosphericTechnicianShoes
   - SurvivalExtended
   - Trinkets
+  - AtmosphericTechnicianJobTrinkets
   - GroupSpeciesBreathTool
 
 # Science
@@ -299,6 +331,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - ResearchDirectorJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -316,6 +349,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - ScientistJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -327,6 +361,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - ResearchAssistantJobTrinkets
   - GroupSpeciesBreathTool
 
 # Security
@@ -342,6 +377,7 @@
   - SecurityShoes
   - SurvivalSecurity
   - Trinkets
+  - HeadofSecurityJobTrinkets
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
@@ -356,6 +392,7 @@
   - SecurityShoes
   - SurvivalSecurity
   - Trinkets
+  - WardenJobTrinkets
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
@@ -371,13 +408,13 @@
   - SecurityBelt
   - SurvivalSecurity
   - Trinkets
+  - SecurityJobTrinkets
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
 - type: roleLoadout
   id: JobDetective
   groups:
-  - GroupTankHarness
   - DetectiveHead
   - DetectiveNeck
   - DetectiveJumpsuit
@@ -386,6 +423,7 @@
   - SecurityShoes
   - SurvivalSecurity
   - Trinkets
+  - DetectiveJobTrinkets
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
@@ -396,6 +434,7 @@
   - SecurityBackpack
   - SurvivalSecurity
   - Trinkets
+  - SecurityCadetJobTrinkets
   - GroupSpeciesBreathToolSecurity
 
 # Medical
@@ -411,9 +450,10 @@
   - ChiefMedicalOfficerOuterClothing
   - ChiefMedicalOfficerNeck
   - ChiefMedicalOfficerShoes
-  - Glasses
+  - MedicalEyewear
   - SurvivalMedical
   - Trinkets
+  - ChiefMedicalOfficerJobTrinkets
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -428,9 +468,10 @@
   - MedicalDoctorOuterClothing
   - MedicalShoes
   - MedicalDoctorPDA
-  - Glasses
+  - MedicalEyewear
   - SurvivalMedical
   - Trinkets
+  - MedicalDoctorJobTrinkets
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -439,9 +480,10 @@
   - GroupTankHarness
   - MedicalInternJumpsuit
   - MedicalBackpack
-  - Glasses
+  - MedicalEyewear
   - SurvivalMedical
   - Trinkets
+  - MedicalInternJobTrinkets
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -456,6 +498,7 @@
   - MedicalShoes
   - SurvivalMedical
   - Trinkets
+  - ChemistJobTrinkets
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -469,9 +512,10 @@
   - MedicalBackpack
   - ParamedicOuterClothing
   - ParamedicShoes
-  - Glasses
+  - MedicalEyewear
   - SurvivalMedical
   - Trinkets
+  - ParamedicJobTrinkets
   - GroupSpeciesBreathToolMedical
 
 # Wildcards
@@ -483,6 +527,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - ZookeeperJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -494,6 +539,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - ReporterJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -505,6 +551,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - PsychologistJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -517,16 +564,26 @@
   - Glasses
   - Survival
   - Trinkets
+  - BoxerJobTrinkets
   - GroupSpeciesBreathTool
 
 # These loadouts are used for non-crew spawns, like off-station antags and event mobs
 # They will be used without player configuration, thus they will only ever apply what is forced by MinLimit
 
+# gives vox a harness and breathing mask
+# nitrogen tank not included
 - type: roleLoadout
   id: RoleSurvivalVoxSupport
   groups:
   - GroupSpeciesBreathTool
   - GroupTankHarness
+
+# gives vox a nitrogen breathing tank
+# other species get nothing
+- type: roleLoadout
+  id: RoleSurvivalVoxTank
+  groups:
+  - GroupEVATankVox
 
 - type: roleLoadout
   id: RoleSurvivalStandard

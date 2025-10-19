@@ -56,6 +56,11 @@
   copyright: "Created by Sarahon"
   source: "https://github.com/Sarahon"
 
+- files: ["hew.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified from existing weh emote image (weh.png) by ArtisticRoomba"
+  source: "https://github.com/ArtisticRoomba"
+
 - files: ["honk.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Modified from existing bikehorn texture (icon.png) by TyAshley (AllenTheGreat) & Sarahon"
@@ -108,7 +113,7 @@
 
 - files: ["weh.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Modified from plushie_lizard.png by TyAshley (AllenTheGreat) & Sarahon"
+  copyright: "Modified from plushie_lizard.png (icon.png in Plushies/lizard.rsi) by TyAshley (AllenTheGreat) & Sarahon"
   source: "https://github.com/TyAshley"
 
 - files: ["whistle.png"]
@@ -117,6 +122,11 @@
   source: "https://github.com/Sarahon"
 
 - files: ["yawn.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Sarahon"
+  source: "https://github.com/Sarahon"
+
+- files: ["tailslap.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Created by Sarahon"
   source: "https://github.com/Sarahon"

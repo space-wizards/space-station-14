@@ -64,6 +64,7 @@
   - type: Pullable
   - type: Physics
     bodyType: KinematicController
+  - type: GravityAffected
   - type: Clickable
   - type: WiresPanel
   - type: Fixtures
@@ -167,6 +168,8 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepClown
+      params:
+        variation: 0.17
   - type: Mech
     baseState: honker
     openState: honker-open

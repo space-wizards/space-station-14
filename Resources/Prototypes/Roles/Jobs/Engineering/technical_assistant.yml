@@ -5,10 +5,10 @@
   playTimeTracker: JobTechnicalAssistant
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 3600 #1 hr
+      time: 1h
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 54000 #15 hrs
+      time: 5h
       inverted: true # stop playing intern if you're good at engineering!
   startingGear: TechnicalAssistantGear
   icon: "JobIconTechnicalAssistant"
@@ -30,3 +30,14 @@
   #storage:
     #back:
     #- Stuff
+
+- type: chameleonOutfit
+  id: TechnicalAssistantChameleonOutfit
+  job: TechnicalAssistant
+  equipment:
+    head: ClothingHeadHatHardhatOrange
+    eyes: ClothingEyesGlassesMeson
+    mask: ClothingMaskBreath
+    neck: ClothingNeckScarfStripedOrange
+    outerClothing: ClothingOuterVestHazard
+    gloves: ClothingHandsGlovesColorYellow
