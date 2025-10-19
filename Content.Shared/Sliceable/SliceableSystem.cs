@@ -73,7 +73,7 @@ public sealed class SliceableSystem : EntitySystem
         if (args.Using is not null)
         {
             var used = args.Using.Value;
-            if (!TryComp<ToolComponent>(used, out _))
+            if (!HasComp<ToolComponent>(used))
                 return;
 
             if (!_toolSystem.HasQuality(used, comp.ToolQuality))
