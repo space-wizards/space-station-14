@@ -354,8 +354,9 @@ cmd-options-desc = Opens options menu, optionally with a specific tab selected.
 cmd-options-help = Usage: options [tab]
 
 ## Toggle advanced settings command
-cmd-advanced-settings-desc = Toggles visibility of the Networking tab in the options menu. It has some unsafe settings that are useful for debugging.
-cmd-advanced-settings-log = Toggled Networking tab visibility to { $value }.
+cmd-advancedsettings-desc = Toggles visibility of the Networking tab in the options menu. It has some unsafe settings that are useful for debugging.
+cmd-options-help = Usage: advancedsettings
+cmd-advancedsettings-log = Toggled Networking tab visibility to { $value }.
 
 ## Accessibility menu
 

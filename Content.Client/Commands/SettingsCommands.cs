@@ -14,10 +14,6 @@ public sealed class OptionsCommand : LocalizedCommands
 
     public override string Command => "options";
 
-    public override string Description => Loc.GetString("cmd-options-desc");
-
-    public override string Help => Loc.GetString("cmd-options-help");
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var controller = _userInterfaceManager.GetUIController<OptionsUIController>();
@@ -48,14 +44,12 @@ public sealed class AdvancedSettingsCommand : LocalizedCommands
 
     public override string Command => "advancedsettings";
 
-    public override string Description => Loc.GetString("cmd-advanced-settings-desc");
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var newValue = !_config.GetCVar(CCVars.AdvancedSettings);
         _config.SetCVar(CCVars.AdvancedSettings, newValue, true);
 
-        shell.WriteLine(Loc.GetString("cmd-advanced-settings-log", ("value", newValue)));
+        shell.WriteLine(Loc.GetString("cmd-advancedsettings-log", ("value", newValue)));
 
         _userInterfaceManager.GetUIController<OptionsUIController>().UpdateWindow();
     }
