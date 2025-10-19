@@ -2,8 +2,10 @@ using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Antag;
 using Content.Server.Players.PlayTimeTracking;
+using Content.Server.Preferences.Managers;
 using Content.Server.Station.Components;
 using Content.Server.Station.Events;
+using Content.Shared.Antag;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.Player;
@@ -20,6 +22,7 @@ public sealed partial class StationJobsSystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IBanManager _banManager = default!;
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
+    [Dependency] private readonly IServerPreferencesManager _serverPreferences = default!;
 
     private Dictionary<int, HashSet<string>> _jobsByWeight = default!;
     private List<int> _orderedWeights = default!;
@@ -45,7 +48,7 @@ public sealed partial class StationJobsSystem
     /// Assigns jobs based on the given preferences and list of stations to assign for.
     /// This does NOT change the slots on the station, only figures out where each player should go.
     /// </summary>
-    /// <param name="profiles">The profiles to use for selection.</param>
+    /// <param name="userIdsIn">Set of the UserIds we will be attempting to assign.</param>
     /// <param name="stations">List of stations to assign for.</param>
     /// <param name="useRoundStartJobs">Whether or not to use the round-start jobs for the stations instead of their current jobs.</param>
     /// <returns>List of players and their assigned jobs.</returns>
@@ -54,20 +57,20 @@ public sealed partial class StationJobsSystem
     /// as there may end up being more round-start slots than available slots, which can cause weird behavior.
     /// A warning to all who enter ye cursed lands: This function is long and mildly incomprehensible. Best used without touching.
     /// </remarks>
-    public Dictionary<NetUserId, (ProtoId<JobPrototype>?, EntityUid)> AssignJobs(Dictionary<NetUserId, HumanoidCharacterProfile> profiles, IReadOnlyList<EntityUid> stations, bool useRoundStartJobs = true)
+    public Dictionary<NetUserId, (ProtoId<JobPrototype>? job, EntityUid station)> AssignJobs(IReadOnlySet<NetUserId> userIdsIn, IReadOnlyList<EntityUid> stations, bool useRoundStartJobs = true)
     {
         DebugTools.Assert(stations.Count > 0);
 
         InitializeRoundStart();
 
-        if (profiles.Count == 0)
+        if (userIdsIn.Count == 0)
             return new();
 
         // We need to modify this collection later, so make a copy of it.
-        profiles = profiles.ShallowClone();
+        var userIds = userIdsIn.ToHashSet();
 
         // Player <-> (job, station)
-        var assigned = new Dictionary<NetUserId, (ProtoId<JobPrototype>?, EntityUid)>(profiles.Count);
+        var assigned = new Dictionary<NetUserId, (ProtoId<JobPrototype>?, EntityUid)>(userIds.Count);
 
         // The jobs left on the stations. This collection is modified as jobs are assigned to track what's available.
         var stationJobs = new Dictionary<EntityUid, Dictionary<ProtoId<JobPrototype>, int?>>();
@@ -106,10 +109,10 @@ public sealed partial class StationJobsSystem
         {
             for (var selectedPriority = JobPriority.High; selectedPriority > JobPriority.Never; selectedPriority--)
             {
-                if (profiles.Count == 0)
+                if (userIds.Count == 0)
                     goto endFunc;
 
-                var candidates = GetPlayersJobCandidates(weight, selectedPriority, profiles);
+                var candidates = GetPlayersJobCandidates(weight, selectedPriority, userIds);
 
                 var optionsRemaining = 0;
 
@@ -125,7 +128,7 @@ public sealed partial class StationJobsSystem
                     }
 
                     stationJobs[station][job]--;
-                    profiles.Remove(player);
+                    userIds.Remove(player);
                     assigned.Add(player, (job, station));
 
                     optionsRemaining--;
@@ -268,56 +271,6 @@ public sealed partial class StationJobsSystem
         return assigned;
     }
 
-    /// <summary>
-    /// Attempts to assign overflow jobs to any player in allPlayersToAssign that is not in assignedJobs.
-    /// </summary>
-    /// <param name="assignedJobs">All assigned jobs.</param>
-    /// <param name="allPlayersToAssign">All players that might need an overflow assigned.</param>
-    /// <param name="profiles">Player character profiles.</param>
-    /// <param name="stations">The stations to consider for spawn location.</param>
-    public void AssignOverflowJobs(
-        ref Dictionary<NetUserId, (ProtoId<JobPrototype>?, EntityUid)> assignedJobs,
-        IEnumerable<NetUserId> allPlayersToAssign,
-        IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> profiles,
-        IReadOnlyList<EntityUid> stations)
-    {
-        var givenStations = stations.ToList();
-        if (givenStations.Count == 0)
-            return; // Don't attempt to assign them if there are no stations.
-        // For players without jobs, give them the overflow job if they have that set...
-        foreach (var player in allPlayersToAssign)
-        {
-            if (assignedJobs.ContainsKey(player))
-            {
-                continue;
-            }
-
-            var profile = profiles[player];
-            if (profile.PreferenceUnavailable != PreferenceUnavailableMode.SpawnAsOverflow)
-            {
-                assignedJobs.Add(player, (null, EntityUid.Invalid));
-                continue;
-            }
-
-            _random.Shuffle(givenStations);
-
-            foreach (var station in givenStations)
-            {
-                // Pick a random overflow job from that station
-                var overflows = GetOverflowJobs(station).ToList();
-                _random.Shuffle(overflows);
-
-                // Stations with no overflow slots should simply get skipped over.
-                if (overflows.Count == 0)
-                    continue;
-
-                // If the overflow exists, put them in as it.
-                assignedJobs.Add(player, (overflows[0], givenStations[0]));
-                break;
-            }
-        }
-    }
-
     public void CalcExtendedAccess(Dictionary<EntityUid, int> jobsCount)
     {
         // Calculate whether stations need to be on extended access or not.
@@ -339,17 +292,44 @@ public sealed partial class StationJobsSystem
     /// </summary>
     /// <param name="weight">Weight to find, if any.</param>
     /// <param name="selectedPriority">Priority to find, if any.</param>
-    /// <param name="profiles">Profiles to look in.</param>
+    /// <param name="players">Players to select from</param>
     /// <returns>Players and a list of their matching jobs.</returns>
-    private Dictionary<NetUserId, List<string>> GetPlayersJobCandidates(int? weight, JobPriority? selectedPriority, Dictionary<NetUserId, HumanoidCharacterProfile> profiles)
+    private Dictionary<NetUserId, List<string>> GetPlayersJobCandidates(int? weight, JobPriority? selectedPriority, ICollection<NetUserId> players)
     {
-        var outputDict = new Dictionary<NetUserId, List<string>>(profiles.Count);
+        var outputDict = new Dictionary<NetUserId, List<string>>(players.Count);
 
-        foreach (var (player, profile) in profiles)
+        foreach (var player in players)
         {
+            if (!_player.TryGetSessionById(player, out var session))
+                continue;
+
             var roleBans = _banManager.GetJobBans(player);
-            var antagBlocked = _antag.GetPreSelectedAntagSessions();
-            var profileJobs = profile.JobPriorities.Keys.Select(k => new ProtoId<JobPrototype>(k)).ToList();
+            var isPreselectedAntag = _antag.GetPreSelectedAntagSessions().Contains(session);
+            var preselectedAntags = _antag.GetPreSelectedAntagDefinitions(session);
+
+            // Get all the jobs that a player has selected with a priority greater than Never and also that they
+            // have an enabled character with that job preference selected
+            var playerPrefs = _serverPreferences.GetPreferences(player);
+            var playerJobs = playerPrefs.JobPriorities;
+            var allCharacterJobs = new HashSet<ProtoId<JobPrototype>>();
+            foreach (var profile in playerPrefs.Characters.Values)
+            {
+                if (profile is not HumanoidCharacterProfile { Enabled: true } humanoid)
+                    continue;
+                allCharacterJobs.UnionWith(humanoid.JobPreferences);
+            }
+            var filteredPlayerJobs = new HashSet<ProtoId<JobPrototype>>();
+            foreach (var (job, priority) in playerJobs)
+            {
+                if (!(priority == selectedPriority || selectedPriority is null))
+                    continue;
+                if (!allCharacterJobs.Contains(job))
+                    continue;
+                filteredPlayerJobs.Add(job);
+            }
+
+            // Remove jobs that the player in ineligible for
+            var profileJobs = filteredPlayerJobs.ToList();
             var ev = new StationJobsGetCandidatesEvent(player, profileJobs);
             RaiseLocalEvent(ref ev);
 
@@ -357,7 +337,7 @@ public sealed partial class StationJobsSystem
 
             foreach (var jobId in profileJobs)
             {
-                var priority = profile.JobPriorities[jobId];
+                var priority = playerJobs[jobId];
 
                 if (!(priority == selectedPriority || selectedPriority is null))
                     continue;
@@ -365,7 +345,14 @@ public sealed partial class StationJobsSystem
                 if (!_prototypeManager.Resolve(jobId, out var job))
                     continue;
 
-                if (!job.CanBeAntag && (!_player.TryGetSessionById(player, out var session) || antagBlocked.Contains(session)))
+                // If we're an antag but the job can't be an antag, don't allow this job
+                if (isPreselectedAntag && !job.CanBeAntag)
+                    continue;
+
+                // If we're an antag, make sure that we have a character that is eligible to
+                // become all of our selected antags
+                if (isPreselectedAntag && !preselectedAntags.All(antag =>
+                        _antag.HasPrimaryAntagPreference(session, antag, AntagSelectionTime.IntraPlayerSpawn, job)))
                     continue;
 
                 if (weight is not null && job.Weight != weight.Value)
@@ -374,7 +361,7 @@ public sealed partial class StationJobsSystem
                 if (!(roleBans == null || !roleBans.Contains(jobId))) //TODO: Replace with IsRoleBanned
                     continue;
 
-                availableJobs ??= new List<string>(profile.JobPriorities.Count);
+                availableJobs ??= new List<string>(playerJobs.Count);
                 availableJobs.Add(jobId);
             }
 
