@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Rifle crates with two Lecters and four magazines can be ordered from
-      Cargo for 8000 spesos.
-    type: Add
-  - message: Lethal Weapons gift event now includes a Rifle crate.
-    type: Tweak
-  - message: SMG crates are properly described and no longer reference 'semiautomatic
-      rifles.'
-    type: Tweak
-  id: 8626
-  time: '2025-06-05T23:40:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35535
 - author: themias
   changes:
   - message: Wearing a muzzle now reduces the sound of vocal emotes
@@ -3935,3 +3922,12 @@
   id: 9127
   time: '2025-10-19T19:09:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38542
+- author: PotentiallyTom
+  changes:
+  - message: AI Law boards now have a link to the lawsets guide page
+    type: Tweak
+  - message: Added the My, Robot book.
+    type: Add
+  id: 9128
+  time: '2025-10-19T21:10:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40944
