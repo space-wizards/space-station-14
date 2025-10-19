@@ -22,6 +22,7 @@ public sealed partial class HailerComponent : Component
     /// <summary>
     /// Are the wires of the hailer currently cut ?
     /// </summary>
+    [DataField, AutoNetworkedField]
     public bool AreWiresCut = false;
 
     /// <summary>

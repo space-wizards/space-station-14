@@ -442,7 +442,7 @@
     visuals:
       enum.SecMaskVisuals.State:
         mask:
-          Functional: { state: icon }
+          Intact: { state: icon }
           WiresCut: { state: icon-wires-cut }
   - type: Tag
     tags:

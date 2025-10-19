@@ -90,7 +90,7 @@ public abstract class SharedHailerSystem : EntitySystem
         var resolver = _sharedAudio.ResolveSound(specifier);
         if (resolver is ResolvedCollectionSpecifier collectionResolver)
         {
-            _sharedAudio.PlayPredicted(resolver, ent.Owner, ent.Owner, audioParams: new AudioParams().WithVolume(-3f));
+            //_sharedAudio.PlayPredicted(resolver, ent.Owner, ent.Owner, audioParams: new AudioParams().WithVolume(-3f));
             return collectionResolver.Index;
         }
         else
@@ -220,12 +220,13 @@ public abstract class SharedHailerSystem : EntitySystem
 
     private void OnCuttingDoAfter(Entity<HailerComponent> ent, ref SecHailerToolDoAfterEvent args)
     {
-        _sharedAudio.PlayPvs(ent.Comp.CutSounds, ent.Owner);
+        _sharedAudio.PlayPredicted(ent.Comp.CutSounds, ent.Owner, args.User);
 
         var (uid, comp) = ent;
 
         comp.AreWiresCut = !comp.AreWiresCut;
         Dirty(ent);
+
         var state = comp.AreWiresCut ? "WiresCut" : "Intact";
         _appearance.SetData(ent, SecMaskVisuals.State, state);
         Dirty(ent);
@@ -233,8 +234,7 @@ public abstract class SharedHailerSystem : EntitySystem
 
     private void OnScrewingDoAfter(Entity<HailerComponent> ent, ref SecHailerToolDoAfterEvent args)
     {
-        _sharedAudio.PlayPredicted(ent.Comp.ScrewedSounds, ent.Owner, ent.Owner);
-
+        _sharedAudio.PlayPredicted(ent.Comp.ScrewedSounds, ent.Owner, args.User);
         IncreaseAggressionLevel(ent);
     }
 
@@ -292,7 +292,7 @@ public abstract class SharedHailerSystem : EntitySystem
         if (ent.Comp.User.HasValue && ent.Comp.User != args.UserUid)
             return;
 
-        _popup.PopupPredicted(Loc.GetString("hailer-gas-mask-emagged"), Loc.GetString("hailer-gas-mask-emagged"), ent.Owner, ent.Owner);
+        _popup.PopupPredicted(Loc.GetString("hailer-gas-mask-emagged"), Loc.GetString("hailer-gas-mask-emagged"), ent.Owner, args.UserUid);
 
         args.Type = EmagType.Interaction;
 
@@ -308,13 +308,13 @@ public abstract class SharedHailerSystem : EntitySystem
         if (!_access.IsAllowed(userActed, ent.Owner))
         {
             _sharedAudio.PlayPredicted(ent.Comp.SettingError, ent.Owner, ent.Owner, AudioParams.Default.WithVariation(0.15f));
-            _popup.PopupPredicted(Loc.GetString("hailer-gas-mask-wrong_access"), Loc.GetString("hailer-gas-mask-wrong_access"), userActed, userActed);
+            _popup.PopupPredicted(Loc.GetString("hailer-gas-mask-wrong_access"), Loc.GetString("hailer-gas-mask-wrong_access"), ent.Owner, userActed);
             return;
         }
 
         if (!HasComp<EmaggedComponent>(ent) && !ent.Comp.AreWiresCut)
         {
-            _sharedAudio.PlayPredicted(ent.Comp.SettingBeep, ent.Owner, ent.Owner, AudioParams.Default.WithVolume(0.5f).WithVariation(0.15f));
+            _sharedAudio.PlayPredicted(ent.Comp.SettingBeep, ent.Owner, userActed, AudioParams.Default.WithVolume(0.5f).WithVariation(0.15f));
             IncreaseAggressionLevel(ent);
             Dirty(ent);
         }
