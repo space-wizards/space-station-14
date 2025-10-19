@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Samuka
-  changes:
-  - message: Fire bombs are now minor contra
-    type: Tweak
-  - message: Pipe bombs are now minor contra
-    type: Tweak
-  id: 8629
-  time: '2025-06-06T02:28:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38088
 - author: Minemoder
   changes:
   - message: Shark plushies now bite.
@@ -3933,3 +3924,10 @@
   id: 9130
   time: '2025-10-19T22:28:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34127
+- author: AsnDen
+  changes:
+  - message: Large thruster (2x2) was added.
+    type: Add
+  id: 9131
+  time: '2025-10-19T23:51:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37681
