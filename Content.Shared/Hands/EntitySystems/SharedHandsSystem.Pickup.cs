@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Item;
@@ -84,7 +83,10 @@ public abstract partial class SharedHandsSystem
         if (!Resolve(entity, ref item, false))
             return false;
 
-        if (!CanPickupToHand(uid, entity, handId, checkActionBlocker, handsComp, item))
+        if (!CanPickupToHand(uid, entity, handId, checkActionBlocker: checkActionBlocker, showPopup: true, handsComp: handsComp, item: item))
+            return false;
+
+        if (!BeforeDoPickup((uid, handsComp), entity))
             return false;
 
         if (animate)
@@ -151,7 +153,11 @@ public abstract partial class SharedHandsSystem
         return false;
     }
 
-    public bool CanPickupAnyHand(EntityUid uid, EntityUid entity, bool checkActionBlocker = true, HandsComponent? handsComp = null, ItemComponent? item = null)
+    /// <summary>
+    /// Checks whether a given item will fit into the user's first free hand.
+    /// Unless otherwise specified, this will also check the general CanPickup action blocker.
+    /// </summary>
+    public bool CanPickupAnyHand(EntityUid uid, EntityUid entity, bool checkActionBlocker = true, bool showPopup = false, HandsComponent? handsComp = null, ItemComponent? item = null)
     {
         if (!Resolve(uid, ref handsComp, false))
             return false;
@@ -159,13 +165,14 @@ public abstract partial class SharedHandsSystem
         if (!TryGetEmptyHand((uid, handsComp), out var hand))
             return false;
 
-        return CanPickupToHand(uid, entity, hand, checkActionBlocker, handsComp, item);
+        return CanPickupToHand(uid, entity, hand, checkActionBlocker, showPopup, handsComp, item);
     }
 
     /// <summary>
-    ///     Checks whether a given item will fit into a specific user's hand. Unless otherwise specified, this will also check the general CanPickup action blocker.
+    /// Checks whether a given item will fit into a specific user's hand.
+    /// Unless otherwise specified, this will also check the general CanPickup action blocker.
     /// </summary>
-    public bool CanPickupToHand(EntityUid uid, EntityUid entity, string handId, bool checkActionBlocker = true, HandsComponent? handsComp = null, ItemComponent? item = null)
+    public bool CanPickupToHand(EntityUid uid, EntityUid entity, string handId, bool checkActionBlocker = true, bool showPopup = false, HandsComponent? handsComp = null, ItemComponent? item = null)
     {
         if (!Resolve(uid, ref handsComp, false))
             return false;
@@ -176,13 +183,17 @@ public abstract partial class SharedHandsSystem
         if (handContainer.ContainedEntities.FirstOrNull() != null)
             return false;
 
+        // Huh, seems kinda weird that this system passes item comp around
+        // everywhere but it's never actually used besides being resolved.
+        // I wouldn't be surprised if there's some API simplifications that
+        // could be made with respect to that.
         if (!Resolve(entity, ref item, false))
             return false;
 
         if (TryComp(entity, out PhysicsComponent? physics) && physics.BodyType == BodyType.Static)
             return false;
 
-        if (checkActionBlocker && !_actionBlocker.CanPickup(uid, entity))
+        if (checkActionBlocker && !_actionBlocker.CanPickup(uid, entity, showPopup))
             return false;
 
         if (!CheckWhitelists((uid, handsComp), handId, entity))
@@ -230,6 +241,28 @@ public abstract partial class SharedHandsSystem
                 TransformSystem.PlaceNextTo(entity, uid.Value);
             }
         }
+    }
+
+    /// <summary>
+    /// Small helper function meant as a last step before <see cref="DoPickup"/>
+    /// is called. Used to run a cancelable before pickup event that can have
+    /// side effects, unlike the side effect free <see cref="GettingPickedUpAttemptEvent"/>.
+    /// </summary>
+    private bool BeforeDoPickup(Entity<HandsComponent?> user, EntityUid item)
+    {
+        if (!Resolve(user, ref user.Comp))
+            return false;
+
+        var userEv = new BeforeEquippingHandEvent(item);
+        RaiseLocalEvent(user, ref userEv);
+
+        if (userEv.Cancelled)
+            return false;
+
+        var itemEv = new BeforeGettingEquippedHandEvent(user);
+        RaiseLocalEvent(item, ref itemEv);
+
+        return !itemEv.Cancelled;
     }
 
     /// <summary>
