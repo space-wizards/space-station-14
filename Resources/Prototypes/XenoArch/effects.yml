@@ -887,7 +887,7 @@
 - type: entity
   id: XenoArtifactFaunaSpawn
   parent: BaseXenoArtifactEffect
-  description: Create 'friendly' fauna
+  description: Create friendly fauna
   components:
   - type: XenoArtifactNode
     maxDurability: 4
@@ -902,15 +902,15 @@
       deleteSpawnerAfterSpawn: false
       table: !type:GroupSelector
         children:
-        - id: MobAdultSlimesYellowAngry
-        - id: MobAngryBee
-        - id: MobBearSpace
-        - id: MobXenoRavager
-        - id: MobTick
-        - id: MobSpiderSpace
-        - id: MobPurpleSnake
+        #- id: MobAdultSlimesYellowAngry
+        #- id: MobAngryBee
+        #- id: MobBearSpace
+        #- id: MobXenoRavager
+        #- id: MobTick
+        #- id: MobSpiderSpace
+        #- id: MobPurpleSnake
         - id: MobMouse
-        - id: MobKangarooSpace
+        #- id: MobKangarooSpace
         - id: MobPig
         - id: MobParrot
         - id: MobKangaroo
