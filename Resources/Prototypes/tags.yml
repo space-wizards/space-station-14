@@ -862,25 +862,25 @@
 ## K ##
 
 - type: Tag
-  id: Kangaroo
+  id: Kangaroo # Used by inventoryTemplate:kangaroo to whitelist clothes wearable by the man shaped animal.
 
 - type: Tag
-  id: Katana
+  id: Katana # Unused. (Exists on Katana)
 
 - type: Tag
-  id: Ketchup
+  id: Ketchup # Storage whitelist: ClothingBeltChef and FoodCartHot. ItemMapper: ClothingBeltChef and FoodCartHot
 
 - type: Tag
-  id: KeyedInstrument
+  id: KeyedInstrument # MachineBoard construction: DawInstrumentMachineCircuitboard
 
 - type: Tag
-  id: KitchenKnife
+  id: KitchenKnife # Storage whitelist: ClothingBeltChef. ItemMapper: ClothingBeltChef
 
 - type: Tag
-  id: Knife
+  id: Knife # MachineBoard construction: BiomassReclaimerMachineCircuitboard. Storage whitelist: ClothingShoesMilitaryBase, ClothingShoesClownBase
 
 - type: Tag
-  id: KnockdownImmune
+  id: KnockdownImmune # Blacklisted by MobStandStatusEffectBase
 
 ## L ##
 
@@ -1097,7 +1097,7 @@
   id: PepperShaker
 
 - type: Tag
-  id: PercussionInstrument
+  id: PercussionInstrument # CargoBounty: BountyPercussion. MachineBoard construction: DawInstrumentMachineCircuitboard
 
 - type: Tag
   id: PetOnly
@@ -1404,7 +1404,7 @@
   id: Steak
 
 - type: Tag
-  id: StringInstrument
+  id: StringInstrument # MachineBoard construction: DawInstrumentMachineCircuitboard
 
 - type: Tag
   id: StunImmune
@@ -1593,6 +1593,7 @@
 
 - type: Tag
   id: WoodwindInstrument # even more like our atmos
+                         # MachineBoard construction: DawInstrumentMachineCircuitboard
 
 - type: Tag
   id: Wrench
