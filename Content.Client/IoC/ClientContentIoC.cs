@@ -63,7 +63,6 @@ namespace Content.Client.IoC
             collection.Register<SharedPlayerRateLimitManager, PlayerRateLimitManager>();
             collection.Register<TitleWindowManager>();
             collection.Register<ClientsidePlaytimeTrackingManager>();
-            collection.Register<ClientBwoinkManager>();
 
             var bwoinkInstance = new ClientBwoinkManager(); // There HAS to be a better way of doing this.
             collection.RegisterInstance<ClientBwoinkManager>(bwoinkInstance);
