@@ -20,8 +20,8 @@ public sealed class WieldingRequiresMultipleHandsTest : InteractionTest
     [Test]
     public async Task TestOneHandedWielding()
     {
-        var mosinNet = await PlaceInHands("TestWieldingRequiresMultipleHandsTest");
-        var wieldComp = Comp<WieldableComponent>(mosinNet);
+        var itemNet = await PlaceInHands("TestWieldingRequiresMultipleHandsTest");
+        var wieldComp = Comp<WieldableComponent>(itemNet);
 
         // The player entity by default should only have one hand.
         // We're checking to make sure that is still the case.
