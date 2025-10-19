@@ -39,8 +39,8 @@ public abstract partial class SharedStackSystem
             return false;
 
         // transfer only as much as we want
-        if (amount is > 0)
-            transferred = Math.Min(transferred, (int)amount);
+        if (amount > 0)
+            transferred = Math.Min(transferred, amount.Value);
 
         SetCount(donor, donor.Comp.Count - transferred);
         SetCount(recipient, recipient.Comp.Count + transferred);
@@ -121,7 +121,7 @@ public abstract partial class SharedStackSystem
     /// Clamps between zero and the stack's max size.
     /// </summary>
     /// <remarks> All setter functions should end up here. </remarks>
-    public virtual void SetCount(Entity<StackComponent?> ent, int amount)
+    public void SetCount(Entity<StackComponent?> ent, int amount)
     {
         if (!Resolve(ent.Owner, ref ent.Comp))
             return;
@@ -140,17 +140,20 @@ public abstract partial class SharedStackSystem
         amount = Math.Max(amount, 0);
 
         stackComp.Count = amount;
+        stackComp.UiUpdateNeeded = true;
         Dirty(ent);
 
         Appearance.SetData(stackEnt, StackVisuals.Actual, stackComp.Count);
         RaiseLocalEvent(stackEnt, new StackCountChangedEvent(old, stackComp.Count));
 
-        // Server-side override deletes the entity if count == 0
+        // Queue delete stack if count reaches zero.
+        if (ent.Comp.Count <= 0)
+            PredictedQueueDel(ent.Owner);
     }
 
     /// <inheritdoc cref="SetCount(Entity{StackComponent?}, int)"/>
     [Obsolete("Use Entity<T> method instead")]
-    public virtual void SetCount(EntityUid uid, int amount, StackComponent? component = null)
+    public void SetCount(EntityUid uid, int amount, StackComponent? component = null)
     {
         SetCount((uid, component), amount);
     }
@@ -163,10 +166,11 @@ public abstract partial class SharedStackSystem
 
     /// <summary>
     /// Reduce a stack count by an amount, even if it would go below 0.
+    /// If it reaches 0 the stack will despawn.
     /// </summary>
     /// <seealso cref="TryUse"/>
     [PublicAPI]
-    public void LowerCount(Entity<StackComponent?> ent, int amount)
+    public void ReduceCount(Entity<StackComponent?> ent, int amount)
     {
         if (!Resolve(ent.Owner, ref ent.Comp))
             return;

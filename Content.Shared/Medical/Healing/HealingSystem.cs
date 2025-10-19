@@ -87,7 +87,7 @@ public sealed class HealingSystem : EntitySystem
         var dontRepeat = false;
         if (TryComp<StackComponent>(args.Used.Value, out var stackComp))
         {
-            _stacks.LowerCount((args.Used.Value, stackComp), 1);
+            _stacks.ReduceCount((args.Used.Value, stackComp), 1);
 
             if (_stacks.GetCount((args.Used.Value, stackComp)) <= 0)
                 dontRepeat = true;

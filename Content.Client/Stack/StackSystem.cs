@@ -21,31 +21,6 @@ namespace Content.Client.Stack
             Subs.ItemStatus<StackComponent>(ent => new StackStatusControl(ent));
         }
 
-        /// <inheritdoc />
-        public override void SetCount(Entity<StackComponent?> ent, int amount)
-        {
-            if (!Resolve(ent.Owner, ref ent.Comp))
-                return;
-
-            base.SetCount(ent, amount);
-
-            // TODO PREDICT ENTITY DELETION: This should really just be a normal entity deletion call.
-            if (ent.Comp.Count <= 0)
-            {
-                Xform.DetachEntity(ent.Owner, Transform(ent.Owner));
-                return;
-            }
-
-            ent.Comp.UiUpdateNeeded = true;
-        }
-
-        /// <inheritdoc cref="SetCount(Entity{StackComponent?}, int)"/>
-        [Obsolete("Use Entity<T> method instead")]
-        public override void SetCount(EntityUid uid, int amount, StackComponent? component = null)
-        {
-            SetCount((uid, component), amount);
-        }
-
         #region Appearance
 
         private void OnAppearanceChange(Entity<StackComponent> ent, ref AppearanceChangeEvent args)

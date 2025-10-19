@@ -15,30 +15,10 @@ namespace Content.Server.Stack
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        /// <inheritdoc />
-        public override void SetCount(Entity<StackComponent?> ent, int amount)
-        {
-            if (!Resolve(ent.Owner, ref ent.Comp, false))
-                return;
-
-            base.SetCount(ent, amount);
-
-            // Queue delete stack if count reaches zero.
-            if (ent.Comp.Count <= 0)
-                QueueDel(ent.Owner);
-        }
-
-        /// <inheritdoc cref="SetCount(Entity{StackComponent?}, int)"/>
-        [Obsolete("Use Entity<T> method instead")]
-        public override void SetCount(EntityUid uid, int amount, StackComponent? component = null)
-        {
-            SetCount((uid, component), amount);
-        }
-
         #region Spawning
 
         /// <summary>
-        /// Spawns a new entity and moves an amount to it from ent.
+        /// Spawns a new entity and moves an amount to it from the stack.
         /// Moves nothing if amount is greater than ent's stack count.
         /// </summary>
         /// <param name="amount"> How much to move to the new entity. </param>
@@ -53,19 +33,18 @@ namespace Content.Server.Stack
             if (!TryUse(ent, amount))
                 return null;
 
-            // Get a prototype ID to spawn the new entity. Null is also valid, although it should rarely be picked...
-            var prototype = _prototypeManager.TryIndex(ent.Comp.StackTypeId, out var stackType)
-                ? stackType.Spawn.ToString()
-                : Prototype(ent.Owner)?.ID;
+            if (!_prototypeManager.Resolve(ent.Comp.StackTypeId, out var stackType))
+                return null;
 
             // Set the output parameter in the event instance to the newly split stack.
-            var newEntity = SpawnAtPosition(prototype, spawnPosition);
+            var newEntity = SpawnAtPosition(stackType.Spawn, spawnPosition);
 
-            // There should always be a StackComponent, but make sure
-            var stackComp = EnsureComp<StackComponent>(newEntity);
+            // There should always be a StackComponent
+            var stackComp = Comp<StackComponent>(newEntity);
 
             SetCount((newEntity, stackComp), amount);
             stackComp.Unlimited = false; // Don't let people dupe unlimited stacks
+            Dirty(newEntity, stackComp);
 
             var ev = new StackSplitEvent(newEntity);
             RaiseLocalEvent(ent, ref ev);
@@ -83,10 +62,8 @@ namespace Content.Server.Stack
         public EntityUid SpawnAtPosition(int count, StackPrototype prototype, EntityCoordinates spawnPosition)
         {
             var entity = SpawnAtPosition(prototype.Spawn, spawnPosition); // The real SpawnAtPosition
-            // There should always be a StackComponent, but make sure. TODO an integration test should ensure that StackPrototypes have stack component
-            var stack = EnsureComp<StackComponent>(entity);
 
-            SetCount((entity, stack), count);
+            SetCount((entity, null), count);
             return entity;
         }
 
@@ -120,7 +97,8 @@ namespace Content.Server.Stack
             {
                 var entity = SpawnAtPosition(entityPrototype, spawnPosition); // The real SpawnAtPosition
                 spawnedEnts.Add(entity);
-                SetCount((entity, null), count);
+                if (TryComp<StackComponent>(entity, out var stackComp)) // prevent errors from the Resolve
+                    SetCount((entity, stackComp), count);
             }
 
             return spawnedEnts;
@@ -179,10 +157,7 @@ namespace Content.Server.Stack
         public EntityUid SpawnNextToOrDrop(int amount, StackPrototype prototype, EntityUid source)
         {
             var entity = SpawnNextToOrDrop(prototype.Spawn, source); // The real SpawnNextToOrDrop
-            // There should always be a StackComponent, but make sure. TODO This should be an integration test
-            var stack = EnsureComp<StackComponent>(entity);
-
-            SetCount((entity, stack), amount);
+            SetCount((entity, null), amount);
             return entity;
         }
 
@@ -211,7 +186,8 @@ namespace Content.Server.Stack
             {
                 var entity = SpawnNextToOrDrop(entityPrototype, target); // The real SpawnNextToOrDrop
                 spawnedEnts.Add(entity);
-                SetCount((entity, null), count);
+                if (TryComp<StackComponent>(entity, out var stackComp)) // prevent errors from the Resolve
+                    SetCount((entity, stackComp), count);
             }
 
             return spawnedEnts;

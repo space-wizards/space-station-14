@@ -36,12 +36,11 @@ public sealed partial class StackPrototype : IPrototype, IInheritingPrototype
     [DataField]
     public SpriteSpecifier? Icon { get; private set; }
 
-    // TODO Verify that this entity has StackComponent
     /// <summary>
     ///     The entity id that will be spawned by default from this stack.
     /// </summary>
     [DataField(required: true)]
-    public EntProtoId Spawn { get; private set; } = string.Empty;
+    public EntProtoId<StackComponent> Spawn { get; private set; } = string.Empty;
 
     /// <summary>
     ///     The maximum amount of things that can be in a stack.

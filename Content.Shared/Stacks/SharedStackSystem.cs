@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Stacks
 {
@@ -29,7 +30,9 @@ namespace Content.Shared.Stacks
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] protected readonly SharedPopupSystem Popup = default!;
         [Dependency] private readonly SharedStorageSystem _storage = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
 
+        // TODO: These should be in the prototype.
         public static readonly int[] DefaultSplitAmounts = { 1, 5, 10, 20, 30, 50 };
 
         public override void Initialize()
@@ -117,7 +120,7 @@ namespace Content.Shared.Stacks
 
         private void OnStackGetState(Entity<StackComponent> ent, ref ComponentGetState args)
         {
-            args.State = new StackComponentState(ent.Comp.Count, ent.Comp.MaxCountOverride);
+            args.State = new StackComponentState(ent.Comp.Count, ent.Comp.MaxCountOverride, ent.Comp.Unlimited);
         }
 
         private void OnStackHandleState(Entity<StackComponent> ent, ref ComponentHandleState args)
@@ -125,7 +128,8 @@ namespace Content.Shared.Stacks
             if (args.Current is not StackComponentState cast)
                 return;
 
-            ent.Comp.MaxCountOverride = cast.MaxCount;
+            ent.Comp.MaxCountOverride = cast.MaxCountOverride;
+            ent.Comp.Unlimited = cast.Unlimited;
             // This will change the count and call events.
             SetCount(ent.AsNullable(), cast.Count);
         }
@@ -166,7 +170,7 @@ namespace Content.Shared.Stacks
             The easiest and safest option is and always will be Option 1 otherwise we risk reagent deletion or duplication.
             That is why we cancel if we cannot set the minimum to the entire volume of the solution.
             */
-            if(args.TryNewMinimum(sol.Volume))
+            if (args.TryNewMinimum(sol.Volume))
                 return;
 
             args.Cancelled = true;
