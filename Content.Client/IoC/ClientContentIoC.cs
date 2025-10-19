@@ -24,6 +24,7 @@ using Content.Client.Players.RateLimiting;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Administration.Managers.Bwoink;
 using Content.Shared.Chat;
+using Content.Shared.IoC;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Players.RateLimiting;
 
@@ -31,10 +32,9 @@ namespace Content.Client.IoC
 {
     internal static class ClientContentIoC
     {
-        public static void Register()
+        public static void Register(IDependencyCollection collection)
         {
-            var collection = IoCManager.Instance!;
-
+            SharedContentIoC.Register(collection);
             collection.Register<IParallaxManager, ParallaxManager>();
             collection.Register<GeneratedParallaxCache>();
             collection.Register<IChatManager, ChatManager>();

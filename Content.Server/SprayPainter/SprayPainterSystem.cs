@@ -1,5 +1,5 @@
-using Content.Shared.Atmos.Components;
-using Content.Shared.Atmos.EntitySystems;
+using Content.Server.Atmos.Piping.Components;
+using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.Charges;
 using Content.Server.Decals;
 using Content.Server.Destructible;
@@ -56,7 +56,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
             return;
 
         args.Handled = true;
-        if (TryComp(ent, out LimitedChargesComponent? charges) && charges.LastCharges < ent.Comp.DecalChargeCost)
+        if (TryComp(ent, out LimitedChargesComponent? charges) && _charges.GetCurrentCharges((ent, charges)) < ent.Comp.DecalChargeCost)
         {
             _popup.PopupEntity(Loc.GetString("spray-painter-interact-no-charges"), args.User, args.User);
             return;
@@ -147,7 +147,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
             return;
 
         Audio.PlayPvs(ent.Comp.SpraySound, ent);
-        _pipeColor.SetColor((target, color), args.Color);
+        _pipeColor.SetColor(target, color, args.Color);
 
         args.Handled = true;
     }
@@ -165,7 +165,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
             return;
 
         if (TryComp<LimitedChargesComponent>(args.Used, out var charges)
-            && charges.LastCharges < painter.PipeChargeCost)
+            && _charges.GetCurrentCharges((args.Used, charges)) < painter.PipeChargeCost)
         {
             var msg = Loc.GetString("spray-painter-interact-no-charges");
             _popup.PopupEntity(msg, args.User, args.User);
