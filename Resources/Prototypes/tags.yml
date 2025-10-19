@@ -72,7 +72,7 @@
   id: Bedsheet # CargoBounty: BountyBedsheet
 
 - type: Tag
-  id: Bee # Mode switching for BuzzochloricBees (only damages non-bees)
+  id: Bee # CreateEntityTileReaction whitelist on BuzzochloricBees and mode switching (only damages non-bees)
 
 - type: Tag
   id: Beer # CargoBounty: BountyBeer
@@ -236,7 +236,7 @@
   id: CaptainSabre # Storage whitelist: ClothingBeltSheath. ItemMapper: ClothingBeltSheath
 
 - type: Tag
-  id: Carpet # Unused (exists on carpets (obviously))
+  id: Carpet # CreateEntityTileReaction whitelist on Carpetium
 
 - type: Tag
   id: Carrot # CargoBounty: BountyCarrot
@@ -305,7 +305,10 @@
   id: ChiliBowl # CargoBounty: BountyChili
 
 - type: Tag
-  id: Cigarette # Storage whitelist: Ashtray
+  id: Cigar # ItemCounter: CigarCase
+
+- type: Tag
+  id: Cigarette # Storage whitelist: Ashtray. ItemCounter: CigPackBase, CigPackMixedBase
 
 - type: Tag
   id: CigFilter # Storage whitelist: PackPaperRolling
@@ -344,7 +347,7 @@
   id: CluwneHorn # ConstructionGraph: JonkBot
 
 - type: Tag
-  id: Cola  # Storage whitelist: DrinkCanPack
+  id: Cola  # Storage whitelist: DrinkCanPack. ItemCounter: DrinkCanPack
 
 - type: Tag
   id: Coldsauce # Storage whitelist: ClothingBeltChef and FoodCartHot. ItemMapper: ClothingBeltChef and FoodCartHot
@@ -487,7 +490,7 @@
   id: DonkPocket # Storage whitelist: FoodBoxDonkpocket
 
 - type: Tag
-  id: Donut # Storage whitelist: FoodBoxDonut. CargoBounty: BountyDonut
+  id: Donut # Storage whitelist: FoodBoxDonut. ItemCounter: FoodBoxDonut. CargoBounty: BountyDonut
 
 - type: Tag
   id: DoorBumpOpener # Used by SharedDoorSystem to allow tagged entities to open doors when they collide.
@@ -526,7 +529,7 @@
   id: Ectoplasm # ConstructionGraph: PlushieGhostRevenant
 
 - type: Tag
-  id: Egg # Storage whitelist: FoodContainerEgg
+  id: Egg # Storage whitelist: FoodContainerEgg. ItemCounter: FoodContainerEgg
 
 - type: Tag
   id: EmagImmune # Default value in EmagComponent. Marks tagged entity as immune to EmagUnlimited.
@@ -666,7 +669,7 @@
   id: GlassAirlock # Used in ConstructionGraph "Airlock" to navigate between regular, glass, and highsec airlocks.
 
 - type: Tag
-  id: GlassBeaker # This tag exists for the purpose of being a common ingredient in the construction of various machines.
+  id: GlassBeaker # This tag is used as a common ingredient in the construction of various machines.
 
 - type: Tag
   id: GlassShard # ConstructionGraph: BladedFlatcapBrown, BladedFlatcapGrey, ImprovisedArrow, ImprovisedShotgunShellGraph, Shiv, Spear
@@ -821,34 +824,35 @@
 ## I ##
 
 - type: Tag
-  id: Ice
+  id: Ice # CreateEntityTileReaction whitelist on Fresium
 
 - type: Tag
-  id: Igniter
+  id: Igniter # ConstructionGraph: makeshiftstunprod, FireBomb. Common ingredient in machines (HyperConvection)
 
 - type: Tag
-  id: Ingredient
+  id: Ingredient # Unused. (Exists on items in igredients.yml)
 
 - type: Tag #Drop this innate tool instead of deleting it.
-  id: InnateDontDelete
+  id: InnateDontDelete # Basically used as a bool for InnateToolComponent in InnateToolSystem. TODO remove
 
 - type: Tag
-  id: Ingot
+  id: Ingot # MaterialStorage whitelist for many machines and lathes. Storage whitelist: MaterialBag
 
 - type: Tag
-  id: Inflatable
+  id: Inflatable # Storage whitelist: BorgModuleInflatable
 
 - type: Tag
-  id: InstantDoAfters
+  id: InstantDoAfters # Used by SharedDoAfterSystem for tagged entities to skip DoAfters (aghost). TODO remove
 
 - type: Tag
-  id: IntercomElectronics
+  id: IntercomElectronics # ConstructionGraph: Intercom
 
 - type: Tag
-  id: InvalidForGlobalSpawnSpell
+  id: InvalidForGlobalSpawnSpell # Used by SharedMagicSystem to skip tagged entity for an all living humans spawn spell.
+                                 # Implemented only in server ZombieSystem.
 
 - type: Tag
-  id: InvalidForSurvivorAntag
+  id: InvalidForSurvivorAntag # Used by server MagicSystem and SurvivorRuleSystem to alter mind roles from global spawn spells.
 
 ## J ##
 
@@ -1038,7 +1042,7 @@
   id: NozzleBackTank
 
 - type: Tag
-  id: Nugget # for chicken nuggets
+  id: Nugget # ItemCounter: FoodBoxNugget
 
 - type: Tag
   id: NukeOpsUplink
