@@ -7,74 +7,75 @@ namespace Content.Client.Stylesheets.Palette;
 /// <remarks>
 ///     Don't be afraid to add a lot of fields here! This class is made for readability.
 /// </remarks>
-public sealed class ColorPalette
+public record ColorPalette(
+    Color Base,
+
+    float LightnessShift,
+    float ChromaShift,
+
+    Color Element,
+    Color HoveredElement,
+    Color PressedElement,
+    Color DisabledElement,
+
+    Color Background,
+    Color BackgroundLight,
+    Color BackgroundDark,
+
+    Color Text,
+    Color TextDark
+)
 {
     /// <summary>
-    ///     The root color all others are derived from
+    /// Helper method for generating a ColorPalette from a specified base hex string, with the
+    /// option to override specific parts of the palette
     /// </summary>
-    public Color Base;
-
-    public float LightnessShift;
-    public float ChromaShift;
-
-    public Color Element;
-    public Color HoveredElement;
-    public Color PressedElement;
-    public Color DisabledElement;
-
-    public Color Background;
-    public Color BackgroundLight;
-    public Color BackgroundDark;
-
-    public Color Text;
-    public Color TextDark;
-
-    /// <summary>
-    ///     Given the initialized configuration properties, this constructor sets all the color properties to
-    ///     derivations of the <see cref="Base"/> color. You can override specific fields or groups of fields with
-    ///     their own values by passing them in as arguments.
-    /// </summary>
-    /// <remarks>
-    ///     This constructor should be used with named arguments to override specific arguments in the method
-    ///     invocation. Do NOT use positional arguments, AKA list them out one by one. I don't think I have to
-    ///     justify why.
-    /// </remarks>
-    public ColorPalette(
+    public static ColorPalette FromHexBase(
         string hex,
         float lightnessShift = 0.06f,
         float chromaShift = 0.00f,
         Color? element = null,
-        Color? hoveredElement = null,
-        Color? pressedElement = null,
-        Color? disabledElement = null,
         Color? background = null,
-        Color? backgroundLight = null,
-        Color? backgroundDark = null,
-        Color? text = null,
-        Color? textDark = null
+        Color? text = null
     )
     {
-        Base = Color.FromHex(hex);
+        var @base = Color.FromHex(hex);
 
-        LightnessShift = lightnessShift;
-        ChromaShift = chromaShift;
+        element ??= Shift(@base, lightnessShift, chromaShift, -1); //                        Shift(@base, -1)
+        var hoveredElement = Shift(element.Value, lightnessShift, chromaShift, 1); //        Shift(@base,  0)
+        var pressedElement = Shift(element.Value, lightnessShift, chromaShift, -1); //       Shift(@base, -2)
+        var disabledElement = Shift(element.Value, lightnessShift, chromaShift, -2) //       Shift(@base, -3)
+            .NudgeChroma(-chromaShift * 2);
 
-        Element = element ?? Shift(Base, -1); //                        Shift(Base, -1)
-        HoveredElement = hoveredElement ?? Shift(Element, 1); //        Shift(Base,  0)
-        PressedElement = pressedElement ?? Shift(Element, -1); //       Shift(Base, -2)
-        DisabledElement = disabledElement ?? Shift(Element, -2) //      Shift(Base, -3)
-            .NudgeChroma(-ChromaShift * 2);
+        background ??= Shift(@base, lightnessShift, chromaShift, -3); //                     Shift(@base, -3)
+        var backgroundLight = Shift(background.Value, lightnessShift, chromaShift, 1); //    Shift(@base, -2)
+        var backgroundDark = Shift(background.Value, lightnessShift, chromaShift, -1); //    Shift(@base, -4)
 
-        Background = background ?? Shift(Base, -3); //                  Shift(Base, -3)
-        BackgroundLight = backgroundLight ?? Shift(Background, 1); //   Shift(Base, -2)
-        BackgroundDark = backgroundDark ?? Shift(Background, -1); //    Shift(Base, -4)
+        text ??= @base; //                                                                   Shift(@base,  0)
+        var textDark = Shift(text.Value, lightnessShift, chromaShift, -1); //                Shift(@base, -1)
 
-        Text = text ?? Base; //                                         Shift(Base,  0)
-        TextDark = textDark ?? Shift(Text, -1); //                      Shift(Base, -1)
+        return new ColorPalette(
+            Base: @base,
+
+            LightnessShift: lightnessShift,
+            ChromaShift: chromaShift,
+
+            Element: element.Value,
+            HoveredElement: hoveredElement,
+            PressedElement: pressedElement,
+            DisabledElement: disabledElement,
+
+            Background: background.Value,
+            BackgroundLight: backgroundLight,
+            BackgroundDark: backgroundDark,
+
+            Text: text.Value,
+            TextDark: textDark
+        );
     }
 
-    private Color Shift(Color from, float factor)
+    private static Color Shift(Color from, float lightnessShift, float chromaShift, float factor)
     {
-        return from.NudgeLightness(LightnessShift * factor).NudgeChroma(ChromaShift * factor);
+        return from.NudgeLightness(lightnessShift * factor).NudgeChroma(chromaShift * factor);
     }
 }
