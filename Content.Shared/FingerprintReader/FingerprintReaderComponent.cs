@@ -20,16 +20,4 @@ public sealed partial class FingerprintReaderComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool IgnoreGloves;
-
-    /// <summary>
-    /// The popup to show when access is denied due to fingerprint mismatch.
-    /// </summary>
-    [DataField]
-    public LocId? FailPopup;
-
-    /// <summary>
-    /// The popup to show when access is denied due to wearing gloves.
-    /// </summary>
-    [DataField]
-    public LocId? FailGlovesPopup;
 }
