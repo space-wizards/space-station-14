@@ -64,7 +64,10 @@ namespace Content.Client.IoC
             collection.Register<TitleWindowManager>();
             collection.Register<ClientsidePlaytimeTrackingManager>();
             collection.Register<ClientBwoinkManager>();
-            collection.Register<SharedBwoinkManager>();
+
+            var bwoinkInstance = new ClientBwoinkManager(); // There HAS to be a better way of doing this.
+            IoCManager.RegisterInstance<ClientBwoinkManager>(bwoinkInstance);
+            IoCManager.RegisterInstance<SharedBwoinkManager>(bwoinkInstance);
         }
     }
 }
