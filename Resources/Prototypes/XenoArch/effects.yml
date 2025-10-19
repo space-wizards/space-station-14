@@ -902,15 +902,7 @@
       deleteSpawnerAfterSpawn: false
       table: !type:GroupSelector
         children:
-        #- id: MobAdultSlimesYellowAngry
-        #- id: MobAngryBee
-        #- id: MobBearSpace
-        #- id: MobXenoRavager
-        #- id: MobTick
-        #- id: MobSpiderSpace
-        #- id: MobPurpleSnake
         - id: MobMouse
-        #- id: MobKangarooSpace
         - id: MobPig
         - id: MobParrot
         - id: MobKangaroo
