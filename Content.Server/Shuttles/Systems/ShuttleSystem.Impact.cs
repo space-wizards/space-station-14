@@ -232,7 +232,7 @@ public sealed partial class ShuttleSystem
         var minsq = _minThrowVelocity * _minThrowVelocity;
 
         // iterate all dynamic entities on the grid
-        if (!TryComp<BroadphaseComponent>(gridUid, out var lookup) || !TryComp<MapGridComponent>(gridUid, out var gridComp))
+        if (!TryComp<BroadphaseComponent>(gridUid, out var lookup) || !_gridQuery.TryComp(gridUid, out var gridComp))
             return;
 
         var gridBox = gridComp.LocalAABB;
@@ -254,7 +254,7 @@ public sealed partial class ShuttleSystem
 
             if (direction.LengthSquared() > minsq)
             {
-                _stuns.TryCrawling(ent, knockdownTime);
+                _stuns.TryCrawling(ent.Owner, knockdownTime);
                 _throwing.TryThrow(ent, direction, ent.Comp, Transform(ent), _projQuery, direction.Length(), playSound: false);
             }
             else
