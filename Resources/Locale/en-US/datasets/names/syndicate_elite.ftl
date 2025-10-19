@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 names-syndicate-elite-dataset-1 = Alpha
 names-syndicate-elite-dataset-2 = Beta
 names-syndicate-elite-dataset-3 = Gamma

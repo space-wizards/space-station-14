@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 lock-comp-on-examined-is-locked = The {$entityName} seems to be locked.
 lock-comp-on-examined-is-unlocked = The {$entityName} seems to be unlocked.
 lock-comp-do-lock-success = You lock the {$entityName}.

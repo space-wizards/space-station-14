@@ -1,4 +1,8 @@
-﻿[assembly: Parallelizable(ParallelScope.Children)]
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+[assembly: Parallelizable(ParallelScope.Children)]
 
 // I don't know why this parallelism limit was originally put here.
 // I *do* know that I tried removing it, and ran into the following .NET runtime problem:

@@ -1,4 +1,10 @@
-﻿<tabs:MiscTab xmlns="https://spacestation14.io"
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<tabs:MiscTab xmlns="https://spacestation14.io"
               xmlns:tabs="clr-namespace:Content.Client.Options.UI.Tabs"
               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
               xmlns:ui="clr-namespace:Content.Client.Options.UI">

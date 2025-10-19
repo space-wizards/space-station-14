@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # mop bucket
 mop-bucket-slot-component-slot-name-item = Item
 mop-bucket-slot-component-eject-verb = Take out

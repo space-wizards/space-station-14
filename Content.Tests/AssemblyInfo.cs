@@ -1,3 +1,7 @@
-﻿using NUnit.Framework;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using NUnit.Framework;
 
 [assembly: Parallelizable(ParallelScope.Fixtures)]

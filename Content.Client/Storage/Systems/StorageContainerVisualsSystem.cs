@@ -1,4 +1,8 @@
-﻿using Content.Client.Storage.Components;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Client.Storage.Components;
 using Content.Shared.Rounding;
 using Content.Shared.Storage;
 using Robust.Client.GameObjects;

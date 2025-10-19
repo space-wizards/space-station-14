@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # Deployable turret component
 deployable-turret-component-activating = Deploying...
 deployable-turret-component-deactivating = Deactivating...

@@ -1,4 +1,8 @@
-﻿reagent-effect-status-effect-Stun = stunning
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+reagent-effect-status-effect-Stun = stunning
 reagent-effect-status-effect-KnockedDown = knockdown
 reagent-effect-status-effect-Jitter = jittering
 reagent-effect-status-effect-TemporaryBlindness = blindness

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 - type: entity
   parent: [ClothingHandsButcherable, BaseChameleon]
   id: ClothingHandsChameleon # doesn't protect from electricity or heat

@@ -1,4 +1,10 @@
-﻿<pda:PdaWindow  xmlns="https://spacestation14.io"
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<pda:PdaWindow  xmlns="https://spacestation14.io"
                 xmlns:pda="clr-namespace:Content.Client.PDA"
                 MouseFilter="Stop">
     <PanelContainer Name="Background" Access="Public" StyleClasses="PdaBackgroundRect" />

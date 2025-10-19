@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # InstrumentComponent
 instrument-component-finger-cramps-light-message = Your fingers are beginning to a cramp a little!
 instrument-component-finger-cramps-serious-message = Your fingers are seriously cramping up!

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 apc-menu-title = APC
 apc-menu-breaker-label = Main Breaker
 apc-menu-breaker-button = Toggle

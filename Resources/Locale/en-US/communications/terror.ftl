@@ -1,2 +1,6 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 terror-dragon = Attention crew, it appears that someone on your station has made an unexpected communication with a strange man-eating fish in nearby space.
 terror-revenant = Attention crew, it appears that someone on your station has made an unexpected communication with an otherworldly energy in nearby space.

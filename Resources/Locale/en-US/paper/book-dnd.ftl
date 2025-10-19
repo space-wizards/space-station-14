@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 book-cnc-sheet = C&C 5e Character Sheet
     --------------------------------------------------------------------------------------
     SECTION 1:  THE BASICS

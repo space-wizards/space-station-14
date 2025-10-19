@@ -1,4 +1,8 @@
-﻿using Content.Client.UserInterface.Controls;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Hands.Components;
 
 namespace Content.Client.UserInterface.Systems.Hands.Controls;

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 ### For items thare are used as intermediate steps on a crafting recipe but have no use outside of it.
 - type: entity
   parent: BaseItem

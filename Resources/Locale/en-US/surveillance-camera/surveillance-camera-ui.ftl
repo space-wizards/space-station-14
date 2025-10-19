@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 surveillance-camera-monitor-ui-window = Camera monitor
 surveillance-camera-monitor-ui-refresh-cameras = Refresh cameras
 surveillance-camera-monitor-ui-refresh-subnets = Refresh subnets

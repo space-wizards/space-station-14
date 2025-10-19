@@ -1,4 +1,8 @@
-﻿roles-antag-changeling-name = Changeling
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+roles-antag-changeling-name = Changeling
 roles-antag-changeling-objective = A intelligent predator that assumes the identities of its victims.
 
 changeling-devour-attempt-failed-rotting = This corpse has only rotted biomass.

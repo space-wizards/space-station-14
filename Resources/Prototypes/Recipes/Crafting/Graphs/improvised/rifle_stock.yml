@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 #In its own file and not improvised-shotgun.yml in case anyone ever wants to add more guns that use it.
 - type: constructionGraph
   id: RifleStockGraph

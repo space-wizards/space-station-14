@@ -1,4 +1,8 @@
-﻿using System.Runtime.InteropServices;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using System.Runtime.InteropServices;
 using Content.Server.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Players.RateLimiting;

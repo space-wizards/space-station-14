@@ -1,4 +1,8 @@
-﻿### Localization for role ban command
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+### Localization for role ban command
 
 cmd-roleban-desc = Bans a player from a role
 cmd-roleban-help = Usage: roleban <name or user ID> <job> <reason> [duration in minutes, leave out or 0 for permanent ban]

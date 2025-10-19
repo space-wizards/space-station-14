@@ -1,4 +1,8 @@
-﻿advertisement-ammo-1 = Liberation Station: Your one-stop shop for all things second amendment!
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+advertisement-ammo-1 = Liberation Station: Your one-stop shop for all things second amendment!
 advertisement-ammo-2 = Be a patriot today, pick up a gun!
 advertisement-ammo-3 = Quality weapons for cheap prices!
 advertisement-ammo-4 = Better dead than red!

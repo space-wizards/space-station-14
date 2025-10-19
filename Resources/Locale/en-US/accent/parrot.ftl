@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 accent-parrot-squawk-1 = SQUAWK!
 accent-parrot-squawk-2 = SQUAAAWK!
 accent-parrot-squawk-3 = AWWK!

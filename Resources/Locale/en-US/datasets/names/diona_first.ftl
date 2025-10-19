@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 names-diona-first-dataset-1 = Moss
 names-diona-first-dataset-2 = Mushroom
 names-diona-first-dataset-3 = Herb

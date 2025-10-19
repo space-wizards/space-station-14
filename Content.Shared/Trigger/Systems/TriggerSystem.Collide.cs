@@ -1,4 +1,8 @@
-﻿using Content.Shared.Trigger.Components.Triggers;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Shared.Trigger.Components.Triggers;
 using Content.Shared.StepTrigger.Systems;
 using Robust.Shared.Physics.Events;
 

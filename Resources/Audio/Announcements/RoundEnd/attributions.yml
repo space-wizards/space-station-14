@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 - files: ["apc_destroyed.ogg"]
   license: "CC-BY-3.0"
   copyright: "https://github.com/tgstation/tgstation/commit/9693fb456a3f8f63e73e6e504fe75de1d148d271n"

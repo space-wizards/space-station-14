@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 ## ExamineSystem
 
 examine-system-entity-does-not-exist = That entity doesn't exist

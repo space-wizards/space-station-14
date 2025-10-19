@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 news-dataset-1 = Tree stuck in tajaran; firefighters baffled.
 news-dataset-2 = Armadillos want aardvarks removed from dictionary claims 'here first'.
 news-dataset-3 = Angel found dancing on pinhead ordered to stop; cited for public nuisance.

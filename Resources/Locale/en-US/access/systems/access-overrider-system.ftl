@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 access-overrider-window-privileged-id = Privileged ID:
 access-overrider-window-eject-button = Eject
 access-overrider-window-insert-button = Insert

@@ -1,4 +1,8 @@
-﻿hugbot-start-hug-1 = LEVEL 5 HUG DEFICIENCY DETECTED!
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+hugbot-start-hug-1 = LEVEL 5 HUG DEFICIENCY DETECTED!
 hugbot-start-hug-2 = You look like you need a hug!
 hugbot-start-hug-3 = Aww, somebody needs a hug!
 hugbot-start-hug-4 = Target acquired; Initiating hug routine.

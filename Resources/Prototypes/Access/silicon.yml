@@ -1,4 +1,8 @@
-﻿- type: accessLevel
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+- type: accessLevel
   id: Borg
   name: id-card-access-level-borg
   canAddToIdCard: false

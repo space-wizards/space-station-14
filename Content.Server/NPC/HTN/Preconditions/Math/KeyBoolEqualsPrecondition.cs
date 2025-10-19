@@ -1,4 +1,8 @@
-﻿namespace Content.Server.NPC.HTN.Preconditions.Math;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+namespace Content.Server.NPC.HTN.Preconditions.Math;
 
 /// <summary>
 /// Checks if there is a bool value for the specified <see cref="KeyBoolEqualsPrecondition.Key"/>

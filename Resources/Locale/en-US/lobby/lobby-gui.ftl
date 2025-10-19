@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 ui-lobby-title = Lobby: {$serverName}
 ui-lobby-ahelp-button = AHelp
 ui-lobby-options-button = Options

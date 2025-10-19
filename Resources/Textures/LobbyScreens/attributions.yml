@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 - files: ["supermatter.webp", "robotics.webp"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "Veritius#2351 (257233913951289344) on discord / @Veritius on GitHub"

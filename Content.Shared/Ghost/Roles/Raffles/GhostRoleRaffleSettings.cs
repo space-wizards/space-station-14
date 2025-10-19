@@ -1,4 +1,8 @@
-﻿namespace Content.Shared.Ghost.Roles.Raffles;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Ghost.Roles.Raffles;
 
 /// <summary>
 /// Defines settings for a ghost role raffle.

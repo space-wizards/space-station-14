@@ -1,4 +1,8 @@
-﻿### Loc for the pneumatic cannon.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+### Loc for the pneumatic cannon.
 
 pneumatic-cannon-component-itemslot-name = Gas Tank
 

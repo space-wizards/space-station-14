@@ -1,4 +1,8 @@
-﻿using System.Threading;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Preferences.Managers;
 using Robust.Shared.Network;

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 barsign-component-name = bar sign
 barsign-ui-menu = Bar Sign Configuration
 barsign-ui-set-label = Set Sign:

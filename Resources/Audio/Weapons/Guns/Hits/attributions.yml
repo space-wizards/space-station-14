@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 - files: ["bullet_meat1.ogg", "bullet_meat2.ogg", "bullet_meat3.ogg", "bullet_meat4.ogg", "energy_meat1.ogg", "energy_meat2.ogg", "energy_metal1.ogg", "energy_metal2.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Taken from Citadel Station 13. Remixed to mono where it was stereo by metalgearsloth"

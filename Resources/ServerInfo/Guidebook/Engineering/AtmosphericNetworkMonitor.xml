@@ -1,4 +1,10 @@
-﻿<Document>
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<Document>
   # Atmospheric Network Monitor
   The Atmospheric Network Monitor is a computer that shows information on monitored [textlink="pipe networks" link="PipeNetworks"] across the station.
 

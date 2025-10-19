@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 positronic-brain-installed = Neural activity detected.
 positronic-brain-off = No neural activity detected.
 positronic-brain-still-searching = Synthetic neuron descrambling in progress...

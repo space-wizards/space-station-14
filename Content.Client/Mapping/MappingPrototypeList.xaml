@@ -1,4 +1,10 @@
-﻿<mapping:MappingPrototypeList
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<mapping:MappingPrototypeList
     xmlns="https://spacestation14.io"
     xmlns:mapping="clr-namespace:Content.Client.Mapping">
     <BoxContainer Orientation="Vertical">

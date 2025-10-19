@@ -1,4 +1,8 @@
-﻿advertisement-discount-1 = Discount Dan, he's the man!
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+advertisement-discount-1 = Discount Dan, he's the man!
 advertisement-discount-2 = There ain't nothing better in this world than a bite of mystery.
 advertisement-discount-3 = Don't listen to those other machines, buy my product!
 advertisement-discount-4 = Quantity over Quality!

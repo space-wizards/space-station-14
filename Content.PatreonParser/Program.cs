@@ -1,4 +1,8 @@
-﻿using System.Globalization;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Content.PatreonParser;

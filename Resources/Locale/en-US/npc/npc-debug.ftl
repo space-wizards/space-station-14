@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 npc-debug-overlay-window-title = NPC debug
 
 npc-debug-overlay-window-section-npc-label = NPC

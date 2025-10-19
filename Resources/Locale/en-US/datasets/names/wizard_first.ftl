@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 names-wizard-first-dataset-1 = Ashenzari
 names-wizard-first-dataset-2 = Chancellor
 names-wizard-first-dataset-3 = Cleric

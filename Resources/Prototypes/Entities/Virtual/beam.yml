@@ -1,4 +1,8 @@
-﻿# Special entity used to keep track of beams from the BeamComponent and what targets they collided with
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+# Special entity used to keep track of beams from the BeamComponent and what targets they collided with
 - type: entity
   id: VirtualBeamEntityController
   name: BEAM ENTITY YOU SHOULD NOT SEE THIS

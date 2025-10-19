@@ -1,4 +1,10 @@
-﻿<cartridges:CrewManifestUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<cartridges:CrewManifestUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
                                    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                                    xmlns:ui="clr-namespace:Content.Client.CrewManifest.UI"
                                    xmlns="https://spacestation14.io" Margin="1 0 2 0">

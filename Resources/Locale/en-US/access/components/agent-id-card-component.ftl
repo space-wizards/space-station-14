@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 agent-id-new = { $number ->
     [0] Didn't gain any new accesses from {THE($card)}.
     [one] Gained one new access from {THE($card)}.

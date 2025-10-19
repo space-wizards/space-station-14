@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 cmd-setlooc-description = Allows you to enable or disable LOOC.
 cmd-setlooc-help = Usage: setlooc OR setlooc [value]
 cmd-setlooc-looc-enabled = LOOC chat has been enabled.

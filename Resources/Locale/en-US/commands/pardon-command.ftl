@@ -1,4 +1,8 @@
-﻿cmd-pardon-desc = Pardon somebody's ban.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+cmd-pardon-desc = Pardon somebody's ban.
 cmd-pardon-help = Usage: pardon <ban id>
 cmd-pardon-unable-to-parse = Unable to parse {$id} as a ban id integer.
                              {$help}

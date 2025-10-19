@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 ### Locale for wielding items; i.e. two-handing them
 
 wieldable-verb-text-wield = Wield

@@ -1,4 +1,8 @@
-﻿using Content.Server.Worldgen.Prototypes;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Server.Worldgen.Prototypes;
 using Content.Server.Worldgen.Systems.Debris;
 using Content.Server.Worldgen.Tools;
 using Content.Shared.Storage;

@@ -1,4 +1,8 @@
-﻿cmd-jobwhitelist-job-does-not-exist = Job {$job} does not exist.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+cmd-jobwhitelist-job-does-not-exist = Job {$job} does not exist.
 cmd-jobwhitelist-player-not-found = Player {$player} not found.
 cmd-jobwhitelist-hint-player = [player]
 cmd-jobwhitelist-hint-job = [job]

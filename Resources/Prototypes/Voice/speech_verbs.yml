@@ -1,4 +1,8 @@
-﻿- type: speechVerb
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+- type: speechVerb
   id: Default
   name: chat-speech-verb-name-default
   speechVerbStrings:

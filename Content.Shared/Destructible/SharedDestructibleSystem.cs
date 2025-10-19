@@ -1,4 +1,8 @@
-﻿namespace Content.Shared.Destructible;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Destructible;
 
 public abstract class SharedDestructibleSystem : EntitySystem
 {

@@ -1,4 +1,8 @@
-﻿name: "Labels: Review"
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+name: "Labels: Review"
 
 on:
   pull_request_target:

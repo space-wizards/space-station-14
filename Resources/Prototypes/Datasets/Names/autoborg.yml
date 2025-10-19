@@ -1,4 +1,8 @@
-﻿- type: localizedDataset
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+- type: localizedDataset
   id: NamesAutoborg
   values:
     prefix: names-autoborg-dataset-

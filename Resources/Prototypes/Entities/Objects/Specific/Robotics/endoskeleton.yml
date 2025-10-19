@@ -1,4 +1,8 @@
-﻿- type: entity
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+- type: entity
   id: CyborgEndoskeleton
   name: cyborg endoskeleton
   description: A frame that cyborgs are built on. Significantly less spooky than expected.

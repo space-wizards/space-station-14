@@ -1,4 +1,8 @@
-﻿using System.Reflection;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using System.Reflection;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.Markdown.Mapping;

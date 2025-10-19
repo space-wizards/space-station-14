@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 ninja-round-end-agent-name = ninja
 
 objective-issuer-spiderclan = [color=#33cc00]Spider Clan[/color]

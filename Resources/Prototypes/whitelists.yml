@@ -1,4 +1,8 @@
-﻿- type: playerConnectionWhitelist
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+- type: playerConnectionWhitelist
   id: basicWhitelist # Basic whitelist using only the ManualWhitelist condition
   conditions:
     - !type:ConditionManualWhitelistMembership

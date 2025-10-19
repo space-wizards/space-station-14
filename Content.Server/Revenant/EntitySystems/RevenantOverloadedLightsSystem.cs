@@ -1,4 +1,8 @@
-﻿using Content.Server.Beam;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Server.Beam;
 using Content.Shared.Revenant.Components;
 using Content.Shared.Revenant.EntitySystems;
 

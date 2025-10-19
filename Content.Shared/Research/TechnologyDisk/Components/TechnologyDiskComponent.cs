@@ -1,4 +1,8 @@
-﻿using Content.Shared.Random;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Shared.Random;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;

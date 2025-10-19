@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 - files: ["grass.png", "triple_edge.png", "double_edge.png", "single_edge.png"]
   license: "CC-BY-SA-3.0"
   copyright: "tgstation commit 8abb19545828230d92ba18827feeb42a67a55d49. double_edge, single_edge, and triple_edge modified from grass by github user @Flareguy"

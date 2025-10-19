@@ -1,4 +1,8 @@
-﻿construction-presenter-to-craft = To craft this item, you need to:
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+construction-presenter-to-craft = To craft this item, you need to:
 construction-presenter-to-build = To build this, first you need to:
 
 construction-presenter-step-wrapper = {$step-number}. {$text}

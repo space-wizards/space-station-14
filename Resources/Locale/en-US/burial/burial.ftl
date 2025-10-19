@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 grave-start-digging-others = {CAPITALIZE($user)} starts digging {THE($grave)} with {THE($tool)}.
 grave-start-digging-user = You start digging {THE($grave)} with {THE($tool)}.
 grave-start-digging-user-trapped = You start clawing your way out of {THE($grave)}!

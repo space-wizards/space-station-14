@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 advertisement-medibot-1 = What kind of medbay is this? Everyone's dropping like dead flies.
 advertisement-medibot-2 = I knew it, I should've been a plastic surgeon.
 advertisement-medibot-3 = There's always a catch, and I'm the best there is.

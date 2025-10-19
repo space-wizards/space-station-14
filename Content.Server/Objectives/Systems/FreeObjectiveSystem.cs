@@ -1,4 +1,8 @@
-﻿using Content.Server.Objectives.Components;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Server.Objectives.Components;
 using Content.Shared.Objectives.Components;
 
 namespace Content.Server.Objectives.Systems;

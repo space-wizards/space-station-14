@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 traitor-death-match-redemption-component-interact-using-main-message = The machine buzzes, and displays: {$secondMessage}
 traitor-death-match-redemption-component-interact-using-no-mind-message = "AUTHENTICATION FAILED (0045)"
 traitor-death-match-redemption-component-interact-using-no-user-mind-message = "AUTHENTICATION FAILED (0052)"

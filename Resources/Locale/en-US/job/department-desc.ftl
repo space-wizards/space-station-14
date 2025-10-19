@@ -1,4 +1,8 @@
-﻿department-Cargo-description = Complete bounties, earn Spessos, and order useful supplies for the crew.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+department-Cargo-description = Complete bounties, earn Spessos, and order useful supplies for the crew.
 department-Civilian-description = Perform small helpful tasks to keep the station sane and well catered.
 department-Command-description = Manage the crew and keep them working efficiently.
 department-CentralCommand-description = Manage the crew and keep them working efficiently.

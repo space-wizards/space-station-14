@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 job-description-technical-assistant = Learn the basics of managing the station's power, as well as repairing the station's hull.
 job-description-atmostech = Optimize the station's atmospherics setup, and synthesize rare gases to use or sell.
 job-description-bartender = Manage the bar and keep it lively, give out drinks, and listen to the crew's stories.

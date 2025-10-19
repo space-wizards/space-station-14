@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using System.Collections.Generic;
 using System.IO;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Utility;

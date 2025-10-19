@@ -1,4 +1,10 @@
-﻿<pda:PdaProgramItem HorizontalExpand="True" MinHeight="60" Margin="4"
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<pda:PdaProgramItem HorizontalExpand="True" MinHeight="60" Margin="4"
                     xmlns:pda="clr-namespace:Content.Client.PDA"
                     xmlns="https://spacestation14.io">
     <PanelContainer Name="Panel"/>

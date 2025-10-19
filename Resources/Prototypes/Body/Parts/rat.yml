@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # Just copypasta of some animal basic body parts for interaction,
 # It's basically as animals except a different torso with different organs
 - type: entity

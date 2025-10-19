@@ -1,4 +1,8 @@
-﻿using Content.Server.DeviceLinking.Components.Overload;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Server.DeviceLinking.Components.Overload;
 using Robust.Server.Audio;
 using Robust.Shared.Audio;
 using Content.Shared.DeviceLinking.Events;

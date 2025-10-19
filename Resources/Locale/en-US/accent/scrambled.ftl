@@ -1,4 +1,8 @@
-﻿accent-scrambled-words-1 = Who?
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+accent-scrambled-words-1 = Who?
 accent-scrambled-words-2 = What?
 accent-scrambled-words-3 = When?
 accent-scrambled-words-4 = Where?

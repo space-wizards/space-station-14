@@ -1,4 +1,8 @@
-﻿### Loc for the transfer amount eui window
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+### Loc for the transfer amount eui window
 
 ## Title
 

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 analysis-console-menu-title = Broad-Spectrum Mark 3 Analysis Console
 analysis-console-server-list-button = Server
 analysis-console-extract-button = Extract points

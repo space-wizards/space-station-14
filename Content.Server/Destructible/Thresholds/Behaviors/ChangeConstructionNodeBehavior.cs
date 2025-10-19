@@ -1,4 +1,8 @@
-﻿using Content.Server.Construction.Components;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Server.Construction.Components;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
 {

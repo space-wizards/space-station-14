@@ -1,4 +1,8 @@
-﻿# This is the whitelist used for Wizard's Den Salamander
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+# This is the whitelist used for Wizard's Den Salamander
 
 - type: playerConnectionWhitelist
   id: salamanderMrpWhitelist

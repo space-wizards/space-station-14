@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 #TODO: Remove all of these when possible, apparently decals aren't possible to just remove right now without causing mapper issues.
 #Please do not make any of these into the new entity stairs unless you want to make new sprites for them.
 

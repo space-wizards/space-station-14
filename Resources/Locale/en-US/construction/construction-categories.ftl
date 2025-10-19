@@ -1,4 +1,8 @@
-﻿construction-category-all = All
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+construction-category-all = All
 construction-category-furniture = Furniture
 construction-category-storage = Storage
 construction-category-tools = Tools

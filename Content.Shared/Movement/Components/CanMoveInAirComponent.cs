@@ -1,4 +1,8 @@
-﻿using Robust.Shared.GameStates;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.Movement.Components;

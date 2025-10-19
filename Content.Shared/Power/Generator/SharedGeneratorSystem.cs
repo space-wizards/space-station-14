@@ -1,4 +1,8 @@
-﻿namespace Content.Shared.Power.Generator;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Power.Generator;
 
 /// <summary>
 /// This handles small, portable generators that run off a material fuel.

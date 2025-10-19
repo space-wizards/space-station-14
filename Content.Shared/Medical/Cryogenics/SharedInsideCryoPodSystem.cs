@@ -1,4 +1,8 @@
-﻿using Content.Shared.Standing;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Shared.Standing;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.Medical.Cryogenics;

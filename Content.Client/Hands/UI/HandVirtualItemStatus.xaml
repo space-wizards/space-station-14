@@ -1,3 +1,9 @@
-﻿<Control xmlns="https://spacestation14.io">
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<Control xmlns="https://spacestation14.io">
     <Label StyleClasses="ItemStatus" Text="{Loc 'hands-system-blocked-by'}" />
 </Control>

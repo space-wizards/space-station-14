@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # This is a basic list that specifies files for which the prototypes inside of them will be made abstract.
 # This supports all prototype kinds and is intended to allow servers to remove prototypes in a relatively clean way.
 # This method does not break inheritance, but you will still have to remove usages.

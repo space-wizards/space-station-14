@@ -1,4 +1,8 @@
-﻿namespace Content.Server.Power.Generation.Teg;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+namespace Content.Server.Power.Generation.Teg;
 
 /// <summary>
 /// The centerpiece for the thermo-electric generator (TEG).

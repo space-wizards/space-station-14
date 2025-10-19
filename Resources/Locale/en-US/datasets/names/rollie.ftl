@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 names-rollie-dataset-1 = bifta
 names-rollie-dataset-2 = bifter
 names-rollie-dataset-3 = bird

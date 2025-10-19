@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 cmd-weather-desc = Sets the weather for the current map.
 cmd-weather-help = weather <mapId> <prototype / null>
 cmd-weather-hint = Weather prototype

@@ -1,4 +1,10 @@
-﻿<tabs:GraphicsTab xmlns="https://spacestation14.io"
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<tabs:GraphicsTab xmlns="https://spacestation14.io"
           xmlns:tabs="clr-namespace:Content.Client.Options.UI.Tabs"
           xmlns:ui="clr-namespace:Content.Client.Options.UI">
     <BoxContainer Orientation="Vertical">

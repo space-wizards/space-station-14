@@ -1,4 +1,8 @@
-﻿norepinephricacid-effect-eyelids = Your eyelids are rapidly twitching.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+norepinephricacid-effect-eyelids = Your eyelids are rapidly twitching.
 norepinephricacid-effect-eyes-itch = Your eyes feel itchy.
 norepinephricacid-effect-vision-fade = You feel your vision fading.
 norepinephricacid-effect-vision-fail = You can feel your vision failing you.

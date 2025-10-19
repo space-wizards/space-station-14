@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 - files: ["paper_scribble1.ogg", "paper_scribble2.ogg", "paper_scribble3.ogg", "paper_scribble4.ogg", "paper_scribble5.ogg"]
   license: "CC0-1.0"
   copyright: "Originally 'Pen Clicks and Writing on Paper' created by PDaefaul. Cut, spliced and converted by Krunklehorn."

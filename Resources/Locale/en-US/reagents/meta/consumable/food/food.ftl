@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 reagent-name-nutriment = nutriment
 reagent-desc-nutriment = All the vitamins, minerals, and carbohydrates the body needs in pure form.
 

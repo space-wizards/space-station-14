@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 role-type-crew-aligned-name = Crew Aligned
 role-type-solo-antagonist-name = Solo Antagonist
 role-type-team-antagonist-name = Team Antagonist

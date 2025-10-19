@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
 using System.Text.RegularExpressions;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Systems;

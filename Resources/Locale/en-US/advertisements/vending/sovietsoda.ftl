@@ -1,4 +1,8 @@
-﻿advertisement-sovietsoda-1 = For comrade and country.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+advertisement-sovietsoda-1 = For comrade and country.
 advertisement-sovietsoda-2 = Have you fulfilled your nutrition quota today?
 advertisement-sovietsoda-3 = Very nice!
 advertisement-sovietsoda-4 = We are simple people, for this is all we eat.

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 - type: entity
   description: "If you want to get cancer, might as well do it in style."
   id: BaseSmokable

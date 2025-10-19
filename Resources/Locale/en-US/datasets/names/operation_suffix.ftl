@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 names-operation-suffix-dataset-1 = Abyss
 names-operation-suffix-dataset-2 = Action
 names-operation-suffix-dataset-3 = Annihilation

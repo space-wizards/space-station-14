@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 names-ninja-title-dataset-1 = Master
 names-ninja-title-dataset-2 = Sensei
 names-ninja-title-dataset-3 = Swift

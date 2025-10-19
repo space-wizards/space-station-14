@@ -1,4 +1,8 @@
-﻿namespace Content.Shared.Materials;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Materials;
 
 /// <summary>
 /// Valid items that collide with an entity with this component

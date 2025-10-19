@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 carp-rift-warning = A rift is causing an unnaturally large energy flux {$location}. Stop it at all costs!
 carp-rift-duplicate = Cannot have 2 charging rifts at the same time!
 carp-rift-examine = It is [color=yellow]{$percentage}%[/color] charged!

@@ -1,4 +1,10 @@
-﻿<Document>
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<Document>
   # Fire and Gas Control
   Unfortunately, [textlink="fires" link="Fires"], [textlink="spacing" link="Spacing"], and other [textlink="atmospheric upsets" link="AtmosphericUpsets"] are a common occurrence on the station.
   These upsets can quickly spread throughout the station and make the atmosphere uninhabitable for the crew.

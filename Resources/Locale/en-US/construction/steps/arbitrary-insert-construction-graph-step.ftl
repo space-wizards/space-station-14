@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # Shown when examining an in-construction object
 construction-insert-arbitrary-entity = Next, insert {$stepName}.
 

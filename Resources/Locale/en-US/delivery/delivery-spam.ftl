@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # All spelling mistakes and broken english are intentional!
 # I hate saving paper contents in ftl files
 

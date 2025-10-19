@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 marking-VoxHairAfro = Vox Afro
 marking-VoxHairBraids = Vox Braids
 marking-VoxHairCrestedQuills = Vox Crested Quills

@@ -1,4 +1,8 @@
-﻿comp-gas-thermomachine-ui-title-freezer = Freezer
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+comp-gas-thermomachine-ui-title-freezer = Freezer
 comp-gas-thermomachine-ui-title-heater = Heater
 
 comp-gas-thermomachine-ui-temperature = Temperature (K):

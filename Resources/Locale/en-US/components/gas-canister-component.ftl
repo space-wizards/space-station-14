@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 comp-gas-canister-ui-canister-status = Canister Status
 comp-gas-canister-ui-canister-relabel = Relabel
 comp-gas-canister-ui-canister-pressure = Canister Pressure:

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 comp-gas-pump-ui-pump-status = Status:
 comp-gas-pump-ui-status-enabled = On
 comp-gas-pump-ui-status-disabled = Off

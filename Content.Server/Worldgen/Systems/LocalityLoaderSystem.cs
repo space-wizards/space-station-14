@@ -1,4 +1,8 @@
-﻿using Content.Server.Worldgen.Components;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Server.Worldgen.Components;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Worldgen.Systems;

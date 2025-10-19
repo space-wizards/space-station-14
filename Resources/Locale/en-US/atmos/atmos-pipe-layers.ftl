@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 atmos-pipe-layers-component-layer-primary = primary 
 atmos-pipe-layers-component-layer-secondary = secondary
 atmos-pipe-layers-component-layer-tertiary = tertiary

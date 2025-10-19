@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 names-revenant-adjective-dataset-1 = abysmal
 names-revenant-adjective-dataset-2 = abyssal
 names-revenant-adjective-dataset-3 = brutal

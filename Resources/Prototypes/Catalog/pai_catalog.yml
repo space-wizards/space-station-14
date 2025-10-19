@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # Some things might seem like great ideas on paper for pAI apps, but have deliberately been excluded.
 # e.g. Monitoring (Power/Atmos/Crew), Cameras, etc. are excluded as apps for performance and balance reasons.
 # Generally speaking, if you're adding an application, it needs to *not* be round-impacting.

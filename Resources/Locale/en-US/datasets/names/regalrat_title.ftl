@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 names-regal-rat-title-dataset-1 = King
 names-regal-rat-title-dataset-2 = Lord
 names-regal-rat-title-dataset-3 = Prince

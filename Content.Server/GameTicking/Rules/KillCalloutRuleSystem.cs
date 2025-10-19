@@ -1,4 +1,8 @@
-﻿using Content.Server.Chat.Managers;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.KillTracking;
 using Content.Shared.Chat;

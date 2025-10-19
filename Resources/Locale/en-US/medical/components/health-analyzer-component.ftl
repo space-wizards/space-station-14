@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 health-analyzer-window-no-patient-data-text = No patient data.
 health-analyzer-window-entity-unknown-text = Unknown
 health-analyzer-window-entity-unknown-species-text = Non-Humanoid

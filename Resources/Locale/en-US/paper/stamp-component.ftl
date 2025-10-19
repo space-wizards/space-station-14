@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 stamp-component-stamped-name-default = A very important person
 stamp-component-stamped-name-detective = Detective
 stamp-component-stamped-name-mime = Mime

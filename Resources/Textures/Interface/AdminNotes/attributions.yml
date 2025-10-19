@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 - files: ["none_button.png", "minor_button.png", "medium_button.png", "high_button.png"]
   license: "CC-BY-SA-3.0"
   copyright: "CitrusGender"

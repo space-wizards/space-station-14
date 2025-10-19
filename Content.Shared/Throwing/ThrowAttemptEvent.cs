@@ -1,4 +1,8 @@
-﻿namespace Content.Shared.Throwing
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Throwing
 {
     public sealed class ThrowAttemptEvent : CancellableEntityEventArgs
     {

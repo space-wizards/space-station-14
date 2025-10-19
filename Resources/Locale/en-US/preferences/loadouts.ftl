@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # Name
 loadout-name-edit-label = Sets a custom name to be used if you play this role. If empty, your character's name will be used instead.
 loadout-name-edit-label-dataset = Sets a custom name to be used if you play this role. If empty, a random name will be selected instead.

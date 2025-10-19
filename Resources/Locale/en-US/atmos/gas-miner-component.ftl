@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 gas-miner-mines-text = It mines [color=lightgray]{$gas}[/color] when active.
 
 gas-miner-amount-text = It mines {$moles} moles of gas a second when active.

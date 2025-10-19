@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 marking-ScarEyeRight-scar_eye_right = Right Eye Scar
 marking-ScarEyeRight = Eye Scar (Right)
 

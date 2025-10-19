@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 death-match-title = DeathMatch
 death-match-description = Kill anything that moves! Normal roleplay need not apply. The first to 31 points wins!
 

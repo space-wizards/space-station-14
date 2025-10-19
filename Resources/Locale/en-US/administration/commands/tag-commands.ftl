@@ -1,4 +1,8 @@
-﻿addtag-command-description = Adds a tag to a given entity
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+addtag-command-description = Adds a tag to a given entity
 addtag-command-help = Usage: addtag <entity uid> <tag>
 
 addtag-command-success = Added {$tag} to {$target}.

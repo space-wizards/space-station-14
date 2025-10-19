@@ -1,4 +1,10 @@
-﻿<Document>
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<Document>
   # Core Rule 14 - Do not use LOOC or OOC to share current round information
   Local Out of Character (LOOC) and Out of Character (OOC) channel are meant for things that don't relate to the current round. Using these channels to share round info is often referred to as "IC in OOC" or "ick ock".
 

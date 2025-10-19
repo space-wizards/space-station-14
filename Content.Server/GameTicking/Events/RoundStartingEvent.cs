@@ -1,4 +1,8 @@
-﻿namespace Content.Server.GameTicking.Events;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+namespace Content.Server.GameTicking.Events;
 
 /// <summary>
 ///     Raised at the start of <see cref="GameTicker.StartRound"/>, after round id has been incremented

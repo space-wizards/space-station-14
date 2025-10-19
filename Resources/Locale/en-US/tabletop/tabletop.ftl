@@ -1,4 +1,8 @@
-﻿## TabletopGameComponent
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+## TabletopGameComponent
 tabletop-verb-play-game = Play Game
 tabletop-verb-dump-pieces = Dump Pieces
 tabletop-default-board-name = Board Game

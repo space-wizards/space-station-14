@@ -1,4 +1,8 @@
-﻿// There isn't really a 'default place' to put these,
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+// There isn't really a 'default place' to put these,
 // so a file in the project top level directory it is
 
 global using System;

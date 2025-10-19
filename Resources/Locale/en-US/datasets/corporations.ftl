@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 traitor-corporations-dataset-1 = CyberSun Industries
 traitor-corporations-dataset-2 = Gorlex Marauders
 traitor-corporations-dataset-3 = MI13

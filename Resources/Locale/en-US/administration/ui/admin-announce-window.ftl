@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 admin-announce-title = Make Announcement
 admin-announce-announcement-placeholder = Announcement text...
 admin-announce-announcer-placeholder = Announcer

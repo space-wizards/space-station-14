@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 names-clown-dataset-1 = Gigglesworth
 names-clown-dataset-2 = Honkel the III
 names-clown-dataset-3 = Goose McSunny

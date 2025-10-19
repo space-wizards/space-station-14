@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 salvage-system-announcement-losing = The magnet is no longer able to hold the salvagable debris. Estimated time until loss: {$timeLeft} seconds.
 salvage-system-announcement-spawn-debris-disintegrated = Debris disintegrated during orbital transfer.
 salvage-system-announcement-spawn-no-debris-available = No debris could be recovered by the salvage magnet.

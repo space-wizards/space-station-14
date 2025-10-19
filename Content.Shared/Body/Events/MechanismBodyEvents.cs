@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
 namespace Content.Shared.Body.Events;
 
 // All of these events are raised on a mechanism entity when added/removed to a body in different

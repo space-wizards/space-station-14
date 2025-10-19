@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 - files: ["dog_bark1.ogg"]
   license: "CC0-1.0"
   copyright: "Original sound by https://freesound.org/people/abhisheky948/sounds/625497/"

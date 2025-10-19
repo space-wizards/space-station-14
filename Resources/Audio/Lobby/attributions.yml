@@ -1,4 +1,8 @@
-﻿- files: ["thunderdome.ogg"]
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+- files: ["thunderdome.ogg"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "-Sector11 by MashedByMachines. Converted from MP3 to OGG."
   source: "https://www.newgrounds.com/audio/listen/312622"

@@ -1,4 +1,8 @@
-﻿using Robust.Server.Containers;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Robust.Server.Containers;
 
 namespace Content.Server.NPC.HTN.Preconditions;
 

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 cmd-adduplink-desc = Creates uplink on selected item and link it to users account
 cmd-adduplink-help = Usage: adduplink [username] [item-id] [discountEnabled]
 

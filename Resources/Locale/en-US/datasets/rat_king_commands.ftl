@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 rat-king-command-stay-1 = Sit!
 rat-king-command-stay-2 = Stay!
 rat-king-command-stay-3 = Stop!

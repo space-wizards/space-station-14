@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Cargo.Systems;
 using Content.Shared.Stacks;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;

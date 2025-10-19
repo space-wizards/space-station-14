@@ -1,4 +1,8 @@
-﻿# Accents that work off of full replacements rather than word replacements.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+# Accents that work off of full replacements rather than word replacements.
 
 - type: accent
   id: cat

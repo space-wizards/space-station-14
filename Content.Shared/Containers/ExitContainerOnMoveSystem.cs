@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Movement.Events;
 using Robust.Shared.Containers;

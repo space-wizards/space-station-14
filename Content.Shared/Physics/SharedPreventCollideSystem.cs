@@ -1,4 +1,8 @@
-﻿using Robust.Shared.Physics.Events;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Robust.Shared.Physics.Events;
 
 namespace Content.Shared.Physics;
 

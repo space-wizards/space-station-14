@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 hand-labeler-ui-header = Hand Labeler
 
 # The content of the label in the UI above the text entry input.

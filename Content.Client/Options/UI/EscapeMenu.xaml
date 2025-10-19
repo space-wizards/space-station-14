@@ -1,4 +1,10 @@
-﻿<ui1:EscapeMenu xmlns="https://spacestation14.io"
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<ui1:EscapeMenu xmlns="https://spacestation14.io"
             xmlns:changelog="clr-namespace:Content.Client.Changelog"
             xmlns:ui="clr-namespace:Content.Client.Voting.UI"
             xmlns:ui1="clr-namespace:Content.Client.Options.UI"

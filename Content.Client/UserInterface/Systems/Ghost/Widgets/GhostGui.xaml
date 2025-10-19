@@ -1,4 +1,10 @@
-﻿<widgets:GhostGui xmlns="https://spacestation14.io"
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<widgets:GhostGui xmlns="https://spacestation14.io"
                   xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Ghost.Widgets"
                   HorizontalAlignment="Center">
     <BoxContainer Orientation="Horizontal">

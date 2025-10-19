@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 names-fake-human-last-dataset-1 = Al
 names-fake-human-last-dataset-2 = Anatoli
 names-fake-human-last-dataset-3 = Archideld

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # This should probably use the same prefix system as the mobster accent.
 # For the record, these do not work right now - even when uncommented.
 

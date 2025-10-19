@@ -1,4 +1,8 @@
-﻿# Be careful with these as they get removed on shutdown too!
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+# Be careful with these as they get removed on shutdown too!
 - type: entity
   id: AiHeld
   description: Components added / removed from an entity that gets inserted into an AI core.

@@ -1,4 +1,8 @@
-﻿using Content.Server.GameTicking.Rules.VariationPass.Components;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Server.GameTicking.Rules.VariationPass.Components;
 using Content.Shared.Storage;
 using Robust.Shared.Map;
 using Robust.Shared.Random;

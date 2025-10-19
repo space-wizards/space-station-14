@@ -1,4 +1,8 @@
-﻿advertisement-nutrimax-1 = We like plants!
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+advertisement-nutrimax-1 = We like plants!
 advertisement-nutrimax-2 = Don't you want some?
 advertisement-nutrimax-3 = The greenest thumbs ever.
 advertisement-nutrimax-4 = We like big plants.

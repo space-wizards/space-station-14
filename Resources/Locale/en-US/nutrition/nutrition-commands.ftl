@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 cmd-nutrition-error-player = You cannot use this command unless you are a player.
 cmd-nutrition-error-entity = You cannot use this command without an entity.
 cmd-nutrition-error-component = Your entity does not have a {$comp} component.

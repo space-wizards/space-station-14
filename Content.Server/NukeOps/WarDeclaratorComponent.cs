@@ -1,4 +1,8 @@
-﻿using Content.Server.GameTicking.Rules;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Server.GameTicking.Rules;
 using Content.Shared.NukeOps;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;

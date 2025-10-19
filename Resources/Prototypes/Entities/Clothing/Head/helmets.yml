@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 #These are intentionally all very mediocre as locational damage does not exist yet. Without it, armor values will stack in a way that makes it really god damn hard to determine how effective something is, along with making players extremely tanky.
 #When it DOES exist, the values here should be totally reworked - probably just port them from SS13.
 

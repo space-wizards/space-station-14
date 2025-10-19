@@ -1,4 +1,8 @@
-﻿using Content.Shared.Storage.Components;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Shared.Storage.Components;
 using Content.Shared.Storage.Events;
 
 namespace Content.Shared.Storage.EntitySystems;

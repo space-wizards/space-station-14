@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 ## Entity
 
 seed-component-description = It looks like you can grow [color=yellow]{$seedName}[/color] from these.

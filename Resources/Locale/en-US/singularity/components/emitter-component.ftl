@@ -1,4 +1,8 @@
-﻿### EmitterComponent
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+### EmitterComponent
 
 # Shows when attempting to turn the emitter on or off without proper access
 comp-emitter-access-locked = The {$target} is access locked!

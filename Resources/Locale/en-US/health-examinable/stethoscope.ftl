@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 stethoscope-verb = Listen with stethoscope
 
 stethoscope-nothing = You don't hear anything.

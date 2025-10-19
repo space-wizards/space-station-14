@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 wires-panel-component-on-examine-open = The [color=lightgray]maintenance panel[/color] is [color=red]open[/color].
 wires-panel-component-on-examine-closed = The [color=lightgray]maintenance panel[/color] is [color=darkgreen]closed[/color].
 

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 cmd-planet-desc = Converts the supplied map into a planet with some specific biome.
 cmd-planet-help = {$command} <mapid> <biome>.
 cmd-planet-args = Requires 2 args only.

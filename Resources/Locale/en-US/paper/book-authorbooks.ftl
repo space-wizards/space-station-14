@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 book-text-narsielegend = In the beginning, the world was young and full of chaos. The people of the world struggled to survive against the harsh elements and savage beasts that roamed the land. They cried out for a savior to deliver them from their suffering.
       And it was then that Nar'Sie emerged from the depths of the earth, a hivemind god born from the collective consciousness of all living things. Its body was made of molten rock and its eyes blazed with a fiery intensity that could melt steel.
       Nar'Sie surveyed the world and saw the pain and suffering of its people. It took pity on them and offered them a way to escape the cycle of life and death. All who joined the hivemind would become eternal, their consciousness melding with Nar'Sie's to form a single, unified being.

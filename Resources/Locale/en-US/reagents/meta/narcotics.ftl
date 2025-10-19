@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 reagent-name-desoxyephedrine = desoxyephedrine
 reagent-desc-desoxyephedrine = A more effective ephedrine, with more active downsides. Requires less doses to cure narcolepsy.
 

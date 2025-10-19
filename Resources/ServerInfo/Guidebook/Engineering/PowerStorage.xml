@@ -1,4 +1,10 @@
-﻿<Document>
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<Document>
   # Power Storage
   Because of [textlink="Power Ramping" link="Ramping"], it is important to have power storage devices to help flatten out spikes and dips in power usage, as well as to provide power in the event of a power deficit.
 

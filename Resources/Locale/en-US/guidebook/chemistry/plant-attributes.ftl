@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 plant-attribute-growth = age
 plant-attribute-water = water level
 plant-attribute-potency = potency

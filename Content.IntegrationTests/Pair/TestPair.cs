@@ -1,4 +1,8 @@
-﻿#nullable enable
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+#nullable enable
 using System.Collections.Generic;
 using Content.Client.IoC;
 using Content.Client.Parallax.Managers;

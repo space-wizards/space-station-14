@@ -1,4 +1,10 @@
-﻿<Document>
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<Document>
   # Radiators
   Radiators are a device that enables the exchange of heat energy between a [textlink="pipenet" link="PipeNetworks"] and the environment.
 

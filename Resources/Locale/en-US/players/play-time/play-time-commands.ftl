@@ -1,4 +1,8 @@
-﻿parse-minutes-fail = Unable to parse '{$minutes}' as minutes
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+parse-minutes-fail = Unable to parse '{$minutes}' as minutes
 parse-session-fail = Did not find session for '{$username}'
 
 ## Role Timer Commands

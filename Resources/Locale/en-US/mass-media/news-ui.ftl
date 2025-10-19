@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 news-read-ui-next-text = ▶
 news-read-ui-prev-text = ◀
 news-read-ui-next-tooltip = Next

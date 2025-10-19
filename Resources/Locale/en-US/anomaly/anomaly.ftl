@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 anomaly-component-contact-damage = The anomaly sears off your skin!
 
 anomaly-vessel-component-anomaly-assigned = Anomaly assigned to vessel.

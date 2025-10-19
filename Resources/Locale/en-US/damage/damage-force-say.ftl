@@ -1,4 +1,8 @@
-﻿damage-force-say-message-wrap = {$message}-{$suffix}
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+damage-force-say-message-wrap = {$message}-{$suffix}
 damage-force-say-message-wrap-no-suffix = {$message}-
 
 damage-force-say-1 = GACK!

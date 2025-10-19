@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 station-map-window-title = Station map
 station-map-user-interface-flavor-left = Don't panic
 station-map-user-interface-flavor-right = v1.42

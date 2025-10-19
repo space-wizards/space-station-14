@@ -1,4 +1,10 @@
-﻿<Control xmlns="https://spacestation14.io"
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<Control xmlns="https://spacestation14.io"
          xmlns:parallax="clr-namespace:Content.Client.Parallax"
          xmlns:info="clr-namespace:Content.Client.Info"
          VerticalExpand="True" HorizontalExpand="True"

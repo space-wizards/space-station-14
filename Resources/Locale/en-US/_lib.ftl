@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 ### Special messages used by internal localizer stuff.
 
 # Used internally by the PRESSURE() function.

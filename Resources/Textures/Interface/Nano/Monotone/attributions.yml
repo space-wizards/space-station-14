@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 - files: ["monotone_button.svg.96dpi.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Modified from slider_outline.svg.96dpi.png by chromiumboy"

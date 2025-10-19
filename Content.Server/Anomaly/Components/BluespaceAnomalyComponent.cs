@@ -1,4 +1,8 @@
-﻿using Content.Server.Anomaly.Effects;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Server.Anomaly.Effects;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Anomaly.Components;

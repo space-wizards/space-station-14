@@ -1,4 +1,8 @@
-﻿decal-placer-window-title = Decal Placer
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+decal-placer-window-title = Decal Placer
 decal-placer-window-use-color = Custom Color
 decal-placer-window-rotation = Rotation
 decal-placer-window-zindex = Draw Depth

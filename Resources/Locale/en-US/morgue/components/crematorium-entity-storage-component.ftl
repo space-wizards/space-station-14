@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 crematorium-entity-storage-component-on-examine-details-is-burning = The {$owner} is [color=red]active[/color]!
 crematorium-entity-storage-component-on-examine-details-has-contents =  The content light is [color=green]on[/color], there's something in here.
 crematorium-entity-storage-component-on-examine-details-empty = The content light is off, there's nothing in here.

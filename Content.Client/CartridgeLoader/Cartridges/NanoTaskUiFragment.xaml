@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
 <cartridges:NanoTaskUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
                                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                                xmlns="https://spacestation14.io" Margin="1 0 2 0">

@@ -1,4 +1,8 @@
-﻿using NetCord.Logging;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using NetCord.Logging;
 using NLogLevel = NetCord.Logging.LogLevel;
 using LogLevel = Robust.Shared.Log.LogLevel;
 

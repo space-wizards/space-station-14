@@ -1,4 +1,8 @@
-﻿cmd-nodevis-desc = Toggles node group visualization.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+cmd-nodevis-desc = Toggles node group visualization.
 cmd-nodevis-help = Usage: nodevis
 
 cmd-nodevisfilter-desc = Toggles showing a specific group on nodevis.

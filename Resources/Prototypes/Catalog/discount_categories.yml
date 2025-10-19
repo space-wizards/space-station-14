@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 - type: discountCategory
   id: rareDiscounts # Dirty-cheap items that are rarely used and can be discounted to 0-ish cost to encourage usage.
   weight: 18

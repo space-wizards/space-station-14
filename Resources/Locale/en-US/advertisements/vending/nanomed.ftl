@@ -1,4 +1,8 @@
-﻿advertisement-nanomed-1 = Go save some lives!
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+advertisement-nanomed-1 = Go save some lives!
 advertisement-nanomed-2 = The best stuff for your medbay.
 advertisement-nanomed-3 = Only the finest tools.
 advertisement-nanomed-4 = Natural chemicals!

@@ -1,4 +1,10 @@
-﻿<DefaultWindow Title="{Loc make-ghost-roles-window-title}"
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<DefaultWindow Title="{Loc make-ghost-roles-window-title}"
             xmlns="https://spacestation14.io">
 
     <BoxContainer Orientation="Vertical">

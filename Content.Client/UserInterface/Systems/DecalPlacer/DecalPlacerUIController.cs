@@ -1,4 +1,8 @@
-﻿using Content.Client.Decals.UI;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Client.Decals.UI;
 using Content.Client.Gameplay;
 using Content.Client.Sandbox;
 using Content.Shared.Decals;

@@ -1,4 +1,8 @@
-﻿bounty-console-menu-title = Cargo bounty console
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+bounty-console-menu-title = Cargo bounty console
 bounty-console-label-button-text = Print label
 bounty-console-skip-button-text = Skip
 bounty-console-time-label = Time: [color=orange]{$time}[/color]

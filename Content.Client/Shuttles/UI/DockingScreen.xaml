@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
 <controls:BoxContainer Visible="False"
                HorizontalExpand="True"
                xmlns:controls="https://spacestation14.io"

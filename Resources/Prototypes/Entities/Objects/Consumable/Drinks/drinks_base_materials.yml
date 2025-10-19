@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 ## Material costs to apply to a drink
 # These bases should always be the parented before DrinkBase, or before a prototype inheriting DrinkBase.
 # - That way they override any previously inherited material, and material specific sounds aren't overridden by BaseItem.

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 particle-accelerator-control-menu-on-button = On
 particle-accelerator-control-menu-off-button = Off
 particle-accelerator-control-menu-service-manual-reference = Refer to p.132 of service manual

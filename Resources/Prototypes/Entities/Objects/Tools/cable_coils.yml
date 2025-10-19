@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # If you're looking at the rsi for this file, you'll probably be confused why
 # I didn't just use an alpha for most of this stuff. Well icons don't have the
 # ability to have applied colors yet in GUIs. And also inhands... -Swept

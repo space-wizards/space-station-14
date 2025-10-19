@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 metabolism-group-poison = Poison
 metabolism-group-medicine = Medicine
 metabolism-group-narcotic = Narcotic

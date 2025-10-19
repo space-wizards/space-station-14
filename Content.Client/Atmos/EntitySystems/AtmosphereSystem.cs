@@ -1,4 +1,8 @@
-﻿using Content.Client.Atmos.Components;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Client.Atmos.Components;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Robust.Shared.GameStates;

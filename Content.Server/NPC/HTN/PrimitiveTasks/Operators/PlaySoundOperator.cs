@@ -1,4 +1,8 @@
-﻿using Robust.Server.Audio;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Robust.Server.Audio;
 using Robust.Shared.Audio;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;

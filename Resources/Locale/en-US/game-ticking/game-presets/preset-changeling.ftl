@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 changeling-role-greeting =
     You are a Changeling, a highly intelligent predator.
     Your primary goal is to escape the station alive via assuming the identities of the denizens of this station.

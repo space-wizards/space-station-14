@@ -1,4 +1,10 @@
-﻿<Document>
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<Document>
   # Wire Panels
   Some station devices like airlocks, vending machines, and arcade consoles have wire panels, which control certain aspects of their functionality.
 

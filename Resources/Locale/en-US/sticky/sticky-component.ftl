@@ -1,4 +1,8 @@
-﻿# Bomb planting strings
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+# Bomb planting strings
 
 comp-sticky-start-stick-bomb = You start planting the bomb...
 comp-sticky-success-stick-bomb = You planted the bomb

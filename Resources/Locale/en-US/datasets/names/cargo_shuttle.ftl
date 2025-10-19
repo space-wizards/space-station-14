@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 names-cargo-shuttle-dataset-1 = A Shuttle Will Not Occur
 names-cargo-shuttle-dataset-2 = Big Money Shuttle
 names-cargo-shuttle-dataset-3 = Engine Change

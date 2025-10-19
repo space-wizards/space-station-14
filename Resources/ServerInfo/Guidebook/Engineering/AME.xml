@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
 <Document>
   # Antimatter Engine (AME)
   The Antimatter Engine is a short-term support generator for the station, providing a sizable chunk of power for a limited time.

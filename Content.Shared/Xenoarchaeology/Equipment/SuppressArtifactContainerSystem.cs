@@ -1,4 +1,8 @@
-﻿using Content.Shared.Xenoarchaeology.Artifact;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Equipment.Components;
 using Robust.Shared.Containers;

@@ -1,4 +1,8 @@
-﻿using Content.Client.Eui;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Client.Eui;
 
 namespace Content.Client.Revolutionary.UI;
 

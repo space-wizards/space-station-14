@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # When an admin adds a game rule
 add-gamerule-admin = Game rule({$rule}) added - {$admin}
 list-gamerule-admin-header = | Time       | Rule added

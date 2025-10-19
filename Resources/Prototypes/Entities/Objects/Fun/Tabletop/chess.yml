@@ -1,4 +1,8 @@
-﻿# Chessboard item (normal in game item you can hold in your hand)
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+# Chessboard item (normal in game item you can hold in your hand)
 - type: entity
   parent: BaseBoardEntity
   id: ChessBoard

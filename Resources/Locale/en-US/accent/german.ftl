@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 accent-german-words-1 = yes
 accent-german-words-1-2 = yea
 accent-german-words-replace-1 = ja

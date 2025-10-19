@@ -1,3 +1,7 @@
-﻿#this is just a copy of hammer.svg, but scaled and adjusted slightly so that it can be used as a right-click context menu icon.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+#this is just a copy of hammer.svg, but scaled and adjusted slightly so that it can be used as a right-click context menu icon.
 sample:
   filter: true

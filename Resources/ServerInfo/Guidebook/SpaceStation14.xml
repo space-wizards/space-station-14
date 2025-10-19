@@ -1,4 +1,10 @@
-﻿<Document>
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<Document>
 # Station and Shifts
 
 Every round of SS14 is a [bold]self-contained shift[/bold] that takes place on one of many different stations.

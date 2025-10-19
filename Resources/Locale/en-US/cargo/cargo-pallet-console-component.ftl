@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
 
 # Cargo pallet sale console
 cargo-pallet-console-menu-title = Cargo sale console

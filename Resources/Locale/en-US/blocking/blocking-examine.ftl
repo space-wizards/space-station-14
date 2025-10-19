@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # Blocking examines
 blocking-examinable-verb-text = Protection
 blocking-examinable-verb-message = Examine the protection values.

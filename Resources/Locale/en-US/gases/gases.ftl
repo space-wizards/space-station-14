@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 gases-oxygen = Oxygen
 gases-nitrogen = Nitrogen
 gases-co2 = Carbon Dioxide

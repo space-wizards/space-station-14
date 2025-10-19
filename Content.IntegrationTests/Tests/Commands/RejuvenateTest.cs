@@ -1,4 +1,8 @@
-﻿using Content.Server.Administration.Commands;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Server.Administration.Commands;
 using Content.Server.Administration.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;

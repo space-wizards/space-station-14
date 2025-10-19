@@ -1,3 +1,7 @@
-﻿cmd-showrules-desc = Opens the rules popup for the specified player.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+cmd-showrules-desc = Opens the rules popup for the specified player.
 cmd-showrules-help = Usage: showrules <username> [seconds]
 cmd-showrules-invalid-seconds = {$seconds} is not a valid number of seconds!

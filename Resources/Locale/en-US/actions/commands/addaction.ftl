@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # addaction
 cmd-addaction-desc = Adds an action to the target entity. The action will not work if the target requires an additional component on their entity (such as Dragon's Devour).
 cmd-addaction-help = addaction <EntityUid> <ActionPrototype>

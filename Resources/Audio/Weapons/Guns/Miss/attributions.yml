@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 - files: ["bullet_miss1.ogg", "bullet_miss2.ogg", "bullet_miss3.ogg", "bullet_miss4.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Taken from CM-SS13"

@@ -1,4 +1,8 @@
-﻿using System;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Content.Server.Database.Migrations.Sqlite

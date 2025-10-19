@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # Shown when greeted with the Suspicion role
 suspicion-role-greeting = You're a {$roleName}!
 

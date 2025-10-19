@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 figurines-hop-1 = Papers, please.
 figurines-hop-2 = You are fired.
 figurines-hop-3 = BRB.

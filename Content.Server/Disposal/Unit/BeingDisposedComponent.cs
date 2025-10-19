@@ -1,4 +1,8 @@
-﻿namespace Content.Server.Disposal.Unit;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+namespace Content.Server.Disposal.Unit;
 
 /// <summary>
 ///     A component added to entities that are currently in disposals.

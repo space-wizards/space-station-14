@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 job-name-warden = Warden
 job-name-security = Security Officer
 job-name-cadet = Security Cadet

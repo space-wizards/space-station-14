@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 criminal-records-console-window-title = Criminal Records Computer
 criminal-records-console-records-list-title = Crewmembers
 criminal-records-console-select-record-info = Select a record.

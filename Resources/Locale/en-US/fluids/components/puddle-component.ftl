@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 puddle-component-examine-is-slippery-text = It looks [color=#169C9C]slippery[/color].
 puddle-component-examine-evaporating = It is [color=#5E7C16]evaporating[/color].
 puddle-component-examine-evaporating-partial = It is [color=#FED83D]partially evaporating[/color].

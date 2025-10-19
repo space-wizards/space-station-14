@@ -1,4 +1,10 @@
-﻿<Document>
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<Document>
 # Pumps
   Pumps are the primary way of actively moving gasses through a [textlink="pipenet." link="PipeNetworks"]
   They take gas from one side and push it to the other.

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 action-name-internals-toggle-on = Toggle Internals On
 action-description-internals-toggle-on = Breathe from the equipped gas tank. Also requires equipped breath mask.
 action-name-internals-toggle-off = Toggle Internals Off

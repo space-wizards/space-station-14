@@ -1,4 +1,10 @@
-﻿<component name="ProjectRunConfigurationManager">
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Content Server+Client" type="CompoundRunConfigurationType">
     <toRun name="Content.Client" type="DotNetProject" />
     <toRun name="Content.Server" type="DotNetProject" />

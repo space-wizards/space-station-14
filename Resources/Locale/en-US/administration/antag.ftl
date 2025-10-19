@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 verb-categories-antag = Antag ctrl
 admin-verb-make-traitor = Make the target into a traitor.
 admin-verb-make-initial-infected = Make the target into an Initial Infected.

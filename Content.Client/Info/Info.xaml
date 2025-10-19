@@ -1,4 +1,10 @@
-﻿<ScrollContainer xmlns="https://spacestation14.io"
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<ScrollContainer xmlns="https://spacestation14.io"
                  HScrollEnabled="False"
                  HorizontalExpand="True"
                  VerticalExpand="True">

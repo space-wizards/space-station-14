@@ -1,4 +1,10 @@
-﻿<widgets:HotbarGui
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<widgets:HotbarGui
     xmlns="https://spacestation14.io"
     xmlns:inventory="clr-namespace:Content.Client.UserInterface.Systems.Inventory.Controls"
     xmlns:hands="clr-namespace:Content.Client.UserInterface.Systems.Hands.Controls"

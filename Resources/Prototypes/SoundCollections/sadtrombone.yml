@@ -1,4 +1,8 @@
-﻿- type: soundCollection
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+- type: soundCollection
   id: SadTrombone
   files:
     - /Audio/Effects/sadtrombone.ogg

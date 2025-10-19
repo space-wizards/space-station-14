@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 lobby-character-preview-panel-header = Character
 lobby-character-preview-panel-character-setup-button = Customize
 lobby-character-preview-panel-unloaded-preferences-label = Your character preferences have not yet loaded, please stand by.

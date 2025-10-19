@@ -1,4 +1,8 @@
-﻿changecvar-simple-debug_test_cvar = Does nothing.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+changecvar-simple-debug_test_cvar = Does nothing.
 changecvar-full-debug_test_cvar = Just a simple testing cvar. Does nothing.
 
 changecvar-simple-events_enabled = Controls if the game should run station events.

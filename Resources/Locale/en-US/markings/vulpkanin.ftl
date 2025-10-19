@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # Ears
 marking-VulpEar-vulp = Vulpkanin ears (Base)
 marking-VulpEar-vulp-inner = Vulpkanin ears (Inner)

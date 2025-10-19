@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 names-vulpkanin-female-dataset-1 = Adrianna
 names-vulpkanin-female-dataset-2 = Agatha
 names-vulpkanin-female-dataset-3 = Agneza

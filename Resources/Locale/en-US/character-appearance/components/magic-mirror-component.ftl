@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 magic-mirror-component-activate-user-has-no-hair = You can't have any hair!
 
 magic-mirror-window-title = Magic Mirror

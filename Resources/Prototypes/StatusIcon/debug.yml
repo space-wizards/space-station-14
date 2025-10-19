@@ -1,4 +1,8 @@
-﻿- type: debugIcon
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+- type: debugIcon
   id: DebugStatus
   icon:
     sprite: /Textures/Interface/Misc/research_disciplines.rsi

@@ -1,4 +1,8 @@
-﻿comp-space-heater-ui-title = Temperature Control Unit
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+comp-space-heater-ui-title = Temperature Control Unit
 comp-space-heater-ui-thermostat = Thermostat:
 comp-space-heater-ui-mode = Mode
 comp-space-heater-ui-status-disabled = Off

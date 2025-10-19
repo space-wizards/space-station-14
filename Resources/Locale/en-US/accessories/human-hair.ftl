@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 marking-HumanHairAfro = Afro
 marking-HumanHairAfro2 = Afro 2
 marking-HumanHairBigafro = Afro (Large)

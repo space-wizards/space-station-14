@@ -1,4 +1,8 @@
-﻿cmd-showaccessreaders-desc = Toggles showing access reader permissions on the map
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+cmd-showaccessreaders-desc = Toggles showing access reader permissions on the map
 cmd-showaccessreaders-help =
     Overlay Info:
     -Disabled | The access reader is disabled

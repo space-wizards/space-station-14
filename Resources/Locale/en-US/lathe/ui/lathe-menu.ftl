@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 lathe-menu-title = Lathe Menu
 lathe-menu-queue = Queue
 lathe-menu-server-list = Server list

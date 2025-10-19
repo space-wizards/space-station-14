@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 salvage-expedition-type = Mission
 salvage-expedition-window-title = Salvage expeditions
 salvage-expedition-window-difficulty = Difficulty:

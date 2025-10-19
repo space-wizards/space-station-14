@@ -1,4 +1,8 @@
-﻿### Localization used for the invoke verb command.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+### Localization used for the invoke verb command.
 # Mostly help + error messages.
 
 invoke-verb-command-description = Invokes a verb with the given name on an entity, with the player entity

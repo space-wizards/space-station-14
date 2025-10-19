@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 emergency-light-component-on-examine = The battery indicator displays: {$batteryStateText}.
 emergency-light-component-on-examine-alert = The current station alert level is: [color={$color}]{$level}[/color].
 emergency-light-component-light-state-full = [color=darkgreen]full[/color]

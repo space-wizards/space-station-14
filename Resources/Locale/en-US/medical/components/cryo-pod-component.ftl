@@ -1,4 +1,8 @@
-﻿# Ejection verb label.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+# Ejection verb label.
 cryo-pod-verb-noun-occupant = Patient
 # Examine text showing whether there's a beaker in the pod and if it is empty.
 cryo-pod-examine = There's {INDEFINITE($beaker)} {$beaker} in here.

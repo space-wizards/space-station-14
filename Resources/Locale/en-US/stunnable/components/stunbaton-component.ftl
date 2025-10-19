@@ -1,4 +1,8 @@
-﻿### Stunbaton component
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+### Stunbaton component
 
 comp-stunbaton-stun = Stunned
 

@@ -1,4 +1,8 @@
-﻿namespace Content.Shared.Stacks;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Stacks;
 
 /// <summary>
 ///     Raised on the original stack entity when it is split to create another.

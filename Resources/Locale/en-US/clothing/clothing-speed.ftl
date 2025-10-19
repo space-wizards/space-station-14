@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # Clothing speed examine
 clothing-speed-examinable-verb-text = Clothing
 clothing-speed-examinable-verb-message = Examine the clothing speed values.

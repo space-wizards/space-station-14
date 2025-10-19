@@ -1,4 +1,8 @@
-﻿advertisement-bruiseomat-1 = I VOTE WAROPS!!!
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+advertisement-bruiseomat-1 = I VOTE WAROPS!!!
 advertisement-bruiseomat-2 = Who has TC?
 advertisement-bruiseomat-3 = Did anyone buy an EMAG?
 advertisement-bruiseomat-4 = I wanna go back to my home station...

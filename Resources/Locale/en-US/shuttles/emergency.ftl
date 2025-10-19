@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # Commands
 ## Delay shuttle round end
 cmd-delayroundend-desc = Stops the timer that ends the round when the emergency shuttle exits hyperspace.

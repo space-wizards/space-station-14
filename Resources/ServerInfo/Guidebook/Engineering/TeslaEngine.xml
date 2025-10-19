@@ -1,4 +1,10 @@
-﻿<Document>
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<Document>
   # Tesla Engine
   The Tesla Engine is a powerful generator that uses a contained ball of lightning to produce energy for the station.
   <Box>

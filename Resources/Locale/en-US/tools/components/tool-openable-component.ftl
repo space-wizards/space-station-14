@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 tool-openable-component-examine-closed = The {$name} is closed.
 tool-openable-component-examine-opened = The {$name} is open.
 

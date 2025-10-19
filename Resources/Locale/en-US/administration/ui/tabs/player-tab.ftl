@@ -1,4 +1,8 @@
-﻿player-tab-player-count = Players: { $count }
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+player-tab-player-count = Players: { $count }
 player-tab-username = Username
 player-tab-character = Character
 player-tab-job = Job

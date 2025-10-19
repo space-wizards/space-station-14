@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # Just copypasta of some human basic body parts for interaction,
 # only differences for now is that limbs work in pairs,
 # they are unextractable and can't be spawned (no surgery on Animals!?).

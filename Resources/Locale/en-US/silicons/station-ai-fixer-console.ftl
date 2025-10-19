@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # System
 station-ai-fixer-console-is-locked = The console is locked.
 station-ai-fixer-console-station-ai-holder-required = Only AI storage units can be inserted into the console.

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 rule-suspicion-added-announcement = There are traitors on the station! Find them, and kill them!
 rule-suspicion-traitor-time-has-run-out = Time has run out for the traitors!
 rule-suspicion-check-winner-stalemate = Everybody is dead, it's a stalemate!

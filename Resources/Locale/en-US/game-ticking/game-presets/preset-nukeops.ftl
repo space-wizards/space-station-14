@@ -1,4 +1,8 @@
-﻿nukeops-title = Nuclear Operatives
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+nukeops-title = Nuclear Operatives
 nukeops-description = Nuclear operatives have targeted the station. Try to keep them from arming and detonating the nuke by protecting the nuke disk!
 
 nukeops-welcome =

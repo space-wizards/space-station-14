@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # rmaction
 cmd-rmaction-desc = Removes an action from an entity.
 cmd-rmaction-help = rmaction <EntityUid> <ActionUid>

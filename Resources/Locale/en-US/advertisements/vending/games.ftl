@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 advertisement-goodcleanfun-1 = Escape to a fantasy world!
 advertisement-goodcleanfun-2 = Fuel your gambling addiction!
 advertisement-goodcleanfun-3 = Ruin your friendships!

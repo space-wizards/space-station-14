@@ -1,4 +1,8 @@
-﻿using System;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using System;
 using BenchmarkDotNet.Running;
 using BenchmarkDotNet.Configs;
 using Robust.Benchmarks.Configs;

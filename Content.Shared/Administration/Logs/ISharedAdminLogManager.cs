@@ -1,4 +1,8 @@
-﻿using System.Runtime.CompilerServices;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using System.Runtime.CompilerServices;
 using Content.Shared.Database;
 
 namespace Content.Shared.Administration.Logs;

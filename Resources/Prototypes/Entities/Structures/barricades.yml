@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 #None of these besides the full barricade are constructible yet since I can't understand code, and they need to do stuff like go over airlocks / windows.
 #Consider porting the barricade kit from /vg/ if you do make them constructible, along with their HP values. Or don't.
 

@@ -1,4 +1,8 @@
-﻿# Station prototype for cut-down test maps that don't need all the infrastructure.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+# Station prototype for cut-down test maps that don't need all the infrastructure.
 - type: entity
   id: TestStation
   parent:

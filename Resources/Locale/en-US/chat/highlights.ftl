@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # Command
 highlights-captain = Captain, "Cap", Bridge, Command
 highlights-head-of-personnel = Head Of Personnel, "HoP", Service, Bridge, Command

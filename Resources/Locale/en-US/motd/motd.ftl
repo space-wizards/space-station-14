@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 cmd-motd-desc = Prints or sets the Message Of The Day.
 cmd-motd-help = motd [ message... ]
 cmd-get-motd-desc = Prints the Message Of The Day.

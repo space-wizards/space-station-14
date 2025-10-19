@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
 namespace Content.Server.Disposal.Tube
 {
     // TODO: Different types of tubes eject in random direction with no exit point

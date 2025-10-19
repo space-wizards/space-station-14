@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 hud-chatbox-info = {$talk-key} to talk, {$cycle-key} to cycle channels.
 hud-chatbox-info-talk = {$talk-key} to talk.
 hud-chatbox-info-cycle = Click here to talk, {$cycle-key} to cycle channels.

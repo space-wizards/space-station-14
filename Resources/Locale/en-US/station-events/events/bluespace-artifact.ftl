@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 bluespace-artifact-event-announcement = Our readings have detected an incoming object of alien origin. Please inform the research team of { $sighting }.
 
 bluespace-artifact-sighting-1 = bright flashes of light

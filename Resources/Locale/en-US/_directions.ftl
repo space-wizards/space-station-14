@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 zzzz-fmt-direction-North = North
 zzzz-fmt-direction-South = South
 zzzz-fmt-direction-East = East

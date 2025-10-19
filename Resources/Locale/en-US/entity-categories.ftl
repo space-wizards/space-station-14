@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 entity-category-name-actions = Actions
 entity-category-name-game-rules = Game Rules
 entity-category-name-objectives = Objectives

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # User interface
 comms-console-menu-title = Communications Console
 comms-console-menu-announcement-placeholder = Announcement text...

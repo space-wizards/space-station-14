@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 upgradeable-gun-popup-already-present = Upgrade already installed!
 upgradeable-gun-popup-upgrade-limit = Max upgrades reached!
 gun-upgrade-popup-insert = Inserted {THE($upgrade)} into {THE($gun)}!

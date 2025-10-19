@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 book-text-gaming1 = Can't stay for the game.
       Engineering want me to keep a close eye on the singularity SMESes.
       Leaving this so you know what's up.

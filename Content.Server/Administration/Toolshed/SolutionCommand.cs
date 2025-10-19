@@ -1,4 +1,8 @@
-﻿using Content.Server.Chemistry.Containers.EntitySystems;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 #When adding new hardsuits, please try to keep the organization consistent with hardsuit.yml (if possible.)
 
 #For now, since locational damage is not a thing, all "combat" hardsuits (with the exception of the deathsquad hardsuit) have the equvilent of a helmet in terms of armor.

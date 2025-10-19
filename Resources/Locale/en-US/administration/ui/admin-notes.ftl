@@ -1,4 +1,8 @@
-﻿# UI
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+# UI
 admin-notes-title = Notes for {$player}
 admin-notes-new-note = New note
 admin-notes-show-more = Show more

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # erase
 cmd-erase-desc = Erase a player's entity if it exists and all their chat messages
 cmd-erase-help = erase <Username of User Id>

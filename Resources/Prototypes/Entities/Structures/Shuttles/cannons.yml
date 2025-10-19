@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # Most of these have DO NOT MAP, since stations are completely unequipped to deal with ship combat + these are basically placeholder.
 
 - type: entity

@@ -1,4 +1,8 @@
-﻿# Rules
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+# Rules
 
 ui-rules-header = Wizard's Den Official Server Rules
 ui-rules-header-rp = Wizard's Den Roleplay Official Server Rules

@@ -1,4 +1,10 @@
-﻿<bans:BanListControl
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<bans:BanListControl
     xmlns="https://spacestation14.io"
     xmlns:bans="clr-namespace:Content.Client.Administration.UI.BanList.Bans">
     <PanelContainer StyleClasses="BackgroundDark">

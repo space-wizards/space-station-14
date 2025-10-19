@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 player-panel-title = information for {$player}
 player-panel-username = Username: {$player}
 player-panel-whitelisted = Whitelisted:

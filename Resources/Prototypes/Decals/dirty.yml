@@ -1,4 +1,8 @@
-﻿# If you spawn any of these, they should probably be made cleanable as well.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+# If you spawn any of these, they should probably be made cleanable as well.
 
 - type: decal
   id: Dirt

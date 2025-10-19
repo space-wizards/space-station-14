@@ -1,4 +1,8 @@
-﻿advertisement-smartfridge-1 = Hello world!
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+advertisement-smartfridge-1 = Hello world!
 advertisement-smartfridge-2 = PLEASE LET ME OUT
 advertisement-smartfridge-3 = I can make a quintillion calculations a second. Now, I am a fridge.
 advertisement-smartfridge-4 = New firmware update available.

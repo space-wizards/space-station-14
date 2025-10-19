@@ -1,4 +1,8 @@
-﻿comp-kitchen-spike-begin-hook-self = You begin dragging yourself onto { THE($hook) }!
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+comp-kitchen-spike-begin-hook-self = You begin dragging yourself onto { THE($hook) }!
 comp-kitchen-spike-begin-hook-self-other = { CAPITALIZE(THE($victim)) } begins dragging { REFLEXIVE($victim) } onto { THE($hook) }!
 
 comp-kitchen-spike-begin-hook-other-self = You begin dragging { CAPITALIZE(THE($victim)) } onto { THE($hook) }!

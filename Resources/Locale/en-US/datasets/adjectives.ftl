@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 adjectives-dataset-1 = adorable
 adjectives-dataset-2 = adventurous
 adjectives-dataset-3 = aggressive

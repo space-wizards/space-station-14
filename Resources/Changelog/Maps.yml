@@ -1,4 +1,8 @@
-﻿Entries:
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+Entries:
 - author: ArtisticRoomba
   changes:
   - message: The mapping changelog has been added! This primarily serves as a way

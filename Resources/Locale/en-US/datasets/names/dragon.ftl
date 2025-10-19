@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 names-dragon-dataset-1 = Dayle
 names-dragon-dataset-2 = Phlogdor
 names-dragon-dataset-3 = Nidir

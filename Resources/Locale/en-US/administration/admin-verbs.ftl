@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # Generic verbs
 delete-verb-get-data-text = Delete
 edit-solutions-verb-get-data-text = Edit Solutions

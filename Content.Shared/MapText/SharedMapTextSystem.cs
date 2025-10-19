@@ -1,4 +1,8 @@
-﻿namespace Content.Shared.MapText;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.MapText;
 
 /// <summary>
 /// This handles registering the map text overlay, caching the text font and handling component state

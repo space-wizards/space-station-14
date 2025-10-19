@@ -1,4 +1,8 @@
-﻿advertisement-pride-1 = Be gay do crime!
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+advertisement-pride-1 = Be gay do crime!
 advertisement-pride-2 = Full of colors!
 advertisement-pride-3 = You are valid!
 advertisement-pride-4 = The first pride was a riot!

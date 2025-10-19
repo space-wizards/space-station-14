@@ -1,4 +1,10 @@
-﻿<Control Name="CFlavorText" xmlns="https://spacestation14.io">
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<Control Name="CFlavorText" xmlns="https://spacestation14.io">
     <BoxContainer Orientation="Vertical" HorizontalExpand="True">
         <TextEdit Name="CFlavorTextInput" Access="Public" MinSize="220 100" Margin="10" HorizontalExpand="True" VerticalExpand="True" />
     </BoxContainer>

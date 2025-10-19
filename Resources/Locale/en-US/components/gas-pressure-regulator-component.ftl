@@ -1,4 +1,8 @@
-﻿# UI Labels
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+# UI Labels
 gas-pressure-regulator-ui-set-threshold = Set
 gas-pressure-regulator-ui-zero-threshold = Zero
 gas-pressure-regulator-ui-set-to-current-pressure = Set to Inlet Pressure

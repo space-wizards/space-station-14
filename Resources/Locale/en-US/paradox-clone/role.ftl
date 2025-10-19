@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 paradox-clone-round-end-agent-name = paradox clone
 
 objective-issuer-paradox = [color=lightblue]Paradox[/color]

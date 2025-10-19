@@ -1,4 +1,8 @@
-﻿# generic "highly illegal" contraband; Syndicate/magical contraband are already considered highly illegal under Space Law,
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+# generic "highly illegal" contraband; Syndicate/magical contraband are already considered highly illegal under Space Law,
 # so this is mostly for stuff that should be equally illegal but doesn't need its own unique contraband tier added
 - type: entity
   id: BaseHighlyIllegalContraband

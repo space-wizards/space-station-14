@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # addobjectives
 cmd-addobjective-desc = Adds an objective to the player's mind.
 cmd-addobjective-help = addobjective <username> <objectiveID>

@@ -1,4 +1,10 @@
-﻿<widgets:AlertsUI xmlns="https://spacestation14.io"
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<widgets:AlertsUI xmlns="https://spacestation14.io"
                   xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Alerts.Widgets"
                   MinSize="64 64">
     <PanelContainer HorizontalAlignment="Right" VerticalAlignment="Top">

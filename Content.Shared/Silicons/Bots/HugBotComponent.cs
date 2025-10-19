@@ -1,4 +1,8 @@
-﻿namespace Content.Shared.Silicons.Bots;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Silicons.Bots;
 
 /// <summary>
 /// This component describes how a HugBot hugs.

@@ -1,4 +1,8 @@
-﻿using Content.Server.Doors;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Server.Doors;
 using Content.Server.Power;
 using Content.Server.Wires;
 using Robust.Shared.GameObjects;

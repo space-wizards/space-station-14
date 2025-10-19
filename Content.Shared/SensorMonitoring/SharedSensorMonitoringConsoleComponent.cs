@@ -1,4 +1,8 @@
-﻿using Robust.Shared.Serialization;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Robust.Shared.Serialization;
 using ConsoleUIState = Content.Shared.SensorMonitoring.SensorMonitoringConsoleBoundInterfaceState;
 
 namespace Content.Shared.SensorMonitoring;

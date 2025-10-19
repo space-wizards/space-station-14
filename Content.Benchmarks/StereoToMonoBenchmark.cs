@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
 using System.Runtime.Intrinsics.X86;
 using BenchmarkDotNet.Attributes;
 using Robust.Shared.Analyzers;

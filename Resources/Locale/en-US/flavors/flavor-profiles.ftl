@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 flavor-profile = Tastes {$flavor}.
 flavor-profile-multiple = Tastes {$flavors} and {$lastFlavor}.
 flavor-profile-unknown = Tastes indescribable.

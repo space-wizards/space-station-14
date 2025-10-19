@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 names-arachnid-last-dataset-1 = Agrestis
 names-arachnid-last-dataset-2 = Algarve
 names-arachnid-last-dataset-3 = Andohahela

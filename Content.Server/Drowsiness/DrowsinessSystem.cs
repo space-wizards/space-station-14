@@ -1,4 +1,8 @@
-﻿using Content.Shared.Bed.Sleep;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Drowsiness;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.StatusEffectNew.Components;

@@ -1,4 +1,8 @@
-﻿generator-clogged = {CAPITALIZE(THE($generator))} shuts off abruptly!
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+generator-clogged = {CAPITALIZE(THE($generator))} shuts off abruptly!
 
 portable-generator-verb-start = Start generator
 portable-generator-verb-start-msg-unreliable = Start the generator. This may take a few tries.

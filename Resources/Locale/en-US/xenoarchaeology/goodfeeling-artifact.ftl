@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 goodfeeling-artifact-1 = You feel good.
 goodfeeling-artifact-2 = Everything seems to be going alright
 goodfeeling-artifact-3 = You've got a good feeling about this

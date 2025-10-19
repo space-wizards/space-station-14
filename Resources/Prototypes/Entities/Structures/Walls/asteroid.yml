@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 #TODO: Someone should probably move the ore vein prototypes into their own file, or otherwise split this up in some way. This should not be 1.5k lines long.
 
 # Anyway

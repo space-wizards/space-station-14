@@ -1,4 +1,10 @@
-﻿<BoxContainer xmlns="https://spacestation14.io" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<BoxContainer xmlns="https://spacestation14.io" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
     <Control HorizontalExpand="True" VerticalExpand="True" HorizontalAlignment="Stretch">
         <ScrollContainer Name="Scroll" HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True">
             <BoxContainer Name="RulesContainer" VerticalExpand="True" Margin="0 0 5 0"/>

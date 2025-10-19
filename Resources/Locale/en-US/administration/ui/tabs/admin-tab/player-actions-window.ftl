@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 admin-player-actions-window-title = Player Actions Panel
 admin-player-actions-window-ban = Banning panel
 admin-player-actions-window-admin-ghost = Admin Ghost

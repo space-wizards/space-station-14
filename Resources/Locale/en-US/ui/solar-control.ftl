@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 solar-control-window-title = Solar Control Console
 solar-control-window-output-power = Output Power:
 solar-control-window-watts = W

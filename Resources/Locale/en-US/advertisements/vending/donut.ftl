@@ -1,4 +1,8 @@
-﻿advertisement-donut-1 = Each of us is a little cop!
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+advertisement-donut-1 = Each of us is a little cop!
 advertisement-donut-2 = Hope you're hungry!
 advertisement-donut-3 = Over 1 million donuts sold!
 advertisement-donut-4 = We pride ourselves in the consistency of our products!

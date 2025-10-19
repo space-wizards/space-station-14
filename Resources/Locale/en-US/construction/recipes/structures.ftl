@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 construction-recipe-diagonal-shuttle-wall = shuttle wall (diagonal)
 construction-window-diagonal = window (diagonal)
 construction-recipe-reinforced-window-diagonal = reinforced window (diagonal)

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 suicide-command-description = Commits suicide
 suicide-command-help-text = The suicide command gives you a quick way out of a round while remaining in-character.
                             The method varies, first it will attempt to use the held item in your active hand.

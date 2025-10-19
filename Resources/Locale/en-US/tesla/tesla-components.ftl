@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 tesla-coil-on = The tesla coil turns on.
 tesla-coil-off = The tesla coil turns off.
 

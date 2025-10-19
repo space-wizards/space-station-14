@@ -1,4 +1,8 @@
-﻿comp-containment-turned-on = The containment field generator boots up.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+comp-containment-turned-on = The containment field generator boots up.
 comp-containment-turned-off = The containment field generator shuts down.
 
 comp-containment-on = It's switched [color=green]on[/color], ready to generate a connection.

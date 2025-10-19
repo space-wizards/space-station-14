@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 limited-charges-charges-remaining = {$charges ->
     [one] It has [color=fuchsia]{$charges}[/color] charge remaining.
     *[other] It has [color=fuchsia]{$charges}[/color] charges remaining.

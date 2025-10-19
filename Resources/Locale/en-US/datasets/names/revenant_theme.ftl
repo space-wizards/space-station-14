@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 names-revenant-theme-dataset-1 = agony
 names-revenant-theme-dataset-2 = anger
 names-revenant-theme-dataset-3 = death

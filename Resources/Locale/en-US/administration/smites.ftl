@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 admin-smite-chess-self = You feel exceptionally small.
 admin-smite-chess-others = {CAPITALIZE($name)} shrinks into the chessboard!
 admin-smite-set-alight-self = You burst into flames!

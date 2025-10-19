@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 name-identifier-format-monkey = MK-{$number}
 name-identifier-format-kobold = KB-{$number}
 name-identifier-format-holoparasite = HOLO-{$number}

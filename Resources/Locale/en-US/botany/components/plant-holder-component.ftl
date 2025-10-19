@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 ## Entity
 
 plant-holder-component-plant-success-message = You plant the {$seedName} {$seedNoun}.

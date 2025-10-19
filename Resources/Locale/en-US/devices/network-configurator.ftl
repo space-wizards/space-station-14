@@ -1,4 +1,8 @@
-﻿# Popups
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+# Popups
 
 network-configurator-device-saved = Successfully saved network device {$device} with address {$address}!
 network-configurator-device-failed = Failed to save network device {$device}! No address assigned!

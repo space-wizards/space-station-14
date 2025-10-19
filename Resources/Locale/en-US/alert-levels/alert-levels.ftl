@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 alert-level-announcement = Attention! Station alert level is now {$name}! {$announcement}
 
 alert-level-unknown = Unknown.

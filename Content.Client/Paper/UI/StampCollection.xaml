@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
 <paper:StampCollection xmlns="https://spacestation14.io"
     xmlns:paper="clr-namespace:Content.Client.Paper.UI"
     MinSize="150 150">

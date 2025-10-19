@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # The primary role types are referenced by RP Rules, and were specified based on head admin input.
 # Do not create new ones without discussion.
 # You probably want a Subtype instead, anyway. Use MindRoleComponent.Subtype

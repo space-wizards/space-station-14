@@ -1,4 +1,8 @@
-﻿# Status effect prototypes.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+# Status effect prototypes.
 # Holds no actual logic, just some basic data about the effect.
 
 # Note: We have a new status effect system that needs all of these status effects to be fully ported to.

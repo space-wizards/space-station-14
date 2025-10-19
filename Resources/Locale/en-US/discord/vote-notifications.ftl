@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 custom-vote-webhook-name = Custom Vote Held
 custom-vote-webhook-footer = server: { $serverName }, round: { $roundId } { $runLevel }
 custom-vote-webhook-cancelled = **Vote cancelled**

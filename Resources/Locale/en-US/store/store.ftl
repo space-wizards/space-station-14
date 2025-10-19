@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 store-ui-default-title = Store
 store-ui-default-withdraw-text = Withdraw
 store-ui-refund-text = Refund

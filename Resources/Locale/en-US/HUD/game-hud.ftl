@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 game-hud-open-escape-menu-button-tooltip = Open escape menu.
 game-hud-open-guide-menu-button-tooltip = Open guidebook menu.
 game-hud-open-character-menu-button-tooltip = Open character menu.

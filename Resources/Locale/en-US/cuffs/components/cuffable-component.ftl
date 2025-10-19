@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 cuffable-component-cannot-interact-message = You can't do that!
 cuffable-component-cannot-remove-cuffs-too-far-message = You are too far away to remove the restraints.
 

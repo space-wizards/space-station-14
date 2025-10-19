@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
 
 ## Messages shown to Pacified players when they try to do violence:
 

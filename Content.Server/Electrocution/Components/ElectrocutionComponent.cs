@@ -1,4 +1,8 @@
-﻿namespace Content.Server.Electrocution;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+namespace Content.Server.Electrocution;
 
 /// <summary>
 /// Component for virtual electrocution entities (representing an in-progress shock).

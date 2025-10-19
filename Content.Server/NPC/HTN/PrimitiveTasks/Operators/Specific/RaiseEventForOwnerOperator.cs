@@ -1,4 +1,8 @@
-﻿namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
 /// <summary>
 /// Raises an <see cref="HTNRaisedEvent"/> on the <see cref="NPCBlackboard.Owner">owner</see>. The event will contain

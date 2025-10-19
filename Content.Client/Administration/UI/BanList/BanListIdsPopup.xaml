@@ -1,4 +1,10 @@
-﻿<Popup xmlns="https://spacestation14.io">
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<Popup xmlns="https://spacestation14.io">
     <PanelContainer StyleClasses="BackgroundDark">
         <BoxContainer Orientation="Vertical">
             <Label Name="ID" HorizontalExpand="True"/>

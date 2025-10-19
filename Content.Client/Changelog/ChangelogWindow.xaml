@@ -1,4 +1,10 @@
-﻿<ui:ChangelogWindow xmlns="https://spacestation14.io"
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<ui:ChangelogWindow xmlns="https://spacestation14.io"
                     xmlns:ui="clr-namespace:Content.Client.Changelog"
                     Title="{Loc 'changelog-window-title'}"
                     MinSize="500 400"

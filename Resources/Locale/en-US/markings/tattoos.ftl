@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 marking-TattooHiveChest-tattoo_hive_chest = Back Tattoo (Hive)
 marking-TattooHiveChest = Back Tattoo (Hive)
 

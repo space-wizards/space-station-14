@@ -1,4 +1,8 @@
-﻿admin-ui-baby-jail-window-title = Baby Jail
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+admin-ui-baby-jail-window-title = Baby Jail
 
 admin-ui-baby-jail-enabled = Baby Jail Enabled
 admin-ui-baby-jail-disabled = Baby Jail Disabled

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 cryostorage-insert-message-permanent = [color=white]You are now inside of a [bold][color=cyan]cryogenic sleep unit[/color][/bold]. If you [bold]disconnect[/bold], [bold]ghost[/bold], or [bold]wait {$time} minutes[/bold], [color=red]your body will be removed[/color] and your job slot will be opened. You can exit at any time to prevent this.[/color]
 cryostorage-insert-message-temp = [color=white]You are now inside of a [bold][color=cyan]cryogenic sleep unit[/color][/bold]. If you [bold]ghost[/bold] or [bold]wait {$time} minutes[/bold], [color=red]your body will be removed[/color] and your job slot will be opened. If you [bold][color=cyan]disconnect[/color][/bold], your body will be safely held until you rejoin.[/color]
 

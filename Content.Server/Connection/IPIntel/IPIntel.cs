@@ -1,4 +1,8 @@
-﻿using System.Buffers.Binary;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using System.Buffers.Binary;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;

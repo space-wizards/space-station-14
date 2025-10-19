@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 iff-console-window-title = IFF console
 iff-console-show-iff-label = Show IFF
 iff-console-show-vessel-label = Show vessel

@@ -1,4 +1,8 @@
-﻿# This item is stored in the hand slot while it is blocked, to represent what is blocking that hand.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+# This item is stored in the hand slot while it is blocked, to represent what is blocking that hand.
 - type: entity
   id: VirtualItem
   name: VIRTUAL ITEM YOU SHOULD NOT SEE THIS

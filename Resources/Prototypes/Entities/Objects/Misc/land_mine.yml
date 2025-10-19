@@ -1,4 +1,8 @@
-﻿- type: entity
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+- type: entity
   id: BaseLandMine
   abstract: true
   components:

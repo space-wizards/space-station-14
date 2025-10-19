@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 names-regal-rat-kingdom-dataset-1 = Plague
 names-regal-rat-kingdom-dataset-2 = Ammonia
 names-regal-rat-kingdom-dataset-3 = Maintenance

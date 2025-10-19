@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 health-examinable-silicon-none = There is no obvious damage to be seen.
 
 health-examinable-silicon-Blunt-15 = [color=red]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } minor dents on { POSS-ADJ($target) } chassis.[/color]

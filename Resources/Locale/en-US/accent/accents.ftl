@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # Cat accent
 accent-words-cat-1 = Meow!
 accent-words-cat-2 = Mow.

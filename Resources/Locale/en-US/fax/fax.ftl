@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 fax-machine-popup-source-unknown = unknown
 fax-machine-popup-received = Received correspondence from { $from }.
 fax-machine-popup-name-long = Fax name is too long

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # Headings
 turret-controls-window-title = Autonomous Defense Control System
 turret-controls-window-turret-status-label = Linked devices [{$count}]

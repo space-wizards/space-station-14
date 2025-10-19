@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 flatpack-unpack-no-room = No room to unpack!
 flatpack-examine = Use a [color=yellow]multitool[/color] to unpack this.
 flatpack-entity-name = {$name} flatpack

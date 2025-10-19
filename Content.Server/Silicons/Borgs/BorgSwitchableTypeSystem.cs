@@ -1,4 +1,8 @@
-﻿using Content.Server.Inventory;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Server.Inventory;
 using Content.Shared.Inventory;
 using Content.Shared.Radio.Components;
 using Content.Shared.Silicons.Borgs;

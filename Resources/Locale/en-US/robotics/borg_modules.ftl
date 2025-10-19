@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 borg-slot-cables-empty = Cables
 borg-slot-construction-empty = Construction materials
 borg-slot-circuitboards-empty = Circuitboards

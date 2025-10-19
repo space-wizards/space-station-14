@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 names-borg-dataset-1 = Bob
 names-borg-dataset-2 = Joe
 names-borg-dataset-3 = Beep

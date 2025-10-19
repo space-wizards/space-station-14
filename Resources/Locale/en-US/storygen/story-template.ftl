@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 story-template-generic =
  This is { INDEFINITE($bookGenre) } {$bookGenre} about { INDEFINITE($char1Adj) } {$char1Adj} {$char1Type} and { INDEFINITE($char2Adj) } {$char2Adj} {$char2Type}. Due to {$event}, they {$actionTrait} {$action} { INDEFINITE($char3Type) } {$char3Type} {$location}.
 

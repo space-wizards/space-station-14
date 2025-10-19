@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 names-vox-dataset-1 = Babapir
 names-vox-dataset-2 = Babasri
 names-vox-dataset-3 = Babepipit

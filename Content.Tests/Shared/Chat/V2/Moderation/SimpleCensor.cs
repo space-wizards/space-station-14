@@ -1,4 +1,8 @@
-﻿using System.Text.Unicode;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using System.Text.Unicode;
 using Content.Shared.Chat.V2.Moderation;
 using NUnit.Framework;
 

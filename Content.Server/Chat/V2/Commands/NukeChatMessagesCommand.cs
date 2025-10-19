@@ -1,4 +1,8 @@
-﻿using System.Diagnostics;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using System.Diagnostics;
 using Content.Server.Administration;
 using Content.Server.Chat.V2.Repository;
 using Content.Shared.Administration;

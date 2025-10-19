@@ -1,4 +1,8 @@
-﻿silicon-law-ui-verb = Manage laws
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+silicon-law-ui-verb = Manage laws
 silicon-law-ui-title = Silicon laws
 silicon-law-ui-new-law = New law
 silicon-law-ui-save = Save changes

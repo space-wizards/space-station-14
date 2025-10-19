@@ -1,4 +1,8 @@
-﻿guidebook-reagent-effect-description =
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+guidebook-reagent-effect-description =
     {$chance ->
         [1] { $effect }
         *[other] Has a { NATURALPERCENT($chance, 2) } chance to { $effect }

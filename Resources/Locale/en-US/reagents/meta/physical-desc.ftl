@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 reagent-physical-desc-soapy = soapy
 reagent-physical-desc-ferrous = ferrous
 reagent-physical-desc-nothing = nothing

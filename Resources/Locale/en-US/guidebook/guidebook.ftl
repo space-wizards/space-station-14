@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 guidebook-window-title = Guidebook
 guidebook-placeholder-text = Select an entry.
 guidebook-placeholder-text-2 = If you're new, head over to "New? Start here!"

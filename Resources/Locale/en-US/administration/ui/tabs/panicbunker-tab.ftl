@@ -1,4 +1,8 @@
-﻿admin-ui-panic-bunker-window-title = Panic Bunker
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+admin-ui-panic-bunker-window-title = Panic Bunker
 
 admin-ui-panic-bunker-enabled = Panic Bunker Enabled
 admin-ui-panic-bunker-disabled = Panic Bunker Disabled

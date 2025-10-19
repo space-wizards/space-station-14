@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 names-first-female-dataset-1 = Aaliyah
 names-first-female-dataset-2 = Abby
 names-first-female-dataset-3 = Abigail

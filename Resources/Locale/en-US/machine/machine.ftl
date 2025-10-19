@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 machine-insert-item = {CAPITALIZE(THE($user))} inserted {THE($item)} into {THE($machine)}.
 
 machine-upgrade-examinable-verb-text = Upgrades

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 verbs-dataset-1 = accept
 verbs-dataset-2 = add
 verbs-dataset-3 = admire

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 admin-player-actions-reason = Reason
 admin-player-actions-bans = Ban List
 admin-player-actions-notes = Notes

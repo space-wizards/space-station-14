@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # Threshold prototypes for AtmosMonitors
 
 # NOTE: Warning thresholds are given as multipliers of the danger bound. For

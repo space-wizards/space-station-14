@@ -1,4 +1,8 @@
-﻿admin-logs-title = Admin Logs Panel
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+admin-logs-title = Admin Logs Panel
 admin-logs-count = Showing {$showing}/{$total} of {$round}
 admin-logs-export = Export
 admin-logs-pop-out = Pop Out

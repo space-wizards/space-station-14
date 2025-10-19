@@ -1,4 +1,8 @@
-﻿sensor-monitoring-window-title = Sensor Monitoring Console
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+sensor-monitoring-window-title = Sensor Monitoring Console
 
 sensor-monitoring-value-display = {$unit ->
     [PressureKpa] { PRESSURE($value) }

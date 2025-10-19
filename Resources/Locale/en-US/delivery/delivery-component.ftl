@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 delivery-recipient-examine = This one is meant for {$recipient}, {$job}.
 delivery-already-opened-examine = It was already opened.
 delivery-earnings-examine = Delivering this will earn the station [color=yellow]{$spesos}[/color] spesos.

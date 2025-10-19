@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 voice-trigger-lock-verb-record = Record lock phrase
 voice-trigger-lock-verb-message = Locking the item will disable features that reveal its true nature!
 

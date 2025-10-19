@@ -1,4 +1,8 @@
-﻿using Content.Server.Chat.Systems;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Server.Chat.Systems;
 using Content.Shared.Teleportation;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;

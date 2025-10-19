@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # Lots of misc stuff in here, hard to parent it.
 # ^ Yeah, this stuff should probably get split into different files but not my fight today.
 

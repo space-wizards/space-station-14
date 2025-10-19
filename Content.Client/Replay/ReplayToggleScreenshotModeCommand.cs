@@ -1,4 +1,8 @@
-﻿using Content.Client.UserInterface.Systems.Chat;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Client.UserInterface.Systems.Chat;
 using Content.Shared.Chat;
 using Robust.Client.Replays.Commands;
 using Robust.Client.Replays.UI;

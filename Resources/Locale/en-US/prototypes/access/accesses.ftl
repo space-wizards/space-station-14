@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 id-card-access-level-command = Command
 id-card-access-level-captain = Captain
 id-card-access-level-head-of-personnel = Head of Personnel

@@ -1,4 +1,8 @@
-﻿using Content.Server.Anomaly.Components;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Server.Anomaly.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;

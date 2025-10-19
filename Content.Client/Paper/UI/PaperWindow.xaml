@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
 <paper:PaperWindow xmlns="https://spacestation14.io"
     xmlns:paper="clr-namespace:Content.Client.Paper.UI"
     MouseFilter="Stop" Resizable="True" MinSize="150 150"

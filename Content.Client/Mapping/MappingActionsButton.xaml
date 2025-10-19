@@ -1,4 +1,10 @@
-﻿<mapping:MappingActionsButton
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<mapping:MappingActionsButton
     xmlns="https://spacestation14.io"
     xmlns:mapping="clr-namespace:Content.Client.Mapping"
     StyleClasses="ButtonSquare" ToggleMode="True" SetSize="32 32" Margin="0 0 5 0"

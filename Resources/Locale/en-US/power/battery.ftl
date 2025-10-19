@@ -1,4 +1,8 @@
-﻿## Strings for the battery (SMES/substation) menu
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+## Strings for the battery (SMES/substation) menu
 
 battery-menu-footer-left = Danger: high voltage
 battery-menu-footer-right = 7.2 REV 6

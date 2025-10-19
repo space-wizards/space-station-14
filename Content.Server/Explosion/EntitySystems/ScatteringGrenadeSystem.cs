@@ -1,4 +1,8 @@
-﻿using Content.Shared.Explosion.Components;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Shared.Explosion.Components;
 using Content.Shared.Throwing;
 using Content.Shared.Trigger;
 using Content.Shared.Trigger.Systems;

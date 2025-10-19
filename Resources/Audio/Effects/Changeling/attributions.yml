@@ -1,4 +1,8 @@
-﻿- files: ["devour_suck.ogg"]
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+- files: ["devour_suck.ogg"]
   license: "CC0-1.0"
   copyright: "4Cairnz on Freesound: June 5th 2023"
   source: "https://freesound.org/people/4Cairnz/sounds/689640/"

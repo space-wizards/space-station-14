@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 cmd-biome_clear-desc = Clears a biome entirely
 cmd-biome_clear-help = biome_clear <biomecomponent>
 cmd-biome_addlayer-desc = Adds another biome layer

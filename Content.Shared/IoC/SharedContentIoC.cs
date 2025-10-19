@@ -1,4 +1,8 @@
-﻿using Content.Shared.Humanoid.Markings;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Shared.Humanoid.Markings;
 using Content.Shared.Localizations;
 
 namespace Content.Shared.IoC

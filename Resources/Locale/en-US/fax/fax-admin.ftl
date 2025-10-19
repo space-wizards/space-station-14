@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # Command
 cmd-faxui-desc = Open admin window for sending faxes
 cmd-faxui-help = Usage: faxui

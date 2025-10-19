@@ -1,4 +1,8 @@
-﻿cmd-restartround-desc = Ends the current round and starts the countdown for the next lobby.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+cmd-restartround-desc = Ends the current round and starts the countdown for the next lobby.
 cmd-restartround-help = Usage: restartround
 
 cmd-restartroundnow-desc = Moves the server from PostRound to a new PreRoundLobby.

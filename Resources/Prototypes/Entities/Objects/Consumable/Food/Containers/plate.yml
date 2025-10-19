@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # Plate
 # In the future, I (Swept) want a system for putting stuff on plates and it'll provide more nutrition
 # If it's on that plate. I've modified all load/slices to fit on the plate, so all we need

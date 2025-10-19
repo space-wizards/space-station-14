@@ -1,4 +1,8 @@
-﻿using Content.Server.Power.Components;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Server.Power.Components;
 using Content.Server.Power.Pow3r;
 
 namespace Content.Server.Power.NodeGroups

@@ -1,4 +1,8 @@
-﻿namespace Content.Server.Xenoarchaeology.Artifact.XAE.Components;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+namespace Content.Server.Xenoarchaeology.Artifact.XAE.Components;
 
 /// <summary>
 ///     Harmless artifact that broadcast "thoughts" to players nearby.

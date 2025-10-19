@@ -1,4 +1,10 @@
-﻿<Document>
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<Document>
   # Expanding and Repairing Stations
   In Space Station 14, it is common for players to want to expand the station, or repair holes left by meteors or other damage.
 

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 delete-entities-with-component-command-description = Deletes entities with the specified components.
 delete-entities-with-component-command-help-text = Usage: deleteewc <componentName_1> <componentName_2> ... <componentName_n>
                                                    Deletes any entities with the components specified.

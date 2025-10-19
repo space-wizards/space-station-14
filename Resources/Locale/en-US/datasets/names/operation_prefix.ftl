@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 names-operation-prefix-dataset-1 = Ancient
 names-operation-prefix-dataset-2 = Angry
 names-operation-prefix-dataset-3 = Arachnid

@@ -1,4 +1,8 @@
-﻿using System.Linq;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using System.Linq;
 using Content.Server.Worldgen.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Mind.Components;

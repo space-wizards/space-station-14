@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 toggle-trigger-condition-default-verb = Toggle device
 toggle-trigger-condition-default-on = Device enabled.
 toggle-trigger-condition-default-off = Device disabled.

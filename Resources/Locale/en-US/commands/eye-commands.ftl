@@ -1,4 +1,8 @@
-﻿parse-bool-fail = Unable to parse {$arg} as a bool
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+parse-bool-fail = Unable to parse {$arg} as a bool
 parse-float-fail = Unable to parse {$arg} as a float
 
 cmd-lockeyes-desc = Prevents eyes from being rotated any further.

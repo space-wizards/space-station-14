@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 polymorph-self-action-name = Polymorph ({CAPITALIZE($target)})
 polymorph-self-action-description = Instantly polymorph yourself into {$target}.
 

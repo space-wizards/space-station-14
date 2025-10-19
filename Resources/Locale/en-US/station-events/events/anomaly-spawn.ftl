@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 anomaly-spawn-event-announcement = Our readings have detected a dangerous interspacial anomaly. Please inform the research team about { $sighting }.
 
 anomaly-spawn-sighting-1 = low pulsating sounds heard throughout the station

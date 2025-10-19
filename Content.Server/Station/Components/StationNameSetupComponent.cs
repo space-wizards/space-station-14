@@ -1,4 +1,8 @@
-﻿using Content.Server.Maps.NameGenerators;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Server.Maps.NameGenerators;
 
 namespace Content.Server.Station.Components;
 

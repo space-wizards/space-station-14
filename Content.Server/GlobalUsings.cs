@@ -1,4 +1,8 @@
-﻿// Global usings for Content.Server
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+// Global usings for Content.Server
 
 global using System;
 global using System.Collections.Generic;

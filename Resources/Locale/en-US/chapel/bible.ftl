@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 bible-heal-success-self = You hit {THE($target)} with {THE($bible)}, and their wounds close in a flash of holy light!
 bible-heal-success-others = {CAPITALIZE(THE($user))} hits {THE($target)} with {THE($bible)}, and their wounds close in a flash of holy light!
 bible-heal-success-none-self = You hit {THE($target)} with {THE($bible)}, but they have no wounds you can heal!

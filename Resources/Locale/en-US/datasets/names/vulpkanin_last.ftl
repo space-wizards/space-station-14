@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 names-vulpkanin-last-dataset-1 = Abbott
 names-vulpkanin-last-dataset-2 = Adoette
 names-vulpkanin-last-dataset-3 = Aegaeon

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # you shouldn't be creating new hints for every effect/trigger
 # try and reuse them so that a hint isn't a dead giveaway. -emo
 

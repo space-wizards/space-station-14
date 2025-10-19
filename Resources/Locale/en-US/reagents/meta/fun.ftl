@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 reagent-name-carpetium = carpetium
 reagent-desc-carpetium = A mystical chemical, usually outsourced from the Clown Planet, that covers everything it touches in carpet. Somehow filters out carpotoxin from the blood stream.
 

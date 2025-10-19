@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 construction-graph-component-any-computer-circuit-board = any computer circuit board
 construction-graph-component-door-electronics-circuit-board = door electronics circuit board
 construction-graph-component-flash = flash

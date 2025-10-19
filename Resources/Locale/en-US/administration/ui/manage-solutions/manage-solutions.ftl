@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 admin-solutions-window-title = Solution Editor - {$targetName}
 admin-solutions-window-solution-label = Target solution:
 admin-solutions-window-solution-button = Solution

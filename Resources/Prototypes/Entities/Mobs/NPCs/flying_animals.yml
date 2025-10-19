@@ -1,4 +1,8 @@
-﻿# Used for entities that are considered flying,
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+# Used for entities that are considered flying,
 # i.e. shouldnt slip, have free movement in weightlesness, and should go over chasms/lava
 - type: entity
   id: FlyingMobBase

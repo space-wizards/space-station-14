@@ -1,4 +1,8 @@
-﻿using Content.Client.UserInterface.Fragments;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Client.UserInterface.Fragments;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Robust.Client.GameObjects;

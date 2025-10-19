@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 accent-cowboy-words-1 = alcohol
 accent-cowboy-replacement-1 = firewater
 

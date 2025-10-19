@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 round-end-summary-window-title = Round End Summary
 round-end-summary-window-round-end-summary-tab-title = Round Information
 round-end-summary-window-player-manifest-tab-title = Player Manifest

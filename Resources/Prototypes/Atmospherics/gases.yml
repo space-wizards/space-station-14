@@ -1,4 +1,8 @@
-﻿- type: gas
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+- type: gas
   id: 0
   name: gases-oxygen
   specificHeat: 20

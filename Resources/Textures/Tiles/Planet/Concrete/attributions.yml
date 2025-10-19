@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 - files: ["asphalt.png", "oldconcrete.png", "oldconcrete_mono.png", "oldconcrete_smooth.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Taken from vgstation13, modified by EmoGarbage404 (github)"

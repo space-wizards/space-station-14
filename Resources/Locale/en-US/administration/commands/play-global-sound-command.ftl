@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 play-global-sound-command-description = Plays a global sound for a specific player or for every connected player if no players are specified.
 play-global-sound-command-help = playglobalsound <path> [volume] [user 1] ... [user n]
 play-global-sound-command-player-not-found = Player "{$username}" not found.

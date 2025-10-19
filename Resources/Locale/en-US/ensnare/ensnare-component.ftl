@@ -1,4 +1,8 @@
-﻿ensnare-component-try-free = You struggle to remove {$ensnare} that's ensnaring you!
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+ensnare-component-try-free = You struggle to remove {$ensnare} that's ensnaring you!
 ensnare-component-try-free-complete = You successfully free yourself from the {$ensnare}!
 ensnare-component-try-free-fail = You fail to free yourself from the {$ensnare}!
 

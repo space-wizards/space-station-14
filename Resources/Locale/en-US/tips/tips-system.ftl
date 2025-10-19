@@ -1,1 +1,5 @@
-﻿tips-system-chat-message-wrap = Tip: {$tip}
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+tips-system-chat-message-wrap = Tip: {$tip}

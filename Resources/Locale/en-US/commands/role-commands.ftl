@@ -1,4 +1,8 @@
-﻿cmd-addrole-desc = Adds a role to a player's mind.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+cmd-addrole-desc = Adds a role to a player's mind.
 cmd-addrole-help = Usage: addrole <session ID> <role>
 cmd-addrole-mind-not-found = Can't find that mind.
 cmd-addrole-role-not-found = Can't find that role.

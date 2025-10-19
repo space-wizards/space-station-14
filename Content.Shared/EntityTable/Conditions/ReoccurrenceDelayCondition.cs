@@ -1,4 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.GameTicking;

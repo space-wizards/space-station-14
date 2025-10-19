@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
 <DefaultWindow Title="{Loc 'instruments-component-channels-menu'}" MinSize="250 350" xmlns="https://spacestation14.io"
                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
     <BoxContainer Orientation="Vertical" HorizontalExpand="true" VerticalExpand="true" Align="Center">

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 names-hologram-dataset-1 = Apollo
 names-hologram-dataset-2 = Data
 names-hologram-dataset-3 = GLIMMER

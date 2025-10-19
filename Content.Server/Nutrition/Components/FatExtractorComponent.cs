@@ -1,4 +1,8 @@
-﻿using Content.Server.Nutrition.EntitySystems;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Nutrition.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;

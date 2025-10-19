@@ -1,4 +1,8 @@
-﻿advertisement-megaseed-1 = We like plants!
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+advertisement-megaseed-1 = We like plants!
 advertisement-megaseed-2 = Grow some crops
 advertisement-megaseed-3 = Grow, baby, growww!
 advertisement-megaseed-4 = Aw h'yeah son!

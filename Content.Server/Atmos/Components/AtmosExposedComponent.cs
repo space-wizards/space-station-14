@@ -1,4 +1,8 @@
-﻿namespace Content.Server.Atmos.Components
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+namespace Content.Server.Atmos.Components
 {
     // not if i get there first - Flipp
     /// <summary>

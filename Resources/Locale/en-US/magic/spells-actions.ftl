@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 action-speech-spell-forcewall = TARCOL MINTI ZHERI
 action-speech-spell-knock = AULIE OXIN FIERA
 action-speech-spell-smite = EI NATH!

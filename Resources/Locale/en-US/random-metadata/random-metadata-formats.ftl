@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 random-metadata-name-format-default = {$part0}
 random-metadata-description-format-default = {$part0}
 

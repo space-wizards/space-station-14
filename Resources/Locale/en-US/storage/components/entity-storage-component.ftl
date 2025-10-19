@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 entity-storage-component-welded-shut-message = It's welded completely shut!
 entity-storage-component-locked-message = It's locked!
 entity-storage-component-already-contains-user-message = It's too cramped!

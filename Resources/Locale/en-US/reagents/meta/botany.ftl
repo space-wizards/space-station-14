@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 reagent-name-e-z-nutrient = EZ nutrient
 reagent-desc-e-z-nutrient = Give your plants some of those EZ nutrients! Dionas find this delicious.
 

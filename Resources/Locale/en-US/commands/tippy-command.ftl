@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 cmd-tippy-desc = Broadcast a message as Tippy the clown.
 cmd-tippy-help = tippy <user | all> <message> [entity prototype] [speak time] [slide time] [waddle interval]
 cmd-tippy-auto-1 = <user | all>

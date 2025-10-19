@@ -1,4 +1,8 @@
-﻿## Actions Commands loc
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+## Actions Commands loc
 
 ## Upgradeaction command loc
 upgradeaction-command-help = Usage: upgradeaction <entityUid> [level]

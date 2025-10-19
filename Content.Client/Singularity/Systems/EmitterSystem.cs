@@ -1,4 +1,8 @@
-﻿using Content.Shared.Singularity.Components;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
 using Robust.Client.GameObjects;
 

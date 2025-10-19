@@ -1,4 +1,8 @@
-﻿advertisement-smite-1 = SMITE! Ban your thirst!
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+advertisement-smite-1 = SMITE! Ban your thirst!
 advertisement-smite-2 = An eldritch blast of lemon and lime!
 advertisement-smite-3 = Over 1 million drinks sold!
 advertisement-smite-4 = SMITE! Roll 2d8 for FLAVOR.

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 ninja-no-power = Not enough charge in suit battery!
 ninja-revealed = You have been revealed!
 ninja-suit-cooldown = The suit needs time to recuperate from the last attack.

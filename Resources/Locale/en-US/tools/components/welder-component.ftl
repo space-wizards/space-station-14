@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 welder-component-welder-not-lit-message = The welder is turned off!
 welder-component-cannot-weld-message = The welder does not have enough fuel for that!
 welder-component-no-fuel-message = The welder has no fuel left!

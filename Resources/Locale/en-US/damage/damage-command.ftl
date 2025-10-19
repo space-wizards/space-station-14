@@ -1,4 +1,8 @@
-﻿## Damage command loc.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+## Damage command loc.
 
 damage-command-description = Add or remove damage to an entity. 
 damage-command-help = Usage: {$command} <type/group> <amount> [ignoreResistances] [uid]

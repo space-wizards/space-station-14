@@ -1,4 +1,8 @@
-﻿namespace Content.Shared.Chat;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Chat;
 
 public static class ChatChannelExtensions
 {

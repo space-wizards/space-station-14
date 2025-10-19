@@ -1,4 +1,8 @@
-﻿using Content.Server.Ghost.Roles.Raffles;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Server.Ghost.Roles.Raffles;
 using Robust.Shared.Player;
 
 namespace Content.Server.Ghost.Roles.Components;

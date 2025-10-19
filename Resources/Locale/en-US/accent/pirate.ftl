@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 accent-pirate-prefix-1 = Arrgh
 accent-pirate-prefix-2 = Garr
 accent-pirate-prefix-3 = Yarr

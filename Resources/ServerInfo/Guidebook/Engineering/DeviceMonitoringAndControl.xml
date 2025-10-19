@@ -1,4 +1,10 @@
-﻿<Document>
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<Document>
   # Device Monitoring and Control
   Given the station-wide nature of the atmospherics network, it is important to have a way to monitor and control devices from a central location.
 

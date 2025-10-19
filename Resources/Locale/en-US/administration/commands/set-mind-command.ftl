@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 cmd-setmind-desc = Transfers a mind to the specified entity. The entity must have a {$requiredComponent}. By default this will force minds that are currently visiting other entities to return (i.e., return a ghost to their main body).
 cmd-setmind-help = Usage: {$command} <entityUid> <username> [unvisit]
 cmd-setmind-command-target-has-no-content-data-message = Target player does not have content data (wtf?)

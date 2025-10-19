@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 marking-GauzeLefteyePatch-gauze_lefteye_2 = Gauze eyepatch (Left)
 marking-GauzeLefteyePatch = Gauze eyepatch (Left)
 

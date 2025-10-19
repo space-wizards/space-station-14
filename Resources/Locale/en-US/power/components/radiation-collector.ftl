@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 power-radiation-collector-gas-tank-missing = The plasma tank slot is [color=darkred]empty[/color].
 power-radiation-collector-gas-tank-present = The plasma tank slot is [color=darkgreen]filled[/color] and the tank indicator reads [color={$fullness ->
     *[0]red]empty

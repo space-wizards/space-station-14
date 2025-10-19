@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # Components
 spray-painter-ammo-on-examine = It holds {$charges} charges.
 spray-painter-ammo-after-interact-full = The spray painter is full!

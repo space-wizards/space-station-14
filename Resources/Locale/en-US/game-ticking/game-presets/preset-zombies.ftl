@@ -1,4 +1,8 @@
-﻿zombie-title = Zombies
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+zombie-title = Zombies
 zombie-description = The undead have been unleashed on the station! Work with the crew to survive the outbreak and secure the station.
 
 zombieteors-title = Zombieteors

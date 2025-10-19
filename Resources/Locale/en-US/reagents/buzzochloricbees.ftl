@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 buzzochloricbees-effect-oh-god-bees = You are swarmed by many, many bees.
 buzzochloricbees-effect-its-the-bees = It's the bees, oh god the bees.
 buzzochloricbees-effect-why-am-i-covered-in-bees = You are covered in angry bees.

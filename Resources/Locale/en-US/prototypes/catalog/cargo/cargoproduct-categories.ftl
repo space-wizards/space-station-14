@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 cargoproduct-category-name-armory = Armory
 cargoproduct-category-name-atmospherics = Atmospherics
 cargoproduct-category-name-cargo = Cargo

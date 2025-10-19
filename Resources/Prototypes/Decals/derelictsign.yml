@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 #This has to be split up like this because tiles remove the decal under them, and the derelict sign is bigger then 32x32 when combined.
 
 #Bottom

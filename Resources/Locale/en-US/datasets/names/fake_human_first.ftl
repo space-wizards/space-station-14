@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 names-fake-human-first-dataset-1 = Al
 names-fake-human-first-dataset-2 = Anatoli
 names-fake-human-first-dataset-3 = Bip

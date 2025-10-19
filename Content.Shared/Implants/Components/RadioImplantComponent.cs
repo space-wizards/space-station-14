@@ -1,4 +1,8 @@
-﻿using Content.Shared.Radio;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Implants.Components;

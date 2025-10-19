@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 ## Phrases used for where central command got this information.
 random-sentience-event-data-1 = scans from our long-range sensors
 random-sentience-event-data-2 = our sophisticated probabilistic models

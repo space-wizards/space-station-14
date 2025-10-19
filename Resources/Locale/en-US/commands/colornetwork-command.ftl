@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 cmd-colornetwork-desc = Paints the atmos devices in the specified color
 cmd-colornetwork-help = colornetwork <uid> Pipe <HexColor>
 cmd-colornetwork-no-access = You are not currently able to use mapping commands.

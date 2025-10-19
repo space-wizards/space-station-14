@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 names-syndicate-normal-dataset-1 = Alfa
 names-syndicate-normal-dataset-2 = Bravo
 names-syndicate-normal-dataset-3 = Charlie

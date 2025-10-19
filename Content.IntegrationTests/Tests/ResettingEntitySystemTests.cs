@@ -1,4 +1,8 @@
-﻿using Content.Server.GameTicking;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Server.GameTicking;
 using Content.Shared.GameTicking;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Reflection;

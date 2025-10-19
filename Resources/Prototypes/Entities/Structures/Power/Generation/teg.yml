@@ -1,4 +1,8 @@
-﻿- type: entity
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+- type: entity
   id: TegCenter
   name: thermo-electric generator
   description: A high efficiency generator that uses energy transfer between hot and cold gases to produce electricity.

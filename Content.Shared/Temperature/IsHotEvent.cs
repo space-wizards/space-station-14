@@ -1,4 +1,8 @@
-﻿namespace Content.Shared.Temperature
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+namespace Content.Shared.Temperature
 {
     /// <summary>
     ///     Directed event raised on entities to query whether they're "hot" or not.

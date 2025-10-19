@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # Specific Root compound tasks being used for NPCs.
 
 # Tries to shoot a target in LOS in range.

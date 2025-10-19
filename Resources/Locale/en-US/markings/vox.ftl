@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 marking-TattooVoxNightlingHead-tattoo_nightling_head = Vox Head Tattoo (Nightling)
 marking-TattooVoxNightlingHead = Vox Head Tattoo (Nightling)
 

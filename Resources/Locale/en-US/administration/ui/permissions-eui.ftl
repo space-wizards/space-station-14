@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 permissions-eui-do-not-have-required-flags-to-edit-admin-tooltip = You do not have the required flags to edit this admin.
 permissions-eui-do-not-have-required-flags-to-edit-rank-tooltip = You do not have the required flags to edit this rank.
 

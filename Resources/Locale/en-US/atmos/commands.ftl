@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 cmd-set-map-atmos-desc = Sets a map's atmosphere
 cmd-set-map-atmos-help = setmapatmos <mapid> <space> [<temperature> [moles...]]
 cmd-set-map-atmos-removed = Atmosphere removed from map {$map}

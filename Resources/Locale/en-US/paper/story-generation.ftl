@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 story-gen-book-type1 = book
 story-gen-book-type2 = folio
 story-gen-book-type3 = collection

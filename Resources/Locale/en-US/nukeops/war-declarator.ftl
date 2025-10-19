@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 war-declarator-not-working = The device makes beeping noises, but nothing happens...
 war-declarator-ui-header = Declaration of War
 war-declarator-ui-war-button = DECLARE WAR!

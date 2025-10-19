@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
 <tips:TippyUI xmlns="https://spacestation14.io"
                xmlns:tips="clr-namespace:Content.Client.Tips"
                MinSize="64 64"

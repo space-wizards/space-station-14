@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 gateway-window-title = Gateway
 gateway-window-open-portal = Open Portal
 gateway-window-no-destinations = No destinations found.

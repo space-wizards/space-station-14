@@ -1,4 +1,8 @@
-﻿price-gun-pricing-result = The device deems {THE($object)} to be worth {$price} spesos.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+price-gun-pricing-result = The device deems {THE($object)} to be worth {$price} spesos.
 price-gun-verb-text = Appraisal
 price-gun-verb-message = Appraise {THE($object)}.
 price-gun-bounty-complete = The device confirms that the bounty contained within is completed.

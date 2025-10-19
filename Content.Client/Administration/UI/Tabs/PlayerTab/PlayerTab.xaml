@@ -1,4 +1,10 @@
-﻿<Control xmlns="https://spacestation14.io"
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<Control xmlns="https://spacestation14.io"
          xmlns:pt="clr-namespace:Content.Client.Administration.UI.Tabs.PlayerTab"
          xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
          xmlns:co="clr-namespace:Content.Client.UserInterface.Controls">

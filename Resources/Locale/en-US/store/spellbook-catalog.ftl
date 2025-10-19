@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # Spells
 spellbook-fireball-name = Fireball
 spellbook-fireball-desc = Get most crew exploding with rage when they see this fireball heading toward them! Upgradeable.

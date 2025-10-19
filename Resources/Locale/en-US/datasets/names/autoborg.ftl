@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 names-autoborg-dataset-1 = Autoburger Helper
 names-autoborg-dataset-2 = Bob
 names-autoborg-dataset-3 = Joe

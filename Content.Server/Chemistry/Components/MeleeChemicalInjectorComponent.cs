@@ -1,4 +1,8 @@
-﻿namespace Content.Server.Chemistry.Components;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+namespace Content.Server.Chemistry.Components;
 
 /// <summary>
 /// Used for melee weapon entities that should try to inject a

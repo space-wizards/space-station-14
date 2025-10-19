@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 ghost-gui-return-to-body-button = Return to body
 ghost-gui-ghost-warp-button = Ghost Warp
 ghost-gui-ghost-roles-button = Ghost Roles ({$count})

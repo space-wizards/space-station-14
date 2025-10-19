@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 #==Suffix Guide==
 #Always Powered - light doesn't need power to give off life
 #Empty - on map init, light spawns without bulb

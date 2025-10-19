@@ -1,4 +1,8 @@
-﻿prayer-verbs-subtle-message = Subtle Message
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+prayer-verbs-subtle-message = Subtle Message
 prayer-verbs-pray = Pray
 prayer-verbs-call = Call
 prayer-verbs-rub = Rub

@@ -1,4 +1,8 @@
-﻿defaultWindowTitle: Space Station 14
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+defaultWindowTitle: Space Station 14
 windowIconSet: /Textures/Logo/icon
 splashLogo: /Textures/Logo/logo.png
 

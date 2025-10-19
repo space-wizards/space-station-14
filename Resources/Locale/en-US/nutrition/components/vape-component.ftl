@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 vape-component-vape-success = You puffed on the vape.
 vape-component-vape-success-forced = {CAPITALIZE(THE($user))} forced you to puffon the vape.
 vape-component-vape-success-user-forced = You successfully forced to puff {THE($target)}.

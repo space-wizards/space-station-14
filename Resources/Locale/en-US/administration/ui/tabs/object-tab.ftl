@@ -1,4 +1,8 @@
-﻿object-tab-entity-id = Entity ID
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+object-tab-entity-id = Entity ID
 object-tab-object-name = Object name
 
 object-tab-object-type = Object type:

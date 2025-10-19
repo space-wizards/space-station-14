@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 make-ghost-roles-window-title = Make Ghost Role
 
 make-ghost-roles-window-entity-label = Entity

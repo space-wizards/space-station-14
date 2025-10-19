@@ -1,4 +1,8 @@
-﻿# Special entity that indicates that there is something in a player's pockets, without showing the actual entity.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+# Special entity that indicates that there is something in a player's pockets, without showing the actual entity.
 # This **could** just be done via UI elements, but the existing UI uses sprite-views & the examine-system. So this is easier than special casing this.
 
 - type: entity

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 advertisement-syndiedrobe-1 = Brand new outfits!
 advertisement-syndiedrobe-2 = Roof-top outfits for any occasion!
 advertisement-syndiedrobe-3 = Being a scoundrel can be stylish.

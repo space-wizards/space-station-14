@@ -1,4 +1,8 @@
-﻿advertisement-chefvend-1 = At least sixty percent of our eggs un-broken, guranteed!
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+advertisement-chefvend-1 = At least sixty percent of our eggs un-broken, guranteed!
 advertisement-chefvend-2 = Rice, rice, baby.
 advertisement-chefvend-3 = Slap some butter on it!
 advertisement-chefvend-4 = Are you worth your salt? We are.

@@ -1,2 +1,6 @@
-﻿cmd-npc-desc = Opens the debug window for NPCs.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+cmd-npc-desc = Opens the debug window for NPCs.
 cmd-npc-help = Usage: npc

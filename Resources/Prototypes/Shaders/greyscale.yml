@@ -1,4 +1,8 @@
-﻿- type: shader
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+- type: shader
   id: Greyscale
   kind: source
   path: "/Textures/Shaders/greyscale.swsl"

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 reagent-name-acetone = acetone
 reagent-desc-acetone = A slick, slightly carcinogenic liquid. Has a multitude of mundane uses in everyday life.
 

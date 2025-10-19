@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 genpop-prisoner-id-expire = You have served your sentence! You may now exit prison through the turnstiles and collect your belongings.
 genpop-prisoner-id-popup-not-served = Sentence not yet served!
 

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 thief-role-greeting-human =
     You are criminal scum, a kleptomaniac
     previously arrested and on parole for petty theft.

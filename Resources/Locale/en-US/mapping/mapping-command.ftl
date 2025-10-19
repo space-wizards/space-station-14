@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 cmd-mapping-desc = Create or load a map and teleports you to it.
 cmd-mapping-help = Usage: mapping [MapID] [Path] [Grid]
 cmd-mapping-server = Only players can use this command.

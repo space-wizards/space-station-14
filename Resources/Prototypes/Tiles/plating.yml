@@ -1,4 +1,8 @@
-﻿- type: tile
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+- type: tile
   id: Plating
   name: tiles-plating
   sprite: /Textures/Tiles/plating.png

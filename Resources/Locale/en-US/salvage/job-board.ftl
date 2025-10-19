@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 salvage-job-rank-title-0 = [color=gray]Scavenger[/color]
 salvage-job-rank-title-1 = [color=white]Scrapper[/color]
 salvage-job-rank-title-2 = [color=yellow]Specialist[/color]

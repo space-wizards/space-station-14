@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Weapons.Ranged.Systems;
 using Robust.Client.Graphics;
 using Robust.Client.Input;

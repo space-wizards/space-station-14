@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 job-supervisors-centcom = Central Command
 job-supervisors-captain = the Captain
 job-supervisors-hop = the Head of Personnel

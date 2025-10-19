@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Server.ParticleAccelerator.Wires;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;

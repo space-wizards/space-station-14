@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 # Separate yml file for scrap helmet since it has so many construction steps.
 # Listed from first step of crafting to the final helmet
 

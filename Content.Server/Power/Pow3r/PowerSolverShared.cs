@@ -1,4 +1,8 @@
-﻿namespace Content.Server.Power.Pow3r
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+namespace Content.Server.Power.Pow3r
 {
     public static class PowerSolverShared
     {

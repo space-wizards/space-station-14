@@ -1,4 +1,8 @@
-﻿action-popup-blocking-user = You raise your {$shield}!
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+action-popup-blocking-user = You raise your {$shield}!
 action-popup-blocking-disabling-user = You lower your {$shield}!
 
 action-popup-blocking-other = {CAPITALIZE(THE($blockerName))} raises {POSS-ADJ($blockerName)} {$shield}!

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 - files: ["zippo_open.ogg", "zippo_closed.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Created by BobTheBoss64 for ParadiseSS13, edited by Darkenson"

@@ -1,4 +1,8 @@
-﻿using Content.Server.Light.EntitySystems;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Server.Light.EntitySystems;
 
 namespace Content.Server.Light.Components
 {

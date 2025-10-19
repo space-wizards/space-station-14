@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 signal-linker-component-saved = Successfully saved link to {$machine}!
 signal-linker-component-linked-port = Successfully linked {$machine1}:{$port1} to {$machine2}:{$port2}!
 signal-linker-component-unlinked-port = Successfully unlinked {$machine1}:{$port1} from {$machine2}:{$port2}!

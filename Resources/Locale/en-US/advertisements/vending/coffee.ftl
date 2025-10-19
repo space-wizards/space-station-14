@@ -1,4 +1,8 @@
-﻿advertisement-coffee-1 = Have a drink!
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+advertisement-coffee-1 = Have a drink!
 advertisement-coffee-2 = Drink up!
 advertisement-coffee-3 = It's good for you!
 advertisement-coffee-4 = Would you like a hot joe?

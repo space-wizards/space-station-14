@@ -1,4 +1,10 @@
-﻿<Document>
+﻿<!--
+SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+
+SPDX-License-Identifier: MIT
+-->
+
+<Document>
   # Gasses
   Gasses are a critical part of the station's operation.
   You may know them as the stuff you breathe, but they are also used in many other ways.

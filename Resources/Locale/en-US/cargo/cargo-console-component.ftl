@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 ## UI
 cargo-console-menu-title = Cargo request console
 cargo-console-menu-account-name-label = Account:{" "}

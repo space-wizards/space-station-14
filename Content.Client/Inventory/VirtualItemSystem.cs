@@ -1,4 +1,8 @@
-﻿using Content.Client.Hands.UI;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Client.Hands.UI;
 using Content.Client.Items;
 using Content.Shared.Inventory.VirtualItem;
 

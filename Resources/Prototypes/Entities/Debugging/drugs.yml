@@ -1,4 +1,8 @@
-﻿- type: entity
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+- type: entity
   parent: [DrinkBaseMaterialGlass, DrinkBase]
   id: DrinkMeth
   name: meth  # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e

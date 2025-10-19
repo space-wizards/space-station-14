@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 pai-mass-scanner-name = Mass Scanner
 pai-mass-scanner-desc = Enables you to scan nearby masses to assist in navigation.
 

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 - type: entity
   name: spider clan charge
   description: A modified C-4 charge supplied to you by the Spider Clan. Its explosive power has been juiced up, but only works in one specific area.

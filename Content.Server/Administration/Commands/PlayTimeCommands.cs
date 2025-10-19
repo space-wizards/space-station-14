@@ -1,4 +1,8 @@
-﻿using Content.Server.Players.PlayTimeTracking;
+﻿// SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Server.Players.PlayTimeTracking;
 using Content.Shared.Administration;
 using Content.Shared.Players.PlayTimeTracking;
 using Robust.Server.Player;

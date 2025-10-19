@@ -1,4 +1,8 @@
-﻿# Only one of those rulesets will appear on the server at any given time.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+# Only one of those rulesets will appear on the server at any given time.
 # They all have a priority of 10 so they appear 2nd by default (after priority 0 and before priority 20)
 
 - type: guideEntry # Default for forks and stuff. Should not be listed anywhere if the server is using a custom ruleset.

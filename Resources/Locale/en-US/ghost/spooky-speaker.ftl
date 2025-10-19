@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 spooky-speaker-generic-1 = ...ooOoooOOoooo...
 spooky-speaker-generic-2 = ...can anyone hear me...?
 spooky-speaker-generic-3 = ...join us...

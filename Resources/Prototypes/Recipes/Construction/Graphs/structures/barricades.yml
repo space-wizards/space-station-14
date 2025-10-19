@@ -1,4 +1,8 @@
-﻿#Due to limitations with placement conditions in the construction system, the other kinds of non-fulltile barricades are currently not constructible.
+﻿# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
+#Due to limitations with placement conditions in the construction system, the other kinds of non-fulltile barricades are currently not constructible.
 #This may make it sound like it needs some big refactor to be possible, but make no mistake, it is 100% due to my own technical incompetence.
 - type: constructionGraph
   id: Barricade

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Space Station 14 Contributors <https://spacestation14.com/about/about/>
+#
+# SPDX-License-Identifier: MIT
+
 advertisement-magivend-1 = Sling spells the proper way with MagiVend!
 advertisement-magivend-2 = Be your own Houdini! Use MagiVend!
 advertisement-magivend-3 = FJKLFJSD
