@@ -64,6 +64,10 @@
     drawdepth: WallTops
     sprite: Structures/Windows/mining_diagonal.rsi
     state: state0
+  - type: Tag
+    tags:
+    - Diagonal
+    - Window
   - type: IconSmooth
     mode: Diagonal
     key: windows

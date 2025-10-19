@@ -91,7 +91,8 @@
   - type: Machine
     board: EmitterCircuitboard
   - type: GuideHelp
-    guides: [ Singularity, Power ]
+    guides:
+    - SingularityTeslaEngine
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice

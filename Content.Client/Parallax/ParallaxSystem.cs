@@ -10,12 +10,11 @@ namespace Content.Client.Parallax;
 
 public sealed class ParallaxSystem : SharedParallaxSystem
 {
-    [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly IOverlayManager _overlay = default!;
     [Dependency] private readonly IParallaxManager _parallax = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
 
-    [ValidatePrototypeId<ParallaxPrototype>]
-    private const string Fallback = "Default";
+    private static readonly ProtoId<ParallaxPrototype> Fallback = "Default";
 
     public const int ParallaxZIndex = 0;
 
@@ -58,12 +57,12 @@ public sealed class ParallaxSystem : SharedParallaxSystem
 
     public ParallaxLayerPrepared[] GetParallaxLayers(MapId mapId)
     {
-        return _parallax.GetParallaxLayers(GetParallax(_map.GetMapEntityId(mapId)));
+        return _parallax.GetParallaxLayers(GetParallax(_map.GetMapOrInvalid(mapId)));
     }
 
     public string GetParallax(MapId mapId)
     {
-        return GetParallax(_map.GetMapEntityId(mapId));
+        return GetParallax(_map.GetMapOrInvalid(mapId));
     }
 
     public string GetParallax(EntityUid mapUid)

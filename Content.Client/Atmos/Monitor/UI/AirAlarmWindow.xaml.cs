@@ -103,13 +103,15 @@ public sealed partial class AirAlarmWindow : FancyWindow
         _temperature.SetMarkup(Loc.GetString("air-alarm-ui-window-temperature", ("tempC", $"{TemperatureHelpers.KelvinToCelsius(state.TemperatureAverage):0.#}"), ("temperature", $"{state.TemperatureAverage:0.##}")));
         _alarmState.SetMarkup(Loc.GetString("air-alarm-ui-window-alarm-state",
                     ("color", ColorForAlarm(state.AlarmType)),
-                    ("state", $"{state.AlarmType}")));
+                    ("state", state.AlarmType)));
         UpdateModeSelector(state.Mode);
         UpdateAutoMode(state.AutoMode);
         foreach (var (addr, dev) in state.DeviceData)
         {
             UpdateDeviceData(addr, dev);
         }
+        _modes.Visible = !state.PanicWireCut;
+        CModeSelectLocked.Visible = state.PanicWireCut;
     }
 
     public void UpdateModeSelector(AirAlarmMode mode)
@@ -130,8 +132,8 @@ public sealed partial class AirAlarmWindow : FancyWindow
                 if (!_pumps.TryGetValue(addr, out var pumpControl))
                 {
                     var control= new PumpControl(pump, addr);
-                    control.PumpDataChanged += AtmosDeviceDataChanged!.Invoke;
-					control.PumpDataCopied += AtmosDeviceDataCopied!.Invoke;
+                    control.PumpDataChanged += AtmosDeviceDataChanged;
+                    control.PumpDataCopied += AtmosDeviceDataCopied;
                     _pumps.Add(addr, control);
                     CVentContainer.AddChild(control);
                 }
@@ -145,8 +147,8 @@ public sealed partial class AirAlarmWindow : FancyWindow
                 if (!_scrubbers.TryGetValue(addr, out var scrubberControl))
                 {
                     var control = new ScrubberControl(scrubber, addr);
-                    control.ScrubberDataChanged += AtmosDeviceDataChanged!.Invoke;
-					control.ScrubberDataCopied += AtmosDeviceDataCopied!.Invoke;
+                    control.ScrubberDataChanged += AtmosDeviceDataChanged;
+					control.ScrubberDataCopied += AtmosDeviceDataCopied;
                     _scrubbers.Add(addr, control);
                     CScrubberContainer.AddChild(control);
                 }
@@ -161,6 +163,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
                 {
                     var control = new SensorInfo(sensor, addr);
                     control.OnThresholdUpdate += AtmosAlarmThresholdChanged;
+                    control.SensorDataCopied += AtmosDeviceDataCopied;
                     _sensors.Add(addr, control);
                     CSensorContainer.AddChild(control);
                 }

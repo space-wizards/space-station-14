@@ -1,4 +1,5 @@
 ﻿using Content.Server.Station.Components;
+using Content.Shared.Station.Components;
 
 namespace Content.Server.Station.Systems;
 

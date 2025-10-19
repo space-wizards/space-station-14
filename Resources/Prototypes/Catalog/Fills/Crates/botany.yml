@@ -58,14 +58,14 @@
       - id: HydroponicsToolHatchet
       - id: ClothingOuterApronBotanist
       - id: ClothingHandsGlovesLeather
-      - id: EZNutrientChemistryBottle
+      - id: ChemistryBottleEZNutrient
         amount: 2
 
 - type: entity
   id: CrateHydroponicsSeeds
   parent: CrateHydroponics
   name: seeds crate
-  description: Big things have small beginnings. Contains twelve different seeds.
+  description: Big things have small beginnings. Contains twenty-four different seeds.
   components:
   - type: StorageFill
     contents:
@@ -92,3 +92,14 @@
       - id: WatermelonSeeds
       - id: PeaSeeds
       - id: CherrySeeds
+      - id: CottonSeeds
+
+- type: entity
+  id: CrateHydroponicsTray
+  parent: CrateHydroponics
+  name: hydroponics tray crate
+  description: Contains a hydroponics tray flatpack.
+  components:
+  - type: StorageFill
+    contents:
+    - id: HydroponicsTrayFlatpack

@@ -537,6 +537,12 @@ namespace Content.Server.Database
             return await base.AddAdminMessage(message);
         }
 
+        public override Task SendNotification(DatabaseNotification notification)
+        {
+            // Notifications not implemented on SQLite.
+            return Task.CompletedTask;
+        }
+
         protected override DateTime NormalizeDatabaseTime(DateTime time)
         {
             DebugTools.Assert(time.Kind == DateTimeKind.Unspecified);

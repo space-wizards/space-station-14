@@ -39,6 +39,8 @@ public sealed class CriminalRecordsConsoleBoundUserInterface : BoundUserInterfac
             SendMessage(new CriminalRecordChangeStatus(status, null));
         _window.OnDialogConfirmed += (status, reason) =>
             SendMessage(new CriminalRecordChangeStatus(status, reason));
+        _window.OnStatusFilterPressed += (statusFilter) =>
+            SendMessage(new CriminalRecordSetStatusFilter(statusFilter));
         _window.OnHistoryUpdated += UpdateHistory;
         _window.OnHistoryClosed += () => _historyWindow?.Close();
         _window.OnClose += Close;

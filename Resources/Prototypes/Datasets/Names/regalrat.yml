@@ -1,39 +1,11 @@
-- type: dataset
-  id: RegalRatNameKingdom
+- type: localizedDataset
+  id: NamesRegalratKingdom
   values:
-  - Plague
-  - Ammonia
-  - Maintenance
-  - Trash
-  - Garbage
-  - Rat
-  - Vermin
-  - Cheese
-  - Munching
-  - Big
-  - Filth
-  - Sewer
-  - Disposal
-  - Service
-  - The
+    prefix: names-regal-rat-kingdom-dataset-
+    count: 15
 
-- type: dataset
-  id: RegalRatNameTitle
+- type: localizedDataset
+  id: NamesRegalratTitle
   values:
-  - King
-  - Lord
-  - Prince
-  - Emperor
-  - Supreme
-  - Overlord
-  - Master
-  - Shogun
-  - Bojar
-  - Tsar
-  - Fan #vs
-  - Enjoyer
-  - President
-  - Mayor
-  - Boss
-  - Prophet
-  - Cheese
+    prefix: names-regal-rat-title-dataset-
+    count: 17

@@ -1,4 +1,4 @@
-﻿using Content.Server.Disposal.Unit.Components;
+﻿using Content.Server.Disposal.Unit;
 
 namespace Content.Server.Disposal.Tube;
 

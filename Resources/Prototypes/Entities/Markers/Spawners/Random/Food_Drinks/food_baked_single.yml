@@ -42,6 +42,8 @@
       - FoodCakeChristmasSlice
       - FoodCakeVanillaSlice
       - FoodCakeBirthdaySlice
+      - FoodCakeBerryDelightSlice
+      - FoodCakeCottonSlice
       - FoodBakedMuffin
       - FoodBakedMuffinBerry
       - FoodBakedMuffinCherry
@@ -55,6 +57,8 @@
       - FoodBakedCookieOatmeal
       - FoodBakedCookieRaisin
       - FoodBakedCookieSugar
+      - FoodBakedGrilledCheeseSandwich
+      - FoodBakedGrilledCheeseSandwichCotton
       - FoodBakedNugget
       - FoodBakedPancake
       - FoodBakedPancakeBb

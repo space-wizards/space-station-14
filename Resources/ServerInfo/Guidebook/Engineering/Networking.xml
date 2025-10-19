@@ -1,24 +1,64 @@
 <Document>
   # Networking
-  Some devices on the station need to communicate with each other, and they do this by utilizing device networking.
-  With networking, machines and devices can send arbitrary data between each other.
-  There are multiple networks that get used, such as the wireless and wired network.
-  Each network device has a frequency it receives on. PDAs, for example, use the frequency: [color=green]220.2[/color]
+  On the station, devices need to communicate to each other to preform their functions.
+  [textlink="Air alarms" link="AirAlarms"] need to talk to their respective devices, [textlink="doors" link="Airlocks"] need to be linked to form proper airlocks, and much more.
 
-  Note: The following operations will require use of the Network Configurator to be performed:
+  This is done through two systems, the Link system and the List system.
 
-  ## Device Lists
-  Some devices need to know which other devices to communicate with specifically.
-  <Box>
-    <GuideEntityEmbed Entity="AirAlarm"/>
-  </Box>
-  Air alarms, for example, require you to tell it which vents, scrubbers, sensors, and firelocks to interact with.
+  You can use either the Multitool or Network Configurator to interact with these systems.
+  You can switch between the different systems using [color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color] or by hovering your cursor over the device and using [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color].
 
-  ## Linking
-  If a device, basic or advanced, needs finer controls of how and which devices it connects to, it will generally use device linking.
+  <Box HorizontalAlignment="Stretch">
     <Box>
-      <GuideEntityEmbed Entity="SignalSwitch"/>
-      <GuideEntityEmbed Entity="Airlock"/>
+      <GuideEntityEmbed Entity="Multitool"/>
     </Box>
-  With linking, you can connect the outputs of a device, like [color=gray]On[/color] or [color=gray]Off[/color], with the inputs of a device, like the airlocks [color=gray]Open[/color] or [color=gray]Close[/color] inputs.
+    <Box>
+      <GuideEntityEmbed Entity="NetworkConfigurator"/>
+    </Box>
+  </Box>
+
+  Some devices will require access to link devices to them.
+  For example, you need Atmospherics access to link devices to an [textlink="air alarm" link="AirAlarms"].
+  For doors, you'll need the access level of the door you're linking to.
+
+  ## Link System
+  The link system is used for explicitly linking two devices, such as linking a door to another door.
+
+  <Box>
+    <GuideEntityEmbed Entity="AirlockExternal"/>
+    <GuideEntityEmbed Entity="AirlockEngineering"/>
+    <GuideEntityEmbed Entity="BlastDoor"/>
+    <GuideEntityEmbed Entity="SignalButton"/>
+  </Box>
+
+  Under the link system, devices have [bold]ports[/bold] that are capable of either sending or receiving signals.
+
+  Hovering over a port using your cursor will show a tooltip that tells you what the port does.
+  For example, output ports will state the conditions under which they will invoke a signal, and input ports will state what the device will do if it receives a signal.
+
+  ## List System
+  The list system is used for linking multiple devices to a single primary device, such as linking multiple atmospherics devices to an air alarm.
+
+  <Box>
+    <GuideEntityEmbed Entity="AirAlarm" Caption=""/>
+    <GuideEntityEmbed Entity="GasVentPump" Caption=""/>
+    <GuideEntityEmbed Entity="GasVentScrubber" Caption=""/>
+    <GuideEntityEmbed Entity="AirSensor" Caption=""/>
+    <GuideEntityEmbed Entity="Firelock" Caption=""/>
+  </Box>
+
+  Each device has its own unique address, which is used to identify it in the list system. When you link a device to a primary device, you are adding the device's address to a list of devices that the primary device will communicate with.
+
+  You can save a device's address to your tool by interacting with the device using [color=yellow][bold][keybind="Use"][/bold][/color].
+
+  Once you have a list of devices saved to your tool, you can link them to a primary device by interacting with the primary device using [color=yellow][bold][keybind="Use"][/bold][/color], which will bring up a UI.
+
+  The UI has multiple options:
+  - Set: Overwrites the current list of linked devices with the devices saved on the tool.
+  - Add: Adds the devices saved on the tool to the current list of linked devices.
+  - Clear: Removes all linked devices from the air alarm.
+  - Copy: Copies the list of currently linked devices to the tool.
+  - Show: Draws a line between the primary device and all linked devices. This is useful for visualizing the area the air alarm covers.
+
+  If you need to clear your tool, you can press [color=yellow][bold][keybind="Use"][/bold][/color] on the tool or use [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] to bring up a list of saved devices, and then press the "Clear" button.
 </Document>

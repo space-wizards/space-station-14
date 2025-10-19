@@ -8,7 +8,7 @@ namespace Content.Client.Strip
     public sealed class StrippingMenu : DefaultWindow
     {
         public LayoutContainer InventoryContainer = new();
-        public BoxContainer HandsContainer = new() { Orientation = LayoutOrientation.Horizontal };
+        public LayoutContainer HandsContainer = new();
         public BoxContainer SnareContainer = new();
         public bool Dirty = true;
 
@@ -25,9 +25,9 @@ namespace Content.Client.Strip
 
         public void ClearButtons()
         {
-            InventoryContainer.DisposeAllChildren();
-            HandsContainer.DisposeAllChildren();
-            SnareContainer.DisposeAllChildren();
+            InventoryContainer.RemoveAllChildren();
+            HandsContainer.RemoveAllChildren();
+            SnareContainer.RemoveAllChildren();
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
