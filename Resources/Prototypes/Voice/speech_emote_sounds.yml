@@ -496,7 +496,7 @@
       collection: VulpkaninSnarls
     Bark:
       collection: VulpkaninBarks
-    Whine:
+    Crying:
       collection: VulpkaninWhines
     Howl:
       collection: VulpkaninHowls
@@ -528,7 +528,7 @@
       collection: VulpkaninSnarls
     Bark:
       collection: VulpkaninBarks
-    Whine:
+    Crying:
       collection: VulpkaninWhines
     Howl:
       collection: VulpkaninHowls
