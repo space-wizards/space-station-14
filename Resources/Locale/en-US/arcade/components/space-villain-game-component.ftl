@@ -1,4 +1,4 @@
-## space-villainGame
+## SpaceVillainGame
 
 space-villain-game-player-attack-message = You attack {$enemyName} for {$attackAmount} damage!
 space-villain-game-player-heal-message = You use {$magicPointAmount} {-space-villain-magic} to heal {$healAmount} {-space-villain-health}!
