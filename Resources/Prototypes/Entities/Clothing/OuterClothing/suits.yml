@@ -292,7 +292,7 @@
     accent: BarkAccent
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: [ ClothingOuterBase, BaseSyndicateContraband ]
   id: ClothingOuterSuitCarp
   name: carp suit
   description: A special suit that makes you look just like a space carp, if your eyesight is bad.
