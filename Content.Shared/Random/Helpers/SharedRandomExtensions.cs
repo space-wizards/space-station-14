@@ -198,7 +198,7 @@ namespace Content.Shared.Random.Helpers
         /// <example>
         /// Combine the current game tick with a NetEntity Id in order to not get the same random result if this is called multiple times in the same tick.
         /// <code>
-        /// var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(ent).Id });
+        /// var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
         /// </code>
         /// </example>
         public static int HashCodeCombine(IReadOnlyCollection<int> values)
