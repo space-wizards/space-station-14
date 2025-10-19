@@ -6,6 +6,10 @@ using Content.Client.Weapons.Ranged.Components;
 using Content.Shared.Camera;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Physics;
 using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
@@ -488,13 +492,13 @@ public sealed partial class GunSystem : SharedGunSystem
         // If we cannot collide then we absolutely do not want to target it!
         args.Priority = 0;
     }
+    
+    // TODO: Move RangedDamageSoundComponent to shared so this can be predicted.
+    public override void PlayImpactSound(EntityUid otherEntity, DamageSpecifier? modifiedDamage, SoundSpecifier? weaponSound, bool forceWeaponSound) {}
 
     /// <summary>
     /// Raised on an entity that is being hovered over by the client's mouse to get an appropriate "Rank" for being targeted.
     /// </summary>
     [ByRefEvent]
     public record struct TargetRankEvent(int Priority);
-
-    // TODO: Move RangedDamageSoundComponent to shared so this can be predicted.
-    public override void PlayImpactSound(EntityUid otherEntity, DamageSpecifier? modifiedDamage, SoundSpecifier? weaponSound, bool forceWeaponSound) {}
 }
