@@ -39,13 +39,13 @@
                     Name="PlayerHpLabel"
                     Align="Center"
                     HorizontalExpand="True"
-                    Modulate="SpringGreen"/>
+                    Modulate="#37e928"/>
                 <!-- Player MP -->
                 <Label
                     Name="PlayerMpLabel"
                     Align="Center"
                     HorizontalExpand="True"
-                    Modulate="Aquamarine"/>
+                    Modulate="#3483ff"/>
             </GridContainer>
             <!-- Separator -->
             <Label
@@ -61,13 +61,13 @@
                     Name="EnemyHpLabel"
                     Align="Center"
                     HorizontalExpand="True"
-                    Modulate="Salmon"/>
+                    Modulate="#e94740"/>
                 <!-- Enemy MP -->
                 <Label
                     Name="EnemyMpLabel"
                     Align="Center"
                     HorizontalExpand="True"
-                    Modulate="Aquamarine"/>
+                    Modulate="#3483ff"/>
             </GridContainer>
         </GridContainer>
         <!-- Spacer -->
