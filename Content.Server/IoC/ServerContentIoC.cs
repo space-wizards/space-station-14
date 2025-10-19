@@ -26,6 +26,7 @@ using Content.Server.Voting.Managers;
 using Content.Server.Worldgen.Tools;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Administration.Managers;
+using Content.Shared.Administration.Managers.Bwoink;
 using Content.Shared.Chat;
 using Content.Shared.Kitchen;
 using Content.Shared.Players.PlayTimeTracking;
@@ -77,7 +78,10 @@ namespace Content.Server.IoC
             IoCManager.Register<ConnectionManager>();
             IoCManager.Register<MultiServerKickManager>();
             IoCManager.Register<CVarControlManager>();
-            IoCManager.Register<ServerBwoinkManager>();
+
+            var bwoinkInstance = new ServerBwoinkManager(); // There HAS to be a better way of doing this.
+            IoCManager.RegisterInstance<ServerBwoinkManager>(bwoinkInstance);
+            IoCManager.RegisterInstance<SharedBwoinkManager>(bwoinkInstance);
 
             IoCManager.Register<DiscordLink>();
             IoCManager.Register<DiscordChatLink>();

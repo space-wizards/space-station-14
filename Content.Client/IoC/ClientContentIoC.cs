@@ -22,6 +22,7 @@ using Content.Shared.Administration.Logs;
 using Content.Client.Lobby;
 using Content.Client.Players.RateLimiting;
 using Content.Shared.Administration.Managers;
+using Content.Shared.Administration.Managers.Bwoink;
 using Content.Shared.Chat;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Players.RateLimiting;
@@ -62,7 +63,10 @@ namespace Content.Client.IoC
             collection.Register<SharedPlayerRateLimitManager, PlayerRateLimitManager>();
             collection.Register<TitleWindowManager>();
             collection.Register<ClientsidePlaytimeTrackingManager>();
-            collection.Register<ClientBwoinkManager>();
+
+            var bwoinkInstance = new ClientBwoinkManager(); // There HAS to be a better way of doing this.
+            IoCManager.RegisterInstance<ClientBwoinkManager>(bwoinkInstance);
+            IoCManager.RegisterInstance<SharedBwoinkManager>(bwoinkInstance);
         }
     }
 }
