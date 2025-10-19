@@ -13,7 +13,7 @@
   abstract: true
   components:
   - type: Contraband
-    severity: Major # placeholder until they make a better severity
+    severity: HighlyIllegal
 
 # any type of magical items used by wizards and similiar
 - type: entity
