@@ -262,6 +262,7 @@
       - Seed
       - Smokable
       - HandLabeler
+      - Swab
   - type: ItemMapper
     sprite: *BeltOverlay
     mapLayers:

@@ -47,6 +47,7 @@
     sprite: Objects/Specific/Hydroponics/swab_applicator.rsi
     heldPrefix: swab_applicator
     size: Small
+    storedRotation: 270
   - type: ItemSlots
     slots:
       swab:
