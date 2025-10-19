@@ -35,10 +35,10 @@ public sealed partial class SpaceVillainArcadeMenu : DefaultWindow
         if (message is SharedSpaceVillainArcadeComponent.SpaceVillainArcadeMetaDataUpdateMessage metaMessage)
             UpdateMetadata(metaMessage);
 
-        PlayerHpLabel.Text = $"{message.PlayerHP} HP";
-        PlayerMpLabel.Text = $"{message.PlayerMP} MP";
-        EnemyHpLabel.Text = $"{message.EnemyHP} HP";
-        EnemyMpLabel.Text = $"{message.EnemyMP} MP";
+        PlayerHpLabel.Text = Loc.GetString("space-villain-menu-label-health", ("amount", message.PlayerHP));
+        PlayerMpLabel.Text = Loc.GetString("space-villain-menu-label-magic", ("amount", message.PlayerMP));
+        EnemyHpLabel.Text = Loc.GetString("space-villain-menu-label-health", ("amount", message.EnemyHP));
+        EnemyMpLabel.Text = Loc.GetString("space-villain-menu-label-magic", ("amount", message.EnemyMP));
         PlayerActionLabel.Text = message.PlayerActionMessage;
         EnemyActionLabel.Text = message.EnemyActionMessage;
     }
