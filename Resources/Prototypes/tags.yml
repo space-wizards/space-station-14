@@ -748,7 +748,7 @@
 - type: Tag
   id: HardsuitSpatio # ConstructionGraph: HardsuitGoliath
 
-- type: Tag
+- type: Tag # Used on DungeonRoom prototypes.
   id: Haunted # Unused. Exists on various DungeonRoomPrototypes in haunted.yml, presumably for an unimplemented PrefabDunGen whitelist.
 
 - type: Tag
@@ -884,17 +884,17 @@
 
 ## L ##
 
-- type: Tag
-  id: LavaBrig
+- type: Tag # Used on DungeonRoom prototypes.
+  id: LavaBrig # PrefabDunGen whitelist on LavaBrig DungeonConfig.
 
 - type: Tag
-  id: Lemon
+  id: Lemon # CargoBounty: BountyLemon
 
 - type: Tag
-  id: LightBulb
+  id: LightBulb # Storage whitelist: BoxLightbulb. ConstructionGraph: HelmetJustice
 
 - type: Tag
-  id: Lime
+  id: Lime # CargoBounty: BountyLime
 
 ## M ##
 
