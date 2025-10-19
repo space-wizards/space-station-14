@@ -14,7 +14,6 @@ using Content.Shared.Pointing;
 using Content.Shared.Random.Helpers;
 using Content.Shared.RatKing;
 using Robust.Shared.Map;
-using Robust.Shared.Random;
 
 namespace Content.Server.RatKing
 {
