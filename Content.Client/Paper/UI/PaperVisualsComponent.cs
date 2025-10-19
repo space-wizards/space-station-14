@@ -1,4 +1,5 @@
 using System.Numerics;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Paper.UI;
 
@@ -54,6 +55,24 @@ public sealed partial class PaperVisualsComponent : Component
     /// </summary>
     [DataField("headerMargin")]
     public Box2 HeaderMargin = default;
+
+    /// <summary>
+    /// A path to an image which will be used as a footer on the paper
+    /// </summary>
+    [DataField]
+    public ResPath? FooterImagePath;
+
+    /// <summary>
+    /// Modulate the footer image by this color
+    /// </summary>
+    [DataField]
+    public Color FooterImageModulate = Color.White;
+
+    /// <summary>
+    /// Any additional margin to add around the footer
+    /// </summary>
+    [DataField]
+    public Box2 FooterMargin = default;
 
     /// <summary>
     ///     Path to an image to use as the background to the "content" of the paper

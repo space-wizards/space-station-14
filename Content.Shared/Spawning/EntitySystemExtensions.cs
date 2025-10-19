@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
@@ -16,7 +16,7 @@ namespace Content.Shared.Spawning
             SharedPhysicsSystem? physicsManager = null)
         {
             physicsManager ??= entityManager.System<SharedPhysicsSystem>();
-            var mapCoordinates = coordinates.ToMap(entityManager, entityManager.System<SharedTransformSystem>());
+            var mapCoordinates = entityManager.System<SharedTransformSystem>().ToMapCoordinates(coordinates);
 
             return entityManager.SpawnIfUnobstructed(prototypeName, mapCoordinates, collisionLayer, box, physicsManager);
         }

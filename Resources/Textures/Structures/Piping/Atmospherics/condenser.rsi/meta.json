@@ -1,21 +1,18 @@
 {
-    "version":1,
-    "size":
-    {
-        "x":32,
-        "y":32
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    "copyright":"Created by EmoGarbage404 (github) for Space Station 14.",
-    "license":"CC0-1.0",
-    "states":
-    [
+    "copyright": "Created by EmoGarbage404 (github) for Space Station 14, edited by chromiumboy.",
+    "license": "CC0-1.0",
+    "states": [
         {
-            "name":"off"
+            "name": "off"
         },
         {
-            "name":"on",
-            "delays":
-            [
+            "name": "on",
+            "delays": [
                 [
                     0.05,
                     0.05,
@@ -26,38 +23,38 @@
             ]
         },
         {
-            "name":"panel"
+            "name": "panel"
         },
         {
-            "name":"trans"
+            "name": "trans"
         },
         {
-            "name":"pipe",
-            "directions":4
+            "name": "pipe",
+            "directions": 4
         },
         {
-            "name":"display"
+            "name": "display"
         },
         {
-            "name":"fill-1"
+            "name": "fill-1"
         },
         {
-            "name":"fill-2"
+            "name": "fill-2"
         },
         {
-            "name":"fill-3"
+            "name": "fill-3"
         },
         {
-            "name":"fill-4"
+            "name": "fill-4"
         },
         {
-            "name":"fill-5"
+            "name": "fill-5"
         },
         {
-            "name":"fill-6"
+            "name": "fill-6"
         },
         {
-            "name":"fill-7"
+            "name": "fill-7"
         }
     ]
 }

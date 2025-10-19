@@ -14,6 +14,9 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
     [UsedImplicitly]
     public sealed partial class LoadBlueprintsWindow : DefaultWindow
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+
         public LoadBlueprintsWindow()
         {
             RobustXamlLoader.Load(this);
@@ -21,9 +24,9 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
 
         protected override void EnteredTree()
         {
-            var mapManager = IoCManager.Resolve<IMapManager>();
+            var mapSystem = _entityManager.System<SharedMapSystem>();
 
-            foreach (var mapId in mapManager.GetAllMapIds())
+            foreach (var mapId in mapSystem.GetAllMapIds())
             {
                 MapOptions.AddItem(mapId.ToString(), (int) mapId);
             }
@@ -39,21 +42,19 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
 
         private void Reset()
         {
-            var entManager = IoCManager.Resolve<IEntityManager>();
-            var xformSystem = entManager.System<SharedTransformSystem>();
-            var playerManager = IoCManager.Resolve<IPlayerManager>();
-            var player = playerManager.LocalEntity;
+            var xformSystem = _entityManager.System<SharedTransformSystem>();
+            var player = _playerManager.LocalEntity;
 
             var currentMap = MapId.Nullspace;
             var position = Vector2.Zero;
             var rotation = Angle.Zero;
 
-            if (entManager.TryGetComponent<TransformComponent>(player, out var xform))
+            if (_entityManager.TryGetComponent<TransformComponent>(player, out var xform))
             {
                 currentMap = xform.MapID;
                 position = xformSystem.GetWorldPosition(xform);
 
-                if (entManager.TryGetComponent<TransformComponent>(xform.GridUid, out var gridXform))
+                if (_entityManager.TryGetComponent<TransformComponent>(xform.GridUid, out var gridXform))
                 {
                     rotation = xformSystem.GetWorldRotation(gridXform);
                 }

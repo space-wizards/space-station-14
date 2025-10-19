@@ -1,0 +1,11 @@
+## Static recipes
+
+# Added to emagged autolathe
+- type: latheRecipePack
+  id: SyndicateAmmoStatic
+  recipes:
+  - MagazineShotgun
+  - MagazineShotgunEmpty
+  - MagazineShotgunSlug
+  - MagazinePistolCaselessRifle
+  - MagazineBoxAntiMateriel

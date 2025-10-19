@@ -10,7 +10,6 @@ namespace Content.Server.Administration.Commands;
 public sealed class VariantizeCommand : IConsoleCommand
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
 
     public string Command => "variantize";
 
@@ -40,11 +39,12 @@ public sealed class VariantizeCommand : IConsoleCommand
 
         var mapsSystem = _entManager.System<SharedMapSystem>();
         var tileSystem = _entManager.System<TileSystem>();
+        var turfSystem = _entManager.System<TurfSystem>();
 
         foreach (var tile in mapsSystem.GetAllTiles(euid.Value, gridComp))
         {
-            var def = tile.GetContentTileDefinition(_tileDefManager);
-            var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, tileSystem.PickVariant(def));
+            var def = turfSystem.GetContentTileDefinition(tile);
+            var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, tileSystem.PickVariant(def), tile.Tile.RotationMirroring);
             mapsSystem.SetTile(euid.Value, gridComp, tile.GridIndices, newTile);
         }
     }

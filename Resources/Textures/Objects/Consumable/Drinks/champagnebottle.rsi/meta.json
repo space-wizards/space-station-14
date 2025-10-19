@@ -5,13 +5,21 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "drawn by givazaa",
+    "copyright": "drawn by givazaa, inhands by TiniestShark (github)",
     "states": [
         {
             "name": "icon"
         },
         {
             "name": "icon_open"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
         }
     ]
 }

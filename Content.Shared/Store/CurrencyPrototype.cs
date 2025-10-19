@@ -11,7 +11,7 @@ namespace Content.Shared.Store;
 ///     This is separate to the cargo ordering system.
 /// </summary>
 [Prototype]
-[DataDefinition, Serializable, NetSerializable]
+[DataDefinition]
 public sealed partial class CurrencyPrototype : IPrototype
 {
     [ViewVariables]

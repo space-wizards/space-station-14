@@ -1,0 +1,58 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "FairlySadPanda (Discord/Github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "load": {
+        "srgb": false
+    },
+    "states": [
+        {
+            "name": "jumpsuit",
+            "directions": 4
+        },
+        {
+            "name": "back",
+            "directions": 4
+        },
+        {
+            "name": "hand",
+            "directions": 4
+        },
+        {
+            "name": "head",
+            "directions": 4
+        },
+        {
+            "name": "neck",
+            "directions": 4
+        },
+        {
+            "name": "eyes",
+            "directions": 4
+        },
+        {
+            "name": "shoes",
+            "directions": 4
+        },
+        {
+            "name": "belt",
+            "directions": 4
+        },
+        {
+            "name": "outerwear",
+            "directions": 4
+        },
+        {
+            "name": "hair",
+            "directions": 4
+        },
+        {
+            "name": "ears",
+            "directions": 4
+        }
+    ]
+}

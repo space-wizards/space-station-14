@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Content.Server.Body.Components;
+using Content.Shared.Body.Events;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Tag;

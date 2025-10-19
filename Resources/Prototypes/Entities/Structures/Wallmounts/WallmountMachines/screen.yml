@@ -1,0 +1,45 @@
+- type: entity
+  parent: BaseWallmountMachine
+  id: Screen
+  name: screen
+  description: Displays text or time.
+  components:
+  - type: Rotatable
+  - type: TextScreenVisuals
+    textOffset: 0,3
+    timerOffset: 0,-4
+    rows: 2
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Wallmounts/screen.rsi
+    state: screen
+    noRot: true
+  - type: Appearance
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+  - type: ApcPowerReceiver
+    powerLoad: 100
+  - type: ExtensionCableReceiver
+  - type: Screen
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: ShuttleTimer
+
+- type: entity
+  id: ArrivalsShuttleTimer
+  parent: Screen
+  name: arrivals screen
+  description: Displays time of arrivals shuttle ETA.
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Private
+    receiveFrequencyId: ArrivalsShuttleTimer

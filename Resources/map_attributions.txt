@@ -60,3 +60,6 @@
 
 - files: ["convex.yml"]
   authors: Spacemann
+
+- file: ["amber.yml"]
+  authors: Southbridge, Flipsie27

@@ -6,7 +6,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobPassenger
-      time: 36000 #10 hrs, silly reward for people who play passenger a lot
+      time: 10h # silly reward for people who play passenger a lot
 
 # Head of Greytide (for grey mantle)
 - type: loadoutEffectGroup
@@ -16,7 +16,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobPassenger
-      time: 72000 #20 hrs, fun mantle for the most experienced greytiders
+      time: 20h # fun mantle for the most experienced greytiders
 
 # Face
 - type: loadout
@@ -47,6 +47,15 @@
     proto: GreyTider
   equipment:
     jumpsuit: ClothingUniformColorRainbow
+
+# Rainbow Jumpskirt
+- type: loadout
+  id: RainbowJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: GreyTider
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorRainbow
 
 # Ancient
 - type: loadout

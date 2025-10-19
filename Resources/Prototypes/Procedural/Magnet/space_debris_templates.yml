@@ -70,12 +70,7 @@
     - Plating
     - FloorSteel
     entities:
-    - WeldingFuelTankFull
-    - Table
-    - SalvageCanisterSpawner
-    - Rack
-    - ClosetMaintenanceFilledRandom
-    - ClosetMaintenanceFilledRandom
+    - SalvageSpawnerStructuresVarious
   - !type:BiomeEntityLayer
     allowedTiles:
     - FloorSteel
@@ -101,14 +96,12 @@
     entities:
     - SalvageSpawnerTreasure
     - SalvageSpawnerTreasure
-    - SalvageSpawnerEquipment
-    - SalvageSpawnerEquipment
     - SalvageSpawnerTreasureValuable
-    - SalvageSpawnerEquipmentValuable
   - !type:BiomeEntityLayer
     allowedTiles:
     - FloorSteel
-    threshold: 0.90
+    - Plating
+    threshold: 0.925
     noise:
       seed: 1
       frequency: 1

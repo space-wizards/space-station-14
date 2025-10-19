@@ -14,6 +14,7 @@ public abstract partial class SharedBuckleSystem
     {
         SubscribeLocalEvent<StrapComponent, ComponentStartup>(OnStrapStartup);
         SubscribeLocalEvent<StrapComponent, ComponentShutdown>(OnStrapShutdown);
+        SubscribeLocalEvent<StrapComponent, EntityTerminatingEvent>(OnStrapTerminating);
         SubscribeLocalEvent<StrapComponent, ComponentRemove>((e, c, _) => StrapRemoveAll(e, c));
 
         SubscribeLocalEvent<StrapComponent, ContainerGettingInsertedAttemptEvent>(OnStrapContainerGettingInsertedAttempt);
@@ -33,6 +34,11 @@ public abstract partial class SharedBuckleSystem
     {
         if (!TerminatingOrDeleted(uid))
             StrapRemoveAll(uid, component);
+    }
+
+    private void OnStrapTerminating(Entity<StrapComponent> entity, ref EntityTerminatingEvent args)
+    {
+        StrapRemoveAll(entity, entity.Comp);
     }
 
     private void OnStrapContainerGettingInsertedAttempt(EntityUid uid, StrapComponent component, ContainerGettingInsertedAttemptEvent args)

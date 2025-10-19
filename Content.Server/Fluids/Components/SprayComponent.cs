@@ -32,10 +32,10 @@ public sealed partial class SprayComponent : Component
     /// <summary>
     /// How much the player is pushed back for each spray.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField]
-    public float PushbackAmount = 2f;
+    [DataField]
+    public float PushbackAmount = 5f;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField(required: true)]
+    [DataField(required: true)]
     [Access(typeof(SpraySystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
     public SoundSpecifier SpraySound { get; private set; } = default!;
 }

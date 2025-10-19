@@ -22,7 +22,7 @@ public sealed class ShowCriminalRecordIconsSystem : EquipmentHudSystem<ShowCrimi
         if (!IsActive)
             return;
 
-        if (_prototype.TryIndex(component.StatusIcon, out var iconPrototype))
+        if (_prototype.Resolve(component.StatusIcon, out var iconPrototype))
             ev.StatusIcons.Add(iconPrototype);
     }
 }

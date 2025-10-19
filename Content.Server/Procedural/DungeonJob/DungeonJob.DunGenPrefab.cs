@@ -14,15 +14,8 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="PrefabDunGen"/>
     /// </summary>
-    private async Task<Dungeon> GeneratePrefabDunGen(Vector2i position, DungeonData data, PrefabDunGen prefab, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task<Dungeon> GeneratePrefabDunGen(Vector2i position, PrefabDunGen prefab, HashSet<Vector2i> reservedTiles, Random random)
     {
-        if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto) ||
-            !data.Whitelists.TryGetValue(DungeonDataKey.Rooms, out var roomWhitelist))
-        {
-            LogDataError(typeof(PrefabDunGen));
-            return Dungeon.Empty;
-        }
-
         var preset = prefab.Presets[random.Next(prefab.Presets.Count)];
         var gen = _prototype.Index(preset);
 
@@ -50,9 +43,9 @@ public sealed partial class DungeonJob
         {
             var whitelisted = false;
 
-            if (roomWhitelist?.Tags != null)
+            if (prefab.RoomWhitelist?.Tags != null)
             {
-                foreach (var tag in roomWhitelist.Tags)
+                foreach (var tag in prefab.RoomWhitelist.Tags)
                 {
                     if (proto.Tags.Contains(tag))
                     {
@@ -164,6 +157,7 @@ public sealed partial class DungeonJob
 
         // Then for overlaps choose either 1x1 / 3x1
         // Pick a random tile for it and then expand outwards as relevant (weighted towards middle?)
+        var fallbackTile = prefab.FallbackTile;
 
         for (var i = 0; i < chosenPacks.Length; i++)
         {
@@ -181,29 +175,35 @@ public sealed partial class DungeonJob
                 Angle roomRotation = Angle.Zero;
                 Matrix3x2 matty;
 
+                // If no room found then try rotated dimensions
                 if (!roomProtos.TryGetValue(roomDimensions, out var roomProto))
                 {
                     roomDimensions = new Vector2i(roomDimensions.Y, roomDimensions.X);
 
+                    // If nothing at all then no valid rooms, try fallback tile and log it.
                     if (!roomProtos.TryGetValue(roomDimensions, out roomProto))
                     {
-                        matty = Matrix3x2.Multiply(packTransform, dungeonTransform);
-
-                        for (var x = roomSize.Left; x < roomSize.Right; x++)
+                        if (fallbackTile != null)
                         {
-                            for (var y = roomSize.Bottom; y < roomSize.Top; y++)
+                            matty = Matrix3x2.Multiply(packTransform, dungeonTransform);
+
+                            for (var x = roomSize.Left; x < roomSize.Right; x++)
                             {
-                                var index = Vector2.Transform(new Vector2(x, y) + _grid.TileSizeHalfVector - packCenter, matty).Floored();
+                                for (var y = roomSize.Bottom; y < roomSize.Top; y++)
+                                {
+                                    var index = Vector2.Transform(new Vector2(x, y) + _grid.TileSizeHalfVector - packCenter, matty).Floored();
 
-                                if (reservedTiles.Contains(index))
-                                    continue;
+                                    if (reservedTiles.Contains(index))
+                                        continue;
 
-                                tiles.Add((index, new Tile(_tileDefManager[tileProto].TileId)));
+                                    tiles.Add((index, new Tile(_tileDefManager[fallbackTile.Value].TileId)));
+                                }
                             }
+
+                            _maps.SetTiles(_gridUid, _grid, tiles);
+                            tiles.Clear();
                         }
 
-                        _maps.SetTiles(_gridUid, _grid, tiles);
-                        tiles.Clear();
                         _sawmill.Error($"Unable to find room variant for {roomDimensions}, leaving empty.");
                         continue;
                     }

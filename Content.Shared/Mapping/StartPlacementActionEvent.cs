@@ -1,18 +1,20 @@
-﻿using Content.Shared.Actions;
+using Content.Shared.Actions;
+﻿using Content.Shared.Maps;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Mapping;
 
 public sealed partial class StartPlacementActionEvent : InstantActionEvent
 {
-    [DataField("entityType")]
-    public string? EntityType;
+    [DataField]
+    public EntProtoId? EntityType;
 
-    [DataField("tileId")]
-    public string? TileId;
+    [DataField]
+    public ProtoId<ContentTileDefinition>? TileId;
 
-    [DataField("placementOption")]
+    [DataField]
     public string? PlacementOption;
 
-    [DataField("eraser")]
+    [DataField]
     public bool Eraser;
 }

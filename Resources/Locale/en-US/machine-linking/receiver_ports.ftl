@@ -11,10 +11,10 @@ signal-port-name-off-receiver = Off
 signal-port-description-off-receiver = Turns a device off.
 
 signal-port-name-forward = Forward
-signal-port-description-forward = Makes a device (e.g. conveyer) operate in the normal direction.
+signal-port-description-forward = Makes a device (e.g. conveyor) operate in the normal direction.
 
 signal-port-name-reverse = Reverse
-signal-port-description-reverse = Makes a device (e.g. conveyer) operate in the reverse direction.
+signal-port-description-reverse = Makes a device (e.g. conveyor) operate in the reverse direction.
 
 signal-port-name-open = Open
 signal-port-description-open = Opens a device.
@@ -25,11 +25,8 @@ signal-port-description-close = Closes a device.
 signal-port-name-doorbolt = Door bolt
 signal-port-description-doorbolt = Bolts door when HIGH.
 
-signal-port-name-trigger = Trigger
-signal-port-description-trigger = Triggers some mechanism on the device.
-
-signal-port-name-timer = Timer
-signal-port-description-timer = Starts the timer countdown of the device.
+signal-port-name-trigger-receiver = Trigger
+signal-port-description-trigger-receiver = Triggers some mechanism on the device.
 
 signal-port-name-order-sender = Order sender
 signal-port-description-order-sender = Cargo console order sender

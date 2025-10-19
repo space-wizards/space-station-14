@@ -8,7 +8,6 @@
   - vvread
   - vvwrite
   - vvinvoke
-  - scale
   - spin
 
 - Flags: DEBUG
@@ -17,7 +16,6 @@
   - inrangeunoccluded
   - lsgrid
   - lsmap
-  - listplayers
   - loc
   - mem
   - netaudit
@@ -40,6 +38,9 @@
   - hwid
   - showaudio
   - showpos
+  - showvel
+  - showrot
+  - showangvel
   - showray
   - showchunkbb
   - showgridnodes
@@ -60,7 +61,7 @@
   - watch
   - sendgarbage
   - setinputcontext
-  - showvelocities
+  - showplayervelocity
   - tilelookup
   - net_entityreport
   - scene
@@ -68,7 +69,6 @@
   - print_pvs_ack
   - pvs_override_info
   - merge_grids
-
 
 - Flags: MAPPING
   Commands:
@@ -89,9 +89,12 @@
 
 - Flags: ADMIN
   Commands:
-  - listplayers
   - tp
   - tpto
+
+- Flags: PII
+  Commands:
+  - listplayers
 
 - Flags: FUN
   Commands:

@@ -52,6 +52,9 @@
       points: 1
       required: true
       defaultMarkings: [ VoxBeak ]
+    SnoutCover:
+      points: 1
+      required: false
     Arms:
       points: 4
       required: true
@@ -67,7 +70,7 @@
       points: 1
       required: false
     Chest:
-      points: 1
+      points: 2
       required: false
     Tail:
       points: 1

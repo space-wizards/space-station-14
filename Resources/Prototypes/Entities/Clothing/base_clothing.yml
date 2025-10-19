@@ -34,7 +34,7 @@
   components:
   - type: AllowSuitStorage
     whitelist:
-      tags:
+      components:
       - GasTank
 
 # for clothing that has a single item slot to insert and alt click out.

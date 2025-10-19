@@ -1,0 +1,41 @@
+- files:
+  - shriek1.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from https://github.com/ParadiseSS13/Paradise/blob/master/sound/voice/shriek1.ogg"
+  source: "https://github.com/ParadiseSS13/Paradise/commit/43e60ab01eda88fe30eb93612614bde836e55fe4"
+
+- files:
+  - vox_laugh.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by Errant, modified from shriek1.ogg"
+  source: "https://github.com/space-wizards/space-station-14/commit/2b0f227940d9163e06ac75e0f6af7140fb3fd11f"
+
+- files:
+  - vox_cough.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by TrixxedHeart, modified from vox_laugh.ogg"
+  source: "https://github.com/space-wizards/space-station-14/pull/39914"
+
+- files:
+  - vox_sigh.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by TrixxedHeart, modified from shriek1.ogg"
+  source: "https://github.com/space-wizards/space-station-14/pull/39914"
+
+- files:
+  - vox_cry.ogg
+  license: "CC0-1.0"
+  copyright: "raptorgoesextinct.wav by Nerdwizard78"
+  source: "https://freesound.org/people/Nerdwizard78/sounds/643928/"
+
+- files:
+  - vox_chitter.ogg
+  license: "CC0-1.0"
+  copyright: "dinosaur.wav by JhennaSide"
+  source: "https://freesound.org/people/JhennaSide/sounds/455906/"
+  
+- files:
+  - vox_click.ogg
+  license: "CC0-1.0"
+  copyright: "Storks bill-clapping by Breviceps"
+  source: "https://freesound.org/people/Breviceps/sounds/705861/"

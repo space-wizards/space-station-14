@@ -9,8 +9,7 @@
     issuer: objective-issuer-swf
   - type: RoleRequirement
     roles:
-      mindRoles:
-      - WizardRole
+    - WizardRole
 
 - type: entity
   parent: [BaseWizardObjective, BaseSurviveObjective]

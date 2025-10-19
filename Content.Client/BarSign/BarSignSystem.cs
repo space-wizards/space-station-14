@@ -39,14 +39,14 @@ public sealed class BarSignSystem : VisualizerSystem<BarSignComponent>
 
         if (powered
             && sign.Current != null
-            && _prototypeManager.TryIndex(sign.Current, out var proto))
+            && _prototypeManager.Resolve(sign.Current, out var proto))
         {
-            sprite.LayerSetSprite(0, proto.Icon);
+            SpriteSystem.LayerSetSprite((id, sprite), 0, proto.Icon);
             sprite.LayerSetShader(0, "unshaded");
         }
         else
         {
-            sprite.LayerSetState(0, "empty");
+            SpriteSystem.LayerSetRsiState((id, sprite), 0, "empty");
             sprite.LayerSetShader(0, null, null);
         }
     }

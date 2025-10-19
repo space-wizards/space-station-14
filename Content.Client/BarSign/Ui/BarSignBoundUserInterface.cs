@@ -35,7 +35,7 @@ public sealed class BarSignBoundUserInterface(EntityUid owner, Enum uiKey) : Bou
 
     public void Update(ProtoId<BarSignPrototype>? sign)
     {
-        if (_prototype.TryIndex(sign, out var signPrototype))
+        if (_prototype.Resolve(sign, out var signPrototype))
             _menu?.UpdateState(signPrototype);
     }
 

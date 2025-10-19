@@ -8,11 +8,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry.Components;
 
-[Serializable, NetSerializable]
-public sealed partial class InjectorDoAfterEvent : SimpleDoAfterEvent
-{
-}
-
 /// <summary>
 /// Implements draw/inject behavior for droppers and syringes.
 /// </summary>
@@ -26,8 +21,17 @@ public sealed partial class InjectorDoAfterEvent : SimpleDoAfterEvent
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class InjectorComponent : Component
 {
+    /// <summary>
+    /// The solution to draw into or inject from.
+    /// </summary>
     [DataField]
     public string SolutionName = "injector";
+
+    /// <summary>
+    /// A cached reference to the solution.
+    /// </summary>
+    [ViewVariables]
+    public Entity<SolutionComponent>? Solution = null;
 
     /// <summary>
     /// Whether or not the injector is able to draw from containers or if it's a single use
@@ -37,42 +41,35 @@ public sealed partial class InjectorComponent : Component
     public bool InjectOnly;
 
     /// <summary>
-    /// Whether or not the injector is able to draw from or inject from mobs
+    /// Whether or not the injector is able to draw from or inject from mobs.
     /// </summary>
     /// <remarks>
-    ///     for example: droppers would ignore mobs
+    /// For example: droppers would ignore mobs.
     /// </remarks>
     [DataField]
     public bool IgnoreMobs;
 
     /// <summary>
-    /// Whether or not the injector is able to draw from or inject into containers that are closed/sealed
+    /// Whether or not the injector is able to draw from or inject into containers that are closed/sealed.
     /// </summary>
     /// <remarks>
-    ///     for example: droppers can not inject into cans, but syringes can
+    /// For example: droppers can not inject into cans, but syringes can.
     /// </remarks>
     [DataField]
     public bool IgnoreClosed = true;
 
     /// <summary>
-    ///     The minimum amount of solution that can be transferred at once from this solution.
+    /// The transfer amounts for the set-transfer verb.
     /// </summary>
-    [DataField("minTransferAmount")]
-    public FixedPoint2 MinimumTransferAmount = FixedPoint2.New(5);
-
-    /// <summary>
-    ///     The maximum amount of solution that can be transferred at once from this solution.
-    /// </summary>
-    [DataField("maxTransferAmount")]
-    public FixedPoint2 MaximumTransferAmount = FixedPoint2.New(15);
+    [DataField]
+    public List<FixedPoint2> TransferAmounts = new() { 1, 5, 10, 15 };
 
     /// <summary>
     /// Amount to inject or draw on each usage. If the injector is inject only, it will
     /// attempt to inject it's entire contents upon use.
     /// </summary>
-    [DataField]
-    [AutoNetworkedField]
-    public FixedPoint2 TransferAmount = FixedPoint2.New(5);
+    [DataField, AutoNetworkedField]
+    public FixedPoint2 CurrentTransferAmount = FixedPoint2.New(5);
 
     /// <summary>
     /// Injection delay (seconds) when the target is a mob.
@@ -95,8 +92,7 @@ public sealed partial class InjectorComponent : Component
     /// right SolutionCaps to support injection/drawing. For InjectOnly injectors this should
     /// only ever be set to Inject
     /// </summary>
-    [AutoNetworkedField]
-    [DataField]
+    [DataField, AutoNetworkedField]
     public InjectorToggleMode ToggleState = InjectorToggleMode.Draw;
 
     /// <summary>
@@ -127,6 +123,7 @@ public sealed partial class InjectorComponent : Component
 /// <summary>
 /// Possible modes for an <see cref="InjectorComponent"/>.
 /// </summary>
+[Serializable, NetSerializable]
 public enum InjectorToggleMode : byte
 {
     /// <summary>
@@ -137,5 +134,11 @@ public enum InjectorToggleMode : byte
     /// <summary>
     /// The injector will try to draw reagent from things.
     /// </summary>
-    Draw
+    Draw,
 }
+
+/// <summary>
+/// Raised on the injector when the doafter has finished.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed partial class InjectorDoAfterEvent : SimpleDoAfterEvent;

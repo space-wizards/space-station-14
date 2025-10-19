@@ -14,6 +14,7 @@
     disabledFore: "#5A5A5A"
     _itemstatus_content_margin_right: "#06060404"
     _itemstatus_content_margin_left: "#04060604"
+    _itemstatus_patch_margin: "#07060404"
 - type: uiTheme
   id: SS14PlasmafireTheme
   path: /Textures/Interface/Plasmafire/
@@ -30,6 +31,7 @@
     disabledFore: "#FFF5EE"
     _itemstatus_content_margin_right: "#06060404"
     _itemstatus_content_margin_left: "#04060604"
+    _itemstatus_patch_margin: "#07060404"
 - type: uiTheme
   id: SS14SlimecoreTheme
   path: /Textures/Interface/Slimecore/
@@ -46,6 +48,7 @@
     disabledFore: "#FFF5EE"
     _itemstatus_content_margin_right: "#06060404"
     _itemstatus_content_margin_left: "#04060604"
+    _itemstatus_patch_margin: "#07060404"
 - type: uiTheme
   id: SS14ClockworkTheme
   path: /Textures/Interface/Clockwork/
@@ -62,6 +65,7 @@
     disabledFore: "#FFF5EE"
     _itemstatus_content_margin_right: "#06060404"
     _itemstatus_content_margin_left: "#04060604"
+    _itemstatus_patch_margin: "#07060404"
 - type: uiTheme
   id: SS14RetroTheme
   path: /Textures/Interface/Retro/
@@ -78,6 +82,7 @@
     disabledFore: "#FFF5EE"
     _itemstatus_content_margin_right: "#06060404"
     _itemstatus_content_margin_left: "#04060604"
+    _itemstatus_patch_margin: "#07060404"
 - type: uiTheme
   id: SS14MinimalistTheme
   path: /Textures/Interface/Minimalist/
@@ -94,6 +99,7 @@
     disabledFore: "#5A5A5A"
     _itemstatus_content_margin_right: "#06060604"
     _itemstatus_content_margin_left: "#06060604"
+    _itemstatus_patch_margin: "#07060404"
 - type: uiTheme
   id: SS14AshenTheme
   path: /Textures/Interface/Ashen/
@@ -110,3 +116,4 @@
     disabledFore: "#FFF5EE"
     _itemstatus_content_margin_right: "#06060604"
     _itemstatus_content_margin_left: "#06060604"
+    _itemstatus_patch_margin: "#07060505"

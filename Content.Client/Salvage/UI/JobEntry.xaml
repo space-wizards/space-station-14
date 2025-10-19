@@ -1,0 +1,29 @@
+﻿<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+              Margin="10 10 10 0"
+              HorizontalExpand="True"
+              Visible="True">
+    <PanelContainer StyleClasses="AngleRect" HorizontalExpand="True">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <BoxContainer HorizontalExpand="True" Orientation="Vertical" MaxWidth="380">
+                <RichTextLabel Name="NameLabel" StyleClasses="LabelKeyText"/>
+                <customControls:HSeparator Margin="0 0 0 5"/>
+                <RichTextLabel Name="DescriptionLabel" HorizontalExpand="True"/>
+                <Control MinHeight="10"/>
+                <RichTextLabel Name="ManifestLabel"/>
+                <Control MinHeight="10"/>
+                <RichTextLabel Name="RewardLabel" VerticalExpand="True" VerticalAlignment="Bottom"/>
+            </BoxContainer>
+            <BoxContainer HorizontalExpand="True" VerticalExpand="True" VerticalAlignment="Center">
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True" HorizontalAlignment="Center">
+                    <TextureRect Name="IconRect" MinSize="64 64" HorizontalAlignment="Center"/>
+                    <Control MinHeight="20"/>
+                    <Button Name="PrintButton"
+                            Text="{Loc 'bounty-console-label-button-text'}"
+                            HorizontalExpand="False"
+                            HorizontalAlignment="Center"/>
+                </BoxContainer>
+            </BoxContainer>
+        </BoxContainer>
+    </PanelContainer>
+</BoxContainer>

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/Citadel-Station-13/Citadel-Station-13-RP/blob/817e7c1f225876b45891e3f06908e6d032f0a8bc/icons/obj/mining.dmi and modified by alzore_ (discord)",
+  "copyright": "https://github.com/Citadel-Station-13/Citadel-Station-13-RP/blob/817e7c1f225876b45891e3f06908e6d032f0a8bc/icons/obj/mining.dmi and modified by alzore_ (discord). Back/Suit sprites by Redbookcase (github).",
   "size": {
     "x": 32,
     "y": 32
@@ -21,6 +21,14 @@
           0.3
         ]
       ]
+    },
+    {
+      "name": "equipped-BACKPACK",
+      "directions": 4
+    },
+	{
+      "name": "equipped-SUITSTORAGE",
+      "directions": 4
     }
   ]
 }

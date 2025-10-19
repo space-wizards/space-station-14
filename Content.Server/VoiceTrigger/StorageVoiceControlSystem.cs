@@ -2,10 +2,10 @@ using Content.Server.Hands.Systems;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
-using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
+using Content.Shared.Trigger;
 using Robust.Server.Containers;
 
 namespace Content.Server.VoiceTrigger;
@@ -36,32 +36,24 @@ public sealed class StorageVoiceControlSystem : EntitySystem
             (itemSlot.SlotFlags & ent.Comp.AllowedSlots) == 0)
             return;
 
-        // Don't do anything if there is no message
-        if (args.Message == null)
-            return;
-
         // Get the storage component
         if (!TryComp<StorageComponent>(ent, out var storage))
             return;
 
-        // Get the hands component
-        if (!TryComp<HandsComponent>(args.Source, out var hands))
-            return;
-
         // If the player has something in their hands, try to insert it into the storage
-        if (hands.ActiveHand != null && hands.ActiveHand.HeldEntity.HasValue)
+        if (_hands.TryGetActiveItem(args.Source, out var activeItem))
         {
             // Disallow insertion and provide a reason why if the person decides to insert the item into itself
-            if (ent.Owner.Equals(hands.ActiveHand.HeldEntity.Value))
+            if (ent.Owner.Equals(activeItem.Value))
             {
-                _popup.PopupEntity(Loc.GetString("comp-storagevoicecontrol-self-insert", ("entity", hands.ActiveHand.HeldEntity.Value)), ent, args.Source);
+                _popup.PopupEntity(Loc.GetString("comp-storagevoicecontrol-self-insert", ("entity", activeItem.Value)), ent, args.Source);
                 return;
             }
-            if (_storage.CanInsert(ent, hands.ActiveHand.HeldEntity.Value, out var failedReason))
+            if (_storage.CanInsert(ent, activeItem.Value, out var failedReason))
             {
                 // We adminlog before insertion, otherwise the logger will attempt to pull info on an entity that no longer is present and throw an exception
-                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.Source)} inserted {ToPrettyString(hands.ActiveHand.HeldEntity.Value)} into {ToPrettyString(ent)} via voice control");
-                _storage.Insert(ent, hands.ActiveHand.HeldEntity.Value, out _);
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.Source)} inserted {ToPrettyString(activeItem.Value)} into {ToPrettyString(ent)} via voice control");
+                _storage.Insert(ent, activeItem.Value, out _);
                 return;
             }
             {
@@ -71,7 +63,7 @@ public sealed class StorageVoiceControlSystem : EntitySystem
                 _popup.PopupEntity(Loc.GetString(failedReason), ent, args.Source);
                 _adminLogger.Add(LogType.Action,
                     LogImpact.Low,
-                    $"{ToPrettyString(args.Source)} failed to insert {ToPrettyString(hands.ActiveHand.HeldEntity.Value)} into {ToPrettyString(ent)} via voice control");
+                    $"{ToPrettyString(args.Source)} failed to insert {ToPrettyString(activeItem.Value)} into {ToPrettyString(ent)} via voice control");
             }
             return;
         }
@@ -79,20 +71,31 @@ public sealed class StorageVoiceControlSystem : EntitySystem
         // If otherwise, we're retrieving an item, so check all the items currently in the attached storage
         foreach (var item in storage.Container.ContainedEntities)
         {
-            // Get the item's name
-            var itemName = MetaData(item).EntityName;
-            // The message doesn't match the item name the requestor requested, skip and move on to the next item
-            if (!args.Message.Contains(itemName, StringComparison.InvariantCultureIgnoreCase))
-                continue;
-
-            // We found the item we want, so draw it from storage and place it into the player's hands
-            if (storage.Container.ContainedEntities.Count != 0)
+            // Check if the name contains the actual command.
+            // This will do comparisons against any length of string which is a little weird, but worth the tradeoff.
+            // E.g "go go s" would give you the screwdriver because "screwdriver" contains "s"
+            if (Name(item).Contains(args.MessageWithoutPhrase))
             {
-                _container.RemoveEntity(ent, item);
-                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.Source)} retrieved {ToPrettyString(item)} from {ToPrettyString(ent)} via voice control");
-                _hands.TryPickup(args.Source, item, handsComp: hands);
+                ExtractItemFromStorage(ent, item, args.Source);
                 break;
             }
         }
+    }
+
+    /// <summary>
+    /// Extracts an item from storage and places it into the player's hands.
+    /// </summary>
+    /// <param name="ent">The entity with the <see cref="StorageVoiceControlComponent"/></param>
+    /// <param name="item">The entity to be extracted from the attached storage</param>
+    /// <param name="source">The entity wearing the item</param>
+    private void ExtractItemFromStorage(Entity<StorageVoiceControlComponent> ent,
+        EntityUid item,
+        EntityUid source)
+    {
+        _container.RemoveEntity(ent, item);
+        _adminLogger.Add(LogType.Action,
+            LogImpact.Low,
+            $"{ToPrettyString(source)} retrieved {ToPrettyString(item)} from {ToPrettyString(ent)} via voice control");
+        _hands.TryPickup(source, item);
     }
 }

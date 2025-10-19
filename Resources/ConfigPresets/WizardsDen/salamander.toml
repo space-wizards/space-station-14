@@ -1,7 +1,7 @@
 # Configuration preset used on Wizard's Den Salamander
 
 [game]
-desc = "Official English Space Station 14 servers. Medium roleplay ruleset. you must be whitelisted by playing on other Wizard's Den servers if there are more than 15 online players."
+desc = "Official English Space Station 14 servers. Medium roleplay ruleset. You must apply for a whitelist on the official forums to be able to join. If the current player count is less than 15 players then anyone with enough playtime on Wizard's Den servers may join."
 hostname = "[EN][MRP] Wizard's Den Salamander [US West]"
 round_restart_time = 300
 

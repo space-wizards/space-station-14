@@ -19,7 +19,7 @@
     outerClothing: ClothingOuterSuitSpaceNinja
     shoes: ClothingShoesSpaceNinja
     id: AgentIDCard
-    ears: ClothingHeadsetGrey
+    ears: ClothingHeadsetNinja
     pocket1: SpiderCharge
     pocket2: PinpointerStation
     belt: EnergyKatana
@@ -33,3 +33,11 @@
     - Wirecutter
     - Welder
     - Multitool
+
+- type: chameleonOutfit
+  id: NinjaChameleonOutfit
+  name: roles-antag-space-ninja-name
+  startingGear: SpaceNinjaGear
+  equipment:
+    id: PassengerPDA
+    neck: ClothingNeckGoldmedal

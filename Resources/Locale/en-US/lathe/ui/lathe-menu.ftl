@@ -25,6 +25,13 @@ lathe-menu-material-amount-missing = { $amount ->
     *[other] {NATURALFIXED($amount, 2)} {MAKEPLURAL($unit)} of {$material} ([color=red]{NATURALFIXED($missingAmount, 2)} {MAKEPLURAL($unit)} missing[/color])
 }
 lathe-menu-no-materials-message = No materials loaded.
+lathe-menu-silo-linked-message = Silo Linked
 lathe-menu-fabricating-message = Fabricating...
 lathe-menu-materials-title = Materials
 lathe-menu-queue-title = Build Queue
+lathe-menu-delete-fabricating-tooltip = Cancel printing the current item.
+lathe-menu-delete-item-tooltip = Cancel printing this batch.
+lathe-menu-move-up-tooltip = Move this batch ahead in the queue.
+lathe-menu-move-down-tooltip = Move this batch back in the queue.
+lathe-menu-item-single = {$index}. {$name}
+lathe-menu-item-batch = {$index}. {$name} ({$printed}/{$total})

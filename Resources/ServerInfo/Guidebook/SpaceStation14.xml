@@ -7,7 +7,7 @@ Rounds typically last from [color=cyan]45 to 90 minutes[/color], but players are
 
 ## Shuttle Terminal
 If you join in the middle of a shift, you will likely spawn on the [color=lime]shuttle terminal[/color].
-Here you can grab drinks, conversate with other players, and wait for the shuttle to take you to the station.
+Here you can grab drinks, converse with other players, and wait for the shuttle to take you to the station.
 
 Screens on the walls will give you an ETA for the shuttle.
 When it arrives, simply walk on to be transported to the station.
@@ -38,7 +38,7 @@ The round doesn't officially end until you reach [bold]Central Command[/bold]
   <GuideEntityEmbed Entity="CryogenicSleepUnit"/>
 </Box>
 
-If you need to leave a round early, you can do so through a [color=lime]cyrogenic sleep unit[/color].
+If you need to leave a round early, you can do so through a [color=lime]cryogenic sleep unit[/color].
 Simply going inside and leaving the game will store your belongings and ensure that they are not stolen or misused.
 
 ## More Info

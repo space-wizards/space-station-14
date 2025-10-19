@@ -236,8 +236,7 @@
     - !type:NestedSelector
       tableId: MaintFluffTable
       weight: 5
-      rolls: !type:RangeNumberSelector
-        range: 1, 2
+      rolls: 1, 2
 
 - type: entity
   parent: MarkerBase
@@ -266,16 +265,16 @@
       children:
       - !type:NestedSelector
         tableId: SalvageEquipmentCommon
-        weight: 50
+        weight: 20
       - !type:NestedSelector
         tableId: SalvageEquipmentUncommon
         weight: 35
       - !type:NestedSelector
         tableId: SalvageEquipmentRare
-        weight: 14
+        weight: 35
       - !type:NestedSelector
         tableId: SalvageEquipmentLegendary
-        weight: 1
+        weight: 10
     # 5% chance of decent-ish treasure
     - !type:GroupSelector
       weight: 5
@@ -325,16 +324,16 @@
       children:
       - !type:NestedSelector
         tableId: SalvageEquipmentCommon
-        weight: 15
+        weight: 5
       - !type:NestedSelector
         tableId: SalvageEquipmentUncommon
-        weight: 40
+        weight: 25
       - !type:NestedSelector
         tableId: SalvageEquipmentRare
-        weight: 35
+        weight: 45
       - !type:NestedSelector
         tableId: SalvageEquipmentLegendary
-        weight: 10
+        weight: 25
     # 5% chance of decent-ish treasure
     - !type:GroupSelector
       weight: 5
@@ -407,20 +406,34 @@
   id: SalvageMagnetMobTable
   table: !type:GroupSelector
     children:
-    - id: MobCarpSalvage
-      weight: 80
-    - id: MobCarpSalvage
-      weight: 15
-      amount: !type:RangeNumberSelector
-        range: 1, 3
-    - !type:AllSelector
+    - !type:GroupSelector # normal theats
+      weight: 95
+      children:
+      - id: MobCarpSalvage
+        weight: 2
+      - !type:AllSelector
+        weight: 1
+        children:
+        - id: LandMineExplosive
+        - !type:NestedSelector # what's that thing underneath the scrap?
+          prob: 0.33
+          tableId: SalvageScrapSpawnerCommon
+    - !type:GroupSelector # scary monsters
       weight: 5
       children:
-      - id: MobSharkSalvage
-      - id: MobCarpSalvage
-        amount: !type:ConstantNumberSelector
-          value: 2
-    # - id: MobHivebot (solo hivebot spawn)
+      - !type:AllSelector
+        children:
+        - id: MobSharkSalvage
+        - id: MobCarpSalvage
+          amount: 2
+        - !type:NestedSelector
+          rolls: 1, 3
+          tableId: SalvageTreasureSpawnerValuable
+        - !type:NestedSelector
+          rolls: 7, 10
+          tableId: TreasureCoinPileRare
+      #- id: MobHivebot (solo hivebot spawn)
+
 
 - type: entity
   parent: MarkerBase
@@ -460,6 +473,42 @@
 
 - type: entity
   parent: MarkerBase
+  id: SalvageSpawnerStructuresVarious
+  name: Space Debris Structure Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Structures/Storage/tanks.rsi
+      state: fueltank-2
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: WeldingFuelTankFull
+        weight: 0.5
+      - !type:GroupSelector
+        children:
+        - id: Table
+          weight: 2
+        - id: TableFrame
+      - id: SalvageCanisterSpawner
+      - id: Rack
+      - !type:NestedSelector
+        weight: 0.5
+        tableId: LowValueCrateTable
+      - id: ComputerBroken
+        weight: 0.1
+      - id: CrateGeneric
+        weight: 0.25
+      - id: ClosetMaintenanceFilledRandom
+        weight: 2
+      - !type:GroupSelector
+        children:
+        - id: Thruster
+        - id: Gyroscope
+
+- type: entity
+  parent: MarkerBase
   id: SalvageSpawnerMobShark
   name: Salvage Sharkminnow Spawner
   components:
@@ -473,8 +522,7 @@
       children:
       - id: MobSharkSalvage
       - id: MobCarpSalvage
-        amount: !type:ConstantNumberSelector
-          value: 3
+        amount: 3
 
 - type: entity
   parent: MarkerBase
@@ -490,7 +538,8 @@
     table: !type:GroupSelector
       children:
       - id: MobGoliath
-        weight: 65
+        weight: 45
       - id: MobHivelord
         weight: 35
-
+      - id: MobBasilisk
+        weight: 20

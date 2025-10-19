@@ -1,28 +1,37 @@
 <Document>
   # Roleplay Rule 9 - As an antagonist, do not cause excessive death, damage, or destruction beyond your objectives
-  This rule is not intended to disallow reasonable steps taken to complete your objectives. As an antagonist, you can always kill in bona fide self defense. Taking steps to permanently round remove many people who are no longer an immediate threat to you is almost always excessive, even if it is done to prevent yourself from being discovered.
 
-  This rule is not intended to disallow all antagonist activity unrelated to objectives. Antagonists may cause a level of disruption to the station that is proportional to their objectives, even if it is unrelated to their objectives. As an antagonist, killing a single person in a round is not on its own be a violation of this rule.
+  This rule is not intended to disallow reasonable steps taken to complete your objectives. As an antagonist, you can always kill in bona fide self defense. You can kill if the action of killing could potentially advance your objectives. Taking steps to permanently round remove many people who are not a threat to you is almost always excessive.
+
+  Unless told otherwise, antags should avoid causing disruption to the station or other players that could potentially cause entire departments to stop functioning, either permanently or for a significant portion of the round. Major disruptive actions are acceptable to get evac called if the objectives require that the antagonist escapes to Centcomm, this does not include singuloose/tesloose. Antagonists should also avoid round-removing a large number of players unnecessarily.
+
+  As an antagonist, killing a few objective unrelated persons in a round is not on its own a violation of this rule. Pursuing a gimmick unrelated to the objectives entirely is also permissible as long as this gimmick does not cause nonantagonists to self antag.
 
   ## MRP Amendment
 
   As an antagonist, do not make the Emergency Shuttle uninhabitable or otherwise cause excessive death, damage, or destruction to the Emergency Shuttle.
 
   ## Exemptions
-  The "die a glorious death" objective allows antagonists to ignore this rule entirely.
+ The Syndicate Agent “die a glorious death” objective allows antagonists to ignore this rule entirely. Nuclear Operatives and Wizards are also exempt from this rule as of the time of writing.
 
   ## Examples
   Acceptable:
   - Permanently round removing people who you have the objective to kill.
   - Causing massive station damage and chaos as an antagonist with the "die a glorious death" objective.
-  - Killing anyone you see as a nuclear operative.
+  - Killing anyone you see while playing as nuclear operative(s).
   - Permanently round removing a single person so that you can impersonate them to make it easier for you to complete a steal objective.
-  - Sabotaging station power 10 minutes into the round to try to get the shuttle called because you've completed all of your other objectives and have one to escape on the shuttle alive.
-  - Sabotaging a department's power 10 minutes into the round to make a steal objective easier to accomplish.
+  - Sabotaging station power 10 minutes into the round to try to get the shuttle called because you’ve completed all of your other objectives and have one to escape on the shuttle alive. (Destroying the Particle Accelerator, TEG and all backup generation in Engineering but not loosing a singularity/tesla.)
+  - Sabotaging a department’s power 10 minutes into the round to make a steal objective easier to accomplish. (Such as cutting the departments MV power, or removing/destroying the substation.)
   - Permanently round removing many people who have demonstrated a persistence and a capability to either kill you or interfere with the completion of your objectives.
+  - Killing an unrelated person in order to steal items held by said person, such as killing an engineer for their hardsuit and tools.
+  - As a traitor, buying a singularity attractor to guide the singularity to a kill target when it is already loosed.
+  - Bombing an entire department provided it is an attempt to kill a designated target within said department.
 
   Prohibited:
   - As a traitor with 3 kill objectives, taking steps to permanently round remove many non-objective people who are no longer an immediate threat to you, even if it is done to prevent yourself from being discovered.
   - Setting up an electrified grille in maintenance and using it to kill anyone who walks into it with the hope that one of your objectives will be one of them.
-  - Sabotaging power station-wide 10 minutes into the round to make a steal objective easier to accomplish.
+  - Sabotaging power station-wide 10 minutes into the round to make a steal objective easier to accomplish. (Such as destroying the TEG, Particle Accelerator and all backup generators in Engineering.)
+  - Loosing the tesla or singularity in the hope that it kills your objectives.
+  - Seeking out and gibbing/round removing an entire department and random people for no actual reason. This includes the security department.
+  - Loosing the tesla or singularity in order to get evac called, even if objectives are already completed.
 </Document>

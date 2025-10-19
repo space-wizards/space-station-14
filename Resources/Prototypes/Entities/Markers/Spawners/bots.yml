@@ -1,28 +1,69 @@
 - type: entity
-  name: medibot spawner
-  id: SpawnMobMedibot
   parent: MarkerBase
+  id: SpawnMobMedibot
+  name: medibot spawner
   components:
   - type: Sprite
     layers:
-      - state: green
-      - sprite: Mobs/Silicon/Bots/medibot.rsi
-        state: medibot
+    - state: green
+    - sprite: Mobs/Silicon/Bots/medibot.rsi
+      state: medibot
   - type: ConditionalSpawner
     prototypes:
-      - MobMedibot
+    - MobMedibot
 
 - type: entity
-  name: cleanbot spawner
-  id: SpawnMobCleanBot
   parent: MarkerBase
+  id: SpawnMobCleanBot
+  name: cleanbot spawner
   components:
   - type: Sprite
     layers:
-      - state: green
-      - sprite: Mobs/Silicon/Bots/cleanbot.rsi
-        state: cleanbot
+    - state: green
+    - sprite: Mobs/Silicon/Bots/cleanbot.rsi
+      state: cleanbot
   - type: ConditionalSpawner
     prototypes:
-      - MobCleanBot
+    - MobCleanBot
 
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobFireBot
+  name: firebot spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/Bots/firebot.rsi
+      state: firebot
+  - type: ConditionalSpawner
+    prototypes:
+    - MobFireBot
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobSupplyBot
+  name: supplybot spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/Bots/supplybot.rsi
+      state: supplybot
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSupplyBot
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobHonkBot
+  name: honkbot spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/Bots/honkbot.rsi
+      state: honkbot
+  - type: ConditionalSpawner
+    prototypes:
+    - MobHonkBot
