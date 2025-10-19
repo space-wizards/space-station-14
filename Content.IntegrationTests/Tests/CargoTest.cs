@@ -211,8 +211,8 @@ public sealed class CargoTest
                             Assert.That(
                                 sliceCount,
                                 Is.EqualTo(1),
-                                $"{proto} counts as part of cargo bounty {bounty.ID} " +
-                                $"and slices into {sliceCount} slices which count for the same bounty!"
+                                $"{proto} counts as part of cargo bounty {bounty.ID} "
+                                + $"and slices into {sliceCount} slices which count for the same bounty!"
                             );
                         }
                     }
