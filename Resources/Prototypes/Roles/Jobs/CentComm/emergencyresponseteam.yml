@@ -229,22 +229,19 @@
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltMilitaryWebbingERT
     pocket2: CombatKnife
-  inhand:
-  - ClothingBackpackDuffelERTFilledEngineering
   storage:
     back:
-    - WeaponPistolMk58
-    - MagazinePistol
-    - MagazinePistol
-    - AccessConfigurator
+    - RCD
     - GasAnalyzer
     - trayScanner
-    - MiningDrill # End of first line
-    - EmergencyMedipen
-    - PowerCellHigh # End of second line
+    - HolofanProjector
+    - AccessConfigurator
+    - MiningDrill
     - RCDAmmo
-    - RCDAmmo
-    - RCDAmmo
+    - RCDAmmo # End of first line
+    - PowerCellHigh
+    - MetalFoamGrenade
+    - AirGrenade
     - SheetSteel
     - SheetPlasteel
     belt:
@@ -252,8 +249,9 @@
     - PowerDrill
     - WelderIndustrialAdvanced
     - Multitool
-    - HolofanProjector
-    - RCD
+    - WeaponPistolMk58
+    - MagazinePistol
+    - EmergencyMedipen
 
 - type: startingGear
   parent: ERTEngineerGearEVA
@@ -262,16 +260,15 @@
     suitstorage: WeaponShotgunEnforcer
   storage:
     back:
-    - WeaponPistolMk58
-    - MagazinePistol
-    - MagazinePistol
-    - AccessConfigurator
+    - RCD
     - GasAnalyzer
     - trayScanner
-    - MiningDrill # End of first line
-    - EmergencyMedipen
-    - PowerCellHigh # End of second line
+    - HolofanProjector
+    - AccessConfigurator
+    - MiningDrill
     - RCDAmmo
+    - RCDAmmo # End of first line
+    - PowerCellHigh
     - C4
     - C4
     - BoxLethalshot
@@ -488,31 +485,27 @@
     - ClothingBackpackDuffelERTFilledMedical
   storage:
     back:
-    - WeaponPistolMk58
-    - MagazinePistol
-    - MagazinePistol
-    - CrowbarRed
-    - MedkitCombatFilled
-    - MedkitCombatFilled
-    - ChemistryBottleOmnizine # End of first line
-    - LauncherSyringe
+    - Hypospray
+    - ClothingEyesGlassesChemical
     - BeakerSmallArith
     - BeakerSmallDiph
     - BeakerSmallSigy
     - BeakerSmallPhal
+    - JugDexPlusSaline
+    - JugPunctTranex
+    - BeakerSmallBruiz
+    - JugPyraDerma
+    - JugTrico
+    - BeakerSmallLace
+    - PowerCellHigh
     belt:
+    - CrowbarRed
     - DefibrillatorCompact
-    - MiniSyringe
-    - MiniSyringe
-    - MiniSyringe
-    - MiniSyringe
-    - Hypospray
-    - ClothingEyesGlassesChemical
-    - MiniSyringe
-    - MiniSyringe
-    - MiniSyringe
-    - MiniSyringe
-
+    - MedkitCombatFilled
+    - WeaponPistolMk58
+    - MagazinePistol
+    - EmergencyMedipen
+    -
 - type: startingGear
   parent: ERTMedicalGearEVA
   id: ERTMedicalGearArmed
