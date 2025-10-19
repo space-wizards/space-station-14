@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: Most syndicate contraband have been given sell prices (depending on the
-      "power" of the item) to discourage powergaming and encourage Security's interaction
-      with Departmental Economy.
-    type: Add
-  id: 8622
-  time: '2025-06-05T23:26:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37835
 - author: RedBookcase
   changes:
   - message: The running and walking speed debuffs on equipped gear have been standardized.
@@ -3941,3 +3932,10 @@
   id: 9123
   time: '2025-10-19T06:55:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40974
+- author: AlwyAnri
+  changes:
+  - message: Added a ninja headset.
+    type: Add
+  id: 9124
+  time: '2025-10-19T11:45:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40054
