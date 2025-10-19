@@ -4,9 +4,10 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Chemistry.Components;
 
 /// <summary>
-///     Reagents that can be added easily. For example like
-///     pouring something into another beaker, glass, or into the gas
-///     tank of a car.
+/// Denotes that the entity has a solution contained which can be easily added
+/// to. This should go on things that are meant to be refilled, including
+/// pouring things into a beaker. If you run it under a sink tap, it's probably
+/// refillable.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class RefillableSolutionComponent : Component

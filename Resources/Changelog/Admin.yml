@@ -1437,5 +1437,44 @@ Entries:
   id: 174
   time: '2025-09-22T06:22:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40360
+- author: IProduceWidgets
+  changes:
+  - message: The Homing Rod smite. Does what it says on the tin.
+    type: Add
+  - message: The Slowming Rod smite. Slowly chases the target, and destroys everything
+      on the way.
+    type: Add
+  id: 175
+  time: '2025-09-25T21:43:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40246
+- author: Kowlin
+  changes:
+  - message: Adjusted meatspike admin log severities.
+    type: Tweak
+  id: 176
+  time: '2025-10-03T11:31:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40604
+- author: Kowlin
+  changes:
+  - message: Stun prods are now high severity when crafted.
+    type: Tweak
+  id: 177
+  time: '2025-10-05T07:40:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40709
+- author: Samuka
+  changes:
+  - message: Added bank account toolshed commands
+    type: Add
+  id: 178
+  time: '2025-10-15T15:21:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40614
+- author: Errant
+  changes:
+  - message: The old buttons to Teleport and kick (Player Actions Panel) have been
+      removed from the first tab of the admin menu.
+    type: Remove
+  id: 179
+  time: '2025-10-17T15:38:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40904
 Name: Admin
 Order: 2
