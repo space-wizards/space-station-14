@@ -6,7 +6,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Sliceable;
 
 /// <summary>
-/// Allows slice entity via different tools. Slicing by default.
+/// Allows slice entity via different tools, 'Slicing' by default.
+/// Slicing effectively destroys entity at the end of the process,
+/// and can provide newly created entities as a result.
 /// </summary>
 [RegisterComponent, Access(typeof(SliceableSystem))]
 public sealed partial class SliceableComponent : Component
@@ -18,7 +20,8 @@ public sealed partial class SliceableComponent : Component
     public List<EntitySpawnEntry> Slices = [];
 
     /// <summary>
-    /// If true, entity will transfer split solution into <see cref="Slices"/>.
+    /// If true, entity will transfer split solution into <see cref="Slices"/>
+    /// (if they have components to support process and have required empty volume).
     /// </summary>
     [DataField]
     public bool TransferSolution = true;
@@ -36,7 +39,7 @@ public sealed partial class SliceableComponent : Component
     public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Items/Culinary/chop.ogg");
 
     /// <summary>
-    /// Time of slicing.
+    /// How long it takes for entity to be sliced.
     /// </summary>
     [DataField]
     public TimeSpan SliceTime = TimeSpan.FromSeconds(1);
