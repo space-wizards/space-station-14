@@ -96,6 +96,8 @@
     capacity: 6
     chambers: [ True, True, True, True, True, True ]
     ammoSlots: [ null, null, null, null, null, null ]
+  - type: StealTarget
+    stealGroup: OfficerHandgun
 
 - type: entity
   name: Mateba
@@ -152,7 +154,7 @@
   suffix: armor-piercing
   components:
   - type: RevolverAmmoProvider
-    whitelist:
+    whitelist: # Redundant
       tags:
         - CartridgeMagnum
         - SpeedLoaderMagnum
