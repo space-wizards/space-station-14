@@ -95,7 +95,7 @@
     - state: banana
   - type: Sliceable
     slices:
-    - id: FoodCakePlainSlice
+    - id: FoodBreadBananaSlice
       amount: 5
   - type: Tag
     tags:

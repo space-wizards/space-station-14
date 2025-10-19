@@ -1238,7 +1238,7 @@
   - type: Sliceable
     slices:
     - id: FoodCakeCottonSlice
-      amount: 6
+      amount: 5
   - type: Tag
     tags:
     - Cake
@@ -1313,7 +1313,7 @@
   - type: Sliceable
     slices:
     - id: FoodCakeBerryDelightSlice
-      amount: 6
+      amount: 5
   - type: Tag
     tags:
     - Cake
