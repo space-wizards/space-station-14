@@ -99,7 +99,7 @@ public sealed class SliceableSystem : EntitySystem
             if (!_mob.IsDead(uid, mobState))
             {
                 verbDisabled = true;
-                verbMessage = Loc.GetString("slice-verb-message-alive");
+                verbMessage = Loc.GetString("slice-verb-target-isnt-dead");
             }
         }
 
