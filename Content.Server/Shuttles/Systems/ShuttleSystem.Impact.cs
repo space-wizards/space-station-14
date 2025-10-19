@@ -230,15 +230,21 @@ public sealed partial class ShuttleSystem
         var knockdownTime = TimeSpan.FromSeconds(5);
 
         var minsq = _minThrowVelocity * _minThrowVelocity;
-        // iterate all entities on the grid
-        // TODO: only iterate non-static entities
-        var childEnumerator = xform.ChildEnumerator;
-        while (childEnumerator.MoveNext(out var uid))
-        {
-            // don't throw static bodies
-            if (!_physicsQuery.TryGetComponent(uid, out var physics) || (physics.BodyType & BodyType.Static) != 0)
-                continue;
 
+        // iterate all dynamic entities on the grid
+        if (!TryComp<BroadphaseComponent>(gridUid, out var lookup) || !TryComp<MapGridComponent>(gridUid, out var gridComp))
+            return;
+
+        var gridBox = gridComp.LocalAABB;
+        List<Entity<PhysicsComponent>> list = new();
+        HashSet<EntityUid> processed = new();
+        var state = (list, processed, _physicsQuery);
+        lookup.DynamicTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
+        lookup.SundriesTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
+
+        foreach (var ent in list)
+        {
+            var (uid, physics) = ent;
             // don't throw if buckled
             if (_buckle.IsBuckled(uid, _buckleQuery.CompOrNull(uid)))
                 continue;
@@ -257,6 +263,24 @@ public sealed partial class ShuttleSystem
                 _physics.ApplyLinearImpulse(uid, direction * physics.Mass, body: physics);
             }
         }
+    }
+
+    private static bool GridQueryCallback(
+        ref (List<Entity<PhysicsComponent>> List, HashSet<EntityUid> Processed, EntityQuery<PhysicsComponent> PhysicsQuery) state,
+        in EntityUid uid)
+    {
+        if (state.PhysicsQuery.TryComp(uid, out var body) && state.Processed.Add(uid))
+            state.List.Add((uid, body));
+
+        return true;
+    }
+
+    private static bool GridQueryCallback(
+        ref (List<Entity<PhysicsComponent>> List, HashSet<EntityUid> Processed, EntityQuery<PhysicsComponent> PhysicsQuery) state,
+        in FixtureProxy proxy)
+    {
+        var owner = proxy.Entity;
+        return GridQueryCallback(ref state, in owner);
     }
 
     /// <summary>
