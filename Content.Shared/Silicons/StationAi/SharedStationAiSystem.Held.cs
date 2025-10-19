@@ -28,7 +28,7 @@ public abstract partial class SharedStationAiSystem
         SubscribeLocalEvent<StationAiHeldComponent, InteractionAttemptEvent>(OnHeldInteraction);
         SubscribeLocalEvent<StationAiHeldComponent, AttemptRelayActionComponentChangeEvent>(OnHeldRelay);
         SubscribeLocalEvent<StationAiHeldComponent, JumpToCoreEvent>(OnCoreJump);
-        SubscribeLocalEvent<StationAiHeldComponent, GetStationAiRadialEvent>(OnHeldRadial);
+        SubscribeLocalEvent<StationAiHeldComponent, StationAiOpenWarpActionEvent>(OnOpenWarpAction);
 
         SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
     }
@@ -120,14 +120,9 @@ public abstract partial class SharedStationAiSystem
         args.Target = core.Comp?.RemoteEntity;
     }
 
-    private void OnHeldRadial(Entity<StationAiHeldComponent> ent, ref GetStationAiRadialEvent args)
+    protected virtual void OnOpenWarpAction(Entity<StationAiHeldComponent> ent, ref StationAiOpenWarpActionEvent args)
     {
-        args.Actions.Add(new StationAiRadial
-        {
-            Tooltip = Loc.GetString("station-ai-warp-radial-tooltip"),
-            Sprite = new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Actions/actions_ai.rsi"), "ai_camera"),
-            Event = new StationAiOpenWarpAction()
-        });
+        args.Handled = true;
     }
 
     private void OnRadialMessage(StationAiRadialMessage ev)
@@ -258,8 +253,6 @@ public abstract class BaseStationAiAction
     [field:NonSerialized]
     public EntityUid User { get; set; }
 }
-
-public sealed class StationAiOpenWarpAction : BaseStationAiAction;
 
 // No idea if there's a better way to do this.
 /// <summary>

@@ -3,7 +3,14 @@ using System.Collections.Generic;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
+using Content.Shared.Actions;
+
 namespace Content.Shared.Silicons.StationAi;
+
+public sealed partial class StationAiOpenWarpActionEvent : InstantActionEvent
+{
+}
+
 
 [Serializable, NetSerializable]
 public sealed partial class StationAiWarpRequestEvent : EntityEventArgs

@@ -11,7 +11,6 @@ public sealed partial class StationAiSystem
 
     private void InitializeWarp()
     {
-        SubscribeLocalEvent<StationAiHeldComponent, StationAiOpenWarpAction>(OnOpenWarpAction);
         SubscribeNetworkEvent<StationAiWarpTargetsEvent>(OnWarpTargets);
     }
 
@@ -27,8 +26,10 @@ public sealed partial class StationAiSystem
 
     }
 
-    private void OnOpenWarpAction(Entity<StationAiHeldComponent> ent, ref StationAiOpenWarpAction args)
+    protected override void OnOpenWarpAction(Entity<StationAiHeldComponent> ent, ref StationAiOpenWarpActionEvent args)
     {
+        base.OnOpenWarpAction(ent, ref args);
+
         if (_player.LocalEntity != ent.Owner)
             return;
 
