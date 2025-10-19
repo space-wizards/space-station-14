@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Wearing a muzzle now reduces the sound of vocal emotes
-    type: Tweak
-  id: 8627
-  time: '2025-06-05T23:45:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34444
 - author: RedBookcase
   changes:
   - message: Added Scrap Armor and Scrap Helmets.
@@ -3931,3 +3924,11 @@
   id: 9128
   time: '2025-10-19T21:10:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40944
+- author: aspiringLich
+  changes:
+  - message: UIs have been brought more in line with each other with a standardized
+      palette, as well as other changes resulting from a new styling mechanism.
+    type: Tweak
+  id: 9129
+  time: '2025-10-19T21:23:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29903
