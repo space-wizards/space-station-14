@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: RedBookcase
-  changes:
-  - message: Added Scrap Armor and Scrap Helmets.
-    type: Add
-  id: 8628
-  time: '2025-06-06T00:13:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37601
 - author: Samuka
   changes:
   - message: Fire bombs are now minor contra
@@ -3932,3 +3925,11 @@
   id: 9129
   time: '2025-10-19T21:23:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29903
+- author: ArtisticRoomba, seam_less
+  changes:
+  - message: Job-themed lizard plushies! You can equip them in your loadout if you
+      have 20 hours on the job.
+    type: Add
+  id: 9130
+  time: '2025-10-19T22:28:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34127
