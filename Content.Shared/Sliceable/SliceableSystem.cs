@@ -26,6 +26,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Sliceable;
 
+/// <inheritdoc cref="SliceableComponent"/>
 public sealed class SliceableSystem : EntitySystem
 {
     [Dependency] private readonly MobStateSystem _mob = default!;
@@ -65,7 +66,7 @@ public sealed class SliceableSystem : EntitySystem
             return;
 
         var verbDisabled = false;
-        var verbMessage = Loc.GetString("slice-verb-message-default");
+        string? verbMessage = null;
         EntityUid tool;
 
         var user = args.User;
@@ -91,8 +92,6 @@ public sealed class SliceableSystem : EntitySystem
             return;
         }
 
-        var verbName = Loc.GetString("slice-verb-name");
-
         if (TryComp<MobStateComponent>(uid, out var mobState) && !_mob.IsDead(uid, mobState))
         {
             verbDisabled = true;
@@ -101,10 +100,10 @@ public sealed class SliceableSystem : EntitySystem
 
         InteractionVerb verb = new()
         {
-            Text = verbName,
+            Text = Loc.GetString("slice-verb-name"),
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png")),
             Disabled = verbDisabled,
-            Message = verbMessage,
+            Message = verbMessage ?? Loc.GetString("slice-verb-message-default"),
             Act = () =>
             {
                 CreateDoAfter(uid, user, tool, comp.SliceTime.Seconds, comp.ToolQuality);
@@ -155,12 +154,12 @@ public sealed class SliceableSystem : EntitySystem
     {
         var slices = EntitySpawnCollection.GetSpawns(ent.Comp.Slices);
 
-        var rndSeed = SharedRandomExtensions.HashCodeCombine(new List<int> { unchecked((int) _gameTiming.CurTick.Value), user.Id, ent.Owner.Id });
+        var rndSeed = SharedRandomExtensions.HashCodeCombine(new() { unchecked((int) _gameTiming.CurTick.Value), user.Id, ent.Owner.Id });
         var rng = new System.Random(rndSeed);
 
-        foreach (var sliceProto in slices)
+        foreach (var sliceProtoId in slices)
         {
-            var sliceUid = PredictedSpawnNextToOrDrop(sliceProto, ent);
+            var sliceUid = PredictedSpawnNextToOrDrop(sliceProtoId, ent);
             _transform.SetLocalRotation(sliceUid, 0);
 
             if (slices.Count != 0 && !_container.IsEntityOrParentInContainer(sliceUid))
@@ -172,12 +171,12 @@ public sealed class SliceableSystem : EntitySystem
             // Fills new slice if comp allows.
             if (ent.Comp.TransferSolution && TryComp<EdibleComponent>(ent, out var edible))
             {
-                if (!_solutionContainer.TryGetSolution(ent.Owner, edible.Solution, out var soln, out var solution))
+                if (!_solutionContainer.TryGetSolution(ent.Owner, edible.Solution, out var sourceSoln, out var sourceSolution))
                     return false;
 
-                var sliceVolume = solution.Volume / FixedPoint2.New(slices.Count);
+                var sliceVolume = sourceSolution.Volume / FixedPoint2.New(slices.Count);
 
-                var lostSolution = _solutionContainer.SplitSolution(soln.Value, sliceVolume);
+                var lostSolution = _solutionContainer.SplitSolution(sourceSoln.Value, sliceVolume);
                 FillSlice(sliceUid, lostSolution);
             }
         }
