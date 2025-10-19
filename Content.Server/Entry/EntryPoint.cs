@@ -2,6 +2,7 @@ using Content.Server.Acz;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
+using Content.Server.Administration.Managers.Bwoink;
 using Content.Server.Afk;
 using Content.Server.Chat.Managers;
 using Content.Server.Connection;
@@ -76,6 +77,7 @@ namespace Content.Server.Entry
         [Dependency] private readonly ServerApi _serverApi = default!;
         [Dependency] private readonly ServerInfoManager _serverInfo = default!;
         [Dependency] private readonly ServerUpdateManager _updateManager = default!;
+        [Dependency] private readonly ServerBwoinkManager _bwoinkManager = default!;
 
         public override void PreInit()
         {
@@ -165,6 +167,7 @@ namespace Content.Server.Entry
             _connection.PostInit();
             _multiServerKick.Initialize();
             _cvarCtrl.Initialize();
+            _bwoinkManager.Initialize();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)
@@ -185,6 +188,7 @@ namespace Content.Server.Entry
                     _playTimeTracking.Update();
                     _watchlistWebhookManager.Update();
                     _connection.Update();
+                    _bwoinkManager.Update();
                     break;
             }
         }
@@ -199,6 +203,7 @@ namespace Content.Server.Entry
             }
 
             _serverApi.Shutdown();
+            _bwoinkManager.Shutdown();
 
             // TODO Should this be awaited?
             _discordLink.Shutdown();
