@@ -8,14 +8,9 @@
   - type: Organ
   - type: Food
   - type: Extractable
-    grindableSolutionName: organ
+    grindableSolutionName: food
   - type: SolutionContainerManager
     solutions:
-      organ:
-        maxVol: 10
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
       food:
         maxVol: 5
         reagents:
@@ -38,11 +33,6 @@
     state: brain
   - type: SolutionContainerManager
     solutions:
-      organ:
-        maxVol: 10
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
       Lung:
         maxVol: 100
         canReact: False
@@ -122,11 +112,6 @@
       rateModifier: 100.0
   - type: SolutionContainerManager
     solutions:
-      organ:
-        maxVol: 10
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
       Lung:
         maxVol: 100
         canReact: False

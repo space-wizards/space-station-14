@@ -8,13 +8,9 @@
   - type: Organ
   - type: Food
   - type: Extractable
-    grindableSolutionName: organ
+    grindableSolutionName: food
   - type: SolutionContainerManager
     solutions:
-      organ:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
       food:
         maxVol: 5
         reagents:
@@ -55,10 +51,6 @@
       - Meat
   - type: SolutionContainerManager
     solutions:
-      organ:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
       food:
         maxVol: 5
         reagents:
@@ -142,10 +134,6 @@
       rateModifier: 100.0
   - type: SolutionContainerManager
     solutions:
-      organ:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
       Lung:
         maxVol: 100.0
         canReact: false
