@@ -186,6 +186,8 @@ public sealed class AccessReaderSystem : EntitySystem
         // If the user has access to this lock, we pass it into the event.
         if (IsAllowed(args.User, ent))
             args.HasAccess |= LockTypes.Access;
+        else
+            args.DenyReason ??= Loc.GetString("lock-comp-has-user-access-fail");
     }
 
     /// <summary>
