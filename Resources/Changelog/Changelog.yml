@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Minemoder
-  changes:
-  - message: Shark plushies now bite.
-    type: Tweak
-  id: 8630
-  time: '2025-06-06T21:07:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38113
 - author: themias
   changes:
   - message: Increased the chance of throwing trash into a disposal unit
@@ -3931,3 +3924,13 @@
   id: 9131
   time: '2025-10-19T23:51:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37681
+- author: ArtisticRoomba
+  changes:
+  - message: Slimes can now metabolize their own slime to restore their blood level.
+    type: Add
+  - message: Slime is no longer effective at satiating hunger when metabolized by
+      a Slime.
+    type: Tweak
+  id: 9132
+  time: '2025-10-20T00:40:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32537
