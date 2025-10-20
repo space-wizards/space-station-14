@@ -3,12 +3,14 @@
   name: bwoink-channel-ahelp
   helpText: bwoink-channel-ahelp-help
   order: -1 # We always want this one to be the first
+  manageRequirement:
+    requirements:
+    - !type:AdminFlagRequirement
+      flags: Adminhelp
   features:
   - !type:SoundOnMessage
     sound: !type:SoundPathSpecifier
       path: /Audio/Animals/cat_meow.ogg
-  - !type:RequiredFlags
-    flags: Adminhelp
 
 # TODO: Remove, this is only for testing.
 - type: bwoinkChannel
@@ -16,9 +18,14 @@
   name: Event Feedback
   helpText: An event is currently on-going, use this channel to provide feedback or to request assistance.
   order: 1
+  manageRequirement:
+    requirements:
+    - !type:AdminFlagRequirement
+      flags: Adminhelp
+  readRequirement:
+    requirements:
+    - !type:ListRequirement
   features:
   - !type:SoundOnMessage
     sound: !type:SoundPathSpecifier
       path: /Audio/Animals/wawa_protest.ogg
-  - !type:RequiredFlags
-    flags: Adminhelp

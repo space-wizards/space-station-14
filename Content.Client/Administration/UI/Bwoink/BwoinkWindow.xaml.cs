@@ -57,6 +57,9 @@ public sealed partial class BwoinkWindow : DefaultWindow
         var index = 0;
         foreach (var channel in channels.OrderBy(x => x.Order))
         {
+            if (!_bwoinkManager.CanReadChannel(channel))
+                continue; // cooked
+
             _channelIndexes[channel.ID] = index;
             index++;
 
@@ -96,6 +99,9 @@ public sealed partial class BwoinkWindow : DefaultWindow
 
     public void SwitchToChannel(ProtoId<BwoinkChannelPrototype> channel)
     {
+        if (!_bwoinkManager.CanReadChannel(channel))
+            return;
+
         Channels.CurrentTab = _channelIndexes[channel];
     }
 }

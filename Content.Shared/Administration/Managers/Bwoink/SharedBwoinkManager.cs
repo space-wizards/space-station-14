@@ -10,7 +10,7 @@ namespace Content.Shared.Administration.Managers.Bwoink;
 /// <summary>
 /// This class is responsible for managing the admin help system. See the Server and Client implementation for details.
 /// </summary>
-public abstract class SharedBwoinkManager : IPostInjectInit
+public abstract partial class SharedBwoinkManager : IPostInjectInit
 {
     [Dependency] private readonly ILogManager _logManager = default!;
 
@@ -155,27 +155,6 @@ public abstract class SharedBwoinkManager : IPostInjectInit
     void IPostInjectInit.PostInject()
     {
         Log = _logManager.GetSawmill("bwoink");
-    }
-
-    /// <summary>
-    /// Checks if a given session is able to manage a given bwoink channel.
-    /// </summary>
-    public bool CanManageChannel(ProtoId<BwoinkChannelPrototype> proto, ICommonSession session)
-    {
-        var prototype = PrototypeManager.Index(proto);
-        return CanManageChannel(prototype, session);
-    }
-
-    /// <inheritdoc cref="CanManageChannel(Robust.Shared.Prototypes.ProtoId{Content.Shared.Administration.Managers.Bwoink.BwoinkChannelPrototype},Robust.Shared.Player.ICommonSession)"/>
-    public bool CanManageChannel(BwoinkChannelPrototype channel, ICommonSession session)
-    {
-        if (channel.Features.TryFirstOrDefault(bwoinkChannelFeature => bwoinkChannelFeature is RequiredFlags,
-                out var feature))
-        {
-            return AdminManager.HasAdminFlag(session, (feature as RequiredFlags)!.Flags);
-        }
-
-        return true;
     }
 
     /// <summary>

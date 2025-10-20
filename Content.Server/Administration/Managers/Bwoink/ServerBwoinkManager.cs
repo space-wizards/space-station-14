@@ -45,6 +45,9 @@ public sealed partial class ServerBwoinkManager : SharedBwoinkManager
     /// <summary>
     /// Validates that the protoId given is actually a real prototype. Needed since clients can just send whatever as the ID.
     /// </summary>
+    /// <remarks>
+    /// get real
+    /// </remarks>
     private bool IsPrototypeReal(ProtoId<BwoinkChannelPrototype> channel)
     {
         // If this fails, Resolve will log an error.

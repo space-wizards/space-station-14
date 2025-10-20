@@ -16,6 +16,8 @@ public sealed partial class ServerBwoinkManager
         _netManager.RegisterNetMessage<MsgBwoinkSync>();
         _netManager.RegisterNetMessage<MsgBwoinkTypingUpdate>(TypingUpdated);
         _netManager.RegisterNetMessage<MsgBwoinkTypings>();
+        _netManager.RegisterNetMessage<MsgBwoinkSyncChannelsRequest>(SyncChannelsRequest);
+        _netManager.RegisterNetMessage<MsgBwoinkSyncChannels>();
 
         _netManager.Connected += NetManagerOnConnected;
     }
@@ -39,7 +41,9 @@ public sealed partial class ServerBwoinkManager
     private void NetManagerOnConnected(object? _, NetChannelArgs e)
     {
         // A player connected, we send their ahelp history.
-        SynchronizeMessages(PlayerManager.GetSessionByChannel(e.Channel));
+        var sus = PlayerManager.GetSessionByChannel(e.Channel);
+        SynchronizeMessages(sus);
+        SyncChannels(sus);
     }
 
     private void SyncBwoinks(MsgBwoinkSyncRequest message)
@@ -70,6 +74,9 @@ public sealed partial class ServerBwoinkManager
     {
         if (!IsPrototypeReal(message.Channel))
             return;
+
+        if (!CanWriteChannel(message.Channel, PlayerManager.GetSessionByChannel(message.MsgChannel)))
+            return; // TODO: Logging.
 
         SynchronizeMessage(message.Channel,
             message.MsgChannel.UserId,
@@ -112,8 +119,21 @@ public sealed partial class ServerBwoinkManager
 
         _netManager.ServerSendToMany(msgBwoink, managers);
 
-        if (CanManageChannel(channel, PlayerManager.GetSessionById(target)))
+        if (message.Flags.HasFlag(MessageFlags.ManagerOnly))
+            return; // Stop here.
+
+        var targetSes = PlayerManager.GetSessionById(target);
+
+        if (CanManageChannel(channel, targetSes))
             return; // Don't need to send it to the admin client.
+
+        if (!CanReadChannel(channel, targetSes))
+        {
+            // Target can't read it. Womp. Womp.
+            var notificationMessage = CreateSystemMessage(_localizationManager.GetString("bwoink-channel-no-readers"), MessageFlags.Manager | MessageFlags.ManagerOnly);
+            SynchronizeMessage(channel, target, notificationMessage);
+            return;
+        }
 
         // TODO: Predict on client, so that we don't have to send the message back to the client here.
         _netManager.ServerSendMessage(msgNonAdminBwoink, PlayerManager.GetSessionById(target).Channel);

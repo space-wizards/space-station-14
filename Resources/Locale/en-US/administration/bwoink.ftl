@@ -35,3 +35,5 @@ bwoink-message-admin-only = (Admin Only)
 bwoink-message-silent = (S)
 
 bwoink-system-user = System
+bwoink-read-only = You cannot write in this channel.
+bwoink-channel-no-readers = This person cannot read the channel. The message will only be seen by other managers.

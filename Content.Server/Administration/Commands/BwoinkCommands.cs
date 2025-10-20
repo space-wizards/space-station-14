@@ -21,4 +21,24 @@ public sealed class BwoinkCommand : ToolshedCommand
             _bwoinkManager.SendMessageInChannel(channel, session.UserId, message, MessageFlags.Manager);
         }
     }
+
+    [CommandImplementation("addchannel")]
+    public void AddChannel([PipedArgument] IEnumerable<ICommonSession> input,
+        [CommandArgument] ProtoId<BwoinkChannelPrototype> channel)
+    {
+        foreach (var session in input)
+        {
+            _bwoinkManager.SetAllowList(channel, session.UserId, true);
+        }
+    }
+
+    [CommandImplementation("rmchannel")]
+    public void RemoveChannel([PipedArgument] IEnumerable<ICommonSession> input,
+        [CommandArgument] ProtoId<BwoinkChannelPrototype> channel)
+    {
+        foreach (var session in input)
+        {
+            _bwoinkManager.SetAllowList(channel, session.UserId, true);
+        }
+    }
 }

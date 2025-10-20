@@ -29,6 +29,31 @@ public sealed class BwoinkChannelPrototype : IPrototype
     [DataField(required: true)]
     public int Order { get; set; } = 0;
 
+    /// <summary>
+    /// Requirements that define who can write in this channel. Writing being non-managers sending to managers.
+    /// </summary>
+    /// <remarks>
+    /// If null, this defaults to true.
+    /// </remarks>
+    [DataField]
+    public BwoinkChannelRequirement? WriteRequirement { get; set; }
+    /// <summary>
+    /// Requirements that define who can read this channel. If this is condition is not met, a person will not be able to receive messages sent to them.
+    /// </summary>
+    /// <remarks>
+    /// If null, this defaults to true.
+    /// </remarks>
+    [DataField]
+    public BwoinkChannelRequirement? ReadRequirement { get; set; }
+    /// <summary>
+    /// Requirements that define who can manage this channel. Overrides write and read requirements.
+    /// </summary>
+    /// <remarks>
+    /// If null, this defaults to true. Yes, really.
+    /// </remarks>
+    [DataField]
+    public BwoinkChannelRequirement? ManageRequirement { get; set; }
+
     [DataField(required: true)]
     public List<BwoinkChannelFeature> Features { get; set; } = new();
 }

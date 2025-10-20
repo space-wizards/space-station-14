@@ -90,6 +90,56 @@ public sealed class MsgBwoinkSync : NetMessage
 }
 
 /// <summary>
+/// Message sent by a client to request the status of all the channels.
+/// </summary>
+public sealed class MsgBwoinkSyncChannelsRequest : NetMessage
+{
+    public override MsgGroups MsgGroup => MsgGroups.Command;
+    public override NetDeliveryMethod DeliveryMethod => NetDeliveryMethod.ReliableOrdered;
+
+    public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
+    {
+
+    }
+
+    public override void WriteToBuffer(NetOutgoingMessage buffer, IRobustSerializer serializer)
+    {
+
+    }
+}
+
+/// <summary>
+/// Message sent by the server after a <see cref="MsgBwoinkSyncChannelsRequest"/>
+/// Contains all the channels and the status of them.
+/// </summary>
+public sealed class MsgBwoinkSyncChannels : NetMessage
+{
+    public override MsgGroups MsgGroup => MsgGroups.Command;
+    public override NetDeliveryMethod DeliveryMethod => NetDeliveryMethod.ReliableOrdered;
+
+    public Dictionary<ProtoId<BwoinkChannelPrototype>, BwoinkChannelConditionFlags> Channels = new();
+
+    public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
+    {
+        var count = buffer.ReadInt32();
+        for (var i = 0; i < count; i++)
+        {
+            Channels.Add(buffer.ReadString(), (BwoinkChannelConditionFlags)buffer.ReadByte());
+        }
+    }
+
+    public override void WriteToBuffer(NetOutgoingMessage buffer, IRobustSerializer serializer)
+    {
+        buffer.Write(Channels.Count);
+        foreach (var (channel, flags) in Channels)
+        {
+            buffer.Write(channel.Id);
+            buffer.Write((byte)flags);
+        }
+    }
+}
+
+/// <summary>
 /// Message sent by a client to request the most up to date :tm: conversations.
 /// </summary>
 public sealed class MsgBwoinkSyncRequest : NetMessage

@@ -38,6 +38,12 @@ public sealed partial class BwoinkPanel : BoxContainer
             TextOutput.AddMessage(helpText);
         }
 
+        if (!_bwoinkManager.CanWriteChannel(channel))
+        {
+            ReadOnlyLabel.Visible = true;
+            SenderLineEdit.Visible = false;
+        }
+
         var msg = new FormattedMessage();
         msg.PushColor(Color.LightGray);
         msg.AddText(Loc.GetString("bwoink-system-messages-being-relayed-to-discord"));

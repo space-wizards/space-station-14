@@ -15,7 +15,7 @@ namespace Content.Client.Administration.Managers;
 /// Handles the client side APIs for bwoinking.
 /// </summary>
 /// <seealso cref="SharedBwoinkManager"/>
-public sealed class ClientBwoinkManager : SharedBwoinkManager
+public sealed partial class ClientBwoinkManager : SharedBwoinkManager
 {
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
@@ -60,6 +60,8 @@ public sealed class ClientBwoinkManager : SharedBwoinkManager
         _netManager.RegisterNetMessage<MsgBwoinkSync>(SyncBwoinks);
         _netManager.RegisterNetMessage<MsgBwoinkTypingUpdate>();
         _netManager.RegisterNetMessage<MsgBwoinkTypings>(SyncTypings);
+        _netManager.RegisterNetMessage<MsgBwoinkSyncChannelsRequest>();
+        _netManager.RegisterNetMessage<MsgBwoinkSyncChannels>(SyncChannels);
 
         _adminManager.AdminStatusUpdated += StatusUpdated;
     }
@@ -72,6 +74,7 @@ public sealed class ClientBwoinkManager : SharedBwoinkManager
 
     private void StatusUpdated()
     {
+        RequestChannels();
         RequestSync();
     }
 
