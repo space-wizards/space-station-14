@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -65,38 +66,9 @@ public sealed class SliceableSystem : EntitySystem
         if (!args.CanInteract || !args.CanAccess)
             return;
 
-        var verbDisabled = false;
-        string? verbMessage = null;
-        EntityUid tool;
-
         var user = args.User;
-        if (args.Using is not null)
-        {
-            var used = args.Using.Value;
-            if (!HasComp<ToolComponent>(used))
-                return;
-
-            if (!_toolSystem.HasQuality(used, comp.ToolQuality))
-            {
-                verbDisabled = true;
-                verbMessage = Loc.GetString("slice-verb-message-tool", ("target", uid));
-            }
-            tool = used;
-        }
-        else if (_toolSystem.HasQuality(user, comp.ToolQuality))
-        {
-            tool = user;
-        }
-        else
-        {
+        if (!TryGetTool(uid, comp, args, user, out var verbDisabled, out var verbMessage, out var tool))
             return;
-        }
-
-        if (TryComp<MobStateComponent>(uid, out var mobState) && !_mob.IsDead(uid, mobState))
-        {
-            verbDisabled = true;
-            verbMessage = Loc.GetString("slice-verb-target-isnt-dead");
-        }
 
         InteractionVerb verb = new()
         {
@@ -106,7 +78,7 @@ public sealed class SliceableSystem : EntitySystem
             Message = verbMessage ?? Loc.GetString("slice-verb-message-default"),
             Act = () =>
             {
-                CreateDoAfter(uid, user, tool, comp.SliceTime.Seconds, comp.ToolQuality);
+                CreateDoAfter(uid, user, tool.Value, comp.SliceTime.Seconds, comp.ToolQuality);
             },
         };
         args.Verbs.Add(verb);
@@ -157,6 +129,10 @@ public sealed class SliceableSystem : EntitySystem
         var rndSeed = SharedRandomExtensions.HashCodeCombine(new() { unchecked((int) _gameTiming.CurTick.Value), user.Id, ent.Owner.Id });
         var rng = new System.Random(rndSeed);
 
+        (Entity<SolutionComponent> sourceSoln, Solution sourceSolution)? solutionInfo = default;
+        if (ent.Comp.TransferSolution && !TryGetSourceSolutionForTransfer(ent, out solutionInfo))
+            return false;
+
         foreach (var sliceProtoId in slices)
         {
             var sliceUid = PredictedSpawnNextToOrDrop(sliceProtoId, ent);
@@ -168,15 +144,13 @@ public sealed class SliceableSystem : EntitySystem
                 _physics.SetLinearVelocity(sliceUid, randVect);
             }
 
-            // Fills new slice if comp allows.
-            if (ent.Comp.TransferSolution && TryComp<EdibleComponent>(ent, out var edible))
+            // Fills new slice if original entity allows.
+            if (solutionInfo.HasValue)
             {
-                if (!_solutionContainer.TryGetSolution(ent.Owner, edible.Solution, out var sourceSoln, out var sourceSolution))
-                    return false;
-
+                var (sourceSoln, sourceSolution) = solutionInfo.Value;
                 var sliceVolume = sourceSolution.Volume / FixedPoint2.New(slices.Count);
 
-                var lostSolution = _solutionContainer.SplitSolution(sourceSoln.Value, sliceVolume);
+                var lostSolution = _solutionContainer.SplitSolution(sourceSoln, sliceVolume);
                 FillSlice(sliceUid, lostSolution);
             }
         }
@@ -190,6 +164,69 @@ public sealed class SliceableSystem : EntitySystem
         };
         RaiseLocalEvent(ent, ev);
 
+        return true;
+    }
+
+    private bool TryGetTool(
+        EntityUid uid,
+        SliceableComponent comp,
+        GetVerbsEvent<InteractionVerb> args,
+        EntityUid user,
+        out bool verbDisabled,
+        out string? verbMessage,
+        [NotNullWhen(true)] out EntityUid? tool
+    )
+    {
+        tool = null;
+        verbMessage = null;
+        verbDisabled = false;
+
+        if (args.Using is not null)
+        {
+            var used = args.Using.Value;
+            if (!HasComp<ToolComponent>(used))
+                return false;
+
+            if (!_toolSystem.HasQuality(used, comp.ToolQuality))
+            {
+                verbDisabled = true;
+                verbMessage = Loc.GetString("slice-verb-message-tool", ("target", uid));
+            }
+            tool = used;
+        }
+        else if (_toolSystem.HasQuality(user, comp.ToolQuality))
+        {
+            tool = user;
+        }
+        else
+        {
+            return false;
+        }
+
+        if (TryComp<MobStateComponent>(uid, out var mobState) && !_mob.IsDead(uid, mobState))
+        {
+            verbDisabled = true;
+            verbMessage = Loc.GetString("slice-verb-target-isnt-dead");
+        }
+
+        return false;
+    }
+
+    private bool TryGetSourceSolutionForTransfer(
+        Entity<SliceableComponent> ent,
+        [NotNullWhen(true)] out (Entity<SolutionComponent> sourceSoln, Solution sourceSolution)? solutionInfo
+    )
+    {
+        solutionInfo = default;
+        if (!TryComp<EdibleComponent>(ent, out var edible))
+            return false;
+
+        if (!_solutionContainer.TryGetSolution(ent.Owner, edible.Solution, out var sourceSoln, out var sourceSolution))
+        {
+            return false;
+        }
+
+        solutionInfo = (sourceSoln.Value, sourceSolution);
         return true;
     }
 
