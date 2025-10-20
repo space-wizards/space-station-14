@@ -37,35 +37,21 @@ public sealed class GhostSpriteStateSystem : EntitySystem
             return;
 
         highestType.Sort();
-        ent.Comp.DamageMap.TryGetValue(highestType[0], out var numOfStates);
 
         string spriteState;
         if (highestType[0] == "Blunt" && highestType[1] == "Heat" && highestType[2] == "Piercing")  // Specific case for explosions
         {
-            spriteState = "explosion";
-            if (ent.Comp.DamageMap.TryGetValue("Explosion", out var spriteAmount) && spriteAmount > 1)  // Chooses a random sprite state if needed.
-            {
-                spriteState += _random.Next(1, spriteAmount + 1);
-            }
-        }
-        else if (highestType.Count > 1)  // If there's multiple damage types in the list
-        {
-            spriteState = highestType[_random.Next(0, highestType.Count)]; // Chooses a random damage type from the list
-            if (ent.Comp.DamageMap.TryGetValue(highestType[_random.Next(0, highestType.Count)], out var spriteAmount) && spriteAmount > 1)  // Chooses  a random sprite state if needed.
-            {
-                spriteState += _random.Next(1, spriteAmount + 1);
-            }
+            spriteState = "explosion" +_random.Next(1, 4);
         }
         else
         {
-            spriteState = highestType[0];
-            if (ent.Comp.DamageMap.TryGetValue(highestType[0], out var spriteAmount) && spriteAmount > 1) // Chooses  a random sprite state if needed
+            spriteState = highestType[_random.Next(0, highestType.Count)]; // Chooses a random damage type from the list
+            if (ent.Comp.DamageMap.TryGetValue(highestType[_random.Next(0, highestType.Count)], out var spriteAmount) && spriteAmount > 1)  // Chooses a random sprite state if needed.
             {
                 spriteState += _random.Next(1, spriteAmount + 1);
             }
         }
 
-        Log.Debug($"wawa {spriteState}");
         _appearance.SetData(ent, GhostComponent.GhostVisuals.Damage, ent.Comp.Prefix + spriteState.ToLower(), appearance);
     }
 }

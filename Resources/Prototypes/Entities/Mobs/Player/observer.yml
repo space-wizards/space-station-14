@@ -91,7 +91,6 @@
       Cellular: 1
       Poison: 1
       Asphyxiation: 1
-      Explosion: 3
     prefix: "ghost_"
   - type: GhostHearing
   - type: ShowElectrocutionHUD
