@@ -9,3 +9,16 @@
       path: /Audio/Animals/cat_meow.ogg
   - !type:RequiredFlags
     flags: Adminhelp
+
+# TODO: Remove, this is only for testing.
+- type: bwoinkChannel
+  id: EventHelp
+  name: Event Feedback
+  helpText: An event is currently on-going, use this channel to provide feedback or to request assistance.
+  order: 1
+  features:
+  - !type:SoundOnMessage
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Animals/wawa_protest.ogg
+  - !type:RequiredFlags
+    flags: Adminhelp
