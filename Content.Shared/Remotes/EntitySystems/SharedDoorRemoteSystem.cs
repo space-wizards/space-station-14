@@ -13,15 +13,15 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Remotes.EntitySystems;
 
-public sealed class DoorRemoteSystem : EntitySystem
+public abstract class SharedDoorRemoteSystem : EntitySystem
 {
     [Dependency] private readonly SharedAirlockSystem _airlock = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] protected readonly IGameTiming Timing = default!;
 
 
     public override void Initialize()
@@ -38,7 +38,7 @@ public sealed class DoorRemoteSystem : EntitySystem
 
     private void OnBeforeInteract(Entity<DoorRemoteComponent> entity, ref BeforeRangedInteractEvent args)
     {
-        if (!_timing.IsFirstTimePredicted)
+        if (!Timing.IsFirstTimePredicted)
             return;
 
         var isAirlock = TryComp<AirlockComponent>(args.Target, out var airlockComp);
