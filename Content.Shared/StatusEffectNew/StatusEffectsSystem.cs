@@ -81,7 +81,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         if (args.Container.ID != StatusEffectContainerComponent.ContainerId)
             return;
 
-        if (!TryComp<StatusEffectComponent>(args.Entity, out var statusComp))
+        if (!_effectQuery.TryComp(args.Entity, out var statusComp))
             return;
 
         // Make sure AppliedTo is set correctly so events can rely on it
@@ -137,7 +137,6 @@ public sealed partial class StatusEffectsSystem : EntitySystem
 
         statusEffectEnt.Comp.Applied = true;
 
-        DirtyFields(statusEffectEnt, statusEffectEnt.Comp, null, nameof(StatusEffectComponent.StartEffectTime), nameof(StatusEffectComponent.Applied));
         return true;
     }
 
@@ -204,6 +203,8 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         SetStatusEffectEndTime((effect.Value, effectComp), endTime);
         var startTime = delay == null ? TimeSpan.Zero : _timing.CurTime + delay.Value;
         SetStatusEffectStartTime(effect.Value, startTime);
+
+        TryApplyStatusEffect((statusEffect.Value, effectComp));
 
         return true;
     }
