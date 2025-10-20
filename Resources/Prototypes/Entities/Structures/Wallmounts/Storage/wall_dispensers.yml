@@ -1,0 +1,82 @@
+- type: entity
+  parent: BaseWallmountMetallic
+  id: BaseDispenser
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/tanks.rsi
+    state: cleanerdispenser
+  - type: Appearance
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Heat
+        damage: 5
+      behaviors:
+      - !type:SolutionExplosionBehavior
+        solution: tank
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Piercing
+        damage: 5
+      behaviors:
+      - !type:SolutionExplosionBehavior
+        solution: tank
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:SpillBehavior
+        solution: tank
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: DrainableSolution
+    solution: tank
+  - type: ReagentTank
+  - type: ExaminableSolution
+    solution: tank
+
+- type: entity
+  parent: BaseDispenser
+  id: FuelDispenser
+  name: fuel dispenser
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/tanks.rsi
+    state: fueldispenser
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 1000
+  - type: ReagentTank
+    tankType: Fuel
+  - type: DamageOnToolInteract
+    tools: Welding
+    weldingDamage:
+      types:
+        Heat: 20
+
+- type: entity
+  parent: BaseDispenser
+  id: CleanerDispenser
+  name: space cleaner dispenser
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: SpaceCleaner
+          Quantity: 5000
+  - type: ReagentTank
