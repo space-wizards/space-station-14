@@ -42,52 +42,79 @@
     graph: BananiumStatueClown
     node: bananiumStatue
 
+# Ironsand Statues
+
 - type: entity
+  abstract: true
   parent: BaseStructure
+  id: BaseIronsandStatue
+  description: A mysterious statue found in a desert of iron sand.
+  components:
+  - type: Sprite
+    noRot: true
+    drawdepth: Mobs
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Rock
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150 # Overkill
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -6
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SteelOre1:
+            min: 1
+            max: 2
+
+- type: entity
+  parent: BaseIronsandStatue
   id: StatueIronsandSmall
   name: ironsand small statue
-  description: A mysterious statue found in a desert of iron sand.
   components:
   - type: Sprite
-    noRot: true
     sprite: Structures/Decoration/ironsand_statue.rsi
     state: small_pillar
-    drawdepth: Mobs
 
 - type: entity
-  parent: BaseStructure
+  parent: BaseIronsandStatue
   id: StatueIronsandSmall2
   name: ironsand small statue
-  description: A mysterious statue found in a desert of iron sand.
   components:
   - type: Sprite
-    noRot: true
     sprite: Structures/Decoration/ironsand_statue.rsi
     state: small_pillar_2
-    drawdepth: Mobs
 
 - type: entity
-  parent: BaseStructure
+  parent: BaseIronsandStatue
   id: StatueIronsandTall
   name: ironsand tall statue
-  description: A mysterious statue found in a desert of iron sand.
   components:
   - type: Sprite
-    noRot: true
     sprite: Structures/Decoration/ironsand_statue_tall.rsi
     state: pillar_of_weh
-    drawdepth: Mobs
     offset: "0.0,0.5"
 
 - type: entity
-  parent: BaseStructure
+  parent: BaseIronsandStatue
   id: StatueIronsandTall2
   name: ironsand tall statue
-  description: A mysterious statue found in a desert of iron sand.
   components:
   - type: Sprite
-    noRot: true
     sprite: Structures/Decoration/ironsand_statue_tall.rsi
     state: inverse_pillar
-    drawdepth: Mobs
     offset: "0.0,0.5"
