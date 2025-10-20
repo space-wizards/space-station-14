@@ -121,6 +121,9 @@
 
       - tool: Welding
         doAfter: 1
+        completed:
+        - !type:SnapToNode
+          node: ripley
 
   - node: ripley
     actions:

@@ -112,6 +112,9 @@
 
       - tool: Honking
         doAfter: 1
+        completed:
+        - !type:SnapToNode
+          node: hamtr
 
   - node: honker
     actions:
