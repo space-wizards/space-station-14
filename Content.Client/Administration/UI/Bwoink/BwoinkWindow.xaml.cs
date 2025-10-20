@@ -19,6 +19,8 @@ public sealed partial class BwoinkWindow : DefaultWindow
     private readonly IPlayerManager _playerManager;
     private readonly ClientBwoinkManager _bwoinkManager;
 
+    private Dictionary<ProtoId<BwoinkChannelPrototype>, int> _channelIndexes = [];
+
     public BwoinkWindow(ClientBwoinkManager clientBwoinkManager,
         IPrototypeManager prototypeManager,
         IPlayerManager playerManager)
@@ -49,10 +51,15 @@ public sealed partial class BwoinkWindow : DefaultWindow
         // We now nuke all the channels we already have. This *does* loose us any input and state we have previously.
         // Frankly, I call this a skill issue when admins upload prototypes on live.
         Channels.RemoveAllChildren();
+        _channelIndexes.Clear();
 
         var channels = _prototypeManager.EnumeratePrototypes<BwoinkChannelPrototype>();
+        var index = 0;
         foreach (var channel in channels.OrderBy(x => x.Order))
         {
+            _channelIndexes[channel.ID] = index;
+            index++;
+
             var canManage = _bwoinkManager.CanManageChannel(channel, _playerManager.LocalSession!);
             if (canManage)
             {
@@ -84,5 +91,11 @@ public sealed partial class BwoinkWindow : DefaultWindow
                 Channels.AddChild(control);
             }
         }
+    }
+
+
+    public void SwitchToChannel(ProtoId<BwoinkChannelPrototype> channel)
+    {
+        Channels.CurrentTab = _channelIndexes[channel];
     }
 }

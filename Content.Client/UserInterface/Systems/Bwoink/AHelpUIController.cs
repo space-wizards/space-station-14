@@ -40,6 +40,7 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
     private bool _bwoinkSoundEnabled;
     private BwoinkWindow? _window;
     private bool IsOpen => _window is { Disposed: false };
+    private bool IsVisible => _window is { Visible: true, Disposed: false };
 
     public override void Initialize()
     {
@@ -63,7 +64,17 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
         // are we a manager for this channel? if so, we do not open the window itself.
         var isManager = _bwoinkManager.CanManageChannel(sender, _playerManager.LocalSession);
         if (!isManager)
+        {
+            var wasVisible = IsVisible;
+
             EnsureUIHelper();
+            // We need to ensure we open on the correct tab, *however* we do not want to switch tabs if the UI is already open:
+            // Reason being that we do not want to switch channels while a client is typing.
+            if (!wasVisible)
+            {
+                _window!.SwitchToChannel(sender);
+            }
+        }
 
         if (!_clyde.IsFocused) // wake up samurai, we have a city to burn
             _clyde.RequestWindowAttention();
@@ -73,7 +84,7 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
             sound?.Restart();
         }
 
-        if (!IsOpen && isManager)
+        if (!IsVisible && isManager)
         {
             var info = _bwoinkManager.GetOrCreatePlayerPropertiesForChannel(sender, args.person);
             info.Unread++;
