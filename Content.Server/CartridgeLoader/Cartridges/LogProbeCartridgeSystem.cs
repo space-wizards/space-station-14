@@ -7,9 +7,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Labels.EntitySystems;
 using Content.Shared.Paper;
 using Content.Shared.Popups;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Text;
 
@@ -19,7 +17,6 @@ public sealed class LogProbeCartridgeSystem : EntitySystem
 {
     [Dependency] private readonly CartridgeLoaderSystem _cartridge = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;

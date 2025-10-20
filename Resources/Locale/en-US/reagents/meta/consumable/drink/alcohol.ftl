@@ -95,7 +95,7 @@ reagent-name-banana-honk = Banana Honk
 reagent-desc-banana-honk = A drink from Clown Heaven.
 
 reagent-name-barefoot = barefoot
-reagent-desc-barefoot = Barefoot and pregnant.
+reagent-desc-barefoot = A cassis milkshake, made from cream, fruit juice, and vermouth wine.
 
 reagent-name-beepsky-smash = Beepsky smash
 reagent-desc-beepsky-smash = Deny drinking this and prepare for THE LAW.
@@ -141,6 +141,9 @@ reagent-desc-doctors-delight = A gulp a day keeps the MediBot away. That's proba
 
 reagent-name-driest-martini = driest martini
 reagent-desc-driest-martini = Only for the experienced. You think you see sand floating in the glass.
+
+reagent-name-eggnog = eggnog
+reagent-desc-eggnog = Not enough egg.
 
 reagent-name-electric-shark = electric shark
 reagent-desc-electric-shark = Fun Shark fact: Selachians make up 20% of Space Station 16’s Engineering staff!

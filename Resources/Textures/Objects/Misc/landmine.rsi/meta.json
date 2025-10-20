@@ -5,20 +5,20 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/b764f0e8c3004ad5e7726e7ff27a52a0c893beff/icons/obj/weapons/grenade.dmi",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/b764f0e8c3004ad5e7726e7ff27a52a0c893beff/icons/obj/weapons/grenade.dmi, modified by spanky-spanky (GitHub)",
   "states": [
     {
-      "name": "landmine",
+      "name": "landmine"
+    },
+    {
+      "name": "landmine-unshaded",
       "delays": [
         [
-          0.4,
+          0.75,
           0.15,
           0.1
         ]
       ]
-    },
-    {
-      "name": "landmine-inactive"
     }
   ]
 }

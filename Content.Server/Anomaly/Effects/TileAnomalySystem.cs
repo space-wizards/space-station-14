@@ -84,10 +84,6 @@ public sealed class TileAnomalySystem : SharedTileAnomalySystem
 
     private void SpawnTiles(Entity<TileSpawnAnomalyComponent> anomaly, TileSpawnSettingsEntry entry, float stability, float severity, float powerMod)
     {
-        var xform = Transform(anomaly);
-        if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
-            return;
-
         var tiles = _anomaly.GetSpawningPoints(anomaly, stability, severity, entry.Settings, powerMod);
         if (tiles == null)
             return;

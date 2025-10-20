@@ -22,6 +22,13 @@ public sealed partial class DoorRemoteComponent : Component
     /// </summary>
     [DataField]
     public List<DoorRemoteModeInfo> Options;
+
+    /// <summary>
+    /// Does the remote allow the user to manipulate doors that they have access to, even if the remote itself does not?
+    /// </summary>
+    [AutoNetworkedField]
+    [DataField]
+    public bool IncludeUserAccess = false;
 }
 
 /// <summary>
