@@ -68,8 +68,8 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 3
-        Heat: 7
+        Piercing: 7
+        Heat: 3
   - type: IgnitionSource
     ignited: true
 
@@ -149,14 +149,8 @@
     solutions:
       ammo:
         maxVol: 15
-  - type: RefillableSolution
-    solution: ammo
-  - type: DrainableSolution
-    solution: ammo
   - type: SolutionInjectOnProjectileHit
     transferAmount: 15
-    solution: ammo
-  - type: InjectableSolution
     solution: ammo
 
 - type: entity

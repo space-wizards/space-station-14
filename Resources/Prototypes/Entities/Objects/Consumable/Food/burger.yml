@@ -2,12 +2,11 @@
 # Bun
 
 - type: entity
-  name: bun
   parent: FoodBreadSliceBase
   id: FoodBreadBun
+  name: bun
   description: A hamburger bun. Round and convenient to hold.
   components:
-  - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/burger.rsi
     layers:
@@ -28,14 +27,13 @@
         amount: 1
 
 - type: entity
-  id: FoodBreadBunBottom
   parent: FoodBreadSliceBase
+  id: FoodBreadBunBottom
   name: bottom bun
-  description: It's time to start building the burger tower. 
+  description: It's time to start building the burger tower.
   components:
   - type: Item
-    size: Normal #patch until there is an adequate resizing system in place 
-  - type: Food
+    size: Normal #patch until there is an adequate resizing system in place
   - type: Sprite
     drawdepth: Mobs
     noRot: true
@@ -63,12 +61,11 @@
           Quantity: 3.3 # 1/2 of a bun
 
 - type: entity
-  id: FoodBreadBunTop
   parent: FoodBreadSliceBase
+  id: FoodBreadBunTop
   name: top bun
   description: The perfect finish for your burger tower.
   components:
-  - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/burger_sequence.rsi
     layers:
@@ -83,20 +80,18 @@
   - type: FoodSequenceElement
     entries:
       Burger: BunTopBurger
-  
+
 # Base
 
 - type: entity
+  abstract: true
   parent: FoodInjectableBase
   id: FoodBurgerBase
-  abstract: true
   components:
   - type: FlavorProfile
     flavors:
       - bun
       - meaty
-  - type: Food
-    transferAmount: 5
   - type: Sprite
     sprite: Objects/Consumable/Food/burger.rsi
   - type: SolutionContainerManager
@@ -110,6 +105,8 @@
           Quantity: 3
   - type: Item
     sprite: Objects/Consumable/Food/burger.rsi
+    shape:
+    - 0,0,1,0
 
 # Custom Burger Example
 
@@ -129,6 +126,20 @@
     - state: custburg-filling
       color: red
     - state: custburg-top
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: alpha-patty-inhand-left
+        color: "#f70000"
+      - state: alpha-filling-inhand-left
+        color: "#f70000"
+      right:
+      - state: bun-inhand-right
+      - state: alpha-patty-inhand-right
+        color: "#f70000"
+      - state: alpha-filling-inhand-right
+        color: "#f70000"
 
 # Burger
 
@@ -158,6 +169,20 @@
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: alpha-patty-inhand-left
+        color: "#382010"
+      - state: alpha-filling-inhand-left
+        color: "#bd9451"
+      right:
+      - state: bun-inhand-right
+      - state: alpha-patty-inhand-right
+        color: "#382010"
+      - state: alpha-filling-inhand-right
+        color: "#bd9451"
 # Tastes like bun, grass.
 
 - type: entity
@@ -184,6 +209,20 @@
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: alpha-patty-inhand-left
+        color: "#b37659"
+      - state: alpha-filling-inhand-left
+        color: "#e8634f"
+      right:
+      - state: bun-inhand-right
+      - state: alpha-patty-inhand-right
+        color: "#b37659"
+      - state: alpha-filling-inhand-right
+        color: "#e8634f"
 # Tastes like bun, bacon.
 
 - type: entity
@@ -212,13 +251,30 @@
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: alpha-bun-inhand-left
+        color: "#f7f7f7"
+      - state: burger-inhand-left
+      right:
+      - state: alpha-bun-inhand-right
+        color: "#f7f7f7"
+      - state: burger-inhand-right
 
 - type: entity
-  name: bearger
   parent: FoodBurgerBase
   id: FoodBurgerBear
+  name: bearger
   description: Best served rawr.
   components:
+  - type: Item
+    storedOffset: 0,1
+    inhandVisuals:
+      left:
+      - state: bear-inhand-left
+      right:
+      - state: bear-inhand-right
   - type: FlavorProfile
     flavors:
       - bun
@@ -241,11 +297,21 @@
     - Meat
 
 - type: entity
-  name: big bite burger
   parent: FoodBurgerBase
   id: FoodBurgerBig
+  name: big bite burger
   description: Forget the Big Mac. THIS is the future!
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
+    storedOffset: 0,3
+    inhandVisuals:
+      left:
+      - state: burger-big-inhand-left
+      right:
+      - state: burger-big-inhand-right
   - type: FlavorProfile
     flavors: # What bun?
       - meaty
@@ -270,11 +336,18 @@
 # Tastes like bun, silver, magic.
 
 - type: entity
-  name: brain burger
   parent: FoodBurgerBase
   id: FoodBurgerBrain
+  name: brain burger
   description: A strange looking burger. It looks almost sentient.
   components:
+  - type: Item
+    storedOffset: 0,1
+    inhandVisuals:
+      left:
+      - state: brain-inhand-left
+      right:
+      - state: brain-inhand-right
   - type: FlavorProfile
     flavors:
       - bun
@@ -298,11 +371,20 @@
 # Tastes like bun, brains.
 
 - type: entity
-  name: cat burger
   parent: FoodBurgerBase
   id: FoodBurgerCat
+  name: cat burger
   description: Finally those cats and catpeople are worth something!
   components:
+  - type: Item
+    storedOffset: -1,1
+    inhandVisuals:
+      left:
+      - state: cat-inhand-left
+      - state: plain-inhand-left
+      right:
+      - state: cat-inhand-right
+      - state: plain-inhand-right
   - type: Sprite
     state: cat
   - type: FlavorProfile
@@ -352,6 +434,12 @@
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      right:
+      - state: plain-inhand-right
 # TODO: Make this work.
   # - type: Sprite
   #   state: plate
@@ -390,14 +478,35 @@
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: alpha-filling-inhand-left
+        color: "#98d966"
+      - state: alpha-patty-inhand-left
+        color: "#f7b125"
+      right:
+      - state: bun-inhand-right
+      - state: alpha-filling-inhand-right
+        color: "#98d966"
+      - state: alpha-patty-inhand-right
+        color: "#f7b125"
 # Tastes like bun, chicken.
 
 - type: entity
-  name: clown burger
   parent: FoodBurgerBase
   id: FoodBurgerClown
+  name: clown burger
   description: This tastes funny...
   components:
+  - type: Item
+    storedOffset: 0,1
+    inhandVisuals:
+      left:
+      - state: clown-inhand-left
+      right:
+      - state: clown-inhand-right
   - type: FlavorProfile
     flavors:
       - bun
@@ -443,6 +552,12 @@
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: dog-inhand-left
+      right:
+      - state: dog-inhand-right
 
 - type: entity
   name: crab burger
@@ -470,13 +585,37 @@
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: alpha-filling-inhand-left
+        color: "#7e1a07"
+      - state: alpha-patty-inhand-left
+        color: "#7e1a07"
+      right:
+      - state: bun-inhand-right
+      - state: alpha-filling-inhand-right
+        color: "#7e1a07"
+      - state: alpha-patty-inhand-right
+        color: "#7e1a07"
 
 - type: entity
-  name: crazy hamburger # Burger for you euro-cucks
   parent: FoodBurgerBase
   id: FoodBurgerCrazy
+  name: crazy hamburger # Burger for you euro-cucks
   description: This looks like the sort of food that a demented clown in a trenchcoat would make.
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
+    storedOffset: -2,0
+    inhandVisuals:
+      left:
+      - state: crazy-inhand-left
+      right:
+      - state: crazy-inhand-right
   - type: FlavorProfile
     flavors:
       - bun
@@ -499,17 +638,32 @@
         - ReagentId: Vitamin
           Quantity: 8
         - ReagentId: Sulfur # What you get for eating something with a flare in it
-          Quantity: 5 
+          Quantity: 5
   - type: Tag
     tags:
     - Meat
 
 - type: entity
-  name: duck sandwich # Burger for you sick bastards
   parent: FoodBurgerBase
   id: FoodBurgerDuck
+  name: duck sandwich # Burger for you sick bastards
   description: A duck sandwich, only the criminally insane would dare to eat the meat of such an adorable creature.
   components:
+  - type: Item
+    storedOffset: 0,1
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: alpha-filling-inhand-left
+        color: "#98d966"
+      - state: alpha-patty-inhand-left
+        color: "#e8b348"
+      right:
+      - state: bun-inhand-right
+      - state: alpha-filling-inhand-right
+        color: "#98d966"
+      - state: alpha-patty-inhand-right
+        color: "#e8b348"
   - type: FlavorProfile
     flavors:
       - bun
@@ -531,11 +685,18 @@
 # Tastes like bun, duck.
 
 - type: entity
-  name: empowered burger
   parent: FoodBurgerBase
   id: FoodBurgerEmpowered
+  name: empowered burger
   description: It's shockingly good, if you live off of electricity that is.
   components:
+  - type: Item
+    storedOffset: -2,1
+    inhandVisuals:
+      left:
+      - state: plasma-inhand-left
+      right:
+      - state: plasma-inhand-right
   - type: Sprite
     state: empowered
   - type: FlavorProfile
@@ -554,11 +715,26 @@
 # Tastes like bun, pure electricity.
 
 - type: entity
-  name: fillet-o-carp burger
   parent: FoodBurgerBase
   id: FoodBurgerCarp
+  name: fillet-o-carp burger
   description: Almost like a carp is yelling somewhere...
   components:
+  - type: Item
+    storedOffset: 0,1
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: alpha-filling-inhand-left
+        color: "#feffba"
+      - state: alpha-patty-inhand-left
+        color: "#f4bb53"
+      right:
+      - state: bun-inhand-right
+      - state: alpha-filling-inhand-right
+        color: "#feffba"
+      - state: alpha-patty-inhand-right
+        color: "#f4bb53"
   - type: FlavorProfile
     flavors:
       - bun
@@ -571,11 +747,21 @@
 # Tastes like bun, fish.
 
 - type: entity
-  name: five alarm burger
   parent: FoodBurgerBase
   id: FoodBurgerFive
+  name: five alarm burger
   description: HOT! HOT! HOT!
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
+    storedOffset: 0,1
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      right:
+      - state: plain-inhand-right
   - type: FlavorProfile
     flavors:
       - meaty
@@ -604,11 +790,31 @@
 # Tastes like bun, HEAT.
 
 - type: entity
-  name: ghost burger
   parent: FoodBurgerBase
   id: FoodBurgerGhost
+  name: ghost burger
   description: Too spooky!
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
+    storedOffset: 0,3
+    inhandVisuals:
+      left:
+      - state: alpha-bun-inhand-left
+        color: "#cededa"
+      - state: alpha-filling-inhand-left
+        color: "#6a6281"
+      - state: alpha-patty-inhand-left
+        color: "#95a79f"
+      right:
+      - state: alpha-bun-inhand-right
+        color: "#cededa"
+      - state: alpha-filling-inhand-right
+        color: "#6a6281"
+      - state: alpha-patty-inhand-right
+        color: "#95a79f"
   - type: FlavorProfile
     flavors:
       - bun
@@ -656,13 +862,34 @@
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      right:
+      - state: plain-inhand-right
 
 - type: entity
-  name: McGuffin
   parent: FoodBurgerBase
   id: FoodBurgerMcguffin
+  name: McGuffin
   description: A cheap and greasy imitation of an eggs Benedict.
   components:
+  - type: Item
+    storedOffset: 0,1
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: alpha-filling-inhand-left
+        color: "#f2efce"
+      - state: alpha-patty-inhand-left
+        color: "#e3756d"
+      right:
+      - state: bun-inhand-right
+      - state: alpha-filling-inhand-right
+        color: "#f2efce"
+      - state: alpha-patty-inhand-right
+        color: "#e3756d"
   - type: FlavorProfile
     flavors:
       - muffin
@@ -685,13 +912,13 @@
     - Meat
 
 - type: entity
-  name: BBQ Rib Sandwich
   parent: FoodBurgerBase
   id: FoodBurgerMcrib
+  name: BBQ Rib Sandwich
   description: An elusive rib shaped burger with limited availability across the galaxy. Not as good as you remember it.
   components:
-  - type: Food
-    trash: 
+  - type: Edible
+    trash:
     - FoodKebabSkewer
   - type: FlavorProfile
     flavors:
@@ -702,7 +929,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30 
+        maxVol: 30
         reagents:
         - ReagentId: Nutriment
           Quantity: 11
@@ -715,6 +942,20 @@
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: alpha-filling-inhand-left
+        color: "#899660"
+      - state: alpha-patty-inhand-left
+        color: "#a94a31"
+      right:
+      - state: bun-inhand-right
+      - state: alpha-filling-inhand-right
+        color: "#899660"
+      - state: alpha-patty-inhand-right
+        color: "#a94a31"
 # Tastes like bun, pork patty.
 
 - type: entity
@@ -742,6 +983,12 @@
           Quantity: 4
         - ReagentId: Nothing
           Quantity: 1
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: mime-inhand-left
+      right:
+      - state: mime-inhand-right
 # Tastes like  .
 
 - type: entity
@@ -770,6 +1017,12 @@
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      right:
+      - state: plain-inhand-right
 
 - type: entity
   name: rat burger
@@ -797,6 +1050,15 @@
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: rat-inhand-left
+      right:
+      - state: bun-inhand-right
+      - state: rat-inhand-right
+
 # Tastes like bun, HEAT.
 
 - type: entity
@@ -824,14 +1086,45 @@
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: alpha-bun-inhand-left
+        color: "#7f7f7f"
+      - state: alpha-patty-inhand-left
+        color: "#c0c0c0"
+      - state: alpha-filling-inhand-left
+        color: "#141414"
+      right:
+      - state: alpha-bun-inhand-right
+        color: "#7f7f7f"
+      - state: alpha-patty-inhand-right
+        color: "#c0c0c0"
+      - state: alpha-filling-inhand-right
+        color: "#141414"
 # Tastes like bun, lettuce, sludge.
 
 - type: entity
-  name: soylent burger
   parent: FoodBurgerBase
   id: FoodBurgerSoy
+  name: soylent burger
   description: After eating this you have the overwhelming urge to purchase overpriced figurines of superheroes.
   components:
+  - type: Item
+    storedOffset: 0,1
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: alpha-patty-inhand-left
+        color: "#91d90b"
+      - state: alpha-filling-inhand-left
+        color: "#91d90b"
+      right:
+      - state: bun-inhand-right
+      - state: alpha-patty-inhand-right
+        color: "#91d90b"
+      - state: alpha-filling-inhand-right
+        color: "#91d90b"
   - type: FlavorProfile
     flavors:
       - bun
@@ -850,11 +1143,21 @@
 # Tastes like bun, redditors.
 
 - type: entity
-  name: spell burger
   parent: FoodBurgerBase
   id: FoodBurgerSpell
+  name: spell burger
   description: This is absolutely Ei Nath.
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
+    storedOffset: -1,2
+    inhandVisuals:
+      left:
+      - state: spell-inhand-left
+      right:
+      - state: spell-inhand-right
   - type: FlavorProfile
     flavors:
       - bun
@@ -875,11 +1178,21 @@
 # Tastes like bun, silver.
 
 - type: entity
-  name: super bite burger
   parent: FoodBurgerBase
   id: FoodBurgerSuper
+  name: super bite burger
   description: This is a mountain of a burger. FOOD!
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
+    storedOffset: 0,4
+    inhandVisuals:
+      left:
+      - state: burger-super-inhand-left
+      right:
+      - state: burger-super-inhand-right
   - type: FlavorProfile
     flavors: # What bun?
       - meaty
@@ -926,6 +1239,20 @@
           Quantity: 8
         - ReagentId: Protein
           Quantity: 3
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: alpha-patty-inhand-left
+        color: "#f0d8a1"
+      - state: alpha-filling-inhand-left
+        color: "#e5ad29"
+      right:
+      - state: bun-inhand-right
+      - state: alpha-patty-inhand-right
+        color: "#f0d8a1"
+      - state: alpha-filling-inhand-right
+        color: "#e5ad29"
 # Tastes like bun, tofu.
 
 - type: entity
@@ -955,17 +1282,39 @@
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: alpha-patty-inhand-left
+        color: "#00cc33"
+      - state: alpha-filling-inhand-left
+        color: "#9900cc"
+      right:
+      - state: bun-inhand-right
+      - state: alpha-patty-inhand-right
+        color: "#00cc33"
+      - state: alpha-filling-inhand-right
+        color: "#9900cc"
 # Tastes like bun, acid.
 
 # Note: I would put a bunch of colored burgers here as listed in the tg .dm but
 # I'd rather wait for a custom burger component.
 
 - type: entity
-  name: mothroachburger
   parent: FoodBurgerBase
   id: FoodBurgerMothRoach
+  name: mothroachburger
   description: The last lamp it saw was the one inside the microwave.
   components:
+  - type: Item
+    shape:
+    - 0,0,0,1
+    inhandVisuals:
+      left:
+      - state: mothroach-inhand-left
+      right:
+      - state: mothroach-inhand-right
   - type: FlavorProfile
     flavors:
       - bun
@@ -987,4 +1336,4 @@
   - type: Tag
     tags:
     - Meat
-    
+

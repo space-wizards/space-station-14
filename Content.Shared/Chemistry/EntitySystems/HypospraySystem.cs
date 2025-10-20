@@ -1,6 +1,8 @@
 using Content.Shared.Administration.Logs;
-using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Body.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Hypospray.Events;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
@@ -142,7 +144,7 @@ public sealed class HypospraySystem : EntitySystem
             return false;
         }
 
-        _popup.PopupClient(Loc.GetString(msgFormat ?? "hypospray-component-inject-other-message", ("other", target)), target, user);
+        _popup.PopupClient(Loc.GetString(msgFormat ?? "hypospray-component-inject-other-message", ("other", Identity.Entity(target, EntityManager))), target, user);
 
         if (target != user)
         {

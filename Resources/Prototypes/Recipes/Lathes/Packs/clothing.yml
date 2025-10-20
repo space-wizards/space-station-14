@@ -33,7 +33,6 @@
   - ClothingUniformJumpskirtCapFormalDress
   # HoP
   - ClothingHeadHatHopcap
-  - ClothingHeadHatBeretHop
   - ClothingUniformJumpsuitHoP
   - ClothingUniformJumpskirtHoP
   # Generic
@@ -201,6 +200,7 @@
   - CarpetPurple
   - CarpetCyan
   - CarpetWhite
+  - CarpetSkyBlue
 
 - type: latheRecipePack
   id: ClothingCentComm

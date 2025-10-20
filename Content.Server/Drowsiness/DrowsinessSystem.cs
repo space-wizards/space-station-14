@@ -1,5 +1,4 @@
-﻿using Content.Server.StatusEffectNew;
-using Content.Shared.Bed.Sleep;
+﻿using Content.Shared.Bed.Sleep;
 using Content.Shared.Drowsiness;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.StatusEffectNew.Components;
@@ -47,7 +46,7 @@ public sealed class DrowsinessSystem : SharedDrowsinessSystem
             // Make sure the sleep time doesn't cut into the time to next incident.
             drowsiness.NextIncidentTime += duration;
 
-            _statusEffects.TryAddStatusEffect(statusEffect.AppliedTo.Value, SleepingSystem.StatusEffectForcedSleeping, duration);
+            _statusEffects.TryAddStatusEffectDuration(statusEffect.AppliedTo.Value, SleepingSystem.StatusEffectForcedSleeping, duration);
         }
     }
 }
