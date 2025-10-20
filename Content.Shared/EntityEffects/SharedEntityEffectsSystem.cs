@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reaction;
@@ -91,7 +91,7 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
         // TODO: Replace with proper random prediciton when it exists.
         if (effect.Probability <= 1f)
         {
-            var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(target).Id, 0 });
+            var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(target).Id, 0);
             var rand = new System.Random(seed);
             if (!rand.Prob(effect.Probability))
                 return false;
