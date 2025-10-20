@@ -202,8 +202,8 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
 
                     if (effect.Probability <= 1f)
                     {
-                        var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_gameTiming.CurTick.Value, GetNetEntity(actualEntity).Id, 0 });
-                        var rand = new System.Random(seed);
+                        var seed = SharedRandomExtensions.HashCodeCombine((int)_gameTiming.CurTick.Value, GetNetEntity(actualEntity).Id);
+                        var rand = new Random(seed);
                         if (!rand.Prob(effect.Probability))
                             continue;
                     }
