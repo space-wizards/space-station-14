@@ -38,7 +38,7 @@ public sealed class BwoinkCommand : ToolshedCommand
     {
         foreach (var session in input)
         {
-            _bwoinkManager.SetAllowList(channel, session.UserId, true);
+            _bwoinkManager.SetAllowList(channel, session.UserId, false);
         }
     }
 }

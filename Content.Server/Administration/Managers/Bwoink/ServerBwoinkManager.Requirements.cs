@@ -67,6 +67,9 @@ public sealed partial class ServerBwoinkManager
     /// <inheritdoc cref="CanReadChannel(Robust.Shared.Prototypes.ProtoId{Content.Shared.Administration.Managers.Bwoink.BwoinkChannelPrototype},Robust.Shared.Player.ICommonSession)"/>
     public override bool CanReadChannel(BwoinkChannelPrototype channel, ICommonSession session)
     {
+        if (CanManageChannel(channel, session))
+            return true;
+
         return channel.ReadRequirement == null
                || CheckConditions(channel, channel.ReadRequirement.Requirements, channel.ReadRequirement.OperationMode, session);
     }
@@ -82,6 +85,9 @@ public sealed partial class ServerBwoinkManager
     /// <inheritdoc cref="CanWriteChannel(Robust.Shared.Prototypes.ProtoId{Content.Shared.Administration.Managers.Bwoink.BwoinkChannelPrototype},Robust.Shared.Player.ICommonSession)"/>
     public override bool CanWriteChannel(BwoinkChannelPrototype channel, ICommonSession session)
     {
+        if (CanManageChannel(channel, session))
+            return true;
+
         return channel.WriteRequirement == null
                || CheckConditions(channel, channel.WriteRequirement.Requirements, channel.WriteRequirement.OperationMode, session);
     }

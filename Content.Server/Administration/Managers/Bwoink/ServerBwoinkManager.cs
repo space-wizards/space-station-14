@@ -142,6 +142,13 @@ public sealed partial class ServerBwoinkManager : SharedBwoinkManager
 
         foreach (var (channelId, channel) in ProtoCache)
         {
+            if (!CanReadChannel(channel, session))
+            {
+                // Can't even read it. Smh.
+                conversations.Add(channelId, []);
+                continue;
+            }
+
             if (CanManageChannel(channel, session))
             {
                 // This person is a manager, so we send them all the conversations for this channel.

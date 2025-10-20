@@ -94,6 +94,8 @@ public sealed partial class BwoinkWindow : DefaultWindow
                 Channels.AddChild(control);
             }
         }
+
+        Channels.CurrentTab = 0; // Prevent crashing if the current active tab gets deleted during the reload.
     }
 
 

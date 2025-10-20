@@ -47,7 +47,11 @@ public sealed partial class ServerBwoinkManager
         }
 
         if (refresh)
-            SyncChannels(PlayerManager.GetSessionById(target));
+        {
+            var session = PlayerManager.GetSessionById(target);
+            SyncChannels(session);
+            SynchronizeMessages(session);
+        }
     }
 
     private BwoinkMessage CreateSystemMessage(string text, MessageFlags flags = MessageFlags.Manager)

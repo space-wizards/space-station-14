@@ -178,6 +178,8 @@ public abstract partial class SharedBwoinkManager : IPostInjectInit
         if (!conversations.TryGetValue(userId, out var conversation))
             return null;
 
+        conversation.Messages.RemoveAll(x => x.Flags.HasFlag(MessageFlags.ManagerOnly));
+
         if (!filterSender)
             return conversation;
 
