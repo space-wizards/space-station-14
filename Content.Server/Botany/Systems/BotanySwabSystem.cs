@@ -24,10 +24,10 @@ public sealed class BotanySwabSystem : EntitySystem
         SubscribeLocalEvent<BotanySwabComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<BotanySwabComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<BotanySwabComponent, BotanySwabDoAfterEvent>(OnDoAfter);
-        SubscribeLocalEvent<BotanySwabComponent, UseInHandEvent>(OnClean); //Remove a swab's SeedData
-        SubscribeLocalEvent<BotanySwabComponent, ContainerGettingInsertedAttemptEvent>(OnInsertAttempt); //Swab Applicator, on swab insert check swab has pollen, cancel if it doesn't.
-        SubscribeLocalEvent<BotanySwabComponent, EntGotInsertedIntoContainerMessage>(OnInsert); //Swab Applicator, on swab successfully inserted transfer its SeedData
-        SubscribeLocalEvent<BotanySwabComponent, EntGotRemovedFromContainerMessage>(OnRemove); //Swab Applicator, on remove swab, set Applicator's SeedData back to null
+        SubscribeLocalEvent<BotanySwabComponent, UseInHandEvent>(OnClean);
+        SubscribeLocalEvent<BotanySwabComponent, ContainerGettingInsertedAttemptEvent>(OnInsertAttempt);
+        SubscribeLocalEvent<BotanySwabComponent, EntGotInsertedIntoContainerMessage>(OnInsert);
+        SubscribeLocalEvent<BotanySwabComponent, EntGotRemovedFromContainerMessage>(OnRemove);
     }
 
     /// <summary>
@@ -40,7 +40,7 @@ public sealed class BotanySwabSystem : EntitySystem
         {
             if (swab.SeedData != null)
                 args.PushMarkup(Loc.GetString("swab-used"));
-            else if (swab.UsableIfClean == true)
+            else if (swab.UsableIfClean) //if swab can only be used when dirty, it doesn't have an unused state, so don't display this.
                 args.PushMarkup(Loc.GetString("swab-unused"));
         }
     }
@@ -53,7 +53,7 @@ public sealed class BotanySwabSystem : EntitySystem
         if (args.Target == null || !args.CanReach || !HasComp<PlantHolderComponent>(args.Target))
             return;
 
-        if (swab.UsableIfClean == false && swab.SeedData == null)
+        if (!swab.UsableIfClean && swab.SeedData == null) //if swab is not usable when clean, and is clean (has no seedData), prevent use.
         {
             _popupSystem.PopupEntity(Loc.GetString("botany-swab-unusable"), uid, args.User);
             return;
@@ -68,7 +68,7 @@ public sealed class BotanySwabSystem : EntitySystem
     }
 
     /// <summary>
-    /// Save seed data or cross-pollenate.
+    /// Save seed data or cross-pollinate.
     /// </summary>
     private void OnDoAfter(EntityUid uid, BotanySwabComponent swab, DoAfterEvent args)
     {
@@ -89,7 +89,7 @@ public sealed class BotanySwabSystem : EntitySystem
             if (old == null)
                 return;
 
-            plant.Seed = _mutationSystem.Cross(swab.SeedData, old); // Cross-pollenate
+            plant.Seed = _mutationSystem.Cross(swab.SeedData, old); // Cross-pollinate
 
             if (swab.Contaminate)
                 swab.SeedData = old;// Transfer old plant pollen to swab if contamination is allowed
@@ -99,6 +99,9 @@ public sealed class BotanySwabSystem : EntitySystem
         args.Handled = true;
     }
 
+    ///<summary>
+    /// Remove a swab's SeedData
+    /// </summary>
     private void OnClean(EntityUid uid, BotanySwabComponent swab, ref UseInHandEvent args)
     {
         if (args.Handled)
@@ -113,6 +116,9 @@ public sealed class BotanySwabSystem : EntitySystem
         args.Handled = true;
     }
 
+    ///<summary>
+    /// Swab Applicator, on swab insert check swab has pollen, cancel if it doesn't.
+    /// </summary>
     private void OnInsertAttempt(EntityUid uid, BotanySwabComponent swab, ref ContainerGettingInsertedAttemptEvent args)
     {
         //does the container have the botanySwab component (should always be the case)
@@ -128,13 +134,18 @@ public sealed class BotanySwabSystem : EntitySystem
         args.Cancel();
         return;
     }
-
+    ///<summary>
+    /// Swab Applicator, on swab successfully inserted transfer its SeedData to the applicator
+    /// </summary>
     private void OnInsert(EntityUid uid, BotanySwabComponent swab, ref EntGotInsertedIntoContainerMessage args)
     {
         if (TryComp<BotanySwabComponent>(args.Container.Owner, out var applicator))
             applicator.SeedData = swab.SeedData;
     }
 
+    ///<summary>
+    /// Swab Applicator, on removing swab, set Applicator's SeedData back to null
+    /// </summary>
     private void OnRemove(EntityUid uid, BotanySwabComponent swab, ref EntGotRemovedFromContainerMessage args)
     {
         if (TryComp<BotanySwabComponent>(args.Container.Owner, out var applicator))
