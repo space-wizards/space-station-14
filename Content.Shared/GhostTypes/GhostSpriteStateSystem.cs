@@ -39,7 +39,7 @@ public sealed class GhostSpriteStateSystem : EntitySystem
         highestType.Sort();
 
         string spriteState;
-        if (highestType[0] == "Blunt" && highestType[1] == "Heat" && highestType[2] == "Piercing")  // Specific case for explosions
+        if (highestType.Count == 3 && highestType[0]== "Blunt" && highestType[1]== "Heat" && highestType[2]== "Piercing")  // Specific case for explosions
         {
             spriteState = "explosion" +_random.Next(1, 4);
         }
