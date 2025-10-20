@@ -49,6 +49,7 @@
       - Burnt
       - Cigarette
       - Cigar
+      - Matchstick
     hideStackVisualsWhenClosed: false
     maxItemSize: Tiny
     grid:
