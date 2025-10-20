@@ -12,6 +12,7 @@ namespace Content.Server.Administration.Commands;
 public sealed class BwoinkCommand : ToolshedCommand
 {
     [Dependency] private readonly ServerBwoinkManager _bwoinkManager = default!;
+    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
 
     [CommandImplementation("message")]
     public void Message([PipedArgument] IEnumerable<ICommonSession> input, [CommandArgument] ProtoId<BwoinkChannelPrototype> channel, [CommandArgument] string message)
@@ -39,6 +40,16 @@ public sealed class BwoinkCommand : ToolshedCommand
         foreach (var session in input)
         {
             _bwoinkManager.SetAllowList(channel, session.UserId, false);
+        }
+    }
+
+    [CommandImplementation("sync")]
+    public void SyncPlayer([PipedArgument] IEnumerable<ICommonSession> input)
+    {
+        foreach (var session in input)
+        {
+            _bwoinkManager.SynchronizeMessages(session);
+            _bwoinkManager.SyncChannels(session);
         }
     }
 }
