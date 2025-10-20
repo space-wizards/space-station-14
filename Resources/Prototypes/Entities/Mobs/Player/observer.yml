@@ -64,7 +64,7 @@
           ghost_cold: { state: ghost_cold }
           ghost_shock: { state: ghost_shock }
           ghost_radiation: { state: ghost_radiation }
-          ghost_genetic: { state: ghost_genetic }
+          ghost_cellular: { state: ghost_cellular }
           ghost_poison: { state: ghost_poison }
           ghost_asphyxiation: { state: ghost_asphyxiation }
           ghost_explosion1: { state: ghost_explosion1 }
@@ -88,7 +88,7 @@
       Cold: 1
       Shock: 1
       Radiation: 1
-      Genetic: 1
+      Cellular: 1
       Poison: 1
       Asphyxiation: 1
       Explosion: 3
