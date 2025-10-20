@@ -82,7 +82,7 @@ public sealed class CharacterCreationTest
 
         if (clientCharacter is not HumanoidCharacterProfile a)
         {
-            Assert.Fail($"Not a nameof(HumanoidCharacterProfile)");
+            Assert.Fail($"Not a {nameof(HumanoidCharacterProfile)}");
             return;
         }
 
