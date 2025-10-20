@@ -102,22 +102,27 @@ public abstract class SharedHailerSystem : EntitySystem
 
     protected void SubmitChatMessage(Entity<HailerComponent> ent, string localeText, int index)
     {
-        //Put the exclamations mark around people at the distance specified in the comp side
-        //Just like a whistle
-        ExclamateHumanoidsAround(ent);
+        if (ent.Comp.User.HasValue)
+        {
+            //Put the exclamations mark around people at the distance specified in the comp side
+            //Just like a whistle
+            ExclamateHumanoidsAround(ent);
 
-        //Make a chat line with the sec hailer as speaker, in bold and UPPERCASE for added impact
-        string sentence = Loc.GetString(localeText + "-" + index);
+            //Make a chat line with the sec hailer as speaker, in bold and UPPERCASE for added impact
+            string sentence = Loc.GetString(localeText + "-" + index);
 
-        _chat.TrySendInGameICMessage(ent.Owner,
-                                    sentence.ToUpper(),
-                                    InGameICChatType.Speak,
-                                    hideChat: true,
-                                    hideLog: true,
-                                    nameOverride: ent.Comp.ChatName,
-                                    checkRadioPrefix: false,
-                                    ignoreActionBlocker: true,
-                                    skipTransform: true);
+            _chat.TrySendInGameICMessage(ent.Comp.User.Value, //We submit the message via the User instead of the hailer to make the text BOLD
+                                        sentence.ToUpper(),
+                                        InGameICChatType.Speak,
+                                        hideChat: true,
+                                        hideLog: true,
+                                        nameOverride: ent.Comp.ChatName,
+                                        checkRadioPrefix: false,
+                                        ignoreActionBlocker: true,
+                                        skipTransform: true);
+        }
+        else
+            Log.Error("SharedHailerSystem tried to send a chat message but the hailer had no user !");
     }
 
     /// <summary>
