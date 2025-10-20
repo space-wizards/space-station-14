@@ -1,6 +1,8 @@
 using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Shared.GhostTypes;
@@ -19,7 +21,7 @@ public sealed class GhostSpriteStateSystem : EntitySystem
         if (!TryComp<AppearanceComponent>(ent, out var appearance) || !TryComp<MindComponent>(mind, out var mindComp))
             return;
 
-        List<string> highestType;
+        List<ProtoId<DamageTypePrototype>> highestType;
         if (TryComp<DamageableComponent>(mindComp.CurrentEntity, out var damageComp))
         {
             highestType = _damageable.GetHighestDamageTypes(damageComp.DamagePerGroup, damageComp.Damage);
@@ -35,25 +37,35 @@ public sealed class GhostSpriteStateSystem : EntitySystem
             return;
 
         highestType.Sort();
+        ent.Comp.DamageMap.TryGetValue(highestType[0], out var numOfStates);
 
         string spriteState;
-        if (highestType is ["Blunt", "Heat", "Piercing"])  // special case for explosions
+        if (highestType[0] == "Blunt" && highestType[1] == "Heat" && highestType[2] == "Piercing")  // Specific case for explosions
         {
-            spriteState = "explosion" + _random.Next(1, 4);  // Chooses between 3 possible sprites
+            spriteState = "explosion";
+            if (ent.Comp.DamageMap.TryGetValue("Explosion", out var spriteAmount) && spriteAmount > 1)  // Chooses a random sprite state if needed.
+            {
+                spriteState += _random.Next(1, spriteAmount + 1);
+            }
+        }
+        else if (highestType.Count > 1)  // If there's multiple damage types in the list
+        {
+            spriteState = highestType[_random.Next(0, highestType.Count)]; // Chooses a random damage type from the list
+            if (ent.Comp.DamageMap.TryGetValue(highestType[_random.Next(0, highestType.Count)], out var spriteAmount) && spriteAmount > 1)  // Chooses  a random sprite state if needed.
+            {
+                spriteState += _random.Next(1, spriteAmount + 1);
+            }
         }
         else
         {
-            if (highestType[0] == "Blunt"
-                || highestType[0] == "Slash"
-                || highestType[0] == "Piercing")
+            spriteState = highestType[0];
+            if (ent.Comp.DamageMap.TryGetValue(highestType[0], out var spriteAmount) && spriteAmount > 1) // Chooses  a random sprite state if needed
             {
-                spriteState = highestType[0] + _random.Next(1, 4); // Chooses between 3 possible sprites
-            }
-            else
-            {
-                spriteState = highestType[_random.Next(0, highestType.Count)]; // Uses the 1 possible sprite
+                spriteState += _random.Next(1, spriteAmount + 1);
             }
         }
+
+        Log.Debug($"wawa {spriteState}");
         _appearance.SetData(ent, GhostComponent.GhostVisuals.Damage, ent.Comp.Prefix + spriteState.ToLower(), appearance);
     }
 }

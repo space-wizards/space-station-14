@@ -1,4 +1,6 @@
+using Content.Shared.Damage.Prototypes;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.GhostTypes;
 
@@ -16,4 +18,10 @@ public sealed partial class GhostSpriteStateComponent : Component
     /// </summary>
     [DataField]
     public string Prefix;
+
+    /// <summary>
+    /// Should link damage types names to an int, according to the amount of possible sprites for that specific type.
+    /// </summary>
+    [DataField]
+    public Dictionary<ProtoId<DamageTypePrototype>, int> DamageMap = new();
 }

@@ -66,7 +66,7 @@
           ghost_radiation: { state: ghost_radiation }
           ghost_genetic: { state: ghost_genetic }
           ghost_poison: { state: ghost_poison }
-          ghost_airloss: { state: ghost_airloss }
+          ghost_asphyxiation: { state: ghost_asphyxiation }
           ghost_explosion1: { state: ghost_explosion1 }
           ghost_explosion2: { state: ghost_explosion2 }
           ghost_explosion3: { state: ghost_explosion3 }
@@ -80,6 +80,18 @@
     skipChecks: true
   - type: Ghost
   - type: GhostSpriteState
+    damageMap:
+      Blunt: 3
+      Slash: 3
+      Piercing: 3
+      Heat: 1
+      Cold: 1
+      Shock: 1
+      Radiation: 1
+      Genetic: 1
+      Poison: 1
+      Asphyxiation: 1
+      Explosion: 3
     prefix: "ghost_"
   - type: GhostHearing
   - type: ShowElectrocutionHUD

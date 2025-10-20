@@ -366,9 +366,10 @@ namespace Content.Shared.Damage
         /// <summary>
         /// Returns a string list containing the type/s of the highest damage value
         /// </summary>
-        public List<string> GetHighestDamageTypes(Dictionary<string, FixedPoint2> damagePerGroup, DamageSpecifier damage)
+        public List<ProtoId<DamageTypePrototype>> GetHighestDamageTypes(Dictionary<string, FixedPoint2> damagePerGroup, DamageSpecifier damage)
         {
-            var highestType = new List<string>();
+            var highestType = new List<ProtoId<DamageTypePrototype>>();
+
             var highestValue = FixedPoint2.Zero;
 
             foreach (var (damageGroupId, damageAmount) in damagePerGroup)  //go through each group
