@@ -97,7 +97,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         if (args.Container.ID != StatusEffectContainerComponent.ContainerId)
             return;
 
-        if (!TryComp<StatusEffectComponent>(args.Entity, out var statusComp))
+        if (!_effectQuery.TryComp(args.Entity, out var statusComp))
             return;
 
         var ev = new StatusEffectRemovedEvent(ent);
