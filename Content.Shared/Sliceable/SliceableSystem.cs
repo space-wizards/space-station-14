@@ -126,7 +126,7 @@ public sealed class SliceableSystem : EntitySystem
     {
         var slices = EntitySpawnCollection.GetSpawns(ent.Comp.Slices);
 
-        var rndSeed = SharedRandomExtensions.HashCodeCombine(new() { unchecked((int) _gameTiming.CurTick.Value), user.Id, ent.Owner.Id });
+        var rndSeed = SharedRandomExtensions.HashCodeCombine((int) _gameTiming.CurTick.Value, user.Id, ent.Owner.Id);
         var rng = new System.Random(rndSeed);
 
         (Entity<SolutionComponent> sourceSoln, Solution sourceSolution)? solutionInfo = default;
