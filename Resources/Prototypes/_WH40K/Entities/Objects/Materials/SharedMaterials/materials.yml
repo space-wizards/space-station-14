@@ -9,8 +9,10 @@
   components:
   - type: Sprite
     sprite: Objects/Materials/materials.rsi
+    state: icon
   - type: Item
     sprite: Objects/Materials/materials.rsi
+    state: icon
     size: Normal
   - type: Tag
     tags:
@@ -29,9 +31,11 @@
   name: material
   components:
   - type: Sprite
-    sprite: 
+    sprite: /Textures/_WH40K/Entities/Objects/Materials/SharedMaterials/basic_material.rsi
+    state: icon
   - type: Item
-    sprite: 
+    sprite: /Textures/_WH40K/Entities/Objects/Materials/SharedMaterials/basic_material.rsi
+    state: icon
   - type: Tag
     tags:
       - ProductionMaterialSWH
@@ -44,9 +48,11 @@
   name: construction material
   components:
   - type: Sprite
-    sprite: 
+    sprite: /Textures/_WH40K/Entities/Objects/Materials/SharedMaterials/construction_material.rsi
+    state: icon
   - type: Item
-    sprite: 
+    sprite: /Textures/_WH40K/Entities/Objects/Materials/SharedMaterials/construction_material.rsi
+    state: icon
   - type: Tag
     tags:
       - MaterialSWH
@@ -58,9 +64,11 @@
   name: production material
   components:
   - type: Sprite
-    sprite: 
+    sprite: /Textures/_WH40K/Entities/Objects/Materials/SharedMaterials/production_material.rsi
+    state: icon
   - type: Item
-    sprite: 
+    sprite: /Textures/_WH40K/Entities/Objects/Materials/SharedMaterials/production_material.rsi
+    state: icon
   - type: Tag
     tags:
       - MaterialSWH
@@ -72,9 +80,11 @@
   name: high value material
   components:
   - type: Sprite
-    sprite: 
+    sprite: /Textures/_WH40K/Entities/Objects/Materials/SharedMaterials/highvalue_material.rsi
+    state: icon
   - type: Item
-    sprite: 
+    sprite: /Textures/_WH40K/Entities/Objects/Materials/SharedMaterials/highvalue_material.rsi
+    state: icon
   - type: Tag
     tags:
       - MaterialSWH

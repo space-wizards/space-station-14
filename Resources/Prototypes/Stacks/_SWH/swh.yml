@@ -2,6 +2,5 @@
   parent: BaseSheetStack
   id: StackNumSWH
   name: stack-swh
-  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: base }
+  icon: { sprite: /Textures/_WH40K/Entities/Objects/Materials/SharedMaterials/basic_material.rsi, state: icon }
   spawn: basicMaterialSWH
-  maxCount: 20
