@@ -3,12 +3,12 @@
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       MouseFilter="Stop"
                       MinWidth="200" MinHeight="150">
-    <PanelContainer StyleClasses="AngleRect" />
+    <PanelContainer StyleClasses="BackgroundPanel" />
 
     <BoxContainer Orientation="Vertical">
         <Control>
-            <PanelContainer StyleClasses="WindowHeadingBackground" />
-            <BoxContainer Margin="4 2 8 0" Orientation="Horizontal">
+            <PanelContainer StyleClasses="WindowHeadingBackground" Name="WindowHeader" />
+            <BoxContainer Margin="4 2 4 0" Orientation="Horizontal">
                 <Label Name="WindowTitle"
                        HorizontalExpand="True" VAlign="Center" StyleClasses="FancyWindowTitle" ClipText="true" />
                 <TextureButton Name="HelpButton" StyleClasses="windowHelpButton" VerticalAlignment="Center" Disabled="True" Visible="False" Access="Public" />
@@ -17,6 +17,6 @@
             </BoxContainer>
         </Control>
         <PanelContainer StyleClasses="LowDivider" />
-        <Control Access="Public" Name="ContentsContainer" Margin="0 2" RectClipContent="True" VerticalExpand="true" />
+        <Control Access="Public" Name="ContentsContainer" StyleClasses="WindowContentsContainer" RectClipContent="True" VerticalExpand="true" />
     </BoxContainer>
 </controls:FancyWindow>

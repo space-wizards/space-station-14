@@ -1,79 +1,4 @@
 ﻿Entries:
-- author: RedBookcase
-  changes:
-  - message: The running and walking speed debuffs on equipped gear have been standardized.
-    type: Tweak
-  id: 8623
-  time: '2025-06-05T23:27:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37828
-- author: august-sun
-  changes:
-  - message: Added individual Bulldog drum magazines for sale in the syndicate uplink.
-      Ammo types available are pellets and slugs.
-    type: Add
-  id: 8624
-  time: '2025-06-05T23:35:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37917
-- author: Xeri7
-  changes:
-  - message: Added ability to pick up potted plants in two hands, as well as store
-      them in crates!
-    type: Add
-  - message: Added purchasable potted plant crate!
-    type: Add
-  id: 8625
-  time: '2025-06-05T23:36:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37591
-- author: K-Dynamic
-  changes:
-  - message: Rifle crates with two Lecters and four magazines can be ordered from
-      Cargo for 8000 spesos.
-    type: Add
-  - message: Lethal Weapons gift event now includes a Rifle crate.
-    type: Tweak
-  - message: SMG crates are properly described and no longer reference 'semiautomatic
-      rifles.'
-    type: Tweak
-  id: 8626
-  time: '2025-06-05T23:40:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35535
-- author: themias
-  changes:
-  - message: Wearing a muzzle now reduces the sound of vocal emotes
-    type: Tweak
-  id: 8627
-  time: '2025-06-05T23:45:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34444
-- author: RedBookcase
-  changes:
-  - message: Added Scrap Armor and Scrap Helmets.
-    type: Add
-  id: 8628
-  time: '2025-06-06T00:13:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37601
-- author: Samuka
-  changes:
-  - message: Fire bombs are now minor contra
-    type: Tweak
-  - message: Pipe bombs are now minor contra
-    type: Tweak
-  id: 8629
-  time: '2025-06-06T02:28:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38088
-- author: Minemoder
-  changes:
-  - message: Shark plushies now bite.
-    type: Tweak
-  id: 8630
-  time: '2025-06-06T21:07:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38113
-- author: themias
-  changes:
-  - message: Increased the chance of throwing trash into a disposal unit
-    type: Tweak
-  id: 8631
-  time: '2025-06-06T22:13:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38116
 - author: spanky-spanky
   changes:
   - message: Landmines now light up in the dark!
@@ -3939,3 +3864,73 @@
   id: 9124
   time: '2025-10-19T11:45:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40054
+- author: Pgriha
+  changes:
+  - message: Cotton seeds added to seeds crate from Cargo.
+    type: Add
+  id: 9125
+  time: '2025-10-19T16:02:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40970
+- author: SpaceLizard24
+  changes:
+  - message: Creating crystal chemical reaction now can produce yellow and black crystals!
+    type: Fix
+  id: 9126
+  time: '2025-10-19T18:37:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40985
+- author: Kittygyat
+  changes:
+  - message: Monkeys, Kobolds & Scurrets can now shove/disarm like regular species!
+    type: Tweak
+  id: 9127
+  time: '2025-10-19T19:09:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38542
+- author: PotentiallyTom
+  changes:
+  - message: AI Law boards now have a link to the lawsets guide page
+    type: Tweak
+  - message: Added the My, Robot book.
+    type: Add
+  id: 9128
+  time: '2025-10-19T21:10:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40944
+- author: aspiringLich
+  changes:
+  - message: UIs have been brought more in line with each other with a standardized
+      palette, as well as other changes resulting from a new styling mechanism.
+    type: Tweak
+  id: 9129
+  time: '2025-10-19T21:23:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29903
+- author: ArtisticRoomba, seam_less
+  changes:
+  - message: Job-themed lizard plushies! You can equip them in your loadout if you
+      have 20 hours on the job.
+    type: Add
+  id: 9130
+  time: '2025-10-19T22:28:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34127
+- author: AsnDen
+  changes:
+  - message: Large thruster (2x2) was added.
+    type: Add
+  id: 9131
+  time: '2025-10-19T23:51:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37681
+- author: ArtisticRoomba
+  changes:
+  - message: Slimes can now metabolize their own slime to restore their blood level.
+    type: Add
+  - message: Slime is no longer effective at satiating hunger when metabolized by
+      a Slime.
+    type: Tweak
+  id: 9132
+  time: '2025-10-20T00:40:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32537
+- author: Kittygyat
+  changes:
+  - message: Added a cosmetic carp suit to the AutoDrobe's contraband inventory!
+    type: Add
+  id: 9133
+  time: '2025-10-20T02:56:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40995
