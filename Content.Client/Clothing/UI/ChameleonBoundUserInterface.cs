@@ -42,10 +42,10 @@ public sealed class ChameleonBoundUserInterface : BoundUserInterface
         var targets = _chameleon.GetValidTargets(st.Slot);
         if (st.RequiredTag != null)
         {
-            var newTargets = new List<string>();
+            var newTargets = new List<EntProtoId>();
             foreach (var target in targets)
             {
-                if (string.IsNullOrEmpty(target) || !_proto.TryIndex(target, out EntityPrototype? proto))
+                if (string.IsNullOrEmpty(target) || !_proto.Resolve(target, out EntityPrototype? proto))
                     continue;
 
                 if (!proto.TryGetComponent(out TagComponent? tag, EntMan.ComponentFactory) || !_tag.HasTag(tag, st.RequiredTag))

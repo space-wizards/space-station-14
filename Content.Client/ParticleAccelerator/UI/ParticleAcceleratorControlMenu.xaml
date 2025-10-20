@@ -127,7 +127,7 @@
                             <Control/>
                             <ui:PASegmentControl Name="EndCapTexture" BaseState="end_cap"/>
                             <Control/>
-                            <ui:PASegmentControl Name="ControlBoxTexture" BaseState="control_box"/>
+                            <ui:PASegmentControl Name="ControlBoxTexture" BaseState="control_box" DefaultVisible="True"/>
                             <ui:PASegmentControl Name="FuelChamberTexture" BaseState="fuel_chamber"/>
                             <Control/>
                             <Control/>

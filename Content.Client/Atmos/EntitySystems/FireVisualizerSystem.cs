@@ -11,7 +11,6 @@ namespace Content.Client.Atmos.EntitySystems;
 /// </summary>
 public sealed class FireVisualizerSystem : VisualizerSystem<FireVisualsComponent>
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
     [Dependency] private readonly PointLightSystem _lights = default!;
 
     public override void Initialize()
@@ -33,9 +32,9 @@ public sealed class FireVisualizerSystem : VisualizerSystem<FireVisualsComponent
         // Need LayerMapTryGet because Init fails if there's no existing sprite / appearancecomp
         // which means in some setups (most frequently no AppearanceComp) the layer never exists.
         if (TryComp<SpriteComponent>(uid, out var sprite) &&
-            _sprite.LayerMapTryGet((uid, sprite), FireVisualLayers.Fire, out var layer, false))
+            SpriteSystem.LayerMapTryGet((uid, sprite), FireVisualLayers.Fire, out var layer, false))
         {
-            _sprite.RemoveLayer((uid, sprite), layer);
+            SpriteSystem.RemoveLayer((uid, sprite), layer);
         }
     }
 
@@ -44,11 +43,11 @@ public sealed class FireVisualizerSystem : VisualizerSystem<FireVisualsComponent
         if (!TryComp<SpriteComponent>(uid, out var sprite) || !TryComp(uid, out AppearanceComponent? appearance))
             return;
 
-        _sprite.LayerMapReserve((uid, sprite), FireVisualLayers.Fire);
-        _sprite.LayerSetVisible((uid, sprite), FireVisualLayers.Fire, false);
+        SpriteSystem.LayerMapReserve((uid, sprite), FireVisualLayers.Fire);
+        SpriteSystem.LayerSetVisible((uid, sprite), FireVisualLayers.Fire, false);
         sprite.LayerSetShader(FireVisualLayers.Fire, "unshaded");
         if (component.Sprite != null)
-            _sprite.LayerSetRsi((uid, sprite), FireVisualLayers.Fire, new ResPath(component.Sprite));
+            SpriteSystem.LayerSetRsi((uid, sprite), FireVisualLayers.Fire, new ResPath(component.Sprite));
 
         UpdateAppearance(uid, component, sprite, appearance);
     }
@@ -61,12 +60,12 @@ public sealed class FireVisualizerSystem : VisualizerSystem<FireVisualsComponent
 
     private void UpdateAppearance(EntityUid uid, FireVisualsComponent component, SpriteComponent sprite, AppearanceComponent appearance)
     {
-        if (!_sprite.LayerMapTryGet((uid, sprite), FireVisualLayers.Fire, out var index, false))
+        if (!SpriteSystem.LayerMapTryGet((uid, sprite), FireVisualLayers.Fire, out var index, false))
             return;
 
         AppearanceSystem.TryGetData<bool>(uid, FireVisuals.OnFire, out var onFire, appearance);
         AppearanceSystem.TryGetData<float>(uid, FireVisuals.FireStacks, out var fireStacks, appearance);
-        _sprite.LayerSetVisible((uid, sprite), index, onFire);
+        SpriteSystem.LayerSetVisible((uid, sprite), index, onFire);
 
         if (!onFire)
         {
@@ -80,9 +79,9 @@ public sealed class FireVisualizerSystem : VisualizerSystem<FireVisualsComponent
         }
 
         if (fireStacks > component.FireStackAlternateState && !string.IsNullOrEmpty(component.AlternateState))
-            _sprite.LayerSetRsiState((uid, sprite), index, component.AlternateState);
+            SpriteSystem.LayerSetRsiState((uid, sprite), index, component.AlternateState);
         else
-            _sprite.LayerSetRsiState((uid, sprite), index, component.NormalState);
+            SpriteSystem.LayerSetRsiState((uid, sprite), index, component.NormalState);
 
         component.LightEntity ??= Spawn(null, new EntityCoordinates(uid, default));
         var light = EnsureComp<PointLightComponent>(component.LightEntity.Value);

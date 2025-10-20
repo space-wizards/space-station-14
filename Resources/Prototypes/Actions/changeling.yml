@@ -1,0 +1,44 @@
+- type: entity
+  parent: BaseAction
+  id: ActionRetractableItemArmBlade
+  name: Arm Blade
+  description: Shed your flesh and reform it into a fleshy blade.
+  components:
+  - type: Action
+    useDelay: 2
+    raiseOnAction: true
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/changeling.rsi
+      state: armblade
+  - type: InstantAction
+    event: !type:OnRetractableItemActionEvent
+  - type: RetractableItemAction
+    spawnedPrototype: ArmBlade
+    summonSounds:
+      collection: gib # Placeholder
+    retractSounds:
+      collection: gib # Placeholder
+
+- type: entity
+  id: ActionChangelingDevour
+  name: "[color=red]Devour[/color]"
+  description: Consume the essence of your victims and subsume their identity and mind into your own.
+  components:
+  - type: Action
+    icon: { sprite : Interface/Actions/changeling.rsi, state: "devour" }
+    iconOn: { sprite : Interface/Actions/changeling.rsi, state: "devour_on" }
+    priority: 1
+  - type: TargetAction
+  - type: EntityTargetAction
+    event: !type:ChangelingDevourActionEvent
+
+- type: entity
+  id: ActionChangelingTransform
+  name: "[color=red]Transform[/color]"
+  description: Transform and assume the identities of those you have devoured.
+  components:
+  - type: Action
+    icon: { sprite : Interface/Actions/changeling.rsi, state: "transform" }
+  - type: InstantAction
+    event: !type:ChangelingTransformActionEvent

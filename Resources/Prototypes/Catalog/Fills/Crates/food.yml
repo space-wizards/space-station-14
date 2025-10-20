@@ -13,20 +13,6 @@
       prob: 0.01
 
 - type: entity
-  id: CrateFoodPizzaLarge
-  parent: CratePlastic
-  name: disaster pizza delivery
-  description: In the ultimate event that all else has failed, Find comfort in that more pizza solves everything. Includes 16 pizzas.
-  components:
-  - type: StorageFill
-    contents:
-    - id: FoodBoxPizzaFilled
-      amount: 15
-    - id: FoodBoxPizzaCotton
-    - id: LidSalami
-      prob: 0.04
-
-- type: entity
   id: CrateFoodMRE
   parent: CratePlastic
   name: MRE crate
@@ -39,7 +25,7 @@
 
 - type: entity
   id: CrateFoodCooking
-  parent: CratePlastic
+  parent: CrateFreezer
   name: kitchen supplies crate
   description: Extra kitchen supplies, in case the botanists are absent.
   components:
@@ -93,7 +79,7 @@
 
 - type: entity
   id: CrateFoodBarSupply
-  parent: CratePlastic
+  parent: CrateFreezer
   name: bartending supplies crate
   description: Extra Bar supplies, in case the clown was allowed in the bar unsupervised.
   components:
@@ -120,7 +106,7 @@
 
 - type: entity
   id: CrateFoodSoftdrinks
-  parent: CratePlastic
+  parent: CrateFreezer
   name: softdrinks crate
   description: A variety of sodas to complement a small party, without having to empty the soda machines. Includes 14 sodas.
   components:
@@ -142,33 +128,8 @@
       amount: 2
 
 - type: entity
-  id: CrateFoodSoftdrinksLarge
-  parent: CratePlastic
-  name: softdrinks bulk crate
-  description: Lots of sodas taken straight out of Centcomm's own vending machines, because you just can't leave your department. Includes 32 sodas.
-  components:
-  - type: EntityStorage
-    capacity: 32 # Slightly over-sized CratePlastic to accomodate over 30 drink cans at once.
-  - type: StorageFill
-    contents:
-      - id: DrinkColaCan
-        amount: 8
-      - id: DrinkGrapeCan
-        amount: 4
-      - id: DrinkRootBeerCan
-        amount: 4
-      - id: DrinkIcedTeaCan
-        amount: 4
-      - id: DrinkLemonLimeCan
-        amount: 4
-      - id: DrinkLemonLimeCranberryCan
-        amount: 4
-      - id: DrinkFourteenLokoCan
-        amount: 4
-
-- type: entity
   id: CrateFoodGetMore
-  parent: CratePlastic
+  parent: CrateFreezer
   name: Getmore Bakemore crate
   description: Getmore branded snacks and baking supplies for the creative chef, all without the need of emptying your station's Getmore machines!
   components:

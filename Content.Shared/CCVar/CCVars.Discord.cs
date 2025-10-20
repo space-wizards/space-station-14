@@ -1,5 +1,4 @@
-using Robust.Shared.Configuration;
-using Robust.Shared.Maths;
+﻿using Robust.Shared.Configuration;
 
 namespace Content.Shared.CCVar;
 
@@ -59,6 +58,28 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<string> DiscordRoundEndRoleWebhook =
         CVarDef.Create("discord.round_end_role", string.Empty, CVar.SERVERONLY);
+
+
+    /// <summary>
+    ///     The token used to authenticate with Discord. For the Bot to function set: discord.token, discord.guild_id, and discord.prefix.
+    ///     If this is empty, the bot will not connect.
+    /// </summary>
+    public static readonly CVarDef<string> DiscordToken =
+        CVarDef.Create("discord.token", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
+
+    /// <summary>
+    ///     The Discord guild ID to use for commands as well as for several other features.
+    ///     If this is empty, the bot will not connect.
+    /// </summary>
+    public static readonly CVarDef<string> DiscordGuildId =
+        CVarDef.Create("discord.guild_id", string.Empty, CVar.SERVERONLY);
+
+    /// <summary>
+    ///     Prefix used for commands for the Discord bot.
+    ///     If this is empty, the bot will not connect.
+    /// </summary>
+    public static readonly CVarDef<string> DiscordPrefix =
+        CVarDef.Create("discord.prefix", "!", CVar.SERVERONLY);
 
     /// <summary>
     ///     URL of the Discord webhook which will relay watchlist connection notifications. If left empty, disables the webhook.

@@ -39,8 +39,6 @@
   - type: Label
     examinable: false
   - type: FingerprintReader
-    failPopup: fingerprint-reader-fail
-    failGlovesPopup: fingerprint-reader-fail-gloves
   - type: Delivery
   - type: DeliveryRandomMultiplier
   - type: ContainerContainer
@@ -216,7 +214,7 @@
       path: /Audio/Effects/lightburn.ogg
   - type: Explosive
     explosionType: MicroBomb
-    totalIntensity: 120
-    intensitySlope: 4
-    maxIntensity: 30
+    totalIntensity: 150
+    intensitySlope: 5
+    maxIntensity: 15
     canCreateVacuum: false

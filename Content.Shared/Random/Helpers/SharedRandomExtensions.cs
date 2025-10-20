@@ -184,5 +184,31 @@ namespace Content.Shared.Random.Helpers
             // Shouldn't happen
             throw new InvalidOperationException($"Invalid weighted pick for {prototype.ID}!");
         }
+
+        /// <inheritdoc cref="HashCodeCombine(IReadOnlyCollection{int})"/>
+        public static int HashCodeCombine(params int[] values)
+        {
+            return HashCodeCombine((IReadOnlyCollection<int>)values);
+        }
+
+        /// <summary>
+        /// A very simple, deterministic djb2 hash function for generating a combined seed for the random number generator.
+        /// We can't use HashCode.Combine because that is initialized with a random value, creating different results on the server and client.
+        /// </summary>
+        /// <example>
+        /// Combine the current game tick with a NetEntity Id in order to not get the same random result if this is called multiple times in the same tick.
+        /// <code>
+        /// var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
+        /// </code>
+        /// </example>
+        public static int HashCodeCombine(IReadOnlyCollection<int> values)
+        {
+            int hash = 5381;
+            foreach (var value in values)
+            {
+                hash = (hash << 5) + hash + value;
+            }
+            return hash;
+        }
     }
 }
