@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: spanky-spanky
-  changes:
-  - message: Landmines now light up in the dark!
-    type: Tweak
-  id: 8632
-  time: '2025-06-06T23:01:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38092
 - author: slarticodefast
   changes:
   - message: Fixed wallmount vending machines dispensing in the wrong direction.
@@ -3934,3 +3927,10 @@
   id: 9133
   time: '2025-10-20T02:56:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40995
+- author: Princess-Cheeseballs
+  changes:
+  - message: Zombies can no longer hurt Initial Infected
+    type: Tweak
+  id: 9134
+  time: '2025-10-20T18:06:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41007
