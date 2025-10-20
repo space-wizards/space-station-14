@@ -16,6 +16,7 @@ using Content.Shared.EntityEffects.Effects.Solution;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Random.Helpers;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -198,6 +199,14 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
                 {
                     if (scale < effect.MinScale)
                         continue;
+
+                    if (effect.Probability <= 1f)
+                    {
+                        var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_gameTiming.CurTick.Value, GetNetEntity(actualEntity).Id, 0 });
+                        var rand = new System.Random(seed);
+                        if (!rand.Prob(effect.Probability))
+                            continue;
+                    }
 
                     // See if conditions apply
                     if (effect.Conditions != null && !CanMetabolizeEffect(actualEntity, ent, soln.Value, effect.Conditions))
