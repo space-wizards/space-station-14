@@ -201,7 +201,7 @@ public sealed partial class WantedListUiFragment : BoxContainer
         var label = new Label() { Text = record.TargetInfo.Name };
         var rect = new TextureRect()
         {
-            TextureScale = new(3.0f),
+            TextureScale = new(2.2f),
             VerticalAlignment = VAlignment.Center,
             HorizontalAlignment = HAlignment.Center,
             Margin = new(0f, 0f, 6f, 0f),
