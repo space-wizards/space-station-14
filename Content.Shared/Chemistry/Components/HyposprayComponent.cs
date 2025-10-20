@@ -25,11 +25,11 @@ public sealed partial class HyposprayComponent : Component
     public FixedPoint2 TransferAmount = FixedPoint2.New(5);
 
     /// <summary>
-    /// Whether or not the hypospray is able to draw from containers or if it's a single use
-    /// device that can only inject.
+    /// The delay to draw reagents using the hypospray.
+    /// If set, <see cref="RefillableSolutionComponent"/> RefillTime should probably have the same value.
     /// </summary>
     [DataField]
-    public float DrawDelay = 0f;
+    public float DrawTime = 0f;
 
     /// <summary>
     ///     Sound that will be played when injecting.

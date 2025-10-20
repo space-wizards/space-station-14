@@ -668,7 +668,7 @@
     exactVolume: true
   - type: Hypospray
     onlyAffectsMobs: false
-    drawDelay: 1.25
+    drawTime: 1.25
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice # A new shitcurity meta

@@ -211,7 +211,7 @@ public sealed class HypospraySystem : EntitySystem
         if (!TryGetDrawAmount(entity, target, targetSolution, user,  soln.Value, out _))
             return false;
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, user, entity.Comp.DrawDelay, new HyposprayDrawDoAfterEvent(), entity, target, null)
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, entity.Comp.DrawTime, new HyposprayDrawDoAfterEvent(), entity, target)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
