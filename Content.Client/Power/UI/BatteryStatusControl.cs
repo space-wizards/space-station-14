@@ -24,7 +24,7 @@ public sealed class BatteryStatusControl : PollingItemStatusControl<BatteryStatu
     {
         _parent = parent;
         _entityManager = entityManager;
-        _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
+        _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
         AddChild(_label);
     }
 
