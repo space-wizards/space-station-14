@@ -1,4 +1,6 @@
 using Content.Shared.Access.Systems;
+using Content.Shared.Chasm;
+using Content.Shared.Chat;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.Event;
 using Content.Shared.Coordinates;
@@ -27,6 +29,7 @@ public abstract class SharedHailerSystem : EntitySystem
     private const string SCREWING_QUALITY = "Screwing";
 
     [Dependency] private readonly AccessReaderSystem _access = default!;
+    [Dependency] private readonly SharedChatSystem _chat = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -35,7 +38,6 @@ public abstract class SharedHailerSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedToolSystem _tool = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-
 
     public override void Initialize()
     {
@@ -90,6 +92,7 @@ public abstract class SharedHailerSystem : EntitySystem
         var resolver = _sharedAudio.ResolveSound(specifier);
         if (resolver is ResolvedCollectionSpecifier collectionResolver)
         {
+            //var foo = SoundSpecifier
             //_sharedAudio.PlayPredicted(resolver, ent.Owner, ent.Owner, audioParams: new AudioParams().WithVolume(-3f));
             return collectionResolver.Index;
         }
@@ -97,8 +100,24 @@ public abstract class SharedHailerSystem : EntitySystem
             return 0;
     }
 
-    protected virtual void SubmitChatMessage(Entity<HailerComponent> ent, string localeText, int index)
+    protected void SubmitChatMessage(Entity<HailerComponent> ent, string localeText, int index)
     {
+        //Put the exclamations mark around people at the distance specified in the comp side
+        //Just like a whistle
+        ExclamateHumanoidsAround(ent);
+
+        //Make a chat line with the sec hailer as speaker, in bold and UPPERCASE for added impact
+        string sentence = Loc.GetString(localeText + "-" + index);
+
+        _chat.TrySendInGameICMessage(ent.Owner,
+                                    sentence.ToUpper(),
+                                    InGameICChatType.Speak,
+                                    hideChat: true,
+                                    hideLog: true,
+                                    nameOverride: ent.Comp.ChatName,
+                                    checkRadioPrefix: false,
+                                    ignoreActionBlocker: true,
+                                    skipTransform: true);
     }
 
     /// <summary>
@@ -235,11 +254,21 @@ public abstract class SharedHailerSystem : EntitySystem
     private void OnScrewingDoAfter(Entity<HailerComponent> ent, ref SecHailerToolDoAfterEvent args)
     {
         _sharedAudio.PlayPredicted(ent.Comp.ScrewedSounds, ent.Owner, args.User);
-        IncreaseAggressionLevel(ent);
+        IncreaseAggressionLevel(ent, args.User);
     }
 
-    protected virtual void IncreaseAggressionLevel(Entity<HailerComponent> ent)
+    protected void IncreaseAggressionLevel(Entity<HailerComponent> ent, EntityUid clientUser)
     {
+        if (ent.Comp.HailLevels != null)
+        {
+            //Up the aggression level or reset it
+            ent.Comp.HailLevelIndex++;
+            if (ent.Comp.HailLevelIndex >= ent.Comp.HailLevels.Count)
+                ent.Comp.HailLevelIndex = 0;
+
+            if (ent.Comp.CurrentHailLevel.HasValue)
+                _popup.PopupPredicted(Loc.GetString("hailer-gas-mask-screwed", ("level", ent.Comp.CurrentHailLevel.Value.Name.ToLower())), ent.Owner, clientUser);
+        }
     }
 
     private void OnExamine(Entity<HailerComponent> ent, ref ExaminedEvent args)
@@ -315,7 +344,7 @@ public abstract class SharedHailerSystem : EntitySystem
         if (!HasComp<EmaggedComponent>(ent) && !ent.Comp.AreWiresCut)
         {
             _sharedAudio.PlayPredicted(ent.Comp.SettingBeep, ent.Owner, userActed, AudioParams.Default.WithVolume(0.5f).WithVariation(0.15f));
-            IncreaseAggressionLevel(ent);
+            IncreaseAggressionLevel(ent, userActed);
             Dirty(ent);
         }
     }
