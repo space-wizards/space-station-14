@@ -1,0 +1,91 @@
+# БАЗОВЫЙ МАТЕРИАЛ SWH
+# BASED MATERIAL SWH
+- type: entity
+  abstract: true
+  parent: SheetMetalBase
+  id: materialBaseSWH
+  description: A raw material.
+  suffix: SWH
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/materials.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Materials/materials.rsi
+    state: icon
+    size: Normal
+  - type: Tag
+    tags:
+      - MaterialSWH
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Stack
+    stackType: StackNumSWH # 20 штук в стаке/ 20 pieces in a stack
+
+# Материалы In-Game SWH
+# Materials In-Game SWH
+
+- type: entity
+  id: basicMaterialSWH
+  parent: materialBaseSWH
+  name: material
+  components:
+  - type: Sprite
+    sprite: /Textures/_WH40K/Entities/Objects/Materials/SharedMaterials/basic_material.rsi
+    state: icon
+  - type: Item
+    sprite: /Textures/_WH40K/Entities/Objects/Materials/SharedMaterials/basic_material.rsi
+    state: icon
+  - type: Tag
+    tags:
+      - ProductionMaterialSWH
+      - MaterialSWH
+      - ConstructionMaterialSWH
+  
+- type: entity
+  id: constructionMaterialSWH
+  parent: materialBaseSWH
+  name: construction material
+  components:
+  - type: Sprite
+    sprite: /Textures/_WH40K/Entities/Objects/Materials/SharedMaterials/construction_material.rsi
+    state: icon
+  - type: Item
+    sprite: /Textures/_WH40K/Entities/Objects/Materials/SharedMaterials/construction_material.rsi
+    state: icon
+  - type: Tag
+    tags:
+      - MaterialSWH
+      - ConstructionMaterialSWH
+
+- type: entity
+  id: productionMaterialSWH
+  parent: materialBaseSWH
+  name: production material
+  components:
+  - type: Sprite
+    sprite: /Textures/_WH40K/Entities/Objects/Materials/SharedMaterials/production_material.rsi
+    state: icon
+  - type: Item
+    sprite: /Textures/_WH40K/Entities/Objects/Materials/SharedMaterials/production_material.rsi
+    state: icon
+  - type: Tag
+    tags:
+      - MaterialSWH
+      - ProductionMaterialSWH
+
+- type: entity
+  id: highvalueMaterialSWH
+  parent: materialBaseSWH
+  name: high value material
+  components:
+  - type: Sprite
+    sprite: /Textures/_WH40K/Entities/Objects/Materials/SharedMaterials/highvalue_material.rsi
+    state: icon
+  - type: Item
+    sprite: /Textures/_WH40K/Entities/Objects/Materials/SharedMaterials/highvalue_material.rsi
+    state: icon
+  - type: Tag
+    tags:
+      - MaterialSWH
+      - ProductionMaterialSWH

@@ -4,6 +4,7 @@
   name: stack-steel
   icon: { sprite: /Textures/Objects/Materials/Sheets/metal.rsi, state: steel }
   spawn: SheetSteel1
+  maxCount: 20
 
 - type: stack
   parent: BaseSheetStack
@@ -11,6 +12,7 @@
   name: stack-plasteel
   icon: { sprite: /Textures/Objects/Materials/Sheets/metal.rsi, state: plasteel }
   spawn: SheetPlasteel1
+  maxCount: 20
 
 - type: stack
   parent: BaseSheetStack
@@ -18,3 +20,4 @@
   name: stack-brass
   icon: { sprite: /Textures/Objects/Materials/Sheets/metal.rsi, state: brass }
   spawn: SheetBrass1
+  maxCount: 20

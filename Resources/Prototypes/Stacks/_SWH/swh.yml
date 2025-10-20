@@ -1,0 +1,6 @@
+- type: stack
+  parent: BaseSWHStack
+  id: StackNumSWH
+  name: stack-swh
+  icon: { sprite: /Textures/_WH40K/Entities/Objects/Materials/SharedMaterials/basic_material.rsi, state: icon }
+  spawn: basicMaterialSWH
