@@ -12,6 +12,12 @@
   id: BaseSmallStack
   maxCount: 10
 
+# size used by topicals and machine parts
+- type: stack
+  abstract: true
+  id: BaseSWHStack
+  maxCount: 20
+
 # Default size
 - type: stack
   abstract: true
