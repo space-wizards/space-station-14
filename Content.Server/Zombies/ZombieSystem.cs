@@ -238,10 +238,7 @@ namespace Content.Server.Zombies
 
         private void OnMeleeHit(Entity<ZombieComponent> entity, ref MeleeHitEvent args)
         {
-            if (args.User != entity.Owner)
-                return;
-
-            if (!args.HitEntities.Any())
+            if (!args.IsHit)
                 return;
 
             var cannotSpread = HasComp<NonSpreaderZombieComponent>(args.User);
