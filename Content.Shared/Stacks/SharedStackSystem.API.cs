@@ -123,7 +123,7 @@ public abstract partial class SharedStackSystem
     /// <remarks> All setter functions should end up here. </remarks>
     public void SetCount(Entity<StackComponent?> ent, int amount)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp, false))
+        if (!Resolve(ent.Owner, ref ent.Comp))
             return;
 
         // Do nothing if amount is already the same.
