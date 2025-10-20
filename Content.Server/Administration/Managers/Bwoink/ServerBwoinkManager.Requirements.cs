@@ -94,6 +94,9 @@ public sealed partial class ServerBwoinkManager
 
     private bool CheckConditions(BwoinkChannelPrototype prototype, List<BwoinkChannelCondition> requirements, RequirementOperationMode mode, ICommonSession session)
     {
+        if (mode == RequirementOperationMode.None)
+            return false;
+
         var matchedAll = true;
         foreach (var requirement in requirements)
         {

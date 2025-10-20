@@ -20,6 +20,10 @@ public enum RequirementOperationMode
     /// If any conditions pass, the requirement fails.
     /// </summary>
     InvertedAny,
+    /// <summary>
+    /// Conditions are not evaluated at all, always deny.
+    /// </summary>
+    None,
 }
 
 [ImplicitDataDefinitionForInheritors]
