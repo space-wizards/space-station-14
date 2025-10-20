@@ -1,3 +1,16 @@
+# SWH TAGS
+
+- type: Tag
+  id: ProductionMaterialSWH # For autholathes and fabricators to identify SWH production materials.
+
+- type: Tag
+  id: MaterialSWH # identity for SWH materials
+
+- type: Tag
+  id: ConstructionMaterialSWH # for the construction and belts.
+  
+# DONT LISTEN TO THE BOTTOM, WE DONT CARE HOMMIES WE FUCKING SHITCODING LMAO
+
 # PUT YOUR TAGS IN ALPHABETICAL ORDER
 # ALSO DOCUMENT WHAT THE HELL THEY DO
 

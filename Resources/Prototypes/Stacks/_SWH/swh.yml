@@ -1,0 +1,7 @@
+- type: stack
+  parent: BaseSheetStack
+  id: StackNumSWH
+  name: stack-swh
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: base }
+  spawn: basicMaterialSWH
+  maxCount: 20
