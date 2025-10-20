@@ -108,7 +108,7 @@
         - ReagentId: Plasma
           Quantity: 10
         canReact: false
-  - type: Tag
+  - type: Tag # Redundant
     tags:
     - Sheet
     - ConstructionMaterial
