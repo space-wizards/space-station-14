@@ -19,7 +19,7 @@ public sealed class DoorRemoteSystem : EntitySystem
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
-    [Dependency] private readonly SharedPopupSystem Popup = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
@@ -38,10 +38,10 @@ public sealed class DoorRemoteSystem : EntitySystem
 
     private void OnBeforeInteract(Entity<DoorRemoteComponent> entity, ref BeforeRangedInteractEvent args)
     {
-        if(!_timing.IsFirstTimePredicted)
+        if (!_timing.IsFirstTimePredicted)
             return;
 
-        bool isAirlock = TryComp<AirlockComponent>(args.Target, out var airlockComp);
+        var isAirlock = TryComp<AirlockComponent>(args.Target, out var airlockComp);
 
         if (args.Handled
             || args.Target == null
@@ -61,24 +61,32 @@ public sealed class DoorRemoteSystem : EntitySystem
 
         if (!_powerReceiver.IsPowered(args.Target.Value))
         {
-            Popup.PopupClient(Loc.GetString("door-remote-no-power"), args.User, args.User);
+            _popup.PopupClient(Loc.GetString("door-remote-no-power"), args.User, args.User);
             return;
         }
 
+        var accessTarget = args.Used;
+        // This covers the accesses the REMOTE has, and is not effected by the user's ID card.
+        if (entity.Comp.IncludeUserAccess) // Allows some door remotes to inherit the user's access.
+        {
+            accessTarget = args.User;
+            // This covers the accesses the USER has, which always includes the remote's access since holding a remote acts like holding an ID card.
+        }
+
         if (TryComp<AccessReaderComponent>(args.Target, out var accessComponent)
-            && !_doorSystem.HasAccess(args.Target.Value, args.User, doorComp, accessComponent))
+            && !_doorSystem.HasAccess(args.Target.Value, accessTarget, doorComp, accessComponent))
         {
             if (isAirlock)
-                _doorSystem.Deny(args.Target.Value, doorComp, args.User);
+                _doorSystem.Deny(args.Target.Value, doorComp, user: args.User, predicted: true);
 
-            Popup.PopupClient(Loc.GetString("door-remote-denied"), args.User, args.User);
+            _popup.PopupClient(Loc.GetString("door-remote-denied"), args.User, args.User);
             return;
         }
 
         switch (entity.Comp.Mode)
         {
             case OperatingMode.OpenClose:
-                if (_doorSystem.TryToggleDoor(args.Target.Value, doorComp, args.User, predicted: true))
+                if (_doorSystem.TryToggleDoor(args.Target.Value, doorComp, user: args.User, predicted: true))
                     _adminLogger.Add(LogType.Action,
                         LogImpact.Medium,
                         $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)}: {doorComp.State}");
@@ -88,7 +96,7 @@ public sealed class DoorRemoteSystem : EntitySystem
                 {
                     if (!boltsComp.BoltWireCut)
                     {
-                        _doorSystem.SetBoltsDown((args.Target.Value, boltsComp), !boltsComp.BoltsDown, args.User, predicted: true);
+                        _doorSystem.SetBoltsDown((args.Target.Value, boltsComp), !boltsComp.BoltsDown, user: args.User, predicted: true);
                         _adminLogger.Add(LogType.Action,
                             LogImpact.Medium,
                             $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to {(boltsComp.BoltsDown ? "" : "un")}bolt it");

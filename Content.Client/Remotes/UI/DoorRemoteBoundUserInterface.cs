@@ -12,7 +12,7 @@ public sealed class DoorRemoteBoundUserInterface(EntityUid owner, Enum uiKey) : 
     private static readonly Color SelectedOptionHoverColor = StyleNano.ButtonColorGoodHovered.WithAlpha(128);
 
     private SimpleRadialMenu? _menu;
-    
+
     protected override void Open()
     {
         base.Open();
@@ -27,9 +27,9 @@ public sealed class DoorRemoteBoundUserInterface(EntityUid owner, Enum uiKey) : 
         _menu.OpenOverMouseScreenPosition();
     }
 
-    private RadialMenuOption[] CreateButtons(OperatingMode selectedMode, List<DoorRemoteModeInfo> modeOptions)
+    private IEnumerable<RadialMenuOptionBase> CreateButtons(OperatingMode selectedMode, List<DoorRemoteModeInfo> modeOptions)
     {
-        var options = new RadialMenuOption[modeOptions.Count];
+        var options = new List<RadialMenuOptionBase>();
         for (var i = 0; i < modeOptions.Count; i++)
         {
             var modeOption = modeOptions[i];
@@ -42,13 +42,14 @@ public sealed class DoorRemoteBoundUserInterface(EntityUid owner, Enum uiKey) : 
                 optionHoverCustomColor = SelectedOptionHoverColor;
             }
 
-            options[i] = new RadialMenuActionOption<OperatingMode>(HandleRadialMenuClick, modeOption.Mode)
+            var option = new RadialMenuActionOption<OperatingMode>(HandleRadialMenuClick, modeOption.Mode)
             {
-                Sprite = modeOption.Icon,
+                IconSpecifier = RadialMenuIconSpecifier.With(modeOption.Icon),
                 ToolTip = Loc.GetString(modeOption.Tooltip),
                 BackgroundColor = optionCustomColor,
                 HoverBackgroundColor = optionHoverCustomColor
             };
+            options.Add(option);
         }
 
         return options;
