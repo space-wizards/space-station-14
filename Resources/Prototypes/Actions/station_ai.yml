@@ -41,7 +41,6 @@
             layer:
             - GhostImpassable
 
-
 - type: entity
   parent: BaseMentalAction
   id: ActionAIViewLaws

@@ -3,6 +3,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
@@ -27,6 +28,7 @@ public abstract partial class SharedStationAiSystem
         SubscribeLocalEvent<StationAiHeldComponent, InteractionAttemptEvent>(OnHeldInteraction);
         SubscribeLocalEvent<StationAiHeldComponent, AttemptRelayActionComponentChangeEvent>(OnHeldRelay);
         SubscribeLocalEvent<StationAiHeldComponent, JumpToCoreEvent>(OnCoreJump);
+        SubscribeLocalEvent<StationAiHeldComponent, GetStationAiRadialEvent>(OnHeldRadial);
 
         SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
     }
@@ -116,6 +118,16 @@ public abstract partial class SharedStationAiSystem
             return;
 
         args.Target = core.Comp?.RemoteEntity;
+    }
+
+    private void OnHeldRadial(Entity<StationAiHeldComponent> ent, ref GetStationAiRadialEvent args)
+    {
+        args.Actions.Add(new StationAiRadial
+        {
+            Tooltip = Loc.GetString("station-ai-warp-radial-tooltip"),
+            Sprite = new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Actions/actions_ai.rsi"), "ai_camera"),
+            Event = new StationAiOpenWarpAction()
+        });
     }
 
     private void OnRadialMessage(StationAiRadialMessage ev)
@@ -246,6 +258,8 @@ public abstract class BaseStationAiAction
     [field:NonSerialized]
     public EntityUid User { get; set; }
 }
+
+public sealed class StationAiOpenWarpAction : BaseStationAiAction;
 
 // No idea if there's a better way to do this.
 /// <summary>
