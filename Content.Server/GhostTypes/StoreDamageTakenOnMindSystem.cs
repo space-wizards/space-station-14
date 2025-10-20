@@ -22,15 +22,10 @@ public sealed class StoreDamageTakenOnMindSystem : EntitySystem
     /// </summary>
     private void SaveBodyOnGib(Entity<StoreDamageTakenOnMindComponent> ent, ref AttemptEntityGibEvent args)
     {
-        if (!_container.TryGetContainingContainer(ent.Owner, out var container)
-            || !TryComp<DamageableComponent>(container.Owner, out var damageable)
-            || !TryComp<MindContainerComponent>(container.Owner, out var mindContainer)
-            || !TryComp<MindComponent>(mindContainer.Mind, out _))
+        if (!_container.TryGetContainingContainer(ent.Owner, out var container))
             return;
 
-        EnsureComp<LastBodyDamageComponent>(mindContainer.Mind.Value, out var storedDamage);
-        storedDamage.DamagePerGroup = damageable.DamagePerGroup;
-        storedDamage.Damage = damageable.Damage;
+        SaveBody(container.Owner);
     }
 
     /// <summary>
@@ -38,8 +33,17 @@ public sealed class StoreDamageTakenOnMindSystem : EntitySystem
     /// </summary>
     private void SaveBodyOnThreshold(Entity<StoreDamageTakenOnMindComponent> ent, ref DamageThresholdReached args)
     {
-        if (!TryComp<DamageableComponent>(ent.Owner, out var damageable)
-            || !TryComp<MindContainerComponent>(ent.Owner, out var mindContainer)
+        SaveBody(ent.Owner);
+    }
+
+    /// <summary>
+    /// Gets an entity Mind and stores it's current body damages inside of it's LastBodyDamageComponent
+    /// </summary>
+    /// <param name="ent"></param>
+    private void SaveBody(EntityUid ent)
+    {
+        if (!TryComp<DamageableComponent>(ent, out var damageable)
+            || !TryComp<MindContainerComponent>(ent, out var mindContainer)
             || !TryComp<MindComponent>(mindContainer.Mind, out _))
             return;
 
