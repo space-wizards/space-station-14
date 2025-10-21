@@ -23,6 +23,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
     public GeneralStationRecordConsoleWindow()
     {
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
 
         _currentFilterType = StationRecordFilterType.Name;
 
@@ -47,7 +48,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 
         StationRecordsFilterType.OnItemSelected += eventArgs =>
         {
-            var type = (StationRecordFilterType) eventArgs.Id;
+            var type = (StationRecordFilterType)eventArgs.Id;
 
             if (_currentFilterType != type)
             {
