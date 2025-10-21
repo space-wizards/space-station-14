@@ -3,16 +3,10 @@
   id: IronsandStep
   name: ironsand step
   description: Takes your ironsand up a level.
-  placement:
-    mode: SnapgridCenter
   components:
-  - type: Clickable
   - type: Sprite
     sprite: Structures/ironsand_steps.rsi
     state: straight
-    drawdepth: FloorTiles
-  - type: Transform
-    anchored: true
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Rock
@@ -42,22 +36,17 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  id: IronsandStepConvexCorner
   parent: IronsandStep
+  id: IronsandStepConvexCorner
   name: ironsand step convex corner
   components:
   - type: Sprite
-    sprite: Structures/ironsand_steps.rsi
     state: corner_convex
-    drawdepth: FloorTiles
 
 - type: entity
-  id: IronsandStepConcaveCorner
   parent: IronsandStep
+  id: IronsandStepConcaveCorner
   name: ironsand step concave corner
   components:
   - type: Sprite
-    sprite: Structures/ironsand_steps.rsi
     state: corner_concave
-    drawdepth: FloorTiles
-
