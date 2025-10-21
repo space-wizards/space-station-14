@@ -8,7 +8,7 @@
       connections:
       - torso
       organs:
-        brain: OrganHumanBrain
+        brain: OrganVoxBrain # DS14
         eyes: OrganHumanEyes
     torso:
       part: TorsoVox
@@ -22,7 +22,7 @@
         lungs: OrganVoxLungs
         stomach: OrganVoxStomach
         liver: OrganVoxLiver
-        kidneys: OrganHumanKidneys
+        kidneys: OrganVoxKidneys # DS14
     right arm:
       part: RightArmVox
       connections:

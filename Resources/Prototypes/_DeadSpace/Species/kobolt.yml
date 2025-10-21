@@ -45,6 +45,9 @@
       points: 1
       required: true
       defaultMarkings: [ LizardTailSmoothKobolt ]
+    Head:
+      points: 3
+      required: false
     Snout:
       points: 1
       required: true
