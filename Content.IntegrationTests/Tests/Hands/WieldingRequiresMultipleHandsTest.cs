@@ -31,7 +31,7 @@ public sealed class WieldingRequiresMultipleHandsTest : InteractionTest
             Is.EqualTo(1),
             "Player entity has more than one hand! If this is intentional, " +
             "WieldingRequiresMultipleHandsTest should be removed!");
-        Assert.That(wieldComp.Wielded, Is.False, "Mosin spawned in wielded!");
+        Assert.That(wieldComp.Wielded, Is.False, "Item spawned in wielded!");
         await UseInHand();
         Assert.That(wieldComp.Wielded, Is.False, "Item was wielded but player only has one hand!");
     }
