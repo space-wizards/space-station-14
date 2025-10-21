@@ -332,7 +332,7 @@
   - type: Clothing
     sprite: Clothing/Belt/medical.rsi
   - type: Storage
-    maxItemSize: Large #DS14
+    maxItemSize: Large # DS14
     whitelist:
       tags:
         - Wrench
@@ -348,8 +348,8 @@
         - DiscreteHealthAnalyzer
         - SurgeryTool
         - Dropper
-        - Medkit #DS14
-        - CompactDefibrillator #DS14
+        - Medkit # DS14
+        - CompactDefibrillator # DS14
       components:
         - Hypospray
         - Injector

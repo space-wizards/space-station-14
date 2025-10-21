@@ -99,4 +99,6 @@
   - type: Item
     heldPrefix: blackkit
     size: Normal
+  - type: ExplosionResistance # DS14
+    damageCoefficient: 0
 
