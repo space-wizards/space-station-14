@@ -1,6 +1,5 @@
 ﻿using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Wieldable.Components;
-using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Hands;
 
