@@ -101,7 +101,6 @@ namespace Content.Client.Lobby
 
         private void OnSetupPressed(BaseButton.ButtonEventArgs args)
         {
-            SetReady(false);
             Lobby?.SwitchState(LobbyGui.LobbyGuiState.CharacterSetup);
         }
 
