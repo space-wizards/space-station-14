@@ -5,6 +5,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.Prototypes;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Rejuvenate;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
@@ -52,7 +53,11 @@ public sealed class SatiationSystem : EntitySystem
         foreach (var satiation in entity.Comp.Satiations.Values)
         {
             var proto = _prototype.Index(satiation.Prototype);
-            var value = _random.Next(
+
+            // TODO: Replace with RandomPredicted once the engine PR is merged
+            var seed = SharedRandomExtensions.HashCodeCombine([(int)_timing.CurTick.Value, GetNetEntity(entity).Id]);
+            var rand = new System.Random(seed);
+            var value = rand.Next(
                 (int)proto.Thresholds[SatiationThreshold.Concerned] + 10,
                 (int)proto.Thresholds[SatiationThreshold.Okay]);
 

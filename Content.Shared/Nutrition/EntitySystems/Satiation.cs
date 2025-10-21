@@ -14,7 +14,7 @@ namespace Content.Shared.Nutrition.EntitySystems;
 public sealed partial class Satiation
 {
     [DataField(required: true), ViewVariables(VVAccess.ReadOnly)]
-    public ProtoId<SatiationPrototype> Prototype = "";
+    public ProtoId<SatiationPrototype> Prototype;
 
 
     /// <summary>
