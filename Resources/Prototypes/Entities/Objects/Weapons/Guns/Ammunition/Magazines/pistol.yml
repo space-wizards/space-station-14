@@ -12,7 +12,7 @@
     whitelist:
       tags:
         - CartridgePistol
-    capacity: 19
+    capacity: 14 # DS14
   - type: Item
     size: Small
   - type: ContainerContainer
