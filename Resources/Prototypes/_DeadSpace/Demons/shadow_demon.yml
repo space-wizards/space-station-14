@@ -15,7 +15,6 @@
   parent:
   - MobCombat
   - FlyingMobBase
-  - MobBloodstream
   - MobDamageable
   - BaseMob
   name: неизвестный
@@ -25,10 +24,6 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 4
     baseSprintSpeed: 4
-  - type: Bloodstream
-    bloodReagent: DemonsBlood
-    bloodMaxVolume: 200
-    bloodlossThreshold: 0.2
   - type: Clickable
   - type: Sprite
     noRot: true
@@ -54,7 +49,7 @@
           radius: 0.35
         density: 15
   - type: Damageable
-    damageContainer: Biological
+    damageContainer: BiologicalMetaphysical
     damageModifierSet: DemonShadow
   - type: NoSlip
   - type: Examiner
@@ -116,6 +111,8 @@
     name: ghost-role-information-shadow-name
     description: ghost-role-information-shadow-description
     rules: ghost-role-information-shadow-rules
+    raffle:
+      settings: default
   - type: Tag
     tags:
       - CannotSuicide
@@ -205,6 +202,7 @@
     damage:
       types:
         Poison: -2
+        Holy: -1
       groups:
         Brute: -2
         Burn: -2
