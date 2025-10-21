@@ -662,6 +662,7 @@
   - type: RefillableSolution
     solution: hypospray
     refillTime: 1.25
+    maxRefill: 5
   - type: ExaminableSolution
     solution: hypospray
     heldOnly: true # Allow examination only when held in hand.

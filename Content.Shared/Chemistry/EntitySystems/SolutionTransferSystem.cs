@@ -47,9 +47,7 @@ public sealed class SolutionTransferSystem : EntitySystem
 
     private void AddSetTransferVerbs(Entity<SolutionTransferComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        var (uid, comp) = ent;
-
-        if (!args.CanAccess || !args.CanInteract || !comp.CanChangeTransferAmount || args.Hands == null)
+        if (!args.CanAccess || !args.CanInteract || !ent.Comp.CanChangeTransferAmount || args.Hands == null)
             return;
 
         // Custom transfer verb
@@ -62,7 +60,7 @@ public sealed class SolutionTransferSystem : EntitySystem
             // TODO: remove server check when bui prediction is a thing
             Act = () =>
             {
-                _ui.OpenUi(uid, TransferAmountUiKey.Key, @event.User);
+                _ui.OpenUi(ent.Owner, TransferAmountUiKey.Key, @event.User);
             },
             Priority = 1
         });
@@ -72,7 +70,7 @@ public sealed class SolutionTransferSystem : EntitySystem
         var user = args.User;
         foreach (var amount in DefaultTransferAmounts)
         {
-            if (amount < comp.MinimumTransferAmount || amount > comp.MaximumTransferAmount)
+            if (amount < ent.Comp.MinimumTransferAmount || amount > ent.Comp.MaximumTransferAmount)
                 continue;
 
             AlternativeVerb verb = new();
@@ -80,11 +78,11 @@ public sealed class SolutionTransferSystem : EntitySystem
             verb.Category = VerbCategory.SetTransferAmount;
             verb.Act = () =>
             {
-                comp.TransferAmount = amount;
+                ent.Comp.TransferAmount = amount;
 
-                _popup.PopupClient(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)), uid, user);
+                _popup.PopupClient(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)), ent.Owner, user);
 
-                Dirty(uid, comp);
+                Dirty(ent.Owner, ent.Comp);
             };
 
             // we want to sort by size, not alphabetically by the verb text.
@@ -97,15 +95,13 @@ public sealed class SolutionTransferSystem : EntitySystem
 
     private void OnTransferAmountSetValueMessage(Entity<SolutionTransferComponent> ent, ref TransferAmountSetValueMessage message)
     {
-        var (uid, comp) = ent;
-
-        var newTransferAmount = FixedPoint2.Clamp(message.Value, comp.MinimumTransferAmount, comp.MaximumTransferAmount);
-        comp.TransferAmount = newTransferAmount;
+        var newTransferAmount = FixedPoint2.Clamp(message.Value, ent.Comp.MinimumTransferAmount, ent.Comp.MaximumTransferAmount);
+        ent.Comp.TransferAmount = newTransferAmount;
 
         if (message.Actor is { Valid: true } user)
-            _popup.PopupEntity(Loc.GetString("comp-solution-transfer-set-amount", ("amount", newTransferAmount)), uid, user);
+            _popup.PopupEntity(Loc.GetString("comp-solution-transfer-set-amount", ("amount", newTransferAmount)), ent.Owner, user);
 
-        Dirty(uid, comp);
+        Dirty(ent.Owner, ent.Comp);
     }
 
     private void OnAfterInteract(Entity<SolutionTransferComponent> ent, ref AfterInteractEvent args)
@@ -139,7 +135,6 @@ public sealed class SolutionTransferSystem : EntitySystem
 
             if (transferTime > TimeSpan.Zero)
             {
-                // TODO-Slam: Make this work good
                 if (!CanTransfer(transferData))
                     return;
 
