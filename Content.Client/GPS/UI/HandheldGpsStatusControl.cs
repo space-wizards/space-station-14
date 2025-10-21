@@ -1,8 +1,7 @@
-using Content.Shared.GPS.Components;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
+using Content.Shared.GPS.Components;
 using Content.Shared.GPS.Systems;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
@@ -21,7 +20,7 @@ public sealed class HandheldGpsStatusControl : Control
     {
         _parent = parent;
         _handheldGps = IoCManager.Resolve<IEntityManager>().System<HandheldGpsSystem>();
-        _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
+        _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
         AddChild(_label);
         UpdateGpsDetails();
     }
