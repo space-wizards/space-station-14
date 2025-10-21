@@ -5,7 +5,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition.Components;
-
+[Obsolete("Migration to Content.Shared.Nutrition.Components.EdibleComponent is required")]
 [RegisterComponent, Access(typeof(FoodSystem), typeof(FoodSequenceSystem))]
 public sealed partial class FoodComponent : Component
 {
@@ -43,17 +43,10 @@ public sealed partial class FoodComponent : Component
     public bool RequiresSpecialDigestion;
 
     /// <summary>
-    ///     Stomachs required to digest this entity.
-    ///     Used to simulate 'ruminant' digestive systems (which can digest grass)
-    /// </summary>
-    [DataField]
-    public int RequiredStomachs = 1;
-
-    /// <summary>
     /// The localization identifier for the eat message. Needs a "food" entity argument passed to it.
     /// </summary>
     [DataField]
-    public LocId EatMessage = "food-nom";
+    public LocId EatMessage = "edible-nom";
 
     /// <summary>
     /// How long it takes to eat the food personally.

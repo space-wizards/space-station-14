@@ -1,9 +1,13 @@
 # General
-ai-wire-snipped = Wire has been cut at {$coords}.
+ai-wire-snipped = One of your systems' wires has been cut at {$source}.
 wire-name-ai-vision-light = AIV
 wire-name-ai-act-light = AIA
 station-ai-takeover = AI takeover
 station-ai-eye-name = AI eye - {$name}
+station-ai-has-no-power-for-upload = Upload failed - the AI core is unpowered.
+station-ai-is-too-damaged-for-upload = Upload failed - the AI core must be repaired.
+station-ai-core-losing-power = Your AI core is now running on reserve battery power.
+station-ai-core-critical-power = Your AI core is critically low on power. External power must be re-established or severe data corruption may occur!
 
 # Radial actions
 ai-open = Open actions
@@ -21,6 +25,7 @@ electrify-door-off = Disable overcharge
 toggle-light = Toggle light
 
 ai-device-not-responding = Device is not responding
+ai-device-no-access = You have no access to this device
 
 ai-consciousness-download-warning = Your consciousness is being downloaded.
 

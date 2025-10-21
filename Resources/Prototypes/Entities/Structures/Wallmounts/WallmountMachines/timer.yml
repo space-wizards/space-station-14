@@ -12,6 +12,17 @@
     sprite: Structures/Wallmounts/switch.rsi
     state: on
   - type: Appearance
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
   - type: Rotatable
   - type: SignalTimer
     canEditLabel: false
