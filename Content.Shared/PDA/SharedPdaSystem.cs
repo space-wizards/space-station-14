@@ -1,5 +1,8 @@
 using Content.Shared.Access.Components;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Hands;
+using Content.Shared.Inventory.Events;
+using Content.Shared.StatusIcon;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.PDA
@@ -8,6 +11,7 @@ namespace Content.Shared.PDA
     {
         [Dependency] protected readonly ItemSlotsSystem ItemSlotsSystem = default!;
         [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+        [Dependency] protected readonly SharedStatusIconSystem StatusIconSystem = default!;
 
         public override void Initialize()
         {
@@ -18,6 +22,11 @@ namespace Content.Shared.PDA
 
             SubscribeLocalEvent<PdaComponent, EntInsertedIntoContainerMessage>(OnItemInserted);
             SubscribeLocalEvent<PdaComponent, EntRemovedFromContainerMessage>(OnItemRemoved);
+
+            SubscribeLocalEvent<PdaComponent, GotEquippedEvent>(OnEquipped);
+            SubscribeLocalEvent<PdaComponent, GotEquippedHandEvent>(OnEquippedHand);
+            SubscribeLocalEvent<PdaComponent, GotUnequippedEvent>(OnUnequipped);
+            SubscribeLocalEvent<PdaComponent, GotUnequippedHandEvent>(OnUnequippedHand);
 
             SubscribeLocalEvent<PdaComponent, GetAdditionalAccessEvent>(OnGetAdditionalAccess);
         }
@@ -54,6 +63,32 @@ namespace Content.Shared.PDA
                 pda.ContainedId = null;
 
             UpdatePdaAppearance(uid, pda);
+        }
+
+        private void OnEquipped(EntityUid uid, PdaComponent pda, ref GotEquippedEvent args)
+        {
+            if (args.Slot != "id")
+                return;
+
+            StatusIconSystem.AddTemporaryStatusIcon(args.Equipee);
+        }
+
+        private void OnEquippedHand(EntityUid uid, PdaComponent pda, ref GotEquippedHandEvent args)
+        {
+            StatusIconSystem.AddTemporaryStatusIcon(args.User);
+        }
+
+        private void OnUnequipped(EntityUid uid, PdaComponent pda, ref GotUnequippedEvent args)
+        {
+            if (args.Slot != "id")
+                return;
+
+            StatusIconSystem.RemoveTemporaryStatusIcon(args.Equipee);
+        }
+
+        private void OnUnequippedHand(EntityUid uid, PdaComponent pda, ref GotUnequippedHandEvent args)
+        {
+            StatusIconSystem.RemoveTemporaryStatusIcon(args.User);
         }
 
         private void OnGetAdditionalAccess(EntityUid uid, PdaComponent component, ref GetAdditionalAccessEvent args)

@@ -16,6 +16,21 @@ public sealed partial class StatusIconComponent : Component
     [AutoNetworkedField]
     [DataField("bounds"), ViewVariables(VVAccess.ReadWrite)]
     public Box2? Bounds;
+
+    /// <summary>
+    /// Entites that don't normally have a status icon might be temporarily granted one by a PDA or ID.
+    /// </summary>
+    [AutoNetworkedField]
+    [DataField("temporary"), ViewVariables(VVAccess.ReadWrite)]
+    public bool Temporary = false;
+
+    /// <summary>
+    /// The count of how many entities are granting this temporary component.
+    /// The component should be deleted if it's temporary and the user count is 0.
+    /// </summary>
+    [AutoNetworkedField]
+    [DataField("temporaryUserCount"), ViewVariables(VVAccess.ReadOnly)]
+    public int TemporaryUserCount = 0;
 }
 
 /// <summary>
