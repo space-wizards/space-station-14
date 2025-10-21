@@ -7,26 +7,30 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Remotes.UI;
 
-public sealed class DoorRemoteStatusControl : Control
+public sealed class DoorRemoteStatusControl(Entity<DoorRemoteComponent> ent) : Control
 {
-    private readonly Entity<DoorRemoteComponent> _ent;
-    private readonly RichTextLabel _label;
-
-    public DoorRemoteStatusControl(Entity<DoorRemoteComponent> ent)
-    {
-        _ent = ent;
-        _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
-        AddChild(_label);
-    }
+    private RichTextLabel? _label;
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
 
-        if (!_ent.Comp.IsStatusControlUpdateRequired)
+        if (_label == null)
+        {
+            _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
+            AddChild(_label);
+        }
+        else if (!ent.Comp.IsStatusControlUpdateRequired)
             return;
 
-        var modeStringLocalized = Loc.GetString(_ent.Comp.Mode switch
+        UpdateLabel(_label);
+
+        ent.Comp.IsStatusControlUpdateRequired = false;
+    }
+
+    private void UpdateLabel(RichTextLabel label)
+    {
+        var modeStringLocalized = Loc.GetString(ent.Comp.Mode switch
         {
             OperatingMode.OpenClose => "door-remote-open-close-text",
             OperatingMode.ToggleBolts => "door-remote-toggle-bolt-text",
@@ -34,8 +38,6 @@ public sealed class DoorRemoteStatusControl : Control
             _ => "door-remote-invalid-text"
         });
 
-        _label.SetMarkup(Loc.GetString("door-remote-mode-label", ("modeString", modeStringLocalized)));
-
-        _ent.Comp.IsStatusControlUpdateRequired = false;
+        label.SetMarkup(Loc.GetString("door-remote-mode-label", ("modeString", modeStringLocalized)));
     }
 }
