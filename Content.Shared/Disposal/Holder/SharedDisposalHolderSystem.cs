@@ -27,12 +27,12 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedDisposalUnitSystem _disposalUnit = default!;
-    [Dependency] private readonly DisposalTubeSystem _disposalTubeSystem = default!;
+    [Dependency] private readonly DisposalTubeSystem _disposalTube = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedEyeSystem _eye = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
@@ -65,7 +65,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
     private void OnComponentStartup(Entity<DisposalHolderComponent> ent, ref ComponentStartup args)
     {
         // Ensure the holder will have its container
-        ent.Comp.Container = _containerSystem.EnsureContainer<Container>(ent, nameof(DisposalHolderComponent));
+        ent.Comp.Container = _container.EnsureContainer<Container>(ent, nameof(DisposalHolderComponent));
     }
 
     private void OnExploded(Entity<DisposalHolderComponent> ent, ref BeforeExplodeEvent args)
@@ -153,7 +153,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         // Update the exit angle here to account for the grid's rotation
         if (exitAngle != null && gridXform != null)
         {
-            exitAngle += _xformSystem.GetWorldRotation(gridXform);
+            exitAngle += _xform.GetWorldRotation(gridXform);
         }
 
         // We're purposely iterating over all the holder's children
@@ -170,7 +170,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
             if (unit != null && unit.Value.Comp.Container != null)
             {
                 // Insert the child into the found disposal unit, then pop them out
-                _containerSystem.Insert((held, heldXform, heldMeta), unit.Value.Comp.Container);
+                _container.Insert((held, heldXform, heldMeta), unit.Value.Comp.Container);
                 _disposalUnit.Remove(unit.Value, held);
             }
             else
@@ -178,10 +178,10 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
                 // Otherwise remove the child from the holder and prepare to throw it
                 if (ent.Comp.Container != null && ent.Comp.Container.Contains(held))
                 {
-                    _containerSystem.Remove((held, null, heldMeta), ent.Comp.Container, force: true);
+                    _container.Remove((held, null, heldMeta), ent.Comp.Container, force: true);
                 }
 
-                _xformSystem.AttachToGridOrMap(held, heldXform);
+                _xform.AttachToGridOrMap(held, heldXform);
 
                 // Knockdown the entity
                 _stun.TryKnockdown(held, ent.Comp.ExitStunDuration, force: true);
@@ -255,7 +255,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         // Update trajectory
         ent.Comp.CurrentDirection = ev.Next;
         ent.Comp.CurrentTube = tube;
-        ent.Comp.NextTube = _disposalTubeSystem.GetTubeInDirection(tube, ent.Comp.CurrentDirection);
+        ent.Comp.NextTube = _disposalTube.GetTubeInDirection(tube, ent.Comp.CurrentDirection);
 
         // Update rotation
         xform.LocalRotation = ent.Comp.CurrentDirection.ToAngle();
@@ -374,25 +374,24 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
 
         // Apply a linear velocity to a disposal holder which
         // will direct it toward the next tube on its route
-        var gridRotation = _xformSystem.GetWorldRotation(gridUid.Value);
-        var origin = _xformQuery.GetComponent(currentTube.Value).Coordinates;
-        var destination = _xformQuery.GetComponent(nextTube.Value).Coordinates;
-        var entCoords = _xformQuery.GetComponent(ent).Coordinates;
+        var origin = _xform.GetWorldPosition(_xformQuery.GetComponent(currentTube.Value));
+        var destination = _xform.GetWorldPosition(_xformQuery.GetComponent(nextTube.Value));
+        var entCoords = _xform.GetWorldPosition(_xformQuery.GetComponent(ent));
 
         // How far off are we from our destination?
-        var entDestDiff = destination.Position - entCoords.Position;
+        var entDestDiff = destination - entCoords;
 
         // If we're really close, don't bother updating our velocity
-        if (entDestDiff.Length() > 1e-6)
+        if (entDestDiff.Length() > 1e-3)
         {
             // Set velocity
-            var velocity = gridRotation.RotateVec(entDestDiff.Normalized() * ent.Comp.TraversalSpeed);
-            _physicsSystem.SetLinearVelocity(ent, velocity);
+            var velocity = entDestDiff.Normalized() * ent.Comp.TraversalSpeed;
+            _physics.SetLinearVelocity(ent, velocity);
 
             // Determine whether the disposal holder should update its route,
             // based on its current position with respect to its target and origin
-            var originDestDiff = destination.Position - origin.Position;
-            var originEntDiff = entCoords.Position - origin.Position;
+            var originDestDiff = destination - origin;
+            var originEntDiff = entCoords - origin;
 
             if (originEntDiff.Length() < originDestDiff.Length())
                 return;
