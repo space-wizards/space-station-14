@@ -28,7 +28,7 @@ public sealed class CrewManifestSection : BoxContainer
         var gridContainer = new GridContainer()
         {
             HorizontalExpand = true,
-            Columns = 2
+            Columns = 3
         };
 
         AddChild(gridContainer);
@@ -43,13 +43,23 @@ public sealed class CrewManifestSection : BoxContainer
 
             var titleContainer = new BoxContainer()
             {
-                Orientation = LayoutOrientation.Horizontal,
-                HorizontalExpand = true
+                Orientation = LayoutOrientation.Horizontal
             };
 
             var title = new RichTextLabel();
             title.SetMessage(entry.JobTitle);
 
+            var specTitleContainer = new BoxContainer()
+            {
+                Orientation = LayoutOrientation.Horizontal,
+                HorizontalExpand = true,
+                Margin = new Thickness(10, 0, 0, 0),
+                MaxWidth = 200f
+            };
+
+            var specTitle = new RichTextLabel();
+            specTitle.SetMessage(entry.JobSpecialization);
+            specTitle.ModulateSelfOverride = Color.FromHex("#60606c");
 
             if (prototypeManager.TryIndex<JobIconPrototype>(entry.JobIcon, out var jobIcon))
             {
@@ -68,9 +78,11 @@ public sealed class CrewManifestSection : BoxContainer
             {
                 titleContainer.AddChild(title);
             }
+            specTitleContainer.AddChild(specTitle);
 
             gridContainer.AddChild(name);
             gridContainer.AddChild(titleContainer);
+            gridContainer.AddChild(specTitleContainer);
         }
     }
 }

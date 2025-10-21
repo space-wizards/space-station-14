@@ -1,3 +1,4 @@
+using Content.Shared.StationRecords;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -27,12 +28,15 @@ namespace Content.Shared.Access.Systems
     {
         public string CurrentName { get; }
         public string CurrentJob { get; }
+        public string CurrentSpecialization { get; }
         public string CurrentJobIconId { get; }
 
-        public AgentIDCardBoundUserInterfaceState(string currentName, string currentJob, string currentJobIconId)
+        public AgentIDCardBoundUserInterfaceState(string currentName, string currentJob,
+            string currentSpecialization, string currentJobIconId)
         {
             CurrentName = currentName;
             CurrentJob = currentJob;
+            CurrentSpecialization = currentSpecialization;
             CurrentJobIconId = currentJobIconId;
         }
     }
@@ -56,6 +60,17 @@ namespace Content.Shared.Access.Systems
         public AgentIDCardJobChangedMessage(string job)
         {
             Job = job;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class AgentIDCardSpecChangedMessage : BoundUserInterfaceMessage
+    {
+        public string Specialization { get; }
+
+        public AgentIDCardSpecChangedMessage(string specialization)
+        {
+            Specialization = specialization;
         }
     }
 

@@ -29,6 +29,7 @@ public abstract class SharedIdCardSystem : EntitySystem
     // CCVar.
     private int _maxNameLength;
     private int _maxIdJobLength;
+    private int _maxJobSpecLength;
 
     public override void Initialize()
     {
@@ -40,6 +41,7 @@ public abstract class SharedIdCardSystem : EntitySystem
 
         Subs.CVar(_cfgManager, CCVars.MaxNameLength, value => _maxNameLength = value, true);
         Subs.CVar(_cfgManager, CCVars.MaxIdJobLength, value => _maxIdJobLength = value, true);
+        Subs.CVar(_cfgManager, CCVars.MaxJobSpecLength, value => _maxJobSpecLength = value, true);
     }
 
     private void OnRename(ref EntityRenamedEvent ev)
@@ -123,6 +125,46 @@ public abstract class SharedIdCardSystem : EntitySystem
         idCard = default;
         return false;
     }
+
+    /// <summary>
+    /// Attempts to change the job title of a card.
+    /// Returns true/false.
+    /// </summary>
+    /// <remarks>
+    /// If provided with a player's EntityUid to the player parameter, adds the change to the admin logs.
+    /// Actually works with the LocalizedJobTitle DataField and not with JobTitle.
+    /// </remarks>
+    public bool TryChangeJobSpec(EntityUid uid, string? jobSpec, IdCardComponent? id = null, EntityUid? player = null)
+    {
+        if (!Resolve(uid, ref id))
+            return false;
+
+        if (!string.IsNullOrWhiteSpace(jobSpec))
+        {
+            jobSpec = jobSpec.Trim();
+
+            if (jobSpec.Length > _maxJobSpecLength)
+                jobSpec = jobSpec[.._maxJobSpecLength];
+        }
+        else
+        {
+            jobSpec = null;
+        }
+
+        if (id.JobSpecializationTitle == jobSpec)
+            return true;
+        id.JobSpecializationTitle = jobSpec;
+        Dirty(uid, id);
+        UpdateEntityName(uid, id);
+
+        if (player != null)
+        {
+            _adminLogger.Add(LogType.Identity, LogImpact.Low,
+                $"{ToPrettyString(player.Value):player} has changed the job specialization title of {ToPrettyString(uid):entity} to {jobSpec} ");
+        }
+        return true;
+    }
+
 
     /// <summary>
     /// Attempts to change the job title of a card.
@@ -269,7 +311,16 @@ public abstract class SharedIdCardSystem : EntitySystem
         if (!Resolve(uid, ref id))
             return;
 
-        var jobSuffix = string.IsNullOrWhiteSpace(id.LocalizedJobTitle) ? string.Empty : $" ({id.LocalizedJobTitle})";
+        var jobSuffix = string.Empty;
+        if (!string.IsNullOrWhiteSpace(id.LocalizedJobTitle))
+        {
+            jobSuffix = $" ({id.LocalizedJobTitle}";
+
+            if (!string.IsNullOrWhiteSpace(id.LocalizedJobSpecializationTitle))
+                jobSuffix += $", {id.LocalizedJobSpecializationTitle}";
+
+            jobSuffix += ")";
+        }
 
         var val = string.IsNullOrWhiteSpace(id.FullName)
             ? Loc.GetString(id.NameLocId,

@@ -486,6 +486,15 @@ namespace Content.Client.Stylesheets
             };
             monotoneFilledButtonOpenBoth.SetPatchMargin(StyleBox.Margin.Horizontal, 0);
 
+            // Id-Card Monotone
+            var idCardButton = new StyleBoxTexture
+            {
+                Texture = resCache.GetTexture("/Textures/Interface/Nano/id_card.png"),
+            };
+            idCardButton.SetContentMarginOverride(StyleBox.Margin.Vertical, 0);
+            idCardButton.SetContentMarginOverride(StyleBox.Margin.Top, 2);
+            idCardButton.SetContentMarginOverride(StyleBox.Margin.Bottom, 2);
+
             // CheckBox
             var checkBoxTextureChecked = resCache.GetTexture("/Textures/Interface/Nano/checkbox_checked.svg.96dpi.png");
             var checkBoxTextureUnchecked = resCache.GetTexture("/Textures/Interface/Nano/checkbox_unchecked.svg.96dpi.png");
@@ -1349,6 +1358,31 @@ namespace Content.Client.Stylesheets
                     {
                         new StyleProperty(Button.StylePropertyStyleBox, monotoneButtonOpenBoth),
                     }),
+
+                // Id-Card Monotone Button
+                new StyleRule(
+                    new SelectorElement(typeof(IdCardButton), null, null, null),
+                    new[]
+                    {
+                        new StyleProperty(Button.StylePropertyStyleBox, idCardButton),
+                    }),
+
+                new StyleRule(new SelectorElement(typeof(IdCardButton), null, null, new[] {Button.StylePseudoClassNormal}), new[]
+                {
+                    new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorDefault),
+                }),
+                new StyleRule(new SelectorElement(typeof(IdCardButton), null, null, new[] {Button.StylePseudoClassHover}), new[]
+                {
+                    new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorHovered),
+                }),
+                new StyleRule(new SelectorElement(typeof(IdCardButton), null, null, new[] {Button.StylePseudoClassPressed}), new[]
+                {
+                    new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorPressed),
+                }),
+                new StyleRule(new SelectorElement(typeof(IdCardButton), null, null, new[] {Button.StylePseudoClassDisabled}), new[]
+                {
+                    new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorDisabled),
+                }),
 
                 // MonotoneButton (filled)
                 new StyleRule(

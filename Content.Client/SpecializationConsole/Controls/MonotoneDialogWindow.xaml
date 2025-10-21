@@ -1,0 +1,31 @@
+<ui:MonotoneDialogWindow xmlns="https://spacestation14.io" xmlns:ui="clr-namespace:Content.Client.SpecializationConsole.Controls"
+                         MouseFilter="Stop" SetWidth="400">
+
+    <PanelContainer Name="Background" StyleClasses="PdaBackgroundRect" ModulateSelfOverride="#1A1A2E"/>
+    <PanelContainer Name="Border" StyleClasses="PdaBorderRect" />
+
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+        <BoxContainer SetHeight="26" Margin="4 2 8 0" Orientation="Horizontal" HorizontalAlignment="Right">
+            <TextureButton Name="CloseButton" StyleClasses="windowCloseButton" Modulate="#ffffff"
+                           VerticalAlignment="Center" Margin="0 4 4 0" />
+        </BoxContainer>
+
+        <Control Margin="20 5 20 20" RectClipContent="True" VerticalExpand="true"
+                 HorizontalExpand="True">
+            <PanelContainer Name="ContentBorder" StyleClasses="PdaBackground" ModulateSelfOverride="#4A5568"/>
+            <Control Name="ContentsContainer" Margin="3 3" Modulate="#FFFFFF">
+                <PanelContainer Name="ContentBackground" StyleClasses="PdaContentBackground"
+                                ModulateSelfOverride="#1A1A2E" />
+                <BoxContainer Orientation="Vertical" Modulate="#a6bed3">
+                    <BoxContainer Orientation="Vertical" Margin="8">
+                        <BoxContainer Name="Prompts" Orientation="Vertical"/> <!-- Populated in constructor -->
+                        <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Name="OkButton" Text="{Loc 'quick-dialog-ui-ok'}"/>
+                            <Button Name="CancelButton" Text="{Loc 'quick-dialog-ui-cancel'}"/>
+                        </BoxContainer>
+                    </BoxContainer>
+                </BoxContainer>
+            </Control>
+        </Control>
+    </BoxContainer>
+</ui:MonotoneDialogWindow>

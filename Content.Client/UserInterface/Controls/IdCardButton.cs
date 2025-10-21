@@ -7,7 +7,7 @@ namespace Content.Client.UserInterface.Controls;
 /// <summary>
 /// A button intended for use with a monotone color palette
 /// </summary>
-public sealed class MonotoneButton : Button
+public sealed class IdCardButton : Button
 {
     /// <summary>
     /// Specifies the color of the label text when the button is pressed.
@@ -15,8 +15,9 @@ public sealed class MonotoneButton : Button
     [ViewVariables]
     public Color AltTextColor { set; get; } = new Color(0.2f, 0.2f, 0.2f);
 
-    public MonotoneButton()
+    public IdCardButton()
     {
+        RemoveStyleClass("button");
         UpdateAppearance();
     }
 
@@ -27,7 +28,7 @@ public sealed class MonotoneButton : Button
             Label.ModulateSelfOverride = DrawMode == DrawModeEnum.Pressed ? AltTextColor : null;
 
         // Modulate the button if disabled
-        // Modulate = Disabled ? Color.Gray : Color.White;
+        Modulate = Disabled ? Color.Gray : Color.White;
     }
 
     protected override void StylePropertiesChanged()
