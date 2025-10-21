@@ -19,7 +19,7 @@ public sealed class WeaponTests : InteractionTest
 
         var urist = await SpawnTarget(MobHuman);
         var damageComp = Comp<DamageableComponent>(urist);
-        // The spawned mob starts with some airloss damage.
+        // The spawned mob starts with some air loss damage.
         var startDamage = damageComp.TotalDamage.Value;
 
         var mosinNet = await PlaceInHands(SniperMosin);
