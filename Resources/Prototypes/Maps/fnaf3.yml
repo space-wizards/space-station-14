@@ -1,0 +1,15 @@
+- type: gameMap
+  id: FnafFilm2
+  mapName: 'Gazonyuch Frights'
+  mapPath: /Maps/Fnaf3.yml
+  minPlayers: 0
+  stations:
+    Fnaf3:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Gazonyuch Frights'
+        - type: StationJobs
+          availableJobs:
+            CargoTechnician: [-1, -1]
+            SecurityOfficer: [1, 1]
