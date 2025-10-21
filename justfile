@@ -44,10 +44,12 @@ test +TEST_NAME:
 lint-yaml:
     dotnet run --project Content.YAMLLinter/Content.YAMLLinter.csproj
 
-build-packaging:
-    dotnet run --project Content.Packaging server --hybrid-acz --platform linux-x64
+build-packaging +PLATFORM:
+    dotnet run --project Content.Packaging server --hybrid-acz --platform {{PLATFORM}}
 
-run-packaging:
-    dotnet run --property WarningLevel=0 --no-build --project Content.Packaging server --hybrid-acz --platform linux-x64
+run-packaging +PLATFORM:
+    dotnet run --property WarningLevel=0 --no-build --project Content.Packaging server --hybrid-acz --platform {{PLATFORM}}
 
-build-and-run-packaging: build-packaging run-packaging
+build-and-run-packaging +PLATFORM: 
+    just build-packaging {{PLATFORM}}
+    just run-packaging {{PLATFORM}}
