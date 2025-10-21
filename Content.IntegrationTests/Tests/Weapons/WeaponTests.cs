@@ -9,6 +9,7 @@ namespace Content.IntegrationTests.Tests.Weapons;
 
 public sealed class WeaponTests : InteractionTest
 {
+    protected override string PlayerPrototype => "MobHuman"; // The default test mob only has one hand
     private static readonly EntProtoId MobHuman = "MobHuman";
     private static readonly EntProtoId SniperMosin = "WeaponSniperMosin";
 
@@ -17,10 +18,11 @@ public sealed class WeaponTests : InteractionTest
     {
         var gunSystem = SEntMan.System<SharedGunSystem>();
 
+        await AddAtmosphere(); // prevent the Urist from suffocating
+
         var urist = await SpawnTarget(MobHuman);
         var damageComp = Comp<DamageableComponent>(urist);
         // The spawned mob starts with some air loss damage.
-        var startDamage = damageComp.TotalDamage.Value;
 
         var mosinNet = await PlaceInHands(SniperMosin);
         var mosinEnt = ToServer(mosinNet);
@@ -37,14 +39,14 @@ public sealed class WeaponTests : InteractionTest
         Assert.That(startAmmo, Is.GreaterThan(0), "Mosin was spawned with no ammo!");
         Assert.That(wieldComp.Wielded, Is.False, "Mosin was spawned wielded!");
 
-        await AttemptShoot(urist, false);
+        await AttemptShoot(urist, false); // should fail due to not being wielded
         var updatedAmmo = gunSystem.GetAmmoCount(mosinEnt);
 
         Assert.That(updatedAmmo,
             Is.EqualTo(startAmmo),
             "Mosin discharged ammo when the weapon should not have fired!");
         Assert.That(damageComp.TotalDamage.Value,
-            Is.GreaterThan(startDamage),
+            Is.EqualTo(0),
             "Urist took damage when the weapon should not have fired!");
 
         await UseInHand();
@@ -56,7 +58,7 @@ public sealed class WeaponTests : InteractionTest
 
         Assert.That(updatedAmmo, Is.EqualTo(startAmmo - 1), "Mosin failed to discharge appropriate amount of ammo!");
         Assert.That(damageComp.TotalDamage.Value,
-            Is.GreaterThan(startDamage),
+            Is.GreaterThan(0),
             "Mosin was fired but urist sustained no damage!");
     }
 }
