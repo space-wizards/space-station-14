@@ -111,7 +111,7 @@ public sealed class RCDSystem : EntitySystem
             var name = Loc.GetString(prototype.SetName);
 
             if (prototype.Prototype != null &&
-                _protoManager.TryIndex(prototype.Prototype, out var proto))
+                _protoManager.TryIndex(prototype.Prototype, out var proto)) // don't use Resolve because this can be a tile
                 name = proto.Name;
 
             msg = Loc.GetString("rcd-component-examine-build-details", ("name", name));
@@ -178,7 +178,7 @@ public sealed class RCDSystem : EntitySystem
                     var deconstructedTile = _mapSystem.GetTileRef(gridUid.Value, mapGrid, location);
                     var protoName = !_turf.IsSpace(deconstructedTile) ? _deconstructTileProto : _deconstructLatticeProto;
 
-                    if (_protoManager.TryIndex(protoName, out var deconProto))
+                    if (_protoManager.Resolve(protoName, out var deconProto))
                     {
                         cost = deconProto.Cost;
                         delay = deconProto.Delay;
@@ -206,7 +206,7 @@ public sealed class RCDSystem : EntitySystem
 
         // Try to start the do after
         var effect = Spawn(effectPrototype, location);
-        var ev = new RCDDoAfterEvent(GetNetCoordinates(location), component.ConstructionDirection, component.ProtoId, cost, EntityManager.GetNetEntity(effect));
+        var ev = new RCDDoAfterEvent(GetNetCoordinates(location), component.ConstructionDirection, component.ProtoId, cost, GetNetEntity(effect));
 
         var doAfterArgs = new DoAfterArgs(EntityManager, user, delay, ev, uid, target: args.Target, used: uid)
         {
@@ -261,7 +261,7 @@ public sealed class RCDSystem : EntitySystem
         {
             // Delete the effect entity if the do-after was cancelled (server-side only)
             if (_net.IsServer)
-                QueueDel(EntityManager.GetEntity(args.Effect));
+                QueueDel(GetEntity(args.Effect));
             return;
         }
 

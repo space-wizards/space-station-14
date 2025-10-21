@@ -236,19 +236,24 @@ namespace Content.Shared.Cuffs
 
         private void HandleMoveAttempt(EntityUid uid, CuffableComponent component, UpdateCanMoveEvent args)
         {
-            if (component.CanStillInteract || !EntityManager.TryGetComponent(uid, out PullableComponent? pullable) || !pullable.BeingPulled)
+            if (component.CanStillInteract || !TryComp(uid, out PullableComponent? pullable) || !pullable.BeingPulled)
                 return;
 
             args.Cancel();
         }
 
-        private void HandleStopPull(EntityUid uid, CuffableComponent component, AttemptStopPullingEvent args)
+        private void HandleStopPull(EntityUid uid, CuffableComponent component, ref AttemptStopPullingEvent args)
         {
             if (args.User == null || !Exists(args.User.Value))
                 return;
 
             if (args.User.Value == uid && !component.CanStillInteract)
+            {
+                //TODO: UX feedback. Simply blocking the normal interaction feels like an interface bug
+
                 args.Cancelled = true;
+            }
+
         }
 
         private void OnRemoveCuffsAlert(Entity<CuffableComponent> ent, ref RemoveCuffsAlertEvent args)
@@ -477,14 +482,16 @@ namespace Content.Shared.Cuffs
             if (TryComp<HandsComponent>(target, out var hands) && hands.Count <= component.CuffedHandCount)
                 return false;
 
-            var ev = new TargetHandcuffedEvent();
-            RaiseLocalEvent(target, ref ev);
-
             // Success!
             _hands.TryDrop(user, handcuff);
 
             _container.Insert(handcuff, component.Container);
+
+            var ev = new TargetHandcuffedEvent();
+            RaiseLocalEvent(target, ref ev);
+
             UpdateHeldItems(target, handcuff, component);
+
             return true;
         }
 

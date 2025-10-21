@@ -73,7 +73,7 @@ public sealed class WiresSystem : SharedWiresSystem
         List<IWireAction> wireActions = new();
         var dummyWires = 0;
 
-        if (!_protoMan.TryIndex(wires.LayoutId, out WireLayoutPrototype? layoutPrototype))
+        if (!_protoMan.Resolve(wires.LayoutId, out WireLayoutPrototype? layoutPrototype))
         {
             return;
         }
@@ -395,7 +395,7 @@ public sealed class WiresSystem : SharedWiresSystem
     {
         var player = args.Actor;
 
-        if (!EntityManager.TryGetComponent(player, out HandsComponent? handsComponent))
+        if (!TryComp(player, out HandsComponent? handsComponent))
         {
             _popupSystem.PopupEntity(Loc.GetString("wires-component-ui-on-receive-message-no-hands"), uid, player);
             return;
@@ -410,7 +410,7 @@ public sealed class WiresSystem : SharedWiresSystem
         if (!_hands.TryGetActiveItem((player, handsComponent), out var heldEntity))
             return;
 
-        if (!EntityManager.TryGetComponent(heldEntity, out ToolComponent? tool))
+        if (!TryComp(heldEntity, out ToolComponent? tool))
             return;
 
         TryDoWireAction(uid, player, heldEntity.Value, args.Id, args.Action, component, tool);
