@@ -1,13 +1,12 @@
 using Content.Shared.Administration.Logs;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Robust.Shared.Network;
-using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
@@ -182,6 +181,35 @@ public sealed class SolutionTransferSystem : EntitySystem
             return FixedPoint2.Zero;
         }
 
+        // Collect and enforce any whitelist from interested systems before proceeding.
+        // Ensure we pass a sensible solution name even if the Solution.Name field is unset.
+        var targetSolutionName = target.Comp.Solution.Name;
+        if (targetSolutionName == null && TryComp<RefillableSolutionComponent>(targetEntity, out var targetRefillComp))
+            targetSolutionName = targetRefillComp.Solution;
+        var whitelist = new GetSolutionTransferWhitelistEvent(sourceEntity, targetEntity, targetSolutionName);
+
+        // Allow both source and target to contribute to the whitelist.
+        RaiseLocalEvent(targetEntity, ref whitelist);
+        RaiseLocalEvent(sourceEntity, ref whitelist);
+
+        if (whitelist.Enforce)
+        {
+            // If whitelist is enforced and empty, block everything.
+            if (whitelist.Allowed.Count == 0)
+            {
+                _popup.PopupClient(Loc.GetString(whitelist.Popup), targetEntity, user);
+                return FixedPoint2.Zero;
+            }
+            foreach (var rq in sourceSolution.Contents)
+            {
+                if (!whitelist.Allowed.Contains(rq.Reagent.Prototype))
+                {
+                    _popup.PopupClient(Loc.GetString(whitelist.Popup), targetEntity, user);
+                    return FixedPoint2.Zero;
+                }
+            }
+        }
+
         // Check if the target is cancelling the transfer
         RaiseLocalEvent(targetEntity, ref transferAttempt);
         if (transferAttempt.CancelReason is {} targetReason)
@@ -234,3 +262,20 @@ public record struct SolutionTransferAttemptEvent(EntityUid From, EntityUid To, 
 /// </summary>
 [ByRefEvent]
 public record struct SolutionTransferredEvent(EntityUid From, EntityUid To, EntityUid User, FixedPoint2 Amount);
+
+/// <summary>
+/// Raised on both the source and target to collect a whitelist of reagents that are allowed for this transfer.
+/// Systems can add to <see cref="Allowed"/> and set <see cref="Enforce"/> to true to require that only whitelisted
+/// reagents may be transferred.
+/// <para>If <see cref="Enforce"/> is true and the whitelist is empty, the transfer is blocked.</para>
+/// </summary>
+[ByRefEvent]
+public struct GetSolutionTransferWhitelistEvent(EntityUid from, EntityUid to, string? targetSolutionName)
+{
+    public EntityUid From = from;
+    public EntityUid To = to;
+    public string? TargetSolutionName = targetSolutionName;
+    public HashSet<ProtoId<ReagentPrototype>> Allowed = [];
+    public bool Enforce = false;
+    public LocId Popup = "comp-solution-transfer-blocked-default";
+}
