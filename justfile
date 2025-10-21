@@ -1,3 +1,10 @@
+# This sets the terminal used on Windows.
+# This file path is the default installation location Git For Windows will install Git Bash to.
+# Given Space Station 14 is a Git-backed project, and you somehow have these files, we assume 
+# you have Git installed. And if you have Git, you probably installed it via Git For Windows
+# (https://git-scm.com/install/windows).
+# If you don't have Git Bash, or it's not in this location, try deleting this line, but Just
+# may not work for you.
 set windows-shell := ["C:\\Program Files\\Git\\bin\\sh.exe","-c"]
 
 # Build everything. Woe, warnings be upon ye.
