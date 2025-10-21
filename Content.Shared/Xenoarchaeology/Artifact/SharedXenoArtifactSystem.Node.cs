@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.EntityTable;
 using Content.Shared.NameIdentifier;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Artifact.Prototypes;
 using Robust.Shared.Prototypes;
@@ -84,25 +85,25 @@ public abstract partial class SharedXenoArtifactSystem
     /// <summary>
     /// Creates artifact node entity, attaching trigger and marking depth level for future use.
     /// </summary>
-    public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, ProtoId<XenoArchTriggerPrototype> trigger, int depth = 0)
+    public Entity<XenoArtifactNodeComponent>? CreateNode(
+        Entity<XenoArtifactComponent> ent,
+        List<Entity<XenoArtifactNodeComponent>> directPredecessors,
+        Dictionary<XenoArchTriggerPrototype, float> triggers,
+        Dictionary<EntityPrototype, float> effects,
+        int depth = 0
+    )
     {
-        var triggerProto = PrototypeManager.Index(trigger);
-        return CreateNode(ent, triggerProto, depth);
-    }
+        var effect = RobustRandom.Pick(effects);
 
-    /// <summary>
-    /// Creates artifact node entity, attaching trigger and marking depth level for future use.
-    /// </summary>
-    public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, XenoArchTriggerPrototype trigger, int depth = 0)
-    {
-        var entProtoId = _entityTable.GetSpawns(ent.Comp.EffectsTable)
-                                     .First();
+        var entProtoId = effect.ID;
 
         AddNode((ent, ent), entProtoId, out var nodeEnt, dirty: false);
         DebugTools.Assert(nodeEnt.HasValue, "Failed to create node on artifact.");
 
         var nodeComponent = nodeEnt.Value.Comp;
         nodeComponent.Depth = depth;
+
+        var trigger = RobustRandom.PickAndTake(triggers);
         nodeComponent.TriggerTip = trigger.Tip;
         EntityManager.AddComponents(nodeEnt.Value, trigger.Components);
 
@@ -320,7 +321,7 @@ public abstract partial class SharedXenoArtifactSystem
     /// <summary>
     /// Gets two-dimensional array (as lists inside enumeration) that contains artifact nodes, grouped by segment.
     /// </summary>
-    public IEnumerable<List<Entity<XenoArtifactNodeComponent>>> GetSegmentsFromNodes(Entity<XenoArtifactComponent> ent, List<Entity<XenoArtifactNodeComponent>> nodes)
+    public List<List<Entity<XenoArtifactNodeComponent>>> GetSegmentsFromNodes(Entity<XenoArtifactComponent> ent, IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> nodes)
     {
         var outSegments = new List<List<Entity<XenoArtifactNodeComponent>>>();
         foreach (var node in nodes)
