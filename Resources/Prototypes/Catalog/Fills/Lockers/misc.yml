@@ -205,60 +205,82 @@
         tableId: MaintenanceLockerLoot
 
 # Intended to very occasionally be useful for prisoners, so mostly functional items instead of fluff
+
+- type: entityTable
+  id: ToiletCisternCommonToolsTable
+  table: !type:GroupSelector
+    children:
+    - id: Screwdriver
+    - id: Wrench
+    - id: Wirecutter
+    - id: Welder
+    - id: ClothingMaskGas
+    - id: PowerCellSmall
+    - id: RadioHandheld
+    - id: Syringe
+    - id: CableApcStack
+    - id: Lighter
+
+- type: entityTable
+  id: ToiletCisternRareToolsTable
+  table: !type:GroupSelector
+    children:
+    - id: ClothingHandsGlovesColorYellow
+    - id: DrinkSpaceLube
+    - id: WelderIndustrial
+    - id: ClothingHeadHatWeldingMaskFlame
+    - id: PowerCellMedium
+    - id: DoubleEmergencyOxygenTankFilled
+    - id: DoubleEmergencyNitrogenTankFilled
+
+
+- type: entityTable
+  id: ToiletCisternUtilityTable
+  table: !type:GroupSelector
+    children:
+    - id: Brutepack
+    - id: Ointment
+    - id: Gauze
+    - id: ChemistryBottleUnstableMutagen
+
+- type: entityTable
+  id: ToiletCisternWeaponsTable
+  table: !type:GroupSelector
+    children:
+    - id: SurvivalKnife
+    - id: ScalpelShiv
+    - id: Shiv
+    - id: SawImprov
+    - id: HydroponicsToolHatchet
+    - id: ClothingHandsKnuckleDusters
+    - id: WeaponFlareGun
+
+- type: entityTable
+  id: ToiletCisternSyndicateTable
+  table: !type:GroupSelector
+    children:
+    - id: CyberPen
+    - id: CigPackSyndicate
+    - id: SoapSyndie
+    - id: SyndicatePersonalAI
+    - id: UplinkLighterBox
+
 - type: entityTable
   id: ToiletCisternLoot
   table: !type:GroupSelector
     children:
-    # Common tools
-    - !type:GroupSelector
+    - !type:NestedSelector
       weight: 25
-      children:
-      - id: Screwdriver
-      - id: Wrench
-      - id: Wirecutter
-      - id: Welder
-      - id: ClothingMaskGas
-      - id: PowerCellSmall
-      - id: RadioHandheld
-      - id: Syringe
-      - id: CableApcStack
-      - id: EmergencyOxygenTankFilled
-      - id: EmergencyNitrogenTankFilled
-      - id: Lighter
-    # Rare tools
-    - !type:GroupSelector
+      tableId: ToiletCisternCommonToolsTable
+    - !type:NestedSelector
       weight: 8
-      children:
-      - id: ClothingHandsGlovesColorYellow
-      - id: DrinkSpaceLube
-      - id: WelderIndustrial
-      - id: ClothingHeadHatWeldingMaskFlame
-      - id: PowerCellMedium
-    # Utility
-    - !type:GroupSelector
+      tableId: ToiletCisternRareToolsTable
+    - !type:NestedSelector
       weight: 5
-      children:
-      - id: Brutepack
-      - id: Ointment
-      - id: Gauze
-      - id: ChemistryBottleUnstableMutagen
-    # Weapons
-    - !type:GroupSelector
+      tableId: ToiletCisternUtilityTable
+    - !type:NestedSelector
       weight: 3
-      children:
-      - id: SurvivalKnife
-      - id: ScalpelShiv
-      - id: Shiv
-      - id: SawImprov
-      - id: HydroponicsToolHatchet
-      - id: ClothingHandsKnuckleDusters
-      - id: WeaponFlareGun
-    # Syndie
-    - !type:GroupSelector
+      tableId: ToiletCisternWeaponsTable
+    - !type:NestedSelector
       weight: 1
-      children:
-      - id: CyberPen
-      - id: CigPackSyndicate
-      - id: SoapSyndie
-      - id: SyndicatePersonalAI
-      - id: UplinkLighterBox
+      tableId: ToiletCisternSyndicateTable

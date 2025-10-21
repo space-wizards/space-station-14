@@ -156,6 +156,8 @@
     containers:
       stash: !type:NestedSelector
         tableId: ToiletCisternLoot
+        rolls: !type:RangeNumberSelector
+          range: 0, 1
 
 - type: entity
   parent: ToiletDirtyWater
@@ -166,6 +168,8 @@
     containers:
       stash: !type:NestedSelector
         tableId: ToiletCisternLoot
+        rolls: !type:RangeNumberSelector
+          range: 0, 1
 
 - type: entity
   parent: BaseToilet
