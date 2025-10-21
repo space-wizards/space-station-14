@@ -200,13 +200,8 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
                     if (scale < effect.MinScale)
                         continue;
 
-                    if (effect.Probability <= 1f)
-                    {
-                        var seed = SharedRandomExtensions.HashCodeCombine((int)_gameTiming.CurTick.Value, GetNetEntity(actualEntity).Id);
-                        var rand = new Random(seed);
-                        if (!rand.Prob(effect.Probability))
-                            continue;
-                    }
+                    if (effect.Probability < 1.0f && !_random.Prob(effect.Probability))
+                        continue;
 
                     // See if conditions apply
                     if (effect.Conditions != null && !CanMetabolizeEffect(actualEntity, ent, soln.Value, effect.Conditions))
