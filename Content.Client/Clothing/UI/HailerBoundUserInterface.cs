@@ -1,35 +1,20 @@
-
-using Content.Client.Administration.UI.Tabs.PlayerTab;
-using Content.Client.Clothing.Systems;
+using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
-using Content.Shared.Changeling.Components;
 using Content.Shared.Clothing.Components;
-using Content.Shared.Clothing.EntitySystems;
-using Content.Shared.IdentityManagement;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Elfie.Serialization;
-using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
-using System.Numerics;
-using static Robust.Client.UserInterface.Control;
 
 namespace Content.Client.Clothing.UI;
 
 public sealed class HailerBoundUserInterface : BoundUserInterface
 {
     [Dependency] private readonly IPlayerManager _player = default!;
-    private readonly HailerSystem _hailer = default!;
-    private readonly SpriteSystem _sprite = default!;
-
-    private HailerRadialMenu? _menu;
     private SimpleRadialMenu? _hailerRadioMenu;
+    private static readonly Color SelectedOptionBackground = StyleNano.ButtonColorDefaultRed.WithAlpha(128);
+    private static readonly Color SelectedOptionHoverBackground = StyleNano.ButtonColorHoveredRed.WithAlpha(128);
 
     public HailerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
-        _hailer = EntMan.System<HailerSystem>();
-        _sprite = EntMan.System<SpriteSystem>();
     }
 
     protected override void Open()
@@ -41,21 +26,6 @@ public sealed class HailerBoundUserInterface : BoundUserInterface
         Update();
 
         _hailerRadioMenu.OpenCentered();
-
-        //if (_menu == null)
-        //{
-        //    _menu = new(Owner, EntMan, _player, _hailer, _sprite);
-
-        //    _menu.OnOrderPicked += index =>
-        //    {
-        //        SendPredictedMessage(new HailerOrderMessage(index));
-        //        Close();
-        //    };
-
-        //    _menu.OnClose += () => Close();
-        //}
-
-        //_menu.OpenCentered();
     }
 
     public override void Update()
@@ -81,33 +51,14 @@ public sealed class HailerBoundUserInterface : BoundUserInterface
         {
             var line = orders[i];
             var tooltip = line.Description;
-            //var button = new RadialMenuButton()
-            //{
-            //    StyleClasses = { "RadialMenuButton" },
-            //    SetSize = new Vector2(64f, 64f),
-            //    ToolTip = tooltip
-            //};
-            //if (line.Icon != null)
-            //{
-            //    var tex = new TextureRect()
-            //    {
-            //        VerticalAlignment = VAlignment.Center,
-            //        HorizontalAlignment = HAlignment.Center,
-            //        Texture = sprite.Frame0(line.Icon),
-            //        TextureScale = new Vector2(2f, 2f),
-            //    };
-
-            //    button.AddChild(tex);
-            //}
-            //button.OnButtonUp += _ => OnOrderPicked?.Invoke(orderIndex);
 
             var orderIndex = i;
             var button = new RadialMenuActionOption<int>(DoSomething, orderIndex)
             {
                 IconSpecifier = RadialMenuIconSpecifier.With(line.Icon),
                 ToolTip = tooltip,
-                BackgroundColor = Color.Red,
-                HoverBackgroundColor = Color.Blue
+                BackgroundColor = SelectedOptionBackground,
+                HoverBackgroundColor = SelectedOptionHoverBackground
             };
 
             list.Add(button);
@@ -117,7 +68,9 @@ public sealed class HailerBoundUserInterface : BoundUserInterface
         return list;
     }
 
-    private void DoSomething(int obj)
+    private void DoSomething(int index)
     {
+        SendPredictedMessage(new HailerOrderMessage(index));
+        Close();
     }
 }
