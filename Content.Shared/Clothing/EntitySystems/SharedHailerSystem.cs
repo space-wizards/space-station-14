@@ -48,7 +48,6 @@ public abstract class SharedHailerSystem : EntitySystem
         SubscribeLocalEvent<HailerComponent, ClothingGotUnequippedEvent>(OnUnequip);
         SubscribeLocalEvent<HailerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
         SubscribeLocalEvent<HailerComponent, GotEmaggedEvent>(OnEmagged);
-        SubscribeLocalEvent<HailerComponent, HailerOrderMessage>(OnHailOrder);
         SubscribeLocalEvent<HailerComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<HailerComponent, SecHailerToolDoAfterEvent>(OnToolDoAfter);
     }
@@ -61,43 +60,6 @@ public abstract class SharedHailerSystem : EntitySystem
     private void OnUnequip(Entity<HailerComponent> ent, ref ClothingGotUnequippedEvent args)
     {
         ent.Comp.User = null;
-    }
-
-    private void OnHailOrder(EntityUid uid, HailerComponent comp, HailerOrderMessage args)
-    {
-        string soundCollection;
-        string localeText;
-        Entity<HailerComponent> ent = (uid, comp);
-
-        if (HasComp<EmaggedComponent>(ent) && comp.EmagLevelPrefix != null)
-        {
-            localeText = soundCollection = comp.EmagLevelPrefix;
-        }
-        else
-        {
-            var orderUsed = comp.Orders[args.Index];
-            var hailLevel = comp.CurrentHailLevel != null ? "-" + comp.CurrentHailLevel.Value.Name : String.Empty;
-            soundCollection = orderUsed.SoundCollection + hailLevel;
-            localeText = orderUsed.LocalePrefix + hailLevel;
-        }
-
-        //Play voice etc...
-        var index = PlayVoiceLineSound((uid, comp), soundCollection);
-        SubmitChatMessage((uid, comp), localeText, index);
-    }
-
-    private int PlayVoiceLineSound(Entity<HailerComponent> ent, string soundCollection)
-    {
-        var specifier = new SoundCollectionSpecifier(soundCollection);
-        var resolver = _sharedAudio.ResolveSound(specifier);
-        if (resolver is ResolvedCollectionSpecifier collectionResolver)
-        {
-            //var foo = SoundSpecifier
-            //_sharedAudio.PlayPredicted(resolver, ent.Owner, ent.Owner, audioParams: new AudioParams().WithVolume(-3f));
-            return collectionResolver.Index;
-        }
-        else
-            return 0;
     }
 
     protected void SubmitChatMessage(Entity<HailerComponent> ent, string localeText, int index)
