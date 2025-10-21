@@ -122,6 +122,13 @@
   - UnderwearTopBraSeniorEngineer
   - UnderwearBottomPantiesSeniorEngineer
 
+- type: loadoutGroup
+  id: SeniorEngineerBelt
+  name: loadout-group-senior-engineer-belt
+  loadouts:
+  - StationEngineerBeltUtility
+  - StationEngineerBeltWebbing
+
 # Science
 - type: loadoutGroup
   id: SeniorResearcherHead

@@ -27,7 +27,7 @@
   id: StationEngineerGear
   equipment:
     eyes: ClothingEyesGlassesMeson
-    belt: ClothingBeltUtilityEngineering
+#    belt: ClothingBeltUtilityEngineering # DS14
     ears: ClothingHeadsetEngineering
     socks: ClothingUnderwearSocksEngineer
   #storage:

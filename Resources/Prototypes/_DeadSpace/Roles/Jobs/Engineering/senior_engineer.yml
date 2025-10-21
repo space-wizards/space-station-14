@@ -34,7 +34,7 @@
   id: SeniorEngineerGear
   equipment:
     eyes: ClothingEyesGlassesMeson
-    belt: ClothingBeltUtilityEngineering
+#    belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
     socks: ClothingUnderwearSocksSeniorEngineer
   storage:

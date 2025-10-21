@@ -287,6 +287,7 @@
   - GroupTankHarness
   - TechnicalAssistantJumpsuit
   - StationEngineerBackpack
+  - StationEngineerBelt # DS14
   - SurvivalExtended
   - Trinkets
   - GroupSpeciesBreathTool
@@ -299,6 +300,7 @@
   - StationEngineerHead
   - StationEngineerJumpsuit
   - StationEngineerBackpack
+  - StationEngineerBelt # DS14
   - StationEngineerOuterClothing
   - StationEngineerShoes
   - StationEngineerID
@@ -313,6 +315,7 @@
   - GroupTankHarness
   - AtmosphericTechnicianJumpsuit
   - AtmosphericTechnicianBackpack
+  - AtmosphericTechnicianBelt # DS14
   - AtmosphericTechnicianOuterClothing
   - AtmosphericTechnicianShoes
   - SurvivalExtended

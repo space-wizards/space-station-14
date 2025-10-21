@@ -30,6 +30,19 @@
   equipment:
     back: ClothingBackpackDuffelAtmospherics
 
+# DS14-start
+# Belt
+- type: loadout
+  id: AtmosphericTechnicianBeltUtility
+  equipment:
+    belt: ClothingBeltUtilityEngineering
+
+- type: loadout
+  id: AtmosphericTechnicianBeltWebbing
+  equipment:
+    belt: ClothingUtilityWebbingEngineering
+# DS14-end
+
 # OuterClothing
 - type: loadout
   id: AtmosphericTechnicianWintercoat

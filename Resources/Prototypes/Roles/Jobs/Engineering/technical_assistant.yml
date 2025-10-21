@@ -29,7 +29,7 @@
   equipment:
     shoes: ClothingShoesBootsWork
     id: TechnicalAssistantPDA
-    belt: ClothingBeltUtilityEngineering
+#    belt: ClothingBeltUtilityEngineering # DS14
     ears: ClothingHeadsetEngineering
     socks: ClothingUnderwearSocksTechnicalAssistant
   #storage:

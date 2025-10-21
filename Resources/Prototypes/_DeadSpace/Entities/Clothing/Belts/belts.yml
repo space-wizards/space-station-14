@@ -26,3 +26,55 @@
         whitelist:
           tags:
           - SyndieSabre
+
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltUtilityBase
+  abstract: true
+  components:
+  - type: Storage
+    maxItemSize: Normal
+    whitelist:
+      tags:
+        - Powerdrill
+        - Wirecutter
+        - Crowbar
+        - Screwdriver
+        - Flashlight
+        - Wrench
+        - GeigerCounter
+        - Flare
+        - CableCoil
+        - CigPack
+        - Radio
+        - HolofanProjector
+        - Multitool
+        - AppraisalTool
+        - JawsOfLife
+        - GPS
+        - WeldingMask
+        - RemoteSignaller
+      components:
+        - StationMap
+        - SprayPainter
+        - SprayPainterAmmo
+        - NetworkConfigurator
+        - RCD
+        - RCDAmmo
+        - Welder
+        - PowerCell
+        - Geiger
+        - TrayScanner
+        - GasAnalyzer
+        - HandLabeler
+
+- type: entity
+  parent: ClothingBeltUtilityBase
+  id: ClothingUtilityWebbing
+  name: РПС для инструментов
+  description: Дизайнеры NanoTrasen ожидали заменить этим старый добрый пояс для инструментов.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Belt/utilitywebbing.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Belt/utilitywebbing.rsi

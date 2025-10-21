@@ -373,7 +373,7 @@
     outerClothing: ClothingOuterHardsuitERTMedical
     shoes: ADTClothingShoesBootsMagERT
     id: ERTMedicRedIDCard
-    belt: ClothingBeltERTMedicalFilled 
+    belt: ClothingBeltERTMedicalFilled
     pocket1: DoubleEmergencyOxygenTankFilled
   storage:
     back:
@@ -481,7 +481,7 @@
     shoes: ClothingShoesBootsWork
     head: ClothingHeadHelmetERTEngineer
     id: ERTEngineerIDCard
-    belt: ClothingBeltUtilityEngineering
+    belt: ClothingUtilityWebbingEngineering
     pocket1: DoubleEmergencyOxygenTankFilled
   storage:
     back:
