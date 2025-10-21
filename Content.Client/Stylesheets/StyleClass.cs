@@ -1,4 +1,4 @@
-﻿namespace Content.Client.Stylesheets;
+namespace Content.Client.Stylesheets;
 
 ///
 /// <summary>
@@ -56,6 +56,7 @@ public static class StyleClass
     public const string ButtonBig = "ButtonBig";
 
     public const string CrossButtonRed = "CrossButtonRed";
+    public const string RefreshButton = "RefreshButton";
 
     public const string ItemStatus = "ItemStatus";
     public const string ItemStatusNotHeld = "ItemStatusNotHeld";
