@@ -80,7 +80,7 @@ public sealed class SolutionTransferSystem : EntitySystem
             {
                 ent.Comp.TransferAmount = amount;
 
-                _popup.PopupClient(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)), uid, user);
+                _popup.PopupClient(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)), ent.Owner, user);
 
                 Dirty(ent.Owner, ent.Comp);
             };
