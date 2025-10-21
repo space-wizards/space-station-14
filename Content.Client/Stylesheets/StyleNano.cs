@@ -740,23 +740,6 @@ namespace Content.Client.Stylesheets
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDisabled),
 
-                // Colors for confirm buttons confirm states.
-                Element<ConfirmButton>()
-                    .Pseudo(ConfirmButton.ConfirmPrefix + ContainerButton.StylePseudoClassNormal)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDefault),
-
-                Element<ConfirmButton>()
-                    .Pseudo(ConfirmButton.ConfirmPrefix + ContainerButton.StylePseudoClassHover)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionHovered),
-
-                Element<ConfirmButton>()
-                    .Pseudo(ConfirmButton.ConfirmPrefix + ContainerButton.StylePseudoClassPressed)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionPressed),
-
-                Element<ConfirmButton>()
-                    .Pseudo(ConfirmButton.ConfirmPrefix + ContainerButton.StylePseudoClassDisabled)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDisabled),
-
                 new StyleRule(new SelectorChild(
                     new SelectorElement(typeof(Button), null, null, new[] {ContainerButton.StylePseudoClassDisabled}),
                     new SelectorElement(typeof(Label), null, null, null)),
