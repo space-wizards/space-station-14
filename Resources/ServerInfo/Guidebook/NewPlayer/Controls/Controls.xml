@@ -58,7 +58,7 @@
   - Use [color=yellow][bold][keybind="Use"][/bold][/color] to [color=cyan]put[/color] a held item from your active hand somewhere else, or to [color=cyan]use it[/color] on something or someone, depending on the context.
   - Pay attention to your active hand when interacting with the world to prevent accidentally using held items.
 
-  [bold]Items can't be transferred to, or from hand slots by drag and drop.[/bold]
+  [bold]Items cannot be transferred by drag and drop.[/bold]
 
   ### Dropping and throwing
   Use [color=yellow][bold][keybind="Drop"][/bold][/color] to [color=cyan]drop[/color] (or place) an item from your hand within arm's reach.
@@ -81,7 +81,7 @@
 
   Standard interactions range from clicking [bold]tables[/bold] to put held items onto them, to [bold]using[/bold] objects in the world with empty hands, and most commonly, using held items to interact with mobs and with other items.
 
-  In some situations, you can directly [color=cyan]replace items[/color] by clicking on a machine while holding an item.
+  In some situations, you can directly [color=cyan]swap items[/color] by clicking on a machine while holding an item.
   For example, while holding a beaker, click on a machine storing another beaker. This also works with air tanks and canisters.
 
   Some items have [color=cyan]alternative interactions[/color] — use [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color] to [bold]lock[/bold] lockers, [bold]eject[/bold] subitems such as batteries from other items, etc.
@@ -90,7 +90,7 @@
   Interact with objects such as containers even when your hands are full by performing [color=cyan]activation interactions[/color] with [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color].
   This allows you to, for example, [bold]open containers[/bold] without picking them up, [bold]open doors[/bold] without using the item you're holding, and to [bold]cycle guns[/bold].
 
-  Notably, press [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color] on a mob to open the [color=cyan]strip menu[/color], allowing you to view their inventory — which lets you try to take off or steal items from other players.
+  Notably, press [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color] on a mob to open the [color=cyan]strip menu[/color], allowing you to view their inventory — which lets you try to take off or steal items from them.
 
   ### In-hand
   Many items also have [color=cyan]use-in-hand interactions[/color], such as [bold]opening[/bold] bottles, [bold]wielding[/bold] two-handed guns and big melee weapons with both hands (clubs, spears, axes, mops, shotguns, etc.), [bold]cycling[/bold] guns, or [bold]toggling[/bold] syringes between injecting and drawing.
