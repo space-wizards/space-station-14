@@ -7,26 +7,29 @@
     <Control>
         <PanelContainer Name="BackgroundPanel" />
         <BoxContainer Orientation="Vertical" SeparationOverride="0">
-            <BoxContainer Orientation="Horizontal" MinSize="0 40">
+            <BoxContainer Orientation="Horizontal" MinSize="0 40" >
                 <Label Text="{Loc 'character-setup-gui-character-setup-label'}"
                        Margin="8 0 0 0" VAlign="Center"
                        StyleClasses="LabelHeadingBigger" />
 
-                <Button Name="StatsButton" HorizontalExpand="True"
-                        Text="{Loc 'character-setup-gui-character-setup-stats-button'}"
-                        StyleClasses="ButtonBig"
-                        HorizontalAlignment="Right" />
-                <cc:CommandButton Name="AdminRemarksButton"
-                                  Command="adminremarks"
-                                  Text="{Loc 'character-setup-gui-character-setup-adminremarks-button'}"
-                                  StyleClasses="ButtonBig" />
-                <Button Name="RulesButton"
-                        Text="{Loc 'character-setup-gui-character-setup-rules-button'}"
-                        StyleClasses="ButtonBig"/>
-                <Button Name="CloseButton"
-                        Access="Public"
-                        Text="{Loc 'character-setup-gui-character-setup-close-button'}"
-                        StyleClasses="ButtonBig"/>
+                <BoxContainer HorizontalAlignment="Right" HorizontalExpand="True">
+                    <BoxContainer Name="JoinRoundPanel" Access="Public" Orientation="Horizontal" SeparationOverride="6"
+                                  Align="End" Margin="16 0 16 0" />
+                    <Button Name="StatsButton"
+                            Text="{Loc 'character-setup-gui-character-setup-stats-button'}"
+                            StyleClasses="ButtonBig" />
+                    <cc:CommandButton Name="AdminRemarksButton"
+                                      Command="adminremarks"
+                                      Text="{Loc 'character-setup-gui-character-setup-adminremarks-button'}"
+                                      StyleClasses="ButtonBig" />
+                    <Button Name="RulesButton"
+                            Text="{Loc 'character-setup-gui-character-setup-rules-button'}"
+                            StyleClasses="ButtonBig" />
+                    <Button Name="CloseButton"
+                            Access="Public"
+                            Text="{Loc 'character-setup-gui-character-setup-close-button'}"
+                            StyleClasses="ButtonBig" />
+                    </BoxContainer>
             </BoxContainer>
             <PanelContainer StyleClasses="highlight">
             </PanelContainer>
