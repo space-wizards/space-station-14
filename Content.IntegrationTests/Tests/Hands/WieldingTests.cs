@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Hands;
 
-public sealed class WieldingRequiresMultipleHandsTest : InteractionTest
+public sealed class WieldingTests : InteractionTest
 {
     [TestPrototypes]
     private const string TestProto = @"
