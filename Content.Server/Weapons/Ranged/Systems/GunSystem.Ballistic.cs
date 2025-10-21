@@ -1,4 +1,4 @@
-using Content.Server.Emp;
+using Content.Shared.Emp;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Map;
