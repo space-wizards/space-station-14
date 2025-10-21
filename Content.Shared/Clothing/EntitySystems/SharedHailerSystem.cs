@@ -73,7 +73,7 @@ public abstract class SharedHailerSystem : EntitySystem
             //Make a chat line with the sec hailer as speaker, in bold and UPPERCASE for added impact
             string sentence = Loc.GetString(localeText + "-" + index);
 
-            _chat.TrySendInGameICMessage(ent.Comp.User.Value, //We submit the message via the User instead of the hailer to make the text BOLD
+            _chat.TrySendInGameICMessage(ent.Owner, //We submit the message via the User instead of the hailer to make the text BOLD
                                         sentence.ToUpper(),
                                         InGameICChatType.Speak,
                                         hideChat: true,
