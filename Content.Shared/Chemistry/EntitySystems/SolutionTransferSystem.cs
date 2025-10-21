@@ -1,5 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -122,8 +122,11 @@ public sealed class SolutionTransferSystem : EntitySystem
         if (ent.Comp.CanSend
             && _drainableQuery.TryComp(ent.Owner, out var heldDrainable)
             && _refillableQuery.TryComp(target, out var targetRefillable)
-            && _solution.TryGetDrainableSolution((ent.Owner, heldDrainable), out var ownerSoln, out _)
-            && _solution.TryGetRefillableSolution((target, targetRefillable, null), out var targetSoln, out _))
+            && TryGetTransferrableSolutions((ent.Owner, heldDrainable),
+                (target, targetRefillable),
+                out var ownerSoln,
+                out var targetSoln,
+                out _))
         {
             args.Handled = true; //If we reach this point, the interaction counts as handled.
 
@@ -160,8 +163,11 @@ public sealed class SolutionTransferSystem : EntitySystem
         if (ent.Comp.CanReceive
             && _refillableQuery.TryComp(ent.Owner, out var heldRefillable)
             && _drainableQuery.TryComp(target, out var targetDrainable)
-            && _solution.TryGetRefillableSolution((ent.Owner, heldRefillable), out ownerSoln, out var solution)
-            && _solution.TryGetDrainableSolution((target, targetDrainable), out targetSoln, out _))
+            && TryGetTransferrableSolutions((target, targetDrainable),
+                (ent.Owner, heldRefillable),
+                out targetSoln,
+                out ownerSoln,
+                out var solution))
         {
             args.Handled = true; //If we reach this point, the interaction counts as handled.
 
@@ -195,15 +201,11 @@ public sealed class SolutionTransferSystem : EntitySystem
 
     private void OnSolutionDrainTransferDoAfter(Entity<SolutionTransferComponent> ent, ref SolutionDrainTransferDoAfterEvent args)
     {
-        if (args.Cancelled)
+        if (args.Cancelled || args.Target is not { } target)
             return;
 
         // Have to check again, in case something has changed.
-        if (ent.Comp.CanSend
-            && _drainableQuery.TryComp(ent.Owner, out var heldDrainable)
-            && _refillableQuery.TryComp(args.Target, out var targetRefillable)
-            && _solution.TryGetRefillableSolution((args.Target.Value, targetRefillable), out var targetSoln, out _)
-            && _solution.TryGetDrainableSolution((ent.Owner, heldDrainable), out var ownerSoln, out _))
+        if (CanSend(ent, target, out var ownerSoln, out var targetSoln))
         {
             DrainTransfer(new SolutionTransferData(args.User, ent.Owner, ownerSoln.Value, args.Target.Value, targetSoln.Value, args.Amount));
         }
@@ -211,18 +213,60 @@ public sealed class SolutionTransferSystem : EntitySystem
 
     private void OnSolutionFillTransferDoAfter(Entity<SolutionTransferComponent> ent, ref SolutionRefillTransferDoAfterEvent args)
     {
-        if (args.Cancelled)
+        if (args.Cancelled || args.Target is not { } target)
             return;
 
         // Have to check again, in case something has changed.
-        if (ent.Comp.CanReceive
-            && _refillableQuery.TryComp(ent.Owner, out var heldRefillable)
-            && _drainableQuery.TryComp(args.Target, out var targetDrainable)
-            && _solution.TryGetRefillableSolution((ent.Owner, heldRefillable), out var ownerSoln, out var solution)
-            && _solution.TryGetDrainableSolution((args.Target.Value, targetDrainable), out var targetSoln, out _))
-        {
-            RefillTransfer(new SolutionTransferData(args.User, args.Target.Value, targetSoln.Value, ent.Owner, ownerSoln.Value, args.Amount), solution);
-        }
+        if (!CanRecieve(ent, target, out var ownerSoln, out var targetSoln, out var solution))
+            return;
+
+        RefillTransfer(new SolutionTransferData(args.User, target, targetSoln.Value, ent.Owner, ownerSoln.Value, args.Amount), solution);
+    }
+
+    private bool CanSend(Entity<SolutionTransferComponent, DrainableSolutionComponent?> ent,
+        Entity<RefillableSolutionComponent?> target,
+        [NotNullWhen(true)] out Entity<SolutionComponent>? drainable,
+        [NotNullWhen(true)] out Entity<SolutionComponent>? refillable)
+    {
+        drainable = null;
+        refillable = null;
+
+        return ent.Comp1.CanReceive && TryGetTransferrableSolutions(ent.Owner, target, out drainable, out refillable, out _);
+    }
+
+    private bool CanRecieve(Entity<SolutionTransferComponent> ent,
+        EntityUid source,
+        [NotNullWhen(true)] out Entity<SolutionComponent>? drainable,
+        [NotNullWhen(true)] out Entity<SolutionComponent>? refillable,
+        [NotNullWhen(true)] out Solution? solution)
+    {
+        drainable = null;
+        refillable = null;
+        solution = null;
+
+        return ent.Comp.CanReceive && TryGetTransferrableSolutions(source, ent.Owner, out drainable, out refillable, out solution);
+    }
+
+    private bool TryGetTransferrableSolutions(Entity<DrainableSolutionComponent?> source,
+        Entity<RefillableSolutionComponent?> target,
+        [NotNullWhen(true)] out Entity<SolutionComponent>? drainable,
+        [NotNullWhen(true)] out Entity<SolutionComponent>? refillable,
+        [NotNullWhen(true)] out Solution? solution)
+    {
+        drainable = null;
+        refillable = null;
+        solution = null;
+
+        if (!_drainableQuery.Resolve(source, ref source.Comp) || !_refillableQuery.Resolve(target, ref target.Comp))
+            return false;
+
+        if (!_solution.TryGetDrainableSolution(source, out drainable, out _))
+            return false;
+
+        if (!_solution.TryGetRefillableSolution(target, out refillable, out solution))
+            return false;
+
+        return true;
     }
 
     /// <summary>
@@ -231,16 +275,14 @@ public sealed class SolutionTransferSystem : EntitySystem
     /// </summary>
     /// <param name="data">The transfer data making up the transfer.</param>
     /// <returns>The actual amount transferred.</returns>
-    private FixedPoint2 DrainTransfer(SolutionTransferData data)
+    private void DrainTransfer(SolutionTransferData data)
     {
         var transferred = Transfer(data);
-        if (transferred > 0)
-        {
-            var message = Loc.GetString("comp-solution-transfer-transfer-solution", ("amount", transferred), ("target", data.TargetEntity));
-            _popup.PopupClient(message, data.SourceEntity, data.User);
-        }
+        if (transferred <= 0)
+            return;
 
-        return transferred;
+        var message = Loc.GetString("comp-solution-transfer-transfer-solution", ("amount", transferred), ("target", data.TargetEntity));
+        _popup.PopupClient(message, data.SourceEntity, data.User);
     }
 
     /// <summary>
@@ -250,22 +292,18 @@ public sealed class SolutionTransferSystem : EntitySystem
     /// <param name="data">The transfer data making up the transfer.</param>
     /// <param name="targetSolution">The target solution,included for LoC pop-up purposes.</param>
     /// <returns>The actual amount transferred.</returns>
-    private FixedPoint2 RefillTransfer(
-        SolutionTransferData data,
-        Solution targetSolution)
+    private void RefillTransfer(SolutionTransferData data, Solution targetSolution)
     {
         var transferred = Transfer(data);
-        if (transferred > 0)
-        {
-            var toTheBrim = targetSolution.AvailableVolume == 0;
-            var msg = toTheBrim
-                ? "comp-solution-transfer-fill-fully"
-                : "comp-solution-transfer-fill-normal";
+        if (transferred <= 0)
+            return;
 
-            _popup.PopupClient(Loc.GetString(msg, ("owner", data.SourceEntity), ("amount", transferred), ("target", data.TargetEntity)), data.TargetEntity, data.User);
-        }
+        var toTheBrim = targetSolution.AvailableVolume == 0;
+        var msg = toTheBrim
+            ? "comp-solution-transfer-fill-fully"
+            : "comp-solution-transfer-fill-normal";
 
-        return transferred;
+        _popup.PopupClient(Loc.GetString(msg, ("owner", data.SourceEntity), ("amount", transferred), ("target", data.TargetEntity)), data.TargetEntity, data.User);
     }
 
     /// <summary>
@@ -289,7 +327,8 @@ public sealed class SolutionTransferSystem : EntitySystem
         var ev = new SolutionTransferredEvent(data.SourceEntity, data.TargetEntity, data.User, actualAmount);
         RaiseLocalEvent(data.TargetEntity, ref ev);
 
-        _adminLogger.Add(LogType.Action, LogImpact.Medium,
+        _adminLogger.Add(LogType.Action,
+            LogImpact.Medium,
             $"{ToPrettyString(data.User):player} transferred {SharedSolutionContainerSystem.ToPrettyString(solution)} to {ToPrettyString(data.TargetEntity):target}, which now contains {SharedSolutionContainerSystem.ToPrettyString(targetSolution)}");
 
         return actualAmount;
