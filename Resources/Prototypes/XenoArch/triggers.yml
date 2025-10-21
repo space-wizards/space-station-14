@@ -29,7 +29,6 @@
     TriggerMagnet: 1
     TriggerAlcohol: 0.125
     TriggerBaseElement: 0.125
-    TriggerBotany: 0.125
     TriggerCleaning: 0.125
     TriggerMedicine: 0.125
     TriggerNarcotic: 0.125
@@ -443,22 +442,6 @@
     - SpaceCleaner
     - SpaceGlue
     - SpaceLube
-
-- type: xenoArchTrigger
-  id: TriggerBotany
-  tip: xenoarch-trigger-tip-botany
-  components:
-  - type: XATReactive
-    reagents:
-    - Ammonia
-    - Diethylamine
-    - EZNutrient
-    - Left4Zed
-    - PestKiller
-    - PlantBGone
-    - RobustHarvest
-    - Sedin
-    - WeedKiller
 
 - type: xenoArchTrigger
   id: TriggerAlcohol
