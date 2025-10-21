@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Orsoniks
-  changes:
-  - message: Reworked the Health examination text
-    type: Tweak
-  id: 8640
-  time: '2025-06-09T07:31:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38126
 - author: TiniestShark
   changes:
   - message: Mecha parts now require two hands to pick up.
@@ -3929,3 +3922,10 @@
   id: 9141
   time: '2025-10-21T12:28:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36378
+- author: TrixxedHeart
+  changes:
+  - message: Vox can now have up to 4 head markings.
+    type: Fix
+  id: 9142
+  time: '2025-10-21T14:16:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40542
