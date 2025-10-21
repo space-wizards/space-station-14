@@ -233,7 +233,6 @@
     - id: DoubleEmergencyOxygenTankFilled
     - id: DoubleEmergencyNitrogenTankFilled
 
-
 - type: entityTable
   id: ToiletCisternUtilityTable
   table: !type:GroupSelector
