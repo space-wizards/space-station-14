@@ -1,3 +1,11 @@
+# --------------------------------------------------------------------------------------------------------------------
+# Space Station 14 JustFile
+# --------------------------------------------------------------------------------------------------------------------
+# This is a file containing commands for Just. You can find Just here: https://github.com/casey/just
+# Just is a command runner that automates needing to remember common terminal commands, similar to Make's makefiles.
+# If you don't want to use Just, this file also serves as a handy reference for common console commands.
+# --------------------------------------------------------------------------------------------------------------------
+
 # This sets the terminal used on Windows.
 # This file path is the default installation location Git For Windows will install Git Bash to.
 # Given Space Station 14 is a Git-backed project, and you somehow have these files, we assume 
