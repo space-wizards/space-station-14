@@ -27,6 +27,8 @@
       - id: ClothingMaskGasAtmosian
       - id: ClothingCloakAtmosian
       - id: ClothingHeadHatFancyCrown
+      - id: ClothingUniformJumpsuitNanonachos
+      - id: FoodSnackNanonachos
 
 - type: sponsorLoadout
   id: ClothingBackpackTier4HOSIAASponsorLoadout

@@ -189,3 +189,38 @@
   solids:
     FoodCakePlain: 1
     FoodSakuraFlower: 3
+
+- type: microwaveMealRecipe
+  id: RecipeFoodNuclearNachosBowl
+  name: nuclear nachos bowl recipe
+  result: FoodNuclearNachosBowl
+  time: 10
+  group: Savory
+  solids:
+    FoodSnackNanonachos: 1
+    SheetUranium1: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFoodNachosBowl
+  name: nachos bowl recipe
+  result: FoodNachosBowl
+  time: 10
+  group: Savory
+  solids:
+    FoodSnackNanonachos: 1
+    FoodGarlic: 1
+  reagents:
+    TableSalt: 1
+    Blackpepper: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFoodNachosSaladBowl
+  name: nachos salad bowl recipe
+  result: FoodNachosSaladBowl
+  time: 10
+  group: Savory
+  solids:
+    FoodBowlBig: 1
+    FoodSnackNanonachos: 1
+    FoodTomato: 1
+    FoodCabbage: 1

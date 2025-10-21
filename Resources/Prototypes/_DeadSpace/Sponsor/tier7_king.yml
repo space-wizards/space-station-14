@@ -38,6 +38,8 @@
       - id: ClothingOuterCoatPineappleTrenchSponsor
       - id: ClothingNeckCloakBoneKing
       - id: ClothingNeckMantleWhiteKing
+      - id: ClothingUniformJumpsuitNanonachos
+      - id: FoodSnackNanonachos
 
 - type: sponsorLoadout
   id: ClothingBackpackTier7HOSIAASponsorLoadout
