@@ -33,9 +33,6 @@ public sealed class SpeakOnExceptionSystem : EntitySystem
     private void OnMapInit(Entity<SpeakOnExceptionComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextTimeCanSpeak = _timing.CurTime;
-
-        // Make sure you don't speak when spawned if an error already occured
-        ent.Comp.LastLog = _logHandler.LastLog;
     }
 
     public override void Update(float frameTime)
@@ -48,16 +45,15 @@ public sealed class SpeakOnExceptionSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (_timing.CurTime >= comp.NextTimeCanSpeak && log != comp.LastLog)
-            {
-                _chat.TrySendInGameICMessage(uid, CensorMessage(comp), InGameICChatType.Speak, ChatTransmitRange.Normal, true);
+            if (_timing.CurTime < comp.NextTimeCanSpeak)
+                continue;
 
-                comp.NextTimeCanSpeak += comp.SpeechCooldown;
-            }
+            _chat.TrySendInGameICMessage(uid, CensorMessage(comp), InGameICChatType.Speak, ChatTransmitRange.Normal, true);
 
-            // If the log changes when you're in cooldown, you still want to update the log so it won't trigger immediately
-            comp.LastLog = log;
+            comp.NextTimeCanSpeak += comp.SpeechCooldown;
         }
+
+        _logHandler.LastLog = null;
     }
 
     private void OnTransformSpeech(Entity<SpeakOnExceptionComponent> ent, ref TransformSpeechEvent args)

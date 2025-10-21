@@ -10,12 +10,6 @@ namespace Content.Server.RuntimeFun;
 public sealed partial class SpeakOnExceptionComponent : Component
 {
     /// <summary>
-    /// The last log that was spoken, used to ensure you don't repeat logs
-    /// </summary>
-    [DataField]
-    public string? LastLog;
-
-    /// <summary>
     /// Minimum time between error speech events.
     /// </summary>
     [DataField]
