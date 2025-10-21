@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: sowelipililimute
-  changes:
-  - message: Departmental request computers now send their orders directly to Cargo,
-      instead of requiring paper slips be brought to Cargo for insertion
-    type: Tweak
-  id: 8643
-  time: '2025-06-09T15:11:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37943
 - author: Disp-Dev
   changes:
   - message: Two new recipes have been added, Full English and Full American breakfast.
@@ -3928,3 +3920,10 @@
   id: 9144
   time: '2025-10-21T22:17:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40538
+- author: SolidSyn
+  changes:
+  - message: Changed the cooldown on wizards mind swap spell from 5 minutes to 3 minutes.
+    type: Tweak
+  id: 9145
+  time: '2025-10-21T22:47:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41027
