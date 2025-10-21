@@ -89,7 +89,7 @@ hailer-disperse-high-1 = Back the fuck off before I shove you in the brig myself
 hailer-disperse-high-2 = Step back from the scene while you still have legs!!
 
 ##  ARREST ##
-hailer-arrest-low-0 = You're being detained under Nanotrasen's code 4-2!!
+hailer-arrest-low-0 = You are being detained under Nanotrasen's code 4-2!!
 hailer-arrest-low-1 = You are in violation of Nanotrasen's laws!
 hailer-arrest-low-2 = Resistance is futile!!
 hailer-arrest-low-3 = You have the right to an attorney!!
@@ -102,7 +102,7 @@ hailer-arrest-med-3 = Down on the floor, scumbag!!
 hailer-arrest-high-0 = Go on, mald about it!!
 hailer-arrest-high-1 = You have the right to shut the fuck up!!
 hailer-arrest-high-2 = Drop the weapon or I drop you!!
-hailer-arrest-high-3 = You are about five seconds from being a training video!!
+hailer-arrest-high-3 = You are about five seconds from becoming a training video!!
 
 
 ##  EMAG ##
