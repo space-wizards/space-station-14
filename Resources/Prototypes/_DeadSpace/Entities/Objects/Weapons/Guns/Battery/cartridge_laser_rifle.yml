@@ -59,7 +59,7 @@
       state: o2
       shader: unshaded
   - type: Item
-    size: Normal
+    size: Small
   - type: Tag
     tags:
     - EnergyCartridge
@@ -67,7 +67,7 @@
     maxCharge: 1500
     startingCharge: 1500
   - type: HitscanBatteryAmmoProvider
-    proto: RedLaser
+    proto: RedMediumLaser
     fireCost: 100
   - type: PowerCell
   - type: Appearance

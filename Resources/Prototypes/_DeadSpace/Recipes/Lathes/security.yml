@@ -15,3 +15,31 @@
     Steel: 2000
     Plastic: 750
     Silver: 500
+
+- type: latheRecipe
+  parent: BaseWeaponRecipeLong
+  id: PhotonShotgun
+  result: PhotonShotgun
+  materials:
+    Steel: 3000
+    Plastic: 1750
+    Gold: 500
+    Plasma: 250
+
+- type: latheRecipe
+  parent: BaseWeaponRecipeLong
+  id: CartridgeLaserRifle
+  result: CartridgeLaserRifle
+  materials:
+    Steel: 2500
+    Plastic: 1750
+    Gold: 1000
+    Silver: 1000
+
+- type: latheRecipe
+  parent: BaseWeaponRecipeLong
+  id: EnergyCartridge
+  result: EnergyCartridge
+  materials:
+    Steel: 1000
+    Plasma: 150

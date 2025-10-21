@@ -566,6 +566,7 @@
         - CombatKnife
         - Truncheon
         - HandGrenade
+        - EnergyCartridge # DS14
       components:
         - Stunbaton
         - FlashOnTrigger

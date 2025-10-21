@@ -1,0 +1,54 @@
+- type: entity
+  parent: [ BaseWeaponBattery, BaseGunWieldable ]
+  id: PhotonShotgun
+  name: фотонный деструктор
+  description: Высокотехнологичная разработка Sibyl System, оснащённая промышленными энергетическими модуляторами. Длинный трубно-коллиматорный ствол обеспечивает повышенную точность, а голографическая панель у курка в одно мгновение меняет направление фотонных частиц, преобразуя накопившуюся энергию в противоположные друг-другу частицы - в виде лазерных и импульсных.
+  suffix: Дробовик
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Battery/multishot.rsi
+    layers:
+    - state: base-0
+      scale: 1.3, 1.3
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Appearance
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Clothing
+    sprite: _DeadSpace/Objects/Weapons/Guns/Battery/multishot.rsi
+  - type: Gun
+    fireRate: 1.75
+    soundGunshot:
+      path: /Audio/_DeadSpace/Weapons/Guns/Gunshots/multishot.ogg
+      params:
+        volume: -2
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletDisablerShotgun
+    fireCost: 50
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: BulletDisablerShotgun
+      fireCost: 50
+    - proto: LaserRifleBulletpread
+      fireCost: 50
+  - type: UseDelay
+    delay: 1.2
+  - type: Tag
+    tags:
+    - BatteryWeaponFireModesSprites
+  - type: StaticPrice
+    price: 750
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: Item
+    sprite: _DeadSpace/Objects/Weapons/Guns/Battery/multishot64.rsi
+    shape:
+    - 0,0,4,0
+    size: Large
+  - type: GunRequiresWield

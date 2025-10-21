@@ -1,0 +1,1 @@
+research-technology-photon-laser-weaponry = Фотонный арсенал
