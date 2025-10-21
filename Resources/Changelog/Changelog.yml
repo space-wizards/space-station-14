@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TiniestShark
-  changes:
-  - message: Mecha parts now require two hands to pick up.
-    type: Tweak
-  id: 8641
-  time: '2025-06-09T07:40:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38162
 - author: DrSmugleaf
   changes:
   - message: Fixed eating and drinking verbs showing up after a short delay and their
@@ -3929,3 +3922,10 @@
   id: 9142
   time: '2025-10-21T14:16:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40542
+- author: Princess-Cheeseballs
+  changes:
+  - message: You can now get drunk again.
+    type: Fix
+  id: 9143
+  time: '2025-10-21T20:24:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41002
