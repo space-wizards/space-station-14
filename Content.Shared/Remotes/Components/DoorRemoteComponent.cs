@@ -7,7 +7,7 @@ namespace Content.Shared.Remotes.Components;
 /// <summary>
 /// Component for door remote devices, that allow you to control doors from a distance.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class DoorRemoteComponent : Component
 {
     /// <summary>
@@ -28,6 +28,16 @@ public sealed partial class DoorRemoteComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool IncludeUserAccess;
+
+    /// <summary>
+    /// Client-side only field for checking if StatusControl requires update.
+    /// </summary>
+    /// <remarks>
+    /// StatusControl is updated inside loop and cannot understand
+    /// when state is of component it looks for is restored, thus mispredicting. To avoid that,
+    /// client-side system basically controls behaviour of StatusControl updates using this field.
+    /// </remarks>
+    public bool IsStatusControlUpdateRequired;
 }
 
 /// <summary>

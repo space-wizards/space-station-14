@@ -11,6 +11,12 @@ public sealed class DoorRemoteSystem : SharedDoorRemoteSystem
     {
         base.Initialize();
 
-        Subs.ItemStatus<DoorRemoteComponent>(ent => new DoorRemoteStatusControl(ent, Timing));
+        Subs.ItemStatus<DoorRemoteComponent>(ent => new DoorRemoteStatusControl(ent));
+        SubscribeLocalEvent<DoorRemoteComponent, AfterAutoHandleStateEvent>(Handler);
+    }
+
+    private void Handler(Entity<DoorRemoteComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        ent.Comp.IsStatusControlUpdateRequired = true;
     }
 }

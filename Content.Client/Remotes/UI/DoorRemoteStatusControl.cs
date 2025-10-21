@@ -9,36 +9,28 @@ namespace Content.Client.Remotes.UI;
 
 public sealed class DoorRemoteStatusControl : Control
 {
-    private readonly Entity<DoorRemoteComponent> _entity;
+    private readonly Entity<DoorRemoteComponent> _ent;
     private readonly RichTextLabel _label;
-    private readonly IGameTiming _timing;
 
     // set to toggle bolts initially just so that it updates on first pickup of remote
-    private OperatingMode? _prevOperatingMode;
 
-    public DoorRemoteStatusControl(Entity<DoorRemoteComponent> entity, IGameTiming timing)
+    public DoorRemoteStatusControl(Entity<DoorRemoteComponent> ent)
     {
-        _entity = entity;
+        _ent = ent;
         _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
         AddChild(_label);
-        _timing = timing;
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
 
-        if(!_timing.IsFirstTimePredicted)
-            return;
-
         // only updates the UI if any of the details are different than they previously were
-        if (_prevOperatingMode == _entity.Comp.Mode)
+        if (!_ent.Comp.IsStatusControlUpdateRequired)
             return;
-
-        _prevOperatingMode = _entity.Comp.Mode;
 
         // Update current volume and injector state
-        var modeStringLocalized = Loc.GetString(_entity.Comp.Mode switch
+        var modeStringLocalized = Loc.GetString(_ent.Comp.Mode switch
         {
             OperatingMode.OpenClose => "door-remote-open-close-text",
             OperatingMode.ToggleBolts => "door-remote-toggle-bolt-text",
@@ -47,5 +39,7 @@ public sealed class DoorRemoteStatusControl : Control
         });
 
         _label.SetMarkup(Loc.GetString("door-remote-mode-label", ("modeString", modeStringLocalized)));
+
+        _ent.Comp.IsStatusControlUpdateRequired = false;
     }
 }
