@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DrSmugleaf
-  changes:
-  - message: Fixed eating and drinking verbs showing up after a short delay and their
-      effect being delayed.
-    type: Fix
-  id: 8642
-  time: '2025-06-09T14:36:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38164
 - author: sowelipililimute
   changes:
   - message: Departmental request computers now send their orders directly to Cargo,
@@ -3929,3 +3921,10 @@
   id: 9143
   time: '2025-10-21T20:24:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41002
+- author: SlamBamActionman
+  changes:
+  - message: The hypopen now requires a short delay before being filled.
+    type: Tweak
+  id: 9144
+  time: '2025-10-21T22:17:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40538
