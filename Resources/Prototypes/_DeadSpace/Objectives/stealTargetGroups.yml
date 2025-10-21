@@ -4,3 +4,10 @@
   sprite:
     sprite: _DeadSpace/Objects/Devices/portable_camera_monitor.rsi
     state: icon
+
+- type: stealTargetGroup
+  id: WeaponSeniorKinetik
+  name: steal-target-groups-seniorpka
+  sprite:
+    sprite: _DeadSpace/Objects/Weapons/Guns/Basic/seniorpka.rsi
+    state: icon

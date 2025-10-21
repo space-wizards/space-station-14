@@ -435,6 +435,10 @@
       "directions": 4
     },
     {
+      "name": "ROBO-equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+    {
       "name": "ROBO-inhand-left",
       "directions": 4
     },
@@ -522,6 +526,10 @@
     },
     {
       "name": "RD-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "RD-equipped-OUTERCLOTHING-vox",
       "directions": 4
     },
     {

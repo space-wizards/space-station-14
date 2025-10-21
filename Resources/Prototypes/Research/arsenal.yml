@@ -11,6 +11,8 @@
   cost: 5000
   recipeUnlocks:
   - WeaponProtoKineticAccelerator
+  - WeaponProtoKineticAcceleratorReapeter # DS14
+  - WeaponProtoKineticAcceleratorShotgun # DS14
   - ShuttleGunKineticCircuitboard
   - BorgModuleMiningWeapon # DS14
   # These are roundstart but not replenishable for salvage

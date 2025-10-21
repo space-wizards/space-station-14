@@ -68,3 +68,149 @@
   - type: Sprite
     sprite: _DeadSpace/Objects/Consumable/Food/snacks.rsi
     state: fre-wrapper
+
+# Nachos
+- type: entity
+  id: FoodSnackNanonachos
+  parent: FoodSnackBase
+  name: наноначос
+  description: Любимые начос основателя NanoTrasen.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - nachos
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Consumable/Food/nanonachos.rsi
+    state: icon
+  - type: Food
+
+- type: entity
+  id: FoodSnackNuclearNachos
+  parent: FoodSnackNanonachos
+  name: ядерные начос
+  description: Начос с привкусом лучевой болезни.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Consumable/Food/nuclear_nachos.rsi
+    state: icon
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Radium
+          Quantity: 4
+        - ReagentId: Uranium
+          Quantity: 6
+
+- type: entity
+  id: FoodNuclearNachosBowl
+  parent: FoodMealNachos
+  name: тарелка ядерных начос
+  description: Начос с привкусом лучевой болезни.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Consumable/Food/nuclear_nachos_bowl.rsi
+    state: icon
+  - type: Item
+    storedRotation: -90
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Radium
+          Quantity: 4
+        - ReagentId: Uranium
+          Quantity: 6
+
+- type: entity
+  id: FoodNachosBowl
+  parent: FoodMealNachos
+  name: тарелка начос
+  description: Тарелка начос с чесночным соусом.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - nachos
+      - salt
+      - spicy
+      - garlic
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Consumable/Food/plate_nachos.rsi
+    state: icon
+  - type: Item
+    storedRotation: -90
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+    slots:
+    - HEAD
+
+- type: entity
+  id: FoodNachosSaladBowl
+  parent: FoodMealNachos
+  name: салат с начос
+  description: Невероятно простой и вкусный салат с начос.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - nachos
+      - tomato
+      - cabbage
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Consumable/Food/nachos_salad.rsi
+    state: icon
+  - type: Item
+    storedRotation: -90
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 25
+
+- type: entity
+  id: FoodSnackChipsMeatPie
+  parent: FoodSnackNanonachos
+  name: чипсы со вкусом мясного пирога
+  description: Не понятно, кому в голову пришла мысль делать чипсы с таким вкусом... Но пирог хотя бы мясной, но на любителя.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Consumable/Food/pie_chips.rsi
+    state: meat_pie
+  - type: FlavorProfile
+    flavors:
+      - oily
+      - salty
+      - potatoes
+      - meaty
+
+- type: entity
+  id: FoodSnackChipsCherryPie
+  parent: FoodSnackNanonachos
+  name: чипсы со вкусом вишнёвого пирога
+  description: Возможно, такие чипсы будут по вкусу каким-то горничным.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Consumable/Food/pie_chips.rsi
+    state: cherry_pie
+  - type: FlavorProfile
+    flavors:
+      - oily
+      - salty
+      - potatoes
+      - cherry

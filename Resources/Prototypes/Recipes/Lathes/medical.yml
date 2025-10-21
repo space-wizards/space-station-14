@@ -183,10 +183,15 @@
   name: lathe-recipe-MedkitRadiation-name
 
 - type: latheRecipe
-  parent: Medkit
   id: MedkitCombat
   result: MedkitCombat
   name: lathe-recipe-MedkitCombat-name
+# DS14-start
+  completetime: 2
+  materials:
+    Plastic: 1000
+    Steel: 1000
+# DS14-end
 
 - type: latheRecipe
   parent: BaseToolRecipe

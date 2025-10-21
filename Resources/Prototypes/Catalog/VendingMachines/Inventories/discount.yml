@@ -4,6 +4,10 @@
     FoodSnackCheesie: 3
     FoodSnackChips: 3
     FoodSnackBoritos: 3
+    FoodSnackNanonachos: 3 # DS14
+    FoodSnackNuclearNachos: 2 # DS14
+    FoodSnackChipsMeatPie: 2 # DS14
+    FoodSnackChipsCherryPie: 2 # DS14
     DrinkEnergyDrinkCan: 4
     FoodSnackPopcorn: 3
     FoodSnackEnergy: 3

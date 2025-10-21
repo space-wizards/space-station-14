@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretRobotics
+  name: берет робототехника
+  description: Красный берет с белой кокардой. киборги будут в восторге от вашего стиля!
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Head/Hats/beret_robo.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Head/Hats/beret_robo.rsi

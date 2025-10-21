@@ -14,6 +14,11 @@
     walkModifier: 1
     sprintModifier: 0.9
   - type: HeldSpeedModifier
+  # DS14-start 
+  - type: PhysicalComposition
+    materialComposition:
+      Cloth: 100
+  # DS14-end
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -171,7 +176,7 @@
   - type: Storage
     grid:
     - 0,0,8,4
-
+  
 - type: entity
   parent: [ ClothingBackpackDuffelSyndicate, BaseSyndicateContraband ]
   id: ClothingBackpackDuffelSyndicateBundle

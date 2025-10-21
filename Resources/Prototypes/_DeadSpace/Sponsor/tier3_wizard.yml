@@ -23,6 +23,8 @@
       - id: BedsheetWiz
       - id: ClothingUniformJumpsuitSkeleton
       - id: ClothingNeckWingsMagic
+      - id: ClothingUniformJumpsuitNanonachos
+      - id: FoodSnackNanonachos
 
 - type: sponsorLoadout
   id: ClothingBackpackTier3HOSIAASponsorLoadout

@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitNanonachos
+  name: комбинезон наноначос
+  description: Фирменный мерч лучших начос корпорации.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/nanonachos.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/nanonachos.rsi

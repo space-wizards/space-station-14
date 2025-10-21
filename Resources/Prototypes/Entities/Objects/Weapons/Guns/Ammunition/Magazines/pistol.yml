@@ -12,7 +12,7 @@
     whitelist:
       tags:
         - CartridgePistol
-    capacity: 19
+    capacity: 14 # DS14
   - type: Item
     size: Small
   - type: ContainerContainer
@@ -30,6 +30,11 @@
     steps: 6
     zeroVisible: false
   - type: Appearance
+  # DS14-start
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 25
+  # DS14-end
 
 - type: entity
   id: BaseMagazinePistolHighCapacity
@@ -63,6 +68,11 @@
     steps: 6
     zeroVisible: false
   - type: Appearance
+  # DS14-start
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 25
+  # DS14-end
 
 - type: entity
   id: BaseMagazinePistolSubMachineGun  # Yeah it's weird but it's pistol caliber
@@ -96,6 +106,11 @@
     steps: 6
     zeroVisible: false
   - type: Appearance
+  # DS14-start
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 25
+  # DS14-end
 
 - type: entity
   id: MagazinePistolSubMachineGunTopMounted

@@ -123,7 +123,13 @@
     proto: robot
   - type: Speech
     speechVerb: Robotic
-
+  # DS14-start
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 500
+      Plastic: 500
+  # DS14-end
+    
 - type: entity
   parent: BasePDA
   id: BaseWidePDA

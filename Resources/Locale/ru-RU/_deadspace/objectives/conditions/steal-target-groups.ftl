@@ -1,0 +1,1 @@
+steal-target-groups-seniorpka = продвинутый протокинетический ускоритель

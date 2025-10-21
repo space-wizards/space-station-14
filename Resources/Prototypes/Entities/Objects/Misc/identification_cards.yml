@@ -25,7 +25,12 @@
     - WhitelistChameleonIdCard
   - type: StealTarget
     stealGroup: IDCard
-
+  # DS14-start
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
+  # DS14-end
+    
 #IDs with layers
 
 - type: entity

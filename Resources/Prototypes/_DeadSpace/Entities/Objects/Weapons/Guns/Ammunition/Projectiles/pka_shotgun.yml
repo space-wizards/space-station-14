@@ -1,0 +1,34 @@
+- type: entity
+  name: bolt
+  id: BulletKineticShotgun
+  parent: BulletKinetic
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    impactEffect: BulletImpactEffectKinetic
+    damage:
+      types:
+        Blunt: 8 
+        Structural: 30 
+
+- type: entity
+  name: wide bolt
+  id: BulletKineticShotgunSpread
+  categories: [ HideSpawnMenu ]
+  parent: BulletKineticShotgun
+  components:
+  - type: ProjectileSpread
+    proto: BulletKineticShotgun
+    count: 5 
+    spread: 23
+
+- type: entity
+  name: кинетичеcкий разрыв
+  id: BulletKineticSeniorSpread
+  categories: [ HideSpawnMenu ]
+  parent: BulletKineticShotgun
+  components:
+  - type: ProjectileSpread
+    proto: BulletKineticShotgun
+    count: 3 
+    spread: 23

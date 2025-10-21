@@ -67,6 +67,7 @@
     MailStealCollectionObjective: 1                     #cargo
     IDCardsStealCollectionObjective: 1
     LAMPStealCollectionObjective: 2                     #only for moth
+    WeaponSeniorKinetikStealObjective: 1                # DS14
 
 - type: weightedRandom
   id: ThiefObjectiveGroupItem
@@ -94,7 +95,7 @@
     FaxMachineCaptainStealObjective: 1
     ChemDispenserStealObjective: 1
     XenoArtifactStealObjective: 1
-    FreezerHeaterStealObjective: 1
+    # FreezerHeaterStealObjective: 1 # DS14
     TegStealObjective: 1
     BoozeDispenserStealObjective: 1
     AltarNanotrasenStealObjective: 1
@@ -112,7 +113,7 @@
     RenaultStealObjective: 1
     ShivaStealObjective: 1
     TropicoStealObjective: 1
-    PolyStealObjective: 1
+    # PolyStealObjective: 1 # DS14
 
 - type: weightedRandom
   id: ThiefObjectiveGroupEscape

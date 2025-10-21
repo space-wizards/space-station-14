@@ -15,12 +15,12 @@
     minSaturation: 5.0
   - type: Temperature
     heatDamageThreshold: 325
-    coldDamageThreshold: 150
+    coldDamageThreshold: 253.15
     currentTemperature: 310.15
     specificHeat: 42
     coldDamage:
       types:
-        Cold: 0.05 #per second, scales with temperature & other constants
+        Cold: 0.06 #per second, scales with temperature & other constants
     heatDamage:
       types:
         Heat: 3 #per second, scales with temperature & other constants
@@ -97,9 +97,9 @@
     - Dead
     damage:
       types:
-        Caustic: -0.7
+        Caustic: -0.6
       groups:
-        Brute: -0.5
+        Brute: -0.4
   - type: Sanity
   - type: LizardAccent
   - type: EmotePanel # DS14-Emote-panel

@@ -225,7 +225,7 @@
 - type: listing
   id: UplinkMagazineShothgun
   name: uplink-shotgun-magazine-name
-  description: uplink-Shotgun-magazine-desc
+  description: uplink-shotgun-magazine-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12.rsi, state: base }
   productEntity: MagazineShotgun
   cost:
@@ -264,6 +264,11 @@
     Telecrystal: 5
   categories:
   - UplinkPointless
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
 
 - type: listing
   id: UplinkNukeOpsCloak
@@ -276,7 +281,7 @@
   - UplinkPointless
   conditions:
   - !type:StoreWhitelistCondition
-    whitelist:
+    blacklist:
       tags:
       - NukeOpsUplink
 
@@ -549,6 +554,10 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
 
 # For the DesertEagle
 - type: listing
@@ -576,6 +585,51 @@
     Telecrystal: 3
   categories:
   - UplinkAmmo
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkCombatMedipenNuke
+  name: uplink-combat-medipen-name
+  description: uplink-combat-medipen-desc
+  productEntity: CombatMedipen
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkChemicals
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkStimpackNuke
+  name: uplink-stimpack-name
+  description: uplink-stimpack-desc
+  productEntity: Stimpack
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkChemicals
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkCostumeClownNuke
+  name: uplink-costume-clown-name
+  description: uplink-costume-clown-desc
+  productEntity: ClothingBackpackDuffelSyndicateCostumeClown
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkDeception
   conditions:
   - !type:StoreWhitelistCondition
     whitelist:

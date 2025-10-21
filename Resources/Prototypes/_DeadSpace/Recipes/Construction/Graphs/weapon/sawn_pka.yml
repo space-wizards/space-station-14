@@ -1,0 +1,12 @@
+- type: constructionGraph
+  id: ShotgunSawnKinetik
+  start: startkinetik
+  graph:
+    - node: startkinetik
+      edges:
+        - to: shotgunsawnkinetik
+          steps:
+            - tool: Sawing
+              doAfter: 2
+    - node: shotgunsawnkinetik
+      entity: WeaponShotgunSawnKinetik

@@ -175,6 +175,13 @@
       guides:
       - Security
       - Antagonists
+    # DS14-start
+    - type: PhysicalComposition
+      materialComposition:
+        Steel: 100
+        Glass: 100
+    # DS14-end
+
 
 - type: entity
   name: flash

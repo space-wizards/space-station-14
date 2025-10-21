@@ -6,8 +6,10 @@
     ClothingBackpackDuffelScience: 4
     ClothingUniformJumpsuitScientist: 8
     ClothingUniformJumpskirtScientist: 8
-    ClothingUniformJumpsuitScientistFormal: 4
-    ClothingUniformJumpskirtScientistFormal: 4
+    ClothingUniformJumpsuitScientistTurtle: 4 # DS14
+    ClothingUniformJumpskirtScientistTurtle: 4 # DS14
+    ClothingUniformJumpsuitScientistFormal: 4 # DS14
+    ClothingUniformJumpskirtScientistFormal: 4 # DS14
     ClothingOuterCoatRnd: 4
     ClothingShoesColorWhite: 4
     ClothingNeckTieSci: 4

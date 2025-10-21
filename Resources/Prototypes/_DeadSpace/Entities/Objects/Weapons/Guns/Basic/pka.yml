@@ -1,0 +1,256 @@
+- type: entity
+  id: WeaponProtoKineticAcceleratorReapeter
+  parent: [ WeaponProtoKineticAcceleratorBase, BaseCargoContraband ] 
+  name: протокинетический повторитель
+  description: Поздний, модифицированный прототип протокинетического ускорителя с возможностью накапливать заряды для важной ситуации.
+  components:
+  - type: AmmoCounter
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AmmoVisuals.HasAmmo:
+        empty-icon:
+          True: { visible: False }
+          False: { visible: True }
+        #todo: add other 'empty' animations
+  - type: BasicEntityAmmoProvider
+    proto: BulletKinetic
+    capacity: 3
+    count: 3
+  - type: Gun
+    fireRate: 1.5
+    selectedMode: SemiAuto
+    angleDecay: 45
+    minAngle: 44
+    maxAngle: 45
+    availableModes:
+    - FullAuto
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Basic/reapeterpka.rsi
+    layers:
+    - state: icon
+    - state: animation-icon
+      visible: false
+      map: [ "empty-icon" ]
+  - type: Item
+    sprite: _DeadSpace/Objects/Weapons/Guns/Basic/reapeterpka.rsi
+    shape:
+    - 0,0,2,1
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 2.5
+    rechargeSound:
+      path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
+  - type: Clothing
+    sprite: _DeadSpace/Objects/Weapons/Guns/Basic/reapeterpka.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt
+  - type: UpgradeableGun
+    whitelist:
+      tags:
+      - PKAUpgrade
+  - type: ContainerContainer
+    containers:
+      upgrades: !type:Container
+
+- type: entity
+  id: WeaponProtoKineticAcceleratorShotgun
+  parent: [ WeaponProtoKineticAcceleratorBase, BaseGunWieldable, BaseCargoContraband ] 
+  name: протокинетический дробовик
+  description: Новейший модифицированный прототип протокинетического ускорителя, что работает как дробовик
+  components:
+  - type: AmmoCounter
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AmmoVisuals.HasAmmo:
+        empty-icon:
+          True: { visible: False }
+          False: { visible: True }
+        #todo: add other 'empty' animations
+  - type: BasicEntityAmmoProvider
+    proto: BulletKineticShotgunSpread
+    capacity: 1
+    count: 1
+  - type: Gun
+    fireRate: 3
+    selectedMode: SemiAuto
+    angleDecay: 45
+    minAngle: 44
+    maxAngle: 45
+    availableModes:
+    - FullAuto
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Basic/shotgunpka.rsi
+    layers:
+    - state: icon
+      scale: 1.2, 1.2
+    - state: animation-icon
+      visible: false
+      map: [ "empty-icon" ]
+  - type: Item
+    sprite: _DeadSpace/Objects/Weapons/Guns/Basic/shotgunpkahand64.rsi
+    shape:
+    - 0,0,3,1
+    heldPrefix: energy
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 3
+    rechargeSound:
+      path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
+  - type: Clothing
+    sprite: _DeadSpace/Objects/Weapons/Guns/Basic/shotgunpka.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt
+  - type: GunRequiresWield
+  - type: UpgradeableGun
+    whitelist:
+      tags:
+      - PKAUpgrade
+  - type: ContainerContainer
+    containers:
+      upgrades: !type:Container
+
+- type: entity
+  id: WeaponShotgunSawnKinetik
+  parent: [ BaseItem, BaseCargoContraband ] 
+  name: протокинетический обрез
+  description: Зачем было резать и так исправное оружие?
+  components:
+  - type: AmmoCounter
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AmmoVisuals.HasAmmo:
+        empty-icon:
+          True: { visible: False }
+          False: { visible: True }
+        #todo: add other 'empty' animations
+  - type: BasicEntityAmmoProvider
+    proto: BulletKinetic
+    capacity: 1
+    count: 1
+  - type: Gun
+    fireRate: 2
+    selectedMode: SemiAuto
+    minAngle: 45
+    maxAngle: 55
+    angleIncrease: 4
+    angleDecay: 16
+    availableModes:
+    - FullAuto
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Basic/sawnpka.rsi
+    layers:
+    - state: icon
+    - state: animation-icon
+      visible: false
+      map: [ "empty-icon" ]
+  - type: Item
+    sprite: _DeadSpace/Objects/Weapons/Guns/Basic/sawnpka.rsi
+    size: Small
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 0.5
+    rechargeSound:
+      path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
+  - type: Clothing
+    sprite: _DeadSpace/Objects/Weapons/Guns/Basic/sawnpka.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt
+  - type: Construction
+    graph: ShotgunSawnKinetik
+    node: shotgunsawnkinetik
+    deconstructionTarget: null
+  - type: UpgradeableGun
+    whitelist:
+      tags:
+      - PKAUpgrade
+  - type: ContainerContainer
+    containers:
+      upgrades: !type:Container
+
+- type: entity
+  id: WeaponSeniorKinetik
+  parent: [ BaseItem, BaseCargoContraband ] 
+  name: продвинутый протокинетический ускоритель
+  description: Специальная модификация протокинетического ускорителя, представляющая из себя ослабленный в угоду компактности гибрид протокинетических повторителя и дробовика с выбором режима работы между ними. Спроектирован для повышения эффективности работы ведущих утилизаторов объектов NanoTrasen.
+  components:
+  - type: AmmoCounter
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AmmoVisuals.HasAmmo:
+        empty-icon:
+          True: { visible: False }
+          False: { visible: True }
+        #todo: add other 'empty' animations
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletKinetic
+    fireCost: 50
+  - type: Gun
+    fireRate: 1
+    selectedMode: SemiAuto
+    minAngle: 0
+    maxAngle: 4
+    availableModes:
+    - FullAuto
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Basic/seniorpka.rsi
+    layers:
+    - state: icon
+    - state: animation-icon
+      visible: false
+      map: [ "empty-icon" ]
+  - type: Item
+    sprite: _DeadSpace/Objects/Weapons/Guns/Basic/seniorpka.rsi
+    shape:
+    - 0,0,2,1
+    size: Large
+  - type: RechargeBasicEntityAmmo
+    rechargeSound:
+      path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
+  - type: Clothing
+    sprite: _DeadSpace/Objects/Weapons/Guns/Basic/seniorpka.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt
+  - type: UpgradeableGun
+    whitelist:
+      tags:
+      - PKAUpgrade
+  - type: ContainerContainer
+    containers:
+      upgrades: !type:Container
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: BulletKinetic
+      fireCost: 50
+    - proto: BulletKineticSeniorSpread
+      fireCost: 100
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 50
+    autoRechargePause: true
+    autoRechargePauseTime: 1
+  - type: Battery
+    maxCharge: 100
+    startingCharge: 100
+  - type: StealTarget
+    stealGroup: WeaponSeniorKinetik

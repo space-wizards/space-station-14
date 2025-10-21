@@ -8,6 +8,8 @@ using Content.Shared.GameTicking.Components;
 using Content.Shared.Random;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
+using Content.Shared.DeadSpace.CCCCVars;
+using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Configuration;
@@ -21,6 +23,7 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!; // DS14
 
     private string _ruleCompName = default!;
 
@@ -74,8 +77,11 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
     private bool TryPickPreset(ProtoId<WeightedRandomPrototype> weights, [NotNullWhen(true)] out GamePresetPrototype? preset)
     {
         var options = _prototypeManager.Index(weights).Weights.ShallowClone();
-        var players = GameTicker.ReadyPlayerCount();
-
+    // DS14-start
+    var players = _configurationManager.GetCVar(CCCCVars.GameModesUseTotalPlayers)
+        ? _playerManager.PlayerCount
+        : GameTicker.ReadyPlayerCount();
+    // DS14-end
         GamePresetPrototype? selectedPreset = null;
         var sum = options.Values.Sum();
         while (options.Count > 0)

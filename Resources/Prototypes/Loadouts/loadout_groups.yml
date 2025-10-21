@@ -1172,6 +1172,12 @@
   loadouts:
   - ResearchDirectorJumpsuit
   - ResearchDirectorJumpskirt
+  # DS14-rnd-start
+  - ResearchDirectorJumpsuitShirt
+  - ResearchDirectorJumpskirtShirt
+  - ResearchDirectorJumpsuitSuit
+  - ResearchDirectorJumpskirtSuit
+  # DS14-rnd-end
 
 - type: loadoutGroup
   id: ResearchDirectorOuterClothing
@@ -1187,6 +1193,7 @@
   loadouts:
   - BrownShoes
   - ScienceWinterBoots
+  - LeatherShoes # DS14
   - ShoesBootsLaceup
 
 - type: loadoutGroup
@@ -1204,6 +1211,7 @@
   name: loadout-group-scientist-head
   minLimit: 0
   loadouts:
+  - RoboticistBeret # DS14
   - RoboticistCap
   - SkullBandana
   # - ScientificBeret
@@ -1221,6 +1229,16 @@
   loadouts:
   - ScientistJumpsuit
   - ScientistJumpskirt
+  # DS14-start
+  - ScientistJumpsuitFormal
+  - ScientistJumpskirtFormal
+  - ScientistJumpsuitTurtleneck
+  - ScientistJumpskirtTurtleneck
+  - RoboticistJumpsuitOveralls
+  - RoboticistJumpskirtOveralls
+  - RoboticistJumpsuitWhite
+  - RoboticistJumpskirtWhite
+  # DS14-end
   - RoboticistJumpsuit
   - RoboticistJumpskirt
   # - SeniorResearcherJumpsuit
@@ -1233,6 +1251,11 @@
   - ScientistBackpack
   - ScientistSatchel
   - ScientistDuffel
+  # DS14-start
+  - RoboticistBackpack
+  - RoboticistSatchel
+  - RoboticistDuffel
+  # DS14-end
 
 - type: loadoutGroup
   id: ScientistOuterClothing

@@ -14,6 +14,11 @@
   - type: Tag
     tags:
     - MonkeyWearable
+    # DS14-start 
+  - type: PhysicalComposition
+    materialComposition:
+      Cloth: 100
+    # DS14-end
 
 - type: entity
   parent: ClothingBackpackSatchel

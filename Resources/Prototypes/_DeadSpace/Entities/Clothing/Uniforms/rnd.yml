@@ -1,4 +1,92 @@
 - type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitResearchDirectorShirt
+  name: рубашка научного руководителя
+  description: Простая рабочая рубашка фиолетового цвета с бежевыми штанами.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/rnd_shirt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/rnd_shirt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitResearchDirectorSuit
+  name: костюм научного руководителя
+  description: Официально-выглядящий фиолетовый костюм с чёрным галстуком и бежевыми брюками.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/rnd_director.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/rnd_director.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitScientistTurtle
+  name: водолазка учёного
+  description: Белая водолазка со специальными знаками, указывающими на принадлежность к научному отделу.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/scientist_turtle.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/scientist_turtle.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitRoboticistOveralls
+  name: подтяжки робототехника
+  description: Красная рубашка с чёрными подтяжками, вытканная из особой ткани, специально для робототехников.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/roboticist_overalls.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/roboticist_overalls.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitRoboticistWhite
+  name: белый комбинезон робототехника
+  description: Белый комбинезон, сотканный из специальной ткани. На нём есть отметки, указывающие, что носящий его - робототехник.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/roboticist_white.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/roboticist_white.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSeniorResearcherTurtle
+  name: водолазка ведущего учёного
+  description: Белая водолазка со специальными разлищающимися знаками, указывающими на принадлежность к научному отделу и отличительный профессионализм.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/senior_researcher_turtle.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/senior_researcher_turtle.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtResearchDirectorShirt
+  name: юбка-рубашка научного руководителя
+  description: Простая рабочая рубашка фиолетового цвета с бежевой юбкой.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/rnd_shirt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/rnd_shirt.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtResearchDirectorSuit
+  name: юбка-костюм научного руководителя
+  description: Официально-выглядящий фиолетовый костюм с чёрным галстуком и бежевой юбкой.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/rnd_director.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/rnd_director.rsi
+
+- type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtScientistFormal
   name: торжественная юбка-комбинезон учёного
@@ -8,3 +96,47 @@
     sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/scientist_formal.rsi
   - type: Clothing
     sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/scientist_formal.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtScientistTurtle
+  name: юбка-водолазка учёного
+  description: Белая водолазка со специальными знаками, указывающими на принадлежность к научному отделу.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/scientist_turtle.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/scientist_turtle.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtRoboticistOveralls
+  name: юбка-подтяжки робототехника
+  description: Красная рубашка с чёрными подтяжками, вытканная из особой ткани, специально для робототехников.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/roboticist_overalls.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/roboticist_overalls.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtRoboticistWhite
+  name: белая юбка-комбинезон робототехника
+  description: Белый комбинезон, сотканный из специальной ткани. На нём есть отметки, указывающие, что носящий его - робототехник.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/roboticist_white.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/roboticist_white.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtSeniorResearcherTurtle
+  name: юбка-водолазка ведущего учёного
+  description: Белая водолазка со специальными разлищающимися знаками, указывающими на принадлежность к научному отделу и отличительный профессионализм.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/senior_researcher_turtle.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/senior_researcher_turtle.rsi

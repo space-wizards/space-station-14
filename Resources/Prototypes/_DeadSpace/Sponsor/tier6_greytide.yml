@@ -20,9 +20,6 @@
       - id: ClothingHandsWatchDivine
       - id: ClothingMaskSkull
       - id: ClothingOuterHoodiePink
-      - id: ClothingNeckWingsBlackVampire
-      - id: ClothingNeckWingsPegas
-      - id: ClothingNeckWingsSkeletonRed
       - id: ClothingOuterWizard
       - id: ClothingHeadHatWizardFake
       - id: BedsheetWiz
@@ -33,12 +30,13 @@
       - id: ClothingCloakAtmosian
       - id: ClothingHeadHatFancyCrown
       - id: ClothingCloakGamer
-      - id: ClothingNeckWingsViolet
       - id: ClothingOuterWinterKirasCloak
       - id: ClothingMaskFawkesSponsor
       - id: ClothingOuterBlueTrenchSponsor
       - id: ClothingNeckCloakGreyFox
       - id: ClothingNeckCloakRedGeytide
+      - id: ClothingUniformJumpsuitNanonachos
+      - id: FoodSnackNanonachos
 
 - type: sponsorLoadout
   id: ClothingBackpackTier6HOSIAASponsorLoadout

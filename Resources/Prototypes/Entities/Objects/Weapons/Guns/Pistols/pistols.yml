@@ -208,7 +208,7 @@
   - type: Item
     storedOffset: 0,-2
   - type: Gun
-    fireRate: 7
+    fireRate: 5 # DS14
     availableModes:
     - SemiAuto
     - Burst

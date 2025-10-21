@@ -1,0 +1,10 @@
+- type: entity
+  parent: BaseThiefStealObjective
+  id: WeaponSeniorKinetikStealObjective
+  components:
+  - type: NotJobRequirement
+    job: SeniorSalvageSpecialist
+  - type: StealCondition
+    stealGroup: WeaponSeniorKinetik
+  - type: Objective
+    difficulty: 2

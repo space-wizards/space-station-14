@@ -15,9 +15,9 @@
   - type: Item
     size: Ginormous
   - type: Storage
-    maxItemSize: Normal # allow up to 5 large beakers / 10 beakers / 10 pill canisters
+    maxItemSize: Large # DS14
     grid:
-    - 0,0,4,3
+    - 0,0,7,3 # DS14
     quickInsert: true
     areaInsert: true
     whitelist:
@@ -30,4 +30,5 @@
         - Bottle
         - Syringe
         - Dropper
+        - ChemDispensable # DS14
   - type: Dumpable

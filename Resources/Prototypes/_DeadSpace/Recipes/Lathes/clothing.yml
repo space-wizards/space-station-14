@@ -1,0 +1,100 @@
+# Jumpsuit
+
+# RD
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpsuitResearchDirectorShirt
+  result: ClothingUniformJumpsuitResearchDirectorShirt
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpskirtResearchDirectorShirt
+  result: ClothingUniformJumpskirtResearchDirectorShirt
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpsuitResearchDirectorSuit
+  result: ClothingUniformJumpsuitResearchDirectorSuit
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpskirtResearchDirectorSuit
+  result: ClothingUniformJumpskirtResearchDirectorSuit
+
+# Scientist
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitScientistTurtle
+  result: ClothingUniformJumpsuitScientistTurtle
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtScientistTurtle
+  result: ClothingUniformJumpskirtScientistTurtle
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitScientistFormal
+  result: ClothingUniformJumpsuitScientistFormal
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtScientistFormal
+  result: ClothingUniformJumpskirtScientistFormal
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitRoboticist
+  result: ClothingUniformJumpsuitRoboticist
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtRoboticist
+  result: ClothingUniformJumpskirtRoboticist
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitRoboticistOveralls
+  result: ClothingUniformJumpsuitRoboticistOveralls
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtRoboticistOveralls
+  result: ClothingUniformJumpskirtRoboticistOveralls
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitRoboticistWhite
+  result: ClothingUniformJumpsuitRoboticistWhite
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtRoboticistWhite
+  result: ClothingUniformJumpskirtRoboticistWhite
+
+# Senior Researcher
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitSeniorResearcherTurtle
+  result: ClothingUniformJumpsuitSeniorResearcherTurtle
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtSeniorResearcherTurtle
+  result: ClothingUniformJumpskirtSeniorResearcherTurtle
+
+- type: latheRecipe
+  parent: BaseCoatRecipe
+  id: ClothingOuterWinterCoatSeniorResearcher
+  result: ClothingOuterWinterCoatSeniorResearcher
+
+
+# Hats
+
+- type: latheRecipe
+  parent: BaseHatRecipe
+  id: ClothingHeadHatBeretRobotics
+  result: ClothingHeadHatBeretRobotics

@@ -472,6 +472,8 @@
   - type: RampingStationEventScheduler
     scheduledGameRules: !type:NestedSelector
       tableId: BasicGameRulesTable
+  - type: GameRule # DS14
+    minPlayers: 15
 
 - type: entity
   id: SpaceTrafficControlEventScheduler # iff we make a selector for EntityTables that can respect StationEventComp restrictions, or somehow impliment them otherwise in said tables,
