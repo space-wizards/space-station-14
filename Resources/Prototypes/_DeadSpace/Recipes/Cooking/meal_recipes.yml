@@ -181,6 +181,96 @@
     FoodPotato: 2
 
 - type: microwaveMealRecipe
+  id: RecipeFoodSoupBeet
+  name: borch recipe
+  result: FoodSoupBeet
+  time: 10
+  group: Soup
+  reagents:
+    Water: 10
+  solids:
+    FoodBowlBig: 1
+    FoodTomato: 1
+    FoodOnionSlice: 2
+    FoodCabbage: 1
+    FoodMeat: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFoodMealMint
+  name: mint recipe
+  result: FoodMealMint
+  time: 5
+  group: Savory
+  reagents:
+    Coldsauce: 5
+    Sugar: 5
+  solids:
+    FoodPlateSmall: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFoodMealEggsbenedict
+  name: benedict recipe
+  result: FoodMealEggsbenedict
+  time: 15
+  group: Savory
+  solids:
+    FoodPlateSmall: 1
+    FoodEgg: 2
+    FoodBreadBun: 1
+    FoodMeatBacon: 2
+    FoodCheeseSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFoodSoupSlime
+  name: slime soup recipe
+  result: FoodSoupSlime
+  time: 10
+  group: Soup
+  reagents:
+    Slime: 15
+    Coldsauce: 5
+  solids:
+    FoodBowlBig: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFoodNoodlesSpesslaw
+  name: law noodl recipe
+  result: FoodNoodlesSpesslaw
+  time: 15
+  group: Pasta
+  solids:
+    FoodNoodlesBoiled: 1
+    HyperLinkBookCorporateLaw: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFoodSoupMiso
+  name: miso recipe
+  result: FoodSoupMiso
+  time: 20
+  group: Soup
+  reagents:
+    Water: 10
+    Soysauce: 15
+    Blackpepper: 5
+  solids:
+    FoodBowlBig: 1
+    FoodNoodlesBoiled: 1
+    FoodMeatFish: 2
+  
+- type: microwaveMealRecipe
+  id: RecipeFoodPizzaSassysage
+  name: sassysage pizza recipe
+  result: FoodPizzaSassysage
+  time: 30
+  group: Pizza
+  solids:
+    FoodDoughFlat: 1
+    ADTFoodSausageRaw: 2
+    FoodOnionSlice: 2
+    FoodEgg: 2
+    FoodCheeseSlice: 1
+
+- type: microwaveMealRecipe
   id: RecipeSakuraCake
   name: sakura cake recipe
   result: FoodSakuraCake

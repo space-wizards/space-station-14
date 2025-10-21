@@ -23,6 +23,8 @@
     tags:
       - Meat
       - Trash # DS14
+  - type: Extractable # DS14
+    grindableSolutionName: food
 
 - type: entity
   id: BaseAnimalOrgan
@@ -57,10 +59,10 @@
         maxVol: 100.0
         canReact: false
       food:
-        maxVol: 5
+        maxVol: 1 # DS14
         reagents:
         - ReagentId: UncookedAnimalProteins
-          Quantity: 5
+          Quantity: 1 # DS14
   - type: Item
     size: Small
     heldPrefix: lungs
@@ -125,6 +127,18 @@
   - type: Item
     size: Small
     heldPrefix: liver
+# DS14-start
+  - type: SolutionContainerManager
+    solutions:
+      Lung:
+        maxVol: 7
+        canReact: false
+      food:
+        maxVol: 7
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 7
+# DS14-end
 
 - type: entity
   id: OrganAnimalHeart
@@ -145,6 +159,18 @@
   - type: Item
     size: Small
     heldPrefix: heart
+# DS14-start
+  - type: SolutionContainerManager
+    solutions:
+      Lung:
+        maxVol: 3
+        canReact: false
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
+# DS14-end
 
 - type: entity
   id: OrganAnimalKidneys
@@ -164,3 +190,15 @@
   - type: Item
     size: Small
     heldPrefix: kidneys
+# DS14-start
+  - type: SolutionContainerManager
+    solutions:
+      Lung:
+        maxVol: 4
+        canReact: false
+      food:
+        maxVol: 4
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 4 
+# DS14-end
