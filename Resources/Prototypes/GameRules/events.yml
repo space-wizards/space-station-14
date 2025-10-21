@@ -3,6 +3,7 @@
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
     - id: AnomalySpawn
+  
     - id: BluespaceArtifact
     - id: BluespaceLocker
     - id: BreakerFlip
@@ -24,6 +25,7 @@
     - id: SpiderClownSpawn
     - id: SpiderSpawn
     - id: VentClog
+    - id: RadiationStorm
 
 - type: entityTable
   id: BasicAntagEventsTable
@@ -446,6 +448,24 @@
     weight: 5
     duration: 60
   - type: VentClogRule
+
+- type: entity
+  id: RadiationStorm
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-radiation-storm-start-announcement
+    endAnnouncement: station-event-radiation-storm-end-announcement
+    startAudio:
+      path: /Audio/Announcements/radiation.ogg
+    earliestStart: 20
+    minimumPlayers: 20
+    weight: 5
+    duration: 180
+  - type: VentCrittersRule
+    entries:
+    - id: RadiationTemporary
+      prob: 1.0
 
 - type: entity
   id: SlimesSpawn

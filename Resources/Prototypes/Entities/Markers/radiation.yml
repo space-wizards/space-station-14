@@ -1,0 +1,20 @@
+- type: entity
+  name: temporary radiation
+  id: RadiationTemporary
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: RadiationSource
+    intensity: 1
+    slope: 0.1 #should affect the entire room
+  - type: TimedDespawn
+    lifetime: 180 #3 minutes
+  - type: PointLight
+    color: "#13FF4B" #tritum green
+    energy: 1
+    falloff: 10
+    radius: 10
+    softness: 1
+  - type: EmitSoundOnSpawn
+    sound:
+      collection:
+        RadiationPulse
