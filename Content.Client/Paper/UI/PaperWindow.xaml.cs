@@ -311,9 +311,9 @@ namespace Content.Client.Paper.UI
             fm.AddMarkupPermissive(state.Text);
             WrittenTextLabel.SetMessage(fm, _allowedTags, DefaultTextColor);
 
-            // Add extra bottom margin based on tag count to prevent cutoff (only in read mode)
-            var tagCount = CountTags(state.Text);
-            var extraBottomMargin = tagCount * 3.0f; // 3 pixels per tag for extra height
+            // Add extra bottom margin based on lines with tags to prevent cutoff (only in read mode)
+            var linesWithTags = CountLinesWithTags(state.Text);
+            var extraBottomMargin = linesWithTags * 8.0f; // 8 pixels per line with tags
             PaperContent.Margin = new Thickness(_originalContentMargin.Left, _originalContentMargin.Top,
                 _originalContentMargin.Right, _originalContentMargin.Bottom + extraBottomMargin);
 
@@ -731,14 +731,23 @@ namespace Content.Client.Paper.UI
         }
 
         /// <summary>
-        /// Counts the total number of interactive tags that create taller buttons.
+        /// Counts the number of lines that contain interactive tags.
+        /// This prevents over-allocation when multiple tags appear on the same line.
         /// </summary>
-        private static int CountTags(string text)
+        private static int CountLinesWithTags(string text)
         {
-            var formCount = CountOccurrences(text, "[form]");
-            var signatureCount = CountOccurrences(text, "[signature]");
-            var checkCount = CountOccurrences(text, "[check]");
-            return formCount + signatureCount + checkCount;
+            var lines = text.Split('\n');
+            var linesWithTags = 0;
+
+            foreach (var line in lines)
+            {
+                if (line.Contains("[form]") || line.Contains("[signature]") || line.Contains("[check]"))
+                {
+                    linesWithTags++;
+                }
+            }
+
+            return linesWithTags;
         }
 
         /// <summary>

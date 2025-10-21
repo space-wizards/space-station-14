@@ -85,9 +85,9 @@ public sealed class CheckTagHandler : IMarkupTagHandler
         var btn = new Button
         {
             Text = "☐",
-            MinSize = new Vector2(FontLineHeight + 2, FontLineHeight + 2),
-            MaxSize = new Vector2(FontLineHeight + 2, FontLineHeight + 2),
-            Margin = new Thickness(1, 0, 1, 0),
+            MinSize = new Vector2(FontLineHeight + 2, FontLineHeight + 4),
+            MaxSize = new Vector2(FontLineHeight + 2, FontLineHeight + 4),
+            Margin = new Thickness(1, 2, 1, 2),
             StyleClasses = { "ButtonSquare" },
             TextAlign = Label.AlignMode.Center
         };
@@ -114,29 +114,5 @@ public sealed class CheckTagHandler : IMarkupTagHandler
         return true;
     }
 
-    /// <summary>
-    /// Replaces the nth occurrence of [check] tag with replacement symbol.
-    /// </summary>
-    private static string ReplaceNthCheckTag(string text, int index, string replacement)
-    {
-        const string checkTag = "[check]";
-        var currentIndex = 0;
-        var pos = 0;
 
-        while (pos < text.Length)
-        {
-            var foundPos = text.IndexOf(checkTag, pos);
-            if (foundPos == -1) break;
-
-            if (currentIndex == index)
-            {
-                return text.Substring(0, foundPos) + replacement + text.Substring(foundPos + checkTag.Length);
-            }
-
-            currentIndex++;
-            pos = foundPos + checkTag.Length;
-        }
-
-        return text;
-    }
 }

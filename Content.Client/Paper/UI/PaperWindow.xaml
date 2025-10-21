@@ -22,7 +22,7 @@
                                 VerticalAlignment="Stretch" VerticalExpand="True" HorizontalExpand="True">
                                 <TextEdit Name="Input" StyleClasses="PaperLineEdit" Access="Public" />
                             </PanelContainer>
-                            <Label Name="FillStatus" StyleClasses="LabelSecondaryColor"/>
+                            <Label Name="FillStatus" StyleClasses="LabelWeak"/>
                         </BoxContainer>
                         <TextureButton Name="FooterImage" HorizontalAlignment="Center" VerticalAlignment="Top" MouseFilter="Ignore"/>
                     </BoxContainer>

@@ -29,7 +29,7 @@ public sealed class PaperSystem : EntitySystem
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedIdentitySystem _identitySystem = default!;
+
 
     private static readonly ProtoId<TagPrototype> WriteIgnoreStampsTag = "WriteIgnoreStamps";
     private static readonly ProtoId<TagPrototype> WriteTag = "Write";
@@ -254,6 +254,14 @@ public sealed class PaperSystem : EntitySystem
         if (!entity.Comp.StampedBy.Contains(stampInfo))
         {
             entity.Comp.StampedBy.Add(stampInfo);
+            
+            // Clean unfilled form and signature tags when stamping to finalize the document
+            var cleanedContent = CleanUnfilledTags(entity.Comp.Content);
+            if (cleanedContent != entity.Comp.Content)
+            {
+                SetContent(entity, cleanedContent);
+            }
+            
             Dirty(entity);
             if (entity.Comp.StampState == null && TryComp<AppearanceComponent>(entity, out var appearance))
             {
@@ -363,6 +371,19 @@ public sealed class PaperSystem : EntitySystem
         }
 
         return text;
+    }
+
+    /// <summary>
+    /// Removes any unfilled [form] and [signature] tags, and converts [check] tags to ☐.
+    /// Called when the paper is stamped to finalize the document.
+    /// </summary>
+    /// <param name="text">The paper text to clean</param>
+    /// <returns>Text with unfilled tags cleaned</returns>
+    private static string CleanUnfilledTags(string text)
+    {
+        return text.Replace("[form]", string.Empty)
+                  .Replace("[signature]", string.Empty)
+                  .Replace("[check]", "☐");
     }
 }
 
