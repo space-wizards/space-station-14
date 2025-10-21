@@ -33,8 +33,7 @@ namespace Content.Server.Damage.Systems
             if (component.WeldingDamage is {} weldingDamage
             && TryComp(args.Used, out WelderComponent? welder)
             && itemToggle.Activated
-            && !welder.TankSafe
-            && welder.RequiresFuel)
+            && !welder.TankSafe)
             {
                 var dmg = _damageableSystem.TryChangeDamage(args.Target, weldingDamage, origin: args.User);
 

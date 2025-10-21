@@ -34,9 +34,6 @@ public sealed class WelderStatusControl : PollingItemStatusControl<WelderStatusC
 
     protected override void Update(in Data data)
     {
-        if (!_parent.Comp.ShowFuelInExamine)
-            return;
-
         _label.SetMarkup(Loc.GetString("welder-component-on-examine-detailed-message",
             ("colorName", data.Fuel < data.FuelCapacity / 4f ? "darkorange" : "orange"),
             ("fuelLeft", data.Fuel),

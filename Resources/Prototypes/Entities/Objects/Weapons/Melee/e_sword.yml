@@ -74,26 +74,8 @@
     temperature: 700
 
 - type: entity
-  id: BaseMeleeWeaponEnergyWelding
-  parent: BaseItem
-  abstract: true
-  components:
-  - type: Tool
-    useSound:
-      collection: Welder
-    qualities: Welding
-  - type: Welder
-    fuelConsumption: 0
-    fuelLitCost: 0
-    logUsage: false
-    requiresFuel: false
-    showFuelInExamine: false
-  - type: RequiresEyeProtection
-
-
-- type: entity
   name: energy sword
-  parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband, BaseMeleeWeaponEnergyWelding]
+  parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband]
   id: EnergySword
   description: A very loud & dangerous sword with a beam made of pure, concentrated plasma. Cuts through unarmored targets like butter.
   components:
@@ -110,12 +92,24 @@
     sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
   - type: StaticPrice
     price: 2500
-  - type: Tool
-    speedModifier: 0.5
+  - type: ComponentToggler
+    components:
+    - type: Sharp
+    - type: DisarmMalus
+      malus: 0.6
+    - type: Execution
+      doAfterDuration: 4.0
+    - type: Tool
+      useSound:
+        collection: Welder
+      qualities: Welding
+      speedModifier: 0.5
+    - type: RequiresEyeProtection
+      toggled: true
 
 - type: entity
   name: energy dagger
-  parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband, BaseMeleeWeaponEnergyWelding]
+  parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband]
   id: EnergyDaggerLoud
   description: A not as loud and dangerous dagger with a beam made of pure, concentrated plasma. This one is completely undisguised.
   components:
@@ -151,6 +145,13 @@
       malus: 0.4
     - type: Execution
       doAfterDuration: 4.0
+    - type: Tool
+      useSound:
+        collection: Welder
+      qualities: Welding
+      speedModifier: 0.7
+    - type: RequiresEyeProtection
+      toggled: true
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_dagger_loud.rsi
     layers:
@@ -176,12 +177,10 @@
     energy: 1.5
     color: white
     netsync: false
-  - type: Tool
-    speedModifier: 0.7
 
 - type: entity
   name: pen
-  parent: [BaseMeleeWeaponEnergy, BaseMeleeWeaponEnergyWelding, SelectableLock]
+  parent: [BaseMeleeWeaponEnergy, SelectableLock]
   id: EnergyDagger
   suffix: E-Dagger
   description: 'A dark ink pen.'
@@ -219,6 +218,13 @@
       doAfterDuration: 4.0
     - type: Contraband
       severity: Syndicate
+    - type: Tool
+      useSound:
+        collection: Welder
+      qualities: Welding
+      speedModifier: 0.8
+    - type: RequiresEyeProtection
+      toggled: true
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_dagger.rsi
     layers:
@@ -257,8 +263,6 @@
   - type: Tag
     tags:
     - Write
-  - type: Tool
-    speedModifier: 0.8
 
 - type: entity
   parent: [BaseItem, BaseSyndicateContraband]
@@ -280,7 +284,7 @@
 
 - type: entity
   name: energy cutlass
-  parent: [BaseMeleeWeaponEnergy, BaseMajorContraband, BaseMeleeWeaponEnergyWelding]
+  parent: [BaseMeleeWeaponEnergy, BaseMajorContraband]
   id: EnergyCutlass
   description: An exotic energy weapon.
   components:
@@ -301,12 +305,24 @@
         map: [ "blade" ]
   - type: Item
     sprite: Objects/Weapons/Melee/e_cutlass.rsi
-  - type: Tool
-    speedModifier: 0.4
+  - type: ComponentToggler
+    components:
+    - type: Sharp
+    - type: DisarmMalus
+      malus: 0.6
+    - type: Execution
+      doAfterDuration: 4.0
+    - type: Tool
+      useSound:
+        collection: Welder
+      qualities: Welding
+      speedModifier: 0.4
+    - type: RequiresEyeProtection
+      toggled: true
 
 - type: entity
   name: double-bladed energy sword
-  parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband, BaseMeleeWeaponEnergyWelding]
+  parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband]
   id: EnergySwordDouble
   description: Syndicate Command Interns thought that having one blade on the energy sword was not enough. This can be stored in pockets.
   components:
@@ -344,6 +360,13 @@
       malus: 0.7
     - type: Execution
       doAfterDuration: 4.0
+    - type: Tool
+      useSound:
+        collection: Welder
+      qualities: Welding
+      speedModifier: 0.4
+    - type: RequiresEyeProtection
+      toggled: true
   - type: Wieldable
     wieldSound: null # esword light sound instead
   - type: MeleeWeapon
@@ -368,12 +391,10 @@
   - type: Reflect
     reflectProb: .75
     spread: 75
-  - type: Tool
-    speedModifier: 0.4
 
 # Item will look weird in handslot. Will need to adjust handstorage visuals in a future PR
 - type: entity
-  parent: [EnergySwordDouble, BaseMeleeWeaponEnergyWelding]
+  parent: [EnergySwordDouble]
   id: HyperEutacticBlade
   name: hypereutactic-blade
   description: A supermassive weapon envisioned to cleave the very fabric of space and time itself in twain, the hypereutactic blade dynamically flash-forges a hypereutactic crystaline nanostructure capable of passing through most known forms of matter like a hot knife through butter.
@@ -423,8 +444,6 @@
   - type: Reflect
     reflectProb: 1.0
     spread: 75
-  - type: Tool
-    speedModifier: 0.2
 
 # Borgs
 

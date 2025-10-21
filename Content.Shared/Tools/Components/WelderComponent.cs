@@ -73,13 +73,4 @@ public sealed partial class WelderComponent : Component
     /// </summary>
     [DataField]
     public bool TankSafe;
-
-    [DataField, AutoNetworkedField]
-    public bool RequiresFuel = true;
-
-    [DataField, AutoNetworkedField]
-    public bool ShowFuelInExamine = true;
-
-    [DataField, AutoNetworkedField]
-    public bool LogUsage = true;
 }
