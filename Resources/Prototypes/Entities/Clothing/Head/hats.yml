@@ -792,6 +792,11 @@
       Hair: HEAD
       HeadTop : HEAD
       HeadSide : HEAD
+  # DS14-start
+  - type: PhysicalComposition
+    materialComposition:
+      Cloth: 100
+  # DS14-end
 
 - type: entity
   abstract: true

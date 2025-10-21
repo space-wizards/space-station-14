@@ -78,6 +78,7 @@
       - Pda
       - IdCard
       tags:
+      - Hardsuit # DS14
       - HighRiskItem
     sound:
       path: /Audio/Effects/saw.ogg

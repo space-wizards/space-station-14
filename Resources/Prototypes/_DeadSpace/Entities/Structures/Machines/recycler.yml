@@ -1,0 +1,21 @@
+- type: entity
+  id: RecyclerXenBorgs
+  parent: Recycler
+  name: Переработчик
+  description: Большая машина похожая на переработчик, но видны явно модифицированные элементы.
+  components:
+  - type: CollideMaterialReclaimer
+  - type: MaterialReclaimer
+    enabled: false
+    scaleProcessSpeed: false #instant!
+    minimumProcessDuration: 0
+    whitelist:
+      components:
+      - PhysicalComposition
+      - MobState
+      - SpaceGarbage
+    blacklist:
+      components:
+      - Material
+      tags:
+      - HighRiskItem

@@ -340,6 +340,12 @@
   - type: Fiber
     fiberMaterial: fibers-insulative
     fiberColor: fibers-yellow
+# DS14-start 
+  - type: PhysicalComposition
+    materialComposition:
+      Cloth: 50
+      Plastic: 20
+# DS14-end
 
 # Budget Insulated Gloves
 - type: entity
@@ -376,3 +382,9 @@
   components:
   - type: Insulated
     coefficient: 5 # zap em good
+# DS14-start 
+  - type: PhysicalComposition
+    materialComposition:
+      Cloth: 40
+      Plastic: 20
+# DS14-end
