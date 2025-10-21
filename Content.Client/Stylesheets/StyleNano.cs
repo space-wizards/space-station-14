@@ -1610,9 +1610,6 @@ namespace Content.Client.Stylesheets
                 Element<TextureButton>().Class("CrossButtonRed").Pseudo(TextureButton.StylePseudoClassHover)
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
 
-                //
-                Element<TextureButton>().Class("Refresh")
-                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/circular_arrow.svg.96dpi.png")),
                 // ---
 
                 // Profile Editor
