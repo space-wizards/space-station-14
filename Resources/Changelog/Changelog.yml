@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed wallmount vending machines dispensing in the wrong direction.
-    type: Fix
-  id: 8633
-  time: '2025-06-06T23:08:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38112
 - author: hoshizora-sayo
   changes:
   - message: Added proper name to the chameleon controller implanter
@@ -3934,3 +3927,10 @@
   id: 9134
   time: '2025-10-20T18:06:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41007
+- author: B_Kirill
+  changes:
+  - message: Hostile and Eliminated criminal statuses
+    type: Add
+  id: 9135
+  time: '2025-10-21T08:56:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36244
