@@ -177,6 +177,9 @@
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalNamedCat
+  - type: SpeakOnException
+    speechCooldown: 3m
+    chanceSpeakNoAccent: 0.01
 
 - type: entity
   name: Exception
