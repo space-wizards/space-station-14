@@ -10,5 +10,7 @@
     RadioHandheld: 2
     # WeaponGrapplingGun: 4 # DS14
     WeaponProtoKineticAccelerator: 4
+    WeaponProtoKineticAcceleratorReapeter: 1 # DS14
+    WeaponProtoKineticAcceleratorShotgun: 1 # DS14
   contrabandInventory:
     PlushieCarp: 1

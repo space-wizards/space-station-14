@@ -70,3 +70,7 @@
   - PKAUpgradeDamage
   - PKAUpgradeRange
   - PKAUpgradeFireRate
+# DS14-start
+  - WeaponProtoKineticAcceleratorReapeter
+  - WeaponProtoKineticAcceleratorShotgun
+# DS14-end

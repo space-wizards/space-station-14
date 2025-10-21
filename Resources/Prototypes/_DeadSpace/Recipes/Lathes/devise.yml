@@ -1,0 +1,23 @@
+- type: latheRecipe
+  id: WeaponProtoKineticAcceleratorShotgun
+  result: WeaponProtoKineticAcceleratorShotgun
+  categories:
+  - Weapons
+  completetime: 5
+  materials:
+    Steel: 3000
+    Gold: 150
+    Glass: 1000
+    Silver: 250
+
+- type: latheRecipe
+  id: WeaponProtoKineticAcceleratorReapeter
+  result: WeaponProtoKineticAcceleratorReapeter
+  categories:
+  - Weapons
+  completetime: 5
+  materials:
+    Steel: 2000
+    Glass: 500
+    Silver: 500
+    Gold: 100

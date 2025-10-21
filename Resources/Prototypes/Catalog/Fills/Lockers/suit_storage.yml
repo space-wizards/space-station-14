@@ -318,6 +318,7 @@
       - id: ClothingShoesBootsMag
       - id: ClothingOuterHardsuitSeniorSalvage
       - id: ClothingMaskGasExplorer
+      - id: WeaponSeniorKinetik
   - type: AccessReader
     access: [["SeniorSalvage"]]
 

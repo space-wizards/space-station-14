@@ -20,3 +20,9 @@
   - type: ContainerContainer
     containers:
       upgrades: !type:Container
+# DS14 start
+  - type: Construction
+    graph: ShotgunSawnKinetik
+    node: startkinetik
+    deconstructionTarget: null
+# DS14 end
