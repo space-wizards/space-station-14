@@ -63,9 +63,6 @@ public sealed class NPCUtilitySystem : EntitySystem
     private ObjectPool<HashSet<EntityUid>> _entPool =
         new DefaultObjectPool<HashSet<EntityUid>>(new SetPolicy<EntityUid>(), 256);
 
-    private static readonly ProtoId<SatiationTypePrototype> HungerSatiation = "Hunger";
-    private static readonly ProtoId<SatiationTypePrototype> ThirstSatiation = "Thirst";
-
     // Temporary caches.
     private List<EntityUid> _entityList = new();
     private HashSet<Entity<IComponent>> _entitySet = new();
@@ -183,7 +180,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 // only eat when hungry or if it will eat anything
                 if (TryComp<SatiationComponent>(owner, out var satiation) &&
-                    _satiation.GetThresholdOrNull((owner, satiation), HungerSatiation) > SatiationThreshold.Okay &&
+                    _satiation.GetThresholdOrNull((owner, satiation), SatiationSystem.Hunger) > SatiationThreshold.Okay &&
                     avoidBadFood)
                     return 0f;
 
@@ -205,7 +202,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 // only drink when thirsty
                 if (TryComp<SatiationComponent>(owner, out var satiation) &&
-                    _satiation.GetThresholdOrNull((owner, satiation), ThirstSatiation) > SatiationThreshold.Okay)
+                    _satiation.GetThresholdOrNull((owner, satiation), SatiationSystem.Thirst) > SatiationThreshold.Okay)
                     return 0f;
 
                 // no janicow don't drink the blood puddle

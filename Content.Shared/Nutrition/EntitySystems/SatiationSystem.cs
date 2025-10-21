@@ -29,6 +29,9 @@ public sealed class SatiationSystem : EntitySystem
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly SharedJetpackSystem _jetpack = default!;
 
+    public static readonly ProtoId<SatiationTypePrototype> Hunger = "Hunger";
+    public static readonly ProtoId<SatiationTypePrototype> Thirst = "Thirst";
+
     /// <inheritdoc/>
     public override void Initialize()
     {

@@ -27,8 +27,6 @@ public abstract partial class SharedSericultureSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedStackSystem _stackSystem = default!;
 
-    private static readonly ProtoId<SatiationTypePrototype> HungerSatiation = "Hunger";
-
     public override void Initialize()
     {
         base.Initialize();
@@ -73,7 +71,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
     private void OnSericultureStart(EntityUid uid, SericultureComponent comp, SericultureActionEvent args)
     {
         if (!TryComp<SatiationComponent>(uid, out var satiationComponent) ||
-            _satiation.GetThresholdWithDeltaOrNull((uid, satiationComponent), HungerSatiation, -comp.HungerCost) < comp.MinHungerThreshold)
+            _satiation.GetThresholdWithDeltaOrNull((uid, satiationComponent), SatiationSystem.Hunger, -comp.HungerCost) < comp.MinHungerThreshold)
         {
             _popupSystem.PopupClient(Loc.GetString(comp.PopupText), uid, uid);
             return;
@@ -98,13 +96,13 @@ public abstract partial class SharedSericultureSystem : EntitySystem
 
         // A check, just incase the doafter is somehow performed when the entity is not in the right hunger state.
         if (!TryComp<SatiationComponent>(uid, out var satiationComponent) ||
-            _satiation.GetThresholdWithDeltaOrNull((uid, satiationComponent), HungerSatiation, -comp.HungerCost) < comp.MinHungerThreshold)
+            _satiation.GetThresholdWithDeltaOrNull((uid, satiationComponent), SatiationSystem.Hunger, -comp.HungerCost) < comp.MinHungerThreshold)
         {
             _popupSystem.PopupClient(Loc.GetString(comp.PopupText), uid, uid);
             return;
         }
 
-        _satiation.ModifyValue((uid, satiationComponent), HungerSatiation, -comp.HungerCost);
+        _satiation.ModifyValue((uid, satiationComponent), SatiationSystem.Hunger, -comp.HungerCost);
 
         if (!_netManager.IsClient) // Have to do this because spawning stuff in shared is CBT.
         {

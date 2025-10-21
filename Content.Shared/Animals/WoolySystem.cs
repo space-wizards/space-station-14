@@ -21,8 +21,6 @@ public sealed class WoolySystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
-    private static readonly ProtoId<SatiationTypePrototype> HungerSatiation = "Hunger";
-
     public override void Initialize()
     {
         base.Initialize();
@@ -71,12 +69,12 @@ public sealed class WoolySystem : EntitySystem
             if (TryComp<SatiationComponent>(uid, out var satiation))
             {
                 // Is there enough nutrition to produce reagent?
-                if (_satiation.GetThresholdWithDeltaOrNull((uid, satiation), HungerSatiation, -wooly.HungerUsage) < SatiationThreshold.Okay)
+                if (_satiation.GetThresholdWithDeltaOrNull((uid, satiation), SatiationSystem.Hunger, -wooly.HungerUsage) < SatiationThreshold.Okay)
                 {
                     continue;
                 }
 
-                _satiation.ModifyValue((uid, satiation), HungerSatiation, -wooly.HungerUsage);
+                _satiation.ModifyValue((uid, satiation), SatiationSystem.Hunger, -wooly.HungerUsage);
             }
 
             _solutionContainer.TryAddReagent(wooly.Solution.Value, wooly.ReagentId, wooly.Quantity, out _);

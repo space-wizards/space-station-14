@@ -29,8 +29,6 @@ namespace Content.Server.RatKing
         [Dependency] private readonly NPCSystem _npc = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
 
-        private static readonly ProtoId<SatiationTypePrototype> HungerSatiation = "Hunger";
-
         public override void Initialize()
         {
             base.Initialize();
@@ -52,13 +50,13 @@ namespace Content.Server.RatKing
                 return;
 
             //make sure the hunger doesn't go into the negatives
-            if (_satiation.GetValueOrNull((uid, satiation), HungerSatiation) < component.HungerPerArmyUse)
+            if (_satiation.GetValueOrNull((uid, satiation), SatiationSystem.Hunger) < component.HungerPerArmyUse)
             {
                 _popup.PopupEntity(Loc.GetString("rat-king-too-hungry"), uid, uid);
                 return;
             }
             args.Handled = true;
-            _satiation.ModifyValue((uid, satiation), HungerSatiation, -component.HungerPerArmyUse);
+            _satiation.ModifyValue((uid, satiation), SatiationSystem.Hunger, -component.HungerPerArmyUse);
             var servant = Spawn(component.ArmyMobSpawnId, Transform(uid).Coordinates);
             var comp = EnsureComp<RatKingServantComponent>(servant);
             comp.King = uid;
@@ -82,13 +80,13 @@ namespace Content.Server.RatKing
                 return;
 
             //make sure the hunger doesn't go into the negatives
-            if (_satiation.GetValueOrNull((uid, satiation), HungerSatiation) < component.HungerPerDomainUse)
+            if (_satiation.GetValueOrNull((uid, satiation), SatiationSystem.Hunger) < component.HungerPerDomainUse)
             {
                 _popup.PopupEntity(Loc.GetString("rat-king-too-hungry"), uid, uid);
                 return;
             }
             args.Handled = true;
-            _satiation.ModifyValue((uid, satiation), HungerSatiation, -component.HungerPerDomainUse);
+            _satiation.ModifyValue((uid, satiation), SatiationSystem.Hunger, -component.HungerPerDomainUse);
 
             _popup.PopupEntity(Loc.GetString("rat-king-domain-popup"), uid);
             var tileMix = _atmos.GetTileMixture(uid, excite: true);

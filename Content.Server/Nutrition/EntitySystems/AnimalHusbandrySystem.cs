@@ -40,9 +40,6 @@ public sealed class AnimalHusbandrySystem : EntitySystem
     private readonly HashSet<EntityUid> _failedAttempts = new();
     private readonly HashSet<EntityUid> _birthQueue = new();
 
-    private static readonly ProtoId<SatiationTypePrototype> HungerSatiation = "Hunger";
-    private static readonly ProtoId<SatiationTypePrototype> ThirstSatiation = "Thirst";
-
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -128,12 +125,12 @@ public sealed class AnimalHusbandrySystem : EntitySystem
 
         if (TryComp<SatiationComponent>(uid, out var satiation))
         {
-            _satiation.ModifyValue((uid, satiation), HungerSatiation, -component.HungerPerBirth);
+            _satiation.ModifyValue((uid, satiation), SatiationSystem.Hunger, -component.HungerPerBirth);
         }
 
         if (TryComp<SatiationComponent>(uid, out var partnerSatiation))
         {
-            _satiation.ModifyValue((uid, partnerSatiation), HungerSatiation, -component.HungerPerBirth);
+            _satiation.ModifyValue((uid, partnerSatiation), SatiationSystem.Hunger, -component.HungerPerBirth);
         }
 
         component.GestationEndTime = _timing.CurTime + component.GestationDuration;
@@ -168,8 +165,8 @@ public sealed class AnimalHusbandrySystem : EntitySystem
         }
 
         // If has hunger or thirst, check that they're high enough.
-        if (_satiation.GetThresholdOrNull((uid, satiation), HungerSatiation) is < SatiationThreshold.Okay ||
-            _satiation.GetThresholdOrNull((uid, satiation), ThirstSatiation) is < SatiationThreshold.Okay)
+        if (_satiation.GetThresholdOrNull((uid, satiation), SatiationSystem.Hunger) is < SatiationThreshold.Okay ||
+            _satiation.GetThresholdOrNull((uid, satiation), SatiationSystem.Thirst) is < SatiationThreshold.Okay)
         {
             return false;
         }

@@ -27,8 +27,6 @@ public sealed class UdderSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
-    private static readonly ProtoId<SatiationTypePrototype> HungerSatiation = "Hunger";
-
     public override void Initialize()
     {
         base.Initialize();
@@ -78,12 +76,12 @@ public sealed class UdderSystem : EntitySystem
             if (TryComp<SatiationComponent>(uid, out var satiation))
             {
                 // Is there enough nutrition to produce reagent?
-                if (_satiation.GetThresholdWithDeltaOrNull((uid, satiation), HungerSatiation, -udder.HungerUsage) < SatiationThreshold.Okay)
+                if (_satiation.GetThresholdWithDeltaOrNull((uid, satiation), SatiationSystem.Hunger, -udder.HungerUsage) < SatiationThreshold.Okay)
                 {
                     continue;
                 }
 
-                _satiation.ModifyValue((uid, satiation), HungerSatiation, -udder.HungerUsage);
+                _satiation.ModifyValue((uid, satiation), SatiationSystem.Hunger, -udder.HungerUsage);
             }
 
             //TODO: toxins from bloodstream !?

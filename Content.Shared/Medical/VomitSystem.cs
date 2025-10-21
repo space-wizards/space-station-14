@@ -34,9 +34,6 @@ public sealed class VomitSystem : EntitySystem
     [Dependency] private readonly SatiationSystem _satiation = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
-    private static readonly ProtoId<SatiationTypePrototype> HungerSatiation = "Hunger";
-    private static readonly ProtoId<SatiationTypePrototype> ThirstSatiation = "Thirst";
-
     public override void Initialize()
     {
         base.Initialize();
@@ -96,8 +93,8 @@ public sealed class VomitSystem : EntitySystem
         if (TryComp<SatiationComponent>(uid, out var satiation))
         {
             Entity<SatiationComponent> entity = (uid, satiation);
-            _satiation.ModifyValue(entity, HungerSatiation, hungerAdded);
-            _satiation.ModifyValue(entity, ThirstSatiation, thirstAdded);
+            _satiation.ModifyValue(entity, SatiationSystem.Hunger, hungerAdded);
+            _satiation.ModifyValue(entity, SatiationSystem.Thirst, thirstAdded);
         }
 
         // It fully empties the stomach, this amount from the chem stream is relatively small
