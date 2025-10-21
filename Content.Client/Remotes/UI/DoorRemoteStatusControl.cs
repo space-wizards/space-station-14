@@ -12,8 +12,6 @@ public sealed class DoorRemoteStatusControl : Control
     private readonly Entity<DoorRemoteComponent> _ent;
     private readonly RichTextLabel _label;
 
-    // set to toggle bolts initially just so that it updates on first pickup of remote
-
     public DoorRemoteStatusControl(Entity<DoorRemoteComponent> ent)
     {
         _ent = ent;
@@ -25,11 +23,9 @@ public sealed class DoorRemoteStatusControl : Control
     {
         base.FrameUpdate(args);
 
-        // only updates the UI if any of the details are different than they previously were
         if (!_ent.Comp.IsStatusControlUpdateRequired)
             return;
 
-        // Update current volume and injector state
         var modeStringLocalized = Loc.GetString(_ent.Comp.Mode switch
         {
             OperatingMode.OpenClose => "door-remote-open-close-text",
