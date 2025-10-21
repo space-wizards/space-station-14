@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Disablers now hold 16 shots instead of 20
-    type: Tweak
-  id: 8635
-  time: '2025-06-07T13:05:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36019
 - author: perryprog
   changes:
   - message: Diamonds can now be ejected from lathes and material silos.
@@ -3934,3 +3927,10 @@
   id: 9136
   time: '2025-10-21T09:37:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41016
+- author: SnappingOpossum
+  changes:
+  - message: Upgraded solar panels can now take structural damage.
+    type: Fix
+  id: 9137
+  time: '2025-10-21T09:50:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40992
