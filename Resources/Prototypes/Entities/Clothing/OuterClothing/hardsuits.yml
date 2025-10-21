@@ -764,8 +764,8 @@
   - type: Item
     size: Huge
   - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
+    walkModifier: 1.0 # DS14-value
+    sprintModifier: 1.0 # DS14-value
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieElite
