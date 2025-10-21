@@ -43,6 +43,28 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtResearchDirector
 
+# DS14-start
+- type: loadout
+  id: ResearchDirectorJumpsuitShirt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitResearchDirectorShirt
+
+- type: loadout
+  id: ResearchDirectorJumpskirtShirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtResearchDirectorShirt
+
+- type: loadout
+  id: ResearchDirectorJumpsuitSuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitResearchDirectorSuit
+
+- type: loadout
+  id: ResearchDirectorJumpskirtSuit
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtResearchDirectorSuit
+# DS14-end
+
 # OuterClothing
 - type: loadout
   id: ResearchDirectorLabCoat
@@ -53,6 +75,13 @@
   id: ResearchDirectorWintercoat
   equipment:
     outerClothing: ClothingOuterWinterRD
+
+# DS14-start
+- type: loadout
+  id: LeatherShoes
+  equipment:
+    shoes: ClothingShoesLeather
+# DS14-end
 
 # Underwear
 - type: loadout

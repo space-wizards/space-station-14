@@ -15,11 +15,26 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtSeniorResearcher
 
+- type: loadout
+  id: SeniorResearcherJumpsuitTurtleneck
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSeniorResearcherTurtle
+
+- type: loadout
+  id: SeniorResearcherJumpskirtTurtleneck
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtSeniorResearcherTurtle
+
 # OuterClothing
 - type: loadout
   id: SeniorResearcherLabCoat
   equipment:
     outerClothing: ClothingOuterCoatLabSeniorResearcher
+
+- type: loadout
+  id: SeniorResearcherWinterCoat
+  equipment:
+    outerClothing: ClothingOuterWinterCoatSeniorResearcher
 
 # ID
 - type: loadout

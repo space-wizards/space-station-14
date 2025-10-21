@@ -1,0 +1,26 @@
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackRobotics
+  name: рюкзак робототехника
+  description: Этот рюкзак был разработан специально, чтобы сварочное масло и механические повреждения не могли его испортить.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Back/Backpacks/robotics.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelRobotics
+  name: вещмешок робототехника
+  description: Большой вещмешок для хранения дополнительных запчастей киборгов и инструментов.
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Clothing/Back/Duffels/robotics.rsi
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelRobotics
+  name: сумка робототехника
+  description: Удобная сумка, которая не пропускает влагу, и позволяет носить модули и материалы для киборгов.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Back/Satchels/robotics.rsi

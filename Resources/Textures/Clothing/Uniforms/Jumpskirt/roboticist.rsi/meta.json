@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Sprite by DreamlyJack, monkey derivative made by brainfood1183 (github), resprite and equipped-INNERCLOTHING-vox made by semkagamez (discord) for Space Station 14 server Мёртвый Космос, skirt shortened by KingFroozy (github)",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/pull/77314/commits/7a16870a23123fc78cafd2ae55414c8f39ef1a74 and modified by KingFroozy (github) for Space Station 14 server Мёртвый космос",
   "size": {
     "x": 32,
     "y": 32
