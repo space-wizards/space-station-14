@@ -1,39 +1,95 @@
-using Content.Client.Storage.Systems;
+using System.Numerics;
+using Content.Client.UserInterface.Systems.Storage;
+using Content.Client.UserInterface.Systems.Storage.Controls;
 using Content.Shared.Storage;
 using JetBrains.Annotations;
+using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Storage;
 
 [UsedImplicitly]
 public sealed class StorageBoundUserInterface : BoundUserInterface
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    private StorageWindow? _window;
 
-    private readonly StorageSystem _storage;
-
-    [Obsolete] public override bool DeferredClose => false;
+    public Vector2? Position => _window?.Position;
 
     public StorageBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
-        IoCManager.InjectDependencies(this);
-        _storage = _entManager.System<StorageSystem>();
     }
 
     protected override void Open()
     {
         base.Open();
 
-        if (_entManager.TryGetComponent<StorageComponent>(Owner, out var comp))
-            _storage.OpenStorageWindow((Owner, comp));
+        _window = IoCManager.Resolve<IUserInterfaceManager>()
+            .GetUIController<StorageUIController>()
+            .CreateStorageWindow(this);
+
+        if (EntMan.TryGetComponent(Owner, out StorageComponent? storage))
+        {
+            _window.UpdateContainer((Owner, storage));
+        }
+
+        _window.OnClose += Close;
+        _window.FlagDirty();
+    }
+
+    public void Refresh()
+    {
+        _window?.FlagDirty();
+    }
+
+    public void Reclaim()
+    {
+        if (_window == null)
+            return;
+
+        _window.OnClose -= Close;
+        _window.Orphan();
+        _window = null;
     }
 
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
-        if (!disposing)
+        Reclaim();
+    }
+
+    public void CloseWindow(Vector2 position)
+    {
+        if (_window == null)
             return;
 
-        _storage.CloseStorageWindow(Owner);
+        // Update its position before potentially saving.
+        // Listen it makes sense okay.
+        LayoutContainer.SetPosition(_window, position);
+        _window?.Close();
+    }
+
+    public void Hide()
+    {
+        if (_window == null)
+            return;
+
+        _window.Visible = false;
+    }
+
+    public void Show()
+    {
+        if (_window == null)
+            return;
+
+        _window.Visible = true;
+    }
+
+    public void Show(Vector2 position)
+    {
+        if (_window == null)
+            return;
+
+        Show();
+        LayoutContainer.SetPosition(_window, position);
     }
 }
-

@@ -5,6 +5,7 @@ using Content.Server.Store.Systems;
 using Content.Server.Traitor.Uplink;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
+using Content.Shared.Mind;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.StoreDiscount.Components;
@@ -64,6 +65,7 @@ public sealed class StoreTests
         await server.WaitAssertion(() =>
         {
             var invSystem = entManager.System<InventorySystem>();
+            var mindSystem = entManager.System<SharedMindSystem>();
 
             human = entManager.SpawnEntity("HumanUniformDummy", coordinates);
             uniform = entManager.SpawnEntity("UniformDummy", coordinates);
@@ -71,6 +73,9 @@ public sealed class StoreTests
 
             Assert.That(invSystem.TryEquip(human, uniform, "jumpsuit"));
             Assert.That(invSystem.TryEquip(human, pda, "id"));
+
+            var mind = mindSystem.CreateMind(null);
+            mindSystem.TransferTo(mind, human, mind: mind);
 
             FixedPoint2 originalBalance = 20;
             uplinkSystem.AddUplink(human, originalBalance, null, true);
@@ -97,6 +102,12 @@ public sealed class StoreTests
                 + $"flag as 'true'. This marks the fact that cost modifier of discount is not applied properly!"
             );
 
+            // The storeComponent returns discounted items with conditions randomly, so we remove these to sanitize the data.
+            foreach (var discountedItem in discountedListingItems)
+            {
+                discountedItem.Conditions = null;
+            }
+
             // Refund action requests re-generation of listing items so we will be re-acquiring items from component a lot of times.
             var itemIds = discountedListingItems.Select(x => x.ID);
             foreach (var itemId in itemIds)
@@ -117,7 +128,7 @@ public sealed class StoreTests
 
 
                     var buyMsg = new StoreBuyListingMessage(discountedListingItem.ID){Actor = human};
-                    server.EntMan.EventBus.RaiseComponentEvent(pda, storeComponent, buyMsg);
+                    server.EntMan.EventBus.RaiseLocalEvent(pda, buyMsg);
 
                     var newBalance = storeComponent.Balance[UplinkSystem.TelecrystalCurrencyPrototype];
                     Assert.That(newBalance.Value, Is.EqualTo((originalBalance - plainDiscountedCost).Value), "Expected to have balance reduced by discounted cost");
@@ -130,10 +141,13 @@ public sealed class StoreTests
                     Assert.That(costAfterBuy.Value, Is.EqualTo(prototypeCost.Value), "Expected cost after discount refund to be equal to prototype cost.");
 
                     var refundMsg = new StoreRequestRefundMessage { Actor = human };
-                    server.EntMan.EventBus.RaiseComponentEvent(pda, storeComponent, refundMsg);
+                    server.EntMan.EventBus.RaiseLocalEvent(pda, refundMsg);
 
                     // get refreshed item after refund re-generated items
                     discountedListingItem = storeComponent.FullListingsCatalog.First(x => x.ID == itemId);
+
+                    // The storeComponent can give a discounted item a condition at random, so we remove it to sanitize the data.
+                    discountedListingItem.Conditions = null;
 
                     var afterRefundBalance = storeComponent.Balance[UplinkSystem.TelecrystalCurrencyPrototype];
                     Assert.That(afterRefundBalance.Value, Is.EqualTo(originalBalance.Value), "Expected refund to return all discounted cost value.");

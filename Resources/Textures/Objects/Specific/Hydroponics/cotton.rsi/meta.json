@@ -1,32 +1,40 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e245d374b2976c73d0aff37cf4a443d2e75c2f57",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "dead"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e245d374b2976c73d0aff37cf4a443d2e75c2f57, inhands by mubururu_ (github)",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "harvest"
-    },
-    {
-      "name": "produce"
-    },
-    {
-      "name": "seed"
-    },
-    {
-      "name": "stage-1"
-    },
-    {
-      "name": "stage-2"
-    },
-    {
-      "name": "stage-3"
-    }
-  ]
+    "states": [
+        {
+            "name": "dead"
+        },
+        {
+            "name": "harvest"
+        },
+        {
+            "name": "produce"
+        },
+        {
+            "name": "seed"
+        },
+        {
+            "name": "stage-1"
+        },
+        {
+            "name": "stage-2"
+        },
+        {
+            "name": "stage-3"
+        },
+        {
+            "name": "produce-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "produce-inhand-right",
+            "directions": 4
+        }
+    ]
 }

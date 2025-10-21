@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/raw/89456d18dd3e7c330839121e3c6bc8c609700137/icons/obj/ammo.dmi. capbase and cap modified from base and rubber by potato1234x (github) for ss14, tweaked by Aleshhh",
+  "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/ca674eff9d23e04357b7609ef7e07eadfc1a993f, modified by ps3moira (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -23,16 +23,19 @@
       "name": "mag-3"
     },
     {
-      "name": "cap"
+      "name": "mag-cap-1"
+    },
+    {
+      "name": "mag-cap-2"
+    },
+    {
+      "name": "mag-cap-3"
     },
     {
       "name": "incendiary"
     },
     {
       "name": "practice"
-    },
-    {
-      "name": "rubber"
     },
     {
       "name": "uranium"

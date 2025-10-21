@@ -41,6 +41,7 @@
       - !type:GroupSelector
         children:
         - id: ReagentContainerFlour
+        - id: FoodBoxCloth
         - id: ReagentContainerCornmeal
         - id: ReagentContainerRice
         - id: ReagentContainerSugar

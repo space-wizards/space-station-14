@@ -13,7 +13,7 @@
             HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="4"/>
 
         <!-- Controls for calling, recalling and displaying info for the emergency shuttle -->
-        <PanelContainer StyleClasses="PanelBackgroundBaseDark" Margin="20">
+        <PanelContainer StyleClasses="PanelDark" Margin="20">
             <BoxContainer Orientation="Vertical" Margin="8">
                 <Label StyleClasses="FancyWindowTitle" Align="Center"
                     Text="{Loc 'comms-console-shuttle-controls-header'}" />

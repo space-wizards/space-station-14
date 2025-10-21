@@ -1,0 +1,26 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Ducky Slippers base taken from ParadiseSS13 at commits https://github.com/ParadiseSS13/Paradise/commit/27edf99e063a31b87cab66c1e29e481ff6a4d88a, Lizard Plushie taken from tgstation at commit https://github.com/tgstation/tgstation/commit/b4f25333593f2550c6bf578d1a03aa9817b7a8fc, sprites by momochitters",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "equipped-FEET",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
+}

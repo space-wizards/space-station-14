@@ -6,6 +6,9 @@
       edges:
         - to: grille
           completed:
+            - !type:AdminLog # Needs a log for start of attempt in addition to the completion log
+              message: "Construction"
+              impact: High
             - !type:SnapToGrid
               southRotation: true
           steps:

@@ -4,7 +4,7 @@
         TabContainer.TabTitle="{Loc 'comms-console-announce-tab-title'}">
         <Label StyleClasses="StatusFieldTitle" Align="Center"
             Text="{Loc 'comms-console-station-announcements-header'}" />
-        <PanelContainer StyleClasses="PanelBackgroundHighlight"
+        <PanelContainer StyleClasses="highlight"
             Margin="6" VerticalExpand="True">
             <PanelContainer StyleClasses="BackgroundDark" Margin="2"
                 HorizontalExpand="True" VerticalExpand="True">

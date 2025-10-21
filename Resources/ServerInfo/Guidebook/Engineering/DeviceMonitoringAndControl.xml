@@ -1,0 +1,39 @@
+﻿<Document>
+  # Device Monitoring and Control
+  Given the station-wide nature of the atmospherics network, it is important to have a way to monitor and control devices from a central location.
+
+  Using these systems, Atmospherics can monitor and control the atmosphere across the entire station.
+
+  <Box>
+    <GuideEntityEmbed Entity="AirAlarm" Caption=""/>
+    <GuideEntityEmbed Entity="AirSensor" Caption=""/>
+  </Box>
+  <Box>
+    ## Air Alarms
+  </Box>
+  <Box>
+    [color=#999999][italic]Wide area monitoring and control over atmos devices[italic][/color]
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="ComputerAlert" Caption=""/>
+  </Box>
+  <Box>
+    ## Atmospheric Alerts Computer
+  </Box>
+  <Box>
+    [color=#999999][italic]Station-wide monitoring of air alarms[italic][/color]
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="ComputerAtmosMonitoring" Caption=""/>
+    <GuideEntityEmbed Entity="GasPipeSensor" Caption=""/>
+  </Box>
+  <Box>
+    ## Atmospheric Network Monitor
+  </Box>
+  <Box>
+    [color=#999999][italic]Monitoring of whole pipe networks[italic][/color]
+  </Box>
+
+</Document>

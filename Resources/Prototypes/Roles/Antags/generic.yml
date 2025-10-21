@@ -1,0 +1,23 @@
+- type: antag
+  id: GenericAntagonist
+  name: roles-antag-generic-solo-antagonist-name
+  antagonist: true
+  objective: never-shown
+
+- type: antag
+  id: GenericTeamAntagonist
+  name: roles-antag-generic-team-antagonist-name
+  antagonist: true
+  objective: never-shown
+
+- type: antag
+  id: GenericFreeAgent
+  name: roles-antag-generic-free-agent-name
+  antagonist: true
+  objective: never-shown
+
+- type: antag
+  id: GenericSiliconAntagonist
+  name: roles-antag-generic-silicon-antagonist-name
+  antagonist: true
+  objective: never-shown

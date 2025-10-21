@@ -82,7 +82,7 @@ public sealed class CursedMaskSystem : SharedCursedMaskSystem
             {
                 _mind.TransferTo(ent.Comp.StolenMind.Value, args.Wearer);
                 _adminLog.Add(LogType.Action,
-                    LogImpact.Extreme,
+                    LogImpact.Medium,
                     $"{ToPrettyString(args.Wearer):player} was restored to their body after the removal of {ToPrettyString(ent):entity}.");
                 ent.Comp.StolenMind = null;
             }
