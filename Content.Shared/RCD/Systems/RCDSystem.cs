@@ -95,18 +95,7 @@ public sealed class RCDSystem : EntitySystem
         component.ProtoId = args.ProtoId;
 
         var prototype = _protoManager.Index(component.ProtoId);
-        switch (prototype.Mode)
-        {
-            case RcdMode.ConstructTile:
-                _adminLogger.Add(LogType.RCD, LogImpact.Low, $"{ToPrettyString(args.Actor):user} set RCD mode to: Construct Tile : {prototype.Prototype}");
-                break;
-            case RcdMode.ConstructObject:
-                _adminLogger.Add(LogType.RCD, LogImpact.Low, $"{ToPrettyString(args.Actor):user} set RCD mode to: Construct Object : {prototype.Prototype}");
-                break;
-            case RcdMode.Deconstruct:
-                _adminLogger.Add(LogType.RCD, LogImpact.Low, $"{ToPrettyString(args.Actor):user} set RCD mode to: Deconstruct");
-                break;
-        }
+        _adminLogger.Add(LogType.RCD, LogImpact.Low, $"{ToPrettyString(args.Actor):user} set RCD mode to: {prototype.Mode} : {prototype.Prototype}");
 
         Dirty(uid, component);
     }
