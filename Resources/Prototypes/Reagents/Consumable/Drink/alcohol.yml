@@ -206,7 +206,7 @@
           type: [ Dwarf ]
           inverted: true
       - !type:Drunk
-        boozePower: 2
+        boozePower: 20
 
 - type: reagent
   id: Gin

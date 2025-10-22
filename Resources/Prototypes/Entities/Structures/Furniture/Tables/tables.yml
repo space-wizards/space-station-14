@@ -757,6 +757,21 @@
     key: fancytableblue
 
 - type: entity
+  id: TableFancySkyBlue
+  parent: TableFancyBase
+  suffix: SkyBlue
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/Fancy/skyblue.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/Fancy/skyblue.rsi
+  - type: Construction
+    graph: Table
+    node: TableFancySkyBlue
+  - type: IconSmooth
+    key: fancytableskyblue
+
+- type: entity
   id: TableFancyCyan
   parent: TableFancyBase
   suffix: Cyan
