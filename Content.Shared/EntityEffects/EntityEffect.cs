@@ -34,22 +34,16 @@ public abstract partial class EntityEffect
     [DataField]
     public float Probability = 1.0f;
 
-    /// <summary>
-    /// The description of this entity effect that shows in guidebooks.
-    /// </summary>
     public virtual string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => null;
-
-    /// <summary>
-    /// Whether this effect should be logged in admin logs.
-    /// </summary>
-    [ViewVariables]
-    public virtual bool ShouldLog => true;
 
     /// <summary>
     /// If this effect is logged, how important is the log?
     /// </summary>
     [ViewVariables]
-    public virtual LogImpact LogImpact => LogImpact.Low;
+    public virtual LogImpact? Impact => null;
+
+    [ViewVariables]
+    public virtual LogType LogType => LogType.EntityEffect;
 }
 
 /// <summary>

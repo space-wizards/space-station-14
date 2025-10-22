@@ -53,7 +53,5 @@ public sealed partial class ExplosionEffect : EntityEffectBase<ExplosionEffect>
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-explosion", ("chance", Probability));
 
-    public override bool ShouldLog => true;
-
-    public override LogImpact LogImpact => LogImpact.High;
+    public override LogImpact? Impact => LogImpact.High;
 }

@@ -11,11 +11,11 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:GenericStatusEffect
-        key: Stutter
-        component: ScrambledAccent
       - !type:ModifyStatusEffect
-        effectProto: StatusEffectSlurred
+        effectProto: StatusEffectScrambled
+        type: Update
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWoozy
         time: 20.0
 
 - type: reagent

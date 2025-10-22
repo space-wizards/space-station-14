@@ -1,7 +1,6 @@
-﻿using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reaction;
-using Content.Shared.Database;
 using Content.Shared.EntityConditions;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Random;
@@ -91,7 +90,7 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
         // TODO: Replace with proper random prediciton when it exists.
         if (effect.Probability <= 1f)
         {
-            var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(target).Id, 0 });
+            var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(target).Id, 0);
             var rand = new System.Random(seed);
             if (!rand.Prob(effect.Probability))
                 return false;
@@ -119,11 +118,11 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
         if (!effect.Scaling)
             scale = Math.Min(scale, 1f);
 
-        if (effect.ShouldLog)
+        if (effect.Impact is { } level)
         {
             _adminLog.Add(
-                LogType.EntityEffect,
-                effect.LogImpact,
+                effect.LogType,
+                level,
                 $"Entity effect {effect.GetType().Name:effect}"
                 + $" applied on entity {target:entity}"
                 + $" at {Transform(target).Coordinates:coordinates}"
@@ -167,5 +166,3 @@ public interface IEntityEffectRaiser
 {
     void RaiseEffectEvent<T>(EntityUid target, T effect, float scale, EntityUid? user) where T : EntityEffectBase<T>;
 }
-
-
