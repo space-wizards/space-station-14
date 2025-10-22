@@ -38,7 +38,7 @@ namespace Content.Client.Access.UI
         private static ProtoId<JobPrototype> _defaultJob = "Passenger";
 
         public IdCardConsoleWindow(IdCardConsoleBoundUserInterface owner, IPrototypeManager prototypeManager,
-            List<ProtoId<AccessLevelPrototype>> accessLevels)
+            List<ProtoId<AccessLevelPrototype>> accessLevels, bool isTaipan) // DS14
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
@@ -65,15 +65,23 @@ namespace Content.Client.Access.UI
             };
             JobTitleSaveButton.OnPressed += _ => SubmitData();
 
-            var jobs = _prototypeManager.EnumeratePrototypes<JobPrototype>().ToList();
+            // DS14-start
+            var jobs = _prototypeManager.EnumeratePrototypes<JobPrototype>()
+                .Where(job => job.OverrideConsoleVisibility.GetValueOrDefault(job.SetPreference))
+                .Where(job => isTaipan ? job.IsTaipan : !job.IsTaipan)
+                .ToList();
+            // DS14-end
+
             jobs.Sort((x, y) => string.Compare(x.LocalizedName, y.LocalizedName, StringComparison.CurrentCulture));
 
             foreach (var job in jobs)
             {
-                if (!job.OverrideConsoleVisibility.GetValueOrDefault(job.SetPreference))
-                {
-                    continue;
-                }
+                // DS14-start
+                // if (!job.OverrideConsoleVisibility.GetValueOrDefault(job.SetPreference))
+                // {
+                //     continue;
+                // }
+                // DS14-end
 
                 _jobPrototypeIds.Add(job.ID);
                 JobPresetOptionButton.AddItem(Loc.GetString(job.Name), _jobPrototypeIds.Count - 1);
@@ -207,7 +215,16 @@ namespace Content.Client.Access.UI
                 jobIndex = _jobPrototypeIds.IndexOf(_defaultJob);
             }
 
-            JobPresetOptionButton.SelectId(jobIndex);
+            // DS14-start
+            if (jobIndex >= 0 && jobIndex < JobPresetOptionButton.ItemCount)
+            {
+                JobPresetOptionButton.SelectId(jobIndex);
+            }
+            else if (JobPresetOptionButton.ItemCount > 0)
+            {
+                JobPresetOptionButton.SelectId(0);
+            }
+            // DS14-end
 
             _lastFullName = state.TargetIdFullName;
             _lastJobTitle = state.TargetIdJobTitle;

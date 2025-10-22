@@ -4,17 +4,17 @@
   cost: 3
   defaultStyle: basic
   styles:
-    базовый тёмный: AirlockTaipan
-    атмосферный тёмный: AirlockTaipanAtmospherics
-    снабжение тёмный: AirlockTaipanCargo
-    командование тёмный: AirlockTaipanCommand
-    инженерный тёмный: AirlockTaipanEngineering
-    морозильник тёмный: AirlockTaipanFreezer
-    технический тёмный: AirlockTaipanMaint
-    медицинский тёмный: AirlockTaipanMedical
-    научный тёмный: AirlockTaipanScience
-    сервисный тёмный: AirlockTaipanService
-    вирусология тёмный: AirlockTaipanVirology
+    basic: AirlockTaipan
+    atmospherics: AirlockTaipanAtmospherics
+    cargo: AirlockTaipanCargo
+    command: AirlockTaipanCommand
+    engineering: AirlockTaipanEngineering
+    freezer: AirlockTaipanFreezer
+    maintenance: AirlockTaipanMaint
+    medical: AirlockTaipanMedical
+    science: AirlockTaipanScience
+    service: AirlockTaipanService
+    virology: AirlockTaipanVirology
 
 - type: paintableGroup
   id: TaipanAirlockGlass
@@ -22,13 +22,13 @@
   cost: 3
   defaultStyle: basic
   styles:
-    базовый тёмный: AirlockTaipanGlass
-    атмосферный тёмный: AirlockTaipanGlassAtmospherics
-    снабжение тёмный: AirlockTaipanGlassCargo
-    командование тёмный: AirlockTaipanGlassCommand
-    инженерный тёмный: AirlockTaipanGlassEngineering
-    технический тёмный: AirlockTaipanGlassMaint
-    медицинский тёмный: AirlockTaipanGlassMedical
-    научный тёмный: AirlockTaipanGlassScience
-    сервисный тёмный: AirlockTaipanGlassService
-    вирусология тёмный: AirlockTaipanGlassVirology
+    basic: AirlockTaipanGlass
+    atmospherics: AirlockTaipanGlassAtmospherics
+    cargo: AirlockTaipanGlassCargo
+    command: AirlockTaipanGlassCommand
+    engineering: AirlockTaipanGlassEngineering
+    maintenance: AirlockTaipanGlassMaint
+    medical: AirlockTaipanGlassMedical
+    science: AirlockTaipanGlassScience
+    service: AirlockTaipanGlassService
+    virology: AirlockTaipanGlassVirology

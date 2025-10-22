@@ -168,6 +168,9 @@
   - type: Appearance
   - type: StaticPrice
     price: 500
+  - type: Tag
+    tags:
+      - SMGTommyGunCap
 
 - type: entity
   id: MagazineDrumTommyGunCap

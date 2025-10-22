@@ -41,6 +41,7 @@ public sealed partial class StationBankAccountComponent : Component
         { "Science",     1000 },
         { "Security",    1000 },
         { "Service",     1000 },
+        { "Taipan",      1000 }, // DS14
     };
 
     /// <summary>

@@ -1,0 +1,189 @@
+- type: entity
+  parent: CyborgEndoskeleton
+  id: TaipanCyborgEndoskeleton
+  name: эндоскелет киборга
+  description: Каркас, на котором собираются киборги. Значительно менее жуткий, чем ожидалось.
+  suffix: Тайпан
+  components:
+  - type: Sprite
+    noRot: true
+    drawdepth: Items
+    sprite: Objects/Specific/Robotics/cyborg_parts.rsi
+    state: robo_suit
+  - type: Appearance
+  - type: ItemMapper
+    sprite: _DeadSpace/Objects/Specific/Robotics/cyborg_parts.rsi
+    mapLayers:
+      borg_l_arm+o:
+        whitelist:
+          tags:
+          - TaipanBorgLArm
+      borg_r_arm+o:
+        whitelist:
+          tags:
+          - TaipanBorgRArm
+      borg_l_leg+o:
+        whitelist:
+          tags:
+          - TaipanBorgLLeg
+      borg_r_leg+o:
+        whitelist:
+          tags:
+          - TaipanBorgRLeg
+      borg_head+o:
+        whitelist:
+          tags:
+          - TaipanBorgHead
+      borg_chest+o:
+        whitelist:
+          tags:
+          - TaipanBorgTorso
+  - type: PartAssembly
+    parts:
+      taipan_cyborg:
+      - TaipanBorgLArm
+      - TaipanBorgRArm
+      - TaipanBorgLLeg
+      - TaipanBorgRLeg
+      - TaipanBorgHead
+      - TaipanBorgTorso
+  - type: Construction
+    graph: TaipanCyborg
+    node: start
+    defaultTarget: cyborg
+    containers:
+    - part-container
+    - cell_slot
+
+- type: entity
+  id: TaipanPartSilicon
+  parent: PartSilicon
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Robotics/cyborg_parts.rsi
+  - type: Icon
+    sprite: _DeadSpace/Objects/Specific/Robotics/cyborg_parts.rsi
+
+- type: entity
+  id: TaipanLeftArmBorg
+  parent: TaipanPartSilicon
+  name: левая рука киборга
+  suffix: Тайпан
+  components:
+  - type: BodyPart
+    partType: Hand
+    symmetry: Left
+  - type: Sprite
+    state: borg_l_arm
+  - type: Icon
+    state: borg_l_arm
+  - type: Tag
+    tags:
+    - Trash
+    - BorgArm
+    - TaipanBorgLArm
+  - type: Item
+    heldPrefix: borg-arm
+
+- type: entity
+  id: TaipanRightArmBorg
+  parent: TaipanPartSilicon
+  name: правая рука киборга
+  suffix: Тайпан
+  components:
+  - type: BodyPart
+    partType: Hand
+    symmetry: Right
+  - type: Sprite
+    state: borg_r_arm
+  - type: Icon
+    state: borg_r_arm
+  - type: Tag
+    tags:
+    - Trash
+    - BorgArm
+    - TaipanBorgRArm
+  - type: Item
+    heldPrefix: borg-arm
+
+- type: entity
+  id: TaipanLeftLegBorg
+  parent: TaipanPartSilicon
+  name: левая нога киборга
+  suffix: Тайпан
+  components:
+  - type: BodyPart
+    partType: Leg
+    symmetry: Left
+  - type: Sprite
+    state: borg_l_leg
+  - type: Icon
+    state: borg_l_leg
+  - type: Tag
+    tags:
+    - Trash
+    - BorgLeg
+    - TaipanBorgLLeg
+  - type: Item
+    heldPrefix: borg-leg
+
+- type: entity
+  id: TaipanRightLegBorg
+  parent: TaipanPartSilicon
+  name: правая нога киборга
+  suffix: Тайпан
+  components:
+  - type: BodyPart
+    partType: Leg
+    symmetry: Right
+  - type: Sprite
+    state: borg_r_leg
+  - type: Icon
+    state: borg_r_leg
+  - type: Tag
+    tags:
+    - Trash
+    - BorgLeg
+    - TaipanBorgRLeg
+  - type: Item
+    heldPrefix: borg-leg
+
+- type: entity
+  id: TaipanLightHeadBorg
+  parent: TaipanPartSilicon
+  name: голова киборга
+  suffix: Тайпан
+  components:
+  - type: BodyPart
+    partType: Head
+  - type: Sprite
+    state: borg_head
+  - type: Icon
+    state: borg_head
+  - type: Tag
+    tags:
+    - Trash
+    - BorgHead
+    - TaipanBorgHead
+  - type: Item
+    heldPrefix: borg-head
+
+- type: entity
+  id: TaipanTorsoBorg
+  parent: TaipanPartSilicon
+  name: туловище киборга
+  suffix: Тайпан
+  components:
+  - type: BodyPart
+    partType: Torso
+  - type: Sprite
+    state: borg_chest
+  - type: Icon
+    state: borg_chest
+  - type: Tag
+    tags:
+    - Trash
+    - TaipanBorgTorso
+  - type: Item
+    heldPrefix: borg-chest

@@ -1,0 +1,20 @@
+- type: entity
+  parent: CryogenicSleepUnit
+  id: CryogenicSleepUnitTaipan
+  name: капсула криогенного сна Синдиката
+  description: Сверхохлаждаемый контейнер, обеспечивающий сохранность членов экипажа во время космических путешествий.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _DeadSpace/Structures/Machines/Taipan/cryostorage.rsi
+    layers:
+    - state: sleeper_0
+      map: ["base"]
+  - type: AccessReader
+    breakOnAccessBreaker: false
+    access: [["TaipanMedical"]]
+  - type: PointLight
+    color: Red
+    radius: 1.5
+    energy: 0.5
+    castShadows: false

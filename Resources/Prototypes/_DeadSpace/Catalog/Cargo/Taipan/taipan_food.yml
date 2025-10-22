@@ -1,0 +1,119 @@
+- type: cargoProduct
+  id: TaipanFoodCrateKvassTank
+  icon:
+    sprite: _DeadSpace/Structures/Storage/yellow_tank.rsi
+    state: icon_kvass
+  product: KvassTankFull
+  cost: 2000
+  category: cargoproduct-category-name-food
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFoodCrateBeerTank
+  icon:
+    sprite: _DeadSpace/Structures/Storage/yellow_tank.rsi
+    state: icon_beer
+  product: BeerTankFull
+  cost: 3000
+  category: cargoproduct-category-name-food
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFoodPizza
+  icon:
+    sprite: Objects/Consumable/Food/Baked/pizza.rsi
+    state: margherita-slice
+  product: CrateFoodPizza
+  cost: 1600
+  category: cargoproduct-category-name-food
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFoodMRE
+  icon:
+    sprite: Objects/Consumable/Food/snacks.rsi
+    state: nutribrick
+  product: CrateFoodMRE
+  cost: 1750 # DS14
+  category: cargoproduct-category-name-food
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFoodCook
+  icon:
+    sprite: Objects/Consumable/Food/ingredients.rsi
+    state: flour-big
+  product: CrateFoodCooking
+  cost: 1250 # DS14
+  category: cargoproduct-category-name-food
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFoodDinnerware
+  icon:
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: tin
+  product: CrateFoodDinnerware
+  cost: 750
+  category: cargoproduct-category-name-food
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFoodBarSupply
+  icon:
+    sprite: Objects/Consumable/Drinks/beerglass.rsi
+    state: icon
+  product: CrateFoodBarSupply
+  cost: 750
+  category: cargoproduct-category-name-food
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFoodSoftdrinks
+  icon:
+    sprite: Objects/Consumable/Drinks/cola.rsi
+    state: icon
+  product: CrateFoodSoftdrinks
+  cost: 1500
+  category: cargoproduct-category-name-food
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFoodCookGetmore
+  icon:
+    sprite: Objects/Consumable/Food/snacks.rsi
+    state: raisins
+  product: CrateFoodGetMore
+  cost: 750
+  category: cargoproduct-category-name-food
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFoodHappyHonkMeals
+  icon:
+    sprite: Objects/Consumable/Food/burger.rsi
+    state: bigbite
+  product: CrateFoodHappyHonkBigBite
+  cost: 2800
+  category: cargoproduct-category-name-food
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFoodIceCream
+  icon:
+    sprite: Objects/Consumable/Food/frozen.rsi
+    state: sandwich
+  product: CrateFoodIceCream
+  cost: 2000
+  category: cargoproduct-category-name-food
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFoodSnowcone
+  icon:
+    sprite: Objects/Consumable/Food/frozen.rsi
+    state: cone
+  product: CrateFoodSnowcone
+  cost: 2000
+  category: cargoproduct-category-name-food
+  group: taipan_market

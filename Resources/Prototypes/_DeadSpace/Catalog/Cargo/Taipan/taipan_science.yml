@@ -1,0 +1,59 @@
+- type: cargoProduct
+  id: TaipanArtifactContainer
+  icon:
+    sprite: Structures/Storage/Crates/artifact.rsi
+    state: artifact_container_icon
+  product: CrateArtifactContainer
+  cost: 500
+  category: cargoproduct-category-name-science
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanHandheldArtifactContainer
+  icon:
+    sprite: Objects/Storage/artifact_container.rsi
+    state: icon
+  product: HandheldArtifactContainer
+  cost: 500
+  category: cargoproduct-category-name-science
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanRandomArtifact
+  icon:
+    sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+    state: ano13
+  product: RandomArtifactSpawner
+  cost: 2000
+  category: cargoproduct-category-name-science
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCrewMonitoring
+  icon:
+    sprite: Structures/Machines/server.rsi
+    state: server
+  product: CrateCrewMonitoring
+  cost: 2000
+  category: cargoproduct-category-name-science
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCrateKarachnocidGrenadeProduct
+  icon:
+    sprite: Objects/Weapons/Grenades/janitor.rsi
+    state: icon
+  product: CrateKarachnocidGrenade
+  cost: 3000
+  category: cargoproduct-category-name-science
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanObeliskStoperProduct
+  icon:
+    sprite: _DeadSpace/Items/stoper.rsi
+    state: ano01
+  product: CrateObeliskStoper
+  cost: 10000
+  category: cargoproduct-category-name-science
+  group: taipan_market

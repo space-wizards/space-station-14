@@ -30,3 +30,14 @@
     sprite: _DeadSpace/Clothing/Neck/blueshieldmantle_shoulder.rsi
   - type: Clothing
     sprite: _DeadSpace/Clothing/Neck/blueshieldmantle_shoulder.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakCommunicationsOfficer
+  name: наплечная мантия офицера телекоммуникаций
+  description: Шёлковая мантия багрового цвета. Выглядит одновременно роскошно и зловеще.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Neck/comantle.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag

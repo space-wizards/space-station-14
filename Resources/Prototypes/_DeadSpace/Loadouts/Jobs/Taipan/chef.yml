@@ -1,0 +1,71 @@
+# Jumpsuit
+- type: loadout
+  id: TaipanChefJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUniforms
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitTaipanChef
+
+- type: loadout
+  id: TaipanChefJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUniforms
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtTaipanChef
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersTaipanChef
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersTaipanChef
+
+- type: loadout
+  id: UnderwearBottomPantiesTaipanChef
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesTaipanChef
+
+- type: loadout
+  id: UnderwearTopBraTaipanChef
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraTaipanChef
+
+# Loadout Groups
+- type: loadoutGroup
+  id: TaipanChefUniform
+  name: loadout-group-taipan-chef-uniform
+  hidden: true
+  minLimit: 1
+  loadouts:
+  - TaipanChefJumpsuit
+  - TaipanChefJumpskirt
+
+- type: loadoutGroup
+  id: TaipanChefUnderwear
+  name: loadout-group-taipan-chef-underwear
+  hidden: true
+  minLimit: 2
+  loadouts:
+  - UnderwearBottomBoxersTaipanChef
+  - UnderwearBottomPantiesTaipanChef
+  - UnderwearTopBraTaipanChef
+
+# Role Loadout
+- type: roleLoadout
+  id: JobTaipanChef
+  groups:
+  - TaipanChefUniform
+  - TaipanChefUnderwear
+  - TaipanSurvival
+  - GroupSpeciesBreathTool
+  - GroupTankHarness

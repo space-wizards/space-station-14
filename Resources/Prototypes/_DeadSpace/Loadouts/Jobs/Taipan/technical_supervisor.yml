@@ -1,0 +1,71 @@
+# Jumpsuit
+- type: loadout
+  id: TaipanTechnicalOperationsSupervisorJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUniforms
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitTaipanTechnicalOperationsSupervisor
+
+- type: loadout
+  id: TaipanTechnicalOperationsSupervisorJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUniforms
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtTaipanTechnicalOperationsSupervisor
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersTaipanTechnicalOperationsSupervisor
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersTaipanTechnicalOperationsSupervisor
+
+- type: loadout
+  id: UnderwearBottomPantiesTaipanTechnicalOperationsSupervisor
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesTaipanTechnicalOperationsSupervisor
+
+- type: loadout
+  id: UnderwearTopBraTaipanTechnicalOperationsSupervisor
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraTaipanTechnicalOperationsSupervisor
+
+# Loadout Groups
+- type: loadoutGroup
+  id: TaipanTechnicalOperationsSupervisorUniform
+  name: loadout-group-taipan-technical-supervisor-uniform
+  hidden: true
+  minLimit: 1
+  loadouts:
+  - TaipanTechnicalOperationsSupervisorJumpsuit
+  - TaipanTechnicalOperationsSupervisorJumpskirt
+
+- type: loadoutGroup
+  id: TaipanTechnicalOperationsSupervisorUnderwear
+  name: loadout-group-taipan-technical-supervisor-underwear
+  hidden: true
+  minLimit: 2
+  loadouts:
+  - UnderwearBottomBoxersTaipanTechnicalOperationsSupervisor
+  - UnderwearBottomPantiesTaipanTechnicalOperationsSupervisor
+  - UnderwearTopBraTaipanTechnicalOperationsSupervisor
+
+# Role Loadout
+- type: roleLoadout
+  id: JobTaipanTechnicalOperationsSupervisor
+  groups:
+  - TaipanTechnicalOperationsSupervisorUniform
+  - TaipanTechnicalOperationsSupervisorUnderwear
+  - TaipanSurvival
+  - GroupSpeciesBreathTool
+  - GroupTankHarness

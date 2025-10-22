@@ -77,6 +77,11 @@ public sealed partial class IdCardConsoleComponent : Component
         "External",
     };
 
+    // DS14-start
+    [DataField("isTaipan")]
+    public bool IsTaipan { get; private set; } = false;
+    // DS14-end
+
     [Serializable, NetSerializable]
     public sealed class IdCardConsoleBoundUserInterfaceState : BoundUserInterfaceState
     {

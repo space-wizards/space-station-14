@@ -1,0 +1,120 @@
+- type: entity
+  id: PlastitaniumPlasmaWindowIndestructible
+  name: пластитановое плазменное окно
+  description: Смотри не заляпай.
+  parent: PlastitaniumWindowIndestructible
+  suffix: Неразрушимое
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: _DeadSpace/Structures/Windows/plastitanium_plasma_window.rsi
+  - type: Icon
+    sprite: _DeadSpace/Structures/Windows/plastitanium_plasma_window.rsi
+    state: full
+  - type: RadiationBlocker
+    resistance: 2
+
+- type: entity
+  id: PlastitaniumPlasmaWindow
+  name: пластитановое плазменное окно
+  description: Смотри не заляпай.
+  parent: PlastitaniumWindowSquareBase
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassPlasma:
+            min: 1
+            max: 2
+          PartRodMetal:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: _DeadSpace/Structures/Windows/plastitanium_plasma_window.rsi
+  - type: Icon
+    sprite: _DeadSpace/Structures/Windows/plastitanium_plasma_window.rsi
+    state: full
+  - type: RadiationBlocker
+    resistance: 2
+  - type: Construction
+    graph: PlastitaniumWindow
+    node: plastitaniumplasmaWindow
+
+- type: entity
+  id: PlastitaniumPlasmaWindowDiagonalIndestructible
+  name: пластитановое плазменное окно
+  description: Смотри не заляпай.
+  parent: PlastitaniumWindowDiagonalIndestructible
+  suffix: Диагональное, Неразрушимое
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: _DeadSpace/Structures/Windows/plastitanium_plasma_window_diagonal.rsi
+    state: state0
+  - type: Icon
+    sprite: _DeadSpace/Structures/Windows/plastitanium_plasma_window_diagonal.rsi
+    state: state0
+  - type: RadiationBlocker
+    resistance: 2
+
+- type: entity
+  id: PlastitaniumPlasmaWindowDiagonal
+  name: пластитановое плазменное окно
+  description: Смотри не заляпай.
+  parent: PlastitaniumWindowDiagonalBase
+  suffix: Диагональное
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassPlasma:
+            min: 1
+            max: 2
+          PartRodMetal:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: _DeadSpace/Structures/Windows/plastitanium_plasma_window_diagonal.rsi
+    state: state0
+  - type: Icon
+    sprite: _DeadSpace/Structures/Windows/plastitanium_plasma_window_diagonal.rsi
+    state: state0
+  - type: RadiationBlocker
+    resistance: 2
+  - type: Construction
+    graph: PlastitaniumWindowDiagonal
+    node: plastitaniumplasmaWindowDiagonal

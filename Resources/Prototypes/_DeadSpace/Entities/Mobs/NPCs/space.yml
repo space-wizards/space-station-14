@@ -1,0 +1,24 @@
+- type: entity
+  id: MobGiantSpiderSpace
+  parent: MobSpiderSpace
+  name: гигантский космический паук
+  description: Светиться ярче и с более крупным брюхом. Явно не к добру.
+  components:
+  - type: Sprite
+    scale: 1.2,1.2
+  - type: EggLayer
+    eggSpawn:
+    - id: EggSpider
+  - type: Tag
+    tags:
+    - GiantSpiderSpace
+  - type: Reproductive
+    breedChance: 0.05
+    birthPopup: reproductive-laid-egg-popup
+    makeOffspringInfant: false
+    partnerWhitelist:
+      tags:
+      - GiantSpiderSpace
+    offspring:
+    - id: EggSpider
+      maxAmount: 1

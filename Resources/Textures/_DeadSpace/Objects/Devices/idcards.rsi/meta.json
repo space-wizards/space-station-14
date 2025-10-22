@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "created by andrew_fenriz and semkagamez (discord) for DS14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "atmosphericsengineer"
+    },
+    {
+      "name": "botanist"
+    },
+    {
+      "name": "cargotechnician"
+    },
+    {
+      "name": "researcher"
+    },
+    {
+      "name": "chiefengineer"
+    },
+    {
+      "name": "chef"
+    },
+    {
+      "name": "headofsecurity"
+    },
+    {
+      "name": "medic"
+    },
+    {
+      "name": "paramedic"
+    },
+    {
+      "name": "pilot"
+    },
+    {
+      "name": "researchdirector"
+    },
+    {
+      "name": "roboticist"
+    },
+    {
+      "name": "scientist"
+    },
+    {
+      "name": "shaftminer"
+    },
+    {
+      "name": "technician"
+    },
+    {
+      "name": "taipan"
+    },
+    {
+      "name": "emag"
+    },
+    {
+      "name": "black-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "black-inhand-right",
+      "directions": 4
+    }
+  ]
+}

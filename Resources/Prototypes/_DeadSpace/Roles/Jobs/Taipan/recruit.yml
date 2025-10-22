@@ -1,0 +1,40 @@
+- type: job
+  id: TaipanRecruit
+  name: job-name-taipan-recruit
+  description: job-description-taipan-recruit
+  playTimeTracker: JobTaipanRecruit
+  setPreference: false
+  overrideConsoleVisibility: true
+  isTaipan: true
+  startingGear: TaipanRecruitGear
+  icon: "JobIconTaipanRecruit"
+  supervisors: job-supervisors-taipan-telecommunications-officer
+  canBeAntag: false
+  requirements:
+  - !type:DepartmentTimeRequirement
+    department: Security
+    time: 36000 # 10 hours
+  access:
+  - TaipanMaint
+  - TaipanExternal
+  - TaipanProtection
+  special:
+  - !type:AddImplantSpecial
+    implants: [ DeathRattleImplantTaipan ]
+
+- type: startingGear
+  id: TaipanRecruitGear
+  equipment:
+    ears: ClothingHeadsetTaipan
+    shoes: ClothingShoesBootsSyndieFilled
+    id: TaipanRecruitPDA
+    back: ClothingBackpackSyndicate
+    socks: ClothingUnderwearSocksTaipanRecruit
+
+- type: chameleonOutfit
+  id: TaipanRecruitChameleonOutfit
+  job: TaipanRecruit
+  startingGear: TaipanRecruitGear
+  equipment:
+    id: PassengerPDA
+    neck: ClothingNeckGoldmedal

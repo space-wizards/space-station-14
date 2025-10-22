@@ -7,3 +7,124 @@
   parent: BaseCircuitboardRecipe
   id: GeneratorRTGMachineCircuitboard
   result: GeneratorRTGMachineCircuitboard
+
+# Taipan
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: AutolatheMachineCircuitboardTaipan
+  result: AutolatheMachineCircuitboardTaipan
+
+- type: latheRecipe
+  parent: BaseGoldCircuitboardRecipe
+  id: AutolatheHyperConvectionMachineCircuitboardTaipan
+  result: AutolatheHyperConvectionMachineCircuitboardTaipan
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: ProtolatheMachineCircuitboardTaipan
+  result: ProtolatheMachineCircuitboardTaipan
+
+- type: latheRecipe
+  parent: BaseGoldCircuitboardRecipe
+  id: ProtolatheHyperConvectionMachineCircuitboardTaipan
+  result: ProtolatheHyperConvectionMachineCircuitboardTaipan
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: CircuitImprinterMachineCircuitboardTaipan
+  result: CircuitImprinterMachineCircuitboardTaipan
+
+- type: latheRecipe
+  parent: BaseGoldCircuitboardRecipe
+  id: CircuitImprinterHyperConvectionMachineCircuitboardTaipan
+  result: CircuitImprinterHyperConvectionMachineCircuitboardTaipan
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: ExosuitFabricatorMachineCircuitboardTaipan
+  result: ExosuitFabricatorMachineCircuitboardTaipan
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: UniformPrinterMachineCircuitboardTaipan
+  result: UniformPrinterMachineCircuitboardTaipan
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: CargoTelepadMachineCircuitboardTaipan
+  result: CargoTelepadMachineCircuitboardTaipan
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: BiofabricatorMachineCircuitboardTaipan
+  result: BiofabricatorMachineCircuitboardTaipan
+
+- type: latheRecipe
+  parent: BaseGoldCircuitboardRecipe
+  id: AnalysisComputerCircuitboardTaipan
+  result: AnalysisComputerCircuitboardTaipan
+
+- type: latheRecipe
+  parent: BaseGoldCircuitboardRecipe
+  id: ShuttleConsoleCircuitboardTaipan
+  result: ShuttleConsoleCircuitboardTaipan
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: SurveillanceCameraMonitorCircuitboardTaipan
+  result: SurveillanceCameraMonitorCircuitboardTaipan
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: IFFConsoleCircuitboardTaipan
+  result: IFFConsoleCircuitboardTaipan
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: SyndicateMicrowaveMachineCircuitboard
+  result: SyndicateMicrowaveMachineCircuitboard
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: AnomalyVesselCircuitboardTaipan
+  result: AnomalyVesselCircuitboardTaipan
+
+- type: latheRecipe
+  parent: BaseGoldCircuitboardRecipe
+  id: AnomalyVesselExperimentalCircuitboardTaipan
+  result: AnomalyVesselExperimentalCircuitboardTaipan
+
+- type: latheRecipe
+  parent: BaseCheapElectronicsRecipe
+  id: DoorElectronicsTaipan
+  result: DoorElectronicsTaipan
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: OreProcessorMachineCircuitboardTaipan
+  result: OreProcessorMachineCircuitboardTaipan
+
+- type: latheRecipe
+  parent: BaseGoldCircuitboardRecipe
+  id: OreProcessorIndustrialMachineCircuitboardTaipan
+  result: OreProcessorIndustrialMachineCircuitboardTaipan
+
+- type: latheRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseMedicalMachineRecipeCategory ]
+  id: CloningPodMachineCircuitboard
+  result: CloningPodMachineCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseMedicalMachineRecipeCategory ]
+  id: MedicalScannerMachineCircuitboard
+  result: MedicalScannerMachineCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseMedicalMachineRecipeCategory ]
+  id: CloningConsoleComputerCircuitboard
+  result: CloningConsoleComputerCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseGeneralMachineRecipeCategory ]
+  id: TaipanHolopadMachineCircuitboard
+  result: TaipanHolopadMachineCircuitboard

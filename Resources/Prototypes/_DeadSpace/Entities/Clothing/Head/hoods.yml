@@ -1,0 +1,12 @@
+- type: entity
+  parent: ClothingHeadHatHoodBioGeneral
+  id: ClothingHeadHatHoodTaipanBioResearcher
+  name: капюшон биозащитного костюма
+  description: Капюшон, защищающий голову и лицо от биологического заражения.
+  suffix: Тайпан
+  components:
+  - type: IdentityBlocker
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Head/Hoods/Bio/researcher.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Head/Hoods/Bio/researcher.rsi

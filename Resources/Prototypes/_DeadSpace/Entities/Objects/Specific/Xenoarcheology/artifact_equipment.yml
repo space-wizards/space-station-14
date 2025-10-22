@@ -1,0 +1,19 @@
+- type: entity
+  id: CrateArtifactContainerTaipan
+  parent: CrateArtifactContainer
+  name: контейнер артефактов
+  description: Используется для безопасного хранения и перемещения артефактов.
+  suffix: Тайпан
+  components:
+    - type: AccessReader
+      access: [["TaipanResearch"], ["TaipanCargo"]]
+
+- type: entity
+  parent: HandheldArtifactContainer
+  id: HandheldArtifactContainerTaipan
+  name: ручной контейнер артефактов
+  description: Ручной кейс для безопасного хранения и перемещения маленьких артефактов.
+  suffix: Тайпан
+  components:
+  - type: AccessReader
+    access: [["TaipanResearch"], ["TaipanCargo"]]

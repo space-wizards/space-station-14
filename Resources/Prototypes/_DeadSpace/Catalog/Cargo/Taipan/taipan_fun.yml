@@ -1,0 +1,269 @@
+- type: cargoProduct
+  id: TaipanFunInstrumentsVariety
+  icon:
+    sprite: Objects/Fun/Instruments/accordion.rsi
+    state: icon
+  product: CrateFunInstrumentsVariety
+  cost: 2000
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFunInstrumentsBrass
+  icon:
+    sprite: Objects/Fun/Instruments/structureinstruments.rsi
+    state: tuba
+  product: CrateFunInstrumentsBrass
+  cost: 2000
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFunInstrumentsString
+  icon:
+    sprite: Objects/Fun/Instruments/bassguitar.rsi
+    state: icon
+  product: CrateFunInstrumentsString
+  cost: 2500
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFunInstrumentsWoodwind
+  icon:
+    sprite: Objects/Fun/Instruments/harmonica.rsi
+    state: icon
+  product: CrateFunInstrumentsWoodwind
+  cost: 3000
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFunInstrumentsKeyedPercussion
+  icon:
+    sprite: Objects/Fun/Instruments/h_synthesizer.rsi
+    state: icon
+  product: CrateFunInstrumentsKeyedPercussion
+  cost: 2500
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFunInstrumentsSpecial
+  icon:
+    sprite: Objects/Fun/Instruments/gunpet.rsi
+    state: icon
+  product: CrateFunInstrumentsSpecial
+  cost: 10000
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFunArtSupplies
+  icon:
+    sprite: Objects/Fun/crayons.rsi
+    state: box
+  product: CrateFunArtSupplies
+  cost: 500
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFunParty
+  icon:
+    sprite: Objects/Consumable/Food/Baked/cake.rsi
+    state: birthday
+  product: CrateFunParty
+  cost: 1000
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCrateFunWaterGuns
+  icon:
+    sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
+    state: display
+  product: CrateFunWaterGuns
+  cost: 750
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCrateFunFoamGuns
+  icon:
+    sprite: Objects/Fun/Foam/foam_rifle.rsi
+    state: icon
+  product: CrateFunFoamGuns
+  cost: 3000
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFunPlushies
+  icon:
+    sprite: Objects/Fun/Plushies/human.rsi
+    state: icon
+  product: CrateFunPlushie
+  cost: 1000
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFunLizardPlushies
+  icon:
+    sprite: Objects/Fun/Plushies/lizard.rsi
+    state: icon
+  product: CrateFunLizardPlushieBulk
+  cost: 500
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFunSharkPlushies
+  icon:
+    sprite: Objects/Fun/Plushies/shark.rsi
+    state: blue
+  product: CrateFunSharkPlushieBulk
+  cost: 500
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFunBoardGames
+  icon:
+    sprite: Objects/Fun/dice.rsi
+    state: d6_6
+  product: CrateFunBoardGames
+  cost: 1500
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFunSadTromboneImplants
+  icon:
+    sprite: Objects/Specific/Medical/implanter.rsi
+    state: implanter0
+  product: CrateFunSadTromboneImplants
+  cost: 1000
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFunLightImplants
+  icon:
+    sprite: Objects/Specific/Medical/implanter.rsi
+    state: implanter0
+  product: CrateFunLightImplants
+  cost: 1000
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFunBoxing
+  icon:
+    sprite: Clothing/Hands/Gloves/Boxing/boxingred.rsi
+    state: icon
+  product: CrateFunBoxing
+  cost: 500
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFunPirate
+  icon:
+    sprite: Structures/Storage/Crates/piratechest.rsi
+    state: crate_icon
+  product: CrateFunPirate
+  cost: 400
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFunToyBox
+  icon:
+    sprite: Structures/Storage/Crates/toybox.rsi
+    state: crate_icon
+  product: CrateFunToyBox
+  cost: 900
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFunBikeHornImplants
+  icon:
+    sprite: Objects/Specific/Medical/implanter.rsi
+    state: implanter0
+  product: CrateFunBikeHornImplants
+  cost: 1000
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFunMysteryFigurines
+  icon:
+    sprite: Objects/Fun/figurines.rsi
+    state: fig_box
+  product: CrateFunMysteryFigurines
+  cost: 4000
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFunDartsSet
+  icon:
+    sprite: Objects/Fun/Darts/dart_red.rsi
+    state: icon
+  product: CrateFunDartsSet
+  cost: 900
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanChurchOrganInstrument
+  icon:
+    sprite: Objects/Fun/Instruments/structureinstruments.rsi
+    state: church-organ
+  product: ChurchOrganInstrument
+  cost: 1500
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanPianoInstrument
+  icon:
+    sprite: Objects/Fun/Instruments/structureinstruments.rsi
+    state: piano
+  product: PianoInstrument
+  cost: 1500
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanUprightPianoInstrument
+  icon:
+    sprite: Objects/Fun/Instruments/structureinstruments.rsi
+    state: piano-upright
+  product: UprightPianoInstrument
+  cost: 1500
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanMinimoogInstrument
+  icon:
+    sprite: Objects/Fun/Instruments/structureinstruments.rsi
+    state: minimoog
+  product: MinimoogInstrument
+  cost: 1500
+  category: cargoproduct-category-name-fun
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFunPlants
+  icon:
+    sprite: Structures/Furniture/potted_plants.rsi
+    state: random
+  product: CratePlants
+  cost: 1000
+  category: cargoproduct-category-name-fun
+  group: taipan_market

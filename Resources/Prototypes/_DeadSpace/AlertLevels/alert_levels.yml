@@ -1,0 +1,45 @@
+- type: alertLevels
+  id: taipanStationAlerts
+  defaultLevel: green
+  levels:
+    green:
+      announcement: alert-level-green-announcement
+      sound: /Audio/_DeadSpace/AlertLevels/green.ogg # DS14 alert sound
+      color: Green
+      emergencyLightColor: LawnGreen
+      shuttleTime: 600
+    yellow:
+      announcement: alert-level-yellow-announcement
+      sound: /Audio/_DeadSpace/AlertLevels/yellow.ogg # DS14 alert sound
+      color: Yellow
+      emergencyLightColor: Goldenrod
+      forceEnableEmergencyLights: true
+      shuttleTime: 600
+    white:
+      announcement: alert-level-white-announcement
+      selectable: true
+      sound: /Audio/_DeadSpace/AlertLevels/Taipan/white.ogg # DS14 alert sound
+      color: White
+      emergencyLightColor: White
+      shuttleTime: 600
+    zeta:
+      announcement: alert-level-zeta-announcement
+      selectable: true
+      sound: /Audio/_DeadSpace/AlertLevels/Taipan/zeta.ogg # DS14 alert sound
+      color: PowderBlue
+      emergencyLightColor: PowderBlue
+      forceEnableEmergencyLights: true
+    omega:
+      announcement: alert-level-omega-announcement
+      selectable: false
+      sound: /Audio/_DeadSpace/AlertLevels/Taipan/omega.ogg # DS14 alert sound
+      color: Red
+      emergencyLightColor: Red
+      forceEnableEmergencyLights: true
+    audit:
+      announcement: alert-level-audit-announcement
+      selectable: false
+      sound: /Audio/_DeadSpace/AlertLevels/Taipan/audit.ogg # DS14 alert sound
+      color: MidnightBlue
+      emergencyLightColor: DarkBlue
+      shuttleTime: 600

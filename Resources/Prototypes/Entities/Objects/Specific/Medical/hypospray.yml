@@ -74,6 +74,9 @@
     maxFillLevels: 4
     fillBaseName: hypo_fill
     solutionName: hypospray
+  - type: Tag # DS14
+    tags:
+    - SyndiHypo
 
 - type: entity
   name: borghypo
@@ -671,6 +674,11 @@
     price: 75
   - type: EmitSoundOnUse
     handle: false # don't want the sound to stop the self-inject from triggering
+  - type: Tag # DS14
+    tags:
+    - Write
+    - Pen
+    - Hypopen
 
 - type: entity
   parent: [ BaseItem, BaseSyndicateContraband ]

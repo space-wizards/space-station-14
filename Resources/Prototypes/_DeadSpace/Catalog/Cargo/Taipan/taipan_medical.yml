@@ -1,0 +1,149 @@
+- type: cargoProduct
+  id: TaipanMedicalSupplies
+  icon:
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    state: firstaid
+  product: CrateMedicalSupplies
+  cost: 2400
+  category: cargoproduct-category-name-medical
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanMedicalChemistrySupplies
+  icon:
+    sprite: Objects/Specific/Chemistry/beaker.rsi
+    state: beaker
+  product: CrateChemistrySupplies
+  cost: 750
+  category: cargoproduct-category-name-medical
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanMedicalChemistryVials
+  icon:
+    sprite: Objects/Specific/Chemistry/vial.rsi
+    state: vial
+  product: CrateChemistryVials
+  cost: 1000
+  category: cargoproduct-category-name-medical
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEmergencyBurnKit
+  icon:
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    state: burnkit
+  product: CrateEmergencyBurnKit
+  cost: 700
+  category: cargoproduct-category-name-medical
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEmergencyToxinKit
+  icon:
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    state: toxinkit
+  product: CrateEmergencyToxinKit
+  cost: 600
+  category: cargoproduct-category-name-medical
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEmergencyO2Kit
+  icon:
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    state: o2kit
+  product: CrateEmergencyO2Kit
+  cost: 600
+  category: cargoproduct-category-name-medical
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEmergencyBruteKit
+  icon:
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    state: brutekit
+  product: CrateEmergencyBruteKit
+  cost: 600
+  category: cargoproduct-category-name-medical
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEmergencyAdvancedKit
+  icon:
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    state: advkit
+  product: CrateEmergencyAdvancedKit
+  cost: 1200
+  category: cargoproduct-category-name-medical
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEmergencyRadiationKit
+  icon:
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    state: radkit
+  product: CrateEmergencyRadiationKit
+  cost: 600
+  category: cargoproduct-category-name-medical
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanMedicalBodybags
+  icon:
+    sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
+    state: bag_folded
+  product: CrateBodyBags
+  cost: 700
+  category: cargoproduct-category-name-medical
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanBiosuit
+  icon:
+    sprite: _DeadSpace/Clothing/Head/Hoods/Bio/researcher.rsi
+    state: icon
+  product: ClosetTaipanL3Filled
+  cost: 800
+  category: cargoproduct-category-name-medical
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanChemistryP
+  icon:
+    sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+    state: icon
+  product: CrateChemistryP
+  cost: 850
+  category: cargoproduct-category-name-medical
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanChemistryS
+  icon:
+    sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+    state: icon
+  product: CrateChemistryS
+  cost: 750
+  category: cargoproduct-category-name-medical
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCrateChemistryD
+  icon:
+    sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+    state: icon
+  product: CrateChemistryD
+  cost: 750
+  category: cargoproduct-category-name-medical
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanZetaOneMedipenProduct
+  icon:
+    sprite: Objects/Specific/Medical/medipen.rsi
+    state: medipen
+  product: CrateZetaOneMedipen
+  cost: 2000
+  category: cargoproduct-category-name-medical
+  group: taipan_market

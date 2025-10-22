@@ -1,0 +1,71 @@
+# Jumpsuit
+- type: loadout
+  id: TaipanAtmosphericsEngineerJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUniforms
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitTaipanAtmosphericsEngineer
+
+- type: loadout
+  id: TaipanAtmosphericsEngineerJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUniforms
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtTaipanAtmosphericsEngineer
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersTaipanAtmosphericsEngineer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersTaipanAtmosphericsEngineer
+
+- type: loadout
+  id: UnderwearBottomPantiesTaipanAtmosphericsEngineer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesTaipanAtmosphericsEngineer
+
+- type: loadout
+  id: UnderwearTopBraTaipanAtmosphericsEngineer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraTaipanAtmosphericsEngineer
+
+# Loadout Groups
+- type: loadoutGroup
+  id: TaipanAtmosphericsEngineerUniform
+  name: loadout-group-taipan-atmospherics-engineer-uniform
+  hidden: true
+  minLimit: 1
+  loadouts:
+  - TaipanAtmosphericsEngineerJumpsuit
+  - TaipanAtmosphericsEngineerJumpskirt
+
+- type: loadoutGroup
+  id: TaipanAtmosphericsEngineerUnderwear
+  name: loadout-group-taipan-atmospherics-engineer-underwear
+  hidden: true
+  minLimit: 2
+  loadouts:
+  - UnderwearBottomBoxersTaipanAtmosphericsEngineer
+  - UnderwearBottomPantiesTaipanAtmosphericsEngineer
+  - UnderwearTopBraTaipanAtmosphericsEngineer
+
+# Role Loadout
+- type: roleLoadout
+  id: JobTaipanAtmosphericsEngineer
+  groups:
+  - TaipanAtmosphericsEngineerUniform
+  - TaipanAtmosphericsEngineerUnderwear
+  - TaipanSurvival
+  - GroupSpeciesBreathTool
+  - GroupTankHarness

@@ -34,6 +34,10 @@
       map: ["variant-service"]
     - state: variant-command
       map: ["variant-command"]
+# DS14-start
+    - state: variant-taipan
+      map: ["variant-taipan"]
+# DS14-end
     - state: variant-multiple
       map: ["variant-multiple"]
     - state: telecom-open
@@ -83,6 +87,12 @@
         whitelist:
           tags:
           - EncryptionCommand
+# DS14-start
+      variant-taipan:
+        whitelist:
+          tags:
+          - EncryptionTaipan
+# DS14-end
       variant-multiple:
         whitelist:
           components:
@@ -125,6 +135,11 @@
         variant-command:
           True: { shader: unshaded }
           False: { shader: shaded }
+# DS14-start
+        variant-taipan:
+          True: { shader: unshaded }
+          False: { shader: shaded }
+# DS14-end
         variant-default:
           True: { shader: unshaded }
           False: { shader: shaded }

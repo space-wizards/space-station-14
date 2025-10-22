@@ -1,0 +1,14 @@
+{
+  "copyright" : "Taken from https://github.com/tgstation/tgstation, resprite by semkagamez (discord), recolored by andrew_fenriz (discord) for Space Station 14 server Мёртвый Космос",
+  "license" : "CC-BY-SA-3.0",
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "mecha_clamp"
+    }
+  ]
+}

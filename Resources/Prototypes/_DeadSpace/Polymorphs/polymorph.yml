@@ -1,0 +1,10 @@
+- type: polymorph
+  id: EggSpiderTerror
+  configuration:
+    entity: EggSpiderTerror
+    transferDamage: true
+    inventory: None
+    forced: true
+    revertOnCrit: false
+    revertOnDeath: false
+    revertOnDelete: false

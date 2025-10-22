@@ -62,7 +62,9 @@
   - type: Appearance
   - type: StaticPrice
     price: 500
-
+  - type: Tag
+    tags:
+      - SMGTommyGun
 
 - type: entity
   id: MagazineDrumTommyGun
@@ -119,7 +121,7 @@
     containers:
       ballistic-ammo: !type:Container
   - type: Sprite
-    sprite: _DeadSpace/Items/Toys/TommyGun/magazine.rsi  
+    sprite: _DeadSpace/Items/Toys/TommyGun/magazine.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]

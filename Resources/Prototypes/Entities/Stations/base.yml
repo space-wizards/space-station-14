@@ -20,6 +20,18 @@
     - type: StationCargoBountyDatabase
 
 - type: entity
+  id: BaseStationTaipanCargo
+  abstract: true
+  components:
+  - type: StationBankAccount
+    primaryAccount: Taipan
+  - type: StationCargoOrderDatabase
+    orders:
+      Taipan: [ ]
+  - type: StationCargoBountyDatabase
+    isTaipan: true
+
+- type: entity
   id: BaseStationJobsSpawning
   abstract: true
   components:
@@ -115,6 +127,25 @@
           - VGRoid
 
 - type: entity
+  id: BaseTaipanStationShuttles
+  abstract: true
+  components:
+    - type: GridSpawn
+      groups:
+        ruins: !type:GridSpawnGroup
+          hide: true
+          nameGrid: true
+          minCount: 1
+          maxCount: 1
+          minimumDistance: 100
+          maximumDistance: 200
+          stationGrid: false
+          paths:
+          - /Maps/Ruins/Taipan/bluespace_science_grid.yml
+          - /Maps/Ruins/Taipan/colossal_asteroid.yml
+          - /Maps/Ruins/Taipan/lincore_crush.yml
+
+- type: entity
   id: BaseStationCentcomm
   abstract: true
   components:
@@ -132,6 +163,13 @@
   components:
     - type: AlertLevel
       alertLevelPrototype: stationAlerts
+
+- type: entity
+  id: BaseTaipanStationAlertLevels
+  abstract: true
+  components:
+    - type: AlertLevel
+      alertLevelPrototype: taipanStationAlerts
 
 - type: entity
   id: BaseStationERTCall # DS14
@@ -181,6 +219,13 @@
   components:
   - type: SiliconLawProvider
     laws: Crewsimov
+
+- type: entity
+  id: BaseStationSiliconTaipanStatic
+  abstract: true
+  components:
+  - type: SiliconLawProvider
+    laws: TaipanStatic
 
 - type: entity
   id: BaseStationNews

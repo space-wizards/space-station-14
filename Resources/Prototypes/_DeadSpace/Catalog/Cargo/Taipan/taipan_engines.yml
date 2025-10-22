@@ -1,0 +1,89 @@
+- type: cargoProduct
+  id: TaipanEngineSingularityGenerator
+  icon:
+    sprite: Structures/Power/Generation/Singularity/generator.rsi
+    state: icon
+  product: CrateEngineeringSingularityGenerator
+  cost: 4000
+  category: cargoproduct-category-name-engineering
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEngineSingularityContainment
+  icon:
+    sprite: Structures/Power/Generation/Singularity/containment.rsi
+    state: icon
+  product: CrateEngineeringSingularityContainment
+  cost: 1000
+  category: cargoproduct-category-name-engineering
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEngineSingularityEmitter
+  icon:
+    sprite: Structures/Power/Generation/Singularity/emitter.rsi
+    state: emitter
+  product: CrateEngineeringSingularityEmitter
+  cost: 1500
+  category: cargoproduct-category-name-engineering
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEngineSingularityCollector
+  icon:
+    sprite: Structures/Power/Generation/Singularity/collector.rsi
+    state: ca_on
+  product: CrateEngineeringSingularityCollector
+  cost: 1000
+  category: cargoproduct-category-name-engineering
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEngineParticleAccelerator
+  icon:
+    sprite: Structures/Power/Generation/PA/control_box.rsi
+    state: completed
+  product: CrateEngineeringParticleAccelerator
+  cost: 2000
+  category: cargoproduct-category-name-engineering
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEngineSolar
+  icon:
+    sprite: Objects/Devices/flatpack.rsi
+    state: solar-assembly-part
+  product: CrateEngineeringSolar
+  cost: 1250
+  category: cargoproduct-category-name-engineering
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEngineTeslaGenerator
+  icon:
+    sprite: Structures/Power/Generation/Tesla/generator.rsi
+    state: icon
+  product: CrateEngineeringTeslaGenerator
+  cost: 4000
+  category: cargoproduct-category-name-engineering
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEngineTeslaCoil
+  icon:
+    sprite: Structures/Power/Generation/Tesla/coil.rsi
+    state: coil
+  product: CrateEngineeringTeslaCoil
+  cost: 1200
+  category: cargoproduct-category-name-engineering
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEngineTeslaGroundingRod
+  icon:
+    sprite: Structures/Power/Generation/Tesla/coil.rsi
+    state: grounding_rod
+  product: CrateEngineeringTeslaGroundingRod
+  cost: 400
+  category: cargoproduct-category-name-engineering
+  group: taipan_market

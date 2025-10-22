@@ -37,7 +37,6 @@ spray-painter-color-white = белый
 spray-painter-color-black = чёрный
 # Categories (tabs)
 spray-painter-tab-category-airlocks = Шлюзы
-spray-painter-tab-category-taipanairlocks = Шлюзы
 spray-painter-tab-category-canisters = Канистры
 spray-painter-tab-category-crates = Ящики
 spray-painter-tab-category-lockers = Шкафчики

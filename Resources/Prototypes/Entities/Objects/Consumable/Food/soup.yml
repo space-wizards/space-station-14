@@ -315,7 +315,7 @@
         - ReagentId: Sugar
           Quantity: 8
         - ReagentId: Vitamin
-          Quantity: 17 
+          Quantity: 17
   - type: Tag
     tags:
     - Fruit
@@ -566,6 +566,9 @@
     flavors:
       - mushroom
       - jelly
+  - type: Tag
+    tags:
+    - JellyAmanita
   - type: Sprite
     sprite: Objects/Consumable/Food/meals.rsi
     state: amanita-jelly
@@ -968,6 +971,7 @@
     tags:
     - Meat
     - Soup
+    - SoupEyeball # DS14
 
 - type: entity
   name: miso soup

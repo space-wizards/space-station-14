@@ -30,10 +30,9 @@
       - TaipanMedical
       - TaipanProtection
       - TaipanResearchDirector
-      - TaipanScience
+      - TaipanResearch
       - TaipanService
       - TaipanTechnicalOperationsSupervisor
-      - TaipanVault
       - TaipanExternal
       privilegedIdSlot:
         name: id-card-console-privileged-id

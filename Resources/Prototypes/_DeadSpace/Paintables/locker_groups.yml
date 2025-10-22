@@ -1,0 +1,24 @@
+- type: paintableGroup
+  id: TaipanLocker
+  cost: 2
+  defaultStyle: basic
+  styles:
+    basic: ClosetTaipanSteel
+    secure: LockerTaipanSteel
+    botanist: LockerTaipanBotanist
+    chef: LockerTaipanChef
+    electrical: LockerElectricalSupplies
+    welding: LockerWeldingSupplies
+    technical: LockerTaipanTechnicalOperationsSupervisor
+    cargotech: LockerTaipanCargotech
+    atmospherics: LockerTaipanAtmosphericsEngineer
+    technician: LockerTaipanTechnician
+    medicine: LockerTaipanMedicine
+    medic: LockerTaipanMedic
+    paramedic: LockerTaipanParamedic
+    chemical: LockerTaipanChemistry
+    rd: LockerTaipanResearchDirector
+    researcher: LockerTaipanResearcher
+    communications: LockerTaipanCommunicationsOfficer
+    security: LockerTaipanRecruit
+    evac: LockerEvacRepair

@@ -1,0 +1,79 @@
+- type: entity
+  id: TitaniumGirder
+  parent: Girder
+  name: титановый каркас
+  description: Большой титановый каркас стены.
+  components:
+  - type: Construction
+    graph: TitaniumGirder
+    node: titaniumGirder
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Walls/girder.rsi
+    state: titanium_wall_girder
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetTitanium1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: StaticPrice
+    price: 60
+
+- type: entity
+  id: PlastitaniumGirder
+  parent: TitaniumGirder
+  name: пластитановый каркас
+  description: Большой каркас из титана и пластитана.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Walls/girder.rsi
+    state: plastitanium_wall_girder
+  - type: Construction
+    graph: TitaniumGirder
+    node: plastitaniumGirder
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetTitanium1:
+            min: 1
+            max: 1
+          SheetPlastitanium1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: StaticPrice
+    price: 200

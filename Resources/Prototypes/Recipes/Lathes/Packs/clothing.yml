@@ -243,6 +243,7 @@
   - ClothingUniformJumpskirtCentcomFormalDress
   - ClothingUniformJumpsuitCentcomOfficer
   - ClothingUniformJumpsuitCentcomOfficial
+  - ClothingOuterWinterCentcom # DS14
 
 - type: latheRecipePack
   id: ClothingSyndie
@@ -259,7 +260,6 @@
   - ClothingUniformJumpsuitPyjamaSyndicatePink
   - ClothingHeadPyjamaSyndicateRed
   - ClothingUniformJumpsuitPyjamaSyndicateRed
-  - ClothingOuterWinterCentcom
   - ClothingOuterWinterSyndie
   - ClothingOuterWinterSyndieCap
   - BedsheetSyndie

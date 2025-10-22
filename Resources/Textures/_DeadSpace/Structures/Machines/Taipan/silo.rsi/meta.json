@@ -1,0 +1,36 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from skyrat at https://github.com/Skyrat-SS13/Skyrat-tg/blob/HEAD/modular_skyrat/modules/colony_fabricator/icons/ore_silo.dmi. edited by andrew_fenriz (discord) for Space Station 14 server Мёртвый Космос",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "silo"
+        },
+        {
+            "name": "silo_active",
+            "delays": [
+                [
+                    0.3,
+                    0.3
+                ]
+            ]
+        },
+        {
+            "name": "overlay_active",
+            "delays": [
+                [
+                    0.3,
+					0.3,
+					0.3,
+					0.3,
+					0.3,
+                    0.3
+                ]
+            ]
+        }
+    ]
+}

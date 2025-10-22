@@ -1,0 +1,35 @@
+# DeathRipley
+
+- type: entity
+  id: TaipanRipleyCentralElectronics
+  parent: BaseElectronics
+  name: центральный модуль управления кроваво-красного Рипли
+  description: Центр управления электрооборудованием кроваво-красного Рипли.
+  components:
+  - type: Item
+    storedRotation: 0
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/module.rsi
+    state: mainboard
+  - type: Tag
+    tags:
+    - TaipanRipleyCentralControlModule
+  - type: GuideHelp
+    guides:
+    - Robotics
+
+- type: entity
+  id: TaipanRipleyPeripheralsElectronics
+  parent: BaseElectronics
+  name: модуль управления периферией кроваво-красного Рипли
+  description: Система управления электрическими периферийными устройствами кроваво-красного Рипли.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/module.rsi
+    state: id_mod
+  - type: Tag
+    tags:
+    - TaipanRipleyPeripheralsControlModule
+  - type: GuideHelp
+    guides:
+    - Robotics

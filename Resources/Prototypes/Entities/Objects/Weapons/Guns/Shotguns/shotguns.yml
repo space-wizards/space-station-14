@@ -101,6 +101,9 @@
   - type: Appearance
   - type: StaticPrice
     price: 5000
+  - type: Tag # DS14
+    tags:
+    - ShotgunBulldog
 
 - type: entity
   name: double-barreled shotgun

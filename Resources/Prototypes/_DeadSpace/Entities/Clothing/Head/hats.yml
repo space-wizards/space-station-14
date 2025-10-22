@@ -1,0 +1,25 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadCommunicationsOfficerTaipan
+  name: берет офицера телекоммуникаций
+  description: Чёрный берет с позолоченной вышивкой, предпочитаемый офицерами телекоммуникаций.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Head/Hats/beret_co.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Head/Hats/beret_co.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretMedicTaipan
+  name: берет медика
+  description: Красный стильный берет для медиков.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Head/Hats/beret_medic.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Head/Hats/beret_medic.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag

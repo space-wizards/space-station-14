@@ -71,6 +71,9 @@
   - type: FlavorProfile
     flavors:
       - copypasta
+  - type: Tag # DS14
+    tags:
+    - NoodlesCopy
   - type: Sprite
     state: copypasta
   - type: SolutionContainerManager

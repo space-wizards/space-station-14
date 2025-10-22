@@ -13,3 +13,24 @@
     tags:
     - WhitelistChameleon
   - type: IngestionBlocker
+
+- type: entity
+  parent: ClothingMaskBreath
+  id: ClothingMaskBreathTaipan
+  name: чёрная боевая дыхательная маска
+  description: Высокопрочная дыхательная маска с возможностью подключения к дыхательному баллону.
+  suffix: Дыхательная маска Синдиката
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Mask/black_breath.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Mask/black_breath.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+        Heat: 0.95
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag

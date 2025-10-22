@@ -1,0 +1,56 @@
+- type: job
+  id: TaipanCommunicationsOfficer
+  name: job-name-taipan-communications-officer
+  description: job-description-taipan-communications-officer
+  playTimeTracker: JobTaipanCommunicationsOfficer
+  setPreference: false
+  overrideConsoleVisibility: true
+  isTaipan: true
+  startingGear: TaipanCommunicationsOfficerGear
+  icon: "JobIconTaipanCommunicationsOfficer"
+  supervisors: job-supervisors-syndicate
+  canBeAntag: false
+  requirements:
+  - !type:RoleTimeRequirement
+    role: JobTaipanRecruit
+    time: 36000 # 10 hours
+  - !type:DepartmentTimeRequirement
+    department: Taipan
+    time: 360000 # 100 hours
+  access:
+  - TaipanArmory
+  - TaipanAtmospherics
+  - TaipanCargo
+  - TaipanCommand
+  - TaipanCommunicationsOfficer
+  - TaipanEngineering
+  - TaipanMaint
+  - TaipanMedical
+  - TaipanProtection
+  - TaipanResearchDirector
+  - TaipanResearch
+  - TaipanService
+  - TaipanTechnicalOperationsSupervisor
+  - TaipanExternal
+  accessGroups:
+  - TaipanAccess
+  special:
+  - !type:AddImplantSpecial
+    implants: [ DeathRattleImplantTaipan ]
+
+- type: startingGear
+  id: TaipanCommunicationsOfficerGear
+  equipment:
+    ears: ClothingHeadsetAltTaipan
+    shoes: ClothingShoesBootsSyndieFilled
+    id: TaipanCommunicationsOfficerPDA
+    back: ClothingBackpackSyndicate
+    socks: ClothingUnderwearSocksTaipanCommunicationsOfficer
+
+- type: chameleonOutfit
+  id: TaipanCommunicationsOfficerChameleonOutfit
+  job: TaipanCommunicationsOfficer
+  startingGear: TaipanCommunicationsOfficerGear
+  equipment:
+    id: PassengerPDA
+    neck: ClothingNeckGoldmedal

@@ -1,0 +1,199 @@
+- type: entity
+  parent: Holopad
+  id: HolopadTaipan
+  name: голопад
+  description: Напольное устройство для проецирования голографических изображений.
+  suffix: Тайпан
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/holopad.rsi
+    drawdepth: HighFloorObjects
+    snapCardinals: true
+    layers:
+    - state: base
+    - map: [ "lights" ]
+      state: blank
+      shader: unshaded
+    - map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+      state: unpowered
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: panel_open
+  - type: Machine
+    board: TaipanHolopadMachineCircuitboard
+  - type: PointLight
+    radius: 1.3
+    energy: 1.8
+    color: "#8B0000"
+    enabled: false
+  - type: Holopad
+    hologramProtoId: HolopadTaipanHologram
+  - type: AccessReader
+    access: [[ "TaipanCommand" ]]
+
+- type: entity
+  name: голопад дальнего действия
+  description: Напольное устройство для проецирования голографических изображений на аналогичные устройства, находящиеся на больших расстояниях.
+  parent: HolopadTaipan
+  id: HolopadTaipanLongRange
+  suffix: Тайпан
+  components:
+  - type: Telephone
+    transmissionRange: Map
+    compatibleRanges:
+    - Map
+    - Unlimited
+    ignoreTelephonesOnSameGrid: true
+
+- type: entity
+  name: квантовый голопад
+  description: Напольное устройство для проецирования голографических изображений на аналогичные устройства, находящиеся на экстремальных расстояниях.
+  parent: HolopadTaipan
+  id: HolopadTaipanUnlimitedRange
+  suffix: Тайпан
+  components:
+  - type: Telephone
+    transmissionRange: Unlimited
+    compatibleRanges:
+    - Map
+    - Unlimited
+    ignoreTelephonesOnSameGrid: true
+
+- type: entity
+  name: редспейс голопад
+  description: Экспериментальное напольное устройство для проецирования голографических изображений через редспейс.
+  parent: HolopadTaipan
+  id: HolopadTaipanRedSpace
+  suffix: Тайпан, Неограниченный диапазон
+  components:
+  - type: Telephone
+    unlistedNumber: true
+    transmissionRange: Unlimited
+    compatibleRanges:
+    - Grid
+    - Map
+    - Unlimited
+
+- type: entity
+  id: HolopadTaipanHologram
+  name: hologram
+  categories: [ HideSpawnMenu, DoNotMap ]
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+  - type: Appearance
+  - type: TypingIndicator
+    proto: robot
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Borg
+    speechBubbleOffset: 0.45
+  - type: HolopadHologram
+    rsiPath: _DeadSpace/Structures/Machines/Taipan/holopad.rsi
+    rsiState: icon_in_call
+    shaderName: Hologram
+    color1: "#ea6758"
+    color2: "#96263c"
+    alpha: 0.9
+    intensity: 2
+    scrollRate: 0.125
+    offset: -0.02, 0.45
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  parent: HolopadTaipanLongRange
+  id: HolopadTaipanCommunicationsOfficer
+  suffix: Тайпан, Офицер телекоммуникаций
+  components:
+  - type: Label
+    currentLabel: holopad-taipan-communications-officer
+
+- type: entity
+  parent: HolopadTaipanLongRange
+  id: HolopadTaipanResearchDirector
+  suffix: Тайпан, Директор исследований
+  components:
+  - type: Label
+    currentLabel: holopad-taipan-research-director
+
+- type: entity
+  parent: HolopadTaipanLongRange
+  id: HolopadTaipanTechnicalOperationsSupervisor
+  suffix: Тайпан, Руководитель техобеспечения
+  components:
+  - type: Label
+    currentLabel: holopad-taipan-technical-operations-supervisor
+
+- type: entity
+  parent: HolopadTaipan
+  id: HolopadTaipanCargo
+  suffix: Тайпан, Снабжение
+  components:
+  - type: Label
+    currentLabel: holopad-taipan-cargo
+
+- type: entity
+  parent: HolopadTaipan
+  id: HolopadTaipanMedical
+  suffix: Тайпан, Медблок
+  components:
+  - type: Label
+    currentLabel: holopad-taipan-medical
+
+- type: entity
+  parent: HolopadTaipan
+  id: HolopadTaipanVirology
+  suffix: Тайпан, Вирусология
+  components:
+  - type: Label
+    currentLabel: holopad-taipan-virology
+
+- type: entity
+  parent: HolopadTaipan
+  id: HolopadTaipanEngineering
+  suffix: Тайпан, Инженерный
+  components:
+  - type: Label
+    currentLabel: holopad-taipan-engineering
+
+- type: entity
+  parent: HolopadTaipan
+  id: HolopadTaipanAtmospherics
+  suffix: Тайпан, Атмосферный
+  components:
+  - type: Label
+    currentLabel: holopad-taipan-atmospherics
+
+- type: entity
+  parent: HolopadTaipan
+  id: HolopadTaipanResearch
+  suffix: Тайпан, Исследовательский
+  components:
+  - type: Label
+    currentLabel: holopad-taipan-research
+
+- type: entity
+  parent: HolopadTaipan
+  id: HolopadTaipanSecurity
+  suffix: Тайпан, Охрана
+  components:
+  - type: Label
+    currentLabel: holopad-taipan-security
+
+- type: entity
+  parent: HolopadTaipan
+  id: HolopadTaipanService
+  suffix: Тайпан, Сервис
+  components:
+  - type: Label
+    currentLabel: holopad-taipan-service
+
+- type: entity
+  parent: HolopadTaipan
+  id: HolopadTaipanAiCore
+  suffix: Тайпан, Ядро ИИ
+  components:
+  - type: Label
+    currentLabel: holopad-taipan-ai-core

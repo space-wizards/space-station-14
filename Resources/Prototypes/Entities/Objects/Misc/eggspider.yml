@@ -13,6 +13,22 @@
         Blunt: 6
         Structural: 2
     animation: WeaponArcPunch
+  # DS14-start
+  - type: SolutionContainerManager
+    solutions:
+      chemicals:
+        maxVol: 15
+        reagents:
+        - ReagentId: CopperBlood
+          Quantity: 5
+  - type: Body
+    prototype: EggSpider
+  - type: InjectableSolution
+    solution: chemicals
+  - type: ContainerContainer
+    containers:
+      body_root_part: !type:ContainerSlot
+  # DS14-end
   - type: Item
     size: Small
   - type: PointLight

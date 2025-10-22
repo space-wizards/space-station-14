@@ -1,0 +1,137 @@
+- type: entity
+  parent: BaseItem
+  id: BaseComputerCircuitboardTaipan
+  name: консольная плата
+  abstract: true
+  suffix: Тайпан
+  components:
+  - type: ComputerBoard
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/module.rsi
+    state: cpu_syndicate
+  - type: Item
+    storedRotation: -90
+  - type: StaticPrice
+    price: 100
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 230
+    chemicalComposition:
+      Silicon: 20
+
+- type: entity
+  parent: BaseComputerCircuitboardTaipan
+  id: AnalysisComputerCircuitboardTaipan
+  name: аналитическая консоль (консольная плата)
+  description: Консольная плата для аналитической консоли.
+  components:
+  - type: ComputerBoard
+    prototype: ComputerTaipanAnalysisConsole
+
+- type: entity
+  parent: BaseComputerCircuitboardTaipan
+  id: CargoBountyComputerCircuitboardTaipan
+  name: консоль запросов (консольная плата)
+  description: Консольная плата для консоли запросов.
+  components:
+  - type: ComputerBoard
+    prototype: ComputerTaipanCargoBounty
+
+- type: entity
+  parent: BaseComputerCircuitboardTaipan
+  id: CargoRequestComputerCircuitboardTaipan
+  name: консоль заказа грузов (консольная плата)
+  description: Консольная плата для консоли заказа грузов.
+  components:
+  - type: ComputerBoard
+    prototype: ComputerTaipanCargoOrders
+
+- type: entity
+  parent: BaseComputerCircuitboardTaipan
+  id: CargoSaleComputerCircuitboardTaipan
+  name: консоль продажи товаров (консольная плата)
+  description: Консольная плата для консоли продажи товаров.
+  components:
+  - type: ComputerBoard
+    prototype: ComputerTaipanPalletConsole
+
+- type: entity
+  parent: BaseComputerCircuitboardTaipan
+  id: SurveillanceCameraMonitorCircuitboardTaipan
+  name: монитор камер слежения (консольная плата)
+  description: Консольная плата для монитора камер слежения.
+  components:
+  - type: ComputerBoard
+    prototype: ComputerTaipanSurveillanceCameraMonitor
+
+- type: entity
+  parent: BaseComputerCircuitboardTaipan
+  id: CommsComputerCircuitboardTaipan
+  name: консоль связи (консольная плата)
+  description: Консольная плата для консоли связи.
+  components:
+  - type: ComputerBoard
+    prototype: ComputerTaipanComms
+
+- type: entity
+  parent: BaseComputerCircuitboardTaipan
+  id: CrewMonitoringComputerCircuitboardTaipan
+  name: консоль мониторинга экипажа (консольная плата)
+  description: Консольная плата для консоли мониторинга экипажа.
+  components:
+  - type: ComputerBoard
+    prototype: ComputerTaipanCrewMonitoring
+
+- type: entity
+  parent: BaseComputerCircuitboardTaipan
+  id: IDComputerCircuitboardTaipan
+  name: консоль ID карт (консольная плата)
+  description: Консольная плата для консоли ID карт.
+  components:
+  - type: ComputerBoard
+    prototype: ComputerTaipanId
+
+- type: entity
+  parent: BaseComputerCircuitboardTaipan
+  id: IFFConsoleCircuitboardTaipan
+  name: консоль системы опознавания (консольная плата)
+  description: Позволяет управлять параметрами системы опознавания судна.
+  components:
+  - type: ComputerBoard
+    prototype: ComputerTaipanIFF
+
+- type: entity
+  parent: BaseComputerCircuitboardTaipan
+  id: ResearchComputerCircuitboardTaipan
+  name: исследовательская консоль (консольная плата)
+  description: Консольная плата исследовательской консоли.
+  components:
+  - type: ComputerBoard
+    prototype: ComputerTaipanResearchAndDevelopment
+
+- type: entity
+  parent: BaseComputerCircuitboardTaipan
+  id: RoboticsConsoleCircuitboardTaipan
+  name: консоль управления робототехникой (консольная плата)
+  description: Консольная плата для консоли управления робототехникой.
+  components:
+  - type: ComputerBoard
+    prototype: ComputerTaipanRoboticsControl
+
+- type: entity
+  parent: BaseComputerCircuitboardTaipan
+  id: ShuttleConsoleCircuitboardTaipan
+  name: консоль управления шаттлом (консольная плата)
+  description: Консольная плата для консоли управления шаттлом.
+  components:
+  - type: ComputerBoard
+    prototype: ComputerTaipanShuttle
+
+- type: entity
+  parent: BaseComputerCircuitboardTaipan
+  id: StationAiUploadCircuitboardTaipan
+  name: консоль загрузки ИИ (консольная плата)
+  description: Консольная плата для консоли загрузки ИИ.
+  components:
+  - type: ComputerBoard
+    prototype: ComputerTaipanAiUpload

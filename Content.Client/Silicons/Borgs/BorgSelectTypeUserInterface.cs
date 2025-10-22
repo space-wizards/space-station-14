@@ -23,8 +23,24 @@ public sealed class BorgSelectTypeUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
-
-        _menu = this.CreateWindow<BorgSelectTypeMenu>();
+        // DS14-start
+        _menu = new BorgSelectTypeMenu(Owner);
         _menu.ConfirmedBorgType += prototype => SendPredictedMessage(new BorgSelectTypeMessage(prototype));
+        _menu.OpenCentered();
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+
+        if (disposing)
+        {
+            if (_menu != null)
+            {
+                _menu.Dispose();
+                _menu = null;
+            }
+        }
+        // DS14-end
     }
 }

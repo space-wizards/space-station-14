@@ -1,0 +1,41 @@
+- type: job
+  id: TaipanTechnician
+  name: job-name-taipan-technician
+  description: job-description-taipan-technician
+  playTimeTracker: JobTaipanTechnician
+  setPreference: false
+  overrideConsoleVisibility: true
+  isTaipan: true
+  startingGear: TaipanTechnicianGear
+  icon: "JobIconTaipanTechnician"
+  supervisors: job-supervisors-taipan-technical-supervisor
+  canBeAntag: false
+  requirements:
+  - !type:DepartmentTimeRequirement
+    department: Engineering
+    time: 36000 #10 hrs
+  access:
+  - TaipanEngineering
+  - TaipanMaint
+  - TaipanExternal
+  special:
+  - !type:AddImplantSpecial
+    implants: [ DeathRattleImplantTaipan ]
+
+- type: startingGear
+  id: TaipanTechnicianGear
+  equipment:
+    ears: ClothingHeadsetTaipan
+    shoes: ClothingShoesTaipanBootsWork
+    id: TaipanTechnicianPDA
+    belt: ClothingBeltUtilityEngineering
+    back: ClothingBackpackSyndicate
+    socks: ClothingUnderwearSocksTaipanTechnician
+
+- type: chameleonOutfit
+  id: TaipanTechnicianChameleonOutfit
+  job: TaipanTechnician
+  startingGear: TaipanTechnicianGear
+  equipment:
+    id: PassengerPDA
+    neck: ClothingNeckGoldmedal

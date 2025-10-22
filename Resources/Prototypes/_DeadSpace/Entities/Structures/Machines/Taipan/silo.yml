@@ -1,0 +1,19 @@
+- type: entity
+  id: MachineMaterialSiloTaipan
+  parent: MachineMaterialSilo
+  name: хранилище материалов
+  description: Продвинутая машина, способная использовать редспейс технологию для передачи материалов ближайшим машинам.
+  suffix: Тайпан
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/silo.rsi
+  - type: OreSilo
+    range: 50
+  - type: MaterialStorage
+    whitelist:
+      tags:
+      - Sheet
+      - RawMaterial
+      - Ingot
+  - type: Machine
+    board: MaterialSiloMachineCircuitboardTaipan

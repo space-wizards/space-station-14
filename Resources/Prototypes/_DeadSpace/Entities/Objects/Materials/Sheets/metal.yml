@@ -1,0 +1,128 @@
+- type: entity
+  parent: SheetMetalBase
+  id: SheetTitanium
+  name: титан
+  suffix: Полный
+  components:
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Titanium: 100
+  - type: Stack
+    stackType: Titanium
+    baseLayer: base
+    layerStates:
+    - titanium
+    - titanium_2
+    - titanium_3
+  - type: Sprite
+    state: titanium_3
+    layers:
+    - state: titanium_3
+      map: ["base"]
+  - type: Item
+    heldPrefix: titanium
+  - type: Appearance
+  - type: Extractable
+    grindableSolutionName: titanium
+  - type: SolutionContainerManager
+    solutions:
+      titanium:
+        reagents:
+        - ReagentId: Titanium
+          Quantity: 10
+  - type: Tag
+    tags:
+    - Sheet
+    - Titanium
+
+- type: entity
+  parent: SheetTitanium
+  id: SheetTitanium10
+  name: титан
+  suffix: 10
+  components:
+  - type: Sprite
+    state: titanium
+  - type: Stack
+    stackType: Titanium
+    count: 10
+
+- type: entity
+  parent: SheetTitanium
+  id: SheetTitanium1
+  name: титан
+  suffix: Один
+  components:
+  - type: Sprite
+    state: titanium
+  - type: Stack
+    stackType: Titanium
+    count: 1
+
+- type: entity
+  parent: SheetMetalBase
+  id: SheetPlastitanium
+  name: пластитан
+  suffix: Полный
+  components:
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Plastitanium: 100
+  - type: Stack
+    stackType: Plastitanium
+    baseLayer: base
+    layerStates:
+    - plastitanium
+    - plastitanium_2
+    - plastitanium_3
+  - type: Sprite
+    state: plastitanium_3
+    layers:
+    - state: plastitanium_3
+      map: ["base"]
+  - type: Item
+    heldPrefix: plastitanium
+  - type: Appearance
+  - type: Extractable
+    grindableSolutionName: plastitanium
+  - type: SolutionContainerManager
+    solutions:
+      plastitanium:
+        reagents:
+        - ReagentId: Plasma
+          Quantity: 10
+        - ReagentId: Titanium
+          Quantity: 9
+        - ReagentId: Carbon
+          Quantity: 1
+        canReact: false
+  - type: Tag
+    tags:
+    - Sheet
+    - Plastitanium
+
+- type: entity
+  parent: SheetPlastitanium
+  id: SheetPlastitanium10
+  name: пластитан
+  suffix: 10
+  components:
+  - type: Sprite
+    state: plastitanium
+  - type: Stack
+    stackType: Plastitanium
+    count: 10
+
+- type: entity
+  parent: SheetPlastitanium
+  id: SheetPlastitanium1
+  name: пластитан
+  suffix: Один
+  components:
+  - type: Sprite
+    state: plastitanium
+  - type: Stack
+    stackType: Plastitanium
+    count: 1

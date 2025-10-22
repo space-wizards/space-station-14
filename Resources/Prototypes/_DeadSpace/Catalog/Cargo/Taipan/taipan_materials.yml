@@ -1,0 +1,149 @@
+- type: cargoProduct
+  id: TaipanMaterialGlass
+  icon:
+    sprite: Objects/Materials/Sheets/glass.rsi
+    state: glass_3
+  product: CrateMaterialGlass
+  cost: 3000 # DS14
+  category: cargoproduct-category-name-materials
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanMaterialSteel
+  icon:
+    sprite: Objects/Materials/Sheets/metal.rsi
+    state: steel_3
+  product: CrateMaterialSteel
+  cost: 3000 # DS14
+  category: cargoproduct-category-name-materials
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanMaterialPlastic
+  icon:
+    sprite: Objects/Materials/Sheets/other.rsi
+    state: plastic_3
+  product: CrateMaterialPlastic
+  cost: 2000
+  category: cargoproduct-category-name-materials
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanMaterialBrass
+  icon:
+    sprite: Objects/Materials/Sheets/metal.rsi
+    state: brass_3
+  product: CrateMaterialBrass
+  cost: 3000
+  category: cargoproduct-category-name-materials
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanMaterialPlasteel
+  icon:
+    sprite: Objects/Materials/Sheets/metal.rsi
+    state: plasteel_3
+  product: CrateMaterialPlasteel
+  cost: 1600
+  category: cargoproduct-category-name-materials
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanMaterialGold
+  icon:
+    sprite: Objects/Materials/ingots.rsi
+    state: gold_3
+  product: CrateMaterialGold
+  cost: 3225
+  category: cargoproduct-category-name-materials
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanMaterialSilver
+  icon:
+    sprite: Objects/Materials/ingots.rsi
+    state: silver_3
+  product: CrateMaterialSilver
+  cost: 2580
+  category: cargoproduct-category-name-materials
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanMaterialTextiles
+  icon:
+    sprite: Objects/Materials/materials.rsi
+    state: cloth_3
+  product: CrateMaterialTextiles
+  cost: 1500
+  category: cargoproduct-category-name-materials
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanMaterialPlasma
+  icon:
+    sprite: Objects/Materials/Sheets/other.rsi
+    state: plasma # Corvax-Resprite
+  product: CrateMaterialPlasma
+  cost: 7500 # DS14
+  category: cargoproduct-category-name-materials
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCardboardMaterial
+  icon:
+    sprite: Objects/Materials/materials.rsi
+    state: cardboard_3
+  product: CrateMaterialCardboard
+  cost: 330
+  category: cargoproduct-category-name-materials
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanPaperMaterial
+  icon:
+    sprite: Objects/Materials/Sheets/other.rsi
+    state: paper_3
+  product: CrateMaterialPaper
+  cost: 185
+  category: cargoproduct-category-name-materials
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanMaterialBasic
+  icon:
+    sprite: Objects/Materials/Sheets/other.rsi
+    state: generic_materials
+  product: CrateMaterialBasicResource
+  cost: 1660
+  category: cargoproduct-category-name-materials
+  group: taipan_market
+
+#- type: cargoProduct
+#  id: TaipanMaterialSilo
+#  icon:
+#    sprite: Structures/Machines/silo.rsi
+#    state: silo
+#  product: CrateMaterialSilo
+#  cost: 5000
+#  category: cargoproduct-category-name-materials
+#  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanMaterialFuelTank
+  icon:
+    sprite: Structures/Storage/tanks.rsi
+    state: fueltank
+  product: WeldingFuelTankFull
+  cost: 1500
+  category: cargoproduct-category-name-materials
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanMaterialWaterTank
+  icon:
+    sprite: Structures/Storage/tanks.rsi
+    state: watertank
+  product: WaterTankFull
+  cost: 1000
+  category: cargoproduct-category-name-materials
+  group: taipan_market

@@ -1,0 +1,219 @@
+- type: cargoProduct
+  id: TaipanServiceJanitorial
+  icon:
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    state: cleaner
+  product: CrateServiceJanitorialSupplies
+  cost: 560
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanServiceCleanerGrenades
+  icon:
+    sprite: Objects/Weapons/Grenades/janitor.rsi
+    state: icon
+  product: CrateServiceCleanerGrenades
+  cost: 400
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanServiceLightsReplacement
+  icon:
+    sprite: Objects/Power/light_bulb.rsi
+    state: normal
+  product: CrateServiceReplacementLights
+  cost: 600
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanServiceLightsHoliday
+  icon:
+    sprite: Objects/Power/light_bulb.rsi
+    state: normal
+  product: CrateServiceHolidayLights
+  cost: 800
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanServiceLightsColorful
+  icon:
+    sprite: Objects/Power/light_bulb.rsi
+    state: normal
+  product: CrateServiceColorfulLights
+  cost: 800
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanMousetrapBoxes
+  icon:
+    sprite: Objects/Devices/mousetrap.rsi
+    state: mousetrap
+  product: CrateMousetrapBoxes
+  cost: 500
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanServiceTheatre
+  icon:
+    sprite: Clothing/Mask/mime.rsi
+    state: icon
+  product: CrateServiceTheatre
+  cost: 1800
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanServiceSmokeables
+  icon:
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
+    state: icon
+  product: CrateServiceSmokeables
+  cost: 1500
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanServiceCustomSmokable
+  icon:
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
+    state: icon
+  product: CrateServiceCustomSmokable
+  cost: 1000
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanServiceBureaucracy
+  icon:
+    sprite: Objects/Misc/pens.rsi
+    state: pen
+  product: CrateServiceBureaucracy
+  cost: 1000
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanServicePersonnel
+  icon:
+    sprite: Objects/Misc/id_cards.rsi
+    state: default
+  product: CrateServicePersonnel
+  cost: 1000
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanServiceBooks
+  icon:
+    sprite: Objects/Misc/books.rsi
+    state: book_icon
+  product: CrateServiceBooks
+  cost: 1000
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanServiceGuidebooks
+  icon:
+    sprite: Objects/Misc/books.rsi
+    state: book_icon
+  product: CrateServiceGuidebooks
+  cost: 1300
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanServiceSodaDispenser
+  icon:
+    sprite: Objects/Consumable/Drinks/generic_jug.rsi
+    state: icon
+  product: CrateServiceSodaDispenser
+  cost: 850
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanServiceBoozeDispenser
+  icon:
+    sprite: Objects/Consumable/Drinks/generic_jug.rsi
+    state: icon
+  product: CrateServiceBoozeDispenser
+  cost: 750
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanServiceBoxes
+  icon:
+    sprite: Objects/Storage/boxes.rsi
+    state: box
+  product: CrateServiceBox
+  cost: 400
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanServiceFoodCartHot
+  icon:
+    sprite: Objects/Specific/Kitchen/food_carts.rsi
+    state: icon-hot
+  product: FoodCartHot
+  cost: 2000
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanServiceFoodCartCold
+  icon:
+    sprite: Objects/Specific/Kitchen/food_carts.rsi
+    state: icon-cold
+  product: FoodCartCold
+  cost: 2000
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanServiceAnimalCarrier
+  icon:
+    sprite: Objects/Storage/petcarrier.rsi
+    state: icon
+  product: PetCarrier
+  cost: 500
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanServiceJanitorTrolley
+  icon:
+    sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
+    state: icon-cart
+  product: JanitorialTrolley
+  cost: 300
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanServiceCandles
+  icon:
+    sprite: Objects/Misc/candles.rsi
+    state: candle-big
+  product: CrateCandles
+  cost: 500
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanServicePhotocopierToners
+  icon:
+    sprite: _DeadSpace/Objects/Misc/tonercartridge.rsi
+    state: icon
+  product: CrateServicePhotocopierToners
+  cost: 1000
+  category: cargoproduct-category-name-service
+  group: taipan_market

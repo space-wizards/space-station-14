@@ -88,6 +88,52 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         }
     }
 
+            // DS14-start
+    public Dictionary<string, List<string>> GetFilteredPaintableGroups(SprayPainterComponent component)
+    {
+        var filteredGroups = new Dictionary<string, List<string>>();
+
+        foreach (var category in Proto.EnumeratePrototypes<PaintableGroupCategoryPrototype>().OrderBy(x => x.ID))
+        {
+            if (component.AllowedCategories.Count > 0 && !component.AllowedCategories.Contains(category.ID))
+                continue;
+
+            var groupList = new List<string>();
+            foreach (var groupId in category.Groups)
+            {
+                if (!IsGroupAllowed(component, groupId))
+                    continue;
+
+                if (!Proto.TryIndex(groupId, out var group))
+                    continue;
+
+                groupList.Add(groupId);
+            }
+
+            if (groupList.Count > 0)
+                filteredGroups[category.ID] = groupList;
+        }
+
+        return filteredGroups;
+    }
+
+    public Dictionary<string, Dictionary<string, EntProtoId>> GetFilteredPaintableStyles(
+        SprayPainterComponent component)
+    {
+        var filteredStyles = new Dictionary<string, Dictionary<string, EntProtoId>>();
+
+        foreach (var groupId in PaintableStylesByGroup.Keys)
+        {
+            if (!IsGroupAllowed(component, groupId))
+                continue;
+
+            filteredStyles[groupId] = PaintableStylesByGroup[groupId];
+        }
+
+        return filteredStyles;
+    }
+            // DS14-end
+
     private sealed class StatusControl : Control
     {
         private readonly RichTextLabel _label;

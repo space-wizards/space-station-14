@@ -20,7 +20,6 @@
     guides:
     - MedicalDoctor
 
-
 - type: entity
   parent: CentcomPDA
   id: CentcomOfficialPDA
@@ -49,7 +48,6 @@
   - type: Pda
     id: CentcomSpecialOperationsOfficerIDCard
 
-
 - type: entity
   parent: ERTLeaderPDA
   id: ERTLeaderRedPDA
@@ -70,7 +68,6 @@
   components:
   - type: Pda
     id: CBURNLeaderIDcard
-
 
 - type: entity
   parent: BasePDA
@@ -162,3 +159,258 @@
     accentHColor: "#CEC155"
   - type: Icon
     state: pda-seniorservice
+
+- type: entity
+  abstract: true
+  parent: BasePDA
+  id: BaseTaipanPDA
+  name: PDA
+  description: Personal Data Assistant.
+  suffix: Тайпан
+  components:
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Devices/pda.rsi
+    layers:
+    - map: [ "enum.PdaVisualLayers.Base" ]
+      state: "pda"
+    - state: "light_overlay"
+      map: [ "enum.PdaVisualLayers.Flashlight" ]
+      shader: "unshaded"
+      visible: false
+    - state: "id_overlay"
+      map: [ "enum.PdaVisualLayers.IdLight" ]
+      shader: "unshaded"
+      visible: false
+  - type: Icon
+    sprite: _DeadSpace/Objects/Devices/pda.rsi
+    state: pda
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+    - NotekeeperCartridge
+    - NanoTaskCartridge
+    cartridgeSlot:
+      priority: -1
+      name: device-pda-slot-component-slot-name-cartridge
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Machines/id_insert.ogg
+      whitelist:
+        components:
+        - Cartridge
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+- type: entity
+  parent: BaseTaipanPDA
+  id: TaipanAtmosphericsEngineerPDA
+  name: КПК атмосферного инженера
+  description: Может страдать от перепадов давления… в кармане.
+  components:
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-atmos
+  - type: Pda
+    id: TaipanAtmosphericsEngineerIDcard
+  - type: Icon
+    state: pda-atmos
+
+- type: entity
+  parent: BaseTaipanPDA
+  id: TaipanBotanistPDA
+  name: КПК ботаника
+  description: Может быть испачкан соком экзотических фруктов.
+  components:
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-hydro
+  - type: Pda
+    id: TaipanBotanistIDcard
+  - type: Icon
+    state: pda-hydro
+
+- type: entity
+  parent: BaseTaipanPDA
+  id: TaipanTechnicalOperationsSupervisorPDA
+  name: КПК руководителя техобеспечения
+  description: Главное, не потеряйте его в инженерном отсеке!
+  components:
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-tos
+  - type: Pda
+    id: TaipanTechnicalOperationsSupervisorIDcard
+  - type: Icon
+    state: pda-tos
+
+- type: entity
+  parent: BaseTaipanPDA
+  id: TaipanChefPDA
+  name: КПК повара
+  description: Часто пропахший ароматами готовящейся пищи.
+  components:
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-chef
+  - type: Pda
+    id: TaipanChefIDcard
+  - type: Icon
+    state: pda-chef
+
+- type: entity
+  parent: BaseTaipanPDA
+  id: TaipanCommunicationsOfficerPDA
+  name: КПК офицера телекоммуникаций
+  description: Главное не читайте заметки.
+  components:
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-co
+  - type: Pda
+    id: TaipanCommunicationsOfficerIDcard
+  - type: Icon
+    state: pda-co
+
+- type: entity
+  parent: BaseTaipanPDA
+  id: TaipanMedicPDA
+  name: КПК медика
+  description: Спасение жизней — его предназначение.
+  components:
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-medical
+  - type: Pda
+    id: TaipanMedicIDcard
+  - type: Icon
+    state: pda-medical
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - NotekeeperCartridge
+      - NanoTaskCartridge
+      - MedTekCartridge
+
+- type: entity
+  parent: BaseTaipanPDA
+  id: TaipanParamedicPDA
+  name: КПК парамедика
+  description: Всегда под рукой во время экстренных вызовов.
+  components:
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-paramedic
+  - type: Pda
+    id: TaipanParamedicIDcard
+  - type: Icon
+    state: pda-paramedic
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - NotekeeperCartridge
+      - NanoTaskCartridge
+      - MedTekCartridge
+
+- type: entity
+  parent: BaseTaipanPDA
+  id: TaipanRecruitPDA
+  name: КПК рекрута
+  description: Важная вещь для обеспечения безопасности.
+  components:
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-security
+  - type: Pda
+    id: TaipanRecruitIDcard
+  - type: Icon
+    state: pda-security
+
+- type: entity
+  parent: BaseTaipanPDA
+  id: TaipanResearchDirectorPDA
+  name: КПК директора исследований
+  description: Возглавляет научный фронт!
+  components:
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-rd
+  - type: Pda
+    id: TaipanResearchDirectorIDcard
+  - type: Icon
+    state: pda-rd
+
+- type: entity
+  parent: BaseTaipanPDA
+  id: TaipanResearcherPDA
+  name: КПК исследователя
+  description: Научные данные всегда под рукой.
+  components:
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-researcher
+  - type: Pda
+    id: TaipanResearcherIDcard
+  - type: Icon
+    state: pda-researcher
+
+- type: entity
+  parent: BaseTaipanPDA
+  id: TaipanTechnicianPDA
+  name: КПК ремонтника
+  description: Ваш надежный инструмент по безопасности станции.
+  components:
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-technician
+  - type: Pda
+    id: TaipanTechnicianIDcard
+  - type: Icon
+    state: pda-technician
+
+- type: entity
+  parent: BaseTaipanPDA
+  id: TaipanCargotechPDA
+  name: КПК карготехника
+  description: Незаменим в глубинах астероидов.
+  components:
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-cargo
+  - type: Pda
+    id: TaipanCargotechIDcard
+  - type: Icon
+    state: pda-cargo
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - NotekeeperCartridge
+      - NanoTaskCartridge
+      - AstroNavCartridge

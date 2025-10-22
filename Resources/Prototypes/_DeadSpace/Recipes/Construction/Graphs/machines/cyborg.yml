@@ -1,0 +1,36 @@
+- type: constructionGraph
+  id: TaipanCyborg
+  start: start
+  graph:
+  - node: start
+    entity: TaipanCyborgEndoskeleton
+    edges:
+    - to: taipan_cyborg
+      steps:
+      - assemblyId: taipan_cyborg
+        guideString: borg-construction-guide-string
+
+      - material: Cable
+        amount: 1
+        doAfter: 1
+        store: part-container
+
+      - component: Flash
+        name: construction-graph-component-flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - component: Flash
+        name: construction-graph-component-second-flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - tool: Screwing
+        doAfter: 0.5
+
+  - node: taipan_cyborg
+    entity: BorgChassisTaipanSelectable

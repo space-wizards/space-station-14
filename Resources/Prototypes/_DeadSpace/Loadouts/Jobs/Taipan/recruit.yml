@@ -1,0 +1,71 @@
+# Jumpsuit
+- type: loadout
+  id: TaipanRecruitJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUniforms
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitTaipanRecruit
+
+- type: loadout
+  id: TaipanRecruitJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUniforms
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtTaipanRecruit
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersTaipanRecruit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersTaipanRecruit
+
+- type: loadout
+  id: UnderwearBottomPantiesTaipanRecruit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesTaipanRecruit
+
+- type: loadout
+  id: UnderwearTopBraTaipanRecruit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraTaipanRecruit
+
+# Loadout Groups
+- type: loadoutGroup
+  id: TaipanRecruitUniform
+  name: loadout-group-taipan-recruit-uniform
+  hidden: true
+  minLimit: 1
+  loadouts:
+  - TaipanRecruitJumpsuit
+  - TaipanRecruitJumpskirt
+
+- type: loadoutGroup
+  id: TaipanRecruitUnderwear
+  name: loadout-group-taipan-recruit-underwear
+  hidden: true
+  minLimit: 2
+  loadouts:
+  - UnderwearBottomBoxersTaipanRecruit
+  - UnderwearBottomPantiesTaipanRecruit
+  - UnderwearTopBraTaipanRecruit
+
+# Role Loadout
+- type: roleLoadout
+  id: JobTaipanRecruit
+  groups:
+  - TaipanRecruitUniform
+  - TaipanRecruitUnderwear
+  - TaipanSurvival
+  - GroupSpeciesBreathTool
+  - GroupTankHarness

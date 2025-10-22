@@ -1,0 +1,69 @@
+# Basic
+- type: loadout
+  id: TaipanEmergencyOxygen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  storage:
+    back:
+    - BoxSurvivalTaipan
+
+- type: loadout
+  id: TaipanEmergencyNitrogen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  storage:
+    back:
+    - BoxSurvivalTaipanNitrogen
+
+- type: loadout
+  id: TaipanEmergencyNonBreather
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NonBreather
+  storage:
+    back:
+    - BoxSurvivalTaipanNonBreather
+
+- type: loadout
+  id: TaipanEmergencyRobotNonBreather
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: RobotNonBreather
+  storage:
+    back:
+    - BoxSurvivalTaipanRobotNonBreather
+
+- type: loadout
+  id: TaipanEmergencyBeer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesDwarf
+  storage:
+    back:
+    - BoxSurvivalTaipanBeer
+
+- type: loadout
+  id: TaipanEmergencyMoth
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesMoth
+  storage:
+    back:
+    - BoxSurvivalTaipanMoth
+
+# Loadout Groups
+- type: loadoutGroup
+  id: TaipanSurvival
+  name: loadout-group-survival-basic
+  minLimit: 3
+  hidden: true
+  loadouts:
+  - TaipanEmergencyNitrogen
+  - TaipanEmergencyOxygen
+  - TaipanEmergencyNonBreather
+  - TaipanEmergencyRobotNonBreather
+  - LoadoutSpeciesVoxNitrogen
+  - TaipanEmergencyBeer
+  - TaipanEmergencyMoth

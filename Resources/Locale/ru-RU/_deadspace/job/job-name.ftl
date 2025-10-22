@@ -1,0 +1,12 @@
+job-name-taipan-atmospherics-engineer = Атмосферный инженер
+job-name-taipan-botanist = Ботаник
+job-name-taipan-cargotech = Карготехник
+job-name-taipan-chef = Повар
+job-name-taipan-medic = Медик
+job-name-taipan-paramedic = Парамедик
+job-name-taipan-research-director = Директор исследований
+job-name-taipan-recruit = Рекрут
+job-name-taipan-researcher = Исследователь
+job-name-taipan-technician = Ремонтник
+job-name-taipan-technical-supervisor = Руководитель техобеспечения
+job-name-taipan-communications-officer = Офицер телекоммуникаций

@@ -1,0 +1,59 @@
+- type: cargoProduct
+  id: TaipanHydroponicsSeedsExotic
+  icon:
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    state: seed
+  product: CrateHydroponicsSeedsExotic
+  cost: 1000
+  category: cargoproduct-category-name-hydroponics
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanHydroponicsSeedsMedicinal
+  icon:
+    sprite: Objects/Specific/Hydroponics/galaxythistle.rsi
+    state: seed
+  product: CrateHydroponicsSeedsMedicinal
+  cost: 500
+  category: cargoproduct-category-name-hydroponics
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanHydroponicsTools
+  icon:
+    sprite: Objects/Tools/Hydroponics/hoe.rsi
+    state: icon
+  product: CrateHydroponicsTools
+  cost: 500
+  category: cargoproduct-category-name-hydroponics
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanHydroponicsSeeds
+  icon:
+    sprite: Objects/Specific/Hydroponics/apple.rsi
+    state: seed
+  product: CrateHydroponicsSeeds
+  cost: 600
+  category: cargoproduct-category-name-hydroponics
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanBulkPlantBGone
+  icon:
+    sprite: Objects/Specific/Chemistry/jug.rsi
+    state: jug
+  product: CratePlantBGone
+  cost: 750
+  category: cargoproduct-category-name-hydroponics
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanHydroponicsTray
+  icon:
+    sprite: Structures/Hydroponics/containers.rsi
+    state: hydrotray3
+  product: CrateHydroponicsTray
+  cost: 750
+  category: cargoproduct-category-name-hydroponics
+  group: taipan_market

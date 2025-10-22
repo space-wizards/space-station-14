@@ -1,0 +1,134 @@
+- type: entity
+  parent: BaseItem
+  id: EggSpiderTerror
+  name: яйцо паука ужаса
+  description: Выглядит ужасно. Похоже, оно хрупче того, из которого появилось.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/eggspiderterror.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 1
+    animation: WeaponArcPunch
+  - type: SolutionContainerManager
+    solutions:
+      chemicals:
+        maxVol: 15
+        reagents:
+        - ReagentId: AcidicBlood
+          Quantity: 15
+  - type: Timer
+  - type: TimedSpawner
+    prototypes:
+    - MobSpiderTerrorGuardian
+    - MobSpiderTerrorGuardianKingBlood
+    intervalSeconds: 600
+    minimumEntitiesSpawned: 1
+    maximumEntitiesSpawned: 1
+  - type: TimedDespawn #delete the egg after the spider spawns
+    lifetime: 601
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Web
+  - type: NpcFactionMember
+    factions:
+    - SpiderTerror
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      3: Dead
+  - type: Deathgasp
+  - type: HealthExaminable
+    examinableTypes:
+    - Blunt
+    - Slash
+    - Piercing
+    - Heat
+    - Shock
+    - Cold
+    - Caustic
+    - Asphyxiation
+    - Radiation
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 10
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 1
+  - type: Flammable
+    fireSpread: true
+    canResistFire: true
+    damage:
+      types:
+        Heat: 2.5
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Mouse_burning
+  - type: Temperature
+    heatDamageThreshold: 292
+    coldDamageThreshold: 288
+    currentTemperature: 290
+    specificHeat: 42
+    coldDamage:
+      types:
+        Cold: 1.5
+    heatDamage:
+      types:
+        Heat: 2.5
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.5
+  - type: LightningTarget
+    priority: 2
+    lightningExplode: false
+  - type: InjectableSolution
+    solution: chemicals
+  - type: DrawableSolution
+    solution: chemicals
+  - type: Item
+    size: Normal
+  - type: StaticPrice
+    price: 750
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 3
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: desecration
+          params:
+            volume: -1
+      - !type:SpillBehavior
+        solution: chemicals
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          EggSpiderTerrorshells:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  name: скорлупа
+  parent: Eggshells
+  id: EggSpiderTerrorshells
+  description: Ты ходишь по ней, приятель.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/eggspiderterror.rsi
+    state: eggshells
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 2
+        reagents:
+        - ReagentId: AcidicBlood
+          Quantity: 1

@@ -1,0 +1,581 @@
+- type: entity
+  parent: BaseComputerAiAccess
+  id: ComputerTaipanAiUpload
+  name: консоль загрузки ИИ
+  suffix: Тайпан
+  description: Используется для обновления законов ИИ станции.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: aiupload
+    - map: ["computerLayerKeys"]
+      state: aiupload_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: ApcPowerReceiver
+    powerLoad: 1000
+  - type: Computer
+    board: StationAiUploadCircuitboardTaipan
+  - type: AccessReader
+    access: [["TaipanResearchDirector"]]
+  - type: Lock
+    unlockOnClick: false
+  - type: SiliconLawUpdater
+    components:
+    - type: StationAiHeld
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#8B0000"
+  - type: ItemSlots
+    slots:
+      circuit_holder:
+        name: circuit-holder
+        insertSuccessPopup: silicon-laws-updated
+        whitelist:
+          requireAll: true
+          components:
+          - SiliconLawProvider
+          - Item
+  - type: ContainerContainer
+    containers:
+      circuit_holder: !type:ContainerSlot
+      board: !type:Container
+
+- type: entity
+  parent: ComputerAnalysisConsole
+  id: ComputerTaipanAnalysisConsole
+  name: аналитическая консоль
+  suffix: Тайпан
+  description: Компьютер, используемый для взаимодействия с анализатором артефактов.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: artifact
+    - map: ["computerLayerKeys"]
+      state: tech_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: ResearchClient
+    isTaipan: true
+  - type: Computer
+    board: AnalysisComputerCircuitboardTaipan
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#8B0000"
+
+- type: entity
+  parent: BaseComputerAiAccess
+  id: ComputerTaipanCargoBounty
+  name: консоль запросов
+  suffix: Тайпан
+  description: Используется для управления активными наградами.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: bounty
+    - map: ["computerLayerKeys"]
+      state: tech_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: CargoBountyConsole
+  - type: ActivatableUI
+    key: enum.CargoConsoleUiKey.Bounty
+  - type: UserInterface
+    interfaces:
+      enum.CargoConsoleUiKey.Bounty:
+        type: CargoBountyConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: Computer
+    board: CargoBountyComputerCircuitboardTaipan
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#8B0000"
+  - type: AccessReader
+    access: [["TaipanTechnicalOperationsSupervisor"]]
+
+- type: entity
+  parent: ComputerCargoOrders
+  id: ComputerTaipanCargoOrders
+  name: консоль заказа грузов
+  suffix: Тайпан
+  description: Используется для заказа поставок и утверждения запросов.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: request
+    - map: ["computerLayerKeys"]
+      state: tech_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: CargoOrderConsole
+    isTaipan: true
+    removeLimitAccess: [ "TaipanTechnicalOperationsSupervisor" ]
+    announcementChannel: Taipan
+    account: Taipan
+    allowedGroups:
+    - taipan_market
+  - type: ActiveRadio
+    channels:
+    - Taipan
+  - type: ActivatableUI
+    key: enum.CargoConsoleUiKey.Orders
+  - type: Computer
+    board: CargoRequestComputerCircuitboardTaipan
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#8B0000"
+  - type: AccessReader
+    access: [["TaipanCargo"]]
+
+- type: entity
+  parent: BaseComputer
+  id: ComputerTaipanSurveillanceCameraMonitor
+  name: монитор камер слежения
+  description: Монитор камер слежения. Вы наблюдаете за ними. Возможно.
+  suffix: Тайпан
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: cameras
+    - map: ["computerLayerKeys"]
+      state: tech_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: Computer
+    board: SurveillanceCameraMonitorCircuitboardTaipan
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCamera
+    transmitFrequencyId: SurveillanceCamera
+  - type: WiredNetworkConnection
+  - type: DeviceNetworkRequiresPower
+  - type: SurveillanceCameraMonitor
+  - type: ActivatableUI
+    key: enum.SurveillanceCameraMonitorUiKey.Key
+  - type: ActivatableUIRequiresVision
+  - type: Transform
+    anchored: true
+  - type: UserInterface
+    interfaces:
+      enum.SurveillanceCameraMonitorUiKey.Key:
+        type: SurveillanceCameraMonitorBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+
+- type: entity
+  parent: BaseComputerAiAccess
+  id: ComputerTaipanComms
+  name: консоль связи
+  suffix: Тайпан
+  description: Используется для объявлений по станции, установки уровня тревоги и вызова экстренного шаттла.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: comm_syndie
+    - map: ["computerLayerKeys"]
+      state: syndie_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: AccessReader
+    access: [["TaipanCommand"]]
+  - type: CommunicationsConsole
+    title: comms-console-announcement-title-taipan
+    sound:
+      path: /Audio/_DeadSpace/Announcements/announce_taipan.ogg
+      params:
+        volume: -2
+    canShuttle: False
+#    canCallERT: False
+#    canCallShuttle: False
+    color: "#8B0000"
+#    global: false
+  - type: DeviceNetwork
+    transmitFrequencyId: ShuttleTimer
+  - type: ActivatableUI
+    key: enum.CommunicationsConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.CommunicationsConsoleUiKey.Key:
+        type: CommunicationsConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: Computer
+    board: CommsComputerCircuitboardTaipan
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#8B0000"
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+
+- type: entity
+  parent: BaseComputerAiAccess
+  id: ComputerTaipanCrewMonitoring
+  name: консоль мониторинга экипажа
+  suffix: Тайпан
+  description: Используется для мониторинга активных датчиков здоровья большинства униформ экипажа.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: crew
+    - map: ["computerLayerKeys"]
+      state: med_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#8B0000"
+  - type: Computer
+    board: CrewMonitoringComputerCircuitboardTaipan
+  - type: ActivatableUI
+    key: enum.CrewMonitoringUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.CrewMonitoringUIKey.Key:
+        type: CrewMonitoringBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: CrewMonitoringConsole
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: CrewMonitor
+  - type: WirelessNetworkConnection
+    range: 1200
+
+- type: entity
+  parent: BaseComputerAiAccess
+  id: ComputerTaipanId
+  name: консоль ID карт
+  suffix: Тайпан
+  description: Терминал для программирования ID-карт сотрудников.
+  components:
+  - type: IdCardConsole
+    isTaipan: true
+    accessLevels:
+    - TaipanArmory
+    - TaipanAtmospherics
+    - TaipanCargo
+    - TaipanCommand
+    - TaipanCommunicationsOfficer
+    - TaipanEngineering
+    - TaipanMaint
+    - TaipanMedical
+    - TaipanProtection
+    - TaipanResearchDirector
+    - TaipanResearch
+    - TaipanService
+    - TaipanTechnicalOperationsSupervisor
+    - TaipanExternal
+    privilegedIdSlot:
+      name: id-card-console-privileged-id
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: false
+      whitelist:
+        components:
+        - IdCard
+    targetIdSlot:
+      name: id-card-console-target-id
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: false
+      whitelist:
+        components:
+        - IdCard
+  - type: ActivatableUI
+    key: enum.IdCardConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.IdCardConsoleUiKey.Key:
+        type: IdCardConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: CrewManifestViewer
+    ownerKey: enum.IdCardConsoleUiKey.Key
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Pai
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: id
+    - map: ["computerLayerKeys"]
+      state: id_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: Computer
+    board: IDComputerCircuitboardTaipan
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#8B0000"
+  - type: AccessReader
+    access: [["TaipanCommand"]]
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+      IdCardConsole-privilegedId: !type:ContainerSlot
+      IdCardConsole-targetId: !type:ContainerSlot
+
+- type: entity
+  parent: BaseComputerAiAccess
+  id: ComputerTaipanIFF
+  name: консоль системы опознавания
+  suffix: Тайпан
+  description: Позволяет управлять параметрами системы опознавания судна.
+  components:
+  - type: IFFConsole
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: helm
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: ActivatableUI
+    key: enum.IFFConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.IFFConsoleUiKey.Key:
+        type: IFFConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: Computer
+    board: IFFConsoleCircuitboardTaipan
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#8B0000"
+
+- type: entity
+  parent: ComputerPalletConsole
+  id: ComputerTaipanPalletConsole
+  name: консоль продажи грузов
+  suffix: Тайпан
+  description: Используется для продажи товаров, загруженных на грузовые паллеты.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: transfer
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: CargoPalletConsole
+    isTaipan: true
+  - type: ActivatableUI
+    key: enum.CargoPalletConsoleUiKey.Sale
+  - type: UserInterface
+    interfaces:
+      enum.CargoPalletConsoleUiKey.Sale:
+        type: CargoPalletConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: Computer
+    board: CargoSaleComputerCircuitboardTaipan
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#8B0000"
+  - type: AccessReader
+    access: [["TaipanCargo"]]
+
+- type: entity
+  parent: BaseComputerAiAccess
+  id: ComputerTaipanResearchAndDevelopment
+  name: исследовательская консоль
+  suffix: Тайпан
+  description: Компьютер, используемый для работы с инструментами исследования и разработки.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: rdcomp
+    - map: ["computerLayerKeys"]
+      state: rd_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: ResearchClient
+    isTaipan: true
+  - type: ResearchConsole
+    announcementChannel: Taipan
+  - type: ActiveRadio
+    channels:
+    - Taipan
+  - type: TechnologyDatabase
+  - type: ActivatableUI
+    key: enum.ResearchConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ResearchConsoleUiKey.Key:
+        type: ResearchConsoleBoundUserInterface
+      enum.ResearchClientUiKey.Key:
+        type: ResearchClientBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: ApcPowerReceiver
+    powerLoad: 1000
+  - type: Computer
+    board: ResearchComputerCircuitboardTaipan
+  - type: AccessReader
+    access: [["TaipanResearch"]]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#8B0000"
+
+- type: entity
+  parent: BaseComputerAiAccess
+  id: ComputerTaipanRoboticsControl
+  name: консоль управления робототехникой
+  suffix: Тайпан
+  description: Используется для удаленного мониторинга, отключения и уничтожения киборгов станции.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: robot
+    - map: ["computerLayerKeys"]
+      state: rd_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: RoboticsConsole
+    radioChannel: Taipan
+    isTaipan: true
+  - type: ActiveRadio
+    channels:
+    - Taipan
+  - type: ActivatableUI
+    key: enum.RoboticsConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.RoboticsConsoleUiKey.Key:
+        type: RoboticsConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: ApcPowerReceiver
+    powerLoad: 1000
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: RoboticsConsole
+    transmitFrequencyId: CyborgControl
+  - type: Computer
+    board: RoboticsConsoleCircuitboardTaipan
+  - type: AccessReader
+    access: [["TaipanResearchDirector"]]
+  - type: Lock
+    unlockOnClick: false
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#8B0000"
+
+- type: entity
+  parent: ComputerShuttleSyndie
+  id: ComputerTaipanShuttle
+  name: консоль управления шаттлом
+  suffix: Тайпан
+  description: Используется для пилотирования шаттла.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: syndishuttle
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: Tag
+    tags:
+    - Taipan
+  - type: Computer
+    board: ShuttleConsoleCircuitboardTaipan
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#8B0000"

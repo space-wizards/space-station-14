@@ -296,7 +296,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
-    access: [["SyndicateAgent"]]
+    access: [["SyndicateAgent"], ["TaipanService"]] # DS14
   - type: GuideHelp
     guides:
     - Bartender
@@ -1988,7 +1988,7 @@
     energy: 1.6
     color: "#d82929"
   - type: AccessReader
-    access: [["NuclearOperative"], ["SyndicateAgent"]]
+    access: [["NuclearOperative"], ["SyndicateAgent"], ["TaipanMaint"]] # DS14
 
 - type: entity
   parent: VendingMachine
@@ -2245,8 +2245,10 @@
     normalState: normal
     denyState: deny
     ejectDelay: 2
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/VendingMachines/chemvend.rsi
   - type: AccessReader
-    access: [["SyndicateAgent"]]
+    access: [["SyndicateAgent"], ["TaipanMedical"]] # DS14
 
 # wallmount
 - type: entity

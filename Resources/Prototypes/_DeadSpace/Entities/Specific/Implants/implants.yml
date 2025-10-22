@@ -60,3 +60,33 @@
     whitelist:
       components:
       - Hands
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: DeathRattleImplantTaipan
+  name: предсмертный хрип
+  description: Этот имплант информирует всех о физическом состоянии по частоте Тайпана.
+  suffix: Тайпан
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+    permanent: true
+    whitelist:
+      components:
+      - MobState
+  - type: TriggerOnMobstateChange
+    mobState:
+    - Critical
+    - Dead
+  - type: RattleOnTrigger
+    radioChannel: Taipan
+
+- type: entity
+  id: DeathRattleImplanterTaipan
+  parent: BaseImplantOnlyImplanterSyndi
+  name: предсмертный хрип
+  description: Этот имплант информирует всех о физическом состоянии по частоте Тайпана.
+  suffix: Тайпан
+  components:
+  - type: Implanter
+    implant: DeathRattleImplantTaipan

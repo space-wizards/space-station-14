@@ -1,0 +1,71 @@
+# Jumpsuit
+- type: loadout
+  id: TaipanMedicJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUniforms
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitTaipanMedic
+
+- type: loadout
+  id: TaipanMedicJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUniforms
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtTaipanMedic
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersTaipanMedic
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersTaipanMedic
+
+- type: loadout
+  id: UnderwearBottomPantiesTaipanMedic
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesTaipanMedic
+
+- type: loadout
+  id: UnderwearTopBraTaipanMedic
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraTaipanMedic
+
+# Loadout Groups
+- type: loadoutGroup
+  id: TaipanMedicUniform
+  name: loadout-group-taipan-medic-uniform
+  hidden: true
+  minLimit: 1
+  loadouts:
+  - TaipanMedicJumpsuit
+  - TaipanMedicJumpskirt
+
+- type: loadoutGroup
+  id: TaipanMedicUnderwear
+  name: loadout-group-taipan-medic-underwear
+  hidden: true
+  minLimit: 2
+  loadouts:
+  - UnderwearBottomBoxersTaipanMedic
+  - UnderwearBottomPantiesTaipanMedic
+  - UnderwearTopBraTaipanMedic
+
+# Role Loadout
+- type: roleLoadout
+  id: JobTaipanMedic
+  groups:
+  - TaipanMedicUniform
+  - TaipanMedicUnderwear
+  - TaipanSurvival
+  - GroupSpeciesBreathTool
+  - GroupTankHarness

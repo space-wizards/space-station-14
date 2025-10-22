@@ -1,0 +1,117 @@
+- type: entity
+  parent: BaseItem
+  id: BoxFolderTaipanGoals
+  name: папка с целью ННКСС "Тайпан"
+  suffix: Тайпан, Случайная цель
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/folders.rsi
+      layers:
+        - state: folder-colormap
+          color: "#cc2323"
+        - state: folder-base
+        - state: folder-stamp-inverse
+          color: "#1dff00"
+    - type: SpawnItemsOnUse
+      items:
+        - id: PaperTaipanGoalMonkeys
+          orGroup: GoalPool
+        - id: PaperTaipanGoalGrenades
+          orGroup: GoalPool
+        - id: PaperTaipanGoalVirus
+          orGroup: GoalPool
+        - id: PaperTaipanGoalExplosives
+          orGroup: GoalPool
+        - id: PaperTaipanGoalSpiders
+          orGroup: GoalPool
+        - id: PaperTaipanGoalZombies
+          orGroup: GoalPool
+        - id: PaperTaipanGoalNecromorfs
+          orGroup: GoalPool
+      sound:
+        path: /Audio/Effects/packetrip.ogg
+    - type: Appearance
+
+- type: entity
+  parent: PaperPrintedSyndicate
+  id: PaperTaipanGoalMonkeys
+  categories: [HideSpawnMenu]
+  components:
+    - type: Paper
+      stampState: paper_stamp-syndicate
+      stampedBy:
+        - stampedColor: "#850000"
+          stampedName: Синдикат
+      content: paper-taipan-goal-monkeys
+
+- type: entity
+  parent: PaperPrintedSyndicate
+  id: PaperTaipanGoalGrenades
+  categories: [HideSpawnMenu]
+  components:
+    - type: Paper
+      stampState: paper_stamp-syndicate
+      stampedBy:
+        - stampedColor: "#850000"
+          stampedName: Синдикат
+      content: paper-taipan-goal-grenades
+
+- type: entity
+  parent: PaperPrintedSyndicate
+  id: PaperTaipanGoalVirus
+  categories: [HideSpawnMenu]
+  components:
+    - type: Paper
+      stampState: paper_stamp-syndicate
+      stampedBy:
+        - stampedColor: "#850000"
+          stampedName: Синдикат
+      content: paper-taipan-goal-virus
+
+- type: entity
+  parent: PaperPrintedSyndicate
+  id: PaperTaipanGoalExplosives
+  categories: [HideSpawnMenu]
+  components:
+    - type: Paper
+      stampState: paper_stamp-syndicate
+      stampedBy:
+        - stampedColor: "#850000"
+          stampedName: Синдикат
+      content: paper-taipan-goal-explosives
+
+- type: entity
+  parent: PaperPrintedSyndicate
+  id: PaperTaipanGoalSpiders
+  categories: [HideSpawnMenu]
+  components:
+    - type: Paper
+      stampState: paper_stamp-syndicate
+      stampedBy:
+        - stampedColor: "#850000"
+          stampedName: Синдикат
+      content: paper-taipan-goal-spiders
+
+- type: entity
+  parent: PaperPrintedSyndicate
+  id: PaperTaipanGoalZombies
+  categories: [HideSpawnMenu]
+  components:
+    - type: Paper
+      stampState: paper_stamp-syndicate
+      stampedBy:
+        - stampedColor: "#850000"
+          stampedName: Синдикат
+      content: paper-taipan-goal-zombies
+
+- type: entity
+  parent: PaperPrintedSyndicate
+  id: PaperTaipanGoalNecromorfs
+  categories: [HideSpawnMenu]
+  components:
+    - type: Paper
+      stampState: paper_stamp-syndicate
+      stampedBy:
+        - stampedColor: "#850000"
+          stampedName: Синдикат
+      content: paper-taipan-goal-necromorfs

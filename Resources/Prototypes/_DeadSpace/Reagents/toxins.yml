@@ -1,0 +1,48 @@
+- type: reagent
+  id: Chitoectesin
+  name: reagent-name-chitoectesin
+  group: Toxins
+  desc: reagent-desc-chitoectesin
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: medicine
+  color: "#CD853F"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.50
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.5
+            Caustic: 0.5
+      - !type:Polymorph
+        prototype: EggSpiderTerror
+        conditions:
+        - !type:OrganType
+          type: EggSpider
+          shouldHave: true
+        - !type:ReagentThreshold
+          min: 10
+
+- type: reagent
+  id: Terratosomochromolin
+  name: reagent-name-terratosomochromolin
+  group: Toxins
+  desc: reagent-desc-terratosomochromolin
+  physicalDesc: reagent-physical-desc-shiny
+  flavor: bitter
+  color: "#8B4513"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+      - !type:MovespeedModifier
+        walkSpeedModifier: 0.5
+        sprintSpeedModifier: 0.5
+      - !type:HealthChange
+        damage:
+          groups:
+            Airloss: 4

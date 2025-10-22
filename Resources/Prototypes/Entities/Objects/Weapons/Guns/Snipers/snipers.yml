@@ -131,6 +131,9 @@
     pvsIncrease: 0.5 # DS14, prev 0.3
   - type: StaticPrice
     price: 3500
+  - type: Tag # DS14
+    tags:
+    - SniperHristov
 
 - type: entity
   name: musket

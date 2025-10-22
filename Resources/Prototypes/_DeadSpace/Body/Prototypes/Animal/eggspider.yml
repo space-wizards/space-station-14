@@ -1,0 +1,13 @@
+- type: body
+  id: EggSpider
+  name: "яйцо паука"
+  root: torso
+  slots:
+    torso:
+      part: TorsoAnimal
+      organs:
+        lungs: OrganAnimalLungs
+        stomach: OrganEggSpiderStomach
+        liver: OrganEggSpiderLiver
+        heart: OrganEggSpiderHeart
+        kidneys: OrganAnimalKidneys

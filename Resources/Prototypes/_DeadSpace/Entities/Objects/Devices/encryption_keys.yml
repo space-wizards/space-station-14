@@ -46,8 +46,8 @@
 - type: entity
   parent: EncryptionKey
   id: EncryptionKeyTaipan
-  name: красный ключ шифрования
-  description: Ключ шифрования, используемый... хм... кем же?
+  name: багровый ключ шифрования
+  description: Ключ шифрования, используемый гордыми змееносцами!
   suffix: Тайпан
   components:
   - type: EncryptionKey
@@ -57,7 +57,10 @@
   - type: Sprite
     sprite: _DeadSpace/Objects/Devices/encryption_keys.rsi
     layers:
-    - state: crypt_typ
+    - state: crypt_taipan
+  - type: Tag
+    tags:
+    - EncryptionTaipan
 
 - type: entity
   parent: EncryptionKey
@@ -68,7 +71,7 @@
   - type: EncryptionKey
     channels:
     - Law
-    - Command    
+    - Command
     defaultChannel: Law
   - type: Sprite
     layers:

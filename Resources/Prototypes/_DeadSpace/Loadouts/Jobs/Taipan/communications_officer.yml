@@ -1,0 +1,71 @@
+# Jumpsuit
+- type: loadout
+  id: TaipanCommunicationsOfficerJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUniforms
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitTaipanCommunicationsOfficer
+
+- type: loadout
+  id: TaipanCommunicationsOfficerJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUniforms
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtTaipanCommunicationsOfficer
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersTaipanCommunicationsOfficer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersTaipanCommunicationsOfficer
+
+- type: loadout
+  id: UnderwearBottomPantiesTaipanCommunicationsOfficer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesTaipanCommunicationsOfficer
+
+- type: loadout
+  id: UnderwearTopBraTaipanCommunicationsOfficer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraTaipanCommunicationsOfficer
+
+# Loadout Groups
+- type: loadoutGroup
+  id: TaipanCommunicationsOfficerUniform
+  name: loadout-group-taipan-communications-officer-uniform
+  hidden: true
+  minLimit: 1
+  loadouts:
+  - TaipanCommunicationsOfficerJumpsuit
+  - TaipanCommunicationsOfficerJumpskirt
+
+- type: loadoutGroup
+  id: TaipanCommunicationsOfficerUnderwear
+  name: loadout-group-taipan-communications-officer-underwear
+  hidden: true
+  minLimit: 2
+  loadouts:
+  - UnderwearBottomBoxersTaipanCommunicationsOfficer
+  - UnderwearBottomPantiesTaipanCommunicationsOfficer
+  - UnderwearTopBraTaipanCommunicationsOfficer
+
+# Role Loadout
+- type: roleLoadout
+  id: JobTaipanCommunicationsOfficer
+  groups:
+  - TaipanCommunicationsOfficerUniform
+  - TaipanCommunicationsOfficerUnderwear
+  - TaipanSurvival
+  - GroupSpeciesBreathTool
+  - GroupTankHarness

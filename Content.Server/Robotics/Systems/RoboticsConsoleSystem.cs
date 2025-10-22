@@ -10,6 +10,7 @@ using Content.Shared.Robotics.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.Silicons.Borgs.Components;
 
 namespace Content.Server.Research.Systems;
 
@@ -25,6 +26,7 @@ public sealed class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
     [Dependency] private readonly LockSystem _lock = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!; // DS14
 
     // almost never timing out more than 1 per tick so initialize with that capacity
     private List<string> _removing = new(1);
@@ -81,6 +83,13 @@ public sealed class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
         if (!payload.TryGetValue(RoboticsConsoleConstants.NET_CYBORG_DATA, out CyborgControlData? data))
             return;
 
+        // DS14-start
+        if (!_entityManager.TryGetComponent<BorgTransponderComponent>(args.Sender, out var transponder))
+            return;
+
+        if (ent.Comp.IsTaipan != transponder.IsTaipan)
+            return;
+        // DS14-end
         var real = data.Value;
         real.Timeout = _timing.CurTime + ent.Comp.Timeout;
         ent.Comp.Cyborgs[args.SenderAddress] = real;

@@ -100,7 +100,7 @@
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
   - type: Gun
     minAngle: 2
-    maxAngle: 16 
+    maxAngle: 16
     shotsPerBurst: 5
     availableModes:
     - Burst
@@ -117,6 +117,9 @@
   - type: Appearance
   - type: StaticPrice
     price: 5000
+  - type: Tag # DS14
+    tags:
+    - SubMachineGunC20r
 
 - type: entity
   name: C-20r ROW #I think ROW stands for Recharging Onboard Weapon so i'm following the L6C's example

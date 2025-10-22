@@ -1,0 +1,306 @@
+- type: entity
+  id: BaseBorgChassisTaipan
+  parent: [BaseBorgChassis, BaseBorgTransponder]
+  abstract: true
+  description: Гибрид машины и человека, помогающий в работе станции. Они обожают, когда их снова и снова просят назвать свои законы.
+  suffix: Тайпан
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Mobs/Silicon/chassis.rsi
+  - type: RandomMetadata
+    nameSegments:
+    - NamesBorg
+  - type: NpcFactionMember
+    factions:
+    - Taipan
+  - type: Access
+    groups:
+    - TaipanAccess
+  - type: AccessReader
+    access: [["TaipanCommand"], ["TaipanResearch"]]
+  - type: ShowSyndicateIcons
+  - type: SiliconLawProvider
+    laws: TaipanStatic
+    subverted: false
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary # But that has really long range
+    - Taipan
+  - type: ActiveRadio
+    channels:
+    - Taipan
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: SyndieBorg
+    allowedEmotes:
+    - Laugh
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSiliconSyndicate
+  - type: Damageable
+    damageModifierSet: CombatBorg
+  - type: InteractionPopup
+    interactSuccessString: petting-success-syndicate-cyborg
+    interactFailureString: petting-failure-syndicate-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: BorgTransponder
+    isTaipan: true
+    name: taipan cyborg
+
+- type: entity
+  id: BorgChassisTaipanSelectable
+  parent: BaseBorgChassisTaipan
+  components:
+  - type: Sprite
+    layers:
+    - state: robot
+      map: ["enum.BorgVisualLayers.Body", "movement"]
+    - state: robot_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: robot_l
+      shader: unshaded
+      map: ["light","enum.BorgVisualLayers.LightStatus"]
+      visible: false
+  - type: BorgChassis
+    maxModules: 0
+    hasMindState: robot_e
+    noMindState: robot_e_r
+  - type: BorgTransponder
+    sprite:
+      sprite: _DeadSpace/Mobs/Silicon/chassis.rsi
+      state: robot
+    isTaipan: true
+    name: taipan cyborg
+  - type: BorgSwitchableType
+    inherentRadioChannels:
+    - Taipan
+  - type: Appearance
+
+# Taipan Generic
+- type: entity
+  id: BorgChassisTaipanGeneric
+  parent: BorgChassisTaipanSelectable
+  components:
+  - type: Sprite
+    layers:
+    - state: robot
+      map: ["enum.BorgVisualLayers.Body", "movement"]
+    - state: robot_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: robot_l
+      shader: unshaded
+      map: ["light","enum.BorgVisualLayers.LightStatus"]
+      visible: false
+  - type: BorgSwitchableType
+    selectedBorgType: taipan-generic
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: robot-moving
+    noMovementLayers:
+      movement:
+        state: robot
+  - type: BorgTransponder
+    sprite:
+      sprite: _DeadSpace/Mobs/Silicon/chassis.rsi
+      state: robot
+    isTaipan: true
+    name: taipan generic cyborg
+
+# Taipan Engineer
+- type: entity
+  id: BorgChassisTaipanEngineer
+  parent: BorgChassisTaipanSelectable
+  components:
+  - type: Sprite
+    layers:
+    - state: engineer
+      map: ["enum.BorgVisualLayers.Body", "movement"]
+    - state: engineer_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: engineer_l
+      shader: unshaded
+      map: ["light","enum.BorgVisualLayers.LightStatus"]
+      visible: false
+  - type: BorgSwitchableType
+    selectedBorgType: taipan-engineering
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: engineer-moving
+    noMovementLayers:
+      movement:
+        state: engineer
+  - type: BorgTransponder
+    sprite:
+      sprite: _DeadSpace/Mobs/Silicon/chassis.rsi
+      state: engineer
+    isTaipan: true
+    name: taipan engineer cyborg
+
+# Taipan Mining
+- type: entity
+  id: BorgChassisTaipanMining
+  parent: BorgChassisTaipanSelectable
+  components:
+  - type: Sprite
+    layers:
+    - state: miner
+      map: ["enum.BorgVisualLayers.Body", "movement"]
+    - state: miner_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: miner_l
+      shader: unshaded
+      map: ["light","enum.BorgVisualLayers.LightStatus"]
+      visible: false
+  - type: BorgSwitchableType
+    selectedBorgType: taipan-mining
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: miner-moving
+    noMovementLayers:
+      movement:
+        state: miner
+  - type: BorgTransponder
+    sprite:
+      sprite: _DeadSpace/Mobs/Silicon/chassis.rsi
+      state: miner
+    isTaipan: true
+    name: taipan mining cyborg
+
+# Taipan Janitor
+- type: entity
+  id: BorgChassisTaipanJanitor
+  parent: BorgChassisTaipanSelectable
+  components:
+  - type: Sprite
+    layers:
+    - state: janitor
+      map: ["enum.BorgVisualLayers.Body", "movement"]
+    - state: janitor_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: janitor_l
+      shader: unshaded
+      map: ["light","enum.BorgVisualLayers.LightStatus"]
+      visible: false
+  - type: BorgSwitchableType
+    selectedBorgType: taipan-janitor
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: janitor-moving
+    noMovementLayers:
+      movement:
+        state: janitor
+  - type: BorgTransponder
+    sprite:
+      sprite: _DeadSpace/Mobs/Silicon/chassis.rsi
+      state: janitor
+    isTaipan: true
+    name: taipan janitor cyborg
+
+# Taipan Medical
+- type: entity
+  id: BorgChassisTaipanMedical
+  parent: BorgChassisTaipanSelectable
+  components:
+  - type: Sprite
+    layers:
+    - state: medical
+      map: ["enum.BorgVisualLayers.Body", "movement"]
+    - state: medical_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: medical_l
+      shader: unshaded
+      map: ["light","enum.BorgVisualLayers.LightStatus"]
+      visible: false
+  - type: BorgSwitchableType
+    selectedBorgType: taipan-medical
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: medical-moving
+    noMovementLayers:
+      movement:
+        state: medical
+  - type: BorgTransponder
+    sprite:
+      sprite: _DeadSpace/Mobs/Silicon/chassis.rsi
+      state: medical
+    isTaipan: true
+    name: taipan medical cyborg
+
+# Taipan Service
+- type: entity
+  id: BorgChassisTaipanService
+  parent: BorgChassisTaipanSelectable
+  components:
+  - type: Sprite
+    layers:
+    - state: service
+      map: ["enum.BorgVisualLayers.Body", "movement"]
+    - state: service_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: service_l
+      shader: unshaded
+      map: ["light","enum.BorgVisualLayers.LightStatus"]
+      visible: false
+  - type: BorgSwitchableType
+    selectedBorgType: taipan-service
+  - type: TTS # Corvax-TTS
+    voice: Glados
+  - type: BorgTransponder
+    sprite:
+      sprite: _DeadSpace/Mobs/Silicon/chassis.rsi
+      state: service
+    isTaipan: true
+    name: taipan service cyborg
+
+# Taipan Security
+- type: entity
+  id: BorgChassisTaipanSecurity
+  parent: BorgChassisTaipanSelectable
+  components:
+  - type: Sprite
+    layers:
+    - state: sec
+      map: ["enum.BorgVisualLayers.Body", "movement"]
+    - state: sec_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: sec_l
+      shader: unshaded
+      map: ["light","enum.BorgVisualLayers.LightStatus"]
+      visible: false
+  - type: BorgSwitchableType
+    selectedBorgType: taipan-security
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: sec-moving
+    noMovementLayers:
+      movement:
+        state: sec
+  - type: BorgTransponder
+    sprite:
+      sprite: _DeadSpace/Mobs/Silicon/chassis.rsi
+      state: sec
+    isTaipan: true
+    name: taipan security cyborg

@@ -100,14 +100,18 @@
     - !type:BlacklistedJobsMindFilter
       blacklist:
       - Passenger
-      - TaipanAtmosTech
+      - TaipanAtmosphericsEngineer
       - TaipanBotanist
       - TaipanCargotech
       - TaipanChef
+      - TaipanCommunicationsOfficer
       - TaipanMedic
-      - TaipanRD
-      - TaipanScience
-      - TaipanTelecommunicationsOfficer
+      - TaipanParamedic
+      - TaipanRecruit
+      - TaipanResearchDirector
+      - TaipanResearcher
+      - TaipanTechnician
+      - TaipanTechnicalOperationsSupervisor
   - type: KillPersonCondition
     requireMaroon: true
 

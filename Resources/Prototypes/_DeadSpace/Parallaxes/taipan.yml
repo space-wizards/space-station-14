@@ -1,0 +1,50 @@
+- type: parallax
+  id: Taipan
+  layers:
+  - texture:
+      !type:ImageParallaxTextureSource
+      path: "/Textures/_DeadSpace/Parallaxes/TaipanParallaxBG.png"
+    slowness: 0.998046875
+  - texture:
+      !type:ImageParallaxTextureSource
+      path: "/Textures/_DeadSpace/Parallaxes/TaipanParallaxNeb.png"
+    slowness: 0.969046875
+    scale: "0.5, 0.5"
+    worldHomePosition: "0, 0"
+  - texture:
+      !type:GeneratedParallaxTextureSource
+      id: "hq_wizard_stars"
+      configPath: "/Prototypes/Parallaxes/parallax_config_stars.toml"
+    slowness: 0.996625
+  - texture:
+      !type:GeneratedParallaxTextureSource
+      id: "hq_wizard_stars_dim"
+      configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim.toml"
+    slowness: 0.989375
+  - texture:
+      !type:ImageParallaxTextureSource
+      path: "/Textures/_DeadSpace/Parallaxes/blackhole.png"
+    slowness: 0.969046875
+    tiled: false
+    worldHomePosition: "0.0, 250.0"
+  - texture:
+      !type:ImageParallaxTextureSource
+      path: "/Textures/Parallaxes/debris_large.png"
+    slowness: 0.97
+    scale: "0.45, 0.45"
+    scrolling: "0, -0.1"
+    worldHomePosition: "0.0, -100"
+  - texture:
+      !type:ImageParallaxTextureSource
+      path: "/Textures/Parallaxes/debris_small.png"
+    slowness: 0.95
+    scale: "0.50, 0.50"
+    scrolling: "0, -0.1"
+    worldHomePosition: "0.0, 100"
+  layersLQ:
+  - texture:
+      !type:GeneratedParallaxTextureSource
+      id: ""
+      configPath: "/Prototypes/Parallaxes/parallax_config.toml"
+    slowness: 0.875
+  layersLQUseHQ: false

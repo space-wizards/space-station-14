@@ -4,11 +4,16 @@
   description: department-Taipan-description
   color: "#D381C9"
   roles:
-  - TaipanAtmosTech
+  - TaipanAtmosphericsEngineer
   - TaipanBotanist
   - TaipanCargotech
   - TaipanChef
+  - TaipanCommunicationsOfficer
   - TaipanMedic
-  - TaipanRD
-  - TaipanScience
-  - TaipanTelecommunicationsOfficer
+  - TaipanParamedic
+  - TaipanRecruit
+  - TaipanResearchDirector
+  - TaipanResearcher
+  - TaipanTechnician
+  - TaipanTechnicalOperationsSupervisor
+  editorHidden: true

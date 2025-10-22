@@ -1,0 +1,291 @@
+- type: entity
+  parent: AirlockTaipan
+  id: AirlockTaipanProtectionLocked
+  suffix: Тайпан, Охрана, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanProtection ]
+
+- type: entity
+  parent: AirlockTaipanService
+  id: AirlockTaipanServiceLocked
+  suffix: Тайпан, Сервис, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanService ]
+
+- type: entity
+  parent: AirlockTaipanAtmospherics
+  id: AirlockTaipanAtmosphericsLocked
+  suffix: Тайпан, Атмосферный, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanAtmospherics ]
+
+- type: entity
+  parent: AirlockTaipanCargo
+  id: AirlockTaipanCargoLocked
+  suffix: Тайпан, Снабжение, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanCargo ]
+
+- type: entity
+  parent: AirlockTaipanCommand
+  id: AirlockTaipanCommandLocked
+  suffix: Тайпан, Командование, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanCommand ]
+
+- type: entity
+  parent: AirlockTaipanEngineering
+  id: AirlockTaipanEngineeringLocked
+  suffix: Тайпан, Инженерный, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanEngineering ]
+
+- type: entity
+  parent: AirlockTaipanMaint
+  id: AirlockTaipanMaintLocked
+  suffix: Тайпан, Технический, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanMaintenance ]
+
+- type: entity
+  parent: AirlockTaipanMedical
+  id: AirlockTaipanMedicalLocked
+  suffix: Тайпан, Медицинский, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanMedical ]
+
+- type: entity
+  parent: AirlockTaipanScience
+  id: AirlockTaipanScienceLocked
+  suffix: Тайпан, Научный, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanResearch ]
+
+- type: entity
+  parent: AirlockTaipanVirology
+  id: AirlockTaipanVirologyLocked
+  suffix: Тайпан, Вирусология, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanMedical ]
+
+- type: entity
+  parent: AirlockTaipanCommand
+  id: AirlockTaipanTechnicalOperationsSupervisorLocked
+  suffix: Тайпан, Руководитель техобеспечения, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanTechnicalOperationsSupervisor ]
+
+- type: entity
+  parent: AirlockTaipanCommand
+  id: AirlockTaipanResearchDirectorLocked
+  suffix: Тайпан, Директор исследований, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanResearchDirector ]
+
+- type: entity
+  parent: AirlockTaipanCommand
+  id: AirlockTaipanCommunicationsOfficerLocked
+  suffix: Тайпан, Офицер телекоммуникаций, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanCommunicationsOfficer ]
+
+- type: entity
+  parent: AirlockTaipanGlass
+  id: AirlockTaipanGlassProtectionLocked
+  suffix: Тайпан, Охрана, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanProtection ]
+
+- type: entity
+  parent: AirlockTaipanGlassService
+  id: AirlockTaipanGlassServiceLocked
+  suffix: Тайпан, Сервис, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanService ]
+
+- type: entity
+  parent: AirlockTaipanGlassAtmospherics
+  id: AirlockTaipanGlassAtmosphericsLocked
+  suffix: Тайпан, Атмосферный, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanAtmospherics ]
+
+- type: entity
+  parent: AirlockTaipanGlassCargo
+  id: AirlockTaipanGlassCargoLocked
+  suffix: Тайпан, Снабжение, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanCargo ]
+
+- type: entity
+  parent: AirlockTaipanGlassCommand
+  id: AirlockTaipanGlassCommandLocked
+  suffix: Тайпан, Командование, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanCommand ]
+
+- type: entity
+  parent: AirlockTaipanGlassEngineering
+  id: AirlockTaipanGlassEngineeringLocked
+  suffix: Тайпан, Инженерный, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanEngineering ]
+
+- type: entity
+  parent: AirlockTaipanGlassMaint
+  id: AirlockTaipanGlassMaintLocked
+  suffix: Тайпан, Технический, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanMaintenance ]
+
+- type: entity
+  parent: AirlockTaipanGlassMedical
+  id: AirlockTaipanGlassMedicalLocked
+  suffix: Тайпан, Медицинский, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanMedical ]
+
+- type: entity
+  parent: AirlockTaipanGlassVirology
+  id: AirlockTaipanGlassVirologyLocked
+  suffix: Тайпан, Вирусология, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanMedical ]
+
+- type: entity
+  parent: AirlockTaipanGlassScience
+  id: AirlockTaipanGlassScienceLocked
+  suffix: Тайпан, Научный, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanResearch ]
+
+- type: entity
+  parent: AirlockTaipanGlassCommand
+  id: AirlockTaipanGlassTechnicalOperationsSupervisorLocked
+  suffix: Тайпан, Руководитель техобеспечения, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanTechnicalOperationsSupervisor ]
+
+- type: entity
+  parent: AirlockTaipanGlassCommand
+  id: AirlockTaipanGlassResearchDirectorLocked
+  suffix: Тайпан, Директор исследований, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanResearchDirector ]
+
+- type: entity
+  parent: AirlockTaipanGlassCommand
+  id: AirlockTaipanGlassCommunicationsOfficerLocked
+  suffix: Тайпан, Офицер телекоммуникаций, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanCommunicationsOfficer ]
+
+- type: entity
+  parent: AirlockTaipanFreezer
+  id: AirlockTaipanFreezerLocked
+  suffix: Тайпан, Холодильник, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanService ]
+
+- type: entity
+  parent: HighSecDoorTaipan
+  id: HighSecDoorTaipanLocked
+  suffix: Тайпан, Хранилище, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanCommunicationsOfficer ]
+
+- type: entity
+  parent: AirlockHatchTaipan
+  id: AirlockHatchTaipanLocked
+  suffix: Тайпан, Внешний, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanExternal ]
+
+- type: entity
+  parent: AirlockHatchGlassTaipan
+  id: AirlockHatchGlassTaipanLocked
+  suffix: Тайпан, Внешний, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanExternal ]
+
+- type: entity
+  parent: AirlockShuttleSyndicate
+  id: AirlockExternalShuttleTaipanLocked
+  name: стыковочный шлюз
+  description: Необходим для соединения двух космических кораблей вместе.
+  suffix: Тайпан, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanExternal ]
+
+- type: entity
+  parent: AirlockGlassShuttleSyndicate
+  id: AirlockExternalGlassShuttleTaipanLocked
+  name: стыковочный шлюз
+  description: Необходим для соединения двух космических кораблей вместе.
+  suffix: Тайпан, Стеклянный, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanExternal ]

@@ -1,0 +1,69 @@
+- type: cargoProduct
+  id: TaipanEmergencyExplosive
+  icon:
+    sprite: Clothing/Head/Helmets/bombsuit.rsi
+    state: icon
+  product: CrateEmergencyExplosive
+  cost: 1000
+  category: cargoproduct-category-name-emergency
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEmergencyFire
+  icon:
+    sprite: Objects/Misc/fire_extinguisher.rsi
+    state: fire_extinguisher_closed
+  product: CrateEmergencyFire
+  cost: 1500
+  category: cargoproduct-category-name-emergency
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEmergencyInternals
+  icon:
+    sprite: Clothing/Mask/breath.rsi
+    state: icon
+  product: CrateEmergencyInternals
+  cost: 600
+  category: cargoproduct-category-name-emergency
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEmergencyInternalsLarge
+  icon:
+    sprite: Clothing/Mask/breath.rsi
+    state: icon
+  product: CrateEmergencyInternalsLarge
+  cost: 1200
+  category: cargoproduct-category-name-emergency
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEmergencyRadiation
+  icon:
+    sprite: Structures/Wallmounts/signs.rsi
+    state: radiation
+  product: CrateEmergencyRadiation
+  cost: 1000
+  category: cargoproduct-category-name-emergency
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEmergencyInflatablewall
+  icon:
+    sprite: Objects/Misc/inflatable_wall.rsi
+    state: item_wall
+  product: CrateEmergencyInflatablewall
+  cost: 500
+  category: cargoproduct-category-name-emergency
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEmergencyNitrogenTanks
+  icon:
+    sprite: Objects/Tanks/red.rsi
+    state: icon
+  product: CrateNitrogenInternals
+  cost: 350
+  category: cargoproduct-category-name-emergency
+  group: taipan_market

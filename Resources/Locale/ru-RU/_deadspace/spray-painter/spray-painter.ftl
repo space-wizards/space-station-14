@@ -1,0 +1,60 @@
+# Categories (tabs)
+spray-painter-tab-category-taipanairlocks = Шлюзы
+spray-painter-tab-category-taipancanisters = Канистры
+spray-painter-tab-category-taipancrates = Ящики
+spray-painter-tab-category-taipanlockers = Шкафчики
+# Groups (subtabs)
+spray-painter-tab-group-taipanairlockstandard = Стандарт
+spray-painter-tab-group-taipanairlockglass = Стекло
+spray-painter-tab-group-taipancratesteel = Сталь
+spray-painter-tab-group-taipanlocker = С замком
+# Airlocks
+spray-painter-style-taipanairlockstandard-atmospherics = Атмос
+spray-painter-style-taipanairlockstandard-basic = Обычный
+spray-painter-style-taipanairlockstandard-cargo = Снабжение
+spray-painter-style-taipanairlockstandard-chemistry = Химия
+spray-painter-style-taipanairlockstandard-command = Командование
+spray-painter-style-taipanairlockstandard-engineering = Инженерный
+spray-painter-style-taipanairlockstandard-freezer = Холодильник
+spray-painter-style-taipanairlockstandard-maintenance = Технический
+spray-painter-style-taipanairlockstandard-medical = Медицинский
+spray-painter-style-taipanairlockstandard-science = Научный
+spray-painter-style-taipanairlockstandard-virology = Вирусология
+spray-painter-style-taipanairlockstandard-service = Сервис
+spray-painter-style-taipanairlockglass-atmospherics = Атмос
+spray-painter-style-taipanairlockglass-basic = Обычный
+spray-painter-style-taipanairlockglass-cargo = Снабжение
+spray-painter-style-taipanairlockglass-chemistry = Химия
+spray-painter-style-taipanairlockglass-command = Командование
+spray-painter-style-taipanairlockglass-engineering = Инженерный
+spray-painter-style-taipanairlockglass-maintenance = Технический
+spray-painter-style-taipanairlockglass-medical = Медицинский
+spray-painter-style-taipanairlockglass-science = Научный
+spray-painter-style-taipanairlockglass-virology = Вирусология
+spray-painter-style-taipanairlockglass-service = Сервис
+# Lockers
+spray-painter-style-taipanlocker-basic = Обычный
+spray-painter-style-taipanlocker-botanist = Ботаник
+spray-painter-style-taipanlocker-electrical = Электрический
+spray-painter-style-taipanlocker-welding = Сварочный
+spray-painter-style-taipanlocker-technical = Руководитель техобеспечения
+spray-painter-style-taipanlocker-cargotech = Карготехник
+spray-painter-style-taipanlocker-atmospherics = Атмосферный инженер
+spray-painter-style-taipanlocker-technician = Ремонтник
+spray-painter-style-taipanlocker-medicine = Медицинский
+spray-painter-style-taipanlocker-medic = Медик
+spray-painter-style-taipanlocker-paramedic = Парамедик
+spray-painter-style-taipanlocker-chemical = Химия
+spray-painter-style-taipanlocker-rd = Директор исследований
+spray-painter-style-taipanlocker-researcher = Исследователь
+spray-painter-style-taipanlocker-communications = Офицер телекоммуникаций
+spray-painter-style-taipanlocker-security = Рекрут
+spray-painter-style-taipanlocker-evac = Эвак ремонт
+# Crates
+spray-painter-style-taipancratesteel-basic = Обычный
+spray-painter-style-taipancratesteel-electrical = Электрический
+spray-painter-style-taipancratesteel-engineering = Инженерный
+spray-painter-style-taipancratesteel-radiation = Радиационный
+spray-painter-style-taipancratesteel-science = Научный
+spray-painter-style-taipancratesteel-surgery = Хирургический
+spray-painter-style-taipancratesteel-syndicate = Синдикат

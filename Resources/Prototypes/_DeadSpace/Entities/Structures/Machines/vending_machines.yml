@@ -98,3 +98,95 @@
     radius: 1.8
     energy: 1.6
     color: "#7c3bb8"
+
+- type: entity
+  parent: VendingMachineMedical
+  id: VendingMachineMedicalTaipan
+  name: СиндиМед Плюс
+  description: Это медицинский раздатчик препаратов. Только натуральные химикаты!
+  suffix: Тайпан
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/VendingMachines/medical.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: AccessReader
+    access: [["TaipanMedical"]]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#8B0000"
+
+- type: entity
+  parent: VendingMachineYouTool
+  id: VendingMachineYouToolTaipan
+  name: СиндИнструменты
+  description: "Торговый автомат, содержащий стандартные инструменты. Табличка гласит: Инструменты для инструментов."
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/VendingMachines/youtool.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#8B0000"
+
+- type: entity
+  parent: VendingMachineEngivend
+  id: VendingMachineEngivendTaipan
+  name: СиндиИнж
+  description: Запасные инструменты. А что? Вы ожидали чего-то остроумного?
+  suffix: Тайпан
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/VendingMachines/engivend.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: AccessReader
+    access: [["TaipanEngineering"]]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#8B0000"
+
+- type: entity
+  parent: VendingMachineSalvage
+  id: VendingMachineSalvageTaipan
+  name: Карготехмаг
+  description: Лучший друг дворфов!
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/VendingMachines/mining.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#8B0000"
+  - type: AccessReader
+    access: [["TaipanCargo"]]

@@ -1,0 +1,475 @@
+- type: entity
+  id: AutolatheTaipan
+  parent: BaseLatheLube
+  name: автолат
+  suffix: Тайпан
+  description: Производит базовые изделия из металла и стекла. Имеет возможность обрабатывать чертежи для печати по новым рецептам.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/autolathe.rsi
+    snapCardinals: true
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Machine
+    board: AutolatheMachineCircuitboardTaipan
+  - type: MaterialStorage
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+        - Ingot
+  - type: ResearchClient
+    isTaipan: true
+  - type: Lathe
+    idleState: icon
+    runningState: building
+    unlitIdleState: unlit
+    unlitRunningState: unlit-building
+    staticPacks:
+    - ToolsStatic
+    - PartsStatic
+    - AtmosStatic
+    - CablesStatic
+    - CargoStatic
+    - BasicChemistryStatic
+    - LightsStatic
+    - ServiceStatic
+    - PowerCellsStatic
+    - TaipanElectronicsStatic
+  - type: BlueprintReceiver
+    whitelist:
+      tags:
+      - BlueprintAutolathe
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      blueprint: !type:Container
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - blueprint
+  - type: OreSiloClient
+
+- type: entity
+  id: AutolatheHyperConvectionTaipan
+  parent: [AutolatheTaipan, BaseHyperlathe]
+  name: гиперконвекционный автолат
+  suffix: Тайпан
+  description: Экспериментальный автолат, использующий технологию экстремального нагрева для замедленного, но гораздо более экономичного создания предметов.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/autolathe_hypercon.rsi
+  - type: Machine
+    board: AutolatheHyperConvectionMachineCircuitboardTaipan
+  - type: ResearchClient
+    isTaipan: true
+
+- type: entity
+  id: ProtolatheTaipan
+  parent: BaseLatheLube
+  name: протолат
+  suffix: Тайпан
+  description: Преобразует сырьё в продвинутые предметы.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/protolathe.rsi
+    snapCardinals: true
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Machine
+    board: ProtolatheMachineCircuitboardTaipan
+  - type: MaterialStorage
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+        - Ingot
+  - type: ResearchClient
+    isTaipan: true
+  - type: Lathe
+    idleState: icon
+    runningState: building
+    unlitIdleState: unlit
+    unlitRunningState: unlit-building
+    dynamicPacks:
+    - SyndicateAdvancedTools
+    - TaipanHardsuits
+    - ScienceEquipment
+    - ScienceExplosives
+    - TaipanScienceClothing
+    - PowerCells
+    - ScienceWeapons
+    - Mining
+    - AtmosTools
+    - EngineeringWeapons
+    - Janitor
+    - Instruments
+    - TaipanEquipment
+    - SalvageSecurityWeapons
+  - type: OreSiloClient
+
+- type: entity
+  id: ProtolatheHyperConvectionTaipan
+  parent: [ProtolatheTaipan, BaseHyperlathe]
+  name: гиперконвекционный протолат
+  suffix: Тайпан
+  description: Экспериментальный протолат, использующий технологию экстремального нагрева для замедленного, но гораздо более экономичного создания предметов.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/protolathe_hypercon.rsi
+  - type: Machine
+    board: ProtolatheHyperConvectionMachineCircuitboardTaipan
+  - type: ResearchClient
+    isTaipan: true
+
+- type: entity
+  id: CircuitImprinterTaipan
+  parent: BaseLatheLube
+  name: принтер схем
+  suffix: Тайпан
+  description: Печатает платы для машин.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/circuit_imprinter.rsi
+    snapCardinals: true
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Machine
+    board: CircuitImprinterMachineCircuitboardTaipan
+  - type: ResearchClient
+    isTaipan: true
+  - type: Lathe
+    producingSound: /Audio/Machines/circuitprinter.ogg
+    idleState: icon
+    runningState: building
+    staticPacks:
+    - TaipanScienceBoardsStatic
+    - TaipanServiceBoardsStatic
+    - TaipanCargoBoardsStatic
+    - MedicalBoardsStatic
+    - EngineeringBoardsStatic
+    dynamicPacks:
+    - EngineeringBoards
+    - TaipanCargoBoards
+    - MedicalBoards
+    - TaipanServiceBoards
+    - TaipanScienceBoards
+    - TaipanMechBoards
+    - TaipanShuttleBoards
+    - SalvageSecurityBoards
+    - SecurityBoards
+    - TaipanCloning
+  - type: MaterialStorage
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+        - Ingot
+  - type: RequireProjectileTarget
+  - type: OreSiloClient
+
+- type: entity
+  id: CircuitImprinterHyperConvectionTaipan
+  parent: [CircuitImprinterTaipan, BaseHyperlathe]
+  name: гиперконвекционный принтер схем
+  suffix: Тайпан
+  description: Экспериментальный принтер схем, использующий технологию экстремального нагрева для замедленного, но гораздо более экономичного создания предметов.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/circuit_imprinter_hypercon.rsi
+  - type: Machine
+    board: CircuitImprinterHyperConvectionMachineCircuitboardTaipan
+  - type: ResearchClient
+    isTaipan: true
+
+- type: entity
+  id: ExosuitFabricatorTaipan
+  parent: BaseLatheLube
+  name: фабрикатор экзокостюмов
+  suffix: Тайпан
+  description: Печатает запчасти для создания робототехники и других механизмов.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/exosuit_fabricator.rsi
+    layers:
+    - state: fab-idle
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: fab-load
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+    - state: fab-o
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Machine
+    board: ExosuitFabricatorMachineCircuitboardTaipan
+  - type: ResearchClient
+    isTaipan: true
+  - type: Lathe
+    idleState: fab-idle
+    runningState: fab-active
+    staticPacks:
+    - TaipanRoboticsStatic
+    - BorgModulesStatic
+    - TaipanBorgLimbsStatic
+    dynamicPacks:
+    - Robotics
+    - BorgModules
+    - TaipanMech
+  - type: MaterialStorage
+    whitelist:
+      tags:
+      - Sheet
+      - RawMaterial
+      - Ingot
+  - type: OreSiloClient
+
+- type: entity
+  parent: BaseLathe
+  id: UniformPrinterTaipan
+  name: принтер униформы
+  description: Печать новой или запасной униформы.
+  suffix: Тайпан
+  components:
+  - type: Transform
+    noRot: false
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/uniform_printer.rsi
+    snapCardinals: false
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+  - type: Machine
+    board: UniformPrinterMachineCircuitboardTaipan
+  - type: ResearchClient
+    isTaipan: true
+  - type: Lathe
+    producingSound: /Audio/Machines/uniformprinter.ogg
+    idleState: icon
+    runningState: building
+    staticPacks:
+    - TaipanClothing
+    - ClothingSyndie
+    - Ties
+    - Scarves
+    - Carpets
+    - Bedsheets
+    - DoubleBedsheets
+    dynamicPacks:
+    - TaipanSpecialClothing
+    - TaipanArmorVest
+  - type: EmagLatheRecipes
+    emagStaticPacks:
+    - ClothingCentComm
+  - type: MaterialStorage
+    whitelist:
+      tags:
+      - Sheet
+      - RawMaterial
+      - Ingot
+  - type: OreSiloClient
+
+- type: entity
+  id: BiofabricatorTaipan
+  parent: BaseLathe
+  name: фабрикатор биокубов
+  suffix: Тайпан
+  description: Производит кубы животных, используя биомассу
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/biofabricator.rsi
+    snapCardinals: true
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+      color: "#ffaa99"
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      color: "#ffaaaa"
+    - state: inserting
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+      color: "#ffaaaa"
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Machine
+    board: BiofabricatorMachineCircuitboardTaipan
+  - type: MaterialStorage
+    ignoreColor: true
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+  - type: ResearchClient
+    isTaipan: true
+  - type: Lathe
+    idleState: icon
+    runningState: building
+    staticPacks:
+    - FriendlyCubesStatic
+    dynamicPacks:
+    - HostileCubesStatic
+
+- type: entity
+  id: MedicalTechFabTaipan
+  parent: BaseLatheLube
+  name: медицинский техфаб
+  suffix: Тайпан
+  description: Печатает инветнарь для медицинского отсека.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/techfab.rsi
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: med
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: ResearchClient
+    isTaipan: true
+  - type: Lathe
+    idleState: icon
+    runningState: icon
+    staticPacks:
+    - TopicalsStatic
+    - ChemistryStatic
+    - TaipanMedicalStatic
+    - RollerBedsStatic
+    - MedicalClothingStatic
+    - EmptyMedkitsStatic
+    - TaipanSurgeryStatic
+    dynamicPacks:
+    - Chemistry
+    - TaipanMedical
+  - type: Machine
+    board: MedicalTechFabCircuitboardTaipan
+  - type: OreSiloClient
+
+- type: entity
+  id: WeaponryTechFabTaipan
+  parent: BaseLatheLube
+  name: оружейный техфаб
+  suffix: Тайпан
+  description: Печатает инвентарь для охранного отсека.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/techfab.rsi
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: sec
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Machine
+    board: WeaponryTechFabCircuitboardTaipan
+  - type: ResearchClient
+    isTaipan: true
+  - type: Lathe
+    idleState: icon
+    runningState: icon
+    staticPacks:
+    - TaipanSecurityEquipmentStatic
+    - SecurityAmmoStatic
+    - TaipanAmmoStatic
+    - SecurityWeaponsStatic
+    dynamicPacks:
+    - SalvageSecurityBoards
+    - SalvageSecurityWeapons
+    - SecurityEquipment
+    - SecurityExplosives
+    - SecurityAmmo
+    - SecurityDisablers
+    - TaipanPistols
+    - TaipanWeapons
+    - TaipanEnergyWeapons
+    - TaipanMelee
+    - TaipanGrenades
+  - type: MaterialStorage
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+        - Ingot
+  - type: OreSiloClient
+
+- type: entity
+  parent: BaseLathe
+  id: OreProcessorTaipan
+  name: переработчик руды
+  description: Производит металлические листы и слитки из руды.
+  suffix: Тайпан
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/ore_processor.rsi
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Machine
+    board: OreProcessorMachineCircuitboardTaipan
+  - type: MaterialStorage
+    ignoreColor: true
+    whitelist:
+      tags:
+      - Ore
+  - type: Lathe
+    idleState: icon
+    runningState: building
+    defaultProductionAmount: 10
+    staticPacks:
+    - TaipanOreSmelting
+    - RGlassSmelting
+
+- type: entity
+  parent: OreProcessorTaipan
+  id: OreProcessorIndustrialTaipan
+  name: промышленный переработчик руды
+  description: Переработчик руды, разработанный специально для производства металлов в промышленных масштабах.
+  suffix: Тайпан
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/ore_processor_industrial.rsi
+  - type: Machine
+    board: OreProcessorIndustrialMachineCircuitboardTaipan
+  - type: Lathe
+    materialUseMultiplier: 0.75
+    timeMultiplier: 0.5
+    staticPacks:
+    - TaipanOreSmelting
+    - RGlassSmelting
+    - TaipanAdvancedSmelting

@@ -59,6 +59,9 @@
   - type: GunRequiresWield
   - type: StaticPrice
     price: 10000
+  - type: Tag # DS14
+    tags:
+    - LauncherChinaLake
 
 - type: entity
   parent: [ BaseWeaponLauncher, BaseGunWieldable, BaseMajorContraband ]
@@ -130,7 +133,7 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - SnapPop 
+        - SnapPop
     capacity: 20
     proto: SnapPop
     soundInsert:

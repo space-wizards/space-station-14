@@ -1,35 +1,54 @@
 - type: job
-  id: TaipanRD
-  name: job-name-taipan-rd
-  playTimeTracker: TaipanRD
-  description: Директор исследований из далёкого космоса.
-  startingGear: SyndicateRD
-  icon: "JobIconSyndicateRD"
-  supervisors: job-supervisors-taipan-syndicate
+  id: TaipanResearchDirector
+  name: job-name-taipan-research-director
+  description: job-description-taipan-research-director
+  playTimeTracker: JobTaipanResearchDirector
+  setPreference: false
+  overrideConsoleVisibility: true
+  isTaipan: true
+  startingGear: TaipanResearchDirectorGear
+  icon: "JobIconTaipanResearchDirector"
+  supervisors: job-supervisors-syndicate
   canBeAntag: false
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Science
-      time: 60000
-    - !type:OverallPlaytimeRequirement
-      time: 150000
-    - !type:AgeRequirement
-      requiredAge: 24
+  - !type:DepartmentTimeRequirement
+    department: Taipan
+    time: 216000 # 60 hours
+  - !type:RoleTimeRequirement
+    role: JobTaipanResearcher
+    time: 72000 # 20 hours
+  - !type:RoleTimeRequirement
+    role: JobTaipanMedic
+    time: 36000 # 10 hours
   access:
-  - SyndicateAgent
-  - NuclearOperative
-  accessGroups:
-  - AllAccess
+  - TaipanAtmospherics
+  - TaipanCargo
+  - TaipanCommand
+  - TaipanEngineering
+  - TaipanMaint
+  - TaipanMedical
+  - TaipanResearchDirector
+  - TaipanResearch
+  - TaipanService
+  - TaipanExternal
+  special:
+  - !type:AddImplantSpecial
+    implants: [ DeathRattleImplantTaipan ]
 
 - type: startingGear
-  id: SyndicateRD
+  id: TaipanResearchDirectorGear
   equipment:
-    eyes: ClothingEyesGlassesHiddenSecurity
+    eyes: ClothingEyesGlasses
     ears: ClothingHeadsetAltTaipan
-    shoes: ClothingShoesBootsCombat
-    outerClothing: ClothingOuterCoatRDTaipan
-    gloves: ClothingHandsRDTaipan
-    id: SyndiPDARD
+    shoes: ClothingShoesBootsLaceup
+    id: TaipanResearchDirectorPDA
     back: ClothingBackpackSyndicate
-    jumpsuit: ClothingUniformJumpsuitSyndieFormal
-    belt: ClothingBeltAssaultTaipan
+    socks: ClothingUnderwearSocksTaipanResearchDirector
+
+- type: chameleonOutfit
+  id: TaipanResearchDirectorChameleonOutfit
+  job: TaipanResearchDirector
+  startingGear: TaipanResearchDirectorGear
+  equipment:
+    id: PassengerPDA
+    neck: ClothingNeckGoldmedal

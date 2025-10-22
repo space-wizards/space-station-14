@@ -69,6 +69,15 @@ namespace Content.Client.Cargo.UI
                     ("code", Loc.GetString(accountProto.Code)));
             }
 
+            // DS14-start
+           if (entMan.TryGetComponent<CargoOrderConsoleComponent>(owner, out var console) && console.IsTaipan)
+           {
+               TabContainer.SetTabTitle(0, Loc.GetString("cargo-console-menu-tab-title-orders"));
+               TabContainer.GetChild(1)?.Orphan();
+           }
+           else
+           {
+            // DS14-end
             TabContainer.SetTabTitle(0, Loc.GetString("cargo-console-menu-tab-title-orders"));
             TabContainer.SetTabTitle(1, Loc.GetString("cargo-console-menu-tab-title-funds"));
 
@@ -96,7 +105,8 @@ namespace Content.Client.Cargo.UI
             {
                 OnToggleUnboundedLimit?.Invoke(a);
             };
-        }
+           }
+}
 
         private void OnCategoryItemSelected(OptionButton.ItemSelectedEventArgs args)
         {
@@ -234,7 +244,7 @@ namespace Content.Client.Cargo.UI
                     Description =
                     {
                         Text = Loc.GetString("cargo-console-menu-order-reason-description",
-                                                        ("reason", order.Reason))
+                            ("reason", order.Reason))
                     }
                 };
                 row.Cancel.OnPressed += (args) => { OnOrderCanceled?.Invoke(args); };
@@ -252,6 +262,10 @@ namespace Content.Client.Cargo.UI
                 !_entityManager.TryGetComponent<CargoOrderConsoleComponent>(_owner, out var console))
                 return;
 
+            // DS14-start
+            if (console.IsTaipan)
+                return;
+            // DS14-end
             var i = 0;
             ActionOptions.Clear();
             ActionOptions.AddItem(Loc.GetString("cargo-console-menu-account-action-option-withdraw"), i);
@@ -262,7 +276,7 @@ namespace Content.Client.Cargo.UI
                     continue;
                 var accountProto = _protoManager.Index(account);
                 ActionOptions.AddItem(Loc.GetString("cargo-console-menu-account-action-option-transfer",
-                    ("code", Loc.GetString(accountProto.Code))),
+                        ("code", Loc.GetString(accountProto.Code))),
                     i);
                 ActionOptions.SetItemMetadata(i, account);
                 i++;

@@ -1,0 +1,29 @@
+- type: construction
+  id: AirlockTaipan
+  graph: AirlockTaipan
+  startNode: start
+  targetNode: airlock
+  category: construction-category-structures
+  entityWhitelist:
+    tags:
+    - TaipanRole
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  id: AirlockTaipanGlass
+  graph: AirlockTaipan
+  startNode: start
+  targetNode: glassAirlock
+  category: construction-category-structures
+  entityWhitelist:
+    tags:
+    - TaipanRole
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked

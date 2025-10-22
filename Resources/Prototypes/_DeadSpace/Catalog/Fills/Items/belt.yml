@@ -26,6 +26,19 @@
       - SyndieSabre
 
 - type: entity
+  parent: ClothingBeltPlantTaipan
+  id: ClothingBeltPlantTaipanFilled
+  name: пояс ботаника
+  description: Пояс, используемый для хранения основных принадлежностей для гидропоники. На удивление, не чёрный.
+  suffix: Тайпан, Заполненный
+  components:
+  - type: StorageFill
+    contents:
+    - id: HydroponicsToolMiniHoe
+    - id: HydroponicsToolSpade
+    - id: ChemistryBottleRobustHarvest
+
+- type: entity
   id: ClothingUtilityWebbingFilled
   parent: ClothingUtilityWebbing
   suffix: Filled

@@ -93,6 +93,9 @@
     sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
   - type: StaticPrice
     price: 2500
+  - type: Tag # DS14
+    tags:
+    - EnergySword
 
 - type: entity
   name: energy dagger
@@ -343,6 +346,9 @@
   - type: Reflect
     reflectProb: .75
     spread: 75
+  - type: Tag # DS14
+    tags:
+    - EnergySwordDouble
 
 # Item will look weird in handslot. Will need to adjust handstorage visuals in a future PR
 - type: entity

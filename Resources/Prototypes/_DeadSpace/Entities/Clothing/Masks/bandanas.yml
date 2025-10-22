@@ -8,3 +8,17 @@
     sprite: _DeadSpace/Clothing/Head/Bandanas/sec.rsi
   - type: Clothing
     sprite: _DeadSpace/Clothing/Head/Bandanas/sec.rsi
+
+- type: entity
+  parent: ClothingMaskBandanaBase
+  id: ClothingMaskBandBotanyTaipan
+  name: бандана ботаника
+  description: Стильная бандана из прочной, натуральной ткани.
+  suffix: Тайпан
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Head/Bandanas/botany.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Head/Bandanas/botany.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag

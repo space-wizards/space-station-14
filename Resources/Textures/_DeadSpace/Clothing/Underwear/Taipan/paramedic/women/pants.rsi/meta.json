@@ -1,0 +1,18 @@
+{
+  "license": "CC-BY-SA-3.0",
+  "copyright": "sprite made by chuiomoio (discord), recolored by andrew_fenriz (discord) for Space Station 14 server Мёртвый Космос",
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "equipped-UNDERWEARB",
+      "directions": 4
+    },
+    {
+      "name": "icon"
+    }
+  ]
+}

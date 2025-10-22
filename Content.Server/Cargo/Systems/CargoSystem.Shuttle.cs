@@ -244,11 +244,23 @@ public sealed partial class CargoSystem
                 {
                     { sellComponent.OverrideAccount, cut },
                     { bankAccount.PrimaryAccount, 1.0 - cut },
-                };
+                // DS14-start
+            };
             }
             else
             {
-                distribution = baseDistribution;
+                if (component.IsTaipan)
+                {
+                    distribution = new Dictionary<ProtoId<CargoAccountPrototype>, double>
+                    {
+                        { "Taipan", 1.0 },
+                    };
+                }
+                else
+                {
+                    distribution = baseDistribution;
+                }
+                // DS14-end
             }
 
             UpdateBankAccount((station, bankAccount), (int) Math.Round(value), distribution, false);

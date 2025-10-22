@@ -46,21 +46,18 @@ namespace Content.Server.Research.Systems
         /// <param name="serverUid"></param>
         /// <param name="serverComponent"></param>
         /// <returns></returns>
-        public bool TryGetServerById(EntityUid client, int id, [NotNullWhen(true)] out EntityUid? serverUid, [NotNullWhen(true)] out ResearchServerComponent? serverComponent)
+        // DS14-edit-start
+        public HashSet<Entity<ResearchServerComponent>> GetServers(EntityUid client)
         {
-            serverUid = null;
-            serverComponent = null;
+            ClientLookup.Clear();
 
-            var query = GetServers(client).ToList();
-            foreach (var (uid, server) in query)
-            {
-                if (server.Id != id)
-                    continue;
-                serverUid = uid;
-                serverComponent = server;
-                return true;
-            }
-            return false;
+            var clientXform = Transform(client);
+            if (clientXform.GridUid is not { } grid)
+                return ClientLookup;
+
+            _lookup.GetGridEntities(grid, ClientLookup);
+            return ClientLookup;
+        // DS14-edit-end
         }
 
         /// <summary>
@@ -97,16 +94,52 @@ namespace Content.Server.Research.Systems
             return list;
         }
 
-        public HashSet<Entity<ResearchServerComponent>> GetServers(EntityUid client)
+        // DS14-start
+        public string[] GetServerNames(EntityUid client, bool isTaipan)
         {
-            ClientLookup.Clear();
+            var allServers = GetServers(client).ToArray();
+            var list = new List<string>();
 
-            var clientXform = Transform(client);
-            if (clientXform.GridUid is not { } grid)
-                return ClientLookup;
+            foreach (var server in allServers)
+            {
+                if (server.Comp.isTaipan == isTaipan)
+                    list.Add(server.Comp.ServerName);
+            }
 
-            _lookup.GetGridEntities(grid, ClientLookup);
-            return ClientLookup;
+            return list.ToArray();
+        }
+
+        public int[] GetServerIds(EntityUid client, bool isTaipan)
+        {
+            var allServers = GetServers(client).ToArray();
+            var list = new List<int>();
+
+            foreach (var server in allServers)
+            {
+                if (server.Comp.isTaipan == isTaipan)
+                    list.Add(server.Comp.Id);
+            }
+
+            return list.ToArray();
+        }
+
+        public bool TryGetServerById(EntityUid client, int id, [NotNullWhen(true)] out EntityUid? serverUid, [NotNullWhen(true)] out ResearchServerComponent? serverComponent)
+        {
+            serverUid = null;
+            serverComponent = null;
+
+            var query = GetServers(client).ToList();
+            foreach (var (uid, server) in query)
+            {
+                if (server.Id != id)
+                    continue;
+                serverUid = uid;
+                serverComponent = server;
+                return true;
+            }
+
+            return false;
+        // DS14-end
         }
 
         public override void Update(float frameTime)

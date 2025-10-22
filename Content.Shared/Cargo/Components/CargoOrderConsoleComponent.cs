@@ -86,6 +86,11 @@ public sealed partial class CargoOrderConsoleComponent : Component
         "SalvageJobRewardMAX",
     };
 
+    // DS14-start
+    [DataField, AutoNetworkedField]
+    public bool IsTaipan;
+    // DS14-end
+
     /// <summary>
     /// Access needed to toggle the limit on this console.
     /// </summary>

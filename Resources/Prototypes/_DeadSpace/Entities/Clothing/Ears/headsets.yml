@@ -53,20 +53,39 @@
     color: "#CF1CFF"
 
 - type: entity
-  parent: ClothingHeadsetAlt
-  id: ClothingHeadsetAltTaipan
-  name: полноразмерная кроваво - красная гарнитура
-  description: Модифицированный модульный интерком синдиката.
+  parent: ClothingHeadset
+  id: ClothingHeadsetTaipan
+  name: багровая гарнитура
+  suffix: Тайпан
   components:
   - type: Headset
-    color: "#8f4a4b"
-  - type: EncryptionKeyHolder
-    keySlots: 5
+    color: "#8B0000"
   - type: ContainerFill
     containers:
       key_slots:
       - EncryptionKeyTaipan
   - type: Sprite
-    sprite: Clothing/Ears/Headsets/syndicate.rsi
+    sprite: _DeadSpace/Clothing/Ears/Headsets/hs_base_taipan.rsi
   - type: Clothing
-    sprite: Clothing/Ears/Headsets/syndicate.rsi
+    sprite: _DeadSpace/Clothing/Ears/Headsets/hs_base_taipan.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+- type: entity
+  parent: ClothingHeadsetAlt
+  id: ClothingHeadsetAltTaipan
+  name: полноразмерная багровая гарнитура
+  suffix: Тайпан
+  components:
+  - type: Headset
+    color: "#8B0000"
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyTaipan
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Ears/Headsets/hs_taipan.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Ears/Headsets/hs_taipan.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
