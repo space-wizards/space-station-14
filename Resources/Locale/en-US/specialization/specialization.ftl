@@ -32,4 +32,3 @@ placeholders-specialization-12 = Perma Dweller
 placeholders-specialization-13 = Redshield officer
 placeholders-specialization-14 = Maxcap technician
 placeholders-specialization-15 = Drug cook
-placeholders-specialization-16 = Inclusion Officer
