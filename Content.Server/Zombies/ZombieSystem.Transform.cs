@@ -39,6 +39,8 @@ using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Content.Shared.DeadSpace.Languages.Components;
+using Content.Shared.DeadSpace.Languages.Prototypes;
 using Content.Shared.NPC.Prototypes;
 
 namespace Content.Server.Zombies;
@@ -68,6 +70,7 @@ public sealed partial class ZombieSystem
 
     private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
     private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
+    private static readonly ProtoId<LanguagePrototype> ZombieLanguage = "ZombieLanguage";
     private static readonly ProtoId<NpcFactionPrototype> ZombieFaction = "Zombie";
 
     /// <summary>
@@ -118,12 +121,32 @@ public sealed partial class ZombieSystem
         RemComp<ComplexInteractionComponent>(target);
         RemComp<SentienceTargetComponent>(target);
 
-        //funny voice
-        var accentType = "zombie";
-        if (TryComp<ZombieAccentOverrideComponent>(target, out var accent))
-            accentType = accent.Accent;
+        // DS14-Languages-start
 
-        EnsureComp<ReplacementAccentComponent>(target).Accent = accentType;
+        if (TryComp<LanguageComponent>(target, out var language))
+        {
+            language.KnownLanguages.Clear();
+            language.KnownLanguages.Add(ZombieLanguage);
+            language.SelectedLanguage = ZombieLanguage;
+        }
+        else
+        {
+            AddComp(target, new LanguageComponent
+            {
+                KnownLanguages = { ZombieLanguage },
+                SelectedLanguage = ZombieLanguage
+            });
+        }
+
+        //funny voice
+        // var accentType = "zombie";
+        // if (TryComp<ZombieAccentOverrideComponent>(target, out var accent))
+        //     accentType = accent.Accent;
+
+        // EnsureComp<ReplacementAccentComponent>(target).Accent = accentType;
+
+        // DS14-Languages-end
+
 
         //This is needed for stupid entities that fuck up combat mode component
         //in an attempt to make an entity not attack. This is the easiest way to do it.

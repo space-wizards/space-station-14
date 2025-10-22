@@ -87,8 +87,10 @@
       path: /Audio/_DeadSpace/Animals/xeno_maid_meow.ogg
       params:
         volume: 20
-  - type: ReplacementAccent
-    accent: xeno
+  - type: Language
+    selectedLanguage: XenomorphLanguage
+    knownLanguages:
+    - XenomorphLanguage
   - type: TypingIndicator
     proto: alien
   - type: Speech

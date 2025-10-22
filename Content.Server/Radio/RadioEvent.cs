@@ -1,10 +1,12 @@
 using Content.Shared.Chat;
 using Content.Shared.Radio;
+using Robust.Shared.Prototypes;
+using Content.Shared.DeadSpace.Languages.Prototypes;
 
 namespace Content.Server.Radio;
 
 [ByRefEvent]
-public readonly record struct RadioReceiveEvent(string Message, EntityUid MessageSource, RadioChannelPrototype Channel, EntityUid RadioSource, MsgChatMessage ChatMsg, List<EntityUid> Receivers);
+public readonly record struct RadioReceiveEvent(string Message, ProtoId<LanguagePrototype> LanguageId, EntityUid MessageSource, RadioChannelPrototype Channel, EntityUid RadioSource, MsgChatMessage ChatMsg, MsgChatMessage LexiconChatMsg, List<EntityUid> Receivers);
 
 /// <summary>
 /// Event raised on the parent entity of a headset radio when a radio message is received

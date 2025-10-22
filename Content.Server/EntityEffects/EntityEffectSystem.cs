@@ -48,6 +48,8 @@ using Content.Shared.DeadSpace.Necromorphs.InfectionDead.Components;
 
 using TemperatureCondition = Content.Shared.EntityEffects.EffectConditions.Temperature; // disambiguate the namespace
 using PolymorphEffect = Content.Shared.EntityEffects.Effects.Polymorph;
+using Content.Shared.DeadSpace.Languages.Components;
+using Content.Server.DeadSpace.Languages;
 
 namespace Content.Server.EntityEffects;
 
@@ -765,6 +767,21 @@ public sealed class EntityEffectSystem : EntitySystem
         // We call this before the mind check to allow things like player-controlled mice to be able to benefit from the effect
         RemComp<ReplacementAccentComponent>(uid);
         RemComp<MonkeyAccentComponent>(uid);
+
+        // DS14-Languages-start
+        if (TryComp<LanguageComponent>(uid, out var language))
+        {
+            language.KnownLanguages.Add(LanguageSystem.DefaultLanguageId);
+        }
+        else
+        {
+            AddComp(uid, new LanguageComponent
+            {
+                KnownLanguages = { LanguageSystem.DefaultLanguageId },
+                SelectedLanguage = LanguageSystem.DefaultLanguageId
+            });
+        }
+        // DS14-Languages-end
 
         // Stops from adding a ghost role to things like people who already have a mind
         if (TryComp<MindContainerComponent>(uid, out var mindContainer) && mindContainer.HasMind)

@@ -216,12 +216,12 @@ public sealed partial class CargoSystem
 
     private void OnMapInit(EntityUid uid, StationCargoBountyDatabaseComponent component, MapInitEvent args)
     {
-            // DS14-start
+        // DS14-start
         if (!component.IsTaipan && HasComp<StationTaipanComponent>(uid))
         {
             component.IsTaipan = true;
         }
-            // DS14-end
+        // DS14-end
         FillBountyDatabase(uid, component);
     }
 

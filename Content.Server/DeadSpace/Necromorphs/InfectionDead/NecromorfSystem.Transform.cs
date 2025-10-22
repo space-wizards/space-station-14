@@ -12,7 +12,6 @@ using Content.Server.NPC;
 using Content.Shared.DeadSpace.Necromorphs.InfectionDead.Components;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
-using Content.Server.Speech.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.CombatMode.Pacification;
@@ -45,11 +44,15 @@ using Content.Shared.DeadSpace.Necromorphs.Necroobelisk;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Damage.Components;
 using Content.Shared.Rotation;
+using Content.Shared.DeadSpace.Languages.Components;
 using Content.Shared.Interaction.Components;
+using Content.Shared.DeadSpace.Languages.Prototypes;
 using Content.Shared.Body.Components;
 using Robust.Server.Player;
 using Content.Shared.Zombies;
 using Content.Shared.Sprite;
+using Robust.Shared.Prototypes;
+
 
 namespace Content.Server.DeadSpace.Necromorphs.InfectionDead;
 
@@ -69,6 +72,7 @@ public sealed partial class NecromorfSystem
     [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
     [Dependency] private readonly SharedRotationVisualsSystem _sharedRotationVisuals = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
+    private static readonly ProtoId<LanguagePrototype> NecroLanguage = "NecromorfLanguage";
 
     public void Necrofication(EntityUid target, string prototypeId, InfectionDeadStrainData strainData, MobStateComponent? mobState = null)
     {
@@ -127,9 +131,13 @@ public sealed partial class NecromorfSystem
         if (HasComp<SlowOnDamageComponent>(target) && !necromorf.IsSlowOnDamage)
             RemComp<SlowOnDamageComponent>(target);
 
-        var accentType = "genericAggressive";
+        if (HasComp<LanguageComponent>(target))
+            RemComp<LanguageComponent>(target);
 
-        EnsureComp<ReplacementAccentComponent>(target).Accent = accentType;
+        var langComp = new LanguageComponent();
+        langComp.KnownLanguages.Add(NecroLanguage);
+        langComp.SelectedLanguage = NecroLanguage;
+        AddComp(target, langComp);
 
         var combat = EnsureComp<CombatModeComponent>(target);
         RemComp<PacifiedComponent>(target);

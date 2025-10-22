@@ -1,0 +1,18 @@
+## Dynamic
+
+- type: latheRecipePack
+  id: LanguageImplanters
+  recipes:
+  - LearnSlimeLanguageImplanter
+  - LearnArachnidLanguageImplanter
+  - LearnMothLanguageImplanter
+  - LearnReptilianLanguageImplanter
+  - LearnVoxLanguageImplanter
+  - LearnDemonLanguageImplanter
+  - LearnCatLanguageImplanter
+  - LearnMachineLanguageImplanter
+  - LearnKoboltLanguageImplanter
+  - LearnPlafLanguageImplanter
+  - LearnVulpkaninLanguageImplanter
+  - LearnXenomorphLanguageImplanter
+  - LearnDogLanguageImplanter

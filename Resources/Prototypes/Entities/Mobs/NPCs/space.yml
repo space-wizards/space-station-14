@@ -162,8 +162,14 @@
   - type: Vocal
     sounds:
       Unsexed: Kangaroo
-  - type: ReplacementAccent
-    accent: kangaroo
+  # DS14-Languages-start
+  # - type: ReplacementAccent
+  #   accent: kangaroo
+  - type: Language # DS14-Languages
+    selectedLanguage: KangarooLanguage
+    knownLanguages:
+    - KangarooLanguage
+  # DS14-Languages-end
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -247,8 +253,14 @@
   - type: MeleeChemicalInjector
     solution: melee
     transferAmount: 4
-  - type: ReplacementAccent
-    accent: xeno
+  # DS14-Languages-start
+  # - type: ReplacementAccent
+  #   accent: xeno
+  - type: Language # DS14-Languages
+    selectedLanguage: ArachnidLanguage
+    knownLanguages:
+    - ArachnidLanguage
+  # DS14-Languages-end
   - type: InteractionPopup
     successChance: 0.20
     interactSuccessString: petting-success-tarantula

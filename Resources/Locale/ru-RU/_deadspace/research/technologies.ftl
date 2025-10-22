@@ -37,5 +37,4 @@ research-technology-syndicate-hardsuits = Скафандры Синдиката
 research-technology-elite-syndicate-hardsuits = Элитные скафандры Синдиката
 research-technology-heavy-syndicate-hardsuits = Тяжёлые скафандры Синдиката
 research-technology-defibrillator-syndicate = Дефибриллятор Синдиката
-
 research-technology-photon-laser-weaponry = Фотонный арсенал

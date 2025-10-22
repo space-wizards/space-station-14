@@ -194,7 +194,15 @@
       methods: [Touch]
       effects:
       - !type:WashCreamPieReaction
+  # DS14-Languages-start
+  - type: Language
+    selectedLanguage: GeneralLanguage
+    knownLanguages:
+    - GeneralLanguage
+    - MothLanguage
+  # DS14-Languages-end
   # - type: FootPrints # Backmen-footsteps
+
 
 - type: entity
   parent: BaseSpeciesDummy

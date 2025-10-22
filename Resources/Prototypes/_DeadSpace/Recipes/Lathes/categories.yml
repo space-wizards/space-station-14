@@ -40,3 +40,7 @@
 - type: latheCategory
   id: Special
   name: lathe-category-special
+
+- type: latheCategory
+  id: Implants
+  name: lathe-category-special

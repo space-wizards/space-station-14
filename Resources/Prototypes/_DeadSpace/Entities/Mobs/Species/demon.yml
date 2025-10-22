@@ -50,6 +50,11 @@
       Unsexed: FemaleHuman
   - type: Speech
     speechSounds: Lizard
+  - type: Language
+    selectedLanguage: GeneralLanguage
+    knownLanguages:
+    - DemonLanguage
+    - GeneralLanguage
   # - type: FootPrints
 
 - type: entity

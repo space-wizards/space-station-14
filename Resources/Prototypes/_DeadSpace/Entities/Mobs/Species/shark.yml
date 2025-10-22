@@ -47,6 +47,11 @@
   - type: Sanity # DS14
   - type: TypingIndicator
     proto: plafeim
+  - type: Language
+    selectedLanguage: GeneralLanguage
+    knownLanguages:
+    - PlafLanguage
+    - GeneralLanguage
   # - type: FootPrints
     # leftBarePrint: "footprint-left-bare-lizard"
     # rightBarePrint: "footprint-right-bare-lizard"

@@ -133,9 +133,17 @@
     templateId: arachnid
     speciesId: arachnid
   - type: Sanity # DS14
+  # DS14-Languages-start
+  - type: Language
+    selectedLanguage: GeneralLanguage
+    knownLanguages:
+    - GeneralLanguage
+    - ArachnidLanguage
+  # DS14-Languages-end
   # - type: FootPrints # Backmen-footsteps
     # leftBarePrint: "footprint-left-bare-spider"
     # rightBarePrint: "footprint-right-bare-spider"
+
 
 - type: entity
   parent: BaseSpeciesDummy

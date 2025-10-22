@@ -10,6 +10,9 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Server.DeadSpace.Languages;
+using Robust.Server.Player;
+using Content.Shared.DeadSpace.Languages.Prototypes;
 
 namespace Content.Server.Corvax.TTS;
 
@@ -21,6 +24,8 @@ public sealed partial class TTSSystem : EntitySystem
     [Dependency] private readonly TTSManager _ttsManager = default!;
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
     [Dependency] private readonly IRobustRandom _rng = default!;
+    [Dependency] private readonly LanguageSystem _language = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     private readonly List<string> _sampleText =
         new()
@@ -94,11 +99,11 @@ public sealed partial class TTSSystem : EntitySystem
 
         if (args.ObfuscatedMessage != null)
         {
-            HandleWhisper(uid, args.Message, args.ObfuscatedMessage, protoVoice.Speaker);
+            HandleWhisper(uid, args.Message, args.LexiconMessage, args.LanguageId, args.ObfuscatedMessage, protoVoice.Speaker);
             return;
         }
 
-        HandleSay(uid, args.Message, protoVoice.Speaker);
+        HandleSay(uid, args.Message, args.LexiconMessage, args.LanguageId, protoVoice.Speaker);
     }
 
     private async void OnEntitySpokeToEntity(EntityUid uid, TTSComponent component, EntitySpokeToEntityEvent args)
@@ -116,7 +121,7 @@ public sealed partial class TTSSystem : EntitySystem
         if (!_prototypeManager.TryIndex<TTSVoicePrototype>(voiceId, out var protoVoice))
             return;
 
-        HandleDirectSay(args.Target, args.Message, protoVoice.Speaker);
+        HandleDirectSay(args.Target, args.Message, args.LexiconMessage, args.LanguageId, protoVoice.Speaker);
     }
 
     private async void OnRadioSpokeEvent(RadioSpokeEvent args)
@@ -140,7 +145,7 @@ public sealed partial class TTSSystem : EntitySystem
         if (!_prototypeManager.TryIndex<TTSVoicePrototype>(voiceId, out var protoVoice))
             return;
 
-        HandleRadio(args.Receivers, args.Message, protoVoice.Speaker);
+        HandleRadio(args.Receivers, args.Message, args.LexiconMessage, args.LanguageId, protoVoice.Speaker);
     }
 
     private async void OnAnnounceSpokeEvent(AnnounceSpokeEvent args)
@@ -161,49 +166,129 @@ public sealed partial class TTSSystem : EntitySystem
         if (!_prototypeManager.TryIndex<TTSVoicePrototype>(voiceId, out var protoVoice))
             return;
 
-        Timer.Spawn(6000, () => HandleAnnounce(args.Message, protoVoice.Speaker)); // Awful, but better than sending announce sound to client in resource file
+        Timer.Spawn(6000, () => HandleAnnounce(args.Message, args.LexiconMessage, args.LanguageId, protoVoice.Speaker)); // Awful, but better than sending announce sound to client in resource file
     }
 
-    private async void HandleSay(EntityUid uid, string message, string speaker)
+    private async void HandleSay(EntityUid uid, string message, string lexiconMessage, ProtoId<LanguagePrototype> languageId, string speaker)
     {
         var soundData = await GenerateTTS(message, speaker);
+
+        byte[]? soundLexiconData = null;
+
+        if (_language.NeedGenerateTTS(uid, languageId, false))
+            soundLexiconData = await GenerateTTS(lexiconMessage, speaker);
+
+        var understanding = _language.GetUnderstanding(languageId);
+
         if (soundData is null) return;
-        RaiseNetworkEvent(new PlayTTSEvent(soundData, GetNetEntity(uid)), Filter.Pvs(uid));
+
+        foreach (var session in Filter.Pvs(uid).Recipients)
+        {
+            if (!understanding.Contains(session))
+            {
+                if (soundLexiconData is null)
+                    RaiseNetworkEvent(new PlayTTSEvent(new byte[0], GetNetEntity(uid), isSoundLexicon: true, languageId: languageId), session);
+                else
+                    RaiseNetworkEvent(new PlayTTSEvent(soundLexiconData, GetNetEntity(uid)), session);
+            }
+            else
+                RaiseNetworkEvent(new PlayTTSEvent(soundData, GetNetEntity(uid), isSoundLexicon: false), session);
+        }
+
     }
 
-    private async void HandleDirectSay(EntityUid uid, string message, string speaker)
+    private async void HandleDirectSay(EntityUid uid, string message, string lexiconMessage, ProtoId<LanguagePrototype> languageId, string speaker)
     {
         var soundData = await GenerateTTS(message, speaker);
+
+        byte[]? soundLexiconData = null;
+
+        if (_language.NeedGenerateDirectTTS(uid, languageId))
+            soundLexiconData = await GenerateTTS(lexiconMessage, speaker);
+
         if (soundData is null) return;
-        RaiseNetworkEvent(new PlayTTSEvent(soundData, GetNetEntity(uid)), uid);
+
+        if (!_language.KnowsLanguage(uid, languageId))
+        {
+            if (soundLexiconData is null)
+                RaiseNetworkEvent(new PlayTTSEvent(new byte[0], GetNetEntity(uid), isSoundLexicon: true, languageId: languageId), uid);
+            else
+                RaiseNetworkEvent(new PlayTTSEvent(soundLexiconData, GetNetEntity(uid)), uid);
+        }
+        else
+            RaiseNetworkEvent(new PlayTTSEvent(soundData, GetNetEntity(uid)), uid);
     }
 
-    private async void HandleRadio(EntityUid[] uids, string message, string speaker)
+    private async void HandleRadio(EntityUid[] uids, string message, string lexiconMessage, ProtoId<LanguagePrototype> languageId, string speaker)
     {
         var soundData = await GenerateTTS(message, speaker);
+
+        byte[]? soundLexiconData = null;
+
+        if (_language.NeedGenerateRadioTTS(languageId, uids, out var understandings, out var notUnderstandings))
+            soundLexiconData = await GenerateTTS(lexiconMessage, speaker);
+
         if (soundData is null) return;
 
-        foreach (var uid in uids)
+        foreach (var uid in understandings)
+        {
             RaiseNetworkEvent(new PlayTTSEvent(soundData, GetNetEntity(uid), isRadio: true), Filter.Entities(uid));
+        }
+
+        foreach (var uid in notUnderstandings)
+        {
+            if (soundLexiconData is null)
+                RaiseNetworkEvent(new PlayTTSEvent(new byte[0], GetNetEntity(uid), isRadio: true, isSoundLexicon: true, languageId: languageId), Filter.Entities(uid));
+            else
+                RaiseNetworkEvent(new PlayTTSEvent(soundLexiconData, GetNetEntity(uid), isRadio: true), Filter.Entities(uid));
+        }
+
     }
 
-    private async void HandleAnnounce(string message, string speaker)
+    private async void HandleAnnounce(string message, string lexiconMessage, ProtoId<LanguagePrototype> languageId, string speaker)
     {
         var soundData = await GenerateTTS(message, speaker);
+
+        byte[]? soundLexiconData = null;
+        List<ICommonSession> understanding = new List<ICommonSession>();
+
+        if (_language.NeedGenerateGlobalTTS(languageId, out understanding))
+            soundLexiconData = await GenerateTTS(lexiconMessage, speaker);
+
         if (soundData is null) return;
-        RaiseNetworkEvent(new PlayTTSEvent(soundData), Filter.Broadcast());
+
+        foreach (var session in Filter.Broadcast().Recipients)
+        {
+            if (!understanding.Contains(session))
+            {
+                if (soundLexiconData is null)
+                    RaiseNetworkEvent(new PlayTTSEvent(new byte[0], isSoundLexicon: true, languageId: languageId), session);
+                else
+                    RaiseNetworkEvent(new PlayTTSEvent(soundLexiconData), session);
+            }
+            else
+                RaiseNetworkEvent(new PlayTTSEvent(soundData), session);
+        }
     }
 
-    private async void HandleWhisper(EntityUid uid, string message, string obfMessage, string speaker)
+    private async void HandleWhisper(EntityUid uid, string message, string lexiconMessage, ProtoId<LanguagePrototype> languageId, string obfMessage, string speaker)
     {
         var fullSoundData = await GenerateTTS(message, speaker, true);
-        if (fullSoundData is null) return;
+
+        byte[]? lexiconSoundData = null;
+
+        if (_language.NeedGenerateTTS(uid, languageId, true))
+            lexiconSoundData = await GenerateTTS(lexiconMessage, speaker);
 
         // var obfSoundData = await GenerateTTS(obfMessage, speaker, true);
         // if (obfSoundData is null) return;
-
-        var fullTtsEvent = new PlayTTSEvent(fullSoundData, GetNetEntity(uid), true);
         // var obfTtsEvent = new PlayTTSEvent(obfSoundData, GetNetEntity(uid), true);
+
+        if (fullSoundData is null) return;
+
+        var fullTtsEvent = new PlayTTSEvent(fullSoundData, GetNetEntity(uid), isWhisper: true);
+
+        var understanding = _language.GetUnderstanding(languageId);
 
         // TODO: Check obstacles
         var xformQuery = GetEntityQuery<TransformComponent>();
@@ -217,7 +302,16 @@ public sealed partial class TTSSystem : EntitySystem
             if (distance > ChatSystem.VoiceRange * ChatSystem.VoiceRange)
                 continue;
 
-            RaiseNetworkEvent(fullTtsEvent, session);
+            if (!understanding.Contains(session))
+            {
+                if (lexiconSoundData is null)
+                    RaiseNetworkEvent(new PlayTTSEvent(new byte[0], GetNetEntity(uid), isWhisper: true, isSoundLexicon: true, languageId: languageId), session);
+                else
+                    RaiseNetworkEvent(new PlayTTSEvent(lexiconSoundData, GetNetEntity(uid), isWhisper: true), session);
+            }
+            else
+                RaiseNetworkEvent(fullTtsEvent, session);
+
         }
     }
 

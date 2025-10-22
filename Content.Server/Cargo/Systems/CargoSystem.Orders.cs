@@ -52,9 +52,10 @@ namespace Content.Server.Cargo.Systems
                 return;
 
             // DS14-start
-    if (component.IsTaipan && !HasComp<StationTaipanComponent>(stationUid))
-        return;
+            if (component.IsTaipan && !HasComp<StationTaipanComponent>(stationUid))
+                return;
             // DS14-end
+
             _audio.PlayPvs(ApproveSound, uid);
             UpdateBankAccount((stationUid.Value, bank), (int) price, component.Account);
             QueueDel(args.Used);
@@ -171,20 +172,20 @@ namespace Content.Server.Cargo.Systems
             }
 
             // DS14-start
-    if (component.IsTaipan && !HasComp<StationTaipanComponent>(station))
-        return;
+            if (component.IsTaipan && !HasComp<StationTaipanComponent>(station))
+                return;
 
             // Find our order again. It might have been dispatched or approved already
-    CargoOrderData? order = null;
+            CargoOrderData? order = null;
 
-    if (component.IsTaipan)
-    {
-        order = orderDatabase.TaipanOrders.Find(order => args.OrderId == order.OrderId && !order.Approved);
-    }
-    else if (orderDatabase.Orders.TryGetValue(component.Account, out var accountOrders))
-    {
-        order = accountOrders.Find(order => args.OrderId == order.OrderId && !order.Approved);
-    }
+            if (component.IsTaipan)
+            {
+                order = orderDatabase.TaipanOrders.Find(order => args.OrderId == order.OrderId && !order.Approved);
+            }
+            else if (orderDatabase.Orders.TryGetValue(component.Account, out var accountOrders))
+            {
+                order = accountOrders.Find(order => args.OrderId == order.OrderId && !order.Approved);
+            }
             // DS14-end
             if (order == null || !_protoMan.TryIndex(order.Account, out var account))
             {
@@ -274,14 +275,14 @@ namespace Content.Server.Cargo.Systems
                 $"{ToPrettyString(player):user} approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}] on account {order.Account} with balance at {accountBalance}");
 
             // DS14-start
-    if (component.IsTaipan)
-    {
-        orderDatabase.TaipanOrders.Remove(order);
-    }
-    else if (orderDatabase.Orders.TryGetValue(component.Account, out var accountOrders))
-    {
-        accountOrders.Remove(order);
-    }
+            if (component.IsTaipan)
+            {
+                orderDatabase.TaipanOrders.Remove(order);
+            }
+            else if (orderDatabase.Orders.TryGetValue(component.Account, out var accountOrders))
+            {
+                accountOrders.Remove(order);
+            }
             // DS14-end
             UpdateBankAccount((station.Value, bank), -cost, order.Account);
             UpdateOrders(station.Value);
@@ -415,10 +416,8 @@ namespace Content.Server.Cargo.Systems
             var targetAccount = component.Mode == CargoOrderConsoleMode.SendToPrimary ? bank.PrimaryAccount : component.Account;
 
             // DS14-start
-    if (component.IsTaipan)
-    {
-      targetAccount = "Taipan";
-    }
+            if (component.IsTaipan)
+                targetAccount = "Taipan";
             // DS14-end
             var data = GetOrderData(args, product, GenerateOrderId(orderDatabase), component.Account);
 
@@ -452,8 +451,8 @@ namespace Content.Server.Cargo.Systems
                 return;
 
             // DS14-start
-    if (console.IsTaipan && !HasComp<StationTaipanComponent>(station))
-        return;
+            if (console.IsTaipan && !HasComp<StationTaipanComponent>(station))
+                return;
             // DS14-end
             if (_uiSystem.HasUi(consoleUid, CargoConsoleUiKey.Orders))
             {
@@ -478,16 +477,14 @@ namespace Content.Server.Cargo.Systems
             if (!TryComp<StationBankAccountComponent>(station, out var bank))
                 return [];
             // DS14-start
-    if (console.Comp.IsTaipan)
-    {
-        return station.Comp.TaipanOrders.ToList();
-    }
+            if (console.Comp.IsTaipan)
+                return station.Comp.TaipanOrders.ToList();
 
-    if (!station.Comp.Orders.TryGetValue(console.Comp.Account, out var ourOrders))
-    {
-        ourOrders = new List<CargoOrderData>();
-        station.Comp.Orders[console.Comp.Account] = ourOrders;
-    }
+            if (!station.Comp.Orders.TryGetValue(console.Comp.Account, out var ourOrders))
+            {
+                ourOrders = new List<CargoOrderData>();
+                station.Comp.Orders[console.Comp.Account] = ourOrders;
+            }
 
             if (console.Comp.Account == bank.PrimaryAccount)
                 return ourOrders;
@@ -529,7 +526,7 @@ namespace Content.Server.Cargo.Systems
             if (!TryComp<StationBankAccountComponent>(station, out var bank))
                 return amount;
 
-                // DS14-start
+            // DS14-start
             if (account == "Taipan")
             {
                 foreach (var order in station.Comp.TaipanOrders)
@@ -650,27 +647,27 @@ namespace Content.Server.Cargo.Systems
 
         public void RemoveOrder(EntityUid dbUid, ProtoId<CargoAccountPrototype> account, int index, StationCargoOrderDatabaseComponent orderDB)
         {
-        // DS14-start
-        int sequenceIdx;
-        if (account == "Taipan")
-        {
-            sequenceIdx = orderDB.TaipanOrders.FindIndex(order => order.OrderId == index);
+            // DS14-start
+            int sequenceIdx;
+            if (account == "Taipan")
+            {
+                sequenceIdx = orderDB.TaipanOrders.FindIndex(order => order.OrderId == index);
+                if (sequenceIdx != -1)
+                {
+                    orderDB.TaipanOrders.RemoveAt(sequenceIdx);
+                }
+                UpdateOrders(dbUid);
+                return;
+            }
+
+            if (!orderDB.Orders.TryGetValue(account, out var orders))
+                return;
+
+            sequenceIdx = orders.FindIndex(order => order.OrderId == index);
             if (sequenceIdx != -1)
             {
-                orderDB.TaipanOrders.RemoveAt(sequenceIdx);
-            }
-            UpdateOrders(dbUid);
-            return;
-        }
-
-        if (!orderDB.Orders.TryGetValue(account, out var orders))
-            return;
-
-        sequenceIdx = orders.FindIndex(order => order.OrderId == index);
-        if (sequenceIdx != -1)
-        {
-            orders.RemoveAt(sequenceIdx);
-        // DS14-end
+                orders.RemoveAt(sequenceIdx);
+            // DS14-end
             }
             UpdateOrders(dbUid);
         }

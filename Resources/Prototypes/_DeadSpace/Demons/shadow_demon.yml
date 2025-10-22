@@ -116,6 +116,11 @@
   - type: Tag
     tags:
       - CannotSuicide
+  - type: Language
+    selectedLanguage: DemonLanguage
+    knownLanguages:
+    - DemonLanguage
+    - GeneralLanguage
 
 - type: entity
   name: теневая рука
@@ -188,8 +193,6 @@
       100: Dead
   - type: Stamina
   - type: Appearance
-  - type: ReplacementAccent
-    accent: genericAggressive
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Demon

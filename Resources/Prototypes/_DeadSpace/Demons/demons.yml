@@ -55,8 +55,10 @@
         Blunt: 7
         Piercing: 1
         Heat: 5
-  - type: ReplacementAccent
-    accent: genericAggressive
+  - type: Language
+    selectedLanguage: DemonLanguage
+    knownLanguages:
+    - DemonLanguage
   - type: Demon
   - type: Damageable
     damageModifierSet: Demon

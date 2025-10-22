@@ -215,6 +215,12 @@
     - AnomalyHost
   - type: EmoteAnimation # ADT-Emotes
   - type: EmotePanel # DS14-Emote-panel
+  # DS14-Languages-start
+  - type: Language
+    selectedLanguage: GeneralLanguage
+    knownLanguages:
+    - GeneralLanguage
+  # DS14-Languages-end
 
 - type: entity
   save: false

@@ -1,0 +1,70 @@
+- type: soundCollection
+  id: CatLexicon
+  files:
+  - /Audio/_DeadSpace/Voice/Felinid/cat_meow1.ogg
+  - /Audio/_DeadSpace/Voice/Felinid/cat_meow2.ogg
+  - /Audio/_DeadSpace/Voice/Felinid/cat_meow3.ogg
+  - /Audio/_DeadSpace/Voice/Felinid/cat_mew1.ogg
+  - /Audio/_DeadSpace/Voice/Felinid/cat_mew2.ogg
+
+- type: soundCollection
+  id: DionaLexicon
+  files:
+  - /Audio/Voice/Diona/diona_rustle1.ogg
+  - /Audio/Voice/Diona/diona_rustle2.ogg
+  - /Audio/Voice/Diona/diona_rustle3.ogg
+  - /Audio/Voice/Diona/diona_scream.ogg
+
+- type: soundCollection
+  id: SpiderLexicon
+  files:
+  - /Audio/Voice/Arachnid/arachnid_scream.ogg
+  - /Audio/_DeadSpace/Languages/spider2.ogg
+  - /Audio/_DeadSpace/Languages/spider1.ogg
+  - /Audio/_DeadSpace/Languages/spider3.ogg
+
+- type: soundCollection
+  id: MachineLexicon
+  files:
+  - /Audio/_DeadSpace/Languages/robot1.ogg
+  - /Audio/_DeadSpace/Languages/robot2.ogg
+
+- type: soundCollection
+  id: VoxLexicon
+  files:
+  - /Audio/Voice/Talk/vox_exclaim.ogg
+  - /Audio/Voice/Talk/vox.ogg
+  - /Audio/Voice/Talk/vox_ask.ogg
+
+- type: soundCollection
+  id: ReptilianLexicon
+  files:
+  - /Audio/_DeadSpace/Languages/dino1.ogg
+  - /Audio/_DeadSpace/Languages/dino2.ogg
+  - /Audio/_DeadSpace/Languages/dino3.ogg
+
+- type: soundCollection
+  id: MothLexicon
+  files:
+  - /Audio/Voice/Moth/moth_chitter.ogg
+  - /Audio/Voice/Moth/moth_squeak.ogg
+
+- type: soundCollection
+  id: DogLexicon
+  files:
+  - /Audio/Animals/dog_bark1.ogg
+  - /Audio/Animals/dog_bark2.ogg
+  - /Audio/Animals/dog_bark3.ogg
+
+- type: soundCollection
+  id: ChickenLexicon
+  files:
+  - /Audio/_DeadSpace/Languages/сhicken1.ogg
+  - /Audio/_DeadSpace/Languages/сhicken2.ogg
+  - /Audio/_DeadSpace/Languages/сhicken3.ogg
+  - /Audio/_DeadSpace/Languages/сhicken4.ogg
+
+- type: soundCollection
+  id: XenoLexicon
+  files:
+  - /Audio/_DeadSpace/Sponsor/Sound/hissed_xeno.ogg
