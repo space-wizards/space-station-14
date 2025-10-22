@@ -1,0 +1,12 @@
+ent-BaseMagazineCaselessRifle = магазин (.25 безгильзовые)
+    .desc = { ent-BaseItem.desc }
+ent-BaseMagazinePistolCaselessRifle = пистолетный магазин (.25 безгильзовые)
+    .desc = { ent-BaseMagazineCaselessRifle.desc }
+ent-MagazinePistolCaselessRifle = пистолетный магазин (.25 безгильзовые)
+    .desc = { ent-BaseMagazinePistolCaselessRifle.desc }
+ent-MagazinePistolCaselessRiflePractice = пистолетный магазин (.25 безгильзовые учебные)
+    .desc = { ent-BaseMagazinePistolCaselessRifle.desc }
+ent-MagazineCaselessRifle = магазин (.25 безгильзовые)
+    .desc = { ent-BaseMagazineCaselessRifle.desc }
+ent-MagazineCaselessRiflePractice = магазин (.25 безгильзовые учебные)
+    .desc = { ent-BaseMagazineCaselessRifle.desc }

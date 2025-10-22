@@ -25,6 +25,17 @@
     - yells
     - yelled
     - yelling
+    # RU-Localization-Start
+    - кричит
+    - кричит.
+    - кричит!
+    - орёт
+    - орёт.
+    - орёт!
+    - визжит
+    - визжит.
+    - визжит!
+    # RU-Localization-End
 
 - type: emote
   id: Laugh
@@ -54,6 +65,15 @@
     - chortle
     - chortles
     - chortling
+    # RU-Localization-Start
+    - смеется
+    - смеётся
+    - хохочет
+    - хихикает
+    - хихикнул
+    - хихикнула
+    - ржёт
+    # RU-Localization-End
 
 - type: emote
   id: Honk
@@ -89,6 +109,11 @@
     - sigh
     - sighs
     - sighed
+    # RU-Localization-Start
+    - вздыхает
+    - вздохнул
+    - вздохнула
+    # RU-Localization-End
 
 - type: emote
   id: Whistle
@@ -106,6 +131,10 @@
     - whistle
     - whistles
     - whistleblowing
+    # RU-Localization-Start
+    - свистит
+    - свистнул
+    # RU-Localization-End
 
 - type: emote
   id: Crying
@@ -126,6 +155,10 @@
     - sob
     - sobs
     - sobbing
+    # RU-Localization-Start
+    - плачет
+    - рыдает
+    # RU-Localization-End
 
 - type: emote
   id: Squish
@@ -180,6 +213,9 @@
    - squeak
    - squeaks
    - squeaked
+   # RU-Localization-Start
+   - пищит
+   # RU-Localization-End
 
 - type: emote
   id: Click
@@ -197,6 +233,10 @@
   chatTriggers:
    - click
    - clicks
+   # RU-Localization-Start
+   - клац
+   - клацает
+   # RU-Localization-End
 
 # Vulpkanin
 - type: emote
@@ -325,6 +365,15 @@
     - claps her hands together
     - claps his hands together
     - claps its hands together
+    # RU-Localization-Start
+    - хлопает
+    - хлопнул
+    - хлопнула
+    - хлопает в ладоши
+    - хлопнул в ладоши
+    - хлопнула в ладоши
+    - апплодирует
+    # RU-Localization-End
 
 - type: emote
   id: Snap
@@ -351,6 +400,20 @@
     - snaps its fingers
     - snapping fingers
     - snapped fingers
+    # RU-Localization-Start
+    - щелкает
+    - щелкнул
+    - щелкнула
+    - щёлкает
+    - щёлкнул
+    - щёлкнула
+    - щелкает пальцами
+    - щелкнул пальцами
+    - щелкнула пальцами
+    - щёлкает пальцами
+    - щёлкнул пальцами
+    - щёлкнула пальцами
+    # RU-Localization-End
 
 - type: emote
   id: Thump
@@ -392,6 +455,12 @@
   chatTriggers:
     - salute
     - salutes
+    # RU-Localization-Start
+    - салютует
+    - отдаёт честь
+    - отдал честь
+    - отдала честь
+    # RU-Localization-End
 
 - type: emote
   id: Gasp

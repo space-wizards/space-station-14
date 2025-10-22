@@ -1,33 +1,40 @@
 # Non-fungible apes, anyone?
 - type: nameIdentifierGroup
   id: Monkey
-  format: name-identifier-format-monkey
+  prefix: MK
+  prefix: ОБ # RU-Localization
 
 - type: nameIdentifierGroup
   id: Kobold
-  format: name-identifier-format-kobold
+  prefix: KB
+  prefix: КБ # RU-Localization
 
 - type: nameIdentifierGroup
   id: Holoparasite
-  format: name-identifier-format-holoparasite
+  prefix: HOLO
+  prefix: ГОЛО # RU-Localization
 
 - type: nameIdentifierGroup
   id: MMI
-  format: name-identifier-format-mmi
+  prefix: MMI
+  prefix: ЧМИ # RU-Localization
   minValue: 100
   maxValue: 999
 
 - type: nameIdentifierGroup
   id: PositronicBrain
-  format: name-identifier-format-positronic-brain
+  prefix: PB
+  prefix: ПМ # RU-Localization
   minValue: 10
   maxValue: 99
 
 - type: nameIdentifierGroup
   id: Silicon
-  format: name-identifier-format-silicon
+  prefix: Si
+  prefix: Кр # RU-Localization
   minValue: 1000
   maxValue: 9999
+
 
 - type: nameIdentifierGroup
   id: Xenoborg

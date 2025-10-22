@@ -1,0 +1,14 @@
+ent-DrinkBaseMaterialGlass = { "" }
+    .desc = { "" }
+ent-DrinkBaseMaterialPorcelain = { ent-DrinkBaseMaterialGlass }
+    .desc = { ent-DrinkBaseMaterialGlass.desc }
+ent-DrinkBaseMaterialPlastic = { "" }
+    .desc = { "" }
+ent-DrinkBaseMaterialCardboard = { "" }
+    .desc = { "" }
+ent-DrinkBaseMaterialMetal = { "" }
+    .desc = { "" }
+ent-DrinkBaseMaterialStrongMetal = { ent-DrinkBaseMaterialMetal }
+    .desc = { ent-DrinkBaseMaterialMetal.desc }
+ent-DrinkBaseMaterialGold = { "" }
+    .desc = { "" }
