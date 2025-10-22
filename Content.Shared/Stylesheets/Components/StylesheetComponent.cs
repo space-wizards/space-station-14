@@ -7,7 +7,7 @@ public sealed partial class StylesheetComponent : Component
     /// The name of the stylesheet to use for this UI
     /// </summary>
     /// <remarks>
-    /// Gets applied in the BUI when calling <see cref="" />
+    /// Gets applied in the BUI when calling <code>FancyWindow.ApplyStylesheetFrom()</code>
     /// </remarks>
     [DataField]
     public string? Stylesheet = null;
