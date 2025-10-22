@@ -127,13 +127,9 @@ public abstract class SharedIdCardSystem : EntitySystem
     }
 
     /// <summary>
-    /// Attempts to change the job title of a card.
+    /// Attempts to change the job specialization of a card.
     /// Returns true/false.
     /// </summary>
-    /// <remarks>
-    /// If provided with a player's EntityUid to the player parameter, adds the change to the admin logs.
-    /// Actually works with the LocalizedJobTitle DataField and not with JobTitle.
-    /// </remarks>
     public bool TryChangeJobSpec(EntityUid uid, string? jobSpec, IdCardComponent? id = null, EntityUid? player = null)
     {
         if (!Resolve(uid, ref id))
