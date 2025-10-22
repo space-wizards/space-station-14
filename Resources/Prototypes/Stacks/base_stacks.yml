@@ -12,7 +12,7 @@
   id: BaseSmallStack
   maxCount: 10
 
-# size used by topicals and machine parts
+# size for SWH materials
 - type: stack
   abstract: true
   id: BaseSWHStack

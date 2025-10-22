@@ -20,8 +20,9 @@
   - type: Damageable
     damageContainer: Inorganic
   - type: Stack
-    stackType: StackNumSWH # 20 штук в стаке/ 20 pieces in a stack
-
+    stackType: StackNumSWH 
+    count: 20
+    
 # Материалы In-Game SWH
 # Materials In-Game SWH
 
