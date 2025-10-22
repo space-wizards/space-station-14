@@ -12,6 +12,7 @@ public interface IButtonConfig : ISheetletConfig
     public ResPath SmallButtonPath { get; }
     public ResPath RoundedButtonPath { get; }
     public ResPath RoundedButtonBorderedPath { get; }
+    public ResPath BaseButtonIdCardPath { get; }
 
     public ColorPalette ButtonPalette { get; }
     public ColorPalette PositiveButtonPalette { get; }

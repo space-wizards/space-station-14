@@ -54,6 +54,7 @@ public static class StyleClass
     public const string ButtonSquare = "ButtonSquare";
     public const string ButtonSmall = "ButtonSmall";
     public const string ButtonBig = "ButtonBig";
+    public const string ButtonIdCard = "ButtonIdCard";
 
     public const string CrossButtonRed = "CrossButtonRed";
 
