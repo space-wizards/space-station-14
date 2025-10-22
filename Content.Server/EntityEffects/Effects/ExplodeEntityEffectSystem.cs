@@ -9,7 +9,7 @@ namespace Content.Server.EntityEffects.Effects;
 /// Makes this entity explode using its <see cref="ExplosiveComponent"/>.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
-public sealed partial class ExplosionEntityEffectSystem : EntityEffectSystem<ExplosiveComponent, ExplodeEffect>
+public sealed partial class ExplodeEntityEffectSystem : EntityEffectSystem<ExplosiveComponent, ExplodeEffect>
 {
     [Dependency] private readonly ExplosionSystem _explosion = default!;
 
