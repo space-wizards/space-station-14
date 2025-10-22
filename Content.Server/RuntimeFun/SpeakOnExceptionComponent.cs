@@ -1,12 +1,13 @@
 using Content.Shared.Dataset;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.RuntimeFun;
 
 /// <summary>
 /// Entities with this component will speak everytime an error occurs. They will say the exception
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class SpeakOnExceptionComponent : Component
 {
     /// <summary>
@@ -30,6 +31,6 @@ public sealed partial class SpeakOnExceptionComponent : Component
     /// <summary>
     /// The next time the entity can say another error.
     /// </summary>
-    [DataField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan? NextTimeCanSpeak;
 }
