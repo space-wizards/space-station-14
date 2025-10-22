@@ -108,7 +108,7 @@
     - type: StaticPrice
       price: 200
     - type: AccessReader
-      access: [["Atmospherics"], ["Engineering"], ["Research"]]
+      access: [["Atmospherics"], ["Engineering"], ["Research"], ["TaipanAtmospherics"], ["TaipanEngineering"], ["TaipanResearch"]] # DS14
     - type: Lock
       locked: false
     - type: GuideHelp

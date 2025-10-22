@@ -1,4 +1,7 @@
 - type: playTimeTracker
+  id: Taipan
+
+- type: playTimeTracker
   id: JobTaipanAtmosphericsEngineer
 
 - type: playTimeTracker
@@ -33,6 +36,3 @@
 
 - type: playTimeTracker
   id: JobTaipanTechnicalOperationsSupervisor
-
-- type: playTimeTracker
-  id: JobTaipanAi

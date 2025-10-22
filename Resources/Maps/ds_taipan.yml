@@ -26959,7 +26959,7 @@ entities:
     - type: Transform
       pos: -4.5,-30.5
       parent: 2
-- proto: CrateArtifactContainer
+- proto: CrateArtifactContainerTaipan
   entities:
   - uid: 3678
     components:
@@ -46531,7 +46531,7 @@ entities:
     - type: Transform
       pos: 38.5,-16.5
       parent: 2
-- proto: HandheldArtifactContainer
+- proto: HandheldArtifactContainerTaipan
   entities:
   - uid: 6402
     components:
