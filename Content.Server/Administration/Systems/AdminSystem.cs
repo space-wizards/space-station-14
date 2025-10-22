@@ -406,9 +406,9 @@ public sealed class AdminSystem : EntitySystem
             foreach (var item in _inventory.GetHandOrInventoryEntities(entity))
             {
                 if (TryComp(item, out PdaComponent? pda) &&
-                    TryComp(pda.ContainedId, out StationRecordInfoStorageComponent? keyStorage) &&
+                    TryComp(pda.ContainedId, out StationRecordKeyStorageComponent? keyStorage) &&
                     keyStorage.Key is { } key &&
-                    keyStorage.Record is { } record)
+                    _stationRecords.TryGetRecord(key, out GeneralStationRecord? record))
                 {
                     if (TryComp(entity, out DnaComponent? dna) &&
                         dna.DNA != record.DNA)

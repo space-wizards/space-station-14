@@ -17,7 +17,7 @@
     storedRotation: -90
   - type: Access
   - type: IdCard
-  - type: StationRecordInfoStorage
+  - type: StationRecordKeyStorage
   - type: Tag
     tags:
     - DoorBumpOpener

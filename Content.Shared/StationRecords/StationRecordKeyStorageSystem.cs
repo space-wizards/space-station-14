@@ -2,7 +2,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.StationRecords;
 
-public sealed class StationRecordInfoStorageSystem : EntitySystem
+public sealed class StationRecordKeyStorageSystem : EntitySystem
 {
     [Dependency] private readonly SharedStationRecordsSystem _records = default!;
 
@@ -10,18 +10,18 @@ public sealed class StationRecordInfoStorageSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<StationRecordInfoStorageComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<StationRecordInfoStorageComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<StationRecordKeyStorageComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<StationRecordKeyStorageComponent, ComponentHandleState>(OnHandleState);
     }
 
-    private void OnGetState(EntityUid uid, StationRecordInfoStorageComponent component, ref ComponentGetState args)
+    private void OnGetState(EntityUid uid, StationRecordKeyStorageComponent component, ref ComponentGetState args)
     {
-        args.State = new StationRecordInfoStorageComponentState(_records.Convert(component.Key), component.Record);
+        args.State = new StationRecordKeyStorageComponentState(_records.Convert(component.Key), component.Record);
     }
 
-    private void OnHandleState(EntityUid uid, StationRecordInfoStorageComponent component, ref ComponentHandleState args)
+    private void OnHandleState(EntityUid uid, StationRecordKeyStorageComponent component, ref ComponentHandleState args)
     {
-        if (args.Current is not StationRecordInfoStorageComponentState state)
+        if (args.Current is not StationRecordKeyStorageComponentState state)
             return;
         component.Key = _records.Convert(state.Key);
         component.Record = state.Record;
@@ -33,7 +33,7 @@ public sealed class StationRecordInfoStorageSystem : EntitySystem
     /// <param name="uid"></param>
     /// <param name="key"></param>
     /// <param name="keyStorage"></param>
-    public void AssignKey(EntityUid uid, StationRecordKey key, StationRecordInfoStorageComponent? keyStorage = null)
+    public void AssignKey(EntityUid uid, StationRecordKey key, StationRecordKeyStorageComponent? keyStorage = null)
     {
         if (!Resolve(uid, ref keyStorage))
         {
@@ -45,29 +45,12 @@ public sealed class StationRecordInfoStorageSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Assigns a station record key to an entity.
-    /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="key"></param>
-    /// <param name="keyStorage"></param>
-    public void AssignRecord(EntityUid uid, GeneralStationRecord record, StationRecordInfoStorageComponent? keyStorage = null)
-    {
-        if (!Resolve(uid, ref keyStorage))
-        {
-            return;
-        }
-
-        keyStorage.Record = record;
-        Dirty(uid, keyStorage);
-    }
-
-    /// <summary>
     ///     Removes a station record key from an entity.
     /// </summary>
     /// <param name="uid"></param>
     /// <param name="keyStorage"></param>
     /// <returns></returns>
-    public StationRecordKey? RemoveKey(EntityUid uid, StationRecordInfoStorageComponent? keyStorage = null)
+    public StationRecordKey? RemoveKey(EntityUid uid, StationRecordKeyStorageComponent? keyStorage = null)
     {
         if (!Resolve(uid, ref keyStorage) || keyStorage.Key == null)
         {
@@ -87,7 +70,7 @@ public sealed class StationRecordInfoStorageSystem : EntitySystem
     /// <param name="uid"></param>
     /// <param name="keyStorage"></param>
     /// <returns></returns>
-    public bool CheckKey(EntityUid uid, StationRecordInfoStorageComponent? keyStorage = null)
+    public bool CheckKey(EntityUid uid, StationRecordKeyStorageComponent? keyStorage = null)
     {
         if (!Resolve(uid, ref keyStorage))
         {
