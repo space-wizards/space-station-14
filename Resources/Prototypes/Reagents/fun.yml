@@ -279,7 +279,7 @@
         - !type:TemperatureCondition
           min: 160.15 # not quite enough for cryo, but can speed it up if you wanna take the risk
         amount: -18000 # make fresium great
-      - !type:MovespeedModifier
+      - !type:MovementSpeedModifier
         conditions:
         - !type:ReagentCondition
           reagent: Fresium
