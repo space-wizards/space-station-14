@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: SpecializationPlaceholders
+  values:
+    prefix: placeholders-specialization-
+    count: 15

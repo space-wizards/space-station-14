@@ -51,6 +51,7 @@
       - id: IDComputerCircuitboard
       - id: FundingAllocationComputerCircuitboard
       - id: CargoRequestServiceComputerCircuitboard
+      - id: SpecializationComputerCircuitboard
 
 - type: entity
   name: stamp box [HoP]

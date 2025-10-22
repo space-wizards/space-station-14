@@ -571,3 +571,14 @@
       state: cpu_science
     - type: ComputerBoard
       prototype: StationAiFixerComputer
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SpecializationComputerCircuitboard
+  name: Department specialization console board
+  description: A computer printed circuit board for an department specialization.
+  components:
+  - type: Sprite
+    state: cpu_command
+  - type: ComputerBoard
+    prototype: SpecializationComputer
