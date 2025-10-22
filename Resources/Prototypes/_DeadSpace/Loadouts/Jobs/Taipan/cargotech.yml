@@ -1,0 +1,71 @@
+# Jumpsuit
+- type: loadout
+  id: TaipanCargotechJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUniforms
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitTaipanCargotech
+
+- type: loadout
+  id: TaipanCargotechJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUniforms
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtTaipanCargotech
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersTaipanCargotech
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersTaipanCargotech
+
+- type: loadout
+  id: UnderwearBottomPantiesTaipanCargotech
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesTaipanCargotech
+
+- type: loadout
+  id: UnderwearTopBraTaipanCargotech
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraTaipanCargotech
+
+# Loadout Groups
+- type: loadoutGroup
+  id: TaipanCargotechUniform
+  name: loadout-group-taipan-cargotech-uniform
+  hidden: true
+  minLimit: 1
+  loadouts:
+  - TaipanCargotechJumpsuit
+  - TaipanCargotechJumpskirt
+
+- type: loadoutGroup
+  id: TaipanCargotechUnderwear
+  name: loadout-group-taipan-cargotech-underwear
+  hidden: true
+  minLimit: 2
+  loadouts:
+  - UnderwearBottomBoxersTaipanCargotech
+  - UnderwearBottomPantiesTaipanCargotech
+  - UnderwearTopBraTaipanCargotech
+
+# Role Loadout
+- type: roleLoadout
+  id: JobTaipanCargotech
+  groups:
+  - TaipanCargotechUniform
+  - TaipanCargotechUnderwear
+  - TaipanSurvival
+  - GroupSpeciesBreathTool
+  - GroupTankHarness

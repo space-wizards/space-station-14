@@ -1,0 +1,71 @@
+# Jumpsuit
+- type: loadout
+  id: TaipanBotanistJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUniforms
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitTaipanBotanist
+
+- type: loadout
+  id: TaipanBotanistJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUniforms
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtTaipanBotanist
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersTaipanBotanist
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersTaipanBotanist
+
+- type: loadout
+  id: UnderwearBottomPantiesTaipanBotanist
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesTaipanBotanist
+
+- type: loadout
+  id: UnderwearTopBraTaipanBotanist
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraTaipanBotanist
+
+# Loadout Groups
+- type: loadoutGroup
+  id: TaipanBotanistUniform
+  name: loadout-group-taipan-botanist-uniform
+  hidden: true
+  minLimit: 1
+  loadouts:
+  - TaipanBotanistJumpsuit
+  - TaipanBotanistJumpskirt
+
+- type: loadoutGroup
+  id: TaipanBotanistUnderwear
+  name: loadout-group-taipan-botanist-underwear
+  hidden: true
+  minLimit: 2
+  loadouts:
+  - UnderwearBottomBoxersTaipanBotanist
+  - UnderwearBottomPantiesTaipanBotanist
+  - UnderwearTopBraTaipanBotanist
+
+# Role Loadout
+- type: roleLoadout
+  id: JobTaipanBotanist
+  groups:
+  - TaipanBotanistUniform
+  - TaipanBotanistUnderwear
+  - TaipanSurvival
+  - GroupSpeciesBreathTool
+  - GroupTankHarness

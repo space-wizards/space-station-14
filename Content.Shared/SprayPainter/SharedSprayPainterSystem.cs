@@ -59,8 +59,27 @@ public abstract class SharedSprayPainterSystem : EntitySystem
     private void OnMapInit(Entity<SprayPainterComponent> ent, ref MapInitEvent args)
     {
         bool stylesByGroupPopulated = false;
+            // DS14-start
         foreach (var groupProto in Proto.EnumeratePrototypes<PaintableGroupPrototype>())
         {
+            bool isAllowed = ent.Comp.AllowedCategories.Count == 0;
+
+            if (!isAllowed)
+            {
+                foreach (var categoryProto in Proto.EnumeratePrototypes<PaintableGroupCategoryPrototype>())
+                {
+                    if (ent.Comp.AllowedCategories.Contains(categoryProto.ID) &&
+                        categoryProto.Groups.Contains(groupProto.ID))
+                    {
+                        isAllowed = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!isAllowed)
+                continue;
+            // DS14-end
             ent.Comp.StylesByGroup[groupProto.ID] = groupProto.DefaultStyle;
             stylesByGroupPopulated = true;
         }
@@ -70,6 +89,51 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         if (ent.Comp.ColorPalette.Count > 0)
             SetPipeColor(ent, ent.Comp.ColorPalette.First().Key);
     }
+
+    // DS14-start
+    public IEnumerable<PaintableGroupPrototype> GetAllowedGroups(SprayPainterComponent component)
+    {
+        foreach (var groupProto in Proto.EnumeratePrototypes<PaintableGroupPrototype>())
+        {
+            bool isAllowed = component.AllowedCategories.Count == 0;
+
+            if (!isAllowed)
+            {
+                foreach (var categoryProto in Proto.EnumeratePrototypes<PaintableGroupCategoryPrototype>())
+                {
+                    if (component.AllowedCategories.Contains(categoryProto.ID) &&
+                        categoryProto.Groups.Contains(groupProto.ID))
+                    {
+                        isAllowed = true;
+                        break;
+                    }
+                }
+            }
+
+            if (isAllowed)
+            {
+                yield return groupProto;
+            }
+        }
+    }
+
+    public bool IsGroupAllowed(SprayPainterComponent component, string groupId)
+    {
+        if (component.AllowedCategories.Count == 0)
+            return true;
+
+        foreach (var categoryProto in Proto.EnumeratePrototypes<PaintableGroupCategoryPrototype>())
+        {
+            if (component.AllowedCategories.Contains(categoryProto.ID) &&
+                categoryProto.Groups.Contains(groupId))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    // DS14-end
 
     private void SetPipeColor(Entity<SprayPainterComponent> ent, string? paletteKey)
     {
@@ -183,6 +247,11 @@ public abstract class SharedSprayPainterSystem : EntitySystem
             || !painter.StylesByGroup.TryGetValue(group, out var selectedStyle)
             || !Proto.TryIndex(group, out PaintableGroupPrototype? targetGroup))
             return;
+
+        // DS14-start
+        if (!painter.StylesByGroup.ContainsKey(group))
+            return;
+        // DS14-end
 
         // Valid paint target.
         args.Handled = true;

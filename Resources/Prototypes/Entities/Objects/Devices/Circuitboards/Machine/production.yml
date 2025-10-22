@@ -475,6 +475,9 @@
         Manipulator: 4
         Glass: 1
         Cable: 1
+    - type: Tag
+      tags:
+      - CloningPodMachineCircuitboard
 
 - type: entity
   id: MedicalScannerMachineCircuitboard
@@ -1061,6 +1064,9 @@
         Manipulator: 1
         Glass: 2
         Cable: 2
+    - type: Tag # DS14
+      tags:
+      - SyndicateMicrowave
 
 - type: entity
   id: FatExtractorMachineCircuitboard

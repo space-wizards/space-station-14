@@ -72,3 +72,23 @@
     proto: BulletDisablerPulse
     count: 3
     spread: 9
+
+- type: entity
+  name: плазменный удар
+  id: LaserRifleBulletpread
+  categories: [ HideSpawnMenu ]
+  parent: LaserRifleBullet
+  components:
+  - type: ProjectileSpread
+    proto: LaserRifleBullet
+    count: 4 
+    spread: 23
+
+- type: entity
+  name : парализатор
+  id: BulletDisablerShotgun
+  parent: BulletDisabler
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StaminaDamageOnCollide
+    damage: 42

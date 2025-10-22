@@ -1,0 +1,183 @@
+# Tier 1
+
+- type: technology
+  id: TaipanBasicRobotics
+  name: research-technology-basic-robotics
+  icon:
+    sprite: _DeadSpace/Structures/Machines/Taipan/exosuit_fabricator.rsi
+    state: fab-idle
+  discipline: TaipanResearch
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - ProximitySensor
+
+- type: technology
+  id: TaipanBasicAnomalousResearch
+  name: research-technology-basic-anomalous-research
+  icon:
+    sprite: Objects/Specific/Research/anomalyscanner.rsi
+    state: icon
+  discipline: TaipanResearch
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - AnomalyScanner
+  - AnomalyLocator
+  - AnomalyLocatorWide
+  - APECircuitboard
+  - AnomalyVesselCircuitboardTaipan
+
+- type: technology
+  id: TaipanBasicXenoArcheology
+  name: research-technology-basic-xenoarcheology
+  icon:
+    sprite: Structures/Machines/artifact_analyzer.rsi
+    state: display
+  discipline: TaipanResearch
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - NodeScanner
+  - AnalysisComputerCircuitboardTaipan
+  - ArtifactAnalyzerMachineCircuitboard
+
+- type: technology
+  id: TaipanMagnetsTech
+  name: research-technology-magnets-tech
+  icon:
+    sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi
+    state: icon
+  discipline: TaipanResearch
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - ClothingShoesBootsMagSyndie
+  - ClothingShoesBootsMoon
+
+- type: technology
+  id: TaipanEnergyDaggers
+  name: research-technology-energy-daggers
+  icon:
+    sprite: Objects/Weapons/Melee/e_dagger.rsi
+    state: icon
+  discipline: TaipanResearch
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - EnergyDagger
+
+# Tier 2
+
+- type: technology
+  id: TaipanAbnormalArtifactManipulation
+  name: research-technology-abnormal-artifact-manipulation
+  icon:
+    sprite: Structures/Machines/artifact_crusher.rsi
+    state: icon
+  discipline: TaipanResearch
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - ArtifactCrusherMachineCircuitboard
+  - ObeliskStoper
+
+- type: technology
+  id: TaipanAdvancedAnomalyResearch
+  name: research-technology-advanced-anomaly-research
+  icon:
+    sprite: Structures/Machines/anomaly_sync.rsi
+    state: base
+  discipline: TaipanResearch
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - WeaponPistolCHIMP
+  - WeaponPistolCHIMPUpgradeKit
+  - AnomalySynchronizerCircuitboard
+  - AnomalyVesselExperimentalCircuitboardTaipan
+  - WeaponGauntletGorilla
+  technologyPrerequisites:
+  - TaipanBasicAnomalousResearch
+
+- type: technology
+  id: TaipanDeterrenceTechnologies
+  name: research-technology-deterrence
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/particle_decelerator.rsi
+    state: base
+  discipline: TaipanResearch
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - WeaponParticleDecelerator
+  - HoloprojectorField
+
+- type: technology
+  id: TaipanChameleonProjector
+  name: research-technology-chameleon-projector
+  icon:
+    sprite: Objects/Devices/chameleon_projector.rsi
+    state: icon
+  discipline: TaipanResearch
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - ChameleonProjector
+
+- type: technology
+  id: TaipanEnergyWeapons
+  name: research-technology-energy-weapons
+  icon:
+    sprite: Objects/Weapons/Melee/e_sword.rsi
+    state: icon
+  discipline: TaipanResearch
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - EnergySword
+  - EnergyShield
+  technologyPrerequisites:
+  - TaipanEnergyDaggers
+
+# Tier 3
+
+- type: technology
+  id: TaipanEmag
+  name: research-technology-emag
+  icon:
+    sprite: _DeadSpace/Objects/Devices/idcards.rsi
+    state: emag
+  discipline: TaipanResearch
+  tier: 3
+  cost: 30000
+  recipeUnlocks:
+  - EmagTaipanLimited
+
+- type: technology
+  id: TaipanAdvancedMagnetsTech
+  name: research-technology-advanced-magnets-tech
+  icon:
+    sprite: _ADT/Clothing/Shoes/Boots/advanced.rsi
+    state: icon
+  discipline: TaipanResearch
+  tier: 3
+  cost: 30000
+  recipeUnlocks:
+  - ADTClothingShoesBootsMagAdvSynd
+  technologyPrerequisites:
+  - TaipanMagnetsTech
+
+- type: technology
+  id: TaipanEliteEnergyWeapons
+  name: research-technology-elite-energy-weapons
+  icon:
+    sprite: Objects/Weapons/Melee/e_sword_double.rsi
+    state: icon
+  discipline: TaipanResearch
+  tier: 3
+  cost: 30000
+  recipeUnlocks:
+  - EnergySwordDouble
+  technologyPrerequisites:
+  - TaipanEnergyWeapons

@@ -2,15 +2,15 @@
   id: StandardTaipanStation
   parent:
   - BaseStation
-  - BaseStationNews
-  - BaseStationCargo
-  - BaseStationJobsSpawning
-  - BaseStationRecords
-  # - BaseStationShuttles
-  - BaseStationAlertLevels
+  # - BaseStationNews
+  - BaseStationTaipanCargo
+  # - BaseStationJobsSpawning
+  # - BaseStationRecords
+  - BaseTaipanStationShuttles
+  - BaseTaipanStationAlertLevels
   - BaseStationMagnet
   - BaseStationExpeditions
-  - BaseStationSiliconLawCrewsimov
+  - BaseStationSiliconTaipanStatic
   # - BaseStationAllEventsEligible
   - BaseStationTaipan
   categories: [ HideSpawnMenu ]

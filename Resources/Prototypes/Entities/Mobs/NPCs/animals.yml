@@ -51,8 +51,14 @@
     flavorKind: station-event-random-sentience-flavor-organic
   - type: Bloodstream
     bloodMaxVolume: 50
-  - type: ReplacementAccent
-    accent: mouse
+  # DS14-Languages-start
+  # - type: ReplacementAccent
+  #   accent: mouse
+  - type: Language
+    selectedLanguage: MouseLanguage
+    knownLanguages:
+    - MouseLanguage
+  # DS14-Languages-end
   - type: MeleeWeapon
     soundHit:
         path: /Audio/Effects/bite.ogg
@@ -78,7 +84,7 @@
   - type: Tag
     tags:
     - VimPilot
-  - type: NightVision # DS14 
+  - type: NightVision # DS14
 
 - type: entity
   name: bee
@@ -267,8 +273,14 @@
     eggSpawn:
     - id: FoodEgg
   - type: ExaminableHunger
-  - type: ReplacementAccent
-    accent: chicken
+  # DS14-Languages-start
+  # - type: ReplacementAccent
+  #   accent: chicken
+  - type: Language
+    selectedLanguage: ChickenLanguage
+    knownLanguages:
+    - ChickenLanguage
+  # DS14-Languages-end
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
   - type: NpcFactionMember
@@ -569,8 +581,14 @@
       amount: 2
   - type: Extractable
     grindableSolutionName: food
-  - type: ReplacementAccent
-    accent: mothroach
+  # DS14-Languages-start
+  # - type: ReplacementAccent
+  #   accent: mothroach
+  - type: Language
+    selectedLanguage: MothLanguage
+    knownLanguages:
+    - MothLanguage
+  # DS14-Languages-end
   - type: ZombieAccentOverride
     accent: zombieMoth
   - type: Vocal
@@ -711,8 +729,14 @@
     eggSpawn:
     - id: FoodEgg
   - type: ExaminableHunger
-  - type: ReplacementAccent
-    accent: duck
+  # DS14-Languages-start
+  # - type: ReplacementAccent
+  #   accent: duck
+  - type: Language
+    selectedLanguage: ChickenLanguage
+    knownLanguages:
+    - ChickenLanguage
+  # DS14-Languages-end
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
   - type: NpcFactionMember
@@ -932,8 +956,14 @@
     guides:
     - Chef
     - FoodRecipes
-  - type: ReplacementAccent # DS14
-    accent: cow
+  # DS14-Languages-start
+  # - type: ReplacementAccent
+  #   accent: cow
+  - type: Language
+    selectedLanguage: CowLanguage
+    knownLanguages:
+    - CowLanguage
+  # DS14-Languages-end
   - type: TTS # DS14
     voice: Thrud
 
@@ -991,8 +1021,14 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Voice/Arachnid/arachnid_chitter.ogg
-  - type: ReplacementAccent
-    accent: crab
+  # DS14-Languages-start
+  # - type: ReplacementAccent
+  #   accent: crab
+  - type: Language
+    selectedLanguage: CrabLanguage
+    knownLanguages:
+    - CrabLanguage
+  # DS14-Languages-end
   - type: Bloodstream
     bloodMaxVolume: 50
     bloodReagent: CopperBlood
@@ -1267,8 +1303,14 @@
   - type: Inventory
     speciesId: kangaroo
     templateId: kangaroo
-  - type: ReplacementAccent
-    accent: kangaroo
+  # DS14-Languages-start
+  # - type: ReplacementAccent
+  #   accent: kangaroo
+  - type: Language
+    selectedLanguage: KangarooLanguage
+    knownLanguages:
+    - KangarooLanguage
+  # DS14-Languages-end
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -1546,8 +1588,14 @@
   - type: NameIdentifier
     group: Kobold
   - type: LizardAccent
-  - type: ReplacementAccent
-    accent: kobold
+  # DS14-Languages-start
+  # - type: ReplacementAccent
+  #   accent: kobold
+  - type: Language
+    selectedLanguage: KoboltLanguage
+    knownLanguages:
+    - KoboltLanguage
+  # DS14-Languages-end
   - type: Speech
     speechSounds: Lizard
     speechVerb: Reptilian
@@ -1831,8 +1879,14 @@
     spawned:
     - id: FoodMeatRat
       amount: 1
-  - type: ReplacementAccent
-    accent: mouse
+  # DS14-Languages-start
+  # - type: ReplacementAccent
+  #   accent: mouse
+  - type: Language
+    selectedLanguage: MouseLanguage
+    knownLanguages:
+    - MouseLanguage
+  # DS14-Languages-end
   - type: Tag
     tags:
     - Trash
@@ -2508,8 +2562,14 @@
   - type: MeleeChemicalInjector
     transferAmount: 0.75
     solution: melee
-  - type: ReplacementAccent
-    accent: xeno
+  # DS14-Languages-start
+  # - type: ReplacementAccent
+  #   accent: xeno
+  - type: Language
+    selectedLanguage: XenomorphLanguage
+    knownLanguages:
+    - XenomorphLanguage
+  # DS14-Languages-end
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-tarantula
@@ -2947,8 +3007,14 @@
     spawned:
     - id: FoodMeat
       amount: 2
-  - type: ReplacementAccent
-    accent: dog
+  # DS14-Languages-start
+  # - type: ReplacementAccent
+  #   accent: dog
+  - type: Language
+    selectedLanguage: DogLanguage
+    knownLanguages:
+    - DogLanguage
+  # DS14-Languages-end
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-corgi
   - type: Tag
@@ -3085,8 +3151,14 @@
     spawned:
     - id: FoodMeat
       amount: 3
-  - type: ReplacementAccent
-    accent: cat
+  # DS14-Languages-start
+  # - type: ReplacementAccent
+  #   accent: cat
+  - type: Language
+    selectedLanguage: CatLanguage
+    knownLanguages:
+    - CatLanguage
+  # DS14-Languages-end
   - type: InteractionPopup
     successChance: 0.7
     interactSuccessString: petting-success-cat
@@ -3488,8 +3560,14 @@
     spawned:
     - id: FoodMeat
       amount: 1
-  - type: ReplacementAccent
-    accent: mouse
+  # DS14-Languages-start
+  # - type: ReplacementAccent
+  #   accent: mouse
+  - type: Language
+    selectedLanguage: MouseLanguage
+    knownLanguages:
+    - MouseLanguage
+  # DS14-Languages-end
   - type: Tag
     tags:
     - VimPilot
@@ -3606,8 +3684,14 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/pig_oink.ogg
-  - type: ReplacementAccent
-    accent: pig
+  # DS14-Languages-start
+  # - type: ReplacementAccent
+  #   accent: pig
+  - type: Language
+    selectedLanguage: PigLanguage
+    knownLanguages:
+    - PigLanguage
+  # DS14-Languages-end
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
   - type: NpcFactionMember
@@ -3703,8 +3787,14 @@
   id: MobDionaNymphAccent # No talky. For non-brain & wild nymphs
   suffix: Accent
   components:
-  - type: ReplacementAccent
-    accent: nymph
+  # DS14-Languages-start
+  # - type: ReplacementAccent
+  #   accent: nymph
+  - type: Language
+    selectedLanguage: DionaLanguage
+    knownLanguages:
+    - DionaLanguage
+  # DS14-Languages-end
 
 - type: entity
   name: reindeer buck

@@ -11,10 +11,9 @@
   - TaipanMedical
   - TaipanProtection
   - TaipanResearchDirector
-  - TaipanScience
+  - TaipanResearch
   - TaipanService
   - TaipanTechnicalOperationsSupervisor
-  - TaipanVault
   - TaipanExternal
 
 - type: accessLevel
@@ -35,7 +34,7 @@
 
 - type: accessLevel
   id: TaipanCommunicationsOfficer
-  name: Кабинет ОТК
+  name: Офицер телекоммуникаций
 
 - type: accessLevel
   id: TaipanEngineering
@@ -55,10 +54,10 @@
 
 - type: accessLevel
   id: TaipanResearchDirector
-  name: Кабинет ДИ
+  name: Директор исследований
 
 - type: accessLevel
-  id: TaipanScience
+  id: TaipanResearch
   name: Научный
 
 - type: accessLevel
@@ -67,11 +66,7 @@
 
 - type: accessLevel
   id: TaipanTechnicalOperationsSupervisor
-  name: Кабинет РТ
-
-- type: accessLevel
-  id: TaipanVault
-  name: Хранилище
+  name: Руководитель техобеспечения
 
 - type: accessLevel
   id: TaipanExternal

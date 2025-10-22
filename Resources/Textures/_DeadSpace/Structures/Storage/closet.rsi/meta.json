@@ -1,0 +1,127 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/vgstation-coders/vgstation13/commit/02b9f6894af4419c9f7e699a22c402b086d8067e, edited by andrew_fenriz (discord) for Space Station 14 server Мёртвый Космос",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "atmos"
+    },
+    {
+      "name": "atmos_door"
+    },
+    {
+      "name": "chef"
+    },
+    {
+      "name": "chef_door"
+    },
+    {
+      "name": "door_open"
+    },
+    {
+      "name": "ts"
+    },
+    {
+      "name": "ts_door"
+    },
+    {
+      "name": "eng_secure"
+    },
+    {
+      "name": "eng_secure_door"
+    },
+    {
+      "name": "co"
+    },
+    {
+      "name": "co_door"
+    },
+    {
+      "name": "hydro"
+    },
+    {
+      "name": "hydro_door"
+    },
+    {
+      "name": "locked"
+    },
+    {
+      "name": "med_secure"
+    },
+    {
+      "name": "med_secure_door"
+    },
+    {
+      "name": "mining"
+    },
+    {
+      "name": "mining_door"
+    },
+    {
+      "name": "paramed"
+    },
+    {
+      "name": "paramed_door"
+    },
+    {
+      "name": "rd"
+    },
+    {
+      "name": "rd_door"
+    },
+    {
+      "name": "science"
+    },
+    {
+      "name": "science_door"
+    },
+    {
+      "name": "sec"
+    },
+    {
+      "name": "sec_door"
+    },
+    {
+      "name": "secure"
+    },
+    {
+      "name": "secure_door"
+    },
+    {
+      "name": "generic_door"
+    },
+    {
+      "name": "shotgun"
+    },
+    {
+      "name": "shotguncase"
+    },
+    {
+      "name": "shotguncase_door"
+    },
+    {
+      "name": "shotguncase_open"
+    },
+    {
+      "name": "sparking",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "unlocked"
+    },
+    {
+      "name": "welded"
+    }
+  ]
+}

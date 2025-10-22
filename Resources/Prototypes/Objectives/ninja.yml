@@ -109,14 +109,18 @@
     - !type:BlacklistedJobsMindFilter
       blacklist:
       - Passenger
-      - TaipanAtmosTech
+      - TaipanAtmosphericsEngineer
       - TaipanBotanist
       - TaipanCargotech
       - TaipanChef
+      - TaipanCommunicationsOfficer
       - TaipanMedic
-      - TaipanRD
-      - TaipanScience
-      - TaipanTelecommunicationsOfficer
+      - TaipanParamedic
+      - TaipanRecruit
+      - TaipanResearchDirector
+      - TaipanResearcher
+      - TaipanTechnician
+      - TaipanTechnicalOperationsSupervisor
   - type: KillPersonCondition
     # don't count missing evac as killing as heads are higher profile, so you really need to do the dirty work
     # if ce flies a shittle to centcom you better find a way onto it

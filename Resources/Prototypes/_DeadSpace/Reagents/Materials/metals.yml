@@ -1,0 +1,15 @@
+- type: material
+  id: Titanium
+  stackEntity: SheetTitanium1
+  name: materials-titanium
+  icon: { sprite: Objects/Materials/Sheets/metal.rsi, state: titanium }
+  color: "#464762"
+  price: 0.3
+
+- type: material
+  id: Plastitanium
+  stackEntity: SheetPlastitanium1
+  name: materials-plastitanium
+  icon: { sprite: Objects/Materials/Sheets/metal.rsi, state: plastitanium }
+  color: "#323232"
+  price: 0.7

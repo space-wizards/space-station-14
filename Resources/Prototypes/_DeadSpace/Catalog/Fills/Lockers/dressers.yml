@@ -1,0 +1,55 @@
+- type: entity
+  id: DresserTaipanCommunicationsOfficerFilled
+  parent: Dresser
+  name: комод
+  description: Деревянный комод, в котором можно хранить вещи, идеально подходит для нижнего белья и чьих-то почек?...
+  suffix: Тайпан, Офицер телекоммуникаций
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingHeadCommunicationsOfficerTaipan
+    - id: ClothingUniformJumpsuitTaipanCommunicationsOfficer
+    - id: ClothingUniformJumpskirtTaipanCommunicationsOfficer
+    - id: ClothingOuterCoatTaipanCommunicationsOfficer
+    - id: ClothingOuterTrenchTaipanCommunicationsOfficer
+    - id: ClothingNeckCloakCommunicationsOfficer
+    - id: ClothingHandsTaipanCommunicationsOfficer
+    - id: ClothingUnderwearSocksTaipanCommunicationsOfficer
+    - id: ClothingUnderwearBottomBoxersTaipanCommunicationsOfficer
+    - id: ClothingUnderwearTopBraTaipanCommunicationsOfficer
+    - id: ClothingUnderwearBottomPantiesTaipanCommunicationsOfficer
+
+- type: entity
+  id: DresserTaipanResearchDirectorFilled
+  parent: Dresser
+  name: комод
+  description: Деревянный комод, в котором можно хранить вещи, идеально подходит для нижнего белья и чьих-то почек?...
+  suffix: Тайпан, Директор исследований
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingUniformJumpsuitTaipanResearchDirector
+    - id: ClothingUniformJumpskirtTaipanResearchDirector
+    - id: ClothingOuterTaipanCoatLabResearchDirector
+    - id: ClothingHandsTaipanResearchDirector
+    - id: ClothingUnderwearSocksTaipanResearchDirector
+    - id: ClothingUnderwearBottomBoxersTaipanResearchDirector
+    - id: ClothingUnderwearTopBraTaipanResearchDirector
+    - id: ClothingUnderwearBottomPantiesTaipanResearchDirector
+
+- type: entity
+  id: DresserTaipanTechnicalOperationsSupervisorFilled
+  parent: Dresser
+  name: комод
+  description: Деревянный комод, в котором можно хранить вещи, идеально подходит для нижнего белья и чьих-то почек?...
+  suffix: Тайпан, Руководитель техобеспечения
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingUniformJumpsuitTaipanTechnicalOperationsSupervisor
+    - id: ClothingUniformJumpskirtTaipanTechnicalOperationsSupervisor
+    - id: ClothingHandsTaipanTechnicalOperationsSupervisor
+    - id: ClothingUnderwearSocksTaipanTechnicalOperationsSupervisor
+    - id: ClothingUnderwearBottomBoxersTaipanTechnicalOperationsSupervisor
+    - id: ClothingUnderwearTopBraTaipanTechnicalOperationsSupervisor
+    - id: ClothingUnderwearBottomPantiesTaipanTechnicalOperationsSupervisor

@@ -1,0 +1,327 @@
+- type: entity
+  id: SuitStorageTaipanBase
+  parent: SuitStorageBase
+  name: хранилище скафандра
+  description: Необычное высокотехнологичное хранилище Синдиката, предназначенное для хранения космических скафандров.
+  suffix: Тайпан
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _DeadSpace/Structures/Storage/suit_storage.rsi
+    layers:
+    - state: base
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: open
+      shader: unshaded
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+  - type: EntityStorage
+    closeSound:
+      path: /Audio/Machines/blastdoor.ogg
+      params:
+        volume: -7
+    openSound:
+      path: /Audio/Machines/blastdoor.ogg
+      params:
+        volume: -7
+  #  - type: Lock
+  #    lockingSound:
+  #      path: /Audio/Machines/quickbeep.ogg
+  #      params:
+  #        volume: -3
+  #    unlockingSound:
+  #      path: /Audio/Machines/quickbeep.ogg
+  #      params:
+  #        volume: -3
+
+- type: entity
+  id: LockerTaipanBaseSecure
+  parent: LockerBaseSecure
+  name: защищённый шкаф
+  description: Стандартное хранилище Синдиката.
+  abstract: true
+  suffix: Тайпан
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Storage/closet.rsi
+    noRot: true
+    layers:
+    - state: sec
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: sec_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: paper
+      visible: false
+      sprite: Structures/Storage/closet_labels.rsi
+      offset: "-0.065,0"
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: Appearance
+
+- type: entity
+  id: ClosetTaipanSteel
+  parent: ClosetSteelBase
+  name: шкаф
+  description: Стандартное хранилище Синдиката.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _DeadSpace/Structures/Storage/closet.rsi
+    layers:
+    - state: secure
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: generic_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: paper
+      visible: false
+      sprite: Structures/Storage/closet_labels.rsi
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: secure
+    stateDoorOpen: door_open
+    stateDoorClosed: generic_door
+
+- type: entity
+  id: LockerTaipanSteel
+  parent: LockerTaipanBaseSecure
+  name: защищённый шкаф
+  description: Стандартное хранилище Синдиката.
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: secure
+    stateDoorOpen: door_open
+    stateDoorClosed: secure_door
+
+# Booze
+- type: entity
+  id: LockerTaipanBooze
+  parent: LockerBooze
+  name: шкафчик со спиртным
+  description: Здесь бармен хранит алкоголь.
+  components:
+  - type: AccessReader
+    access: [["TaipanService"]]
+
+# Technical Operations Supervisor
+- type: entity
+  id: LockerTaipanTechnicalOperationsSupervisor
+  parent: LockerTaipanBaseSecure
+  name: шкаф руководителя техобеспечения
+  components:
+  - type: EntityStorageVisuals
+    stateBaseClosed: ts
+    stateDoorOpen: door_open
+    stateDoorClosed: ts_door
+  - type: AccessReader
+    access: [["TaipanTechnicalOperationsSupervisor"]]
+
+# Cargotech
+- type: entity
+  id: LockerTaipanCargotech
+  parent: LockerTaipanBaseSecure
+  name: шкаф карготехника
+  components:
+  - type: EntityStorageVisuals
+    stateBaseClosed: mining
+    stateDoorOpen: door_open
+    stateDoorClosed: mining_door
+  - type: AccessReader
+    access: [["TaipanCargo"]]
+
+# Atmospherics Engineer
+- type: entity
+  id: LockerTaipanAtmosphericsEngineer
+  parent: LockerTaipanBaseSecure
+  name: шкаф атмосферного инженера
+  components:
+  - type: EntityStorageVisuals
+    stateBaseClosed: atmos
+    stateDoorOpen: door_open
+    stateDoorClosed: atmos_door
+  - type: AccessReader
+    access: [["TaipanAtmospherics"]]
+
+# Technician
+- type: entity
+  id: LockerTaipanTechnician
+  parent: LockerTaipanBaseSecure
+  name: шкаф ремонтника
+  components:
+  - type: EntityStorageVisuals
+    stateBaseClosed: eng_secure
+    stateDoorOpen: door_open
+    stateDoorClosed: eng_secure_door
+  - type: AccessReader
+    access: [["TaipanEngineering"]]
+
+# Freezer
+- type: entity
+  id: LockerTaipanFreezer
+  parent: LockerFreezerBase
+  name: холодильник
+  suffix: Тайпан, Закрыт
+  components:
+  - type: AccessReader
+    access: [["TaipanService"]]
+
+# Botanist
+- type: entity
+  id: LockerTaipanBotanist
+  parent: LockerTaipanBaseSecure
+  name: шкаф ботаника
+  components:
+  - type: EntityStorageVisuals
+    stateBaseClosed: hydro
+    stateDoorOpen: door_open
+    stateDoorClosed: hydro_door
+  - type: AccessReader
+    access: [["TaipanService"]]
+
+# Chef
+- type: entity
+  id: LockerTaipanChef
+  parent: LockerTaipanBaseSecure
+  name: шкаф повара
+  components:
+  - type: EntityStorageVisuals
+    stateBaseClosed: chef
+    stateDoorOpen: door_open
+    stateDoorClosed: chef_door
+  - type: AccessReader
+    access: [["TaipanService"]]
+
+# Medicine
+- type: entity
+  id: LockerTaipanMedicine
+  parent: LockerBase
+  name: медицинский шкаф
+  description: Стандартное хранилище Синдиката.
+  suffix: Тайпан
+  components:
+  - type: EntityStorageVisuals
+    stateBaseClosed: med
+    stateDoorOpen: med_open
+    stateDoorClosed: med_door
+  - type: AccessReader
+    access: [["TaipanMedical"]]
+
+# Medic
+- type: entity
+  id: LockerTaipanMedic
+  parent: LockerTaipanBaseSecure
+  name: шкаф медика
+  components:
+  - type: EntityStorageVisuals
+    stateBaseClosed: med_secure
+    stateDoorOpen: door_open
+    stateDoorClosed: med_secure_door
+  - type: AccessReader
+    access: [["TaipanMedical"]]
+
+# Paramedic
+- type: entity
+  id: LockerTaipanParamedic
+  parent: LockerTaipanBaseSecure
+  name: шкаф парамедика
+  components:
+  - type: EntityStorageVisuals
+    stateBaseClosed: paramed
+    stateDoorOpen: door_open
+    stateDoorClosed: paramed_door
+  - type: AccessReader
+    access: [["TaipanMedical"]]
+
+# Chemical
+- type: entity
+  id: LockerTaipanChemistry
+  parent: LockerBase
+  name: шкаф химика
+  description: Стандартное хранилище Синдиката.
+  suffix: Тайпан
+  components:
+  - type: EntityStorageVisuals
+    stateBaseClosed: med
+    stateDoorOpen: med_open
+    stateDoorClosed: chemical_door
+  - type: AccessReader
+    access: [["TaipanMedical"], ["TaipanResearch"]]
+
+# Research Director
+- type: entity
+  id: LockerTaipanResearchDirector
+  parent: LockerTaipanBaseSecure
+  name: шкаф директора исследований
+  components:
+  - type: EntityStorageVisuals
+    stateBaseClosed: rd
+    stateDoorOpen: door_open
+    stateDoorClosed: rd_door
+  - type: AccessReader
+    access: [["TaipanResearchDirector"]]
+
+# Researcher
+- type: entity
+  id: LockerTaipanResearcher
+  parent: LockerTaipanBaseSecure
+  name: шкаф исследователя
+  components:
+  - type: EntityStorageVisuals
+    stateBaseClosed: science
+    stateDoorOpen: door_open
+    stateDoorClosed: science_door
+  - type: AccessReader
+    access: [["TaipanResearch"]]
+
+# Communications Officer
+- type: entity
+  id: LockerTaipanCommunicationsOfficer
+  parent: LockerTaipanBaseSecure
+  name: шкаф офицера телекоммуникаций
+  components:
+  - type: EntityStorageVisuals
+    stateBaseClosed: co
+    stateDoorOpen: door_open
+    stateDoorClosed: co_door
+  - type: AccessReader
+    access: [["TaipanCommunicationsOfficer"]]
+
+# Security Officer
+- type: entity
+  id: LockerTaipanRecruit
+  parent: LockerTaipanBaseSecure
+  name: шкаф рекрута
+  components:
+  - type: EntityStorageVisuals
+    stateBaseClosed: sec
+    stateDoorOpen: door_open
+    stateDoorClosed: sec_door
+  - type: AccessReader
+    access: [["TaipanProtection"]]
+
+- type: entity
+  id: GunSafeTaipan
+  parent: LockerTaipanBaseSecure
+  name: оружейный шкаф
+  components:
+  - type: EntityStorageVisuals
+    stateBaseClosed: shotguncase
+    stateDoorOpen: shotguncase_open
+    stateDoorClosed: shotguncase_door
+  - type: AccessReader
+    access: [["TaipanArmory"]]

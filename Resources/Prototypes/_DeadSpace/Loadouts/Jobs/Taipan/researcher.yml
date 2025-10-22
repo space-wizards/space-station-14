@@ -1,0 +1,71 @@
+# Jumpsuit
+- type: loadout
+  id: TaipanResearcherJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUniforms
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitTaipanResearcher
+
+- type: loadout
+  id: TaipanResearcherJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUniforms
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtTaipanResearcher
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersTaipanResearcher
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersTaipanResearcher
+
+- type: loadout
+  id: UnderwearBottomPantiesTaipanResearcher
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesTaipanResearcher
+
+- type: loadout
+  id: UnderwearTopBraTaipanResearcher
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraTaipanResearcher
+
+# Loadout Groups
+- type: loadoutGroup
+  id: TaipanResearcherUniform
+  name: loadout-group-taipan-researcher-uniform
+  hidden: true
+  minLimit: 1
+  loadouts:
+  - TaipanResearcherJumpsuit
+  - TaipanResearcherJumpskirt
+
+- type: loadoutGroup
+  id: TaipanResearcherUnderwear
+  name: loadout-group-taipan-researcher-underwear
+  hidden: true
+  minLimit: 2
+  loadouts:
+  - UnderwearBottomBoxersTaipanResearcher
+  - UnderwearBottomPantiesTaipanResearcher
+  - UnderwearTopBraTaipanResearcher
+
+# Role Loadout
+- type: roleLoadout
+  id: JobTaipanResearcher
+  groups:
+  - TaipanResearcherUniform
+  - TaipanResearcherUnderwear
+  - TaipanSurvival
+  - GroupSpeciesBreathTool
+  - GroupTankHarness

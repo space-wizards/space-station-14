@@ -1,0 +1,71 @@
+# Jumpsuit
+- type: loadout
+  id: TaipanTechnicianJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUniforms
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitTaipanTechnician
+
+- type: loadout
+  id: TaipanTechnicianJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUniforms
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtTaipanTechnician
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersTaipanTechnician
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersTaipanTechnician
+
+- type: loadout
+  id: UnderwearBottomPantiesTaipanTechnician
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesTaipanTechnician
+
+- type: loadout
+  id: UnderwearTopBraTaipanTechnician
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraTaipanTechnician
+
+# Loadout Groups
+- type: loadoutGroup
+  id: TaipanTechnicianUniform
+  name: loadout-group-taipan-technician-uniform
+  hidden: true
+  minLimit: 1
+  loadouts:
+  - TaipanTechnicianJumpsuit
+  - TaipanTechnicianJumpskirt
+
+- type: loadoutGroup
+  id: TaipanTechnicianUnderwear
+  name: loadout-group-taipan-technician-underwear
+  hidden: true
+  minLimit: 2
+  loadouts:
+  - UnderwearBottomBoxersTaipanTechnician
+  - UnderwearBottomPantiesTaipanTechnician
+  - UnderwearTopBraTaipanTechnician
+
+# Role Loadout
+- type: roleLoadout
+  id: JobTaipanTechnician
+  groups:
+  - TaipanTechnicianUniform
+  - TaipanTechnicianUnderwear
+  - TaipanSurvival
+  - GroupSpeciesBreathTool
+  - GroupTankHarness

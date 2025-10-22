@@ -1,0 +1,180 @@
+- type: entity
+  parent: BaseSubdermalImplant
+  id: LearnSlimeLanguageImplant
+  name: имплант изучения пузырчатого языка
+  description: Имплант изучения пузырчатого языка. Подкожный имплант с простейшим языковым модулем. Подключается к периферийным нервам и подменяет часть сигналов, связанных с речью и слухом. Возможны лёгкие сбои восприятия, подрагивание кожи и кратковременное желание растечься по полу.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+  - type: LearnLanguageImplant
+    language:
+    - SlimeLanguage
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: LearnArachnidLanguageImplant
+  name: имплант изучения пучьего языка
+  description: Имплант изучения пучьего языка. Подкожный имплант с простейшим языковым модулем. Подключается к периферийным нервам и подменяет часть сигналов, связанных с речью и слухом. Возможны лёгкие сбои восприятия, непроизвольные подёргивания конечностей и временная тяга к ткачеству.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+  - type: LearnLanguageImplant
+    language:
+    - ArachnidLanguage
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: LearnMothLanguageImplant
+  name: имплант изучения ткачьего языка
+  description: Имплант изучения ткачьего языка. Подкожный имплант с простейшим языковым модулем. Подключается к периферийным нервам и подменяет часть сигналов, связанных с речью и слухом. Возможны лёгкие сбои восприятия, самопроизвольное жужжание и кратковременные приступы чужого акцента.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+  - type: LearnLanguageImplant
+    language:
+    - MothLanguage
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: LearnReptilianLanguageImplant
+  name: имплант изучения синта’унати
+  description: Имплант изучения синта’унати. Подкожный имплант с простейшим языковым модулем. Подключается к периферийным нервам и подменяет часть сигналов, связанных с речью и слухом. Возможны лёгкие сбои восприятия, непроизвольное шипение и кратковременные вспышки территориальной агрессии.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+  - type: LearnLanguageImplant
+    language:
+    - ReptilianLanguage
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: LearnVoxLanguageImplant
+  name: имплант изучения вокс-птичий
+  description: Имплант изучения вокс-птичий. Подкожный имплант с простейшим языковым модулем. Подключается к периферийным нервам и подменяет часть сигналов, связанных с речью и слухом. Возможны лёгкие сбои восприятия, самопроизвольное чириканье и кратковременные приступы чужого акцента.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+  - type: LearnLanguageImplant
+    language:
+    - VoxLanguage
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: LearnDemonLanguageImplant
+  name: имплант изучения демонического языка
+  description: Имплант изучения демонического языка. Подкожный имплант с простейшим языковым модулем. Подключается к периферийным нервам и подменяет часть сигналов, связанных с речью и слухом. Возможны лёгкие сбои восприятия, самопроизвольное мурлыканье и кратковременные приступы чужого акцента.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+  - type: LearnLanguageImplant
+    language:
+    - DemonLanguage
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: LearnCatLanguageImplant
+  name: имплант изучения кошачьего языка
+  description: Имплант изучения кошачьего языка. Подкожный имплант с простейшим языковым модулем. Подключается к периферийным нервам и подменяет часть сигналов, связанных с речью и слухом. Возможны лёгкие сбои восприятия, самопроизвольное мурлыканье и стремление поточить когти о мебель.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+  - type: LearnLanguageImplant
+    language:
+    - CatLanguage
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: LearnMachineLanguageImplant
+  name: имплант трансляции машинного кода
+  description: Имплант трансляции машинного кода. Подкожный имплант с простейшим модулем для трансляции машинного кода. Подключается к периферийным нервам и подменяет часть сигналов, связанных с речью и слухом. Возможны лёгкие сбои восприятия, самопроизвольное жужжание и кратковременные приступы чужого акцента.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+  - type: LearnLanguageImplant
+    language:
+    - MachineLanguage
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: LearnKoboltLanguageImplant
+  name: имплант изучения кобальдского языка
+  description: Имплант изучения кобальдского языка. Подкожный имплант с простейшим языковым модулем. Подключается к периферийным нервам и подменяет часть сигналов, связанных с речью и слухом. Возможны лёгкие сбои восприятия, самопроизвольное шипение и кратковременные приступы чужого акцента.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+  - type: LearnLanguageImplant
+    language:
+    - KoboltLanguage
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: LearnPlafLanguageImplant
+  name: имплант изучения акульего языка
+  description: Имплант изучения акульего языка. Подкожный имплант с простейшим языковым модулем. Подключается к периферийным нервам и подменяет часть сигналов, связанных с речью и слухом. Возможны лёгкие сбои восприятия, учащённое сердцебиение и кратковременное желание укусить собеседника.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+  - type: LearnLanguageImplant
+    language:
+    - PlafLanguage
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: LearnVulpkaninLanguageImplant
+  name: имплант изучения языка вульпканинов
+  description: Имплант изучения языка вульпканинов. Подкожный имплант с простейшим языковым модулем. Подключается к периферийным нервам и подменяет часть сигналов, связанных с речью и слухом. Возможны лёгкие сбои восприятия, самопроизвольное гавканье, кратковременное желание укусить собеседника и ощущение, что нужно вертеть хвостом, даже если его нет.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+  - type: LearnLanguageImplant
+    language:
+    - VulpkaninLanguage
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: LearnXenomorphLanguageImplant
+  name: имплант изучения языка ксеноморфов
+  description: Имплант изучения языка ксеноморфов. Подкожный имплант с простейшим языковым модулем. Подключается к периферийным нервам и подменяет часть сигналов, связанных с речью и слухом. Возможны лёгкие сбои восприятия, самопроизвольное шипение и кратковременные приступы желания мытья полов.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+  - type: LearnLanguageImplant
+    language:
+    - XenomorphLanguage
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: LearnDogLanguageImplant
+  name: имплант изучения собачьего языка
+  description: Имплант изучения собачьего языка. Подкожный имплант с простейшим языковым модулем. Подключается к периферийным нервам и подменяет часть сигналов, связанных с речью и слухом. Возможны лёгкие сбои восприятия, самопроизвольное гавканье и ощущение, что нужно вертеть хвостом, даже если его нет.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+  - type: LearnLanguageImplant
+    language:
+    - DogLanguage
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: LearnAllLanguageImplant
+  name: имплант изучения всех языков
+  description: Имплант изучения всех языков. Подкожный имплант с простейшим языковым модулем. Подключается к периферийным нервам и подменяет часть сигналов, связанных с речью и слухом.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+  - type: LearnLanguageImplant
+    language:
+    - GeneralLanguage
+    - ArachnidLanguage
+    - SlimeLanguage
+    - DionaLanguage
+    - MothLanguage
+    - ReptilianLanguage
+    - VoxLanguage
+    - DemonLanguage
+    - CatLanguage
+    - MachineLanguage
+    - KoboltLanguage
+    - PlafLanguage
+    - VulpkaninLanguage
+    - XenomorphLanguage

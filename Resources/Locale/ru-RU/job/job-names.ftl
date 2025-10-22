@@ -93,15 +93,6 @@ job-name-zombie = зомби
 job-title-visitor = Посетитель
 job-title-cluwne = Клувень
 job-title-universal = Администратор
-# Taipan
-job-name-taipan-atmos-tech = Атмосферный инженер Синдиката
-job-name-taipan-botanist = Ботаник Синдиката
-job-name-taipan-cargotech = Карготехник Синдиката
-job-name-taipan-chef = Повар Синдиката
-job-name-taipan-medic = Медик Синдиката
-job-name-taipan-rd = Директор исследований Синдиката
-job-name-taipan-science = Учёный Синдиката
-job-name-taipan-telecommunications-officer = Офицер телекоммуникаций Синдиката
 # Role timers - Make these alphabetical or I cut you
 JobAtmosphericTechnician = Атмосферный техник
 JobBartender = Бармен
@@ -180,12 +171,3 @@ JobSeniorSalvageSpecialist = Ведущий утилизатор
 JobSeniorAdministrator = Менеджер
 JobStationAi = Станционный ИИ
 JobVisitor = Посетитель
-# Taipan
-JobTaipanAtmosTech = Атмосферный инженер Синдиката
-JobTaipanBotanist = Ботаник Синдиката
-JobTaipanCargotech = Карготехник Синдиката
-JobTaipanChef = Повар Синдиката
-JobTaipanMedic = Медик Синдиката
-JobTaipanRD = Директор исследований Синдиката
-JobTaipanScience = Учёный Синдиката
-JobTaipanTelecommunicationsOfficer = Офицер телекоммуникаций Синдиката

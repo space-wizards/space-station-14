@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by andrew_fenriz (discord) for Space Station 14 server Мёртвый Космос",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "green"
+    },
+    {
+      "name": "ai"
+    },
+    {
+      "name": "botanist"
+    },
+    {
+      "name": "chef"
+    },
+    {
+      "name": "paramedic"
+    },
+    {
+      "name": "technical_supervisor"
+    },
+    {
+      "name": "technician"
+    },
+    {
+      "name": "atmospheric_engineer"
+    },
+    {
+      "name": "cargotech"
+    },
+    {
+      "name": "communication_officer"
+    },
+    {
+      "name": "medic"
+    },
+    {
+      "name": "recruit"
+    },
+    {
+      "name": "research_director"
+    },
+    {
+      "name": "researcher"
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+# Language implants
+
+- type: entity
+  parent: BaseImplantOnlyImplanter
+  id: LearnSlimeLanguageImplanter
+  name: имплант изучения пузырчатого языка
+  components:
+  - type: Implanter
+    implant: LearnSlimeLanguageImplant
+
+- type: entity
+  parent: BaseImplantOnlyImplanter
+  id: LearnArachnidLanguageImplanter
+  name: имплант изучения пучьего языка
+  components:
+  - type: Implanter
+    implant: LearnArachnidLanguageImplant
+
+- type: entity
+  parent: BaseImplantOnlyImplanter
+  id: LearnMothLanguageImplanter
+  name: имплант изучения ткачьего языка
+  components:
+  - type: Implanter
+    implant: LearnMothLanguageImplant
+
+- type: entity
+  parent: BaseImplantOnlyImplanter
+  id: LearnReptilianLanguageImplanter
+  name: имплант изучения синта’унати
+  components:
+  - type: Implanter
+    implant: LearnReptilianLanguageImplant
+
+- type: entity
+  parent: BaseImplantOnlyImplanter
+  id: LearnVoxLanguageImplanter
+  name: имплант изучения вокс-птичий
+  components:
+  - type: Implanter
+    implant: LearnVoxLanguageImplant
+
+- type: entity
+  parent: BaseImplantOnlyImplanter
+  id: LearnDemonLanguageImplanter
+  name: имплант изучения демонического языка
+  components:
+  - type: Implanter
+    implant: LearnDemonLanguageImplant
+
+- type: entity
+  parent: BaseImplantOnlyImplanter
+  id: LearnCatLanguageImplanter
+  name: имплант изучения кошачьего языка
+  components:
+  - type: Implanter
+    implant: LearnCatLanguageImplant
+
+- type: entity
+  parent: BaseImplantOnlyImplanter
+  id: LearnMachineLanguageImplanter
+  name: имплант трансляции машинного кода
+  components:
+  - type: Implanter
+    implant: LearnMachineLanguageImplant
+
+- type: entity
+  parent: BaseImplantOnlyImplanter
+  id: LearnKoboltLanguageImplanter
+  name: имплант изучения кобальдского языка
+  components:
+  - type: Implanter
+    implant: LearnKoboltLanguageImplant
+
+- type: entity
+  parent: BaseImplantOnlyImplanter
+  id: LearnPlafLanguageImplanter
+  name: имплант изучения акульего языка
+  components:
+  - type: Implanter
+    implant: LearnPlafLanguageImplant
+
+- type: entity
+  parent: BaseImplantOnlyImplanter
+  id: LearnVulpkaninLanguageImplanter
+  name: имплант изучения языка вульпканинов
+  components:
+  - type: Implanter
+    implant: LearnVulpkaninLanguageImplant
+
+- type: entity
+  parent: BaseImplantOnlyImplanter
+  id: LearnXenomorphLanguageImplanter
+  name: имплант изучения языка ксеноморфов
+  components:
+  - type: Implanter
+    implant: LearnXenomorphLanguageImplant
+
+- type: entity
+  parent: BaseImplantOnlyImplanter
+  id: LearnDogLanguageImplanter
+  name: имплант изучения собачьего языка
+  components:
+  - type: Implanter
+    implant: LearnDogLanguageImplant
+
+- type: entity
+  parent: BaseImplantOnlyImplanter
+  id: LearnAllLanguageImplanter
+  name: имплант изучения всех языков
+  suffix: Адмемы
+  components:
+  - type: Implanter
+    implant: LearnAllLanguageImplant

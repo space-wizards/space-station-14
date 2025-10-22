@@ -1,3 +1,136 @@
+# Plastitanium
+- type: construction
+  id: TitaniumGirder
+  graph: TitaniumGirder
+  startNode: start
+  targetNode: titaniumGirder
+  category: construction-category-structures
+  entityWhitelist:
+    tags:
+    - TaipanRole
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  id: PlastitaniumGirder
+  graph: TitaniumGirder
+  startNode: start
+  targetNode: plastitaniumGirder
+  category: construction-category-structures
+  entityWhitelist:
+    tags:
+    - TaipanRole
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  id: PlastitaniumPlasmaWindow
+  graph: PlastitaniumWindow
+  startNode: start
+  targetNode: plastitaniumplasmaWindow
+  category: construction-category-structures
+  canBuildInImpassable: true
+  entityWhitelist:
+    tags:
+    - TaipanRole
+  conditions:
+  - !type:EmptyOrWindowValidInTile
+  - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
+  id: PlastitaniumWindow
+  graph: PlastitaniumWindow
+  startNode: start
+  targetNode: plastitaniumWindow
+  category: construction-category-structures
+  canBuildInImpassable: true
+  entityWhitelist:
+    tags:
+    - TaipanRole
+  conditions:
+  - !type:EmptyOrWindowValidInTile
+  - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
+  id: PlastitaniumPlasmaWindowDiagonal
+  graph: PlastitaniumWindowDiagonal
+  startNode: start
+  targetNode: plastitaniumplasmaWindowDiagonal
+  category: construction-category-structures
+  canBuildInImpassable: true
+  entityWhitelist:
+    tags:
+    - TaipanRole
+  conditions:
+  - !type:EmptyOrWindowValidInTile
+  - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  id: PlastitaniumWindowDiagonal
+  graph: PlastitaniumWindowDiagonal
+  startNode: start
+  targetNode: plastitaniumWindowDiagonal
+  category: construction-category-structures
+  canBuildInImpassable: true
+  entityWhitelist:
+    tags:
+    - TaipanRole
+  conditions:
+  - !type:EmptyOrWindowValidInTile
+  - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  id: PlastitaniumWall
+  graph: TitaniumGirder
+  startNode: start
+  targetNode: plastitaniumWall
+  category: construction-category-structures
+  entityWhitelist:
+    tags:
+    - TaipanRole
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  id: DiagonalPlastitaniumWall
+  graph: TitaniumGirder
+  startNode: start
+  targetNode: diagonalplastitaniumWall
+  category: construction-category-structures
+  entityWhitelist:
+    tags:
+    - TaipanRole
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+# Secret Doors
+
 - type: construction
   id: ReinforcedSecretDoor
   graph: SecretDoor

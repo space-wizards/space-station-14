@@ -220,7 +220,7 @@
   description: Стандартные носки мима. Пахнут... пирогами?
   components:
   - type: Sprite
-    sprite: _DeadSpace/Clothing/Underwear/Civilian/mime/socks.rsi  
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/mime/socks.rsi
 
 - type: entity
   parent: ClothingUnderwearSocksBase
@@ -229,7 +229,7 @@
   description: Стандартные носки музыканта.
   components:
   - type: Sprite
-    sprite: _DeadSpace/Clothing/Underwear/Civilian/mime/socks.rsi  
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/mime/socks.rsi
 
 - type: entity
   parent: ClothingUnderwearSocksBase
@@ -238,7 +238,7 @@
   description: Стандартные носки менеджера.
   components:
   - type: Sprite
-    sprite: _DeadSpace/Clothing/Underwear/Civilian/reporter/socks.rsi  
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/reporter/socks.rsi
 
 - type: entity
   parent: ClothingUnderwearSocksBase
@@ -247,7 +247,7 @@
   description: Стандартные носки репортёра.
   components:
   - type: Sprite
-    sprite: _DeadSpace/Clothing/Underwear/Civilian/reporter/socks.rsi  
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/reporter/socks.rsi
 
 - type: entity
   parent: ClothingUnderwearSocksBase
@@ -256,7 +256,7 @@
   description: Стандартные носки зоотехника.
   components:
   - type: Sprite
-    sprite: _DeadSpace/Clothing/Underwear/Civilian/zoo/socks.rsi 
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/zoo/socks.rsi
 
 - type: entity
   parent: ClothingUnderwearSocksBase
@@ -534,3 +534,113 @@
   components:
   - type: Sprite
     sprite: _DeadSpace/Clothing/Underwear/xmas.rsi
+
+# Taipan
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksTaipanAtmosphericsEngineer
+  name: носки атмосферного инженера
+  description: Стандартные носки атмосферного инженера.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/atmospheric_engineer/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksTaipanBotanist
+  name: носки ботаника
+  description: Стандартные носки ботаника.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/botanist/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksTaipanChef
+  name: носки повара
+  description: Стандартные носки повара.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/chef/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksTaipanCargotech
+  name: носки карготехника
+  description: Стандартные носки карготехника.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/cargotech/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksTaipanMedic
+  name: носки медика
+  description: Стандартные носки медика.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/medic/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksTaipanParamedic
+  name: носки парамедика
+  description: Стандартные носки парамедика.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/paramedic/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksTaipanTechnician
+  name: носки ремонтника
+  description: Стандартные носки ремонтника.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/technician/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksTaipanResearcher
+  name: носки исследователя
+  description: Стандартные носки исследователя.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/researcher/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksTaipanResearchDirector
+  name: носки директора исследований
+  description: Стандартные носки директора исследований.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/research_director/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksTaipanRecruit
+  name: носки рекрута
+  description: Стандартные носки рекрута.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/recruit/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksTaipanTechnicalOperationsSupervisor
+  name: носки руководителя техобеспечения
+  description: Стандартные носки руководителя техобеспечения.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/supervisor/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksTaipanCommunicationsOfficer
+  name: носки офицера телекоммуникаций
+  description: Стандартные носки офицера телекоммуникаций.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/communication_officer/socks.rsi

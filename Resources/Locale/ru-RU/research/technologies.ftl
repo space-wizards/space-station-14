@@ -72,6 +72,7 @@ research-technology-launcher-syringe = Шприцемёт
 research-technology-honk-mech = Мех Х.О.Н.К.
 research-technology-advanced-spray = Продвинутые спреи
 research-technology-clowning-utilities = Клоунские принадлежности
+research-technology-language-implants = Простейшие языковые импланты
 research-technology-quantum-fiber-weaving = Плетение квантового волокна
 research-technology-bluespace-cargo-transport = Блюспейс-транспортировка грузов
 research-technology-night-vision-technology = Технология ночного зрения

@@ -1,0 +1,25 @@
+- type: entity
+  id: RandomAnomalyExtendedSpawner
+  name: расширенный спавнер случайной аномалии
+  parent: RandomAnomalySpawner
+  components:
+  - type: RandomSpawner
+    chance: 1
+    prototypes:
+    - AnomalyPyroclastic
+    - AnomalyGravity
+    - AnomalyElectricity
+    - AnomalyFlesh
+    - AnomalyBluespace
+    - AnomalyIce
+    - RandomRockAnomalySpawner
+    - AnomalyLiquid
+    - AnomalyFlora
+    - AnomalyShadow
+    - AnomalyTech
+    - AnomalyNecro
+    #- AnomalySanta
+    rareChance: 0.3
+    rarePrototypes:
+    - RandomAnomalyInjectorSpawner
+    offset: 0.15 # not to put it higher. The anomaly sychnronizer looks for anomalies within this radius, and if the radius is higher, the anomaly can be attracted from a neighboring tile.

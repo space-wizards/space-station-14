@@ -25,147 +25,254 @@
     job: CargoTechnician
     name: Ларго
 
-# Typan
-- type: entity
-  parent: IDCardStandard
-  id: TaipanIDCardCargo
-  name: ID-карта
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Objects/Misc/taipancargo.rsi
-    layers:
-    - state: taipancardcargo
-  - type: PresetIdCard
-    job: TaipanCargotech
-  - type: Access
-    tags:
-    - SyndicateAgent
-    - NuclearOperative
-
+# ID карты Тайпана
 
 - type: entity
-  parent: IDCardStandard
-  id: TaipanIDCardCom
-  name: ID-карта
+  parent: Clothing
+  id: IDCardTaipan
+  description: Чёрная ID-карта, предоставляющая различные доступы.
+  suffix: Тайпан
+  abstract: true
   components:
   - type: Sprite
-    sprite: _DeadSpace/Objects/Misc/taipansec.rsi
-    layers:
-    - state: taipancardcom
+    sprite: _DeadSpace/Objects/Devices/idcards.rsi
+  - type: Clothing
+    slots:
+    - idcard
+    sprite: _DeadSpace/Objects/Devices/idcards.rsi
+  - type: Item
+    size: Small
+    heldPrefix: default
+    storedRotation: -90
   - type: Access
+  - type: IdCard
+  - type: Tag
     tags:
-    - Armory
-    - Cargo
-    - Medical
-    - Engineering
-    - Research
-    - Service
-    - SyndicateAgent
-    - Quartermaster
-    - ResearchDirector
-    - NuclearOperative
+    - DoorBumpOpener
 
 - type: entity
-  parent: IDCardStandard
-  id: TaipanIDCardEng
-  name: ID-карта
+  parent: IDCardTaipan
+  id: TaipanAtmosphericsEngineerIDcard
+  name: ID-карта атмосферного инженера
   components:
   - type: Sprite
-    sprite: _DeadSpace/Objects/Misc/taipaneng.rsi
+    sprite: _DeadSpace/Objects/Devices/idcards.rsi
     layers:
-    - state: taipancardeng
+    - state: atmosphericsengineer
   - type: Access
     tags:
-    - Engineering
-    - SyndicateAgent
-    - NuclearOperative
-    groups:
-    - AllAccess
+    - TaipanMaint
+    - TaipanEngineering
+    - TaipanAtmospherics
+    - TaipanExternal
 
 - type: entity
-  parent: IDCardStandard
-  id: TaipanIDCardMed
-  name: ID-карта
+  parent: IDCardTaipan
+  id: TaipanBotanistIDcard
+  name: ID-карта ботаника
   components:
   - type: Sprite
-    sprite: _DeadSpace/Objects/Misc/taipanmed.rsi
+    sprite: _DeadSpace/Objects/Devices/idcards.rsi
     layers:
-    - state: taipancardmed
+    - state: botanist
   - type: Access
     tags:
-    - SyndicateAgent
-    - NuclearOperative
-    groups:
-    - AllAccess
+    - TaipanService
+    - TaipanMaint
 
 - type: entity
-  parent: IDCardStandard
-  id: TaipanIDCardRd
-  name: ID-карта
+  parent: IDCardTaipan
+  id: TaipanResearchDirectorIDcard
+  name: ID-карта директора исследований
   components:
   - type: Sprite
-    sprite: _DeadSpace/Objects/Misc/taipanrd.rsi
+    sprite: _DeadSpace/Objects/Devices/idcards.rsi
     layers:
-    - state: taipancardrd
-  - type: PresetIdCard
-    job: TaipanRD
+    - state: researchdirector
   - type: Access
     tags:
-    - SyndicateAgent
-    - NuclearOperative
-    groups:
-    - AllAccess
+    - TaipanAtmospherics
+    - TaipanCargo
+    - TaipanCommand
+    - TaipanEngineering
+    - TaipanMaint
+    - TaipanMedical
+    - TaipanResearchDirector
+    - TaipanResearch
+    - TaipanService
+    - TaipanExternal
 
 - type: entity
-  parent: IDCardStandard
-  id: TaipanIDCardScience
-  name: ID-карта
+  parent: IDCardTaipan
+  id: TaipanCargotechIDcard
+  name: ID-карта карготехника
   components:
   - type: Sprite
-    sprite: _DeadSpace/Objects/Misc/taipanscien.rsi
+    sprite: _DeadSpace/Objects/Devices/idcards.rsi
     layers:
-    - state: taipancardscience
-  - type: PresetIdCard
-    job: TaipanScience
+    - state: shaftminer
   - type: Access
     tags:
-    - SyndicateAgent
-    - NuclearOperative
-    groups:
-    - AllAccess
+    - TaipanMaint
+    - TaipanCargo
+    - TaipanExternal
 
 - type: entity
-  parent: IDCardStandard
-  id: TaipanIDCardBotanist
-  name: ID-карта
+  parent: IDCardTaipan
+  id: TaipanMedicIDcard
+  name: ID-карта медика
   components:
   - type: Sprite
-    sprite: _DeadSpace/Objects/Misc/taipanbotan.rsi
+    sprite: _DeadSpace/Objects/Devices/idcards.rsi
     layers:
-    - state: taipancardbotanist
-  - type: PresetIdCard
-    job: TaipanBotanist
+    - state: medic
   - type: Access
     tags:
-    - SyndicateAgent
-    - NuclearOperative
-    groups:
-    - AllAccess
+    - TaipanMaint
+    - TaipanMedical
 
 - type: entity
-  parent: IDCardStandard
-  id: TaipanIDCardChef
-  name: ID-карта
+  parent: IDCardTaipan
+  id: TaipanCommunicationsOfficerIDcard
+  name: ID-карта офицера телекоммуникаций
   components:
   - type: Sprite
-    sprite: _DeadSpace/Objects/Misc/taipanchef.rsi
+    sprite: _DeadSpace/Objects/Devices/idcards.rsi
     layers:
-    - state: taipancardchef
-  - type: PresetIdCard
-    job: TaipanChef
+    - state: headofsecurity
   - type: Access
     tags:
+    - TaipanArmory
+    - TaipanAtmospherics
+    - TaipanCargo
+    - TaipanCommand
+    - TaipanCommunicationsOfficer
+    - TaipanEngineering
+    - TaipanMaint
+    - TaipanMedical
+    - TaipanProtection
+    - TaipanResearchDirector
+    - TaipanResearch
+    - TaipanService
+    - TaipanTechnicalOperationsSupervisor
+    - TaipanExternal
     - SyndicateAgent
-    - NuclearOperative
-    groups:
-    - AllAccess
+
+- type: entity
+  parent: IDCardTaipan
+  id: TaipanParamedicIDcard
+  name: ID-карта парамедика
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Devices/idcards.rsi
+    layers:
+    - state: paramedic
+  - type: Access
+    tags:
+    - TaipanMaint
+    - TaipanExternal
+    - TaipanMedical
+
+- type: entity
+  parent: IDCardTaipan
+  id: TaipanChefIDcard
+  name: ID-карта повара
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Devices/idcards.rsi
+    layers:
+    - state: chef
+  - type: Access
+    tags:
+    - TaipanService
+    - TaipanMaint
+
+- type: entity
+  parent: IDCardTaipan
+  id: TaipanRecruitIDcard
+  name: ID-карта рекрута
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Devices/idcards.rsi
+    layers:
+    - state: pilot
+  - type: Access
+    tags:
+    - TaipanMaint
+    - TaipanExternal
+    - TaipanProtection
+
+- type: entity
+  parent: IDCardTaipan
+  id: TaipanTechnicianIDcard
+  name: ID-карта ремонтника
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Devices/idcards.rsi
+    layers:
+    - state: technician
+  - type: Access
+    tags:
+    - TaipanEngineering
+    - TaipanMaint
+    - TaipanExternal
+
+- type: entity
+  parent: IDCardTaipan
+  id: TaipanTechnicalOperationsSupervisorIDcard
+  name: ID-карта руководителя техобеспечения
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Devices/idcards.rsi
+    layers:
+    - state: roboticist
+  - type: Access
+    tags:
+    - TaipanAtmospherics
+    - TaipanCargo
+    - TaipanCommand
+    - TaipanEngineering
+    - TaipanMaint
+    - TaipanMedical
+    - TaipanResearch
+    - TaipanService
+    - TaipanTechnicalOperationsSupervisor
+    - TaipanExternal
+
+- type: entity
+  parent: IDCardTaipan
+  id: TaipanResearcherIDcard
+  name: ID-карта исследователя
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Devices/idcards.rsi
+    layers:
+    - state: researcher
+  - type: Access
+    tags:
+    - TaipanMaint
+    - TaipanResearch
+
+- type: entity
+  parent: Emag
+  id: EmagTaipanLimited
+  suffix: Тайпан, ЕМАГ, Ограниченный
+  name: криптографический секвенсор
+  description: Универсальное устройство для взлома. Специализированная версия для важных сотрудников Синдиката.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Devices/idcards.rsi
+    state: emag
+  - type: Item
+    sprite: _DeadSpace/Objects/Devices/idcards.rsi
+    storedRotation: -90
+
+- type: entity
+  parent: EmagTaipanLimited
+  id: EmagTaipan
+  suffix: Тайпан, ЕМАГ, Ограниченный
+  components:
+  - type: LimitedCharges
+    maxCharges: 5
+  - type: AutoRecharge
+    rechargeDuration: 30

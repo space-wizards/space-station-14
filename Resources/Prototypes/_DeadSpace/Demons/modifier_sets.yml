@@ -9,6 +9,7 @@
     Heat: 0.2
     Poison: 0.25
     Radiation: 0
+    Holy: 1.5
 
 - type: damageModifierSet
   id: SlaughterDemon
@@ -21,6 +22,7 @@
     Heat: 0.2
     Poison: 0.25
     Radiation: 0
+    Holy: 1.5
 
 - type: damageModifierSet
   id: StandardBorg

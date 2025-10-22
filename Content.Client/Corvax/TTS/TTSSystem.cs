@@ -9,6 +9,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Utility;
+using Content.Server.DeadSpace.Languages;
 
 namespace Content.Client.Corvax.TTS;
 
@@ -21,6 +22,7 @@ public sealed class TTSSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IResourceManager _res = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private readonly LanguageSystem _languageSystem = default!;
 
     private ISawmill _sawmill = default!;
     private readonly MemoryContentRoot _contentRoot = new();
@@ -82,23 +84,47 @@ public sealed class TTSSystem : EntitySystem
     private void OnPlayTTS(PlayTTSEvent ev)
     {
         if (ev.IsRadio && !_playRadio)
+            return;
+
+        var hasData = ev.Data is { Length: > 0 };
+        var hasLexiconSound = ev.IsLexiconSound && !string.IsNullOrEmpty(ev.LanguageId);
+
+        // Проверяем, что хотя бы один источник звука доступен
+        if (!hasData && !hasLexiconSound)
         {
+            _sawmill.Warning("Не содержит звуковых данных и допустимого звучания лексики (TTS event has no audio data and no valid lexicon sound)");
             return;
         }
 
-        _sawmill.Verbose($"Play TTS audio {ev.Data.Length} bytes from {ev.SourceUid} entity");
+        string verboseMessage;
 
-        var filePath = new ResPath($"{_fileIdx++}.ogg");
-        _contentRoot.AddOrUpdateFile(filePath, ev.Data);
+        if (hasData)
+            verboseMessage = $"Play TTS audio {ev.Data.Length} bytes from {ev.SourceUid} entity";
+        else if (hasLexiconSound)
+            verboseMessage = $"Play Lexicon sound '{ev.LanguageId}' from {ev.SourceUid} entity";
+        else
+            verboseMessage = "Play TTS event with no audio data";
 
-        var audioResource = new AudioResource();
-        audioResource.Load(IoCManager.Instance!, Prefix / filePath);
+        _sawmill.Verbose(verboseMessage);
+
+        ResolvedPathSpecifier? soundSpecifier = null;
+        AudioResource? audioResource = null;
+        ResPath? filePath = null;
 
         var audioParams = AudioParams.Default
             .WithVolume(AdjustVolume(ev.IsWhisper, ev.IsRadio))
             .WithMaxDistance(AdjustDistance(ev.IsWhisper));
 
-        var soundSpecifier = new ResolvedPathSpecifier(Prefix / filePath);
+        // Если есть обычные данные TTS — готовим ресурс
+        if (hasData)
+        {
+            filePath = new ResPath($"{_fileIdx++}.ogg");
+            _contentRoot.AddOrUpdateFile(filePath.Value, ev.Data);
+
+            audioResource = new AudioResource();
+            audioResource.Load(IoCManager.Instance!, Prefix / filePath.Value);
+            soundSpecifier = new ResolvedPathSpecifier(Prefix / filePath.Value);
+        }
 
         if (ev.SourceUid != null)
         {
@@ -106,26 +132,33 @@ public sealed class TTSSystem : EntitySystem
                 return;
 
             var sourceUid = GetEntity(ev.SourceUid.Value);
-            _audio.PlayEntity(audioResource.AudioStream, sourceUid, soundSpecifier, audioParams);
+
+            if (ev.IsLexiconSound && !string.IsNullOrEmpty(ev.LanguageId))
+                _languageSystem.PlayEntityLexiconSound(audioParams, sourceUid, ev.LanguageId);
+            else
+                _audio.PlayEntity(audioResource!.AudioStream, sourceUid, soundSpecifier, audioParams);
         }
         else
         {
-            _audio.PlayGlobal(audioResource.AudioStream, soundSpecifier, audioParams);
+            if (ev.IsLexiconSound && !string.IsNullOrEmpty(ev.LanguageId))
+                _languageSystem.PlayGlobalLexiconSound(audioParams, ev.LanguageId);
+            else
+                _audio.PlayGlobal(audioResource!.AudioStream, soundSpecifier, audioParams);
         }
 
-        _contentRoot.RemoveFile(filePath);
+        if (filePath is not null)
+            _contentRoot.RemoveFile(filePath.Value);
     }
 
     private float AdjustVolume(bool isWhisper, bool isRadio)
     {
         var volume = MinimalVolume + SharedAudioSystem.GainToVolume(_volume);
 
-        if (isWhisper)
+        if (isWhisper && !isRadio)
         {
             volume -= SharedAudioSystem.GainToVolume(WhisperFade);
         }
-
-        if (isRadio)
+        else if (isRadio)
         {
             volume = MinimalVolume + SharedAudioSystem.GainToVolume(_volumeRadio);
         }

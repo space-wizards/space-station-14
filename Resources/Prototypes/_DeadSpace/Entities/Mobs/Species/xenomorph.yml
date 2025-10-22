@@ -103,6 +103,11 @@
   - type: Sanity
   - type: LizardAccent
   - type: EmotePanel # DS14-Emote-panel
+  - type: Language
+    selectedLanguage: GeneralLanguage
+    knownLanguages:
+    - XenomorphLanguage
+    - GeneralLanguage
   # - type: FootPrints
     # leftBarePrint: "footprint-left-bare-lizard"
     # rightBarePrint: "footprint-right-bare-lizard"

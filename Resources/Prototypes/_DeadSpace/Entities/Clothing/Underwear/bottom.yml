@@ -535,6 +535,116 @@
   - type: Sprite
     sprite: _DeadSpace/Clothing/Underwear/Security/warden/man.rsi
 
+# Taipan
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersTaipanAtmosphericsEngineer
+  name: боксеры атмосферного инженера
+  description: Cтандартное нижнее бельё атмосферного инженера.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/atmospheric_engineer/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersTaipanBotanist
+  name: боксеры ботаника
+  description: Cтандартное нижнее бельё ботаника.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/botanist/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersTaipanChef
+  name: боксеры шефа
+  description: Cтандартное нижнее бельё шефа.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/chef/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersTaipanCargotech
+  name: боксеры корготехника
+  description: Cтандартное нижнее бельё корготехника.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/cargotech/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersTaipanMedic
+  name: боксеры медика
+  description: Cтандартное нижнее бельё медика.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/medic/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersTaipanParamedic
+  name: боксеры парамедика
+  description: Cтандартное нижнее бельё парамедика.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/paramedic/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersTaipanResearcher
+  name: боксеры исследователя
+  description: Cтандартное нижнее бельё исследователя.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/researcher/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersTaipanResearchDirector
+  name: боксеры директора исследований
+  description: Cтандартное нижнее бельё директора исследований.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/research_director/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersTaipanRecruit
+  name: боксеры рекрута
+  description: Cтандартное нижнее бельё рекрута.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/recruit/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersTaipanTechnicalOperationsSupervisor
+  name: боксеры руководителя техобеспечения
+  description: Cтандартное нижнее бельё руководителя техобеспечения.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/supervisor/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersTaipanTechnician
+  name: боксеры ремонтника
+  description: Cтандартное нижнее бельё ремонтника.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/technician/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersTaipanCommunicationsOfficer
+  name: боксеры офицера телекоммуникаций
+  description: Cтандартное нижнее бельё офицера телекоммуникаций.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/communication_officer/man.rsi
+
 # DS14 pants
 ## Antags
 - type: entity
@@ -1021,3 +1131,113 @@
   components:
   - type: Sprite
     sprite: _DeadSpace/Clothing/Underwear/Security/warden/women/pants.rsi
+
+# Taipan
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesTaipanAtmosphericsEngineer
+  name: стринги атмосферного инженера
+  description: Cтандартное нижнее бельё атмосферного инженера.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/atmospheric_engineer/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesTaipanBotanist
+  name: стринги ботаника
+  description: Cтандартное нижнее бельё ботаника.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/botanist/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesTaipanCargotech
+  name: стринги карготехника
+  description: Cтандартное нижнее бельё карготехника.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/cargotech/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesTaipanChef
+  name: стринги повара
+  description: Cтандартное нижнее бельё повара.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/chef/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesTaipanMedic
+  name: стринги медика
+  description: Cтандартное нижнее бельё медика.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/medic/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesTaipanParamedic
+  name: стринги парамедика
+  description: Cтандартное нижнее бельё парамедика.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/paramedic/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesTaipanResearchDirector
+  name: стринги директора исследований
+  description: Cтандартное нижнее бельё директора исследований.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/research_director/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesTaipanResearcher
+  name: стринги исследователя
+  description: Cтандартное нижнее бельё исследователя.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/researcher/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesTaipanRecruit
+  name: стринги рекрута
+  description: Cтандартное нижнее бельё рекрута.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/recruit/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesTaipanTechnicalOperationsSupervisor
+  name: стринги руководителя техобеспечения
+  description: Cтандартное нижнее бельё руководителя техобеспечения.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/supervisor/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesTaipanTechnician
+  name: стринги ремонтника
+  description: Cтандартное нижнее бельё ремонтника.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/technician/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesTaipanCommunicationsOfficer
+  name: стринги офицера телекоммуникаций
+  description: Cтандартное нижнее бельё офицера телекоммуникаций.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/communication_officer/women/pants.rsi

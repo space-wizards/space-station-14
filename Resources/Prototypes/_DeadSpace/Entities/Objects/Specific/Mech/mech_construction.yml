@@ -1,0 +1,115 @@
+# TaipanRipley APLU
+
+- type: entity
+  id: BaseTaipanRipleyPart
+  parent: BaseMechPart
+  suffix: Тайпан
+  abstract: true
+  components:
+  - type: Sprite
+    drawdepth: Items
+    noRot: false
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+
+- type: entity
+  id: BaseTaipanRipleyPartItem
+  parent: BaseTaipanRipleyPart
+  abstract: true
+  components:
+  - type: Item
+    size: Ginormous
+
+- type: entity
+  parent: BaseTaipanRipleyPart
+  id: TaipanRipleyHarness
+  name: каркас кроваво-красного Рипли
+  description: Ядро кроваво-красного Рипли.
+  components:
+  - type: Appearance
+  - type: ItemMapper
+    mapLayers:
+      ripley_l_arm+o:
+        whitelist:
+          tags:
+          - TaipanRipleyLArm
+      ripley_r_arm+o:
+        whitelist:
+          tags:
+          - TaipanRipleyRArm
+      ripley_l_leg+o:
+        whitelist:
+          tags:
+          - TaipanRipleyLLeg
+      ripley_r_leg+o:
+        whitelist:
+          tags:
+          - TaipanRipleyRLeg
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+  - type: ContainerContainer
+    containers:
+      mech-assembly-container: !type:Container
+      battery-container: !type:Container
+  - type: MechAssemblyVisuals
+    statePrefix: ripley
+  - type: Sprite
+    state: ripley_harness+o
+    noRot: true
+  - type: PartAssembly
+    parts:
+      TaipanRipley:
+      - TaipanRipleyLArm
+      - TaipanRipleyRArm
+      - TaipanRipleyLLeg
+      - TaipanRipleyRLeg
+    containerId: mech-assembly-container
+  - type: Construction
+    graph: TaipanRipley
+    node: start
+
+- type: entity
+  parent: BaseTaipanRipleyPartItem
+  id: TaipanRipleyLArm
+  name: левая рука кроваво-красного Рипли
+  description: Левая рука кроваво-красного Рипли. Устанавливается на каркас меха.
+  components:
+  - type: Sprite
+    state: ripley_l_arm
+  - type: Tag
+    tags:
+    - TaipanRipleyLArm
+
+- type: entity
+  parent: BaseTaipanRipleyPartItem
+  id: TaipanRipleyLLeg
+  name: левая нога кроваво-красного Рипли
+  description: Левая нога кроваво-красного Рипли. Устанавливается на каркас меха.
+  components:
+  - type: Sprite
+    state: ripley_l_leg
+  - type: Tag
+    tags:
+    - TaipanRipleyLLeg
+
+- type: entity
+  parent: BaseTaipanRipleyPartItem
+  id: TaipanRipleyRLeg
+  name: правая нога кроваво-красного Рипли
+  description: Правая нога кроваво-красного Рипли. Устанавливается на каркас меха.
+  components:
+  - type: Sprite
+    state: ripley_r_leg
+  - type: Tag
+    tags:
+    - TaipanRipleyRLeg
+
+- type: entity
+  parent: BaseTaipanRipleyPartItem
+  id: TaipanRipleyRArm
+  name: правая рука кроваво-красного Рипли
+  description: Правая рука кроваво-красного Рипли. Устанавливается на каркас меха.
+  components:
+  - type: Sprite
+    state: ripley_r_arm
+  - type: Tag
+    tags:
+    - TaipanRipleyRArm

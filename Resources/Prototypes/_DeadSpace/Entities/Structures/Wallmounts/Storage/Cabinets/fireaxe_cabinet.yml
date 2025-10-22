@@ -1,0 +1,14 @@
+- type: entity
+  parent: FireAxeCabinet
+  id: FireAxeCabinetTaipanFilled
+  name: шкаф для пожарного топора
+  description: Небольшая табличка гласит "Только для экстренных случаев" и содержит инструкцию по безопасной эксплуатации топора. Ага, конечно.
+  suffix: Тайпан, Заполненный
+  components:
+  - type: ContainerFill
+    containers:
+      ItemCabinet:
+      - FireAxeFlaming
+  - type: Lock
+  - type: AccessReader
+    access: [["TaipanAtmospherics"], ["TaipanCommand"]]

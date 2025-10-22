@@ -56,4 +56,9 @@ public sealed partial class RoboticsConsoleComponent : Component
     /// </summary>
     [DataField]
     public bool AllowBorgControl = true;
+
+    // DS14-start
+    [DataField]
+    public bool IsTaipan { get; set; } = false;
+    // DS14-end
 }

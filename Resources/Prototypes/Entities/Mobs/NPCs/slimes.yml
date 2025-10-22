@@ -118,8 +118,14 @@
   abstract: true
   description: It looks so much like jelly. I wonder what it tastes like?
   components:
-  - type: ReplacementAccent
-    accent: slimes
+  # DS14-Languages-start
+  # - type: ReplacementAccent
+  #   accent: slimes
+  - type: Language
+    selectedLanguage: SlimeLanguage
+    knownLanguages:
+    - SlimeLanguage
+  # DS14-Languages-end
   - type: GhostTakeoverAvailable
   - type: GhostRole
     makeSentient: true

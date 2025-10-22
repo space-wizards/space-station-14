@@ -22,6 +22,7 @@ chat-radio-deathsquad = Эскадрон смерти
 chat-radio-law = Юридический
 chat-radio-merc = Наёмники
 chat-radio-taipan = Тайпан
+chat-radio-taipan-handheld = Портативный
 chat-radio-unitolog = Юнитологи
 chat-radio-spiders = Связующая паутина
 chat-radio-hivemind = Улей

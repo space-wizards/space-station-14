@@ -14,6 +14,11 @@ public sealed partial class ResearchServerComponent : Component
     [DataField("serverName"), ViewVariables(VVAccess.ReadWrite)]
     public string ServerName = "RDSERVER";
 
+    /// DS14-start
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool isTaipan;
+    /// DS14-end
+
     /// <summary>
     /// The amount of points on the server.
     /// </summary>
@@ -60,4 +65,3 @@ public readonly record struct ResearchServerPointsChangedEvent(EntityUid Server,
 /// <param name="Points"></param>
 [ByRefEvent]
 public record struct ResearchServerGetPointsPerSecondEvent(EntityUid Server, int Points);
-

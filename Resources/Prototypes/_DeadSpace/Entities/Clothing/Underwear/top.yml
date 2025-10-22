@@ -543,3 +543,113 @@
   components:
   - type: Sprite
     sprite: _DeadSpace/Clothing/Underwear/Security/warden/women/bra.rsi
+
+# Taipan
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraTaipanAtmosphericsEngineer
+  name: бра атмосферного инженера
+  description: Стандартное нижнее бельё атмосферного инженера.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/atmospheric_engineer/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraTaipanBotanist
+  name: бра ботаника
+  description: Стандартное нижнее бельё ботаника.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/botanist/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraTaipanChef
+  name: бра повара
+  description: Стандартное нижнее бельё повара.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/chef/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraTaipanMedic
+  name: бра медика
+  description: Стандартное нижнее бельё медика.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/medic/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraTaipanParamedic
+  name: бра парамедика
+  description: Стандартное нижнее бельё парамедика.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/paramedic/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraTaipanResearchDirector
+  name: бра директора исследований
+  description: Стандартное нижнее бельё директора исследований.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/research_director/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraTaipanTechnician
+  name: бра ремонтника
+  description: Стандартное нижнее бельё ремонтника.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/technician/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraTaipanResearcher
+  name: бра исследователя
+  description: Стандартное нижнее бельё исследователя.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/researcher/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraTaipanRecruit
+  name: бра рекрута
+  description: Стандартное нижнее бельё рекрута.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/recruit/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraTaipanTechnicalOperationsSupervisor
+  name: бра руководителя техобеспечения
+  description: Стандартное нижнее бельё руководителя техобеспечения.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/supervisor/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraTaipanCommunicationsOfficer
+  name: бра офицера телекоммуникаций
+  description: Стандартное нижнее бельё офицера телекоммуникаций.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/communication_officer/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraTaipanCargotech
+  name: бра карготехника
+  description: Стандартное нижнее бельё карготехника.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Taipan/cargotech/women/bra.rsi

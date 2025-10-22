@@ -83,8 +83,14 @@
         - Carp
         - DoorBumpOpener
         - CannotSuicide
-    - type: ReplacementAccent
-      accent: genericAggressive
+    # DS14-Languages-start
+    # - type: ReplacementAccent
+    #   accent: genericAggressive
+    - type: Language
+      selectedLanguage: CarpDragonLanguage
+      knownLanguages:
+      - CarpDragonLanguage
+    # DS14-Languages-end
     - type: Speech
       speechVerb: LargeMob
     - type: InteractionPopup

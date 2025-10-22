@@ -92,6 +92,11 @@
       Male: IPSIPC
       Female: IPSIPC
       Unsexed: IPSIPC
+  - type: Language
+    selectedLanguage: GeneralLanguage
+    knownLanguages:
+    - MachineLanguage
+    - GeneralLanguage
   - type: Tag
     tags:
     - SiliconIPSIPCEmotes
@@ -100,3 +105,4 @@
     - DoorBumpOpener
     - AnomalyHost
   # - type: FootPrints
+

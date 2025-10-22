@@ -124,6 +124,13 @@
             state: jumpsuit-female
   - type: Sanity # DS14
   - type: SlimePerson # DS14: For emote panel
+  # DS14-Languages-start
+  - type: Language
+    selectedLanguage: GeneralLanguage
+    knownLanguages:
+    - GeneralLanguage
+    - SlimeLanguage
+  # DS14-Languages-end
   # DS14-slimeperson-internal-magic-mirror-start
   - type: MagicMirror
     internal: true
@@ -135,6 +142,7 @@
   # - type: FootPrints # Backmen-footsteps
     # leftBarePrint: "footprint-left-bare-slime"
     # rightBarePrint: "footprint-right-bare-slime"
+
 
 - type: entity
   parent: MobHumanDummy

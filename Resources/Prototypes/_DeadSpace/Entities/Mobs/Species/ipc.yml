@@ -16,6 +16,11 @@
       Brute:
         sprite: Mobs/Effects/brute_damage.rsi
         color: "#525252"
+  - type: Language
+    selectedLanguage: GeneralLanguage
+    knownLanguages:
+    - MachineLanguage
+    - GeneralLanguage
 
 - type: entity
   parent: BaseSpeciesDummy

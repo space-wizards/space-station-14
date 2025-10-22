@@ -1,0 +1,7 @@
+- type: cargoAccount
+  id: Taipan
+  name: cargo-account-taipan-name
+  code: cargo-account-taipan-code
+  color: "#87181c"
+  radioChannel: Taipan
+  acquisitionSlip: PaperAcquisitionSlipCargo

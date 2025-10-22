@@ -15,8 +15,14 @@
   - type: Sprite
     sprite: Mobs/Aliens/Argocyte/argocyte_common.rsi
   - type: SolutionContainerManager
-  - type: ReplacementAccent
-    accent: xeno
+  # DS14-Languages-start
+  # - type: ReplacementAccent
+  #   accent: xeno
+  - type: Language
+    selectedLanguage: XenomorphLanguage
+    knownLanguages:
+    - XenomorphLanguage
+  # DS14-Languages-end
   - type: Bloodstream
     bloodReagent: FerrochromicAcid
     bloodMaxVolume: 75 #we don't want the map to become pools of blood

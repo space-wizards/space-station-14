@@ -1,0 +1,65 @@
+# Iconography
+- type: stationAiCustomization
+  abstract: true
+  id: TaipanAiIconBase
+  previewKey: Occupied
+  previewBackground:
+    sprite: _DeadSpace/Mobs/Silicon/station_ai.rsi
+    state: base
+
+- type: stationAiCustomization
+  parent: TaipanAiIconBase
+  id: TaipanAiIconAi
+  name: station-ai-icon-ai
+  layerData:
+    Occupied:
+      sprite: _DeadSpace/Mobs/Silicon/station_ai.rsi
+      state: ai
+    Dead:
+      sprite: _DeadSpace/Mobs/Silicon/station_ai.rsi
+
+# Holograms
+- type: stationAiCustomization
+  id: TaipanAiHologramFemale
+  name: station-ai-hologram-female
+  previewKey: Hologram
+  layerData:
+    Hologram:
+      sprite: _DeadSpace/Mobs/Silicon/holograms.rsi
+      state: ai_female
+
+- type: stationAiCustomization
+  id: TaipanAiHologramMale
+  name: station-ai-hologram-male
+  previewKey: Hologram
+  layerData:
+    Hologram:
+      sprite: _DeadSpace/Mobs/Silicon/holograms.rsi
+      state: ai_male
+
+- type: stationAiCustomization
+  id: TaipanAiHologramFace
+  name: station-ai-hologram-face
+  previewKey: Hologram
+  layerData:
+    Hologram:
+      sprite: _DeadSpace/Mobs/Silicon/holograms.rsi
+      state: ai_face
+
+- type: stationAiCustomization
+  id: TaipanAiHologramCat
+  name: station-ai-hologram-cat
+  previewKey: Hologram
+  layerData:
+    Hologram:
+      sprite: _DeadSpace/Mobs/Silicon/holograms.rsi
+      state: ai_cat
+
+- type: stationAiCustomization
+  id: TaipanAiHologramDog
+  name: station-ai-hologram-dog
+  previewKey: Hologram
+  layerData:
+    Hologram:
+      sprite: _DeadSpace/Mobs/Silicon/holograms.rsi
+      state: ai_dog

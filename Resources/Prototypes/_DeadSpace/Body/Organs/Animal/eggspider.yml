@@ -1,0 +1,23 @@
+- type: entity
+  id: OrganEggSpiderStomach
+  parent: OrganAnimalStomach
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ EggSpider ]
+
+- type: entity
+  id: OrganEggSpiderLiver
+  parent: OrganAnimalLiver
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ EggSpider ]
+
+- type: entity
+  id: OrganEggSpiderHeart
+  parent: OrganAnimalHeart
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ EggSpider ]

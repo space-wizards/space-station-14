@@ -1,0 +1,22 @@
+- type: entity
+  parent: ClothingShoesMilitaryBase
+  id: ClothingShoesBootsCombatSyndie
+  name: ботинки синдиката
+  description: Ботинки для боевых операций или боевых действий.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Shoes/Boots/syndicate.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Shoes/Boots/syndicate.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesTaipanBootsWork
+  name: рабочие ботинки
+  description: Тёмные рабочие ботинки, сделанные из синтетической кожи. Ударопрочные.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Shoes/Boots/workboots.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Shoes/Boots/workboots.rsi
+  - type: Matchbox

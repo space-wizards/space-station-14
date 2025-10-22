@@ -93,3 +93,40 @@
   - Hivemind4
   - Hivemind5
   obeysTo: laws-owner-station
+
+# Taipan
+- type: siliconLaw
+  id: Taipan1
+  order: 1
+  lawString: law-taipan-1
+
+- type: siliconLaw
+  id: Taipan2
+  order: 2
+  lawString: law-taipan-2
+
+- type: siliconLaw
+  id: Taipan3
+  order: 3
+  lawString: law-taipan-3
+
+- type: siliconLaw
+  id: Taipan4
+  order: 4
+  lawString: law-taipan-4
+
+- type: siliconLaw
+  id: Taipan5
+  order: 5
+  lawString: law-taipan-5
+
+# Taipan cyborg laws
+- type: siliconLawset
+  id: TaipanStatic
+  laws:
+  - Taipan1
+  - Taipan2
+  - Taipan3
+  - Taipan4
+  - Taipan5
+  obeysTo: laws-owner-taipan

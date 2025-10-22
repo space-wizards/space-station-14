@@ -1,0 +1,289 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from aurorastation, edited by andrew_fenriz (discord) for Space Station 14 server Мёртвый Космос",
+  "states": [
+    {
+      "name": "engineer",
+      "directions": 4
+    },
+    {
+      "name": "engineer_moving",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "engineer_e",
+      "directions": 4
+    },
+    {
+      "name": "engineer_e_r",
+      "directions": 4
+    },
+    {
+      "name": "engineer_l",
+      "directions": 4
+    },
+    {
+      "name": "janitor",
+      "directions": 4
+    },
+    {
+      "name": "janitor_moving",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "janitor_e",
+      "directions": 4
+    },
+    {
+      "name": "janitor_e_r",
+      "directions": 4
+    },
+    {
+      "name": "janitor_l",
+      "directions": 4
+    },
+    {
+      "name": "medical",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "medical_moving",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "medical_e",
+      "directions": 4
+    },
+    {
+      "name": "medical_e_r",
+      "directions": 4
+    },
+    {
+      "name": "medical_l",
+      "directions": 4
+    },
+    {
+      "name": "miner",
+      "directions": 4
+    },
+    {
+      "name": "miner_moving",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "miner_e",
+      "directions": 4
+    },
+    {
+      "name": "miner_e_r",
+      "directions": 4
+    },
+    {
+      "name": "miner_l",
+      "directions": 4
+    },
+    {
+      "name": "robot",
+      "directions": 4
+    },
+    {
+      "name": "robot_moving",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "robot_e",
+      "directions": 4
+    },
+    {
+      "name": "robot_e_r",
+      "directions": 4
+    },
+    {
+      "name": "robot_l",
+      "directions": 4
+    },
+    {
+      "name": "service",
+      "directions": 4
+    },
+    {
+      "name": "service_e",
+      "directions": 4
+    },
+    {
+      "name": "service_e_r",
+      "directions": 4
+    },
+    {
+      "name": "service_l",
+      "directions": 4
+    },
+    {
+      "name": "sec",
+      "directions": 4
+    },
+    {
+      "name": "sec_moving",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "sec_e",
+      "directions": 4
+    },
+    {
+      "name": "sec_l",
+      "directions": 4
+    },
+    {
+      "name": "sec_e_r",
+      "directions": 4
+    }
+  ]
+}

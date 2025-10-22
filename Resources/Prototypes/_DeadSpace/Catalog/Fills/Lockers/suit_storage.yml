@@ -1,0 +1,78 @@
+# Атмосферный инженер
+- type: entity
+  id: SuitStorageTaipanAtmosphericsFilled
+  parent: SuitStorageTaipanBase
+  suffix: Тайпан, Атмосферный инженер
+  components:
+  - type: StorageFill
+    contents:
+    - id: OxygenTankFilled
+    - id: ClothingOuterHardsuitTaipanAtmosphericsEngineer
+    - id: ClothingMaskGasSyndicate
+  - type: AccessReader
+    access: [["TaipanAtmospherics"]]
+
+# Карготехник
+- type: entity
+  id: SuitStorageTaipanCargotechFilled
+  parent: SuitStorageTaipanBase
+  suffix: Тайпан, Карготехник
+  components:
+  - type: StorageFill
+    contents:
+    - id: OxygenTankFilled
+    - id: ClothingOuterHardsuitTaipanCargotech
+  - type: AccessReader
+    access: [["TaipanCargo"]]
+
+# Ремонтник
+- type: entity
+  id: SuitStorageTaipanTechnicianFilled
+  parent: SuitStorageTaipanBase
+  suffix: Тайпан, Ремонтник
+  components:
+  - type: StorageFill
+    contents:
+    - id: OxygenTankFilled
+    - id: ClothingOuterHardsuitTaipanTechnician
+  - type: AccessReader
+    access: [["TaipanEngineering"]]
+
+# Парамедик
+- type: entity
+  id: SuitStorageTaipanParamedicFilled
+  parent: SuitStorageTaipanBase
+  suffix: Тайпан, Парамедик
+  components:
+  - type: StorageFill
+    contents:
+    - id: OxygenTankFilled
+    - id: ClothingOuterHardsuitTaipanParamedic
+  - type: AccessReader
+    access: [["TaipanMedical"]]
+
+# Рекрут
+- type: entity
+  id: SuitStorageTaipanRecruitFilled
+  parent: SuitStorageTaipanBase
+  suffix: Тайпан, Рекрут
+  components:
+  - type: StorageFill
+    contents:
+    - id: OxygenTankFilled
+    - id: ClothingOuterHardsuitTaipanRecruit
+  - type: AccessReader
+    access: [["TaipanProtection"]]
+
+# Офицер телекоммуникаций
+- type: entity
+  id: SuitStorageTaipanCOFilled
+  parent: SuitStorageTaipanBase
+  suffix: Тайпан, Офицер телекоммуникаций
+  components:
+  - type: StorageFill
+    contents:
+    - id: OxygenTankFilled
+    - id: ClothingOuterHardsuitTaipanCommunicationsOfficer
+  - type: AccessReader
+    access: [["TaipanCommunicationsOfficer"]]

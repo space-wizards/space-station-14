@@ -32,3 +32,304 @@
       Uranium: 30
       Diamond: 1
 
+- type: entity
+  id: BaseMachineCircuitboardTaipan
+  parent: BaseItem
+  name: машинная плата
+  abstract: true
+  suffix: Тайпан
+  components:
+  - type: MachineBoard
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/module.rsi
+    state: syndicate
+  - type: Item
+    storedRotation: -90
+  - type: StaticPrice
+    price: 100
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 230
+    chemicalComposition:
+      Silicon: 20
+
+- type: entity
+  id: AutolatheMachineCircuitboardTaipan
+  parent: BaseMachineCircuitboardTaipan
+  name: автолат (машинная плата)
+  description: Печатная плата автолата.
+  components:
+  - type: MachineBoard
+    prototype: AutolatheTaipan
+    stackRequirements:
+      Manipulator: 4
+      Glass: 1
+
+- type: entity
+  id: AutolatheHyperConvectionMachineCircuitboardTaipan
+  parent: BaseMachineCircuitboardTaipan
+  name: гиперконвекционный автолат (машинная плата)
+  description: Печатная плата гиперконвекционного автолата.
+  components:
+  - type: MachineBoard
+    prototype: AutolatheHyperConvectionTaipan
+    stackRequirements:
+      Manipulator: 3
+      Glass: 1
+    tagRequirements:
+      Igniter:
+        amount: 1
+        defaultPrototype: Igniter
+
+- type: entity
+  id: ProtolatheMachineCircuitboardTaipan
+  parent: BaseMachineCircuitboardTaipan
+  name: протолат (машинная плата)
+  description: Печатная плата протолата.
+  components:
+  - type: MachineBoard
+    prototype: ProtolatheTaipan
+    stackRequirements:
+      Manipulator: 4
+    tagRequirements:
+      GlassBeaker:
+        amount: 2
+        defaultPrototype: Beaker
+
+- type: entity
+  id: ProtolatheHyperConvectionMachineCircuitboardTaipan
+  parent: BaseMachineCircuitboardTaipan
+  name: гиперконвекционный протолат (машинная плата)
+  description: Печатная плата гиперконвекционного протолата.
+  components:
+  - type: MachineBoard
+    prototype: ProtolatheHyperConvectionTaipan
+    stackRequirements:
+      Manipulator: 4
+    tagRequirements:
+      GlassBeaker:
+        amount: 2
+        defaultPrototype: Beaker
+      Igniter:
+        amount: 1
+        defaultPrototype: Igniter
+
+- type: entity
+  id: CircuitImprinterMachineCircuitboardTaipan
+  parent: BaseMachineCircuitboardTaipan
+  name: принтер схем (машинная плата)
+  description: Печатная плата принтера схем.
+  components:
+  - type: MachineBoard
+    prototype: CircuitImprinterTaipan
+    stackRequirements:
+      Manipulator: 2
+    tagRequirements:
+      GlassBeaker:
+        amount: 2
+        defaultPrototype: Beaker
+
+- type: entity
+  id: CircuitImprinterHyperConvectionMachineCircuitboardTaipan
+  parent: BaseMachineCircuitboardTaipan
+  name: гиперконвекционный принтер схем (машинная плата)
+  description: Печатная плата гиперконвекционного принтера схем.
+  components:
+  - type: MachineBoard
+    prototype: CircuitImprinterHyperConvectionTaipan
+    stackRequirements:
+      Manipulator: 2
+    tagRequirements:
+      GlassBeaker:
+        amount: 2
+        defaultPrototype: Beaker
+      Igniter:
+        amount: 1
+        defaultPrototype: Igniter
+
+- type: entity
+  id: ExosuitFabricatorMachineCircuitboardTaipan
+  parent: BaseMachineCircuitboardTaipan
+  name: фабрикатор экзокостюмов (машинная плата)
+  description: Печатная плата фабрикатора экзокостюмов.
+  components:
+  - type: MachineBoard
+    prototype: ExosuitFabricatorTaipan
+    stackRequirements:
+      Manipulator: 4
+      Glass: 5
+
+- type: entity
+  id: UniformPrinterMachineCircuitboardTaipan
+  parent: BaseMachineCircuitboard
+  name: принтер униформы (машинная плата)
+  description: Печатная плата принтера униформы.
+  components:
+  - type: MachineBoard
+    prototype: UniformPrinterTaipan
+    stackRequirements:
+      Manipulator: 3
+
+- type: entity
+  id: ResearchAndDevelopmentServerMachineCircuitboardTaipan
+  parent: BaseMachineCircuitboardTaipan
+  name: сервер РнД (машинная плата)
+  description: Печатная плата сервера РнД.
+  components:
+  - type: MachineBoard
+    prototype: ResearchAndDevelopmentServerTaipan
+    stackRequirements:
+      Plasma: 5
+
+- type: entity
+  id: CargoTelepadMachineCircuitboardTaipan
+  parent: BaseMachineCircuitboardTaipan
+  name: грузовой телепад (машинная плата)
+  description: Печатная плата грузового телепада.
+  components:
+  - type: MachineBoard
+    prototype: CargoTelepadTaipan
+    stackRequirements:
+      Manipulator: 2
+      Steel: 5
+
+- type: entity
+  id: BiofabricatorMachineCircuitboardTaipan
+  parent: BaseMachineCircuitboardTaipan
+  name: фабрикатор биокубов (машинная плата)
+  description: Печатная плата фабрикатора биокубов.
+  components:
+  - type: MachineBoard
+    prototype: BiofabricatorTaipan
+    stackRequirements:
+      Manipulator: 4
+      Glass: 1
+
+- type: entity
+  id: WeaponryTechFabCircuitboardTaipan
+  parent: BaseMachineCircuitboardTaipan
+  name: оружейный ТехФаб (машинная плата)
+  description: Печатная плата оружейного ТехФаба.
+  components:
+  - type: MachineBoard
+    prototype: WeaponryTechFabTaipan
+    stackRequirements:
+      Manipulator: 4
+    tagRequirements:
+      GlassBeaker:
+        amount: 2
+        defaultPrototype: Beaker
+
+- type: entity
+  id: MedicalTechFabCircuitboardTaipan
+  parent: BaseMachineCircuitboardTaipan
+  name: медицинский ТехФаб (машинная плата)
+  description: Печатная плата медицинского ТехФаба.
+  components:
+  - type: MachineBoard
+    prototype: MedicalTechFabTaipan
+    stackRequirements:
+      Manipulator: 4
+    tagRequirements:
+      GlassBeaker:
+        amount: 2
+        defaultPrototype: Beaker
+
+- type: entity
+  id: OreProcessorMachineCircuitboardTaipan
+  parent: BaseMachineCircuitboardTaipan
+  name: переработчик руды (машинная плата)
+  components:
+  - type: MachineBoard
+    prototype: OreProcessorTaipan
+    stackRequirements:
+      Manipulator: 4
+      Glass: 1
+
+- type: entity
+  parent: BaseMachineCircuitboardTaipan
+  id: OreProcessorIndustrialMachineCircuitboardTaipan
+  name: промышленный переработчик руды (машинная плата)
+  components:
+  - type: MachineBoard
+    prototype: OreProcessorIndustrialTaipan
+    stackRequirements:
+      Manipulator: 4
+      Glass: 1
+
+- type: entity
+  parent: BaseMachineCircuitboardTaipan
+  id: AnomalyVesselCircuitboardTaipan
+  name: сосуд аномалии (машинная плата)
+  description: Печатная плата для сосуда аномалии.
+  components:
+  - type: MachineBoard
+    prototype: MachineAnomalyVesselTaipan
+    stackRequirements:
+      Manipulator: 3
+      Cable: 1
+      PlasmaGlass: 10
+
+- type: entity
+  parent: BaseMachineCircuitboardTaipan
+  id: AnomalyVesselExperimentalCircuitboardTaipan
+  name: экспериментальный сосуд аномалии (машинная плата)
+  description: Печатная плата для экспериментального сосуда аномалии.
+  components:
+  - type: MachineBoard
+    prototype: MachineAnomalyVesselExperimentalTaipan
+    stackRequirements:
+      Manipulator: 3
+      Cable: 5
+      PlasmaGlass: 15
+      MetalRod: 4
+
+- type: entity
+  parent: WeaponEnergyTurretStationMachineCircuitboardBase
+  id: WeaponEnergyTurretTaipanAIMachineCircuitboard
+  name: охранная турель (машинная плата)
+  description: Печатная плата для охранной турели.
+  suffix: Тайпан, ИИ, Борги
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/module.rsi
+    state: syndicate
+  - type: MachineBoard
+    prototype: WeaponEnergyTurretTaipanAI
+
+- type: entity
+  parent: WeaponEnergyTurretStationMachineCircuitboardBase
+  id: WeaponEnergyTurretTaipanProtectionMachineCircuitboard
+  name: охранная турель (машинная плата)
+  description: Печатная плата для охранной турели.
+  suffix: Тайпан, Охрана
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/module.rsi
+    state: syndicate
+  - type: MachineBoard
+    prototype: WeaponEnergyTurretTaipanProtection
+
+- type: entity
+  parent: WeaponEnergyTurretStationMachineCircuitboardBase
+  id: WeaponEnergyTurretTaipanCommandMachineCircuitboard
+  name: охранная турель (машинная плата)
+  description: Печатная плата для охранной турели.
+  suffix: Тайпан, Командование
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/module.rsi
+    state: syndicate
+  - type: MachineBoard
+    prototype: WeaponEnergyTurretTaipanCommand
+
+- type: entity
+  id: MaterialSiloMachineCircuitboardTaipan
+  parent: BaseMachineCircuitboardTaipan
+  name: хранилище материалов (машинная плата)
+  components:
+  - type: MachineBoard
+    prototype: MachineMaterialSiloTaipan
+    stackRequirements:
+      Manipulator: 4
+      Cable: 1

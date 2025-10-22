@@ -1,0 +1,12 @@
+- type: entity
+  id: TaipanHolopadMachineCircuitboard
+  parent: BaseMachineCircuitboardTaipan
+  name: кроваво-красный голопад (машинная плата)
+  description: Печатная плата кроваво-красного голопада.
+  components:
+    - type: MachineBoard
+      prototype: HolopadTaipan
+      stackRequirements:
+        Manipulator: 4
+        Cable: 4
+        Glass: 2

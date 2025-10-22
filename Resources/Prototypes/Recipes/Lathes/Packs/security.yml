@@ -152,6 +152,9 @@
   - WeaponTemperatureGun
   - WeaponLaserRifle # DS14
   - WeaponIonRifle # DS14
+  - PhotonShotgun # DS14
+  - CartridgeLaserRifle # DS14
+  - EnergyCartridge # DS14
 
 - type: latheRecipePack
   id: SecurityDisablers

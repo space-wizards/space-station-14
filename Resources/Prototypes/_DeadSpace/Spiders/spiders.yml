@@ -168,6 +168,10 @@
       Acidic: [Touch, Ingestion]
   - type: TTS
     voice: Sunboy_mannered
+  - type: Language
+    selectedLanguage: ArachnidLanguage
+    knownLanguages:
+    - ArachnidLanguage
 
 - type: entity
   name: паук королевской крови

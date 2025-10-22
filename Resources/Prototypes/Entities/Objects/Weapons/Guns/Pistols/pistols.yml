@@ -189,6 +189,9 @@
       gun_chamber: !type:ContainerSlot
   - type: StaticPrice
     price: 1500
+  - type: Tag
+    tags:
+    - PistolCobra
 
 - type: entity
   name: mk 58

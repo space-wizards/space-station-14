@@ -699,6 +699,7 @@
     - WhitelistChameleon
     - CorgiWearable
     - ScurretWearable
+    - HardsuitSyndie # DS14
   - type: StaticPrice
     price: 5000
   - type: HardsuitIdentification # DS14
@@ -862,6 +863,7 @@
     - CorgiWearable
     - Hardsuit
     - WhitelistChameleon
+    - HardsuitJuggernaut # DS14
   - type: HardsuitIdentification # DS14
   - type: Speech # DS14
   - type: TTS # DS14

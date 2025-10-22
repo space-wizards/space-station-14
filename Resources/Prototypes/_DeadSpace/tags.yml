@@ -1,5 +1,11 @@
 - type: Tag
+  id: AmbrosiaDeus
+
+- type: Tag
   id: BatteryWeaponFireModesSprites
+
+- type: Tag
+  id: BerryDelight
 
 - type: Tag
   id: BorgModuleSecurity
@@ -23,19 +29,49 @@
   id: BorgSecTorso
 
 - type: Tag
+  id: CakeBrain
+
+- type: Tag
+  id: CaviarHolo
+
+- type: Tag
+  id: ChameleonProjector
+
+- type: Tag
   id: ChefGoldenKnife
 
 - type: Tag
   id: CleanerGrenade
 
 - type: Tag
+  id: CloningPodMachineCircuitboard
+
+- type: Tag
   id: CompactDefibrillator
+
+- type: Tag
+  id: DeathNettle
+
+- type: Tag
+  id: DeathRipleyEquipment
 
 - type: Tag
   id: DockCentcommERT
 
 - type: Tag
+  id: DonkCo
+
+- type: Tag
   id: EnergyCartridge
+
+- type: Tag
+  id: EnergySword
+
+- type: Tag
+  id: EnergySwordDouble
+
+- type: Tag
+  id: EncryptionTaipan
 
 - type: Tag
   id: FelinidFood
@@ -44,13 +80,40 @@
   id: FittableInBackpackCase
 
 - type: Tag
+  id: GiantSpiderSpace
+
+- type: Tag
+  id: GoldenApple
+
+- type: Tag
   id: GrenadeCleanade
 
 - type: Tag
   id: HardHat
 
 - type: Tag
+  id: HardsuitJuggernaut
+
+- type: Tag
+  id: HardsuitSyndie
+
+- type: Tag
+  id: Hypopen
+
+- type: Tag
+  id: JellyAmanita
+
+- type: Tag
   id: KatanaVjlados
+
+- type: Tag
+  id: Koibean
+
+- type: Tag
+  id: LauncherChinaLake
+
+- type: Tag
+  id: LightMachineGunL6
 
 - type: Tag
   id: LightReplacer
@@ -71,28 +134,130 @@
   id: MagazineTommyGunCap
 
 - type: Tag
-  id: MukhtarWearable
+  id: MantisBlades
 
 - type: Tag
-  id: MantisBlades
+  id: MeatAnomalyCooked
+
+- type: Tag
+  id: MeatWheat
+
+- type: Tag
+  id: MukhtarWearable
 
 - type: Tag
   id: Necro
 
 - type: Tag
+  id: NoodlesCopy
+
+- type: Tag
+  id: PistolCobra
+
+- type: Tag
+  id: PistolDesertEagle
+
+- type: Tag
+  id: Plastitanium
+
+- type: Tag
   id: Plasteel
+
+- type: Tag
+  id: RealCapfruit
+
+- type: Tag
+  id: RevolverPython
+
+- type: Tag
+  id: ShotgunBulldog
 
 - type: Tag
   id: SiliconIPSIPCEmotes
 
 - type: Tag
+  id: SMGTommyGun
+
+- type: Tag
+  id: SMGTommyGunCap
+
+- type: Tag
   id: SnapPop
+
+- type: Tag
+  id: SniperHristov
 
 - type: Tag
   id: SoapSyndie
 
 - type: Tag
+  id: SoupEyeball
+
+- type: Tag
+  id: SpaceCarpCube
+
+- type: Tag
+  id: SubMachineGunC20r
+
+- type: Tag
+  id: Suppermatter
+
+- type: Tag
+  id: SyndiHypo
+
+- type: Tag
+  id: SyndicateMicrowave
+
+- type: Tag
   id: SyndieSabre
+
+- type: Tag
+  id: Taipan
+
+- type: Tag
+  id: TaipanBorgHead
+
+- type: Tag
+  id: TaipanBorgLArm
+
+- type: Tag
+  id: TaipanBorgLLeg
+
+- type: Tag
+  id: TaipanBorgRArm
+
+- type: Tag
+  id: TaipanBorgRLeg
+
+- type: Tag
+  id: TaipanBorgTorso
+
+- type: Tag
+  id: TaipanRipleyCentralControlModule
+
+- type: Tag
+  id: TaipanRipleyEquipment
+
+- type: Tag
+  id: TaipanRipleyLArm
+
+- type: Tag
+  id: TaipanRipleyLLeg
+
+- type: Tag
+  id: TaipanRipleyPeripheralsControlModule
+
+- type: Tag
+  id: TaipanRipleyRArm
+
+- type: Tag
+  id: TaipanRipleyRLeg
+
+- type: Tag
+  id: TaipanRole
+
+- type: Tag
+  id: Titanium
 
 - type: Tag
   id: ToySword
@@ -114,5 +279,3 @@
 
 - type: Tag
   id: WeldingMaskWhite
-
-  # Обязательно в алфавитном порядке

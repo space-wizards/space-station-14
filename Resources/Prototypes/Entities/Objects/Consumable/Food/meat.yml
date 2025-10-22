@@ -612,6 +612,9 @@
   - type: FlavorProfile
     flavors:
       - falsemeat
+  - type: Tag # DS14
+    tags:
+    - MeatWheat
   - type: Sprite
     state: clump
   - type: SolutionContainerManager
@@ -1527,6 +1530,7 @@
     tags:
     - Cooked
     - Meat
+    - MeatAnomalyCooked
   - type: Sprite
     layers:
     - state: anomalymeat-cooked #Kinda hard to cook this... thing evenly

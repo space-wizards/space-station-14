@@ -1,0 +1,17 @@
+- type: entity
+  name: портативная рация
+  description: Удобная портативная рация с зашифрованным каналом.
+  parent: RadioHandheld
+  id: RadioHandheldTaipan
+  suffix: Тайпан
+  components:
+  - type: RadioMicrophone
+    broadcastChannel: TaipanHandheld
+  - type: RadioSpeaker
+    channels:
+    - TaipanHandheld
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Devices/taipan_radio.rsi
+  - type: Item
+    sprite: _DeadSpace/Objects/Devices/taipan_radio.rsi
+    heldPrefix: walkietalkie

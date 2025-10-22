@@ -124,7 +124,10 @@ public abstract partial class SharedStationAiSystem : EntitySystem
                 {
                     if (_net.IsClient)
                         return;
-                    var brain = SpawnInContainerOrDrop(DefaultAi, ent.Owner, StationAiCoreComponent.Container);
+                    // DS14-start
+                    var proto = ent.Comp.SpawnedBrainProto ?? DefaultAi;
+                    var brain = SpawnInContainerOrDrop(proto, ent.Owner, StationAiCoreComponent.Container);
+                    // DS14-end
                     _mind.ControlMob(user, brain);
                 },
                 Impact = LogImpact.High,

@@ -318,6 +318,9 @@
     damage:
       types:
         Blunt: 5 # The nettle will "wilt" after 5 hits.
+  - type: Tag
+    tags:
+    - DeathNettle # DS14
 
 - type: entity
   name: banana
@@ -1150,6 +1153,7 @@
   - type: Tag
     tags:
     - Fruit
+    - GoldenApple # DS14
   - type: FoodSequenceElement
     entries:
       Burger: GoldenApple
@@ -1739,6 +1743,7 @@
   - type: Tag
     tags:
     - Ambrosia
+    - AmbrosiaDeus # DS14
   - type: FoodSequenceElement
     entries:
       Taco: AmbrosiaDeus
@@ -1943,6 +1948,7 @@
   - type: Tag
     tags:
     - Fruit
+    - RealCapfruit # DS14
   - type: FoodSequenceElement
     entries:
       Taco: Capfruit

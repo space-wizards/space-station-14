@@ -1,0 +1,76 @@
+- type: latheRecipe
+  abstract: true
+  id: BaseImplantRecipe
+  categories:
+  - Implants
+  materials:
+    Steel: 400
+    Glass: 200
+    Plastic: 200
+    Gold: 500
+  completetime: 6
+
+- type: latheRecipe
+  parent: BaseImplantRecipe
+  id: LearnSlimeLanguageImplanter
+  result: LearnSlimeLanguageImplanter
+
+- type: latheRecipe
+  parent: BaseImplantRecipe
+  id: LearnArachnidLanguageImplanter
+  result: LearnArachnidLanguageImplanter
+
+- type: latheRecipe
+  parent: BaseImplantRecipe
+  id: LearnMothLanguageImplanter
+  result: LearnMothLanguageImplanter
+
+- type: latheRecipe
+  parent: BaseImplantRecipe
+  id: LearnReptilianLanguageImplanter
+  result: LearnReptilianLanguageImplanter
+
+- type: latheRecipe
+  parent: BaseImplantRecipe
+  id: LearnVoxLanguageImplanter
+  result: LearnVoxLanguageImplanter
+
+- type: latheRecipe
+  parent: BaseImplantRecipe
+  id: LearnDemonLanguageImplanter
+  result: LearnDemonLanguageImplanter
+
+- type: latheRecipe
+  parent: BaseImplantRecipe
+  id: LearnCatLanguageImplanter
+  result: LearnCatLanguageImplanter
+
+- type: latheRecipe
+  parent: BaseImplantRecipe
+  id: LearnMachineLanguageImplanter
+  result: LearnMachineLanguageImplanter
+
+- type: latheRecipe
+  parent: BaseImplantRecipe
+  id: LearnKoboltLanguageImplanter
+  result: LearnKoboltLanguageImplanter
+
+- type: latheRecipe
+  parent: BaseImplantRecipe
+  id: LearnPlafLanguageImplanter
+  result: LearnPlafLanguageImplanter
+
+- type: latheRecipe
+  parent: BaseImplantRecipe
+  id: LearnVulpkaninLanguageImplanter
+  result: LearnVulpkaninLanguageImplanter
+
+- type: latheRecipe
+  parent: BaseImplantRecipe
+  id: LearnXenomorphLanguageImplanter
+  result: LearnXenomorphLanguageImplanter
+
+- type: latheRecipe
+  parent: BaseImplantRecipe
+  id: LearnDogLanguageImplanter
+  result: LearnDogLanguageImplanter

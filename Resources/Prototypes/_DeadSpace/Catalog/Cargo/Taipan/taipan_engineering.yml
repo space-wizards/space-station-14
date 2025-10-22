@@ -1,0 +1,139 @@
+- type: cargoProduct
+  id: TaipanEngineeringCableLv
+  icon:
+    sprite: Objects/Tools/cable-coils.rsi
+    state: coillv-30
+  product: CrateEngineeringCableLV
+  cost: 300
+  category: cargoproduct-category-name-engineering
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEngineeringCableMv
+  icon:
+    sprite: Objects/Tools/cable-coils.rsi
+    state: coilmv-30
+  product: CrateEngineeringCableMV
+  cost: 300
+  category: cargoproduct-category-name-engineering
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEngineeringCableHv
+  icon:
+    sprite: Objects/Tools/cable-coils.rsi
+    state: coilhv-30
+  product: CrateEngineeringCableHV
+  cost: 300
+  category: cargoproduct-category-name-engineering
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEngineeringFoamGrenade
+  icon:
+    sprite: Objects/Weapons/Grenades/metalfoam.rsi
+    state: icon
+  product: CrateEngineeringFoamGrenade
+  cost: 2500
+  category: cargoproduct-category-name-engineering
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEngineeringCableBulk
+  icon:
+    sprite: Objects/Tools/cable-coils.rsi
+    state: coilall-30
+  product: CrateEngineeringCableBulk
+  cost: 600
+  category: cargoproduct-category-name-engineering
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEngineeringElectricalSupplies
+  icon:
+    sprite: Objects/Tools/Toolboxes/toolbox_yellow.rsi
+    state: icon
+  product: CrateEngineeringElectricalSupplies
+  cost: 4500
+  category: cargoproduct-category-name-engineering
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanStationBeaconBundle
+  icon:
+    sprite: Objects/Devices/station_beacon.rsi
+    state: icon
+  product: CrateEngineeringStationBeaconBundle
+  cost: 500
+  category: cargoproduct-category-name-engineering
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEngineeringJetpack
+  icon:
+    sprite: Objects/Tanks/Jetpacks/blue.rsi
+    state: icon
+  product: CrateEngineeringJetpack
+  cost: 1000
+  category: cargoproduct-category-name-engineering
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEngineeringMiniJetpack
+  icon:
+    sprite: Objects/Tanks/Jetpacks/mini.rsi
+    state: icon
+  product: CrateEngineeringMiniJetpack
+  cost: 750
+  category: cargoproduct-category-name-engineering
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEngineeringRCDAmmo
+  icon:
+    sprite: Objects/Tools/rcd.rsi
+    state: ammo
+  product: CrateRCDAmmo
+  cost: 2500
+  category: cargoproduct-category-name-engineering
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEngineeringRCD
+  icon:
+    sprite: Objects/Tools/rcd.rsi
+    state: icon
+  product: CrateRCD
+  cost: 800
+  category: cargoproduct-category-name-engineering
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEngineeringParticleDecelerators
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/particle_decelerator.rsi
+    state: base
+  product: CrateParticleDecelerators
+  cost: 15000
+  category: cargoproduct-category-name-engineering
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEngineeringSpaceHeater
+  icon:
+    sprite: Structures/Piping/Atmospherics/Portable/portable_sheater.rsi
+    state: sheaterOff
+  product: CrateEngineeringSpaceHeater
+  cost: 350
+  category: cargoproduct-category-name-engineering
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanEngineeringVoidJetpack
+  icon:
+    sprite: Objects/Tanks/Jetpacks/void.rsi
+    state: icon
+  product: CrateEngineeringVoidJetpack
+  cost: 8000
+  category: cargoproduct-category-name-engineering
+  group: taipan_market

@@ -5,6 +5,8 @@ using Content.Server.Prayer;
 using Content.Shared.Revenant.Components;
 using Robust.Shared.Utility;
 using Content.Server.Chat.Systems;
+using Content.Shared.DeadSpace.Languages.Components;
+using Content.Server.DeadSpace.Languages;
 
 namespace Content.Server.Revenant;
 
@@ -12,6 +14,7 @@ public sealed partial class TelepathySystem : EntitySystem
 {
     [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
     [Dependency] private readonly PrayerSystem _prayerSystem = default!;
+    [Dependency] private readonly LanguageSystem _language = default!;
 
     public override void Initialize()
     {
@@ -44,8 +47,15 @@ public sealed partial class TelepathySystem : EntitySystem
                 {
                     _quickDialog.OpenDialog(player, "Пробраться в мысли", "Сообщение", (string message) =>
                     {
+                        var lexiconMessage = message;
+
+                        if (TryComp<LanguageComponent>(args.User, out var language))
+                            lexiconMessage = _language.ReplaceWordsWithLexicon(message, language.SelectedLanguage);
+
+                        var selectedLanguage = language != null ? language.SelectedLanguage : LanguageSystem.DefaultLanguageId;
+
                         _prayerSystem.SendSubtleMessage(targetActor.PlayerSession, player, message, Loc.GetString("prayer-popup-subtle-revenant"));
-                        var ev = new EntitySpokeToEntityEvent(args.Target, message);
+                        var ev = new EntitySpokeToEntityEvent(args.Target, message, lexiconMessage, selectedLanguage);
                         RaiseLocalEvent(args.User, ev, true);
                     });
                 };

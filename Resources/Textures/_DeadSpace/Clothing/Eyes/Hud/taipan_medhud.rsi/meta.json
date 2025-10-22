@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by IntegerTempest, edited by Golinth. Equipped-EYES-arachnid modified from equipped-EYES by HTMLSystem, edited by andrew_fenriz (discord) for SS14 server Мёртвый Космос",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "equipped-EYES",
+      "directions": 4
+    },
+    {
+      "name": "equipped-EYES-arachnid",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

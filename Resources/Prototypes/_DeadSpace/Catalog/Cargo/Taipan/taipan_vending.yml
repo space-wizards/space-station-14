@@ -1,0 +1,199 @@
+- type: cargoProduct
+  id: TaipanCrateVendingMachineRestockBooze
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockBoozeFilled
+  cost: 3500
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCrateVendingMachineRestockAutoDrobe
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockAutoDrobeFilled
+  cost: 2500
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCrateVendingMachineRestockCondimentStation
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockCondimentStationFilled
+  cost: 300
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCrateVendingMachineRestockEngineering
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockEngineeringFilled
+  cost: 3200
+  category: cargoproduct-category-name-engineering
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCrateVendingMachineRestockGames
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockGamesFilled
+  cost: 750
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCrateVendingMachineRestockHotDrinks
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockHotDrinksFilled
+  cost: 1200
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCrateVendingMachineRestockMedical
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockMedicalFilled
+  cost: 1750
+  category: cargoproduct-category-name-medical
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCrateVendingMachineRestockChemVend
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockChemVendFilled
+  cost: 3820
+  category: cargoproduct-category-name-medical
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCrateVendingMachineRestockNutriMax
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockNutriMaxFilled
+  cost: 2400
+  category: cargoproduct-category-name-hydroponics
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCrateVendingMachineRestockRobustSoftdrinks
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockRobustSoftdrinksFilled
+  cost: 1200
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCrateVendingMachineRestockSalvageEquipment
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockSalvageEquipmentFilled
+  cost: 1500
+  category: cargoproduct-category-name-cargo
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCrateVendingMachineRestockSeeds
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockSeedsFilled
+  cost: 3600
+  category: cargoproduct-category-name-hydroponics
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCrateVendingMachineRestockSmokes
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockSmokesFilled
+  cost: 1200
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCrateVendingMachineRestockVendomat
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockVendomatFilled
+  cost: 1200
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCrateVendingMachineRestockTankDispenser
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockTankDispenserFilled
+  cost: 1000
+  category: cargoproduct-category-name-atmospherics
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCrateVendingMachineRestockHappyHonk
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockHappyHonkFilled
+  cost: 2100
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCrateVendingMachineRestockGetmoreChocolateCorp
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockGetmoreChocolateCorpFilled
+  cost: 1200
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCrateVendingMachineRestockChang
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockChangFilled
+  cost: 1200
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCrateVendingMachineRestockDiscountDans
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockDiscountDansFilled
+  cost: 1200
+  category: cargoproduct-category-name-service
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCrateVendingMachineRestockDonut
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockDonutFilled
+  cost: 1200
+  category: cargoproduct-category-name-service
+  group: taipan_market

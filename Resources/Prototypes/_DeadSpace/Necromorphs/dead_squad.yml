@@ -124,8 +124,10 @@
     - CannotSuicide
     - DoorBumpOpener
     - FootstepSound
-  - type: ReplacementAccent
-    accent: genericAggressive
+  - type: Language
+    selectedLanguage: NecromorfLanguage
+    knownLanguages:
+    - NecromorfLanguage
   - type: Damageable
     damageModifierSet: DeadSquadNecro
   - type: Loadout

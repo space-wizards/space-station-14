@@ -22,3 +22,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: StationTaipan
+  - type: NpcFactionMember
+    factions:
+    - Taipan

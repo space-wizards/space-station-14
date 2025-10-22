@@ -51,7 +51,7 @@ public sealed class RenegadeRule : StationEventSystem<Renegade.Components.Renega
             _role.MindHasRole<RenegadeSubmissionConditionComponent>(mind, out var role);
             var count = CompOrNull<RenegadeSubmissionConditionComponent>(role)?.SubordinateCommand.Count ?? 0;
 
-            args.AddLine(Loc.GetString("Renegade-sub-name-user",
+            args.AddLine(Loc.GetString("renegade-sub-name-user",
             ("name", name),
             ("username", data.UserName),
             ("count", count)));

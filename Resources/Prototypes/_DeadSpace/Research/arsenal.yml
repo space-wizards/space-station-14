@@ -1,0 +1,15 @@
+# Tier 2
+
+- type: technology
+  id: ConcentratedPhotonWeaponry
+  name: research-technology-photon-laser-weaponry
+  icon:
+    sprite: _DeadSpace/Objects/Weapons/Guns/Battery/multishot.rsi
+    state: icon-0
+  discipline: Arsenal
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - PhotonShotgun 
+  - CartridgeLaserRifle
+  - EnergyCartridge

@@ -33,3 +33,16 @@ stack-floor-tile-fairy-astro-grass = астро-трава фей
 stack-floor-tile-diamond = алмазный пол
 stack-floor-tile-plasma = плазменный пол
 stack-floor-tile-uranium = урановый пол
+stack-titanium =
+    { $amount ->
+        [1] лист
+        [few] листа
+       *[other] листов
+    } титана
+stack-plastitanium =
+    { $amount ->
+        [1] лист
+        [few] листа
+       *[other] листов
+    } пластитана
+

@@ -260,6 +260,11 @@
   - type: TTS # Corvax-TTS
     voice: TrainingRobot
   - type: EmotePanel # DS14-Emote-panel
+  - type: Language # DS14
+    selectedLanguage: GeneralLanguage
+    knownLanguages:
+    - GeneralLanguage
+    - MachineLanguage
 
 - type: entity
   abstract: true

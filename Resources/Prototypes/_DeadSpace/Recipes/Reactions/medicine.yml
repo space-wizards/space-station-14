@@ -1,0 +1,29 @@
+- type: reaction
+  id: Chitoectesin
+  impact: High
+  minTemp: 350
+  reactants:
+    Terratosomochromolin:
+      amount: 2
+    AcidicBlood:
+      amount: 2
+    Vestine:
+      amount: 1
+  products:
+    Chitoectesin: 2
+
+- type: reaction
+  id: Romerol
+  impact: High
+  minTemp: 370
+  reactants:
+    Terratosomochromolin:
+      amount: 2
+    UnstableMutagen:
+      amount: 2
+    Vestine:
+      amount: 1
+    Cryptobiolin:
+      amount: 1
+  products:
+    Romerol: 1

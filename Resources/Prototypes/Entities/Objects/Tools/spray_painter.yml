@@ -30,6 +30,13 @@
       distro: '#0055cc'
       air: '#03fcd3'
       mix: '#947507'
+# DS14-start
+    allowedCategories:
+    - Airlocks
+    - Canisters
+    - Crates
+    - Lockers
+# DS14-end
   - type: StaticPrice
     price: 40
   - type: LimitedCharges

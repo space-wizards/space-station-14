@@ -1,0 +1,32 @@
+# Sex
+- type: loadoutEffectGroup
+  id: MaleUniforms
+  effects:
+  - !type:SexLoadoutEffect
+    sexes:
+    - Male
+    - Unsexed
+
+- type: loadoutEffectGroup
+  id: FemaleUniforms
+  effects:
+  - !type:SexLoadoutEffect
+    sexes:
+    - Female
+
+# Default uniform
+- type: loadout
+  id: UniformJumpsuitColorGrey
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUniforms
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorGrey
+
+- type: loadout
+  id: UniformJumpskirtColorGrey
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUniforms
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorGrey

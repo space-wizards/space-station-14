@@ -1,0 +1,92 @@
+- type: entity
+  parent: [BaseWeaponBallisticTurret, BaseSyndicateContraband]
+  id: WeaponTurretTaipan
+  name: баллистическая турель
+  description: Автоматическая турель с баллистическим пулемётом.
+  suffix: Тайпан
+  components:
+  - type: NpcFactionMember
+    factions:
+    - Taipan
+
+- type: entity
+  parent: WeaponTurretBaseLaser
+  id: WeaponTurretLaserTaipan
+  name: лазерная турель
+  description: Автоматическая турель лазерного поражения, имеет встроенную батарею самозарядки.
+  suffix: Тайпан
+  components:
+  - type: Sprite
+    sprite: _Backmen/Objects/Weapons/Guns/Turrets/turrets.rsi
+    layers:
+      - state: stand
+      - state: team_b
+  - type: NpcFactionMember
+    factions:
+    - Taipan
+
+- type: entity
+  parent: WeaponEnergyTurretStationBase
+  id: WeaponEnergyTurretTaipanAI
+  name: охранная турель
+  description: Высокотехнологичная автономная система вооружения, предназначенная для предотвращения проникновений посторонних лиц в важные зоны.
+  suffix: Тайпан, ИИ, Борги
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Turrets/sentry_turret.rsi
+  - type: AccessReader
+    access: [["StationAi"], ["TaipanResearchDirector"]]
+  - type: StationAiTurret
+  - type: TurretTargetSettings
+    exemptAccessLevels:
+    - Borg
+    - BasicSilicon
+  - type: Machine
+    board: WeaponEnergyTurretTaipanAIMachineCircuitboard
+  - type: DeviceNetwork
+    receiveFrequencyId: TurretControlAI
+    transmitFrequencyId: TurretAI
+
+- type: entity
+  parent: WeaponEnergyTurretStationBase
+  id: WeaponEnergyTurretTaipanProtection
+  name: охранная турель
+  description: Высокотехнологичная автономная система вооружения, предназначенная для предотвращения проникновений посторонних лиц в важные зоны.
+  suffix: Тайпан, Охрана
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Turrets/sentry_turret.rsi
+  - type: AccessReader
+    access: [["StationAi"], ["TaipanProtection"]]
+  - type: TurretTargetSettings
+    exemptAccessLevels:
+    - TaipanProtection
+    - Borg
+    - BasicSilicon
+  - type: Machine
+    board: WeaponEnergyTurretTaipanProtectionMachineCircuitboard
+  - type: DeviceNetwork
+    receiveFrequencyId: TurretControl
+    transmitFrequencyId: Turret
+
+- type: entity
+  parent: WeaponEnergyTurretStationBase
+  id: WeaponEnergyTurretTaipanCommand
+  name: охранная турель
+  description: Высокотехнологичная автономная система вооружения, предназначенная для предотвращения проникновений посторонних лиц в важные зоны.
+  suffix: Тайпан, Командование
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Turrets/sentry_turret.rsi
+  - type: AccessReader
+    access: [["StationAi"], ["TaipanCommand"]]
+  - type: TurretTargetSettings
+    exemptAccessLevels:
+    - TaipanCommand
+    - Borg
+    - BasicSilicon
+  - type: Machine
+    board: WeaponEnergyTurretTaipanCommandMachineCircuitboard
+  - type: DeviceNetwork
+    receiveFrequencyId: TurretControl
+    transmitFrequencyId: Turret

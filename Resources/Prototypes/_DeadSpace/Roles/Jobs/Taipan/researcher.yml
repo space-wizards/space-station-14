@@ -1,0 +1,43 @@
+- type: job
+  id: TaipanResearcher
+  name: job-name-taipan-researcher
+  description: job-description-taipan-researcher
+  playTimeTracker: JobTaipanResearcher
+  setPreference: false
+  overrideConsoleVisibility: true
+  isTaipan: true
+  startingGear: TaipanResearcherGear
+  icon: "JobIconTaipanResearcher"
+  supervisors: job-supervisors-taipan-research-director
+  canBeAntag: false
+  requirements:
+  - !type:DepartmentTimeRequirement
+    department: Science
+    time: 36000 # 10 hours
+  - !type:RoleTimeRequirement
+    role: JobChemist
+    time: 18000 # 5 hours
+  access:
+  - TaipanMaint
+  - TaipanResearch
+  special:
+  - !type:AddImplantSpecial
+    implants: [ DeathRattleImplantTaipan ]
+
+- type: startingGear
+  id: TaipanResearcherGear
+  equipment:
+    ears: ClothingHeadsetTaipan
+    outerClothing: ClothingOuterTaipanCoatLabResearcher
+    shoes: ClothingShoesBootsLaceup
+    back: ClothingBackpackSyndicate
+    id: TaipanResearcherPDA
+    socks: ClothingUnderwearSocksTaipanResearcher
+
+- type: chameleonOutfit
+  id: TaipanResearcherChameleonOutfit
+  job: TaipanResearcher
+  startingGear: TaipanResearcherGear
+  equipment:
+    id: PassengerPDA
+    neck: ClothingNeckGoldmedal

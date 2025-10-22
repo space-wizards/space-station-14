@@ -1,0 +1,16 @@
+- type: entity
+  parent: DoorRemoteDefault
+  id: DoorRemoteTaipan
+  name: пульт от шлюзов
+  description: Гаджет, который может открывать и закрывать шлюзы дистанционно.
+  components:
+  - type: Sprite
+    layers:
+    - state: door_remotebase
+    - state: door_remotelightscolour
+      color: "#cc2127"
+    - state: door_remotescreencolour
+      color: "#87181c"
+  - type: Access
+    groups:
+    - TaipanAccess

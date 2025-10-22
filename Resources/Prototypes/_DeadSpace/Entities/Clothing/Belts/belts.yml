@@ -1,4 +1,43 @@
 - type: entity
+  parent: ClothingBeltAssault
+  id: ClothingBeltAssaultTaipan
+  name: тактический пояс
+  description: Удобный пояс, часто используемый синдикатом на засекреченных территориях.
+  suffix: Тайпан
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Belt/assault.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Belt/assault.rsi
+
+- type: entity
+  parent: ClothingBeltPlant
+  id: ClothingBeltPlantTaipan
+  name: пояс ботаника
+  description: Пояс, используемый для хранения основных принадлежностей для гидропоники. На удивление, не чёрный.
+  suffix: Тайпан
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Belt/plantbelt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Belt/plantbelt.rsi
+
+- type: entity
+  name: сумка для растений
+  id: TaipanPlantBag
+  parent: PlantBag
+  description: Сумка для ботаников, чтобы легко переносить свои огромные урожаи.
+  suffix: Тайпан
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Belt/plant_bag.rsi
+    state: icon
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - belt
+
+- type: entity
   parent: ClothingBeltSheath
   id: ClothingBeltSheathSyndie
   name: ножны синдиката
@@ -26,3 +65,55 @@
         whitelist:
           tags:
           - SyndieSabre
+
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltUtilityBase
+  abstract: true
+  components:
+  - type: Storage
+    maxItemSize: Normal
+    whitelist:
+      tags:
+        - Powerdrill
+        - Wirecutter
+        - Crowbar
+        - Screwdriver
+        - Flashlight
+        - Wrench
+        - GeigerCounter
+        - Flare
+        - CableCoil
+        - CigPack
+        - Radio
+        - HolofanProjector
+        - Multitool
+        - AppraisalTool
+        - JawsOfLife
+        - GPS
+        - WeldingMask
+        - RemoteSignaller
+      components:
+        - StationMap
+        - SprayPainter
+        - SprayPainterAmmo
+        - NetworkConfigurator
+        - RCD
+        - RCDAmmo
+        - Welder
+        - PowerCell
+        - Geiger
+        - TrayScanner
+        - GasAnalyzer
+        - HandLabeler
+
+- type: entity
+  parent: ClothingBeltUtilityBase
+  id: ClothingUtilityWebbing
+  name: РПС для инструментов
+  description: Дизайнеры NanoTrasen ожидали заменить этим старый добрый пояс для инструментов.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Belt/utilitywebbing.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Belt/utilitywebbing.rsi

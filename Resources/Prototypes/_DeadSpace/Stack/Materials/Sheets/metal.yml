@@ -1,0 +1,13 @@
+- type: stack
+  id: Titanium
+  name: stack-titanium
+  icon: { sprite: /Textures/Objects/Materials/Sheets/metal.rsi, state: titanium }
+  spawn: SheetTitanium1
+  maxCount: 30
+
+- type: stack
+  id: Plastitanium
+  name: stack-plastitanium
+  icon: { sprite: /Textures/Objects/Materials/Sheets/metal.rsi, state: plastitanium }
+  spawn: SheetPlastitanium1
+  maxCount: 30

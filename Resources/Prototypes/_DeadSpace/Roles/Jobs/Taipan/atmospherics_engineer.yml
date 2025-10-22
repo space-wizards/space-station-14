@@ -1,0 +1,48 @@
+- type: job
+  id: TaipanAtmosphericsEngineer
+  name: job-name-taipan-atmospherics-engineer
+  description: job-description-taipan-atmospherics-engineer
+  playTimeTracker: JobTaipanAtmosphericsEngineer
+  setPreference: false
+  overrideConsoleVisibility: true
+  isTaipan: true
+  startingGear: TaipanAtmosphericsEngineerGear
+  icon: "JobIconTaipanAtmosphericsEngineer"
+  supervisors: job-supervisors-taipan-technical-supervisor
+  canBeAntag: false
+  requirements:
+  - !type:RoleTimeRequirement
+    role: JobAtmosphericTechnician
+    time: 18000 #5 hrs
+  - !type:RoleTimeRequirement
+    role: JobTaipanTechnician
+    time: 18000 #5 hrs
+  - !type:DepartmentTimeRequirement
+    department: Taipan
+    time: 36000 #10 hrs
+  access:
+  - TaipanMaint
+  - TaipanEngineering
+  - TaipanAtmospherics
+  - TaipanExternal
+  special:
+  - !type:AddImplantSpecial
+    implants: [ DeathRattleImplantTaipan ]
+
+- type: startingGear
+  id: TaipanAtmosphericsEngineerGear
+  equipment:
+    ears: ClothingHeadsetTaipan
+    shoes: ClothingShoesTaipanBootsWork
+    back: ClothingBackpackSyndicate
+    socks: ClothingUnderwearSocksTaipanAtmosphericsEngineer
+    belt: ClothingBeltUtilityEngineering
+    id: TaipanAtmosphericsEngineerPDA
+
+- type: chameleonOutfit
+  id: TaipanAtmosphericsEngineerChameleonOutfit
+  job: TaipanAtmosphericsEngineer
+  startingGear: TaipanAtmosphericsEngineerGear
+  equipment:
+    id: PassengerPDA
+    neck: ClothingNeckGoldmedal

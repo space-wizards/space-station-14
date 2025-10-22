@@ -1,0 +1,12 @@
+- type: paintableGroup
+  id: TaipanCrateSteel
+  cost: 2
+  defaultStyle: basic
+  styles:
+    basic: CrateGenericSteel
+    electrical: CrateElectrical
+    engineering: CrateEngineering
+    radiation: CrateRadiation
+    science: CrateScience
+    surgery: CrateSurgery
+    syndicate: CrateSyndicate

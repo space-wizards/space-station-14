@@ -1,5 +1,5 @@
 - type: entity
-  parent: SimpleSpaceMobBase
+  parent: BaseMobAsteroid
   id: BaseMobDemonBoss
   name: босс демонов
   description: Монстр!
@@ -39,10 +39,6 @@
       350: Dead
   - type: Stamina
   - type: Appearance
-  - type: Bloodstream
-    bloodReagent: DemonsBlood
-    bloodMaxVolume: 200
-    bloodlossThreshold: 0.4
   - type: CombatMode
   - type: MeleeWeapon
     altDisarm: false
@@ -50,8 +46,6 @@
     angle: 45
     soundHit:
         path: /Audio/Effects/demon_attack1.ogg
-        params:
-          volume: -100
     animation: WeaponArcClaw
     damage:
       types:
@@ -88,9 +82,14 @@
     damage:
       types:
         Poison: -2
+        Holy: -1
       groups:
         Brute: -4
         Burn: -4
+  - type: NoSlip
+  - type: Damageable
+    damageModifierSet: SlaughterDemon
+    damageContainer: BiologicalMetaphysical
 
 - type: entity
   parent: BaseMobDemonBoss
@@ -154,11 +153,9 @@
     baseSprintSpeed: 1
   - type: MeleeWeapon
     hidden: true
+    angle: 45
     soundHit:
         path: /Audio/Effects/demon_attack1.ogg
-        params:
-          volume: -100
-    angle: 0
     animation: WeaponArcClaw
     damage:
       types:

@@ -1,0 +1,40 @@
+- type: job
+  id: TaipanCargotech
+  name: job-name-taipan-cargotech
+  description: job-description-taipan-cargotech
+  playTimeTracker: JobTaipanCargotech
+  setPreference: false
+  overrideConsoleVisibility: true
+  isTaipan: true
+  startingGear: TaipanCargotechGear
+  icon: "JobIconTaipanCargotech"
+  supervisors: job-name-taipan-technical-supervisor
+  canBeAntag: false
+  requirements:
+  - !type:RoleTimeRequirement
+    role: JobSalvageSpecialist
+    time: 36000 # 10 hours
+  access:
+  - TaipanMaint
+  - TaipanCargo
+  - TaipanExternal
+  special:
+  - !type:AddImplantSpecial
+    implants: [ DeathRattleImplantTaipan ]
+
+- type: startingGear
+  id: TaipanCargotechGear
+  equipment:
+    ears: ClothingHeadsetTaipan
+    shoes: ClothingShoesTaipanBootsWork
+    back: ClothingBackpackSyndicate
+    id: TaipanCargotechPDA
+    socks: ClothingUnderwearSocksTaipanCargotech
+
+- type: chameleonOutfit
+  id: TaipanCargotechChameleonOutfit
+  job: TaipanCargotech
+  startingGear: TaipanCargotechGear
+  equipment:
+    id: PassengerPDA
+    neck: ClothingNeckGoldmedal

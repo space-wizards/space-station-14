@@ -203,6 +203,34 @@
   - PushHorn
   - BorgModuleAdvancedClowning
 
+# DS14-start
+- type: technology
+  id: LanguageImplants
+  name: research-technology-language-implants
+  icon:
+    sprite: Objects/Specific/Medical/implanter.rsi
+    state: implanter0
+    layers:
+    - state: implanter1
+  discipline: CivilianServices
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - LearnSlimeLanguageImplanter
+  - LearnArachnidLanguageImplanter
+  - LearnMothLanguageImplanter
+  - LearnReptilianLanguageImplanter
+  - LearnVoxLanguageImplanter
+  - LearnDemonLanguageImplanter
+  - LearnCatLanguageImplanter
+  - LearnMachineLanguageImplanter
+  - LearnKoboltLanguageImplanter
+  - LearnPlafLanguageImplanter
+  - LearnVulpkaninLanguageImplanter
+  - LearnXenomorphLanguageImplanter
+  - LearnDogLanguageImplanter
+# DS14-end
+
 # Tier 3
 
 - type: technology

@@ -13,7 +13,6 @@ public sealed partial class ResearchSystem
         SubscribeLocalEvent<ResearchClientComponent, ComponentShutdown>(OnClientShutdown);
         SubscribeLocalEvent<ResearchClientComponent, BoundUIOpenedEvent>(OnClientUIOpen);
         SubscribeLocalEvent<ResearchClientComponent, ConsoleServerSelectionMessage>(OnConsoleSelect);
-        SubscribeLocalEvent<ResearchClientComponent, AnchorStateChangedEvent>(OnClientAnchorStateChanged);
 
         SubscribeLocalEvent<ResearchClientComponent, ResearchClientSyncMessage>(OnClientSyncMessage);
         SubscribeLocalEvent<ResearchClientComponent, ResearchClientServerSelectedMessage>(OnClientSelected);
@@ -62,10 +61,24 @@ public sealed partial class ResearchSystem
 
     private void OnClientMapInit(EntityUid uid, ResearchClientComponent component, MapInitEvent args)
     {
+        // DS14-start
+        var taipanServers = new List<Entity<ResearchServerComponent>>();
+        var normalServers = new List<Entity<ResearchServerComponent>>();
         var allServers = GetServers(uid).ToList();
 
-        if (allServers.Count > 0)
-            RegisterClient(uid, allServers[0], component, allServers[0]);
+        foreach (var (serverUid, serverComp) in allServers)
+        {
+            if (component.isTaipan && serverComp.isTaipan)
+                taipanServers.Add((serverUid, serverComp));
+            else if (!component.isTaipan && !serverComp.isTaipan)
+                normalServers.Add((serverUid, serverComp));
+        }
+
+        if (normalServers.Count > 0)
+            RegisterClient(uid, normalServers[0], component, normalServers[0]);
+        if (taipanServers.Count > 0)
+            RegisterClient(uid, taipanServers[0], component, taipanServers[0]);
+        // DS14-end
     }
 
     private void OnClientShutdown(EntityUid uid, ResearchClientComponent component, ComponentShutdown args)
@@ -103,11 +116,15 @@ public sealed partial class ResearchSystem
 
         TryGetClientServer(uid, out _, out var serverComponent, component);
 
-        var names = GetServerNames(uid);
+        // DS14-start
+        var serverNames = GetServerNames(uid, component?.isTaipan ?? false);
+        var serverIds = GetServerIds(uid, component?.isTaipan ?? false);
+
         var state = new ResearchClientBoundInterfaceState(
-            names.Length,
-            names,
-            GetServerIds(uid),
+            serverNames.Length,
+            serverNames,
+            serverIds,
+        // DS14-end
             serverComponent?.Id ?? -1);
 
         _uiSystem.SetUiState(uid, ResearchClientUiKey.Key, state);

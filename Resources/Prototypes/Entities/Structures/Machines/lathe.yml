@@ -211,6 +211,7 @@
     - Equipment
     # - FauxTiles # DS14: moved to CutterMachine recipes
     - NightVisionTech # DS14
+    - LanguageImplanters # DS14
   - type: EmagLatheRecipes
     emagDynamicPacks:
     - SecurityAmmo

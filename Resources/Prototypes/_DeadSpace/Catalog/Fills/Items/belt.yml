@@ -14,7 +14,7 @@
       - id: Gauze
       - id: EmergencyMedipen #You never know what people are going to latejoin into
         amount: 2
-        
+
 - type: entity
   id: ClothingBeltSheathSyndieFilled
   parent: ClothingBeltSheathSyndie
@@ -24,3 +24,44 @@
     containers:
       item:
       - SyndieSabre
+
+- type: entity
+  parent: ClothingBeltPlantTaipan
+  id: ClothingBeltPlantTaipanFilled
+  name: пояс ботаника
+  description: Пояс, используемый для хранения основных принадлежностей для гидропоники. На удивление, не чёрный.
+  suffix: Тайпан, Заполненный
+  components:
+  - type: StorageFill
+    contents:
+    - id: HydroponicsToolMiniHoe
+    - id: HydroponicsToolSpade
+    - id: ChemistryBottleRobustHarvest
+
+- type: entity
+  id: ClothingUtilityWebbingFilled
+  parent: ClothingUtilityWebbing
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: Crowbar
+      - id: Wrench
+      - id: Screwdriver
+      - id: Wirecutter
+      - id: Welder
+      - id: NetworkConfigurator
+
+- type: entity
+  id: ClothingUtilityWebbingEngineering
+  parent: ClothingUtilityWebbing
+  suffix: Engineering
+  components:
+  - type: StorageFill
+    contents:
+      - id: CrowbarYellow
+      - id: Wrench
+      - id: Screwdriver
+      - id: Wirecutter
+      - id: Welder
+      - id: Multitool

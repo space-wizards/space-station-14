@@ -1,0 +1,360 @@
+# Tier 1
+
+- type: technology
+  id: TaipanSalvageWeapons
+  name: research-technology-salvage-weapons
+  icon:
+    sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
+    state: icon
+  discipline: TaipanWeaponry
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - WeaponProtoKineticAccelerator
+  - ShuttleGunKineticCircuitboard
+  - BorgModuleMiningWeapon
+
+- type: technology
+  id: TaipanDraconicMunitions
+  name: research-technology-draconic-munitions
+  icon:
+    sprite: _DeadSpace/Objects/Weapons/Guns/Ammunition/Boxes/pistol.rsi
+    state: incendiarydisplay
+  discipline: TaipanWeaponry
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - BoxShotgunIncendiary
+  - MagazineRifleIncendiary
+  - MagazinePistolIncendiary
+  - MagazinePistolSubMachineGunIncendiary
+  - MagazineLightRifleIncendiary
+  - SpeedLoaderMagnumIncendiary
+  - MagazineShotgunIncendiary
+  - MagazineBoxPistolIncendiary
+  - MagazineBoxMagnumIncendiary
+  - MagazineBoxLightRifleIncendiary
+  - MagazineBoxRifleIncendiary
+  - MagazineBox357Incendiary
+
+- type: technology
+  id: TaipanNonlethalAmmunition
+  name: research-technology-nonlethal-ammunition
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: beanbag
+  discipline: TaipanWeaponry
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - MagazineShotgunBeanbag
+  - BoxShellTranquilizer
+  - BoxBeanbag
+  - WeaponDisabler
+
+- type: technology
+  id: TaipanUraniumMunitions
+  name: research-technology-uranium-munitions
+  icon:
+    sprite: Objects/Materials/Sheets/other.rsi
+    state: uranium
+  discipline: TaipanWeaponry
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - MagazineRifleUranium
+  - MagazinePistolUranium
+  - MagazinePistolSubMachineGunUranium
+  - MagazineLightRifleUranium
+  - SpeedLoaderMagnumUranium
+  - MagazineBoxPistolUranium
+  - MagazineBoxMagnumUranium
+  - MagazineBoxLightRifleUranium
+  - MagazineBoxRifleUranium
+  - BoxShotgunUranium
+
+- type: technology
+  id: TaipanAdvancedRiotControl
+  name: research-technology-advanced-riot-control
+  icon:
+    sprite: Objects/Weapons/Melee/truncheon.rsi
+    state: icon
+  discipline: TaipanWeaponry
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - Truncheon
+  - TelescopicShield
+  - HoloprojectorSecurity
+  - WeaponDisablerSMG
+
+- type: technology
+  id: TaipanExplosiveTechnology
+  name: research-technology-explosive-technology
+  icon:
+    sprite: Objects/Devices/payload.rsi
+    state: payload-explosive-armed
+  discipline: TaipanWeaponry
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - SignallerAdvanced
+  - SignalTrigger
+  - VoiceTrigger
+  - TimerTrigger
+  - FlashPayload
+  - ExplosivePayload
+  - ChemicalPayload
+
+- type: technology
+  id: TaipanSpecialMeans
+  name: research-technology-special-means
+  icon:
+    sprite: Clothing/Back/Backpacks/electropack.rsi
+    state: icon
+  discipline: TaipanWeaponry
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - ClothingBackpackElectropack
+
+- type: technology
+  id: TaipanBasicPistols
+  name: research-technology-basic-pistols
+  icon:
+    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+    state: icon
+  discipline: TaipanWeaponry
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - WeaponPistolViper
+  - WeaponRevolverPython
+
+- type: technology
+  id: TaipanEdgedWeapons
+  name: research-technology-edged-weapons
+  icon:
+    sprite: Clothing/Hands/Gloves/KnuckleDusters/syndicateknuckleduster.rsi
+    state: syndicateknuckleduster
+  discipline: TaipanWeaponry
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - ClothingHandsKnuckleDustersSyndicate
+  - ThrowingKnife
+
+- type: technology
+  id: TaipanCombatGloves
+  name: research-technology-combat-gloves
+  icon:
+    sprite: Clothing/Hands/Gloves/northstar.rsi
+    state: icon
+  discipline: TaipanWeaponry
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - ClothingHandsGlovesNorthStar
+  - ClothingHandsGlovesBoxingRigged
+
+- type: technology
+  id: TaipanBasicRifles
+  name: research-technology-basic-rifles
+  icon:
+    sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
+    state: base
+  discipline: TaipanWeaponry
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - WeaponSniperMosin
+
+# Tier 2
+
+- type: technology
+  id: TaipanBasicShuttleArmament
+  name: research-technology-shuttle-weapon
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Grenade/grenade_cartridge.rsi
+    state: base
+  discipline: TaipanWeaponry
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - PowerCageRechargerCircuitboard
+  - PowerCageSmall
+  - PowerCageMedium
+  - PowerCageHigh
+  - MagazineGrenadeEmpty
+  - GrenadeFlash
+  - GrenadeBlast
+  - GrenadeEMP
+  - ShuttleGunSvalinnMachineGunCircuitboard
+  - ShuttleGunPerforatorCircuitboard
+  - ShuttleGunFriendshipCircuitboard
+  - ShuttleGunDusterCircuitboard
+  technologyPrerequisites:
+  - TaipanSalvageWeapons
+  - TaipanExplosiveTechnology
+
+- type: technology
+  id: TaipanNightVisionTechnology
+  name: research-technology-night-vision-technology
+  icon:
+    sprite: _DeadSpace/Clothing/Eyes/Hud/pnv-synd.rsi
+    state: icon
+  discipline: TaipanWeaponry
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - ClothingEyesPNVAdvSyndicate
+
+- type: technology
+  id: TaipanAdvancedPistols
+  name: research-technology-advanced-pistols
+  icon:
+    sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
+    state: icon
+  discipline: TaipanWeaponry
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - WeaponPistolCobra
+  - WeaponPistolDesertEagle
+  technologyPrerequisites:
+  - TaipanBasicPistols
+
+- type: technology
+  id: TaipanGrenades
+  name: research-technology-grenades
+  icon:
+    sprite: Objects/Weapons/Grenades/shrapnelgrenade.rsi
+    state: icon
+  discipline: TaipanWeaponry
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - GrenadeShrapnel
+  - ExGrenade
+  - GrenadeFlashBang
+  - SmokeGrenade
+  - GrenadeIncendiary
+  - ClusterGrenade
+  - EmpGrenade
+  technologyPrerequisites:
+  - TaipanExplosiveTechnology
+
+- type: technology
+  id: TaipanSniperRifles
+  name: research-technology-sniper-rifles
+  icon:
+    sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
+    state: base
+  discipline: TaipanWeaponry
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - WeaponSniperHristov
+  technologyPrerequisites:
+  - TaipanBasicRifles
+
+- type: technology
+  id: TaipanSMGs
+  name: research-technology-smgs
+  icon:
+    sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
+    state: icon
+  discipline: TaipanWeaponry
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - WeaponSubMachineGunC20r
+  - WeaponSMGTommyGun
+  technologyPrerequisites:
+  - TaipanBasicRifles
+
+- type: technology
+  id: TaipanAssaultRifles
+  name: research-technology-assault-rifles
+  icon:
+    sprite: _ADT/Objects/Weapons/Guns/Rifels/xc67.rsi
+    state: icon
+  discipline: TaipanWeaponry
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - ADTWeaponRifleXC67
+  - WeaponRifleAk
+  technologyPrerequisites:
+  - TaipanBasicRifles
+
+- type: technology
+  id: TaipanShotguns
+  name: research-technology-shotguns
+  icon:
+    sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
+    state: icon
+  discipline: TaipanWeaponry
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - WeaponShotgunBulldog
+
+# Tier 3
+
+- type: technology
+  id: TaipanExperimentalGrenades
+  name: research-technology-experimental-grenades
+  icon:
+    sprite: Objects/Weapons/Grenades/holyhandgrenade.rsi
+    state: icon
+  discipline: TaipanWeaponry
+  tier: 3
+  cost: 30000
+  recipeUnlocks:
+  - HolyHandGrenade
+  - WhiteholeGrenade
+  - SingularityGrenade
+  technologyPrerequisites:
+  - TaipanGrenades
+  - TaipanBasicShuttleArmament
+
+- type: technology
+  id: TaipanHeavyWeapons
+  name: research-technology-heavy-weapons
+  icon:
+    sprite: Objects/Weapons/Guns/LMGs/l6.rsi
+    state: icon
+  discipline: TaipanWeaponry
+  tier: 3
+  cost: 30000
+  recipeUnlocks:
+  - WeaponLightMachineGunL6
+  technologyPrerequisites:
+  - TaipanAssaultRifles
+
+- type: technology
+  id: TaipanGrenadeLaunchers
+  name: research-technology-grenade-launchers
+  icon:
+    sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
+    state: icon
+  discipline: TaipanWeaponry
+  tier: 3
+  cost: 30000
+  recipeUnlocks:
+  - WeaponLauncherChinaLake
+  technologyPrerequisites:
+  - TaipanGrenades
+
+- type: technology
+  id: TaipanSpecialWeapons
+  name: research-technology-special-weapons
+  icon:
+    sprite: _DeadSpace/Objects/Weapons/Guns/Bow/crossbow.rsi
+    state: icon
+  discipline: TaipanWeaponry
+  tier: 3
+  cost: 30000
+  recipeUnlocks:
+  - WeaponEnergyCrossbow

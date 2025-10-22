@@ -44,3 +44,4 @@ lathe-category-command = Командование
 lathe-category-hats = Шляпы
 lathe-category-jumpsuits = Комбинезоны
 lathe-category-neck = Шея
+lathe-category-implants = Импланты

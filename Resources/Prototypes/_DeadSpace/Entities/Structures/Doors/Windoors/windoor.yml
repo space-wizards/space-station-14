@@ -1,0 +1,311 @@
+# Plasma Windoor
+
+- type: entity
+  parent: WindoorPlasma
+  id: PlasmaWindoorTaipanProtectionLocked
+  name: плазменное раздвижное окно
+  description: Это и розовое окно *и* раздвижная дверь. Невероятно!
+  suffix: Тайпан, Охрана, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanProtection ]
+
+- type: entity
+  parent: WindoorPlasma
+  id: PlasmaWindoorTaipanServiceLocked
+  name: плазменное раздвижное окно
+  description: Это и розовое окно *и* раздвижная дверь. Невероятно!
+  suffix: Тайпан, Сервис, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanService ]
+
+- type: entity
+  parent: WindoorPlasma
+  id: PlasmaWindoorTaipanAtmosphericsLocked
+  name: плазменное раздвижное окно
+  description: Это и розовое окно *и* раздвижная дверь. Невероятно!
+  suffix: Тайпан, Атмосферный, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanAtmospherics ]
+
+- type: entity
+  parent: WindoorPlasma
+  id: PlasmaWindoorTaipanCargoLocked
+  name: плазменное раздвижное окно
+  description: Это и розовое окно *и* раздвижная дверь. Невероятно!
+  suffix: Тайпан, Снабжение, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanCargo ]
+
+- type: entity
+  parent: WindoorPlasma
+  id: PlasmaWindoorTaipanCommandLocked
+  name: плазменное раздвижное окно
+  description: Это и розовое окно *и* раздвижная дверь. Невероятно!
+  suffix: Тайпан, Командование, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanCommand ]
+
+- type: entity
+  parent: WindoorPlasma
+  id: PlasmaWindoorTaipanEngineeringLocked
+  name: плазменное раздвижное окно
+  description: Это и розовое окно *и* раздвижная дверь. Невероятно!
+  suffix: Тайпан, Инженерный, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanEngineering ]
+
+- type: entity
+  parent: WindoorPlasma
+  id: PlasmaWindoorTaipanMaintLocked
+  name: плазменное раздвижное окно
+  description: Это и розовое окно *и* раздвижная дверь. Невероятно!
+  suffix: Тайпан, Технический, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanMaintenance ]
+
+- type: entity
+  parent: WindoorPlasma
+  id: PlasmaWindoorTaipanMedicalLocked
+  name: плазменное раздвижное окно
+  description: Это и розовое окно *и* раздвижная дверь. Невероятно!
+  suffix: Тайпан, Медицинский, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanMedical ]
+
+- type: entity
+  parent: WindoorPlasma
+  id: PlasmaWindoorTaipanVirologyLocked
+  name: плазменное раздвижное окно
+  description: Это и розовое окно *и* раздвижная дверь. Невероятно!
+  suffix: Тайпан, Вирусология, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanMedical ]
+
+- type: entity
+  parent: WindoorPlasma
+  id: PlasmaWindoorTaipanScienceLocked
+  name: плазменное раздвижное окно
+  description: Это и розовое окно *и* раздвижная дверь. Невероятно!
+  suffix: Тайпан, Научный, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanResearch]
+
+- type: entity
+  parent: WindoorPlasma
+  id: PlasmaWindoorTaipanTechnicalOperationsSupervisorLocked
+  name: плазменное раздвижное окно
+  description: Это и розовое окно *и* раздвижная дверь. Невероятно!
+  suffix: Тайпан, Руководитель техобеспечения, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanTechnicalOperationsSupervisor ]
+
+- type: entity
+  parent: WindoorPlasma
+  id: PlasmaWindoorTaipanResearchDirectorLocked
+  name: плазменное раздвижное окно
+  description: Это и розовое окно *и* раздвижная дверь. Невероятно!
+  suffix: Тайпан, Директор исследований, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanResearchDirector ]
+
+- type: entity
+  parent: WindoorPlasma
+  id: PlasmaWindoorTaipanCommunicationsOfficerLocked
+  name: плазменное раздвижное окно
+  description: Это и розовое окно *и* раздвижная дверь. Невероятно!
+  suffix: Тайпан, Офицер телекоммуникаций, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanCommunicationsOfficer ]
+
+- type: entity
+  parent: WindoorPlasma
+  id: PlasmaWindoorTaipanExternalLocked
+  name: плазменное раздвижное окно
+  description: Это и розовое окно *и* раздвижная дверь. Невероятно!
+  suffix: Тайпан, Внешний, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanExternal ]
+
+# Secure Plasma Windoor
+
+- type: entity
+  parent: WindoorSecurePlasma
+  id: PlasmaWindoorSecureTaipanProtectionLocked
+  name: плазменное раздвижное бронеокно
+  description: Это и прочное розовое окно *и* раздвижная дверь. Впечатляюще!
+  suffix: Тайпан, Охрана, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanProtection ]
+
+- type: entity
+  parent: WindoorSecurePlasma
+  id: PlasmaWindoorSecureTaipanServiceLocked
+  name: плазменное раздвижное бронеокно
+  description: Это и прочное розовое окно *и* раздвижная дверь. Впечатляюще!
+  suffix: Тайпан, Сервис, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanService ]
+
+- type: entity
+  parent: WindoorSecurePlasma
+  id: PlasmaWindoorSecureTaipanAtmosphericsLocked
+  name: плазменное раздвижное бронеокно
+  description: Это и прочное розовое окно *и* раздвижная дверь. Впечатляюще!
+  suffix: Тайпан, Атмосферный, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanAtmospherics ]
+
+- type: entity
+  parent: WindoorSecurePlasma
+  id: PlasmaWindoorSecureTaipanCargoLocked
+  name: плазменное раздвижное бронеокно
+  description: Это и прочное розовое окно *и* раздвижная дверь. Впечатляюще!
+  suffix: Тайпан, Снабжение, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanCargo ]
+
+- type: entity
+  parent: WindoorSecurePlasma
+  id: PlasmaWindoorSecureTaipanCommandLocked
+  name: плазменное раздвижное бронеокно
+  description: Это и прочное розовое окно *и* раздвижная дверь. Впечатляюще!
+  suffix: Тайпан, Командование, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanCommand ]
+
+- type: entity
+  parent: WindoorSecurePlasma
+  id: PlasmaWindoorSecureTaipanEngineeringLocked
+  name: плазменное раздвижное бронеокно
+  description: Это и прочное розовое окно *и* раздвижная дверь. Впечатляюще!
+  suffix: Тайпан, Инженерный, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanEngineering ]
+
+- type: entity
+  parent: WindoorSecurePlasma
+  id: PlasmaWindoorSecureTaipanMaintLocked
+  name: плазменное раздвижное бронеокно
+  description: Это и прочное розовое окно *и* раздвижная дверь. Впечатляюще!
+  suffix: Тайпан, Технический, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanMaintenance ]
+
+- type: entity
+  parent: WindoorSecurePlasma
+  id: PlasmaWindoorSecureTaipanMedicalLocked
+  name: плазменное раздвижное бронеокно
+  description: Это и прочное розовое окно *и* раздвижная дверь. Впечатляюще!
+  suffix: Тайпан, Медицинский, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanMedical ]
+
+- type: entity
+  parent: WindoorSecurePlasma
+  id: PlasmaWindoorSecureTaipanVirologyLocked
+  name: плазменное раздвижное бронеокно
+  description: Это и прочное розовое окно *и* раздвижная дверь. Впечатляюще!
+  suffix: Тайпан, Вирусология, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanMedical ]
+
+- type: entity
+  parent: WindoorSecurePlasma
+  id: PlasmaWindoorSecureTaipanScienceLocked
+  name: плазменное раздвижное бронеокно
+  description: Это и прочное розовое окно *и* раздвижная дверь. Впечатляюще!
+  suffix: Тайпан, Научный, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanResearch ]
+
+- type: entity
+  parent: WindoorSecurePlasma
+  id: PlasmaWindoorSecureTaipanTechnicalOperationsSupervisorLocked
+  name: плазменное раздвижное бронеокно
+  description: Это и прочное розовое окно *и* раздвижная дверь. Впечатляюще!
+  suffix: Тайпан, Руководитель техобеспечения, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanTechnicalOperationsSupervisor ]
+
+- type: entity
+  parent: WindoorSecurePlasma
+  id: PlasmaWindoorSecureTaipanResearchDirectorLocked
+  name: плазменное раздвижное бронеокно
+  description: Это и прочное розовое окно *и* раздвижная дверь. Впечатляюще!
+  suffix: Тайпан, Директор исследований, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanResearchDirector ]
+
+- type: entity
+  parent: WindoorSecurePlasma
+  id: PlasmaWindoorSecureTaipanCommunicationsOfficerLocked
+  name: плазменное раздвижное бронеокно
+  description: Это и прочное розовое окно *и* раздвижная дверь. Впечатляюще!
+  suffix: Тайпан, Офицер телекоммуникаций, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanCommunicationsOfficer ]
+
+- type: entity
+  parent: WindoorSecurePlasma
+  id: PlasmaWindoorSecureTaipanExternalLocked
+  name: плазменное раздвижное бронеокно
+  description: Это и прочное розовое окно *и* раздвижная дверь. Впечатляюще!
+  suffix: Тайпан, Внешний, Закрыт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsTaipanExternal ]

@@ -1,4 +1,3 @@
-# Jumpsuit
 
 # RD
 
@@ -91,10 +90,340 @@
   id: ClothingOuterWinterCoatSeniorResearcher
   result: ClothingOuterWinterCoatSeniorResearcher
 
-
 # Hats
 
 - type: latheRecipe
   parent: BaseHatRecipe
   id: ClothingHeadHatBeretRobotics
   result: ClothingHeadHatBeretRobotics
+
+# Taipan
+# Jumpsuit
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitTaipanAtmosphericsEngineer
+  result: ClothingUniformJumpsuitTaipanAtmosphericsEngineer
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitTaipanBotanist
+  result: ClothingUniformJumpsuitTaipanBotanist
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitTaipanChef
+  result: ClothingUniformJumpsuitTaipanChef
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpsuitTaipanTechnicalOperationsSupervisor
+  result: ClothingUniformJumpsuitTaipanTechnicalOperationsSupervisor
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpsuitTaipanCommunicationsOfficer
+  result: ClothingUniformJumpsuitTaipanCommunicationsOfficer
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitTaipanMedic
+  result: ClothingUniformJumpsuitTaipanMedic
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitTaipanParamedic
+  result: ClothingUniformJumpsuitTaipanParamedic
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitTaipanRecruit
+  result: ClothingUniformJumpsuitTaipanRecruit
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpsuitTaipanResearchDirector
+  result: ClothingUniformJumpsuitTaipanResearchDirector
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitTaipanResearcher
+  result: ClothingUniformJumpsuitTaipanResearcher
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitTaipanTechnician
+  result: ClothingUniformJumpsuitTaipanTechnician
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitTaipanCargotech
+  result: ClothingUniformJumpsuitTaipanCargotech
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformOverallsTaipanCargotech
+  result: ClothingUniformOverallsTaipanCargotech
+
+# Jumpskirt
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtTaipanAtmosphericsEngineer
+  result: ClothingUniformJumpskirtTaipanAtmosphericsEngineer
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtTaipanBotanist
+  result: ClothingUniformJumpskirtTaipanBotanist
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtTaipanChef
+  result: ClothingUniformJumpskirtTaipanChef
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpskirtTaipanTechnicalOperationsSupervisor
+  result: ClothingUniformJumpskirtTaipanTechnicalOperationsSupervisor
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpskirtTaipanCommunicationsOfficer
+  result: ClothingUniformJumpskirtTaipanCommunicationsOfficer
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtTaipanMedic
+  result: ClothingUniformJumpskirtTaipanMedic
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtTaipanParamedic
+  result: ClothingUniformJumpskirtTaipanParamedic
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtTaipanRecruit
+  result: ClothingUniformJumpskirtTaipanRecruit
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpskirtTaipanResearchDirector
+  result: ClothingUniformJumpskirtTaipanResearchDirector
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtTaipanResearcher
+  result: ClothingUniformJumpskirtTaipanResearcher
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtTaipanTechnician
+  result: ClothingUniformJumpskirtTaipanTechnician
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtTaipanCargotech
+  result: ClothingUniformJumpskirtTaipanCargotech
+
+# Outer
+- type: latheRecipe
+  parent: BaseCommandCoatRecipe
+  id: ClothingOuterTrenchTaipanCommunicationsOfficer
+  result: ClothingOuterTrenchTaipanCommunicationsOfficer
+
+- type: latheRecipe
+  parent: BaseCommandCoatRecipe
+  id: ClothingOuterCoatTaipanCommunicationsOfficer
+  result: ClothingOuterCoatTaipanCommunicationsOfficer
+
+- type: latheRecipe
+  parent: BaseCoatRecipe
+  id: ClothingOuterTaipanCoatLab
+  result: ClothingOuterTaipanCoatLab
+
+- type: latheRecipe
+  parent: BaseCoatRecipe
+  id: ClothingOuterTaipanCoatLabMed
+  result: ClothingOuterTaipanCoatLabMed
+
+- type: latheRecipe
+  parent: BaseCommandCoatRecipe
+  id: ClothingOuterTaipanCoatLabResearchDirector
+  result: ClothingOuterTaipanCoatLabResearchDirector
+
+- type: latheRecipe
+  parent: BaseCoatRecipe
+  id: ClothingOuterTaipanCoatLabResearcher
+  result: ClothingOuterTaipanCoatLabResearcher
+
+- type: latheRecipe
+  parent: BaseCoatRecipe
+  id: ClothingOuterApronTaipanBotanist
+  result: ClothingOuterApronTaipanBotanist
+
+- type: latheRecipe
+  parent: BaseCoatRecipe
+  id: ClothingOuterApronTaipanChef
+  result: ClothingOuterApronTaipanChef
+
+- type: latheRecipe
+  parent: BaseCoatRecipe
+  id: ClothingOuterJacketTaipanChef
+  result: ClothingOuterJacketTaipanChef
+
+# Backpack
+- type: latheRecipe
+  id: ClothingBackpackSatchelTaipan
+  result: ClothingBackpackSatchelTaipan
+  completetime: 3.5
+  materials:
+    Cloth: 400
+    Durathread: 150
+
+- type: latheRecipe
+  id: ClothingBackpackSyndicate
+  result: ClothingBackpackSyndicate
+  completetime: 4
+  materials:
+    Cloth: 600
+    Durathread: 300
+
+- type: latheRecipe
+  id: ClothingBackpackDuffelSyndicate
+  result: ClothingBackpackDuffelSyndicate
+  completetime: 5
+  materials:
+    Cloth: 800
+    Durathread: 400
+
+# Chameleon
+
+- type: latheRecipe
+  abstract: true
+  id: BaseChameleonClothingRecipe
+  categories:
+  - Special
+  completetime: 4
+  materials:
+    Cloth: 300
+
+# Chameleon Clothing Recipes
+
+- type: latheRecipe
+  parent: BaseChameleonClothingRecipe
+  id: ClothingBackpackChameleon
+  result: ClothingBackpackChameleon
+  materials:
+    Cloth: 600
+    Durathread: 300
+    Gold: 100
+    Silver: 100
+
+- type: latheRecipe
+  parent: BaseChameleonClothingRecipe
+  id: ClothingHeadsetChameleon
+  result: ClothingHeadsetChameleon
+  materials:
+    Cloth: 100
+    Durathread: 50
+    Gold: 50
+    Silver: 50
+
+- type: latheRecipe
+  parent: BaseChameleonClothingRecipe
+  id: ClothingEyesChameleon
+  result: ClothingEyesChameleon
+  materials:
+    Cloth: 150
+    Durathread: 75
+    Gold: 75
+    Silver: 75
+
+- type: latheRecipe
+  parent: BaseChameleonClothingRecipe
+  id: ClothingHandsChameleon
+  result: ClothingHandsChameleon
+  materials:
+    Cloth: 200
+    Durathread: 100
+    Gold: 50
+    Silver: 50
+
+- type: latheRecipe
+  parent: BaseChameleonClothingRecipe
+  id: ClothingHeadHatChameleon
+  result: ClothingHeadHatChameleon
+  materials:
+    Cloth: 250
+    Durathread: 125
+    Gold: 75
+    Silver: 75
+
+- type: latheRecipe
+  parent: BaseChameleonClothingRecipe
+  id: ClothingMaskGasChameleon
+  result: ClothingMaskGasChameleon
+  materials:
+    Cloth: 300
+    Durathread: 150
+    Gold: 50
+    Silver: 100
+
+- type: latheRecipe
+  parent: BaseChameleonClothingRecipe
+  id: ClothingNeckChameleon
+  result: ClothingNeckChameleon
+  materials:
+    Cloth: 200
+    Durathread: 100
+    Gold: 100
+    Silver: 50
+
+- type: latheRecipe
+  parent: BaseChameleonClothingRecipe
+  id: ClothingOuterChameleon
+  result: ClothingOuterChameleon
+  materials:
+    Cloth: 500
+    Durathread: 250
+    Gold: 150
+    Silver: 100
+
+- type: latheRecipe
+  parent: BaseChameleonClothingRecipe
+  id: ClothingShoesChameleon
+  result: ClothingShoesChameleon
+  materials:
+    Cloth: 300
+    Durathread: 150
+    Gold: 75
+    Silver: 75
+
+- type: latheRecipe
+  parent: BaseChameleonClothingRecipe
+  id: ClothingUniformJumpsuitChameleon
+  result: ClothingUniformJumpsuitChameleon
+  materials:
+    Cloth: 400
+    Durathread: 200
+    Gold: 100
+    Silver: 100
+
+# Armor vest
+
+- type: latheRecipe
+  id: ClothingOuterVestWeb
+  result: ClothingOuterVestWeb
+  materials:
+    Cloth: 300
+    Durathread: 200
+    Titanium: 400
+
+- type: latheRecipe
+  id: ClothingOuterVestWebElite
+  result: ClothingOuterVestWebElite
+  materials:
+    Cloth: 300
+    Durathread: 400
+    Titanium: 200

@@ -7,6 +7,7 @@ using Content.Shared.Radio.Components;
 using Content.Shared.Radio.EntitySystems;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Content.Server.DeadSpace.Languages;
 using Content.Shared.Corvax.TTS;
 using Robust.Server.Audio;
 using Robust.Shared.Audio;
@@ -17,7 +18,8 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
 {
     [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
-    [Dependency] private readonly AudioSystem _audio = default!; // DS14
+    [Dependency] private readonly AudioSystem _audio = default!; // DS14-TTS
+    [Dependency] private readonly LanguageSystem _language = default!; // DS14-Languages
 
     public override void Initialize()
     {
@@ -104,13 +106,17 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
     private void OnHeadsetReceive(EntityUid uid, HeadsetComponent component, ref RadioReceiveEvent args)
     {
         // TTS-edit-start
+        var msg = args.ChatMsg;
+        var parent = Transform(uid).ParentUid;
+
+        if (!_language.KnowsLanguage(parent, args.LanguageId))
+            msg = args.LexiconChatMsg;
+
         _audio.PlayPvs(component.RadioReceiveSoundPath, uid, AudioParams.Default.WithVolume(-10f));
 
         // TODO: change this when a code refactor is done
         // this is currently done this way because receiving radio messages on an entity otherwise requires that entity
         // to have an ActiveRadioComponent
-
-        var parent = Transform(uid).ParentUid;
 
         if (parent.IsValid())
         {
@@ -120,7 +126,7 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
 
         if (TryComp(parent, out ActorComponent? actor))
         {
-            _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.Channel);
+            _netMan.ServerSendMessage(msg, actor.PlayerSession.Channel);
             if (parent != args.MessageSource && TryComp(args.MessageSource, out TTSComponent? _))
             {
                 args.Receivers.Add(parent);

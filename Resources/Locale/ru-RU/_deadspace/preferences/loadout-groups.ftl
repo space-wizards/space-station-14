@@ -18,6 +18,7 @@ loadout-group-senior-engineer-head = Ведущий инженер, голова
 loadout-group-senior-engineer-jumpsuit = Ведущий инженер, комбинезон
 loadout-group-senior-engineer-id = Ведущий инженер, ID
 loadout-group-senior-engineer-underwear = Ведущий инженер, нижнее бельё
+loadout-group-senior-engineer-belt = Ведущий инженер, пояс
 # Science
 loadout-group-senior-researcher-head = Ведущий учёный, голова
 loadout-group-senior-researcher-jumpsuit = Ведущий учёный, комбинезон
@@ -55,3 +56,40 @@ loadout-group-coroner-head = Коронер, голова
 loadout-group-coroner-underwear = Коронер, нижнее бельё
 # Centcomm
 loadout-group-centcomm-officer-underwear = Офицер ЦК, нижнее бельё
+# Taipan
+# Atmospherics Engineer
+loadout-group-taipan-atmospherics-engineer-uniform = Атмосферный инженер, комбинезон
+loadout-group-taipan-atmospherics-engineer-underwear = Атмосферный инженер, нижнее бельё
+# Botanist
+loadout-group-taipan-botanist-uniform = Ботаник, комбинезон
+loadout-group-taipan-botanist-underwear = Ботаник, нижнее бельё
+# Cargotech
+loadout-group-taipan-cargotech-uniform = Карготехник, комбинезон
+loadout-group-taipan-cargotech-underwear = Карготехник, нижнее бельё
+# Chef
+loadout-group-taipan-chef-uniform = Повар, комбинезон
+loadout-group-taipan-chef-underwear = Повар, нижнее бельё
+# Communications Officer
+loadout-group-taipan-communications-officer-uniform = Офицер телекоммуникаций, комбинезон
+loadout-group-taipan-communications-officer-underwear = Офицер телекоммуникаций, нижнее бельё
+# Medic
+loadout-group-taipan-medic-uniform = Медик, комбинезон
+loadout-group-taipan-medic-underwear = Медик, нижнее бельё
+# Paramedic
+loadout-group-taipan-paramedic-uniform = Парамедик, комбинезон
+loadout-group-taipan-paramedic-underwear = Парамедик, нижнее бельё
+# Recruit
+loadout-group-taipan-recruit-uniform = Рекрут, комбинезон
+loadout-group-taipan-recruit-underwear = Рекрут, нижнее бельё
+# Researcher
+loadout-group-taipan-researcher-uniform = Исследователь, комбинезон
+loadout-group-taipan-researcher-underwear = Исследователь, нижнее бельё
+# Research Director
+loadout-group-taipan-research-director-uniform = Директор исследований, комбинезон
+loadout-group-taipan-research-director-underwear = Директор исследований, нижнее бельё
+# Technical Supervisor
+loadout-group-taipan-technical-supervisor-uniform = Руководитель техобеспечения, комбинезон
+loadout-group-taipan-technical-supervisor-underwear = Руководитель техобеспечения, нижнее бельё
+# Technician
+loadout-group-taipan-technician-uniform = Ремонтник, комбинезон
+loadout-group-taipan-technician-underwear = Ремонтник, нижнее бельё

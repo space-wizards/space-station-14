@@ -25,6 +25,11 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
     [DataField]
     public Dictionary<ProtoId<CargoAccountPrototype>, List<CargoOrderData>> Orders = new();
 
+    // DS14-start
+    [DataField]
+    public List<CargoOrderData> TaipanOrders = new();
+    // DS14-end
+
     /// <summary>
     /// Used to determine unique order IDs
     /// </summary>
@@ -39,6 +44,7 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
     public List<ProtoId<CargoMarketPrototype>> Markets = new()
     {
         "market",
+        "taipan_market", // DS14
     };
 
     // TODO: Can probably dump this

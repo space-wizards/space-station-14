@@ -1061,6 +1061,15 @@
   - StationEngineerSatchel
   - StationEngineerDuffel
 
+# DS14-start
+- type: loadoutGroup
+  id: StationEngineerBelt
+  name: loadout-group-station-engineer-belt
+  loadouts:
+  - StationEngineerBeltUtility
+  - StationEngineerBeltWebbing
+# DS14-end
+
 - type: loadoutGroup
   id: StationEngineerOuterClothing
   name: loadout-group-station-engineer-outerclothing
@@ -1116,6 +1125,15 @@
   - AtmosphericTechnicianBackpack
   - AtmosphericTechnicianSatchel
   - AtmosphericTechnicianDuffel
+
+# DS14-start
+- type: loadoutGroup
+  id: AtmosphericTechnicianBelt
+  name: loadout-group-atmospheric-technician-belt
+  loadouts:
+  - AtmosphericTechnicianBeltUtility
+  - AtmosphericTechnicianBeltWebbing
+# DS14-end
 
 - type: loadoutGroup
   id: AtmosphericTechnicianShoes

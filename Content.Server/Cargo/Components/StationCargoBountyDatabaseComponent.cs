@@ -11,6 +11,11 @@ namespace Content.Server.Cargo.Components;
 [RegisterComponent]
 public sealed partial class StationCargoBountyDatabaseComponent : Component
 {
+    // DS14-start
+    [DataField]
+    public bool IsTaipan = false;
+    // DS14-end
+
     /// <summary>
     /// Maximum amount of bounties a station can have.
     /// </summary>

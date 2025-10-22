@@ -1,0 +1,42 @@
+- type: job
+  id: TaipanParamedic
+  name: job-name-taipan-paramedic
+  description: job-description-taipan-paramedic
+  playTimeTracker: JobTaipanParamedic
+  setPreference: false
+  overrideConsoleVisibility: true
+  isTaipan: true
+  startingGear: TaipanParamedicGear
+  icon: "JobIconTaipanParamedic"
+  supervisors: job-supervisors-taipan-research-director
+  canBeAntag: false
+  requirements:
+  - !type:RoleTimeRequirement
+    role: JobTaipanMedic
+    time: 36000 # 10 hours
+  access:
+  - TaipanMaint
+  - TaipanExternal
+  - TaipanMedical
+  special:
+  - !type:AddImplantSpecial
+    implants: [ DeathRattleImplantTaipan ]
+
+- type: startingGear
+  id: TaipanParamedicGear
+  equipment:
+    ears: ClothingHeadsetTaipan
+    outerClothing: ClothingOuterTaipanCoatLabMed
+    shoes: ClothingShoesColorWhite
+    id: TaipanParamedicPDA
+    back: ClothingBackpackSyndicate
+    belt: ClothingBeltMedicalEMTFilled
+    socks: ClothingUnderwearSocksTaipanParamedic
+
+- type: chameleonOutfit
+  id: TaipanParamedicChameleonOutfit
+  job: TaipanParamedic
+  startingGear: TaipanParamedicGear
+  equipment:
+    id: PassengerPDA
+    neck: ClothingNeckGoldmedal

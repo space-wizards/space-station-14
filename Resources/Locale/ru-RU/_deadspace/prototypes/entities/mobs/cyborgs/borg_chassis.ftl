@@ -1,0 +1,17 @@
+ent-BorgChassisTaipanSelectable = киборг
+    .desc = Гибрид машины и человека, помогающий в работе станции. Они обожают, когда их снова и снова просят назвать свои законы.
+    .suffix = Тайпан, Выбранный тип
+ent-BorgChassisTaipanGeneric = киборг-универсал
+    .desc = { ent-BorgChassisTaipanSelectable.desc }
+ent-BorgChassisTaipanMining = киборг-шахтёр
+    .desc = { ent-BorgChassisTaipanSelectable.desc }
+ent-BorgChassisTaipanEngineer = киборг-инженер
+    .desc = { ent-BorgChassisTaipanSelectable.desc }
+ent-BorgChassisTaipanJanitor = киборг-уборщик
+    .desc = { ent-BorgChassisTaipanSelectable.desc }
+ent-BorgChassisTaipanMedical = киборг-доктор
+    .desc = { ent-BorgChassisTaipanSelectable.desc }
+ent-BorgChassisTaipanService = киборг-официант
+    .desc = { ent-BorgChassisTaipanSelectable.desc }
+ent-BorgChassisTaipanSecurity = киборг-охранник
+    .desc = { ent-BorgChassisTaipanSelectable.desc }

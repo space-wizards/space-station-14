@@ -31,8 +31,8 @@
     interactSuccessSound:
       path: /Audio/Effects/glass_knock.ogg
   - type: Appearance
-  - type: StaticPrice
-    price: 100
+#  - type: StaticPrice # DS14
+#    price: 100
   - type: BlockWeather
   - type: Fixtures
     fixtures:
@@ -123,6 +123,11 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: RGlass
+# DS14-start
+  - type: Construction
+    graph: PlastitaniumWindow
+    node: plastitaniumWindow
+# DS14-end
 
 - type: entity
   id: PlastitaniumWindowDiagonalBase
@@ -218,3 +223,6 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: RGlass
+  - type: Construction # DS14
+    graph: PlastitaniumWindowDiagonal
+    node: plastitaniumWindowDiagonal

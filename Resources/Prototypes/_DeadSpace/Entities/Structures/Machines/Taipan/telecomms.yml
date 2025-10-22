@@ -1,0 +1,11 @@
+- type: entity
+  parent: TelecomServer
+  id: TelecomServerFilledTaipan
+  name: телекоммуникационный сервер
+  description: Будучи запитанным и оснащённым ключами шифрования, он обеспечивает гарнитурную радиосвязь.
+  suffix: Тайпан
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyTaipan

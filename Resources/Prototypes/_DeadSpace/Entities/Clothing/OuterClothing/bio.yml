@@ -1,0 +1,11 @@
+- type: entity
+  parent: ClothingOuterBioGeneral
+  id: ClothingOuterTaipanBioResearcher
+  name: биозащитный костюм
+  suffix: Тайпан
+  description: Костюм, защищающий от биологического заражения, в расцветке Синдиката.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/OuterClothing/Bio/researcher.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/OuterClothing/Bio/researcher.rsi

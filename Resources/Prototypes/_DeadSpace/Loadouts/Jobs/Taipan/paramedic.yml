@@ -1,0 +1,71 @@
+# Jumpsuit
+- type: loadout
+  id: TaipanParamedicJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUniforms
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitTaipanParamedic
+
+- type: loadout
+  id: TaipanParamedicJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUniforms
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtTaipanParamedic
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersTaipanParamedic
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersTaipanParamedic
+
+- type: loadout
+  id: UnderwearBottomPantiesTaipanParamedic
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesTaipanParamedic
+
+- type: loadout
+  id: UnderwearTopBraTaipanParamedic
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraTaipanParamedic
+
+# Loadout Groups
+- type: loadoutGroup
+  id: TaipanParamedicUniform
+  name: loadout-group-taipan-paramedic-uniform
+  hidden: true
+  minLimit: 1
+  loadouts:
+  - TaipanParamedicJumpsuit
+  - TaipanParamedicJumpskirt
+
+- type: loadoutGroup
+  id: TaipanParamedicUnderwear
+  name: loadout-group-taipan-paramedic-underwear
+  hidden: true
+  minLimit: 2
+  loadouts:
+  - UnderwearBottomBoxersTaipanParamedic
+  - UnderwearBottomPantiesTaipanParamedic
+  - UnderwearTopBraTaipanParamedic
+
+# Role Loadout
+- type: roleLoadout
+  id: JobTaipanParamedic
+  groups:
+  - TaipanParamedicUniform
+  - TaipanParamedicUnderwear
+  - TaipanSurvival
+  - GroupSpeciesBreathTool
+  - GroupTankHarness

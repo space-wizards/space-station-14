@@ -1,0 +1,36 @@
+- type: entity
+  name: селерат
+  parent: [BaseWeaponRevolver]
+  id: WeaponRevolverSelerat
+  description: Трофейный револьвер Синдиката. На ручке имеется гравировка "le scélérat."
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Pistols/selerat.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Objects/Weapons/Guns/Pistols/selerat.rsi
+  - type: Item
+    storedOffset: 0,-2
+  - type: Gun
+    selectedMode: SemiAuto
+    fireRate: 2
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+      params:
+        volume: 2.25
+  - type: RevolverAmmoProvider
+    whitelist:
+      tags:
+        - Cartridge357
+        - SpeedLoader357
+    proto: Cartridge357
+    capacity: 6
+    chambers: [ True, True, True, True, True, True ]
+    ammoSlots: [ null, null, null, null, null, null ]
+    soundEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+  - type: StaticPrice
+    price: 3000

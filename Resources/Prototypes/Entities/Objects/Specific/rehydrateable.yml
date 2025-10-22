@@ -164,6 +164,9 @@
   - type: Rehydratable
     possibleSpawns:
     - MobCarp
+  - type: Tag # DS14
+    tags:
+    - SpaceCarpCube
 
 - type: entity
   parent: RehydratableAnimalCube

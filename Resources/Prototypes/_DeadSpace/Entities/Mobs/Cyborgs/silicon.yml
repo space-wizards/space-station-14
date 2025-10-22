@@ -1,0 +1,147 @@
+# Taipan Selectable Battery
+- type: entity
+  id: PlayerBorgTaipanBattery
+  parent: BorgChassisTaipanSelectable
+  suffix: Тайпан, Батарея
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - PositronicBrain
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+  - type: StartingMindRole
+    mindRole: MindRoleSiliconBrain
+    silent: true
+
+# Taipan Generic Battery
+- type: entity
+  id: PlayerBorgTaipanGenericBattery
+  parent: [BorgChassisTaipanGeneric, BorgChassisGeneric]
+  suffix: Тайпан, Батарея
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+  - type: StartingMindRole
+    mindRole: MindRoleSiliconBrain
+    silent: true
+
+# Taipan Engineer Battery
+- type: entity
+  id: PlayerBorgTaipanEngineerBattery
+  parent: [BorgChassisTaipanEngineer, BorgChassisEngineer]
+  suffix: Тайпан, Батарея
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - PositronicBrain
+      borg_module:
+      - BorgModuleTool
+      - BorgModuleConstruction
+      - BorgModuleRCD
+      - BorgModuleCable
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+  - type: StartingMindRole
+    mindRole: MindRoleSiliconBrain
+    silent: true
+
+# Taipan Mining Battery
+- type: entity
+  id: PlayerBorgTaipanMiningBattery
+  parent: [BorgChassisTaipanMining, BorgChassisMining]
+  suffix: Тайпан, Батарея
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHyper
+  - type: StartingMindRole
+    mindRole: MindRoleSiliconBrain
+    silent: true
+
+# Taipan Janitor Battery
+- type: entity
+  id: PlayerBorgTaipanJanitorBattery
+  parent: [BorgChassisTaipanJanitor, BorgChassisJanitor]
+  suffix: Тайпан, Батарея
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+  - type: StartingMindRole
+    mindRole: MindRoleSiliconBrain
+    silent: true
+
+# Taipan Medical Battery
+- type: entity
+  id: PlayerBorgTaipanMedicalBattery
+  parent: [BorgChassisTaipanMedical, BorgChassisMedical]
+  suffix: Тайпан, Батарея
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+  - type: StartingMindRole
+    mindRole: MindRoleSiliconBrain
+    silent: true
+
+# Taipan Service Battery
+- type: entity
+  id: PlayerBorgTaipanServiceBattery
+  parent: [BorgChassisTaipanService, BorgChassisService]
+  suffix: Тайпан, Батарея
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - PositronicBrain
+      borg_module:
+      - BorgModuleMusique
+      - BorgModuleService
+      - BorgModuleClowning
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+  - type: StartingMindRole
+    mindRole: MindRoleSiliconBrain
+    silent: true
+
+# Taipan Security Battery
+- type: entity
+  id: PlayerBorgTaipanSecurityBattery
+  parent: BorgChassisTaipanSecurity
+  suffix: Тайпан, Батарея
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - PositronicBrain
+      borg_module:
+      - BorgModuleEsword
+      - BorgModuleC20r
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHyper
+  - type: StartingMindRole
+    mindRole: MindRoleSiliconBrain
+    silent: true

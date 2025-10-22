@@ -137,3 +137,6 @@
       path: /Audio/_DeadSpace/Weapons/Guns/Gunshots/deserteagle.ogg
       params:
         volume: 2
+  - type: Tag
+    tags:
+    - PistolDesertEagle

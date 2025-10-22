@@ -14,3 +14,20 @@
   - Necromorfs # DS14
   - SpiderTerror # DS14
   - Blob # DS14
+
+- type: npcFaction
+  id: Taipan
+  hostile:
+  - NanoTrasen
+  - Syndicate # Because we don't need to be able to see them
+  - SimpleHostile
+  - Xeno
+  - PetsNT
+  - Zombie
+  - Revolutionary # Because we don't need to be able to see them
+  - AllHostile
+  - Wizard
+  - Necromorfs
+  - SpiderTerror
+  - Blob
+  - SyndicateAgent # Because we don't need to be able to see them

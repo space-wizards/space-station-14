@@ -1,0 +1,151 @@
+- type: constructionGraph
+  id: TitaniumGirder
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: titaniumGirder
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: Titanium
+        amount: 2
+        doAfter: 2
+
+  - node: titaniumGirder
+    entity: TitaniumGirder
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetTitanium1
+        amount: 2
+      - !type:DeleteEntity {}  # ЕДИНСТВЕННЫЙ DeleteEntity для базового каркаса
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      steps:
+      - tool: Screwing
+        doAfter: 4
+
+    - to: plastitaniumGirder
+      completed:
+      - !type:SnapToGrid
+        southRotation: false
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - material: Plastitanium
+        amount: 2
+        doAfter: 2
+
+  - node: plastitaniumGirder
+    entity: PlastitaniumGirder
+    edges:
+    - to: titaniumGirder  # Возврат к титановому каркасу
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetPlastitanium1
+        amount: 2
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      steps:
+      - tool: Screwing
+        doAfter: 4
+
+    - to: plastitaniumWall
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - material: Titanium
+        amount: 4
+        doAfter: 1
+      - tool: Screwing
+        doAfter: 2
+      - material: Plastitanium
+        amount: 2
+        doAfter: 1
+
+    - to: diagonalplastitaniumWall
+      completed:
+      - !type:SnapToGrid
+        southRotation: false
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - material: MetalRod
+        amount: 4
+        doAfter: 1
+      - tool: Welding
+        doAfter: 4
+      - material: Plastitanium
+        amount: 2
+        doAfter: 1
+
+  - node: plastitaniumWall
+    entity: WallPlastitanium
+    edges:
+    - to: plastitaniumGirder  # Возврат к пластитановому каркасу
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetPlastitanium1
+        amount: 2
+      steps:
+      - tool: Welding
+        doAfter: 5
+      - tool: Cutting
+        doAfter: 1
+      - tool: Screwing
+        doAfter: 1
+      - tool: Welding
+        doAfter: 5
+      - tool: Prying
+        doAfter: 1
+      - tool: Anchoring
+        doAfter: 1
+      - tool: Welding
+        doAfter: 10
+      - tool: Prying
+        doAfter: 1
+      - tool: Screwing
+        doAfter: 1
+      - tool: Cutting
+        doAfter: 1
+
+  - node: diagonalplastitaniumWall
+    entity: WallPlastitaniumDiagonal
+    edges:
+    - to: plastitaniumGirder  # Возврат к пластитановому каркасу
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetPlastitanium1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: PartRodMetal1
+        amount: 4
+      steps:
+      - tool: Welding
+        doAfter: 5
+      - tool: Cutting
+        doAfter: 1
+      - tool: Screwing
+        doAfter: 1
+      - tool: Welding
+        doAfter: 5
+      - tool: Prying
+        doAfter: 1
+      - tool: Anchoring
+        doAfter: 1
+      - tool: Welding
+        doAfter: 10
+      - tool: Prying
+        doAfter: 1
+      - tool: Screwing
+        doAfter: 1
+      - tool: Cutting
+        doAfter: 1

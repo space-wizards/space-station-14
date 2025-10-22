@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from /vg/station at commit 5c50dee8fb2a55d6be3b3c9c90a782a618a5506e Cut out for unshaded by metalgearsloth",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "beam",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "idle",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "offline"
+    },
+    {
+      "name": "display"
+    }
+  ]
+}

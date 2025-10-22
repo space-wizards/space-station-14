@@ -175,6 +175,13 @@
           sprite: Mobs/Species/Vox/displacement.rsi
           state: hand_r
   - type: Sanity # DS14
+  # DS14-Languages-start
+  - type: Language
+    selectedLanguage: GeneralLanguage
+    knownLanguages:
+    - GeneralLanguage
+    - VoxLanguage
+  # DS14-Languages-end
   # - type: FootPrints # Backmen-footsteps
     # leftBarePrint: "footprint-left-bare-lizard"
     # rightBarePrint: "footprint-right-bare-lizard"

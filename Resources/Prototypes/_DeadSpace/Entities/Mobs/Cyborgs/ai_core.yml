@@ -1,0 +1,299 @@
+# AI Core
+- type: entity
+  id: AiHeldTaipan
+  parent: AiHeld
+  description: Компоненты добавляются/удаляются из сущности, которая помещается в ядро ИИ.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+    - Taipan
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Taipan
+  - type: SiliconLawProvider
+    laws: TaipanStatic
+  - type: RandomMetadata
+    nameSegments:
+    - NamesAI
+  - type: UserInterface
+    interfaces:
+      enum.RadarConsoleUiKey.Key:
+        type: RadarConsoleBoundUserInterface
+      enum.CrewMonitoringUIKey.Key:
+        type: CrewMonitoringBoundUserInterface
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+      enum.CommunicationsConsoleUiKey.Key:
+        type: CommunicationsConsoleBoundUserInterface
+      enum.AICameraListUiKey.Key:
+        type: AICameraListBoundUserInterface
+  - type: IntrinsicUI
+    uis:
+      enum.RadarConsoleUiKey.Key:
+        toggleAction: AIActionAGhostShowRadar
+      enum.CrewMonitoringUIKey.Key:
+        toggleAction: AIActionAGhostShowCrewMonitoring
+      enum.CommunicationsConsoleUiKey.Key:
+        toggleAction: AIActionAGhostShowCommunications
+  - type: CommunicationsConsole
+#    canCallShuttle: false
+#    canCallERT: false
+    title: comms-console-announcement-title-station-ai
+    color: "#fc7777"
+  - type: HolographicAvatar
+    layerData:
+    - sprite: _DeadSpace/Mobs/Silicon/station_ai.rsi
+      state: default
+  - type: ShowJobIcons
+  - type: ShowSyndicateIcons
+  - type: AiEye
+  - type: TTS
+    voice: Glados
+  - type: MindContainer
+  - type: GhostRole
+    allowMovement: false
+    name: job-name-station-ai
+    description: job-description-station-ai
+    rules: ghost-role-information-taipan-personal-rules
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Silicon
+      time: 72000 # 20 hours
+    - !type:DepartmentTimeRequirement
+      department: Taipan
+      time: 72000 # 20 hours
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  id: AiHeldTaipanIntellicard
+  parent: AiHeldIntellicard
+  description: Компоненты добавляются/удаляются из сущности, которая помещается в интелкарту.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+    - Taipan
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Taipan
+  - type: ShowJobIcons
+  - type: ShowSyndicateIcons
+
+- type: entity
+  id: IntellicardTaipan
+  name: интелкарта Синдиката
+  description: Устройство для хранения ИИ.
+  parent: Intellicard
+  suffix: Тайпан, Пустой
+  components:
+  - type: ContainerComp
+    proto: AiHeldTaipanIntellicard
+    container: station_ai_mind_slot
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Devices/ai_card.rsi
+    layers:
+    - state: base
+    - state: full
+      map: ["unshaded"]
+      shader: unshaded
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.StationAiVisualState.Key:
+        unshaded:
+          Empty: { state: empty }
+          Occupied: { state: full }
+  - type: Intellicard
+
+- type: entity
+  parent: PlayerStationAiPreview
+  id: PlayerTaipanAiPreview
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Mobs/Silicon/station_ai.rsi
+    layers:
+    - state: base
+    - state: ai
+      shader: unshaded
+
+- type: entity
+  id: PlayerTaipanAiEmpty
+  name: ядро ИИ Синдиката
+  description: Последние достижения в области искусственного интеллекта.
+  parent:
+  - BaseStructure
+  - AiHolder
+  suffix: Тайпан, Пустой
+  components:
+  - type: Anchorable
+    flags:
+    - Anchorable
+  - type: Rotatable
+  - type: WarpPoint
+    blacklist:
+      tags:
+      - GhostOnlyWarp
+  - type: ContainerComp
+    proto: AiHeldTaipan
+    container: station_ai_mind_slot
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: ApcPowerReceiver
+    powerLoad: 1000
+    needsPower: false
+  - type: StationAiCore
+    spawnedBrainProto: TaipanAiBrain
+    remoteEntityProto: TaipanAiHolo
+    physicalEntityProto: TaipanAiHoloLocal
+  - type: StationAiVision
+  - type: StationAiWhitelist
+  - type: Appearance
+  - type: InteractionOutline
+  - type: Sprite
+    snapCardinals: true
+    sprite: _DeadSpace/Mobs/Silicon/station_ai.rsi
+    layers:
+    - state: base
+    - state: ai_empty
+      shader: unshaded
+    - state: ai
+      map: ["enum.StationAiVisualState.Key"]
+      shader: unshaded
+      visible: false
+  - type: Telephone
+    compatibleRanges:
+    - Grid
+    - Map
+    - Unlimited
+    listeningRange: 0
+    speakerVolume: Speak
+    unlistedNumber: true
+  - type: Holopad
+  - type: UserInterface
+    interfaces:
+      enum.HolopadUiKey.AiRequestWindow:
+        type: HolopadBoundUserInterface
+      enum.HolopadUiKey.AiActionWindow:
+        type: HolopadBoundUserInterface
+  - type: InteractionPopup
+    interactSuccessString: petting-success-station-ai
+    interactFailureString: petting-failure-station-ai
+    messagePerceivedByOthers: petting-success-station-ai-others
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+
+- type: entity
+  id: PlayerTaipanAi
+  parent: PlayerTaipanAiEmpty
+  name: ядро ИИ Синдиката
+  description: Последние достижения в области искусственного интеллекта.
+  suffix: Тайпан, Спавн должности
+  components:
+  - type: ContainerFill
+    containers:
+      station_ai_mind_slot:
+      - TaipanAiBrain
+
+# The actual brain inside the core
+- type: entity
+  id: TaipanAiBrain
+  parent: PositronicBrain
+  categories: [ HideSpawnMenu, DoNotMap ]
+  components:
+  - type: Sprite
+    # Once it's in a core it's pretty much an abstract entity at that point.
+    visible: false
+  - type: BlockMovement
+    blockInteraction: false
+  - type: SiliconLawBound
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
+  - type: UserInterface
+    interfaces:
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+        requireInputValidation: false
+  - type: ComplexInteraction
+  - type: Actions
+  - type: Eye
+    drawFov: false
+  - type: Examiner
+  - type: InputMover
+  - type: Tag
+    tags:
+    - HideContextMenu
+    - StationAi
+    - NoConsoleSound
+  - type: SiliconLawProvider
+    laws: TaipanStatic
+  - type: Access
+    groups:
+    - AllAccess
+    - TaipanAccess
+    - Silicon
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: SyndieBorg
+    allowedEmotes:
+    - Laugh
+  - type: StartingMindRole
+    mindRole: "MindRoleSiliconBrain"
+    silent: true
+  - type: StationAiCustomization
+    protoIds:
+      StationAiCoreIconography: TaipanAiIconAi
+      StationAiHolograms: TaipanAiHologramFemale
+  - type: HolographicAvatar
+    layerData:
+    - sprite: _DeadSpace/Mobs/Silicon/station_ai.rsi
+      state: default
+  - type: NameIdentifier
+    group: StationAi
+
+- type: entity
+  parent: StationAiHolo
+  id: TaipanAiHolo
+  name: око ИИ Синдиката
+  description: Обозреватель ИИ.
+  categories: [ HideSpawnMenu, DoNotMap ]
+  components:
+  - type: WarpPoint
+    follow: true
+  - type: Sprite
+    sprite: _DeadSpace/Mobs/Silicon/station_ai.rsi
+    layers:
+    - state: ai_camera
+      shader: unshaded
+      map: ["base"]
+
+# The holographic representation of the AI that is projected from a holopad.
+- type: entity
+  id: TaipanAiHoloLocal
+  parent: StationAiHoloLocal
+  name: ИИ голограмма
+  description: Голографическая проекция ИИ.
+  categories: [ HideSpawnMenu, DoNotMap ]
+  components:
+  - type: WarpPoint
+    follow: true
+    blacklist:
+      tags:
+      - GhostOnlyWarp

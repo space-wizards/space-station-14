@@ -1,0 +1,29 @@
+- type: cargoProduct
+  id: TaipanCargoOreBox
+  icon:
+    sprite:  /Textures/Structures/Storage/orebox.rsi
+    state: orebox
+  product: OreBox
+  cost: 500
+  category: cargoproduct-category-name-cargo
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCargoParcelWrap
+  icon:
+    sprite: Objects/Misc/ParcelWrap/parcel_wrap.rsi
+    state: brown
+  product: CrateCargoParcelWrap
+  cost: 750
+  category: cargoproduct-category-name-cargo
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanCargoCrusherDagger
+  icon:
+    sprite: Objects/Weapons/Melee/crusher_dagger.rsi
+    state: icon
+  product: CrateCrusherDagger
+  cost: 2500
+  category: cargoproduct-category-name-cargo
+  group: taipan_market

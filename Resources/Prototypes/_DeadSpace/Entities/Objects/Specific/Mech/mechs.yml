@@ -1,0 +1,50 @@
+- type: entity
+  id: MechTaipanRipley
+  parent: BaseMech
+  name: кроваво-красный Рипли
+  description: Слабо бронированный мех в фирменной расцветке Синдиката, созданный на основе Рипли MKII. Предназначен для тяжёлой физической работы.
+  suffix: Тайпан
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    noRot: true
+    sprite: _DeadSpace/Objects/Specific/Mech/mecha.rsi
+    layers:
+    - map: [ "enum.MechVisualLayers.Base" ]
+      state: bloodredripley
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
+  - type: Mech
+    baseState: bloodredripley
+    openState: bloodredripley-open
+    brokenState: bloodredripley-broken
+    mechToPilotDamageMultiplier: 0.75
+    pilotWhitelist:
+      components:
+      - HumanoidAppearance
+    equipmentWhitelist:
+      tags:
+      - DeathRipleyEquipment
+  - type: MeleeWeapon
+    hidden: true
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 28
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.25
+    baseSprintSpeed: 3.6
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: StrongMetallic
+
+- type: entity
+  id: MechTaipanRipleyBattery
+  parent: MechTaipanRipley
+  suffix: Тайпан, Батарея
+  components:
+  - type: ContainerFill
+    containers:
+      mech-battery-slot:
+      - PowerCellHigh

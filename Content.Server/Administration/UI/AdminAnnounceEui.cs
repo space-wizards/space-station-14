@@ -52,12 +52,12 @@ namespace Content.Server.Administration.UI
                         case AdminAnnounceType.Station:
                             if (doAnnounce.EnableTTS && !doAnnounce.CustomTTS)
                                 _chatSystem.DispatchGlobalAnnouncement(doAnnounce.Announcement, doAnnounce.Announcer, colorOverride: Color.Gold,
-                                    originalMessage: doAnnounce.Announcement, usePresetTTS: true);
+                                    originalMessage: doAnnounce.Announcement, usePresetTTS: true, languageId: doAnnounce.LanguageId); // DS14-Languages
                             else if (doAnnounce.EnableTTS)
                                 _chatSystem.DispatchGlobalAnnouncement(doAnnounce.Announcement, doAnnounce.Announcer, colorOverride: Color.Gold,
-                                    originalMessage: doAnnounce.Announcement, voice: doAnnounce.Voice);
+                                    originalMessage: doAnnounce.Announcement, voice: doAnnounce.Voice, languageId: doAnnounce.LanguageId); // DS14-Languages
                             else
-                                _chatSystem.DispatchGlobalAnnouncement(doAnnounce.Announcement, doAnnounce.Announcer, colorOverride: Color.Gold);
+                                _chatSystem.DispatchGlobalAnnouncement(doAnnounce.Announcement, doAnnounce.Announcer, colorOverride: Color.Gold, languageId: doAnnounce.LanguageId); // DS14-Languages
                             break;
                     }
 

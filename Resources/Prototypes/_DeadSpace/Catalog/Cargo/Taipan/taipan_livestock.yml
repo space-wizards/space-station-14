@@ -1,0 +1,249 @@
+- type: cargoProduct
+  id: TaipanLivestockBee
+  icon:
+    sprite: Mobs/Animals/bee.rsi
+    state: 0
+  product: CrateNPCBee
+  cost: 7000
+  category: cargoproduct-category-name-livestock
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanLivestockButterfly
+  icon:
+    sprite: Mobs/Animals/butterfly.rsi
+    state: butterfly
+  product: CrateNPCButterflies
+  cost: 4400
+  category: cargoproduct-category-name-livestock
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanLivestockCat
+  icon:
+    sprite: Mobs/Pets/cat.rsi
+    state: cat
+  product: CrateNPCCat
+  cost: 1200
+  category: cargoproduct-category-name-livestock
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanLivestockChicken
+  icon:
+    sprite: Mobs/Animals/chicken.rsi
+    state: icon-1
+  product: CrateNPCChicken
+  cost: 4000
+  category: cargoproduct-category-name-livestock
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanLivestockCrab
+  icon:
+    sprite: Mobs/Animals/crab.rsi
+    state: crab
+  product: CrateNPCCrab
+  cost: 3000
+  category: cargoproduct-category-name-livestock
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanLivestockDuck
+  icon:
+    sprite: Mobs/Animals/duck.rsi
+    state: icon-0
+  product: CrateNPCDuck
+  cost: 4000
+  category: cargoproduct-category-name-livestock
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanLivestockCorgi
+  icon:
+    sprite: Mobs/Pets/corgi.rsi
+    state: corgi
+  product: CrateNPCCorgi
+  cost: 1200
+  category: cargoproduct-category-name-livestock
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanLivestockPupCorgi
+  icon:
+    sprite: Mobs/Pets/corgi.rsi
+    state: puppy
+  product: CrateNPCPuppyCorgi
+  cost: 1200
+  category: cargoproduct-category-name-livestock
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanLivestockCow
+  icon:
+    sprite: Mobs/Animals/cow.rsi
+    state: cow
+  product: CrateNPCCow
+  cost: 3200
+  category: cargoproduct-category-name-livestock
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanLivestockGoat
+  icon:
+    sprite: Mobs/Animals/goat.rsi
+    state: goat
+  product: CrateNPCGoat
+  cost: 1200
+  category: cargoproduct-category-name-livestock
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanLivestockGoose
+  icon:
+    sprite: Mobs/Animals/goose.rsi
+    state: goose
+  product: CrateNPCGoose
+  cost: 2100
+  category: cargoproduct-category-name-livestock
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanLivestockGorilla
+  icon:
+    sprite: Mobs/Animals/gorilla.rsi
+    state: icon
+  product: CrateNPCGorilla
+  cost: 1100
+  category: cargoproduct-category-name-livestock
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanLivestockMonkeyCube
+  icon:
+    sprite: Objects/Misc/monkeycube.rsi
+    state: box
+  product: CrateNPCMonkeyCube
+  cost: 2000
+  category: cargoproduct-category-name-livestock
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanLivestockKoboldCube
+  icon:
+    sprite: Objects/Misc/monkeycube.rsi
+    state: box_kobold
+  product: CrateNPCKoboldCube
+  cost: 2000
+  category: cargoproduct-category-name-livestock
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanLivestockMouse
+  icon:
+    sprite: Mobs/Animals/mouse.rsi
+    state: icon-0
+  product: CrateNPCMouse
+  cost: 4400
+  category: cargoproduct-category-name-livestock
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanLivestockParrot
+  icon:
+    sprite: Mobs/Animals/parrot/parrot.rsi
+    state: parrot
+  product: CrateNPCParrot
+  cost: 3000
+  category: cargoproduct-category-name-livestock
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanLivestockPenguin
+  icon:
+    sprite: Mobs/Animals/penguin.rsi
+    state: penguin
+  product: CrateNPCPenguin
+  cost: 2100
+  category: cargoproduct-category-name-livestock
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanLivestockPig
+  icon:
+    sprite: Mobs/Animals/pig.rsi
+    state: pig
+  product: CrateNPCPig
+  cost: 1100
+  category: cargoproduct-category-name-livestock
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanLivestockSnake
+  icon:
+    sprite: Mobs/Animals/snake.rsi
+    state: snake
+  product: CrateNPCSnake
+  cost: 3000
+  category: cargoproduct-category-name-livestock
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanLivestockHamster
+  icon:
+    sprite: Mobs/Animals/hamster.rsi
+    state: icon-0
+  product: CrateNPCHamster
+  cost: 2800
+  category: cargoproduct-category-name-livestock
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanLivestockLizard
+  icon:
+    sprite: Mobs/Animals/lizard.rsi
+    state: lizard
+  product: CrateNPCLizard
+  cost: 1100
+  category: cargoproduct-category-name-livestock
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanLivestockKangaroo
+  icon:
+    sprite: Mobs/Animals/kangaroo.rsi
+    state: kangaroo
+  product: CrateNPCKangaroo
+  cost: 2800
+  category: cargoproduct-category-name-livestock
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanLivestockMothroach
+  icon:
+    sprite: Mobs/Animals/mothroach/mothroach.rsi
+    state: mothroach
+  product: CrateNPCMothroach
+  cost: 5000
+  category: cargoproduct-category-name-livestock
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanHydratedScurret
+  icon:
+    sprite: Structures/Wallmounts/posters.rsi
+    state: poster55_legit
+  product: CrateFunScurret
+  cost: 25000
+  category: cargoproduct-category-name-livestock
+  group: taipan_market
+
+- type: cargoProduct
+  id: TaipanLivestockGiantSpiderSpace
+  icon:
+    sprite: Mobs/Animals/spacespider.rsi
+    state: spacespider
+  product: CrateNPCGiantSpiderSpace
+  cost: 4000
+  category: cargoproduct-category-name-livestock
+  group: taipan_market

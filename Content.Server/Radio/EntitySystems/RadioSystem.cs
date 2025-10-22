@@ -18,6 +18,8 @@ using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Access.Components;
 using System.Text.RegularExpressions;
+using Content.Shared.DeadSpace.Languages.Components;
+using Content.Server.DeadSpace.Languages;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -33,12 +35,15 @@ public sealed class RadioSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly LanguageSystem _language = default!; // DS14-Languages
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
 
     private EntityQuery<TelecomExemptComponent> _exemptQuery;
 
+    // DS14-start
+    // Fix this
     private readonly Dictionary<string, string[]> _departments = new Dictionary<string, string[]>
     {
         { "fcdf03", ["командование", "кэп", "капитан", "глава персонала"] },
@@ -53,6 +58,7 @@ public sealed class RadioSystem : EntitySystem
         { "fb77f3", ["клуня", "клоун"] },
         { "d0d0d0", ["мим"] }
     };
+    // DS14-end
 
     public override void Initialize()
     {
@@ -74,8 +80,16 @@ public sealed class RadioSystem : EntitySystem
 
     private void OnIntrinsicReceive(EntityUid uid, IntrinsicRadioReceiverComponent component, ref RadioReceiveEvent args)
     {
+        // DS14-Languages-start
+        var msg = args.ChatMsg;
+
+        if (!_language.KnowsLanguage(uid, args.LanguageId))
+            msg = args.LexiconChatMsg;
+
+        // DS14-Languages-end
+
         if (TryComp(uid, out ActorComponent? actor))
-            _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.Channel);
+            _netMan.ServerSendMessage(msg, actor.PlayerSession.Channel); // DS14-edit
     }
 
     /// <summary>
@@ -158,7 +172,46 @@ public sealed class RadioSystem : EntitySystem
             NetEntity.Invalid,
             null);
         var chatMsg = new MsgChatMessage { Message = chat };
-        var ev = new RadioReceiveEvent(message, messageSource, channel, radioSource, chatMsg, []); // DS14
+
+        // DS14-Languages-start
+        var lexiconMessage = message;
+        var chatMsgLexicon = chatMsg;
+
+        if (TryComp<LanguageComponent>(messageSource, out var language))
+        {
+            lexiconMessage = _language.ReplaceWordsWithLexicon(message, language.SelectedLanguage);
+
+            var lexiconContent = escapeMarkup
+            ? FormattedMessage.EscapeText(lexiconMessage)
+            : lexiconMessage;
+
+            lexiconContent = Highlight(lexiconContent);
+
+            var wrappedLexiconMessage = Loc.GetString(speech.Bold ? "chat-radio-message-wrap-bold" : "chat-radio-message-wrap",
+            ("channel-color", channel.Color),
+            ("fontType", speech.FontId),
+            ("fontSize", speech.FontSize),
+            ("verb", Loc.GetString(_random.Pick(speech.SpeechVerbStrings))),
+            ("channel", $"\\[{channel.LocalizedName}\\]"),
+            ("name", name),
+            ("message", lexiconContent),
+            ("headset-color", headsetColor),
+            ("job", job));
+
+            var chatLexicon = new ChatMessage(
+                ChatChannel.Radio,
+                lexiconMessage,
+                wrappedLexiconMessage,
+                NetEntity.Invalid,
+                null);
+
+            chatMsgLexicon = new MsgChatMessage { Message = chatLexicon };
+        }
+
+        var languageId = language?.SelectedLanguage ?? LanguageSystem.DefaultLanguageId;
+
+        var ev = new RadioReceiveEvent(message, languageId, messageSource, channel, radioSource, chatMsg, chatMsgLexicon, []); // DS14
+        // DS14-Languages-end
 
         var sendAttemptEv = new RadioSendAttemptEvent(channel, radioSource);
         RaiseLocalEvent(ref sendAttemptEv);
@@ -198,7 +251,9 @@ public sealed class RadioSystem : EntitySystem
             RaiseLocalEvent(receiver, ref ev);
         }
 
-        RaiseLocalEvent(new RadioSpokeEvent(messageSource, message, ev.Receivers.ToArray())); // DS14
+        var selectedLanguage = language != null ? language.SelectedLanguage.Id : string.Empty; // DS14-Languages
+
+        RaiseLocalEvent(new RadioSpokeEvent(messageSource, message, lexiconMessage, selectedLanguage, ev.Receivers.ToArray())); // DS14
 
         if (name != Name(messageSource))
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(messageSource):user} as {name} on {channel.LocalizedName}: {message}");

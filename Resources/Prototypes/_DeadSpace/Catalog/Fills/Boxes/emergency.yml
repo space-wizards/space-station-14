@@ -1,0 +1,71 @@
+- type: entity
+  parent: BoxSurvival
+  id: BoxSurvivalTaipan
+  name: аварийный запас
+  description: Коробка с базовым набором для выживания.
+  suffix: Тайпан, Стандартный
+  components:
+  - type: Sprite
+    layers:
+    - state: box_of_doom
+    - state: emergencytank
+
+- type: entity
+  parent: BoxSurvivalNitrogen
+  id: BoxSurvivalTaipanNitrogen
+  name: аварийный запас
+  description: Коробка с базовым набором для выживания для сотрудников дышащих азотом.
+  suffix: Тайпан, Азот
+  components:
+  - type: Sprite
+    layers:
+    - state: box_of_doom
+    - state: nitrogentank
+
+- type: entity
+  parent: BoxSurvivalBeer
+  id: BoxSurvivalTaipanBeer
+  name: аварийный запас
+  description: Коробка с базовым набором для выживания для дворфов.
+  suffix: Тайпан, Дворф
+  components:
+  - type: Sprite
+    layers:
+    - state: box_of_doom
+    - state: emergencytank
+
+- type: entity
+  parent: BoxSurvivalMoth
+  id: BoxSurvivalTaipanMoth
+  name: аварийный запас
+  description: Коробка с базовым набором для выживания.
+  suffix: Тайпан, Ниан
+  components:
+  - type: Sprite
+    layers:
+    - state: box_of_doom
+    - state: emergencytank
+
+- type: entity
+  parent: BoxSurvivalNonBreather
+  id: BoxSurvivalTaipanNonBreather
+  name: аварийный запас
+  description: Коробка с базовым набором выживания для биологических сотрудников которым не нужен кислород или азот.
+  suffix: Тайпан, Ксеноморф
+  components:
+  - type: Sprite
+    layers:
+    - state: box_of_doom
+    - state: emergencytank
+
+- type: entity
+  parent: BoxSurvivalRobotNonBreather
+  id: BoxSurvivalTaipanRobotNonBreather
+  name: аварийный запас для роботов
+  description: Коробка с базовым набором выживания для не биологических сотрудников.
+  suffix: Тайпан, Роботы, КПБ, КПС
+  components:
+  - type: Sprite
+    layers:
+    - state: box_of_doom
+    - state: emergencytank

@@ -1,5 +1,25 @@
 - type: paintableGroupCategory
   id: TaipanAirlocks
   groups:
-  - AirlockStandard
-  - AirlockGlass
+  - TaipanAirlockStandard
+  - TaipanAirlockGlass
+
+- type: paintableGroupCategory
+  id: TaipanCanisters
+  groups:
+  - Canisters
+
+- type: paintableGroupCategory
+  id: TaipanCrates
+  groups:
+  - TaipanCrateSteel
+  - CratePlastic
+  - CrateSecure
+
+- type: paintableGroupCategory
+  id: TaipanLockers
+  groups:
+  - TaipanLocker
+  - Closet
+  - WallLocker
+  - WallCloset

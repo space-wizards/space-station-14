@@ -1,87 +1,611 @@
 - type: entity
-  name: атмосферный инженер Синдиката
-  id: SpawnPointLatejoinTaipanAtmos
-  parent: SpawnPointJobBase
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerTaipanAtmosphericsEngineer
+  name: Атмосферный инженер
+  suffix: Тайпан, Призрачная роль, Кастомизируемый персонаж
   components:
   - type: Sprite
-    state: green
-  - type: SpawnPoint
-    job_id: TaipanAtmosTech
-    spawn_type: LateJoin
+    layers:
+    - state: green
+    - state: timed
+    - sprite: _DeadSpace/Markers/jobs.rsi
+      state: atmospheric_engineer
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: TaipanAtmosphericsEngineer
+    tags:
+    - TaipanRole
+    factions:
+    - Taipan
+    allowedSpecies:
+    - Arachnid
+    - Diona
+    - Dwarf
+    - Human
+    - Moth
+    - Reptilian
+    - SlimePerson
+    - Vox
+    - Demon
+    - Shark
+    - Tajaran
+    - Vulpkanin
+    - Felinid
+    - Kobolt
+    - Xenomorph
+#    - IPC
+#    - IPS
+  - type: GhostRole
+    name: job-name-taipan-atmospherics-engineer
+    description: job-description-taipan-atmospherics-engineer
+    rules: ghost-role-information-taipan-personal-rules
+    job: TaipanAtmosphericsEngineer
+    requirements:
+    - !type:RoleTimeRequirement
+      role: JobAtmosphericTechnician
+      time: 18000 #5 hrs
+    - !type:RoleTimeRequirement
+      role: JobTaipanTechnician
+      time: 18000 #5 hrs
+    - !type:DepartmentTimeRequirement
+      department: Taipan
+      time: 36000 #10 hrs
+    raffle:
+      settings: default
 
 - type: entity
-  name: ботаник Синдиката
-  id: SpawnPointLatejoinTaipanBotanist
-  parent: SpawnPointJobBase
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerTaipanBotanist
+  name: Ботаник
+  suffix: Тайпан, Призрачная роль, Кастомизируемый персонаж
   components:
   - type: Sprite
-    state: green
-  - type: SpawnPoint
-    job_id: TaipanBotanist
-    spawn_type: LateJoin
+    layers:
+    - state: green
+    - state: timed
+    - sprite: _DeadSpace/Markers/jobs.rsi
+      state: botanist
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: TaipanBotanist
+    tags:
+    - TaipanRole
+    factions:
+    - Taipan
+    allowedSpecies:
+    - Arachnid
+    - Diona
+    - Dwarf
+    - Human
+    - Moth
+    - Reptilian
+    - SlimePerson
+    - Vox
+    - Demon
+    - Shark
+    - Tajaran
+    - Vulpkanin
+    - Felinid
+    - Kobolt
+    - Xenomorph
+#    - IPC
+#    - IPS
+  - type: GhostRole
+    name: job-name-taipan-botanist
+    description: job-description-taipan-botanist
+    rules: ghost-role-information-taipan-personal-rules
+    job: TaipanBotanist
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 18000 # 5 hours
+    - !type:RoleTimeRequirement
+      role: JobBotanist
+      time: 3600 # 1 hour
+    raffle:
+      settings: default
 
 - type: entity
-  name: грузчик Синдиката
-  id: SpawnPointLatejoinTaipanCargotech
-  parent: SpawnPointJobBase
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerTaipanCargotech
+  name: Карготехник
+  suffix: Тайпан, Призрачная роль, Кастомизируемый персонаж
   components:
   - type: Sprite
-    state: green
-  - type: SpawnPoint
-    job_id: TaipanCargotech
-    spawn_type: LateJoin
+    layers:
+    - state: green
+    - state: timed
+    - sprite: _DeadSpace/Markers/jobs.rsi
+      state: cargotech
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: TaipanCargotech
+    tags:
+    - TaipanRole
+    factions:
+    - Taipan
+    allowedSpecies:
+    - Arachnid
+    - Diona
+    - Dwarf
+    - Human
+    - Moth
+    - Reptilian
+    - SlimePerson
+    - Vox
+    - Demon
+    - Shark
+    - Tajaran
+    - Vulpkanin
+    - Felinid
+    - Kobolt
+    - Xenomorph
+#    - IPC
+#    - IPS
+  - type: GhostRole
+    name: job-name-taipan-cargotech
+    description: job-description-taipan-cargotech
+    rules: ghost-role-information-taipan-personal-rules
+    job: TaipanCargotech
+    requirements:
+    - !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
+      time: 36000 # 10 hours
+    raffle:
+      settings: default
 
 - type: entity
-  name: повар Синдиката
-  id: SpawnPointLatejoinTaipanChef
-  parent: SpawnPointJobBase
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerTaipanChef
+  name: Повар
+  suffix: Тайпан, Призрачная роль, Кастомизируемый персонаж
   components:
   - type: Sprite
-    state: green
-  - type: SpawnPoint
-    job_id: TaipanChef
-    spawn_type: LateJoin
+    layers:
+    - state: green
+    - state: timed
+    - sprite: _DeadSpace/Markers/jobs.rsi
+      state: chef
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: TaipanChef
+    tags:
+    - TaipanRole
+    factions:
+    - Taipan
+    allowedSpecies:
+    - Arachnid
+    - Diona
+    - Dwarf
+    - Human
+    - Moth
+    - Reptilian
+    - SlimePerson
+    - Vox
+    - Demon
+    - Shark
+    - Tajaran
+    - Vulpkanin
+    - Felinid
+    - Kobolt
+    - Xenomorph
+#    - IPC
+#    - IPS
+  - type: GhostRole
+    name: job-name-taipan-chef
+    description: job-description-taipan-chef
+    rules: ghost-role-information-taipan-personal-rules
+    job: TaipanChef
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 18000 # 5 hours
+    - !type:RoleTimeRequirement
+      role: JobChef
+      time: 3600 # 1 hour
+    - !type:RoleTimeRequirement
+      role: JobBartender
+      time: 3600 # 1 hour
+    raffle:
+      settings: default
 
 - type: entity
-  name: медик Синдиката
-  id: SpawnPointLatejoinTaipanMedic
-  parent: SpawnPointJobBase
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerTaipanCommunicationsOfficer
+  name: Офицер телекоммуникаций
+  suffix: Тайпан, Призрачная роль, Кастомизируемый персонаж
   components:
   - type: Sprite
-    state: green
-  - type: SpawnPoint
-    job_id: TaipanMedic
-    spawn_type: LateJoin
+    layers:
+    - state: green
+    - state: timed
+    - sprite: _DeadSpace/Markers/jobs.rsi
+      state: communication_officer
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: TaipanCommunicationsOfficer
+    tags:
+    - TaipanRole
+    factions:
+    - Taipan
+    allowedSpecies:
+    - Arachnid
+    - Diona
+    - Dwarf
+    - Human
+    - Moth
+    - Reptilian
+    - SlimePerson
+    - Vox
+    - Demon
+    - Shark
+    - Tajaran
+    - Vulpkanin
+    - Felinid
+    - Kobolt
+    - Xenomorph
+#    - IPC
+#    - IPS
+  - type: GhostRole
+    name: job-name-taipan-communications-officer
+    description: job-description-taipan-communications-officer
+    rules: ghost-role-information-taipan-personal-rules
+    job: TaipanCommunicationsOfficer
+    requirements:
+    - !type:RoleTimeRequirement
+      role: JobTaipanRecruit
+      time: 36000 # 10 hours
+    - !type:DepartmentTimeRequirement
+      department: Taipan
+      time: 360000 # 100 hours
+    raffle:
+      settings: default
 
 - type: entity
-  name: директор исследований Синдиката
-  id: SpawnPointLatejoinTaipanRD
-  parent: SpawnPointJobBase
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerTaipanMedic
+  name: Медик
+  suffix: Тайпан, Призрачная роль, Кастомизируемый персонаж
   components:
   - type: Sprite
-    state: green
-  - type: SpawnPoint
-    job_id: TaipanRD
-    spawn_type: LateJoin
+    layers:
+    - state: green
+    - state: timed
+    - sprite: _DeadSpace/Markers/jobs.rsi
+      state: medic
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: TaipanMedic
+    tags:
+    - TaipanRole
+    factions:
+    - Taipan
+    allowedSpecies:
+    - Arachnid
+    - Diona
+    - Dwarf
+    - Human
+    - Moth
+    - Reptilian
+    - SlimePerson
+    - Vox
+    - Demon
+    - Shark
+    - Tajaran
+    - Vulpkanin
+    - Felinid
+    - Kobolt
+    - Xenomorph
+#    - IPC
+#    - IPS
+  - type: GhostRole
+    name: job-name-taipan-medic
+    description: job-description-taipan-medic
+    rules: ghost-role-information-taipan-personal-rules
+    job: TaipanMedic
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 36000 # 10 hours
+    - !type:RoleTimeRequirement
+      role: JobChemist
+      time: 18000 # 5 hours
+    raffle:
+      settings: default
 
 - type: entity
-  name: учёный Синдиката
-  id: SpawnPointLatejoinTaipanScience
-  parent: SpawnPointJobBase
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerTaipanParamedic
+  name: Парамедик
+  suffix: Тайпан, Призрачная роль, Кастомизируемый персонаж
   components:
   - type: Sprite
-    state: green
-  - type: SpawnPoint
-    job_id: TaipanScience
-    spawn_type: LateJoin
+    layers:
+    - state: green
+    - state: timed
+    - sprite: _DeadSpace/Markers/jobs.rsi
+      state: paramedic
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: TaipanParamedic
+    tags:
+    - TaipanRole
+    factions:
+    - Taipan
+    allowedSpecies:
+    - Arachnid
+    - Diona
+    - Dwarf
+    - Human
+    - Moth
+    - Reptilian
+    - SlimePerson
+    - Vox
+    - Demon
+    - Shark
+    - Tajaran
+    - Vulpkanin
+    - Felinid
+    - Kobolt
+    - Xenomorph
+#    - IPC
+#    - IPS
+  - type: GhostRole
+    name: job-name-taipan-paramedic
+    description: job-description-taipan-paramedic
+    rules: ghost-role-information-taipan-personal-rules
+    job: TaipanParamedic
+    requirements:
+    - !type:RoleTimeRequirement
+      role: JobTaipanMedic
+      time: 36000 # 10 hours
+    raffle:
+      settings: default
 
 - type: entity
-  name: офицер телекоммуникаций Синдиката
-  id: SpawnPointLatejoinTaipanOfficer
-  parent: SpawnPointJobBase
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerTaipanRecruit
+  name: Рекрут
+  suffix: Тайпан, Призрачная роль, Кастомизируемый персонаж
   components:
   - type: Sprite
-    state: green
-  - type: SpawnPoint
-    job_id: TaipanTelecommunicationsOfficer
-    spawn_type: LateJoin
+    layers:
+    - state: green
+    - state: timed
+    - sprite: _DeadSpace/Markers/jobs.rsi
+      state: recruit
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: TaipanRecruit
+    tags:
+    - TaipanRole
+    factions:
+    - Taipan
+    allowedSpecies:
+    - Arachnid
+    - Diona
+    - Dwarf
+    - Human
+    - Moth
+    - Reptilian
+    - SlimePerson
+    - Vox
+    - Demon
+    - Shark
+    - Tajaran
+    - Vulpkanin
+    - Felinid
+    - Kobolt
+    - Xenomorph
+#    - IPC
+#    - IPS
+  - type: GhostRole
+    name: job-name-taipan-recruit
+    description: job-description-taipan-recruit
+    rules: ghost-role-information-taipan-personal-rules
+    job: TaipanRecruit
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 36000 # 10 hours
+    raffle:
+      settings: default
+
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerTaipanResearchDirector
+  name: Директор исследований
+  suffix: Тайпан, Призрачная роль, Кастомизируемый персонаж
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: timed
+    - sprite: _DeadSpace/Markers/jobs.rsi
+      state: research_director
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: TaipanResearchDirector
+    tags:
+    - TaipanRole
+    factions:
+    - Taipan
+    allowedSpecies:
+    - Arachnid
+    - Diona
+    - Dwarf
+    - Human
+    - Moth
+    - Reptilian
+    - SlimePerson
+    - Vox
+    - Demon
+    - Shark
+    - Tajaran
+    - Vulpkanin
+    - Felinid
+    - Kobolt
+    - Xenomorph
+#    - IPC
+#    - IPS
+  - type: GhostRole
+    name: job-name-taipan-research-director
+    description: job-description-taipan-research-director
+    rules: ghost-role-information-taipan-personal-rules
+    job: TaipanResearchDirector
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Taipan
+      time: 216000 # 60 hours
+    - !type:RoleTimeRequirement
+      role: JobTaipanResearcher
+      time: 72000 # 20 hours
+    - !type:RoleTimeRequirement
+      role: JobTaipanMedic
+      time: 36000 # 10 hours
+    raffle:
+      settings: default
+
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerTaipanResearcher
+  name: Исследователь
+  suffix: Тайпан, Призрачная роль, Кастомизируемый персонаж
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: timed
+    - sprite: _DeadSpace/Markers/jobs.rsi
+      state: researcher
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: TaipanResearcher
+    tags:
+    - TaipanRole
+    factions:
+    - Taipan
+    allowedSpecies:
+    - Arachnid
+    - Diona
+    - Dwarf
+    - Human
+    - Moth
+    - Reptilian
+    - SlimePerson
+    - Vox
+    - Demon
+    - Shark
+    - Tajaran
+    - Vulpkanin
+    - Felinid
+    - Kobolt
+    - Xenomorph
+#    - IPC
+#    - IPS
+  - type: GhostRole
+    name: job-name-taipan-researcher
+    description: job-description-taipan-researcher
+    rules: ghost-role-information-taipan-personal-rules
+    job: TaipanResearcher
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 36000 # 10 hours
+    - !type:RoleTimeRequirement
+      role: JobChemist
+      time: 18000 # 5 hours
+    raffle:
+      settings: default
+
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerTaipanTechnician
+  name: Ремонтник
+  suffix: Тайпан, Призрачная роль, Кастомизируемый персонаж
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: timed
+    - sprite: _DeadSpace/Markers/jobs.rsi
+      state: technician
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: TaipanTechnician
+    tags:
+    - TaipanRole
+    factions:
+    - Taipan
+    allowedSpecies:
+    - Arachnid
+    - Diona
+    - Dwarf
+    - Human
+    - Moth
+    - Reptilian
+    - SlimePerson
+    - Vox
+    - Demon
+    - Shark
+    - Tajaran
+    - Vulpkanin
+    - Felinid
+    - Kobolt
+    - Xenomorph
+#    - IPC
+#    - IPS
+  - type: GhostRole
+    name: job-name-taipan-technician
+    description: job-description-taipan-technician
+    rules: ghost-role-information-taipan-personal-rules
+    job: TaipanTechnician
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 36000 #10 hrs
+    raffle:
+      settings: default
+
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerTaipanTechnicalOperationsSupervisor
+  name: Руководитель техобеспечения
+  suffix: Тайпан, Призрачная роль, Кастомизируемый персонаж
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: timed
+    - sprite: _DeadSpace/Markers/jobs.rsi
+      state: technical_supervisor
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: TaipanTechnicalOperationsSupervisor
+    tags:
+    - TaipanRole
+    factions:
+    - Taipan
+    allowedSpecies:
+    - Arachnid
+    - Diona
+    - Dwarf
+    - Human
+    - Moth
+    - Reptilian
+    - SlimePerson
+    - Vox
+    - Demon
+    - Shark
+    - Tajaran
+    - Vulpkanin
+    - Felinid
+    - Kobolt
+    - Xenomorph
+#    - IPC
+#    - IPS
+  - type: GhostRole
+    name: job-name-taipan-technical-supervisor
+    description: job-description-taipan-technical-supervisor
+    rules: ghost-role-information-taipan-personal-rules
+    job: TaipanTechnicalOperationsSupervisor
+    requirements:
+    - !type:RoleTimeRequirement
+      role: JobTaipanCargotech
+      time: 36000 # 10 hours
+    - !type:RoleTimeRequirement
+      role: JobTaipanAtmosphericsEngineer
+      time: 18000 # 5 hours
+    - !type:DepartmentTimeRequirement
+      department: Taipan
+      time: 144000 # 40 hours
+    raffle:
+      settings: default

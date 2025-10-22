@@ -1,0 +1,275 @@
+# Tier 1
+
+- type: technology
+  id: TaipanSalvageEquipment
+  name: research-technology-salvage-equipment
+  icon:
+    sprite: Objects/Tools/handdrill.rsi
+    state: handdrill
+  discipline: TaipanMechworks
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - MiningDrill
+  - MineralScannerEmpty
+  - OreProcessorIndustrialMachineCircuitboardTaipan
+  - ClothingMaskWeldingGas
+
+- type: technology
+  id: TaipanSpaceScanning
+  name: research-technology-space-scanning
+  icon:
+    sprite: Objects/Tools/handheld_mass_scanner.rsi
+    state: icon
+  discipline: TaipanMechworks
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - RadarConsoleCircuitboard
+  - HandHeldMassScanner
+
+- type: technology
+  id: TaipanAdvancedPowercells
+  name: research-technology-advanced-powercells
+  icon:
+    sprite: Structures/Power/turbo_recharger.rsi
+    state: empty
+  discipline: TaipanMechworks
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - PowerCellHigh
+  - TurboItemRechargerCircuitboard
+  - SMESAdvancedMachineCircuitboard
+
+- type: technology
+  id: TaipanMechanicalCompression
+  name: research-technology-mechanical-compression
+  icon:
+    sprite: Structures/Machines/flatpacker.rsi
+    state: base
+  discipline: TaipanMechworks
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - FlatpackerMachineCircuitboard
+
+- type: technology
+  id: TaipanIndustrialEngineering
+  name: research-technology-industrial-engineering
+  icon:
+    sprite: _DeadSpace/Structures/Machines/Taipan/protolathe_hypercon.rsi
+    state: building
+  discipline: TaipanMechworks
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - AutolatheHyperConvectionMachineCircuitboardTaipan
+  - ProtolatheHyperConvectionMachineCircuitboardTaipan
+  - CircuitImprinterHyperConvectionMachineCircuitboardTaipan
+  - SheetifierMachineCircuitboard
+
+- type: technology
+  id: TaipanPowerGeneration
+  name: research-technology-power-generation
+  icon:
+    sprite: Structures/Power/Generation/portable_generator.rsi
+    state: portgen0
+  discipline: TaipanMechworks
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - PortableGeneratorPacmanMachineCircuitboard
+  - PortableGeneratorSuperPacmanMachineCircuitboard
+  - PortableGeneratorJrPacmanMachineCircuitboard
+  - SolarControlComputerCircuitboard
+  - SolarTrackerElectronics
+  - EmitterCircuitboard
+
+- type: technology
+  id: TaipanAtmosphericTech
+  name: research-technology-atmospheric-tech
+  icon:
+    sprite: Structures/Piping/Atmospherics/thermomachine.rsi
+    state: freezerOff
+  discipline: TaipanMechworks
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - ThermomachineFreezerMachineCircuitBoard
+  - GasRecyclerMachineCircuitboard
+
+- type: technology
+  id: TaipanRipley
+  name: research-technology-bloodred-ripley
+  icon:
+    sprite: _DeadSpace/Objects/Specific/Mech/mecha.rsi
+    state: bloodredripley
+  discipline: TaipanMechworks
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - TaipanRipleyHarness
+  - TaipanRipleyLArm
+  - TaipanRipleyRArm
+  - TaipanRipleyLLeg
+  - TaipanRipleyRLeg
+  - TaipanRipleyCentralElectronics
+  - TaipanRipleyPeripheralsElectronics
+  - MechEquipmentTaipanRipleyGrabber
+
+- type: technology
+  id: TaipanHardsuitsBasic
+  name: research-technology-basic-syndicate-hardsuits
+  icon:
+    sprite: Clothing/Head/Helmets/eva_syndicate.rsi
+    state: icon
+  discipline: TaipanMechworks
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - ClothingOuterEVASuitSyndicate
+  - ClothingHeadHelmetSyndicate
+
+# Tier 2
+
+- type: technology
+  id: TaipanShuttlecraft
+  name: research-technology-shuttlecraft
+  icon:
+    sprite: Structures/Shuttles/gyroscope.rsi
+    state: base
+  discipline: TaipanMechworks
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - ShuttleConsoleCircuitboardTaipan
+  - IFFConsoleCircuitboardTaipan
+  - ThrusterMachineCircuitboard
+  - GyroscopeMachineCircuitboard
+  - MiniGravityGeneratorCircuitboard
+
+- type: technology
+  id: TaipanAdvancedAtmospherics
+  name: research-technology-advanced-atmospherics
+  icon:
+    sprite: Objects/Devices/Holoprojectors/atmos.rsi
+    state: icon
+  discipline: TaipanMechworks
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - HellfireFreezerMachineCircuitBoard
+  - PortableScrubberMachineCircuitBoard
+  - HolofanProjector
+  technologyPrerequisites:
+  - TaipanAtmosphericTech
+
+- type: technology
+  id: TaipanAdvancedToolsTechnology
+  name: research-technology-advanced-tools
+  icon:
+    sprite: _DeadSpace/Objects/Tools/welder_industrial_taipan.rsi
+    state: icon
+  discipline: TaipanMechworks
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - SyndicateWelderExperimental
+  - SyndicatePowerDrill
+  - SyndicateJawsOfLife
+  - BorgModuleAdvancedTool
+  - Fulton
+  - FultonBeacon
+
+- type: technology
+  id: TaipanMassExcavation
+  name: research-technology-excavation
+  icon:
+    sprite: Objects/Tools/handdrilldiamond.rsi
+    state: handdrill
+  discipline: TaipanMechworks
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - MiningDrillDiamond
+  - AdvancedMineralScannerEmpty
+  - SalvageExpeditionsComputerCircuitboard
+  - BorgModuleAdvancedMining
+
+- type: technology
+  id: TaipanHUD
+  name: research-technology-hud
+  icon:
+    sprite: _DeadSpace/Clothing/Eyes/Hud/taipan_advhud.rsi
+    state: icon
+  discipline: TaipanMechworks
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - ClothingEyesHudTaipanDiagnostic
+  - ClothingEyesHudTaipanMedical
+  - ClothingEyesHudTaipanRecruit
+  - ClothingEyesHudTaipanResearch
+  - ClothingEyesHudTaipanAdvanced
+
+- type: technology
+  id: TaipanHardsuits
+  name: research-technology-syndicate-hardsuits
+  icon:
+    sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
+    state: icon
+  discipline: TaipanMechworks
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - ClothingOuterHardsuitSyndie
+  - ClothingOuterHardsuitSyndieMedic
+  technologyPrerequisites:
+  - TaipanHardsuitsBasic
+
+- type: technology
+  id: TaipanEliteHardsuits
+  name: research-technology-elite-syndicate-hardsuits
+  icon:
+    sprite: Clothing/OuterClothing/Hardsuits/syndieelite.rsi
+    state: icon
+  discipline: TaipanMechworks
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - ClothingOuterHardsuitSyndieElite
+  - ClothingOuterHardsuitSyndieCommander
+  technologyPrerequisites:
+  - TaipanHardsuits
+
+# Tier 3
+
+- type: technology
+  id: TaipanOptimizedMicrogalvanism
+  name: research-technology-optimized-microgalvanism
+  icon:
+    sprite: Objects/Power/power_cells.rsi
+    state: microreactor
+  discipline: TaipanMechworks
+  tier: 3
+  cost: 30000
+  recipeUnlocks:
+  - PowerCellMicroreactor
+  - PowerCellHyper
+  technologyPrerequisites:
+  - TaipanAdvancedPowercells
+
+- type: technology
+  id: TaipanHeavyHardsuits
+  name: research-technology-heavy-syndicate-hardsuits
+  icon:
+    sprite: Clothing/OuterClothing/Hardsuits/cybersun.rsi
+    state: icon
+  discipline: TaipanMechworks
+  tier: 3
+  cost: 30000
+  recipeUnlocks:
+  - ClothingOuterHardsuitJuggernaut
+  technologyPrerequisites:
+  - TaipanEliteHardsuits
