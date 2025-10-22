@@ -14,6 +14,32 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
 {
     private static readonly (Regex regex, string emoteKey)[] ShorthandToEmote =
     [
+        // RU-Localization-Start
+    Entry("хд", "chatsan-laughs"),
+    Entry("о-о", "chatsan-wide-eyed"), // cyrillic о
+    Entry("о.о", "chatsan-wide-eyed"), // cyrillic о
+    Entry("0_о", "chatsan-wide-eyed"), // cyrillic о
+    Entry("о/", "chatsan-waves"), // cyrillic о
+    Entry("о7", "chatsan-salutes"), // cyrillic о
+    Entry("0_o", "chatsan-wide-eyed"),
+    Entry("лмао", "chatsan-laughs"),
+    Entry("рофл", "chatsan-laughs"),
+    Entry("яхз", "chatsan-shrugs"),
+    Entry(":0", "chatsan-surprised"),
+    Entry(":р", "chatsan-stick-out-tongue"), // cyrillic р
+    Entry("кек", "chatsan-laughs"),
+    Entry("T_T", "chatsan-cries"),
+    Entry("Т_Т", "chatsan-cries"), // cyrillic T
+    Entry("=_(", "chatsan-cries"),
+    Entry("!с", "chatsan-laughs"),
+    Entry("!в", "chatsan-sighs"),
+    Entry("!х", "chatsan-claps"),
+    Entry("!щ", "chatsan-snaps"),
+    Entry("))", "chatsan-smiles-widely"),
+    Entry(")", "chatsan-smiles"),
+    Entry("((", "chatsan-frowns-deeply"),
+    Entry("(", "chatsan-frowns"),
+        // RU-Localization-End
         Entry(":)", "chatsan-smiles"),
         Entry(":]", "chatsan-smiles"),
         Entry("=)", "chatsan-smiles"),

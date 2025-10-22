@@ -3,6 +3,7 @@
   id: CadianFlakArmor
   name: cadian flak vest
   description: Standard issue flak armor worn by Cadian shock troops. Good enough.
+  suffix: SWH
   components:
   - type: Sprite
     sprite: _WH40K/Clothing/OuterClothing/Armor/cadian_flak_armor.rsi
