@@ -41,7 +41,6 @@
     ears: ClothingHeadsetAltTaipan
     shoes: ClothingShoesBootsLaceup
     id: TaipanTechnicalOperationsSupervisorPDA
-    back: ClothingBackpackSyndicate
     socks: ClothingUnderwearSocksTaipanTechnicalOperationsSupervisor
 
 - type: chameleonOutfit

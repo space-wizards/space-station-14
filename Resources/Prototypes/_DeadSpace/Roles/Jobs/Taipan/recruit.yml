@@ -28,7 +28,6 @@
     ears: ClothingHeadsetTaipan
     shoes: ClothingShoesBootsSyndieFilled
     id: TaipanRecruitPDA
-    back: ClothingBackpackSyndicate
     socks: ClothingUnderwearSocksTaipanRecruit
 
 - type: chameleonOutfit

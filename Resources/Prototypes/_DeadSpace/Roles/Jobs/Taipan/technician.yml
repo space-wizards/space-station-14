@@ -29,7 +29,6 @@
     shoes: ClothingShoesTaipanBootsWork
     id: TaipanTechnicianPDA
     belt: ClothingBeltUtilityEngineering
-    back: ClothingBackpackSyndicate
     socks: ClothingUnderwearSocksTaipanTechnician
 
 - type: chameleonOutfit

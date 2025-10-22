@@ -66,6 +66,7 @@
   groups:
   - TaipanParamedicUniform
   - TaipanParamedicUnderwear
+  - TaipanBackpack
   - TaipanSurvival
   - GroupSpeciesBreathTool
   - GroupTankHarness

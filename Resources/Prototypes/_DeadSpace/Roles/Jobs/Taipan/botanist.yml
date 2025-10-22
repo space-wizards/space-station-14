@@ -29,7 +29,6 @@
   equipment:
     ears: ClothingHeadsetTaipan
     shoes: ClothingShoesBootsLaceup
-    back: ClothingBackpackSyndicate
     id: TaipanBotanistPDA
     socks: ClothingUnderwearSocksTaipanBotanist
 

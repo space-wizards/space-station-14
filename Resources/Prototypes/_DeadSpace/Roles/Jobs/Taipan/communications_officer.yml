@@ -44,7 +44,6 @@
     ears: ClothingHeadsetAltTaipan
     shoes: ClothingShoesBootsSyndieFilled
     id: TaipanCommunicationsOfficerPDA
-    back: ClothingBackpackSyndicate
     socks: ClothingUnderwearSocksTaipanCommunicationsOfficer
 
 - type: chameleonOutfit

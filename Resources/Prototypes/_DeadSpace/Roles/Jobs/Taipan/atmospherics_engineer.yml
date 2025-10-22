@@ -34,7 +34,6 @@
   equipment:
     ears: ClothingHeadsetTaipan
     shoes: ClothingShoesTaipanBootsWork
-    back: ClothingBackpackSyndicate
     socks: ClothingUnderwearSocksTaipanAtmosphericsEngineer
     belt: ClothingBeltUtilityEngineering
     id: TaipanAtmosphericsEngineerPDA

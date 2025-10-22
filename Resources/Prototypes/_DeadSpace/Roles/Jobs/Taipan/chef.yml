@@ -32,7 +32,6 @@
   equipment:
     ears: ClothingHeadsetTaipan
     shoes: ClothingShoesBootsLaceup
-    back: ClothingBackpackSyndicate
     id: TaipanChefPDA
     socks: ClothingUnderwearSocksTaipanChef
 

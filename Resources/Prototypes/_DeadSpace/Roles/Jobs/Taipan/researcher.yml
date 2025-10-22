@@ -30,7 +30,6 @@
     ears: ClothingHeadsetTaipan
     outerClothing: ClothingOuterTaipanCoatLabResearcher
     shoes: ClothingShoesBootsLaceup
-    back: ClothingBackpackSyndicate
     id: TaipanResearcherPDA
     socks: ClothingUnderwearSocksTaipanResearcher
 

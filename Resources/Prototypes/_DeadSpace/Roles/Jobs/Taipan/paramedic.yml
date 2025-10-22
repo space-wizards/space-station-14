@@ -29,7 +29,6 @@
     outerClothing: ClothingOuterTaipanCoatLabMed
     shoes: ClothingShoesColorWhite
     id: TaipanParamedicPDA
-    back: ClothingBackpackSyndicate
     belt: ClothingBeltMedicalEMTFilled
     socks: ClothingUnderwearSocksTaipanParamedic
 
