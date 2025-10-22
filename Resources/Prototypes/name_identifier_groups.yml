@@ -2,36 +2,30 @@
 - type: nameIdentifierGroup
   id: Monkey
   prefix: MK
-  prefix: ОБ # RU-Localization
 
 - type: nameIdentifierGroup
   id: Kobold
   prefix: KB
-  prefix: КБ # RU-Localization
 
 - type: nameIdentifierGroup
   id: Holoparasite
   prefix: HOLO
-  prefix: ГОЛО # RU-Localization
 
 - type: nameIdentifierGroup
   id: MMI
   prefix: MMI
-  prefix: ЧМИ # RU-Localization
   minValue: 100
   maxValue: 999
 
 - type: nameIdentifierGroup
   id: PositronicBrain
   prefix: PB
-  prefix: ПМ # RU-Localization
   minValue: 10
   maxValue: 99
 
 - type: nameIdentifierGroup
   id: Silicon
   prefix: Si
-  prefix: Кр # RU-Localization
   minValue: 1000
   maxValue: 9999
 
