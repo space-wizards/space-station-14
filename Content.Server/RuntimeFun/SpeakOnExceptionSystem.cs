@@ -53,7 +53,12 @@ public sealed class SpeakOnExceptionSystem : EntitySystem
             if (_timing.CurTime < comp.NextTimeCanSpeak)
                 continue;
 
+            if (_random.Prob(comp.ChanceSpeakNoAccent))
+                comp.BlockAccent = true;
+
             _chat.TrySendInGameICMessage(uid, CensorMessage(comp), InGameICChatType.Speak, ChatTransmitRange.Normal, true);
+
+            comp.BlockAccent = false;
 
             comp.NextTimeCanSpeak += comp.SpeechCooldown;
         }
@@ -61,7 +66,7 @@ public sealed class SpeakOnExceptionSystem : EntitySystem
 
     private void OnTransformSpeech(Entity<SpeakOnExceptionComponent> ent, ref TransformSpeechEvent args)
     {
-        if (_random.Prob(ent.Comp.ChanceSpeakNoAccent))
+        if (ent.Comp.BlockAccent)
             args.Cancel();
     }
 

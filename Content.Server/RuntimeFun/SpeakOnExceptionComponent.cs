@@ -33,4 +33,9 @@ public sealed partial class SpeakOnExceptionComponent : Component
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan? NextTimeCanSpeak;
+
+    /// <summary>
+    /// If this component is currently trying to block accents from working.
+    /// </summary>
+    public bool BlockAccent;
 }
