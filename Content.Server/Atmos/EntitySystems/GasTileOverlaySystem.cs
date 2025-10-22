@@ -361,7 +361,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private record struct UpdatePlayerJob : IParallelRobustJob
         {
-            public int BatchSize => 2;
+            public readonly int BatchSize => 2;
 
             public IEntityManager EntManager;
             public IMapManager MapManager;
@@ -376,7 +376,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             public EntityQuery<MapGridComponent> GridQuery;
 
-            public void Execute(int index)
+            public readonly void Execute(int index)
             {
                 var playerSession = Sessions[index];
                 var chunksInRange = ChunkingSys.GetChunksForSession(playerSession, ChunkSize, ChunkIndexPool, ChunkViewerPool);
@@ -465,7 +465,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private record struct UpdateGridOverlayJob : IParallelRobustJob
         {
-            public int BatchSize => 16;
+            public readonly int BatchSize => 16;
 
             // Not much reason to use non-interface entman here and we need it because it exposes a query for MetaDataComponent.
             public EntityManager EntManager;
@@ -479,7 +479,7 @@ namespace Content.Server.Atmos.EntitySystems
                 System = system;
             }
 
-            public void Execute(int gridIndex)
+            public readonly void Execute(int gridIndex)
             {
                 var (gridUid, gasOverlayComponent, gridAtmosphereComponent) = Grids[gridIndex];
                 var changed = false;
