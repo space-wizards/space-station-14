@@ -5,12 +5,10 @@ using Robust.Shared.Containers;
 
 namespace Content.Server.Inventory;
 
-/// <summary>
 /// Read-only helper to count what a mob is carrying, recursively,
 /// with support for stackable items (cash, sheets, etc.).
 /// "Carrying" = anything in the mob's containers (inventory slots, hands,
 /// backpack, boxes, wallets, nested containers, implants, etc.).
-/// </summary>
 public sealed class CarryCounterSystem : EntitySystem
 {
     private EntityQuery<ContainerManagerComponent> _containerQuery;
@@ -21,10 +19,8 @@ public sealed class CarryCounterSystem : EntitySystem
         _containerQuery = GetEntityQuery<ContainerManagerComponent>();
     }
 
-    /// <summary>
     /// Overload that accepts a nullable EntityUid (e.g., Mind.OwnedEntity).
     /// Returns 0 if null; otherwise forwards to the non-nullable overload.
-    /// </summary>
     public int CountByStackType(EntityUid? maybeMob, string stackTypeId, int valuePerUnit = 1)
     {
         if (!maybeMob.HasValue)
@@ -33,13 +29,10 @@ public sealed class CarryCounterSystem : EntitySystem
         return CountByStackType(maybeMob.Value, stackTypeId, valuePerUnit);
     }
 
-    /// <summary>
     /// Returns the total amount of items carried by mob whose
     /// stack type (if present) matches <paramref name="stackTypeId"/>.
-    ///
     /// If an entity has a StackComponent with a matching StackTypeId,
     /// contributes stack.Count * valuePerUnit. Non-stack entities contribute 0 in this overload.
-    /// </summary>
     public int CountByStackType(EntityUid mob, string stackTypeId, int valuePerUnit = 1)
     {
         if (!_containerQuery.TryGetComponent(mob, out var currentManager))
@@ -69,10 +62,8 @@ public sealed class CarryCounterSystem : EntitySystem
         return total;
     }
 
-    /// <summary>
     /// Generic counter
     /// For stacks, contributes Count by default; for non-stacks contributes 1.
-    /// </summary>
     public int CountWhere(
         EntityUid mob,
         Func<EntityUid, bool> predicate,
@@ -117,7 +108,6 @@ public sealed class CarryCounterSystem : EntitySystem
     {
         var sum = 0;
 
-        // If it's the right kind of stack, add its amount.
         if (TryComp(entity, out StackComponent? stack) && stack.StackTypeId == stackTypeId)
             sum += Math.Max(0, stack.Count) * valuePerUnit;
 
