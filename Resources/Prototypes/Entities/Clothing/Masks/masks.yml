@@ -101,7 +101,10 @@
     interfaces:
       enum.HailerUiKey.Key:
         type: HailerBoundUserInterface
-  - type: Speech #Linked to hailer. To make the text BOLD!! and cancel the sound the creature wearing it makes when speaking
+  - type: Speech #Linked to hailer. Make the tex bold with a single ! and lets the hailer use chat functions
+    speechVerb: DefaultExclamationStrong
+    suffixSpeechVerbs:
+      chat-speech-verb-suffix-exclamation: DefaultExclamationStrong
 
 - type: entity
   parent: [ClothingMaskGas, BaseSyndicateContraband]
@@ -517,6 +520,10 @@
     interfaces:
       enum.HailerUiKey.Key:
         type: HailerBoundUserInterface
+  - type: Speech #Linked to hailer. Make the tex bold with a single ! and lets the hailer use chat functions
+    speechVerb: DefaultExclamationStrong
+    suffixSpeechVerbs:
+      chat-speech-verb-suffix-exclamation: DefaultExclamationStrong
 
 - type: entity
   parent: [ ClothingMaskGas, BaseSecurityCargoContraband ]
@@ -595,6 +602,10 @@
     interfaces:
       enum.HailerUiKey.Key:
         type: HailerBoundUserInterface
+  - type: Speech #Linked to hailer. Make the tex bold with a single ! and lets the hailer use chat functions
+    speechVerb: DefaultExclamationStrong
+    suffixSpeechVerbs:
+      chat-speech-verb-suffix-exclamation: DefaultExclamationStrong
   
   
 
