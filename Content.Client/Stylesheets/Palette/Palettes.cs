@@ -23,8 +23,8 @@ public static class Palettes
     // highlight tones
     public static readonly ColorPalette Gold = ColorPalette.FromHexBase("#a88b5e");
     public static readonly ColorPalette Maroon = ColorPalette.FromHexBase("#9b2236");
+    public static readonly ColorPalette Emerald = ColorPalette.FromHexBase("#557979");
 
     // Intended to be used with `ModulateSelf` to darken / lighten something
     public static readonly ColorPalette AlphaModulate = ColorPalette.FromHexBase("#ffffff");
-
 }

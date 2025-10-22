@@ -22,16 +22,15 @@ public sealed class LineEditSheetlet<T> : Sheetlet<T> where T : PalettedStyleshe
         [
             E<LineEdit>()
                 .Prop(LineEdit.StylePropertyStyleBox, lineEditStylebox),
-            // TODO: Hardcoded colors bad, kill.
             E<LineEdit>()
                 .Class(LineEdit.StyleClassLineEditNotEditable)
-                .Prop("font-color", new Color(192, 192, 192)),
+                .Prop("font-color", sheet.SecondaryPalette.Text),
             E<LineEdit>()
                 .Pseudo(LineEdit.StylePseudoClassPlaceholder)
-                .Prop("font-color", Color.Gray),
+                .Prop("font-color", sheet.SecondaryPalette.Text),
             E<TextEdit>()
                 .Pseudo(TextEdit.StylePseudoClassPlaceholder)
-                .Prop("font-color", Color.Gray),
+                .Prop("font-color", sheet.SecondaryPalette.Text),
         ];
     }
 }
