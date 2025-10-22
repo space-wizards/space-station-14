@@ -3,7 +3,7 @@
             Title="{Loc melee-speech-menu-title}"
             SetWidth="150"
             MinWidth="150">
-    <BoxContainer Orientation="Vertical" SeparationOverride="4" HorizontalExpand="True" >
+    <BoxContainer Orientation="Vertical" SeparationOverride="4" >
         <Label Name="CurrentBattlecry" Text="{Loc 'melee-speech-current-battlecry'}" />
         <LineEdit Name="BattlecryLineEdit" />
     </BoxContainer>
