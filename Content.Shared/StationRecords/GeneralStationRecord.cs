@@ -1,4 +1,3 @@
-using Content.Shared.Preferences;
 using Robust.Shared.Enums;
 using Robust.Shared.Serialization;
 
@@ -39,12 +38,6 @@ public sealed record GeneralStationRecord
 
     [DataField]
     public string JobSpecialization = string.Empty;
-
-    /// <summary>
-    ///     Character Profile tied to this station record.
-    /// </summary>
-    [DataField]
-    public HumanoidCharacterProfile? Profile;
 
     /// <summary>
     ///     Species tied to this station record.
