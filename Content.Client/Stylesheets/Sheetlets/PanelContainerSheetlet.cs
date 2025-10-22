@@ -17,7 +17,7 @@ public sealed class PanelContainerSheetlet<T> : Sheetlet<T> where T : PalettedSt
         var insetBack = new StyleBoxTexture
         {
             Texture = sheet.GetTextureOr(buttonConfig.BaseButtonPath, NanotrasenStylesheet.TextureRoot),
-            Modulate = Color.FromHex("#202023"),
+            Modulate = sheet.SecondaryPalette.BackgroundDark,
         };
         insetBack.SetPatchMargin(StyleBox.Margin.All, 10);
 
