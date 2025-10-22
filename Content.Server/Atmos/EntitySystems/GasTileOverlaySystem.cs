@@ -360,7 +360,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private record struct UpdatePlayerJob : IParallelRobustJob
         {
-            public int BatchSize => 10;
+            public int BatchSize => 2;
 
             public IEntityManager EntManager;
             public IMapManager MapManager;
