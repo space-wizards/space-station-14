@@ -3,12 +3,12 @@
             Title="{Loc 'hand-labeler-ui-header'}"
             SetWidth="400"
             MinWidth="150">
-    <BoxContainer Orientation="Vertical" SeparationOverride="4" HorizontalExpand="True">
+    <BoxContainer Orientation="Vertical" SeparationOverride="4">
         <Label Name="CurrentTextLabel" Text="{Loc 'hand-labeler-current-text-label'}" />
         <LineEdit Name="LabelLineEdit" />
-        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Align="Center">
-            <Button Name="ResetLabelButton" Text="{Loc 'hand-labeler-ui-reset-label-text'}"/>
-            <Button Name="ClearLabelButton" Text="{Loc 'hand-labeler-ui-clear-label-text'}"/>
+        <BoxContainer Orientation="Horizontal" Align="Center">
+            <Button Name="ResetLabelButton" Text="{Loc 'hand-labeler-ui-reset-label-text'}" StyleClasses="OpenRight" />
+            <Button Name="ClearLabelButton" Text="{Loc 'hand-labeler-ui-clear-label-text'}" StyleClasses="OpenLeft" />
         </BoxContainer>
     </BoxContainer>
 </DefaultWindow>
