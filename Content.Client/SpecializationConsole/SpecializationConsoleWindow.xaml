@@ -11,7 +11,7 @@
             <GridContainer Columns="2"
                            Margin="8"
                            VerticalExpand="True">
-                <PanelContainer Name="TargetingControlsPanel"
+                <PanelContainer Name="LeftPanel"
                                 VerticalExpand="True"
                                 HorizontalExpand="True">
                     <PanelContainer.PanelOverride>
@@ -87,7 +87,7 @@
                         </PanelContainer>
                     </BoxContainer>
                 </PanelContainer>
-                <BoxContainer Name="Sssss"
+                <BoxContainer Name="RightPanel"
                               HorizontalExpand="True"
                               VerticalExpand="True"
                               Orientation="Vertical"

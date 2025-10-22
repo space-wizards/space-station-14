@@ -3,7 +3,7 @@ computer-spec-dialog-title = Set Specialization
 
 computer-spec-priveleged-id = Priveleged Id
 computer-spec-target-id = Target Id
-computer-spec-access = Access
+computer-spec-access = Access:
 
 computer-spec-specialization = Specialization
 computer-spec-specialization-set = Set
@@ -32,3 +32,4 @@ placeholders-specialization-12 = Perma Dweller
 placeholders-specialization-13 = Redshield officer
 placeholders-specialization-14 = Maxcap technician
 placeholders-specialization-15 = Drug cook
+placeholders-specialization-16 = Inclusion Officer
