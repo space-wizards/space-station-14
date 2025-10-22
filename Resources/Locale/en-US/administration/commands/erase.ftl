@@ -1,4 +1,3 @@
-# erase
 cmd-erase-desc = Erase a player's entity if it exists and all their chat messages.
 cmd-erase-help = Usage: {$command} <Username of User Id>
 cmd-erase-invalid-args = Invalid number of arguments

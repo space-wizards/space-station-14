@@ -1,4 +1,3 @@
-# FTLdiskburner
 cmd-ftldisk-desc = Creates an FTL coordinates disk to sail to the map the given EntityID is/on.
 cmd-ftldisk-help = Usage: {$command} [EntityID]
 

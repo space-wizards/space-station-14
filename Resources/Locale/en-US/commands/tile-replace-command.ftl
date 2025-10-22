@@ -1,5 +1,6 @@
 cmd-tilereplace-desc = Replaces one tile with another.
 cmd-tilereplace-help = Usage: {$command} [<gridId>] <src> <dst>
+
 cmd-tilereplace-only-player = Only a player can run this command without a grid ID.
 cmd-tilereplace-invalid-entity = {$entity} is not a valid entity.
 cmd-tilereplace-no-grid = No grid exists with id {$gridId}

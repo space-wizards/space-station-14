@@ -73,10 +73,10 @@ public sealed class AddMapAtmosCommand : LocalizedEntityCommands
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
-            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(EntityManager), Loc.GetString($"{Command}-hint-map"));
+            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(EntityManager), Loc.GetString("cmd-setmapatmos-hint-map"));
 
         if (args.Length == 2)
-            return CompletionResult.FromHintOptions(new[] { "false", "true" }, Loc.GetString($"{Command}-hint-space"));
+            return CompletionResult.FromHintOptions(new[] { "false", "true" }, Loc.GetString("cmd-setmapatmos-hint-space"));
 
         if (!bool.TryParse(args[1], out var space) || space)
             return CompletionResult.Empty;

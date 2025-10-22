@@ -1,4 +1,3 @@
-# addobjectives
 cmd-addobjective-desc = Adds an objective to the player's mind.
 cmd-addobjective-help = Usage: {$command} <username> <objectiveID>
 

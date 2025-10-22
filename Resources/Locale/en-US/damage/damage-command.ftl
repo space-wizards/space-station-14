@@ -1,6 +1,4 @@
-﻿## Damage command loc.
-
-cmd-damage-desc = Add or remove damage to an entity.
+﻿cmd-damage-desc = Add or remove damage to an entity.
 cmd-damage-help = Usage: {$command} <type/group> <amount> [ignoreResistances] [uid]
 
 cmd-damage-arg-type = <damage type or group>
