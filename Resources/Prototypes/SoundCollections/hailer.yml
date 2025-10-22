@@ -117,7 +117,7 @@
   - /Audio/Voice/Hailer/ERT/cooperate.ogg
   - /Audio/Voice/Hailer/ERT/interfere.ogg
   - /Audio/Voice/Hailer/ERT/obey.ogg
-  - /Audio/Voice/Hailer/ERT/stand_clear.ogg
+  - /Audio/Voice/Hailer/ERT/reponse.ogg
 
   ##  ERT / COMBAT ##
 - type: soundCollection
@@ -125,5 +125,5 @@
   files:
   - /Audio/Voice/Hailer/ERT/danger.ogg
   - /Audio/Voice/Hailer/ERT/hostile.ogg
-  - /Audio/Voice/Hailer/ERT/suppress.ogg
-  - /Audio/Voice/Hailer/ERT/threat.ogg
+  - /Audio/Voice/Hailer/ERT/death.ogg
+  - /Audio/Voice/Hailer/ERT/finest.ogg

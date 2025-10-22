@@ -115,12 +115,12 @@ hailer-emag-6 = FUCKYOUFUCKYOUFUCKYOUFUCKYOUFUCKYOUFUCKYOUFU-
 
 ## ERT ##
 
-hailer-ERT-attention-0 = ERT units moving in, cooperate !
+hailer-ERT-attention-0 = Emergency Response Team present, cooperate !
 hailer-ERT-attention-1 = Do not interfere with ERT operations !
 hailer-ERT-attention-2 = ERT on site ! Obey commands !
-hailer-ERT-attention-3 = Emergency response in progress, stand clear !
+hailer-ERT-attention-3 = Emergency response in progress, do not resist !
 
 hailer-ERT-combat-0 = Eyes up ! Danger incoming !
-hailer-ERT-combat-1 = Hostile entity detected, free to engage !
-hailer-ERT-combat-2 = Supress, flank, neutralize !
-hailer-ERT-combat-3 = Threat confirmed, containment active !
+hailer-ERT-combat-1 = Hostile detected !
+hailer-ERT-combat-2 = The price for insubordination is death !
+hailer-ERT-combat-3 = You are facing Centcom's finest !
