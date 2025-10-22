@@ -361,7 +361,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private record struct UpdatePlayerJob : IParallelRobustJob
         {
-            public int BatchSize => 2;
+            public int BatchSize => 10;
 
             public IEntityManager EntManager;
             public IMapManager MapManager;
@@ -464,7 +464,7 @@ namespace Content.Server.Atmos.EntitySystems
         private record struct UpdateGridOverlayJob : IParallelRobustJob
         {
             // I don't know what this actually does and how it counts for minimumbatchparallel so if there's a more reasonable value for this please change it.
-            public int BatchSize => 4;
+            public int BatchSize => 16;
 
             // Not much reason to use non-interface entman here and we need it because it exposes a query for MetaDataComponent.
             public EntityManager EntManager;
