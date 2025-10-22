@@ -6,13 +6,13 @@
         <BoxContainer Orientation="Vertical"
                       SeparationOverride="5"
                       SetWidth="130">
-            <Label Text="Name:" />
+            <Label Text="{Loc 'computer-spec-employee-data-name'}" />
             <RichTextLabel Name="EmployeeNameLabel"
                            Margin="5 0 0 0" />
-            <Label Text="Job:" />
+            <Label Text="{Loc 'computer-spec-employee-data-job'}" />
             <RichTextLabel Name="EmployeeJobLabel"
                            Margin="5 0 0 0" />
-            <Label Text="Specialization:" />
+            <Label Text="{Loc 'computer-spec-employee-data-specialization'}" />
             <RichTextLabel Name="EmployeeSpecLabel"
                            Margin="5 0 0 0" />
         </BoxContainer>
