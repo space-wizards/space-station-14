@@ -4,13 +4,13 @@ using BenchmarkDotNet.Attributes;
 using Content.IntegrationTests;
 using Content.IntegrationTests.Pair;
 using Content.Server.Atmos.EntitySystems;
+using Content.Shared.Atmos.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
+using Robust.Shared.Maths;
 
 namespace Content.Benchmarks;
 
@@ -64,10 +64,14 @@ public class GasOverlayBenchmark
                 // This will actually be off-center (iirc) considering bottom-left tile origin. But that doesn't matter here.
                 _transformSystem.SetWorldPosition(
                     (grid, _entMan.TransformQuery.GetComponent(grid)),
-                    new Vector2(generated * 2, 0)); // Space them apart a bit just incase.
+                    new Vector2(generated * 2, 0)); // Space them apart a bit
 
                 // Entire grid is a 1x1 plating.
                 _mapSystem.SetTile(grid, new EntityCoordinates(grid, 0, 0), new Tile(plating));
+
+                // Update the only tile that there is
+                if (_entMan.TryGetComponent<GasTileOverlayComponent>(grid, out var overlayComponent))
+                    overlayComponent.InvalidTiles.Add(Vector2i.Zero);
             }
         });
     }

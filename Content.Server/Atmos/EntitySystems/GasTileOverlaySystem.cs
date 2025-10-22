@@ -13,6 +13,7 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.ObjectPool;
 using Robust.Server.Player;
 using Robust.Shared;
+using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
@@ -66,14 +67,14 @@ namespace Content.Server.Atmos.EntitySystems
 
         private int _thresholds;
         private EntityQuery<MapGridComponent> _gridQuery;
-        private EntityQuery<GasTileOverlayComponent> _query;
+        public EntityQuery<GasTileOverlayComponent> OverlayQuery;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _query = GetEntityQuery<GasTileOverlayComponent>();
             _gridQuery = GetEntityQuery<MapGridComponent>();
+            OverlayQuery = GetEntityQuery<GasTileOverlayComponent>();
 
             _updatePlayerJob = new UpdatePlayerJob()
             {
@@ -147,7 +148,7 @@ namespace Content.Server.Atmos.EntitySystems
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Invalidate(Entity<GasTileOverlayComponent?> grid, Vector2i index)
         {
-            if (_query.Resolve(grid.Owner, ref grid.Comp))
+            if (OverlayQuery.Resolve(grid.Owner, ref grid.Comp))
                 grid.Comp.InvalidTiles.Add(index);
         }
 
@@ -416,20 +417,19 @@ namespace Content.Server.Atmos.EntitySystems
                         ev.RemovedChunks.Add(netGrid, old);
                 }
 
+                var dataToSend = new ValueList<GasOverlayChunk>();
                 foreach (var (netGrid, gridChunks) in chunksInRange)
                 {
                     // Not all grids have atmospheres.
-                    if (!EntManager.TryGetEntity(netGrid, out var grid) || !EntManager.TryGetComponent(grid, out GasTileOverlayComponent? overlay))
+                    if (!EntManager.TryGetEntity(netGrid, out var gridUid) ||
+                        !System.OverlayQuery.TryGetComponent(gridUid, out var overlayComponent))
                         continue;
-
-                    List<GasOverlayChunk> dataToSend = new();
-                    ev.UpdatedChunks[netGrid] = dataToSend;
 
                     previouslySent.TryGetValue(netGrid, out var previousChunks);
 
                     foreach (var gIndex in gridChunks)
                     {
-                        if (!overlay.Chunks.TryGetValue(gIndex, out var value))
+                        if (!overlayComponent.Chunks.TryGetValue(gIndex, out var value))
                             continue;
 
                         // If the chunk was updated since we last sent it, send it again
@@ -443,6 +443,9 @@ namespace Content.Server.Atmos.EntitySystems
                         if (previousChunks == null || !previousChunks.Contains(gIndex))
                             dataToSend.Add(value);
                     }
+
+                    ev.UpdatedChunks[netGrid] = [.. dataToSend];
+                    dataToSend.Clear();
 
                     previouslySent[netGrid] = gridChunks;
                     if (previousChunks != null)
