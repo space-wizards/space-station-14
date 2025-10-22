@@ -80,8 +80,7 @@ public abstract class SharedHailerSystem : EntitySystem
                                         hideLog: true,
                                         nameOverride: ent.Comp.ChatName,
                                         checkRadioPrefix: false,
-                                        ignoreActionBlocker: true,
-                                        skipTransform: true);
+                                        ignoreActionBlocker: true);
         }
         else
             Log.Error("SharedHailerSystem tried to send a chat message but the hailer had no user !");
