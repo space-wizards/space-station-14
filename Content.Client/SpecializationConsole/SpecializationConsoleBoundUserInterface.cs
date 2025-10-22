@@ -1,5 +1,3 @@
-
-using Content.Client.SpecializationConsole.Controls;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.SpecializationConsole;
 using Robust.Client.UserInterface;
@@ -22,8 +20,7 @@ public sealed class SpecializationConsoleBoundUserInterface(EntityUid owner, Enu
         _window.PrivilegedIdButton.OnPressed += _ => SendPredictedMessage(new ItemSlotButtonPressedEvent(PrivilegedIdCardSlotId));
         _window.TargetIdButton.OnPressed += _ => SendPredictedMessage(new ItemSlotButtonPressedEvent(TargetIdCardSlotId));
 
-        _window.OnDialogConfirmed += spec => SendMessage(new SpecializationChangedMessage(spec));
-        _window.DeleteButton.OnPressed += _ => SendMessage(new SpecializationChangedMessage(null));
+        _window.OnSpecializationChanged += spec => SendMessage(new SpecializationChangedMessage(spec));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

@@ -2,17 +2,12 @@
                       xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       xmlns:employeeData="clr-namespace:Content.Client.SpecializationConsole.EmployeeData"
-                      xmlns:xNamespace="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:s="clr-namespace:Content.Client.Stylesheets"
-                      Title="{Loc 'comp-ringer-ui-menu-title'}"
-                      MinSize="575 330"
+                      Title="{Loc 'computer-spec-title'}"
                       SetSize="575 330">
     <BoxContainer Orientation="Vertical"
                   HorizontalExpand="True">
-        <!-- Screen foreground -->
         <BoxContainer Orientation="Vertical"
                       VerticalExpand="True">
-            <!-- Targeting controls -->
             <GridContainer Columns="2"
                            Margin="8"
                            VerticalExpand="True">
@@ -30,17 +25,19 @@
                                 <PanelContainer StyleClasses="Inset"
                                                 HorizontalExpand="True">
                                     <BoxContainer Orientation="Vertical">
-                                        <Label Text="Privileged ID"
+                                        <Label Text="{Loc 'computer-spec-priveleged-id'}"
                                                StyleClasses="LabelKeyText" />
                                         <BoxContainer HorizontalAlignment="Left">
-                                            <controls:IdCardButton Name="PrivilegedIdButton"
+                                            <Button Name="PrivilegedIdButton"
                                                                    Access="Public"
-                                                                   SetSize="33 33">
+                                                                   SetSize="33 33"
+                                                                   StyleClasses="ButtonIdCard">
                                                 <SpriteView Name="EntityView"
                                                             Access="Public"
                                                             Stretch="None"
-                                                            Scale="1.5 1.5" />
-                                            </controls:IdCardButton>
+                                                            Scale="1.5 1.5"
+                                                            RectClipContent="False"/>
+                                            </Button>
                                         </BoxContainer>
                                     </BoxContainer>
                                 </PanelContainer>
@@ -48,17 +45,19 @@
                                                 HorizontalExpand="True"
                                                 Margin="6 0 0 0">
                                     <BoxContainer Orientation="Vertical">
-                                        <Label Text="Target ID"
+                                        <Label Text="{Loc 'computer-spec-target-id'}"
                                                StyleClasses="LabelKeyText" />
                                         <BoxContainer HorizontalAlignment="Left">
-                                            <controls:IdCardButton Name="TargetIdButton"
-                                                                   Access="Public"
-                                                                   SetSize="33 33">
+                                            <Button Name="TargetIdButton"
+                                                    Access="Public"
+                                                    SetSize="33 33"
+                                                    StyleClasses="ButtonIdCard">
                                                 <SpriteView Name="TargetEntityView"
                                                             Access="Public"
                                                             Stretch="None"
-                                                            Scale="1.5 1.5" />
-                                            </controls:IdCardButton>
+                                                            Scale="1.5 1.5"
+                                                            RectClipContent="False"/>
+                                            </Button>
                                         </BoxContainer>
                                     </BoxContainer>
                                 </PanelContainer>
@@ -68,7 +67,7 @@
                                         Margin="0 10 0 0"
                                         SetSize="260 70">
                             <BoxContainer>
-                                <Label Text="Access" />
+                                <Label Text="{Loc 'computer-spec-access'}" />
                                 <BoxContainer Name="AccessBox"
                                               Orientation="Vertical"
                                               HorizontalExpand="True"
@@ -78,22 +77,12 @@
                                 </BoxContainer>
                             </BoxContainer>
                         </PanelContainer>
-                        <!-- Access configuration -->
                         <PanelContainer StyleClasses="Inset"
                                         Margin="0 10 0 0">
                             <BoxContainer Orientation="Vertical">
-                                <Label Text="Specialization" />
-                                <BoxContainer>
-                                    <Button Name="SetButton"
-                                            StyleClasses="OpenRight"
-                                            Text="Set"
-                                            Margin="0 5 0 5" />
-                                    <Button Name="DeleteButton"
-                                            StyleClasses="OpenLeft"
-                                            Text="Delete"
-                                            Margin="0 5 0 5"
-                                            Access="Public" />
-                                </BoxContainer>
+                                <Label Text="{Loc 'computer-spec-specialization'}" />
+                                <LineEdit Name="SpecializationLineEdit"
+                                          Margin="0 5 0 5"/>
                             </BoxContainer>
                         </PanelContainer>
                     </BoxContainer>
@@ -107,17 +96,12 @@
                         <controls:StripeBack HorizontalExpand="True">
                             <BoxContainer HorizontalExpand="True"
                                           HorizontalAlignment="Center">
-                                <Label Text="Employee Data"
+                                <Label Text="{Loc 'computer-spec-employee-data'}"
                                        StyleClasses="LabelBig" />
                             </BoxContainer>
                         </controls:StripeBack>
                     </PanelContainer>
-                    <PanelContainer VerticalExpand="True">
-                        <PanelContainer.PanelOverride>
-                            <gfx:StyleBoxFlat BorderThickness="2"
-                                              BorderColor="#444444"
-                                              BackgroundColor="{xNamespace:Static s:StyleNano.PanelDark}" />
-                        </PanelContainer.PanelOverride>
+                    <PanelContainer VerticalExpand="True" StyleClasses="PanelDark">
                         <employeeData:EmployeeData Name="EmployeeInfo"
                                                    Access="Public" />
                     </PanelContainer>
@@ -135,7 +119,7 @@
                        Modulate="#FFD700"
                        StyleClasses="WindowFooterText" />
                 <Label Name="Footer"
-                       Text="{Loc 'turret-controls-window-footer'}"
+                       Text="{Loc 'computer-spec-window-footer'}"
                        HorizontalAlignment="Center"
                        Margin="0 0 0 4"
                        Modulate="#FFCC66"
