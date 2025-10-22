@@ -50,9 +50,47 @@ namespace Content.Shared.Localizations
              * This ensures the english translations continue to work as expected when fallbacks are needed.
              */
             var cultureEn = new CultureInfo("en-US");
+            // Register functions for both the custom culture and English where appropriate.
+            // Most formatting functions are useful for both cultures, so register them for both.
+            // English-specific functions (like MAKEPLURAL) remain registered only for en-US.
 
+            // Functions to register for both cultures
+            _loc.AddFunction(culture, "PRESSURE", FormatPressure);
+            _loc.AddFunction(cultureEn, "PRESSURE", FormatPressure);
+
+            _loc.AddFunction(culture, "POWERWATTS", FormatPowerWatts);
+            _loc.AddFunction(cultureEn, "POWERWATTS", FormatPowerWatts);
+
+            _loc.AddFunction(culture, "POWERJOULES", FormatPowerJoules);
+            _loc.AddFunction(cultureEn, "POWERJOULES", FormatPowerJoules);
+
+            _loc.AddFunction(culture, "ENERGYWATTHOURS", FormatEnergyWattHours);
+            _loc.AddFunction(cultureEn, "ENERGYWATTHOURS", FormatEnergyWattHours);
+
+            _loc.AddFunction(culture, "UNITS", FormatUnits);
+            _loc.AddFunction(cultureEn, "UNITS", FormatUnits);
+
+            _loc.AddFunction(culture, "TOSTRING", args => FormatToString(culture, args));
+            _loc.AddFunction(cultureEn, "TOSTRING", args => FormatToString(cultureEn, args));
+
+            _loc.AddFunction(culture, "LOC", FormatLoc);
+            _loc.AddFunction(cultureEn, "LOC", FormatLoc);
+
+            _loc.AddFunction(culture, "NATURALFIXED", FormatNaturalFixed);
+            _loc.AddFunction(cultureEn, "NATURALFIXED", FormatNaturalFixed);
+
+            _loc.AddFunction(culture, "NATURALPERCENT", FormatNaturalPercent);
+            _loc.AddFunction(cultureEn, "NATURALPERCENT", FormatNaturalPercent);
+
+            _loc.AddFunction(culture, "PLAYTIME", FormatPlaytime);
+            _loc.AddFunction(cultureEn, "PLAYTIME", FormatPlaytime);
+
+            // Register MANY for both to avoid issues in generated locale files
+            _loc.AddFunction(culture, "MANY", FormatMany);
+            _loc.AddFunction(cultureEn, "MANY", FormatMany);
+
+            // English-only functions
             _loc.AddFunction(cultureEn, "MAKEPLURAL", FormatMakePlural);
-            _loc.AddFunction(culture, "MANY", FormatMany); // RU-Localization: To prevent problems in auto-generated locale files
         }
 
         private ILocValue FormatMany(LocArgs args)
