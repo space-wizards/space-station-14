@@ -1,13 +1,12 @@
-## NEW LINES BELOW, OLD TO BE DELETED
 ## 	GENERAL 	##
 
 ## Tools interaction
 
-sec-gas-mask-verb = Change level
+hailer-gas-mask-verb = Change level
 hailer-gas-mask-screwed = Changed to {$level} aggression
-sec-gas-mask-emagged = Changed to ERROR aggression
-sec-gas-mask-wrong_access = You don't have succifient access.
-ert-gas-mask-impossible = It seems impervious to external change.
+hailer-gas-mask-emagged = Changed to ERROR aggression
+hailer-gas-mask-wrong_access = You don't have succifient access.
+hailer-ert-gas-mask-impossible = It seems impervious to external change.
 
 
 sec-gas-mask-alert-owner = {CAPITALIZE(THE($user))} is { $quality ->
