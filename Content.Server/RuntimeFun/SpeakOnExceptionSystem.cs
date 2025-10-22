@@ -8,6 +8,10 @@ using Serilog.Events;
 
 namespace Content.Server.RuntimeFun;
 
+/// <summary>
+///     System for the <see cref="SpeakOnExceptionComponent"/>. Deals with getting the latest error log and making
+///     entities with that component speak.
+/// </summary>
 public sealed class SpeakOnExceptionSystem : EntitySystem
 {
     [Dependency] private readonly ILogManager _log = default!;
@@ -37,9 +41,10 @@ public sealed class SpeakOnExceptionSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        var log = _logHandler.LastLog;
-        if (log == null)
+        if (!_logHandler.ErrorHasOccured)
             return;
+
+        _logHandler.ErrorHasOccured = false;
 
         var query = EntityQueryEnumerator<SpeakOnExceptionComponent>();
 
@@ -52,8 +57,6 @@ public sealed class SpeakOnExceptionSystem : EntitySystem
 
             comp.NextTimeCanSpeak += comp.SpeechCooldown;
         }
-
-        _logHandler.LastLog = null;
     }
 
     private void OnTransformSpeech(Entity<SpeakOnExceptionComponent> ent, ref TransformSpeechEvent args)
@@ -71,19 +74,20 @@ public sealed class SpeakOnExceptionSystem : EntitySystem
     {
         _log.RootSawmill.RemoveHandler(_logHandler);
     }
-}
 
-// Log handler for SpeakOnException entities.
-public sealed class SpeakOnExceptionLogHandler : ILogHandler
-{
-    // Last error log that occured
-    public string? LastLog;
-
-    public void Log(string sawmillName, LogEvent message)
+    // Log handler for SpeakOnException entities.
+    private sealed class SpeakOnExceptionLogHandler : ILogHandler
     {
-        if (message.Exception == null)
-            return;
+        // Gets set to true if an error ever occurs - reset this too false if you want to see if another error occured!
+        public bool ErrorHasOccured;
 
-        LastLog = message.Exception.Message;
+        public void Log(string sawmillName, LogEvent message)
+        {
+            if (message.Exception == null)
+                return;
+
+            ErrorHasOccured = true;
+        }
     }
 }
+
