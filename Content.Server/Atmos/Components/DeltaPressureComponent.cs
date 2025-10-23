@@ -1,6 +1,7 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
+using Content.Shared.Guidebook;
 
 namespace Content.Server.Atmos.Components;
 
@@ -34,17 +35,12 @@ public sealed partial class DeltaPressureComponent : Component
     public bool IsTakingDamage;
 
     /// <summary>
-    /// The current cached position of this entity on the grid.
-    /// Updated via MoveEvent.
-    /// </summary>
-    [DataField(readOnly: true)]
-    public Vector2i CurrentPosition = Vector2i.Zero;
-
-    /// <summary>
     /// The grid this entity is currently joined to for processing.
     /// Required for proper deletion, as we cannot reference the grid
     /// for removal while the entity is being deleted.
     /// </summary>
+    /// <remarks>Note that while <see cref="AirtightComponent"/> already stores the grid,
+    /// we cannot trust it to be available on init or when the entity is being deleted. Tragic.</remarks>
     [DataField]
     public EntityUid? GridUid;
 
@@ -87,6 +83,7 @@ public sealed partial class DeltaPressureComponent : Component
     /// The minimum difference in pressure between any side required for the entity to start taking damage.
     /// </summary>
     [DataField]
+    [GuidebookData]
     public float MinPressureDelta = 7500;
 
     /// <summary>
