@@ -559,6 +559,8 @@
   - type: HideLayerClothing
     slots:
     - Hair
+    - HeadTop
+    - HeadSide
     - Snout
     hideOnToggle: true
   - type: FlashImmunity
@@ -609,7 +611,7 @@
   
 
 - type: entity
-  parent: ClothingMaskGasERT
+  parent: [ ClothingMaskGas, BaseCentcommContraband ]
   id: ClothingMaskGasDeathSquad
   name: death squad gas mask
   description: A unique gas mask for the NT's most elite squad.
@@ -618,11 +620,19 @@
     sprite: Clothing/Mask/squadron.rsi
   - type: Clothing
     sprite: Clothing/Mask/squadron.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - EmagImmune 
   - type: HideLayerClothing
     slots:
     - Hair
     - HeadTop
     - HeadSide
+    - Snout
+    hideOnToggle: true
+  - type: FlashImmunity
+  - type: EyeProtection
   - type: Armor
     modifiers:
       coefficients:
