@@ -2,9 +2,14 @@
   id: XenoArtifactEffectsDefaultTable
   table: !type:GroupSelector
     children:
-    # hijacks use key, prevents from using artifact, sadly
-    #- id: XenoArtifactEffectUniversalIntercom
-    #  weight: 10.0
+    - id: XenoArtifactEffectUniversalIntercom
+      weight: 10.0
+    - id: XenoArtifactBecomeRandomInstrument
+      weight: 10.0
+    - id: XenoArtifactBecomeLathe
+      weight: 10.0
+    - id: XenoArtifactBecomeJukebox
+      weight: 10.0
     - id: XenoArtifactSolutionStorage
       weight: 10.0
     - id: XenoArtifactPhasing
@@ -132,8 +137,6 @@
   id: XenoArtifactEffectsHandheldOnlyTable
   table: !type:GroupSelector
     children:
-    #- id: XenoArtifactBecomeRandomInstrument
-    #  weight 10.0 # removed until we have value-based system
     #- id: XenoArtifactGun
     #  weight 4.0 #it conflicts with default interaction - it should activate artifact nodes
     - id: XenoArtifactOmnitool
@@ -174,6 +177,8 @@
   description: Obtains ability of long-distance communication device
   components:
   - type: XAEApplyComponents
+    key: enum.IntercomUiKey.Key
+    verbText: Use Intercom
     components:
     - type: RadioMicrophone
       powerRequired: false
@@ -182,8 +187,6 @@
     - type: Speech
     - type: RadioSpeaker
       toggleOnInteract: false
-    - type: ActivatableUI
-      key: enum.IntercomUiKey.Key
     - type: Intercom
       requiresPower: false
       supportedChannels:
@@ -205,10 +208,62 @@
   - type: XAEApplyComponents
     components:
     - type: Instrument
-    - type: ActivatableUI
-      singleUser: true
-      verbText: verb-instrument-openui
-      key: enum.InstrumentUiKey.Key
+    verbText: Use Instrument
+    key: enum.InstrumentUiKey.Key
+
+- type: entity
+  id: XenoArtifactBecomeLathe
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Obtains ability of lathe
+  components:
+  - type: XAEApplyComponents
+    key: enum.LatheUiKey.Key
+    verbText: Use Lathe
+    components:
+    - type: Lathe
+      staticPacks:
+      - AtmosStatic
+      - CargoBoardsStatic
+      - CargoStatic
+      - ChemistryStatic
+      - ElectronicsStatic
+      - EmptyMedkitsStatic
+      - EngineeringBoardsStatic
+      - MedicalBoardsStatic
+      - MedicalClothingStatic
+      - MedicalStatic
+      - RollerBedsStatic
+      - ScienceBoardsStatic
+      - SecurityAmmoStatic
+      - SecurityEquipmentStatic
+      - SecurityPracticeStatic
+      - SecurityWeaponsStatic
+      - ServiceBoardsStatic
+      - ServiceStatic
+      - SurgeryStatic
+      - SyndicateAmmoStatic
+      - ToolsStatic
+      - TopicalsStatic
+    - type: ResearchClient
+    - type: TechnologyDatabase
+    - type: OreSiloClient
+    - type: MaterialStorage
+      whitelist:
+        tags:
+        - Sheet
+        - RawMaterial
+        - Ingot
+
+- type: entity
+  id: XenoArtifactBecomeJukebox
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Obtains ability of jukebox
+  components:
+  - type: XAEApplyComponents
+    key: enum.JukeboxUiKey.Key
+    verbText: Use Jukebox
+    components:
+    - type: Jukebox
 
 - type: entity
   id: XenoArtifactStorage

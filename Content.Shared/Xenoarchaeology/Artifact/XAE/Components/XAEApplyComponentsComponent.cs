@@ -26,4 +26,10 @@ public sealed partial class XAEApplyComponentsComponent : Component
     /// </summary>
     [DataField]
     public bool RefreshOnReactivate { get; set; }
+
+    [DataField]
+    public Enum? Key;
+
+    [DataField]
+    public LocId VerbText = "ui-verb-toggle-open";
 }

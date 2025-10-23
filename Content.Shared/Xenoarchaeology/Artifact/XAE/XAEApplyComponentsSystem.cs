@@ -1,3 +1,4 @@
+using Content.Shared.UserInterface;
 using Content.Shared.Xenoarchaeology.Artifact.XAE.Components;
 using Robust.Shared.Timing;
 
@@ -34,5 +35,13 @@ public sealed class XAEApplyComponentsSystem : BaseXAESystem<XAEApplyComponentsC
             var clone = EntityManager.ComponentFactory.GetComponent(registry.Value);
             AddComp(artifact, clone);
         }
+
+        if (ent.Comp.Key == null || !TryComp<MultiActivatableUIComponent>(artifact, out var maui))
+        {
+            return;
+        }
+
+        maui.Keys.Add(ent.Comp.Key);
+        maui.VerbTexts.Add(ent.Comp.VerbText);
     }
 }
