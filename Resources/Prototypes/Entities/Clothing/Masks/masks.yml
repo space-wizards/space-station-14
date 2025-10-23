@@ -23,8 +23,7 @@
 - type: entity
   parent: [ClothingMaskGas, BaseSecurityContraband]
   id: ClothingMaskGasSecurity
-  #test purposes, i'm tired of typing 'gas masks' every time :((
-  name: hailer #security gas mask
+  name: security gas mask
   description: A standard issue Security gas mask.
   components:
   - type: Item

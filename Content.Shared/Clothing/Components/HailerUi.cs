@@ -14,10 +14,13 @@ public enum HailerUiKey : byte
 [Serializable, NetSerializable]
 public sealed class HailerOrderMessage : BoundUserInterfaceMessage
 {
-    public readonly int Index;
+    /// <summary>
+    /// Index for the hailer order choosen by the user
+    /// </summary>
+    public readonly int OrderIndex;
 
     public HailerOrderMessage(int index)
     {
-        Index = index;
+        OrderIndex = index;
     }
 }

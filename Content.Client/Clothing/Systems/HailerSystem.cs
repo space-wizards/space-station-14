@@ -1,12 +1,8 @@
-using Content.Shared.Changeling.Systems;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.ActionEvent;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
-using Content.Shared.Emag.Components;
-using Content.Shared.Labels;
 using Robust.Client.GameObjects;
-using System;
 
 namespace Content.Client.Clothing.Systems;
 public sealed class HailerSystem : SharedHailerSystem
@@ -26,6 +22,7 @@ public sealed class HailerSystem : SharedHailerSystem
         if (ev.Handled)
             return;
 
+        //Try to get BUI if already open
         if (_ui.TryGetOpenUi(ent.Owner, HailerUiKey.Key, out var bui))
         {
             ev.Handled = true;
@@ -34,6 +31,7 @@ public sealed class HailerSystem : SharedHailerSystem
         {
             if (!mask.IsToggled && !ent.Comp.AreWiresCut)
             {
+                //Otherwise, open it
                 _ui.TryOpenUi(ent.Owner, HailerUiKey.Key, ev.Performer, predicted: true);
                 ev.Handled = true;
             }

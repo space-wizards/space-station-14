@@ -9,8 +9,11 @@ namespace Content.Client.Clothing.UI;
 public sealed class HailerBoundUserInterface : BoundUserInterface
 {
     [Dependency] private readonly IPlayerManager _player = default!;
+
     private SimpleRadialMenu? _hailerRadioMenu;
+    //Background color of the button
     private static readonly Color SelectedOptionBackground = StyleNano.ButtonColorDefaultRed.WithAlpha(128);
+    //Hover color of the button
     private static readonly Color SelectedOptionHoverBackground = StyleNano.ButtonColorHoveredRed.WithAlpha(128);
 
     public HailerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
@@ -39,6 +42,7 @@ public sealed class HailerBoundUserInterface : BoundUserInterface
         if (_player.LocalSession?.AttachedEntity is not { } user)
             return;
 
+        //Convert hailer orders set in the yaml to buttons for the radialMenu
         var list = ConvertToButtons(hailerComp.Orders);
         _hailerRadioMenu.SetButtons(list);
     }
@@ -47,11 +51,13 @@ public sealed class HailerBoundUserInterface : BoundUserInterface
     {
         List<RadialMenuOptionBase> list = new();
 
+        //For each order, add a button
         for (var i = 0; i < orders.Count; i++)
         {
             var line = orders[i];
             var tooltip = line.Description;
 
+            //Index of the order in the hailer orders List
             var orderIndex = i;
             var button = new RadialMenuActionOption<int>(DoSomething, orderIndex)
             {
@@ -70,7 +76,10 @@ public sealed class HailerBoundUserInterface : BoundUserInterface
 
     private void DoSomething(int index)
     {
+        //Send message for HailerSystem to catch
         SendPredictedMessage(new HailerOrderMessage(index));
+
+        //Close BUI
         Close();
     }
 }

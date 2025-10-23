@@ -9,18 +9,18 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Clothing.Components;
 
 /// <summary>
-/// Handle the hails (audible orders to stop) coming from a security gas mask / swat mask
+/// Handle the orders coming from a security gas mask / swat mask
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class HailerComponent : Component
 {
     /// <summary>
-    /// The person wearing the mask
+    /// The user wearing the mask
     /// </summary>
     public EntityUid? User;
 
     /// <summary>
-    /// Are the wires of the hailer currently cut ?
+    /// Are the wires of the hailer cut ?
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool AreWiresCut = false;
@@ -32,7 +32,7 @@ public sealed partial class HailerComponent : Component
     public bool IsToolInteractible = true;
 
     /// <summary>
-    /// Locale text for the description when examined
+    /// Loc string for the description when examined
     /// </summary>
     [DataField]
     public string DescriptionLocale;
@@ -53,13 +53,13 @@ public sealed partial class HailerComponent : Component
     /// Delay when the hailer is used with a screwing tool to change aggression level
     /// </summary>
     [DataField]
-    public float ScrewingDoAfterDelay = 3f;
+    public float ScrewingDoAfterDelay = 2f;
 
     /// <summary>
     /// Delay when the hailer is used with a cutting tool
     /// </summary>
     [DataField]
-    public float CuttingDoAfterDelay = 5f;
+    public float CuttingDoAfterDelay = 4f;
 
     /// <summary>
     /// How long until you can use the verb again to change aggression level
@@ -70,7 +70,7 @@ public sealed partial class HailerComponent : Component
     /// <summary>
     /// Time where the verb will be ready to be used again
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, AutoNetworkedField]
     public TimeSpan TimeVerbReady = TimeSpan.Zero;
 
     /// <summary>
@@ -99,25 +99,13 @@ public sealed partial class HailerComponent : Component
     public SoundSpecifier SettingError = new SoundCollectionSpecifier("CargoError");
 
     /// <summary>
-    /// The action that gets displayed when the gas mask is equipped.
-    /// </summary>
-    [DataField]
-    public EntProtoId Action = "ActionSecHailer";
-
-    /// <summary>
-    /// Reference to the action for hailing.
-    /// </summary>
-    [DataField]
-    public EntityUid? ActionEntity;
-
-    /// <summary>
-    /// Entity prototype to spawn when used, using the whistle one
+    /// Entity prototype spawn on other people when using the hailer. Similar to the whistle.
     /// </summary>
     [DataField]
     public EntProtoId ExclamationEffect = "WhistleExclamation";
 
     /// <summary>
-    /// The levels/states of hailing. Determines what soundcollection to use
+    /// This determines what soundcollection and what loc string will be used in addition to a random index
     /// </summary>
     [DataField]
     public List<HailLevel>? HailLevels = [];
@@ -129,17 +117,20 @@ public sealed partial class HailerComponent : Component
     public int? HailLevelIndex;
 
     /// <summary>
-    /// Locale text prefix for emag lines
+    /// Loc string prefix for emag lines
     /// </summary>
     [DataField]
     public string? EmagLevelPrefix;
 
     /// <summary>
-    /// Orders shown on the BUI radial menu and determines what soundcollection to use
+    /// Orders shown on the BUI radial menu and determines what soundcollection to use when playing the audio of the line
     /// </summary>
     [DataField]
     public List<HailOrder> Orders = [];
 
+    /// <summary>
+    /// Return the current HailLevel based on HailLevelIndex or return null
+    /// </summary>
     public HailLevel? CurrentHailLevel
     {
         get
@@ -153,14 +144,8 @@ public sealed partial class HailerComponent : Component
     }
 }
 
-[Serializable, NetSerializable]
-public enum SecMaskVisuals : byte
-{
-    State
-}
-
 /// <summary>
-/// Measure the level of the hails produced, ex: more or less aggressive
+/// Category of hailer line. Used for determining which soundcollection and loc string to use
 /// </summary>
 [DataRecord, Serializable, NetSerializable]
 public record struct HailLevel
@@ -169,6 +154,10 @@ public record struct HailLevel
     public string Name;
 }
 
+/// <summary>
+/// Appears on the BUI radial menu of the hailer
+/// Each has a soundCollection and loc string prefix used when choosen on the BUI
+/// </summary>
 [DataRecord, Serializable, NetSerializable]
 public record struct HailOrder
 {
@@ -176,13 +165,13 @@ public record struct HailOrder
     public string? Name;
 
     /// <summary>
-    /// What will be shown on the BUI radial menu ?
+    /// String shown the BUI radial menu
     /// </summary>
     [DataField]
     public string? Description;
 
     /// <summary>
-    /// Icon shown on the BUI
+    /// Icon shown on the BUI radial menu
     /// </summary>
     [DataField, AutoNetworkedField]
     public SpriteSpecifier? Icon;
@@ -195,7 +184,7 @@ public record struct HailOrder
     public string? SoundCollection;
 
     /// <summary>
-    /// What locale text to use
+    /// What loc string to use
     /// Will add the hail level if relevant
     /// </summary>
     [DataField]
