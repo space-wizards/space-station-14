@@ -39,7 +39,7 @@ public sealed class ChatWindowCommand : LocalizedCommands
         var window = clyde.CreateWindow(new WindowCreateParameters
         {
             //Maximized = true,
-            Title = "Chat Window",
+            Title = Loc.GetString("chat-window-title"),
             //Monitor = monitor,
         });
         var root = IoCManager.Resolve<IUserInterfaceManager>().CreateWindowRoot(window);
@@ -52,7 +52,6 @@ public sealed class ChatWindowCommand : LocalizedCommands
         root.AddChild(control);
     }
 }
-
 
 /// <summary>
 /// Command which creates a window containing a chatbox configured for admin use
