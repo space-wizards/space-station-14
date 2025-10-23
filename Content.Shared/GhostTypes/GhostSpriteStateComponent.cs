@@ -21,6 +21,7 @@ public sealed partial class GhostSpriteStateComponent : Component
 
     /// <summary>
     /// Should link damage types names to an int, according to the amount of possible sprites for that specific type.
+    /// (The GhostSpriteStateSystem will randomly choose between them)
     /// </summary>
     [DataField]
     public Dictionary<ProtoId<DamageTypePrototype>, int> DamageMap = new();

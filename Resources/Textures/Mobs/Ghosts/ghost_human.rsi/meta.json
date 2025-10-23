@@ -23,43 +23,43 @@
             "directions": 4
         },
         {
-            "name": "ghost_blunt1",
+            "name": "ghost_Blunt1",
             "directions": 4
         },
         {
-            "name": "ghost_blunt2",
+            "name": "ghost_Blunt2",
             "directions": 4
         },
         {
-            "name": "ghost_blunt3",
+            "name": "ghost_Blunt3",
             "directions": 4
         },
         {
-            "name": "ghost_slash1",
+            "name": "ghost_Slash1",
             "directions": 4
         },
         {
-            "name": "ghost_slash2",
+            "name": "ghost_Slash2",
             "directions": 4
         },
         {
-            "name": "ghost_slash3",
+            "name": "ghost_Slash3",
             "directions": 4
         },
         {
-            "name": "ghost_piercing1",
+            "name": "ghost_Piercing1",
             "directions": 4
         },
         {
-            "name": "ghost_piercing2",
+            "name": "ghost_Piercing2",
             "directions": 4
         },
         {
-            "name": "ghost_piercing3",
+            "name": "ghost_Piercing3",
             "directions": 4
         },
         {
-            "name": "ghost_heat",
+            "name": "ghost_Heat",
             "directions": 4,
             "delays": [
                 [
@@ -89,11 +89,11 @@
             ]
         },
         {
-            "name": "ghost_cold",
+            "name": "ghost_Cold",
             "directions": 4
         },
         {
-            "name": "ghost_shock",
+            "name": "ghost_Shock",
             "directions": 4,
             "delays": [
                 [
@@ -131,7 +131,7 @@
             ]
         },
         {
-            "name": "ghost_radiation",
+            "name": "ghost_Radiation",
             "directions": 4,
             "delays": [
                 [
@@ -161,27 +161,27 @@
             ]
         },
         {
-            "name": "ghost_cellular",
+            "name": "ghost_Cellular",
             "directions": 4
         },
         {
-            "name": "ghost_poison",
+            "name": "ghost_Poison",
             "directions": 4
         },
         {
-            "name": "ghost_asphyxiation",
+            "name": "ghost_Asphyxiation",
             "directions": 4
         },
         {
-            "name": "ghost_explosion1",
+            "name": "ghost_Explosion1",
             "directions": 4
         },
         {
-            "name": "ghost_explosion2",
+            "name": "ghost_Explosion2",
             "directions": 4
         },
         {
-            "name": "ghost_explosion3",
+            "name": "ghost_Explosion3",
             "directions": 4
         }
       ]

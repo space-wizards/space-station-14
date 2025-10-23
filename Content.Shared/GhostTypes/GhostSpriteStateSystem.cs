@@ -1,5 +1,7 @@
+using System.Linq;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.FixedPoint;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
 using Robust.Shared.Prototypes;
@@ -21,37 +23,48 @@ public sealed class GhostSpriteStateSystem : EntitySystem
         if (!TryComp<AppearanceComponent>(ent, out var appearance) || !TryComp<MindComponent>(mind, out var mindComp))
             return;
 
-        List<ProtoId<DamageTypePrototype>> highestType;
+        var damageTypes = new Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2>();
+
         if (TryComp<DamageableComponent>(mindComp.CurrentEntity, out var damageComp))
         {
-            highestType = _damageable.GetHighestDamageTypes(damageComp.DamagePerGroup, damageComp.Damage);
+            damageTypes = _damageable.GetDamages(damageComp.DamagePerGroup, damageComp.Damage);
         }
         else if (TryComp<LastBodyDamageComponent>(mind, out var storedDamage) && storedDamage.DamagePerGroup != null && storedDamage.Damage != null)
         {
-            highestType = _damageable.GetHighestDamageTypes(storedDamage.DamagePerGroup, storedDamage.Damage);
+            damageTypes = _damageable.GetDamages(storedDamage.DamagePerGroup, storedDamage.Damage);
         }
         else
             return;
 
-        if (highestType.Count == 0)
+        if (damageTypes.Count == 0)
             return;
 
-        highestType.Sort();
+        var spriteState = new ProtoId<DamageTypePrototype>();
+        var sortedDict = damageTypes.OrderBy(x => x.Value).ToDictionary();
+        List<ProtoId<DamageTypePrototype>> highestTypes = new();
 
-        string spriteState;
-        if (highestType.Count == 3 && highestType[0]== "Blunt" && highestType[1]== "Heat" && highestType[2]== "Piercing")  // Specific case for explosions
+        for (var i = sortedDict.Count - 1; i >= 0; i--) // Go through the dictionary values and save the ProtoId's of the highest value
         {
-            spriteState = "explosion" +_random.Next(1, 4);
+            if (sortedDict.ElementAt(i).Value == sortedDict.ElementAt(sortedDict.Count - 1).Value)
+            {
+                highestTypes.Add(sortedDict.ElementAt(i).Key);
+            }
+        }
+
+        if (highestTypes.Count == 3 && highestTypes[0] == "Blunt" && highestTypes[1] == "Heat" && highestTypes[2] == "Heat") // Specific case for explosions
+        {
+            spriteState = "explosion" + _random.Next(1, 4);
+            Log.Debug("explosion!!");
         }
         else
         {
-            spriteState = highestType[_random.Next(0, highestType.Count)]; // Chooses a random damage type from the list
-            if (ent.Comp.DamageMap.TryGetValue(highestType[_random.Next(0, highestType.Count)], out var spriteAmount) && spriteAmount > 1)  // Chooses a random sprite state if needed.
+            spriteState = highestTypes[_random.Next(0, highestTypes.Count)]; // Chooses a random damage type from the list
+            if (ent.Comp.DamageMap.TryGetValue(spriteState, out var spriteAmount) && spriteAmount > 1)  // Chooses a random sprite state if needed.
             {
                 spriteState += _random.Next(1, spriteAmount + 1);
             }
         }
-
-        _appearance.SetData(ent, GhostComponent.GhostVisuals.Damage, ent.Comp.Prefix + spriteState.ToLower(), appearance);
+        Log.Debug($"weh {spriteState}");
+        _appearance.SetData(ent, GhostComponent.GhostVisuals.Damage, ent.Comp.Prefix + spriteState, appearance);
     }
 }

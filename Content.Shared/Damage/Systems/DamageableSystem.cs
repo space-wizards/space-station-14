@@ -364,13 +364,11 @@ namespace Content.Shared.Damage
         }
 
         /// <summary>
-        /// Returns a string list containing the type/s of the highest damage value
+        /// Returns a dictionary containing the ProtoId of the damage types and FixedPoint2 of the damage values present in the body
         /// </summary>
-        public List<ProtoId<DamageTypePrototype>> GetHighestDamageTypes(Dictionary<string, FixedPoint2> damagePerGroup, DamageSpecifier damage)
+        public Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2> GetDamages(Dictionary<string, FixedPoint2> damagePerGroup, DamageSpecifier damage)
         {
-            var highestType = new List<ProtoId<DamageTypePrototype>>();
-
-            var highestValue = FixedPoint2.Zero;
+            var damageTypes = new Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2>();
 
             foreach (var (damageGroupId, damageAmount) in damagePerGroup)  //go through each group
             {
@@ -379,21 +377,11 @@ namespace Content.Shared.Damage
                 {
                     if (damage.DamageDict.TryGetValue(type, out var damageValue) && damageValue > 0)  //get value and make sure it isn't 0
                     {
-                        if (damageValue > highestValue)  //if it's higher, clear the list and add the value
-                        {
-                            highestType.Clear();
-                            highestType.Add(type);
-
-                            highestValue = damageValue;
-                        }
-                        else if (damageValue == highestValue)  //if it's the same, add it to the list
-                        {
-                            highestType.Add(type);
-                        }
+                        damageTypes.Add(type, damageValue);
                     }
                 }
             }
-            return highestType;
+            return damageTypes;
         }
     }
 
