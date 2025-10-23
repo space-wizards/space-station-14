@@ -9,11 +9,11 @@ namespace Content.Server.EntityEffects.Effects;
 /// Makes this entity explode using its <see cref="ExplosiveComponent"/>.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
-public sealed partial class ExplodeEntityEffectSystem : EntityEffectSystem<ExplosiveComponent, ExplodeEffect>
+public sealed partial class ExplodeEntityEffectSystem : EntityEffectSystem<ExplosiveComponent, Explode>
 {
     [Dependency] private readonly ExplosionSystem _explosion = default!;
 
-    protected override void Effect(Entity<ExplosiveComponent> entity, ref EntityEffectEvent<ExplodeEffect> args)
+    protected override void Effect(Entity<ExplosiveComponent> entity, ref EntityEffectEvent<Explode> args)
     {
         _explosion.TriggerExplosive(entity, entity, args.Effect.Delete, args.Effect.Intensity, args.Effect.Radius, args.User);
     }
