@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: nabegator
-  changes:
-  - message: hi-viz vest now has a 2% chance to reflect lasers
-    type: Tweak
-  id: 8647
-  time: '2025-06-09T23:03:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38180
 - author: ArtisticRoomba
   changes:
   - message: Spacing damage has been brought back to its unnerfed value, as Atmospherics
@@ -3926,3 +3919,10 @@
   id: 9148
   time: '2025-10-23T07:00:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41047
+- author: Absotively
+  changes:
+  - message: Minor hand labeler UI improvements
+    type: Tweak
+  id: 9149
+  time: '2025-10-23T15:27:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40318
