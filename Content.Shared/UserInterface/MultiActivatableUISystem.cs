@@ -1,4 +1,4 @@
-using Content.Shared.Interaction;
+using Content.Shared.Ghost;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 
@@ -12,12 +12,16 @@ public sealed partial class MultiActivatableUISystem : EntitySystem
     {
         base.Initialize();
 
-        //SubscribeLocalEvent<MultiActivatableUIComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<MultiActivatableUIComponent, GetVerbsEvent<ActivationVerb>>(GetActivationVerb);
     }
 
     private void GetActivationVerb(EntityUid uid, MultiActivatableUIComponent component, GetVerbsEvent<ActivationVerb> args)
     {
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null || HasComp<GhostComponent>(args.User))
+        {
+            return;
+        }
+
         for (var i = 0; i < component.Keys.Count; i++)
         {
             var key = component.Keys[i];
@@ -30,23 +34,8 @@ public sealed partial class MultiActivatableUISystem : EntitySystem
         }
     }
 
-    private void OnActivate(EntityUid uid, MultiActivatableUIComponent component, ActivateInWorldEvent args)
-    {
-        args.Handled = InteractUI(args.User, uid, component);
-    }
-
     private void OpenUI(EntityUid user, EntityUid uiEntity, Enum key)
     {
         _uiSystem.OpenUi(uiEntity, key, user);
-    }
-
-    private bool InteractUI(EntityUid user, EntityUid uiEntity, MultiActivatableUIComponent maui)
-    {
-        for (var i = 0; i < maui.Keys.Count; i++)
-        {
-            _uiSystem.OpenUi(uiEntity, maui.Keys[i], user);
-        }
-
-        return false; // We don't want to hijack the ActivateInWorldEvent from other components
     }
 }
