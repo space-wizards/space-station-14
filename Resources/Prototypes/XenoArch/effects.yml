@@ -3,13 +3,13 @@
   table: !type:GroupSelector
     children:
     - id: XenoArtifactEffectUniversalIntercom
-      weight: 10.0
+      weight: 5.0
     - id: XenoArtifactBecomeRandomInstrument
-      weight: 10.0
+      weight: 5.0
     - id: XenoArtifactBecomeLathe
-      weight: 10.0
+      weight: 2.0
     - id: XenoArtifactBecomeJukebox
-      weight: 10.0
+      weight: 5.0
     - id: XenoArtifactSolutionStorage
       weight: 10.0
     - id: XenoArtifactPhasing
