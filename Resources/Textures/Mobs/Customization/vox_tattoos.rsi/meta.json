@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from Paradise at https://github.com/ParadiseSS13/Paradise/blob/ef7a4d962915cb36b138eeb59663f0053d4906fe/icons/mob/sprite_accessories/vox/vox_body_markings.dmi and modified by Flareguy. eyeshadow & tail_ring states by Flareguy, tail_talisman by TrixxedHeart",
+  "copyright": "Taken from Paradise at https://github.com/ParadiseSS13/Paradise/blob/ef7a4d962915cb36b138eeb59663f0053d4906fe/icons/mob/sprite_accessories/vox/vox_body_markings.dmi and modified by Flareguy. eyeshadow & tail_ring states by Flareguy. beakcover_stripe, beakcover_tip, cheekblush, chest_v, nightbelt, tail_talisman, tattoo_arrow_head, tattoo_nightling_head (modified from nightling_s), underbelly, visage, visage_l and visage_r by TrixxedHeart",
   "size": {
     "x": 32,
     "y": 32
@@ -21,6 +21,22 @@
     },
     {
       "name": "nightling_s",
+      "directions": 4
+    },
+    {
+      "name": "nightbelt",
+      "directions": 4
+    },
+    {
+      "name": "chest_v_1",
+      "directions": 4
+    },
+    {
+      "name": "chest_v_2",
+      "directions": 4
+    },
+    {
+      "name": "underbelly",
       "directions": 4
     },
     {
@@ -48,7 +64,43 @@
       "directions": 4
     },
     {
+      "name": "eyeliner",
+      "directions": 4
+    },
+    {
+      "name": "cheekblush",
+      "directions": 4
+    },
+    {
       "name": "tail_ring",
+      "directions": 4
+    },
+    {
+      "name": "beakcover_tip",
+      "directions": 4
+    },
+    {
+      "name": "beakcover_stripe",
+      "directions": 4
+    },
+    {
+      "name": "tattoo_arrow_head",
+      "directions": 4
+    },
+    {
+      "name": "tattoo_nightling_head",
+      "directions": 4
+    },
+    {
+      "name": "visage",
+      "directions": 4
+    },
+    {
+      "name": "visage_l",
+      "directions": 4
+    },
+    {
+      "name": "visage_r",
       "directions": 4
     }
   ]

@@ -1,6 +1,7 @@
 construction-recipe-curtains-cloth = curtains (cloth)
 construction-recipe-curtains-black = curtains (black)
 construction-recipe-curtains-blue = curtains (blue)
+construction-recipe-curtains-sky-blue = curtains (sky blue)
 construction-recipe-curtains-cyan = curtains (cyan)
 construction-recipe-curtains-green = curtains (green)
 construction-recipe-curtains-orange = curtains (orange)

@@ -51,10 +51,10 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
         _menu.OpenOverMouseScreenPosition();
     }
 
-    private IEnumerable<RadialMenuOption> ConvertToButtons(HashSet<ProtoId<RCDPrototype>> prototypes)
+    private IEnumerable<RadialMenuOptionBase> ConvertToButtons(HashSet<ProtoId<RCDPrototype>> prototypes)
     {
-        Dictionary<string, List<RadialMenuActionOption>> buttonsByCategory = new();
-        ValueList<RadialMenuActionOption> topLevelActions = new();
+        Dictionary<string, List<RadialMenuActionOptionBase>> buttonsByCategory = new();
+        ValueList<RadialMenuActionOptionBase> topLevelActions = new();
         foreach (var protoId in prototypes)
         {
             var prototype = _prototypeManager.Index(protoId);
@@ -62,7 +62,7 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
             {
                 var topLevelActionOption = new RadialMenuActionOption<RCDPrototype>(HandleMenuOptionClick, prototype)
                 {
-                    Sprite = prototype.Sprite,
+                    IconSpecifier = RadialMenuIconSpecifier.With(prototype.Sprite),
                     ToolTip = GetTooltip(prototype)
                 };
                 topLevelActions.Add(topLevelActionOption);
@@ -74,26 +74,26 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
 
             if (!buttonsByCategory.TryGetValue(prototype.Category, out var list))
             {
-                list = new List<RadialMenuActionOption>();
+                list = new List<RadialMenuActionOptionBase>();
                 buttonsByCategory.Add(prototype.Category, list);
             }
 
             var actionOption = new RadialMenuActionOption<RCDPrototype>(HandleMenuOptionClick, prototype)
             {
-                Sprite = prototype.Sprite,
+                IconSpecifier = RadialMenuIconSpecifier.With(prototype.Sprite),
                 ToolTip = GetTooltip(prototype)
             };
             list.Add(actionOption);
         }
 
-        var models = new RadialMenuOption[buttonsByCategory.Count + topLevelActions.Count];
+        var models = new RadialMenuOptionBase[buttonsByCategory.Count + topLevelActions.Count];
         var i = 0;
         foreach (var (key, list) in buttonsByCategory)
         {
             var groupInfo = PrototypesGroupingInfo[key];
             models[i] = new RadialMenuNestedLayerOption(list)
             {
-                Sprite = groupInfo.Sprite,
+                IconSpecifier = RadialMenuIconSpecifier.With(groupInfo.Sprite),
                 ToolTip = Loc.GetString(groupInfo.Tooltip)
             };
             i++;
@@ -125,8 +125,10 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
             var name = Loc.GetString(proto.SetName);
 
             if (proto.Prototype != null &&
-                _prototypeManager.TryIndex(proto.Prototype, out var entProto, logError: false))
+                _prototypeManager.TryIndex(proto.Prototype, out var entProto)) // don't use Resolve because this can be a tile
+            {
                 name = entProto.Name;
+            }
 
             msg = Loc.GetString("rcd-component-change-build-mode", ("name", name));
         }
@@ -142,7 +144,7 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
 
         if (proto.Mode is RcdMode.ConstructTile or RcdMode.ConstructObject
             && proto.Prototype != null
-            && _prototypeManager.TryIndex(proto.Prototype, out var entProto, logError: false))
+            && _prototypeManager.TryIndex(proto.Prototype, out var entProto)) // don't use Resolve because this can be a tile
         {
             tooltip = Loc.GetString(entProto.Name);
         }
