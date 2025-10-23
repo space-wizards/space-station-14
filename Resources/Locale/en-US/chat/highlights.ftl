@@ -45,7 +45,7 @@ highlights-mime = Mime
 highlights-passenger = Passenger, Greytider, "Tider"
 highlights-serviceworker = Service Worker
 
-# Station-specific=
+# Station-specific
 highlights-boxer = Boxer
 highlights-reporter = Reporter, Journalist
 highlights-zookeeper = Zookeeper
