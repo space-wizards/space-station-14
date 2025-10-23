@@ -36,7 +36,7 @@ public sealed partial class ReagentCondition : EntityConditionBase<ReagentCondit
         if (!prototype.Resolve(Reagent, out var reagentProto))
             return String.Empty;
 
-        return Loc.GetString("entity-effect-condition-guidebook-reagent-threshold",
+        return Loc.GetString("entity-condition-guidebook-reagent-threshold",
             ("reagent", reagentProto.LocalizedName),
             ("max", Max == FixedPoint2.MaxValue ? int.MaxValue : Max.Float()),
             ("min", Min.Float()));
