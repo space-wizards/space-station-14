@@ -1,0 +1,13 @@
+- files:
+  - "cooperate.ogg"
+  - "danger.ogg"
+  - "death.ogg"
+  - "finest.ogg"
+  - "hostile.ogg"
+  - "interfere.ogg"
+  - "obey.ogg"
+  - "response.ogg"
+  
+  license: "CC-BY-4.0"
+  copyright: "Audio work by Banedon (discord) for SS14."
+  source: "https://github.com/space-wizards/space-station-14/pull/37646"
