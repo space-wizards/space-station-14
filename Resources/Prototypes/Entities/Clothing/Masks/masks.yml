@@ -21,7 +21,7 @@
     hideOnToggle: true
 
 - type: entity
-  parent: [ClothingMaskGas, BaseSecurityContraband]
+  parent: [ClothingMaskGas, BaseSecurityContraband, HailerSecurity]
   id: ClothingMaskGasSecurity
   name: security gas mask
   description: A standard issue Security gas mask.
@@ -46,64 +46,7 @@
         Slash: 0.95
         Piercing: 0.95
         Heat: 0.95
-  - type: Hailer
-    hailLevels:
-    - name: low
-    - name: med
-    - name: high
-    hailLevelIndex: 0
-    emagLevelPrefix: hailer-emag
-    orders:
-    - name: attention
-      description: Pay attention !
-      soundCollection: hailer-attention
-      localePrefix: hailer-attention
-      icon:
-        sprite: Objects/Fun/whistles.rsi
-        state: sec
-    - name: oneliner
-      description: Say a cool oneliner !
-      soundCollection: hailer-oneliner
-      localePrefix: hailer-oneliner
-      icon:
-        sprite: Clothing/Eyes/Glasses/sunglasses.rsi
-        state: icon
-    - name: disperse
-      description: Crowd, disperse !
-      soundCollection: hailer-disperse
-      localePrefix: hailer-disperse
-      icon:
-        sprite: Structures/Wallmounts/signs.rsi
-        state: securearea
-    - name: arrest
-      description: You're under arrest !
-      soundCollection: hailer-arrest
-      localePrefix: hailer-arrest
-      icon:
-        sprite: Objects/Misc/handcuffs.rsi
-        state: handcuff
-    chatName: "Security Hailer"
-    distance: 5
-    descriptionLocale: hailer-gas-mask-examined
-  - type: AccessReader
-    access: [["Security"]]
-    loggingDisabled: true
-    breakOnAccessBreaker: false
-  - type: ActionGrant
-    actions:
-    - ActionSecHailer
-  - type: ItemActionGrant
-    actions:
-    - ActionSecHailer
-    activeIfWorn: true
-  - type: UserInterface
-    interfaces:
-      enum.HailerUiKey.Key:
-        type: HailerBoundUserInterface
-  - type: Speech #Linked to hailer. Make the tex bold with a single ! and lets the hailer use chat functions
-    speechVerb: DefaultExclamationStrong
-    suffixSpeechVerbs:
-      chat-speech-verb-suffix-exclamation: DefaultExclamationStrong
+  
 
 - type: entity
   parent: [ClothingMaskGas, BaseSyndicateContraband]
@@ -432,7 +375,7 @@
     accent: StutteringAccent
 
 - type: entity
-  parent: [ ClothingMaskGas, BaseSecurityContraband ]
+  parent: [ ClothingMaskGas, BaseSecurityContraband, HailerSecurity]
   id: ClothingMaskGasSwat
   name: swat gas mask
   description: A elite issue Security gas mask.
@@ -466,63 +409,11 @@
         Piercing: 0.95
         Heat: 0.95
   - type: Hailer
-    hailLevels:
-    - name: low
-    - name: med
-    - name: high
-    hailLevelIndex: 0
-    emagLevelPrefix: hailer-emag
-    orders:
-    - name: attention
-      description: Pay attention !
-      soundCollection: hailer-attention
-      localePrefix: hailer-attention
-      icon:
-        sprite: Objects/Fun/whistles.rsi
-        state: sec
-    - name: oneliner
-      description: Say a cool oneliner !
-      soundCollection: hailer-oneliner
-      localePrefix: hailer-oneliner
-      icon:
-        sprite: Clothing/Eyes/Glasses/sunglasses.rsi
-        state: icon
-    - name: disperse
-      description: Crowd, disperse !
-      soundCollection: hailer-disperse
-      localePrefix: hailer-disperse
-      icon:
-        sprite: Structures/Wallmounts/signs.rsi
-        state: securearea
-    - name: arrest
-      description: You're under arrest !
-      soundCollection: hailer-arrest
-      localePrefix: hailer-arrest
-      icon:
-        sprite: Objects/Misc/handcuffs.rsi
-        state: handcuff
-    chatName: "Security Hailer"
-    distance: 5
-    descriptionLocale: hailer-gas-mask-examined
+    hailLevelIndex: 2
   - type: AccessReader
     access: [["HeadOfSecurity"]]
     loggingDisabled: true
     breakOnAccessBreaker: false
-  - type: ActionGrant
-    actions:
-    - ActionSecHailer
-  - type: ItemActionGrant
-    actions:
-    - ActionSecHailer
-    activeIfWorn: true
-  - type: UserInterface
-    interfaces:
-      enum.HailerUiKey.Key:
-        type: HailerBoundUserInterface
-  - type: Speech #Linked to hailer. Make the tex bold with a single ! and lets the hailer use chat functions
-    speechVerb: DefaultExclamationStrong
-    suffixSpeechVerbs:
-      chat-speech-verb-suffix-exclamation: DefaultExclamationStrong
 
 - type: entity
   parent: [ ClothingMaskGas, BaseSecurityCargoContraband ]
@@ -543,7 +434,7 @@
         Heat: 0.95
 
 - type: entity
-  parent: [ ClothingMaskGas, BaseCentcommContraband ]
+  parent: [ ClothingMaskGas, BaseCentcommContraband, HailerSecurity]
   id: ClothingMaskGasERT
   name: ert gas mask
   description: The gas mask of the elite squad of the ERT.
@@ -573,7 +464,12 @@
         Piercing: 0.95
         Heat: 0.95
   - type: Hailer
+    hailLevels:
+    hailLevelIndex: 
+    emagLevelPrefix:
     isToolInteractible: false
+    buttonColor: "#3B40D4"
+    buttonHoverColor: "#6F6BDF"
     orders:
     - name: attention
       description: Pay attention !
@@ -590,25 +486,7 @@
         sprite: Actions/Implants/implants.rsi
         state: explosive
     chatName: "ERT Hailer"
-    distance: 5
-    descriptionLocale: hailer-ert-mask-examined
-  - type: ActionGrant
-    actions:
-    - ActionSecHailer
-  - type: ItemActionGrant
-    actions:
-    - ActionSecHailer
-    activeIfWorn: true
-  - type: UserInterface
-    interfaces:
-      enum.HailerUiKey.Key:
-        type: HailerBoundUserInterface
-  - type: Speech #Linked to hailer. Make the tex bold with a single ! and lets the hailer use chat functions
-    speechVerb: DefaultExclamationStrong
-    suffixSpeechVerbs:
-      chat-speech-verb-suffix-exclamation: DefaultExclamationStrong
-  
-  
+    descriptionLocale: hailer-ert-mask-examined  
 
 - type: entity
   parent: [ ClothingMaskGas, BaseCentcommContraband ]

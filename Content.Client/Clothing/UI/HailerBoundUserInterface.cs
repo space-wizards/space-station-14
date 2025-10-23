@@ -12,9 +12,9 @@ public sealed class HailerBoundUserInterface : BoundUserInterface
 
     private SimpleRadialMenu? _hailerRadioMenu;
     //Background color of the button
-    private static readonly Color SelectedOptionBackground = StyleNano.ButtonColorDefaultRed.WithAlpha(128);
+    private Color _buttonColor;
     //Hover color of the button
-    private static readonly Color SelectedOptionHoverBackground = StyleNano.ButtonColorHoveredRed.WithAlpha(128);
+    private Color _buttonHoverColor;
 
     public HailerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
@@ -42,6 +42,10 @@ public sealed class HailerBoundUserInterface : BoundUserInterface
         if (_player.LocalSession?.AttachedEntity is not { } user)
             return;
 
+        //Set the colors for the buttons based on Component properties
+        _buttonColor = Color.FromHex(hailerComp.ButtonColor).WithAlpha(128);
+        _buttonHoverColor = Color.FromHex(hailerComp.ButtonHoverColor).WithAlpha(128);
+
         //Convert hailer orders set in the yaml to buttons for the radialMenu
         var list = ConvertToButtons(hailerComp.Orders);
         _hailerRadioMenu.SetButtons(list);
@@ -63,8 +67,8 @@ public sealed class HailerBoundUserInterface : BoundUserInterface
             {
                 IconSpecifier = RadialMenuIconSpecifier.With(line.Icon),
                 ToolTip = tooltip,
-                BackgroundColor = SelectedOptionBackground,
-                HoverBackgroundColor = SelectedOptionHoverBackground
+                BackgroundColor = _buttonColor,
+                HoverBackgroundColor = _buttonHoverColor
             };
 
             list.Add(button);

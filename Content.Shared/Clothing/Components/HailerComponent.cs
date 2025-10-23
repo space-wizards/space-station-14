@@ -15,21 +15,34 @@ namespace Content.Shared.Clothing.Components;
 public sealed partial class HailerComponent : Component
 {
     /// <summary>
-    /// The user wearing the mask
-    /// </summary>
-    public EntityUid? User;
-
-    /// <summary>
     /// Are the wires of the hailer cut ?
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool AreWiresCut = false;
+    public bool AreWiresCut;
 
     /// <summary>
-    /// Can the interaction with tools happen ? (Screwing/Cutting)
+    /// The name displayed as the speaker when hailing orders
     /// </summary>
     [DataField]
-    public bool IsToolInteractible = true;
+    public string ChatName;
+
+    [DataField]
+    public string ButtonColor;
+
+    [DataField]
+    public string ButtonHoverColor;
+
+    /// <summary>
+    /// Delay when the hailer is used with a cutting tool
+    /// </summary>
+    [DataField]
+    public float CuttingDoAfterDelay;
+
+    /// <summary>
+    /// Delay when the hailer is used with a screwing tool to change aggression level
+    /// </summary>
+    [DataField]
+    public float ScrewingDoAfterDelay;
 
     /// <summary>
     /// Loc string for the description when examined
@@ -41,25 +54,43 @@ public sealed partial class HailerComponent : Component
     /// Range value for the exclamation effect on humanoids
     /// </summary>
     [DataField]
-    public float Distance = 0f;
+    public float Distance;
 
     /// <summary>
-    /// The name displayed as the speaker when hailing orders
+    /// Loc string prefix for emag lines
     /// </summary>
     [DataField]
-    public string ChatName;
+    public string? EmagLevelPrefix;
 
     /// <summary>
-    /// Delay when the hailer is used with a screwing tool to change aggression level
+    /// Entity prototype spawn on other people when using the hailer. Similar to the whistle.
     /// </summary>
     [DataField]
-    public float ScrewingDoAfterDelay = 2f;
+    public EntProtoId ExclamationEffect;
 
     /// <summary>
-    /// Delay when the hailer is used with a cutting tool
+    /// This determines what soundcollection and what loc string will be used in addition to a random index
     /// </summary>
     [DataField]
-    public float CuttingDoAfterDelay = 4f;
+    public List<HailLevel>? HailLevels = [];
+
+    /// <summary>
+    /// Index for HailsLevels property
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int? HailLevelIndex;
+
+    /// <summary>
+    /// Can the interaction with tools happen ? (Screwing/Cutting)
+    /// </summary>
+    [DataField]
+    public bool IsToolInteractible;
+
+    /// <summary>
+    /// Orders shown on the BUI radial menu and determines what soundcollection to use when playing the audio of the line
+    /// </summary>
+    [DataField]
+    public List<HailOrder> Orders = [];
 
     /// <summary>
     /// How long until you can use the verb again to change aggression level
@@ -99,36 +130,6 @@ public sealed partial class HailerComponent : Component
     public SoundSpecifier SettingError = new SoundCollectionSpecifier("CargoError");
 
     /// <summary>
-    /// Entity prototype spawn on other people when using the hailer. Similar to the whistle.
-    /// </summary>
-    [DataField]
-    public EntProtoId ExclamationEffect = "WhistleExclamation";
-
-    /// <summary>
-    /// This determines what soundcollection and what loc string will be used in addition to a random index
-    /// </summary>
-    [DataField]
-    public List<HailLevel>? HailLevels = [];
-
-    /// <summary>
-    /// Index for HailsLevels property
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public int? HailLevelIndex;
-
-    /// <summary>
-    /// Loc string prefix for emag lines
-    /// </summary>
-    [DataField]
-    public string? EmagLevelPrefix;
-
-    /// <summary>
-    /// Orders shown on the BUI radial menu and determines what soundcollection to use when playing the audio of the line
-    /// </summary>
-    [DataField]
-    public List<HailOrder> Orders = [];
-
-    /// <summary>
     /// Return the current HailLevel based on HailLevelIndex or return null
     /// </summary>
     public HailLevel? CurrentHailLevel
@@ -142,6 +143,11 @@ public sealed partial class HailerComponent : Component
             return null;
         }
     }
+
+    /// <summary>
+    /// The user wearing the mask
+    /// </summary>
+    public EntityUid? User;
 }
 
 [Serializable, NetSerializable]

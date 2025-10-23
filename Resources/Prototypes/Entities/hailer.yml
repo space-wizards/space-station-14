@@ -1,0 +1,82 @@
+## TEST
+- type: entity
+  id: HailerBase
+  abstract: true
+  components:
+  - type: Hailer
+    areWiresCut: false
+    buttonColor: "#464966"
+    buttonHoverColor: "#575b7f"
+    chatName:
+    cuttingDoAfterDelay: 4
+    screwingDoAfterDelay: 2
+    descriptionLocale:
+    distance: 5
+    exclamationEffect: WhistleExclamation
+    isToolInteractible: true
+  - type: Speech #Linked to hailer. Make the tex bold with a single ! and lets the hailer use chat functions
+    speechVerb: DefaultExclamationStrong
+    suffixSpeechVerbs:
+      chat-speech-verb-suffix-exclamation: DefaultExclamationStrong
+##
+- type: entity
+  id: HailerSecurity
+  abstract: true
+  parent: [HailerBase]
+  components:
+  - type: Hailer
+    hailLevels:
+    - name: low
+    - name: med
+    - name: high
+    buttonColor: "#D43B3B"
+    buttonHoverColor: "#DF6B6B"
+    chatName: "Security Hailer"
+    descriptionLocale: hailer-gas-mask-examined
+    emagLevelPrefix: hailer-emag
+    hailLevelIndex: 0
+    orders:
+    - name: attention
+      description: Pay attention !
+      soundCollection: hailer-attention
+      localePrefix: hailer-attention
+      icon:
+        sprite: Objects/Fun/whistles.rsi
+        state: sec
+    - name: oneliner
+      description: Say a cool oneliner !
+      soundCollection: hailer-oneliner
+      localePrefix: hailer-oneliner
+      icon:
+        sprite: Clothing/Eyes/Glasses/sunglasses.rsi
+        state: icon
+    - name: disperse
+      description: Crowd, disperse !
+      soundCollection: hailer-disperse
+      localePrefix: hailer-disperse
+      icon:
+        sprite: Structures/Wallmounts/signs.rsi
+        state: securearea
+    - name: arrest
+      description: You're under arrest !
+      soundCollection: hailer-arrest
+      localePrefix: hailer-arrest
+      icon:
+        sprite: Objects/Misc/handcuffs.rsi
+        state: handcuff
+  - type: AccessReader
+    access: [["Security"]]
+    loggingDisabled: true
+    breakOnAccessBreaker: false
+  - type: ActionGrant
+    actions:
+    - ActionSecHailer
+  - type: ItemActionGrant
+    actions:
+    - ActionSecHailer
+    activeIfWorn: true
+  - type: UserInterface
+    interfaces:
+      enum.HailerUiKey.Key:
+        type: HailerBoundUserInterface
+##
