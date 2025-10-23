@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: cnv41
-  changes:
-  - message: Fixed a minor typo in coffin description.
-    type: Fix
-  id: 8645
-  time: '2025-06-09T22:33:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38193
 - author: ArtisticRoomba
   changes:
   - message: Convex, Loop, Meta, and Omega have been removed from the map rotation
@@ -3927,3 +3920,11 @@
   id: 9146
   time: '2025-10-22T13:32:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41031
+- author: SolidSyn
+  changes:
+  - message: Wizards Slippery Slope spell no longer requires a robe and hat to be
+      cast.
+    type: Tweak
+  id: 9147
+  time: '2025-10-23T01:28:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41038
