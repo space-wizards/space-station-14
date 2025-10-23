@@ -1,0 +1,19 @@
+- type: entity
+  parent: ClothingOuterArmorBase
+  id: CadianVest1Armor
+  name: cadian vest
+  description: Standard issue flak armor worn by Cadian shock troops. Good enough.
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/OuterClothing/Armor/cadian_vest/cadian_vest1.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/OuterClothing/Armor/cadian_vest/cadian_vest1.rsi
+  - type: Armor 
+    modifiers:
+      coefficients:
+        Blunt: 0.30
+        Slash: 0.30
+        Piercing: 0.40 
+        Heat: 0.30
+  - type: ExplosionResistance
+    damageCoefficient: 0.60
