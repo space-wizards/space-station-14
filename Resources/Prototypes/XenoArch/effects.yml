@@ -178,7 +178,7 @@
   components:
   - type: XAEApplyComponents
     key: enum.IntercomUiKey.Key
-    verbText: Use Intercom
+    verbText: verb-maui-intercom
     components:
     - type: RadioMicrophone
       powerRequired: false
@@ -208,7 +208,7 @@
   - type: XAEApplyComponents
     components:
     - type: Instrument
-    verbText: Use Instrument
+    verbText: verb-maui-instrument
     key: enum.InstrumentUiKey.Key
 
 - type: entity
@@ -218,7 +218,7 @@
   components:
   - type: XAEApplyComponents
     key: enum.LatheUiKey.Key
-    verbText: Use Lathe
+    verbText: verb-maui-lathe
     components:
     - type: Lathe
       staticPacks:
@@ -261,7 +261,7 @@
   components:
   - type: XAEApplyComponents
     key: enum.JukeboxUiKey.Key
-    verbText: Use Jukebox
+    verbText: verb-maui-jukebox
     components:
     - type: Jukebox
 
