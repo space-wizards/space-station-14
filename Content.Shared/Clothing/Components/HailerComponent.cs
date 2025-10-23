@@ -144,6 +144,12 @@ public sealed partial class HailerComponent : Component
     }
 }
 
+[Serializable, NetSerializable]
+public enum SecMaskVisuals : byte
+{
+    State
+}
+
 /// <summary>
 /// Category of hailer line. Used for determining which soundcollection and loc string to use
 /// </summary>
