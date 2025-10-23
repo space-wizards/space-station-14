@@ -58,11 +58,17 @@ namespace Content.Client.Lobby.UI
 
                     UserInterfaceManager.GetUIController<LobbyUIController>().ReloadCharacterSetup();
 
-                    if (CharacterSetupState.ChildCount > 0 && CharacterSetupState.GetChild(0) is CharacterSetupGui setup)
+                    if (CharacterSetupState.ChildCount > 0 && CharacterSetupState.GetChild(0) is CharacterSetupGui characterSetupGui)
                     {
-                        setup.JoinRoundPanel.AddChild(ObserveButton);
-                        setup.JoinRoundPanel.AddChild(StartTime);
-                        setup.JoinRoundPanel.AddChild(ReadyButton);
+                        characterSetupGui.JoinRoundPanel.AddChild(ObserveButton);
+                        characterSetupGui.JoinRoundPanel.AddChild(StartTime);
+                        characterSetupGui.JoinRoundPanel.AddChild(ReadyButton);
+                    }
+                    else
+                    {
+                        JoinRoundPanel.AddChild(ObserveButton);
+                        JoinRoundPanel.AddChild(StartTime);
+                        JoinRoundPanel.AddChild(ReadyButton);
                     }
 
                     break;

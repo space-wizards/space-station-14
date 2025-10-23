@@ -86,6 +86,7 @@ namespace Content.Client.Lobby
 
             _voteManager.ClearPopupContainer();
 
+            Lobby!.SwitchState(LobbyGui.LobbyGuiState.Default);
             Lobby!.CharacterPreview.CharacterSetupButton.OnPressed -= OnSetupPressed;
             Lobby!.ReadyButton.OnPressed -= OnReadyPressed;
             Lobby!.ReadyButton.OnToggled -= OnReadyToggled;
