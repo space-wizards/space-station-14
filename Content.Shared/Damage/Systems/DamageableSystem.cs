@@ -17,7 +17,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Damage
 {
-    public sealed class DamageableSystem : EntitySystem
+    public sealed partial class DamageableSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
