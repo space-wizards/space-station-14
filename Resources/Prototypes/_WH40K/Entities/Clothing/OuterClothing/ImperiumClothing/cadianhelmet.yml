@@ -1,0 +1,17 @@
+- type: entity
+  parent: [ClothingHeadHelmetArmoredBase, BaseSecurityContraband]
+  id: CadianHelmet
+  name: cadian helmet
+  description: 1984
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/OuterClothing/Armor/cadian_vest/cadian_helmet.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/OuterClothing/Armor/cadian_vest/cadian_helmet.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - SecurityHelmet
+  - type: HideLayerClothing
+    layers:
+      Hair: HEAD
