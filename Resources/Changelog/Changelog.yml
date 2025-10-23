@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: Convex, Loop, Meta, and Omega have been removed from the map rotation
-      pool to make way for new maps. Thank you Spessmann for Convex, TytosB for Loop,
-      Nox38 for her recent Meta overhauls, and Emisse for Omega.
-    type: Remove
-  id: 8646
-  time: '2025-06-09T22:37:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38190
 - author: nabegator
   changes:
   - message: hi-viz vest now has a 2% chance to reflect lasers
@@ -3928,3 +3919,10 @@
   id: 9147
   time: '2025-10-23T01:28:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41038
+- author: Moomoobeef
+  changes:
+  - message: Fixed banana bread being missing from the guidebook.
+    type: Fix
+  id: 9148
+  time: '2025-10-23T07:00:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41047
