@@ -5,6 +5,7 @@
   name: head of security weapon spawner
   components:
   - type: EntityTableSpawner
+    offset: 0.2
     table: !type:AllSelector
       children:
       - id: WeaponSubMachineGunWt550
@@ -23,6 +24,7 @@
   name: warden weapon spawner
   components:
   - type: EntityTableSpawner
+    offset: 0.2
     table: !type:AllSelector
       children:
       - id: WeaponEnergyShotgun
