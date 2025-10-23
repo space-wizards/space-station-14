@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: CadianSuit
+  name: Cadian Suit
+  description: 1984
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/OuterClothing/Armor/cadian_vest/cadian_suit1.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/OuterClothing/Armor/cadian_vest/cadian_suit1.rsi
