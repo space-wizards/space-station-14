@@ -7,7 +7,7 @@
     <Control>
         <PanelContainer Name="BackgroundPanel" />
         <BoxContainer Orientation="Vertical" SeparationOverride="0">
-            <BoxContainer Orientation="Horizontal" MinSize="0 40" >
+            <BoxContainer Orientation="Horizontal" MinSize="0 40">
                 <Label Text="{Loc 'character-setup-gui-character-setup-label'}"
                        Margin="8 0 0 0" VAlign="Center"
                        StyleClasses="LabelHeadingBigger" />
@@ -29,7 +29,7 @@
                             Access="Public"
                             Text="{Loc 'character-setup-gui-character-setup-close-button'}"
                             StyleClasses="ButtonBig" />
-                    </BoxContainer>
+                </BoxContainer>
             </BoxContainer>
             <PanelContainer StyleClasses="highlight">
             </PanelContainer>
