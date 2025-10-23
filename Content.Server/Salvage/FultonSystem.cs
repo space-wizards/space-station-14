@@ -1,4 +1,6 @@
 using System.Numerics;
+using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Salvage.Fulton;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -12,6 +14,7 @@ namespace Content.Server.Salvage;
 public sealed class FultonSystem : SharedFultonSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly PullingSystem _pullingSystem = default!;
 
     public override void Initialize()
     {
@@ -65,6 +68,12 @@ public sealed class FultonSystem : SharedFultonSystem
             var localPos = Vector2.Transform(
                     TransformSystem.GetWorldPosition(beaconXform),
                     TransformSystem.GetInvWorldMatrix(beaconXform.ParentUid)) + offset;
+
+            if (TryComp<PullableComponent>(uid, out var pull) && _pullingSystem.IsPulled(uid, pull))
+                _pullingSystem.TryStopPull(uid, pull);
+
+            if (TryComp<PullerComponent>(uid, out var puller) && TryComp<PullableComponent>(puller.Pulling, out var pullable))
+                _pullingSystem.TryStopPull(puller.Pulling.Value, pullable);
 
             TransformSystem.SetCoordinates(uid, new EntityCoordinates(beaconXform.ParentUid, localPos));
 
