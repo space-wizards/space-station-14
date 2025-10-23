@@ -8,9 +8,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Client.Utility;
 using Robust.Shared.Prototypes;
 
-#pragma warning disable IDE1006
-namespace Content.Client.Lobby.UI.CharacterEditor;
-#pragma warning restore IDE1006
+namespace Content.Client.Lobby.UI.ProfileEditor;
 
 [GenerateTypedNameReferences]
 public sealed partial class CharacterPreview : BoxContainer

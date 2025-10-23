@@ -9,9 +9,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-#pragma warning disable IDE1006
-namespace Content.Client.Lobby.UI.CharacterEditor.Tabs;
-#pragma warning restore IDE1006
+namespace Content.Client.Lobby.UI.ProfileEditor.Tabs;
 
 [GenerateTypedNameReferences]
 public sealed partial class ProfileEditorTraitsTab : BoxContainer

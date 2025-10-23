@@ -2,9 +2,7 @@ using Content.Client.Lobby.UI.Loadouts;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 
-#pragma warning disable IDE1006
-namespace Content.Client.Lobby.UI.CharacterEditor.Tabs;
-#pragma warning restore IDE1006
+namespace Content.Client.Lobby.UI.ProfileEditor.Tabs;
 
 // Yeah fuck it let's take advantage of partial controls woohoo
 public sealed partial class ProfileEditorJobsTab

@@ -9,9 +9,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.ContentPack;
 
-#pragma warning disable IDE1006
-namespace Content.Client.Lobby.UI.CharacterEditor;
-#pragma warning restore IDE1006
+namespace Content.Client.Lobby.UI.ProfileEditor;
 
 [GenerateTypedNameReferences]
 public sealed partial class ProfileButtons : BoxContainer
