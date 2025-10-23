@@ -10,7 +10,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.ContentPack;
 
 #pragma warning disable IDE1006
-namespace Content.Client._MORBIT.Lobby.UI.CharacterEditor;
+namespace Content.Client.Lobby.UI.CharacterEditor;
 #pragma warning restore IDE1006
 
 [GenerateTypedNameReferences]
