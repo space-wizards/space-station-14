@@ -1,6 +1,6 @@
 - type: department
   id: Cargo
-  name: TTT
+  name: department-Cargo
   description: department-Cargo-description
   color: "#A46106"
   roles:
@@ -10,8 +10,8 @@
 
 - type: department
   id: Civilian
-  name: Counter Strike
-  description: CS standart
+  name: department-Civilian
+  description: department-Civilian-description
   color: "#9FED58"
   weight: -10
   roles:
@@ -39,7 +39,6 @@
   description: department-CentralCommand-description
   color: "#0c344d"
   roles:
-  - Captain
   - CentralCommandOfficial
   - CBURN
   - ERTLeader
@@ -53,19 +52,31 @@
   weight: 120
 
 - type: department
-  id: Security
-  name: FNAF
-  description: department-Security-description
-  color: "#DE3A3A"
-  weight: 20
+  id: Command
+  name: department-Command
+  description: department-Command-description
+  color: "#334E6D"
   roles:
+  - Captain
+  - ChiefEngineer
+  - ChiefMedicalOfficer
+  - HeadOfPersonnel
   - HeadOfSecurity
-  - SecurityCadet
-  - SecurityOfficer
-  - Detective
-  - Warden
-  
-  - type: department
+  - ResearchDirector
+  - Quartermaster
+  - CentralCommandOfficial
+  - CBURN
+  - ERTLeader
+  - ERTChaplain
+  - ERTJanitor
+  - ERTMedical
+  - ERTSecurity
+  - ERTEngineer
+  - DeathSquad
+  primary: false
+  weight: 100
+
+- type: department
   id: Engineering
   name: department-Engineering
   description: department-Engineering-description
@@ -75,6 +86,32 @@
   - ChiefEngineer
   - StationEngineer
   - TechnicalAssistant
+
+- type: department
+  id: Medical
+  name: department-Medical
+  description: department-Medical-description
+  color: "#52B4E9"
+  roles:
+  - Chemist
+  - ChiefMedicalOfficer
+  - MedicalDoctor
+  - MedicalIntern
+  - Psychologist
+  - Paramedic
+
+- type: department
+  id: Security
+  name: department-Security
+  description: department-Security-description
+  color: "#DE3A3A"
+  weight: 20
+  roles:
+  - HeadOfSecurity
+  - SecurityCadet
+  - SecurityOfficer
+  - Detective
+  - Warden
 
 - type: department
   id: Science
@@ -107,18 +144,3 @@
   - Zookeeper
   - Psychologist
   primary: false
-
-- type: department
-  id: Medical
-  name: department-Medical
-  description: department-Medical-description
-  color: "#52B4E9"
-  roles:
-  - Chemist
-  - ChiefMedicalOfficer
-  - MedicalDoctor
-  - MedicalIntern
-  - Psychologist
-  - Paramedic
-
-
