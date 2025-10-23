@@ -7,7 +7,7 @@ using Robust.Shared.Console;
 namespace Content.Server.Atmos.Commands;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class AtmosSimulationPauseUnpause : LocalizedEntityCommands
+public sealed class PauseAtmosCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
@@ -25,7 +25,7 @@ public sealed class AtmosSimulationPauseUnpause : LocalizedEntityCommands
                         out var playerxform) ||
                     playerxform.GridUid == null)
                 {
-                    shell.WriteError(Loc.GetString("error-no-grid-provided-or-invalid-grid"));
+                    shell.WriteError(Loc.GetString("cmd-error-no-grid-provided-or-invalid-grid"));
                     return;
                 }
 
@@ -34,7 +34,7 @@ public sealed class AtmosSimulationPauseUnpause : LocalizedEntityCommands
             case 1:
                 if (!EntityUid.TryParse(args[0], out var parsedGrid) || !EntityManager.EntityExists(parsedGrid))
                 {
-                    shell.WriteError(Loc.GetString("error-couldnt-parse-entity"));
+                    shell.WriteError(Loc.GetString("cmd-error-couldnt-parse-entity"));
                     return;
                 }
 
@@ -44,14 +44,14 @@ public sealed class AtmosSimulationPauseUnpause : LocalizedEntityCommands
 
         if (!EntityManager.TryGetComponent<GridAtmosphereComponent>(grid, out var gridAtmos))
         {
-            shell.WriteError(Loc.GetString("error-no-gridatmosphere"));
+            shell.WriteError(Loc.GetString("cmd-error-no-gridatmosphere"));
             return;
         }
 
         var newEnt = new Entity<GridAtmosphereComponent>(grid, gridAtmos);
 
         _atmosphereSystem.SetAtmosphereSimulation(newEnt, !newEnt.Comp.Simulated);
-        shell.WriteLine(Loc.GetString("set-atmos-simulation",
+        shell.WriteLine(Loc.GetString("cmd-pauseatmos-set-atmos-simulation",
             ("grid", EntityManager.ToPrettyString(grid)),
             ("state", newEnt.Comp.Simulated)));
     }
@@ -62,7 +62,7 @@ public sealed class AtmosSimulationPauseUnpause : LocalizedEntityCommands
         {
             return CompletionResult.FromHintOptions(
                 CompletionHelper.Components<GridAtmosphereComponent>(args[0], EntityManager),
-                Loc.GetString("completion-grid-pause"));
+                Loc.GetString("cmd-pauseatmos-completion-grid-pause"));
         }
 
         return CompletionResult.Empty;

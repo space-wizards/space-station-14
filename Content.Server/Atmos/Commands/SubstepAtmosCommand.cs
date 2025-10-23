@@ -10,7 +10,7 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Atmos.Commands;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class AtmosSimulationSubstepCommand : LocalizedEntityCommands
+public sealed class SubstepAtmosCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
@@ -28,7 +28,7 @@ public sealed class AtmosSimulationSubstepCommand : LocalizedEntityCommands
                         out var playerxform) ||
                     playerxform.GridUid == null)
                 {
-                    shell.WriteError(Loc.GetString("error-no-grid-provided-or-invalid-grid"));
+                    shell.WriteError(Loc.GetString("cmd-error-no-grid-provided-or-invalid-grid"));
                     return;
                 }
 
@@ -37,7 +37,7 @@ public sealed class AtmosSimulationSubstepCommand : LocalizedEntityCommands
             case 1:
                 if (!EntityUid.TryParse(args[0], out var parsedGrid) || !EntityManager.EntityExists(parsedGrid))
                 {
-                    shell.WriteError(Loc.GetString("error-couldnt-parse-entity"));
+                    shell.WriteError(Loc.GetString("cmd-error-couldnt-parse-entity"));
                     return;
                 }
 
@@ -48,19 +48,19 @@ public sealed class AtmosSimulationSubstepCommand : LocalizedEntityCommands
         // i'm straight piratesoftwaremaxxing
         if (!EntityManager.TryGetComponent<GridAtmosphereComponent>(grid, out var gridAtmos))
         {
-            shell.WriteError(Loc.GetString("error-no-gridatmosphere"));
+            shell.WriteError(Loc.GetString("cmd-error-no-gridatmosphere"));
             return;
         }
 
         if (!EntityManager.TryGetComponent<GasTileOverlayComponent>(grid, out var gasTile))
         {
-            shell.WriteError(Loc.GetString("error-no-gastileoverlay"));
+            shell.WriteError(Loc.GetString("cmd-error-no-gastileoverlay"));
             return;
         }
 
         if (!EntityManager.TryGetComponent<MapGridComponent>(grid, out var mapGrid))
         {
-            shell.WriteError(Loc.GetString("error-no-mapgrid"));
+            shell.WriteError(Loc.GetString("cmd-error-no-mapgrid"));
             return;
         }
 
@@ -68,7 +68,7 @@ public sealed class AtmosSimulationSubstepCommand : LocalizedEntityCommands
 
         if (xform.MapUid == null || xform.MapID == MapId.Nullspace)
         {
-            shell.WriteError(Loc.GetString("error-no-valid-map"));
+            shell.WriteError(Loc.GetString("cmd-error-no-valid-map"));
             return;
         }
 
@@ -81,14 +81,14 @@ public sealed class AtmosSimulationSubstepCommand : LocalizedEntityCommands
 
         if (gridAtmos.Simulated)
         {
-            shell.WriteLine(Loc.GetString("info-implicitly-paused-simulation",
+            shell.WriteLine(Loc.GetString("cmd-substepatmos-info-implicitly-paused-simulation",
                 ("grid", EntityManager.ToPrettyString(grid))));
         }
 
         _atmosphereSystem.SetAtmosphereSimulation(newEnt, false);
         _atmosphereSystem.RunProcessingFull(newEnt, xform.MapUid.Value, _atmosphereSystem.AtmosTickRate);
 
-        shell.WriteLine(Loc.GetString("info-substepped-grid", ("grid", EntityManager.ToPrettyString(grid))));
+        shell.WriteLine(Loc.GetString("cmd-substepatmos-info-substepped-grid", ("grid", EntityManager.ToPrettyString(grid))));
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -97,7 +97,7 @@ public sealed class AtmosSimulationSubstepCommand : LocalizedEntityCommands
         {
             return CompletionResult.FromHintOptions(
                 CompletionHelper.Components<GridAtmosphereComponent>(args[0], EntityManager),
-                Loc.GetString("completion-grid-substep"));
+                Loc.GetString("cmd-substepatmos-completion-grid-substep"));
         }
 
         return CompletionResult.Empty;
