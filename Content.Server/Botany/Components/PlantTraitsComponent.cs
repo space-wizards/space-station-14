@@ -48,6 +48,9 @@ public sealed partial class PlantTraitsComponent : PlantGrowthComponent
     [DataField]
     public float Potency = 1f;
 
+    /// TODO: The logic for these fields is quite hardcoded.
+    /// They require a separate component and a system that will use events or APIs from other growth systems.
+
     /// <summary>
     /// If true, produce can't be put into the seed maker.
     /// </summary>

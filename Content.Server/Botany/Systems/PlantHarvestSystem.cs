@@ -7,27 +7,6 @@ using Robust.Shared.Audio.Systems;
 namespace Content.Server.Botany.Systems;
 
 /// <summary>
-/// Harvest options for plants.
-/// </summary>
-public enum HarvestType
-{
-    /// <summary>
-    /// Plant is removed on harvest.
-    /// </summary>
-    NoRepeat,
-
-    /// <summary>
-    /// Plant makes produce every Production ticks.
-    /// </summary>
-    Repeat,
-
-    /// <summary>
-    /// Repeat, plus produce is dropped on the ground near the plant automatically.
-    /// </summary>
-    SelfHarvest
-}
-
-/// <summary>
 /// Manages harvest readiness and execution for plants, including repeat/self-harvest
 /// logic and produce spawning, responding to growth and interaction events.
 /// </summary>
@@ -60,25 +39,16 @@ public sealed class HarvestSystem : EntitySystem
         if (plantHolder.Dead || plantHolder.Seed == null)
             return;
 
+        if (component.ReadyForHarvest && component.HarvestRepeat == HarvestType.SelfHarvest)
+            AutoHarvest(ent);
+
         // Check if plant is ready for harvest
-        if (component.HarvestRepeat == HarvestType.Repeat || component.HarvestRepeat == HarvestType.SelfHarvest)
+        var timeLastHarvest = plantHolder.Age - component.LastHarvest;
+        if (timeLastHarvest > traits.Production && !component.ReadyForHarvest)
         {
-            // Repeat harvest
-            var timeSinceLastHarvest = plantHolder.Age - component.LastHarvestTime;
-            if (timeSinceLastHarvest > traits.Production && !component.ReadyForHarvest)
-            {
-                component.ReadyForHarvest = true;
-                plantHolder.UpdateSpriteAfterUpdate = true;
-            }
-        }
-        else
-        {
-            // Non-repeat harvest
-            if (plantHolder.Age > traits.Production && !component.ReadyForHarvest)
-            {
-                component.ReadyForHarvest = true;
-                plantHolder.UpdateSpriteAfterUpdate = true;
-            }
+            component.ReadyForHarvest = true;
+            component.LastHarvest = plantHolder.Age;
+            plantHolder.UpdateSpriteAfterUpdate = true;
         }
     }
 
@@ -125,7 +95,7 @@ public sealed class HarvestSystem : EntitySystem
         {
             // Remove dead plant
             _plantHolder.RemovePlant(uid, plantHolder);
-            AfterHarvest((uid, plantHolder));
+            AfterHarvest(ent);
             return;
         }
 
@@ -160,27 +130,32 @@ public sealed class HarvestSystem : EntitySystem
             case HarvestType.Repeat:
             case HarvestType.SelfHarvest:
                 component.ReadyForHarvest = false;
-                component.LastHarvestTime = plantHolder.Age;
-                plantHolder.Harvest = false;
+                component.LastHarvest = plantHolder.Age;
                 break;
         }
 
-        AfterHarvest((uid, plantHolder));
+        AfterHarvest(ent);
     }
 
-    private void AfterHarvest(Entity<PlantHolderComponent> ent)
+    private void AfterHarvest(Entity<PlantHarvestComponent> ent)
     {
         var uid = ent.Owner;
         var component = ent.Comp;
 
+        PlantTraitsComponent? traits = null;
+        PlantHolderComponent? plantHolder = null;
+        if (!Resolve(uid, ref traits, ref plantHolder))
+            return;
+
+        component.ReadyForHarvest = false;
+        component.LastHarvest = plantHolder.Age;
+
         // Play scream sound if applicable
-        if (TryComp<PlantTraitsComponent>(uid, out var traits) && traits.CanScream && component.Seed != null)
-        {
-            _audio.PlayPvs(component.Seed.ScreamSound, uid);
-        }
+        if (traits.CanScream && plantHolder.Seed != null)
+            _audio.PlayPvs(plantHolder.Seed.ScreamSound, uid);
 
         // Update sprite
-        _plantHolder.UpdateSprite(uid, component);
+        _plantHolder.UpdateSprite(uid, plantHolder);
     }
 
     /// <summary>
@@ -191,6 +166,6 @@ public sealed class HarvestSystem : EntitySystem
         if (!ent.Comp.ReadyForHarvest)
             return;
 
-        DoHarvest(ent);
+        AfterHarvest(ent);
     }
 }

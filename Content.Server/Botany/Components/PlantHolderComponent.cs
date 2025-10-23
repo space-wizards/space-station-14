@@ -14,12 +14,6 @@ public sealed partial class PlantHolderComponent : Component
     public TimeSpan NextUpdate = TimeSpan.Zero;
 
     /// <summary>
-    /// Age when the plant last produced harvestable items.
-    /// </summary>
-    [DataField]
-    public int LastProduce;
-
-    /// <summary>
     /// Number of missing gases required for plant growth.
     /// </summary>
     [DataField]
@@ -109,12 +103,6 @@ public sealed partial class PlantHolderComponent : Component
     /// </summary>
     [DataField]
     public bool Dead;
-
-    /// <summary>
-    /// Whether the plant is ready for harvest.
-    /// </summary>
-    [DataField]
-    public bool Harvest;
 
     /// <summary>
     /// Set to true if this plant has been clipped by seed clippers. Used to prevent a single plant

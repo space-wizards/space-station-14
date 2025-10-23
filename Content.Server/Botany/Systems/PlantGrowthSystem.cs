@@ -37,28 +37,24 @@ public abstract class PlantGrowthSystem : EntitySystem
         if (component.Seed == null)
             return;
 
-        if (!TryComp<PlantTraitsComponent>(uid, out var traits))
+        PlantHarvestComponent? harvest = null;
+        PlantTraitsComponent? traits = null;
+        if (!Resolve(uid, ref harvest, ref traits))
             return;
-
-        // Synchronize harvest status with PlantHarvestComponent if present
-        if (TryComp<PlantHarvestComponent>(uid, out var harvestComp))
-        {
-            component.Harvest = harvestComp.ReadyForHarvest;
-        }
 
         if (amount > 0)
         {
             if (component.Age < traits.Maturation)
                 component.Age += amount;
-            else if (!component.Harvest && traits.Yield <= 0f)
-                component.LastProduce -= amount;
+            else if (!harvest.ReadyForHarvest && traits.Yield <= 0f)
+                harvest.LastHarvest -= amount;
         }
         else
         {
             if (component.Age < traits.Maturation)
                 component.SkipAging++;
-            else if (!component.Harvest && traits.Yield <= 0f)
-                component.LastProduce += amount;
+            else if (!harvest.ReadyForHarvest && traits.Yield <= 0f)
+                harvest.LastHarvest += amount;
         }
     }
 }

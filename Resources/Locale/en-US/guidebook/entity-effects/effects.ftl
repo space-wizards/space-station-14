@@ -501,13 +501,13 @@ entity-effect-guidebook-plant-seeds-remove =
         *[other] remove the
     } seeds of the plant
 
-reagent-effect-guidebook-plant-mutate-exude-gasses =
+entity-effect-guidebook-plant-mutate-exude-gasses =
     { $chance ->
         [1] Mutates
         *[other] mutate
     } the plant to exude gases between {$minValue} and {$maxValue} moles
 
-reagent-effect-guidebook-plant-mutate-consume-gasses =
+entity-effect-guidebook-plant-mutate-consume-gasses =
     { $chance ->
         [1] Mutates
         *[other] mutate

@@ -16,7 +16,8 @@ public sealed partial class PlantMutateConsumeGases : EntityEffectBase<PlantMuta
     /// <inheritdoc/>
     public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
-        return Loc.GetString("reagent-effect-guidebook-plant-mutate-consume-gasses",
+        return Loc.GetString("entity-effect-guidebook-plant-mutate-consume-gasses",
+                ("chance", Probability),
                 ("minValue", MinValue),
                 ("maxValue", MaxValue));
     }
@@ -33,7 +34,8 @@ public sealed partial class PlantMutateExudeGases : EntityEffectBase<PlantMutate
     /// <inheritdoc/>
     public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
-        return Loc.GetString("reagent-effect-guidebook-plant-mutate-exude-gasses",
+        return Loc.GetString("entity-effect-guidebook-plant-mutate-exude-gasses",
+                ("chance", Probability),
                 ("minValue", MinValue),
                 ("maxValue", MaxValue));
     }

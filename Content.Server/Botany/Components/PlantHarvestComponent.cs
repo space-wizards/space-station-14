@@ -7,8 +7,7 @@ namespace Content.Server.Botany.Components;
 public sealed partial class PlantHarvestComponent : PlantGrowthComponent
 {
     /// <summary>
-    /// Harvest options are NoRepeat(plant is removed on harvest), Repeat(Plant makes produce every Production ticks),
-    /// and SelfHarvest (Repeat, plus produce is dropped on the ground near the plant automatically)
+    /// Harvest repeat type.
     /// </summary>
     [DataField]
     public HarvestType HarvestRepeat = HarvestType.NoRepeat;
@@ -23,5 +22,26 @@ public sealed partial class PlantHarvestComponent : PlantGrowthComponent
     /// The last time this plant was harvested.
     /// </summary>
     [ViewVariables]
-    public float LastHarvestTime = 0f;
+    public int LastHarvest = 0;
+}
+
+/// <summary>
+/// Harvest options for plants.
+/// </summary>
+public enum HarvestType
+{
+    /// <summary>
+    /// Plant is removed on harvest.
+    /// </summary>
+    NoRepeat,
+
+    /// <summary>
+    /// Plant makes produce every Production ticks.
+    /// </summary>
+    Repeat,
+
+    /// <summary>
+    /// Repeat, plus produce is dropped on the ground near the plant automatically.
+    /// </summary>
+    SelfHarvest
 }
