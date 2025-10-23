@@ -24,7 +24,7 @@ public sealed partial class MetabolizerTypeCondition : EntityConditionBase<Metab
 
         var names = ContentLocalizationManager.FormatListToOr(typeList);
 
-        return Loc.GetString("reagent-effect-condition-guidebook-organ-type",
+        return Loc.GetString("entity-effect-condition-guidebook-organ-type",
             ("name", names),
             ("shouldhave", !Inverted));
     }

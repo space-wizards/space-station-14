@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityEffects.Effects.Transform;
 
 /// <inheritdoc cref="EntityEffect"/>
-/// <seealso cref="ExplodeEffect">
+/// <seealso cref="ExplodeEffect"/>
 public sealed partial class ExplosionEffect : EntityEffectBase<ExplosionEffect>
 {
     /// <summary>
