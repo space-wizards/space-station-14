@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Numerics;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
@@ -15,15 +16,20 @@ using Robust.Shared.Maths;
 namespace Content.Benchmarks;
 
 /// <summary>
-/// Spawns a number of 1x1-tile grids and processing update gas overlay data on them.
+/// Spawns a number of variable-size grids and processes update gas overlay data on them.
 /// Does NOT capture updating player sessions with new data.
 /// </summary>
 [Virtual]
-//[MemoryDiagnoser]
 public class GasOverlayBenchmark
 {
-    [Params(1, 2, 4, 8, 10, 25, 50, 100)]
+    [Params(1, 32, 64, 128)]
     public int GridCount;
+
+    /// <summary>
+    /// Number of tiles on each grid.
+    /// </summary>
+    [Params(1, 30, 65, 100, 220)]
+    public int GridLength;
 
     private TestPair _pair = default!;
     private EntityManager _entMan = default!; // We need the actual non-interface entman as it exposes transform query.
@@ -33,6 +39,20 @@ public class GasOverlayBenchmark
     private TransformSystem _transformSystem = default!;
     private SharedMapSystem _mapSystem = default!;
     private GasTileOverlaySystem _gasTileOverlaySystem = default!;
+
+    /// <summary>
+    /// Returns a length of tiles as a list of tiles; tiles going in a straight line. Starts from the far left.
+    /// </summary>
+    private static List<(Vector2i, Tile)> ConstructTileLength(int length, in Tile tile)
+    {
+        var matrix = new List<(Vector2i, Tile)>();
+        for (var x = 0; x < length; x++)
+        {
+            matrix.Add((new Vector2i(x, 0), tile));
+        }
+
+        return matrix;
+    }
 
     [GlobalSetup]
     public async Task SetupAsync()
@@ -55,7 +75,7 @@ public class GasOverlayBenchmark
 
         await server.WaitPost(() =>
         {
-            var mapUid = _mapSystem.CreateMap(out var mapId);
+            _mapSystem.CreateMap(out var mapId);
 
             for (; generated <= GridCount; generated++)
             {
@@ -64,10 +84,9 @@ public class GasOverlayBenchmark
                 // This will actually be off-center (iirc) considering bottom-left tile origin. But that doesn't matter here.
                 _transformSystem.SetWorldPosition(
                     (grid, _entMan.TransformQuery.GetComponent(grid)),
-                    new Vector2(generated * 2, 0)); // Space them apart a bit
+                    new Vector2(generated * (GridLength + 1), 0)); // Space them apart by 1 tile or something it doesnt really matter how much
 
-                // Entire grid is a 1x1 plating.
-                _mapSystem.SetTile(grid, new EntityCoordinates(grid, 0, 0), new Tile(plating));
+                _mapSystem.SetTiles(grid, ConstructTileLength(GridLength, new Tile(plating)));
 
                 // Update the only tile that there is
                 if (_entMan.TryGetComponent<GasTileOverlayComponent>(grid, out var overlayComponent))
