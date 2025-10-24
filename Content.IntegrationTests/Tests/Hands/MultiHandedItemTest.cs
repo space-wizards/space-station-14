@@ -189,8 +189,8 @@ public abstract class BaseMultiHandedItemTest : InteractionTest
 
             Assert.Multiple(() =>
             {
-                Assert.That(CHands.GetHandCount(SPlayer), Is.EqualTo(hands));
-                Assert.That(CHands.CountFreeHands(SPlayer), Is.EqualTo(freeHands));
+                Assert.That(CHands.GetHandCount(CPlayer), Is.EqualTo(hands));
+                Assert.That(CHands.CountFreeHands(CPlayer), Is.EqualTo(freeHands));
                 Assert.That(itemCount, Is.EqualTo(items));
                 Assert.That(virtualItemCount, Is.EqualTo(virtualItems));
             });
