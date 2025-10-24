@@ -38,7 +38,7 @@
     Carbon:
       amount: 10
   effects:
-    - !type:CreateEntityReactionEffect
+    - !type:SpawnEntity
       entity: FoodMeat
 
 - type: reaction
@@ -75,7 +75,7 @@
     SulfuricAcid:
       amount: 2
   effects:
-    - !type:CreateEntityReactionEffect
+    - !type:SpawnEntity
       entity: SheetPlastic1
 
 - type: reaction
@@ -153,7 +153,7 @@
     Ethanol:
       amount: 5
   effects:
-    - !type:CreateEntityReactionEffect
+    - !type:SpawnEntity
       entity: ShardCrystalRandom
 
 - type: reaction
@@ -169,7 +169,7 @@
     Charcoal:
       amount: 2
   effects:
-    - !type:CreateEntityReactionEffect
+    - !type:SpawnEntity
       entity: MaterialGunpowder
 
 - type: reaction
@@ -182,7 +182,7 @@
     FrostOil:
       amount: 5
   effects:
-  - !type:CreateEntityReactionEffect
+  - !type:SpawnEntity
     entity: IngotGold1
 
 - type: reaction
@@ -195,7 +195,7 @@
     FrostOil:
       amount: 5
   effects:
-  - !type:CreateEntityReactionEffect
+  - !type:SpawnEntity
     entity: IngotSilver1
 
 - type: reaction
@@ -208,7 +208,7 @@
     JuiceThatMakesYouHew:
       amount: 1
   effects:
-  - !type:ExplosionReactionEffect
+  - !type:Explosion
     explosionType: Radioactive
     maxIntensity: 200
     intensityPerUnit: 2

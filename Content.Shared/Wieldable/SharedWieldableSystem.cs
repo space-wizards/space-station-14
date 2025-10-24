@@ -261,7 +261,7 @@ public abstract class SharedWieldableSystem : EntitySystem
             return false;
         }
 
-        if (_hands.CountFreeableHands((user, hands)) < wieldable.Comp.FreeHandsRequired)
+        if (_hands.CountFreeableHands((user, hands), except: wieldable.Owner) < wieldable.Comp.FreeHandsRequired)
         {
             if (!quiet)
             {

@@ -55,13 +55,13 @@
   sprite:
     sprite: Objects/Consumable/Food/meat.rsi
     state: corgi
-    #
+
 - type: stealTargetGroup
   id: CaptainIDCard
   name: steal-target-groups-captain-id-card
   sprite:
     sprite: Objects/Misc/id_cards.rsi
-    state: ert_commander #no one will know the difference.
+    state: icon-captain
 
 - type: stealTargetGroup
   id: JetpackCaptainFilled
@@ -85,11 +85,11 @@
     state: icon
 
 - type: stealTargetGroup
-  id: WeaponEnergyShotgun
-  name: steal-target-groups-weapon-energy-shot-gun
+  id: WeaponEnergyMagnum
+  name: steal-target-groups-weapon-energy-magnum
   sprite:
-    sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Battery/energy_magnum.rsi
+    state: icon
 
 # Thief Collection
 
@@ -120,6 +120,13 @@
   sprite:
     sprite: Objects/Devices/door_remote.rsi
     state: door_remotebase
+
+- type: stealTargetGroup
+  id: OfficerHandgun
+  name: steal-target-groups-officer-handguns
+  sprite:
+    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
+    state: base
 
 - type: stealTargetGroup
   id: EncryptionKey
@@ -229,6 +236,13 @@
     state: ame-part
 
 - type: stealTargetGroup
+  id: ChiefEngineerToolBelt
+  name: steal-target-groups-belt-ce
+  sprite:
+    sprite: Clothing/Belt/ce.rsi
+    state: icon
+
+- type: stealTargetGroup
   id: SalvageExpeditionsComputerCircuitboard
   name: steal-target-groups-salvage-expeditions-computer-circuitboard
   sprite:
@@ -276,6 +290,13 @@
   sprite:
     sprite: Objects/Devices/cartridge.rsi
     state: cart-sec
+
+- type: stealTargetGroup
+  id: CaptainSword
+  name: steal-target-groups-captain-sword
+  sprite:
+    sprite: Objects/Weapons/Melee/captain_sabre.rsi
+    state: icon
 
 #Thief structures
 

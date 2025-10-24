@@ -66,7 +66,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
             var visuals = EnsureComp<JointVisualsComponent>(shotUid.Value);
             visuals.Sprite = component.RopeSprite;
             visuals.OffsetA = new Vector2(0f, 0.5f);
-            visuals.Target = GetNetEntity(uid);
+            visuals.Target = uid;
             Dirty(shotUid.Value, visuals);
         }
 
@@ -118,7 +118,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
 
     private void OnGunActivate(EntityUid uid, GrapplingGunComponent component, ActivateInWorldEvent args)
     {
-        if (!Timing.IsFirstTimePredicted || args.Handled || !args.Complex || component.Projectile is not {} projectile)
+        if (!Timing.IsFirstTimePredicted || args.Handled || !args.Complex || component.Projectile is not { } projectile)
             return;
 
         _audio.PlayPredicted(component.CycleSound, uid, args.User);
@@ -129,7 +129,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
 
         component.Projectile = null;
         SetReeling(uid, component, false, args.User);
-        _gun.ChangeBasicEntityAmmoCount(uid,  1);
+        _gun.ChangeBasicEntityAmmoCount(uid, 1);
 
         args.Handled = true;
     }
@@ -211,7 +211,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
     /// <returns>True if hooked, false otherwise.</returns>
     public bool IsEntityHooked(Entity<JointRelayTargetComponent?> entity)
     {
-        if (!Resolve(entity, ref entity.Comp))
+        if (!Resolve(entity, ref entity.Comp, false))
             return false;
 
         foreach (var uid in entity.Comp.Relayed)
