@@ -407,8 +407,8 @@ namespace Content.Shared.Stacks
                 return;
             }
 
-            // If we've made it this far, we should refresh the solution when this item is eaten!
-            args.Refresh = true;
+            // If we've made it this far, we should refresh the solution when this item is eaten provided it's not the last one in the stack!
+            args.Refresh = eaten.Comp.Count > 1;
 
             /*
             Edible stacked items is near completely evil so we must choose one of the following:
