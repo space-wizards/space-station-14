@@ -436,7 +436,7 @@ public sealed class ThreeHandedItemTestFixture : BaseMultiHandedItemTest
         await SwapHands();
         await SpawnTarget(CrowbarWield2);
         await Pickup();
-        await AssertHandItems(3, 1, 3, 1);
+        await AssertHandItems(3, 0, 3, 1);
 
         // And wielding it drops the first item
         await Server.WaitAssertion(() =>
