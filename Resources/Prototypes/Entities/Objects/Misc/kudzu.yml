@@ -90,7 +90,7 @@
       ignoreWhitelist:
         components:
         - IgnoreKudzu
-    - type: Food
+    - type: Edible
       requiresSpecialDigestion: true
       delay: 0.5
     - type: FlavorProfile
