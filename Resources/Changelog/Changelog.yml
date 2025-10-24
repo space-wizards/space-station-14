@@ -1,49 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: Spacing damage has been brought back to its unnerfed value, as Atmospherics
-      and Engineering now have better tools to combat spacing.
-    type: Tweak
-  id: 8648
-  time: '2025-06-10T00:05:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38196
-- author: Southbridge
-  changes:
-  - message: AI camera static shader has been updated to be more consistent.
-    type: Tweak
-  id: 8649
-  time: '2025-06-10T04:47:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38093
-- author: BramvanZijp
-  changes:
-  - message: Added Stamina Damage resistance to the raid/hard-suits used by Nuclear
-      Operatives and Emergency Response Teams. [TEST MERGE]
-    type: Tweak
-  id: 8650
-  time: '2025-06-10T19:31:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37040
-- author: themias
-  changes:
-  - message: Returned the cooldown for bike horn implants
-    type: Fix
-  id: 8651
-  time: '2025-06-10T21:40:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38237
-- author: eoineoineoin
-  changes:
-  - message: Technology disks will now show the tech they contain in their name.
-    type: Add
-  id: 8652
-  time: '2025-06-11T01:15:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38157
-- author: hoshizora-sayo
-  changes:
-  - message: Fixed mops, rags, and towels being unable to be properly emptied into
-      drains
-    type: Fix
-  id: 8653
-  time: '2025-06-11T04:54:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38252
 - author: Boaz1111
   changes:
   - message: Grenadine bottles now start closed, instead of opened.
@@ -3926,3 +3881,50 @@
   id: 9149
   time: '2025-10-23T15:27:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40318
+- author: Silverfur-underscore
+  changes:
+  - message: The Mime Job Lizard plushie no longer breaks its vow when being thrown
+      against something or eaten.
+    type: Fix
+  id: 9150
+  time: '2025-10-24T00:02:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41063
+- author: MDuch369
+  changes:
+  - message: Added guidebook entry for gas recycler.
+    type: Add
+  - message: Gas recycler can now be rotated.
+    type: Fix
+  id: 9151
+  time: '2025-10-24T01:07:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39212
+- author: Princess_Chzblz, AdmiralObvious, hyphenation, Is-A-Slark, beck
+  changes:
+  - message: PAIs will no longer get uplinks instead of traitors when a player is
+      selected as an traitor and holding a pAI
+    type: Fix
+  id: 9152
+  time: '2025-10-24T05:58:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41069
+- author: slarticodefast
+  changes:
+  - message: Fixed being able to wield two-handed weapons when having only one hand.
+    type: Fix
+  id: 9153
+  time: '2025-10-24T07:36:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40966
+- author: TheGrimbeeper
+  changes:
+  - message: Fix artifact radiation trigger not being triggered by ambient radiation.
+    type: Fix
+  id: 9154
+  time: '2025-10-24T09:21:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41065
+- author: PicklOH
+  changes:
+  - message: Space Dragon and Carp are more heat resistant. Carp no longer take fire
+      damage.
+    type: Tweak
+  id: 9155
+  time: '2025-10-24T19:26:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40820
