@@ -33,17 +33,13 @@ namespace Content.Client.Lobby.UI
             DefaultState.Visible = false;
             CharacterSetupState.Visible = false;
 
-            ObserveButton.Orphan();
-            StartTime.Orphan();
-            ReadyButton.Orphan();
+            JoinRoundPanel.Orphan();
             switch (state)
             {
                 case LobbyGuiState.Default:
                     DefaultState.Visible = true;
                     RightSide.Visible = true;
-                    JoinRoundPanel.AddChild(ObserveButton);
-                    JoinRoundPanel.AddChild(StartTime);
-                    JoinRoundPanel.AddChild(ReadyButton);
+                    JoinRoundStripeBack.AddChild(JoinRoundPanel);
                     break;
                 case LobbyGuiState.CharacterSetup:
                     CharacterSetupState.Visible = true;
@@ -60,15 +56,11 @@ namespace Content.Client.Lobby.UI
 
                     if (CharacterSetupState.ChildCount > 0 && CharacterSetupState.GetChild(0) is CharacterSetupGui characterSetupGui)
                     {
-                        characterSetupGui.JoinRoundPanel.AddChild(ObserveButton);
-                        characterSetupGui.JoinRoundPanel.AddChild(StartTime);
-                        characterSetupGui.JoinRoundPanel.AddChild(ReadyButton);
+                        characterSetupGui.JoinRoundStripeBack.AddChild(JoinRoundPanel);
                     }
                     else
                     {
-                        JoinRoundPanel.AddChild(ObserveButton);
-                        JoinRoundPanel.AddChild(StartTime);
-                        JoinRoundPanel.AddChild(ReadyButton);
+                        JoinRoundStripeBack.AddChild(JoinRoundPanel);
                     }
 
                     break;

@@ -17,7 +17,7 @@
         <SplitContainer State="Auto" ResizeMode="NotResizable" HorizontalExpand="True">
             <!-- LHS Controls -->
             <BoxContainer Name="LeftSide" Orientation="Vertical" SeparationOverride="4" HorizontalExpand="True">
-                <Control Name="DefaultState" Access="Public" VerticalExpand="True">
+                <Control Name="DefaultState"  VerticalExpand="True">
                     <BoxContainer Name="TopLeft" Orientation="Vertical">
                         <!-- Left Top Panel -->
                         <PanelContainer StyleClasses="BackgroundPanel" HorizontalAlignment="Left" Name="LeftSideTop"
@@ -25,8 +25,8 @@
                             <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" MaxWidth="800">
                                 <info:LinkBanner Name="LinkBanner" VerticalExpand="false" HorizontalAlignment="Center"
                                                  Margin="3 3 3 3" />
-                                <controls:StripeBack>
-                                    <BoxContainer Orientation="Horizontal" Name="JoinRoundPanel" Access="Public" SeparationOverride="6" Margin="3 3 3 3">
+                                <controls:StripeBack Name="JoinRoundStripeBack">
+                                    <BoxContainer Orientation="Horizontal" Name="JoinRoundPanel" SeparationOverride="6" Margin="3 3 3 3">
                                         <cc:UICommandButton Command="observe" Name="ObserveButton" Access="Public"
                                                             Text="{Loc 'ui-lobby-observe-button'}"
                                                             StyleClasses="ButtonBig"
