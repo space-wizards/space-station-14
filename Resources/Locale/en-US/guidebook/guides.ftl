@@ -25,6 +25,7 @@ guide-entry-mixingandfiltering = Mixing and Filtering
 guide-entry-gascanisters = Gas Canisters
 guide-entry-thermomachines = Thermomachines
 guide-entry-gascondensing = Gas Condensing
+guide-entry-gasrecycling = Gas Recycling
 guide-entry-radiators = Radiators
 guide-entry-atmosphericssystems = Atmospherics Systems
 guide-entry-pipenetworks = Pipe Networks
