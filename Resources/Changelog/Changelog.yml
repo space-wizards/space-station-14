@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: eoineoineoin
-  changes:
-  - message: Technology disks will now show the tech they contain in their name.
-    type: Add
-  id: 8652
-  time: '2025-06-11T01:15:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38157
-- author: hoshizora-sayo
-  changes:
-  - message: Fixed mops, rags, and towels being unable to be properly emptied into
-      drains
-    type: Fix
-  id: 8653
-  time: '2025-06-11T04:54:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38252
 - author: Boaz1111
   changes:
   - message: Grenadine bottles now start closed, instead of opened.
@@ -3928,3 +3913,18 @@
   id: 9153
   time: '2025-10-24T07:36:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40966
+- author: TheGrimbeeper
+  changes:
+  - message: Fix artifact radiation trigger not being triggered by ambient radiation.
+    type: Fix
+  id: 9154
+  time: '2025-10-24T09:21:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41065
+- author: PicklOH
+  changes:
+  - message: Space Dragon and Carp are more heat resistant. Carp no longer take fire
+      damage.
+    type: Tweak
+  id: 9155
+  time: '2025-10-24T19:26:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40820
