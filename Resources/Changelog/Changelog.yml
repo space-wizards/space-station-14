@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: Spacing damage has been brought back to its unnerfed value, as Atmospherics
-      and Engineering now have better tools to combat spacing.
-    type: Tweak
-  id: 8648
-  time: '2025-06-10T00:05:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38196
 - author: Southbridge
   changes:
   - message: AI camera static shader has been updated to be more consistent.
@@ -3926,3 +3918,11 @@
   id: 9149
   time: '2025-10-23T15:27:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40318
+- author: Silverfur-underscore
+  changes:
+  - message: The Mime Job Lizard plushie no longer breaks its vow when being thrown
+      against something or eaten.
+    type: Fix
+  id: 9150
+  time: '2025-10-24T00:02:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41063
