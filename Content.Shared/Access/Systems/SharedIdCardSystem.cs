@@ -3,11 +3,9 @@ using Content.Shared.Access.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
-using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
-using Content.Shared.Inventory.Events;
 using Content.Shared.PDA;
 using Content.Shared.Roles;
 using Content.Shared.StatusIcon;
@@ -27,7 +25,6 @@ public abstract class SharedIdCardSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SharedStatusIconSystem _statusIconSystem = default!;
 
     // CCVar.
     private int _maxNameLength;
@@ -40,11 +37,6 @@ public abstract class SharedIdCardSystem : EntitySystem
         SubscribeLocalEvent<IdCardComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
         SubscribeLocalEvent<EntityRenamedEvent>(OnRename);
-
-        SubscribeLocalEvent<IdCardComponent, GotEquippedEvent>(OnEquipped);
-        SubscribeLocalEvent<IdCardComponent, GotEquippedHandEvent>(OnEquippedHand);
-        SubscribeLocalEvent<IdCardComponent, GotUnequippedEvent>(OnUnequipped);
-        SubscribeLocalEvent<IdCardComponent, GotUnequippedHandEvent>(OnUnequippedHand);
 
         Subs.CVar(_cfgManager, CCVars.MaxNameLength, value => _maxNameLength = value, true);
         Subs.CVar(_cfgManager, CCVars.MaxIdJobLength, value => _maxIdJobLength = value, true);
@@ -83,32 +75,6 @@ public abstract class SharedIdCardSystem : EntitySystem
 
         ev.Title = title;
         ev.Handled = true;
-    }
-
-    private void OnEquipped(EntityUid uid, IdCardComponent id, ref GotEquippedEvent args)
-    {
-        if (args.Slot != "id")
-            return;
-
-        _statusIconSystem.AddTemporaryStatusIcon(args.Equipee);
-    }
-
-    private void OnEquippedHand(EntityUid uid, IdCardComponent id, ref GotEquippedHandEvent args)
-    {
-        _statusIconSystem.AddTemporaryStatusIcon(args.User);
-    }
-
-    private void OnUnequipped(EntityUid uid, IdCardComponent id, ref GotUnequippedEvent args)
-    {
-        if (args.Slot != "id")
-            return;
-
-        _statusIconSystem.RemoveTemporaryStatusIcon(args.Equipee);
-    }
-
-    private void OnUnequippedHand(EntityUid uid, IdCardComponent id, ref GotUnequippedHandEvent args)
-    {
-        _statusIconSystem.RemoveTemporaryStatusIcon(args.User);
     }
 
     /// <summary>
