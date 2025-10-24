@@ -6,11 +6,11 @@ namespace Content.Shared.Singularity.Components;
 public sealed partial class ContainmentFieldComponent : Component
 {
     /// <summary>
-    /// The throw force for the field if an entity collides with it
-    /// The lighter the mass the further it will throw. 5 mass will go about 4 tiles out, 70 mass goes only a couple tiles.
+    /// The impulse a containment field applies to an object which collides with it.
+    /// At 100 a player moves about a tile at most.
     /// </summary>
     [DataField]
-    public float ThrowForce = 100f;
+    public float ThrowImpulse = 100f;
 
     /// <summary>
     /// The maximum speed at which this containment field will throw an object.

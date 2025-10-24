@@ -4,6 +4,7 @@ using Content.Shared.Singularity.Components;
 using Content.Shared.Throwing;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Singularity.EntitySystems;
 
@@ -12,6 +13,7 @@ namespace Content.Shared.Singularity.EntitySystems;
 /// </summary>
 public abstract class SharedContainmentFieldSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
@@ -22,23 +24,24 @@ public abstract class SharedContainmentFieldSystem : EntitySystem
         SubscribeLocalEvent<ContainmentFieldComponent, StartCollideEvent>(HandleFieldCollide);
     }
 
-    private void HandleFieldCollide(EntityUid uid, ContainmentFieldComponent component, ref StartCollideEvent args)
+    private void HandleFieldCollide(Entity<ContainmentFieldComponent> entity, ref StartCollideEvent args)
     {
         var otherBody = args.OtherEntity;
 
-        if (component.DestroyGarbage && HasComp<SpaceGarbageComponent>(otherBody))
+        // TODO: When collisions stop being funky on client, remove the timing check!
+        if (entity.Comp.DestroyGarbage && HasComp<SpaceGarbageComponent>(otherBody) && _timing.IsFirstTimePredicted)
         {
-            _popupSystem.PopupEntity(Loc.GetString("comp-field-vaporized", ("entity", otherBody)), uid, PopupType.LargeCaution);
-            QueueDel(otherBody);
+            _popupSystem.PopupEntity(Loc.GetString("comp-field-vaporized", ("entity", otherBody)), entity, PopupType.LargeCaution);
+            PredictedQueueDel(otherBody);
         }
 
-        if (!TryComp<PhysicsComponent>(otherBody, out var physics) || physics.Mass > component.MaxMass || !physics.Hard)
+        if (!TryComp<PhysicsComponent>(otherBody, out var physics) || physics.Mass > entity.Comp.MaxMass || !physics.Hard)
             return;
 
-        var fieldDir = _transformSystem.GetWorldPosition(uid);
+        var fieldDir = _transformSystem.GetWorldPosition(entity);
         var playerDir = _transformSystem.GetWorldPosition(otherBody);
-        var speed = Math.Min(component.ThrowForce / physics.Mass, component.MaxSpeed);
+        var speed = Math.Min(entity.Comp.ThrowImpulse / physics.Mass, entity.Comp.MaxSpeed);
 
-        _throwing.TryThrow(otherBody, playerDir-fieldDir, baseThrowSpeed: speed);
+        _throwing.TryThrow(otherBody, playerDir-fieldDir, baseThrowSpeed: speed, recoil: false);
     }
 }
