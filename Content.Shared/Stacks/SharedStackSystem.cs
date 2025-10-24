@@ -407,6 +407,9 @@ namespace Content.Shared.Stacks
                 return;
             }
 
+            // If we've made it this far, we should refresh the solution when this item is eaten!
+            args.Refresh = true;
+
             /*
             Edible stacked items is near completely evil so we must choose one of the following:
             - Option 1: Eat the entire solution each bite and reduce the stack by 1.
@@ -423,18 +426,7 @@ namespace Content.Shared.Stacks
 
         private void OnEaten(Entity<StackComponent> eaten, ref IngestedEvent args)
         {
-            if (!Use(eaten, 1))
-                return;
-
-            // We haven't eaten the whole stack yet or are unable to eat it completely.
-            if (eaten.Comp.Count > 0)
-            {
-                args.Refresh = true;
-                return;
-            }
-
-            // Here to tell the food system to do destroy stuff.
-            args.Destroy = true;
+            Use(eaten, 1);
         }
 
         private void OnStackAlternativeInteract(EntityUid uid, StackComponent stack, GetVerbsEvent<AlternativeVerb> args)
