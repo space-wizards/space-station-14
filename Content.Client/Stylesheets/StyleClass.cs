@@ -47,7 +47,7 @@ public static class StyleClass
 
     public const string PanelDark = "PanelDark";
     public const string PanelLight = "PanelLight";
-    public const string Inset = "Inset";
+    public const string Outset = "Outset"; // replaces 'Inset'
 
     public const string ButtonOpenRight = "OpenRight";
     public const string ButtonOpenLeft = "OpenLeft";
