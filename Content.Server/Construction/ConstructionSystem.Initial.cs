@@ -31,6 +31,7 @@ namespace Content.Server.Construction
         [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
         [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+        [Dependency] private readonly IEntityManager _entManager = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
@@ -267,6 +268,11 @@ namespace Content.Server.Construction
             {
                 FailCleanup();
                 return null;
+            }
+
+            foreach (var entity in container.ContainedEntities.ToArray())
+            {
+                RaiseLocalEvent(entity, new EntityUsedInCraftingEvent(user));
             }
 
             var newEntityProto = graph.Nodes[edge.Target].Entity.GetId(null, user, new(EntityManager));

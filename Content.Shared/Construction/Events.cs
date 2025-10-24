@@ -132,3 +132,18 @@ public sealed partial class ConstructionInteractDoAfterEvent : DoAfterEvent
 public sealed partial class WelderRefineDoAfterEvent : SimpleDoAfterEvent
 {
 }
+
+[Serializable]
+public sealed class EntityUsedInCraftingEvent : EntityEventArgs
+{
+    /// <summary>
+    ///     The entity that performed the crafting, if any.
+    /// </summary>
+    [DataField("crafterUid")]
+    public readonly EntityUid CrafterUid;
+
+    public EntityUsedInCraftingEvent(EntityUid crafterUid)
+    {
+        CrafterUid = crafterUid;
+    }
+}
