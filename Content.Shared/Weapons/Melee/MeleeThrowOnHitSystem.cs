@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Content.Shared.Timing;
@@ -28,11 +29,9 @@ public sealed class MeleeThrowOnHitSystem : EntitySystem
 
     private void OnThrow(Entity<MeleeThrowOnHitComponent> ent, ref ThrownEvent args)
     {
-        if (_delay.IsDelayed(ent.Owner))
-            return;
+        ent.Comp.ThrowOnCooldown = _delay.IsDelayed(ent.Owner, ent.Comp.UseDelayId);
 
         ent.Comp.HitWhileThrown = false;
-        ent.Comp.ThrowOnCooldown = false;
 
         DirtyField(ent, ent.Comp, nameof(MeleeThrowOnHitComponent.HitWhileThrown));
         DirtyField(ent, ent.Comp, nameof(MeleeThrowOnHitComponent.ThrowOnCooldown));
@@ -40,8 +39,8 @@ public sealed class MeleeThrowOnHitSystem : EntitySystem
 
     private void OnLand(Entity<MeleeThrowOnHitComponent> ent, ref LandEvent args)
     {
-        if (ent.Comp.HitWhileThrown && !_delay.IsDelayed(ent.Owner))
-            _delay.TryResetDelay(ent.Owner);
+        if (ent.Comp.HitWhileThrown && !_delay.IsDelayed(ent.Owner, ent.Comp.UseDelayId))
+            _delay.TryResetDelay(ent.Owner, id: ent.Comp.UseDelayId);
 
         ent.Comp.ThrowOnCooldown = true;
         DirtyField(ent, ent.Comp, nameof(MeleeThrowOnHitComponent.ThrowOnCooldown));
@@ -50,13 +49,10 @@ public sealed class MeleeThrowOnHitSystem : EntitySystem
     private void OnMeleeHit(Entity<MeleeThrowOnHitComponent> weapon, ref MeleeHitEvent args)
     {
         // TODO: MeleeHitEvent is weird. Why is this even raised if we don't hit something?
-        if (!args.IsHit)
+        if (!args.HitEntities.Any())
             return;
 
-        if (_delay.IsDelayed(weapon.Owner))
-            return;
-
-        if (args.HitEntities.Count == 0)
+        if (_delay.IsDelayed(weapon.Owner, weapon.Comp.UseDelayId))
             return;
 
         var userPos = _transform.GetWorldPosition(args.User);

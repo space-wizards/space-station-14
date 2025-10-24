@@ -147,8 +147,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 
     private void OnMeleeHit(EntityUid uid, StaminaDamageOnHitComponent component, MeleeHitEvent args)
     {
-        if (!args.IsHit ||
-            !args.HitEntities.Any() ||
+        if (!args.HitEntities.Any() ||
             component.Damage <= 0f)
         {
             return;

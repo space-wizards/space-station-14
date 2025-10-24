@@ -92,8 +92,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
     private void OnSpeechHit(EntityUid owner, MeleeSpeechComponent comp, MeleeHitEvent args)
     {
-        if (!args.IsHit ||
-        !args.HitEntities.Any())
+        if (!args.HitEntities.Any())
         {
             return;
         }

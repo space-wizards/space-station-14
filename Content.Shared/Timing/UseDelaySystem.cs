@@ -4,7 +4,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Timing;
 
-public sealed class UseDelaySystem : EntitySystem
+public sealed partial class UseDelaySystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
@@ -14,6 +14,7 @@ public sealed class UseDelaySystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        InitializeEvents();
 
         SubscribeLocalEvent<UseDelayComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<UseDelayComponent, EntityUnpausedEvent>(OnUnpaused);

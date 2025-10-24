@@ -70,7 +70,6 @@ public abstract class SharedFlashSystem : EntitySystem
     private void OnFlashMeleeHit(Entity<FlashComponent> ent, ref MeleeHitEvent args)
     {
         if (!ent.Comp.FlashOnMelee ||
-            !args.IsHit ||
             !args.HitEntities.Any() ||
             !UseFlash(ent, args.User))
         {

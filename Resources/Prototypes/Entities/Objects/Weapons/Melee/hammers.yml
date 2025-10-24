@@ -39,11 +39,17 @@
     layers:
     - state: icon
   - type: UseDelay
-    delay: 10
+    delays:
+      hit:
+        length: 10
   - type: UseDelayOnMeleeHit
+    useDelayId: hit
+  - type: UseDelayOnThrowHit
+    useDelayId: hit
   - type: MeleeThrowOnHit
     stunTime: 3
     activateOnThrown: true
+    useDelayId: hit
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
@@ -87,9 +93,14 @@
       components:
       - MobMover
       - Item
+    useDelayId: hit
   - type: UseDelay
-    delay: 10
+    delays:
+      hit:
+        length: 10
   - type: UseDelayOnMeleeHit
+    useDelayId: hit
+    includeMiss: true
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:

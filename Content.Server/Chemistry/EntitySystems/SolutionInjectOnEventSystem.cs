@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -50,7 +51,7 @@ public sealed class SolutionInjectOnCollideSystem : EntitySystem
     {
         // MeleeHitEvent is weird, so we have to filter to make sure we actually
         // hit something and aren't just examining the weapon.
-        if (args.IsHit)
+        if (args.HitEntities.Any())
             TryInjectTargets((entity.Owner, entity.Comp), args.HitEntities, args.User);
     }
 
