@@ -1,3 +1,5 @@
+using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Artifact.XAE.Components;
@@ -12,6 +14,7 @@ public sealed class XAERandomTeleportInvokerSystem : BaseXAESystem<XAERandomTele
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly PullingSystem _pulling = default!;
 
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAERandomTeleportInvokerComponent> ent, ref XenoArtifactNodeActivatedEvent args)
@@ -28,7 +31,10 @@ public sealed class XAERandomTeleportInvokerSystem : BaseXAESystem<XAERandomTele
         _popup.PopupPredictedCoordinates(Loc.GetString("blink-artifact-popup"), xform.Coordinates, args.User, PopupType.Medium);
 
         var offsetTo = _random.NextVector2(component.MinRange, component.MaxRange);
+
         _xform.AttachToGridOrMap(artifact);
+        if (TryComp<PullableComponent>(artifact, out var pullable))
+            _pulling.TryStopPull(artifact, pullable);
         _xform.SetCoordinates(artifact, xform, xform.Coordinates.Offset(offsetTo));
     }
 }
