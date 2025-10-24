@@ -198,8 +198,8 @@
     state: dark-vertical-slats
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorDarkVerticalSlatsContinuous
+    - Plating
+    - FloorDarkVerticalSlatsContinuous
   - type: Stack
     stackType: FloorTileDarkVerticalSlatsContinuous
 
@@ -212,8 +212,8 @@
     state: dark-vertical-slats
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorDarkVerticalSlatsBordered
+    - Plating
+    - FloorDarkVerticalSlatsBordered
   - type: Stack
     stackType: FloorTileDarkVerticalSlatsBordered
 
@@ -226,8 +226,8 @@
     state: dark-horizontal-slats
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorDarkHorizontalSlatsContinuous
+    - Plating
+    - FloorDarkHorizontalSlatsContinuous
   - type: Stack
     stackType: FloorTileDarkHorizontalSlatsContinuous
 
@@ -240,8 +240,8 @@
     state: dark-horizontal-slats
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorDarkHorizontalSlatsBordered
+    - Plating
+    - FloorDarkHorizontalSlatsBordered
   - type: Stack
     stackType: FloorTileDarkHorizontalSlatsBordered
 
@@ -329,8 +329,8 @@
     state: steel-vertical-slats
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorSteelVerticalSlatsContinuous
+    - Plating
+    - FloorSteelVerticalSlatsContinuous
   - type: Stack
     stackType: FloorTileSteelVerticalSlatsContinuous
 
@@ -343,8 +343,8 @@
     state: steel-vertical-slats
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorSteelVerticalSlatsBordered
+    - Plating
+    - FloorSteelVerticalSlatsBordered
   - type: Stack
     stackType: FloorTileSteelVerticalSlatsBordered
 
@@ -357,8 +357,8 @@
     state: steel-horizontal-slats
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorSteelHorizontalSlatsContinuous
+    - Plating
+    - FloorSteelHorizontalSlatsContinuous
   - type: Stack
     stackType: FloorTileSteelHorizontalSlatsContinuous
 
@@ -371,8 +371,8 @@
     state: steel-horizontal-slats
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorSteelHorizontalSlatsBordered
+    - Plating
+    - FloorSteelHorizontalSlatsBordered
   - type: Stack
     stackType: FloorTileSteelHorizontalSlatsBordered
 
@@ -586,8 +586,8 @@
     state: white-vertical-slats
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorWhiteVerticalSlatsBordered
+    - Plating
+    - FloorWhiteVerticalSlatsBordered
   - type: Stack
     stackType: FloorTileWhiteVerticalSlatsBordered
 
@@ -600,8 +600,8 @@
     state: white-vertical-slats
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorWhiteVerticalSlatsContinuous
+    - Plating
+    - FloorWhiteVerticalSlatsContinuous
   - type: Stack
     stackType: FloorTileWhiteVerticalSlatsContinuous
 
@@ -614,8 +614,8 @@
     state: white-horizontal-slats
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorWhiteHorizontalSlatsBordered
+    - Plating
+    - FloorWhiteHorizontalSlatsBordered
   - type: Stack
     stackType: FloorTileWhiteHorizontalSlatsBordered
 
@@ -628,8 +628,8 @@
     state: white-horizontal-slats
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorWhiteHorizontalSlatsContinuous
+    - Plating
+    - FloorWhiteHorizontalSlatsContinuous
   - type: Stack
     stackType: FloorTileWhiteHorizontalSlatsContinuous
 
