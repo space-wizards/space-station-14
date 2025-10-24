@@ -57,6 +57,11 @@ namespace Content.Server.Nutrition.EntitySystems
             QueueDel(entity);
         }
 
+        // TODO
+        // A regression occured here. Previously creampies would activate their hidden payload if you tried to eat them.
+        // However, the refactor to IngestionSystem caused the event to not be reached,
+        // because eating is blocked if an item is inside the food.
+
         private void OnSlice(Entity<CreamPieComponent> entity, ref SliceFoodEvent args)
         {
             ActivatePayload(entity);
