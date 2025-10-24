@@ -40,4 +40,6 @@
             SalvageSpecialist: [ 1, 1 ]
             #civilian (1+)
             Passenger: [ -1, -1 ] #infinite, not counted
+            Clown: [ 1, 1 ]
+            Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
