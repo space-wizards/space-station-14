@@ -63,7 +63,7 @@ namespace Content.Server.Stack
         {
             var entity = SpawnAtPosition(prototype.Spawn, spawnPosition); // The real SpawnAtPosition
 
-            SetCount((entity, Comp<StackComponent>(entity)), count);
+            SetCount((entity, null), count);
             return entity;
         }
 
@@ -157,7 +157,7 @@ namespace Content.Server.Stack
         public EntityUid SpawnNextToOrDrop(int amount, StackPrototype prototype, EntityUid source)
         {
             var entity = SpawnNextToOrDrop(prototype.Spawn, source); // The real SpawnNextToOrDrop
-            SetCount((entity, Comp<StackComponent>(entity)), amount);
+            SetCount((entity, null), amount);
             return entity;
         }
 
