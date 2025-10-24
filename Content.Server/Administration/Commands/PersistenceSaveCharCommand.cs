@@ -9,13 +9,13 @@ using Robust.Shared.Utility;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Server)]
-public sealed class PersistenceSave : LocalizedEntityCommands
+public sealed class PersistenceSaveChar : LocalizedEntityCommands
 {
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
 
-    public override string Command => "persistencesave";
+    public override string Command => "persistencesavechar";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -31,12 +31,8 @@ public sealed class PersistenceSave : LocalizedEntityCommands
             return;
         }
 
-        var mapId = new MapId(intMapId);
-        if (!_map.MapExists(mapId))
-        {
-            shell.WriteError(Loc.GetString("cmd-savemap-not-exist"));
-            return;
-        }
+        var entId = new EntityUid(intMapId);
+
 
         var saveFilePath = (args.Length > 1 ? args[1] : null) ?? _config.GetCVar(CCVars.GameMap);
         if (string.IsNullOrWhiteSpace(saveFilePath))
@@ -45,7 +41,7 @@ public sealed class PersistenceSave : LocalizedEntityCommands
             return;
         }
 
-        bool save_stat = _mapLoader.TrySaveMap(mapId, new ResPath(saveFilePath));
+        bool save_stat = _mapLoader.TrySaveGeneric(entId, new ResPath(saveFilePath), out var category);
         shell.WriteLine(Loc.GetString("Did the map save? ") + $"{save_stat}");
     }
 }

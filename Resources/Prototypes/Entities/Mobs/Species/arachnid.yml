@@ -1,5 +1,5 @@
 - type: entity
-  save: false
+  save: true
   name: Urist McWebs
   parent: BaseMobSpeciesOrganic
   id: BaseMobArachnid
