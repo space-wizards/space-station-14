@@ -145,7 +145,7 @@
     color: blue
   - type: Clickable
   - type: ContainmentField
-    throwForce: 0
+    throwImpulse: 0
   - type: Destructible
     thresholds:
       - trigger:
