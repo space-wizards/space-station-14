@@ -40,6 +40,8 @@ public class DestructibleBenchmark
     private readonly EntProtoId _wallProtoId = "WallReinforced";
     private readonly EntProtoId _humanProtoId = "MobHuman";
 
+    private DamageSpecifier _damage;
+
     private TestPair _pair = default!;
     private IEntityManager _entMan = default!;
     private IPrototypeManager _protoMan = default!;
@@ -66,6 +68,11 @@ public class DestructibleBenchmark
         _damageable = _entMan.System<DamageableSystem>();
         _destructible = _entMan.System<DestructibleSystem>();
         _map = _entMan.System<SharedMapSystem>();
+
+        if (!_protoMan.Resolve(DamageType, out var type))
+            return;
+
+        _damage = new DamageSpecifier(type, DamageAmount);
 
         _random.SetSeed(69420); // Randomness needs to be deterministic for benchmarking.
 
@@ -114,12 +121,7 @@ public class DestructibleBenchmark
     {
         await _pair.Server.WaitPost(() =>
         {
-            if (!_protoMan.Resolve(DamageType, out var type))
-                return;
-
-            var damage = new DamageSpecifier(type, DamageAmount);
-
-            while (!_damageable.ApplyDamageToAllEntities(damage)) { }
+            _damageable.ApplyDamageToAllEntities(_damage);
         });
     }
 
@@ -128,7 +130,7 @@ public class DestructibleBenchmark
     {
         await _pair.Server.WaitPost(() =>
         {
-            while (!_destructible.TestAllTriggers()) { }
+            _destructible.TestAllTriggers();
         });
     }
 

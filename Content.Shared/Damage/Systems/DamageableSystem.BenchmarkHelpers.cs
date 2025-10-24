@@ -5,7 +5,7 @@
 /// </summary>
 public sealed partial class DamageableSystem
 {
-    public bool ApplyDamageToAllEntities(DamageSpecifier damage)
+    public void ApplyDamageToAllEntities(DamageSpecifier damage)
     {
         var query = EntityQueryEnumerator<DamageableComponent>();
 
@@ -13,7 +13,5 @@ public sealed partial class DamageableSystem
         {
             TryChangeDamage(uid, damage, damageable: damageable);
         }
-
-        return true;
     }
 }

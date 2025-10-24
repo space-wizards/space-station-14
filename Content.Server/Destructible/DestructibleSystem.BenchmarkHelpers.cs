@@ -7,7 +7,7 @@ namespace Content.Server.Destructible;
 /// </summary>
 public sealed partial class DestructibleSystem
 {
-    public bool TestAllTriggers()
+    public void TestAllTriggers()
     {
         var query = EntityQueryEnumerator<DestructibleComponent, DamageableComponent>();
 
@@ -23,7 +23,5 @@ public sealed partial class DestructibleSystem
                 }
             }
         }
-
-        return true;
     }
 }
