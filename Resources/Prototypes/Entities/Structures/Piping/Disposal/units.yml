@@ -4,7 +4,7 @@
   parent: BaseMachinePowered
   description: A pneumatic waste disposal unit.
   placement:
-    mode: SnapgridCenter
+    mode: SnapgridCenters
     snap:
     - Disposal
   components:
