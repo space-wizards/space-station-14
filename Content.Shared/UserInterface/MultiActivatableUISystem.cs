@@ -4,6 +4,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.UserInterface;
 
+/// <summary>
+/// System for multiple verb-only user interfaces on one entity
+/// </summary>
 public sealed partial class MultiActivatableUISystem : EntitySystem
 {
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
@@ -37,5 +40,13 @@ public sealed partial class MultiActivatableUISystem : EntitySystem
     private void OpenUI(EntityUid user, EntityUid uiEntity, Enum key)
     {
         _uiSystem.OpenUi(uiEntity, key, user);
+    }
+
+    public void AddUI(EntityUid uid, MultiActivatableUIComponent maui, Enum key, LocId verbText)
+    {
+        maui.Keys.Add(key);
+        maui.VerbTexts.Add(verbText);
+
+        Dirty(uid, maui);
     }
 }

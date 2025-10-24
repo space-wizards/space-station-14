@@ -2,12 +2,15 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.UserInterface;
 
-[RegisterComponent, NetworkedComponent]
+/// <summary>
+/// Component for multiple verb-only user interfaces on one entity
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class MultiActivatableUIComponent : Component
 {
-    [DataField]
+    [DataField, AutoNetworkedField]
     public List<Enum> Keys = [];
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public List<LocId> VerbTexts = [];
 }

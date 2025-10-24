@@ -10,6 +10,7 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAE;
 public sealed class XAEApplyComponentsSystem : BaseXAESystem<XAEApplyComponentsComponent>
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly MultiActivatableUISystem _multi = default!;
 
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEApplyComponentsComponent> ent, ref XenoArtifactNodeActivatedEvent args)
@@ -41,7 +42,6 @@ public sealed class XAEApplyComponentsSystem : BaseXAESystem<XAEApplyComponentsC
             return;
         }
 
-        maui.Keys.Add(ent.Comp.Key);
-        maui.VerbTexts.Add(ent.Comp.VerbText);
+        _multi.AddUI(ent, maui, ent.Comp.Key, ent.Comp.VerbText);
     }
 }
