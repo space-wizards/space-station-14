@@ -1,5 +1,5 @@
 - type: entity
-  save: false
+  save: true
   name: Urist McSkelly
   parent:
   - MobFlammable

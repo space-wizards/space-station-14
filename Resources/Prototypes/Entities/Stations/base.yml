@@ -3,6 +3,7 @@
   abstract: true
   components:
     - type: StationData
+  
 
 - type: entity
   id: BaseStationCargo

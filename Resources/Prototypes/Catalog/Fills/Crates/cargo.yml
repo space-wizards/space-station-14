@@ -319,6 +319,9 @@
     - id: PlushieArachind
       prob: 0.01
       orGroup: Plushies
+    - id: PlushieLizardJobMultiweh # the exceedingly rare multiweh!
+      prob: 0.01
+      orGroup: Plushies
     - id: PlushieThrongler #hehe
       prob: 0.0005
       orGroup: Plushies

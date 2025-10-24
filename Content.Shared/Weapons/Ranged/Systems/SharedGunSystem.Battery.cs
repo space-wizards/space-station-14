@@ -2,6 +2,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
 using Content.Shared.Projectiles;
+using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.GameStates;
@@ -80,11 +81,10 @@ public abstract partial class SharedGunSystem
     {
         if (component is ProjectileBatteryAmmoProviderComponent battery)
         {
-            if (ProtoManager.Index<EntityPrototype>(battery.Prototype)
-                .Components
+            if (ProtoManager.Index<EntityPrototype>(battery.Prototype).Components
                 .TryGetValue(Factory.GetComponentName<ProjectileComponent>(), out var projectile))
             {
-                var p = (ProjectileComponent)projectile.Component;
+                var p = (ProjectileComponent) projectile.Component;
 
                 if (!p.Damage.Empty)
                 {
@@ -97,8 +97,11 @@ public abstract partial class SharedGunSystem
 
         if (component is HitscanBatteryAmmoProviderComponent hitscan)
         {
-            var dmg = ProtoManager.Index<HitscanPrototype>(hitscan.Prototype).Damage;
-            return dmg == null ? dmg : dmg * Damageable.UniversalHitscanDamageModifier;
+            var dmg = ProtoManager.Index(hitscan.HitscanEntityProto);
+            if (!dmg.TryGetComponent<HitscanBasicDamageComponent>(out var basicDamageComp, Factory))
+                return null;
+
+            return basicDamageComp.Damage * Damageable.UniversalHitscanDamageModifier;
         }
 
         return null;
@@ -155,7 +158,8 @@ public abstract partial class SharedGunSystem
                 var ent = Spawn(proj.Prototype, coordinates);
                 return (ent, EnsureShootable(ent));
             case HitscanBatteryAmmoProviderComponent hitscan:
-                return (null, ProtoManager.Index<HitscanPrototype>(hitscan.Prototype));
+                var hitscanEnt = Spawn(hitscan.HitscanEntityProto);
+                return (hitscanEnt, EnsureShootable(hitscanEnt));
             default:
                 throw new ArgumentOutOfRangeException();
         }

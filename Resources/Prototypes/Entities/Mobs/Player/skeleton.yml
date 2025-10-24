@@ -1,5 +1,5 @@
 - type: entity
-  save: false
+  save: true
   parent: BaseMobSkeletonPerson
   id: MobSkeletonPerson
   components:

@@ -1,6 +1,6 @@
 - type: entity
   id: BaseMech
-  save: false
+  save: true
   abstract: true
   components:
   - type: MobMover

@@ -45,7 +45,7 @@ public sealed class PersistenceSave : LocalizedEntityCommands
             return;
         }
 
-        _mapLoader.TrySaveMap(mapId, new ResPath(saveFilePath));
-        shell.WriteLine(Loc.GetString("cmd-savemap-success"));
+        bool save_stat = _mapLoader.TrySaveMap(mapId, new ResPath(saveFilePath));
+        shell.WriteLine(Loc.GetString("Did the map save? ") + $"{save_stat}");
     }
 }
