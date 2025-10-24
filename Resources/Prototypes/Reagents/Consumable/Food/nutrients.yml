@@ -1,9 +1,9 @@
 # End points - the eventual goal is that almost all foods and drinks metabolize into either these, or reagents that build up (e.g. theobromine, caffeine,... )
 - type: reagent
-  id: Nutriment #Anything that isn't better suited to vitamin, protein, or sugar. we aren't doing a super in-depth simulator.
-  name: reagent-name-nutriment
+  id: Nutriment # A unit of satiating. Avoid making it accessible in game.
+  name: reagent-name-adenosine-nutriment
   group: Foods
-  desc: reagent-desc-nutriment
+  desc: reagent-desc-adenosine-nutriment
   physicalDesc: reagent-physical-desc-opaque
   flavor: nutriment
   color: "#24591F"
@@ -19,7 +19,22 @@
   pricePerUnit: 2
 
 - type: reagent
-  id: Vitamin #Anything "healthy"
+  id: Carbohydrate
+  name: reagent-name-carbohydrate
+  group: Foods
+  desc: reagent-desc-carbohydrate
+  physicalDesc: reagent-physical-desc-chalky
+  flavor: chalky
+  color: "white"
+  plantMetabolism:
+  - !type:PlantAdjustNutrition
+    amount: 1.5
+  - !type:PlantAdjustHealth
+    amount: 0.75
+  pricePerUnit: 2
+
+- type: reagent
+  id: Vitamin #Anything "healthy", also no nutritional score
   name: reagent-name-vitamin
   group: Foods
   desc: reagent-desc-vitamin
@@ -38,7 +53,6 @@
       # Helps you stop bleeding to an extent.
       - !type:ModifyBleed
         amount: -0.25
-      - !type:SatiateHunger #Numbers are balanced with this in mind + it helps limit how much healing you can get from food
   # Lets plants benefit too
   plantMetabolism:
   - !type:PlantAdjustNutrition
@@ -65,7 +79,6 @@
             Brute: -0.4
       - !type:ModifyBloodLevel
         amount: 1 # weaker than iron but pretty good all things considered
-      - !type:SatiateHunger
   pricePerUnit: 3
 
 - type: reagent
@@ -81,10 +94,6 @@
     Food:
       effects:
       - !type:SatiateHunger
-        conditions:
-        - !type:ReagentCondition #Only satiates when eaten with nutriment
-          reagent: Nutriment
-          min: 0.1
         factor: 1
   plantMetabolism:
   - !type:PlantAdjustNutrition
@@ -101,9 +110,29 @@
   metamorphicChangeColor: false
 
 - type: reagent
-  id: PumpkinFlesh #Just so pumpkins spill orange stuff when smashed
-  parent: Nutriment
-  name: reagent-name-pumpkin-flesh
-  desc: reagent-desc-pumpkin-flesh
-  flavor: pumpkin
-  color: "#fc9300"
+  id: Fat
+  name: reagent-name-fat
+  group: Biological
+  desc: reagent-desc-fat
+  flavor: terrible
+  color: "#d8d8b0"
+  physicalDesc: reagent-physical-desc-exotic-smelling
+  footstepSound:
+    collection: FootstepBlood
+    params:
+      volume: 6
+
+- type: reagent
+  id: Oil # Unsaturated fat
+  name: reagent-name-oil
+  group: Foods
+  desc: reagent-desc-oil
+  physicalDesc: reagent-physical-desc-oily
+  flavor: oily
+  flavorMinimum: 0.05
+  recognizable: true
+  color: "#b67823"
+  boilingPoint: 300.0
+  meltingPoint: -16.0
+  tileReactions:
+  - !type:FlammableTileReaction {}

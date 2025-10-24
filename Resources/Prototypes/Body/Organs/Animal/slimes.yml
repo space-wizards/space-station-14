@@ -24,6 +24,9 @@
       solutions:
         stomach:
           maxVol: 30.0
+    - type: ReactionMixer
+      reactionTypes:
+      - Digestion
 
 - type: entity
   id: OrganSlimesLungs
@@ -48,9 +51,9 @@
         rateModifier: 100.0
     - type: SolutionContainerManager
       solutions:
-        organ:
+        food:
           reagents:
-          - ReagentId: Nutriment
+          - ReagentId: Slime
             Quantity: 10
         Lung:
           maxVol: 100.0

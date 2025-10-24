@@ -20,7 +20,7 @@
       food:
         maxVol: 7
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 5
 
 - type: entity
@@ -47,7 +47,7 @@
         reagents:
         - ReagentId: Bicaridine
           Quantity: 5
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 5
 
 - type: entity
@@ -72,7 +72,7 @@
       food:
         maxVol: 12
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 2.5
         - ReagentId: Fiber
           Quantity: 2.5

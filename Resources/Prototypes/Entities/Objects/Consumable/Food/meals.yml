@@ -15,13 +15,6 @@
     - 0,0,1,0
   - type: Sprite
     sprite: Objects/Consumable/Food/meals.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 26
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 20
 
 # Meals
 
@@ -39,6 +32,15 @@
       - potatoes
   - type: Sprite
     state: loadedbakedpotato
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 15
+        - ReagentId: Fat
+          Quantity: 5
 # Tastes like potato.
 
 - type: entity
@@ -55,6 +57,15 @@
       - salty
   - type: Sprite
     state: fries
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 15
+        - ReagentId: TableSalt
+          Quantity: 5
 # Tastes like fries, salt.
 
 - type: entity
@@ -72,6 +83,17 @@
       - cheesy
   - type: Sprite
     state: fries-cheesy
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 31
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 15
+        - ReagentId: Fat
+          Quantity: 5
+        - ReagentId: TableSalt
+          Quantity: 5
 # Tastes like fries, cheese.
 
 - type: entity
@@ -96,8 +118,10 @@
       food:
         maxVol: 26
         reagents:
-        - ReagentId: JuiceCarrot
-          Quantity: 20
+        - ReagentId: Carbohydrate
+          Quantity: 15
+        - ReagentId: TableSalt
+          Quantity: 5
 # Tastes like carrots, salt.
 
 - type: entity
@@ -121,8 +145,10 @@
       food:
         maxVol: 20
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 15
+        - ReagentId: Carbohydrate
+          Quantity: 13
+        - ReagentId: Oil
+          Quantity: 2
         - ReagentId: TableSalt
           Quantity: 2
 # Tastes like nachos.
@@ -149,8 +175,10 @@
       food:
         maxVol: 25
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 20
+        - ReagentId: Carbohydrate
+          Quantity: 14
+        - ReagentId: Oil
+          Quantity: 6
         - ReagentId: TableSalt
           Quantity: 2
 # Tastes like nachos, cheese.
@@ -178,11 +206,11 @@
       food:
         maxVol: 40
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 25
         - ReagentId: CapsaicinOil
           Quantity: 7
-        - ReagentId: Vitamin
+        - ReagentId: Oil
           Quantity: 5
 # Tastes like nachos, hot pepper.
 
@@ -205,7 +233,7 @@
         # Note that this acts as the limiter against injecting anything.
         maxVol: 1
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Vitamin
           Quantity: 1
 # Tastes like parsnips, salt.
 
@@ -228,9 +256,9 @@
       food:
         maxVol: 10
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 6
-        - ReagentId: Vitamin
+        - ReagentId: Fat
           Quantity: 2
   - type: Tag
     tags:
@@ -251,6 +279,15 @@
       - potatoes
   - type: Sprite
     state: yakiimo
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 15
+        - ReagentId: Sugar
+          Quantity: 5
 # Tastes like sweet potato.
 
 - type: entity
@@ -273,7 +310,7 @@
       food:
         maxVol: 55
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Protein
           Quantity: 40
         - ReagentId: CarpoToxin
           Quantity: 3
@@ -306,10 +343,12 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Protein
           Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 4
+        - ReagentId: Salt
+          Quantity: 2
+        - ReagentId: Carbohydrate
+          Quantity: 2
   - type: Tag
     tags:
     - Meat
@@ -337,10 +376,10 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Vitamin
+        - ReagentId: Protein
           Quantity: 5
+        - ReagentId: Fat
+          Quantity: 2
   - type: Tag
     tags:
     - Meat
@@ -367,10 +406,10 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 1
+        - ReagentId: Protein
+          Quantity: 5
+        - ReagentId: Carbohydrate
+          Quantity: 2
   - type: Tag
     tags:
     - Meat
@@ -398,7 +437,7 @@
       food:
         maxVol: 35
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Fat
           Quantity: 3
         - ReagentId: Protein
           Quantity: 20
@@ -427,9 +466,9 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Protein
           Quantity: 6
-        - ReagentId: Vitamin
+        - ReagentId: Fat
           Quantity: 4
   - type: Tag
     tags:
@@ -455,8 +494,10 @@
       food:
         maxVol: 10
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 9
+        - ReagentId: Protein
+          Quantity: 5
+        - ReagentId: Fat
+          Quantity: 4
   - type: Tag
     tags:
     - Meat
@@ -482,7 +523,7 @@
       food:
         maxVol: 10
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Protein
           Quantity: 2
         - ReagentId: TableSalt
           Quantity: 1
@@ -509,6 +550,17 @@
       - chocolate
   - type: Sprite
     state: milkape
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Milk
+          Quantity: 10
+        - ReagentId: Fat
+          Quantity: 5
+        - ReagentId: Sugar
+          Quantity: 5
 # Tastes like milk, chocolate, the jungle.
 
 - type: entity
@@ -530,7 +582,7 @@
       food:
         maxVol: 20
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 10
         - ReagentId: Allicin
           Quantity: 5
@@ -554,7 +606,7 @@
       food:
         maxVol: 25
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Protein
           Quantity: 9
         - ReagentId: Water
           Quantity: 10
@@ -575,6 +627,15 @@
         - cheesy
     - type: Sprite
       state: queso
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 26
+          reagents:
+          - ReagentId: Protein
+            Quantity: 15
+          - ReagentId: CapsaicinOil
+            Quantity: 5
 # Its queso! Everyone loves queso... Right?.
 
 - type: entity
@@ -593,7 +654,7 @@
       food:
         maxVol: 25
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Protein
           Quantity: 6
         - ReagentId: CarpoToxin
           Quantity: 15
@@ -620,10 +681,10 @@
         food:
           maxVol: 35
           reagents:
-          - ReagentId: Nutriment
-            Quantity: 20
+          - ReagentId: Carbohydrate
+            Quantity: 15
           - ReagentId: Protein
-            Quantity: 5
+            Quantity: 10
           - ReagentId: CapsaicinOil
             Quantity: 6
           - ReagentId: Vitamin
@@ -652,7 +713,7 @@
       food:
         maxVol: 65
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Sugar
           Quantity: 30
         - ReagentId: Vitamin
           Quantity: 15
@@ -688,7 +749,7 @@
       food:
         maxVol: 10
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 4
-        - ReagentId: Vitamin
+        - ReagentId: Oil
           Quantity: 4

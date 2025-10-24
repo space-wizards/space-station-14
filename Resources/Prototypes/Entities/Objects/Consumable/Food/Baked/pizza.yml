@@ -15,11 +15,15 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 40
+        maxVol: 60
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 30
-        - ReagentId: Vitamin
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Oil
+          Quantity: 5
+        - ReagentId: Fat
+          Quantity: 10
+        - ReagentId: Protein
           Quantity: 5
   - type: SliceableFood
     count: 8
@@ -50,10 +54,14 @@
         # Note: Keep FoodPizzaMoldySlice & FoodPizzaSliceBase roughly in sync
         maxVol: 6
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
-        - ReagentId: Vitamin
-          Quantity: 0.8
+        - ReagentId: Carbohydrate
+          Quantity: 2.5
+        - ReagentId: Oil
+          Quantity: 0.625
+        - ReagentId: Fat
+          Quantity: 1.25
+        - ReagentId: Protein
+          Quantity: 0.625
   - type: Item
     size: Tiny
   - type: Tag
@@ -113,6 +121,19 @@
   - type: Sprite
     layers:
     - state: meat
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 60
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Oil
+          Quantity: 5
+        - ReagentId: Fat
+          Quantity: 10
+        - ReagentId: Protein
+          Quantity: 10
   - type: SliceableFood
     slice: FoodPizzaMeatSlice
   - type: Tag
@@ -135,6 +156,19 @@
   - type: Sprite
     layers:
     - state: meat-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 2.5
+        - ReagentId: Oil
+          Quantity: 0.625
+        - ReagentId: Fat
+          Quantity: 1.25
+        - ReagentId: Protein
+          Quantity: 1.25
   - type: Item
     heldPrefix: meat-slice
   - type: Tag
@@ -201,10 +235,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 40
+        maxVol: 60
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 25
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Oil
+          Quantity: 5
+        - ReagentId: Fat
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
         - ReagentId: JuiceCarrot
           Quantity: 5
         - ReagentId: Vitamin
@@ -235,12 +275,18 @@
       food:
         maxVol: 10
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 4
+        - ReagentId: Carbohydrate
+          Quantity: 2.5
+        - ReagentId: Oil
+          Quantity: 0.625
+        - ReagentId: Fat
+          Quantity: 0.625
+        - ReagentId: Protein
+          Quantity: 0.625
         - ReagentId: JuiceCarrot
-          Quantity: 1
+          Quantity: 0.625
         - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 0.625
 
 # Tastes like crust, tomato, cheese, carrot.
 
@@ -261,14 +307,18 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 75
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 27
-        - ReagentId: Vitamin
-          Quantity: 6
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Oil
+          Quantity: 5
+        - ReagentId: Fat
+          Quantity: 10
+        - ReagentId: Protein
+          Quantity: 5
         - ReagentId: Omnizine
-          Quantity: 9
+          Quantity: 10
   - type: Tag
     tags:
     - Meat
@@ -294,12 +344,16 @@
       food:
         maxVol: 10
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 4.5
-        - ReagentId: Vitamin
-          Quantity: 1
+        - ReagentId: Carbohydrate
+          Quantity: 2.5
+        - ReagentId: Oil
+          Quantity: 0.625
+        - ReagentId: Fat
+          Quantity: 1.25
+        - ReagentId: Protein
+          Quantity: 0.625
         - ReagentId: Omnizine
-          Quantity: 1.5
+          Quantity: 1.25
   - type: Tag
     tags:
     - Meat
@@ -327,10 +381,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 60
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 20
+        - ReagentId: Oil
+          Quantity: 5
+        - ReagentId: Fat
+          Quantity: 10
+        - ReagentId: Protein
+          Quantity: 5
         - ReagentId: THC
           Quantity: 30
 
@@ -356,15 +416,21 @@
       food:
         maxVol: 10
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 3.5
+        - ReagentId: Carbohydrate
+          Quantity: 2.5
+        - ReagentId: Oil
+          Quantity: 0.625
+        - ReagentId: Fat
+          Quantity: 1.25
+        - ReagentId: Protein
+          Quantity: 0.625
         - ReagentId: THC
-          Quantity: 5
+          Quantity: 3.75
 # Tastes like crust, tomato, cheese, meat, satisfaction.
 
 - type: entity
   name: sassysage pizza
-  parent: FoodPizzaBase
+  parent: FoodPizzaMeat
   id: FoodPizzaSassysage
   description: You can really smell the sassiness.
   components:
@@ -386,7 +452,7 @@
 
 - type: entity
   name: slice of sassysage pizza
-  parent: FoodPizzaSliceBase
+  parent: FoodPizzaMeatSlice
   id: FoodPizzaSassysageSlice
   description: Deliciously sassy.
   components:
@@ -478,10 +544,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 85
+        maxVol: 105
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 30
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Oil
+          Quantity: 5
+        - ReagentId: Fat
+          Quantity: 10
+        - ReagentId: Protein
+          Quantity: 5
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Iron
@@ -516,14 +588,20 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
+        - ReagentId: Carbohydrate
+          Quantity: 2.5
+        - ReagentId: Oil
+          Quantity: 0.625
+        - ReagentId: Fat
+          Quantity: 1.25
+        - ReagentId: Protein
+          Quantity: 0.625
         - ReagentId: Vitamin
-          Quantity: 0.8
+          Quantity: 0.625
         - ReagentId: Iron
-          Quantity: 1.6
+          Quantity: 1.25
         - ReagentId: Omnizine
-          Quantity: 5
+          Quantity: 3.75
   - type: Tag
     tags:
     - Meat
@@ -557,12 +635,10 @@
         # Note: Keep FoodPizzaMoldySlice & FoodPizzaSliceBase roughly in sync
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
+        - ReagentId: Carbohydrate
+          Quantity: 2.5
         - ReagentId: Mold
-          Quantity: 2
-        - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 2.5
 # Tastes like stale crust, rancid cheese, mushroom.
 
 - type: entity
@@ -594,12 +670,18 @@
       food:
         maxVol: 40
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 20
-        - ReagentId: Radium
-          Quantity: 4
+        - ReagentId: Oil
+          Quantity: 5
+        - ReagentId: Fat
+          Quantity: 10
+        - ReagentId: Protein
+          Quantity: 5
+        - ReagentId: CapsaicinOil
+          Quantity: 5
         - ReagentId: Uranium
-          Quantity: 16
+          Quantity: 20
 
 - type: entity
   name: slice of spicy rock pizza
@@ -631,12 +713,18 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 2.5
-        - ReagentId: Radium
-          Quantity: 0.5
+        - ReagentId: Oil
+          Quantity: 0.625
+        - ReagentId: Fat
+          Quantity: 1.25
+        - ReagentId: Protein
+          Quantity: 0.625
+        - ReagentId: CapsaicinOil
+          Quantity: 0.625
         - ReagentId: Uranium
-          Quantity: 2
+          Quantity: 2.5
 
 # Tastes like crust, tomato, cheese, radiation.
 
@@ -664,11 +752,15 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 40
+        maxVol: 60
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 20
-        - ReagentId: Vitamin
+        - ReagentId: Oil
+          Quantity: 10
+        - ReagentId: Fat
+          Quantity: 5
+        - ReagentId: Protein
           Quantity: 5
         - ReagentId: Fiber
           Quantity: 10
@@ -696,14 +788,18 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 10
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 3.5
-        - ReagentId: Vitamin
-          Quantity: 0.8
+        - ReagentId: Carbohydrate
+          Quantity: 2.5
+        - ReagentId: Oil
+          Quantity: 1.25
+        - ReagentId: Fat
+          Quantity: 0.625
+        - ReagentId: Protein
+          Quantity: 0.625
         - ReagentId: Fiber
-          Quantity: 1.5
+          Quantity: 1.25
 
 - type: entity
   name: world peazza
@@ -723,10 +819,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 45
+        maxVol: 65
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 20
+        - ReagentId: Oil
+          Quantity: 5
+        - ReagentId: Fat
+          Quantity: 10
+        - ReagentId: Protein
+          Quantity: 5
         - ReagentId: Happiness
           Quantity: 12
         - ReagentId: Pax
@@ -752,9 +854,15 @@
       food:
         maxVol: 10
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 3.5
+        - ReagentId: Carbohydrate
+          Quantity: 2.5
+        - ReagentId: Oil
+          Quantity: 0.625
+        - ReagentId: Fat
+          Quantity: 1.25
+        - ReagentId: Protein
+          Quantity: 0.625
         - ReagentId: Happiness
-          Quantity: 2
-        - ReagentId: Pax
           Quantity: 1.5
+        - ReagentId: Pax
+          Quantity: 1

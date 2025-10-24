@@ -126,13 +126,19 @@
   flavor: salty
   color: saddlebrown
   recognizable: true
-  metabolisms:
-    Food:
-      effects:
-      - !type:SatiateHunger
-        factor: 0.5
-      - !type:SatiateThirst
-        factor: -0.5 # high salt content
+
+- type: reaction
+  id: SoysauceComposition
+  source: true
+  requiredMixerCategories:
+  - Digestion
+  - Centrifuge
+  reactants:
+    Soysauce:
+      amount: 2
+  products:
+    Carbohydrate: 1
+    TableSalt: 1
 
 - type: reagent
   id: TableSalt

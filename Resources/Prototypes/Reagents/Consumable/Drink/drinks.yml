@@ -499,11 +499,17 @@
   physicalDesc: reagent-physical-desc-wormy
   flavor: cheapnoodles
   color: "#664300"
-  metabolisms:
-    Food:
-      effects:
-      - !type:SatiateHunger
-        factor: 1
+- type: reaction
+  id: DryRamenComposition
+  source: true
+  requiredMixerCategories:
+  - Digestion
+  - Centrifuge
+  reactants:
+    DryRamen:
+      amount: 1
+  products:
+    Carbohydrate: 1
 
 - type: reagent
   id: HotRamen
@@ -513,11 +519,18 @@
   physicalDesc: reagent-physical-desc-wormy
   flavor: cheapnoodles
   color: "#664300"
-  metabolisms:
-    Food:
-      effects:
-      - !type:SatiateHunger
-        factor: 4
+- type: reaction
+  id: HotRamenComposition
+  source: true
+  requiredMixerCategories:
+  - Digestion
+  - Centrifuge
+  reactants:
+    HotRamen:
+      amount: 1
+  products:
+    Carbohydrate: 4
+    CapsaicinOil: 1
 
 - type: reagent
   id: ArnoldPalmer

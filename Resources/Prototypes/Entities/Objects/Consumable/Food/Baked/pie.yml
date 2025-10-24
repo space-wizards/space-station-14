@@ -17,14 +17,18 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
-        reagents: #Most of these are this with slight variations, not worth changing until we have the rest of the reagents
-        - ReagentId: Nutriment
-          Quantity: 30
+        maxVol: 70
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Fat
+          Quantity: 10
         - ReagentId: Vitamin
-          Quantity: 14
-        - ReagentId: Sugar
           Quantity: 5
+        - ReagentId: TableSalt
+          Quantity: 5
+        - ReagentId: Sugar
+          Quantity: 10
   - type: Edible #It's actually possible now to have a pie stored in a tin rather than spawning trash when you finish eating it. But right now I'm just cleaning up.
     trash:
     - FoodPlateTin
@@ -50,14 +54,18 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 7
+        maxVol: 15
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 7.5
+        - ReagentId: Carbohydrate
+          Quantity: 5
+        - ReagentId: Fat
+          Quantity: 2.5
         - ReagentId: Vitamin
-          Quantity: 3.5
-        - ReagentId: Sugar
           Quantity: 1.25
+        - ReagentId: TableSalt
+          Quantity: 1.25
+        - ReagentId: Sugar
+          Quantity: 2.5
   - type: Tag
     tags:
     - Pie
@@ -295,6 +303,21 @@
     layers:
     - state: tin
     - state: meat
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 70
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Fat
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: TableSalt
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 10
   - type: SliceableFood
     slice: FoodPieMeatSlice
   - type: Tag
@@ -315,6 +338,21 @@
     - state: plain-slice
     - state: alpha-slice-filling
       color: brown
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 5
+        - ReagentId: Fat
+          Quantity: 2.5
+        - ReagentId: Vitamin
+          Quantity: 1.25
+        - ReagentId: TableSalt
+          Quantity: 1.25
+        - ReagentId: Protein
+          Quantity: 2.5
   - type: Tag
     tags:
     - Meat
@@ -372,6 +410,21 @@
     layers:
     - state: tin
     - state: xeno
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 70
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Fat
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: TableSalt
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 10
   - type: SliceableFood
     slice: FoodPieXenoSlice
   - type: Tag
@@ -393,6 +446,21 @@
     - state: plain-slice
     - state: alpha-slice-filling
       color: green
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 5
+        - ReagentId: Fat
+          Quantity: 2.5
+        - ReagentId: Vitamin
+          Quantity: 1.25
+        - ReagentId: TableSalt
+          Quantity: 1.25
+        - ReagentId: Protein
+          Quantity: 2.5
   - type: Tag
     tags:
     - Meat
@@ -478,14 +546,18 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 17
+        maxVol: 70
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Amatoxin
-          Quantity: 3
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Fat
+          Quantity: 10
         - ReagentId: Vitamin
-          Quantity: 4
+          Quantity: 5
+        - ReagentId: TableSalt
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 10
 # Tastes like pie, mushrooms.
 
 - type: entity
@@ -514,17 +586,6 @@
       - sweet
   - type: Sprite
     state: grape
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 30
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 15
-        - ReagentId: Vitamin
-          Quantity: 5
-        - ReagentId: Sugar
-          Quantity: 5
   - type: Tag
     tags:
     - Fruit
@@ -562,10 +623,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 35
+        maxVol: 70
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 25
+        - ReagentId: Carbohydrate
+          Quantity: 20
+        - ReagentId: Fat
+          Quantity: 10
+        - ReagentId: TableSalt
+          Quantity: 5
+        - ReagentId: Sugar
+          Quantity: 10
         - ReagentId: Theobromine
-          Quantity: 2
+          Quantity: 5
 # Tastes like tart, dark chocolate.

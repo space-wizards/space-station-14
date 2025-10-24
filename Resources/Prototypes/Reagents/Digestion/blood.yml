@@ -1,0 +1,97 @@
+# Blood
+- type: reaction
+  id: BloodDigestion
+  source: true
+  requiredMixerCategories:
+  - Digestion
+  reactants:
+    Blood:
+      amount: 20
+  products:
+    Water: 13
+    Iron: 1
+    Sugar: 2
+    UncookedAnimalProteins: 4
+
+# Copper blood
+- type: reaction
+  id: CopperBloodDigestion
+  source: true
+  requiredMixerCategories:
+  - Digestion
+  reactants:
+    CopperBlood:
+      amount: 20
+  products:
+    Water: 13
+    Copper: 1
+    Sugar: 2
+    UncookedAnimalProteins: 4
+
+# Insect blood
+- type: reaction
+  id: InsectBloodDigestion
+  source: true
+  requiredMixerCategories:
+  - Digestion
+  reactants:
+    InsectBlood:
+      amount: 20
+  products:
+    Water: 13
+    Sodium: 1
+    Sugar: 2
+    UncookedAnimalProteins: 4
+
+# Ammonia blood
+- type: reaction
+  id: AmmoniaBloodDigestion
+  source: true
+  requiredMixerCategories:
+  - Digestion
+  reactants:
+    AmmoniaBlood:
+      amount: 20
+  products:
+    Water: 10
+    Ammonia: 6
+    UncookedAnimalProteins: 4
+
+# Zombie blood
+- type: reaction
+  id: ZombieBloodDigestion
+  source: true
+  requiredMixerCategories:
+  - Digestion
+  reactants:
+    ZombieBlood:
+      amount: 4
+  products:
+    Mold: 2
+    UncookedAnimalProteins: 1
+    GastroToxin: 1
+
+# Slime blood
+- type: reaction
+  id: SlimeDigestion
+  source: true
+  requiredMixerCategories:
+  - Digestion
+  reactants:
+    Slime:
+      amount: 1
+  products:
+    Nutriment: 1
+
+# Sap blood
+- type: reaction
+  id: SapBloodDigestion
+  source: true
+  requiredMixerCategories:
+  - Digestion
+  reactants:
+    Sap:
+      amount: 2
+  products:
+    Water: 1
+    Nutriment: 1

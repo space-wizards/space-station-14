@@ -11,9 +11,9 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 17
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 3
   - type: Item
     size: Tiny
@@ -55,10 +55,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 17
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 8
+        - ReagentId: Carbohydrate
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
         - ReagentId: Omnizine
           Quantity: 2
 
@@ -76,7 +78,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 5
   - type: Sprite
     state: dank
@@ -95,8 +97,10 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
+        - ReagentId: Carbohydrate
+          Quantity: 5
+        - ReagentId: Fiber
+          Quantity: 5
         - ReagentId: Omnizine
           Quantity: 4
 
@@ -129,8 +133,10 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
+        - ReagentId: Carbohydrate
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
         - ReagentId: Omnizine
           Quantity: 2
   - type: Sprite
@@ -165,7 +171,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 10
         - ReagentId: Omnizine
           Quantity: 2
@@ -186,8 +192,14 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
+        - ReagentId: Carbohydrate
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 3
+        - ReagentId: Fat
+          Quantity: 3
+        - ReagentId: Oil
+          Quantity: 3
   - type: Sprite
     state: pizza
 
@@ -207,8 +219,14 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 15
+        - ReagentId: Carbohydrate
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 3
+        - ReagentId: Fat
+          Quantity: 3
+        - ReagentId: Oil
+          Quantity: 3
         - ReagentId: Omnizine
           Quantity: 2
 
@@ -226,8 +244,10 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
+        - ReagentId: Carbohydrate
+          Quantity: 2.5
+        - ReagentId: Protein
+          Quantity: 2.5
         - ReagentId: Honk
           Quantity: 0.50
   - type: Sprite
@@ -247,8 +267,10 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
+        - ReagentId: Carbohydrate
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
         - ReagentId: Honk
           Quantity: 1
         - ReagentId: Omnizine
@@ -268,8 +290,10 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
+        - ReagentId: Carbohydrate
+          Quantity: 2.5
+        - ReagentId: Sugar
+          Quantity: 2.5
   - type: Sprite
     state: berry
 
@@ -287,8 +311,10 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
+        - ReagentId: Carbohydrate
+          Quantity: 5
+        - ReagentId: Sugar
+          Quantity: 5
         - ReagentId: Omnizine
           Quantity: 2
         - ReagentId: Sugar
@@ -304,12 +330,6 @@
     flavors:
       - profits
       - cheap
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
   - type: Sprite
     state: stonk
 
@@ -322,14 +342,6 @@
     flavors:
       - profits
       - cheap
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Omnizine
-          Quantity: 2
 
 - type: entity
   name: carp-pocket
@@ -341,12 +353,6 @@
     flavors:
     - cheap
     - fishops
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
   - type: Sprite
     state: carp
 
@@ -359,14 +365,6 @@
     flavors:
     - cheap
     - fishops
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Omnizine
-          Quantity: 2
 
 - type: entity
   name: dink-pocket
@@ -382,7 +380,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Protein
           Quantity: 2
         - ReagentId: JuiceCarrot
           Quantity: 1
@@ -403,7 +401,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 5
         - ReagentId: Fiber
           Quantity: 5
@@ -425,7 +423,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 10
         - ReagentId: Fiber
           Quantity: 5
