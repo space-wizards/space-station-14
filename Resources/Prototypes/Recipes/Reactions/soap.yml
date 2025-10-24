@@ -14,7 +14,6 @@
   effects:
     - !type:SpawnEntity
       entity: Soap
-      scaling: true
 
 - type: reaction
   id: CreateSoapNT
@@ -33,7 +32,6 @@
   effects:
     - !type:SpawnEntity
       entity: SoapNT
-      scaling: true
 
 - type: reaction
   id: CreateSoapDeluxe
@@ -52,7 +50,6 @@
   effects:
     - !type:SpawnEntity
       entity: SoapDeluxe
-      scaling: true
 
 - type: reaction
   id: CreateSoapBlood
@@ -71,7 +68,6 @@
   effects:
     - !type:SpawnEntity
       entity: SoapHomemade
-      scaling: true
 
 - type: reaction
   id: CreateSoapSyndie
@@ -90,7 +86,6 @@
   effects:
     - !type:SpawnEntity
       entity: SoapSyndie
-      scaling: true
 
 - type: reaction
   id: CreateSoapOmega
@@ -123,4 +118,3 @@
   effects:
     - !type:SpawnEntity
       entity: SoapOmega
-      scaling: true

@@ -40,7 +40,6 @@
   effects:
     - !type:SpawnEntity
       entity: FoodMeat
-      scaling: true
 
 - type: reaction
   id: SpaceGlue
@@ -78,7 +77,6 @@
   effects:
     - !type:SpawnEntity
       entity: SheetPlastic1
-      scaling: true
 
 - type: reaction
   id: FlashFreezeIce
@@ -157,7 +155,6 @@
   effects:
     - !type:SpawnEntity
       entity: ShardCrystalRandom
-      scaling: true
 
 - type: reaction
   id: Gunpowder
@@ -174,7 +171,6 @@
   effects:
     - !type:SpawnEntity
       entity: MaterialGunpowder
-      scaling: true
 
 - type: reaction
   id: SolidifyGold
@@ -188,7 +184,6 @@
   effects:
   - !type:SpawnEntity
     entity: IngotGold1
-      scaling: true
 
 - type: reaction
   id: SolidifySilver
@@ -202,7 +197,6 @@
   effects:
   - !type:SpawnEntity
     entity: IngotSilver1
-      scaling: true
 
 - type: reaction
   id: WehHewExplosion

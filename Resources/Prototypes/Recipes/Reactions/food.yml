@@ -12,7 +12,6 @@
   effects:
     - !type:SpawnEntity
       entity: FoodCheese
-      scaling: true
 
 - type: reaction
   id: ChevreCurdling
@@ -28,7 +27,6 @@
   effects:
     - !type:SpawnEntity
       entity: FoodChevre
-      scaling: true
 
 - type: reaction
   id: CreateDough
@@ -43,7 +41,6 @@
   effects:
     - !type:SpawnEntity
       entity: FoodDough
-      scaling: true
 
 - type: reaction
   id: CreateCornmealDough
@@ -60,7 +57,6 @@
   effects:
     - !type:SpawnEntity
       entity: FoodDoughCornmeal
-      scaling: true
 
 - type: reaction
   id: CreateTortillaDough
@@ -75,7 +71,6 @@
   effects:
     - !type:SpawnEntity
       entity: FoodDoughTortilla
-      scaling: true
 
 - type: reaction
   id: CreateDoughCotton
@@ -92,7 +87,6 @@
   effects:
   - !type:SpawnEntity
     entity: FoodDoughCotton
-    scaling: true
 
 - type: reaction
   id: CreateCakeBatter
@@ -111,7 +105,6 @@
   effects:
     - !type:SpawnEntity
       entity: FoodCakeBatter
-      scaling: true
 
 - type: reaction
   id: CreateButter
@@ -127,7 +120,6 @@
   effects:
     - !type:SpawnEntity
       entity: FoodButter
-      scaling: true
 
 - type: reaction
   id: CreatePieDough
@@ -144,7 +136,6 @@
   effects:
     - !type:SpawnEntity
       entity: FoodDoughPie
-      scaling: true
 
 # TG has a cake recipe that uses soy milk instead of eggs.
 # but afaik it spawns the exact same cake batter entity.
@@ -164,7 +155,6 @@
   effects:
     - !type:SpawnEntity
       entity: FoodCakeBatter
-      scaling: true
 
 - type: reaction
   id: CreateTofu
@@ -180,7 +170,6 @@
   effects:
     - !type:SpawnEntity
       entity: FoodTofu
-      scaling: true
 
 - type: reaction
   id: CreateMeatball
@@ -197,7 +186,6 @@
   effects:
     - !type:SpawnEntity
       entity: FoodMeatMeatball
-      scaling: true
 
 - type: reaction
   id: CreateChocolate
@@ -214,7 +202,6 @@
   effects:
     - !type:SpawnEntity
       entity: FoodSnackChocolateBar
-      scaling: true
 
 # Condiments
 
