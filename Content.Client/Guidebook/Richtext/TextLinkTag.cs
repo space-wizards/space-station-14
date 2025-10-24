@@ -33,6 +33,7 @@ public sealed class TextLinkTag : IMarkupTagHandler
         label.MouseFilter = Control.MouseFilterMode.Stop;
         label.FontColorOverride = LinkColor;
         label.DefaultCursorShape = Control.CursorShape.Hand;
+        label.HorizontalAlignment = Control.HAlignment.Left;
 
         label.OnMouseEntered += _ => label.FontColorOverride = Color.LightSkyBlue;
         label.OnMouseExited += _ => label.FontColorOverride = Color.CornflowerBlue;
