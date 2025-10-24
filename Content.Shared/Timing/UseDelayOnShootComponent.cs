@@ -1,4 +1,3 @@
-using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Timing;

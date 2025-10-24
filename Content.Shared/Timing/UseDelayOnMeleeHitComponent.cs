@@ -1,5 +1,4 @@
-﻿using Content.Shared.Weapons.Melee;
-using Robust.Shared.GameStates;
+﻿using Robust.Shared.GameStates;
 
 namespace Content.Shared.Timing;
 
