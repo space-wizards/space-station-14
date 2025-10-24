@@ -1,5 +1,4 @@
 using Content.Shared.Trigger.Components.Effects;
-using Robust.Shared.Containers;
 using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Shared.Trigger.Systems;

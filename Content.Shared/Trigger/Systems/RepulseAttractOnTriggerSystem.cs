@@ -1,4 +1,3 @@
-using Content.Shared.Trigger;
 using Content.Shared.Trigger.Components.Effects;
 using Content.Shared.RepulseAttract;
 
