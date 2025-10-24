@@ -15,6 +15,7 @@ public sealed class XAERandomTeleportInvokerSystem : BaseXAESystem<XAERandomTele
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedJointSystem _jointSystem = default!;
+
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAERandomTeleportInvokerComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
@@ -23,17 +24,13 @@ public sealed class XAERandomTeleportInvokerSystem : BaseXAESystem<XAERandomTele
         // todo: teleport person who activated artifact with artifact itself
         var component = ent.Comp;
 
-        if (!TryComp<XenoArtifactNodeComponent>(ent.Owner, out var nodeComponent) || nodeComponent.Attached is not { } artifact)
-            return;
-
-        var xform = Transform(artifact);
+        var xform = Transform(args.Artifact);
         _popup.PopupPredictedCoordinates(Loc.GetString("blink-artifact-popup"), xform.Coordinates, args.User, PopupType.Medium);
 
         var offsetTo = _random.NextVector2(component.MinRange, component.MaxRange);
 
-        _xform.AttachToGridOrMap(artifact);
-       if (TryComp<JointComponent>(artifact, out var joint))
-            _jointSystem.ClearJoints(artifact, joint);
-        _xform.SetCoordinates(artifact, xform, xform.Coordinates.Offset(offsetTo));
+        _xform.AttachToGridOrMap(args.Artifact);
+        _jointSystem.ClearJoints(args.Artifact);
+        _xform.SetCoordinates(args.Artifact, xform, xform.Coordinates.Offset(offsetTo));
     }
 }
