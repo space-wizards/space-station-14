@@ -17,7 +17,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobReporter
-      time: 20h
+      time: 10h
   equipment:
     head: ClothingHeadHatFedoraPress
 
@@ -29,6 +29,6 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobReporter
-      time: 52h
+      time: 35h
   equipment:
     outerClothing: ClothingOuterVestPress
