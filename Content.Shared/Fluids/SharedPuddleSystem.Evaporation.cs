@@ -3,6 +3,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Content.Shared.Fluids.Components;
+using Content.Shared.Chemistry.Reagent;
 
 namespace Content.Shared.Fluids;
 
