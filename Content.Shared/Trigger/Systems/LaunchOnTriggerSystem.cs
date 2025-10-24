@@ -24,7 +24,7 @@ public sealed class LaunchOnTriggerSystem : XOnTriggerSystem<LaunchOnTriggerComp
         // When triggered, take the direction the target is moving in (the normalized vector) and multiply it by the speed.
         // Then apply an impulse to the target on the new vector.
         // (If the target is moving NE at 10 m/s, this impulses it NE at speed m/s)
-        _physics.ApplyLinearImpulse(target, linearVelocity.Normalized() * ent.Comp.Speed, body: phys);
+        _physics.ApplyLinearImpulse(target, linearVelocity.Normalized() * ent.Comp.Impulse, body: phys);
 
         args.Handled = true;
     }
