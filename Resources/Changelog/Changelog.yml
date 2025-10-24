@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Southbridge
-  changes:
-  - message: AI camera static shader has been updated to be more consistent.
-    type: Tweak
-  id: 8649
-  time: '2025-06-10T04:47:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38093
 - author: BramvanZijp
   changes:
   - message: Added Stamina Damage resistance to the raid/hard-suits used by Nuclear
@@ -3926,3 +3919,12 @@
   id: 9150
   time: '2025-10-24T00:02:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41063
+- author: MDuch369
+  changes:
+  - message: Added guidebook entry for gas recycler.
+    type: Add
+  - message: Gas recycler can now be rotated.
+    type: Fix
+  id: 9151
+  time: '2025-10-24T01:07:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39212
