@@ -495,16 +495,10 @@
   id: IronSandstone
   parent: AsteroidRock
   name: ironsandstone
-  suffix: Low Ore Yield
-  description: A rocky asteroid.
+  suffix: no ore yield
   components:
-  - type: IconSmooth
-    key: walls
-    mode: NoSprite
   - type: Icon
-    sprite: Structures/Walls/rock.rsi
     state: ironsandstone
-  - type: SmoothEdge
   - type: Sprite
     sprite: Structures/Walls/rock.rsi
     layers:
@@ -523,7 +517,6 @@
   parent: IronSandstone
   name: ironsandstone
   suffix: higher ore yield
-  description: An asteroid.
   components:
   - type: OreVein
     oreChance: 0.33
