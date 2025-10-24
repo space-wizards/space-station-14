@@ -124,10 +124,7 @@ public sealed class UplinkSystem : EntitySystem
             {
                 var pdaUid = containerSlot.ContainedEntity;
 
-                if (!pdaUid.HasValue)
-                    continue;
-
-                if (HasComp<PdaComponent>(pdaUid))
+                if (HasComp<PdaComponent>(pdaUid) && HasComp<StoreComponent>(pdaUid))
                     return pdaUid;
             }
         }
@@ -135,7 +132,7 @@ public sealed class UplinkSystem : EntitySystem
         // Also check hands
         foreach (var item in _handsSystem.EnumerateHeld(user))
         {
-            if (HasComp<PdaComponent>(item))
+            if (HasComp<PdaComponent>(item) && HasComp<StoreComponent>(item))
                 return item;
         }
 
