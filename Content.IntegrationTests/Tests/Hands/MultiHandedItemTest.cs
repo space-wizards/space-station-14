@@ -311,7 +311,7 @@ public sealed class TwoHandedItemTestFixture : BaseMultiHandedItemTest
         await SpawnTarget(Crowbar2);
         await Pickup();
         await SwapHands();
-        await AssertHandItems(2, 0, 1, 1);
+        await AssertHandItems(2, 0, 2, 1);
 
         // We cannot pick up a second item
         await SpawnTarget(Crowbar1);
@@ -319,14 +319,14 @@ public sealed class TwoHandedItemTestFixture : BaseMultiHandedItemTest
         {
             Assert.That(SHands.TryPickupAnyHand(SPlayer, STarget.Value), Is.False);
         });
-        await AssertHandItems(2, 0, 1, 1);
+        await AssertHandItems(2, 0, 2, 1);
 
         // Drop all items
         await DropAll();
         await AssertHandItems(2, 2, 0, 0);
 
         // We can pick up a one-handed item with one hand
-        await SpawnTarget(Crowbar1);
+        var handOneItem = await SpawnTarget(Crowbar1);
         await Pickup();
         await SwapHands();
         await AssertHandItems(2, 1, 1, 0);
@@ -344,11 +344,12 @@ public sealed class TwoHandedItemTestFixture : BaseMultiHandedItemTest
         await Pickup();
         await AssertHandItems(2, 0, 2, 0);
 
-        // We can wield the one-handed wieldable item
+        // We can wield the one-handed wieldable item without dropping other items
         await Server.WaitAssertion(() =>
         {
             Assert.That(SWieldable.TryWield(STarget.Value, SPlayer), Is.True);
         });
+        Assert.That(SHands.IsHolding(SPlayer, ToServer(handOneItem)), Is.True);
         await AssertHandItems(2, 0, 2, 0);
 
         // Drop it and pick up a two-handed wieldable item
@@ -358,15 +359,16 @@ public sealed class TwoHandedItemTestFixture : BaseMultiHandedItemTest
         await Pickup();
         await AssertHandItems(2, 0, 2, 0);
 
-        // We cannot wield the two-handed wieldable item with no free hands
+        // We can wield the two-handed wieldable item, but drop the item in the other hand while doing so
         await Server.WaitAssertion(() =>
         {
-            Assert.That(SWieldable.TryWield(STarget.Value, SPlayer), Is.False);
+            Assert.That(SWieldable.TryWield(STarget.Value, SPlayer), Is.True);
         });
-        await AssertHandItems(2, 0, 2, 0);
+        Assert.That(SHands.IsHolding(SPlayer, ToServer(handOneItem)), Is.False);
+        await AssertHandItems(2, 0, 2, 1);
 
-        // Drop all items
-        await DropAll();
+        // Drop the wielded item
+        await Drop();
         await AssertHandItems(2, 2, 0, 0);
 
         // We cannot pick up a three-handed item
@@ -411,14 +413,14 @@ public sealed class ThreeHandedItemTestFixture : BaseMultiHandedItemTest
         // We can pick up a three-handed item
         await SpawnTarget(Crowbar3);
         await Pickup();
-        await AssertHandItems(3, 0, 1, 2);
+        await AssertHandItems(3, 0, 3, 2);
 
         // Drop it
         await Drop();
         await AssertHandItems(3, 3, 0, 0);
 
         // We can pick up a two-handed wieldable item
-        await SpawnTarget(CrowbarWield2);
+        var handOneItem = await SpawnTarget(CrowbarWield2);
         await Pickup();
         await AssertHandItems(3, 2, 1, 0);
 
@@ -427,27 +429,28 @@ public sealed class ThreeHandedItemTestFixture : BaseMultiHandedItemTest
         {
             Assert.That(SWieldable.TryWield(STarget.Value, SPlayer), Is.True);
         });
-        await AssertHandItems(3, 1, 1, 1);
+        await AssertHandItems(3, 1, 2, 1);
 
         // We can pick up a second two-handed wieldable item
         await SwapHands();
         await SwapHands();
         await SpawnTarget(CrowbarWield2);
         await Pickup();
-        await AssertHandItems(3, 1, 2, 1);
+        await AssertHandItems(3, 1, 3, 1);
 
-        // But we cannot wield the second item
+        // And wielding it drops the first item
         await Server.WaitAssertion(() =>
         {
-            Assert.That(SWieldable.TryWield(STarget.Value, SPlayer), Is.False);
+            Assert.That(SWieldable.TryWield(STarget.Value, SPlayer), Is.True);
         });
+        Assert.That(SHands.IsHolding(SPlayer, ToServer(handOneItem)), Is.False);
         await AssertHandItems(3, 1, 2, 1);
     }
 }
 
 public sealed class FourHandedItemTestFixture : BaseMultiHandedItemTest
 {
-    protected override string PlayerPrototype => Dummy3;
+    protected override string PlayerPrototype => Dummy4;
 
     /// <summary>
     /// Tries out a few possible combinations for using multi-handed and wieldable items while having four hands.
@@ -467,21 +470,21 @@ public sealed class FourHandedItemTestFixture : BaseMultiHandedItemTest
         {
             Assert.That(SWieldable.TryWield(STarget.Value, SPlayer), Is.True);
         });
-        await AssertHandItems(4, 2, 1, 1);
+        await AssertHandItems(4, 2, 2, 1);
         await SwapHands();
         await SwapHands();
         await SpawnTarget(CrowbarWield2);
         await Pickup();
-        await AssertHandItems(4, 1, 2, 1);
+        await AssertHandItems(4, 1, 3, 1);
         await Server.WaitAssertion(() =>
         {
             Assert.That(SWieldable.TryWield(STarget.Value, SPlayer), Is.True);
         });
-        await AssertHandItems(4, 0, 2, 2);
+        await AssertHandItems(4, 0, 4, 2);
 
         // Drop the first item
         await Drop();
-        await AssertHandItems(4, 2, 1, 1);
+        await AssertHandItems(4, 2, 2, 1);
 
         // Drop the second item
         await SwapHands();
