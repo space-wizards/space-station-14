@@ -32,8 +32,8 @@ public sealed class XAERandomTeleportInvokerSystem : BaseXAESystem<XAERandomTele
         var offsetTo = _random.NextVector2(component.MinRange, component.MaxRange);
 
         _xform.AttachToGridOrMap(artifact);
-       if (TryComp<JointComponent>(uid, out var joint))
-            _jointSystem.ClearJoints(uid, joint);
+       if (TryComp<JointComponent>(artifact, out var joint))
+            _jointSystem.ClearJoints(artifact, joint);
         _xform.SetCoordinates(artifact, xform, xform.Coordinates.Offset(offsetTo));
     }
 }
