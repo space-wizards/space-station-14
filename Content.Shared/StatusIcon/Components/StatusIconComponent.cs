@@ -18,7 +18,8 @@ public sealed partial class StatusIconComponent : Component
     public Box2? Bounds;
 
     /// <summary>
-    /// Entites that don't normally have a status icon might be temporarily granted one by a PDA or ID.
+    /// Entites that don't normally have status icons might be temporarily granted them,
+    /// such as by equipment with StatusIconEquipmentComponent.
     /// </summary>
     [AutoNetworkedField]
     [DataField]
