@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   abstract: true
   id: DisposalUnitBase
   parent: BaseMachinePowered
@@ -36,7 +36,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
+          bounds: "-0.25,-0.4,0.25,0.4"
         density: 55
         mask:
         - MachineMask
