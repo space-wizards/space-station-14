@@ -76,7 +76,7 @@
             </GridContainer>
         </BoxContainer>
         <PanelContainer
-            StyleClasses="Inset"
+            StyleClasses="Outset"
             VerticalAlignment="Top">
 
             <SpriteView Name="EntityView"
