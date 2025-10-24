@@ -741,6 +741,6 @@
     price: 250
   - type: Appearance
   - type: SolutionContainerVisuals
-    maxFillLevels: 6
+    maxFillLevels: 3
     fillBaseName: jetinjector_filled
     solutionName: hypospray
