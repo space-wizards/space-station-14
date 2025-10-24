@@ -2,11 +2,11 @@
 
 namespace Content.Server.Destructible;
 
-/// <summary>
-/// This contains methods used for DestructibleBenchmark.
-/// </summary>
 public sealed partial class DestructibleSystem
 {
+    /// <summary>
+    /// Tests all triggers in a DestructibleComponent to see how expensive it is to query them.
+    /// </summary>
     public void TestAllTriggers()
     {
         var query = EntityQueryEnumerator<DestructibleComponent, DamageableComponent>();

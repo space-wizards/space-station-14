@@ -1,10 +1,10 @@
 ﻿namespace Content.Shared.Damage;
 
-/// <summary>
-/// This contains methods used for DestructibleBenchmark.
-/// </summary>
 public sealed partial class DamageableSystem
 {
+    /// <summary>
+    /// Applies damage to all entities to see how expensive it is to deal damage.
+    /// </summary>
     public void ApplyDamageToAllEntities(DamageSpecifier damage)
     {
         var query = EntityQueryEnumerator<DamageableComponent>();

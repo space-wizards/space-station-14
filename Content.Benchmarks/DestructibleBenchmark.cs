@@ -22,7 +22,7 @@ namespace Content.Benchmarks;
 public class DestructibleBenchmark
 {
     /// <summary>
-    /// Number of destructible entities to spawn with a <see cref="DestructibleComponent"/>.
+    /// Number of destructible entities per prototype to spawn with a <see cref="DestructibleComponent"/>.
     /// </summary>
     [Params(1, 10, 100, 1000, 5000)]
     public int EntityCount;
