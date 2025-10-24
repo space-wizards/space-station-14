@@ -27,7 +27,7 @@ public sealed partial class TotalDamageCondition : EntityConditionBase<TotalDama
     public FixedPoint2 Min = FixedPoint2.Zero;
 
     public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>
-        Loc.GetString("reagent-effect-condition-guidebook-total-damage",
+        Loc.GetString("entity-condition-guidebook-total-damage",
             ("max", Max == FixedPoint2.MaxValue ? int.MaxValue : Max.Float()),
             ("min", Min.Float()));
 }
