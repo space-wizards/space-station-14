@@ -377,10 +377,6 @@
   - type: Sprite
     sprite: Structures/Doors/MineralDoors/ironstone_door.rsi
   - type: Door
-    canCrush: true
-    crushDamage:
-      types:
-        Blunt: 25
     openSound:
       path: /Audio/Effects/stonedoor_openclose.ogg
     closeSound:
