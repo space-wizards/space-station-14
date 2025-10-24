@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Returned the cooldown for bike horn implants
-    type: Fix
-  id: 8651
-  time: '2025-06-10T21:40:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38237
 - author: eoineoineoin
   changes:
   - message: Technology disks will now show the tech they contain in their name.
@@ -3928,3 +3921,10 @@
   id: 9152
   time: '2025-10-24T05:58:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41069
+- author: slarticodefast
+  changes:
+  - message: Fixed being able to wield two-handed weapons when having only one hand.
+    type: Fix
+  id: 9153
+  time: '2025-10-24T07:36:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40966
