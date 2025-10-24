@@ -15,6 +15,7 @@
   - type: Speech
     speechVerb: Vox
     speechSounds: Vox
+    allowedEmotes: ['Click', 'Chitter']
   - type: TypingIndicator
     proto: vox
   - type: Vocal

@@ -41,6 +41,8 @@ namespace Content.Client.Stylesheets
 
     }
     // STLYE SHEETS WERE A MISTAKE. KILL ALL OF THIS WITH FIRE
+    [Obsolete("Please use the new sheetlet system to define styles, and remove all references to this class as it may be deleted in the future")]
+    // i did :)
     public sealed class StyleNano : StyleBase
     {
         public const string StyleClassBorderedWindowPanel = "BorderedWindowPanel";
@@ -48,7 +50,6 @@ namespace Content.Client.Stylesheets
         public const string StyleClassHandSlotHighlight = "HandSlotHighlight";
         public const string StyleClassChatPanel = "ChatPanel";
         public const string StyleClassChatSubPanel = "ChatSubPanel";
-        public const string StyleClassTransparentBorderedWindowPanel = "TransparentBorderedWindowPanel";
         public const string StyleClassHotbarPanel = "HotbarPanel";
         public const string StyleClassTooltipPanel = "tooltipBox";
         public const string StyleClassTooltipAlertTitle = "tooltipAlertTitle";
@@ -162,6 +163,19 @@ namespace Content.Client.Stylesheets
         public const string StyleClassPinButtonPinned = "pinButtonPinned";
         public const string StyleClassPinButtonUnpinned = "pinButtonUnpinned";
 
+        // i'm not sure what the missing symbols were referencing, and this is getting obseleted anyway so:
+        public const string ButtonOpenRight = "OpenRight";
+        public const string ButtonOpenLeft = "OpenLeft";
+        public const string ButtonOpenBoth = "OpenBoth";
+        public const string ButtonSquare = "OpenBoth";
+        public const string ButtonCaution = "negative";
+        public const string StyleClassLabelHeading = "LabelHeading";
+        public const string StyleClassLabelSubText = "LabelSubText";
+        public const string StyleClassRedTopButton = "negative";
+        public const string ClassHighDivider = "HighDivider";
+        public const string ClassLowDivider = "LowDivider";
+        public const string ClassAngleRect = "AngleRect";
+
 
         public override Stylesheet Stylesheet { get; }
 
@@ -239,13 +253,6 @@ namespace Content.Client.Stylesheets
                 Texture = handSlotHighlightTex,
             };
             handSlotHighlight.SetPatchMargin(StyleBox.Margin.All, 2);
-
-            var borderedTransparentWindowBackgroundTex = resCache.GetTexture("/Textures/Interface/Nano/transparent_window_background_bordered.png");
-            var borderedTransparentWindowBackground = new StyleBoxTexture
-            {
-                Texture = borderedTransparentWindowBackgroundTex,
-            };
-            borderedTransparentWindowBackground.SetPatchMargin(StyleBox.Margin.All, 2);
 
             var hotbarBackground = new StyleBoxTexture
             {
@@ -515,10 +522,8 @@ namespace Content.Client.Stylesheets
             itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
             itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
 
-            var squareTex = resCache.GetTexture("/Textures/Interface/Nano/square.png");
-            var listContainerButton = new StyleBoxTexture
+            var listContainerButton = new StyleBoxFlat
             {
-                Texture = squareTex,
                 ContentMarginLeftOverride = 10
             };
 
@@ -641,12 +646,6 @@ namespace Content.Client.Stylesheets
                     {
                         new StyleProperty(PanelContainer.StylePropertyPanel, borderedWindowBackground),
                     }),
-                new StyleRule(
-                    new SelectorElement(null, new[] {StyleClassTransparentBorderedWindowPanel}, null, null),
-                    new[]
-                    {
-                        new StyleProperty(PanelContainer.StylePropertyPanel, borderedTransparentWindowBackground),
-                    }),
                 // inventory slot background
                 new StyleRule(
                     new SelectorElement(null, new[] {StyleClassInventorySlotBackground}, null, null),
@@ -739,23 +738,6 @@ namespace Content.Client.Stylesheets
 
                 Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonCaution)
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDisabled),
-
-                // Colors for confirm buttons confirm states.
-                Element<ConfirmButton>()
-                    .Pseudo(ConfirmButton.ConfirmPrefix + ContainerButton.StylePseudoClassNormal)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDefault),
-
-                Element<ConfirmButton>()
-                    .Pseudo(ConfirmButton.ConfirmPrefix + ContainerButton.StylePseudoClassHover)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionHovered),
-
-                Element<ConfirmButton>()
-                    .Pseudo(ConfirmButton.ConfirmPrefix + ContainerButton.StylePseudoClassPressed)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionPressed),
-
-                Element<ConfirmButton>()
-                    .Pseudo(ConfirmButton.ConfirmPrefix + ContainerButton.StylePseudoClassDisabled)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDisabled),
 
                 new StyleRule(new SelectorChild(
@@ -1096,11 +1078,11 @@ namespace Content.Client.Stylesheets
                 }),
 
                 // small number for the entity counter in the entity menu
-                new StyleRule(new SelectorElement(typeof(Label), new[] {ContextMenuElement.StyleClassEntityMenuIconLabel}, null, null), new[]
-                {
-                    new StyleProperty("font", notoSans10),
-                    new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Right),
-                }),
+                // new StyleRule(new SelectorElement(typeof(Label), new[] {ContextMenuElement.StyleClassEntityMenuIconLabel}, null, null), new[]
+                // {
+                //     new StyleProperty("font", notoSans10),
+                //     new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Right),
+                // }),
 
                 // hotbar slot
                 new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassHotbarSlotNumber}, null, null), new[]
@@ -1288,13 +1270,6 @@ namespace Content.Client.Stylesheets
                     }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(MenuButton), new[] {MenuButton.StyleClassRedTopButton}, null, new[] {Button.StylePseudoClassNormal}),
-                    new[]
-                    {
-                        new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorDefaultRed),
-                    }),
-
-                new StyleRule(
                     new SelectorElement(typeof(MenuButton), null, null, new[] {Button.StylePseudoClassNormal}),
                     new[]
                     {
@@ -1313,20 +1288,6 @@ namespace Content.Client.Stylesheets
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorHovered),
-                    }),
-
-                new StyleRule(
-                    new SelectorElement(typeof(MenuButton), new[] {MenuButton.StyleClassRedTopButton}, null, new[] {Button.StylePseudoClassHover}),
-                    new[]
-                    {
-                        new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorHoveredRed),
-                    }),
-
-                new StyleRule(
-                    new SelectorElement(typeof(Label), new[] {MenuButton.StyleClassLabelTopButton}, null, null),
-                    new[]
-                    {
-                        new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
                     }),
 
                 // MonotoneButton (unfilled)
@@ -1618,9 +1579,6 @@ namespace Content.Client.Stylesheets
                 Element<TextureButton>().Class("CrossButtonRed").Pseudo(TextureButton.StylePseudoClassHover)
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
 
-                //
-                Element<TextureButton>().Class("Refresh")
-                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/circular_arrow.svg.96dpi.png")),
                 // ---
 
                 // Profile Editor
