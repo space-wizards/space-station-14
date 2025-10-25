@@ -1,0 +1,34 @@
+- type: entity
+  parent: BaseItem
+  id: VoiceTrigger2
+  name: voice trigger2
+  description: Adds a machine link that is triggered by vocal keywords but cooler.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/voice.rsi
+    state: voice
+  - type: StaticPrice
+    price: 40
+  - type: DeviceLinkSource
+    ports:
+      - Trigger
+  - type: Tag
+    tags:
+    - VoiceTrigger
+  - type: SignalOnTrigger
+    port: Trigger
+  - type: TriggerOnVoice
+  - type: UseDelayOnTrigger
+  - type: UseDelayTriggerCondition
+  - type: UseDelay
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: TriggerActivate
+  - type: PayloadTrigger
+    components:
+    - type: TriggerOnVoice
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 15
