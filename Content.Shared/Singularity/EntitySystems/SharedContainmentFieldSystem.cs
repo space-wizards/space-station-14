@@ -5,7 +5,6 @@ using Content.Shared.Throwing;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Singularity.EntitySystems;
 
