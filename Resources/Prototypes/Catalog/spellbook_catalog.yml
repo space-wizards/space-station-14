@@ -13,18 +13,18 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
-- type: listing
-  id: SpellbookRodForm
-  name: spellbook-polymorph-rod-name
-  description: spellbook-polymorph-rod-desc
-  productAction: ActionPolymorphWizardRod
-  cost:
-    WizCoin: 3
-  categories:
-  - SpellbookOffensive
-  conditions:
-  - !type:ListingLimitedStockCondition
-    stock: 1
+#- type: listing
+#  id: SpellbookRodForm
+#  name: spellbook-polymorph-rod-name
+#  description: spellbook-polymorph-rod-desc
+#  productAction: ActionPolymorphWizardRod
+#  cost:
+#    WizCoin: 3
+#  categories:
+#  - SpellbookOffensive
+#  conditions:
+#  - !type:ListingLimitedStockCondition
+#    stock: 1
 
 - type: listing
   id: SpellbookSmite
