@@ -1,20 +1,20 @@
 - type: entity
   parent: BaseItem
-  id: VoiceTrigger2
-  name: voice trigger2
-  description: Adds a machine link that is triggered by vocal keywords but cooler.
+  id: voicesensor
+  name: voice sensor
+  description: This microphone, invented by Micheal Phone during his time working at Michealsoft, can send signals upon a prerecorded code phrase being uttered near it!
   components:
+  - type: Construction
+    graph: voiceSensorGraph
+    node: voicesensor
   - type: Sprite
-    sprite: Objects/Devices/voice.rsi
+    sprite: Objects/Devices/voicesensor.rsi
     state: voice
   - type: StaticPrice
     price: 40
   - type: DeviceLinkSource
     ports:
       - Trigger
-  - type: Tag
-    tags:
-    - VoiceTrigger
   - type: SignalOnTrigger
     port: Trigger
   - type: TriggerOnVoice
@@ -24,9 +24,6 @@
   - type: EmitSoundOnTrigger
     sound:
       collection: TriggerActivate
-  - type: PayloadTrigger
-    components:
-    - type: TriggerOnVoice
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice

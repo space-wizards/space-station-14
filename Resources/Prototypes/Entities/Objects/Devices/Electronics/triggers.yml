@@ -84,26 +84,9 @@
     state: voice
   - type: StaticPrice
     price: 40
-  - type: DeviceLinkSource
-    ports:
-      - Trigger
   - type: Tag
     tags:
     - VoiceTrigger
-  - type: SignalOnTrigger
-    port: Trigger
-  - type: TriggerOnVoice
-  - type: UseDelayOnTrigger
-  - type: UseDelayTriggerCondition
-  - type: UseDelay
-  - type: EmitSoundOnTrigger
-    sound:
-      collection: TriggerActivate
   - type: PayloadTrigger
     components:
     - type: TriggerOnVoice
-  - type: DeviceNetwork
-    deviceNetId: Wireless
-    receiveFrequencyId: BasicDevice
-  - type: WirelessNetworkConnection
-    range: 15
