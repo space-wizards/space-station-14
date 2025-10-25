@@ -29,10 +29,13 @@ public abstract class SharedContainmentFieldSystem : EntitySystem
         var otherBody = args.OtherEntity;
 
         // TODO: When collisions stop being funky on client, remove the isServer check!
-        if (_net.IsServer && entity.Comp.DestroyGarbage && HasComp<SpaceGarbageComponent>(otherBody))
+        if (entity.Comp.DestroyGarbage && HasComp<SpaceGarbageComponent>(otherBody))
         {
-            _popupSystem.PopupEntity(Loc.GetString("comp-field-vaporized", ("entity", otherBody)), entity, PopupType.LargeCaution);
-            QueueDel(otherBody);
+            if (_net.IsServer)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("comp-field-vaporized", ("entity", otherBody)), entity, PopupType.LargeCaution);
+                QueueDel(otherBody);
+            }
             return;
         }
 
