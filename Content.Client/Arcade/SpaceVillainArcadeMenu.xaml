@@ -1,6 +1,6 @@
 <DefaultWindow
     xmlns="https://spacestation14.io"
-    Title="{Loc 'space-villain-menu-title'}"
+    Title="{Loc 'spacevillain-menu-title'}"
     MinWidth="540"
     MinHeight="225">
     <GridContainer
@@ -16,7 +16,7 @@
             HorizontalExpand="True">
             <!-- Player name -->
             <Label
-                Text="{Loc 'space-villain-menu-label-player'}"
+                Text="{Loc 'spacevillain-menu-label-player'}"
                 Align="Center"
                 HorizontalExpand="True"/>
             <!-- Separator -->
@@ -25,7 +25,7 @@
                 Align="Center"/>
             <!-- Enemy name -->
             <Label
-                Text="{Loc 'space-villain-menu-label-enemy'}"
+                Text="{Loc 'spacevillain-menu-label-enemy'}"
                 Name="EnemyNameLabel"
                 Align="Center"
                 HorizontalExpand="True"/>
@@ -86,24 +86,24 @@
             HorizontalExpand="True">
             <Button
                 Name="AttackButton"
-                Text="{Loc space-villain-menu-button-attack}"
+                Text="{Loc spacevillain-menu-button-attack}"
                 StyleClasses="OpenRight"
                 HorizontalExpand="True"/>
             <Button
                 Name="HealButton"
-                Text="{Loc space-villain-menu-button-heal}"
+                Text="{Loc spacevillain-menu-button-heal}"
                 StyleClasses="ButtonSquare"
                 HorizontalExpand="True"/>
             <Button
                 Name="RechargeButton"
-                Text="{Loc space-villain-menu-button-recharge}"
+                Text="{Loc spacevillain-menu-button-recharge}"
                 StyleClasses="OpenLeft"
                 HorizontalExpand="True"/>
         </BoxContainer>
         <!-- New game button -->
         <Button
             Name="NewGameButton"
-            Text="{Loc space-villain-menu-button-new-game}"
+            Text="{Loc spacevillain-menu-button-new-game}"
             HorizontalExpand="True"/>
     </GridContainer>
 </DefaultWindow>
