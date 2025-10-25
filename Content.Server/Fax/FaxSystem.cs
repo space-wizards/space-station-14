@@ -524,7 +524,7 @@ public sealed class FaxSystem : EntitySystem
 
         var faxMachineAddress = TryComp<DeviceNetworkComponent>(uid, out var deviceNetworkComponent)
             ? deviceNetworkComponent.Address
-            : "????-????-????";
+            : Loc.GetString("device-address-unknown");
 
         var content = paper.Content;
 
@@ -534,7 +534,7 @@ public sealed class FaxSystem : EntitySystem
             content += Loc.GetString(component.SenderInfo,
                 ("sender_name", component.FaxName),
                 ("sender_addr", faxMachineAddress),
-                ("recipient_name", component.DestinationFaxName ?? "unknown"),
+                ("recipient_name", component.DestinationFaxName ?? Loc.GetString("fax-machine-popup-source-unknown")),
                 ("recipient_addr", component.DestinationFaxAddress)
             );
         }
