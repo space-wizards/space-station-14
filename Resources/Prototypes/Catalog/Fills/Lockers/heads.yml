@@ -377,12 +377,8 @@
 
 - type: entity
   id: GunSafeVaultFilled
-  suffix: Vault, Locked
-  parent: GunSafe
-  name: safe
-  components:
-  - type: AccessReader
-    access: [ [ "Command" ] ]
+  suffix: Vault, Filled
+  parent: GunSafeVault
   components:
   - type: EntityTableContainerFill
     containers:

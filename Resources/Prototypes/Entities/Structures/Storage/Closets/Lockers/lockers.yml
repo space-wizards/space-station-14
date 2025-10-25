@@ -87,6 +87,14 @@
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
 
+- type: entity
+  id: GunSafeVault
+  parent: GunSafe
+  name: safe
+  components:
+  - type: AccessReader
+    access: [ [ "Command" ] ]
+
 # CE
 - type: entity
   id: LockerChiefEngineer
