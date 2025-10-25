@@ -74,9 +74,11 @@ public sealed class FaxRefreshMessage : BoundUserInterfaceMessage
 public sealed class FaxDestinationMessage : BoundUserInterfaceMessage
 {
     public string Address { get; }
+    public string Name { get; }
 
-    public FaxDestinationMessage(string address)
+    public FaxDestinationMessage(string address, string name)
     {
         Address = address;
+        Name = name;
     }
 }

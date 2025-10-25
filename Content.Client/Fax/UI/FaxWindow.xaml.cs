@@ -15,7 +15,7 @@ public sealed partial class FaxWindow : DefaultWindow
     public event Action? CopyButtonPressed;
     public event Action? SendButtonPressed;
     public event Action? RefreshButtonPressed;
-    public event Action<string>? PeerSelected;
+    public event Action<string, string>? PeerSelected;
 
     public bool OfficePaper = false;
 
@@ -31,7 +31,7 @@ public sealed partial class FaxWindow : DefaultWindow
         SendButton.OnPressed += _ => SendButtonPressed?.Invoke();
         RefreshButton.OnPressed += _ => RefreshButtonPressed?.Invoke();
         PeerSelector.OnItemSelected += args =>
-            PeerSelected?.Invoke((string) args.Button.GetItemMetadata(args.Id)!);
+            PeerSelected?.Invoke((string) args.Button.GetItemMetadata(args.Id)!, args.Button.Name!);
     }
 
     public void UpdateState(FaxUiState state)
@@ -66,7 +66,7 @@ public sealed partial class FaxWindow : DefaultWindow
         // always must be selected destination
         if (string.IsNullOrEmpty(state.DestinationAddress) && state.AvailablePeers.Count != 0)
         {
-            PeerSelected?.Invoke(state.AvailablePeers.First().Key);
+            PeerSelected?.Invoke(state.AvailablePeers.First().Key, state.AvailablePeers.First().Value);
             return;
         }
 

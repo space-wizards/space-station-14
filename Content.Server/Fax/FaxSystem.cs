@@ -344,7 +344,7 @@ public sealed class FaxSystem : EntitySystem
 
     private void OnDestinationSelected(EntityUid uid, FaxMachineComponent component, FaxDestinationMessage args)
     {
-        SetDestination(uid, args.Address, component);
+        SetDestination(uid, args.Address, args.Name, component);
     }
 
     private void UpdateAppearance(EntityUid uid, FaxMachineComponent? component = null)
@@ -386,12 +386,13 @@ public sealed class FaxSystem : EntitySystem
     /// <summary>
     ///     Set fax destination address not checking if he knows it exists
     /// </summary>
-    public void SetDestination(EntityUid uid, string destAddress, FaxMachineComponent? component = null)
+    public void SetDestination(EntityUid uid, string destAddress, string destName, FaxMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
         component.DestinationFaxAddress = destAddress;
+        component.DestinationFaxName = destName;
 
         UpdateUserInterface(uid, component);
     }
@@ -521,12 +522,29 @@ public sealed class FaxSystem : EntitySystem
 
         TryComp<LabelComponent>(sendEntity, out var labelComponent);
 
+        var faxMachineAddress = TryComp<DeviceNetworkComponent>(uid, out var deviceNetworkComponent)
+            ? deviceNetworkComponent.Address
+            : "????-????-????";
+
+        var content = paper.Content;
+
+        if (component.AddSenderInfo)
+        {
+            content += "\n";
+            content += Loc.GetString(component.SenderInfo,
+                ("sender_name", component.FaxName),
+                ("sender_addr", faxMachineAddress),
+                ("recipient_name", component.DestinationFaxName ?? "unknown"),
+                ("recipient_addr", component.DestinationFaxAddress)
+            );
+        }
+
         var payload = new NetworkPayload()
         {
             { DeviceNetworkConstants.Command, FaxConstants.FaxPrintCommand },
             { FaxConstants.FaxPaperNameData, nameMod?.BaseName ?? metadata.EntityName },
             { FaxConstants.FaxPaperLabelData, labelComponent?.CurrentLabel },
-            { FaxConstants.FaxPaperContentData, paper.Content },
+            { FaxConstants.FaxPaperContentData, content },
             { FaxConstants.FaxPaperLockedData, paper.EditingDisabled },
         };
 

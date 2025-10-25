@@ -87,9 +87,9 @@ public sealed class FaxBoundUi : BoundUserInterface
         SendMessage(new FaxRefreshMessage());
     }
 
-    private void OnPeerSelected(string address)
+    private void OnPeerSelected(string address, string name)
     {
-        SendMessage(new FaxDestinationMessage(address));
+        SendMessage(new FaxDestinationMessage(address, name));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
