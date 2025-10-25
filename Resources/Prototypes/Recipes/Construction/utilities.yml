@@ -1006,3 +1006,12 @@
   canBuildInImpassable: true
   conditions:
   - !type:WallmountCondition
+
+# DEVICE LINKING
+- type: construction
+  id: VoiceSensorRecipe
+  graph: VoiceSensorGraph
+  startNode: start
+  targetNode: finished
+  category: construction-category-utilities
+  objectType: Item
