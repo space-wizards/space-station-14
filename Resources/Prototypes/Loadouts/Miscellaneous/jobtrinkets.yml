@@ -121,6 +121,15 @@
     - PlushieLizardJobJanitor
 
 - type: loadout
+  id: JanitorGoldenPlunger
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorJanitorial
+  storage:
+    back:
+    - GoldenPlunger
+
+- type: loadout
   id: LizardPlushieBotanist
   effects:
   - !type:JobRequirementLoadoutEffect
@@ -335,6 +344,24 @@
   storage:
     back:
     - PlushieLizardJobSecurityofficer
+
+- type: loadoutEffectGroup # Security Star playtime requirement; this can also be used by other "100-security-hour award" job trinkets
+  id: SecurityStarWorthy
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:DepartmentTimeRequirement
+        department: Security
+        time: 100h
+
+- type: loadout
+  id: SecStar
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SecurityStarWorthy
+  storage:
+    back:
+    - Dinkystar
 
 - type: loadout
   id: LizardPlushieSecurityCadet
