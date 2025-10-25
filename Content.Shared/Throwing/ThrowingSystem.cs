@@ -5,7 +5,6 @@ using Content.Shared.CCVar;
 using Content.Shared.Construction.Components;
 using Content.Shared.Database;
 using Content.Shared.Friction;
-using Content.Shared.Gravity;
 using Content.Shared.Projectiles;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -33,7 +32,6 @@ public sealed class ThrowingSystem : EntitySystem
     private const float UnequipAllDefaultMaxThrowForce = 2.0f;
 
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ThrownItemSystem _thrownSystem = default!;

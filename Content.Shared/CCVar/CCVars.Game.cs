@@ -291,10 +291,10 @@ public sealed partial class CCVars
 
     /// <summary>
     /// Amount of playtime in minutes to be exempt from an IP check. 0 to search everyone. 5 hours by default.
+    /// </summary>
     /// <remarks>
     /// Trust me you want one.
-    /// </remarks>>
-    /// </summary>
+    /// </remarks>
     public static readonly CVarDef<TimeSpan> GameIPIntelExemptPlaytime =
         CVarDef.Create("game.ipintel_exempt_playtime", TimeSpan.FromMinutes(300), CVar.SERVERONLY);
 
