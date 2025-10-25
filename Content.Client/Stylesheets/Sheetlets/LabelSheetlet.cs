@@ -24,14 +24,14 @@ public sealed class LabelSheetlet : Sheetlet<PalettedStylesheet>
             E<Label>()
                 .Class(StyleClass.LabelSubText)
                 .Font(sheet.BaseFont.GetFont(10))
-                .FontColor(sheet.SecondaryPalette.Text),
+                .FontColor(Palettes.White.BackgroundLight),
             E<Label>()
                 .Class(StyleClass.LabelKeyText)
                 .Font(sheet.BaseFont.GetFont(12, FontKind.Bold))
                 .FontColor(sheet.HighlightPalette.Text),
             E<Label>()
                 .Class(StyleClass.LabelWeak)
-                .FontColor(sheet.SecondaryPalette.Text),
+                .FontColor(Palettes.White.BackgroundLight),
 
             E<Label>()
                 .Class(StyleClass.Positive)

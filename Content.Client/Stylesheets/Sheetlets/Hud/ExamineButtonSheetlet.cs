@@ -23,7 +23,7 @@ public sealed class ExamineButtonSheetlet : Sheetlet<NanotrasenStylesheet>
             E<ExamineButton>()
                 .Class(ExamineButton.StyleClassExamineButton)
                 .PseudoNormal()
-                .Prop(Control.StylePropertyModulateSelf, Palettes.Emerald.BackgroundLight),
+                .Prop(Control.StylePropertyModulateSelf, Palettes.AlphaModulate.Base.WithAlpha(0f)),
             E<ExamineButton>()
                 .Class(ExamineButton.StyleClassExamineButton)
                 .PseudoHovered()

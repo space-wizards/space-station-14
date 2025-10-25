@@ -2,6 +2,7 @@
 using Content.Client.Stylesheets.Fonts;
 using Content.Client.Stylesheets.SheetletConfigs;
 using Content.Client.Stylesheets.Stylesheets;
+using Content.Client.Stylesheets.Palette;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -29,7 +30,7 @@ public sealed class TooltipSheetlet<T> : Sheetlet<T> where T : PalettedStyleshee
         [
             E<PanelContainer>()
                 .Class(StyleClass.TooltipPanel)
-                .Modulate(sheet.SecondaryPalette.Background.WithAlpha(0.9f))
+                .Modulate(Palettes.White.TextDark.WithAlpha(0.9f))
                 .Panel(tooltipBox),
             E<RichTextLabel>()
                 .Class(StyleClass.TooltipTitle)

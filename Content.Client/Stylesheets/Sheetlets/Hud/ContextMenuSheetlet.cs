@@ -21,10 +21,10 @@ public sealed class ContextMenuSheetlet<T> : Sheetlet<NanotrasenStylesheet>
     {
         var contextButtonPalette = sheet.SecondaryPalette with
         {
-            Element = sheet.SecondaryPalette.BackgroundDark.WithAlpha(0.8f),
+            Element = sheet.SecondaryPalette.BackgroundDark,
             HoveredElement = Palettes.Emerald.Element,
             PressedElement = Palettes.Emerald.HoveredElement,
-            DisabledElement = sheet.SecondaryPalette.BackgroundDark,
+            DisabledElement = Palettes.Dark.Background,
         };
 
         IWindowConfig windowCfg = sheet;
