@@ -252,16 +252,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 5
         reagents:
         - ReagentId: Nutriment
           Quantity: 3
         - ReagentId: Ammonia
-          Quantity: 2
-        - ReagentId: Chlorine
           Quantity: 1
+        - ReagentId: Chlorine
+          Quantity: 0.5
         - ReagentId: JuiceBluePumpkin
-          Quantity: 2
+          Quantity: 0.5
 # Tastes sweet, bitter, like a mouthful of pool water.
 
 - type: entity
@@ -449,16 +449,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 5
         reagents:
         - ReagentId: Nutriment
           Quantity: 3
         - ReagentId: Ammonia
-          Quantity: 2
+          Quantity: 0.5
         - ReagentId: Chlorine
-          Quantity: 1
+          Quantity: 0.25
         - ReagentId: JuiceBluePumpkin
-          Quantity: 2
+          Quantity: 0.25
         - ReagentId: Vitamin
           Quantity: 1
 # Tastes sweet, bitter, like jelly, like a mouthful of pool water.
@@ -477,14 +477,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 5
         reagents:
         - ReagentId: Nutriment
           Quantity: 3
         - ReagentId: JuiceBungo
-          Quantity: 1
+          Quantity: 0.5
         - ReagentId: Enzyme
-          Quantity: 1
+          Quantity: 0.5
         - ReagentId: Vitamin
           Quantity: 1
 # Tastes bitter, like tropical sweetness, like jelly.
@@ -535,7 +535,6 @@
     flavors:
       - slimy
       - corn
-      - egg
       - meaty
   - type: Sprite
     state: jelly-slug
@@ -547,16 +546,18 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 5
         reagents:
         - ReagentId: Nutriment
           Quantity: 3
+        - ReagentId: EggCooked
+          Quantity: 0.25
         - ReagentId: BlueCuracao
-          Quantity: 1
+          Quantity: 0.25
         - ReagentId: Vampiro
-          Quantity: 1
+          Quantity: 0.25
         - ReagentId: ZombieCocktail
-          Quantity: 1
+          Quantity: 0.25
         - ReagentId: Vitamin
           Quantity: 1
 # Tastes slimy, meaty, like corn, like egg, like orange flowers, fruity, savoury and spicy, like eating brains.
@@ -572,8 +573,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 5
         reagents:
-        - ReagentId: Amatoxin
-          Quantity: 10
+        - ReagentId: Lexorin
+          Quantity: 5
 # Tastes sweet, like pink.
+# This used to be 10 units of Amatoxin, which would deal 150 poison damage, critting you by itself.
+# But, did you know that if you ingest 5 units of any chemical, and you are at full health when you do,
+# and you are under normal conditions, and you take no additional damage, it won't crit you?
+# Lexorin deals exactly 100, but because it's airlosss and bloodloos, you regenerate some of it during metabolisation,
+# so you live. Lead should deal 100 damage on paper, but because of rounding it does... 
+# 99.99. 99.99 poison damage per 5u. So, yeah, these unfortunately don't crit people from full health anymore.
