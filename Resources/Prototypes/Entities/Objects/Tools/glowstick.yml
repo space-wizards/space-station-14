@@ -7,6 +7,7 @@
     - type: SpaceGarbage
     - type: ExpendableLight
       glowDuration: 900 # time in seconds
+      stateExpiryTime: 900
       glowColorLit: "#00FF00"
       fadeOutDuration: 300
       turnOnBehaviourID: turn_on
