@@ -89,6 +89,7 @@
 
 - type: entity
   id: GunSafeVault
+  suffix: Vault
   parent: GunSafe
   name: safe
   components:
