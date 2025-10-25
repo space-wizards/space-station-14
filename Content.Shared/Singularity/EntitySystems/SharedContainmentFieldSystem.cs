@@ -2,6 +2,7 @@
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Throwing;
+using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
@@ -13,7 +14,7 @@ namespace Content.Shared.Singularity.EntitySystems;
 /// </summary>
 public abstract class SharedContainmentFieldSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly NetManager _net = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
@@ -28,12 +29,11 @@ public abstract class SharedContainmentFieldSystem : EntitySystem
     {
         var otherBody = args.OtherEntity;
 
-        // TODO: When collisions stop being funky on client, remove the timing check!
-        if (entity.Comp.DestroyGarbage && HasComp<SpaceGarbageComponent>(otherBody) && _timing.IsFirstTimePredicted)
+        // TODO: When collisions stop being funky on client, remove the isServer check!
+        if (_net.IsServer && entity.Comp.DestroyGarbage && HasComp<SpaceGarbageComponent>(otherBody))
         {
-            // Delete the entity and then don't throw it!
             _popupSystem.PopupEntity(Loc.GetString("comp-field-vaporized", ("entity", otherBody)), entity, PopupType.LargeCaution);
-            PredictedQueueDel(otherBody);
+            QueueDel(otherBody);
             return;
         }
 
