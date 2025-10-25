@@ -42,7 +42,7 @@ public sealed partial class EmergencyShuttleSystem
     /// <summary>
     /// How long after the transit is over to end the round.
     /// </summary>
-    private readonly TimeSpan _bufferTime = TimeSpan.FromSeconds(5);
+    public readonly TimeSpan RoundEndBufferTime = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// <see cref="CCVars.EmergencyShuttleMinTransitTime"/>
@@ -209,7 +209,7 @@ public sealed partial class EmergencyShuttleSystem
             ShuttlesLeft = true;
             _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("emergency-shuttle-left", ("transitTime", $"{TransitTime:0}")));
 
-            Timer.Spawn((int)(TransitTime * 1000) + (int)_bufferTime.TotalMilliseconds, () => _roundEnd.EndRound(), _roundEndCancelToken?.Token ?? default);
+            Timer.Spawn((int)(TransitTime * 1000) + (int)RoundEndBufferTime.TotalMilliseconds, () => _roundEnd.EndRound(), _roundEndCancelToken?.Token ?? default);
         }
 
         // All the others.
