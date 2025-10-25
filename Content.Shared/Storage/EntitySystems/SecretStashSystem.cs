@@ -1,4 +1,3 @@
-using Content.Shared.Construction;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
@@ -34,7 +33,6 @@ public sealed class SecretStashSystem : EntitySystem
     [Dependency] private readonly ToolOpenableSystem _toolOpenableSystem = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -46,7 +44,6 @@ public sealed class SecretStashSystem : EntitySystem
         SubscribeLocalEvent<SecretStashComponent, FullyEatenEvent>(OnFullyEaten);
         SubscribeLocalEvent<SecretStashComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<SecretStashComponent, GetVerbsEvent<InteractionVerb>>(OnGetVerb);
-        SubscribeLocalEvent<SecretStashComponent, EntityUsedInCraftingEvent>(OnCrafted);
     }
 
     private void OnInit(Entity<SecretStashComponent> entity, ref ComponentInit args)
@@ -57,11 +54,6 @@ public sealed class SecretStashSystem : EntitySystem
     private void OnDestroyed(Entity<SecretStashComponent> entity, ref DestructionEventArgs args)
     {
         DropContentsAndAlert(entity);
-    }
-
-    private void OnCrafted(Entity<SecretStashComponent> entity, ref EntityUsedInCraftingEvent args)
-    {
-       DropContentsAndAlert(entity, _transform.GetMoverCoordinates(args.CrafterUid));
     }
 
     private void OnReclaimed(Entity<SecretStashComponent> entity, ref GotReclaimedEvent args)
