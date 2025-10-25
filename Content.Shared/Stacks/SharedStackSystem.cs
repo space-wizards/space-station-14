@@ -181,7 +181,7 @@ public abstract partial class SharedStackSystem : EntitySystem
 
         private void OnEaten(Entity<StackComponent> eaten, ref IngestedEvent args)
         {
-            TryUse(eaten, 1);
+            TryUse(eaten.AsNullable(), 1);
         }
 
     private void OnStackAlternativeInteract(Entity<StackComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
