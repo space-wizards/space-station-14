@@ -67,14 +67,14 @@
             </BoxContainer>
         </BoxContainer>
         <!-- Spacer -->
-        <BoxContainer VerticalExpand="True"/>
+        <Control VerticalExpand="True"/>
         <!-- Player and enemy action messages -->
         <Label Name="PlayerActionLabel"
                 Align="Left"/>
         <Label Name="EnemyActionLabel"
                 Align="Right"/>
         <!-- Spacer -->
-        <BoxContainer VerticalExpand="True"/>
+        <Control VerticalExpand="True"/>
         <!-- Action button grid -->
         <BoxContainer
             Orientation="Horizontal">
