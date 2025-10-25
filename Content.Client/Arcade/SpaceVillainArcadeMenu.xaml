@@ -21,12 +21,14 @@
                     <!-- HP -->
                     <Label
                         Name="PlayerHpLabel"
+                        Text=" "
                         Align="Center"
                         HorizontalExpand="True"
                         Modulate="#37e928"/>
                     <!-- MP -->
                     <Label
                         Name="PlayerMpLabel"
+                        Text=" "
                         Align="Center"
                         HorizontalExpand="True"
                         Modulate="#3483ff"/>
@@ -50,12 +52,14 @@
                     <!-- HP -->
                     <Label
                         Name="EnemyHpLabel"
+                        Text=" "
                         Align="Center"
                         HorizontalExpand="True"
                         Modulate="#e94740"/>
                     <!-- MP -->
                     <Label
                         Name="EnemyMpLabel"
+                        Text=" "
                         Align="Center"
                         HorizontalExpand="True"
                         Modulate="#3483ff"/>
