@@ -27,72 +27,22 @@ public sealed class KillTrackingSystem : EntitySystem
 
         if (!args.DamageIncreased)
         {
-            foreach (var key in component.LifetimeDamage.Keys)
-            {
-                component.LifetimeDamage[key] -= args.DamageDelta.GetTotal();
-            }
+     //       foreach (var key in component.LifetimeDamage.Keys)
+     //       {
+    //            component.LifetimeDamage[key] -= args.DamageDelta.GetTotal();
+     //       }
 
-            return;
+    //        return;
         }
 
-        var source = GetKillSource(args.Origin);
-        var damage = component.LifetimeDamage.GetValueOrDefault(source);
-        component.LifetimeDamage[source] = damage + args.DamageDelta.GetTotal();
+     //   var source = GetKillSource(args.Origin);
+    //    var damage = component.LifetimeDamage.GetValueOrDefault(source);
+    //    component.LifetimeDamage[source] = damage + args.DamageDelta.GetTotal();
     }
 
     private void OnMobStateChanged(EntityUid uid, KillTrackerComponent component, MobStateChangedEvent args)
     {
-        if (args.NewMobState != component.KillState || args.OldMobState >= args.NewMobState)
-            return;
-
-        // impulse is the entity that did the finishing blow.
-        var killImpulse = GetKillSource(args.Origin);
-
-        // source is the kill tracker source with the most damage dealt.
-        var largestSource = GetLargestSource(component.LifetimeDamage);
-        largestSource ??= killImpulse;
-
-        KillSource killSource;
-        KillSource? assistSource = null;
-
-        if (killImpulse is KillEnvironmentSource)
-        {
-            // if the kill was environmental, whatever did the most damage gets the kill.
-            killSource = largestSource;
-        }
-        else if (killImpulse == largestSource)
-        {
-            // if the impulse and the source are the same, there's no assist
-            killSource = killImpulse;
-        }
-        else
-        {
-            // the impulse gets the kill and the most damage gets the assist
-            killSource = killImpulse;
-
-            // no assist is given to environmental kills
-            if (largestSource is not KillEnvironmentSource
-                && component.LifetimeDamage.TryGetValue(largestSource, out var largestDamage))
-            {
-                var killDamage = component.LifetimeDamage.GetValueOrDefault(killSource);
-                // you have to do at least twice as much damage as the killing source to get the assist.
-                if (largestDamage >= killDamage / 2)
-                    assistSource = largestSource;
-            }
-        }
-
-        // it's a suicide if:
-        // - you caused your own death
-        // - the kill source was the entity that died
-        // - the entity that died had an assist on themselves
-        var suicide = args.Origin == uid ||
-                      killSource is KillNpcSource npc && npc.NpcEnt == uid ||
-                      killSource is KillPlayerSource player && player.PlayerId == CompOrNull<ActorComponent>(uid)?.PlayerSession.UserId ||
-                      assistSource is KillNpcSource assistNpc && assistNpc.NpcEnt == uid ||
-                      assistSource is KillPlayerSource assistPlayer && assistPlayer.PlayerId == CompOrNull<ActorComponent>(uid)?.PlayerSession.UserId;
-
-        var ev = new KillReportedEvent(uid, killSource, assistSource, suicide);
-        RaiseLocalEvent(uid, ref ev, true);
+        return; // :)
     }
 
     private KillSource GetKillSource(EntityUid? sourceEntity)
