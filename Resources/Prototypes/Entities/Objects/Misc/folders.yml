@@ -11,6 +11,9 @@
     - state: folder-base
     - state: folder-stamp-inverse
       color: "#1dff00"
+  - type: PhysicalComposition
+    materialComposition:
+      Paper: 50
   - type: SpawnItemsOnUse
     items:
     - id: NukeCodePaper
@@ -58,6 +61,11 @@
         whitelist:
           tags:
           - Document
+  - type: PhysicalComposition
+    materialComposition:
+      Paper: 50
+  - type: StaticPrice
+    price: 15 # Weirdly this is more expensive than cardboard boxes. But if I have this any lower then I get an arbitrage testfail because the raw materials are worth ~$14.
   - type: Appearance
   - type: Tag
     tags:
@@ -304,6 +312,10 @@
     slots: [belt]
     quickEquip: false
     sprite: Objects/Misc/clipboard.rsi
+  - type: PhysicalComposition
+    materialComposition: # half of autolathe printing cost
+      Wood: 50
+      Steel: 25
   - type: Storage
     grid:
     - 0,0,5,3
@@ -355,6 +367,10 @@
     sprite: Objects/Misc/plastic_clipboard.rsi
   - type: Clothing
     sprite: Objects/Misc/plastic_clipboard.rsi
+  - type: PhysicalComposition
+    materialComposition: # half of autolathe printing cost
+      Plastic: 50
+      Steel: 25
 
 - type: entity
   parent: [BoxFolderPlasticClipboardEmpty, BoxFolderFill]
@@ -385,6 +401,11 @@
     sprite: Objects/Misc/cc-clipboard.rsi
   - type: Clothing
     sprite: Objects/Misc/cc-clipboard.rsi
+  - type: PhysicalComposition
+    materialComposition: # same composition as regular clipboard + bit of cloth because it's "upholstered with green velvet"
+      Wood: 50
+      Steel: 25
+      Cloth: 25
 
 - type: entity
   parent: [BoxFolderCentComClipboardEmpty, BoxFolderFill]
