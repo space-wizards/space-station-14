@@ -158,6 +158,8 @@
     sprite: Objects/Fun/bananiumhorn.rsi
     slots: [Belt]
     quickEquip: false
+  - type: UseDelay
+    delay: 3
   - type: EmitSoundOnUse
     sound:
       collection: BananiumHorn
