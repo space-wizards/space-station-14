@@ -44,7 +44,7 @@
                         MinSize="300 150">
             <BoxContainer Orientation="Vertical" Align="Begin" Margin="8">
                 <Label Text="{Loc 'replay-info-title'}" Margin="4" HorizontalAlignment="Center"/>
-                <controls:HLine Color="{x:Static style:StyleNano.NanoGold}" Thickness="4"/>
+                <controls:HLine StyleClasses="highlight" Thickness="4"/>
                 <RichTextLabel Access="Public" Name="Info"/>
             </BoxContainer>
         </PanelContainer>

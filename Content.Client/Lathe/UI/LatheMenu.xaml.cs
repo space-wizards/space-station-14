@@ -11,6 +11,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Lathe.UI;
 
@@ -26,6 +27,10 @@ public sealed partial class LatheMenu : DefaultWindow
 
     public event Action<BaseButton.ButtonEventArgs>? OnServerListButtonPressed;
     public event Action<string, int>? RecipeQueueAction;
+    public event Action<int>? QueueDeleteAction;
+    public event Action<int>? QueueMoveUpAction;
+    public event Action<int>? QueueMoveDownAction;
+    public event Action? DeleteFabricatingAction;
 
     public List<ProtoId<LatheRecipePrototype>> Recipes = new();
 
@@ -50,12 +55,21 @@ public sealed partial class LatheMenu : DefaultWindow
         };
         AmountLineEdit.OnTextChanged += _ =>
         {
+            if (int.TryParse(AmountLineEdit.Text, out var amount))
+            {
+                if (amount > LatheSystem.MaxItemsPerRequest)
+                    AmountLineEdit.Text = LatheSystem.MaxItemsPerRequest.ToString();
+                else if (amount < 0)
+                    AmountLineEdit.Text = "0";
+            }
+
             PopulateRecipes();
         };
 
         FilterOption.OnItemSelected += OnItemSelected;
 
         ServerListButton.OnPressed += a => OnServerListButtonPressed?.Invoke(a);
+        DeleteFabricating.OnPressed += _ => DeleteFabricatingAction?.Invoke();
     }
 
     public void SetEntity(EntityUid uid)
@@ -83,7 +97,7 @@ public sealed partial class LatheMenu : DefaultWindow
         var recipesToShow = new List<LatheRecipePrototype>();
         foreach (var recipe in Recipes)
         {
-            if (!_prototypeManager.TryIndex(recipe, out var proto))
+            if (!_prototypeManager.Resolve(recipe, out var proto))
                 continue;
 
             // Category filtering
@@ -115,21 +129,50 @@ public sealed partial class LatheMenu : DefaultWindow
         RecipeCount.Text = Loc.GetString("lathe-menu-recipe-count", ("count", recipesToShow.Count));
 
         var sortedRecipesToShow = recipesToShow.OrderBy(_lathe.GetRecipeName);
-        RecipeList.Children.Clear();
+
+        // Get the existing list of queue controls
+        var oldChildCount = RecipeList.ChildCount;
         _entityManager.TryGetComponent(Entity, out LatheComponent? lathe);
 
+        int idx = 0;
         foreach (var prototype in sortedRecipesToShow)
         {
             var canProduce = _lathe.CanProduce(Entity, prototype, quantity, component: lathe);
+            var tooltipFunction = () => GenerateTooltipText(prototype);
 
-            var control = new RecipeControl(_lathe, prototype, () => GenerateTooltipText(prototype), canProduce, GetRecipeDisplayControl(prototype));
-            control.OnButtonPressed += s =>
+            if (idx >= oldChildCount)
             {
-                if (!int.TryParse(AmountLineEdit.Text, out var amount) || amount <= 0)
-                    amount = 1;
-                RecipeQueueAction?.Invoke(s, amount);
-            };
-            RecipeList.AddChild(control);
+                var control = new RecipeControl(_lathe, prototype, tooltipFunction, canProduce, GetRecipeDisplayControl(prototype));
+                control.OnButtonPressed += s =>
+                {
+                    if (!int.TryParse(AmountLineEdit.Text, out var amount) || amount <= 0)
+                        amount = 1;
+                    RecipeQueueAction?.Invoke(s, amount);
+                };
+                RecipeList.AddChild(control);
+            }
+            else
+            {
+                var child = RecipeList.GetChild(idx) as RecipeControl;
+
+                if (child == null)
+                {
+                    DebugTools.Assert($"Lathe menu recipe control at {idx} is not of type RecipeControl"); // Something's gone terribly wrong.
+                    continue;
+                }
+
+                child.SetRecipe(prototype);
+                child.SetTooltipSupplier(tooltipFunction);
+                child.SetCanProduce(canProduce);
+                child.SetDisplayControl(GetRecipeDisplayControl(prototype));
+            }
+            idx++;
+        }
+
+        // Shrink list if new list is shorter than old list.
+        for (var childIdx = oldChildCount - 1; idx <= childIdx; childIdx--)
+        {
+            RecipeList.RemoveChild(childIdx);
         }
     }
 
@@ -140,7 +183,7 @@ public sealed partial class LatheMenu : DefaultWindow
 
         foreach (var (id, amount) in prototype.Materials)
         {
-            if (!_prototypeManager.TryIndex(id, out var proto))
+            if (!_prototypeManager.Resolve(id, out var proto))
                 continue;
 
             var adjustedAmount = SharedLatheSystem.AdjustMaterial(amount, prototype.ApplyMaterialDiscount, multiplier);
@@ -223,24 +266,52 @@ public sealed partial class LatheMenu : DefaultWindow
     /// Populates the build queue list with all queued items
     /// </summary>
     /// <param name="queue"></param>
-    public void PopulateQueueList(IReadOnlyCollection<ProtoId<LatheRecipePrototype>> queue)
+    public void PopulateQueueList(IReadOnlyCollection<LatheRecipeBatch> queue)
     {
-        QueueList.DisposeAllChildren();
+        // Get the existing list of queue controls
+        var oldChildCount = QueueList.ChildCount;
 
-        var idx = 1;
-        foreach (var recipeProto in queue)
+        var idx = 0;
+        foreach (var batch in queue)
         {
-            var recipe = _prototypeManager.Index(recipeProto);
-            var queuedRecipeBox = new BoxContainer();
-            queuedRecipeBox.Orientation = BoxContainer.LayoutOrientation.Horizontal;
+            var recipe = _prototypeManager.Index(batch.Recipe);
 
-            queuedRecipeBox.AddChild(GetRecipeDisplayControl(recipe));
+            var itemName = _lathe.GetRecipeName(batch.Recipe);
+            string displayText;
+            if (batch.ItemsRequested > 1)
+                displayText = Loc.GetString("lathe-menu-item-batch", ("index", idx + 1), ("name", itemName), ("printed", batch.ItemsPrinted), ("total", batch.ItemsRequested));
+            else
+                displayText = Loc.GetString("lathe-menu-item-single", ("index", idx + 1), ("name", itemName));
 
-            var queuedRecipeLabel = new Label();
-            queuedRecipeLabel.Text = $"{idx}. {_lathe.GetRecipeName(recipe)}";
-            queuedRecipeBox.AddChild(queuedRecipeLabel);
-            QueueList.AddChild(queuedRecipeBox);
+            if (idx >= oldChildCount)
+            {
+                var queuedRecipeBox = new QueuedRecipeControl(displayText, idx, GetRecipeDisplayControl(recipe));
+                queuedRecipeBox.OnDeletePressed += s => QueueDeleteAction?.Invoke(s);
+                queuedRecipeBox.OnMoveUpPressed += s => QueueMoveUpAction?.Invoke(s);
+                queuedRecipeBox.OnMoveDownPressed += s => QueueMoveDownAction?.Invoke(s);
+                QueueList.AddChild(queuedRecipeBox);
+            }
+            else
+            {
+                var child = QueueList.GetChild(idx) as QueuedRecipeControl;
+
+                if (child == null)
+                {
+                    DebugTools.Assert($"Lathe menu queued recipe control at {idx} is not of type QueuedRecipeControl"); // Something's gone terribly wrong.
+                    continue;
+                }
+
+                child.SetDisplayText(displayText);
+                child.SetIndex(idx);
+                child.SetDisplayControl(GetRecipeDisplayControl(recipe));
+            }
             idx++;
+        }
+
+        // Shrink list if new list is shorter than old list.
+        for (var childIdx = oldChildCount - 1; idx <= childIdx; childIdx--)
+        {
+            QueueList.RemoveChild(childIdx);
         }
     }
 

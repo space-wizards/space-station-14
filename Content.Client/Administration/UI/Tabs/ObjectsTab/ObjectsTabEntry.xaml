@@ -1,5 +1,6 @@
 ﻿<PanelContainer xmlns="https://spacestation14.io"
                 xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                 Name="BackgroundColorPanel">
     <BoxContainer Orientation="Horizontal"
                   HorizontalExpand="True"
@@ -20,7 +21,7 @@
                HorizontalExpand="True"
                ClipText="True"/>
         <customControls:VSeparator/>
-        <Button Name="DeleteButton"
+        <controls:ConfirmButton Name="DeleteButton"
                 Text="{Loc object-tab-entity-delete}"
                 SizeFlagsStretchRatio="3"
                 HorizontalExpand="True"
