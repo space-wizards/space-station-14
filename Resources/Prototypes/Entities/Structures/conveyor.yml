@@ -65,23 +65,3 @@
       # if ConveyorBeltAssembly becomes craftable, maybe spawn some of the ingredients?
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-
-- type: entity
-  id: ConveyorBeltAssembly
-  parent: BaseItem
-  name: conveyor belt
-  suffix: assembly
-  description: A conveyor belt assembly. Used to construct a conveyor belt.
-  components:
-  - type: Tag
-    tags:
-    - ConveyorAssembly
-  - type: Sprite
-    sprite: Structures/conveyor.rsi
-    state: conveyor_loose
-  - type: Construction
-    graph: ConveyorGraph
-    node: item
-  - type: StaticPrice
-    price: 40
-
