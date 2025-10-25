@@ -13,7 +13,9 @@ namespace Content.Shared.Singularity.EntitySystems;
 /// </summary>
 public abstract class SharedContainmentFieldSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     /// <inheritdoc/>
@@ -22,9 +24,18 @@ public abstract class SharedContainmentFieldSystem : EntitySystem
         SubscribeLocalEvent<ContainmentFieldComponent, StartCollideEvent>(HandleFieldCollide);
     }
 
-    protected virtual void HandleFieldCollide(Entity<ContainmentFieldComponent> entity, ref StartCollideEvent args)
+    private void HandleFieldCollide(Entity<ContainmentFieldComponent> entity, ref StartCollideEvent args)
     {
         var otherBody = args.OtherEntity;
+
+        // TODO: When collisions stop being funky on client, remove the timing check!
+        if (entity.Comp.DestroyGarbage && HasComp<SpaceGarbageComponent>(otherBody) && _timing.IsFirstTimePredicted)
+        {
+            // Delete the entity and then don't throw it!
+            _popupSystem.PopupEntity(Loc.GetString("comp-field-vaporized", ("entity", otherBody)), entity, PopupType.LargeCaution);
+            PredictedQueueDel(otherBody);
+            return;
+        }
 
         if (entity.Comp.ThrowImpulse == 0)
             return;
