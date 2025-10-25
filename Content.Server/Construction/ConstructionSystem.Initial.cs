@@ -216,9 +216,9 @@ namespace Content.Server.Construction
                             if (used.Contains(entity))
                                 continue;
 
-                            RaiseLocalEvent(entity, new DestructionEventArgs());
                             if (string.IsNullOrEmpty(arbitraryStep.Store))
                             {
+                                RaiseLocalEvent(entity, new DestructionEventArgs());
                                 if (!_container.Insert(entity, container))
                                     continue;
                             }
