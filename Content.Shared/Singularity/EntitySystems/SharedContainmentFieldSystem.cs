@@ -13,7 +13,7 @@ namespace Content.Shared.Singularity.EntitySystems;
 /// </summary>
 public abstract class SharedContainmentFieldSystem : EntitySystem
 {
-    [Dependency] private readonly NetManager _net = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
