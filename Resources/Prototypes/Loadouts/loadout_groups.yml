@@ -298,6 +298,7 @@
   id: BartenderJobTrinkets
   name: loadout-group-jobtrinkets
   minLimit: 0
+  maxLimit: 2
   loadouts:
   - LizardPlushieBartender
   - BartenderGoldenShaker
