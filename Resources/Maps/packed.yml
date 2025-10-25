@@ -72112,7 +72112,7 @@ entities:
     - type: Transform
       pos: 31.5,-9.5
       parent: 2
-- proto: LockerFreezerVaultFilled
+- proto: GunSafeVaultFilled
   entities:
   - uid: 7391
     components:

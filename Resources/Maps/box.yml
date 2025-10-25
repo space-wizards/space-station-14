@@ -131731,7 +131731,7 @@ entities:
     - type: Transform
       pos: 40.5,-2.5
       parent: 8364
-- proto: LockerFreezerVaultFilled
+- proto: GunSafeVaultFilled
   entities:
   - uid: 16305
     components:

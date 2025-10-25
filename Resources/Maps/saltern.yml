@@ -48897,7 +48897,7 @@ entities:
     - type: Transform
       pos: -11.5,-3.5
       parent: 31
-- proto: LockerFreezerVaultFilled
+- proto: GunSafeVaultFilled
   entities:
   - uid: 3849
     components:

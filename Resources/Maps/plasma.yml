@@ -128222,7 +128222,7 @@ entities:
           showEnts: False
           occludes: True
           ent: null
-- proto: LockerFreezerVaultFilled
+- proto: GunSafeVaultFilled
   entities:
   - uid: 14833
     components:

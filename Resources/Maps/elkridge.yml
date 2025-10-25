@@ -90932,7 +90932,7 @@ entities:
     - type: Transform
       pos: 17.5,-5.5
       parent: 2
-- proto: LockerFreezerVaultFilled
+- proto: GunSafeVaultFilled
   entities:
   - uid: 10373
     components:

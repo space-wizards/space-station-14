@@ -107131,7 +107131,7 @@ entities:
         moles:
           Oxygen: 3.4430928
           Nitrogen: 12.952587
-- proto: LockerFreezerVaultFilled
+- proto: GunSafeVaultFilled
   entities:
   - uid: 5608
     components:
