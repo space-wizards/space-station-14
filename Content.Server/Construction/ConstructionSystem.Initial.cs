@@ -8,6 +8,7 @@ using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Coordinates;
 using Content.Shared.Database;
+using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -220,7 +221,7 @@ namespace Content.Server.Construction
                             {
                                 _container.EmptyContainer(storage.Container);
                             }
-
+                            RaiseLocalEvent(entity, new DestructionEventArgs());
                             if (string.IsNullOrEmpty(arbitraryStep.Store))
                             {
                                 if (!_container.Insert(entity, container))
