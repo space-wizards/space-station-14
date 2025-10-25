@@ -562,11 +562,14 @@
   - type: Sprite
     sprite: Objects/Fun/Balloons/syndicate.rsi
     state: icon
+    noRot: true
   - type: Item
     size: Small
     sprite: Objects/Fun/Balloons/syndicate.rsi
   - type: Damageable
     damageContainer: Inorganic
+  - type: TileFrictionModifier
+    modifier: 0.1
   - type: Tag
     tags:
     - Balloon
@@ -582,11 +585,14 @@
   - type: Sprite
     sprite: Objects/Fun/Balloons/nanotrasen.rsi
     state: icon
+    noRot: true
   - type: Item
     size: Small
     sprite: Objects/Fun/Balloons/nanotrasen.rsi
   - type: Damageable
     damageContainer: Inorganic
+  - type: TileFrictionModifier
+    modifier: 0.1
   - type: Tag
     tags:
     - Balloon
@@ -600,11 +606,14 @@
   - type: Sprite
     sprite: Objects/Fun/Balloons/corgi.rsi
     state: icon
+    noRot: true
   - type: Item
     size: Small
     sprite: Objects/Fun/Balloons/corgi.rsi
   - type: Damageable
     damageContainer: Inorganic
+  - type: TileFrictionModifier
+    modifier: 0.1
   - type: Tag
     tags:
     - Balloon
