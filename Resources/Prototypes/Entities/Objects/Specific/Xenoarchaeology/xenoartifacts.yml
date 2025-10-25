@@ -8,6 +8,7 @@
   components:
   # Visual
   - type: Appearance
+  - type: MultiActivatableUI
   - type: InteractionOutline
   - type: UserInterface #needs to be here for certain effects
     interfaces:
@@ -19,6 +20,10 @@
         type: InstrumentBoundUserInterface
       enum.IntercomUiKey.Key:
         type: IntercomBoundUserInterface
+      enum.LatheUiKey.Key:
+        type: LatheBoundUserInterface
+      enum.JukeboxUiKey.Key:
+        type: JukeboxBoundUserInterface
   - type: GuideHelp
     guides:
     - Xenoarchaeology

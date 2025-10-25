@@ -1,3 +1,4 @@
+using Content.Shared.UserInterface;
 using Content.Shared.Xenoarchaeology.Artifact.XAE.Components;
 using Robust.Shared.Timing;
 
@@ -9,6 +10,7 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAE;
 public sealed class XAEApplyComponentsSystem : BaseXAESystem<XAEApplyComponentsComponent>
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly MultiActivatableUISystem _multi = default!;
 
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEApplyComponentsComponent> ent, ref XenoArtifactNodeActivatedEvent args)
@@ -34,5 +36,12 @@ public sealed class XAEApplyComponentsSystem : BaseXAESystem<XAEApplyComponentsC
             var clone = EntityManager.ComponentFactory.GetComponent(registry.Value);
             AddComp(artifact, clone);
         }
+
+        if (ent.Comp.Key == null || !TryComp<MultiActivatableUIComponent>(artifact, out var maui))
+        {
+            return;
+        }
+
+        _multi.AddUI(ent, maui, ent.Comp.Key, ent.Comp.VerbText);
     }
 }

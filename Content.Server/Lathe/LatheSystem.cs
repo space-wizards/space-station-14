@@ -246,6 +246,7 @@ namespace Content.Server.Lathe
                 {
                     var result = Spawn(resultProto, Transform(uid).Coordinates);
                     _stack.TryMergeToContacts(result);
+                    _container.AttachParentToContainerOrGrid((result, Transform(result)));
                 }
 
                 if (currentRecipe.ResultReagents is { } resultReagents &&

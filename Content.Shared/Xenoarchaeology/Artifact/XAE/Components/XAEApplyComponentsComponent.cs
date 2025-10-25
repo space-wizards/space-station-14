@@ -26,4 +26,16 @@ public sealed partial class XAEApplyComponentsComponent : Component
     /// </summary>
     [DataField]
     public bool RefreshOnReactivate { get; set; }
+
+    /// <summary>
+    /// UI key necessary for certain effects that add a user interface to the artifact.
+    /// </summary>
+    [DataField]
+    public Enum? Key;
+
+    /// <summary>
+    /// Verb text necessary for certain effects that require a custom verb action.
+    /// </summary>
+    [DataField]
+    public LocId VerbText = "ui-verb-toggle-open";
 }
