@@ -1,7 +1,6 @@
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
-using Robust.Shared.Map;
 
 namespace Content.Server.Construction.Completions
 {
@@ -14,13 +13,9 @@ namespace Content.Server.Construction.Completions
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
             var transform = entityManager.GetComponent<TransformComponent>(uid);
-            var transformSystem = entityManager.System<SharedTransformSystem>();
 
             if (!transform.Anchored)
-            {
-                var mapSystem = entityManager.System<SharedMapSystem>();
-                transformSystem.SetCoordinates(uid, transform, mapSystem.AlignToGrid(transform.Coordinates));
-            }
+                entityManager.System<SharedTransformSystem>().SetCoordinates(uid, transform.Coordinates.SnapToGrid(entityManager));
 
             if (SouthRotation)
             {
