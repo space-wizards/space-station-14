@@ -4,11 +4,7 @@
     MinWidth="540"
     MinHeight="225">
     <GridContainer
-        Columns="1"
-        HorizontalAlignment="Stretch"
-        VerticalAlignment="Stretch"
-        HorizontalExpand="True"
-        VerticalExpand="True">
+        Columns="1">
         <!-- Info grid -->
         <GridContainer
             Columns="3"
@@ -81,9 +77,7 @@
         <BoxContainer VerticalExpand="True"/>
         <!-- Action button grid -->
         <BoxContainer
-            Orientation="Horizontal"
-            HorizontalAlignment="Stretch"
-            HorizontalExpand="True">
+            Orientation="Horizontal">
             <Button
                 Name="AttackButton"
                 Text="{Loc spacevillain-menu-button-attack}"
@@ -103,7 +97,6 @@
         <!-- New game button -->
         <Button
             Name="NewGameButton"
-            Text="{Loc spacevillain-menu-button-new-game}"
-            HorizontalExpand="True"/>
+            Text="{Loc spacevillain-menu-button-new-game}"/>
     </GridContainer>
 </DefaultWindow>
