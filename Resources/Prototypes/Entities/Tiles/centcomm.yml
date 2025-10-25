@@ -1,0 +1,35 @@
+- type: entity
+  parent: MarkerBase
+  id: FloorPacifismEntity
+  name: pacifism floor
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: /Textures/Interface/Alerts/pacified.rsi
+      state: icon
+  - type: Tag
+    tags:
+    - Catwalk
+    - ForceFixRotations
+  - type: TileEntityEffect
+    effects:
+    - !type:GenericStatusEffect
+      key: Pacified
+      component: Pacified
+      time: 120
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        hard: false
+        layer:
+        - SlipLayer
