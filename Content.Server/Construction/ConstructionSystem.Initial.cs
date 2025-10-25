@@ -220,13 +220,7 @@ namespace Content.Server.Construction
                             {
                                 _container.EmptyContainer(storage.Container);
                             }
-                            if (TryComp<ContainerManagerComponent>(entity, out var slotContainers))
-                            {
-                                foreach (var slot in slotContainers.Containers)
-                                {
-                                    _container.EmptyContainer(slot.Value);
-                                }
-                            }
+
                             if (string.IsNullOrEmpty(arbitraryStep.Store))
                             {
                                 if (!_container.Insert(entity, container))
