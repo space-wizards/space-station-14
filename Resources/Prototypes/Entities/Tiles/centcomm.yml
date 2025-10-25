@@ -1,7 +1,9 @@
+# Adds pacifism and godmode
 - type: entity
   parent: MarkerBase
   id: FloorPacifismEntity
-  name: pacifism floor
+  name: peace floor
+  description: Sets pacifism and godmode for 2 minutes whenever an entity walks over this.
   placement:
     mode: SnapgridCenter
   components:
@@ -20,6 +22,10 @@
       key: Pacified
       component: Pacified
       time: 120
+    - !type:GenericStatusEffect
+      key: Godmode
+      component: Godmode
+      time: 120.0
   - type: StepTrigger
     intersectRatio: 0.2
   - type: Physics
