@@ -75,6 +75,7 @@ public sealed class DiscordLink : IPostInjectInit
     /// </summary>
     public event Action<Message>? OnMessageReceived;
 
+    // TODO: consider implementing this in a way where we can unregister it in a similar way
     public void RegisterCommandCallback(Action<CommandReceivedEventArgs> callback, string command)
     {
         OnCommandReceived += args =>
