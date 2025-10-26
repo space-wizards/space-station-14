@@ -3,6 +3,8 @@ using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Verbs;
@@ -10,7 +12,6 @@ using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Stacks;
 
@@ -25,11 +26,11 @@ public abstract partial class SharedStackSystem : EntitySystem
     [Dependency] private readonly IViewVariablesManager _vvm = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedHandsSystem Hands = default!;
-    [Dependency] protected readonly SharedTransformSystem Xform = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private readonly SharedStorageSystem _storage = default!;
+    [Dependency] private readonly IngestionSystem _ingestion = default!;
 
     // TODO: These should be in the prototype.
     public static readonly int[] DefaultSplitAmounts = { 1, 5, 10, 20, 30, 50 };
@@ -181,6 +182,9 @@ public abstract partial class SharedStackSystem : EntitySystem
     private void OnEaten(Entity<StackComponent> eaten, ref IngestedEvent args)
     {
         ReduceCount(eaten.AsNullable(), 1);
+
+        if (eaten.Comp.Count > 0 && TryComp<EdibleComponent>(eaten, out var edible))
+            _ingestion.SpawnTrash((eaten, edible), args.User);
     }
 
     private void OnStackAlternativeInteract(Entity<StackComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)

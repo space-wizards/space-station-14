@@ -490,9 +490,6 @@ public sealed partial class IngestionSystem : EntitySystem
             }
         }
 
-        if (entity.Comp.TrashEveryTransfer)
-            SpawnTrash(entity, args.User);
-
         // This also prevents us from repeating if it's empty
         if (!IsEmpty(entity))
         {
@@ -514,8 +511,7 @@ public sealed partial class IngestionSystem : EntitySystem
 
     private void OnFullyEaten(Entity<EdibleComponent> entity, ref FullyEatenEvent args)
     {
-        if (!entity.Comp.TrashEveryTransfer)
-            SpawnTrash(entity, args.User);
+        SpawnTrash(entity, args.User);
     }
 
     private void OnBeforeFullySliced(Entity<EdibleComponent> entity, ref BeforeFullySlicedEvent args)

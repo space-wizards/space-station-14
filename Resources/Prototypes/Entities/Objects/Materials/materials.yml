@@ -544,7 +544,6 @@
     flavors:
       - banana
   - type: Edible
-    trashEveryTransfer: true
     trash:
     - TrashBananiumPeel
   - type: BadFood

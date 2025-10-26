@@ -28,17 +28,10 @@ public sealed partial class EdibleComponent : Component
     public bool DestroyOnEmpty = true;
 
     /// <summary>
-    /// Trash we spawn when eaten.
+    /// Trash we spawn when eaten, will not spawn if the item isn't deleted when empty.
     /// </summary>
     [DataField]
     public List<EntProtoId> Trash = new();
-
-    /// <summary>
-    /// If true, spawn trash on every do-after completion.
-    /// If false, spawn trash when the entity is fully eaten.
-    /// </summary>
-    [DataField]
-    public bool TrashEveryTransfer;
 
     /// <summary>
     /// How much of our solution is eaten on a do-after completion. Set to null to eat the whole thing.
