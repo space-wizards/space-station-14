@@ -39,9 +39,11 @@ namespace Content.Client.Communications.UI
         {
             if (_menu!.AlertLevelSelectable)
             {
-                _menu.CurrentAlertLevel = level;
-                _menu.AlertLevelSelectable = false;
-                _menu.AlertLevelButton.Disabled = true;
+                // TODO: This does not work until the console UI is predicted and uses component states.
+                // Also someone decided to send BUI states regularly in an update loop, so this just gets randomly bulldozed until the message reaches the server.
+                // _menu.CurrentAlertLevel = level;
+                // _menu.AlertLevelSelectable = false;
+                // _menu.AlertLevelButton.Disabled = true;
                 SendMessage(new CommunicationsConsoleSelectAlertLevelMessage(level));
             }
         }
