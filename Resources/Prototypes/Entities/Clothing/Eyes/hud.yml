@@ -110,7 +110,7 @@
   - type: Clothing
     sprite: Clothing/Eyes/Hud/friedonion.rsi
   - type: ShowHungerIcons
-  - type: Food
+  - type: Edible
   - type: SolutionContainerManager
     solutions:
       food:
