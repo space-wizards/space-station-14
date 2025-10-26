@@ -17,10 +17,10 @@ namespace Content.Shared.Ninja.Systems;
 /// </summary>
 public abstract class StunProviderSystem : EntitySystem
 {
-    [Dependency] private readonly SharedBatterySystem _battery = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedBatterySystem _battery = default!;
     [Dependency] private readonly SharedNinjaGlovesSystem _gloves = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
