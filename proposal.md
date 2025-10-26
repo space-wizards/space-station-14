@@ -26,29 +26,29 @@ Description of what a sickness stage is:
 Kind of stages that will be included in first release:
 
 - Cough  
-  The player will cough, spreading germs near him, possibly infecting other crew member (see contagion below)
-  This will appear a an emote
-  Is the cough contagious or not
-  Contagion by cough is conterracted by surgical mask, helmet and such.
+  - The player will cough, spreading germs near him, possibly infecting other crew member (see contagion below)
+  - This will appear a an emote
+  - Is the cough contagious or not
+  - Contagion by cough is conterracted by surgical mask, helmet and such.
 - Sneeze
-  The player will sneeze, spreading germs near him, possibly infecting other crew member (see contagion below)
-  This will appear as an emote
-  Is the sneeze contagious or not
-  Contagion by sneeze is conterracted by surgical mask, helmet and such.
+  - The player will sneeze, spreading germs near him, possibly infecting other crew member (see contagion below)
+  - This will appear as an emote
+  - Is the sneeze contagious or not
+  - Contagion by sneeze is conterracted by surgical mask, helmet and such.
 - Speak
-  The player will say something
-  This includes a list of parametrized random things the player might say (for tourette syndrome and such)
+  - The player will say something
+  - This includes a list of parametrized random things the player might say (for tourette syndrome and such)
 - Percieve
-  The player will percieve something
-  This includes a list of parametrized random things the player might percieve (for paranoia and such)  Ex:  You think that someone is watching you.
+  - The player will percieve something
+  - This includes a list of parametrized random things the player might percieve (for paranoia and such)  Ex:  You think that someone is watching you.
 - Emote
-  The player will emote something.
-  This includes a list of parametrized random things the player might emote  Ex:  Player X shivers.
+  - The player will emote something.
+  - This includes a list of parametrized random things the player might emote  Ex:  Player X shivers.
 - Bleed
-  The amount of bleeding
+  - The amount of bleeding
 - Temperature change
-  The direction of temperature of the character (augment or decrease)
-  The quantity of temperature change
+  - The direction of temperature of the character (augment or decrease)
+  - The quantity of temperature change
 - Falls down on the ground
 - Vomit
 - Cured (to make some sicknesses temporary and auto-cured)
@@ -58,10 +58,10 @@ More symptoms will be added in the future
 
 List of pre-included sicknesses:
 
-Cold:
-    Name : Common cold
-    Cause : Viral
-    Stages : 
+- Cold
+    - Name : Common cold
+    - Cause : Viral
+    - Stages : 
         - Sneeze
             Contagious : Yes
             Start after: 0
