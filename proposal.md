@@ -64,8 +64,9 @@ Cold:
             Contagious : Yes
             Start after: 0
             End after : Until cured
+            Frequency : 1 minute.
         - Emote
-            Start after : 0
+            Start after : 5 minutes
             End after : Until cured
             List of emotes : sniffles
         - Perceive
@@ -73,12 +74,60 @@ Cold:
             End after : Until cured
             List of perceptions : 
                 Your throat feels soar.
-                Your nose is runny.
                 You feel tired.
+            Alleviating compound : acetaminophen                
+        - Perceive
+            Start after : 0
+            End after : Until cured
+            List of perceptions : 
+                Your nose is runny.
+            Alleviating compound : None            
         - Cured
             Start after : 30 minutes
             End after : Once
             Immunity : Yes
+
+Flu:
+    Name : Flu
+    Cause : Viral
+    Stages : 
+        - Cough
+            Contagious : Yes
+            Start after: 5 minutes
+            End after : Until cured
+            Frequency : 1 minute.
+        - Emote
+            Start after : 5 minutes
+            End after : Until cured
+            List of emotes : sniffles
+            Frequency : 1 minute.
+        - Perceive
+            Start after : 10 minutes after sickness begins
+            End after : Until cured
+            Frequency : 1 minute.
+            List of perceptions : 
+                You feel seriously tired.
+                Your body aches.
+                You are sweating.
+                You head aches.
+            Alleviating compound : acetaminophen
+        - Perceive
+            Start after : 10 minutes after sickness begins
+            End after : Until cured
+            Frequency : 1 minute.
+            List of perceptions : 
+                Your throat feels soar.
+                Your nose is runny.
+            Alleviating compound : None            
+        - Temperature
+            Start after : 10 minutes
+            End after : Until cured
+            Degree : <TBD>
+            Alleviating compound : acetaminophen            
+        - Cured
+            Start after : 45 minutes
+            End after : Once
+            Immunity : Yes            
 
 Tourette Syndrome:
     Name : Tourette Syndrome
@@ -109,7 +158,7 @@ Hallucinations:
         End after : Never
         Frequency : 1 minute
         List of thing to perceive : "You hear a faint laugh on the radio", Someone whispers, “I see you,”, "Footsteps echo" "The sound of typing…" "The station alarm blips once", "You hear childrens laughing"
-        
+
 How a sickness begins:
 At first release, Admins will have panel will allow to spawn a specific pre-configured sicknesses, choosing the quantity of "patient zero".
 In future release, Admins will have a panel to create a unique  custom sickness (import, export, modify) to their liking.
@@ -123,7 +172,7 @@ Sickness system in many forms exists in many code base.  This is a reimplementat
 A sickness component that all living being will have attached.  That will list what sicknesses the character has and how much time the sickness has been active (to determine the current stage).
 A sickness system that will check all characters with sicknesses to perform the current stages effect.
 An admin UI panel to start a sickness event
-Two new chemicals :  one for curing viral, one for curing bacterial
+New chemical compounds :  one for curing viral, one for curing bacterial, 1 for allievating cold and flu symptoms.
 Adjustments to the medical scanner to detect the kind of sickness and the type (viral, bacterial).
 New traits for some sicknesses (psychological, allergies and such).
 A new game mechanic for psychologists that alleviate psychological sicknesses for some time.
