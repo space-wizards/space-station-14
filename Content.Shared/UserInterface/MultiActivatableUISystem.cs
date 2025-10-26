@@ -18,35 +18,35 @@ public sealed partial class MultiActivatableUISystem : EntitySystem
         SubscribeLocalEvent<MultiActivatableUIComponent, GetVerbsEvent<ActivationVerb>>(GetActivationVerb);
     }
 
-    private void GetActivationVerb(EntityUid uid, MultiActivatableUIComponent component, GetVerbsEvent<ActivationVerb> args)
+    private void GetActivationVerb(Entity<MultiActivatableUIComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands == null || HasComp<GhostComponent>(args.User))
         {
             return;
         }
 
-        for (var i = 0; i < component.Keys.Count; i++)
+        var user = args.User;
+
+        foreach (var dkey in ent.Comp.KeyVerbs)
         {
-            var key = component.Keys[i];
             args.Verbs.Add(new ActivationVerb
             {
-                Act = () => OpenUI(args.User, uid, key),
-                Text = Loc.GetString(component.VerbTexts[i]),
+                Act = () => _uiSystem.OpenUi(ent.Owner, dkey.Key, user),
+                Text = Loc.GetString(dkey.Value),
                 Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
             });
         }
     }
 
-    private void OpenUI(EntityUid user, EntityUid uiEntity, Enum key)
+    public void AddUI(Entity<MultiActivatableUIComponent?> ent, Enum key, LocId verbText)
     {
-        _uiSystem.OpenUi(uiEntity, key, user);
-    }
+        if (!Resolve(ent.Owner, ref ent.Comp))
+        {
+            return;
+        }
 
-    public void AddUI(EntityUid uid, MultiActivatableUIComponent maui, Enum key, LocId verbText)
-    {
-        maui.Keys.Add(key);
-        maui.VerbTexts.Add(verbText);
+        ent.Comp.KeyVerbs.Add(key, verbText);
 
-        Dirty(uid, maui);
+        Dirty(ent);
     }
 }

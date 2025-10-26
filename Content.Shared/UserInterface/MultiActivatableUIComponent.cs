@@ -8,9 +8,8 @@ namespace Content.Shared.UserInterface;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class MultiActivatableUIComponent : Component
 {
-    [DataField, AutoNetworkedField]
-    public List<Enum> Keys = [];
-
-    [DataField, AutoNetworkedField]
-    public List<LocId> VerbTexts = [];
+    /// <summary>
+    /// List of user interface keys used to open correct UI features and their respective verb text
+    /// </summary>
+    public Dictionary<Enum, LocId> KeyVerbs = [];
 }

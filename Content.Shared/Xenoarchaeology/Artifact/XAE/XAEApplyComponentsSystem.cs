@@ -42,6 +42,6 @@ public sealed class XAEApplyComponentsSystem : BaseXAESystem<XAEApplyComponentsC
             return;
         }
 
-        _multi.AddUI(ent, maui, ent.Comp.Key, ent.Comp.VerbText);
+        _multi.AddUI((ent, maui), ent.Comp.Key, ent.Comp.VerbText);
     }
 }
