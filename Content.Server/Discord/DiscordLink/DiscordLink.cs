@@ -26,7 +26,7 @@ public sealed class CommandReceivedEventArgs
 
     /// <summary>
     /// A list of arguments to the command.
-    /// This uses Robust's CommandParsing mostly for maintainability.
+    /// This uses <see cref="CommandParsing.ParseArguments"/> mostly for maintainability.
     /// </summary>
     public List<string> Arguments { get; init; } = [];
 

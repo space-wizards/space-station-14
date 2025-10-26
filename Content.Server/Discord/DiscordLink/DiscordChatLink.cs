@@ -24,7 +24,10 @@ public sealed class DiscordChatLink : IPostInjectInit
     public void Initialize()
     {
         _discordLink.OnMessageReceived += OnMessageReceived;
+
+        #if DEBUG
         _discordLink.RegisterCommandCallback(OnDebugCommandRun, "debug");
+        #endif
 
         _configurationManager.OnValueChanged(CCVars.OocDiscordChannelId, OnOocChannelIdChanged, true);
         _configurationManager.OnValueChanged(CCVars.AdminChatDiscordChannelId, OnAdminChannelIdChanged, true);
@@ -40,12 +43,6 @@ public sealed class DiscordChatLink : IPostInjectInit
 
     private void OnDebugCommandRun(CommandReceivedEventArgs ev)
     {
-        if (ev.Message.Guild is not { } guild
-            || guild.OwnerId != ev.Message.Author.Id)
-        {
-            return;
-        }
-
         var args = string.Join('\n', ev.Arguments);
         _sawmill.Info($"Provided arguments: \n{args}");
     }
