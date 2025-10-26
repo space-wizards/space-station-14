@@ -1,4 +1,4 @@
-using Content.Server.Physics.Components;
+using Content.Shared.Physics.Components;
 using Content.Server.Singularity.Components;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects;
