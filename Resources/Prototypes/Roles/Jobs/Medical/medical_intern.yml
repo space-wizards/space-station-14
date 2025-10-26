@@ -12,6 +12,7 @@
   icon: "JobIconMedicalIntern"
   supervisors: job-supervisors-medicine
   canBeAntag: false
+  canBeKillTarget: false
   access:
   - Medical
   - Maintenance

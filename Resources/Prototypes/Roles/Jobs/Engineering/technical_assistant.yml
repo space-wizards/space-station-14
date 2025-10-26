@@ -14,6 +14,7 @@
   icon: "JobIconTechnicalAssistant"
   supervisors: job-supervisors-engineering
   canBeAntag: false
+  canBeKillTarget: false
   access:
   - Maintenance
   - Engineering

@@ -12,6 +12,7 @@
   icon: "JobIconResearchAssistant"
   supervisors: job-supervisors-science
   canBeAntag: false
+  canBeKillTarget: false
   access:
   - Research
   - Maintenance

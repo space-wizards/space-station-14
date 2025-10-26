@@ -83,6 +83,11 @@ namespace Content.Shared.Roles
 
         [DataField]
         public bool CanBeAntag { get; private set; } = true;
+        /// <summary>
+        ///     Whether this job can be a kill objective target for traitors
+        /// </summary>
+        [DataField]
+        public bool CanBeKillTarget { get; private set; } = true;
 
         /// <summary>
         ///     The "weight" or importance of this job. If this number is large, the job system will assign this job

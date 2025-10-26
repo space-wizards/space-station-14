@@ -97,6 +97,8 @@
       blacklist:
         components:
         - KillPersonCondition
+    # prevents assistant roles from being targets. it's not fun for both parties!
+    - !type:KillTargetableMindFilter
   - type: KillPersonCondition
     requireMaroon: true
 
