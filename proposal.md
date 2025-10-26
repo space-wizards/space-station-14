@@ -1,28 +1,36 @@
-# Sickness system proposal
+# Sickness
 
 | Designers | Coders | Implemented | GitHub Links |
 |---|---|---|---|
-| your names here | coder names here | :white_check_mark: Yes or :warning: Partially or :information_source: Open PR or :x: No | PR Links or TBD |
-
-`Designers` should be the names that you, the authors of this document, use on GitHub and/or Discord. This is optional but strongly recommended, since:
-
-- This acknowledges credit where it is due
-- People who are confused about the written intent can use this information to contact the authors
-
-`Coders` should be the names of the contributors who plan on implementing this feature. To get a design doc approved you will need either
-- have the technical knowledge to be able to implement the proposed feature yourself.
-- have someone else who agreed to do this for you.
-- already have an existing implementation elsewhere that just needs to be ported.
-
-In either case you will have to write an outline on how you plan to implement this feature in the **Technical Considerations** section to show that is technically sound and feasible.
-
-`Implemented` is the status of the feature.
-
-Github links can include multiple PRs, if relevant.
+| JesterX | JesterX | No | TBD |
 
 ## Overview
 
-A very short, maybe three sentence summary of what this proposal is about. A high level "overview" or "what this adds".
+A basic sickness system that inflict a variety of ailments to the crew of the station.  They can be viral, bacterial and psychologics in nature.
+All sickness are made of:
+- The name of the sickness
+- A kind of sickness cause (viral, bacterial or psychologic).  That will impact how the sickness can be cured later on.
+- A collection of sickness stages.
+
+Sickness stages are different stages of each sickness, when they appear, what they do.
+
+Description of what a sickness stage is:
+- Time until that stage begins
+- Duration of said stage
+- What it does
+
+Kind of stages that will be included in first release:
+
+- Cough  
+  the player will cough, spreading germs near him, possibly infecting other crew member (see contagion below)
+  This will appear a an emote
+  Is the cough contagious or not
+- Sneeze
+  the player will sneeze, spreading germs near him, possibly infecting other crew member (see contagion below)
+  This will appear as an emote
+  Is the sneeze contagious or not
+
+
 
 ## Background
 
