@@ -227,3 +227,19 @@
       amount: 1
   products:
     CorgiJuice: 2
+
+- type: reaction
+  id: Felinidium
+  reactants:
+    CarpoToxin:
+      amount: 3
+    Cognizine:
+      amount: 2
+    Milk:
+      amount: 2
+    MuteToxin:
+      amount: 2
+    Iron:
+      amount: 1
+  products:
+    Felinidium: 1

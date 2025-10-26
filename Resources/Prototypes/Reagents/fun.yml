@@ -429,3 +429,24 @@
         - !type:ReagentCondition
           reagent: CorgiJuice
           min: 50
+
+- type: reagent
+  id: Felinidium
+  name: reagent-name-catessence
+  group: Toxins
+  desc: reagent-desc-catessence
+  physicalDesc: reagent-physical-desc-milky
+  flavor: dogfood
+  color: "#d8bed8"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.2
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Felinidium
+          min: 20
+        damage:
+          types:
+            Cellular: 0.5
