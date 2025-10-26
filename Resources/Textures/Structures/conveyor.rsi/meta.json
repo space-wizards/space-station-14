@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24 and modified by Swept, switch-fwd and switch-rev modified by RedBookcase (Github). 'conveyor_2' and 'conveyor_3' states by kosticia (GitHub) based on the 'conveyor'.",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24 and modified by Swept, switch-fwd and switch-rev modified by RedBookcase (Github).",
   "size": {
     "x": 32,
     "y": 32
@@ -9,18 +9,6 @@
   "states": [
     {
       "name": "conveyor"
-    },
-    {
-      "name": "conveyor_2"
-    },
-    {
-      "name": "conveyor_3"
-    },
-    {
-      "name": "conveyor_4"
-    },
-    {
-      "name": "conveyor_5"
     },
     {
       "name": "conveyor_started_ccw",
