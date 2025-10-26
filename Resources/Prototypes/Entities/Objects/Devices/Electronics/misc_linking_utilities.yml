@@ -6,7 +6,7 @@
   components:
   - type: Construction
     graph: voiceSensorGraph
-    node: voicesensor
+    node: finished
   - type: Sprite
     sprite: Objects/Devices/voicesensor.rsi
     state: voice
@@ -28,4 +28,4 @@
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
   - type: WirelessNetworkConnection
-    range: 15
+    range: 25
