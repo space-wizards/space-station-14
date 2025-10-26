@@ -38,16 +38,16 @@ public sealed class DiscordChatLink : IPostInjectInit
         _configurationManager.UnsubValueChanged(CCVars.AdminChatDiscordChannelId, OnAdminChannelIdChanged);
     }
 
-    private void OnDebugCommandRun(CommandReceivedEventArgs args)
+    private void OnDebugCommandRun(CommandReceivedEventArgs ev)
     {
-        if (args.Message.Guild is not { } guild
-            || guild.OwnerId != args.Message.Author.Id)
+        if (ev.Message.Guild is not { } guild
+            || guild.OwnerId != ev.Message.Author.Id)
         {
             return;
         }
 
-        var argumentList = string.Join('\n', args.ArgumentList);
-        _sawmill.Info($"Provided arguments: \n{argumentList}");
+        var args = string.Join('\n', ev.Arguments);
+        _sawmill.Info($"Provided arguments: \n{args}");
     }
 
     private void OnOocChannelIdChanged(string channelId)
