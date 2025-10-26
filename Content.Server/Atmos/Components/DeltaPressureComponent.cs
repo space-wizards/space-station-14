@@ -41,7 +41,7 @@ public sealed partial class DeltaPressureComponent : Component
     /// </summary>
     /// <remarks>Note that while <see cref="AirtightComponent"/> already stores the grid,
     /// we cannot trust it to be available on init or when the entity is being deleted. Tragic.</remarks>
-    [DataField]
+    [ViewVariables(VVAccess.ReadOnly)]
     public EntityUid? GridUid;
 
     /// <summary>
