@@ -30,7 +30,6 @@ public abstract partial class SharedStackSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private readonly SharedStorageSystem _storage = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
 
     // TODO: These should be in the prototype.
     public static readonly int[] DefaultSplitAmounts = { 1, 5, 10, 20, 30, 50 };
@@ -179,10 +178,10 @@ public abstract partial class SharedStackSystem : EntitySystem
         args.Cancelled = true;
     }
 
-        private void OnEaten(Entity<StackComponent> eaten, ref IngestedEvent args)
-        {
-            TryUse(eaten.AsNullable(), 1);
-        }
+    private void OnEaten(Entity<StackComponent> eaten, ref IngestedEvent args)
+    {
+        ReduceCount(eaten.AsNullable(), 1);
+    }
 
     private void OnStackAlternativeInteract(Entity<StackComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
