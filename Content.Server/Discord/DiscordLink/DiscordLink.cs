@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Content.Shared.CCVar;
 using NetCord;
 using NetCord.Gateway;
@@ -27,7 +28,7 @@ public sealed class CommandReceivedEventArgs
     /// A list of arguments to the command.
     /// This uses Robust's CommandParsing mostly for maintainability.
     /// </summary>
-    public IReadOnlyCollection<string> ArgumentList { get; init; } = [];
+    public List<string> ArgumentList { get; init; } = [];
 
     /// <summary>
     /// Information about the message that the command was received from. This includes the message content, author, etc.
