@@ -106,47 +106,38 @@
     count: 1
 
 - type: entity
-  id: ConveyorBeltAssembly
   parent: PartBase
+  id: ConveyorBeltAssembly
   name: conveyor assembly
-  suffix: 30
+  suffix: Full
   description: A conveyor belt assembly. Used to construct a conveyor belt.
   components:
   - type: Item
+    sprite: Structures/conveyor.rsi
     size: Normal
   - type: Appearance
   - type: Sprite
     sprite: Structures/conveyor.rsi
-    state: conveyor_3
     layers:
-    - state: conveyor_3
+    - state: conveyor_5
       map: ["base"]
-  - type: StaticPrice
-    price: 0
   - type: StackPrice
     price: 5
   - type: Stack
     stackType: Conveyor
+    count: 5
     baseLayer: base
     layerStates:
     - conveyor
     - conveyor_2
     - conveyor_3
-
-- type: entity
-  parent: ConveyorBeltAssembly
-  id: ConveyorBeltAssembly10
-  suffix: 10
-  components:
-  - type: Sprite
-    state: conveyor
-  - type: Stack
-    count: 10
+    - conveyor_4
+    - conveyor_5
 
 - type: entity
   parent: ConveyorBeltAssembly
   id: ConveyorBeltAssembly1
-  suffix: 1
+  suffix: Single
   components:
   - type: Sprite
     state: conveyor

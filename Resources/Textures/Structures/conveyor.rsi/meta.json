@@ -17,6 +17,12 @@
       "name": "conveyor_3"
     },
     {
+      "name": "conveyor_4"
+    },
+    {
+      "name": "conveyor_5"
+    },
+    {
       "name": "conveyor_started_ccw",
       "directions": 8,
       "delays": [
