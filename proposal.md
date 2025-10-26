@@ -6,7 +6,10 @@
 
 ## Overview
 
-A basic sickness system that inflict a variety of ailments to the crew of the station.  They can be viral, bacterial and psychologics in nature.
+A basic sickness system that inflict a variety of ailments to the crew of the station.  They can be viral, bacterial and psychologic in nature.
+
+Psychological sickness might be added as a trait.
+
 All sickness are made of:
 - The name of the sickness
 - A kind of sickness cause (viral, bacterial or psychologic).  That will impact how the sickness can be cured later on.
@@ -45,10 +48,11 @@ Kind of stages that will be included in first release:
   The quantity of temperature change
 - Falls down on the ground
 - Vomit
+- Cured (to make some sicknesses temporary and auto-cured)
 
 More symptoms will be added in the future
 
-Exemple of sicknesses:
+List of pre-included sicknesses:
 
 Cold:
     Name : Common cold
@@ -59,13 +63,44 @@ Cold:
             Start after: 0
             End after : Until cured
         - Emote
+            Start after : 0
+            End after : Until cured
             List of emotes : sniffles
+        - Perceive
+            Start after : 0
+            End after : Until cured
+            List of perceptions : 
+                Your throat feels soar.
+                Your nose is runny.
+                You feel tired.
+        - Cured
+            Start after : 30 minutes
+            End after : Once
+            Immunity : Yes
+
+Tourette Syndrome:
+    Name : Tourette Syndrome
+    Cause : Psychological
+    Stages :
+        - Say
+            Start after : 0
+            End after : Never
+            Frequency : 1 minute
+            List of things to say : Hey!” “Okay!” “No!” “Yes!” “Stop!” “Uh!” “Hmm!” “What?” “Go!” “Ah!”, “meow,” “woof,”, “chirp” ,“banana,” “car,” “blue!”
 
 Paranoia
     Name : Paranoia
-    Cause : Psychologic
+    Cause : Psychological
     Stages :
-        - 
+        Percieve
+        Start after : 0
+        End after : Never
+        Frequency : 1 minute
+        List of thing to perceive :  "You think someone is observing you", "You think someone wants you dead", "You’re sure you just saw movement in your peripheral vision.", "You feel like your comms have a slight delay… someone might be listening."
+
+Hallucinations:
+    Name : Space hallucinatory syndrome
+    Cause : Psychological
         
         
 How a sickness begins:
