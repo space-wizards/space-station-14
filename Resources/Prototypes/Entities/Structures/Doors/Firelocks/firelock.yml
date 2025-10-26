@@ -7,8 +7,8 @@
   components:
     - type: Anchorable
       ignoreCollisionsWhitelist:
-      tags:
-      - Directional
+        tags:
+        - Directional
       flags:
       - Anchorable
     - type: Rotatable

@@ -7,8 +7,8 @@
   components:
     - type: Anchorable
       ignoreCollisionsWhitelist:
-      tags:
-      - Directional
+        tags:
+        - Directional
     - type: Damageable
       damageContainer: StructuralInorganic
       damageModifierSet: Metallic

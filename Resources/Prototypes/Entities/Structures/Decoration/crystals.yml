@@ -17,8 +17,8 @@
       spread: 75
     - type: Anchorable
       ignoreCollisionsWhitelist:
-      tags:
-      - Directional
+        tags:
+        - Directional
       delay: 2
     - type: Physics
       bodyType: Static
