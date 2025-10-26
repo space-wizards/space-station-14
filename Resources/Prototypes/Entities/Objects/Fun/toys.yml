@@ -1088,6 +1088,38 @@
     - DrinkSpaceGlue
 
 - type: entity
+  parent: DrinkBase
+  id: CrazyLube
+  name: crazy lube
+  description: A bottle of super slipery crazy lube manufactured by Honk! Co.
+  components:
+  - type: Openable
+    sound:
+      collection: packetOpenSounds
+  - type: Sprite
+    sprite: Objects/Fun/lube.rsi
+    layers:
+    - state: icon
+      map: ["enum.OpenableVisuals.Layer"]
+  - type: Appearance
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: SpaceLube
+          Quantity: 100
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "icon_open"}
+          False: {state: "icon"}
+  - type: Lube
+  - type: TrashOnSolutionEmpty
+    solution: drink
+
+- type: entity
   parent: BaseItem
   id: NewtonCradle
   name: newton cradle
