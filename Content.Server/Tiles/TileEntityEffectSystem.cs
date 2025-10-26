@@ -22,6 +22,6 @@ public sealed class TileEntityEffectSystem : EntitySystem
     {
         var otherUid = args.Tripper;
 
-        _entityEffects.ApplyEffects(otherUid, ent.Comp.Effects.ToArray());
+        _entityEffects.ApplyEffects(otherUid, ent.Comp.Effects.ToArray(), user: otherUid);
     }
 }
