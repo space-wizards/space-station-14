@@ -28,7 +28,7 @@ public sealed class CommandReceivedEventArgs
     /// A list of arguments to the command.
     /// This uses Robust's CommandParsing mostly for maintainability.
     /// </summary>
-    public List<string> ArgumentList { get; init; } = [];
+    public List<string> Arguments { get; init; } = [];
 
     /// <summary>
     /// Information about the message that the command was received from. This includes the message content, author, etc.
