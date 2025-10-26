@@ -4,6 +4,7 @@ using NetCord;
 using NetCord.Gateway;
 using NetCord.Rest;
 using Robust.Shared.Configuration;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Discord.DiscordLink;
 
@@ -18,9 +19,16 @@ public sealed class CommandReceivedEventArgs
     public string Command { get; init; } = string.Empty;
 
     /// <summary>
-    /// The arguments to the command. This is everything after the command
+    /// The raw arguments to the command. This is everything after the command
     /// </summary>
-    public string Arguments { get; init; } = string.Empty;
+    public string RawArguments { get; init; } = string.Empty;
+
+    /// <summary>
+    /// A list of arguments to the command.
+    /// This uses Robust's CommandParsing mostly for maintainability.
+    /// </summary>
+    public IReadOnlyCollection<string> ArgumentList { get; init; } = [];
+
     /// <summary>
     /// Information about the message that the command was received from. This includes the message content, author, etc.
     /// Use this to reply to the message, delete it, etc.
@@ -180,24 +188,28 @@ public sealed class DiscordLink : IPostInjectInit
         var trimmedInput = content[BotPrefix.Length..].Trim();
         var firstSpaceIndex = trimmedInput.IndexOf(' ');
 
-        string command, arguments;
+        string command, rawArguments;
 
         if (firstSpaceIndex == -1)
         {
             command = trimmedInput;
-            arguments = string.Empty;
+            rawArguments = string.Empty;
         }
         else
         {
             command = trimmedInput[..firstSpaceIndex];
-            arguments = trimmedInput[(firstSpaceIndex + 1)..].Trim();
+            rawArguments = trimmedInput[(firstSpaceIndex + 1)..].Trim();
         }
+
+        var argumentList = new List<string>();
+        CommandParsing.ParseArguments(rawArguments, argumentList);
 
         // Raise the event!
         OnCommandReceived?.Invoke(new CommandReceivedEventArgs
         {
             Command = command,
-            Arguments = arguments,
+            ArgumentList =
+            RawArguments = rawArguments,
             Message = message,
         });
         return ValueTask.CompletedTask;
