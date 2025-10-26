@@ -15,7 +15,7 @@ namespace Content.Shared.Ninja.Systems;
 /// All interaction logic is implemented serverside.
 /// This is in shared for API and access.
 /// </summary>
-public abstract class StunProviderSystem : EntitySystem
+public sealed class StunProviderSystem : EntitySystem
 {
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
