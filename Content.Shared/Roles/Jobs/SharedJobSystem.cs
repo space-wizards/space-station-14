@@ -19,15 +19,11 @@ public abstract class SharedJobSystem : EntitySystem
     [Dependency] private readonly SharedRoleSystem _roles = default!;
 
     private readonly Dictionary<string, string> _inverseTrackerLookup = new();
-
-    private ISawmill _sawmill = default!;
-
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnProtoReload);
         SetupTrackerLookup();
-        _sawmill = Logger.GetSawmill("jobs");
     }
 
     private void OnProtoReload(PrototypesReloadedEventArgs obj)
@@ -223,11 +219,8 @@ public abstract class SharedJobSystem : EntitySystem
     public bool CanBeKillTarget(EntityUid? mind)
     {
         if (!MindTryGetJob(mind, out var jobPrototype))
-        {
-            _sawmill.Debug("Mind not found");
             return true;
-        }
-        _sawmill.Debug(jobPrototype.ID + " CanBeKillTarget: " + jobPrototype.CanBeKillTarget);
+
         return jobPrototype.CanBeKillTarget;
     }
 }
