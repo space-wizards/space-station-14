@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Reinforced plasma windows no longer block laser shots.
-    type: Fix
-  id: 8655
-  time: '2025-06-11T15:36:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38041
 - author: Simyon264
   changes:
   - message: The MIDI Channel Selector now shows the instrument name of the track!
@@ -3929,3 +3922,10 @@
   id: 9156
   time: '2025-10-25T00:29:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41091
+- author: Princess-Cheeseballs
+  changes:
+  - message: Eating stacks of items no longer consumes the whole stack in one bite.
+    type: Fix
+  id: 9157
+  time: '2025-10-26T01:09:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41092
