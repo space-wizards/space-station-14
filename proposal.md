@@ -14,6 +14,7 @@ All sickness are made of:
 - The name of the sickness
 - A kind of sickness cause (viral, bacterial or psychologic).  That will impact how the sickness can be cured later on.
 - A collection of sickness stages.
+- Minimal viral and bacterial charged needed to inflict contagion.  Created upon coughing and sneezing without mask and helmets.  (Invisible in the atmos system, disperses like any gas)
 
 Sickness stages are different stages of each sickness, when they appear, what they do.
 
@@ -51,7 +52,8 @@ Kind of stages that will be included in first release:
 - Falls down on the ground
 - Vomit
 - Cured (to make some sicknesses temporary and auto-cured)
-
+- Death (if not treated) (TBD)
+  
 More symptoms will be added in the future
 
 List of pre-included sicknesses:
@@ -189,19 +191,32 @@ In the future, botany might also get involved.
 
 ## Roundflow & Player interaction
 
-Consider addressing:
-- At what point in the round does the feature come into play? Does it happen every round? How does it affect the round pace?
-- How do you wish for players to interact with your feature and how should they not interact with it? How is this mechanically enforced?
-- Which department will interact with the feature? How does the feature fit into the [design document](../space-station-14/departments.md) for that department?
-
+Sickness will appear to a certain number of patient zero (Admin event) or by having the related trait (paranoia, tourette).
+Interraction will be with
+    - Medical analyzer
+    - Psychological intervention 
+    - Taking specific pills
+    - Making specific compounds
+    - Several gameplay elements (chat, emote, bleed, temperature, vomit)
+Departments: 
+    All can be infected
+    Chemicals
+    Medicine
+    Psychologist
+    Eventually : Botany
+    
 ## Administrative & Server Rule Impact (if applicable)
 
-- Does this feature introduce any new rule enforcement challenges or additional workload for admins?
-- Could this feature increase the likelihood of griefing, rule-breaking, or player disputes?
-- How are the rules enforced mechanically by way the feature will be implemented?
+Admins will be the one triggering the events
+Admins will eventually have fun creating new diseases on the fly.  That won't create much workload.  Import and Export features might be used.
+Not likely to create griefing, rule-breaking and player disputes.
+No new rules.
 
 # Technical Considerations
 
-- Does the feature require new systems, UI elements, or refactors of existing ones? Give a short technical outline on how they will be implemented.
+A living mob component will be added to list the sickness affecting a player, hom much time since the sicknesses are in their system how much time passed since last symptom.
+A new system will be added to perform symptoms when timer is reached.
+Likely to not take a lot of processing power.
+There will be a viral / bacterial charge "special gases" invisible to atmos in the air.
 - Are there any anticipated performance impacts?
 - For required UI elements, give a short description or a mockup of how they should look like (for example a radial menu, actions & alerts, navmaps, or other window types)
