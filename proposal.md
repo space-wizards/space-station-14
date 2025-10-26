@@ -17,26 +17,64 @@ Sickness stages are different stages of each sickness, when they appear, what th
 Description of what a sickness stage is:
 - Time until that stage begins
 - Duration of said stage
-- What it does
+- What it does (called "Symptom")
 
 Kind of stages that will be included in first release:
 
 - Cough  
-  the player will cough, spreading germs near him, possibly infecting other crew member (see contagion below)
+  The player will cough, spreading germs near him, possibly infecting other crew member (see contagion below)
   This will appear a an emote
   Is the cough contagious or not
 - Sneeze
-  the player will sneeze, spreading germs near him, possibly infecting other crew member (see contagion below)
+  The player will sneeze, spreading germs near him, possibly infecting other crew member (see contagion below)
   This will appear as an emote
   Is the sneeze contagious or not
+- Speak
+  The player will say something
+  This includes a list of parametrized random things the player might say (for tourette syndrome and such)
+- Percieve
+  The player will percieve something
+  This includes a list of parametrized random things the player might percieve (for paranoia and such)  Ex:  You think that someone is watching you.
+- Emote
+  The player will emote something.
+  This includes a list of parametrized random things the player might emote  Ex:  Player X shivers.
+- Bleed
+  The amount of bleeding
+- Temperature change
+  The direction of temperature of the character (augment or decrease)
+  The quantity of temperature change
+- Falls down on the ground
+- Vomit
 
+More symptoms will be added in the future
 
+Exemple of sicknesses:
+
+Cold:
+    Name : Common cold
+    Cause : Viral
+    Stages : 
+        - Sneeze
+            Contagious : Yes
+            Start after: 0
+            End after : Until cured
+        - Emote
+            List of emotes : sniffles
+
+Paranoia
+    Name : Paranoia
+    Cause : Psychologic
+    Stages :
+        - 
+        
+        
+How a sickness begins:
+At first release, Admins will have panel will allow to spawn a specific pre-configured sicknesses, choosing the quantity of "patient zero".
+In future release, Admins will have a panel to create a unique  custom sickness (import, export, modify) to their liking.
 
 ## Background
 
-Summarize any information that is needed to contextualize the proposed changes, e.g. the current state of the game.
-
-Also link any relevant discussions on Discord, GitHub, or HackMD that are relevant to the proposal.
+Sickness system in many forms exists in many code base.  This is a reimplementation of how I coded it for UnityStation.
 
 ## Features to be added
 
