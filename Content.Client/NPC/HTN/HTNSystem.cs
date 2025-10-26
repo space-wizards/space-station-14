@@ -1,11 +1,13 @@
+using Content.Client.Stylesheets.Fonts;
 using Content.Shared.NPC;
 using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
 
 namespace Content.Client.NPC.HTN;
 
 public sealed class HTNSystem : EntitySystem
 {
+    [Dependency] private readonly IFontSelectionManager _fontSelection = default!;
+
     /*
      * Mainly handles clientside debugging for HTN NPCs.
      */
@@ -19,7 +21,7 @@ public sealed class HTNSystem : EntitySystem
 
             if (_enableOverlay)
             {
-                overlayManager.AddOverlay(new HTNOverlay(EntityManager, IoCManager.Resolve<IResourceCache>()));
+                overlayManager.AddOverlay(new HTNOverlay(EntityManager, _fontSelection));
                 RaiseNetworkEvent(new RequestHTNMessage()
                 {
                     Enabled = true,

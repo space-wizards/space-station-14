@@ -42,6 +42,7 @@ public sealed partial class AtmosAlarmEntryContainer : BoxContainer
         Coordinates = coordinates;
 
         // Load fonts
+        // TODO: Move fonts to stylesheets, respect user font preferences.
         var headerFont = new VectorFont(_cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Bold.ttf"), 11);
         var normalFont = new VectorFont(_cache.GetResource<FontResource>("/Fonts/NotoSansDisplay/NotoSansDisplay-Regular.ttf"), 11);
         var smallFont = new VectorFont(_cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 10);
@@ -68,6 +69,7 @@ public sealed partial class AtmosAlarmEntryContainer : BoxContainer
         Coordinates = _entManager.GetCoordinates(entry.Coordinates);
 
         // Load fonts
+        // TODO: Move fonts to stylesheets, respect user font preferences.
         var normalFont = new VectorFont(_cache.GetResource<FontResource>("/Fonts/NotoSansDisplay/NotoSansDisplay-Regular.ttf"), 11);
 
         // Update alarm state

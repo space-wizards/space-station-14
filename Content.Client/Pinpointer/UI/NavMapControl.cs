@@ -3,7 +3,6 @@ using Content.Client.UserInterface.Controls;
 using Content.Shared.Input;
 using Content.Shared.Pinpointer;
 using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Collections;
@@ -18,6 +17,7 @@ using System.Numerics;
 using JetBrains.Annotations;
 using Content.Shared.Atmos;
 using System.Linq;
+using Content.Client.Stylesheets.Fonts;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Pinpointer.UI;
@@ -28,7 +28,7 @@ namespace Content.Client.Pinpointer.UI;
 [UsedImplicitly, Virtual]
 public partial class NavMapControl : MapGridControl
 {
-    [Dependency] private IResourceCache _cache = default!;
+    [Dependency] private readonly IFontSelectionManager _fontSelection = default!;
     private readonly SharedTransformSystem _transformSystem;
     private readonly SharedNavMapSystem _navMapSystem;
 
@@ -84,6 +84,8 @@ public partial class NavMapControl : MapGridControl
     private TransformComponent? _xform;
     private PhysicsComponent? _physics;
     private FixturesComponent? _fixtures;
+
+    private (Font Font, int Size)? _cachedBeaconFont;
 
     // TODO: https://github.com/space-wizards/RobustToolbox/issues/3818
     private readonly Label _zoom = new()
@@ -432,7 +434,16 @@ public partial class NavMapControl : MapGridControl
 
             // Calculate font size for current zoom level
             var fontSize = (int)Math.Round(1 / WorldRange * DefaultDisplayedRange * UIScale * _targetFontsize, 0);
-            var font = new VectorFont(_cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Bold.ttf"), fontSize);
+            Font font;
+            if (_cachedBeaconFont is not { } cached || cached.Size != fontSize)
+            {
+                font = _fontSelection.GetDefaultFont(StandardFontType.Main, fontSize);
+                _cachedBeaconFont = (font, fontSize);
+            }
+            else
+            {
+                font = cached.Font;
+            }
 
             foreach (var beacon in _navMap.Beacons.Values)
             {
@@ -728,6 +739,26 @@ public partial class NavMapControl : MapGridControl
     protected Vector2 GetOffset()
     {
         return Offset + (_physics?.LocalCenter ?? new Vector2());
+    }
+
+    protected override void EnteredTree()
+    {
+        base.EnteredTree();
+
+        _fontSelection.OnFontChanged += OnFontChanged;
+    }
+
+    protected override void MouseExited()
+    {
+        base.MouseExited();
+
+        _fontSelection.OnFontChanged -= OnFontChanged;
+    }
+
+    private void OnFontChanged(StandardFontType type)
+    {
+        if (type == StandardFontType.Main)
+            _cachedBeaconFont = null;
     }
 }
 

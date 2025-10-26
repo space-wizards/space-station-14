@@ -31,6 +31,7 @@ namespace Content.Client.Voting.UI
         [Dependency] private readonly IEntityNetworkManager _entNetManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IStateManager _state = default!;
+        [Dependency] private readonly IStylesheetManager _stylesheets = default!;
 
         private VotingSystem _votingSystem;
 
@@ -63,7 +64,6 @@ namespace Content.Client.Voting.UI
             RobustXamlLoader.Load(this);
             _votingSystem = _entityManager.System<VotingSystem>();
 
-            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSystem;
             CloseButton.OnPressed += _ => Close();
             VoteNotTrustedLabel.Text = Loc.GetString("ui-vote-trusted-users-notice", ("timeReq", _cfg.GetCVar(CCVars.VotekickEligibleVoterDeathtime)));
 
@@ -77,6 +77,20 @@ namespace Content.Client.Voting.UI
             VoteTypeButton.OnItemSelected += VoteTypeSelected;
             CreateButton.OnPressed += CreatePressed;
             FollowButton.OnPressed += FollowSelected;
+        }
+
+        protected override void EnteredTree()
+        {
+            base.EnteredTree();
+
+            _stylesheets.UseStylesheet(this, sa => sa.SheetSystem);
+        }
+
+        protected override void ExitedTree()
+        {
+            base.ExitedTree();
+
+            _stylesheets.StopStylesheet(this);
         }
 
         protected override void Opened()

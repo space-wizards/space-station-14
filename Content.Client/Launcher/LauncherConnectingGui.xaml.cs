@@ -29,21 +29,22 @@ namespace Content.Client.Launcher
         private readonly IPrototypeManager _prototype;
         private readonly IConfigurationManager _cfg;
         private readonly IClipboardManager _clipboard;
+        private readonly IStylesheetManager _stylesheets;
 
         public LauncherConnectingGui(LauncherConnecting state, IRobustRandom random,
-            IPrototypeManager prototype, IConfigurationManager config, IClipboardManager clipboard)
+            IPrototypeManager prototype, IConfigurationManager config, IClipboardManager clipboard,
+            IStylesheetManager stylesheets)
         {
             _state = state;
             _random = random;
             _prototype = prototype;
             _cfg = config;
             _clipboard = clipboard;
+            _stylesheets = stylesheets;
 
             RobustXamlLoader.Load(this);
 
             LayoutContainer.SetAnchorPreset(this, LayoutContainer.LayoutPreset.Wide);
-
-            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSystem;
 
             ChangeLoginTip();
             RetryButton.OnPressed += ReconnectButtonPressed;
@@ -68,6 +69,20 @@ namespace Content.Client.Launcher
             var edim = IoCManager.Resolve<ExtendedDisconnectInformationManager>();
             edim.LastNetDisconnectedArgsChanged += LastNetDisconnectedArgsChanged;
             LastNetDisconnectedArgsChanged(edim.LastNetDisconnectedArgs);
+        }
+
+        protected override void EnteredTree()
+        {
+            base.EnteredTree();
+
+            _stylesheets.UseStylesheet(this, sa => sa.SheetSystem);
+        }
+
+        protected override void ExitedTree()
+        {
+            base.ExitedTree();
+
+            _stylesheets.StopStylesheet(this);
         }
 
         // Just button, there's only one at once anyways :)

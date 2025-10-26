@@ -145,6 +145,7 @@ namespace Content.Client.Wires.UI
 
             LayoutContainer.SetAnchorPreset(topContainerWrap, LayoutContainer.LayoutPreset.Wide);
 
+            // TODO: Move fonts to stylesheets, respect user font preferences.
             var font = _resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
             var fontSmall = _resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 10);
 
@@ -317,6 +318,7 @@ namespace Content.Client.Wires.UI
                     VerticalAlignment = VAlignment.Bottom,
                     HorizontalAlignment = HAlignment.Center,
                     Align = Label.AlignMode.Center,
+                    // TODO: Move fonts to stylesheets, respect user font preferences.
                     FontOverride = _resourceCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 12),
                     FontColorOverride = Color.Gray,
                     ToolTip = letter.Name(),
@@ -564,6 +566,7 @@ namespace Content.Client.Wires.UI
                     };
                 }
 
+                // TODO: Move fonts to stylesheets, respect user font preferences.
                 var font = resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 12);
 
                 var hBox = new BoxContainer
