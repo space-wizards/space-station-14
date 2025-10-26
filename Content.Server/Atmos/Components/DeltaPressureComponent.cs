@@ -40,8 +40,11 @@ public sealed partial class DeltaPressureComponent : Component
     /// for removal while the entity is being deleted.
     /// </summary>
     /// <remarks>Note that while <see cref="AirtightComponent"/> already stores the grid,
-    /// we cannot trust it to be available on init or when the entity is being deleted. Tragic.</remarks>
-    [DataField]
+    /// we cannot trust it to be available on init or when the entity is being deleted. Tragic.
+    /// Double note: this is set during ComponentInit and thus does not need to be a datafield
+    /// or else it will spam serialization.</remarks>
+    /// TODO ATMOS: Simply use AirtightComponent's GridUID caching and handle entity removal from the processing list on an invalidation system similar to InvalidTiles.
+    [ViewVariables(VVAccess.ReadOnly)]
     public EntityUid? GridUid;
 
     /// <summary>
