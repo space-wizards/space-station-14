@@ -502,6 +502,9 @@ public sealed partial class IngestionSystem : EntitySystem
             };
             RaiseLocalEvent(args.Target, ref ev);
 
+            if (entity.Comp.TrashEveryTransfer)
+                SpawnTrash(entity, args.User);
+
             args.Repeat = !args.ForceFed;
             return;
         }
