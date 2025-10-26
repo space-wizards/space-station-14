@@ -45,6 +45,9 @@
     state: solar_panel_glass
     collectionName: SolarPanel
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
   - type: Pullable
   - type: Electrified
     onHandInteract: false
@@ -334,6 +337,9 @@
       - !type:DoActsBehavior
         acts: ["Breakage"]
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
   - type: Pullable
   - type: Construction
     graph: SolarPanel
@@ -383,6 +389,9 @@
       - !type:DoActsBehavior
         acts: ["Breakage"]
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
   - type: Pullable
   - type: Construction
     graph: SolarPanel

@@ -44,6 +44,9 @@
     supplyRampRate: 500
     supplyRampTolerance: 500
   - type: Anchorable # Reduces anchor time to 1 second
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Metallic

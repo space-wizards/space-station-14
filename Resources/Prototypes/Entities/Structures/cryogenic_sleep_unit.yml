@@ -5,6 +5,9 @@
   description: A super-cooled container that keeps crewmates safe during space travel.
   components:
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
     flags:
     - Anchorable
   - type: Rotatable

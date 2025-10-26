@@ -36,6 +36,9 @@
     softness: 0.9
     color: "#EEEEFF"
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
   - type: InteractionOutline
   - type: Damageable
     damageContainer: Inorganic

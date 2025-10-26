@@ -32,6 +32,9 @@
   - type: Transform
     anchored: true
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Metallic

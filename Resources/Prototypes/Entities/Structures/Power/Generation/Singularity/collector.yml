@@ -65,6 +65,9 @@
   - type: RadiationReceiver
   - type: PowerSupplier
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
   - type: Rotatable
   - type: Pullable
   - type: GuideHelp

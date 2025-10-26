@@ -16,6 +16,9 @@
       - Energy
       spread: 75
     - type: Anchorable
+      ignoreCollisionsWhitelist:
+      tags:
+      - Directional
       delay: 2
     - type: Physics
       bodyType: Static

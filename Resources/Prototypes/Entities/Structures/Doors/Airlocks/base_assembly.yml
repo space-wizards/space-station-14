@@ -22,6 +22,9 @@
         layer:
         - HumanoidBlockLayer
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
     delay: 2
   - type: Pullable
   - type: Transform

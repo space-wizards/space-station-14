@@ -58,6 +58,9 @@
   abstract: true
   components:
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
   - type: Rotatable
 
 #Start anchored, cannot be rotated while anchored

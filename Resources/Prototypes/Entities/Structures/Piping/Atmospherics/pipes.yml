@@ -19,6 +19,9 @@
   - type: SubFloorHide
   - type: CollideOnAnchor
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
   - type: Rotatable
   - type: Destructible
     thresholds:

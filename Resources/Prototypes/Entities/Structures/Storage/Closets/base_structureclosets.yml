@@ -236,6 +236,9 @@
   - type: AccessReader
   - type: Lock
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
     delay: 2
   - type: StaticPrice
     price: 80

@@ -9,6 +9,9 @@
   - type: Appearance
   - type: InteractionOutline
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
   - type: Rotatable
   - type: ContainerContainer
   - type: Gun

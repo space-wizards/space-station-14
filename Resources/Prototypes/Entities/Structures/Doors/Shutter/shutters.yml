@@ -8,6 +8,9 @@
     mode: SnapgridCenter
   components:
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
     flags:
     - Anchorable
   - type: Rotatable

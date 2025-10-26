@@ -5,6 +5,9 @@
   description: It opens, it closes, and maybe crushes you.
   components:
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
     flags:
     - Anchorable
   - type: Rotatable

@@ -10,6 +10,9 @@
     layers:
     - state: base
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
   - type: Rotatable
   - type: Construction
     graph: LogicGate

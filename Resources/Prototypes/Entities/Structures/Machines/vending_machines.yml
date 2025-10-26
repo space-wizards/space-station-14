@@ -70,6 +70,9 @@
     boardName: wires-board-name-vendingmachine
     layoutId: Vending
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
   - type: TypingIndicator
     proto: robot
   - type: Speech

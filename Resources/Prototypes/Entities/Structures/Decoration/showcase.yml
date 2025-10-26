@@ -6,6 +6,9 @@
   description: A non-functional replica of an old security robot.
   components:
     - type: Anchorable
+      ignoreCollisionsWhitelist:
+      tags:
+      - Directional
     - type: Damageable
       damageContainer: StructuralInorganic
       damageModifierSet: Metallic

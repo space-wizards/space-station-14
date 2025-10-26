@@ -6,6 +6,9 @@
   - type: Animateable
   - type: InteractionOutline
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
     delay: 2
   - type: Physics
     bodyType: Static

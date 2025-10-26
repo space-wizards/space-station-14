@@ -67,6 +67,9 @@
         layer:
         - MachineLayer
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
   - type: StaticPrice
     price: 25000
   - type: Prayable

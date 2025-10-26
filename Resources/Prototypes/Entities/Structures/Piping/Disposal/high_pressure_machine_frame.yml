@@ -24,6 +24,9 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Anchorable
+      ignoreCollisionsWhitelist:
+      tags:
+      - Directional
     - type: Pullable
     - type: Construction
       graph: DisposalMachine

@@ -30,6 +30,9 @@
     anchored: true
     noRot: true
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
   - type: Pullable
   - type: GuideHelp
     guides:

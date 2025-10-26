@@ -46,6 +46,9 @@
     tags:
     - Wooden
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
   - type: Rotatable
   - type: Construction
     graph: Dresser

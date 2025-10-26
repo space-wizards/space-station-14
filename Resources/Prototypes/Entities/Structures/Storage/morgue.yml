@@ -7,6 +7,9 @@
   components:
   - type: Pullable
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
   - type: Sprite
     sprite: Structures/Storage/morgue.rsi
     layers:

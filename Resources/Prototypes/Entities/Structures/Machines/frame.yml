@@ -24,6 +24,9 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Anchorable
+      ignoreCollisionsWhitelist:
+      tags:
+      - Directional
     - type: Rotatable
     - type: Pullable
     - type: Construction
@@ -91,6 +94,9 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Anchorable
+      ignoreCollisionsWhitelist:
+      tags:
+      - Directional
     - type: Rotatable
     - type: Pullable
     - type: Construction

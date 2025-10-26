@@ -38,6 +38,9 @@
     layer: 1
   - type: SubFloorHide
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
   - type: Construction
     graph: StationBeaconPart
     node: complete

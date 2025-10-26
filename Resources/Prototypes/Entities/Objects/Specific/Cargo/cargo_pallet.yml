@@ -7,6 +7,9 @@
   components:
   - type: InteractionOutline
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
     flags:
     - Anchorable
   - type: CollideOnAnchor

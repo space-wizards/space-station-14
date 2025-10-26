@@ -43,6 +43,9 @@
     noRot: true
   - type: KitchenSpike
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
   - type: Pullable
   - type: Appearance
   - type: GenericVisualizer

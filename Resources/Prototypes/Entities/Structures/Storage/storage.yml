@@ -13,6 +13,9 @@
     graph: Rack
     node: Rack
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
   - type: InteractionOutline
   - type: PlaceableSurface
   - type: Sprite

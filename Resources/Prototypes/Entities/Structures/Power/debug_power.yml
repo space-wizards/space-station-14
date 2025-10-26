@@ -55,6 +55,9 @@
       - !type:DoActsBehavior
         acts: ["Breakage"]
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
 
 - type: entity
   id: DebugBatteryStorage
@@ -88,6 +91,9 @@
         !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
 
 - type: entity
   id: DebugBatteryDischarger
@@ -123,6 +129,9 @@
         nodeGroupID: HVPower
   - type: BatteryDischarger
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
 
 - type: entity
   parent: BaseSMES
@@ -236,3 +245,6 @@
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional

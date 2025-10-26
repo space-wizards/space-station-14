@@ -78,6 +78,9 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
   - type: Pullable
   - type: Rotatable
   - type: Appearance

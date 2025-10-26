@@ -70,6 +70,9 @@
     maxSupply: 350000
     supplyRampTolerance: 350000
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
   - type: Rotatable
   - type: Pullable
   - type: Clickable
@@ -165,6 +168,9 @@
     lightningExplode: false
     damageFromLightning: 0
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
   - type: Rotatable
   - type: Pullable
   - type: Clickable

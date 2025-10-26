@@ -6,6 +6,9 @@
   description: A door, where will it lead?
   components:
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
     flags:
     - Anchorable
   - type: Rotatable

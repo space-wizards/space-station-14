@@ -53,6 +53,9 @@
   - type: Physics
     bodyType: Static
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
   - type: Pullable
   - type: Occluder
   - type: Storage

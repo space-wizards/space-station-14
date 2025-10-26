@@ -19,6 +19,9 @@
   - type: InteractionOutline
   - type: Rotatable
   - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
   - type: Construction
     graph: Computer
     node: frameUnsecured
