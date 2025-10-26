@@ -6,7 +6,7 @@
 
 ## Overview
 
-A basic sickness system that inflict a variety of ailments to the crew of the station.  They can be viral, bacterial and psychologic in nature.
+A basic sickness system (expendable in the future) that inflict a variety of ailments to the crew of the station.  They can be viral, bacterial and psychologic in nature.
 
 Psychological sickness might be added as a trait.
 
@@ -28,10 +28,12 @@ Kind of stages that will be included in first release:
   The player will cough, spreading germs near him, possibly infecting other crew member (see contagion below)
   This will appear a an emote
   Is the cough contagious or not
+  Contagion by cough is conterracted by surgical mask, helmet and such.
 - Sneeze
   The player will sneeze, spreading germs near him, possibly infecting other crew member (see contagion below)
   This will appear as an emote
   Is the sneeze contagious or not
+  Contagion by sneeze is conterracted by surgical mask, helmet and such.
 - Speak
   The player will say something
   This includes a list of parametrized random things the player might say (for tourette syndrome and such)
@@ -101,7 +103,12 @@ Paranoia
 Hallucinations:
     Name : Space hallucinatory syndrome
     Cause : Psychological
-        
+    Stages :
+        Percieve
+        Start after : 0
+        End after : Never
+        Frequency : 1 minute
+        List of thing to perceive : "You hear a faint laugh on the radio", Someone whispers, “I see you,”, "Footsteps echo" "The sound of typing…" "The station alarm blips once", "You hear childrens laughing"
         
 How a sickness begins:
 At first release, Admins will have panel will allow to spawn a specific pre-configured sicknesses, choosing the quantity of "patient zero".
@@ -113,16 +120,23 @@ Sickness system in many forms exists in many code base.  This is a reimplementat
 
 ## Features to be added
 
-Give a description of what game mechanics you would like to add or change. This should be a general overview, with enough details on critical design points that someone can directly implement the feature from this design document. Exact numbers for game balance however are not necessary, as these can be adjusted later either during development or after it has been implemented, but mention *what* will have to be balanced and what needs to be considered when doing so.
+A sickness component that all living being will have attached.  That will list what sicknesses the character has and how much time the sickness has been active (to determine the current stage).
+A sickness system that will check all characters with sicknesses to perform the current stages effect.
+An admin UI panel to start a sickness event
+Two new chemicals :  one for curing viral, one for curing bacterial
+Adjustments to the medical scanner to detect the kind of sickness and the type (viral, bacterial).
+New traits for some sicknesses (psychological, allergies and such).
+A new game mechanic for psychologists that alleviate psychological sicknesses for some time.
 
 ## Game Design Rationale
 
-Consider addressing:
-- How does the feature align with our [Core Design Principles](../space-station-14/core-design/design-principles.md) and game philosphy?
-- What makes this feature enjoyable or rewarding for players?
-- Does it introduce meaningful choices, risk vs. reward, or new strategies?
-- How does it enhance player cooperation, competition, or emergent gameplay?
-- If the feature is a new antagonist, how does it fit into the corresponding [design pillars](../space-station-14/round-flow/antagonists.md)?
+The rounds will feel more alive and more chaotics.
+Some sicknesses are seriously silly (for instance : paranoia, hallucination and tourette syndrome.
+The psychologists and all medical staff will have fun alleviating symptoms and curing patients.
+The chemists will have new usefulness also to create the reagents to cure some sicknesses.
+The crew will interact more with the psychologist and medical staff.
+In the future, more mechanics might be added to find a cure for mysterious sicknesses.
+In the future, botany might also get involved.
 
 ## Roundflow & Player interaction
 
