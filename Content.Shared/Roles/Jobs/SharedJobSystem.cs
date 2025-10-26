@@ -216,6 +216,10 @@ public abstract class SharedJobSystem : EntitySystem
 
         return prototype.CanBeAntag;
     }
+    /// <summary>
+    ///     Checks if the job prototype can be a kill target
+    ///     Returns true if the job cannot be found
+    /// </summary>
     public bool CanBeKillTarget(EntityUid? mind)
     {
         if (!MindTryGetJob(mind, out var jobPrototype))
