@@ -21,4 +21,10 @@ public sealed partial class FlashImmunityComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool ShowInExamine = true;
+
+    /// <summary>
+    /// Should the examine verb itself be shown?
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ShowExamine = false;
 }
