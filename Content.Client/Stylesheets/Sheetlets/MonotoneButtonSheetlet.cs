@@ -69,36 +69,36 @@ public sealed class MonotoneButtonSheetlet<T> : Sheetlet<T> where T : IButtonCon
         [
             // Unfilled
             E<MonotoneButton>()
-                .Prop(Button.StylePropertyStyleBox, monotoneButton),
+                .Box(monotoneButton),
             E<MonotoneButton>()
                 .Class(StyleClass.ButtonOpenLeft)
-                .Prop(Button.StylePropertyStyleBox, monotoneButtonOpenLeft),
+                .Box(monotoneButtonOpenLeft),
             E<MonotoneButton>()
                 .Class(StyleClass.ButtonOpenRight)
-                .Prop(Button.StylePropertyStyleBox, monotoneButtonOpenRight),
+                .Box(monotoneButtonOpenRight),
             E<MonotoneButton>()
                 .Class(StyleClass.ButtonOpenBoth)
-                .Prop(Button.StylePropertyStyleBox, monotoneButtonOpenBoth),
+                .Box(monotoneButtonOpenBoth),
 
             // Filled
             E<MonotoneButton>()
                 .PseudoPressed()
-                .Prop(Button.StylePropertyStyleBox, monotoneFilledButton)
+                .Box(monotoneFilledButton)
                 .Prop(Button.StylePropertyModulateSelf, Color.White),
             E<MonotoneButton>()
                 .Class(StyleClass.ButtonOpenLeft)
                 .PseudoPressed()
-                .Prop(Button.StylePropertyStyleBox, monotoneFilledButtonOpenLeft)
+                .Box(monotoneFilledButtonOpenLeft)
                 .Prop(Button.StylePropertyModulateSelf, Color.White),
             E<MonotoneButton>()
                 .Class(StyleClass.ButtonOpenRight)
                 .PseudoPressed()
-                .Prop(Button.StylePropertyStyleBox, monotoneFilledButtonOpenRight)
+                .Box(monotoneFilledButtonOpenRight)
                 .Prop(Button.StylePropertyModulateSelf, Color.White),
             E<MonotoneButton>()
                 .Class(StyleClass.ButtonOpenBoth)
                 .PseudoPressed()
-                .Prop(Button.StylePropertyStyleBox, monotoneFilledButtonOpenBoth)
+                .Box(monotoneFilledButtonOpenBoth)
                 .Prop(Button.StylePropertyModulateSelf, Color.White),
         ];
     }
