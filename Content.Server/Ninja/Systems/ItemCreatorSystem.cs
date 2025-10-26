@@ -1,7 +1,7 @@
-using Content.Server.Ninja.Events;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Ninja.Components;
+using Content.Shared.Ninja.Events;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
 

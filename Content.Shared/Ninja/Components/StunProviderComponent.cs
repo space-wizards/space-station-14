@@ -11,7 +11,7 @@ namespace Content.Shared.Ninja.Components;
 /// Knocks them down for a bit and deals shock damage.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedStunProviderSystem))]
+[Access(typeof(StunProviderSystem))]
 public sealed partial class StunProviderComponent : Component
 {
     /// <summary>

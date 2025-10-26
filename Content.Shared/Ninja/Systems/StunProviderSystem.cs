@@ -1,25 +1,23 @@
-using Content.Server.Ninja.Events;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Ninja.Components;
-using Content.Shared.Ninja.Systems;
+using Content.Shared.Ninja.Events;
 using Content.Shared.Popups;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.Stunnable;
 using Content.Shared.Timing;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Timing;
-using Robust.Shared.Prototypes;
 
-namespace Content.Server.Ninja.Systems;
+namespace Content.Shared.Ninja.Systems;
 
 /// <summary>
-/// Shocks clicked mobs using battery charge.
+/// All interaction logic is implemented serverside.
+/// This is in shared for API and access.
 /// </summary>
-public sealed class StunProviderSystem : SharedStunProviderSystem
+public abstract class StunProviderSystem : EntitySystem
 {
-    [Dependency] private readonly BatterySystem _battery = default!;
+    [Dependency] private readonly SharedBatterySystem _battery = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -75,5 +73,17 @@ public sealed class StunProviderSystem : SharedStunProviderSystem
     private void OnBatteryChanged(Entity<StunProviderComponent> ent, ref NinjaBatteryChangedEvent args)
     {
         SetBattery((ent, ent.Comp), args.Battery);
+    }
+
+    /// <summary>
+    /// Set the battery field on the stun provider.
+    /// </summary>
+    public void SetBattery(Entity<StunProviderComponent?> ent, EntityUid? battery)
+    {
+        if (!Resolve(ent, ref ent.Comp) || ent.Comp.BatteryUid == battery)
+            return;
+
+        ent.Comp.BatteryUid = battery;
+        Dirty(ent, ent.Comp);
     }
 }

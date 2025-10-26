@@ -1,7 +1,7 @@
-using Content.Server.Ninja.Events;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Systems;
 using Content.Shared.Ninja.Components;
+using Content.Shared.Ninja.Events;
 using Content.Shared.Ninja.Systems;
 
 namespace Content.Server.Ninja.Systems;
