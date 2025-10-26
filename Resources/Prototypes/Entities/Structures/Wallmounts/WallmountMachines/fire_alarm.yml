@@ -53,12 +53,13 @@
   - type: WiresVisuals
   - type: AlertLevelDisplay
     alertVisuals:
-      green: fire_0
-      blue: fire_1
-      red: fire_2
-      violet: fire_1
-      yellow: fire_1
-      delta: fire_3
+      Green: fire_0
+      Blue: fire_1
+      Red: fire_2
+      Violet: fire_1
+      Yellow: fire_1
+      Delta: fire_3
+      # TODO: add missing alarm states
   - type: UserInterface
     interfaces:
       enum.WiresUiKey.Key:

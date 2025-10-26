@@ -1,8 +1,10 @@
+using Robust.Shared.Prototypes;
+
 namespace Content.Shared.AlertLevel;
 
 [RegisterComponent]
 public sealed partial class AlertLevelDisplayComponent : Component
 {
-    [DataField("alertVisuals")]
-    public  Dictionary<string, string> AlertVisuals = new();
+    [DataField]
+    public Dictionary<ProtoId<AlertLevelPrototype>, string> AlertVisuals = new();
 }

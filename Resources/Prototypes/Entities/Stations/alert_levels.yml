@@ -1,0 +1,14 @@
+- type: entity
+  id: BaseStationAlertLevels
+  abstract: true
+  components:
+  - type: AlertLevel
+    availableAlertLevels:
+    - Blue
+    - Delta
+    - Epsilon
+    - Gamma
+    - Green
+    - Red
+    - Violet
+    - Yellow
