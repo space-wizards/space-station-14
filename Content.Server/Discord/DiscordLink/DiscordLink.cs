@@ -209,7 +209,7 @@ public sealed class DiscordLink : IPostInjectInit
         OnCommandReceived?.Invoke(new CommandReceivedEventArgs
         {
             Command = command,
-            ArgumentList = argumentList,
+            Arguments = argumentList,
             RawArguments = rawArguments,
             Message = message,
         });
