@@ -1010,12 +1010,12 @@
 # DEVICE LINKING
 - type: construction
   id: VoiceSensorRecipe
-  graph: VoiceSensorGraph
+  graph: voiceSensorGraph
   startNode: start
   targetNode: finished
   category: construction-category-utilities
   objectType: Item
- 
+
 # DEFENSES
 - type: construction
   id: WeaponEnergyTurretControlPanel
