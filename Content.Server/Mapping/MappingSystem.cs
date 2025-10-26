@@ -1,6 +1,5 @@
 using System.IO;
 using Content.Server.Administration;
-using Content.Server.Mapping;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
@@ -51,7 +50,7 @@ public sealed class MappingSystem : EntitySystem
 
 		if (!_autosaveEnabled)
 			return;
-		
+
 		var query = AllEntityQuery<AutoSaveMapComponent>();
 		while (query.MoveNext(out var uid, out var auto))
 		{
@@ -83,11 +82,6 @@ public sealed class MappingSystem : EntitySystem
 		}
 	}
 
-    private TimeSpan CalculateNextTime()
-    {
-        return _timing.RealTime + TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.AutosaveInterval));
-    }
-
     private double ReadableTimeLeft(EntityUid uid)
     {
 		if (!TryComp<AutoSaveMapComponent>(uid, out var comp))
@@ -104,17 +98,17 @@ public sealed class MappingSystem : EntitySystem
             ToggleAutosave(uid.Value, path);
     }
 
-    public void ToggleAutosave(EntityUid uid, string? path=null)
+    public void ToggleAutosave(EntityUid uid, string? path = null)
     {
         if (!_autosaveEnabled)
-        return;
+            return;
 
 		if (HasComp<AutoSaveMapComponent>(uid))
 		{
 			RemCompDeferred<AutoSaveMapComponent>(uid);
 			return;
 		}
-		
+
 		if (string.IsNullOrWhiteSpace(path))
 			return;
 
