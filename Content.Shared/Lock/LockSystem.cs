@@ -351,7 +351,7 @@ public sealed class LockSystem : EntitySystem
 
         if (!quiet)
         {
-            var denyReason = accessEv.DenyReason ?? _defaultDenyReason;
+            var denyReason = accessEv.DenyReason ?? Loc.GetString(_defaultDenyReason);
             _sharedPopupSystem.PopupClient(denyReason, ent, user);
         }
 

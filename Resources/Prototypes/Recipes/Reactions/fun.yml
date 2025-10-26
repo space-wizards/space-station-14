@@ -208,7 +208,7 @@
     JuiceThatMakesYouHew:
       amount: 1
   effects:
-  - !type:ExplosionEffect
+  - !type:Explosion
     explosionType: Radioactive
     maxIntensity: 200
     intensityPerUnit: 2
