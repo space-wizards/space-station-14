@@ -1,221 +1,297 @@
-# Sickness
+# Sickness System
 
 | Designers | Coders | Implemented | GitHub Links |
 |---|---|---|---|
 | JesterX | JesterX | No | TBD |
 
+---
+
 ## Overview
 
-A basic sickness system (expendable in the future) that inflict a variety of ailments to the crew of the station.  They can be viral, bacterial and psychologic in nature.
+The **Sickness System** introduces a variety of ailments that can affect the station’s crew.  
+Sicknesses may be **viral**, **bacterial**, or **psychological** in nature.
 
-Psychological sickness might be added as a trait.
+Psychological sicknesses may also exist as **traits**.
 
-All sickness are made of:
-- The name of the sickness
-- A kind of sickness cause (viral, bacterial or psychologic).  That will impact how the sickness can be cured later on.
-- A collection of sickness stages.
-- Minimal viral and bacterial charged needed to inflict contagion.  Created upon coughing and sneezing without mask and helmets.  (Invisible in the atmos system, disperses like any gas)
+Each sickness consists of:
+- A sickness **name**
+- A **cause type** (viral, bacterial, or psychological) – determines how it can be cured
+- A **collection of stages**
+- A **minimum viral or bacterial charge** required for contagion (spread through coughing or sneezing without masks or helmets; invisible in the atmos system and disperses like a gas)
 
-Sickness stages are different stages of each sickness, when they appear, what they do.
+### Sickness Stages
 
-Description of what a sickness stage is:
-- Time until that stage begins
-- Duration of said stage
-- What it does (called "Symptom")
+Stages represent phases of a sickness, including when they occur and what symptoms they cause.
 
-Kind of stages that will be included in first release:
+Each stage defines:
+- **Start Time:** How long before the stage begins  
+- **Duration:** How long the stage lasts  
+- **Symptom:** The effect applied to the character  
 
-- Cough  
-  - The player will cough, spreading germs near him, possibly infecting other crew member (see contagion below)
-  - This will appear a an emote
-  - Is the cough contagious or not
-  - Contagion by cough is conterracted by surgical mask, helmet and such.
-- Sneeze
-  - The player will sneeze, spreading germs near him, possibly infecting other crew member (see contagion below)
-  - This will appear as an emote
-  - Is the sneeze contagious or not
-  - Contagion by sneeze is conterracted by surgical mask, helmet and such.
-- Speak
-  - The player will say something
-  - This includes a list of parametrized random things the player might say (for tourette syndrome and such)
-- Percieve
-  - The player will percieve something
-  - This includes a list of parametrized random things the player might percieve (for paranoia and such)  Ex:  You think that someone is watching you.
-- Emote
-  - The player will emote something.
-  - This includes a list of parametrized random things the player might emote  Ex:  Player X shivers.
-- Bleed
-  - The amount of bleeding
-- Temperature change
-  - The direction of temperature of the character (augment or decrease)
-  - The quantity of temperature change
-- Falls down on the ground
-- Vomit
-- Cured (to make some sicknesses temporary and auto-cured)
-- Death (if not treated) (TBD)
-  
-More symptoms will be added in the future
+---
 
-List of pre-included sicknesses:
+## Stage Types (Initial Release)
 
-- Cold
-    - Name : Common cold
-    - Cause : Viral
-    - Stages : 
-        - Sneeze
-            - Contagious : Yes
-            - Start after: 0
-            - End after : Until cured
-            - Frequency : 1 minute.
-        - Emote
-            - Start after : 5 minutes
-            - End after : Until cured
-            - List of emotes : sniffles
-        - Perceive
-            - Start after : 0
-            - End after : Until cured
-            - List of perceptions : 
-                - Your throat feels soar.
-                - You feel tired.
-            - Alleviating compound : acetaminophen                
-        - Perceive
-            - Start after : 0
-            - End after : Until cured
-            - List of perceptions : 
-                - Your nose is runny.
-            - Alleviating compound : None            
-        - Cured
-            - Start after : 30 minutes
-            - End after : Once
-            - Immunity : Yes
+- **Cough**  
+  - Player coughs, spreading germs to nearby crew (see *Contagion*).  
+  - Appears as an emote.  
+  - May be contagious.  
+  - Contagion can be prevented with a surgical mask, helmet, etc.
 
-- Flu:
-    - Name : Flu
-    - Cause : Viral
-    - Stages : 
-        - Cough
-            - Contagious : Yes
-            - Start after: 5 minutes
-            - End after : Until cured
-            - Frequency : 1 minute.
-        - Emote
-            - Start after : 5 minutes
-            - End after : Until cured
-            - List of emotes : sniffles
-            - Frequency : 1 minute.
-        - Perceive
-            - Start after : 10 minutes after sickness begins
-            - End after : Until cured
-            - Frequency : 1 minute.
-            - List of perceptions : 
-                - You feel seriously tired.
-                - Your body aches.
-                - You are sweating.
-                - You head aches.
-            - Alleviating compound : acetaminophen
-        - Perceive
-            - Start after : 10 minutes after sickness begins
-            - End after : Until cured
-            - Frequency : 1 minute.
-            - List of perceptions : 
-                - Your throat feels soar.
-                - Your nose is runny.
-            - Alleviating compound : None            
-        - Temperature
-            - Start after : 10 minutes
-            - End after : Until cured
-            - Degree : <TBD>
-            - Alleviating compound : acetaminophen            
-        - Cured
-            - Start after : 45 minutes
-            - End after : Once
-            - Immunity : Yes            
+- **Sneeze**  
+  - Player sneezes, spreading germs to nearby crew (see *Contagion*).  
+  - Appears as an emote.  
+  - May be contagious.  
+  - Prevented with masks or helmets.
 
-- Tourette Syndrome:
-    - Name : Tourette Syndrome
-    - Cause : Psychological
-    - Stages :
-        - Say
-            - Start after : 0
-            - End after : Never
-            - Frequency : 1 minute
-            - List of things to say : Hey!” “Okay!” “No!” “Yes!” “Stop!” “Uh!” “Hmm!” “What?” “Go!” “Ah!”, “meow,” “woof,”, “chirp” ,“banana,” “car,” “blue!”
+- **Speak**  
+  - Player says something randomly.  
+  - Includes parameterized phrases (used for Tourette Syndrome and similar effects).
 
-- Paranoia
-    - Name : Paranoia
-    - Cause : Psychological
-    - Stages :
-        - Percieve
-        - Start after : 0
-        - End after : Never
-        - Frequency : 1 minute
-        - List of thing to perceive :  "You think someone is observing you", "You think someone wants you dead", "You’re sure you just saw movement in your peripheral vision.", "You feel like your comms have a slight delay… someone might be listening."
+- **Perceive**  
+  - Player perceives something unusual.  
+  - Includes parameterized messages (used for paranoia or hallucinations).  
+    - *Example:* “You think someone is watching you.”
 
-- Hallucinations:
-    - Name : Space hallucinatory syndrome
-    - Cause : Psychological
-    - Stages :
-        - Percieve
-        - Start after : 0
-        - End after : Never
-        - Frequency : 1 minute
-        - List of thing to perceive : "You hear a faint laugh on the radio", Someone whispers, “I see you,”, "Footsteps echo" "The sound of typing…" "The station alarm blips once", "You hear childrens laughing"
+- **Emote**  
+  - Player performs an emote.  
+  - Includes random emote messages.  
+    - *Example:* “Player X shivers.”
 
-How a sickness begins:
-At first release, Admins will have panel will allow to spawn a specific pre-configured sicknesses, choosing the quantity of "patient zero".
-In future release, Admins will have a panel to create a unique  custom sickness (import, export, modify) to their liking.
+- **Bleed**  
+  - Applies bleeding over time.
+
+- **Temperature Change**  
+  - Adjusts body temperature (increase or decrease).  
+  - Defines the amount of temperature change.
+
+- **Fall Down**  
+  - Player collapses to the ground.
+
+- **Vomit**  
+  - Player vomits.
+
+- **Cured**  
+  - Used for temporary sicknesses that resolve automatically.
+
+- **Death** *(TBD)*  
+  - Occurs if untreated.
+
+> More symptoms will be added in future updates.
+
+---
+
+## Predefined Sicknesses
+
+### Common Cold
+**Cause:** Viral  
+
+**Stages:**
+- **Sneeze**  
+  - Contagious: Yes  
+  - Starts: Immediately  
+  - Ends: Until cured  
+  - Frequency: 1 minute  
+- **Emote**  
+  - Starts: 5 minutes  
+  - Ends: Until cured  
+  - Emote: *sniffles*  
+- **Perceive**  
+  - Starts: Immediately  
+  - Ends: Until cured  
+  - Perceptions:  
+    - “Your throat feels sore.”  
+    - “You feel tired.”  
+  - Alleviating Compound: *Acetaminophen*  
+- **Perceive**  
+  - Starts: Immediately  
+  - Ends: Until cured  
+  - Perceptions:  
+    - “Your nose is runny.”  
+  - Alleviating Compound: None  
+- **Cured**  
+  - Starts: 30 minutes  
+  - Ends: Once  
+  - Grants Immunity: Yes  
+
+---
+
+### Flu
+**Cause:** Viral  
+
+**Stages:**
+- **Cough**  
+  - Contagious: Yes  
+  - Starts: 5 minutes  
+  - Ends: Until cured  
+  - Frequency: 1 minute  
+- **Emote**  
+  - Starts: 5 minutes  
+  - Ends: Until cured  
+  - Emote: *sniffles*  
+  - Frequency: 1 minute  
+- **Perceive**  
+  - Starts: 10 minutes  
+  - Ends: Until cured  
+  - Frequency: 1 minute  
+  - Perceptions:  
+    - “You feel extremely tired.”  
+    - “Your body aches.”  
+    - “You are sweating.”  
+    - “Your head aches.”  
+  - Alleviating Compound: *Acetaminophen*  
+- **Perceive**  
+  - Starts: 10 minutes  
+  - Ends: Until cured  
+  - Frequency: 1 minute  
+  - Perceptions:  
+    - “Your throat feels sore.”  
+    - “Your nose is runny.”  
+  - Alleviating Compound: None  
+- **Temperature**  
+  - Starts: 10 minutes  
+  - Ends: Until cured  
+  - Degree: *TBD*  
+  - Alleviating Compound: *Acetaminophen*  
+- **Cured**  
+  - Starts: 45 minutes  
+  - Ends: Once  
+  - Grants Immunity: Yes  
+
+---
+
+### Tourette Syndrome
+**Cause:** Psychological  
+
+**Stages:**
+- **Speak**  
+  - Starts: Immediately  
+  - Ends: Never  
+  - Frequency: 1 minute  
+  - Possible Phrases:  
+    “Hey!”, “Okay!”, “No!”, “Yes!”, “Stop!”, “Uh!”, “Hmm!”, “What?”, “Go!”, “Ah!”, “Meow!”, “Woof!”, “Chirp!”, “Banana!”, “Car!”, “Blue!”
+
+---
+
+### Paranoia
+**Cause:** Psychological  
+
+**Stages:**
+- **Perceive**  
+  - Starts: Immediately  
+  - Ends: Never  
+  - Frequency: 1 minute  
+  - Perceptions:  
+    - “You think someone is observing you.”  
+    - “You think someone wants you dead.”  
+    - “You’re sure you just saw movement in your peripheral vision.”  
+    - “You feel like your comms have a slight delay… someone might be listening.”
+
+---
+
+### Space Hallucinatory Syndrome
+**Cause:** Psychological  
+
+**Stages:**
+- **Perceive**  
+  - Starts: Immediately  
+  - Ends: Never  
+  - Frequency: 1 minute  
+  - Perceptions:  
+    - “You hear a faint laugh on the radio.”  
+    - “Someone whispers, ‘I see you.’”  
+    - “Footsteps echo.”  
+    - “You hear typing sounds.”  
+    - “The station alarm blips once.”  
+    - “You hear children laughing.”
+
+---
+
+## Sickness Initialization
+
+In the initial release:
+- **Admins** can use a control panel to spawn predefined sicknesses.
+- Admins choose the number of **Patient Zero** cases.
+
+In future releases:
+- Admins will be able to create, import, export, and modify **custom sicknesses**.
+
+---
 
 ## Background
 
-Sickness system in many forms exists in many code base.  This is a reimplementation of how I coded it for UnityStation.
+Sickness systems exist in several codebases.  
+This is a **reimplementation** of the version previously developed for **UnityStation**.
 
-## Features to be added
+---
 
-- A sickness component that all living being will have attached.  That will list what sicknesses the character has and how much time the sickness has been active (to determine the current stage).
-- A sickness system that will check all characters with sicknesses to perform the current stages effect.
-- An admin UI panel to start a sickness event
-- New chemical compounds :  one for curing viral, one for curing bacterial, 1 for allievating cold and flu symptoms.
-- Adjustments to the medical scanner to detect the kind of sickness and the type (viral, bacterial).
-- New traits for some sicknesses (psychological, allergies and such).
-- A new game mechanic for psychologists that alleviate psychological sicknesses for some time.
+## Planned Features
+
+- A **Sickness Component** attached to all living beings, listing:  
+  - Active sicknesses  
+  - Time active  
+  - Current stage  
+- A **Sickness System** that periodically checks infected characters and triggers stage effects.  
+- An **Admin UI Panel** for managing sickness events.  
+- **New chemical compounds:**  
+  - One for curing viral sicknesses  
+  - One for curing bacterial sicknesses  
+  - One for alleviating cold and flu symptoms  
+- Updates to the **Medical Scanner** to detect sickness type.  
+- **New traits** for psychological or allergic conditions.  
+- A new **Psychology mechanic** to temporarily alleviate psychological illnesses.
+
+---
 
 ## Game Design Rationale
 
-- The rounds will feel more alive and more chaotics.
-- Some sicknesses are seriously silly (for instance : paranoia, hallucination and tourette syndrome.
-- The psychologists and all medical staff will have fun alleviating symptoms and curing patients.
-- The chemists will have new usefulness also to create the reagents to cure some sicknesses.
-- The crew will interact more with the psychologist and medical staff.
-- In the future, more mechanics might be added to find a cure for mysterious sicknesses.
-- In the future, botany might also get involved.
+- Adds chaos and realism to station life.  
+- Introduces humorous or absurd sicknesses (e.g., paranoia, hallucinations, Tourette Syndrome).  
+- Expands the role of **medical** and **psychology** staff.  
+- Increases **chemist** utility for creating cures.  
+- Encourages more **interdepartmental interaction**.  
+- Enables future expansion (e.g., mysterious diseases, botany-based cures).
 
-## Roundflow & Player interaction
+---
 
-- Sickness will appear to a certain number of patient zero (Admin event) or by having the related trait (paranoia, tourette).
-- Interraction will be with
-    - Medical analyzer
-    - Psychological intervention 
-    - Taking specific pills
-    - Making specific compounds
-    - Several gameplay elements (chat, emote, bleed, temperature, vomit)
-- Departments: 
-    - All can be infected
-    - Chemicals
-    - Medicine
-    - Psychologist
-    - Eventually : Botany
-    
-## Administrative & Server Rule Impact (if applicable)
+## Round Flow & Player Interaction
 
-- Admins will be the one triggering the events
-- Admins will eventually have fun creating new diseases on the fly.  That won't create much workload.  Import and Export features might be used.
-- Not likely to create griefing, rule-breaking and player disputes.
-- No new rules.
+- Sicknesses can appear via:
+  - Admin events (Patient Zero)
+  - Character traits (e.g., Paranoia, Tourette)
+- Player interactions include:
+  - Medical analyzer  
+  - Psychological intervention  
+  - Taking medicine or pills  
+  - Mixing chemical compounds  
+  - Gameplay effects (chat, emotes, bleeding, temperature, vomiting)
 
-# Technical Considerations
+**Affected Departments:**  
+- All (can be infected)  
+- Chemistry  
+- Medicine  
+- Psychology  
+- *(Future)* Botany  
 
-- A living mob component will be added to list the sickness affecting a player, hom much time since the sicknesses are in their system how much time passed since last symptom.
-- -A new system will be added to perform symptoms when timer is reached.
-- Likely to not take a lot of processing power.
-- There will be a viral / bacterial charge "special gases" invisible to atmos in the air.
-- The UI for Admin event (first release) will only be a dropdown listing sicknesses and the amount of "patient zero" to infect.
+---
+
+## Administrative & Server Impact
+
+- Admins control sickness events.  
+- Admins can create new sicknesses dynamically using import/export tools.  
+- Minimal workload; unlikely to cause griefing or disputes.  
+- No new rules required.
+
+---
+
+## Technical Considerations
+
+- Adds a **Living Mob Component** that:  
+  - Tracks active sicknesses  
+  - Records time since infection and last symptom  
+- A new system triggers symptoms when timers elapse.  
+- Minimal performance impact.  
+- Viral/bacterial **“special gases”** exist invisibly in atmos.  
+- The initial **Admin Event UI** will include:  
+  - Dropdown to select sickness type  
+  - Field to choose the number of Patient Zero cases  
