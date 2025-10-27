@@ -4,7 +4,7 @@ using Content.Shared.Disposal.Components;
 
 namespace Content.Shared.Disposal.Unit;
 
-public abstract partial class SharedDisposalUnitSystem : EntitySystem
+public abstract partial class SharedDisposalUnitSystem
 {
     private void OnUiButtonPressed(Entity<DisposalUnitComponent> ent, ref DisposalUnitUiButtonPressedMessage args)
     {

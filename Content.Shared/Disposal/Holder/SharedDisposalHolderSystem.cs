@@ -1,5 +1,3 @@
-using Content.Shared.Atmos;
-using Content.Shared.Damage;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Tube;
 using Content.Shared.Disposal.Unit;
@@ -15,6 +13,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using System.Text.RegularExpressions;
+using Content.Shared.Damage.Systems;
 
 namespace Content.Shared.Disposal.Holder;
 
@@ -236,7 +235,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
             {
                 foreach (var held in ent.Comp.Container.ContainedEntities)
                 {
-                    _damageable.TryChangeDamage(held, ent.Comp.DamageOnTurn);
+                    _damageable.ChangeDamage(held, ent.Comp.DamageOnTurn);
                 }
 
                 ent.Comp.AccumulatedDamage += ent.Comp.DamageOnTurn.GetTotal();
