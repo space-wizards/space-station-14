@@ -149,7 +149,7 @@ public sealed partial class MindTests
             var damageable = entMan.GetComponent<DamageableComponent>(entity);
             var prototype = protoMan.Index(BluntDamageType);
 
-            damageableSystem.SetDamage(entity, damageable, new DamageSpecifier(prototype, FixedPoint2.New(401)));
+            damageableSystem.SetDamage((entity, damageable), new DamageSpecifier(prototype, FixedPoint2.New(401)));
             Assert.That(mindSystem.GetMind(entity, mindContainerComp), Is.EqualTo(mindId));
         });
 

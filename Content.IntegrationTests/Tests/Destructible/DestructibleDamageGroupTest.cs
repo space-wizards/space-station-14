@@ -132,7 +132,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sTestThresholdListenerSystem.ThresholdsReached.Clear();
 
                 // Heal both classes of damage to 0
-                sDamageableSystem.SetAllDamage(sDestructibleEntity, sDamageableComponent, 0);
+                sDamageableSystem.ClearAllDamage((sDestructibleEntity, sDamageableComponent));
 
                 // No new thresholds reached, healing should not trigger it
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);
@@ -176,7 +176,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 threshold.TriggersOnce = true;
 
                 // Heal brute and burn back to 0
-                sDamageableSystem.SetAllDamage(sDestructibleEntity, sDamageableComponent, 0);
+                sDamageableSystem.ClearAllDamage((sDestructibleEntity, sDamageableComponent));
 
                 // No new thresholds reached from healing
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);
