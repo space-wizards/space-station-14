@@ -1716,3 +1716,62 @@
         type: StationAiFixerConsoleBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
+
+- type: entity
+  id: SpecializationComputer
+  parent: BaseComputer
+  name: Department specialization console
+  description: Used to change personnel specialization.
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "computerLayerBody" ]
+      state: computer
+    - map: [ "computerLayerKeyboard" ]
+      state: generic_keyboard
+    - map: [ "computerLayerScreen" ]
+      state: command
+    - map: [ "computerLayerKeys" ]
+      state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: SpecializationConsole
+    privilegedIdSlot:
+      name: id-card-console-privileged-id
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: false
+      whitelist:
+        components:
+        - IdCard
+    targetIdSlot:
+      name: id-card-console-target-id
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: false
+      whitelist:
+        components:
+        - IdCard
+  - type: Computer
+    board: SpecializationComputerCircuitboard
+  - type: ActivatableUI
+    singleUser: true
+    key: enum.SpecializationConsoleWindowUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.SpecializationConsoleWindowUiKey.Key:
+        type: SpecializationConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+      SpecializationConsole-privilegedId: !type:ContainerSlot
+      SpecializationConsole-targetId: !type:ContainerSlot
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#3c5eb5"
+  - type: ItemSlots

@@ -6,6 +6,8 @@
         <LineEdit Name="NameLineEdit" />
         <Label Name="CurrentJob" Text="{Loc 'agent-id-card-current-job'}" />
         <LineEdit Name="JobLineEdit" />
+        <Label Name="CurrentSpecialization" Text="{Loc 'agent-id-card-current-spec'}" />
+        <LineEdit Name="SpecializationLineEdit" />
         <Label Text="{Loc 'agent-id-card-job-icon-label'}"/>
         <GridContainer Name="IconGrid" Columns="10">
             <!-- Job icon buttons are generated in the code -->

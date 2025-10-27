@@ -36,6 +36,7 @@ namespace Content.Server.Access.Systems
             SubscribeLocalEvent<AgentIDCardComponent, AfterActivatableUIOpenEvent>(AfterUIOpen);
             SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardNameChangedMessage>(OnNameChanged);
             SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardJobChangedMessage>(OnJobChanged);
+            SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardSpecChangedMessage>(OnSpecializationChanged);
             SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardJobIconChangedMessage>(OnJobIconChanged);
             SubscribeLocalEvent<AgentIDCardComponent, InventoryRelayedEvent<ChameleonControllerOutfitSelectedEvent>>(OnChameleonControllerOutfitChangedItem);
         }
@@ -105,7 +106,7 @@ namespace Content.Server.Access.Systems
             if (!TryComp<IdCardComponent>(uid, out var idCard))
                 return;
 
-            var state = new AgentIDCardBoundUserInterfaceState(idCard.FullName ?? "", idCard.LocalizedJobTitle ?? "", idCard.JobIcon);
+            var state = new AgentIDCardBoundUserInterfaceState(idCard.FullName ?? "", idCard.LocalizedJobTitle ?? "", idCard.JobSpecializationTitle ?? "", idCard.JobIcon);
             _uiSystem.SetUiState(uid, AgentIDCardUiKey.Key, state);
         }
 
@@ -115,6 +116,16 @@ namespace Content.Server.Access.Systems
                 return;
 
             _cardSystem.TryChangeJobTitle(uid, args.Job, idCard);
+        }
+
+        private void OnSpecializationChanged(EntityUid uid,
+            AgentIDCardComponent comp,
+            AgentIDCardSpecChangedMessage args)
+        {
+            if (!TryComp<IdCardComponent>(uid, out var idCard))
+                return;
+
+            _cardSystem.TryChangeJobSpec(uid, args.Specialization, idCard);
         }
 
         private void OnNameChanged(EntityUid uid, AgentIDCardComponent comp, AgentIDCardNameChangedMessage args)

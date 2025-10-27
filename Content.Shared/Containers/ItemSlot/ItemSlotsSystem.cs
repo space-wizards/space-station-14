@@ -816,7 +816,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (args.TryEject && slot.HasItem)
                 TryEjectToHands(uid, slot, args.Actor, true);
             else if (args.TryInsert && !slot.HasItem)
-                TryInsertFromHand(uid, slot, args.Actor);
+                TryInsertFromHand(uid, slot, args.Actor, null, true);
         }
 
         #endregion

@@ -46,6 +46,7 @@ public sealed class IdExaminableSystem : EntitySystem
         return GetInfo(uid) ?? Loc.GetString("id-examinable-component-verb-no-id");
     }
 
+
     public string? GetInfo(EntityUid uid)
     {
         if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid))
@@ -67,7 +68,20 @@ public sealed class IdExaminableSystem : EntitySystem
 
     private string GetNameAndJob(IdCardComponent id)
     {
-        var jobSuffix = string.IsNullOrWhiteSpace(id.LocalizedJobTitle) ? string.Empty : $" ({id.LocalizedJobTitle})";
+        var jobSuffix = string.Empty;
+        if (!string.IsNullOrWhiteSpace(id.LocalizedJobTitle))
+        {
+            jobSuffix = $" ({id.LocalizedJobTitle}";
+
+            if (!string.IsNullOrWhiteSpace(id.LocalizedJobSpecializationTitle))
+                jobSuffix += $", {id.LocalizedJobSpecializationTitle}";
+
+            jobSuffix += ")";
+        }
+        else
+        {
+            jobSuffix = string.Empty;
+        }
 
         var val = string.IsNullOrWhiteSpace(id.FullName)
             ? Loc.GetString(id.NameLocId,
