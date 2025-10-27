@@ -5,11 +5,9 @@ public sealed partial class DamageableSystem
     /// <summary>
     /// Applies damage to all entities to see how expensive it is to deal damage.
     /// </summary>
-    public void ApplyDamageToAllEntities(DamageSpecifier damage)
+    public void ApplyDamageToAllEntities(List<Entity<DamageableComponent>> damageables, DamageSpecifier damage)
     {
-        var query = EntityQueryEnumerator<DamageableComponent>();
-
-        while (query.MoveNext(out var uid, out var damageable))
+        foreach (var (uid, damageable) in damageables)
         {
             TryChangeDamage(uid, damage, damageable: damageable);
         }

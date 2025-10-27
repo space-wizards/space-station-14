@@ -7,11 +7,9 @@ public sealed partial class DestructibleSystem
     /// <summary>
     /// Tests all triggers in a DestructibleComponent to see how expensive it is to query them.
     /// </summary>
-    public void TestAllTriggers()
+    public void TestAllTriggers(List<Entity<DamageableComponent, DestructibleComponent>> destructibles)
     {
-        var query = EntityQueryEnumerator<DestructibleComponent, DamageableComponent>();
-
-        while (query.MoveNext(out var uid, out var destructible, out var damageable))
+        foreach (var (uid, damageable, destructible) in destructibles)
         {
             foreach (var threshold in destructible.Thresholds)
             {
@@ -23,5 +21,17 @@ public sealed partial class DestructibleSystem
                 }
             }
         }
+    }
+
+    public void TestAllBehaviors(List<Entity<DamageableComponent, DestructibleComponent>> destructibles)
+    {
+       foreach (var (uid, damageable, destructible) in destructibles)
+       {
+           foreach (var threshold in destructible.Thresholds)
+           {
+               RaiseLocalEvent(uid, new DamageThresholdReached(destructible, threshold), true);
+               Execute(threshold, uid);
+           }
+       }
     }
 }
