@@ -38,9 +38,6 @@
   categories: [ HideSpawnMenu ]
   parent: BaseBullet
   components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: buckshot
   - type: Projectile
     damage:
       types:
@@ -64,9 +61,6 @@
   categories: [ HideSpawnMenu ]
   parent: BaseBulletIncendiary
   components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: buckshot-flare
   - type: Projectile
     damage:
       types:
@@ -91,9 +85,6 @@
   categories: [ HideSpawnMenu ]
   parent: BaseBulletPractice
   components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: buckshot
   - type: Projectile
     damage:
       types:
@@ -140,9 +131,6 @@
   categories: [ HideSpawnMenu ]
   parent: BaseBulletPractice
   components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: buckshot
   - type: Projectile
     damage:
       types:
