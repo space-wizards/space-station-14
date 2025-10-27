@@ -1,17 +1,16 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
-using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
-using Content.Shared.Examine;
+using Content.Shared.Atmos.Piping.Binary.Components;
+using Content.Shared.Atmos.Piping.Binary.Systems;
 using JetBrains.Annotations;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class GasPassiveGateSystem : EntitySystem
+    public sealed class GasPassiveGateSystem : SharedPassiveGateSystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
@@ -21,7 +20,6 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<GasPassiveGateComponent, AtmosDeviceUpdateEvent>(OnPassiveGateUpdated);
-            SubscribeLocalEvent<GasPassiveGateComponent, ExaminedEvent>(OnExamined);
         }
 
         private void OnPassiveGateUpdated(EntityUid uid, GasPassiveGateComponent gate, ref AtmosDeviceUpdateEvent args)
@@ -75,15 +73,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             var tau = 1;    // Time constant (averaging time) in seconds
             var a = dt/tau;
             gate.FlowRate = a*dV/tau + (1-a)*gate.FlowRate; // in L/sec
-        }
-
-        private void OnExamined(Entity<GasPassiveGateComponent> gate, ref ExaminedEvent args)
-        {
-            if (!Comp<TransformComponent>(gate).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
-                return;
-
-            var str = Loc.GetString("gas-passive-gate-examined", ("flowRate", $"{gate.Comp.FlowRate:0.#}"));
-            args.PushMarkup(str);
+            Dirty(uid, gate);
         }
     }
 }
