@@ -1033,19 +1033,19 @@
   id: NinjaBombingTargetBlocker # Ninjas will not target this warp point
 
 - type: Tag
-  id: NoBlockAnchoring
+  id: NoBlockAnchoring # Unused x2
 
 - type: Tag
-  id: NoConsoleSound
+  id: NoConsoleSound # Blacklist on BaseComputer, StationMap. Tagged entity will not make sound when opening the UI.
 
 - type: Tag
-  id: NozzleBackTank
+  id: NozzleBackTank # Storage whitelist: WeaponSprayNozzle
 
 - type: Tag
   id: Nugget # ItemCounter: FoodBoxNugget
 
 - type: Tag
-  id: NukeOpsUplink
+  id: NukeOpsUplink # Used by NukeopsRuleSystem to find nukie uplinks during warops. Whitelisting for ListingPrototypes.
 
 ## O ##
 
