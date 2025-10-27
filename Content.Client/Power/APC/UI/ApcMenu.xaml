@@ -18,15 +18,15 @@
                     <GridContainer Margin="10 0 0 0" Columns="2">
                         <!-- Power On/Off -->
                         <Label Text="{Loc 'apc-menu-breaker-label'}" HorizontalExpand="True"
-                                StyleClasses="StatusFieldTitle" MinWidth="120"/>
+                                StyleClasses="highlight" MinWidth="120"/>
                         <BoxContainer Orientation="Horizontal" MinWidth="90">
                             <Button Name="BreakerButton" Text="{Loc 'apc-menu-breaker-button'}" HorizontalExpand="True" ToggleMode="True"/>
                         </BoxContainer>
                         <!--Charging Status-->
-                        <Label Text="{Loc 'apc-menu-external-label'}" StyleClasses="StatusFieldTitle" MinWidth="120" />
+                        <Label Text="{Loc 'apc-menu-external-label'}" StyleClasses="highlight" MinWidth="120" />
                         <Label Name="ExternalPowerStateLabel" Text="{Loc 'apc-menu-power-state-good'}" />
                         <!--Battery Power-->
-                        <Label Text="{Loc 'apc-menu-power-label'}" StyleClasses="StatusFieldTitle" MinWidth="120" />
+                        <Label Text="{Loc 'apc-menu-power-label'}" StyleClasses="highlight" MinWidth="120" />
                         <Label Name="PowerLabel"/>
                     </GridContainer>
                 </BoxContainer>
