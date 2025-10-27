@@ -4,40 +4,30 @@ using Content.Server.Power.Events;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
-using Content.Shared.Interaction;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
-using Content.Shared.Light.Components;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Power.Components;
 using Content.Shared.Stunnable;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Stunnable.Systems
 {
     public sealed class StunbatonSystem : SharedStunbatonSystem
     {
-        [Dependency] private readonly BatterySystem _battery = default!;
-        [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
         [Dependency] private readonly RiggableSystem _riggableSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
+        [Dependency] private readonly BatterySystem _battery = default!;
+        [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
 
-        //Code similar to HandheldLightSystem, might be bad code
-        private readonly HashSet<Entity<StunbatonComponent>> _activeBatons = new();
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<StunbatonComponent, ChargeChangedEvent>(OnChargeChanged);
+
             SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
-            SubscribeLocalEvent<StunbatonComponent, ComponentRemove>(OnRemove);
             SubscribeLocalEvent<StunbatonComponent, SolutionContainerChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<StunbatonComponent, StaminaDamageOnHitAttemptEvent>(OnStaminaHitAttempt);
-        }
-
-        private void OnRemove(Entity<StunbatonComponent> ent, ref ComponentRemove args)
-        {
-            _activeBatons.Remove(ent);
+            SubscribeLocalEvent<StunbatonComponent, ChargeChangedEvent>(OnChargeChanged);
         }
 
         private void OnStaminaHitAttempt(Entity<StunbatonComponent> entity, ref StaminaDamageOnHitAttemptEvent args)
@@ -73,7 +63,6 @@ namespace Content.Server.Stunnable.Systems
                 if (args.User != null)
                 {
                     _popup.PopupEntity(Loc.GetString("stunbaton-component-low-charge"), (EntityUid)args.User, (EntityUid)args.User);
-                    _activeBatons.Remove(entity);
                 }
                 return;
             }
@@ -81,10 +70,7 @@ namespace Content.Server.Stunnable.Systems
             if (TryComp<RiggableComponent>(entity, out var rig) && rig.IsRigged)
             {
                 _riggableSystem.Explode(entity.Owner, battery, args.User);
-                _activeBatons.Remove(entity);
             }
-            else
-                _activeBatons.Add(entity);
         }
 
         // https://github.com/space-wizards/space-station-14/pull/17288#discussion_r1241213341
@@ -96,10 +82,7 @@ namespace Content.Server.Stunnable.Systems
                 return;
 
             if (_itemToggle.IsActivated(entity.Owner) && riggable.IsRigged)
-            {
                 _riggableSystem.Explode(entity.Owner, battery);
-                _activeBatons.Remove(entity);
-            }
         }
 
         private void SendPowerPulse(EntityUid target, EntityUid? user, EntityUid used)
@@ -117,29 +100,6 @@ namespace Content.Server.Stunnable.Systems
                 battery.CurrentCharge < entity.Comp.EnergyPerUse)
             {
                 _itemToggle.TryDeactivate(entity.Owner, predicted: false);
-                _activeBatons.Remove(entity);
-            }
-        }
-
-        public override void Update(float frameTime)
-        {
-            List<Entity<StunbatonComponent>> toRemove = new();
-
-            foreach (var batong in _activeBatons)
-            {
-                if (TryComp<BatteryComponent>(batong.Owner, out var battery))
-                {
-                    if (!_battery.TryUseCharge(batong.Owner, batong.Comp.EnergyDrain * frameTime, battery))
-                    {
-                        _itemToggle.TryDeactivate(batong.Owner, predicted: false);
-                        toRemove.Add(batong);
-                    }
-                }
-            }
-
-            foreach (var removed in toRemove)
-            {
-                _activeBatons.Remove(removed);
             }
         }
     }
