@@ -41,11 +41,13 @@ public sealed class DiscordChatLink : IPostInjectInit
         _configurationManager.UnsubValueChanged(CCVars.AdminChatDiscordChannelId, OnAdminChannelIdChanged);
     }
 
+    #if DEBUG
     private void OnDebugCommandRun(CommandReceivedEventArgs ev)
     {
         var args = string.Join('\n', ev.Arguments);
         _sawmill.Info($"Provided arguments: \n{args}");
     }
+    #endif
 
     private void OnOocChannelIdChanged(string channelId)
     {
