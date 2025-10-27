@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Damage;
 using Robust.Shared.Random;
 using Robust.Shared.Threading;
@@ -175,7 +176,7 @@ public sealed partial class AtmosphereSystem
     /// containing the queue.</param>
     /// <param name="pressure">The current absolute pressure being experienced by the entity.</param>
     /// <param name="delta">The current delta pressure being experienced by the entity.</param>
-    private static void EnqueueDeltaPressureDamage(Entity<DeltaPressureComponent> ent,
+    private void EnqueueDeltaPressureDamage(Entity<DeltaPressureComponent> ent,
         GridAtmosphereComponent gridAtmosComp,
         float pressure,
         float delta)
@@ -184,7 +185,7 @@ public sealed partial class AtmosphereSystem
         var aboveMinDeltaPressure = delta > ent.Comp.MinPressureDelta;
         if (!aboveMinPressure && !aboveMinDeltaPressure)
         {
-            ent.Comp.IsTakingDamage = false;
+            SetIsTakingDamageState(ent, false);
             return;
         }
 
@@ -251,7 +252,20 @@ public sealed partial class AtmosphereSystem
         var appliedDamage = ScaleDamage(ent, ent.Comp.BaseDamage, maxPressureCapped);
 
         _damage.TryChangeDamage(ent, appliedDamage, ignoreResistances: true, interruptsDoAfters: false);
-        ent.Comp.IsTakingDamage = true;
+        SetIsTakingDamageState(ent, true);
+    }
+
+    /// <summary>
+    /// Helper function to prevent spamming clients with dirty events when the damage state hasn't changed.
+    /// </summary>
+    /// <param name="ent">The entity to check.</param>
+    /// <param name="toSet">The value to set.</param>
+    private void SetIsTakingDamageState(Entity<DeltaPressureComponent> ent, bool toSet)
+    {
+        if (ent.Comp.IsTakingDamage == toSet)
+            return;
+        ent.Comp.IsTakingDamage = toSet;
+        Dirty(ent);
     }
 
     /// <summary>
