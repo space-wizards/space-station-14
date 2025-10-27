@@ -1,38 +1,4 @@
 ﻿Entries:
-- author: Boaz1111
-  changes:
-  - message: Various species can now have the same scars as humans do, with exceptions.
-    type: Add
-  - message: A smaller variant of the eye scars has been added.
-    type: Add
-  id: 8660
-  time: '2025-06-11T21:56:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35645
-- author: SlamBamActionman
-  changes:
-  - message: Propeller hats can now be found in the Clothesmate.
-    type: Add
-  - message: Swirl lollipops can now be found in the manager inventory of GetMore
-      Chocolate Corp. vending machines.
-    type: Add
-  id: 8661
-  time: '2025-06-12T01:22:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38260
-- author: themias
-  changes:
-  - message: Fixed an issue where the gas analyzer and anomaly scanner would need
-      to be reactivated to open the UI
-    type: Fix
-  id: 8662
-  time: '2025-06-12T21:16:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38285
-- author: BigfootBravo
-  changes:
-  - message: Utensils don't spam a warning for incompatible foods.
-    type: Fix
-  id: 8663
-  time: '2025-06-13T01:48:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38297
 - author: hoshizora-sayo
   changes:
   - message: Fixed crafting menu entries that included modular machine parts
@@ -3929,3 +3895,33 @@
   id: 9161
   time: '2025-10-26T18:50:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41068
+- author: ArtisticRoomba
+  changes:
+  - message: Examine text for whether an object is currently taking Delta-Pressure
+      damage is predicted, so you no longer have to wait for it to pop into place,
+      it just shows up instantly.
+    type: Tweak
+  id: 9162
+  time: '2025-10-27T11:12:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41135
+- author: lzk228
+  changes:
+  - message: Water cup spills when worn
+    type: Tweak
+  id: 9163
+  time: '2025-10-27T18:56:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41148
+- author: Princess-Cheeseballs
+  changes:
+  - message: Wizard is now only a midround spawn.
+    type: Tweak
+  id: 9164
+  time: '2025-10-23T15:29:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40983
+- author: Princess-Cheeseballs
+  changes:
+  - message: Explosions now scale properly with reagent quantity
+    type: Fix
+  id: 9165
+  time: '2025-10-27T22:54:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41153

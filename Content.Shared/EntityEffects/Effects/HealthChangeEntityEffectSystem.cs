@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Localizations;
@@ -13,7 +14,7 @@ namespace Content.Shared.EntityEffects.Effects;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class HealthChangeEntityEffectSystem : EntityEffectSystem<DamageableComponent, HealthChange>
 {
-    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly Damage.Systems.DamageableSystem _damageable = default!;
 
     protected override void Effect(Entity<DamageableComponent> entity, ref EntityEffectEvent<HealthChange> args)
     {
@@ -22,7 +23,7 @@ public sealed partial class HealthChangeEntityEffectSystem : EntityEffectSystem<
         damageSpec *= args.Scale;
 
         _damageable.TryChangeDamage(
-                entity,
+                entity.AsNullable(),
                 damageSpec,
                 args.Effect.IgnoreResistances,
                 interruptsDoAfters: false);
@@ -49,10 +50,10 @@ public sealed partial class HealthChange : EntityEffectBase<HealthChange>
 
             var damageSpec = new DamageSpecifier(Damage);
 
-            var universalReagentDamageModifier = entSys.GetEntitySystem<DamageableSystem>().UniversalReagentDamageModifier;
-            var universalReagentHealModifier = entSys.GetEntitySystem<DamageableSystem>().UniversalReagentHealModifier;
+            var universalReagentDamageModifier = entSys.GetEntitySystem<Damage.Systems.DamageableSystem>().UniversalReagentDamageModifier;
+            var universalReagentHealModifier = entSys.GetEntitySystem<Damage.Systems.DamageableSystem>().UniversalReagentHealModifier;
 
-            damageSpec = entSys.GetEntitySystem<DamageableSystem>().ApplyUniversalAllModifiers(damageSpec);
+            damageSpec = entSys.GetEntitySystem<Damage.Systems.DamageableSystem>().ApplyUniversalAllModifiers(damageSpec);
 
             foreach (var (kind, amount) in damageSpec.DamageDict)
             {
