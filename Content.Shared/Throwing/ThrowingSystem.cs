@@ -4,8 +4,8 @@ using Content.Shared.Camera;
 using Content.Shared.CCVar;
 using Content.Shared.Construction.Components;
 using Content.Shared.Database;
-using Content.Shared.Friction;
 using Content.Shared.Projectiles;
+using Content.Shared.Random.Helpers;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -264,23 +264,30 @@ public sealed class ThrowingSystem : EntitySystem
         float maxThrowImpulseModifier = 1.0f,
         bool scatterItems = false)
     {
-        if (maxThrowImpulseModifier == 0.0f || items.Count == 0)
+        if (items.Count == 0)
         {
             return;
         }
 
         var maxThrowImpulse = maxThrowImpulseModifier * UnequipAllDefaultMaxThrowForce;
 
-        // TODO: Replace with RandomPredicted once the engine PR is merged (#5849)
-        var rand = new System.Random((int)_gameTiming.CurTick.Value);
 
         foreach (var item in items)
         {
+            // TODO: Replace with RandomPredicted once the engine PR is merged (#5849)
+            var seed = SharedRandomExtensions.HashCodeCombine((int)_gameTiming.CurTick.Value, GetNetEntity(item).Id);
+            var rand = new System.Random(seed);
+
             if (scatterItems)
             {
                 _transform.SetWorldPosition(item,
                     _transform.GetWorldPosition(item)
                     + new Vector2(rand.NextFloat(-0.5f, 0.5f), rand.NextFloat(-0.5f, 0.5f)));
+            }
+
+            if (maxThrowImpulseModifier == 0.0f)
+            {
+                continue;
             }
 
             Vector2 currentDir;
