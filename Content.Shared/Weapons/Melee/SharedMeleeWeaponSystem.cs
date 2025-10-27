@@ -542,9 +542,8 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         RaiseLocalEvent(target.Value, attackedEvent);
 
         var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage + attackedEvent.BonusDamage, hitEvent.ModifiersList);
-        var damageResult = Damageable.TryChangeDamage(target, modifiedDamage, origin:user, ignoreResistances:resistanceBypass);
 
-        if (damageResult is {Empty: false})
+        if (!Damageable.TryChangeDamage(target.Value, modifiedDamage, out var damageResult, origin:user, ignoreResistances:resistanceBypass))
         {
             // If the target has stamina and is taking blunt damage, they should also take stamina damage based on their blunt to stamina factor
             if (damageResult.DamageDict.TryGetValue("Blunt", out var bluntDamage))
@@ -569,7 +568,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
         _meleeSound.PlayHitSound(target.Value, user, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, component);
 
-        if (damageResult?.GetTotal() > FixedPoint2.Zero)
+        if (damageResult.GetTotal() > FixedPoint2.Zero)
         {
             DoDamageEffect(targets, user, targetXform);
         }
@@ -698,9 +697,9 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             RaiseLocalEvent(entity, attackedEvent);
             var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage + attackedEvent.BonusDamage, hitEvent.ModifiersList);
 
-            var damageResult = Damageable.TryChangeDamage(entity, modifiedDamage, origin: user, ignoreResistances: resistanceBypass);
+            var damageResult = Damageable.ChangeDamage(entity, modifiedDamage, origin: user, ignoreResistances: resistanceBypass);
 
-            if (damageResult != null && damageResult.GetTotal() > FixedPoint2.Zero)
+            if (damageResult.GetTotal() > FixedPoint2.Zero)
             {
                 // If the target has stamina and is taking blunt damage, they should also take stamina damage based on their blunt to stamina factor
                 if (damageResult.DamageDict.TryGetValue("Blunt", out var bluntDamage))

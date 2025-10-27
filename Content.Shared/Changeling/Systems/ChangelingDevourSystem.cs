@@ -93,7 +93,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
             if (damage.Damage.DamageDict.TryGetValue(damagePoints.Key, out var val) && val > comp.DevourConsumeDamageCap)
                 return;
         }
-        _damageable.TryChangeDamage(target, comp.DamagePerTick, true, true, damage, user);
+        _damageable.ChangeDamage((target.Value, damage), comp.DamagePerTick, true, true, user);
     }
 
     /// <summary>

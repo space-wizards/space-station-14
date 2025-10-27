@@ -45,11 +45,10 @@ public sealed partial class EvenHealthChangeEntityEffectSystem : EntityEffectSys
         damageSpec *= args.Scale;
 
         _damageable.TryChangeDamage(
-            entity,
+            entity.AsNullable(),
             damageSpec,
             args.Effect.IgnoreResistances,
-            interruptsDoAfters: false,
-            damageable: entity.Comp);
+            interruptsDoAfters: false);
     }
 }
 

@@ -330,7 +330,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         {
             EnsureComp<KitchenSpikeVictimComponent>(args.Target.Value);
 
-            _damageableSystem.TryChangeDamage(args.Target, ent.Comp.ButcherDamage, true);
+            _damageableSystem.ChangeDamage(args.Target.Value, ent.Comp.ButcherDamage, true);
 
             // Log severity for damaging other entities is normally medium.
             _logger.Add(LogType.Action,
@@ -428,7 +428,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
             kitchenSpike.NextDamage += kitchenSpike.DamageInterval;
             Dirty(uid, kitchenSpike);
 
-            _damageableSystem.TryChangeDamage(contained, kitchenSpike.TimeDamage, true);
+            _damageableSystem.ChangeDamage(contained.Value, kitchenSpike.TimeDamage, true);
         }
     }
 

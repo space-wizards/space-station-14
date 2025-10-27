@@ -285,8 +285,8 @@ namespace Content.Server.Guardian
             if (args.DamageDelta == null || component.Host == null || component.DamageShare == 0)
                 return;
 
-            _damageSystem.TryChangeDamage(
-                component.Host,
+            _damageSystem.ChangeDamage(
+                component.Host.Value,
                 args.DamageDelta * component.DamageShare,
                 origin: args.Origin,
                 ignoreResistances: true,

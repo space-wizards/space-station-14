@@ -587,7 +587,7 @@ namespace Content.Server.Ghost
 
                     DamageSpecifier damage = new(_prototypeManager.Index(AsphyxiationDamageType), dealtDamage);
 
-                    _damageable.TryChangeDamage(playerEntity, damage, true);
+                    _damageable.ChangeDamage(playerEntity.Value, damage, true);
                 }
             }
 

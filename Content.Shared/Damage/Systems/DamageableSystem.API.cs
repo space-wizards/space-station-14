@@ -14,53 +14,14 @@ public sealed partial class DamageableSystem
     ///     Useful for some unfriendly folk. Also ensures that cached values are updated and that a damage changed
     ///     event is raised.
     /// </remarks>
-    public void SetDamage(Entity<DamageableComponent> ent, DamageSpecifier damage)
+    public void SetDamage(Entity<DamageableComponent?> ent, DamageSpecifier damage)
     {
+        if (!_damageableQuery.Resolve(ent, ref ent.Comp, false))
+            return;
+
         ent.Comp.Damage = damage;
 
-        OnEntityDamageChanged(ent);
-    }
-
-    [Obsolete("Use the Entity<Comp> variant instead")]
-    public void SetDamage(EntityUid uid, DamageableComponent damageable, DamageSpecifier damage)
-    {
-        SetDamage((uid, damageable), damage);
-    }
-
-    [Obsolete("Use TryChangeDamage(Entity<DamageableComponent>...) instead")]
-    public DamageSpecifier? TryChangeDamage(
-        EntityUid? uid,
-        DamageSpecifier damage,
-        bool ignoreResistances = false,
-        bool interruptsDoAfters = true,
-        DamageableComponent? damageable = null,
-        EntityUid? origin = null
-    )
-    {
-        return uid is null
-            ? null
-            : TryChangeDamage(uid.Value, damage, ignoreResistances, interruptsDoAfters, damageable, origin);
-    }
-
-    // This function is only here because the C# type engine deduces that non-nullable Entities are more correctly matched
-    // to the signature that uses the non-nullable Entity<DamageableComponent> in the non-obsolete TryChangeDamage below
-    // instead of using the signature above which actually compiles.
-    [Obsolete("Use TryChangeDamage(Entity<DamageableComponent>...) instead")]
-    public DamageSpecifier? TryChangeDamage(
-        EntityUid uid,
-        DamageSpecifier damage,
-        bool ignoreResistances = false,
-        bool interruptsDoAfters = true,
-        DamageableComponent? damageable = null,
-        EntityUid? origin = null
-    )
-    {
-        if (!_damageableQuery.Resolve(uid, ref damageable, false))
-            return null;
-
-        return TryChangeDamage((uid, damageable), damage, ignoreResistances, interruptsDoAfters, origin)
-            ? damage
-            : null;
+        OnEntityDamageChanged((ent, ent.Comp));
     }
 
     /// <summary>
@@ -75,7 +36,7 @@ public sealed partial class DamageableSystem
     ///     If the attempt was successful or not.
     /// </returns>
     public bool TryChangeDamage(
-        Entity<DamageableComponent> ent,
+        Entity<DamageableComponent?> ent,
         DamageSpecifier damage,
         bool ignoreResistances = false,
         bool interruptsDoAfters = true,
@@ -85,7 +46,34 @@ public sealed partial class DamageableSystem
     {
         //! Empty just checks if the DamageSpecifier is _literally_ empty, as in, is internal dictionary of damage types is empty.
         // If you deal 0.0 of some damage type, Empty will be false!
-        return !ChangeDamage(ent, damage, ignoreResistances, interruptsDoAfters, origin, ignoreGlobalModifiers).Empty;
+        return !TryChangeDamage(ent, damage, out _, ignoreResistances, interruptsDoAfters, origin, ignoreGlobalModifiers);
+    }
+
+    /// <summary>
+    ///     Applies damage specified via a <see cref="DamageSpecifier"/>.
+    /// </summary>
+    /// <remarks>
+    ///     <see cref="DamageSpecifier"/> is effectively just a dictionary of damage types and damage values. This
+    ///     function just applies the container's resistances (unless otherwise specified) and then changes the
+    ///     stored damage data. Division of group damage into types is managed by <see cref="DamageSpecifier"/>.
+    /// </remarks>
+    /// <returns>
+    ///     If the attempt was successful or not.
+    /// </returns>
+    public bool TryChangeDamage(
+        Entity<DamageableComponent?> ent,
+        DamageSpecifier damage,
+        out DamageSpecifier newDamage,
+        bool ignoreResistances = false,
+        bool interruptsDoAfters = true,
+        EntityUid? origin = null,
+        bool ignoreGlobalModifiers = false
+    )
+    {
+        //! Empty just checks if the DamageSpecifier is _literally_ empty, as in, is internal dictionary of damage types is empty.
+        // If you deal 0.0 of some damage type, Empty will be false!
+        newDamage = ChangeDamage(ent, damage, ignoreResistances, interruptsDoAfters, origin, ignoreGlobalModifiers);
+        return !damage.Empty;
     }
 
     /// <summary>
@@ -100,7 +88,7 @@ public sealed partial class DamageableSystem
     ///     The actual amount of damage taken, as a DamageSpecifier.
     /// </returns>
     public DamageSpecifier ChangeDamage(
-        Entity<DamageableComponent> ent,
+        Entity<DamageableComponent?> ent,
         DamageSpecifier damage,
         bool ignoreResistances = false,
         bool interruptsDoAfters = true,
@@ -109,6 +97,9 @@ public sealed partial class DamageableSystem
     )
     {
         var damageDone = new DamageSpecifier();
+
+        if (!_damageableQuery.Resolve(ent, ref ent.Comp, false))
+            return damageDone;
 
         if (damage.Empty)
             return damageDone;
@@ -160,7 +151,7 @@ public sealed partial class DamageableSystem
         }
 
         if (!damageDone.Empty)
-            OnEntityDamageChanged(ent, damageDone, interruptsDoAfters, origin);
+            OnEntityDamageChanged((ent, ent.Comp), damageDone, interruptsDoAfters, origin);
 
         return damageDone;
     }
@@ -198,10 +189,9 @@ public sealed partial class DamageableSystem
         return damage;
     }
 
-    [Obsolete("Use the Entity<Comp> variant instead")]
-    public void SetAllDamage(EntityUid uid, DamageableComponent component, FixedPoint2 newValue)
+    public void ClearAllDamage(Entity<DamageableComponent?> ent)
     {
-        SetAllDamage((uid, component), newValue);
+        SetAllDamage(ent, FixedPoint2.Zero);
     }
 
     /// <summary>
@@ -210,8 +200,11 @@ public sealed partial class DamageableSystem
     /// <remarks>
     ///     Does nothing If the given damage value is negative.
     /// </remarks>
-    public void SetAllDamage(Entity<DamageableComponent> ent, FixedPoint2 newValue)
+    public void SetAllDamage(Entity<DamageableComponent?> ent, FixedPoint2 newValue)
     {
+        if (!_damageableQuery.Resolve(ent, ref ent.Comp, false))
+            return;
+
         if (newValue < 0)
             return;
 
@@ -222,23 +215,19 @@ public sealed partial class DamageableSystem
 
         // Setting damage does not count as 'dealing' damage, even if it is set to a larger value, so we pass an
         // empty damage delta.
-        OnEntityDamageChanged(ent, new DamageSpecifier());
+        OnEntityDamageChanged((ent, ent.Comp), new DamageSpecifier());
     }
 
-    [Obsolete("Use the Entity<Comp> variant instead")]
-    public void SetDamageModifierSetId(EntityUid uid, string? damageModifierSetId, DamageableComponent? comp = null)
+    /// <summary>
+    /// Set's the damage modifier set prototype for this entity.
+    /// </summary>
+    /// <param name="ent">The entity we're setting the modifier set of.</param>
+    /// <param name="damageModifierSetId">The prototype we're setting.</param>
+    public void SetDamageModifierSetId(Entity<DamageableComponent?> ent, ProtoId<DamageModifierSetPrototype>? damageModifierSetId)
     {
-        if (!_damageableQuery.Resolve(uid, ref comp))
+        if (!_damageableQuery.Resolve(ent, ref ent.Comp, false))
             return;
 
-        SetDamageModifierSetId((uid, comp), damageModifierSetId);
-    }
-
-    public void SetDamageModifierSetId(
-        Entity<DamageableComponent> ent,
-        ProtoId<DamageModifierSetPrototype>? damageModifierSetId
-    )
-    {
         ent.Comp.DamageModifierSetId = damageModifierSetId;
 
         Dirty(ent);

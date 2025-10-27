@@ -169,14 +169,14 @@ public sealed partial class DamageableSystem
             damage.DamageDict.Add(typeId, damageValue);
         }
 
-        TryChangeDamage(ent, damage, interruptsDoAfters: false, origin: args.Origin);
+        ChangeDamage(ent.Owner, damage, interruptsDoAfters: false, origin: args.Origin);
     }
 
     private void OnRejuvenate(Entity<DamageableComponent> ent, ref RejuvenateEvent args)
     {
         // Do this so that the state changes when we set the damage
         _mobThreshold.SetAllowRevives(ent, true);
-        SetAllDamage(ent, 0);
+        ClearAllDamage(ent.AsNullable());
         _mobThreshold.SetAllowRevives(ent, false);
     }
 

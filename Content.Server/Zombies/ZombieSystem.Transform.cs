@@ -247,8 +247,7 @@ public sealed partial class ZombieSystem
             tempComp.ColdDamage.ClampMax(0);
 
         //Heals the zombie from all the damage it took while human
-        if (TryComp<DamageableComponent>(target, out var damageablecomp))
-            _damageable.SetAllDamage(target, damageablecomp, 0);
+        _damageable.ClearAllDamage(target);
         _mobState.ChangeMobState(target, MobState.Alive);
 
         _faction.ClearFactions(target, dirty: false);

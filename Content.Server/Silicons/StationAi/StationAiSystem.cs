@@ -128,10 +128,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
             _battery.SetCharge(ent, battery.MaxCharge);
         }
 
-        if (TryComp<DamageableComponent>(ent, out var damageable))
-        {
-            _damageable.SetAllDamage(ent, damageable, 0);
-        }
+        _damageable.ClearAllDamage(ent.Owner);
     }
 
     protected override void OnAiInsert(Entity<StationAiCoreComponent> ent, ref EntInsertedIntoContainerMessage args)

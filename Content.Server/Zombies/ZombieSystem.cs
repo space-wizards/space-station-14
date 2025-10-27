@@ -137,7 +137,7 @@ namespace Content.Server.Zombies
                     ? comp.CritDamageMultiplier
                     : 1f;
 
-                _damageable.TryChangeDamage(uid, comp.Damage * multiplier, true, false, damage);
+                _damageable.ChangeDamage((uid, damage), comp.Damage * multiplier, true, false);
             }
 
             // Heal the zombified
@@ -158,7 +158,7 @@ namespace Content.Server.Zombies
                     : 1f;
 
                 // Gradual healing for living zombies.
-                _damageable.TryChangeDamage(uid, comp.PassiveHealing * multiplier, true, false, damage);
+                _damageable.ChangeDamage((uid, damage), comp.PassiveHealing * multiplier, true, false);
             }
         }
 

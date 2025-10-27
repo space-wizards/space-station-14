@@ -77,12 +77,10 @@ public sealed class HealingSystem : EntitySystem
         if (healing.ModifyBloodLevel != 0 && bloodstream != null)
             _bloodstreamSystem.TryModifyBloodLevel((target.Owner, bloodstream), healing.ModifyBloodLevel);
 
-        var healed = _damageable.TryChangeDamage(target.Owner, healing.Damage * _damageable.UniversalTopicalsHealModifier, true, origin: args.Args.User);
-
-        if (healed == null && healing.BloodlossModifier != 0)
+        if (!_damageable.TryChangeDamage(target.Owner, healing.Damage * _damageable.UniversalTopicalsHealModifier, out var healed, true, origin: args.Args.User) && healing.BloodlossModifier != 0)
             return;
 
-        var total = healed?.GetTotal() ?? FixedPoint2.Zero;
+        var total = healed.GetTotal();
 
         // Re-verify that we can heal the damage.
         var dontRepeat = false;

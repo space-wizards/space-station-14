@@ -33,13 +33,13 @@ public sealed class DamageOtherOnHitSystem : SharedDamageOtherOnHitSystem
         if (TerminatingOrDeleted(args.Target))
             return;
 
-        var dmg = _damageable.TryChangeDamage(args.Target, component.Damage * _damageable.UniversalThrownDamageModifier, component.IgnoreResistances, origin: args.Component.Thrower);
+        var dmg = _damageable.ChangeDamage(args.Target, component.Damage * _damageable.UniversalThrownDamageModifier, component.IgnoreResistances, origin: args.Component.Thrower);
 
         // Log damage only for mobs. Useful for when people throw spears at each other, but also avoids log-spam when explosions send glass shards flying.
-        if (dmg != null && HasComp<MobStateComponent>(args.Target))
+        if (HasComp<MobStateComponent>(args.Target))
             _adminLogger.Add(LogType.ThrowHit, $"{ToPrettyString(args.Target):target} received {dmg.GetTotal():damage} damage from collision");
 
-        if (dmg is { Empty: false })
+        if (!dmg.Empty)
         {
             _color.RaiseEffect(Color.Red, [args.Target], Filter.Pvs(args.Target, entityManager: EntityManager));
         }

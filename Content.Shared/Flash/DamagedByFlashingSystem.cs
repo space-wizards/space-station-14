@@ -18,7 +18,7 @@ public sealed class DamagedByFlashingSystem : EntitySystem
     // Best wait for Ed's status effect system rewrite.
     private void OnFlashAttempt(Entity<DamagedByFlashingComponent> ent, ref FlashAttemptEvent args)
     {
-        _damageable.TryChangeDamage(ent, ent.Comp.FlashDamage);
+        _damageable.ChangeDamage(ent.Owner, ent.Comp.FlashDamage);
 
         // TODO: It would be more logical if different flashes had different power,
         // and the damage would be inflicted depending on the strength of the flash.

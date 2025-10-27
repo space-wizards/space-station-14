@@ -27,7 +27,7 @@ public sealed class LightningTargetSystem : EntitySystem
     {
         DamageSpecifier damage = new();
         damage.DamageDict.Add("Structural", uid.Comp.DamageFromLightning);
-        _damageable.TryChangeDamage(uid, damage, true);
+        _damageable.ChangeDamage(uid.Owner, damage, true);
 
         if (uid.Comp.LightningExplode)
         {
