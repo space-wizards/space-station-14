@@ -1,13 +1,20 @@
+using Content.Shared.CCVar;
 using Content.Shared.Projectiles;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Standing;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
+using Robust.Shared.Timing;
+
 
 namespace Content.Shared.Damage.Components;
 
 public sealed class RequireProjectileTargetSystem : EntitySystem
 {
+    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
 
     public override void Initialize()
@@ -40,7 +47,25 @@ public sealed class RequireProjectileTargetSystem : EntitySystem
                 return;
 
             if (!_container.IsEntityOrParentInContainer(shooter.Value))
-               args.Cancelled = true;
+            {
+                var hitChance = _cfgManager.GetCVar(CCVars.ProneMobHitChance);
+
+                // Check if this entity is a mob capable of going prone
+                // Skip if false or hit chance is 0
+                if ((hitChance > 0) && HasComp<StandingStateComponent>(ent))
+                {
+                    // TODO: Replace with RandomPredicted once the engine PR is merged
+                    var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(ent).Id });
+                    var rand = new System.Random(seed);
+
+                    if ((hitChance < 100) && (hitChance <= rand.Next(100)))
+                    {
+                        args.Cancelled = true;
+                    }
+                }
+                else
+                    args.Cancelled = true;
+            }
         }
     }
 
