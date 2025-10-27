@@ -35,7 +35,7 @@ reagent-name-corgiessence = corgium
 reagent-desc-corgiessence = Tastes like dog food. Clearly an acquired taste.
 
 reagent-name-catessence = felinase
-reagent-desc-catessence = Test text here.
+reagent-desc-catessence = A type of carcinogenic enzyme known to break down proteins found within the vocal cords of most animals.
 
 reagent-name-borkessence = borkinase
-reagent-desc-borkessence = Test text here.
+reagent-desc-borkessence = A type of carcinogenic enzyme known to break down proteins found within the vocal cords of most animals.

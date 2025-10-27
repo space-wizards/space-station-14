@@ -34,7 +34,7 @@
   components:
   - type: ScrambledAccent
 
-# Causes wu to tawk wike a cat ^w^.
+# Causes wu to tawk wike a cat. ^w^
 - type: entity
   parent: SpeechStatusEffectBase
   id: StatusEffectOwO

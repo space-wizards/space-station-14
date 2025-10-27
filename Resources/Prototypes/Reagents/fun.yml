@@ -493,7 +493,7 @@
   desc: reagent-desc-borkessence
   physicalDesc: reagent-physical-desc-bubbly
   flavor: dogfood
-  color: "#9a7b4f"
+  color: "#b87333"
   metabolisms:
     Poison:
       metabolismRate: 0.2
