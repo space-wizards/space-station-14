@@ -131,8 +131,8 @@ public sealed partial class RevenantSystem : EntitySystem
         if (regenCap)
             FixedPoint2.Min(component.Essence, component.EssenceRegenCap);
 
-        if (TryComp<StoreComponent>(uid, out var store))
-            _store.UpdateAvailableListings(uid, (uid, store));
+        //if (TryComp<StoreComponent>(uid, out var store))
+        //    _store.UpdateAvailableListings(uid, (uid, store));
 
         _alerts.ShowAlert(uid, component.EssenceAlert);
 

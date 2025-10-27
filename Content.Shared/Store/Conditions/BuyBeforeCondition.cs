@@ -1,4 +1,6 @@
+using System.Linq;
 using Content.Shared.Store.Components;
+using Content.Shared.Store.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -21,10 +23,13 @@ public sealed partial class BuyBeforeCondition : ListingCondition
 
     public override bool Condition(ListingConditionArgs args)
     {
-        if (!args.EntityManager.TryGetComponent<StoreComponent>(args.StoreEntity, out var storeComp))
+        var entMan = args.EntityManager;
+
+        if (!entMan.TryGetComponent<StoreComponent>(args.StoreEntity, out var storeComp))
             return false;
 
-        var allListings = storeComp.FullListingsCatalog;
+        var storeSystem = entMan.System<SharedStoreSystem>();
+        var allListings = storeSystem.GetAvailableListings(args.Buyer, (args.StoreEntity.Value, storeComp)).ToList();
 
         var purchasesFound = false;
 

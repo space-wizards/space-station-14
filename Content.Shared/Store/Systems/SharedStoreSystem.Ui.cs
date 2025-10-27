@@ -1,9 +1,7 @@
-using System.Linq;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store.Components;
 using Robust.Shared.Player;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Store.Systems;
 
@@ -41,37 +39,8 @@ public abstract partial class SharedStoreSystem
         if (!TryComp<ActorComponent>(user, out var actor))
             return;
 
-        if (!Ui.TryToggleUi(store.Owner, StoreUiKey.Key, actor.PlayerSession))
-            return;
-
-        // Purely for optimization purposes, update listings only when we open this UI
-        if (Ui.IsUiOpen(store.Owner, StoreUiKey.Key))
-            UpdateAvailableListings(user, store);
+        Ui.TryToggleUi(store.Owner, StoreUiKey.Key, actor.PlayerSession);
     }
-
-    /// <summary>
-    /// Updates available listings for the user that opened this store last.
-    /// Used when something in the user could change, and you need to make sure that all listings are correct.
-    /// </summary>
-    /// <param name="user">The person who if opening the store ui. Listings are filtered based on this.</param>
-    /// <param name="store">The store entity itself</param>
-    /*public void UpdateAvailableListings(EntityUid? user, Entity<StoreComponent?> store)
-    {
-        if (!Resolve(store, ref store.Comp))
-            return;
-
-        var component = store.Comp;
-
-        //this is the person who will be passed into logic for all listing filtering.
-        if (user != null) //if we have no "buyer" for this update, then don't update the listings
-        {
-            component.LastAvailableListings = GetAvailableListings(component.AccountOwner ?? user.Value, store, component)
-                .ToHashSet();
-        }
-
-        DirtyField(store, component, nameof(StoreComponent.LastAvailableListings));
-        UpdateUi((store, component));
-    }*/
 
     /// <summary>
     /// Handles whenever a purchase was made.
@@ -80,26 +49,24 @@ public abstract partial class SharedStoreSystem
     {
         var (uid, component) = ent;
         var message = msg;
+        var fullListings = GetAvailableListings(uid, ent.AsNullable());
 
         // Get a list of all listings that this player can actually buy.
-        if (!GetAvailableListings(uid, ent).Contains(message.Listing.Id))
+        if (!TryGetListing(fullListings, message.Listing.Id, out var listing))
         {
-            // If that happened it is bad, probably a mispredict or some hacking.
+            // If we are here this is bad, probably a mispredict or some hacking.
             Log.Debug($"{ToPrettyString(msg.Actor)} requested to buy {msg.Listing} from {ToPrettyString(ent.Owner)} store, but it doesn't have that listing available!");
             return;
         }
 
         var buyer = msg.Actor;
-        var listing = Proto.Index<ListingPrototype>(message.Listing.Id);
 
         // Check that we have enough money
         var cost = listing.Cost;
         foreach (var (currency, amount) in cost)
         {
             if (!component.Balance.TryGetValue(currency, out var balance) || balance < amount)
-            {
                 return;
-            }
         }
 
         if (!IsOnStartingMap(ent))
@@ -109,9 +76,7 @@ public abstract partial class SharedStoreSystem
         foreach (var (currency, amount) in cost)
         {
             component.Balance[currency] -= amount;
-
             component.BalanceSpent.TryAdd(currency, FixedPoint2.Zero);
-
             component.BalanceSpent[currency] += amount;
         }
 
@@ -154,13 +119,17 @@ public abstract partial class SharedStoreSystem
 
                 if (listing.ProductUpgradeId != null)
                 {
-                    foreach (var upgradeListing in component.FullListingsCatalog)
+                    foreach (var upgradeListing in fullListings)
                     {
-                        if (upgradeListing.ID == listing.ProductUpgradeId)
+                        if (upgradeListing.ID != listing.ProductUpgradeId)
+                            continue;
+
+                        var modified = new ListingDataWithCostModifiers(upgradeListing)
                         {
-                            upgradeListing.ProductActionEntity = actionId.Value;
-                            break;
-                        }
+                            ProductActionEntity = actionId.Value,
+                        };
+                        component.ListingsModifiers.Add(upgradeListing.ID, modified);
+                        break;
                     }
                 }
             }
@@ -211,15 +180,20 @@ public abstract partial class SharedStoreSystem
         var buyFinished = new StoreBuyFinishedEvent
         {
             PurchasedItem = listing,
-            StoreUid = uid
+            StoreUid = uid,
         };
 
         RaiseLocalEvent(ref buyFinished);
+
+        // Save everything that was changed in that listing (PurchaseAmount and whatever event subscribers had changed)
+        component.ListingsModifiers.TryAdd(listing.ID, listing);
+        component.ListingsModifiers[listing.ID] = listing;
 
         DirtyField(uid, component, nameof(StoreComponent.Balance));
         DirtyField(uid, component, nameof(StoreComponent.BalanceSpent));
         DirtyField(uid, component, nameof(StoreComponent.BoughtEntities));
         DirtyField(uid, component, nameof(StoreComponent.RefundAllowed));
+        DirtyField(uid, component, nameof(StoreComponent.ListingsModifiers));
         UpdateUi(ent);
     }
 
@@ -263,7 +237,7 @@ public abstract partial class SharedStoreSystem
         }
 
         // Reset store back to its original state
-        RefreshAllListings(ent);
+        //RefreshAllListings(ent);
         component.BalanceSpent = new();
 
         DirtyField(uid, component, nameof(StoreComponent.Balance));
@@ -334,7 +308,7 @@ public abstract partial class SharedStoreSystem
     /// <summary>
     /// Server-side method that spawns some amount of currency in hands of user.
     /// </summary>
-    protected virtual void WithdrawCurrency(EntityUid user, CurrencyPrototype currency, int amount) { }
+    protected virtual void WithdrawCurrency(EntityUid buyer, CurrencyPrototype proto, FixedPoint2 amount) { }
 }
 
 /// <summary>

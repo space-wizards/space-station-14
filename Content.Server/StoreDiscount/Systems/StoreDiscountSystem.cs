@@ -1,8 +1,10 @@
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Store.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
+using Content.Shared.Store.Components;
 using Content.Shared.Store.Systems;
 using Content.Shared.StoreDiscount.Components;
 using Robust.Shared.Prototypes;
@@ -35,21 +37,15 @@ public sealed class StoreDiscountSystem : EntitySystem
     {
         var (storeId, purchasedItem) = ev;
         if (!TryComp<StoreDiscountComponent>(storeId, out var discountsComponent))
-        {
             return;
-        }
 
         // find and decrement discount count for item, if there is one.
         if (!TryGetDiscountData(discountsComponent.Discounts, purchasedItem, out var discountData) || discountData.Count == 0)
-        {
             return;
-        }
 
         discountData.Count--;
         if (discountData.Count > 0)
-        {
             return;
-        }
 
         // if there were discounts, but they are all bought up now - restore state: remove modifier and remove store category
         purchasedItem.RemoveCostModifier(discountData.DiscountCategory);
@@ -60,14 +56,15 @@ public sealed class StoreDiscountSystem : EntitySystem
     private void OnStoreInitialized(ref StoreInitializedEvent ev)
     {
         if (!ev.UseDiscounts)
-        {
             return;
-        }
+
+        if (!TryComp<StoreComponent>(ev.Store, out var storeComp))
+            return;
 
         var discountComponent = EnsureComp<StoreDiscountComponent>(ev.Store);
         var listings = _store.GetAvailableListings(ev.TargetUser, ev.Store);
         var discounts = InitializeDiscounts(listings);
-        ApplyDiscounts(, discounts);
+        ApplyDiscounts(listings, discounts, storeComp.ListingsModifiers);
         discountComponent.Discounts = discounts;
     }
 
@@ -214,8 +211,8 @@ public sealed class StoreDiscountSystem : EntitySystem
         return discountAmountByCurrencyId;
     }
 
-    private void AddDiscounts(
-        IReadOnlyList<ProtoId<ListingPrototype>> availableListings,
+    private void ApplyDiscounts(
+        ImmutableHashSet<ListingDataWithCostModifiers> availableListings,
         IReadOnlyCollection<StoreDiscountData> discounts,
         Dictionary<ProtoId<ListingPrototype>, ListingDataWithCostModifiers> modifiers)
     {
@@ -226,14 +223,14 @@ public sealed class StoreDiscountSystem : EntitySystem
                 continue;
             }
 
-            ProtoId<ListingPrototype>? found = null;
+            ListingDataWithCostModifiers? found = null;
             foreach (var current in availableListings)
             {
-                if (current == discountData.ListingId)
-                {
-                    found = current;
-                    break;
-                }
+                if (current.ID != discountData.ListingId)
+                    continue;
+
+                found = current;
+                break;
             }
 
             if (found == null)
@@ -242,11 +239,11 @@ public sealed class StoreDiscountSystem : EntitySystem
                 return;
             }
 
-            // Create a copy of that listing and modify it
-            var modified = new ListingDataWithCostModifiers(_prototypeManager.Index(found));
-            modified.AddCostModifier(discountData.DiscountCategory, discountData.DiscountAmountByCurrency);
-            modified.Categories.Add(DiscountedStoreCategoryPrototypeKey);
-            modifiers.Add(found.Value, modified);
+            found.AddCostModifier(discountData.DiscountCategory, discountData.DiscountAmountByCurrency);
+            found.Categories.Add(DiscountedStoreCategoryPrototypeKey);
+
+            modifiers.TryAdd(found.ID, found);
+            modifiers[found.ID] = found;
         }
     }
 

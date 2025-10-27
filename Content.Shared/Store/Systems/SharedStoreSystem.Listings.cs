@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Mind;
@@ -9,74 +10,60 @@ namespace Content.Shared.Store.Systems;
 public abstract partial class SharedStoreSystem
 {
     /// <summary>
-    /// Refreshes all listings on a store.
-    /// Do not use if you don't know what you're doing.
+    /// Gets all listings from a prototype. Also takes into account <see cref="StoreComponent.ListingsModifiers"/> overrides.
     /// </summary>
-    /// <param name="store">The store to refresh</param>
-    /*public void RefreshAllListings(Entity<StoreComponent> store)
+    /// <returns>
+    /// All listings as <see cref="ListingDataWithCostModifiers"/>.
+    /// </returns>
+    /// <remarks>
+    /// Do not modify this collection directly, it won't work.
+    /// Instead, add a new key and value to <see cref="StoreComponent.ListingsModifiers"/> and dirty it.
+    /// </remarks>
+    public ImmutableHashSet<ListingDataWithCostModifiers> GetAvailableListings(EntityUid buyer, Entity<StoreComponent?> store)
     {
-        var (uid, component) = store;
-        var previousState = component.FullListingsCatalog;
-        var newState = GetAllListings();
-        // if we refresh list with existing cost modifiers - they will be removed,
-        // need to restore them
-        if (previousState.Count != 0)
+        var listings = new HashSet<ListingDataWithCostModifiers>();
+
+        if (!Resolve(store.Owner, ref store.Comp))
+            return listings.ToImmutableHashSet();
+
+        var defaultListings = GetAvailableListingIDs(buyer, store).ToList();
+
+        foreach (var listing in defaultListings)
         {
-            foreach (var previousStateListingItemId in previousState)
-            {
-                var previousStateListingItem = Proto.Index(previousStateListingItemId);
+            if (!store.Comp.ListingsModifiers.TryGetValue(listing, out var resultListing))
+                resultListing = new ListingDataWithCostModifiers(Proto.Index(listing));
 
-                if (!previousStateListingItem.IsCostModified
-                    || !TryGetListing(newState, previousStateListingItem.ID, out var found))
-                {
-                    continue;
-                }
+            if (!CheckListingConditions(resultListing, buyer, store.Owner, store.Comp.Categories))
+                continue;
 
-                foreach (var (modifierSourceId, costModifier) in previousStateListingItem.CostModifiersBySourceId)
-                {
-                    found.AddCostModifier(modifierSourceId, costModifier);
-                }
-            }
+            listings.Add(resultListing);
         }
 
-        component.FullListingsCatalog = newState;
-        DirtyField(uid, component, nameof(StoreComponent.FullListingsCatalog));
-        UpdateUi((store, component));
-    }*/
-
-    /// <summary>
-    /// Gets all listings from a prototype.
-    /// </summary>
-    /// <returns>All the listings</returns>
-    public List<ProtoId<ListingPrototype>> GetAllListings()
-    {
-        var prototypes = Proto.EnumeratePrototypes<ListingPrototype>();
-        return prototypes.Select(prototype => (ProtoId<ListingPrototype>) prototype.ID).ToList();
+        return listings.ToImmutableHashSet();
     }
 
     /// <summary>
-    /// Gets the available listings for a store
+    /// Gets the available listings for a store. COntains onl
     /// </summary>
     /// <param name="buyer">Either the account owner, user, or an inanimate object (e.g., surplus bundle)</param>
     /// <param name="store">Store to get all listings from.</param>
     /// <returns>The available listings.</returns>
-    public IEnumerable<ProtoId<ListingPrototype>> GetAvailableListings(EntityUid buyer, Entity<StoreComponent?> store)
+    public IEnumerable<ProtoId<ListingPrototype>> GetAvailableListingIDs(EntityUid buyer, Entity<StoreComponent?> store)
     {
         if (!Resolve(store.Owner, ref store.Comp))
             return Array.Empty<ProtoId<ListingPrototype>>();
 
-        return GetAvailableListings(buyer, store.Comp.Categories, store.Owner);
+        return GetAvailableListingIDs(buyer, store.Comp.Categories, store.Owner);
     }
 
     /// <summary>
     /// Gets the available listings for a user given an overall set of listings and categories to filter by.
     /// </summary>
     /// <param name="buyer">Either the account owner, user, or an inanimate object (e.g., surplus bundle)</param>
-    /// <param name="listings">All of the listings that are available. If null, will just get all listings from the prototypes.</param>
     /// <param name="categories">What categories to filter by.</param>
     /// <param name="storeEntity">The physial entity of the store. Can be null.</param>
     /// <returns>The available listings.</returns>
-    public IEnumerable<ProtoId<ListingPrototype>> GetAvailableListings(
+    public IEnumerable<ProtoId<ListingPrototype>> GetAvailableListingIDs(
         EntityUid buyer,
         HashSet<ProtoId<StoreCategoryPrototype>> categories,
         EntityUid? storeEntity = null
@@ -88,29 +75,38 @@ public abstract partial class SharedStoreSystem
         {
             var listing = Proto.Index(listingId);
 
-            if (!ListingHasCategory(listing, categories))
+            if (!CheckListingConditions(listing, buyer, storeEntity, categories))
                 continue;
-
-            if (listing.Conditions != null)
-            {
-                var args = new ListingConditionArgs(GetBuyerMind(buyer), storeEntity, listing, EntityManager);
-                var conditionsMet = true;
-
-                foreach (var condition in listing.Conditions)
-                {
-                    if (!condition.Condition(args))
-                    {
-                        conditionsMet = false;
-                        break;
-                    }
-                }
-
-                if (!conditionsMet)
-                    continue;
-            }
 
             yield return listing;
         }
+    }
+
+    private bool CheckListingConditions(
+        ListingData listing,
+        EntityUid buyer,
+        EntityUid? store,
+        HashSet<ProtoId<StoreCategoryPrototype>> categories)
+    {
+        if (!ListingHasCategory(listing, categories))
+            return false;
+
+        if (listing.Conditions == null)
+            return true;
+
+        var args = new ListingConditionArgs(GetBuyerMind(buyer), store, listing, EntityManager, Proto);
+        var conditionsMet = true;
+
+        foreach (var condition in listing.Conditions)
+        {
+            if (!condition.Condition(args))
+            {
+                conditionsMet = false;
+                break;
+            }
+        }
+
+        return conditionsMet;
     }
 
     /// <summary>
@@ -140,9 +136,19 @@ public abstract partial class SharedStoreSystem
         return false;
     }
 
+    /// <summary>
+    /// Gets all listings from a prototype.
+    /// </summary>
+    /// <returns>All the listings</returns>
+    private List<ProtoId<ListingPrototype>> GetAllListings()
+    {
+        var prototypes = Proto.EnumeratePrototypes<ListingPrototype>();
+        return prototypes.Select(prototype => (ProtoId<ListingPrototype>) prototype.ID).ToList();
+    }
+
     private bool TryGetListing(
         IReadOnlyCollection<ListingDataWithCostModifiers> collection,
-        string listingId,
+        ProtoId<ListingPrototype> listingId,
         [NotNullWhen(true)] out ListingDataWithCostModifiers? found)
     {
         found = null;

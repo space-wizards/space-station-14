@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Store;
@@ -25,4 +26,5 @@ public readonly record struct ListingConditionArgs(
     EntityUid Buyer,
     EntityUid? StoreEntity,
     ListingData Listing,
-    IEntityManager EntityManager);
+    IEntityManager EntityManager,
+    IPrototypeManager PrototypeManager);

@@ -87,7 +87,7 @@ public abstract partial class SharedStoreSystem : EntitySystem
 
     private void BeforeActivatableUiOpen(Entity<StoreComponent> ent, ref BeforeActivatableUIOpenEvent args)
     {
-        UpdateAvailableListings(args.User, (ent.Owner, ent.Comp));
+        //UpdateAvailableListings(args.User, (ent.Owner, ent.Comp));
     }
 
     private void OnStoreOpenAttempt(Entity<StoreComponent> ent, ref ActivatableUIOpenAttemptEvent args)

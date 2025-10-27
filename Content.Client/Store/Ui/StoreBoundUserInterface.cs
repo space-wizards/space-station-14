@@ -1,9 +1,11 @@
 using Content.Shared.Store;
 using JetBrains.Annotations;
 using System.Linq;
+using Content.Client.Store.Systems;
 using Content.Shared.PDA.Ringer;
 using Content.Shared.Store.Components;
 using Robust.Client.UserInterface;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Store.Ui;
@@ -12,6 +14,7 @@ namespace Content.Client.Store.Ui;
 public sealed class StoreBoundUserInterface : BoundUserInterface
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly ISharedPlayerManager _playerMan = default!;
 
     [ViewVariables]
     private StoreMenu? _menu;
@@ -70,17 +73,21 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         if (!EntMan.TryGetComponent(Owner, out StoreComponent? store))
             return;
 
+        var player = _playerMan.LocalEntity;
+        if (player == null)
+            return;
+
         var showFooter = EntMan.HasComponent<RingerUplinkComponent>(Owner);
+        var storeSystem = EntMan.System<StoreSystem>();
 
         _menu.Title = Loc.GetString(store.Name);
         _menu.SetFooterVisibility(showFooter);
         _menu.UpdateRefund(store.RefundAllowed);
         _menu.UpdateBalance(store.Balance);
-        _listings = store.LastAvailableListings;
+        _listings = storeSystem.GetAvailableListings(player.Value, (Owner, store)).ToHashSet();
 
         UpdateListingsWithSearchFilter();
     }
-
 
     private void UpdateListingsWithSearchFilter()
     {
