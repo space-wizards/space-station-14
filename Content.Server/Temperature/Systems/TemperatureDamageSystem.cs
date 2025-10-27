@@ -4,6 +4,8 @@ using Content.Server.Temperature.Components;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.Temperature;
+using Content.Shared.Temperature.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using System.Linq;

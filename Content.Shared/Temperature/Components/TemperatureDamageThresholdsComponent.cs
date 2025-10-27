@@ -4,7 +4,7 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Temperature.Components;
+namespace Content.Shared.Temperature.Components;
 
 /// <summary>
 /// Handles taking damage from being excessively hot/cold.
