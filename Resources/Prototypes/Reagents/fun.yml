@@ -466,25 +466,25 @@
         effectProto: StatusEffectOwO
         time: 25.0
         type: Add
-      - !type:Emote
-        conditions:
-        - !type:ReagentCondition
-          reagent: Felinase
-          min: 25
-        emote: Cough
-        showInChat: true
-        showInGuidebook: true
-        force: true
-        probability: 0.05
-      - !type:PopupMessage
-        conditions:
-        - !type:ReagentCondition
-          reagent: Felinase
-          min: 25
-        type: Local
-        visualType: Small
-        messages: [ "capsaicin-effect-light-burn" ]
-        probability: 0.05
+#      - !type:Emote                         Commented out pending refactor
+#        conditions:
+#        - !type:ReagentCondition
+#          reagent: Felinase
+#          min: 25
+#        emote: Cough
+#        showInChat: true
+#        showInGuidebook: true
+#        force: true
+#        probability: 0.05
+#      - !type:PopupMessage
+#        conditions:
+#        - !type:ReagentCondition
+#          reagent: Felinase
+#          min: 25
+#        type: Local
+#        visualType: Small
+#        messages: [ "capsaicin-effect-light-burn" ]
+#        probability: 0.05
 
 - type: reagent
   id: Borkinase
@@ -522,22 +522,22 @@
         effectProto: StatusEffectBark
         time: 25.0
         type: Add
-      - !type:Emote
-        conditions:
-        - !type:ReagentCondition
-          reagent: Borkinase
-          min: 25
-        emote: Cough
-        showInChat: true
-        showInGuidebook: true
-        force: true
-        probability: 0.05
-      - !type:PopupMessage
-        conditions:
-        - !type:ReagentCondition
-          reagent: Borkinase
-          min: 25
-        type: Local
-        visualType: Small
-        messages: [ "capsaicin-effect-light-burn" ]
-        probability: 0.05
+#      - !type:Emote                         Commented out pending refactor
+#        conditions:
+#        - !type:ReagentCondition
+#          reagent: Borkinase
+#          min: 25
+#        emote: Cough
+#        showInChat: true
+#        showInGuidebook: true
+#        force: true
+#        probability: 0.05
+#      - !type:PopupMessage
+#        conditions:
+#        - !type:ReagentCondition
+#          reagent: Borkinase
+#          min: 25
+#        type: Local
+#        visualType: Small
+#        messages: [ "capsaicin-effect-light-burn" ]
+#        probability: 0.05
