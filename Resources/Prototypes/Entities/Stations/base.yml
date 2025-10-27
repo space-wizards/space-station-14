@@ -137,8 +137,8 @@
           nameGrid: true
           minCount: 1
           maxCount: 1
-          minimumDistance: 100
-          maximumDistance: 200
+          minimumDistance: 250
+          maximumDistance: 500
           stationGrid: false
           paths:
           - /Maps/Ruins/Taipan/bluespace_science_grid.yml

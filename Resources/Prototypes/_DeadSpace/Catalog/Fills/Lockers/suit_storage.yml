@@ -8,7 +8,7 @@
     contents:
     - id: OxygenTankFilled
     - id: ClothingOuterHardsuitTaipanAtmosphericsEngineer
-    - id: ClothingMaskGasSyndicate
+    - id: ClothingShoesBootsMagSyndie
   - type: AccessReader
     access: [["TaipanAtmospherics"]]
 
@@ -22,6 +22,7 @@
     contents:
     - id: OxygenTankFilled
     - id: ClothingOuterHardsuitTaipanCargotech
+    - id: ClothingShoesBootsMagSyndie
   - type: AccessReader
     access: [["TaipanCargo"]]
 
@@ -35,6 +36,7 @@
     contents:
     - id: OxygenTankFilled
     - id: ClothingOuterHardsuitTaipanTechnician
+    - id: ClothingShoesBootsMagSyndie
   - type: AccessReader
     access: [["TaipanEngineering"]]
 

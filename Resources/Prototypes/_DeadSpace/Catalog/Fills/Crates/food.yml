@@ -1,0 +1,28 @@
+- type: entity
+  id: CrateFoodDonk
+  parent: CrateDonkFreezer
+  name: доставка донкпокетов
+  description: Холодильник, заполненный продукцией Donk Co.
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodBoxDonkpocket
+      amount: 1
+    - id: FoodBoxDonkpocketSpicy
+      amount: 1
+    - id: FoodBoxDonkpocketTeriyaki
+      amount: 1
+    - id: FoodBoxDonkpocketPizza
+      amount: 1
+    - id: FoodBoxDonkpocketStonk
+      amount: 1
+    - id: FoodBoxDonkpocketBerry
+      amount: 1
+    - id: FoodBoxDonkpocketHonk
+      amount: 1
+    - id: FoodBoxDonkpocketDink
+      amount: 1
+    - id: FoodBoxDonkpocketMoth
+      amount: 1
+    - id: FoodBoxDonkpocketCarp
+      amount: 1

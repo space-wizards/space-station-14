@@ -141,6 +141,22 @@
     - AccessReserved2
     - AccessReserved3
     - Xenoborg
+# DS14-start
+    - TaipanArmory
+    - TaipanAtmospherics
+    - TaipanCargo
+    - TaipanCommand
+    - TaipanCommunicationsOfficer
+    - TaipanEngineering
+    - TaipanMaint
+    - TaipanMedical
+    - TaipanProtection
+    - TaipanResearchDirector
+    - TaipanResearch
+    - TaipanService
+    - TaipanTechnicalOperationsSupervisor
+    - TaipanExternal
+# DS14-end
     privilegedIdSlot:
       name: id-card-console-privileged-id
       startingItem: UniversalIDCard

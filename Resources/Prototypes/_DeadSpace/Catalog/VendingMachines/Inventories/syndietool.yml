@@ -1,0 +1,16 @@
+- type: vendingMachineInventory
+  id: SyndieToolInventory
+  startingInventory:
+    CableApcStack: 5
+    Crowbar: 5
+    Welder: 2
+    Wirecutter: 3
+    Wrench: 3
+    Screwdriver: 3
+    trayScanner: 3
+    NetworkConfigurator: 3
+    GasAnalyzer: 3
+    FlashlightLantern: 5
+    ClothingHandsGlovesColorYellowBudget: 3
+    SprayPainterTaipan: 3
+    SprayPainterAmmo: 5

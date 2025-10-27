@@ -1,0 +1,13 @@
+- type: vendingMachineInventory
+  id: CigaretteMachineInventoryTaipan
+  startingInventory:
+    CigPackSyndicate: 6
+    CigarCase: 1
+    SmokingPipeFilledTobacco: 1
+    # Vape: 1
+    Matchbox: 4 # DS14-value
+    PackPaperRollingFilters: 4 # DS14-value
+    CheapLighter: 4
+    Lighter: 2
+    FlippoSyndicateLighter: 2
+    GroundTobacco: 10  # DS14

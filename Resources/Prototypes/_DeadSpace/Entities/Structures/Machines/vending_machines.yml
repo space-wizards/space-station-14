@@ -125,10 +125,17 @@
 
 - type: entity
   parent: VendingMachineYouTool
-  id: VendingMachineYouToolTaipan
+  id: VendingMachineSyndieToolTaipan
   name: СиндИнструменты
   description: "Торговый автомат, содержащий стандартные инструменты. Табличка гласит: Инструменты для инструментов."
   components:
+  - type: VendingMachine
+    pack: SyndieToolInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
   - type: Sprite
     sprite: _DeadSpace/Structures/Machines/VendingMachines/youtool.rsi
     layers:
@@ -190,3 +197,92 @@
     color: "#8B0000"
   - type: AccessReader
     access: [["TaipanCargo"]]
+
+- type: entity
+  parent: VendingMachineCigs
+  id: VendingMachineCigsTaipan
+  name: СиндиСигс
+  description: Если вы хотите заболеть раком, то лучше сделать это стильно.
+  components:
+  - type: VendingMachine
+    pack: CigaretteMachineInventoryTaipan
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/VendingMachines/cigs.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#8B0000"
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineDonk
+  name: торгомат Donk Co.
+  description: Фирменный торгомат Donk Co. Содержит только свежие донкпокеты на любой вкус.
+  components:
+  - type: VendingMachine
+    pack: DonkInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    denyState: deny-unshaded
+    initialStockQuality: 0.33
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/VendingMachines/donk.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#8B0000"
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineBrassNBolt
+  name: Brass & Bolt
+  description: Лучшие напитки от Brass & Bolt. Эксклюзивное предложение!
+  components:
+  - type: VendingMachine
+    pack: BrassNBoltInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    initialStockQuality: 0.33
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/VendingMachines/brassnbolt.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#8B0000"

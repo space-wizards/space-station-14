@@ -33,7 +33,6 @@
   equipment:
     ears: ClothingHeadsetTaipan
     shoes: ClothingShoesTaipanBootsWork
-    back: ClothingBackpackSyndicate
     id: TaipanCargotechPDA
     socks: ClothingUnderwearSocksTaipanCargotech
 

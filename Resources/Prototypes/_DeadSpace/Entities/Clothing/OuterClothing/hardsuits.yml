@@ -10,6 +10,9 @@
     sprite: _DeadSpace/Clothing/OuterClothing/Hardsuits/taipan_atmospherics.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitTaipanAtmosphericsEngineer
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 

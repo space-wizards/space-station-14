@@ -117,3 +117,13 @@
   cost: 2000
   category: cargoproduct-category-name-food
   group: taipan_market
+
+- type: cargoProduct
+  id: TaipanFoodDonkFreezer
+  icon:
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+    state: box
+  product: CrateFoodDonk
+  cost: 4800
+  category: cargoproduct-category-name-food
+  group: taipan_market
