@@ -345,7 +345,7 @@ public sealed class FaxSystem : EntitySystem
 
     private void OnDestinationSelected(EntityUid uid, FaxMachineComponent component, FaxDestinationMessage args)
     {
-        SetDestination(uid, args.Address, args.Name, component);
+        SetDestination(uid, args.Address, component);
     }
 
     private void UpdateAppearance(EntityUid uid, FaxMachineComponent? component = null)
@@ -387,13 +387,13 @@ public sealed class FaxSystem : EntitySystem
     /// <summary>
     ///     Set fax destination address not checking if he knows it exists
     /// </summary>
-    public void SetDestination(EntityUid uid, string destAddress, string destName, FaxMachineComponent? component = null)
+    public void SetDestination(EntityUid uid, string destAddress, FaxMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
         component.DestinationFaxAddress = destAddress;
-        component.DestinationFaxName = destName;
+        component.DestinationFaxName = component.KnownFaxes[destAddress];
 
         UpdateUserInterface(uid, component);
     }
