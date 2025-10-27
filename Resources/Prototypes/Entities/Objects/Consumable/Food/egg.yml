@@ -61,6 +61,7 @@
   # all below are for egg cooking/exploding
   - type: AtmosExposed
   - type: Temperature
+  - type: TemperatureDamageThresholds
   - type: InternalTemperature
     # ~1mm shell and ~1cm of albumen
     thickness: 0.011

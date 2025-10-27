@@ -521,6 +521,7 @@
   - type: TypingIndicator
     proto: alien
   - type: Temperature
+  - type: TemperatureDamageThresholds
     heatDamageThreshold: 360
     coldDamageThreshold: -150
     currentTemperature: 310.15

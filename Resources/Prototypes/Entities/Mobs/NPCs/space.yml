@@ -505,6 +505,7 @@
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
   - type: Temperature
+  - type: TemperatureDamageThresholds
     heatDamageThreshold: 500
     coldDamageThreshold: 0
   - type: Reactive
