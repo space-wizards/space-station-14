@@ -120,7 +120,7 @@
   result: AirTank
   completetime: 4
   materials:
-    Steel: 300
+    Steel: 400
 
 - type: latheRecipe
   id: DoubleEmergencyOxygenTank

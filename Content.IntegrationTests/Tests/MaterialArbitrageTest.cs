@@ -28,13 +28,10 @@ namespace Content.IntegrationTests.Tests;
 [TestFixture]
 public sealed class MaterialArbitrageTest
 {
-    // These recipes are currently broken and need fixing. You should not be adding to these sets.
+    // These sets are for selectively excluding recipes from arbitrage.
+    // You should NOT be adding to these. They exist here for downstreams and potential future issues.
     private readonly HashSet<string> _destructionArbitrageIgnore = [];
-
-    private readonly HashSet<string> _compositionArbitrageIgnore =
-    [
-        "AirTank",
-    ];
+    private readonly HashSet<string> _compositionArbitrageIgnore = [];
 
     [Test]
     public async Task NoMaterialArbitrage()
