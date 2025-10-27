@@ -36,9 +36,6 @@ public sealed class SingularityAttractorSystem : EntitySystem
     /// <param name="frameTime">The time elapsed since the last set of updates.</param>
     public override void Update(float frameTime)
     {
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
         var query = EntityQueryEnumerator<SingularityAttractorComponent, TransformComponent>();
         var now = _timing.CurTime;
         while (query.MoveNext(out var uid, out var attractor, out var xform))

@@ -128,8 +128,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     public bool AbilityCheck(EntityUid uid, BeforeInteractHandEvent args, out EntityUid target)
     {
         target = args.Target;
-        return _timing.IsFirstTimePredicted
-            && !_combatMode.IsInCombatMode(uid)
+        return !_combatMode.IsInCombatMode(uid)
             && _hands.GetActiveItem(uid) == null
             && _interaction.InRangeUnobstructed(uid, target);
     }

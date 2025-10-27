@@ -1,10 +1,7 @@
 using Content.Server.Atmos.Components;
-using Content.Server.Destructible;
-using Content.Shared.Armor;
 using Content.Shared.Atmos;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Explosion;
-using Content.Shared.Explosion.Components;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Map.Components;
 
