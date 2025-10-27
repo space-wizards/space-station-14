@@ -3926,3 +3926,10 @@
   id: 9163
   time: '2025-10-27T18:56:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41148
+- author: Princess-Cheeseballs
+  changes:
+  - message: Wizard is now only a midround spawn.
+    type: Tweak
+  id: 9164
+  time: '2025-10-23T15:29:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40983
