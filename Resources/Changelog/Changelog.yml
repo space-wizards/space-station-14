@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Propeller hats can now be found in the Clothesmate.
-    type: Add
-  - message: Swirl lollipops can now be found in the manager inventory of GetMore
-      Chocolate Corp. vending machines.
-    type: Add
-  id: 8661
-  time: '2025-06-12T01:22:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38260
 - author: themias
   changes:
   - message: Fixed an issue where the gas analyzer and anomaly scanner would need
@@ -3929,3 +3919,10 @@
   id: 9162
   time: '2025-10-27T11:12:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41135
+- author: lzk228
+  changes:
+  - message: Water cup spills when worn
+    type: Tweak
+  id: 9163
+  time: '2025-10-27T18:56:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41148
