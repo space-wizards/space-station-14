@@ -192,7 +192,6 @@
   - type: Edible
     useSound: *PlushieHampterSound
   - type: MeleeWeapon
-    wideAnimationRotation: 180
     soundHit: *PlushieHampterSound
   - type: Clothing
     quickEquip: false
@@ -355,7 +354,6 @@
     useSound: *PlushieLizardSound
     transferAmount: 10
   - type: MeleeWeapon
-    wideAnimationRotation: 180
     soundHit: *PlushieLizardSound
   - type: Extractable
     juiceSolution:
@@ -391,7 +389,7 @@
   parent: BasePlushie
   id: PlushieExperiment #Arf!
   name: experiment plushie
-  description: A plushie of a canid of sorts, it yearns to be detonated on a landmine.
+  description: A plushie of a canid of sorts. It yearns to be detonated on a landmine.
   components:
   - type: Sprite
     sprite: Objects/Fun/Plushies/expi.rsi
@@ -421,7 +419,6 @@
   - type: Edible
     useSound: *PlushieExperimentSound
   - type: MeleeWeapon
-    wideAnimationRotation: 180
     soundHit: *PlushieExperimentSound
   - type: Clothing
     clothingVisuals:
@@ -504,7 +501,6 @@
   - type: Edible
     useSound: *PlushieSpaceLizardSound
   - type: MeleeWeapon
-    wideAnimationRotation: 180
     soundHit: *PlushieSpaceLizardSound
   - type: Clothing
     sprite: Objects/Fun/Plushies/lizard.rsi
@@ -538,12 +534,13 @@
     sound: *PlushieLizardInversedSound
   - type: EmitSoundOnActivate
     sound: *PlushieLizardInversedSound
+  - type: EmitSoundOnCollide
+    sound: *PlushieLizardInversedSound
   - type: EmitSoundOnTrigger
     sound: *PlushieLizardInversedSound
   - type: Edible
     useSound: *PlushieLizardInversedSound
   - type: MeleeWeapon
-    wideAnimationRotation: 180
     soundHit: *PlushieLizardInversedSound
   - type: Extractable
     juiceSolution:
@@ -597,7 +594,6 @@
   - type: EmitSoundOnCollide
     sound: *PlushieDionaSound
   - type: MeleeWeapon
-    wideAnimationRotation: 180
     soundHit: *PlushieDionaSound
   - type: Edible
     useSound: *PlushieDionaSound
@@ -621,7 +617,8 @@
     - reagents: [ Water ]
       methods: [ Touch ]
       effects:
-      - !type:AddToSolutionReaction
+      - !type:AddReagentToSolution
+        reagent: Water
         solution: plushie
   - type: Fixtures
     fixtures:
@@ -900,6 +897,8 @@
     sound: *PlushieSlimeSound
   - type: EmitSoundOnActivate
     sound: *PlushieSlimeSound
+  - type: EmitSoundOnCollide
+    sound: *PlushieSlimeSound
   - type: EmitSoundOnTrigger
     sound: *PlushieSlimeSound
   - type: MeleeWeapon
@@ -1012,7 +1011,6 @@
   - type: Edible
     useSound: *PlushieVoxSound
   - type: MeleeWeapon
-    wideAnimationRotation: 180
     soundHit: *PlushieVoxSound
   - type: Clothing
     quickEquip: false
@@ -1076,7 +1074,6 @@
   - type: Edible
     useSound: *PlushieXenoSound
   - type: MeleeWeapon
-    wideAnimationRotation: 180
     soundHit: *PlushieXenoSound
   - type: Clothing
     quickEquip: false
@@ -1188,3 +1185,44 @@
   - type: FoodSequenceElement
     entries:
       CottonBurger: MothPlushie
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieVulp
+  name: vulpkanin plushie
+  description: An adorable stuffed toy that resembles a vulpkanin. Yip! Yap!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/vulp.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound: &PlushieVulpSound
+      path: /Audio/Voice/Vulpkanin/howl.ogg
+      params:
+        volume: -5
+  - type: EmitSoundOnLand
+    sound: *PlushieVulpSound
+  - type: EmitSoundOnActivate
+    sound: *PlushieVulpSound
+  - type: EmitSoundOnTrigger
+    sound: *PlushieVulpSound
+  - type: Edible
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Voice/Vulpkanin/vulp_scream4.ogg
+      params:
+        volume: -5
+  - type: MeleeWeapon
+    soundHit: *PlushieVulpSound
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/Plushies/vulp.rsi
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.0625"
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: PlushieVulp

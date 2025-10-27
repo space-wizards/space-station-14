@@ -42,6 +42,7 @@
     - id: PlushieMoth
     - id: PlushieArachind
     - id: PlushiePenguin
+    - id: PlushieVulp
 
 - type: entityTable
   id: AllPottedPlantsTable
@@ -115,6 +116,8 @@
         - id: PlushieSpaceLizard
           amount: !type:ConstantNumberSelector
             value: 3
+        - id: PlushieLizardJobMultiweh # the exceedingly rare multiweh!
+          prob: 0.01
 
 - type: entity
   id: CrateFunSharkPlushieBulk
@@ -425,7 +428,7 @@
     contents:
       - id: SnapPopBox
       - id: CrazyGlue
-        amount: 2
+      - id: CrazyLube
       - id: PlasticBanana
       - id: WhoopieCushion
       - id: ToyHammer
