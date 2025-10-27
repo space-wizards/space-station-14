@@ -26,6 +26,7 @@
   recipeUnlocks:
   - BoxShotgunIncendiary
   - MagazineRifleIncendiary
+  - MagazineCarbineSKSIncendiary
   - MagazinePistolIncendiary
   - MagazinePistolSubMachineGunIncendiary
   - MagazineLightRifleIncendiary
@@ -63,6 +64,7 @@
   cost: 7500
   recipeUnlocks:
   - MagazineRifleUranium
+  - MagazineCarbineSKSUranium
   - MagazinePistolUranium
   - MagazinePistolSubMachineGunUranium
   - MagazineLightRifleUranium
@@ -270,6 +272,22 @@
   recipeUnlocks:
   - WeaponSubMachineGunC20r
   - WeaponSMGTommyGun
+  - BorgModuleC20r
+  technologyPrerequisites:
+  - TaipanBasicRifles
+
+- type: technology
+  id: TaipanCarbines
+  name: research-technology-carbines
+  icon:
+    sprite: _DeadSpace/Objects/Weapons/Guns/Carbines/sks_scope.rsi
+    state: icon
+  discipline: TaipanWeaponry
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - WeaponCarbineSKS
+  - MagazineCarbineSKS
   technologyPrerequisites:
   - TaipanBasicRifles
 
@@ -284,6 +302,7 @@
   cost: 15000
   recipeUnlocks:
   - ADTWeaponRifleXC67
+  - ADTExtMagazineRifle
   - WeaponRifleAk
   technologyPrerequisites:
   - TaipanBasicRifles
@@ -330,6 +349,7 @@
   cost: 30000
   recipeUnlocks:
   - WeaponLightMachineGunL6
+  - BorgModuleL6C
   technologyPrerequisites:
   - TaipanAssaultRifles
 

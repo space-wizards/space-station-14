@@ -427,3 +427,13 @@
     Cloth: 300
     Durathread: 400
     Titanium: 200
+
+# Webbing
+
+- type: latheRecipe
+  id: ClothingBeltMilitaryWebbing
+  result: ClothingBeltMilitaryWebbing
+  completetime: 3
+  materials:
+    Cloth: 200
+    Durathread: 100
