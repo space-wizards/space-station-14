@@ -259,3 +259,23 @@
       amount: 1
   products:
     Borkinase: 2
+
+- type: reaction
+  id: BorkinaseFelinaseReaction
+  impact: High
+  priority: 20
+  reactants:
+    Borkinase:
+      amount: 1
+    Felinase:
+      amount: 1
+  products:
+    Razorium: 2
+  effects:
+  - !type:Explosion
+    explosionType: Radioactive
+    maxIntensity: 90
+    intensityPerUnit: 3
+    intensitySlope: 1
+    maxTotalIntensity: 125
+    tileBreakScale: 0.00001
