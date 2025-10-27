@@ -33,9 +33,7 @@ public sealed class MaterialArbitrageTest
 
     private readonly HashSet<string> _compositionArbitrageIgnore =
     [
-        "AirTank", "WeaponCapacitorRechargerCircuitboard",
-        "WeaponCapacitorRechargerCircuitboard", "BorgChargerCircuitboard", "BorgChargerCircuitboard",
-        "CellRechargerCircuitboard", "CellRechargerCircuitboard",
+        "AirTank",
     ];
 
     [Test]
