@@ -1,7 +1,6 @@
 ﻿using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Examine;
 using Robust.Shared.Network;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Atmos.Piping.Binary.Systems;
 

@@ -73,7 +73,6 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             var tau = 1;    // Time constant (averaging time) in seconds
             var a = dt/tau;
             gate.FlowRate = a*dV/tau + (1-a)*gate.FlowRate; // in L/sec
-            Dirty(uid, gate);
         }
     }
 }

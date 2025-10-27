@@ -1,8 +1,6 @@
-using Robust.Shared.GameStates;
-
 namespace Content.Shared.Atmos.Piping.Binary.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 public sealed partial class GasPassiveGateComponent : Component
 {
     [DataField("inlet")]
