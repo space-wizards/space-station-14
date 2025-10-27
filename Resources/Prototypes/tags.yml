@@ -1209,7 +1209,7 @@
 ## Q ##
 
 - type: Tag
-  id: QuantumSpinInverter
+  id: QuantumSpinInverter # Used by namesake to recognize other QSIs. Also used as a blacklist in some storages to prevent bugs.
 
 ## R ##
 
