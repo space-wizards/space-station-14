@@ -262,10 +262,10 @@ public sealed partial class AtmosphereSystem
     /// <param name="toSet">The value to set.</param>
     private void SetIsTakingDamageState(Entity<DeltaPressureComponent> ent, bool toSet)
     {
-        var prev = ent.Comp.IsTakingDamage;
+        if (ent.Comp.IsTakingDamage == toSet)
+            return;
         ent.Comp.IsTakingDamage = toSet;
-        if (prev != ent.Comp.IsTakingDamage)
-            Dirty(ent);
+        Dirty(ent);
     }
 
     /// <summary>
