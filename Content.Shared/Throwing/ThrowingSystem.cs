@@ -279,12 +279,12 @@ public sealed class ThrowingSystem : EntitySystem
 
             if (scatterItems)
             {
+                var positionDifference = new Angle(rand.NextFloat() * MathF.Tau);
                 _transform.SetWorldPosition(item,
-                    _transform.GetWorldPosition(item)
-                    + new Vector2(rand.NextFloat(-0.5f, 0.5f), rand.NextFloat(-0.5f, 0.5f)));
+                    _transform.GetWorldPosition(item) + positionDifference.ToVec() * rand.NextFloat());
             }
 
-            if (maxThrowImpulseModifier == 0.0f)
+            if (maxThrowImpulse == 0.0f)
             {
                 continue;
             }
