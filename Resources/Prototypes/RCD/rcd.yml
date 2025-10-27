@@ -195,6 +195,44 @@
   rotation: Camera
   fx: EffectRCDConstruct3
 
+# DS14-start
+- type: rcd
+  id: AirlockTaipan
+  category: Airlocks
+  sprite: /Textures/_DeadSpace/Interface/Radial/RCD/taipan_airlock.png
+  mode: ConstructObject
+  prototype: AirlockTaipan
+  cost: 4
+  delay: 4
+  collisionMask: FullTileMask
+  rotation: Camera
+  fx: EffectRCDConstruct4
+
+- type: rcd
+  id: AirlockTaipanGlass
+  category: Airlocks
+  sprite: /Textures/_DeadSpace/Interface/Radial/RCD/taipan_glass_airlock.png
+  mode: ConstructObject
+  prototype: AirlockTaipanGlass
+  cost: 4
+  delay: 4
+  collisionMask: FullTileMask
+  rotation: Camera
+  fx: EffectRCDConstruct4
+
+- type: rcd
+  id: FirelockTaipan
+  category: Airlocks
+  sprite: /Textures/_DeadSpace/Interface/Radial/RCD/taipan_firelock.png
+  mode: ConstructObject
+  prototype: FirelockTaipan
+  cost: 4
+  delay: 3
+  collisionMask: FullTileMask
+  rotation: Camera
+  fx: EffectRCDConstruct3
+# DS14-end
+
 # Lighting
 - type: rcd
   id: TubeLight
