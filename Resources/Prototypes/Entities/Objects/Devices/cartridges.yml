@@ -1,6 +1,7 @@
 ﻿- type: entity
   parent: BaseItem
   id: BasePDACartridge
+  abstract: true
   components:
   - type: Item
     storedRotation: -90
