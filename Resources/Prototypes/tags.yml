@@ -1073,7 +1073,7 @@
 ## P ##
 
 - type: Tag
-  id: Packet
+  id: Packet # Storage whitelist: ClothingBeltChef
 
 - type: Tag
   id: ParadoxCloneObjectiveBlacklist # objective entities with this tag don't get copied to paradox clones
@@ -1082,124 +1082,129 @@
   id: Paper # A writeable piece of paper. Subset of Document tag. SpecialDigestible: OrganMothStomach, OrganReptilianStomach
 
 - type: Tag
-  id: Pancake
+  id: Pancake # CargoBounty: BountyPancake
 
 - type: Tag
-  id: ParcelWrapBlacklist
+  id: ParcelWrapBlacklist # Tagged entities can't be wrapped in ParcelWrap.
 
 - type: Tag
-  id: Payload # for grenade/bomb crafting
+  id: Payload # Used by PayloadSystem to find entities to send TriggerEvent. ConstructionGraph: ModularGrenadeGraph, ModularMineGraph
 
 - type: Tag
-  id: Pen
+  id: Pen # CargoBounty: BountyPen
 
 - type: Tag
-  id: PepperShaker
+  id: PepperShaker # Storage whitelist: ClothingBeltChef. ItemMapper:  ClothingBeltChef
 
 - type: Tag
   id: PercussionInstrument # CargoBounty: BountyPercussion. MachineBoard construction: DawInstrumentMachineCircuitboard
 
 - type: Tag
-  id: PetOnly
+  id: PetOnly # Used by human, diona, arachnid InventoryTemplate to blacklist back slot items.
 
 - type: Tag
-  id: PetWearable
+  id: PetWearable # Used by hamster, kangaroo, pet, petAdvanced, SmartCorgi InventoryTemplate to whitelist mask slots.
+                  # SmartCorgi and petAdvanced use it for eyes slots. petAdvanced uses it for head slot.
 
 - type: Tag
-  id: Pickaxe
+  id: Pickaxe # GatherableComponent whitelist on WallRock.
 
 - type: Tag
-  id: Pie
+  id: Pie # CargoBounty: BountyPie. Blacklisted in BountyFruit and BountyVegetable.
 
 - type: Tag
-  id: Pig
+  id: Pig # Reproductive partner key.
 
 - type: Tag
-  id: Pill
+  id: Pill # Storage whitelist: PillCanister. SpecialDigestible: OrganMothStomach, OrganReptilianStomach
 
 - type: Tag
-  id: PillCanister
+  id: PillCanister # Storage whitelist: ClothingBeltMedical, ChemBag, ChemMaster, SmartFridge. ItemMapper: ClothingBeltMedical
 
 - type: Tag
-  id: Pipe
+  id: Pipe # ConstructionGraph: BananiumHorn, ImprovisedShotgunGraph, PipeBomb, PneumaticCannon
 
 - type: Tag
-  id: Pistachios
+  id: Pistachios # Blacklist on BountyFruit.
 
 - type: Tag
-  id: Pizza
+  id: Pizza # Storage whitelist: FoodBoxPizza
 
 - type: Tag
-  id: PKAUpgrade
+  id: PKAUpgrade # UpgradeableGun whitelist for WeaponProtoKineticAccelerator.
 
 - type: Tag
-  id: PlantAnalyzer
+  id: PlantAnalyzer # Commented out on ClothingBeltPlant, so currently unused x2.
 
 - type: Tag
-  id: PlantBGone
+  id: PlantBGone # Storage whitelist: ClothingBeltPlant. ItemMapper: ClothingBeltPlant
 
 - type: Tag
-  id: PlantSampleTaker
+  id: PlantSampleTaker # Used by PlantHolderSystem to make tagged entities a pseudo-tool for trimming seeds. TODO this sucks!
 
 - type: Tag
-  id: PlasmaGlassShard
+  id: PlasmaGlassShard # ConstructionGraph: ImprovisedArrowPlasma, PlasmaShiv, SpearPlasma
 
 - type: Tag
-  id: Plastic
+  id: Plastic # Used by MicrowaveSystem to turn tagged entities into trash.
 
 - type: Tag
-  id: Plunger
+  id: Plunger # Storage whitelist: BaseBow, ClothingBeltQuiver, ClothingBeltJanitor, JanitorialTrolley. ItemMapper: ClothingBeltJanitor, JanitorialTrolley.
+              # Storage blacklist on BaseToilet due to conflicting actions.
 
 - type: Tag
-  id: PlushieCarp
+  id: PlushieCarp # Storage whitelist: MopBucket. ItemMapper: MopBucket
 
 - type: Tag
-  id: PlushieCarpHolo
+  id: PlushieCarpHolo # Storage whitelist: MopBucket. ItemMapper: MopBucket
 
 - type: Tag
-  id: PlushieCarpMagi
+  id: PlushieCarpMagi # Storage whitelist: MopBucket. ItemMapper: MopBucket
 
 - type: Tag
-  id: PlushieGhost
+  id: PlushieGhost # ConstructionGraph: PlushieGhostRevenant
 
 - type: Tag
-  id: PlushieLizard
+  id: PlushieLizard # ConstructionGraph: ClothingShoeSlippersLizard
 
 - type: Tag
-  id: PlushieSharkBlue
+  id: PlushieSharkBlue # Storage whitelist: MopBucket. ItemMapper: MopBucket
 
 - type: Tag
-  id: PlushieSharkGrey
+  id: PlushieSharkGrey # Storage whitelist: MopBucket. ItemMapper: MopBucket
 
 - type: Tag
-  id: PlushieSharkPink
+  id: PlushieSharkPink # Storage whitelist: MopBucket. ItemMapper: MopBucket
 
 - type: Tag
-  id: Potato
+  id: Potato # ConstructionGraph: PowerCellPotato
 
 - type: Tag
-  id: PotatoBattery
+  id: PotatoBattery # ConstructionGraph: PotatoAI. Blacklisted on battery chargers.
 
 - type: Tag
-  id: PowerCage
+  id: PowerCage # Storage whitelist: PowerCageRecharger, ShuttleGunPerforator
 
 - type: Tag
-  id: PowerCell
+  id: PowerCell # Storage whitelist: BountyLaserGun, ClothingOuterSuitSpaceNinja, BaseWeaponPowerCell, PowerCellRecharger, WeaponCapacitorRecharger,
+                # TurboItemRecharger, ShuttleGunSvalinnMachineGun. ConstructionGraph: WallmountSubstation
+                # Could potentially be replaced by whitelisting PowerCellComponent.
 
 - type: Tag
-  id: PowerCellSmall
+  id: PowerCellSmall # Storage whitelist: BaseWeaponPowerCell, PowerCellRecharger, ShuttleGunSvalinnMachineGun.
+                     # ConstructionGraph: WallmountSubstation, makeshiftstunprod
 
 - type: Tag
-  id: Powerdrill
+  id: Powerdrill # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering
 
 - type: Tag
-  id: PreventAccessLogging
+  id: PreventAccessLogging # Tagged entities (aghost) will not be added to a device's log. Used by AccessReaderSystem.
 
 - type: Tag
-  id: PrisonUniform
+  id: PrisonUniform # CargoBounty: BountyPrisonUniform
 
 - type: Tag
-  id: ProximitySensor
+  id: ProximitySensor # This tag is used as a common ingredient in the construction of various machines and bots.
 
 ## Q ##
 
@@ -1590,6 +1595,7 @@
 
 - type: Tag
   id: Wooden # just like our atmos
+             # MaterialStorage whitelist: Sheetifier
 
 - type: Tag
   id: WoodwindInstrument # even more like our atmos
