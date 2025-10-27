@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
-# Installs git hooks, updates them, updates submodules, that kind of thing.
+"""
+Installs git hooks, updates them, updates submodules, that kind of thing.
+"""
 
-import subprocess
-import sys
 import os
 import shutil
+import subprocess
+import sys
 import time
 from pathlib import Path
 from typing import List
 
 SOLUTION_PATH = Path("..") / "SpaceStation14.sln"
 # If this doesn't match the saved version we overwrite them all.
-CURRENT_HOOKS_VERSION = "2"
+CURRENT_HOOKS_VERSION = "4"
 QUIET = len(sys.argv) == 2 and sys.argv[1] == "--quiet"
 
 
@@ -25,12 +27,10 @@ def run_command(command: List[str], capture: bool = False) -> subprocess.Complet
 
     sys.stdout.flush()
 
-    completed = None
-
     if capture:
-        completed = subprocess.run(command, cwd="..", stdout=subprocess.PIPE)
+        completed = subprocess.run(command, stdout=subprocess.PIPE, text=True)
     else:
-        completed = subprocess.run(command, cwd="..")
+        completed = subprocess.run(command)
 
     if completed.returncode != 0:
         print("Error: command exited with code {}!".format(completed.returncode))
@@ -43,7 +43,7 @@ def update_submodules():
     Updates all submodules.
     """
 
-    if ('GITHUB_ACTIONS' in os.environ):
+    if 'GITHUB_ACTIONS' in os.environ:
         return
 
     if os.path.isfile("DISABLE_SUBMODULE_AUTOUPDATE"):
@@ -76,22 +76,21 @@ def install_hooks():
                     print("No hooks change detected.")
                 return
 
-    with open("INSTALLED_HOOKS_VERSION", "w") as f:
-        f.write(CURRENT_HOOKS_VERSION)
-
     print("Hooks need updating.")
 
-    hooks_target_dir = Path("..")/".git"/"hooks"
+    hooks_target_dir = Path(run_command(["git", "rev-parse", "--git-path", "hooks"], True).stdout.strip())
     hooks_source_dir = Path("hooks")
 
     # Clear entire tree since we need to kill deleted files too.
-    for filename in os.listdir(str(hooks_target_dir)):
-        os.remove(str(hooks_target_dir/filename))
+    for filename in os.listdir(hooks_target_dir):
+        os.remove(hooks_target_dir / filename)
 
-    for filename in os.listdir(str(hooks_source_dir)):
+    for filename in os.listdir(hooks_source_dir):
         print("Copying hook {}".format(filename))
-        shutil.copy2(str(hooks_source_dir/filename),
-                        str(hooks_target_dir/filename))
+        shutil.copy2(hooks_source_dir / filename, hooks_target_dir / filename)
+
+    with open("INSTALLED_HOOKS_VERSION", "w") as f:
+        f.write(CURRENT_HOOKS_VERSION)
 
 
 def reset_solution():
@@ -107,8 +106,7 @@ def reset_solution():
 
 def check_for_zip_download():
     # Check if .git exists,
-    cur_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-    if not os.path.isdir(os.path.join(cur_dir, ".git")):
+    if run_command(["git", "rev-parse"]).returncode != 0:
         print("It appears that you downloaded this repository directly from GitHub. (Using the .zip download option) \n"
               "When downloading straight from GitHub, it leaves out important information that git needs to function. "
               "Such as information to download the engine or even the ability to even be able to create contributions. \n"
