@@ -47,19 +47,17 @@ namespace Content.Shared.Movement.Systems
         private void OnDowned(Entity<MovementSpeedModifierComponent> entity, ref DownedEvent args)
         {
             RefreshFrictionModifiers((entity, entity.Comp));
-            RefreshMovementSpeedModifiers((entity, entity.Comp));
         }
 
         private void OnStand(Entity<MovementSpeedModifierComponent> entity, ref StoodEvent args)
         {
             RefreshFrictionModifiers((entity, entity.Comp));
-            RefreshMovementSpeedModifiers((entity, entity.Comp));
         }
 
         /// <summary>
         /// Copy this component's datafields from one entity to another.
         /// This needs to refresh the modifiers after using CopyComp.
-        /// <summary>
+        /// </summary>
         public void CopyComponent(Entity<MovementSpeedModifierComponent?> source, EntityUid target)
         {
             if (!Resolve(source, ref source.Comp))
@@ -71,7 +69,6 @@ namespace Content.Shared.Movement.Systems
             RefreshFrictionModifiers(target);
         }
 
-        public void RefreshWeightlessModifiers(EntityUid uid, MovementSpeedModifierComponent? move = null)
         /// <summary>
         /// This API method refreshes the movement modifiers for either being weightless, or being grounded depending
         /// on which modifiers the entity is currently using.
@@ -79,7 +76,7 @@ namespace Content.Shared.Movement.Systems
         /// <param name="ent">The entity we're refreshing modifiers for</param>
         public void RefreshMovementModifiers(Entity<MovementSpeedModifierComponent?> ent)
         {
-            if (_gravity.IsWeightless(ent))
+            if (_gravity.IsWeightless(ent.Owner))
                 RefreshWeightlessModifiers(ent);
             else
                 RefreshMovementSpeedModifiers(ent);
