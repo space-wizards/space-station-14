@@ -1,14 +1,12 @@
 using Content.Server.Administration.Logs;
-using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.NodeGroups;
-using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.NodeGroups;
 using Content.Server.Weapons.Melee;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Electrocution;
 using Content.Shared.IdentityManagement;
@@ -27,7 +25,6 @@ using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Map;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -402,7 +399,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
                 ? _stun.TryUpdateParalyzeDuration(uid, time * ParalyzeTimeMultiplier)
                 : _stun.TryAddParalyzeDuration(uid, time * ParalyzeTimeMultiplier);
         }
-            
+
 
         // TODO: Sparks here.
 

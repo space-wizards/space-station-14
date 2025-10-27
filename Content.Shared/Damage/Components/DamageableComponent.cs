@@ -1,4 +1,5 @@
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Content.Shared.StatusIcon;
@@ -6,7 +7,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Damage;
+namespace Content.Shared.Damage.Components;
 
 /// <summary>
 ///     Component that allows entities to take damage.

@@ -1,5 +1,5 @@
 using Content.Shared.Flash.Components;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 
 namespace Content.Shared.Flash;
 

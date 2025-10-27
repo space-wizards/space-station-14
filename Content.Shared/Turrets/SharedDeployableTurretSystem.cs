@@ -1,6 +1,6 @@
-using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;

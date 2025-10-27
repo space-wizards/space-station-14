@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Chemistry;
+using Content.Shared.Damage.Components;
 using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Configuration;
@@ -8,7 +9,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Damage;
+namespace Content.Shared.Damage.Systems;
 
 public sealed partial class DamageableSystem : EntitySystem
 {

@@ -2,6 +2,7 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Lightning;
 using Content.Server.Lightning.Components;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Tesla.EntitySystems;

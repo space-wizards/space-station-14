@@ -1,8 +1,9 @@
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Damage;
+namespace Content.Shared.Damage.Systems;
 
 public sealed partial class DamageableSystem
 {
@@ -204,7 +205,7 @@ public sealed partial class DamageableSystem
     }
 
     /// <summary>
-    ///     Sets all damage types supported by a <see cref="DamageableComponent"/> to the specified value.
+    ///     Sets all damage types supported by a <see cref="Components.DamageableComponent"/> to the specified value.
     /// </summary>
     /// <remarks>
     ///     Does nothing If the given damage value is negative.

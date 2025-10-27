@@ -5,6 +5,7 @@ using Content.Server.Wires;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Prototypes;
 using Content.Shared.Storage.Components;
 using Content.Shared.VendingMachines;

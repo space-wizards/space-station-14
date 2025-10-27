@@ -1,7 +1,7 @@
 using Content.Server.Body.Systems;
 using Content.Server.Popups;
 using Content.Shared.Actions;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Guardian;

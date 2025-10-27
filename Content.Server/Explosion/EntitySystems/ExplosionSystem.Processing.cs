@@ -1,13 +1,10 @@
-using System.Linq;
 using System.Numerics;
-using Content.Server.Atmos.EntitySystems;
-using Content.Server.Explosion.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.Explosion;
 using Content.Shared.Explosion.Components;
-using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
@@ -17,7 +14,6 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -444,7 +440,7 @@ public sealed partial class ExplosionSystem
             GetEntitiesToDamage(uid, originalDamage, id);
             foreach (var (entity, damage) in _toDamage)
             {
-                if (!TryComp<DamageableComponent>(entity, out var damageable))
+                if (!_damageableQuery.TryComp(entity, out var damageable))
                     continue;
 
                 // TODO EXPLOSIONS turn explosions into entities, and pass the the entity in as the damage origin.
@@ -663,7 +659,7 @@ sealed class Explosion
     private readonly IEntityManager _entMan;
     private readonly ExplosionSystem _system;
     private readonly SharedMapSystem _mapSystem;
-    private readonly DamageableSystem _damageable;
+    private readonly Shared.Damage.Systems.DamageableSystem _damageable;
 
     public readonly EntityUid VisualEnt;
 
@@ -687,7 +683,7 @@ sealed class Explosion
         EntityUid visualEnt,
         EntityUid? cause,
         SharedMapSystem mapSystem,
-        DamageableSystem damageable)
+        Shared.Damage.Systems.DamageableSystem damageable)
     {
         VisualEnt = visualEnt;
         Cause = cause;
