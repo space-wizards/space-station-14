@@ -19,6 +19,7 @@ public sealed class StoreDiscountSystem : EntitySystem
 
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly SharedStoreSystem _store = default!;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -64,8 +65,9 @@ public sealed class StoreDiscountSystem : EntitySystem
         }
 
         var discountComponent = EnsureComp<StoreDiscountComponent>(ev.Store);
-        var discounts = InitializeDiscounts(ev.Listings);
-        ApplyDiscounts(ev.Listings, discounts);
+        var listings = _store.GetAvailableListings(ev.TargetUser, ev.Store);
+        var discounts = InitializeDiscounts(listings);
+        ApplyDiscounts(, discounts);
         discountComponent.Discounts = discounts;
     }
 
@@ -212,7 +214,10 @@ public sealed class StoreDiscountSystem : EntitySystem
         return discountAmountByCurrencyId;
     }
 
-    private void ApplyDiscounts(IReadOnlyList<ListingDataWithCostModifiers> listings, IReadOnlyCollection<StoreDiscountData> discounts)
+    private void AddDiscounts(
+        IReadOnlyList<ProtoId<ListingPrototype>> availableListings,
+        IReadOnlyCollection<StoreDiscountData> discounts,
+        Dictionary<ProtoId<ListingPrototype>, ListingDataWithCostModifiers> modifiers)
     {
         foreach (var discountData in discounts)
         {
@@ -221,11 +226,10 @@ public sealed class StoreDiscountSystem : EntitySystem
                 continue;
             }
 
-            ListingDataWithCostModifiers? found = null;
-            for (var i = 0; i < listings.Count; i++)
+            ProtoId<ListingPrototype>? found = null;
+            foreach (var current in availableListings)
             {
-                var current = listings[i];
-                if (current.ID == discountData.ListingId)
+                if (current == discountData.ListingId)
                 {
                     found = current;
                     break;
@@ -238,8 +242,11 @@ public sealed class StoreDiscountSystem : EntitySystem
                 return;
             }
 
-            found.AddCostModifier(discountData.DiscountCategory, discountData.DiscountAmountByCurrency);
-            found.Categories.Add(DiscountedStoreCategoryPrototypeKey);
+            // Create a copy of that listing and modify it
+            var modified = new ListingDataWithCostModifiers(_prototypeManager.Index(found));
+            modified.AddCostModifier(discountData.DiscountCategory, discountData.DiscountAmountByCurrency);
+            modified.Categories.Add(DiscountedStoreCategoryPrototypeKey);
+            modifiers.Add(found.Value, modified);
         }
     }
 
@@ -387,11 +394,9 @@ public sealed class StoreDiscountSystem : EntitySystem
 /// <param name="TargetUser">EntityUid of store entity owner.</param>
 /// <param name="Store">EntityUid of store entity.</param>
 /// <param name="UseDiscounts">Marker, if store should have discounts.</param>
-/// <param name="Listings">List of available listings items.</param>
 [ByRefEvent]
 public record struct StoreInitializedEvent(
     EntityUid TargetUser,
     EntityUid Store,
-    bool UseDiscounts,
-    IReadOnlyList<ListingDataWithCostModifiers> Listings
+    bool UseDiscounts
 );

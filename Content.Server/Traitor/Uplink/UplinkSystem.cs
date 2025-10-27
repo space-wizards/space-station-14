@@ -76,9 +76,7 @@ public sealed class UplinkSystem : EntitySystem
         var uplinkInitializedEvent = new StoreInitializedEvent(
             TargetUser: mind,
             Store: uplink,
-            UseDiscounts: giveDiscounts,
-            Listings: _store.GetAvailableListings(mind, uplink, store)
-                .ToArray());
+            UseDiscounts: giveDiscounts);
         RaiseLocalEvent(ref uplinkInitializedEvent);
     }
 

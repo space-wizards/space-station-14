@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Mind;
 using Content.Shared.Store.Components;
 using Robust.Shared.Prototypes;
@@ -12,7 +13,7 @@ public abstract partial class SharedStoreSystem
     /// Do not use if you don't know what you're doing.
     /// </summary>
     /// <param name="store">The store to refresh</param>
-    public void RefreshAllListings(Entity<StoreComponent> store)
+    /*public void RefreshAllListings(Entity<StoreComponent> store)
     {
         var (uid, component) = store;
         var previousState = component.FullListingsCatalog;
@@ -21,8 +22,10 @@ public abstract partial class SharedStoreSystem
         // need to restore them
         if (previousState.Count != 0)
         {
-            foreach (var previousStateListingItem in previousState)
+            foreach (var previousStateListingItemId in previousState)
             {
+                var previousStateListingItem = Proto.Index(previousStateListingItemId);
+
                 if (!previousStateListingItem.IsCostModified
                     || !TryGetListing(newState, previousStateListingItem.ID, out var found))
                 {
@@ -39,61 +42,30 @@ public abstract partial class SharedStoreSystem
         component.FullListingsCatalog = newState;
         DirtyField(uid, component, nameof(StoreComponent.FullListingsCatalog));
         UpdateUi((store, component));
-    }
+    }*/
 
     /// <summary>
     /// Gets all listings from a prototype.
     /// </summary>
     /// <returns>All the listings</returns>
-    public HashSet<ListingDataWithCostModifiers> GetAllListings()
+    public List<ProtoId<ListingPrototype>> GetAllListings()
     {
-        var clones = new HashSet<ListingDataWithCostModifiers>();
-        foreach (var prototype in Proto.EnumeratePrototypes<ListingPrototype>())
-        {
-            clones.Add(new ListingDataWithCostModifiers(prototype));
-        }
-
-        return clones;
-    }
-
-    /// <summary>
-    /// Adds a listing from an Id to a store
-    /// </summary>
-    /// <param name="component">The store to add the listing to</param>
-    /// <param name="listingId">The id of the listing</param>
-    /// <returns>Whether or not the listing was added successfully</returns>
-    public bool TryAddListing(StoreComponent component, string listingId)
-    {
-        if (!Proto.TryIndex<ListingPrototype>(listingId, out var proto))
-        {
-            Log.Error("Attempted to add invalid listing.");
-            return false;
-        }
-
-        return TryAddListing(component, proto);
-    }
-
-    /// <summary>
-    /// Adds a listing to a store
-    /// </summary>
-    /// <param name="component">The store to add the listing to</param>
-    /// <param name="listing">The listing</param>
-    /// <returns>Whether or not the listing was add successfully</returns>
-    public bool TryAddListing(StoreComponent component, ListingPrototype listing)
-    {
-        return component.FullListingsCatalog.Add(new ListingDataWithCostModifiers(listing));
+        var prototypes = Proto.EnumeratePrototypes<ListingPrototype>();
+        return prototypes.Select(prototype => (ProtoId<ListingPrototype>) prototype.ID).ToList();
     }
 
     /// <summary>
     /// Gets the available listings for a store
     /// </summary>
     /// <param name="buyer">Either the account owner, user, or an inanimate object (e.g., surplus bundle)</param>
-    /// <param name="store"></param>
-    /// <param name="component">The store the listings are coming from.</param>
+    /// <param name="store">Store to get all listings from.</param>
     /// <returns>The available listings.</returns>
-    public IEnumerable<ListingDataWithCostModifiers> GetAvailableListings(EntityUid buyer, EntityUid store, StoreComponent component)
+    public IEnumerable<ProtoId<ListingPrototype>> GetAvailableListings(EntityUid buyer, Entity<StoreComponent?> store)
     {
-        return GetAvailableListings(buyer, component.FullListingsCatalog, component.Categories, store);
+        if (!Resolve(store.Owner, ref store.Comp))
+            return Array.Empty<ProtoId<ListingPrototype>>();
+
+        return GetAvailableListings(buyer, store.Comp.Categories, store.Owner);
     }
 
     /// <summary>
@@ -104,17 +76,18 @@ public abstract partial class SharedStoreSystem
     /// <param name="categories">What categories to filter by.</param>
     /// <param name="storeEntity">The physial entity of the store. Can be null.</param>
     /// <returns>The available listings.</returns>
-    public IEnumerable<ListingDataWithCostModifiers> GetAvailableListings(
+    public IEnumerable<ProtoId<ListingPrototype>> GetAvailableListings(
         EntityUid buyer,
-        IReadOnlyCollection<ListingDataWithCostModifiers>? listings,
         HashSet<ProtoId<StoreCategoryPrototype>> categories,
         EntityUid? storeEntity = null
     )
     {
-        listings ??= GetAllListings();
+        var listings = GetAllListings();
 
-        foreach (var listing in listings)
+        foreach (var listingId in listings)
         {
+            var listing = Proto.Index(listingId);
+
             if (!ListingHasCategory(listing, categories))
                 continue;
 
@@ -154,10 +127,8 @@ public abstract partial class SharedStoreSystem
     }
 
     /// <summary>
-    /// Checks if a listing appears in a list of given categories
+    /// Checks if a listingId appears in a list of given categories
     /// </summary>
-    /// <param name="listing">The listing itself.</param>
-    /// <param name="categories">The categories to check through.</param>
     /// <returns>If the listing was present in one of the categories.</returns>
     public bool ListingHasCategory(ListingData listing, HashSet<ProtoId<StoreCategoryPrototype>> categories)
     {

@@ -41,43 +41,39 @@ public sealed partial class StoreComponent : Component
     /// regardless of who activated it. I.E. role specific items for uplinks.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public EntityUid? AccountOwner = null;
+    public EntityUid? AccountOwner;
 
     /// <summary>
-    /// Cached list of listings items with modifiers.
+    /// Contains all modified listings for some default listings.
+    /// When we try to get a listing with an ID that is contained here,
+    /// we take the value from the dictionary instead of indexing the prototype.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public HashSet<ListingDataWithCostModifiers> FullListingsCatalog = new();
-
-    /// <summary>
-    /// All available listings from the last time that it was checked.
-    /// </summary>
-    [ViewVariables, AutoNetworkedField]
-    public HashSet<ListingDataWithCostModifiers> LastAvailableListings = new();
+    public Dictionary<ProtoId<ListingPrototype>, ListingDataWithCostModifiers> ListingsModifiers = new();
 
     /// <summary>
     ///     All current entities bought from this shop. Useful for keeping track of refunds and upgrades.
     /// </summary>
-    [ViewVariables, DataField, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public List<EntityUid> BoughtEntities = new();
 
     /// <summary>
     ///     The total balance spent in this store. Used for refunds.
     /// </summary>
-    [ViewVariables, DataField, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> BalanceSpent = new();
 
     /// <summary>
     ///     Controls if the store allows refunds
     /// </summary>
-    [ViewVariables, DataField, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool RefundAllowed;
 
     /// <summary>
     ///     Checks if store can be opened by the account owner only.
     ///     Not meant to be used with uplinks.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool OwnerOnly;
 
     /// <summary>
@@ -86,13 +82,11 @@ public sealed partial class StoreComponent : Component
     [DataField, AutoNetworkedField]
     public EntityUid? StartingMap;
 
-    #region audio
     /// <summary>
     /// The sound played to the buyer when a purchase is succesfully made.
     /// </summary>
     [DataField]
-    public SoundSpecifier BuySuccessSound = new SoundPathSpecifier("/Audio/Effects/kaching.ogg");
-    #endregion
+    public SoundSpecifier? BuySuccessSound = new SoundPathSpecifier("/Audio/Effects/kaching.ogg");
 }
 
 /// <summary>

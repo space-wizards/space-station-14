@@ -3,6 +3,7 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store.Components;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Store.Systems;
 
@@ -54,7 +55,7 @@ public abstract partial class SharedStoreSystem
     /// </summary>
     /// <param name="user">The person who if opening the store ui. Listings are filtered based on this.</param>
     /// <param name="store">The store entity itself</param>
-    public void UpdateAvailableListings(EntityUid? user, Entity<StoreComponent?> store)
+    /*public void UpdateAvailableListings(EntityUid? user, Entity<StoreComponent?> store)
     {
         if (!Resolve(store, ref store.Comp))
             return;
@@ -70,7 +71,7 @@ public abstract partial class SharedStoreSystem
 
         DirtyField(store, component, nameof(StoreComponent.LastAvailableListings));
         UpdateUi((store, component));
-    }
+    }*/
 
     /// <summary>
     /// Handles whenever a purchase was made.
@@ -80,29 +81,16 @@ public abstract partial class SharedStoreSystem
         var (uid, component) = ent;
         var message = msg;
 
-        var listing = component.FullListingsCatalog.FirstOrDefault(x => x.ID.Equals(message.Listing.Id));
-
-        if (listing == null) //make sure this listing actually exists
+        // Get a list of all listings that this player can actually buy.
+        if (!GetAvailableListings(uid, ent).Contains(message.Listing.Id))
         {
-            Log.Debug("listing does not exist");
+            // If that happened it is bad, probably a mispredict or some hacking.
+            Log.Debug($"{ToPrettyString(msg.Actor)} requested to buy {msg.Listing} from {ToPrettyString(ent.Owner)} store, but it doesn't have that listing available!");
             return;
         }
 
         var buyer = msg.Actor;
-
-        // Verify that we can actually buy this listing and it wasn't added
-        if (!ListingHasCategory(listing, component.Categories))
-            return;
-
-        // Condition checking because why not
-        if (listing.Conditions != null)
-        {
-            var args = new ListingConditionArgs(component.AccountOwner ?? GetBuyerMind(buyer), uid, listing, EntityManager);
-            var conditionsMet = listing.Conditions.All(condition => condition.Condition(args));
-
-            if (!conditionsMet)
-                return;
-        }
+        var listing = Proto.Index<ListingPrototype>(message.Listing.Id);
 
         // Check that we have enough money
         var cost = listing.Cost;

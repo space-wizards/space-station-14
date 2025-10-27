@@ -13,6 +13,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Implants;
 using Content.Shared.Mind;
+using Content.Shared.Store.Events;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
@@ -50,6 +51,7 @@ public abstract partial class SharedStoreSystem : EntitySystem
         SubscribeLocalEvent<StoreComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<StoreComponent, OpenUplinkImplantEvent>(OnImplantActivate);
         SubscribeLocalEvent<StoreComponent, ImplantRelayEvent<AfterInteractUsingEvent>>(OnStoreRelay);
+        SubscribeLocalEvent<StoreComponent, IntrinsicStoreActionEvent>(OnIntrinsicStoreAction);
 
         InitializeUi();
         InitializeRefund();
@@ -57,7 +59,7 @@ public abstract partial class SharedStoreSystem : EntitySystem
 
     private void OnMapInit(Entity<StoreComponent> ent, ref MapInitEvent args)
     {
-        RefreshAllListings(ent);
+        //RefreshAllListings(ent);
         ent.Comp.StartingMap = Transform(ent).MapUid;
         DirtyField(ent, ent.Comp, nameof(StoreComponent.StartingMap));
         UpdateUi(ent);
@@ -70,7 +72,7 @@ public abstract partial class SharedStoreSystem : EntitySystem
         // for traitors, because the StoreComponent for the PDA can be added at any time.
         if (MetaData(uid).EntityLifeStage == EntityLifeStage.MapInitialized)
         {
-            RefreshAllListings(ent);
+            //RefreshAllListings(ent);
         }
 
         var ev = new StoreAddedEvent();
@@ -256,6 +258,11 @@ public abstract partial class SharedStoreSystem : EntitySystem
         }
 
         return true;
+    }
+
+    private void OnIntrinsicStoreAction(Entity<StoreComponent> ent, ref IntrinsicStoreActionEvent args)
+    {
+        ToggleUi(args.Performer, ent.AsNullable());
     }
 }
 
