@@ -189,6 +189,11 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
         var newHairStyle = HairStyles.DefaultFacialHairStyle.Id;
         var newFacialHairStyle = HairStyles.DefaultFacialHairStyle.Id;
 
+        // we're also declaring a new marking set for our species, so we can grab weight later.
+        var markingSet = new Dictionary<MarkingCategories, MarkingPoints>();
+        if (protoMan.TryIndex(species, out SpeciesPrototype? speciesProto))
+            markingSet = new MarkingSet(speciesProto.MarkingPoints, markingManager, protoMan).Points;
+
         // now we loop through every extant marking category,
         foreach (var category in Enum.GetValues<MarkingCategories>())
         {
@@ -201,10 +206,6 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
                 markingWeights.Add(marking.Key, marking.Value.RandomWeight);
 
             // grab the markingset from our category..
-            var markingSet = new Dictionary<MarkingCategories, MarkingPoints>();
-            if (protoMan.TryIndex(species, out SpeciesPrototype? speciesProto))
-                markingSet = new MarkingSet(speciesProto.MarkingPoints, markingManager, protoMan).Points;
-
             if (!markingSet.TryGetValue(category, out var categorySet))
                 continue;
 
@@ -218,7 +219,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
             }
 
             // if it's facial hair, there are entries in the category, and the character is not female, roll & assign a random one. else bald
-            if (category == MarkingCategories.FacialHair)
+            else if (category == MarkingCategories.FacialHair)
             {
                 newFacialHairStyle = markings.Count == 0 || sex == Sex.Female || !random.Prob(categorySet.Weight)
                     ? HairStyles.DefaultFacialHairStyle.Id
