@@ -1,9 +1,6 @@
-using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
-
 namespace Content.Server.Mapping;
 
-[RegisterComponent]
+[RegisterComponent, UnsavedComponent]
 public sealed partial class AutoSaveMapComponent : Component
 {
     [DataField]
