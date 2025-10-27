@@ -242,7 +242,7 @@
     Enzyme:
       amount: 1
   products:
-    Felinase: 1
+    Felinase: 2
 
 - type: reaction
   id: Borkinase
@@ -258,4 +258,4 @@
     Enzyme:
       amount: 1
   products:
-    Borkinase: 1
+    Borkinase: 2
