@@ -156,10 +156,13 @@ public abstract partial class InteractionTest
   - type: CombatMode
 ";
 
+    protected static PoolSettings Default => new() { Connected = true, Dirty = true };
+    protected virtual PoolSettings Settings => Default;
+
     [SetUp]
     public virtual async Task Setup()
     {
-        Pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
+        Pair = await PoolManager.GetServerClient(Settings);
 
         // server dependencies
         SEntMan = Server.ResolveDependency<IEntityManager>();
