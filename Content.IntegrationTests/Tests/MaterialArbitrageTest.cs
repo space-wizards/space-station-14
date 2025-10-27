@@ -31,9 +31,7 @@ public sealed class MaterialArbitrageTest
     // These recipes are currently broken and need fixing. You should not be adding to these sets.
     private readonly HashSet<string> _destructionArbitrageIgnore =
     [
-        "BaseChemistryEmptyVial", "DrinkShotGlass", "SodiumLightTube", "DrinkGlassCoupeShaped",
-        "LedLightBulb", "ExteriorLightTube", "LightTube", "DrinkGlass", "DimLightBulb", "LightBulb", "LedLightTube",
-        "ChemistryEmptyBottle01", "WarmLightBulb",
+        "BaseChemistryEmptyVial", "DrinkShotGlass", "DrinkGlassCoupeShaped", "DrinkGlass", "ChemistryEmptyBottle01",
     ];
 
     private readonly HashSet<string> _compositionArbitrageIgnore =
