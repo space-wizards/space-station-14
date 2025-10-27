@@ -14,8 +14,12 @@ namespace Content.Shared.IdentityManagement.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class IdentityComponent : Component
 {
+    /// <summary>
+    /// The slot which carries around the entity representing the carrier's
+    /// perceived identity. May be null if the component is not initialized.
+    /// </summary>
     [ViewVariables]
-    public ContainerSlot IdentityEntitySlot = default!;
+    public ContainerSlot? IdentityEntitySlot;
 }
 
 /// <summary>
@@ -32,7 +36,7 @@ public sealed class IdentityRepresentation
     public string? PresumedName;
     public string? PresumedJob;
 
-    public IdentityRepresentation(string trueName, Gender trueGender, string ageString, string? presumedName=null, string? presumedJob=null)
+    public IdentityRepresentation(string trueName, Gender trueGender, string ageString, string? presumedName = null, string? presumedJob = null)
     {
         TrueName = trueName;
         TrueGender = trueGender;

@@ -1,10 +1,7 @@
 <paper:StampWidget xmlns="https://spacestation14.io"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:style="clr-namespace:Content.Client.Stylesheets"
-    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-    xmlns:paper="clr-namespace:Content.Client.Paper.UI" HorizontalAlignment="Center" Margin="6">
-
-    <paper:StampLabel Name="StampedByLabel" StyleClasses="LabelHeadingBigger"
-        FontColorOverride="{x:Static style:StyleNano.DangerousRedFore}"
-        Margin="12 6 12 6"/>
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:paper="clr-namespace:Content.Client.Paper.UI"
+                   HorizontalAlignment="Center"
+                   Margin="6">
+    <paper:StampLabel Name="StampedByLabel" StyleClasses="LabelHeadingBigger" Margin="12 6 12 6" />
 </paper:StampWidget>

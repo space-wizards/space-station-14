@@ -14,21 +14,21 @@ public sealed class StoreSystem : SharedStoreSystem
 
     protected override void WithdrawCurrency(EntityUid user, CurrencyPrototype currency, int amount)
     {
-        FixedPoint2 amountRemaining = amount;
-        var coordinates = Transform(user).Coordinates;
+        FixedPoint2 amountRemaining = msg.Amount;
+        var coordinates = Transform(buyer).Coordinates;
 
-        if (currency.Cash == null)
-            return;
-
-        var sortedCashValues = currency.Cash.Keys.OrderByDescending(x => x).ToList();
+        var sortedCashValues = proto.Cash.Keys.OrderByDescending(x => x).ToList();
         foreach (var value in sortedCashValues)
         {
-            var cashId = currency.Cash[value];
+            var cashId = proto.Cash[value];
             var amountToSpawn = (int) MathF.Floor((float) (amountRemaining / value));
-            var stack = _stack.SpawnMultiple(cashId, amountToSpawn, coordinates);
-            if (stack.FirstOrDefault() is var stackEnt)
-                Hands.PickupOrDrop(user, stackEnt);
+            var ents = _stack.SpawnMultipleAtPosition(cashId, amountToSpawn, coordinates);
+            if (ents.FirstOrDefault() is {} ent)
+                _hands.PickupOrDrop(buyer, ent);
             amountRemaining -= value * amountToSpawn;
         }
+
+        component.Balance[msg.Currency] -= msg.Amount;
+        UpdateUserInterface(buyer, uid, component);
     }
 }
