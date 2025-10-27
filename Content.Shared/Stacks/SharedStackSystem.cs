@@ -185,7 +185,14 @@ public abstract partial class SharedStackSystem : EntitySystem
     {
         ReduceCount(eaten.AsNullable(), 1);
 
-        if (eaten.Comp.Count > 0 && TryComp<EdibleComponent>(eaten, out var edible))
+        // Ingested system will spawn trash when food is destroyed
+        if (eaten.Comp.Count <= 0)
+        {
+            args.Destroy = true;
+            return;
+        }
+
+        if (TryComp<EdibleComponent>(eaten, out var edible))
             _ingestion.SpawnTrash((eaten, edible), args.User);
     }
 
