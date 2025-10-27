@@ -29,10 +29,7 @@ namespace Content.IntegrationTests.Tests;
 public sealed class MaterialArbitrageTest
 {
     // These recipes are currently broken and need fixing. You should not be adding to these sets.
-    private readonly HashSet<string> _destructionArbitrageIgnore =
-    [
-        "BaseChemistryEmptyVial", "ChemistryEmptyBottle01",
-    ];
+    private readonly HashSet<string> _destructionArbitrageIgnore = [];
 
     private readonly HashSet<string> _compositionArbitrageIgnore =
     [
