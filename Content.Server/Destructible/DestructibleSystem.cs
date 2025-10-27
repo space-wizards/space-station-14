@@ -26,7 +26,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Destructible
 {
     [UsedImplicitly]
-    public sealed class DestructibleSystem : SharedDestructibleSystem
+    public sealed partial class DestructibleSystem : SharedDestructibleSystem
     {
         [Dependency] public readonly IRobustRandom Random = default!;
         public new IEntityManager EntityManager => base.EntityManager;

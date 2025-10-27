@@ -25,9 +25,6 @@ public sealed class XAEPortalSystem : BaseXAESystem<XAEPortalComponent>
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEPortalComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
         var map = Transform(ent).MapID;
         var validMinds = new ValueList<EntityUid>();
         var mindQuery = EntityQueryEnumerator<MindContainerComponent, MobStateComponent, TransformComponent, MetaDataComponent>();
