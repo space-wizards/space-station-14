@@ -1020,16 +1020,13 @@
   id: MopBasic # ItemMapper: JanitorialTrolley. ConstructionGraph: MoproachShoes
 
 - type: Tag
+  id: MothershipCoreGhostrole # spawn whitelist : SpawnPointGhostRoleMothershipCore
+
+- type: Tag
+  id: MothershipModule # Cyborg module category for evil xenoborg core
+
+- type: Tag
   id: Mouse # CargoBounty: BountyMouse
-
-- type: Tag
-  id: MothershipCoreGhostrole
-
-- type: Tag
-  id: MothershipModule
-
-- type: Tag
-  id: Mouse
  
 - type: Tag
   id: Multitool # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering. ConstructionGraph: LogicGate
@@ -1625,22 +1622,22 @@
 ## X ##
 
 - type: Tag
-  id: XenoborgGhostrole
+  id: XenoborgGhostrole # spawn whitelist : SpawnPointGhostRoleXenoborg
 
 - type: Tag
-  id: XenoborgModuleEngi
+  id: XenoborgModuleEngi # Cyborg module category for evil engineer xenoborg
 
 - type: Tag
-  id: XenoborgModuleGeneric
+  id: XenoborgModuleGeneric # Cyborg module category for evil xenoborg
 
 - type: Tag
-  id: XenoborgModuleHeavy
+  id: XenoborgModuleHeavy # Cyborg module category for evil heavy xenoborg
 
 - type: Tag
-  id: XenoborgModuleScout
+  id: XenoborgModuleScout # Cyborg module category for evil scout xenoborg
 
 - type: Tag
-  id: XenoborgModuleStealth
+  id: XenoborgModuleStealth # Cyborg module category for evil stealth xenoborg
 
 ## Y ##
 ## Z ##
