@@ -72,9 +72,6 @@ public abstract class SharedAnomalySystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (!Timing.IsFirstTimePredicted)
-            return;
-
         DebugTools.Assert(component.MinPulseLength > TimeSpan.FromSeconds(3)); // this is just to prevent lagspikes mispredicting pulses
         RefreshPulseTimer(uid, component);
 
@@ -155,9 +152,6 @@ public abstract class SharedAnomalySystem : EntitySystem
     public void DoAnomalySupercriticalEvent(EntityUid uid, AnomalyComponent? component = null)
     {
         if (!Resolve(uid, ref component))
-            return;
-
-        if (!Timing.IsFirstTimePredicted)
             return;
 
         if (_net.IsServer)
