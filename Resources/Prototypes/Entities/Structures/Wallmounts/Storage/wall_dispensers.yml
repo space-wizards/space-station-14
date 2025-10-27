@@ -54,12 +54,12 @@
   - type: Sprite
     layers:
     - state: cleanerdispenser
-    - state: cleanerdispenser-1
+    - state: fill-1
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
   - type: SolutionContainerVisuals
     maxFillLevels: 5
-    fillBaseName: cleanerdispenser-
+    fillBaseName: fill-
   - type: SolutionContainerManager
     solutions:
       tank:
@@ -77,12 +77,12 @@
   - type: Sprite
     layers:
     - state: fueldispenser
-    - state: fueldispenser-1
+    - state: fill-1
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
   - type: SolutionContainerVisuals
     maxFillLevels: 5
-    fillBaseName: fueldispenser-
+    fillBaseName: fill-
   - type: SolutionContainerManager
     solutions:
       tank:
