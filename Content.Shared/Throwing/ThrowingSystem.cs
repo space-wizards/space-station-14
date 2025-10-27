@@ -29,7 +29,7 @@ public sealed class ThrowingSystem : EntitySystem
     private float _frictionModifier;
     private float _airDamping;
 
-    private const float UnequipAllDefaultMaxThrowForce = 2.0f;
+    private const float ThrowManyRandomDefaultMaxForce = 2.0f;
 
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -269,8 +269,7 @@ public sealed class ThrowingSystem : EntitySystem
             return;
         }
 
-        var maxThrowImpulse = maxThrowImpulseModifier * UnequipAllDefaultMaxThrowForce;
-
+        var maxThrowImpulse = maxThrowImpulseModifier * ThrowManyRandomDefaultMaxForce;
 
         foreach (var item in items)
         {
