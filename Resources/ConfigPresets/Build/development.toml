@@ -38,6 +38,7 @@ preload_grids = false
 
 [admin]
 see_own_notes = true
+new_player_threshold = 120
 
 [ic]
 random_characters = true
