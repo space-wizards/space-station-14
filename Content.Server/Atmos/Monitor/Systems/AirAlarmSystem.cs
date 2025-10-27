@@ -702,13 +702,12 @@ public sealed class AirAlarmSystem : EntitySystem
             {
                 if (atmosAlarmable.LastAlarmState == AtmosAlarmType.Danger && this.IsPowered(uid, EntityManager))
                 {
-                    var indoor = GetEntityQuery<DoorComponent>();
-                    var infirelock = GetEntityQuery<FirelockComponent>();
-                    foreach (EntityUid i in deviceList.Devices)
+                    foreach (EntityUid сonnectedEnt in deviceList.Devices)
                     {
-                        if (!indoor.TryGetComponent(i, out var nouse) && !infirelock.TryGetComponent(i, out var nouse2)) continue;
-                        var door = indoor.GetComponent(i); var firelock = infirelock.GetComponent(i);
-                        if (door.State == DoorState.Open && this.IsPowered(i, EntityManager)) _firelock.UrgentClosure(i, door, firelock);
+                        if (TryComp<FirelockComponent>(сonnectedEnt, out var flc) &
+                            TryComp<DoorComponent>(сonnectedEnt, out var door) &
+                            this.IsPowered(сonnectedEnt, EntityManager))
+                            _firelock.EmergencyPressureStop(сonnectedEnt, flc, door);
                     }
                 }
             }
