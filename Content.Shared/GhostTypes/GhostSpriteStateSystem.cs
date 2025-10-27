@@ -51,10 +51,10 @@ public sealed class GhostSpriteStateSystem : EntitySystem
             }
         }
 
-        if (highestTypes.Count == 3 && highestTypes[0] == "Blunt" && highestTypes[1] == "Heat" && highestTypes[2] == "Heat") // Specific case for explosions
+        highestTypes.Sort();
+        if (highestTypes.Count == 3 && highestTypes[0] == "Blunt" && highestTypes[1] == "Heat" && highestTypes[2] == "Piercing") // Specific case for explosions (not an ideal way of doing it)
         {
-            spriteState = "explosion" + _random.Next(1, 4);
-            Log.Debug("explosion!!");
+            spriteState = "Explosion" + _random.Next(1, 4);
         }
         else
         {
@@ -64,7 +64,6 @@ public sealed class GhostSpriteStateSystem : EntitySystem
                 spriteState += _random.Next(1, spriteAmount + 1);
             }
         }
-        Log.Debug($"weh {spriteState}");
         _appearance.SetData(ent, GhostComponent.GhostVisuals.Damage, ent.Comp.Prefix + spriteState, appearance);
     }
 }
