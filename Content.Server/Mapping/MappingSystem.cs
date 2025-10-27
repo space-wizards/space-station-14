@@ -51,7 +51,7 @@ public sealed class MappingSystem : EntitySystem
 		if (!_autosaveEnabled)
 			return;
 
-		var query = AllEntityQuery<AutoSaveMapComponent>();
+		var query = AllEntityQuery<AutoSaveComponent>();
 		while (query.MoveNext(out var uid, out var auto))
 		{
 			if (Deleted(uid))
@@ -63,7 +63,7 @@ public sealed class MappingSystem : EntitySystem
 			if (!HasComp<MapComponent>(uid) && !HasComp<MapGridComponent>(uid))
 			{
 				Log.Warning($"Can't autosave entity {uid}; it is not a map or grid. Removing component.");
-				RemCompDeferred<AutoSaveMapComponent>(uid);
+				RemCompDeferred<AutoSaveComponent>(uid);
 				continue;
 			}
 
@@ -84,7 +84,7 @@ public sealed class MappingSystem : EntitySystem
 
     private double ReadableTimeLeft(EntityUid uid)
     {
-		if (!TryComp<AutoSaveMapComponent>(uid, out var comp))
+		if (!TryComp<AutoSaveComponent>(uid, out var comp))
 			return 0;
 
 		return Math.Round(comp.NextSaveTime.TotalSeconds - _timing.RealTime.TotalSeconds);
@@ -103,9 +103,9 @@ public sealed class MappingSystem : EntitySystem
         if (!_autosaveEnabled)
             return;
 
-		if (HasComp<AutoSaveMapComponent>(uid))
+		if (HasComp<AutoSaveComponent>(uid))
 		{
-			RemCompDeferred<AutoSaveMapComponent>(uid);
+			RemCompDeferred<AutoSaveComponent>(uid);
 			return;
 		}
 
@@ -118,7 +118,7 @@ public sealed class MappingSystem : EntitySystem
 			return;
 		}
 
-		var comp = EnsureComp<AutoSaveMapComponent>(uid);
+		var comp = EnsureComp<AutoSaveComponent>(uid);
 		comp.FileName = Path.GetFileName(path);
 		comp.NextSaveTime = _timing.RealTime + TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.AutosaveInterval));
 

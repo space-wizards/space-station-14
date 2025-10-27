@@ -1,7 +1,7 @@
 namespace Content.Server.Mapping;
 
 [RegisterComponent, UnsavedComponent]
-public sealed partial class AutoSaveMapComponent : Component
+public sealed partial class AutoSaveComponent : Component
 {
     [DataField]
     public TimeSpan NextSaveTime;
