@@ -19,6 +19,9 @@ public sealed partial class DestructibleSystem
         }
     }
 
+    /// <summary>
+    /// Tests all behaviours in a DestructibleComponent to see how expensive it is to query them.
+    /// </summary>
     public void TestAllBehaviors(List<Entity<DamageableComponent, DestructibleComponent>> destructibles)
     {
        foreach (var (uid, damageable, destructible) in destructibles)

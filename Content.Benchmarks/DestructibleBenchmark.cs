@@ -48,7 +48,7 @@ public class DestructibleBenchmark
     private readonly EntProtoId[] _prototypes = [WindowProtoId, WallProtoId, HumanProtoId];
 
     private readonly List<Entity<DamageableComponent>> _damageables = new();
-    private readonly List<Entity<DamageableComponent,DestructibleComponent>> _destructbiles = new();
+    private readonly List<Entity<DamageableComponent, DestructibleComponent>> _destructbiles = new();
 
     private DamageSpecifier _damage;
 
@@ -106,7 +106,7 @@ public class DestructibleBenchmark
                 var y = 0;
                 foreach (var protoId in _prototypes)
                 {
-                    var coords = new EntityCoordinates(mapdata.Grid, x + 0.5f,  y + 0.5f);
+                    var coords = new EntityCoordinates(mapdata.Grid, x + 0.5f, y + 0.5f);
                     _entMan.SpawnEntity(protoId, coords);
                     y++;
                 }
