@@ -45,6 +45,7 @@ namespace Content.Server.Entry
         [Dependency] private readonly ContentNetworkResourceManager _netResMan = default!;
         [Dependency] private readonly DiscordChatLink _discordChatLink = default!;
         [Dependency] private readonly DiscordLink _discordLink = default!;
+        [Dependency] private readonly DiscordStatusLink _discordStatusLink = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly GhostKickManager _ghostKick = default!;
         [Dependency] private readonly IAdminManager _admin = default!;
@@ -158,6 +159,7 @@ namespace Content.Server.Entry
             _rules.Initialize();
             _discordLink.Initialize();
             _discordChatLink.Initialize();
+            _discordStatusLink.Initialize();
             _euiManager.Initialize();
             _gameMap.Initialize();
             _entSys.GetEntitySystem<GameTicker>().PostInitialize();
@@ -185,6 +187,8 @@ namespace Content.Server.Entry
                     _playTimeTracking.Update();
                     _watchlistWebhookManager.Update();
                     _connection.Update();
+                    _discordLink.Update();
+                    _discordStatusLink.Update();
                     break;
             }
         }
