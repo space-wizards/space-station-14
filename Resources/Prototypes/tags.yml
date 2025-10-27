@@ -368,7 +368,7 @@
   id: CoordinatesDisk # Storage whitelist: DiskCase
 
 - type: Tag # designed to let corgis wear things; at present only for SmartCorgi.  View PR 33737 on upstream for more dog wearables
-  id: CorgiWearable
+  id: CorgiWearable # Used by inventoryTemplate:SmartCorgi to whitelist clothes slots outerClothing, head, back.
 
 - type: Tag #Ohioans die happy
   id: Corn  # CargoBounty: BountyCorn
@@ -899,134 +899,134 @@
 ## M ##
 
 - type: Tag
-  id: Machete
+  id: Machete # Unsued (Exists on Machete, Cutlass)
 
 - type: Tag
-  id: MacroBomb
+  id: MacroBomb # Unused (Exists on MacroBombImplant)
 
 # Magazines ordered by slot then caliber
 
 - type: Tag
-  id: MagazineCalico
+  id: MagazineCalico # Unused x2
 
 - type: Tag
-  id: MagazineCaselessRifle
+  id: MagazineCaselessRifle # Unused (Exists on BaseMagazineCaselessRifle)
 
 - type: Tag
-  id: MagazineHeavyRifle
+  id: MagazineHeavyRifle # Unused (Exists on BaseMagazineHeavyRifle)
 
 - type: Tag
-  id: MagazineHeavyRifleBox
+  id: MagazineHeavyRifleBox # Unused x2
 
 - type: Tag
-  id: MagazineLightRifle
+  id: MagazineLightRifle # Storage whitelist: BaseWeaponRifle, WeaponRifleAk
 
 - type: Tag
-  id: MagazineLightRifleBox
+  id: MagazineLightRifleBox # Storage whitelist: BaseWeaponLightMachineGun
 
 - type: Tag
-  id: MagazineLightRiflePan
+  id: MagazineLightRiflePan # Unused x2
 
 - type: Tag
-  id: MagazineMagnum
+  id: MagazineMagnum # Storage whitelist: ClothingBeltSecurity, WeaponPistolN1984
 
 - type: Tag
-  id: MagazinePistol
+  id: MagazinePistol # Storage whitelist: ClothingBeltSecurity, BaseWeaponPistol, WeaponPistolViper
 
 - type: Tag
-  id: MagazinePistolCaselessRifle
+  id: MagazinePistolCaselessRifle # Storage whitelist: WeaponPistolCobra
 
 - type: Tag
-  id: MagazinePistolHighCapacity
+  id: MagazinePistolHighCapacity # Storage whitelist: WeaponPistolViper
 
 - type: Tag
-  id: MagazinePistolSubMachineGunTopMounted
+  id: MagazinePistolSubMachineGunTopMounted # Storage whitelist: WeaponSubMachineGunWt550
 
 - type: Tag
-  id: MagazineRifle
+  id: MagazineRifle # Storage whitelist: WeaponRifleLecter, WeaponRifleEstoc, WeaponRifleM90GrenadeLauncher
 
 - type: Tag
-  id: MagazineShotgun
+  id: MagazineShotgun # Storage whitelist: WeaponShotgunBulldog
 
 - type: Tag
-  id: MagazinePistolSubMachineGun
+  id: MagazinePistolSubMachineGun # Storage whitelist: BaseWeaponSubMachineGun, WeaponSubMachineGunDrozd
 
 - type: Tag
-  id: MagazineGrenade
+  id: MagazineGrenade # Storage whitelist: ShuttleGunDuster
 
 # Magazines end
 
 - type: Tag
-  id: MailingUnitElectronics
+  id: MailingUnitElectronics # ConstructionGraph: DisposalMachine
+
+- type: Tag # Used on DungeonRoom prototypes.
+  id: Maints # RoomFill spawner whitelist for MaintsRoomMarker.
 
 - type: Tag
-  id: Maints
+  id: Matchstick # Storage whitelist: Ashtray. ConstructionGraph: ImprovisedShotgunShellGraph
 
 - type: Tag
-  id: Matchstick
+  id: Mayo # Storage whitelist: ClothingBeltChef
 
 - type: Tag
-  id: Mayo
+  id: Meat # SpecialDigestible: OrganReptilianStomach. CargoBounty: BountyFood. Several MetamorphRecipes.
 
 - type: Tag
-  id: Meat
+  id: Medal # Storage whitelist: MedalCase
 
 - type: Tag
-  id: Medal
+  id: Medkit # CargoBounty: BountyMedkitBox. ConstructionGraph: MediBot
 
 - type: Tag
-  id: Medkit
+  id: MessyDrinkerImmune # Default value in MessyDrinkerComponent. Tagged entity is immune to spills.
 
 - type: Tag
-  id: MessyDrinkerImmune
+  id: Metal # Used by MicrowaveSystem. Causes microwaves to malfunction when tagged entity is nuked.
 
 - type: Tag
-  id: Metal
+  id: MicroBomb # ReplacementImplant whitelist on MacroBombImplant.
 
 - type: Tag
-  id: MicroBomb
+  id: MicrowaveMachineBoard # CargoBounty: BountyMicrowaveMachineBoard
 
 - type: Tag
-  id: MicrowaveMachineBoard
+  id: MimeBelt # ConstructionGraph: MimeHardsuit, MimeBot
 
 - type: Tag
-  id: MimeBelt
+  id: MimeHappyHonk # ConstructionGraph: MimeBot
 
 - type: Tag
-  id: MimeHappyHonk
+  id: MindTransferTarget # Default value in TransferMindOnGibComponent. Moves the mind of the gibed component owner to the tagged giblet.
+
+- type: Tag # Used on DungeonRoom prototypes.
+  id: Mineshaft # PrefabDunGen whitelist on Mineshaft DungeonConfig.
 
 - type: Tag
-  id: MindTransferTarget
+  id: ModularReceiver # ConstructionGraph: ImprovisedShotgunGraph
 
 - type: Tag
-  id: Mineshaft
+  id: MonkeyCube # Storage whitelist: ClothingBeltChef. CargoBounty: BountyMonkeyCube
 
 - type: Tag
-  id: ModularReceiver
+  id: MonkeyWearable # Used by inventoryTemplate:monkey to whitelist clothing slot outerClothing for slightly less intelligent primates.
 
 - type: Tag
-  id: MonkeyCube
+  id: Mop # Storage whitelist: JanitorialTrolley
 
 - type: Tag
-  id: MonkeyWearable
+  id: MopAdv # ItemMapper: JanitorialTrolley
 
 - type: Tag
-  id: Mop
+  id: MopBasic # ItemMapper: JanitorialTrolley. ConstructionGraph: MoproachShoes
 
 - type: Tag
-  id: MopAdv
+  id: Mouse # CargoBounty: BountyMouse
 
 - type: Tag
-  id: MopBasic
+  id: Multitool # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering. ConstructionGraph: LogicGate
 
 - type: Tag
-  id: Mouse
-
-- type: Tag
-  id: Multitool
-
-- type: Tag
-  id: Mushroom
+  id: Mushroom  # ConstructionGraph: Soil
 
 ## N ##
 - type: Tag
