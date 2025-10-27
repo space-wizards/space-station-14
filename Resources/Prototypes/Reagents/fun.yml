@@ -431,12 +431,12 @@
           min: 50
 
 - type: reagent
-  id: Felinidium
+  id: Felinase
   name: reagent-name-catessence
   group: Toxins
   desc: reagent-desc-catessence
   physicalDesc: reagent-physical-desc-milky
-  flavor: dogfood
+  flavor: cannedtuna
   color: "#d8bed8"
   metabolisms:
     Poison:
@@ -445,8 +445,99 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
-          reagent: Felinidium
-          min: 20
+          reagent: Felinase
+          min: 25
         damage:
           types:
             Cellular: 0.5
+            Radiation: 1
+      - !type:AdjustReagent
+        reagent: Felinase
+        amount: -15
+        conditions:
+        - !type:ReagentCondition
+          reagent: Felinase
+          min: 40
+      - !type:ModifyStatusEffect
+        conditions:
+        - !type:ReagentCondition
+          reagent: Felinase
+          min: 25
+        effectProto: StatusEffectOwO
+        time: 25.0
+        type: Add
+      - !type:Emote
+        conditions:
+        - !type:ReagentCondition
+          reagent: Felinase
+          min: 25
+        emote: Cough
+        showInChat: true
+        showInGuidebook: true
+        force: true
+        probability: 0.05
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Felinase
+          min: 25
+        type: Local
+        visualType: Small
+        messages: [ "capsaicin-effect-light-burn" ]
+        probability: 0.05
+
+- type: reagent
+  id: Borkinase
+  name: reagent-name-borkessence
+  group: Toxins
+  desc: reagent-desc-borkessence
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: dogfood
+  color: "#9a7b4f"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.2
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Borkinase
+          min: 25
+        damage:
+          types:
+            Cellular: 0.5
+            Radiation: 1
+      - !type:AdjustReagent
+        reagent: Borkinase
+        amount: -15
+        conditions:
+        - !type:ReagentCondition
+          reagent: Borkinase
+          min: 40
+      - !type:ModifyStatusEffect
+        conditions:
+        - !type:ReagentCondition
+          reagent: Borkinase
+          min: 25
+        effectProto: StatusEffectBark
+        time: 25.0
+        type: Add
+      - !type:Emote
+        conditions:
+        - !type:ReagentCondition
+          reagent: Borkinase
+          min: 25
+        emote: Cough
+        showInChat: true
+        showInGuidebook: true
+        force: true
+        probability: 0.05
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Borkinase
+          min: 25
+        type: Local
+        visualType: Small
+        messages: [ "capsaicin-effect-light-burn" ]
+        probability: 0.05

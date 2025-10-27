@@ -229,17 +229,33 @@
     CorgiJuice: 2
 
 - type: reaction
-  id: Felinidium
+  id: Felinase
   reactants:
-    CarpoToxin:
+    Haloperidol:
       amount: 3
     Cognizine:
       amount: 2
-    Milk:
+    CarpoToxin:
       amount: 2
     MuteToxin:
       amount: 2
-    Iron:
+    Enzyme:
       amount: 1
   products:
-    Felinidium: 1
+    Felinase: 1
+
+- type: reaction
+  id: Borkinase
+  reactants:
+    Haloperidol:
+      amount: 3
+    Cognizine:
+      amount: 2
+    Happiness:
+      amount: 2
+    MuteToxin:
+      amount: 2
+    Enzyme:
+      amount: 1
+  products:
+    Borkinase: 1
