@@ -17,7 +17,7 @@ namespace Content.Shared.Atmos.Components;
 /// </summary>
 /// <remarks> Note that the entity should have an AirtightComponent and be a grid structure.</remarks>
 [RegisterComponent]
-[NetworkedComponent, AutoGenerateComponentState(fieldDeltas:true)]
+[NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedAtmosphereSystem), typeof(SharedDeltaPressureSystem))]
 public sealed partial class DeltaPressureComponent : Component
 {

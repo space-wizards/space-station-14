@@ -265,7 +265,7 @@ public sealed partial class AtmosphereSystem
         var prev = ent.Comp.IsTakingDamage;
         ent.Comp.IsTakingDamage = toSet;
         if (prev != ent.Comp.IsTakingDamage)
-            DirtyField(ent.AsNullable(), nameof(ent.Comp.IsTakingDamage));
+            Dirty(ent);
     }
 
     /// <summary>
