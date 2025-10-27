@@ -88,8 +88,8 @@
     defaultTarget: cooked spaceshroom
   - type: AtmosExposed
   - type: Temperature
-  - type: TemperatureDamageThresholds
     currentTemperature: 290
+  - type: TemperatureDamageThresholds
   - type: InternalTemperature
     thickness: 0.02
     area: 0.02
