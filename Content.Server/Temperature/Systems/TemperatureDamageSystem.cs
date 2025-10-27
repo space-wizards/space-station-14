@@ -29,9 +29,7 @@ public sealed partial class TemperatureDamageSystem : EntitySystem
     ///     that we need some mechanism to ensure it doesn't double dip on damage for both calls.
     /// </summary>
     public HashSet<Entity<TemperatureDamageThresholdsComponent>> ShouldUpdateDamage = new();
-
-    [ValidatePrototypeId<AlertCategoryPrototype>]
-    public const string TemperatureAlertCategory = "Temperature";
+    public static readonly ProtoId<AlertCategoryPrototype> TemperatureAlertCategory = "Temperature";
 
     public override void Initialize()
     {
