@@ -1050,25 +1050,25 @@
 ## O ##
 
 - type: Tag
-  id: Ointment
+  id: Ointment # Storage whitelist: ClothingBeltMedical
 
 - type: Tag
-  id: Ore
+  id: Ore # Storage whitelist: OreBag, OreBox. MaterialStorage whitelist: OreProcessor
 
 - type: Tag
-  id: OreBananium
+  id: OreBananium # CargoBounty: BountySalvageOreBananium
 
 - type: Tag
-  id: OreGold
+  id: OreGold # CargoBounty: BountySalvageOreGold
 
 - type: Tag
-  id: OrePlasma
+  id: OrePlasma # CargoBounty: BountySalvageOrePlasma
 
 - type: Tag
-  id: OreSilver
+  id: OreSilver # CargoBounty: BountySalvageOreSilver
 
 - type: Tag
-  id: OreUranium
+  id: OreUranium # CargoBounty: BountySalvageOreUranium
 
 ## P ##
 
