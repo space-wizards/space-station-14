@@ -13,12 +13,8 @@ public sealed partial class DestructibleSystem
         {
             foreach (var threshold in destructible.Thresholds)
             {
-                // Chances are, none of these triggers will pass! But we have the extra code just in case!
-                if (Triggered(threshold, (uid, damageable)))
-                {
-                    RaiseLocalEvent(uid, new DamageThresholdReached(destructible, threshold), true);
-                    Execute(threshold, uid);
-                }
+                // Chances are, none of these triggers will pass!
+                Triggered(threshold, (uid, damageable));
             }
         }
     }
@@ -29,7 +25,6 @@ public sealed partial class DestructibleSystem
        {
            foreach (var threshold in destructible.Thresholds)
            {
-               RaiseLocalEvent(uid, new DamageThresholdReached(destructible, threshold), true);
                Execute(threshold, uid);
            }
        }

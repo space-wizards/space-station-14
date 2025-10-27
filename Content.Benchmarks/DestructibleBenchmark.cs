@@ -145,7 +145,7 @@ public class DestructibleBenchmark
     {
         await _pair.Server.WaitPost(() =>
         {
-            _destructible.TestAllTriggers(_destructbiles);
+            _destructible.TestAllBehaviors(_destructbiles);
         });
     }
 
