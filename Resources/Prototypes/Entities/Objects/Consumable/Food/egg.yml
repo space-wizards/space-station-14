@@ -10,8 +10,9 @@
     tags:
       - Egg
       - Meat
-  - type: Food
-    trash: Eggshells
+  - type: Edible
+    trash:
+    - Eggshells
   - type: Sprite
     sprite: Objects/Consumable/Food/egg.rsi
   - type: Item
@@ -60,8 +61,6 @@
   # all below are for egg cooking/exploding
   - type: AtmosExposed
   - type: Temperature
-    currentTemperature: 290
-  - type: TemperatureDamageThresholds
   - type: InternalTemperature
     # ~1mm shell and ~1cm of albumen
     thickness: 0.011
@@ -76,7 +75,7 @@
   id: Eggshells
   description: You're walkin' on 'em bud.
   components:
-  - type: Food
+  - type: Edible
   - type: Sprite
     sprite: Objects/Consumable/Food/egg.rsi
     state: eggshells
@@ -136,6 +135,3 @@
     # preserve temperature from the boiling step
     currentTemperature: 344
   - type: TemperatureDamageThresholds
-  - type: Construction
-    graph: Egg
-    node: boiled

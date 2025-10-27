@@ -6,6 +6,10 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Anchorable
+    flags:
+    - Anchorable
+  - type: Rotatable
   - type: Clickable
   - type: Sprite
     sprite: Structures/stairs.rsi
@@ -14,7 +18,7 @@
   - type: Transform
     anchored: true
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
@@ -59,7 +63,7 @@
 - type: entity
   id: StairStageWhite
   parent: Stairs
-  suffix: White, stage 
+  suffix: White, stage
   components:
   - type: Sprite
     sprite: Structures/stairs.rsi

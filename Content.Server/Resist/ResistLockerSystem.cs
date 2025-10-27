@@ -1,11 +1,11 @@
 using Content.Server.Popups;
-using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.Lock;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Content.Shared.Resist;
+using Content.Shared.Storage.Components;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.ActionBlocker;
@@ -54,7 +54,7 @@ public sealed class ResistLockerSystem : EntitySystem
         {
             BreakOnMove = true,
             BreakOnDamage = true,
-            NeedHand = false //No hands 'cause we be kickin'
+            NeedHand = false, //No hands 'cause we be kickin'
         };
 
         resistLockerComponent.IsResisting = true;

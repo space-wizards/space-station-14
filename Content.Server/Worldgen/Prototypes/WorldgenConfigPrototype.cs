@@ -7,7 +7,7 @@ namespace Content.Server.Worldgen.Prototypes;
 ///     This is a prototype for controlling overall world generation.
 ///     The components included are applied to the map that world generation is configured on.
 /// </summary>
-[Prototype("worldgenConfig")]
+[Prototype]
 public sealed partial class WorldgenConfigPrototype : IPrototype
 {
     /// <inheritdoc />
@@ -30,7 +30,6 @@ public sealed partial class WorldgenConfigPrototype : IPrototype
         foreach (var data in Components.Values)
         {
             var comp = (Component) serialization.CreateCopy(data.Component, notNullableOverride: true);
-            comp.Owner = target; // look im sorry ok this .owner has to live until engine api exists
             entityManager.AddComponent(target, comp);
         }
     }

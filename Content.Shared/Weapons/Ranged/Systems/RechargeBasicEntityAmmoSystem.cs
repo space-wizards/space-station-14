@@ -66,6 +66,9 @@ public sealed class RechargeBasicEntityAmmoSystem : EntitySystem
 
     private void OnExamined(EntityUid uid, RechargeBasicEntityAmmoComponent component, ExaminedEvent args)
     {
+        if (!component.ShowExamineText)
+            return;
+
         if (!TryComp<BasicEntityAmmoProviderComponent>(uid, out var ammo)
             || ammo.Count == ammo.Capacity ||
             component.NextCharge == null)

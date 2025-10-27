@@ -1,6 +1,5 @@
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Item.ItemToggle;
-using Content.Shared.Item.ItemToggle.Components;
+using Content.Shared.Emp;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.Containers;
@@ -13,19 +12,24 @@ public abstract class SharedPowerCellSystem : EntitySystem
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] protected readonly ItemToggleSystem Toggle = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<PowerCellDrawComponent, MapInitEvent>(OnMapInit);
 
         SubscribeLocalEvent<PowerCellSlotComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<PowerCellSlotComponent, EntInsertedIntoContainerMessage>(OnCellInserted);
         SubscribeLocalEvent<PowerCellSlotComponent, EntRemovedFromContainerMessage>(OnCellRemoved);
         SubscribeLocalEvent<PowerCellSlotComponent, ContainerIsInsertingAttemptEvent>(OnCellInsertAttempt);
 
-        SubscribeLocalEvent<PowerCellDrawComponent, ItemToggleActivateAttemptEvent>(OnActivateAttempt);
-        SubscribeLocalEvent<PowerCellDrawComponent, ItemToggledEvent>(OnToggled);
+        SubscribeLocalEvent<PowerCellComponent, EmpAttemptEvent>(OnCellEmpAttempt);
+    }
+
+    private void OnMapInit(Entity<PowerCellDrawComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.NextUpdateTime = Timing.CurTime + ent.Comp.Delay;
     }
 
     private void OnRejuvenate(EntityUid uid, PowerCellSlotComponent component, RejuvenateEvent args)
@@ -70,22 +74,21 @@ public abstract class SharedPowerCellSystem : EntitySystem
         RaiseLocalEvent(uid, new PowerCellChangedEvent(true), false);
     }
 
-    private void OnActivateAttempt(Entity<PowerCellDrawComponent> ent, ref ItemToggleActivateAttemptEvent args)
+    private void OnCellEmpAttempt(Entity<PowerCellComponent> entity, ref EmpAttemptEvent args)
     {
-        if (!HasDrawCharge(ent, ent.Comp, user: args.User)
-            || !HasActivatableCharge(ent, ent.Comp, user: args.User))
-            args.Cancelled = true;
-    }
-
-    private void OnToggled(Entity<PowerCellDrawComponent> ent, ref ItemToggledEvent args)
-    {
-        ent.Comp.NextUpdateTime = Timing.CurTime;
+        var parent = Transform(entity).ParentUid;
+        // relay the attempt event to the slot so it can cancel it
+        if (HasComp<PowerCellSlotComponent>(parent))
+            RaiseLocalEvent(parent, ref args);
     }
 
     public void SetDrawEnabled(Entity<PowerCellDrawComponent?> ent, bool enabled)
     {
         if (!Resolve(ent, ref ent.Comp, false) || ent.Comp.Enabled == enabled)
             return;
+
+        if (enabled)
+            ent.Comp.NextUpdateTime = Timing.CurTime;
 
         ent.Comp.Enabled = enabled;
         Dirty(ent, ent.Comp);

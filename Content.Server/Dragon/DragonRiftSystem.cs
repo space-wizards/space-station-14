@@ -13,6 +13,7 @@ using Robust.Shared.Serialization.Manager;
 using System.Numerics;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Dragon;
@@ -33,9 +34,18 @@ public sealed class DragonRiftSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<DragonRiftComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<DragonRiftComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<DragonRiftComponent, AnchorStateChangedEvent>(OnAnchorChange);
         SubscribeLocalEvent<DragonRiftComponent, ComponentShutdown>(OnShutdown);
+    }
+
+    private void OnGetState(Entity<DragonRiftComponent> ent, ref ComponentGetState args)
+    {
+        args.State = new DragonRiftComponentState
+        {
+            State = ent.Comp.State,
+        };
     }
 
     public override void Update(float frameTime)
@@ -71,7 +81,7 @@ public sealed class DragonRiftSystem : EntitySystem
                 Dirty(uid, comp);
 
                 var msg = Loc.GetString("carp-rift-warning",
-                    ("location", FormattedMessage.RemoveMarkup(_navMap.GetNearestBeaconString((uid, xform)))));
+                    ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, xform)))));
                 _chat.DispatchGlobalAnnouncement(msg, playSound: false, colorOverride: Color.Red);
                 _audio.PlayGlobal("/Audio/Misc/notice1.ogg", Filter.Broadcast(), true);
                 _navMap.SetBeaconEnabled(uid, true);

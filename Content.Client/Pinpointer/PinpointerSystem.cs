@@ -7,6 +7,7 @@ namespace Content.Client.Pinpointer;
 public sealed class PinpointerSystem : SharedPinpointerSystem
 {
     [Dependency] private readonly IEyeManager _eyeManager = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Update(float frameTime)
     {
@@ -18,7 +19,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         // because eye can change it rotation anytime
         // we need to update this arrow in a update loop
         var query = EntityQueryEnumerator<PinpointerComponent, SpriteComponent>();
-        while (query.MoveNext(out var _, out var pinpointer, out var sprite))
+        while (query.MoveNext(out var uid, out var pinpointer, out var sprite))
         {
             if (!pinpointer.HasTarget)
                 continue;
@@ -30,10 +31,10 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
                 case Distance.Close:
                 case Distance.Medium:
                 case Distance.Far:
-                    sprite.LayerSetRotation(PinpointerLayers.Screen, angle);
+                    _sprite.LayerSetRotation((uid, sprite), PinpointerLayers.Screen, angle);
                     break;
                 default:
-                    sprite.LayerSetRotation(PinpointerLayers.Screen, Angle.Zero);
+                    _sprite.LayerSetRotation((uid, sprite), PinpointerLayers.Screen, Angle.Zero);
                     break;
             }
         }

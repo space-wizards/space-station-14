@@ -58,6 +58,11 @@
   copyright: "Created by BlackMajor (github) for ss14, muffled_weh.ogg modified from weh.ogg by Slorkito (ss14 discord)"
   source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Items/Toys/weh.ogg"
 
+- files: ["hew.ogg"]
+  license: "CC0-1.0"
+  copyright: "Modified from weh.ogg by ArtisticRoomba"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Items/Toys/weh.ogg"
+
 - files: ["skub.ogg", "skub3.ogg"]
   license: "CC0-1.0"
   copyright: "Created by BlackMajor (github) for ss14"
@@ -67,3 +72,44 @@
   license: "CC0-1.0"
   copyright: "Created by unusualcrow for ss14"
   source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Items/Toys/skub2.ogg"
+
+- files: ["rawr.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from ss200, made by Daeberdir"
+  source: "https://github.com/ss220-space/Paradise/pull/3756"
+
+- files: ["rubber_chicken_1.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by xprospero for ss14"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Items/Toys/rubber_chicken_1.ogg"
+
+- files: ["rubber_chicken_2.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by xprospero for ss14"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Items/Toys/rubber_chicken_2.ogg"
+
+- files: ["rubber_chicken_3.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by xprospero for ss14"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Items/Toys/rubber_chicken_3.ogg"
+
+- files: ["pushHornHonk.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by Matislav, modified by Thinbug"
+  source: "https://freesound.org/s/564697/"
+
+- files: ["pushHornFloor.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by Dedshot_Dyzek"
+  source: "https://freesound.org/people/Dedshot_Dyzek/sounds/769792/"
+
+- files: ["arf.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by Orsoniks, from the game Casualties Unknown"
+  source: "https://orsonik.itch.io/scav-prototype"
+
+- files: [card_tube_bonk.ogg]
+  copyright: 'created by Crinkem on Freesound; perryprog (GitHub) downmixed to mono'
+  license: "CC0-1.0"
+  source: https://freesound.org/people/Crinkem/sounds/492027/
+

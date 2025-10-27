@@ -4,7 +4,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.EntitySystems;
-using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Server.Popups;
 
 namespace Content.Server.Chemistry.EntitySystems;
@@ -12,14 +12,14 @@ namespace Content.Server.Chemistry.EntitySystems;
 public sealed partial class ReactionMixerSystem : EntitySystem
 {
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainers = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainers = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ReactionMixerComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<ReactionMixerComponent, AfterInteractEvent>(OnAfterInteract, before: [typeof(IngestionSystem)]);
         SubscribeLocalEvent<ReactionMixerComponent, ShakeEvent>(OnShake);
         SubscribeLocalEvent<ReactionMixerComponent, ReactionMixDoAfterEvent>(OnDoAfter);
     }
@@ -29,12 +29,13 @@ public sealed partial class ReactionMixerSystem : EntitySystem
         if (!args.Target.HasValue || !args.CanReach || !entity.Comp.MixOnInteract)
             return;
 
-        if (!MixAttempt(entity, args.Target.Value, out var solution))
+        if (!MixAttempt(entity, args.Target.Value, out _))
             return;
 
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, entity.Comp.TimeToMix, new ReactionMixDoAfterEvent(), entity, args.Target.Value, entity);
 
         _doAfterSystem.TryStartDoAfter(doAfterArgs);
+        args.Handled = true;
     }
 
     private void OnDoAfter(Entity<ReactionMixerComponent> entity, ref ReactionMixDoAfterEvent args)

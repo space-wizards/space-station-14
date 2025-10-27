@@ -15,6 +15,7 @@ public sealed class BlobFloorPlanBuilderSystem : BaseWorldSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefinition = default!;
     [Dependency] private readonly TileSystem _tiles = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -25,10 +26,10 @@ public sealed class BlobFloorPlanBuilderSystem : BaseWorldSystem
     private void OnBlobFloorPlanBuilderStartup(EntityUid uid, BlobFloorPlanBuilderComponent component,
         ComponentStartup args)
     {
-        PlaceFloorplanTiles(component, Comp<MapGridComponent>(uid));
+        PlaceFloorplanTiles(uid, component, Comp<MapGridComponent>(uid));
     }
 
-    private void PlaceFloorplanTiles(BlobFloorPlanBuilderComponent comp, MapGridComponent grid)
+    private void PlaceFloorplanTiles(EntityUid gridUid, BlobFloorPlanBuilderComponent comp, MapGridComponent grid)
     {
         // NO MORE THAN TWO ALLOCATIONS THANK YOU VERY MUCH.
         // TODO: Just put these on a field instead then?
@@ -82,7 +83,7 @@ public sealed class BlobFloorPlanBuilderSystem : BaseWorldSystem
             }
         }
 
-        grid.SetTiles(taken.Select(x => (x.Key, x.Value)).ToList());
+        _map.SetTiles(gridUid, grid, taken.Select(x => (x.Key, x.Value)).ToList());
     }
 }
 

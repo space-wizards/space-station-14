@@ -53,15 +53,15 @@
         enum.AnomalyVesselVisualLayers.Base:
           True: { visible: true }
           False: { visible: false }
-      enum.AnomalyVesselVisuals.AnomalyState:
+      enum.AnomalyVesselVisuals.AnomalySeverity:
         enum.PowerDeviceVisualLayers.Powered:
-          1: { state: powered-1 }
-          2: { state: powered-2 }
-          3: { state: powered-3 }
+          Stable: { state: powered-1 }
+          Decaying: { state: powered-2 }
+          Growing: { state: powered-3 }
         enum.AnomalyVesselVisualLayers.Base:
-          1: { state: anomaly-1 }
-          2: { state: anomaly-2 }
-          3: { state: anomaly-3 }
+          Stable: { state: anomaly-1 }
+          Decaying: { state: anomaly-2 }
+          Growing: { state: anomaly-3 }
       enum.WiresVisuals.MaintenancePanelState:
         enum.WiresVisualLayers.MaintenancePanel:
           True: { visible: false }
@@ -184,7 +184,7 @@
     guides:
     - APE
   - type: Gun
-    projectileSpeed: 4
+    projectileSpeed: 10
     fireRate: 10 #just has to be fast enough to keep up with upgrades
     showExamineText: false
     selectedMode: SemiAuto
@@ -226,6 +226,7 @@
   placement:
     mode: AlignTileAny
   components:
+  - type: StationAiWhitelist
   - type: SpriteFade
   - type: Sprite
     sprite: Structures/Machines/Anomaly/anomaly_generator.rsi
@@ -269,6 +270,7 @@
         - Sheet
     materialWhiteList:
     - Plasma
+  - type: OreSiloClient
   - type: Fixtures
     fixtures:
       fix1:
@@ -284,6 +286,9 @@
     fuelCost: 10
     doAfterDelay: 5
   - type: WiresPanel
+  - type: Wires
+    boardName: wires-board-name-anomalygenerator
+    layoutId: AnomalyGenerator
   - type: Destructible
     thresholds:
     - trigger:
@@ -300,6 +305,8 @@
     interfaces:
         enum.AnomalyGeneratorUiKey.Key:
           type: AnomalyGeneratorBoundUserInterface
+        enum.WiresUiKey.Key:
+          type: WiresBoundUserInterface
   - type: Appearance
   - type: ActiveRadio
     channels:

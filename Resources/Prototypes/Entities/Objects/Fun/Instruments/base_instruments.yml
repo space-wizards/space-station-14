@@ -5,6 +5,7 @@
   description: That's an instrument.
   components:
   - type: Sprite
+    state: icon
   - type: Instrument
   - type: ActivatableUI
     inHandsOnly: true
@@ -32,7 +33,7 @@
     blockSpectators: true # otherwise they can play client-side music
     inHandsOnly: false
     singleUser: true
-    requireHands: true
+    requiresComplex: true
     verbText: verb-instrument-openui
     key: enum.InstrumentUiKey.Key
   - type: InteractionOutline
@@ -62,11 +63,9 @@
         density: 80
         mask:
         - Impassable
-        - HighImpassable
         - MidImpassable
         layer:
         - Opaque
-        - HighImpassable
         - MidImpassable
         - BulletImpassable
   - type: StaticPrice

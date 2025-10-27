@@ -1,0 +1,181 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by Flareguy & EmoGarbage404 using assets taken from https://github.com/tgstation/tgstation at commit 6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "airlock-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "airlock-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "closet-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "closet-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "firelock-1-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "firelock-1-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "firelock-2-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "firelock-2-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "glass-1"
+    },
+    {
+      "name": "glass-2"
+    },
+    {
+      "name": "glass-3"
+    },
+    {
+      "name": "glass-4"
+    },
+    {
+      "name": "glass-5"
+    },
+    {
+      "name": "glass-6"
+    },
+    {
+      "name": "glass-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "glass-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "jetpack-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "jetpack-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "junk-airlock-1"
+    },
+    {
+      "name": "junk-airlock-2"
+    },
+    {
+      "name": "junk-airlock-3"
+    },
+    {
+      "name": "junk-bucket"
+    },
+    {
+      "name": "junk-camera"
+    },
+    {
+      "name": "junk-canister-1"
+    },
+    {
+      "name": "junk-canister-2"
+    },
+    {
+      "name": "junk-closet"
+    },
+    {
+      "name": "junk-fax"
+    },
+    {
+      "name": "junk-fireextinguisher"
+    },
+    {
+      "name": "junk-firelock-1"
+    },
+    {
+      "name": "junk-firelock-2"
+    },
+    {
+      "name": "junk-firelock-3"
+    },
+    {
+      "name": "junk-intercom-1"
+    },
+    {
+      "name": "junk-intercom-2"
+    },
+    {
+      "name": "junk-intercom-3"
+    },
+    {
+      "name": "junk-jetpack"
+    },
+    {
+      "name": "junk-medkit-1"
+    },
+    {
+      "name": "junk-medkit-2"
+    },
+    {
+      "name": "junk-mop-bucket"
+    },
+    {
+      "name": "junk-pai"
+    },
+    {
+      "name": "junk-pai-gold"
+    },
+    {
+      "name": "junk-target"
+    },
+    {
+      "name": "metal-1"
+    },
+    {
+      "name": "metal-2"
+    },
+    {
+      "name": "metal-3"
+    },
+    {
+      "name": "metal-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "metal-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "tube"
+    },
+    {
+      "name": "tube-bk"
+    },
+    {
+      "name": "tube-bl"
+    },
+    {
+      "name": "tube-g"
+    },
+    {
+      "name": "tube-r"
+    },
+    {
+      "name": "tube-y"
+    }
+  ]
+}

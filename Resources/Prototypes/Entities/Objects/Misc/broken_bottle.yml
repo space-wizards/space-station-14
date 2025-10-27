@@ -5,6 +5,8 @@
   description: In Space Glasgow this is called a conversation starter.
   components:
   - type: Sharp
+  - type: Execution
+    doAfterDuration: 4.0
   - type: MeleeWeapon
     attackRate: 1.5
     damage:
@@ -13,7 +15,7 @@
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
   - type: Sprite
-    sprite: Objects/Consumable/TrashDrinks/broken_bottle.rsi
+    sprite: Objects/Misc/broken_bottle.rsi
     state: icon
   - type: DamageOtherOnHit
     damage:

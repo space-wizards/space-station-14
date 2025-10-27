@@ -1,4 +1,4 @@
-using Content.Client.GPS.Components;
+using Content.Shared.GPS.Components;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
 using Robust.Client.GameObjects;
@@ -21,7 +21,7 @@ public sealed class HandheldGpsStatusControl : Control
         _parent = parent;
         _entMan = IoCManager.Resolve<IEntityManager>();
         _transform = _entMan.System<TransformSystem>();
-        _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
+        _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
         AddChild(_label);
         UpdateGpsDetails();
     }
@@ -29,6 +29,13 @@ public sealed class HandheldGpsStatusControl : Control
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
+
+        // don't display the label if the gps component is being removed
+        if (_parent.Comp.LifeStage > ComponentLifeStage.Running)
+        {
+            _label.Visible = false;
+            return;
+        }
 
         _updateDif += args.DeltaSeconds;
         if (_updateDif < _parent.Comp.UpdateRate)
@@ -44,9 +51,9 @@ public sealed class HandheldGpsStatusControl : Control
         var posText = "Error";
         if (_entMan.TryGetComponent(_parent, out TransformComponent? transComp))
         {
-            var pos =  _transform.GetMapCoordinates(_parent.Owner, xform: transComp);
-            var x = (int) pos.X;
-            var y = (int) pos.Y;
+            var pos = _transform.GetMapCoordinates(_parent.Owner, xform: transComp);
+            var x = (int)pos.X;
+            var y = (int)pos.Y;
             posText = $"({x}, {y})";
         }
         _label.SetMarkup(Loc.GetString("handheld-gps-coordinates-title", ("coordinates", posText)));

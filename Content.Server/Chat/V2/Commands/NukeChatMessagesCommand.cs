@@ -14,7 +14,7 @@ public sealed class NukeChatMessagesCommand : ToolshedCommand
     [Dependency] private readonly IEntitySystemManager _manager = default!;
 
     [CommandImplementation("usernames")]
-    public void Command([CommandInvocationContext] IInvocationContext ctx, [CommandArgument] string usernamesCsv)
+    public void Command(IInvocationContext ctx, string usernamesCsv)
     {
         var usernames = usernamesCsv.Split(',');
 

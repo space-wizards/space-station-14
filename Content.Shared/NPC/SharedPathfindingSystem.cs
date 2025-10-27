@@ -2,7 +2,7 @@ using System.Numerics;
 
 namespace Content.Shared.NPC;
 
-public abstract class SharedPathfindingSystem : EntitySystem
+public abstract partial class SharedPathfindingSystem : EntitySystem
 {
     /// <summary>
     /// This is equivalent to agent radii for navmeshes. In our case it's preferable that things are cleanly
@@ -36,5 +36,32 @@ public abstract class SharedPathfindingSystem : EntitySystem
         var diff = start - end;
         var ab = Vector2.Abs(diff);
         return ab.X + ab.Y + (1.41f - 2) * Math.Min(ab.X, ab.Y);
+    }
+
+    public static IEnumerable<Vector2i> GetTileOutline(Vector2i center, float radius)
+    {
+        // https://www.redblobgames.com/grids/circle-drawing/
+        var vecCircle = center + Vector2.One / 2f;
+
+        for (var r = 0; r <= Math.Floor(radius * MathF.Sqrt(0.5f)); r++)
+        {
+            var d = MathF.Floor(MathF.Sqrt(radius * radius - r * r));
+
+            yield return new Vector2(vecCircle.X - d, vecCircle.Y + r).Floored();
+
+            yield return new Vector2(vecCircle.X + d, vecCircle.Y + r).Floored();
+
+            yield return new Vector2(vecCircle.X - d, vecCircle.Y - r).Floored();
+
+            yield return new Vector2(vecCircle.X + d, vecCircle.Y - r).Floored();
+
+            yield return new Vector2(vecCircle.X + r, vecCircle.Y - d).Floored();
+
+            yield return new Vector2(vecCircle.X + r, vecCircle.Y + d).Floored();
+
+            yield return new Vector2(vecCircle.X - r, vecCircle.Y - d).Floored();
+
+            yield return new Vector2(vecCircle.X - r, vecCircle.Y + d).Floored();
+        }
     }
 }

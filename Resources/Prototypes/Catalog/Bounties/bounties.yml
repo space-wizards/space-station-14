@@ -7,7 +7,7 @@
     amount: 1
     whitelist:
       components:
-      - Artifact
+      - XenoArtifact
 
 - type: cargoBounty
   id: BountyBaseballBat
@@ -202,14 +202,16 @@
 
 - type: cargoBounty
   id: BountyKnife
-  reward: 6000
+  reward: 2000
   description: bounty-description-knife
   entries:
   - name: bounty-item-knife
     amount: 5
     whitelist:
       components:
-        - Sharp
+      - Sharp
+      tags:
+      - UtilityKnife # required because retracted utility knives are not Sharp
 
 - type: cargoBounty
   id: BountyLemon
@@ -529,6 +531,9 @@
     whitelist:
       components:
       - HitscanBatteryAmmoProvider
+    blacklist:
+      components:
+      - PowerCell
 
 - type: cargoBounty
   id: BountyFood
@@ -561,6 +566,8 @@
       - Cake
       - Pie
       - Bread
+      - Pistachios
+      - Creamsicle
 
 - type: cargoBounty
   id: BountyVegetable
@@ -692,7 +699,7 @@
 - type: cargoBounty
   id: BountyCardboardBox
   reward: 1500
-  description: bounty-description-cardobard-box
+  description: bounty-description-cardboard-box
   entries:
   - name: bounty-item-cardboard-box
     amount: 12
@@ -743,3 +750,14 @@
     whitelist:
       components:
       - Flash
+
+- type: cargoBounty
+  id: BountyRing
+  reward: 12500
+  description: bounty-description-ring
+  entries:
+  - name: bounty-item-ring
+    amount: 2
+    whitelist:
+      tags:
+      - Ring

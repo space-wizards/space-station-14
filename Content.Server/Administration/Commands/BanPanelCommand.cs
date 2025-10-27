@@ -17,7 +17,7 @@ public sealed class BanPanelCommand : LocalizedCommands
     {
         if (shell.Player is not { } player)
         {
-            shell.WriteError(Loc.GetString("cmd-banpanel-server"));
+            shell.WriteError(Loc.GetString("shell-cannot-run-command-from-server"));
             return;
         }
 

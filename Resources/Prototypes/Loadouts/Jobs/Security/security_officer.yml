@@ -6,12 +6,22 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobWarden
-      time: 21600 #6 hrs
+      time: 6h
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:DepartmentTimeRequirement
       department: Security
-      time: 216000 # 60 hrs
+      time: 60h
+
+#Security Star
+- type: loadoutEffectGroup
+  id: SecurityStarWorthy
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:DepartmentTimeRequirement
+        department: Security
+        time: 100h
 
 # Head
 - type: loadout
@@ -28,6 +38,11 @@
   id: SecurityBeret
   equipment:
     head: ClothingHeadHatBeretSecurity
+
+- type: loadout
+  id: TrooperHat
+  equipment:
+    head: ClothingHeadHatSecurityTrooper
 
 # Jumpsuit
 - type: loadout
@@ -49,6 +64,11 @@
   id: SecurityJumpskirtGrey
   equipment:
     jumpsuit: ClothingUniformJumpskirtSecGrey
+
+- type: loadout
+  id: TrooperUniform
+  equipment:
+    jumpsuit: ClothingUniformSecurityTrooper
 
 - type: loadout
   id: SeniorOfficerJumpsuit
@@ -138,3 +158,13 @@
     proto: SeniorOfficer
   equipment:
     id: SeniorOfficerPDA
+
+# Misc
+- type: loadout
+  id: SecStar
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SecurityStarWorthy
+  storage:
+    back:
+    - Dinkystar

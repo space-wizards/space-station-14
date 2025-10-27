@@ -6,8 +6,10 @@
                   SeparationOverride="0"
                   Name="InternalHBox">
         <SpriteView Scale="2 2"
+                    Margin="0 4 4 4"
                     OverrideDirection="South"
-                    Name="View"/>
+                    Name="View"
+                    SetSize="64 64"/>
         <Label Name="DescriptionLabel"
                ClipText="True"
                HorizontalExpand="True"/>
@@ -16,7 +18,7 @@
         <Button Name="ConfirmDeleteButton"
                 Text="{Loc 'character-setup-gui-character-picker-button-confirm-delete-button'}"
                 Visible="False"
-                ModulateSelfOverride="{x:Static style:StyleNano.ButtonColorCautionDefault}"/>
+                StyleClasses="negative"/>
 
     </BoxContainer>
 </ContainerButton>

@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation/commit/eba0d62005e7754dd8b1c88e45cd949c360774d5",
+  "states": [
+    {
+      "name": "firebot",
+      "delays": [
+        [
+          0.5,
+          0.2
+        ]
+      ]
+    }
+  ]
+}

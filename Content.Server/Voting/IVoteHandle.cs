@@ -1,4 +1,4 @@
-﻿using Content.Server.Voting.Managers;
+using Content.Server.Voting.Managers;
 using Robust.Shared.Player;
 
 namespace Content.Server.Voting
@@ -42,6 +42,11 @@ namespace Content.Server.Voting
         /// If this is true, <see cref="Finished"/> is also true.
         /// </remarks>
         bool Cancelled { get; }
+
+        /// <summary>
+        /// Dictionary of votes cast by players, matching the option's id.
+        /// </summary>
+        IReadOnlyDictionary<ICommonSession, int> CastVotes { get; }
 
         /// <summary>
         /// Current count of votes per option type.

@@ -16,7 +16,7 @@
 
   ## Make Like A Tree And Leave
   <Box>
-    <GuideEntityEmbed Entity="FloraTree06" Caption=""/>
+    <GuideEntityEmbed Entity="FloraTree" Caption=""/>
   </Box>
   Being exposed to too much Robust Harvest will cause a Diona to grow out of control, turning into an immobile tree (dropping all their equipment).
   Cutting down the tree will "restore" the Diona to their mobile state.

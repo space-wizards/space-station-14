@@ -121,12 +121,14 @@
   - type: StepTrigger
     intersectRatio: 0.2
   - type: TriggerOnStepTrigger
-  - type: ClothingRequiredStepTrigger
+  - type: PreventableStepTrigger
   - type: Slippery
     slipSound:
       path: /Audio/Effects/glass_step.ogg
-    launchForwardsMultiplier: 0
-  - type: DamageUserOnTrigger
+    slipData:
+      launchForwardsMultiplier: 0
+  - type: DamageOnTrigger
+    targetUser: true
     damage:
       types:
         Piercing: 5

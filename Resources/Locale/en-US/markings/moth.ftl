@@ -94,7 +94,8 @@ marking-MothWingsJungle = Wings (Jungle)
 marking-MothWingsLadybug-ladybug = Wing
 marking-MothWingsLadybug = Wings (Ladybug)
 
-marking-MothWingsMaple-maple = Wing
+marking-MothWingsMaple-maple_primary = Primary
+marking-MothWingsMaple-maple_secondary = Secondary
 marking-MothWingsMaple = Wings (Maple)
 
 marking-MothWingsMoffra-moffra_primary = Primary

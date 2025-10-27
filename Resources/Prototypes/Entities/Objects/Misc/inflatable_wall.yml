@@ -1,4 +1,5 @@
 - type: entity
+  parent: BaseDeltaPressureGlass
   id: InflatableWall
   name: inflatable barricade
   description: An inflated membrane. Activate to deflate. Do not puncture.
@@ -20,7 +21,7 @@
         layer:
         - WallLayer
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Inflatable
   - type: Destructible
     thresholds:
@@ -31,8 +32,9 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: DisassembleOnAltVerb
-    prototype: InflatableWallStack1
-    doAfter: 3
+    prototypeToSpawn: InflatableWallStack1
+    disassembleTime: 3
+  - type: InflatableSafeDisassembly
   - type: Airtight
   - type: Transform
     anchored: true
@@ -42,7 +44,7 @@
 - type: entity
   id: InflatableDoor
   name: inflatable door
-  parent: BaseMaterialDoor
+  parent: [BaseMaterialDoor, BaseDeltaPressureGlass]
   description: An inflated membrane. Activate to deflate. Now with a door. Do not puncture.
   components:
   - type: Clickable
@@ -68,7 +70,7 @@
     closeSound:
       path: /Audio/Misc/zip.ogg
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Inflatable
   - type: Destructible
     thresholds:
@@ -79,7 +81,8 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: DisassembleOnAltVerb
-    prototype: InflatableDoorStack1
-    doAfter: 3
+    prototypeToSpawn: InflatableDoorStack1
+    disassembleTime: 3
+  - type: InflatableSafeDisassembly
   - type: Occluder
     enabled: false

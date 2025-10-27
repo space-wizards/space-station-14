@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by TheShuEd, rat Taken from https://github.com/tgstation/tgstation/commit/e15c63d100db65eaaa5231133b8a2662ff439131#diff-8dd94e19fdb2ff341b57e31bce101298 and edited by TheShuEd",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "tacoshell_back"
+    },
+    {
+      "name": "tacoshell_forward"
+    },
+    {
+      "name": "cheese"
+    },
+    {
+      "name": "rat"
+    }
+  ]
+}

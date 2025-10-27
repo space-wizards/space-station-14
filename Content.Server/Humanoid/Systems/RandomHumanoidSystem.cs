@@ -50,10 +50,9 @@ public sealed class RandomHumanoidSystem : EntitySystem
         {
             foreach (var entry in prototype.Components.Values)
             {
-                var comp = (Component) _serialization.CreateCopy(entry.Component, notNullableOverride: true);
-                comp.Owner = humanoid; // This .owner must survive for now.
-                EntityManager.RemoveComponent(humanoid, comp.GetType());
-                EntityManager.AddComponent(humanoid, comp);
+                var comp = (Component)_serialization.CreateCopy(entry.Component, notNullableOverride: true);
+                RemComp(humanoid, comp.GetType());
+                AddComp(humanoid, comp);
             }
         }
 

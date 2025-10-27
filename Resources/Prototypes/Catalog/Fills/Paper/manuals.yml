@@ -23,3 +23,21 @@
         type: PaperBoundUserInterface
   - type: Paper
     content: book-text-holoparasite-info
+
+- type: entity
+  id: PaperAgrichemManual
+  name: NT "AgriChem Is Fun" manual
+  description: The single sheet of instructions that came in the kit. 
+  parent: Paper
+  components:
+  - type: Paper
+    content: book-text-agrichemkit-manual
+
+- type: entity
+  id: PaperWrittenCombatBakeryKit
+  name: "combat bakery kit instructions"
+  description: "Eat note after reading."
+  parent: Paper
+  components:
+  - type: Paper
+    content: book-text-combat-bakery-kit

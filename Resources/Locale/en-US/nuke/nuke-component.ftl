@@ -1,9 +1,12 @@
 nuke-component-cant-anchor-floor = The anchoring bolts fail to lock into the floor!
+nuke-component-cant-anchor-toggle = The nuclear authentication disk is required to toggle the floor bolts!
 nuke-component-announcement-sender = Nuclear Fission Explosive
 nuke-component-announcement-armed = Attention! The station's self-destruct mechanism has been engaged {$location}. {$time} seconds until detonation. If this was made in error, the mechanism may still be disarmed.
 nuke-component-announcement-unarmed = The station's self-destruct was deactivated! Have a nice day!
 nuke-component-announcement-send-codes = Attention! Self-destruction codes have been sent to designated fax machines.
 nuke-component-doafter-warning = You start fiddling with wires and knobs in order to disarm the nuke.. This may take a while.
+
+nuke-disk-component-microwave = The disk sparks and fizzles a bit, but seems mostly unharmed?
 
 # Nuke UI
 nuke-user-interface-title = Nuclear Fission Explosive

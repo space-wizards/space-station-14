@@ -64,7 +64,11 @@
       "directions": 4
     },
     {
-      "name": "maple",
+      "name": "maple_primary",
+      "directions": 4
+    },
+    {
+      "name": "maple_secondary",
       "directions": 4
     },
     {

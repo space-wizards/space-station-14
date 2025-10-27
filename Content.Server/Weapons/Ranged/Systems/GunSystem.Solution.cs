@@ -1,5 +1,4 @@
 using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
@@ -12,7 +11,7 @@ namespace Content.Server.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
-    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
     protected override void InitializeSolution()
     {
@@ -40,8 +39,9 @@ public sealed partial class GunSystem
         if (solution == null && !_solutionContainer.TryGetSolution(uid, component.SolutionId, out _, out solution))
         {
             component.Shots = shots;
+            DirtyField(uid, component, nameof(SolutionAmmoProviderComponent.Shots));
             component.MaxShots = maxShots;
-            Dirty(uid, component);
+            DirtyField(uid, component, nameof(SolutionAmmoProviderComponent.MaxShots));
             return;
         }
 
@@ -49,8 +49,10 @@ public sealed partial class GunSystem
         maxShots = (int) (solution.MaxVolume / component.FireCost);
 
         component.Shots = shots;
+        DirtyField(uid, component, nameof(SolutionAmmoProviderComponent.Shots));
+
         component.MaxShots = maxShots;
-        Dirty(uid, component);
+        DirtyField(uid, component, nameof(SolutionAmmoProviderComponent.MaxShots));
 
         UpdateSolutionAppearance(uid, component);
     }

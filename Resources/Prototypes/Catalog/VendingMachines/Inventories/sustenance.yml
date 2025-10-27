@@ -5,8 +5,13 @@
     FoodSnackNutribrick: 5
     FoodSnackMREBrownie: 5
     FoodCondimentPacketKetchup: 5
-  emaggedInventory:
+  contrabandInventory:
+    FoodTinMRE: 3
+    FoodTinBeans: 3
+    FoodTinPeaches: 3
+    DrinkBeerCan: 6
     KitchenKnife: 2
+  emaggedInventory:
     ClothingMaskBreath: 3
     EmergencyOxygenTankFilled: 3
     DrinkNukieCan: 2

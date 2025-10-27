@@ -1,16 +1,30 @@
 using Content.Server.Botany.Components;
+using Content.Shared.EntityEffects;
+using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 
 namespace Content.Server.Botany.Systems;
 
 public sealed partial class BotanySystem
 {
+    [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
+
     public void ProduceGrown(EntityUid uid, ProduceComponent produce)
     {
         if (!TryGetSeed(produce, out var seed))
             return;
 
-        var solutionContainer = _solutionContainerSystem.EnsureSolution(uid, produce.SolutionName, FixedPoint2.Zero, out _);
+        foreach (var mutation in seed.Mutations)
+        {
+            if (mutation.AppliesToProduce)
+                _entityEffects.TryApplyEffect(uid, mutation.Effect);
+        }
+
+        if (!_solutionContainerSystem.EnsureSolution(uid,
+                produce.SolutionName,
+                out var solutionContainer,
+                FixedPoint2.Zero))
+            return;
 
         solutionContainer.RemoveAllSolution();
         foreach (var (chem, quantity) in seed.Chemicals)
@@ -21,6 +35,25 @@ public sealed partial class BotanySystem
             amount = FixedPoint2.New(MathHelper.Clamp(amount.Float(), quantity.Min, quantity.Max));
             solutionContainer.MaxVolume += amount;
             solutionContainer.AddReagent(chem, amount);
+        }
+    }
+
+    public void OnProduceExamined(EntityUid uid, ProduceComponent comp, ExaminedEvent args)
+    {
+        if (comp.Seed == null)
+            return;
+
+        using (args.PushGroup(nameof(ProduceComponent)))
+        {
+            foreach (var m in comp.Seed.Mutations)
+            {
+                // Don't show mutations that have no effect on produce (sentience)
+                if (!m.AppliesToProduce)
+                    continue;
+
+                if (m.Description != null)
+                    args.PushMarkup(Loc.GetString(m.Description));
+            }
         }
     }
 }
