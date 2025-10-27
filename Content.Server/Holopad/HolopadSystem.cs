@@ -4,6 +4,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Telephone;
 using Content.Shared.Access.Systems;
 using Content.Shared.Audio;
+using Content.Shared.Chat;
 using Content.Shared.Chat.TypingIndicator;
 using Content.Shared.Holopad;
 using Content.Shared.IdentityManagement;
@@ -402,6 +403,9 @@ public sealed class HolopadSystem : SharedHolopadSystem
             return;
 
         if (!this.IsPowered(entity, EntityManager))
+            return;
+
+        if (HasComp<StationAiCoreComponent>(entity))
             return;
 
         if (!TryComp<TelephoneComponent>(entity, out var entityTelephone) ||

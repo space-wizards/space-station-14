@@ -74,9 +74,9 @@ public abstract class SharedPowerCellSystem : EntitySystem
         RaiseLocalEvent(uid, new PowerCellChangedEvent(true), false);
     }
 
-    private void OnCellEmpAttempt(EntityUid uid, PowerCellComponent component, EmpAttemptEvent args)
+    private void OnCellEmpAttempt(Entity<PowerCellComponent> entity, ref EmpAttemptEvent args)
     {
-        var parent = Transform(uid).ParentUid;
+        var parent = Transform(entity).ParentUid;
         // relay the attempt event to the slot so it can cancel it
         if (HasComp<PowerCellSlotComponent>(parent))
             RaiseLocalEvent(parent, ref args);
