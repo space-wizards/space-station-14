@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Boaz1111
-  changes:
-  - message: Various species can now have the same scars as humans do, with exceptions.
-    type: Add
-  - message: A smaller variant of the eye scars has been added.
-    type: Add
-  id: 8660
-  time: '2025-06-11T21:56:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35645
 - author: SlamBamActionman
   changes:
   - message: Propeller hats can now be found in the Clothesmate.
@@ -3929,3 +3920,12 @@
   id: 9161
   time: '2025-10-26T18:50:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41068
+- author: ArtisticRoomba
+  changes:
+  - message: Examine text for whether an object is currently taking Delta-Pressure
+      damage is predicted, so you no longer have to wait for it to pop into place,
+      it just shows up instantly.
+    type: Tweak
+  id: 9162
+  time: '2025-10-27T11:12:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41135
