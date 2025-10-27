@@ -42,3 +42,17 @@
     icon: { sprite : Interface/Actions/changeling.rsi, state: "transform" }
   - type: InstantAction
     event: !type:ChangelingTransformActionEvent
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionChangelingStasis
+  name: "[color=red]Enter Stasis[/color]"
+  description: Enter a regenerative stasis, faking death and allowing to regenerate all damage.
+  components:
+  - type: Action
+    icon: { sprite : Interface/Actions/changeling.rsi, state: "stasis_enter" }
+    iconOn: { sprite : Interface/Actions/changeling.rsi, state: "stasis_exit" }
+    useDelay: 2
+    priority: 1
+  - type: InstantAction
+    event: !type:ChangelingStasisActionEvent
