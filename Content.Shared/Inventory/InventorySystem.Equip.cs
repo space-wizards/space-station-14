@@ -558,23 +558,22 @@ public abstract partial class InventorySystem
     /// <param name="ent">The inventory's owner.</param>
     /// <param name="forceUnequip">Whether to force unequipping all items, no matter what.</param>
     /// <returns>Successfully unequipped items.</returns>
-    public HashSet<EntityUid> TryUnequipAll(Entity<InventoryComponent?, HandsComponent?> ent, bool forceUnequip = true)
+    public HashSet<EntityUid> TryUnequipAll(Entity<InventoryComponent?> ent, bool forceUnequip = true)
     {
         var unequippedItems = new HashSet<EntityUid>();
 
-        if (!Resolve(ent.Owner, ref ent.Comp1, false))
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
         {
             return unequippedItems;
         }
 
         var inventoryItems = new Queue<EntityUid>(GetHandOrInventoryEntities(ent.Owner));
 
-        var hasHands = Resolve(ent.Owner, ref ent.Comp2, false);
-        if (hasHands)
+        foreach (var heldItem in _handsSystem.EnumerateHeld(ent.Owner))
         {
-            foreach (var heldItem in _handsSystem.EnumerateHeld(ent.Owner))
+            if (_handsSystem.TryDrop(ent.Owner, heldItem, checkActionBlocker: false))
             {
-                _handsSystem.TryDrop(ent.Owner, heldItem, checkActionBlocker: false);
+                unequippedItems.Add(heldItem);
             }
         }
 
@@ -582,21 +581,23 @@ public abstract partial class InventorySystem
         {
             if (TryGetContainingSlot(item, out var itemSlot))
             {
-                if (HasItemsInDependentSlots((ent, ent.Comp1), itemSlot.Name))
+                if (HasItemsInDependentSlots((ent, ent.Comp), itemSlot.Name))
                 {
                     inventoryItems.Enqueue(item);
                     continue;
                 }
 
-                if (TryUnequip(ent, ent, itemSlot.Name, force: forceUnequip))
+                if (!TryUnequip(ent, ent, itemSlot.Name, force: forceUnequip, silent: true))
                 {
-                    unequippedItems.Add(item);
+                    _transform.DropNextTo(ent.Owner, item);
                 }
             }
-            else if (hasHands)
+            else
             {
-                unequippedItems.Add(item);
+                _transform.DropNextTo(ent.Owner, item);
             }
+
+            unequippedItems.Add(item);
         }
 
         return unequippedItems;
