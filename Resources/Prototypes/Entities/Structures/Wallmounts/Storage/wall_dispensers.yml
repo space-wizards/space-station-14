@@ -101,20 +101,3 @@
   - type: Explosive
     explosionType: Default
     totalIntensity: 50
-
-- type: entity
-  parent: BaseDispenser
-  id: PepperDispenser
-  name: pepper dispenser
-  description: Wallmount Pepper dispenser.
-  components:
-  - type: Sprite
-    layers:
-    - state: pepperdispenser
-  - type: SolutionContainerManager
-    solutions:
-      tank:
-        maxVol: 500
-        reagents:
-        - ReagentId: Blackpepper
-          Quantity: 500
