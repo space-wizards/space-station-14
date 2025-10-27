@@ -899,7 +899,7 @@
 ## M ##
 
 - type: Tag
-  id: Machete # Unsued (Exists on Machete, Cutlass)
+  id: Machete # Unused (Exists on Machete, Cutlass)
 
 - type: Tag
   id: MacroBomb # Unused (Exists on MacroBombImplant)
