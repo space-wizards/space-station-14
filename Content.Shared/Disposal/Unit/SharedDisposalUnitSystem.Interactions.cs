@@ -138,7 +138,7 @@ public abstract partial class SharedDisposalUnitSystem
 
     private void OnInsertAttempt(Entity<DisposalUnitComponent> ent, ref ContainerIsInsertingAttemptEvent args)
     {
-        if (args.Cancelled)
+        if (args.Cancelled || args.Container != ent.Comp.Container)
             return;
 
         if (GetContainedEntityCount(ent) >= ent.Comp.MaxCapacity)
