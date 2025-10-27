@@ -4,6 +4,11 @@
   name: man-machine interface
   description: A machine able to facilitate communication between a biological brain and electronics, enabling crew to continue to provide value after work-related incidents.
   components:
+  - type: Tag
+    tags:
+      - PlayableSilicon
+  - type: MindExamination
+    examinationType: Silicon
   - type: Sprite
     sprite: Objects/Specific/Robotics/mmi.rsi
     layers:
@@ -74,6 +79,8 @@
   name: positronic brain
   description: An artificial brain capable of spontaneous neural activity.
   components:
+    - type: MindContainer
+      showExamineInfo: true
     - type: Sprite
       sprite: Objects/Specific/Robotics/mmi.rsi
       layers:
@@ -124,6 +131,9 @@
     - type: Tag
       tags:
       - CannotSuicide
+      - PlayableSilicon
+    - type: MindExamination
+      examinationType: Silicon
     - type: GenericVisualizer
       visuals:
         enum.ToggleableGhostRoleVisuals.Status:
@@ -131,6 +141,7 @@
             Off: { state: posibrain }
             Searching: { state: posibrain-searching }
             On: { state: posibrain-occupied }
+            Ssd: { state: posibrain-ssd }
     - type: GuideHelp
       guides:
       - Cyborgs

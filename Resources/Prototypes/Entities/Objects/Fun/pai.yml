@@ -6,6 +6,11 @@
   name: personal ai device
   description: Your electronic pal who's fun to be with!
   components:
+  - type: Tag
+    tags:
+    - PlayableSilicon
+  - type: MindExamination
+    examinationType: Silicon
   - type: Instrument
     allowPercussion: false
     handheld: false

@@ -2,6 +2,8 @@
   id: BorgChassisSelectable
   parent: BaseBorgChassisNT
   components:
+  - type: MindContainer
+    showExamineInfo: true
   - type: Sprite
     layers:
     - state: robot
