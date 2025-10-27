@@ -12,5 +12,9 @@ public abstract partial class SharedDeltaPressureSystem : EntitySystem
         SubscribeLocalEvent<DeltaPressureComponent, ExaminedEvent>(OnExaminedEvent);
     }
 
-    protected virtual void OnExaminedEvent(Entity<DeltaPressureComponent> ent, ref ExaminedEvent args) { }
+    private void OnExaminedEvent(Entity<DeltaPressureComponent> ent, ref ExaminedEvent args)
+    {
+        if (ent.Comp.IsTakingDamage)
+            args.PushMarkup(Loc.GetString("window-taking-damage"));
+    }
 }
