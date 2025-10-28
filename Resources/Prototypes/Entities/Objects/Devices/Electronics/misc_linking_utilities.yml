@@ -9,7 +9,7 @@
     node: finished
   - type: Sprite
     sprite: Objects/Devices/voicesensor.rsi
-    state: voice
+    state: icon
   - type: StaticPrice
     price: 40
   - type: DeviceLinkSource
