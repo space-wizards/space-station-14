@@ -193,9 +193,6 @@ reagent-desc-jungle-bird = Despite the name, it’s not exceptionally popular am
 reagent-name-kalimotxo = kalimotxo
 reagent-desc-kalimotxo = A high-class Cuba Libre, for the discerning alcoholic.
 
-reagent-name-kira-special = Deadly kira
-reagent-desc-kira-special = It's quite ironic that it's less harmful than kir.
-
 reagent-name-tortuga = Tortuga
 reagent-desc-tortuga = Perfect for pirates who’ve been selected as the designated driver. Yarr!
 

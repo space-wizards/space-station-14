@@ -715,20 +715,6 @@
     Kalimotxo: 2
 
 - type: reaction
-  id: KiraSpecial
-  requiredMixerCategories:
-  - Stir
-  reactants:
-    JuiceLime:
-      amount: 1
-    JuiceOrange:
-      amount: 1
-    SodaWater:
-      amount: 1
-  products:
-    KiraSpecial: 3
-
-- type: reaction
   id: Lemonade
   requiredMixerCategories:
   - Stir

@@ -1230,22 +1230,6 @@
 
 - type: entity
   parent: DrinkGlass
-  id: DrinkKiraSpecial
-  suffix: Deadly kira
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: KiraSpecial
-          Quantity: 30
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/kiraspecial.rsi
-    state: icon
-
-- type: entity
-  parent: DrinkGlass
   id: DrinkLemonadeGlass
   suffix: lemonade
   components:

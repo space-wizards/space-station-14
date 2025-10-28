@@ -567,22 +567,6 @@
   color: "#B3B599"
 
 - type: reagent
-  id: KiraSpecial
-  name: reagent-name-kira-special
-  parent: BaseDrink
-  desc: reagent-desc-kira-special
-  physicalDesc: reagent-physical-desc-strong-smelling
-  flavor: sweet
-  color: "#CCCC99"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/kiraspecial.rsi
-    state: icon_empty
-  metamorphicMaxFillLevels: 3
-  metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
-  fizziness: 0.3
-
-- type: reagent
   id: Rewriter
   name: reagent-name-rewriter
   parent: BaseDrink
