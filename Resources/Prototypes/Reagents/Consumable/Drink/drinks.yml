@@ -567,10 +567,10 @@
   color: "#B3B599"
 
 - type: reagent
-  id: Lifechanger
-  name: reagent-name-lifechanger
+  id: KiraSpecial
+  name: reagent-name-kira-special
   parent: BaseDrink
-  desc: reagent-desc-lifechanger
+  desc: reagent-desc-kira-special
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: sweet
   color: "#CCCC99"
