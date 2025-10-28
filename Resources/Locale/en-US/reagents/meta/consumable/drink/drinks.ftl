@@ -93,3 +93,6 @@ reagent-desc-posca = Poor warriors' drink from a forgotten era.
 
 reagent-name-mopwata = mopwata
 reagent-desc-mopwata = Dirty, stagnant mop water.
+
+reagent-name-lifechanger = lifechanger
+reagent-desc-lifechanger = A simple reminder that sometimes nothing changes until something terrible happens.
