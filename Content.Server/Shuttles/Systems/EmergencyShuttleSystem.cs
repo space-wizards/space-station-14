@@ -643,7 +643,7 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
     }
 
     /// <summary>
-    /// Returns whether a target is escaping on the emergency shuttle, but only if evac has arrived.
+    /// Returns whether a target is escaping on the emergency shuttle, or has already reached centcomm, but only if evac has arrived.
     /// </summary>
     public bool IsTargetEscaping(EntityUid target)
     {
@@ -655,6 +655,9 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
         var xform = Transform(target);
 
         if (HasComp<EmergencyShuttleComponent>(xform.GridUid))
+            return true;
+
+        if (xform.MapUid != null && GetCentcommMaps().Contains(xform.MapUid.Value))
             return true;
 
         return false;
