@@ -11,13 +11,11 @@
     Poison:
       effects:
       - !type:Oxygenate
-        scaling: true
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Human, Animal, Rat, Plant ]
       # Convert Oxygen into CO2.
       - !type:ModifyLungGas
-        scaling: true
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Vox ]
@@ -29,7 +27,6 @@
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Vox ]
-        scaling: true
         ignoreResistances: true
         damage:
           types:
@@ -45,13 +42,11 @@
     Gas:
       effects:
       - !type:Oxygenate
-        scaling: true
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Human, Animal, Rat, Plant ]
       # Convert Oxygen into CO2.
       - !type:ModifyLungGas
-        scaling: true
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Vox ]
@@ -63,7 +58,6 @@
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Vox ]
-        scaling: true
         ignoreResistances: true
         damage:
           types:
@@ -103,7 +97,6 @@
     Gas:
       effects:
       - !type:HealthChange
-        scaling: true
         ignoreResistances: true
         damage:
           types:
@@ -149,7 +142,6 @@
     Gas:
       effects:
       - !type:HealthChange
-        scaling: true
         ignoreResistances: true
         damage:
           types:
@@ -173,7 +165,6 @@
     Poison:
       effects:
       - !type:Oxygenate
-        scaling: true
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Plant ]
@@ -182,14 +173,12 @@
         - !type:MetabolizerTypeCondition
           type: [ Plant, Vox ]
           inverted: true
-        scaling: true
         ignoreResistances: true
         damage:
           types:
             Poison:
               0.4
       - !type:Oxygenate
-        scaling: true
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Plant ]
@@ -198,7 +187,6 @@
     Gas:
       effects:
       - !type:Oxygenate
-        scaling: true
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Plant ]
@@ -210,14 +198,12 @@
           inverted: true
         # Don't want people to get toxin damage from the gas they just
         # exhaled, right?
-        scaling: true
         ignoreResistances: true
         damage:
           types:
             Poison:
               0.8
       - !type:Oxygenate # carbon dioxide displaces oxygen from the bloodstream, causing asphyxiation
-        scaling: true
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Plant ]
@@ -246,13 +232,11 @@
     Gas:
       effects:
       - !type:Oxygenate
-        scaling: true
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Vox, Slime ]
       # Converts Nitrogen into Ammonia
       - !type:ModifyLungGas
-        scaling: true
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Vox ]
@@ -260,7 +244,6 @@
           Ammonia: 1.0
           Nitrogen: -1.0
       - !type:ModifyLungGas
-        scaling: true
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Slime ]
@@ -359,7 +342,6 @@
     Narcotic:
       effects:
       - !type:HealthChange
-        scaling: true
         ignoreResistances: true
         damage:
           types:
@@ -386,7 +368,6 @@
       effects:
       - !type:HealthChange
         minScale: 1
-        scaling: true
         ignoreResistances: true
         damage:
           types:
