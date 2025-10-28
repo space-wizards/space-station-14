@@ -1,14 +1,18 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.Atmos.Piping.Binary.Components;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class GasPassiveGateComponent : Component
 {
     [DataField("inlet")]
-    public string InletName { get; set; } = "inlet";
+    public string InletName = "inlet";
     [DataField("outlet")]
-    public string OutletName { get; set; } = "outlet";
+    public string OutletName = "outlet";
 
     [ViewVariables(VVAccess.ReadOnly)]
-    [DataField]
-    public float FlowRate { get; set; } = 0;
+    [DataField, AutoNetworkedField]
+    public float FlowRate;
+
+    public float OldFlowRate;
 }

@@ -1,13 +1,10 @@
 ﻿using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Examine;
-using Robust.Shared.Network;
 
 namespace Content.Shared.Atmos.Piping.Binary.Systems;
 
 public abstract class SharedPassiveGateSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _netManager = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -20,10 +17,7 @@ public abstract class SharedPassiveGateSystem : EntitySystem
         if (!Comp<TransformComponent>(gate).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
             return;
 
-        var str = _netManager.IsServer
-            ? Loc.GetString("gas-passive-gate-examined", ("flowRate", $"{gate.Comp.FlowRate:0.#}"))
-            : Loc.GetString("gas-passive-gate-updating");
-
+        var str = Loc.GetString("gas-passive-gate-examined", ("flowRate", $"{gate.Comp.FlowRate:0.#}"));
         args.PushMarkup(str);
     }
 }
