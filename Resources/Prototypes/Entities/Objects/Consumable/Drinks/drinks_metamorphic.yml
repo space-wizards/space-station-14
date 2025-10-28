@@ -1231,7 +1231,7 @@
 - type: entity
   parent: DrinkGlass
   id: DrinkOrangeLimeSodaGlass
-  suffix: orange-lime soda
+  suffix: citrus bikeshed
   components:
   - type: SolutionContainerManager
     solutions:

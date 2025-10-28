@@ -94,5 +94,5 @@ reagent-desc-posca = Poor warriors' drink from a forgotten era.
 reagent-name-mopwata = mopwata
 reagent-desc-mopwata = Dirty, stagnant mop water.
 
-reagent-name-orange-lime-soda = orange-lime soda
-reagent-desc-orange-lime-soda = Surprisingly sweet mix of citruses and soda.
+reagent-name-orange-lime-soda = citrus bikeshed
+reagent-desc-orange-lime-soda = The soda should be orange! No, it should be lemon-lime!
