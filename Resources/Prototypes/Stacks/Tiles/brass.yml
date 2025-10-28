@@ -1,0 +1,13 @@
+# Tiles made of brass
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileBrassFilled
+  name: stack-filled-brass-plate
+  spawn: FloorTileItemBrassFilled
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileBrassReebe
+  name: stack-smooth-brass-plate
+  spawn: FloorTileItemBrassReebe

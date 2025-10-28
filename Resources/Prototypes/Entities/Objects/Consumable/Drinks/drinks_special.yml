@@ -12,17 +12,8 @@
     size: Tiny
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shotglass.rsi
-    layers:
-    - state: icon # TODO add "icon_empty" state to match "DrinkVisualsFillOverlay"
-      map: [ "enum.SolutionContainerLayers.Base" ]
-    - state: fill1
-      map: [ "enum.SolutionContainerLayers.Fill" ]
-      visible: false
-    - state: icon-front
-      map: [ "enum.SolutionContainerLayers.Overlay" ]
   - type: SolutionContainerVisuals
     maxFillLevels: 2
-    fillBaseName: fill # TODO rename to "fill-" to match "DrinkVisualsFillOverlay"
     inHandsMaxFillLevels: 1
   - type: FitsInDispenser
     solution: drink
@@ -147,6 +138,21 @@
     - Shake
 
 - type: entity
+  parent: DrinkShaker
+  id: DrinkShakerGold
+  name: golden shaker
+  description: A gold-plated shaker given as a token of appreciation for years of service. It doesn't make the drinks taste any different.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/shaker_gold.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/shaker_gold.rsi
+  - type: PhysicalComposition
+    materialComposition:
+      Gold: 10 # Gold plated, not solid gold
+      Steel: 40
+
+- type: entity
   parent: [DrinkBaseMaterialMetal, DrinkBase]
   id: DrinkJigger
   name: jigger
@@ -184,11 +190,6 @@
         maxVol: 60
   - type: Sprite
     sprite: Objects/Consumable/Drinks/pitcher.rsi
-    layers:
-    - state: icon # TODO add "icon_empty" state to match "DrinkVisualsFill"
-    - state: fill-1
-      map: ["enum.SolutionContainerLayers.Fill"]
-      visible: false
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     inHandsMaxFillLevels: 2
