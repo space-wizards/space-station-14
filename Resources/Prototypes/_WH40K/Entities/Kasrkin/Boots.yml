@@ -1,0 +1,18 @@
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: SpecBoots
+  name: Kaskrin boots
+  description: Boots
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/FEET/Karskin.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/FEET/Karskin.rsi
+  - type: ClothingSlowOnDamageModifier
+    modifier: 0.5
+  - type: Armor 
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.985
+
