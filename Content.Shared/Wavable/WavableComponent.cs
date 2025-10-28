@@ -6,5 +6,6 @@ namespace Content.Shared.Wavable;
 [RegisterComponent]
 public sealed partial class WavableComponent : Component
 {
-
+    [DataField]
+    public bool UseInHand = true;
 }

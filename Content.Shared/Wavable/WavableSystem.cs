@@ -18,7 +18,6 @@ public sealed class WavableSystem : EntitySystem
 
         SubscribeLocalEvent<WavableComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<WavableComponent, GetVerbsEvent<InteractionVerb>>(AddWaveVerb);
-        SubscribeLocalEvent<WavableComponent, ExaminedEvent>(OnExamine);
     }
 
     private void AddWaveVerb(EntityUid uid, WavableComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -38,14 +37,9 @@ public sealed class WavableSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private void OnExamine(Entity<WavableComponent> entity, ref ExaminedEvent args)
-    {
-        args.PushText(Loc.GetString("wavable-component-examine"));
-    }
-
     private void OnUseInHand(EntityUid uid, WavableComponent component, UseInHandEvent args)
     {
-        if(args.Handled)
+        if(args.Handled || !component.UseInHand)
             return;
 
         Wave(uid, args.User);
