@@ -7,7 +7,7 @@
   - type: Sprite
     sprite: _WH40K/Clothing/Gloves/Karskin.rsi
   - type: Clothing
-    sprite: 
+    sprite: _WH40K/Clothing/Gloves/Karskin.rsi
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-durathread
