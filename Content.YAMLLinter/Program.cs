@@ -15,39 +15,55 @@ namespace Content.YAMLLinter
 {
     internal static class Program
     {
-        private static async Task<int> Main(string[] _)
+        private static async Task<int> Main(string[] args)
         {
+            if (!CommandLineArguments.TryParse(args, out var arguments))
+                return -1;
+
             PoolManager.Startup();
             var stopwatch = new Stopwatch();
             stopwatch.Start();
+            await using var pair = await PoolManager.GetServerClient();
 
-            var (errors, fieldErrors) = await RunValidation();
-
-            var count = errors.Count + fieldErrors.Count;
-
-            if (count == 0)
+            if (arguments.Diff)
             {
-                Console.WriteLine($"No errors found in {(int) stopwatch.Elapsed.TotalMilliseconds} ms.");
-                PoolManager.Shutdown();
-                return 0;
+                var server = pair.Server;
+                var protoMan = server.ResolveDependency<IPrototypeManager>();
+                protoMan.SaveEntityPrototypes(new(arguments.DiffPath));
+                await pair.CleanReturnAsync();
+                Console.WriteLine($"Saved in {(int)stopwatch.Elapsed.TotalMilliseconds} ms.");
             }
 
-            foreach (var (file, errorHashset) in errors)
+            else
             {
-                foreach (var errorNode in errorHashset)
+                var (errors, fieldErrors) = await RunValidation();
+
+                var count = errors.Count + fieldErrors.Count;
+
+                if (count == 0)
                 {
-                    // TODO YAML LINTER Fix inheritance
-                    // If a parent/abstract prototype has na error, this will misreport the file name (but with the correct line/column).
-                    Console.WriteLine($"::error in {file}({errorNode.Node.Start.Line},{errorNode.Node.Start.Column})  {errorNode.ErrorReason}");
+                    Console.WriteLine($"No errors found in {(int)stopwatch.Elapsed.TotalMilliseconds} ms.");
+                    PoolManager.Shutdown();
+                    return 0;
                 }
-            }
 
-            foreach (var error in fieldErrors)
-            {
-                Console.WriteLine(error);
-            }
+                foreach (var (file, errorHashset) in errors)
+                {
+                    foreach (var errorNode in errorHashset)
+                    {
+                        // TODO YAML LINTER Fix inheritance
+                        // If a parent/abstract prototype has na error, this will misreport the file name (but with the correct line/column).
+                        Console.WriteLine($"::error in {file}({errorNode.Node.Start.Line},{errorNode.Node.Start.Column})  {errorNode.ErrorReason}");
+                    }
+                }
 
-            Console.WriteLine($"{count} errors found in {(int) stopwatch.Elapsed.TotalMilliseconds} ms.");
+                foreach (var error in fieldErrors)
+                {
+                    Console.WriteLine(error);
+                }
+
+                Console.WriteLine($"{count} errors found in {(int)stopwatch.Elapsed.TotalMilliseconds} ms.");
+            }
             PoolManager.Shutdown();
             return -1;
         }
