@@ -349,6 +349,7 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
         foreach (var entity in GetContainedEntities(ent))
         {
             _container.Insert(entity, holder.Comp.Container);
+            _disposalHolder.AttachEntity((holderUid, holder), entity);
         }
 
         if (tags != null)
