@@ -5,9 +5,7 @@ using Content.Server.NPC.Queries.Considerations;
 using Content.Server.NPC.Queries.Curves;
 using Content.Server.NPC.Queries.Queries;
 using Content.Server.Nutrition.Components;
-using Content.Server.Temperature.Components;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Inventory;
@@ -30,6 +28,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Content.Shared.Atmos.Components;
 using System.Linq;
+using Content.Shared.Damage.Components;
+using Content.Shared.Temperature.Components;
 
 namespace Content.Server.NPC.Systems;
 
@@ -185,7 +185,7 @@ public sealed class NPCUtilitySystem : EntitySystem
                     return 0f;
 
                 var nutrition = _ingestion.TotalNutrition(targetUid, owner);
-                if (nutrition <= 1.0f)
+                if (nutrition == 0.0f)
                     return 0f;
 
                 return 1f;
@@ -512,11 +512,12 @@ public sealed class NPCUtilitySystem : EntitySystem
                 {
                     foreach (var comp in compFilter.Components)
                     {
-                        if (HasComp(ent, comp.Value.Component.GetType()))
-                            continue;
-
-                        _entityList.Add(ent);
-                        break;
+                        var hasComp = HasComp(ent, comp.Value.Component.GetType());
+                        if (!compFilter.RetainWithComp == hasComp)
+                        {
+                            _entityList.Add(ent);
+                            break;
+                        }
                     }
                 }
 
