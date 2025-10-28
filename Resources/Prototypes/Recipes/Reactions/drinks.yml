@@ -715,7 +715,7 @@
     Kalimotxo: 2
 
 - type: reaction
-  id: Lifechanger
+  id: KiraSpecial
   requiredMixerCategories:
   - Stir
   reactants:
@@ -726,7 +726,7 @@
     SodaWater:
       amount: 1
   products:
-    Lifechanger: 3
+    KiraSpecial: 3
 
 - type: reaction
   id: Lemonade

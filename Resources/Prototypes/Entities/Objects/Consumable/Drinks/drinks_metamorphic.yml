@@ -1230,15 +1230,15 @@
 
 - type: entity
   parent: DrinkGlass
-  id: DrinkLifechangerGlass
-  suffix: lifechanger
+  id: DrinkKiraSpecial
+  suffix: kira special
   components:
   - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 30
         reagents:
-        - ReagentId: Lifechanger
+        - ReagentId: KiraSpecial
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/kiraspecial.rsi
