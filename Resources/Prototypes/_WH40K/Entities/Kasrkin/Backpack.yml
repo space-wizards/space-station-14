@@ -1,0 +1,32 @@
+- type: entity
+  parent: [Clothing, ContentsExplosionResistanceBase]
+  id: SpecBackpack
+  name: Kaskrin Backpack
+  description: You shit yourself.
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/OutherClothing/backpack.rsi
+    state: icon
+  - type: Item
+    size: Huge
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - back
+  - type: Storage
+    grid:
+    - 0,0,8,4
+    maxItemSize: Huge
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  # to prevent bag open/honk spam
+  - type: UseDelay
+    delay: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
