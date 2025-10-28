@@ -274,8 +274,8 @@
   effects:
   - !type:Explosion
     explosionType: Radioactive
-    maxIntensity: 90
-    intensityPerUnit: 3
-    intensitySlope: 1
-    maxTotalIntensity: 125
+    maxIntensity: 5
+    intensityPerUnit: 1
+    intensitySlope: 2.7
+    maxTotalIntensity: 50
     tileBreakScale: 0.00001
