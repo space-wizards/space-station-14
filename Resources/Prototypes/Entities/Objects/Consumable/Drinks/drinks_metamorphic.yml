@@ -1231,7 +1231,7 @@
 - type: entity
   parent: DrinkGlass
   id: DrinkKiraSpecial
-  suffix: Deadly kira
+  suffix: kira special
   components:
   - type: SolutionContainerManager
     solutions:
