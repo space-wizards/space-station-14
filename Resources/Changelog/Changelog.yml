@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: M1tht1c
-  changes:
-  - message: You can now remove visitors mindshields.
-    type: Fix
-  - message: Disaster victims now have mindshields when appropriate.
-    type: Fix
-  id: 8666
-  time: '2025-06-13T14:43:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36537
 - author: SyaoranFox
   changes:
   - message: Rat King is now a full antag.
@@ -3923,3 +3914,10 @@
   id: 9167
   time: '2025-10-28T07:21:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41160
+- author: emberwinters
+  changes:
+  - message: Diphenhydramine now respects its maximum drowsiness
+    type: Fix
+  id: 9168
+  time: '2025-10-28T17:14:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41169
