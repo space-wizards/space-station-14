@@ -13,7 +13,7 @@ namespace Content.Shared.Disposal.Unit;
 /// </summary>
 public abstract class SharedBeingDisposedSystem : EntitySystem
 {
-    [Dependency] private readonly SharedDisposalHolderSystem _disposable = default!;
+    [Dependency] private readonly SharedDisposalHolderSystem _disposalHolder = default!;
 
     public override void Initialize()
     {
@@ -40,7 +40,7 @@ public abstract class SharedBeingDisposedSystem : EntitySystem
         // This is so that movement under subfloors can be predicted by follower clients.
         foreach (var follower in followed.Following)
         {
-            _disposable.AttachEntity((ent.Comp.Holder, holder), follower);
+            _disposalHolder.AttachEntity((ent.Comp.Holder, holder), follower);
         }
     }
 
@@ -52,7 +52,7 @@ public abstract class SharedBeingDisposedSystem : EntitySystem
 
         foreach (var follower in followed.Following)
         {
-            _disposable.DetachEntity(follower);
+            _disposalHolder.DetachEntity(follower);
         }
     }
 
@@ -62,13 +62,13 @@ public abstract class SharedBeingDisposedSystem : EntitySystem
         if (!TryComp<DisposalHolderComponent>(ent.Comp.Holder, out var holder))
             return;
 
-        _disposable.AttachEntity((ent.Comp.Holder, holder), args.Follower);
+        _disposalHolder.AttachEntity((ent.Comp.Holder, holder), args.Follower);
     }
 
     private void OnStoppedFollowing(Entity<BeingDisposedComponent> ent, ref EntityStoppedFollowingEvent args)
     {
         // Remove departing followers from the disposal holder
-        _disposable.DetachEntity(args.Follower);
+        _disposalHolder.DetachEntity(args.Follower);
     }
 
     private void OnInteractionAttempt(Entity<BeingDisposedComponent> ent, ref InteractionAttemptEvent args)

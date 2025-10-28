@@ -68,7 +68,7 @@ public abstract partial class SharedDisposalUnitSystem
             Category = VerbCategory.Insert,
             Act = () =>
             {
-                _handsSystem.TryDropIntoContainer((verbData.User, verbData.Hands), verbData.Using.Value, ent.Comp.Container, checkActionBlocker: false);
+                _hands.TryDropIntoContainer((verbData.User, verbData.Hands), verbData.Using.Value, ent.Comp.Container, checkActionBlocker: false);
                 _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(verbData.User):player} inserted {ToPrettyString(verbData.Using.Value)} into {ToPrettyString(ent)}");
                 Insert(ent, verbData.Using.Value, verbData.User);
             }
@@ -145,7 +145,7 @@ public abstract partial class SharedDisposalUnitSystem
         {
             // TODO: If ContainerIsInsertingAttemptEvent ever ends up having the user
             // attached to the event, we'll be able to predict the pop up
-            _popupSystem.PopupPredicted(Loc.GetString("disposal-unit-is-full"), ent, null);
+            _popup.PopupPredicted(Loc.GetString("disposal-unit-is-full"), ent, null);
 
             args.Cancel();
             return;
@@ -181,7 +181,7 @@ public abstract partial class SharedDisposalUnitSystem
 
         if (ent.Comp.Container == null ||
             !_container.CanInsert(args.Used, ent.Comp.Container) ||
-            !_handsSystem.TryDropIntoContainer(args.User, args.Used, ent.Comp.Container))
+            !_hands.TryDropIntoContainer(args.User, args.Used, ent.Comp.Container))
         {
             return;
         }
@@ -248,7 +248,7 @@ public abstract partial class SharedDisposalUnitSystem
         // Mobs are allowed to jump inside even without any hands
         if (user != null && !HasComp<HandsComponent>(user) && toInsert != user)
         {
-            _popupSystem.PopupEntity(Loc.GetString("disposal-unit-no-hands"), user.Value, user.Value, PopupType.SmallCaution);
+            _popup.PopupEntity(Loc.GetString("disposal-unit-no-hands"), user.Value, user.Value, PopupType.SmallCaution);
             return false;
         }
 
@@ -259,7 +259,7 @@ public abstract partial class SharedDisposalUnitSystem
         // Warn other players if someone is dragging them into a disposal unit
         if (user != null && !insertingSelf)
         {
-            _popupSystem.PopupEntity(Loc.GetString("disposal-unit-being-inserted",
+            _popup.PopupEntity(Loc.GetString("disposal-unit-being-inserted",
                 ("user", Identity.Entity(user.Value, EntityManager))),
                 toInsert,
                 toInsert,
@@ -281,6 +281,6 @@ public abstract partial class SharedDisposalUnitSystem
             NeedHand = false,
         };
 
-        return _doAfterSystem.TryStartDoAfter(doAfterArgs);
+        return _doAfter.TryStartDoAfter(doAfterArgs);
     }
 }

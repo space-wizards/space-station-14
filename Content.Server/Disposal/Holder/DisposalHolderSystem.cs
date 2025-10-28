@@ -11,7 +11,7 @@ namespace Content.Server.Disposal.Holder;
 public sealed partial class DisposalHolderSystem : SharedDisposalHolderSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
-    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
     /// <inheritdoc/>
@@ -44,7 +44,7 @@ public sealed partial class DisposalHolderSystem : SharedDisposalHolderSystem
 
         // Unanchor the tube and exit
         var xform = Transform(tube);
-        _xformSystem.Unanchor(tube, xform);
+        _xform.Unanchor(tube, xform);
         Exit(ent);
 
         return true;
