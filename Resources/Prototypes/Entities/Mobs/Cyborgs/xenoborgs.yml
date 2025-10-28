@@ -172,6 +172,7 @@
   - type: FootstepModifier # it flies instead of walking
     footstepSoundCollection:
       collection: FootstepHoverXenoborg
+  - type: MovementAlwaysTouching # it flies in space with tiny thrusters
   - type: FlashImmunity
   - type: BorgChassis
     maxModules: 4
