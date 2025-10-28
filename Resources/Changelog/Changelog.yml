@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SyaoranFox
-  changes:
-  - message: Rat King is now a full antag.
-    type: Tweak
-  id: 8667
-  time: '2025-06-13T15:52:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38124
 - author: qrwas
   changes:
   - message: add missing locale for Undergarment
@@ -3921,3 +3914,10 @@
   id: 9168
   time: '2025-10-28T17:14:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41169
+- author: kosticia
+  changes:
+  - message: Kira special drink has been renamed to the citrus bikeshed.
+    type: Tweak
+  id: 9169
+  time: '2025-10-28T19:58:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41167
