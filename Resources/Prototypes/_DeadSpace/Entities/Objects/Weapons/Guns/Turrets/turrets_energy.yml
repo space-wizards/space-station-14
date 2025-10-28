@@ -1,0 +1,19 @@
+- type: entity
+  parent: WeaponEnergyTurretStationBase
+  id: WeaponEnergyTurretCentralCommand
+  name: охранная турель
+  description: Высокотехнологичная автономная система вооружения, предназначенная для предотвращения проникновений посторонних лиц в важные зоны.
+  suffix: Центральное Командование
+  components:
+  - type: AccessReader
+    access: [["CentralCommand"]]
+  - type: TurretTargetSettings
+    exemptAccessLevels:
+    - CentralCommand
+    - Borg
+    - BasicSilicon
+  - type: Machine
+    board: WeaponEnergyTurretCentralCommandMachineCircuitboard
+  - type: DeviceNetwork
+    receiveFrequencyId: TurretControl
+    transmitFrequencyId: Turret

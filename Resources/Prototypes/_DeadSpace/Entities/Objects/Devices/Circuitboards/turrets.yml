@@ -1,0 +1,12 @@
+- type: entity
+  parent: WeaponEnergyTurretStationMachineCircuitboardBase
+  id: WeaponEnergyTurretCentralCommandMachineCircuitboard
+  name: охранная турель (машинная плата)
+  description: Печатная плата для охранной турели.
+  suffix: Центральное Командование
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/module.rsi
+    state: centcomm
+  - type: MachineBoard
+    prototype: WeaponEnergyTurretCentralCommand
