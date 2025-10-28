@@ -2,7 +2,7 @@
   parent: BaseItem
   id: voicesensor
   name: voice sensor
-  description: This microphone, invented by Micheal Phone during his time working at Michealsoft, can send signals upon a prerecorded code phrase being uttered near it!
+  description: This microphone, invented by Micheal Phone during his time working at Michealsoft, sends signals when a prerecorded code phrase is uttered!
   components:
   - type: Construction
     graph: voiceSensorGraph
