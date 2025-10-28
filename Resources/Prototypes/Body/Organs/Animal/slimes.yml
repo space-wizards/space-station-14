@@ -24,6 +24,11 @@
       solutions:
         stomach:
           maxVol: 30.0
+        food:
+          maxVol: 5
+          reagents:
+          - ReagentId: GreyMatter
+            Quantity: 5
 
 - type: entity
   id: OrganSlimesLungs
@@ -55,3 +60,8 @@
         Lung:
           maxVol: 100.0
           canReact: false
+        food:
+          maxVol: 5
+          reagents:
+          - ReagentId: Slime
+            Quantity: 5
