@@ -28,12 +28,12 @@ public sealed partial class AreaReactionEffect : EntityEffectBase<AreaReactionEf
     /// </summary>
     [DataField(required: true)] public SoundSpecifier Sound = default!;
 
+    public override bool Scaling => true;
+
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-area-reaction",
             ("duration", Duration)
         );
 
-    public override bool ShouldLog => true;
-
-    public override LogImpact LogImpact => LogImpact.High;
+    public override LogImpact? Impact => LogImpact.High;
 }

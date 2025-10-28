@@ -617,9 +617,6 @@
     radius: 1.5
     energy: 1.6
     color: "#3c5eb5"
-  - type: Tag
-    tags:
-    - AccessBreakerImmune
   - type: ItemSlots
   - type: ContainerContainer
     containers:
