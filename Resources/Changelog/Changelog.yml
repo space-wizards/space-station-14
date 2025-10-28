@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Fixed an issue where the gas analyzer and anomaly scanner would need
-      to be reactivated to open the UI
-    type: Fix
-  id: 8662
-  time: '2025-06-12T21:16:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38285
-- author: BigfootBravo
-  changes:
-  - message: Utensils don't spam a warning for incompatible foods.
-    type: Fix
-  id: 8663
-  time: '2025-06-13T01:48:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38297
-- author: hoshizora-sayo
-  changes:
-  - message: Fixed crafting menu entries that included modular machine parts
-    type: Fix
-  id: 8664
-  time: '2025-06-13T05:21:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38299
 - author: nkokic
   changes:
   - message: Tear gas smoke is now white and semi-transparent.
@@ -3926,3 +3904,25 @@
   id: 9163
   time: '2025-10-27T18:56:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41148
+- author: Princess-Cheeseballs
+  changes:
+  - message: Wizard is now only a midround spawn.
+    type: Tweak
+  id: 9164
+  time: '2025-10-23T15:29:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40983
+- author: Princess-Cheeseballs
+  changes:
+  - message: Explosions now scale properly with reagent quantity
+    type: Fix
+  id: 9165
+  time: '2025-10-27T22:54:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41153
+- author: scrivoy
+  changes:
+  - message: Fuel dispensers now explode when ignited with a welding tool, similar
+      to fuel tanks.
+    type: Tweak
+  id: 9166
+  time: '2025-10-27T23:09:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36251
