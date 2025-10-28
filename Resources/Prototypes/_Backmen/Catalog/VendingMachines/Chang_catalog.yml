@@ -7,7 +7,7 @@
     - ChangInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 30
+      stock: 5
 
 - type: listing
   id: ChangInventory2
@@ -18,7 +18,7 @@
     - ChangInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 5
 
 - type: listing
   id: ChangInventory3
@@ -29,7 +29,7 @@
     - ChangInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 3
 
 - type: listing
   id: ChangInventory4
@@ -40,7 +40,7 @@
     - ChangInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 3
 
 - type: listing
   id: ChangInventory5
@@ -51,7 +51,7 @@
     - ChangInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 3
 
 - type: listing
   id: ChangInventory6
@@ -62,5 +62,38 @@
     - ChangInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 3
 
+- type: listing
+  id: ChangInventory7
+  productEntity: PairedChopsticks
+  cost:
+    SpaceCash: 5
+  categories:
+    - ChangInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 3
+
+# Contraband
+- type: listing
+  id: ChangContraband1
+  productEntity: FoodBakedDumplings
+  cost:
+    SpaceCash: 20
+  categories:
+    - ChangInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: ChangContraband2
+  productEntity: FoodSoupMiso
+  cost:
+    SpaceCash: 20
+  categories:
+    - ChangInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2

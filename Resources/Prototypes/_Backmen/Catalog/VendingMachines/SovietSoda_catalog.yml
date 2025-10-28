@@ -1,5 +1,5 @@
 ﻿- type: listing
-  id: BodaInventory
+  id: BodaInventory1
   productEntity: DrinkSodaWaterCan
   cost:
     SpaceCash: 5
@@ -7,4 +7,37 @@
     - BodaInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 30
+      stock: 10
+
+- type: listing
+  id: BodaContraband1
+  productEntity: DrinkSodaWaterBottleFull
+  cost:
+    SpaceCash: 10
+  categories:
+    - BodaInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: BodaContraband2
+  productEntity: DrinkColaCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - BodaInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 10
+
+- type: listing
+  id: BodaContraband3
+  productEntity: ClothingHeadHatUshanka
+  cost:
+    SpaceCash: 25
+  categories:
+    - BodaInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2

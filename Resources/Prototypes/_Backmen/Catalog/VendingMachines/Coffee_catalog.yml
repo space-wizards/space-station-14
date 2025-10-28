@@ -7,7 +7,7 @@
     - HotDrinksMachineInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 5
 
 - type: listing
   id: HotDrinksMachineInventory2
@@ -18,7 +18,7 @@
     - HotDrinksMachineInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 5
 
 - type: listing
   id: HotDrinksMachineInventory3
@@ -29,7 +29,7 @@
     - HotDrinksMachineInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 5
 
 - type: listing
   id: HotDrinksMachineInventory4
@@ -40,5 +40,38 @@
     - HotDrinksMachineInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 5
 
+- type: listing
+  id: HotDrinksMachineInventory5
+  productEntity: DrinkHotCoco
+  cost:
+    SpaceCash: 10
+  categories:
+    - HotDrinksMachineInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 5
+
+# Contraband
+- type: listing
+  id: HotDrinksMachineContraband1
+  productEntity: DrinkTeapot
+  cost:
+    SpaceCash: 20
+  categories:
+    - HotDrinksMachineInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: HotDrinksMachineContraband2
+  productEntity: DrinkNothing
+  cost:
+    SpaceCash: 20
+  categories:
+    - HotDrinksMachineInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2

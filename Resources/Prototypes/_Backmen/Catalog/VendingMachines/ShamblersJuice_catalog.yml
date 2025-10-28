@@ -7,7 +7,7 @@
     - ShamblersJuiceInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 4
 
 - type: listing
   id: ShamblersJuiceInventory2
@@ -18,7 +18,7 @@
     - ShamblersJuiceInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 2
 
 - type: listing
   id: ShamblersJuiceInventory3
@@ -29,7 +29,7 @@
     - ShamblersJuiceInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 2
 
 - type: listing
   id: ShamblersJuiceInventory4
@@ -40,10 +40,21 @@
     - ShamblersJuiceInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 2
 
 - type: listing
   id: ShamblersJuiceInventory5
+  productEntity: DrinkSolDryCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - ShamblersJuiceInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: ShamblersJuiceInventory6
   productEntity: DrinkLemonLimeCan
   cost:
     SpaceCash: 10
@@ -51,10 +62,21 @@
     - ShamblersJuiceInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 2
 
 - type: listing
-  id: ShamblersJuiceInventory6
+  id: ShamblersJuiceInventory7
+  productEntity: DrinkLemonLimeCranberryCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - ShamblersJuiceInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: ShamblersJuiceInventory8
   productEntity: DrinkFourteenLokoCan
   cost:
     SpaceCash: 5
@@ -62,4 +84,16 @@
     - ShamblersJuiceInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 2
+
+- type: listing
+  id: ShamblersJuiceContraband1
+  productEntity: DrinkChangelingStingCan
+  cost:
+    SpaceCash: 20
+  categories:
+    - ShamblersJuiceInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+

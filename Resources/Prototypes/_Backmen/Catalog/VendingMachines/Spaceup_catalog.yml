@@ -7,7 +7,7 @@
     - SpaceUpInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 5
 
 - type: listing
   id: SpaceUpInventory2
@@ -18,7 +18,7 @@
     - SpaceUpInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 5
 
 - type: listing
   id: SpaceUpInventory3
@@ -29,7 +29,7 @@
     - SpaceUpInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 2
 
 - type: listing
   id: SpaceUpInventory4
@@ -40,29 +40,29 @@
     - SpaceUpInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 2
 
 - type: listing
   id: SpaceUpInventory5
-  productEntity:  DrinkIcedTeaCan
+  productEntity: DrinkIcedTeaCan
   cost:
     SpaceCash: 10
   categories:
     - SpaceUpInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 2
 
 - type: listing
   id: SpaceUpInventory6
-  productEntity: DrinkLemonLimeCan
+  productEntity: DrinkSolDryCan
   cost:
     SpaceCash: 10
   categories:
     - SpaceUpInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 2
 
 - type: listing
   id: SpaceUpInventory7
@@ -73,5 +73,38 @@
     - SpaceUpInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 2
+
+- type: listing
+  id: SpaceUpContraband1
+  productEntity: DrinkSpaceMountainWindBottleFull
+  cost:
+    SpaceCash: 20
+  categories:
+    - SpaceUpInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: SpaceUpContraband2
+  productEntity: DrinkSpaceUpBottleFull
+  cost:
+    SpaceCash: 20
+  categories:
+    - SpaceUpInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: SpaceUpContraband3
+  productEntity: DrinkChangelingStingCan
+  cost:
+    SpaceCash: 20
+  categories:
+    - SpaceUpInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
 

@@ -7,7 +7,7 @@
     - GetmoreChocolateCorpInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 3
 
 - type: listing
   id: GetmoreChocolateCorpInventory2
@@ -18,49 +18,70 @@
     - GetmoreChocolateCorpInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 25
+      stock: 3
 
 - type: listing
   id: GetmoreChocolateCorpInventory3
-  productEntity: FoodSnackPopcorn
+  productEntity: FoodSnackCnDs
   cost:
-    SpaceCash: 15
+    SpaceCash: 10
   categories:
     - GetmoreChocolateCorpInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 3
 
 - type: listing
   id: GetmoreChocolateCorpInventory4
-  productEntity: FoodSnackSyndi
+  productEntity: FoodSnackPistachios
   cost:
-    SpaceCash: 15
+    SpaceCash: 10
   categories:
     - GetmoreChocolateCorpInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 3
 
 - type: listing
   id: GetmoreChocolateCorpInventory5
-  productEntity: DrinkRamen
+  productEntity: FoodSnackSus
   cost:
     SpaceCash: 10
   categories:
     - GetmoreChocolateCorpInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 3
 
 - type: listing
   id: GetmoreChocolateCorpInventory6
-  productEntity: DrinkHellRamen
+  productEntity: FoodSnackSemki
   cost:
     SpaceCash: 10
   categories:
     - GetmoreChocolateCorpInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 3
 
+- type: listing
+  id: GetmoreChocolateCorpContraband1
+  productEntity: FoodSnackSwirlLollipop
+  cost:
+    SpaceCash: 20
+  categories:
+    - GetmoreChocolateCorpInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: GetmoreChocolateCorpContraband2
+  productEntity: FoodSnackSyndi
+  cost:
+    SpaceCash: 20
+  categories:
+    - GetmoreChocolateCorpInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 3

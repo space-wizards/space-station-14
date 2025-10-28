@@ -18,4 +18,61 @@
     - HappyHonkInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 10
+      stock: 4
+
+# Contraband
+- type: listing
+  id: HappyHonkContraband1
+  productEntity: ToyFigurineClown
+  cost:
+    SpaceCash: 60
+  categories:
+    - HappyHonkInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
+- type: listing
+  id: HappyHonkContraband2
+  productEntity: ToyFigurineMime
+  cost:
+    SpaceCash: 60
+  categories:
+    - HappyHonkInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
+- type: listing
+  id: HappyHonkContraband3
+  productEntity: ToyFigurineNukie
+  cost:
+    SpaceCash: 60
+  categories:
+    - HappyHonkInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
+- type: listing
+  id: HappyHonkContraband4
+  productEntity: HappyHonkCluwne
+  cost:
+    SpaceCash: 60
+  categories:
+    - HappyHonkInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
+# Emag
+- type: listing
+  id: HappyHonkEmag1
+  productEntity: HappyHonkNukie
+  cost:
+    SpaceCash: 100
+  categories:
+    - HappyHonkInventoryEmag
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1

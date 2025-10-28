@@ -7,7 +7,7 @@
     - PwrGameInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 4
 
 - type: listing
   id: PwrGameInventory2
@@ -18,7 +18,7 @@
     - PwrGameInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 4
 
 - type: listing
   id: PwrGameInventory3
@@ -29,7 +29,7 @@
     - PwrGameInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 2
 
 - type: listing
   id: PwrGameInventory4
@@ -40,7 +40,7 @@
     - PwrGameInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 2
 
 - type: listing
   id: PwrGameInventory5
@@ -51,10 +51,21 @@
     - PwrGameInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 2
 
 - type: listing
   id: PwrGameInventory6
+  productEntity: DrinkSolDryCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - PwrGameInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: PwrGameInventory7
   productEntity: DrinkLemonLimeCan
   cost:
     SpaceCash: 10
@@ -62,10 +73,21 @@
     - PwrGameInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 2
 
 - type: listing
-  id: PwrGameInventory7
+  id: PwrGameInventory8
+  productEntity: DrinkLemonLimeCranberryCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - PwrGameInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: PwrGameInventory9
   productEntity: DrinkFourteenLokoCan
   cost:
     SpaceCash: 5
@@ -73,4 +95,26 @@
     - PwrGameInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 2
+
+- type: listing
+  id: PwrGameContraband1
+  productEntity: DrinkDrGibbCan
+  cost:
+    SpaceCash: 20
+  categories:
+    - PwrGameInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 3
+
+- type: listing
+  id: PwrGameContraband2
+  productEntity: DrinkChangelingStingCan
+  cost:
+    SpaceCash: 25
+  categories:
+    - PwrGameInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2

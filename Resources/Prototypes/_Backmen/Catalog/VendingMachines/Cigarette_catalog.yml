@@ -7,7 +7,7 @@
     - CigaretteMachineInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 3
+      stock: 2
 
 - type: listing
   id: CigaretteMachineInventory2
@@ -18,7 +18,7 @@
     - CigaretteMachineInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 3
+      stock: 2
 
 - type: listing
   id: CigaretteMachineInventory3
@@ -29,7 +29,7 @@
     - CigaretteMachineInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 3
+      stock: 2
 
 - type: listing
   id: CigaretteMachineInventory4
@@ -40,7 +40,7 @@
     - CigaretteMachineInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 3
+      stock: 2
 
 - type: listing
   id: CigaretteMachineInventory5
@@ -62,21 +62,10 @@
     - CigaretteMachineInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 5
+      stock: 1
 
 - type: listing
   id: CigaretteMachineInventory7
-  productEntity: Vape
-  cost:
-    SpaceCash: 25
-  categories:
-    - CigaretteMachineInventory
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 3
-
-- type: listing
-  id: CigaretteMachineInventory8
   productEntity: Matchbox
   cost:
     SpaceCash: 5
@@ -84,21 +73,21 @@
     - CigaretteMachineInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 5
+      stock: 4
 
 - type: listing
-  id: CigaretteMachineInventory9
+  id: CigaretteMachineInventory8
   productEntity: PackPaperRollingFilters
   cost:
-    SpaceCash: 20
+    SpaceCash: 5
   categories:
     - CigaretteMachineInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 3
+      stock: 4
 
 - type: listing
-  id: CigaretteMachineInventory10
+  id: CigaretteMachineInventory9
   productEntity: CheapLighter
   cost:
     SpaceCash: 10
@@ -106,10 +95,10 @@
     - CigaretteMachineInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 5
+      stock: 4
 
 - type: listing
-  id: CigaretteMachineInventory11
+  id: CigaretteMachineInventory10
   productEntity: Lighter
   cost:
     SpaceCash: 15
@@ -117,10 +106,10 @@
     - CigaretteMachineInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 3
+      stock: 2
 
 - type: listing
-  id: CigaretteMachineInventory12
+  id: CigaretteMachineInventory11
   productEntity: FlippoLighter
   cost:
     SpaceCash: 25
@@ -131,7 +120,7 @@
       stock: 2
 
 - type: listing
-  id: CigaretteMachineInventory13
+  id: CigaretteMachineInventory12
   productEntity: CigPackMixed
   cost:
     SpaceCash: 15
@@ -139,10 +128,10 @@
     - CigaretteMachineInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 3
+      stock: 2
 
 - type: listing
-  id: CigaretteMachineInventory14
+  id: CigaretteMachineInventory13
   productEntity: GroundTobacco
   cost:
     SpaceCash: 10
@@ -152,13 +141,48 @@
     - !type:ListingLimitedStockCondition
       stock: 10
 
+# Contraband
 - type: listing
-  id: CigaretteMachineInventory15
-  productEntity: Ashtray
+  id: CigaretteMachineContraband1
+  productEntity: CigarGold
   cost:
-    SpaceCash: 15
+    SpaceCash: 30
   categories:
-    - CigaretteMachineInventory
+    - CigaretteMachineInventoryContraband
   conditions:
     - !type:ListingLimitedStockCondition
       stock: 2
+
+- type: listing
+  id: CigaretteMachineContraband2
+  productEntity: Igniter
+  cost:
+    SpaceCash: 15
+  categories:
+    - CigaretteMachineInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
+# Emag
+- type: listing
+  id: CigaretteMachineEmag1
+  productEntity: FlippoSyndicateLighter
+  cost:
+    SpaceCash: 50
+  categories:
+    - CigaretteMachineInventoryEmag
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
+- type: listing
+  id: CigaretteMachineEmag2
+  productEntity: CigPackSyndicate
+  cost:
+    SpaceCash: 50
+  categories:
+    - CigaretteMachineInventoryEmag
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
