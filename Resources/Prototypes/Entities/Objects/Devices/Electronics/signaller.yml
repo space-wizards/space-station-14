@@ -54,7 +54,6 @@
   id: RemoteSignallerBroken
   name: broken remote signaller
   description: A handheld device used for remotely sending signals. Frequently shocks the user.
-  suffix: DEBUG
   components:
   - type: TriggerOnUse # Despite having trigger components, RemoteSignaller doesn't actually create any triggers to use them
   - type: RandomChanceTriggerCondition
