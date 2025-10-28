@@ -2,7 +2,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Atmos.Piping.Binary.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent]
 public sealed partial class GasPassiveGateComponent : Component
 {
     /// <summary>
@@ -21,12 +21,6 @@ public sealed partial class GasPassiveGateComponent : Component
     /// The current flow rate of the passive gate.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float FlowRate;
-
-    /// <summary>
-    /// The previous flow rate of the passive gate.
-    /// This is used to determine if the FlowRate field should be dirtied.
-    /// </summary>
-    public float OldFlowRate;
 }
