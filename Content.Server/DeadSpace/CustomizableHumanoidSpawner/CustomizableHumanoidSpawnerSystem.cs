@@ -16,6 +16,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Content.Shared.Speech;
 using Content.Shared.Tag;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.DeadSpace.CustomizableHumanoidSpawner;
 
@@ -32,6 +33,7 @@ public sealed class CustomizableHumanoidSpawnerSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly NpcFactionSystem _factionSystem = default!;
+    [Dependency] private readonly ISerializationManager _serialization = default!;
 
     public override void Initialize()
     {
@@ -144,6 +146,13 @@ public sealed class CustomizableHumanoidSpawnerSystem : EntitySystem
 
         if (comp.Tags != null)
             _tagSystem.AddTags(newEntity, comp.Tags);
+
+        if (TryComp<GhostRoleComponent>(uid, out var ghostRoleComponent))
+        {
+            var component = (Component)_serialization.CreateCopy(ghostRoleComponent, notNullableOverride: true);
+            RemComp(newEntity, component.GetType());
+            AddComp(newEntity, component);
+        }
 
         if (comp.Factions != null)
             _factionSystem.AddFactions(newEntity, comp.Factions);
