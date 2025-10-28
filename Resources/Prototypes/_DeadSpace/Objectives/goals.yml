@@ -1,8 +1,4 @@
 - type: stationGoal
-  id: Shuttle
-  text: "/Paperwork/StationGoal/Shuttle.xml"
-
-- type: stationGoal
   id: SolarPanels
   text: "/Paperwork/StationGoal/SolarPanels.xml"
 
@@ -66,10 +62,29 @@
   text: "/Paperwork/StationGoal/Anomalies.xml"
 
 - type: stationGoal
-  id: SmartAnimals
-  text: "/Paperwork/StationGoal/SmartAnimals.xml"
-  modifyStationBalance: -7500
-
-- type: stationGoal
   id: HydroponicsInVacuum
   text: "/Paperwork/StationGoal/HydroponicsInVacuum.xml"
+
+- type: stationGoal
+  id: ShuttleMedical
+  text: "/Paperwork/StationGoal/ShuttleMedical.xml"
+
+- type: stationGoal
+  id: ShuttleMiner
+  text: "/Paperwork/StationGoal/ShuttleMiner.xml"
+
+- type: stationGoal
+  id: ShuttleRND
+  text: "/Paperwork/StationGoal/ShuttleRND.xml"
+
+- type: stationGoal
+  id: ShuttleDock
+  text: "/Paperwork/StationGoal/ShuttleDock.xml"
+
+- type: stationGoal
+  id: Museum
+  text: "/Paperwork/StationGoal/Museum.xml"
+
+- type: stationGoal
+  id: Satellite
+  text: "/Paperwork/StationGoal/Satellite.xml"
