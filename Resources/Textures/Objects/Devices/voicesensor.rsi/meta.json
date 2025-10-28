@@ -10,8 +10,7 @@
     },
     "states": [
         {
-            "name": "voice",
-            "directions": 1
+            "name": "icon",
         }
     ]
 }
