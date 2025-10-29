@@ -349,7 +349,6 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
     /// <summary>
     /// Checks that a player has fulfilled the requirements for the borg job.
-    /// If they don't have enough hours, they cannot be placed into a chassis.
     /// </summary>
     public bool CanPlayerBeBorged(ICommonSession session)
     {

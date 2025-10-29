@@ -736,6 +736,9 @@ ToyGriffin: ToyFigurineGriffin
 ToyOwlman: ToyFigurineOwlman
 ToySkeleton: ToyFigurineSkeleton
 
-# 2025-10-18
+# 2025-10-28
+DringKiraSpecial: DrinkOrangeLimeSodaGlass
+
+# 2025-10-29
 DrinkIceJug: DrinkIceBucket
 DrinkMeadJug: null
