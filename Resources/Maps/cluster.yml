@@ -74366,26 +74366,12 @@ entities:
     - type: Transform
       pos: 1.5,2.5
       parent: 2
-- proto: SpawnMobBandito
-  entities:
-  - uid: 10822
-    components:
-    - type: Transform
-      pos: -15.5,-3.5
-      parent: 2
-- proto: SpawnMobCatException
+- proto: SpawnMobCat
   entities:
   - uid: 10823
     components:
     - type: Transform
       pos: -19.5,15.5
-      parent: 2
-- proto: SpawnMobCatRuntime
-  entities:
-  - uid: 10824
-    components:
-    - type: Transform
-      pos: 20.5,-5.5
       parent: 2
 - proto: SpawnMobCorgi
   entities:
@@ -74393,13 +74379,6 @@ entities:
     components:
     - type: Transform
       pos: -1.5,19.5
-      parent: 2
-- proto: SpawnMobCrabAtmos
-  entities:
-  - uid: 10826
-    components:
-    - type: Transform
-      pos: 36.5,-11.5
       parent: 2
 - proto: SpawnMobFoxRenault
   entities:
@@ -74520,13 +74499,6 @@ entities:
     components:
     - type: Transform
       pos: 26.5,12.5
-      parent: 2
-- proto: SpawnMobSmile
-  entities:
-  - uid: 10847
-    components:
-    - type: Transform
-      pos: -18.5,-3.5
       parent: 2
 - proto: SpawnMobWalter
   entities:

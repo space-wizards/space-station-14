@@ -126167,7 +126167,7 @@ entities:
       parent: 1109
     - type: Paper
       content: >-
-        Боже... Я ненавижу всех этих ксеносов, я хочу назад на землю... 
+        Боже... Я ненавижу всех этих ксеносов, я хочу назад на землю...
 
 
         Почему блять я вообще пошёл работать на чёртово NanoTrasen?!
@@ -126699,10 +126699,10 @@ entities:
       - stampedColor: '#006600FF'
         stampedName: stamp-component-stamped-name-centcom
       content: >-
-        Поздравляем, командование NanoTrasen решило обновить минимальный охранный шаттл службы безопасности станции NT-Raven-GE до версии 08. 
+        Поздравляем, командование NanoTrasen решило обновить минимальный охранный шаттл службы безопасности станции NT-Raven-GE до версии 08.
 
 
-        Обновление добавило атмос-конструкции (очень надеемся, что сотрудник безопасности умеет работать с насосом). 
+        Обновление добавило атмос-конструкции (очень надеемся, что сотрудник безопасности умеет работать с насосом).
 
 
         Так же мы учли недовольства по поводу кнопок, теперь гермозатворы переключает кнопка на консоли управление шаттлом, а в самой консоли управления шаттлом есть кнопка стрельбы пушкой шаттла.
@@ -146842,13 +146842,6 @@ entities:
     - type: Transform
       pos: 5.5,-0.5
       parent: 2
-- proto: SpawnMobBandito
-  entities:
-  - uid: 18268
-    components:
-    - type: Transform
-      pos: -36.5,2.5
-      parent: 2
 - proto: SpawnMobCarp
   entities:
   - uid: 24718
@@ -146883,19 +146876,12 @@ entities:
     - type: Transform
       pos: -38.5,-17.5
       parent: 2
-- proto: SpawnMobCatException
+- proto: SpawnMobCat
   entities:
   - uid: 18270
     components:
     - type: Transform
       pos: -7.5,-22.5
-      parent: 2
-- proto: SpawnMobCatRuntime
-  entities:
-  - uid: 18271
-    components:
-    - type: Transform
-      pos: 15.5,33.5
       parent: 2
 - proto: SpawnMobCorgi
   entities:

@@ -948,8 +948,8 @@
       proper: true
       gender: male
 #  - type: AlwaysRevolutionaryConvertible
-  - type: StealTarget
-    stealGroup: AnimalTropico
+#  - type: StealTarget
+#    stealGroup: AnimalTropico
 
 - type: entity
   name: Polly the parrot
@@ -969,3 +969,5 @@
     prototypes: [ MobPollyGear ]
   - type: TTS
     voice: Gyro
+  - type: StealTarget
+    stealGroup: AnimalPolly

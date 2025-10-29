@@ -112,8 +112,13 @@
     MortyStealObjective: 1
     RenaultStealObjective: 1
     ShivaStealObjective: 1
-    TropicoStealObjective: 1
-    # PolyStealObjective: 1 # DS14
+# DS14-start
+#    TropicoStealObjective: 1
+    PollyStealObjective: 1
+    MukhtarStealObjective: 1
+    XenoMaidStealObjective: 1
+    LargoStealObjective: 1
+# DS14-end
 
 - type: weightedRandom
   id: ThiefObjectiveGroupEscape

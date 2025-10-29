@@ -41741,13 +41741,6 @@ entities:
     - pos: 3.5,-15.5
       parent: 30
       type: Transform
-- proto: SpawnMobRaccoonMorticia
-  entities:
-  - uid: 5430
-    components:
-    - pos: -29.5,20.5
-      parent: 30
-      type: Transform
 - proto: SpawnMobShiva
   entities:
   - uid: 2025
@@ -41760,13 +41753,6 @@ entities:
   - uid: 4073
     components:
     - pos: -7.5,-9.5
-      parent: 30
-      type: Transform
-- proto: SpawnMobSmile
-  entities:
-  - uid: 4903
-    components:
-    - pos: -21.5,-9.5
       parent: 30
       type: Transform
 - proto: SpawnMobWalter

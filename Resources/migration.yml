@@ -16,9 +16,6 @@ ClothingHeadHelmetHelmetOld: ClothingHeadHelmetBasic
 # Bulletproof armor is almost statistically identical to kevlar, however, before this kevlar armor was the closest thing there was to "basic" armor. It makes the most sense to replace it with this.
 ClothingOuterVestKevlar: ClothingOuterArmorBasic
 
-# 2023-07-11 - Corvax
-SpawnMobRaccoonMorticia: SpawnMobGorillaLargo
-
 # 2023-07-10
 Intercom: IntercomCommon
 
@@ -1095,3 +1092,5 @@ LedLightTubeRed: LightTubeCrystalRed
 LedLightTubeBlue: LightTubeCrystalBlue
 LedLightTubeYellow: LightTubeCrystalYellow
 LedLightTubeViolet: LightBulbCrystalPink
+SpawnMobCrabAtmos: null
+SpawnMobSmile: null

@@ -106860,10 +106860,10 @@ entities:
         stampedColor: '#006600FF'
         stampedName: stamp-component-stamped-name-centcom
       content: >-
-        Поздравляем, командование NanoTrasen решило обновить минимальный охранный шаттл службы безопасности станции NT-Raven-GE до версии 08. 
+        Поздравляем, командование NanoTrasen решило обновить минимальный охранный шаттл службы безопасности станции NT-Raven-GE до версии 08.
 
 
-        Обновление добавило атмос-конструкции (очень надеемся, что сотрудник безопасности умеет работать с насосом). 
+        Обновление добавило атмос-конструкции (очень надеемся, что сотрудник безопасности умеет работать с насосом).
 
 
         Так же мы учли недовольства по поводу кнопок, теперь гермозатворы переключает кнопка на консоли управление шаттлом, а в самой консоли управления шаттлом есть кнопка стрельбы пушкой шаттла.
@@ -123992,26 +123992,12 @@ entities:
     - type: Transform
       pos: -16.5,7.5
       parent: 2
-- proto: SpawnMobBandito
-  entities:
-  - uid: 18652
-    components:
-    - type: Transform
-      pos: 26.5,13.5
-      parent: 2
-- proto: SpawnMobCatException
+- proto: SpawnMobCat
   entities:
   - uid: 18653
     components:
     - type: Transform
       pos: -12.5,-15.5
-      parent: 2
-- proto: SpawnMobCatRuntime
-  entities:
-  - uid: 18654
-    components:
-    - type: Transform
-      pos: -14.5,-15.5
       parent: 2
 - proto: SpawnMobCorgi
   entities:
@@ -124019,13 +124005,6 @@ entities:
     components:
     - type: Transform
       pos: 4.5,34.5
-      parent: 2
-- proto: SpawnMobCrabAtmos
-  entities:
-  - uid: 18656
-    components:
-    - type: Transform
-      pos: 17.5,-27.5
       parent: 2
 - proto: SpawnMobFoxRenault
   entities:
@@ -124132,13 +124111,6 @@ entities:
     components:
     - type: Transform
       pos: -57.5,-64.5
-      parent: 2
-- proto: SpawnMobSmile
-  entities:
-  - uid: 18673
-    components:
-    - type: Transform
-      pos: 22.5,12.5
       parent: 2
 - proto: SpawnMobWalter
   entities:

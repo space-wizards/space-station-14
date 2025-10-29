@@ -37677,7 +37677,7 @@ entities:
         stampedColor: '#850000FF'
         stampedName: stamp-component-stamped-name-syndicate
       content: >2-
-                                             
+
 
 
 
@@ -45315,13 +45315,6 @@ entities:
     - type: Transform
       pos: 17.5,-19.5
       parent: 2
-- proto: SpawnMobBandito
-  entities:
-  - uid: 5399
-    components:
-    - type: Transform
-      pos: 22.5,-28.5
-      parent: 2
 - proto: SpawnMobButterfly
   entities:
   - uid: 5400
@@ -45529,19 +45522,12 @@ entities:
     - type: Transform
       pos: -28.5,23.5
       parent: 2
-- proto: SpawnMobCatBingus
+- proto: SpawnMobCat
   entities:
   - uid: 5441
     components:
     - type: Transform
       pos: 1.5,22.5
-      parent: 2
-- proto: SpawnMobCatException
-  entities:
-  - uid: 5442
-    components:
-    - type: Transform
-      pos: 1.5,21.5
       parent: 2
 - proto: SpawnMobCatKitten
   entities:
@@ -45549,13 +45535,6 @@ entities:
     components:
     - type: Transform
       pos: 11.5,35.5
-      parent: 2
-- proto: SpawnMobCatRuntime
-  entities:
-  - uid: 5444
-    components:
-    - type: Transform
-      pos: -0.5,22.5
       parent: 2
 - proto: SpawnMobCleanBot
   entities:
@@ -45624,13 +45603,6 @@ entities:
     components:
     - type: Transform
       pos: -9.5,36.5
-      parent: 2
-- proto: SpawnMobCrabAtmos
-  entities:
-  - uid: 5457
-    components:
-    - type: Transform
-      pos: 31.5,0.5
       parent: 2
 - proto: SpawnMobFoxRenault
   entities:
@@ -45746,13 +45718,6 @@ entities:
     components:
     - type: Transform
       pos: -3.5,38.5
-      parent: 2
-- proto: SpawnMobSmile
-  entities:
-  - uid: 5476
-    components:
-    - type: Transform
-      pos: 15.5,-10.5
       parent: 2
 - proto: SpawnMobSyndicateFootSoldier
   entities:

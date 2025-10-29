@@ -95172,13 +95172,6 @@ entities:
     - type: Transform
       pos: -35.5,46.5
       parent: 2
-- proto: SpawnMobBandito
-  entities:
-  - uid: 12971
-    components:
-    - type: Transform
-      pos: -8.5,-0.5
-      parent: 2
 - proto: SpawnMobBear
   entities:
   - uid: 12972
@@ -95186,7 +95179,7 @@ entities:
     - type: Transform
       pos: -0.5,52.5
       parent: 2
-- proto: SpawnMobCatRuntime
+- proto: SpawnMobCat
   entities:
   - uid: 12973
     components:
@@ -95199,13 +95192,6 @@ entities:
     components:
     - type: Transform
       pos: -22.5,38.5
-      parent: 2
-- proto: SpawnMobCrabAtmos
-  entities:
-  - uid: 12975
-    components:
-    - type: Transform
-      pos: -81.5,37.5
       parent: 2
 - proto: SpawnMobFoxRenault
   entities:
