@@ -1,0 +1,15 @@
+- type: entity
+  parent: PaperPrintedCentcomm
+  id: PaperOrderNecromorph
+  name: распечатанный документ
+  description: Лист бумаги с заголовком центкома. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#006600FF'
+      stampedName: Центральное Командование
+    signatures:
+    - Роберт Нортон
+    content: paper-order-necromorph

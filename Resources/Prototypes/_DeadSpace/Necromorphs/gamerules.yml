@@ -160,3 +160,21 @@
     minimumPlayers: 30
     willNotStartRandomly: true
   - type: NecroobeliskArtefactRule
+
+- type: preloadedGrid
+  id: CBURNSCNTShuttle
+  path: /Maps/Shuttles/ShuttleEvent/cburn_scnt.yml
+  copies: 1
+
+- type: entity
+  parent: BaseGameRule
+  id: ShuttleCBURNSCNT
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-response-team-arrival
+    startAudio:
+      path: /Audio/_DeadSpace/Announcements/centcomm.ogg # DS14-Announcements
+    willNotStartRandomly: true
+  - type: RuleGrids
+  - type: LoadMapRule
+    preloadedGrid: CBURNSCNTShuttle

@@ -26,7 +26,13 @@ using Content.Shared.DeadSpace.Necromorphs.InfectionDead.Components;
 using Content.Shared.Zombies;
 using Content.Server.DeadSpace.Necromorphs.InfectionDead;
 using Content.Shared.Stunnable;
+using Content.Shared.Fax.Components;
+using Content.Shared.Station.Components;
+using Content.Server.Station.Systems;
+using Content.Shared.Paper;
+using Content.Server.Fax;
 using Robust.Shared.Random;
+using Content.Shared.Station.Components;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -47,6 +53,8 @@ public sealed class UnitologyRuleSystem : GameRuleSystem<UnitologyRuleComponent>
     [Dependency] private readonly NecromorfSystem _necromorfSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly FaxSystem _faxSystem = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -80,8 +88,15 @@ public sealed class UnitologyRuleSystem : GameRuleSystem<UnitologyRuleComponent>
         float minutes = (float)time.TotalMinutes;
         float seconds = (float)time.TotalSeconds;
 
-        TimeSpan warningTime = TimeSpan.FromMinutes(minutes - component.TimeUntilWarning);
+        TimeSpan obeliskWarningTime = TimeSpan.FromMinutes(minutes - component.TimeUntilObeliskWarning);
+        TimeSpan uniWarningTime = TimeSpan.FromMinutes(minutes - component.TimeUntilUniWarning);
         TimeSpan spawnObeliskTime = TimeSpan.FromMinutes(seconds + component.TimeAfterTheExplosion);
+
+        if (component.IsStageObelisk == true && _timing.CurTime > component.TimeUntilCburn && component.CburnSended == false)
+        {
+            GameTicker.AddGameRule("ShuttleCBURNSCNT");
+            component.CburnSended = true;
+        }
 
         if (component.IsStageObelisk && component.TimeUtilStopTransformations > _timing.CurTime)
         {
@@ -93,10 +108,17 @@ public sealed class UnitologyRuleSystem : GameRuleSystem<UnitologyRuleComponent>
             EndTransformations(uid, component);
         }
 
-        if (!component.IsWarningSend && warningTime < _timing.CurTime)
+        if (!component.IsObeliskWarningSend && obeliskWarningTime < _timing.CurTime)
         {
             _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("unitology-centcomm-announcement-obelisk-arrival"), playSound: true, colorOverride: Color.LightSeaGreen);
-            component.IsWarningSend = true;
+            component.IsObeliskWarningSend = true;
+        }
+
+        if (!component.IsUniWarningSend && uniWarningTime < _timing.CurTime)
+        {
+            SendOrder();
+            _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("unitology-centcomm-announcement-uni-warn"), playSound: true, colorOverride: Color.LightSeaGreen);
+            component.IsUniWarningSend = true;
         }
 
         if (!component.IsObeliskArrival && component.TimeUntilArrivalObelisk < _timing.CurTime)
@@ -246,6 +268,7 @@ public sealed class UnitologyRuleSystem : GameRuleSystem<UnitologyRuleComponent>
         component.Obelisk = ev.Obelisk;
         component.NextStageTime = _timing.CurTime + component.StageObeliskDuration;
         component.TimeUtilStopTransformations = _timing.CurTime + TimeSpan.FromSeconds(component.DurationTransformations);
+        component.TimeUntilCburn = _timing.CurTime + TimeSpan.FromSeconds(component.CburnDuration);
         component.IsStageObelisk = true;
     }
 
@@ -406,6 +429,50 @@ public sealed class UnitologyRuleSystem : GameRuleSystem<UnitologyRuleComponent>
                 ("username", data.UserName)));
         }
 
+    }
+
+    private void SendOrder()
+    {
+        var faxes = EntityQueryEnumerator<FaxMachineComponent>();
+        var wasSent = false;
+
+        var query = EntityQueryEnumerator<UnitologyHeadComponent>();
+
+        while (query.MoveNext(out var ent, out _))
+        {
+            if (wasSent)
+                return;
+
+            var xform = Transform(ent);
+            var station = _station.GetStationInMap(xform.MapID);
+
+            if (!HasComp<StationDataComponent>(station))
+                continue;
+
+            while (faxes.MoveNext(out var faxEnt, out var fax))
+            {
+                if (!fax.ReceiveNukeCodes)
+                    continue;
+
+                var content = Loc.GetString("paper-order-necromorph");
+
+                var printout = new FaxPrintout(
+                    content,
+                    Loc.GetString("nuke-codes-fax-paper-name"),
+                    null,
+                    null,
+                    "paper_stamp-centcom",
+                    new List<StampDisplayInfo>
+                    {
+                        new StampDisplayInfo { StampedName = Loc.GetString("stamp-component-stamped-name-centcom"), StampedColor = Color.FromHex("#006600") },
+                    }
+                );
+
+                _faxSystem.Receive(faxEnt, printout, null, fax);
+
+                wasSent = true;
+            }
+        }
     }
 
     private static readonly string[] Outcomes =

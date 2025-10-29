@@ -68,6 +68,12 @@ public sealed partial class SpiderTerrorRuleComponent : Component
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public int CburnCount = 0;
 
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public float PeopleOnSpidersBreeding = 2;
+
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public float PeopleOnSpidersNukeCode = 0.8f;
+
     [DataField]
     public string Sound = "/Audio/_DeadSpace/Spiders/brif.ogg";
 

@@ -46,7 +46,11 @@ public sealed partial class UnitologyRuleComponent : Component
 
     [DataField]
     [ViewVariables(VVAccess.ReadOnly)]
-    public bool IsWarningSend = false;
+    public bool IsObeliskWarningSend = false;
+
+    [DataField]
+    [ViewVariables(VVAccess.ReadOnly)]
+    public bool IsUniWarningSend = false;
 
     [DataField]
     [ViewVariables(VVAccess.ReadOnly)]
@@ -60,6 +64,10 @@ public sealed partial class UnitologyRuleComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     public bool ThisExplosionMade = false;
 
+    [DataField]
+    [ViewVariables(VVAccess.ReadOnly)]
+    public bool CburnSended = false;
+
     [DataField("obeliskPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string ObeliskPrototype = "StructureObelisk";
 
@@ -70,12 +78,19 @@ public sealed partial class UnitologyRuleComponent : Component
     public EntityUid Obelisk;
 
     [DataField]
+    [ViewVariables(VVAccess.ReadOnly)]
+    public float CburnDuration = 5;
+
+    [DataField]
+    public TimeSpan TimeUntilCburn = TimeSpan.Zero;
+
+    [DataField]
     public TimeSpan NextStageTime;
 
-    [DataField("stageObeliskDuration")]
+    [DataField]
     public TimeSpan StageObeliskDuration = TimeSpan.FromMinutes(20);
 
-    [DataField("stageConvergenceDuration")]
+    [DataField]
     public TimeSpan StageConvergenceDuration = TimeSpan.FromMinutes(1);
 
     [DataField]
@@ -93,18 +108,21 @@ public sealed partial class UnitologyRuleComponent : Component
     public float DurationArrivalObelisk = 40f;
 
     [DataField]
-    public float TimeUntilWarning = 10f;
+    public float TimeUntilUniWarning = 20f;
+
+    [DataField]
+    public float TimeUntilObeliskWarning = 10f;
 
     [DataField]
     public float TimeAfterTheExplosion = 2f;
 
-    [DataField("typeId")]
+    [DataField]
     public string TypeId = "MicroBomb";
 
-    [DataField("totalIntensity")]
+    [DataField]
     public float TotalIntensity = 300f;
 
-    [DataField("maxTileIntensity")]
+    [DataField]
     public float MaxTileIntensity = 20f;
 
     [DataField]

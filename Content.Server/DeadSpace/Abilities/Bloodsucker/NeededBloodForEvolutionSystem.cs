@@ -37,7 +37,7 @@ public sealed partial class NeededBloodForEvolutionSystem : SharedBloodsuckerSys
             return;
         }
 
-        SetReagentCount(uid, -price, bloodsuckerComponent);
+        AddReagentCount(uid, -price, bloodsuckerComponent);
 
         _popup.PopupEntity(Loc.GetString("У вас есть ") + bloodsuckerComponent.CountReagent.ToString() + Loc.GetString(" питательных веществ"), uid, uid);
     }

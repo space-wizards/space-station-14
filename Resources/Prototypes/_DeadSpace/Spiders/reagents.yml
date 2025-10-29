@@ -6,6 +6,25 @@
   physicalDesc: reagent-physical-desc-soothing
   flavor: medicine
   color: "#fcf7f9"
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Bloodsucker
+        damage:
+          groups:
+            Burn: -2
+            Toxin: -2
+            Airloss: -2
+            Brute: -2
+          types:
+            Bloodloss:
+              -1
   metabolisms:
     Medicine:
       metabolismRate: 0.05
@@ -94,6 +113,7 @@
   color: "#fcf7f9"
   metabolisms:
     Poison:
+      metabolismRate: 0.1
       effects:
       - !type:MovespeedModifier
         conditions:
@@ -113,6 +133,59 @@
           groups:
             Toxin: 3
             Airloss: 3
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:MovespeedModifier
+        conditions:
+        - !type:OrganType
+          type: Bloodsucker
+          shouldHave: false
+        walkSpeedModifier: 0.5
+        sprintSpeedModifier: 0.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Bloodsucker
+          shouldHave: false
+        damage:
+          groups:
+            Toxin: 3
+            Airloss: 3
+
+- type: reagent
+  id: SpiderWebExtract
+  name: reagent-name-extract-smoke-lurker
+  group: Medicine
+  desc: reagent-desc-omnizine
+  physicalDesc: reagent-physical-desc-soothing
+  flavor: bitter
+  color: "#fcf7f9"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.05
+      effects:
+      - !type:MovespeedModifier
+        conditions:
+        - !type:OrganType
+          type: Bloodsucker
+          shouldHave: false
+        walkSpeedModifier: 0.4
+        sprintSpeedModifier: 0.4
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Bloodsucker
+          shouldHave: false
+        damage:
+          groups:
+            Toxin: 0.1
+            Airloss: 0.1
 
 - type: reagent
   id: SpiderReaperExtract

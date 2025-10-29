@@ -6,6 +6,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
+using Content.Shared.DeadSpace.Abilities.Bloodsucker;
 using Content.Shared.EntityEffects.Effects;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
@@ -393,6 +394,11 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
             tempSolution.RemoveAllSolution();
         }
+
+        // DS14-Bloodsucker-start
+        var bloodsuckEvent = new ModifyBloodLevelEvent(amount);
+        RaiseLocalEvent(ent.Owner, bloodsuckEvent);
+        // DS14-Bloodsucker-end
 
         SolutionContainer.UpdateChemicals(ent.Comp.TemporarySolution.Value);
 

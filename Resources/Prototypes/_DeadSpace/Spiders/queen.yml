@@ -205,7 +205,7 @@
       SpiderTomb: 50
       TelecomServerSpiderTerror: 200
       CocoonKingBloodSpider: 250
-      CocoonSpider: 10
+      CocoonSpider: 50
   - type: SpiderKing
   - type: Damageable
     damageModifierSet: HeadSpiderTerror

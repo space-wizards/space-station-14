@@ -33,6 +33,7 @@ using Content.Shared.Interaction;
 using Content.Server.DeadSpace.Abilities.Cocoon;
 using Content.Server.DeadSpace.Demons.DemonShadow.Components;
 using Content.Server.StationEvents.Events;
+using Content.Shared.Ghost;
 
 namespace Content.Server.DeadSpace.Demons.DemonShadow;
 
@@ -372,6 +373,12 @@ public sealed class DemonShadowSystem : SharedDemonShadowSystem
         while (pointLightQuery.MoveNext(out var ent, out var lightComp, out var xform))
         {
             if (Transform(uid).MapID != xform.MapID)
+                continue;
+
+            if (HasComp<GhostComponent>(ent))
+                continue;
+
+            if (TryComp<VisibilityComponent>(ent, out var layer) && layer.Layer != (int)VisibilityFlags.Normal)
                 continue;
 
             lightPosition = _transform.GetMapCoordinates(ent);
