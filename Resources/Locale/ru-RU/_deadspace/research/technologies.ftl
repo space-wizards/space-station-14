@@ -1,3 +1,4 @@
+research-technology-supermagboots = Улучшенный локализованный магнетизм
 research-discipline-mechworks = Механика
 research-discipline-weaponry = Вооружение
 research-discipline-research = Исследование
