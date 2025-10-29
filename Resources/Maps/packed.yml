@@ -42804,7 +42804,21 @@ entities:
       rot: 3.141592653589793 rad
       pos: 11.493689,4.5440345
       parent: 2
+- proto: DefaultStationBeaconAI
+  entities:
+  - uid: 15919
+    components:
+    - type: Transform
+      pos: 73.5,23.5
+      parent: 2
 - proto: DefaultStationBeaconAICore
+  entities:
+  - uid: 15916
+    components:
+    - type: Transform
+      pos: 95.5,30.5
+      parent: 2
+- proto: DefaultStationBeaconAIUpload
   entities:
   - uid: 14515
     components:
@@ -42818,12 +42832,26 @@ entities:
     - type: Transform
       pos: 31.5,-40.5
       parent: 2
+- proto: DefaultStationBeaconAnchor
+  entities:
+  - uid: 15922
+    components:
+    - type: Transform
+      pos: 6.5,-21.5
+      parent: 2
 - proto: DefaultStationBeaconAnomalyGenerator
   entities:
   - uid: 8139
     components:
     - type: Transform
       pos: 68.5,15.5
+      parent: 2
+- proto: DefaultStationBeaconArmory
+  entities:
+  - uid: 15787
+    components:
+    - type: Transform
+      pos: 41.5,34.5
       parent: 2
 - proto: DefaultStationBeaconArrivals
   entities:
@@ -42951,6 +42979,20 @@ entities:
     - type: Transform
       pos: 0.5,-30.5
       parent: 2
+- proto: DefaultStationBeaconDorms
+  entities:
+  - uid: 15912
+    components:
+    - type: Transform
+      pos: 15.5,14.5
+      parent: 2
+- proto: DefaultStationBeaconEngineering
+  entities:
+  - uid: 15913
+    components:
+    - type: Transform
+      pos: 18.5,-25.5
+      parent: 2
 - proto: DefaultStationBeaconEscapePodE
   entities:
   - uid: 2949
@@ -42986,12 +43028,26 @@ entities:
     - type: Transform
       pos: 9.5,-6.5
       parent: 2
+- proto: DefaultStationBeaconGravGen
+  entities:
+  - uid: 15910
+    components:
+    - type: Transform
+      pos: 14.5,38.5
+      parent: 2
 - proto: DefaultStationBeaconHOPOffice
   entities:
   - uid: 13131
     components:
     - type: Transform
       pos: 17.5,-4.5
+      parent: 2
+- proto: DefaultStationBeaconHOSRoom
+  entities:
+  - uid: 15907
+    components:
+    - type: Transform
+      pos: 48.5,39.5
       parent: 2
 - proto: DefaultStationBeaconJanitorsCloset
   entities:
@@ -43021,12 +43077,26 @@ entities:
     - type: Transform
       pos: 10.5,5.5
       parent: 2
+- proto: DefaultStationBeaconMedical
+  entities:
+  - uid: 15914
+    components:
+    - type: Transform
+      pos: 51.5,3.5
+      parent: 2
 - proto: DefaultStationBeaconMorgue
   entities:
   - uid: 13137
     components:
     - type: Transform
       pos: 70.5,-3.5
+      parent: 2
+- proto: DefaultStationBeaconPermaBrig
+  entities:
+  - uid: 15911
+    components:
+    - type: Transform
+      pos: 34.5,20.5
       parent: 2
 - proto: DefaultStationBeaconPowerBank
   entities:
@@ -43070,6 +43140,20 @@ entities:
     - type: Transform
       pos: 7.5,33.5
       parent: 2
+- proto: DefaultStationBeaconSecurity
+  entities:
+  - uid: 15908
+    components:
+    - type: Transform
+      pos: 33.5,29.5
+      parent: 2
+- proto: DefaultStationBeaconSecurityCheckpoint
+  entities:
+  - uid: 15915
+    components:
+    - type: Transform
+      pos: -1.5,-3.5
+      parent: 2
 - proto: DefaultStationBeaconServerRoom
   entities:
   - uid: 13172
@@ -43097,6 +43181,13 @@ entities:
     components:
     - type: Transform
       pos: 3.5,-35.5
+      parent: 2
+- proto: DefaultStationBeaconSurgery
+  entities:
+  - uid: 15920
+    components:
+    - type: Transform
+      pos: 65.5,-5.5
       parent: 2
 - proto: DefaultStationBeaconTechVault
   entities:
@@ -43132,6 +43223,13 @@ entities:
     components:
     - type: Transform
       pos: 18.5,41.5
+      parent: 2
+- proto: DefaultStationBeaconWardensOffice
+  entities:
+  - uid: 15909
+    components:
+    - type: Transform
+      pos: 42.5,25.5
       parent: 2
 - proto: Defibrillator
   entities:
@@ -73548,7 +73646,7 @@ entities:
         Connect the green pipes to the machine frame across from the lathes. You'll need a machine board to finish the freezer, and probably some spare parts.
 
 
-        Once the freezer is finished, hook it up to the green pipes and set it to 173K. Make sure you turn it on this time, we don't want a repeat of the containment field incident.
+        Once the freezer is finished, hook it up to the green pipes and set it to 270K. Make sure you turn it on this time, we don't want a repeat of the containment field incident.
 
 
         DO NOT upgrade the lathes to hyper-convection until the system is finished, you'll ash me and every other moth in this department.
@@ -85872,13 +85970,15 @@ entities:
     - type: Transform
       pos: 14.5,-17.5
       parent: 2
-- proto: SurveillanceCameraRouterSecurity
+- proto: SurveillanceCameraRouterScience
   entities:
   - uid: 4644
     components:
     - type: Transform
       pos: 15.5,-19.5
       parent: 2
+- proto: SurveillanceCameraRouterSecurity
+  entities:
   - uid: 6899
     components:
     - type: Transform
@@ -88825,6 +88925,8 @@ entities:
     - type: Transform
       pos: 43.5,-4.5
       parent: 2
+- proto: VendingMachineSeedsUnlocked
+  entities:
   - uid: 7681
     components:
     - type: Transform
