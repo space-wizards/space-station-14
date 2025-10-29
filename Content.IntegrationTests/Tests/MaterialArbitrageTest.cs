@@ -33,7 +33,7 @@ public sealed class MaterialArbitrageTest
     [
         "BaseChemistryEmptyVial", "DrinkShotGlass", "SodiumLightTube", "DrinkGlassCoupeShaped",
         "LedLightBulb", "ExteriorLightTube", "LightTube", "DrinkGlass", "DimLightBulb", "LightBulb", "LedLightTube",
-        "SheetRGlass1", "ChemistryEmptyBottle01", "WarmLightBulb",
+        "ChemistryEmptyBottle01", "WarmLightBulb",
     ];
 
     private readonly HashSet<string> _compositionArbitrageIgnore =
@@ -469,7 +469,8 @@ public sealed class MaterialArbitrageTest
                 await server.WaitPost(() =>
                 {
                     var ent = entManager.SpawnEntity(id, testMap.GridCoords);
-                    stackSys.SetCount(ent, 1);
+                    if (entManager.TryGetComponent<StackComponent>(ent, out var stackComp))
+                        stackSys.SetCount((ent, stackComp), 1);
                     priceCache[id] = price = pricing.GetPrice(ent, false);
                     entManager.DeleteEntity(ent);
                 });

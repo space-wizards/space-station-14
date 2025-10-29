@@ -3,32 +3,17 @@ using Content.Shared.Trigger.Components.Effects;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed class DamageOnTriggerSystem : EntitySystem
+public sealed class DamageOnTriggerSystem : XOnTriggerSystem<DamageOnTriggerComponent>
 {
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly Damage.Systems.DamageableSystem _damageableSystem = default!;
 
-    public override void Initialize()
+    protected override void OnTrigger(Entity<DamageOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<DamageOnTriggerComponent, TriggerEvent>(OnTrigger);
-    }
-
-    private void OnTrigger(Entity<DamageOnTriggerComponent> ent, ref TriggerEvent args)
-    {
-        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
-            return;
-
-        var target = ent.Comp.TargetUser ? args.User : ent.Owner;
-
-        if (target == null)
-            return;
-
         var damage = new DamageSpecifier(ent.Comp.Damage);
-        var ev = new BeforeDamageOnTriggerEvent(damage, target.Value);
+        var ev = new BeforeDamageOnTriggerEvent(damage, target);
         RaiseLocalEvent(ent.Owner, ref ev);
 
-        args.Handled |= _damageableSystem.TryChangeDamage(target, ev.Damage, ent.Comp.IgnoreResistances, origin: ent.Owner) is not null;
+        args.Handled |= _damageableSystem.TryChangeDamage(target, ev.Damage, ent.Comp.IgnoreResistances, origin: ent.Owner);
     }
 }
 
