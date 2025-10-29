@@ -59,7 +59,7 @@
 
 # one department restricted contraband
 - type: entity
-  id: BaseCentcommContraband
+  id: BaseCentcommContraband # Note that CC items are major contraband, but can still only be approved by CC
   parent: BaseRestrictedContraband
   abstract: true
   components:

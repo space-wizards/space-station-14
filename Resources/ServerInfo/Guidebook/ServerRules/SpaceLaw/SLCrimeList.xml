@@ -320,7 +320,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        The Captain or Head of Security may authorize individual use of minor contraband. Any contraband which is restricted to a department other than command or security is minor contraband unless otherwise specified.
+        Any items restricted to a department other than Command, Security, or Central Command are minor contraband unless otherwise specified. The Captain or Head of Security may authorize individual use of minor contraband.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -472,7 +472,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        The Captain may authorize individual use of major contraband. Any contraband which is restricted to the command or security department is major contraband unless otherwise specified.
+        Any items which are restricted to Command, Security, and/or Central Command are major contraband unless otherwise specified. The Captain may authorize individual use of major contraband, with the exception of Central Command exclusive items, which only Central Command may authorize.
       </Box>
     </ColorBox>
     <ColorBox>
