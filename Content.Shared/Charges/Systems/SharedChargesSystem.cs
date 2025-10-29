@@ -1,7 +1,6 @@
 using Content.Shared.Actions.Events;
 using Content.Shared.Charges.Components;
 using Content.Shared.Examine;
-using Content.Shared.Rejuvenate;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
 
@@ -20,7 +19,7 @@ public abstract class SharedChargesSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<LimitedChargesComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<LimitedChargesComponent, RejuvenateEvent>(OnRejuvinate);
+
         SubscribeLocalEvent<LimitedChargesComponent, ActionAttemptEvent>(OnChargesAttempt);
         SubscribeLocalEvent<LimitedChargesComponent, MapInitEvent>(OnChargesMapInit);
         SubscribeLocalEvent<LimitedChargesComponent, ActionPerformedEvent>(OnChargesPerformed);
@@ -47,11 +46,6 @@ public abstract class SharedChargesSystem : EntitySystem
 
         var timeRemaining = GetNextRechargeTime(rechargeEnt);
         args.PushMarkup(Loc.GetString("limited-charges-recharging", ("seconds", timeRemaining.TotalSeconds.ToString("F1"))));
-    }
-
-    private void OnRejuvinate(EntityUid uid, LimitedChargesComponent comp, ref RejuvenateEvent args)
-    {
-        ResetCharges((uid, comp));
     }
 
     private void OnChargesAttempt(Entity<LimitedChargesComponent> ent, ref ActionAttemptEvent args)
@@ -169,16 +163,17 @@ public abstract class SharedChargesSystem : EntitySystem
     /// </summary>
     public void ResetCharges(Entity<LimitedChargesComponent?> action)
     {
-        action.Comp ??= EnsureComp<LimitedChargesComponent>(action.Owner);
-
-        var lastCharges = GetCurrentCharges(action);
-
-        if (lastCharges == action.Comp.MaxCharges)
+        if (!Resolve(action.Owner, ref action.Comp, false))
             return;
 
-        action.Comp.LastUpdate = _timing.CurTime;
+        var charges = GetCurrentCharges((action.Owner, action.Comp, null));
+
+        if (charges == action.Comp.MaxCharges)
+            return;
+
         action.Comp.LastCharges = action.Comp.MaxCharges;
-        Dirty(action.Owner, action.Comp);
+        action.Comp.LastUpdate = _timing.CurTime;
+        Dirty(action);
     }
 
     /// <summary>
