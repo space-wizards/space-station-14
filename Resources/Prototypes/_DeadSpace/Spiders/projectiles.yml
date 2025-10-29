@@ -1,0 +1,49 @@
+- type: entity
+  id: ProjectileSpiderWeb
+  name: паутина
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Spiders/web_shot.rsi
+    layers:
+      - state: web
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 5
+        reagents:
+        - ReagentId: SpiderWebExtract
+          Quantity: 5
+  - type: Injector
+    minTransferAmount: 5
+    maxTransferAmount: 5
+    transferAmount: 5
+  - type: EmbeddableProjectile
+  - type: SolutionInjectOnEmbed
+    transferAmount: 5
+    solution: injector
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.2
+        density: 5
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.3,0.1,0.3"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+  - type: Projectile
+    deleteOnCollide: true
+    onlyCollideWhenShot: true
+    damage:
+      types:
+        Caustic: 5

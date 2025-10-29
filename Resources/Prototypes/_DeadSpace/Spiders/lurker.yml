@@ -161,7 +161,7 @@
       collection: SpiderHatches # Звуки после высасывания
   - type: Puller
     needsHands: false
-  - type: SpiderLurker
+  - type: SmokeAbility
     bloodCost: 10
     duration: 10
     spreadAmount: 30

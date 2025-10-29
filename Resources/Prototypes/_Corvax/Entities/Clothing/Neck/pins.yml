@@ -6,13 +6,10 @@
   components:
   - type: Sprite
     sprite: _Corvax/Clothing/Neck/Misc/pins.rsi
-    layers:
-    - state: comm
+    state: comm
   - type: Clothing
     sprite: _Corvax/Clothing/Neck/Misc/pins.rsi
-    clothingVisuals:
-      neck:
-      - state: comm-equipped
+    equippedPrefix: comm
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -22,13 +19,10 @@
   components:
   - type: Sprite
     sprite: _Corvax/Clothing/Neck/Misc/pins.rsi
-    layers:
-    - state: donk
+    state: donk
   - type: Clothing
     sprite: _Corvax/Clothing/Neck/Misc/pins.rsi
-    clothingVisuals:
-      neck:
-      - state: donk-equipped
+    equippedPrefix: donk
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -38,13 +32,10 @@
   components:
   - type: Sprite
     sprite: _Corvax/Clothing/Neck/Misc/pins.rsi
-    layers:
-    - state: earth
+    state: earth
   - type: Clothing
     sprite: _Corvax/Clothing/Neck/Misc/pins.rsi
-    clothingVisuals:
-      neck:
-      - state: earth-equipped
+    equippedPrefix: earth
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -54,13 +45,10 @@
   components:
   - type: Sprite
     sprite: _Corvax/Clothing/Neck/Misc/pins.rsi
-    layers:
-    - state: logistika
+    state: logistika
   - type: Clothing
     sprite: _Corvax/Clothing/Neck/Misc/pins.rsi
-    clothingVisuals:
-      neck:
-      - state: logistika-equipped
+    equippedPrefix: logistika
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -70,13 +58,10 @@
   components:
   - type: Sprite
     sprite: _Corvax/Clothing/Neck/Misc/pins.rsi
-    layers:
-    - state: med
+    state: med
   - type: Clothing
     sprite: _Corvax/Clothing/Neck/Misc/pins.rsi
-    clothingVisuals:
-      neck:
-      - state: med-equipped
+    equippedPrefix: med
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -86,13 +71,10 @@
   components:
   - type: Sprite
     sprite: _Corvax/Clothing/Neck/Misc/pins.rsi
-    layers:
-    - state: nakamura
+    state: nakamura
   - type: Clothing
     sprite: _Corvax/Clothing/Neck/Misc/pins.rsi
-    clothingVisuals:
-      neck:
-      - state: nakamura-equipped
+    equippedPrefix: nakamura
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -102,13 +84,10 @@
   components:
   - type: Sprite
     sprite: _Corvax/Clothing/Neck/Misc/pins.rsi
-    layers:
-    - state: nano
+    state: nano
   - type: Clothing
     sprite: _Corvax/Clothing/Neck/Misc/pins.rsi
-    clothingVisuals:
-      neck:
-      - state: nano-equipped
+    equippedPrefix: nano
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -118,13 +97,10 @@
   components:
   - type: Sprite
     sprite: _Corvax/Clothing/Neck/Misc/pins.rsi
-    layers:
-    - state: sind
+    state: sind
   - type: Clothing
     sprite: _Corvax/Clothing/Neck/Misc/pins.rsi
-    clothingVisuals:
-      neck:
-      - state: sind-equipped
+    equippedPrefix: sind
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -134,10 +110,7 @@
   components:
   - type: Sprite
     sprite: _Corvax/Clothing/Neck/Misc/pins.rsi
-    layers:
-    - state: vit
+    state: vit
   - type: Clothing
     sprite: _Corvax/Clothing/Neck/Misc/pins.rsi
-    clothingVisuals:
-      neck:
-      - state: vit-equipped
+    equippedPrefix: vit

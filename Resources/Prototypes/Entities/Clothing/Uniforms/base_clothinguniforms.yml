@@ -44,7 +44,7 @@
 
 - type: entity
   abstract: true
-  parent: UnsensoredClothingUniformBase
+  parent: [UnsensoredClothingUniformBase, BaseUniformAccessoryItemJumpsuit] # DS14 accessory
   id: ClothingUniformBase
   components:
   - type: SuitSensor

@@ -1,0 +1,13 @@
+# Tier 3
+
+- type: technology
+  id: ClothingShoesBootsMagSuperTech
+  name: research-technology-supermagboots
+  icon:
+    sprite: _DeadSpace/Clothing/Shoes/Boots/super_mag_boots.rsi
+    state: icon
+  discipline: Experimental
+  tier: 3
+  cost: 20000
+  recipeUnlocks:
+    - ClothingShoesBootsMagSuper

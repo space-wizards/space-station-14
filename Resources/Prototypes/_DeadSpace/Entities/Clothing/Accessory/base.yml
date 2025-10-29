@@ -1,0 +1,99 @@
+- type: entity
+  abstract: true
+  id: BaseUniformAccessoryItemBase
+  components:
+  - type: UniformAccessoryHolder
+
+- type: entity
+  abstract: true
+  parent: BaseUniformAccessoryItemBase
+  id: BaseUniformAccessoryItemOuterClothing
+  components:
+  - type: UniformAccessoryHolder
+    allowedCategories:
+    - Medal
+    - Camera
+
+- type: entity
+  abstract: true
+  parent: BaseUniformAccessoryItemBase
+  id: BaseUniformAccessoryItemJumpsuit
+  components:
+  - type: UniformAccessoryHolder
+    allowedCategories:
+    - Tie
+    - Medal
+    - Camera
+#    - Patch
+#    - Armband
+
+- type: entity
+  abstract: true
+  parent: BaseUniformAccessoryItemBase
+  id: BaseUniformAccessoryItemGloves
+  components:
+  - type: UniformAccessoryHolder
+    allowedCategories:
+    - Wristwatch
+
+#- type: entity
+#  abstract: true
+#  parent: BaseUniformAccessoryItemBase
+#  id: BaseUniformAccessoryItemHelmet
+#  components:
+#  - type: UniformAccessoryHolder
+#    allowedCategories:
+#    - Helmet
+
+# Inner/Outer clothing accessories
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseUniformAccessory
+  components:
+  - type: UniformAccessory
+  - type: Item
+    size: Tiny
+  - type: Appearance
+
+- type: entity
+  abstract: true
+  parent: BaseUniformAccessory
+  id: AccessoryTieBase
+  components:
+  - type: UniformAccessory
+    category: Tie
+    limit: 1
+    color: "#7B1F3A"
+
+- type: entity
+  abstract: true
+  parent: BaseUniformAccessory
+  id: AccessoryMedalBase
+  components:
+  - type: UniformAccessory
+    category: Medal
+    limit: 1
+    color: "#D4AF37"
+
+- type: entity
+  abstract: true
+  parent: BaseUniformAccessory
+  id: AccessoryCameraBase
+  components:
+  - type: UniformAccessory
+    category: Camera
+    limit: 1
+    color: "#28414c"
+
+# Gloves accessories
+- type: entity
+  abstract: true
+  parent: BaseUniformAccessory
+  id: AccessoryWristwatchBase
+  components:
+  - type: UniformAccessory
+    category: Wristwatch
+    limit: 1
+    drawOnItemIcon: false
+    color: "#4B5563"

@@ -245,7 +245,7 @@
     - state: ai
   - type: ConditionalSpawner
     prototypes:
-    - MobPossumMortyOld
+    - MobPossumMorty
 
 - type: entity
   parent: MarkerBase

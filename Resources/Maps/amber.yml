@@ -110901,13 +110901,6 @@ entities:
     - type: Transform
       pos: -8.5,-34.5
       parent: 2
-- proto: SpawnMobBandito
-  entities:
-  - uid: 16250
-    components:
-    - type: Transform
-      pos: 27.5,-34.5
-      parent: 2
 - proto: SpawnMobBee
   entities:
   - uid: 16251
@@ -110996,19 +110989,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: -10.5,17.5
       parent: 2
-- proto: SpawnMobCatException
+- proto: SpawnMobCat
   entities:
   - uid: 16266
     components:
     - type: Transform
       pos: -42.5,-33.5
-      parent: 2
-- proto: SpawnMobCatRuntime
-  entities:
-  - uid: 16267
-    components:
-    - type: Transform
-      pos: -42.5,-35.5
       parent: 2
 - proto: SpawnMobCorgi
   entities:
@@ -111016,13 +111002,6 @@ entities:
     components:
     - type: Transform
       pos: -15.5,-46.5
-      parent: 2
-- proto: SpawnMobCrabAtmos
-  entities:
-  - uid: 16269
-    components:
-    - type: Transform
-      pos: -2.5,-2.5
       parent: 2
 - proto: SpawnMobFoxRenault
   entities:
@@ -111138,13 +111117,6 @@ entities:
     components:
     - type: Transform
       pos: 14.5,-37.5
-      parent: 2
-- proto: SpawnMobSmile
-  entities:
-  - uid: 16287
-    components:
-    - type: Transform
-      pos: 34.5,-34.5
       parent: 2
 - proto: SpawnMobWalter
   entities:

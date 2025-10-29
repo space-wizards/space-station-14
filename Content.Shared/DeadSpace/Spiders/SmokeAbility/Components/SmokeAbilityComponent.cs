@@ -5,17 +5,17 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Content.Shared.Chemistry.Components;
 
-namespace Content.Shared.DeadSpace.Spiders.SpiderLurker.Components;
+namespace Content.Shared.DeadSpace.Spiders.SmokeAbility.Components;
 
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState]
-public sealed partial class SpiderLurkerComponent : Component
+public sealed partial class SmokeAbilityComponent : Component
 {
     [DataField]
-    public EntProtoId SpiderLurker = "ActionSpiderLurker";
+    public EntProtoId SmokeAbility = "ActionSmokeAbility";
 
     [DataField, AutoNetworkedField]
-    public EntityUid? SpiderLurkerActionEntity;
+    public EntityUid? SmokeAbilityActionEntity;
 
     [DataField("durationHide", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadOnly)]
     public TimeSpan DurationHide = TimeSpan.FromSeconds(10);
@@ -25,6 +25,10 @@ public sealed partial class SpiderLurkerComponent : Component
 
     [ViewVariables(VVAccess.ReadOnly)]
     public bool IsHide = false;
+
+    [DataField]
+    [ViewVariables(VVAccess.ReadOnly)]
+    public bool ChangeApperacne = true;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntProtoId SmokePrototype = "Smoke";

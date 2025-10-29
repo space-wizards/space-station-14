@@ -155,6 +155,11 @@
   - type: Battery
     maxCharge: 1080
     startingCharge: 1080
+# DS14-start
+  - type: HitscanBatteryAmmoProvider
+    proto: RedLaser
+    fireCost: 50
+# DS14-end
 
 - type: entity
   id: PowerCellHighPrinted
@@ -190,6 +195,11 @@
   - type: Battery
     maxCharge: 1800
     startingCharge: 1800
+# DS14-start
+  - type: HitscanBatteryAmmoProvider
+    proto: RedMediumLaser
+    fireCost: 50
+# DS14-end
 
 - type: entity
   id: PowerCellHyperPrinted
@@ -228,6 +238,11 @@
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 12 # takes 1 minute to charge itself back to full
+# DS14-start
+  - type: HitscanBatteryAmmoProvider
+    proto: RedLaser
+    fireCost: 50
+# DS14-end
 
 - type: entity
   parent: PowerCellMicroreactor
@@ -264,6 +279,11 @@
     - type: BatterySelfRecharger
       autoRecharge: true
       autoRechargeRate: 40
+# DS14-start
+    - type: HitscanBatteryAmmoProvider
+      proto: RedMediumLaser
+      fireCost: 50
+# DS14-end
 
 # Power cage (big heavy power cell for big devices)
 

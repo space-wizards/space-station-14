@@ -1,6 +1,6 @@
 - type: entity
   id: Wristwatch
-  parent: BaseItem
+  parent: [BaseItem, AccessoryWristwatchBase] # DS14 accessory
   name: wristwatch
   description: A cheap watch for telling time. How much did you waste playing Space Station 14?
   components:

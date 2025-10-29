@@ -1,13 +1,17 @@
 - type: entity
   id: WeaponEnergyCrossbow
-  name: энергетический арбалет
+  name: энергетический мини-арбалет
   description: Маленькое, скрытное, смертоносное устройство.
   parent: BaseItem
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Weapons/Guns/Bow/crossbow.rsi
     layers:
-    - state: icon
+    - state: icon-0
+      map: ["enum.GunVisualLayers.Base"]
+    - state: icon-1
+      map: ["enum.GunVisualLayers.Mag"]
+      visible: false
   - type: Item
     size: Small
   - type: Gun
@@ -24,14 +28,66 @@
       path: /Audio/Magic/forcewall.ogg
       params:
         volume: -50
-    rechargeCooldown: 1
+    rechargeCooldown: 1.5
   - type: BasicEntityAmmoProvider
     proto: BulletEnergyCrossbow
     capacity: 1
     count: 1
+  - type: MagazineVisuals
+    magState: icon
+    steps: 2
+    zeroVisible: true
+  - type: Appearance
   - type: Clothing
     quickEquip: true
     slots:
     - Belt
   - type: UseDelay
-    delay: 0.3
+    delay: 0.5
+
+- type: entity
+  id: WeaponEnergyCrossbowLarge
+  name: энергетический арбалет
+  description: Полноразмерная версия энергетического арбалета. Мощный, но медленный.
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Bow/crossbow_large.rsi
+    layers:
+    - state: icon-0
+      map: ["enum.GunVisualLayers.Base"]
+    - state: icon-1
+      map: ["enum.GunVisualLayers.Mag"]
+      visible: false
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,3,1
+  - type: Gun
+    fireRate: 0.5
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
+      params:
+        volume: -14
+  - type: AmmoCounter
+  - type: RechargeBasicEntityAmmo
+    rechargeSound:
+      path: /Audio/Magic/forcewall.ogg
+      params:
+        volume: -50
+    rechargeCooldown: 3
+  - type: BasicEntityAmmoProvider
+    proto: BulletEnergyCrossbowLarge
+    capacity: 1
+    count: 1
+  - type: MagazineVisuals
+    magState: icon
+    steps: 2
+    zeroVisible: true
+  - type: Wieldable
+  - type: GunRequiresWield
+  - type: Appearance
+  - type: UseDelay
+    delay: 1

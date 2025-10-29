@@ -94,6 +94,20 @@
     - type: RandomHumanoidSpawner
       settings: CBURNLeaderNECRO
 
+- type: entity
+  name: лидер ОПНУ, spawner
+  id: CBURNLeaderSCNTSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Markers/jobs.rsi
+      state: cburn
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidSpawnerCBURNLeaderNECRO
+
 - type: randomHumanoidSettings
   id: CBURNLeaderNECRO
   parent: EventHumanoidERTZombieImmune
@@ -133,6 +147,20 @@
       state: cburn
     - type: RandomHumanoidSpawner
       settings: CBURNSoldierNECRO
+
+- type: entity
+  name: боец ОПНУ, spawner
+  id: CBURNSoldierSCNTSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Markers/jobs.rsi
+      state: cburn
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidSpawnerCBURNSoldierNECRO
 
 - type: randomHumanoidSettings
   id: CBURNSoldierNECRO

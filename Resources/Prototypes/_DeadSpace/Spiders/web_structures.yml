@@ -168,3 +168,4 @@
   - type: Appearance
   - type: SpiderTerrorTomb
     range: 5
+    regen: 1.5

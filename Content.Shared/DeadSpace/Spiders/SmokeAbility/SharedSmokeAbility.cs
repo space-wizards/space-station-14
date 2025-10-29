@@ -3,15 +3,15 @@
 using Content.Shared.Actions;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.DeadSpace.Spiders.SpiderLurker;
+namespace Content.Shared.DeadSpace.Spiders.SmokeAbility;
 
-public sealed partial class SpiderLurkerActionEvent : InstantActionEvent
+public sealed partial class SmokeAbilityActionEvent : InstantActionEvent
 {
 
 }
 
 [NetSerializable, Serializable]
-public enum SpiderLurkerVisuals : byte
+public enum SmokeAbilityVisuals : byte
 {
     state,
     hide

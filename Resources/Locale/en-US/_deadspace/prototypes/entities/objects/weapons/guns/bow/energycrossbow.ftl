@@ -1,2 +1,2 @@
-ent-WeaponEnergyCrossbow = энергетический арбалет
+ent-WeaponEnergyCrossbow = энергетический мини-арбалет
     .desc = Маленькое, скрытное, смертоносное устройство.

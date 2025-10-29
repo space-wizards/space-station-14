@@ -143306,13 +143306,6 @@ entities:
     - type: Transform
       pos: 24.5,-33.5
       parent: 2
-- proto: SpawnMobBandito
-  entities:
-  - uid: 21131
-    components:
-    - type: Transform
-      pos: -43.5,3.5
-      parent: 2
 - proto: SpawnMobButterfly
   entities:
   - uid: 21132
@@ -143347,13 +143340,6 @@ entities:
     components:
     - type: Transform
       pos: 6.5,-29.5
-      parent: 2
-- proto: SpawnMobCrabAtmos
-  entities:
-  - uid: 21137
-    components:
-    - type: Transform
-      pos: -36.5,33.5
       parent: 2
 - proto: SpawnMobFoxRenault
   entities:
@@ -143444,13 +143430,6 @@ entities:
     components:
     - type: Transform
       pos: -10.5,19.5
-      parent: 2
-- proto: SpawnMobSmile
-  entities:
-  - uid: 21152
-    components:
-    - type: Transform
-      pos: -50.5,13.5
       parent: 2
 - proto: SpawnMobWalter
   entities:

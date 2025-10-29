@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, AccessoryCameraBase] # DS14 accessory
   id: ClothingNeckBodyCamera
   name: нательная камера
   description: Лучше не кидать жёлуди рядом с владельцем этой камеры.

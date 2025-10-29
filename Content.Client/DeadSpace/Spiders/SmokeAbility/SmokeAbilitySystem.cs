@@ -1,12 +1,12 @@
 // Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
 
-using Content.Shared.DeadSpace.Spiders.SpiderLurker;
-using Content.Shared.DeadSpace.Spiders.SpiderLurker.Components;
+using Content.Shared.DeadSpace.Spiders.SmokeAbility;
+using Content.Shared.DeadSpace.Spiders.SmokeAbility.Components;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.DeadSpace.Spiders.SpiderLurker;
+namespace Content.Client.DeadSpace.Spiders.SmokeAbility;
 
-public sealed class SpiderLurkerSystem : EntitySystem
+public sealed class SmokeAbilitySystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
@@ -14,14 +14,14 @@ public sealed class SpiderLurkerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SpiderLurkerComponent, AppearanceChangeEvent>(OnAppearanceChange);
+        SubscribeLocalEvent<SmokeAbilityComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
-    private void OnAppearanceChange(EntityUid uid, SpiderLurkerComponent component, ref AppearanceChangeEvent args)
+    private void OnAppearanceChange(EntityUid uid, SmokeAbilityComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        if (_appearance.TryGetData<bool>(uid, SpiderLurkerVisuals.hide, out var hide, args.Component))
+        if (_appearance.TryGetData<bool>(uid, SmokeAbilityVisuals.hide, out var hide, args.Component))
         {
             if (hide)
                 args.Sprite.LayerSetState(0, component.HideState);

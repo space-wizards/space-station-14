@@ -63,7 +63,7 @@
     injectSound:
       collection: SpiderHatches # Звуки после высасывания
   - type: NeededBloodForSpawnAgainst # Пример
-    defaultCost: 10 # Стандартная цена на не заданный результат
+    defaultCost: 50 # Стандартная цена на не заданный результат
   - type: Puller
     needsHands: false
   - type: SpiderKing

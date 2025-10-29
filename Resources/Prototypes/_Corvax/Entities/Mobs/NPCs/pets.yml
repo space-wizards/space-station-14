@@ -84,4 +84,6 @@
       damage:
         types:
           Blunt: 7
+    - type: StealTarget
+      stealGroup: AnimalLargo
     # DS14-end

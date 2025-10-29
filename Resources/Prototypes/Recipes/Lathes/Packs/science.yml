@@ -43,6 +43,8 @@
   - ClothingBackpackHolding
   - ClothingBackpackSatchelHolding
   - ClothingBackpackDuffelHolding
+  - ClothingShoesBootsMagSuper # DS14
+  - JetBoots # DS14
 
 - type: latheRecipePack
   id: PowerCells

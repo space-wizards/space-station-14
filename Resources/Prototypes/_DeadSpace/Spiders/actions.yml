@@ -53,7 +53,7 @@
     event: !type:InvisibilityActionEvent
 
 - type: entity
-  id: ActionSpiderLurker
+  id: ActionSmokeAbility
   name: Дымок
   description: Выпускает дым, стоит 10 крови.
   categories: [ HideSpawnMenu ]
@@ -64,7 +64,7 @@
       sprite: Interface/Actions/actions_mecha.rsi
       state: mech_smoke
   - type: InstantAction
-    event: !type:SpiderLurkerActionEvent
+    event: !type:SmokeAbilityActionEvent
 
 - type: entity
   id: ActionSuckBlood
@@ -182,3 +182,20 @@
       state: Egg
   - type: InstantAction
     event: !type:HatchActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionSpiderWebShot
+  name: "[color=orange]Выстрел паутиной[/color]"
+  description: Стреляет сгустком паутины и замедляет цель.
+  components:
+  - type: Action
+    # TODO: actual sprite and iconOn
+    icon: { sprite : _DeadSpace/Spiders/web_shot.rsi, state: web }
+    itemIconStyle: BigAction
+    priority: 2
+  - type: TargetAction
+    checkCanAccess: false
+    range: 0
+  - type: WorldTargetAction
+    event: !type:ActionGunShootEvent

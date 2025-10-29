@@ -11,63 +11,63 @@
       "name": "comm"
     },
     {
-      "name": "comm-equipped",
+      "name": "comm-equipped-NECK",
       "directions": 4
     },
 	{
       "name": "donk"
     },
     {
-      "name": "donk-equipped",
+      "name": "donk-equipped-NECK",
       "directions": 4
     },
 	{
       "name": "earth"
     },
     {
-      "name": "earth-equipped",
+      "name": "earth-equipped-NECK",
       "directions": 4
     },
 	{
       "name": "logistika"
     },
     {
-      "name": "logistika-equipped",
+      "name": "logistika-equipped-NECK",
       "directions": 4
     },
 	{
       "name": "med"
     },
     {
-      "name": "med-equipped",
+      "name": "med-equipped-NECK",
       "directions": 4
     },
 	{
       "name": "nakamura"
     },
     {
-      "name": "nakamura-equipped",
+      "name": "nakamura-equipped-NECK",
       "directions": 4
     },
 	{
       "name": "nano"
     },
     {
-      "name": "nano-equipped",
+      "name": "nano-equipped-NECK",
       "directions": 4
     },
 	{
       "name": "sind"
     },
     {
-      "name": "sind-equipped",
+      "name": "sind-equipped-NECK",
       "directions": 4
     },
 	{
       "name": "vit"
     },
     {
-      "name": "vit-equipped",
+      "name": "vit-equipped-NECK",
       "directions": 4
     }
   ]

@@ -526,6 +526,12 @@
       prob: 0.02
     - id: MobAdultSlimesYellowAngry
       prob: 0.02
+# DS14-start
+    - id: MobAdultSlimesRainbow
+      prob: 0.001
+    - id: MobAdultSlimesGalacticAngry
+      prob: 0.001
+# DS14-end
 
 - type: entity
   id: SnakeSpawn

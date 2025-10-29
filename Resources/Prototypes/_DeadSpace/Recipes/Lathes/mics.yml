@@ -1,0 +1,18 @@
+- type: latheRecipe
+  id: ClothingShoesBootsMagSuper
+  result: ClothingShoesBootsMagSuper
+  completetime: 2
+  materials:
+    Steel: 4000
+    Plastic: 3500
+    Uranium: 1000
+    Gold: 2500
+
+- type: latheRecipe
+  id: JetBoots
+  result: JetBoots
+  completetime: 2
+  materials:
+    Steel: 1500
+    Plastic: 1500
+    Gold: 2500

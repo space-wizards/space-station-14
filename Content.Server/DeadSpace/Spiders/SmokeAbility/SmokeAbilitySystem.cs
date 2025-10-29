@@ -2,8 +2,8 @@
 
 using Content.Shared.Actions;
 using Content.Shared.Movement.Systems;
-using Content.Shared.DeadSpace.Spiders.SpiderLurker;
-using Content.Shared.DeadSpace.Spiders.SpiderLurker.Components;
+using Content.Shared.DeadSpace.Spiders.SmokeAbility;
+using Content.Shared.DeadSpace.Spiders.SmokeAbility.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Robust.Shared.Timing;
@@ -17,9 +17,9 @@ using Content.Server.Popups;
 using Content.Shared.Bed.Sleep;
 using Content.Server.Spreader;
 
-namespace Content.Server.DeadSpace.Spiders.SpiderLurker;
+namespace Content.Server.DeadSpace.Spiders.SmokeAbility;
 
-public sealed class SpiderLurkerSystem : SharedBloodsuckerSystem
+public sealed class SmokeAbilitySystem : SharedBloodsuckerSystem
 {
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -37,29 +37,29 @@ public sealed class SpiderLurkerSystem : SharedBloodsuckerSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SpiderLurkerComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<SpiderLurkerComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<SpiderLurkerComponent, SpiderLurkerActionEvent>(OnHide);
-        SubscribeLocalEvent<SpiderLurkerComponent, RefreshMovementSpeedModifiersEvent>(OnRefresh);
-        SubscribeLocalEvent<SpiderLurkerComponent, TryingToSleepEvent>(OnSleepAttempt);
+        SubscribeLocalEvent<SmokeAbilityComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<SmokeAbilityComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<SmokeAbilityComponent, SmokeAbilityActionEvent>(OnHide);
+        SubscribeLocalEvent<SmokeAbilityComponent, RefreshMovementSpeedModifiersEvent>(OnRefresh);
+        SubscribeLocalEvent<SmokeAbilityComponent, TryingToSleepEvent>(OnSleepAttempt);
     }
 
-    private void OnComponentInit(EntityUid uid, SpiderLurkerComponent component, ComponentInit args)
+    private void OnComponentInit(EntityUid uid, SmokeAbilityComponent component, ComponentInit args)
     {
-        _actionsSystem.AddAction(uid, ref component.SpiderLurkerActionEntity, component.SpiderLurker, uid);
+        _actionsSystem.AddAction(uid, ref component.SmokeAbilityActionEntity, component.SmokeAbility, uid);
     }
 
-    private void OnShutdown(EntityUid uid, SpiderLurkerComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, SmokeAbilityComponent component, ComponentShutdown args)
     {
-        _actionsSystem.RemoveAction(uid, component.SpiderLurkerActionEntity);
+        _actionsSystem.RemoveAction(uid, component.SmokeAbilityActionEntity);
     }
 
-    private void OnRefresh(EntityUid uid, SpiderLurkerComponent component, RefreshMovementSpeedModifiersEvent args)
+    private void OnRefresh(EntityUid uid, SmokeAbilityComponent component, RefreshMovementSpeedModifiersEvent args)
     {
         args.ModifySpeed(component.MovementSpeedMultiplier, component.MovementSpeedMultiplier);
     }
 
-    private void OnSleepAttempt(EntityUid uid, SpiderLurkerComponent component, ref TryingToSleepEvent args)
+    private void OnSleepAttempt(EntityUid uid, SmokeAbilityComponent component, ref TryingToSleepEvent args)
     {
         args.Cancelled = true;
     }
@@ -68,7 +68,7 @@ public sealed class SpiderLurkerSystem : SharedBloodsuckerSystem
     {
         base.Update(frameTime);
 
-        var spiderLurkerQuery = EntityQueryEnumerator<SpiderLurkerComponent>();
+        var spiderLurkerQuery = EntityQueryEnumerator<SmokeAbilityComponent>();
         while (spiderLurkerQuery.MoveNext(out var ent, out var spiderLurker))
         {
             if (spiderLurker.IsHide)
@@ -81,7 +81,7 @@ public sealed class SpiderLurkerSystem : SharedBloodsuckerSystem
         }
     }
 
-    private void OnHide(EntityUid uid, SpiderLurkerComponent component, SpiderLurkerActionEvent args)
+    private void OnHide(EntityUid uid, SmokeAbilityComponent component, SmokeAbilityActionEvent args)
     {
         if (args.Handled)
             return;
@@ -94,7 +94,7 @@ public sealed class SpiderLurkerSystem : SharedBloodsuckerSystem
                 _popup.PopupEntity(Loc.GetString("Недостаточно питательных веществ, у вас ") + countReagent.ToString() + Loc.GetString(" а нужно: ") + component.BloodCost.ToString(), uid, uid);
                 return;
             }
-            SetReagentCount(uid, -component.BloodCost, bloodsuckerComponent);
+            AddReagentCount(uid, -component.BloodCost, bloodsuckerComponent);
         }
 
         args.Handled = true;
@@ -125,12 +125,15 @@ public sealed class SpiderLurkerSystem : SharedBloodsuckerSystem
         _smokeSystem.StartSmoke(ent, component.Solution, component.Duration, component.SpreadAmount, smoke);
     }
 
-    private void SetLurker(EntityUid uid, SpiderLurkerComponent component, bool isHide)
+    private void SetLurker(EntityUid uid, SmokeAbilityComponent component, bool isHide)
     {
+        if (!component.ChangeApperacne)
+            return;
+
         if (isHide)
         {
-            _appearance.SetData(uid, SpiderLurkerVisuals.state, false);
-            _appearance.SetData(uid, SpiderLurkerVisuals.hide, true);
+            _appearance.SetData(uid, SmokeAbilityVisuals.state, false);
+            _appearance.SetData(uid, SmokeAbilityVisuals.hide, true);
 
             component.MovementSpeedMultiplier = component.MovementBuff;
             _movement.RefreshMovementSpeedModifiers(uid);
@@ -140,8 +143,8 @@ public sealed class SpiderLurkerSystem : SharedBloodsuckerSystem
         }
         else
         {
-            _appearance.SetData(uid, SpiderLurkerVisuals.state, true);
-            _appearance.SetData(uid, SpiderLurkerVisuals.hide, false);
+            _appearance.SetData(uid, SmokeAbilityVisuals.state, true);
+            _appearance.SetData(uid, SmokeAbilityVisuals.hide, false);
 
             component.MovementSpeedMultiplier = 1f;
             _movement.RefreshMovementSpeedModifiers(uid);

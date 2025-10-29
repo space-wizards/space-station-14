@@ -1,7 +1,10 @@
 using System.Linq;
 using System.Numerics;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Cargo.Systems;
+using Content.Server.Temperature.Systems;
 using Content.Server.Weapons.Ranged.Components;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Cargo;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
@@ -32,6 +35,8 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly SharedStaminaSystem _stamina = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly TemperatureSystem _temperatureSystem = default!;
+    [Dependency] private readonly FlammableSystem _flammableSystem = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
 
     private const float DamagePitchVariation = 0.05f;
@@ -203,6 +208,21 @@ public sealed partial class GunSystem : SharedGunSystem
                     if (lastHit != null)
                     {
                         var hitEntity = lastHit.Value;
+// DS14-start: temperature and fire effects
+                        if (hitscan.Temperature != 0f)
+                        {
+                            var heatAmount = hitscan.Temperature * 1000f * 1.5f;
+                            _temperatureSystem.ChangeHeat(hitEntity, heatAmount);
+                        }
+
+                        if (hitscan.FireStacks > 0f &&
+                            TryComp<FlammableComponent>(hitEntity, out var flammable))
+                        {
+                            _flammableSystem.AdjustFireStacks(hitEntity, hitscan.FireStacks, flammable, ignite: true);
+                            var igniter = user ?? gunUid;
+                            _flammableSystem.Ignite(hitEntity, igniter, flammable);
+                        }
+// DS14-end
                         if (hitscan.StaminaDamage > 0f)
                             _stamina.TakeStaminaDamage(hitEntity, hitscan.StaminaDamage, source: user);
 

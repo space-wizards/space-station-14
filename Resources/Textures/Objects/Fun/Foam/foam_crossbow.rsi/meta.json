@@ -1,14 +1,22 @@
 {
     "version": 1,
     "license": "CC-BY-NC-SA-3.0",
-    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432",
+    "copyright": "Taken from https://github.com/ss220-space/Paradise, edited by andrew_fenriz and inhand by protogen_leopard for Space Station 14 server Мёртвый Космос",
     "size": {
         "x": 32,
         "y": 32
     },
     "states": [
         {
-            "name": "icon"
+            "name": "icon",
+            "delays": [
+            [
+              0.15,
+              0.15,
+              0.15,
+              0.15
+            ]
+          ]
         },
         {
             "name": "foambox"

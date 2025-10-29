@@ -7,13 +7,31 @@
   - type: Projectile
     damage:
       types:
-        Poison: 15
+        Poison: 10
   - type: StaminaDamageOnCollide
-    damage: 35
+    damage: 20
   - type: Sprite
     sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/crossbowbullet.rsi
     layers:
     - state: bulletcrossbow
   - type: StunOnCollide
-    stunAmount: 1
+    knockdownAmount: 3
+
+- type: entity
+  id: BulletEnergyCrossbowLarge
+  name: bullet(crossbow large)
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Poison: 20
+  - type: StaminaDamageOnCollide
+    damage: 30
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/crossbowbullet.rsi
+    layers:
+    - state: bulletcrossbow
+  - type: StunOnCollide
     knockdownAmount: 1

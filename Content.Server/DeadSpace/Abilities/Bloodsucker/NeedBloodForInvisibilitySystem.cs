@@ -44,7 +44,7 @@ public sealed partial class NeededBloodForInvisibilitySystem : SharedBloodsucker
             {
                 if (blood.CountReagent - needBlood.CostPerSecond > 0)
                 {
-                    SetReagentCount(uid, -needBlood.CostPerSecond, blood);
+                    AddReagentCount(uid, -needBlood.CostPerSecond, blood);
                     needBlood.NextTick = _timing.CurTime + TimeSpan.FromSeconds(1);
                 }
                 else

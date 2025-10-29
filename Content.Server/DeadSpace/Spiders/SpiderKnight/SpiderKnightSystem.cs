@@ -79,7 +79,7 @@ public sealed class SpiderKnightSystem : SharedBloodsuckerSystem
 
         component.TimeLeftPay = _gameTiming.CurTime + TimeSpan.FromSeconds(1f);
 
-        SetReagentCount(uid, -component.BloodCost, bloodsucker);
+        AddReagentCount(uid, -component.BloodCost, bloodsucker);
     }
 
     private void SetState(EntityUid uid, SpiderKnightComponent component, SpiderKnightActionEvent args)

@@ -109,6 +109,8 @@
     molsPerSecondPerUnitMass: 0.0005
   - type: Body
     prototype: XenoMaid
+  - type: StealTarget
+    stealGroup: AnimalXenoMaid
 
 - type: entity
   name: спавнер ксеноморфа горничной

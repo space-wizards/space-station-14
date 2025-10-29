@@ -33,6 +33,18 @@ public sealed partial class HitscanPrototype : IPrototype, IShootable
     public int CollisionMask = (int) CollisionGroup.Opaque;
 
     /// <summary>
+    /// DS14: Прибавляет или отнимает температуру в килоджоулях.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("temperature")]
+    public float Temperature = 0f;
+
+    /// <summary>
+    /// DS14: Определяет длительность и силу горения.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("fireStacks")]
+    public float FireStacks = 0f;
+
+    /// <summary>
     /// What we count as for reflection.
     /// </summary>
     [DataField("reflective")] public ReflectType Reflective = ReflectType.Energy;

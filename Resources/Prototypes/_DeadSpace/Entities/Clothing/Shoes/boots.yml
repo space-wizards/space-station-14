@@ -1,0 +1,32 @@
+- type: entity
+  parent: [ JetpackMini, ClothingShoesBase ]
+  id: JetBoots
+  name: джет-бутсы
+  description: Ботинки, лишённые локализованного магнитного захватом взамен на встроенный джет с хорошим объёмом газа.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Shoes/Boots/jet_boots.rsi
+    state: icon
+  - type: Clothing
+    slots:
+    - FEET
+    sprite: _DeadSpace/Clothing/Shoes/Boots/jet_boots.rsi
+  - type: Item
+    sprite: null
+    size: Normal
+
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagSuper
+  name: улучшенные магнитные ботинки
+  description: Следующий этап магнитных ботинок, не так сильно замедляющий владельца.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Shoes/Boots/super_mag_boots.rsi
+    state: icon
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Shoes/Boots/super_mag_boots.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 0.90
+    sprintModifier: 0.90
+

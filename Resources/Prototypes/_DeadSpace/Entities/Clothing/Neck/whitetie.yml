@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, AccessoryTieBase] # DS14 accessory
   id: ClothingNeckTieWhite
   name: белый галстук
   description: Кому могут нравиться белые галстуки?

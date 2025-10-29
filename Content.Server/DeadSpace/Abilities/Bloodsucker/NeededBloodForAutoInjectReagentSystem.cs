@@ -31,7 +31,7 @@ public sealed partial class NeededBloodForAutoInjectSystem : SharedBloodsuckerSy
             return;
         }
 
-        SetReagentCount(uid, -component.Cost, bloodsuckerComponent);
+        AddReagentCount(uid, -component.Cost, bloodsuckerComponent);
 
         _popup.PopupEntity(Loc.GetString("У вас есть ") + bloodsuckerComponent.CountReagent.ToString() + Loc.GetString(" питательных веществ"), uid, uid);
     }

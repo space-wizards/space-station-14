@@ -1,0 +1,94 @@
+- type: entity
+  name: радужный слайм
+  id: MobAdultSlimesRainbow
+  parent: MobAdultSlimes
+  description: Редкий радужный слайм, обладающий спокойным характером и ядром с лекарственным эффектом.
+  suffix: Добрый
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: rainbow_baby_slime
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      200: Dead
+  - type: Tag
+    tags:
+    - FootstepSound
+    - DoorBumpOpener
+    - CannotSuicide
+    - VimPilot
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: rainbow_baby_slime
+      Dead:
+        Base: rainbow_baby_slime_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatSlime
+      amount: 1
+    - id: MaterialSmileExtract
+      amount: 1
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 1
+        Caustic: 1
+  - type: MultiHandedItem
+  - type: Item
+    sprite: Mobs/Pets/Smile/smile.rsi
+    size: Huge
+  - type: MobPrice
+    price: 3000 # it is a truly valuable creature
+
+- type: entity
+  name: галактический слайм
+  description: Переливающийся звёздным светом слайм. Мутировал под воздействием космической аномалии.
+  parent: MobAdultSlimes
+  id: MobAdultSlimesGalactic
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Mobs/Aliens/slimes.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: galactic_adult_slime
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: galactic_adult_slime_unshaded
+      shader: unshaded
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: galactic_adult_slime
+        BaseUnshaded: galactic_adult_slime_unshaded
+      Dead:
+        Base: galactic_adult_slime_dead
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 6
+        Structural: 4
+        Caustic: 8
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatSlime
+      amount: 1
+    - id: AnomalyCoreRandom
+      amount: 1
+
+- type: entity
+  parent: MobAdultSlimesGalactic
+  id: MobAdultSlimesGalacticAngry
+  suffix: Злой
+  components:
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: GhostRole
+    description: ghost-role-information-angry-slimes-description
+    rules: ghost-role-information-angry-slimes-rules
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
+    raffle:
+      settings: short

@@ -114,6 +114,8 @@
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Monkey_burning
+  - type: StealTarget
+    stealGroup: AnimalMukhtar
 
 - type: startingGear
   id: MobMukhtarGear

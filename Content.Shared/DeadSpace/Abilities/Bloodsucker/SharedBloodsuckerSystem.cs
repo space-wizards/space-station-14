@@ -2,6 +2,7 @@
 
 using Content.Shared.Alert;
 using Content.Shared.DeadSpace.Abilities.Bloodsucker.Components;
+using Content.Shared.Whitelist;
 
 namespace Content.Shared.DeadSpace.Abilities.Bloodsucker;
 
@@ -29,14 +30,32 @@ public abstract class SharedBloodsuckerSystem : EntitySystem
         }
     }
 
-    public float SetReagentCount(EntityUid uid, float count, BloodsuckerComponent? component = null)
+    public float AddReagentCount(EntityUid uid, float count, BloodsuckerComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return count;
 
+        var bloodsuckEvent = new BloodsuckEvent(count);
+        RaiseLocalEvent(uid, bloodsuckEvent);
+
+        if (bloodsuckEvent.Handled)
+        {
+            UpdateBloodAlert(uid, component);
+            return component.CountReagent;
+        }
+
         component.CountReagent += count;
         UpdateBloodAlert(uid, component);
         return component.CountReagent;
+    }
+
+    public void SetReagentCount(EntityUid uid, float newQuantity, BloodsuckerComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        component.CountReagent = newQuantity;
+        UpdateBloodAlert(uid, component);
     }
 
     public void UpdateBloodAlert(EntityUid ent, BloodsuckerComponent? component = null)

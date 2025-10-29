@@ -38,10 +38,10 @@
       - SurplusBundle
 
 - type: listing
-  id: UplinkEnergyCrossbowNuke
-  name: uplink-energy-crossbow-name
-  description: uplink-energy-crossbow-desc
-  productEntity: WeaponEnergyCrossbow
+  id: UplinkEnergyCrossbowLarge
+  name: uplink-energy-crossbow-large-name
+  description: uplink-energy-crossbow-large-desc
+  productEntity: WeaponEnergyCrossbowLarge
   cost:
     Telecrystal: 20
   categories:

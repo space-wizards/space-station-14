@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: Clothing
+  parent: [Clothing, BaseUniformAccessoryItemGloves] # DS14 accessory
   id: ClothingHandsBase
   components:
   - type: Sprite

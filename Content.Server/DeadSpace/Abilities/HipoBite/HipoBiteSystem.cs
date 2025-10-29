@@ -33,7 +33,7 @@ public sealed partial class HipoBiteSystem : EntitySystem
 
         if (component.CountReagent < component.MaxCountReagent)
         {
-            SetReagentCount(uid, component, 5);
+            AddReagentCount(uid, component, 5);
         }
         component.TimeUntilRegenReagent = _timing.CurTime + TimeSpan.FromSeconds(component.DurationRegenReagent);
     }
@@ -78,12 +78,12 @@ public sealed partial class HipoBiteSystem : EntitySystem
         _solutionContainer.TryAddReagent(injectable.Value, component.Reagent, component.Quantity, out _);
         _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
 
-        SetReagentCount(uid, component, -5);
+        AddReagentCount(uid, component, -5);
 
         return;
     }
 
-    private void SetReagentCount(EntityUid uid, HipoBiteComponent component, float count)
+    private void AddReagentCount(EntityUid uid, HipoBiteComponent component, float count)
     {
         component.CountReagent += count;
         _popup.PopupEntity(Loc.GetString("У вас есть ") + component.CountReagent.ToString() + Loc.GetString(" реагента"), uid, uid);

@@ -40,6 +40,9 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: NpcFactionMember
+    factions:
+    - SpiderTerror
 
 - type: entity
   name: королевский паучий кокон
@@ -73,6 +76,7 @@
     spawnedEntities:
       - MobSpiderTerrorRoyalGuard
       - MobSpiderTerrorPrincess
+      - MobSpiderTerrorSupportLvl1
   - type: Destructible
     thresholds:
     - trigger:
@@ -81,6 +85,9 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: NpcFactionMember
+    factions:
+    - SpiderTerror
 
 - type: entity
   id: SpiderCocoon
@@ -148,3 +155,6 @@
   - type: ZombieImmune
   - type: ImmunitetInfectionDead
   - type: Pullable
+  - type: NpcFactionMember
+    factions:
+    - SpiderTerror

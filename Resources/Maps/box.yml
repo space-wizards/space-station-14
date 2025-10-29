@@ -154430,33 +154430,12 @@ entities:
     - type: Transform
       pos: 36.5,-5.5
       parent: 8364
-- proto: SpawnMobBandito
-  entities:
-  - uid: 512
-    components:
-    - type: Transform
-      pos: 72.5,-36.5
-      parent: 8364
 - proto: SpawnMobCat
   entities:
   - uid: 10856
     components:
     - type: Transform
       pos: 57.5,-1.5
-      parent: 8364
-- proto: SpawnMobCatException
-  entities:
-  - uid: 7991
-    components:
-    - type: Transform
-      pos: 34.5,-41.5
-      parent: 8364
-- proto: SpawnMobCatRuntime
-  entities:
-  - uid: 14475
-    components:
-    - type: Transform
-      pos: 35.5,-38.5
       parent: 8364
 - proto: SpawnMobCleanBot
   entities:
@@ -154471,13 +154450,6 @@ entities:
     components:
     - type: Transform
       pos: -10.5,-27.5
-      parent: 8364
-- proto: SpawnMobCrabAtmos
-  entities:
-  - uid: 6974
-    components:
-    - type: Transform
-      pos: 12.5,-57.5
       parent: 8364
 - proto: SpawnMobFoxRenault
   entities:
@@ -154561,13 +154533,6 @@ entities:
     components:
     - type: Transform
       pos: 44.5,-18.5
-      parent: 8364
-- proto: SpawnMobRaccoonMorticia
-  entities:
-  - uid: 25879
-    components:
-    - type: Transform
-      pos: -30.5,-26.5
       parent: 8364
 - proto: SpawnMobShiva
   entities:

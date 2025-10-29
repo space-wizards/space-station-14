@@ -27,7 +27,7 @@ public sealed partial class HipoHandSystem : EntitySystem
     private void OnRegenReagent(EntityUid uid, HipoHandComponent component, RegenReagentEvent args)
     {
         if (component.CountReagent < component.MaxCountReagent)
-            SetReagentCount(uid, component, component.CountRegen);
+            AddReagentCount(uid, component, component.CountRegen);
 
         component.TimeUntilRegenReagent = _timing.CurTime + TimeSpan.FromSeconds(component.DurationRegenReagent);
     }
@@ -64,12 +64,12 @@ public sealed partial class HipoHandSystem : EntitySystem
         _solutionContainer.TryAddReagent(injectable.Value, component.Reagent, component.Quantity, out _);
         _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
 
-        SetReagentCount(uid, component, (float)-component.Quantity);
+        AddReagentCount(uid, component, (float)-component.Quantity);
 
         args.Handled = true;
     }
 
-    private void SetReagentCount(EntityUid uid, HipoHandComponent component, float count)
+    private void AddReagentCount(EntityUid uid, HipoHandComponent component, float count)
     {
         component.CountReagent += count;
         _popup.PopupEntity(Loc.GetString("У вас есть ") + component.CountReagent.ToString() + Loc.GetString(" реагента"), uid, uid);

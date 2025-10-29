@@ -63,14 +63,14 @@
       - MobSpiderTerrorKnight
       - MobSpiderTerrorVdova
       - MobSpiderTerrorReaper
-      - MobSpiderTerrorInfector
+      # - MobSpiderTerrorInfector
   - type: NeededBloodForEvolution # Пример
     defaultCost: 200 # Стандартная цена на не заданный результат
     bloodCosts:
       MobSpiderTerrorKnight: 150
       MobSpiderTerrorVdova: 150
       MobSpiderTerrorReaper: 200
-      MobSpiderTerrorInfector: 200
+      # MobSpiderTerrorInfector: 200
 
 - type: entity
   name: паук рыцарь

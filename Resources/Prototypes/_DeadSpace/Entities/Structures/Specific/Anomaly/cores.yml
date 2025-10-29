@@ -1,0 +1,21 @@
+- type: entity
+  parent: BaseAnomalyCore
+  id: AnomalyCoreRandom
+  name: случайное ядро аномалии
+  components:
+  - type: RandomSpawner
+    prototypes:
+      - AnomalyCorePyroclastic
+      - AnomalyCoreGravity
+      - AnomalyCoreIce
+      - AnomalyCoreFlesh
+      - AnomalyCoreRock
+      - AnomalyCoreLiquid
+      - AnomalyCoreBluespace
+      - AnomalyCoreElectricity
+      - AnomalyCoreFlora
+      - AnomalyCoreShadow
+      - AnomalyCoreTech
+      - AnomalyCoreSanta
+      - AnomalyCoreNecro
+    chance: 1
