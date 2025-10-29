@@ -5,6 +5,8 @@
     # hijacks use key, prevents from using artifact, sadly
     #- id: XenoArtifactEffectUniversalIntercom
     #  weight: 10.0
+    - id: XenoArtifactBecomeLamp
+      weight: 100.0
     - id: XenoArtifactSolutionStorage
       weight: 10.0
     - id: XenoArtifactPhasing
@@ -167,6 +169,19 @@
       max: 0
   - type: NameIdentifier
     group: XenoArtifactNode
+
+- type: entity
+  id: XenoArtifactBecomeLamp
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Emits light
+  components:
+  - type: XAEApplyComponents
+    components:
+    - type: PointLight
+      enabled: true
+      energy: 8
+      radius: 8
+      netsync: false
 
 - type: entity
   id: XenoArtifactEffectUniversalIntercom
