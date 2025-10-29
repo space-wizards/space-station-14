@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
@@ -23,6 +24,18 @@ public sealed partial class AtmosphereSystem
     public const int DeltaPressurePreAllocateLength = 1000;
 
     /// <summary>
+    /// <para>A queue that handles scheduling of invalid entities to be removed from the entity processing list.</para>
+    ///
+    /// <para>We cannot change the contents of the list while processing it in parallel as this may create
+    /// a race condition for other thread pool workers working on different parts of the same list (as removing
+    /// items from the list will do a substitution of items to fill the gap, which can touch ents
+    /// other threads may be working on).</para>
+    ///
+    /// <para>As such, we just delay removal of these entities until after parallel processing.</para>
+    /// </summary>
+    private readonly ConcurrentQueue<Entity<DeltaPressureComponent>> _deltaPressureInvalidEntityQueue = new();
+
+    /// <summary>
     /// Processes a singular entity, determining the pressures it's experiencing and applying damage based on that.
     /// </summary>
     /// <param name="ent">The entity to process.</param>
@@ -32,6 +45,13 @@ public sealed partial class AtmosphereSystem
         if (!_random.Prob(ent.Comp.RandomDamageChance))
             return;
 
+        if (!_airtightQuery.TryComp(ent, out var airtightComp))
+        {
+            _deltaPressureInvalidEntityQueue.Enqueue(ent);
+            Log.Error($"DeltaPressure entity without an AirtightComponent found in processing list! Ent: {ent}");
+            return;
+        }
+
         /*
          To make our comparisons a little bit faster, we take advantage of SIMD-accelerated methods
          in the NumericsHelpers class.
@@ -40,7 +60,6 @@ public sealed partial class AtmosphereSystem
          so simple vector operations like min/max/abs can be performed on them.
          */
 
-        var airtightComp = _airtightQuery.Comp(ent);
         var currentPos = airtightComp.LastPosition.Tile;
         var tiles = new TileAtmosphere?[Atmospherics.Directions];
         for (var i = 0; i < Atmospherics.Directions; i++)
@@ -59,12 +78,13 @@ public sealed partial class AtmosphereSystem
         // (Or rather, don't do so for directions that it blocks air from.)
         if (!airtightComp.NoAirWhenFullyAirBlocked)
         {
+            var curTilePressure = gridAtmosComp.Tiles.GetValueOrDefault(currentPos)?.Air?.Pressure ?? 0f;
             for (var i = 0; i < Atmospherics.Directions; i++)
             {
                 var direction = (AtmosDirection)(1 << i);
                 if (!airtightComp.AirBlockedDirection.HasFlag(direction))
                 {
-                    pressures[i] = gridAtmosComp.Tiles.GetValueOrDefault(currentPos)?.Air?.Pressure ?? 0f;
+                    pressures[i] = curTilePressure;
                 }
             }
         }
