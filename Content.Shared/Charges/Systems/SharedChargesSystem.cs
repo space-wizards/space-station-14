@@ -20,7 +20,7 @@ public abstract class SharedChargesSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<LimitedChargesComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<LimitedChargesComponent, RejuvenateEvent>(OnRejuvinate);
+        SubscribeLocalEvent<LimitedChargesComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<LimitedChargesComponent, ActionAttemptEvent>(OnChargesAttempt);
         SubscribeLocalEvent<LimitedChargesComponent, MapInitEvent>(OnChargesMapInit);
         SubscribeLocalEvent<LimitedChargesComponent, ActionPerformedEvent>(OnChargesPerformed);
@@ -49,9 +49,9 @@ public abstract class SharedChargesSystem : EntitySystem
         args.PushMarkup(Loc.GetString("limited-charges-recharging", ("seconds", timeRemaining.TotalSeconds.ToString("F1"))));
     }
 
-    private void OnRejuvinate(Entity<LimitedChargesComponent> ent, ref RejuvenateEvent args)
+    private void OnRejuvenate(Entity<LimitedChargesComponent> ent, ref RejuvenateEvent args)
     {
-        ResetCharges(ent);
+        ResetCharges(ent.AsNullable());
     }
 
     private void OnChargesAttempt(Entity<LimitedChargesComponent> ent, ref ActionAttemptEvent args)
