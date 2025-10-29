@@ -1,10 +1,8 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.Actions;
-using Content.Server.AlertLevel;
 using Content.Server.Backmen.Blob.Components;
 using Content.Server.Backmen.GameTicking.Rules.Components;
-using Content.Server.Explosion.EntitySystems;
 using Content.Server.GameTicking;
 using Content.Server.Objectives.Conditions;
 using Content.Server.RoundEnd;
@@ -30,22 +28,32 @@ namespace Content.Server.Backmen.Blob;
 
 public sealed class BlobCoreSystem : SharedBlobCoreSystem
 {
-    [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly StationSystem _stationSystem = default!;
-    [Dependency] private readonly AlertLevelSystem _alertLevelSystem = default!;
-    [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
-    [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
-    [Dependency] private readonly ActionsSystem _action = default!;
-    [Dependency] private readonly MapSystem _map = default!;
+    private static readonly EntProtoId BlobCaptureObjective = "BlobCaptureObjective";
 
-    private EntityQuery<BlobTileComponent> _tile;
+    private static readonly EntProtoId ActionSwapBlobChem = "ActionSwapBlobChem";
+    private static readonly EntProtoId ActionTeleportBlobToCore = "ActionTeleportBlobToCore";
+    private static readonly EntProtoId ActionTeleportBlobToNode = "ActionTeleportBlobToNode";
+    private static readonly EntProtoId ActionCreateBlobFactory = "ActionCreateBlobFactory";
+    private static readonly EntProtoId ActionCreateBlobResource = "ActionCreateBlobResource";
+    private static readonly EntProtoId ActionCreateBlobNode = "ActionCreateBlobNode";
+    private static readonly EntProtoId ActionCreateBlobbernaut = "ActionCreateBlobbernaut";
+    private static readonly EntProtoId ActionSplitBlobCore = "ActionSplitBlobCore";
+    private static readonly EntProtoId ActionSwapBlobCore = "ActionSwapBlobCore";
+
+    private static readonly ProtoId<AlertPrototype> BlobResource = "BlobResource";
+    [Dependency] private readonly ActionsSystem _action = default!;
+    [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly MapSystem _map = default!;
+    [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
+    [Dependency] private readonly StationSystem _stationSystem = default!;
     private EntityQuery<BlobFactoryComponent> _factory;
 
-    private static readonly EntProtoId BlobCaptureObjective = "BlobCaptureObjective";
+    private EntityQuery<BlobTileComponent> _tile;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -66,43 +74,10 @@ public sealed class BlobCoreSystem : SharedBlobCoreSystem
 
     private void OnTerminating(EntityUid uid, BlobCoreComponent component, ref EntityTerminatingEvent args)
     {
-        if (component.Observer != null && !TerminatingOrDeleted(component.Observer.Value) && !EntityManager.IsQueuedForDeletion(component.Observer.Value))
-        {
+        if (component.Observer != null && !TerminatingOrDeleted(component.Observer.Value) &&
+            !EntityManager.IsQueuedForDeletion(component.Observer.Value))
             QueueDel(component.Observer.Value);
-        }
     }
-
-    #region Objective
-    private void OnBlobCaptureInfo(EntityUid uid, BlobCaptureConditionComponent component, ref ObjectiveAfterAssignEvent args)
-    {
-        _metaDataSystem.SetEntityName(uid,Loc.GetString("objective-condition-blob-capture-title"));
-        _metaDataSystem.SetEntityDescription(uid,Loc.GetString("objective-condition-blob-capture-description", ("count", component.Target)));
-    }
-
-    private void OnBlobCaptureProgress(EntityUid uid, BlobCaptureConditionComponent component, ref ObjectiveGetProgressEvent args)
-    {
-        // prevent divide-by-zero
-        if (component.Target == 0)
-        {
-            args.Progress = 1;
-            return;
-        }
-
-        if (args.Mind?.OwnedEntity == null)
-        {
-            args.Progress = 0;
-            return;
-        }
-
-        if (!TryComp<BlobObserverComponent>(args.Mind.OwnedEntity, out var blobObserverComponent)
-            || !TryComp<BlobCoreComponent>(blobObserverComponent.Core, out var blobCoreComponent))
-        {
-            args.Progress = 0;
-            return;
-        }
-        args.Progress = (float) blobCoreComponent.BlobTiles.Count / (float) component.Target;
-    }
-    #endregion
 
     private void OnPlayerAttached(EntityUid uid, BlobCoreComponent component, PlayerAttachedEvent args)
     {
@@ -123,24 +98,12 @@ public sealed class BlobCoreSystem : SharedBlobCoreSystem
         var blobRule = EntityQuery<BlobRuleComponent>().FirstOrDefault();
 
         if (blobRule == null)
-        {
             _gameTicker.StartGameRule("Blob", out _);
-        }
         var ev = new CreateBlobObserverEvent(userId);
         RaiseLocalEvent(blobCoreUid, ev, true);
 
         return !ev.Cancelled;
     }
-
-    private static readonly EntProtoId ActionSwapBlobChem = "ActionSwapBlobChem";
-    private static readonly EntProtoId ActionTeleportBlobToCore = "ActionTeleportBlobToCore";
-    private static readonly EntProtoId ActionTeleportBlobToNode = "ActionTeleportBlobToNode";
-    private static readonly EntProtoId ActionCreateBlobFactory = "ActionCreateBlobFactory";
-    private static readonly EntProtoId ActionCreateBlobResource = "ActionCreateBlobResource";
-    private static readonly EntProtoId ActionCreateBlobNode = "ActionCreateBlobNode";
-    private static readonly EntProtoId ActionCreateBlobbernaut = "ActionCreateBlobbernaut";
-    private static readonly EntProtoId ActionSplitBlobCore = "ActionSplitBlobCore";
-    private static readonly EntProtoId ActionSwapBlobCore = "ActionSwapBlobCore";
 
     private void OnStartup(EntityUid uid, BlobCoreComponent component, ComponentStartup args)
     {
@@ -200,6 +163,7 @@ public sealed class BlobCoreSystem : SharedBlobCoreSystem
                         {
                             blobbernautDamage.DamageDict.Add(keyValuePair.Key, keyValuePair.Value * 0.8f);
                         }
+
                         meleeWeaponComponent.Damage = blobbernautDamage;
                     }
 
@@ -223,9 +187,7 @@ public sealed class BlobCoreSystem : SharedBlobCoreSystem
     private void OnDestruction(EntityUid uid, BlobCoreComponent component, DestructionEventArgs args)
     {
         if (component.Observer != null)
-        {
             QueueDel(component.Observer.Value);
-        }
 
         foreach (var blobTile in component.BlobTiles)
         {
@@ -243,9 +205,7 @@ public sealed class BlobCoreSystem : SharedBlobCoreSystem
         while (blobCoreQuery.MoveNext(out var ent, out var comp))
         {
             if (TerminatingOrDeleted(ent))
-            {
                 continue;
-            }
             isAllDie++;
         }
 
@@ -256,12 +216,10 @@ public sealed class BlobCoreSystem : SharedBlobCoreSystem
             {
                 if (blobRuleComp.Stage == BlobStage.Critical ||
                     blobRuleComp.Stage == BlobStage.Begin)
-                {
-                    _alertLevelSystem.SetLevel(stationUid!.Value, "green", true, true, true, false);
                     _roundEndSystem.CancelRoundEndCountdown(null, false);
-                }
             }
         }
+
         QueueDel(uid);
     }
 
@@ -269,9 +227,7 @@ public sealed class BlobCoreSystem : SharedBlobCoreSystem
     {
         var explosionResistance = EnsureComp<ExplosionResistanceComponent>(uid);
         if (oldChem == BlobChemType.ExplosiveLattice)
-        {
             explosionResistance.DamageCoefficient = 0.3f;
-        }
         switch (newChem)
         {
             case BlobChemType.ExplosiveLattice:
@@ -290,8 +246,12 @@ public sealed class BlobCoreSystem : SharedBlobCoreSystem
         }
     }
 
-    public bool TransformBlobTile(EntityUid? oldTileUid, EntityUid coreTileUid, string newBlobTileProto,
-        EntityCoordinates coordinates, BlobCoreComponent? blobCore = null, bool returnCost = true,
+    public bool TransformBlobTile(EntityUid? oldTileUid,
+        EntityUid coreTileUid,
+        string newBlobTileProto,
+        EntityCoordinates coordinates,
+        BlobCoreComponent? blobCore = null,
+        bool returnCost = true,
         FixedPoint2? transformCost = null)
     {
         if (!Resolve(coreTileUid, ref blobCore))
@@ -301,6 +261,7 @@ public sealed class BlobCoreSystem : SharedBlobCoreSystem
             QueueDel(oldTileUid.Value);
             blobCore.BlobTiles.Remove(oldTileUid.Value);
         }
+
         var tileBlob = EntityManager.SpawnEntity(newBlobTileProto, coordinates);
 
         if (_tile.TryGetComponent(tileBlob, out var blobTileComponent))
@@ -313,10 +274,9 @@ public sealed class BlobCoreSystem : SharedBlobCoreSystem
             var explosionResistance = EnsureComp<ExplosionResistanceComponent>(tileBlob);
 
             if (blobCore.CurrentChem == BlobChemType.ExplosiveLattice)
-            {
                 explosionResistance.DamageCoefficient = 0f;
-            }
         }
+
         if (blobCore.Observer != null && transformCost != null)
         {
             _popup.PopupEntity(Loc.GetString("blob-spent-resource", ("point", transformCost)),
@@ -324,6 +284,7 @@ public sealed class BlobCoreSystem : SharedBlobCoreSystem
                 blobCore.Observer.Value,
                 PopupType.LargeCaution);
         }
+
         blobCore.BlobTiles.Add(tileBlob);
         return true;
     }
@@ -339,8 +300,6 @@ public sealed class BlobCoreSystem : SharedBlobCoreSystem
         return true;
     }
 
-    private static readonly ProtoId<AlertPrototype> BlobResource = "BlobResource";
-
     public bool ChangeBlobPoint(EntityUid uid, FixedPoint2 amount, BlobCoreComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -349,7 +308,11 @@ public sealed class BlobCoreSystem : SharedBlobCoreSystem
         component.Points += amount;
 
         if (component.Observer != null)
-            _alerts.ShowAlert(component.Observer.Value, BlobResource, (short)Math.Clamp(Math.Round(component.Points.Float() / 10f), 0, 16));
+        {
+            _alerts.ShowAlert(component.Observer.Value,
+                BlobResource,
+                (short)Math.Clamp(Math.Round(component.Points.Float() / 10f), 0, 16));
+        }
 
         return true;
     }
@@ -367,18 +330,25 @@ public sealed class BlobCoreSystem : SharedBlobCoreSystem
         return true;
     }
 
-    public bool CheckNearNode(EntityUid observer, EntityCoordinates coords, Entity<MapGridComponent> grid, BlobCoreComponent core)
+    public bool CheckNearNode(EntityUid observer,
+        EntityCoordinates coords,
+        Entity<MapGridComponent> grid,
+        BlobCoreComponent core)
     {
         var radius = 3f;
 
-        var innerTiles = _map.GetLocalTilesIntersecting(grid,grid,
-            new Box2(coords.Position + new Vector2(-radius, -radius), coords.Position + new Vector2(radius, radius)), false).ToArray();
+        var innerTiles = _map.GetLocalTilesIntersecting(grid,
+                grid,
+                new Box2(coords.Position + new Vector2(-radius, -radius),
+                    coords.Position + new Vector2(radius, radius)),
+                false)
+            .ToArray();
 
         var queryNode = GetEntityQuery<BlobNodeComponent>();
         var queryCore = GetEntityQuery<BlobCoreComponent>();
         foreach (var tileRef in innerTiles)
         {
-            foreach (var ent in _map.GetAnchoredEntities(grid,grid,tileRef.GridIndices))
+            foreach (var ent in _map.GetAnchoredEntities(grid, grid, tileRef.GridIndices))
             {
                 if (queryNode.HasComponent(ent) || queryCore.HasComponent(ent))
                     return true;
@@ -388,4 +358,44 @@ public sealed class BlobCoreSystem : SharedBlobCoreSystem
         _popup.PopupCoordinates(Loc.GetString("blob-target-nearby-not-node"), coords, observer, PopupType.Large);
         return false;
     }
+
+    #region Objective
+
+    private void OnBlobCaptureInfo(EntityUid uid,
+        BlobCaptureConditionComponent component,
+        ref ObjectiveAfterAssignEvent args)
+    {
+        _metaDataSystem.SetEntityName(uid, Loc.GetString("objective-condition-blob-capture-title"));
+        _metaDataSystem.SetEntityDescription(uid,
+            Loc.GetString("objective-condition-blob-capture-description", ("count", component.Target)));
+    }
+
+    private void OnBlobCaptureProgress(EntityUid uid,
+        BlobCaptureConditionComponent component,
+        ref ObjectiveGetProgressEvent args)
+    {
+        // prevent divide-by-zero
+        if (component.Target == 0)
+        {
+            args.Progress = 1;
+            return;
+        }
+
+        if (args.Mind?.OwnedEntity == null)
+        {
+            args.Progress = 0;
+            return;
+        }
+
+        if (!TryComp<BlobObserverComponent>(args.Mind.OwnedEntity, out var blobObserverComponent)
+            || !TryComp<BlobCoreComponent>(blobObserverComponent.Core, out var blobCoreComponent))
+        {
+            args.Progress = 0;
+            return;
+        }
+
+        args.Progress = blobCoreComponent.BlobTiles.Count / (float)component.Target;
+    }
+
+    #endregion
 }
