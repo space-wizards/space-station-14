@@ -142,7 +142,7 @@
 
 - type: entity
   name: energy katana
-  parent: [ Katana, BaseHighlyIllegalContraband ]
+  parent: [ BaseHighlyIllegalContraband, Katana ]
   id: EnergyKatana
   description: A katana infused with strong energy.
   components:
