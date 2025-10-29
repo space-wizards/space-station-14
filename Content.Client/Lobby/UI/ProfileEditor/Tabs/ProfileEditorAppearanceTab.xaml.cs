@@ -196,7 +196,7 @@ public sealed partial class ProfileEditorAppearanceTab : BoxContainer
         if (!_prototypeManager.HasIndex<GuideEntryPrototype>(species))
             return;
 
-        SpeciesInfoButton.StyleClasses.Add(SpeciesInfoButtonStyle);
+        SpeciesInfoButton.StyleIdentifier = SpeciesInfoButtonStyle; 
     }
 
     private void UpdateGenderControls()
