@@ -4,12 +4,12 @@
 # When used as the first parent, this empties a bottle's reagent and spawns it already opened
 - type: entity
   abstract: true
-  parent: [ DrinkBaseOpenableOpen, DrinkBaseEmptyTrash ]
+  parent: [ BaseSolOpenableOpen, BaseSolEmptyTrash ]
   id: DrinkBottleBaseEmpty
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 100
   - type: Tag
     tags:
@@ -18,12 +18,12 @@
 
 - type: entity
   abstract: true
-  parent: [ DrinkBaseOpenableOpen, DrinkBaseEmptyTrash ]
+  parent: [ BaseSolOpenableOpen, BaseSolEmptyTrash ]
   id: DrinkBottleBaseSmallEmpty
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 50
   - type: Tag
     tags:
@@ -32,22 +32,22 @@
 
 - type: entity
   abstract: true
-  parent: [ DrinkBaseOpenableOpen, DrinkBaseEmptyTrash ]
+  parent: [ BaseSolOpenableOpen, BaseSolEmptyTrash ]
   id: DrinkCartonBaseEmpty
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 50
 
 - type: entity
   abstract: true
-  parent: [ DrinkBaseOpenableOpen, DrinkBaseEmptyTrash ]
+  parent: [ BaseSolOpenableOpen, BaseSolEmptyTrash ]
   id: DrinkCartonBaseLargeEmpty
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 100
 
 # Small bottles

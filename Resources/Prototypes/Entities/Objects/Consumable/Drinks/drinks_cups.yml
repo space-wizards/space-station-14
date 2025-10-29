@@ -6,10 +6,10 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 20
   - type: FitsInDispenser
-    solution: drink
+    solution: exposed
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 10
@@ -22,7 +22,7 @@
 # A mug is a type of cup.[2]
 - type: entity
   abstract: true
-  parent: [ DrinkBaseMaterialPorcelain, DrinkBaseCup, DrinkVisualsFill ]
+  parent: [ DrinkBaseMaterialPorcelain, DrinkBaseCup, BaseSolVisualsFill ]
   id: DrinkBaseMug
   name: mug
   description: A mug.
@@ -58,7 +58,7 @@
     maxFillLevels: 4
 
 - type: entity
-  parent: [ DrinkBaseMaterialGlass, DrinkBaseCup, DrinkVisualsFillOverlay ]
+  parent: [ DrinkBaseMaterialGlass, DrinkBaseCup, BaseSolVisualsFillOverlay ]
   id: DrinkGlassCoupeShaped
   name: coupe glass
   description: A classic thin neck coupe glass, the icon of fragile labels on crates around the galaxy.
@@ -69,14 +69,14 @@
     inHandsMaxFillLevels: 1
 
 - type: entity
-  parent: [DrinkBaseMaterialCardboard, DrinkBaseCup, DrinkBaseEmptyTrash, DrinkVisualsFill]
+  parent: [DrinkBaseMaterialCardboard, DrinkBaseCup, BaseSolEmptyTrash, BaseSolVisualsFill]
   id: DrinkWaterCup
   name: water cup
   description: A paper water cup.
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 5 # One sip at a time. No rushing at the water cooler
   - type: Item
     size: Tiny
@@ -96,7 +96,7 @@
     quickEquip: false
     sprite: Clothing/Head/Hats/party_water_cup.rsi
   - type: SpillWhenWorn
-    solution: drink
+    solution: exposed
 
 # Mugs
 - type: entity
@@ -209,7 +209,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: HotCocoa
           Quantity: 20
@@ -222,7 +222,7 @@
     - state: fill-3
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: TrashOnSolutionEmpty
-    solution: drink
+    solution: exposed
 
 - type: entity
   parent: DrinkBaseMug
@@ -233,7 +233,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: Coffee
           Quantity: 20
@@ -246,7 +246,7 @@
     - state: fill-3
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: TrashOnSolutionEmpty
-    solution: drink
+    solution: exposed
 
 - type: entity
   parent: DrinkBaseMug
@@ -257,7 +257,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: CafeLatte
           Quantity: 20
@@ -274,7 +274,7 @@
     maxFillLevels: 1
     changeColor: false
   - type: TrashOnSolutionEmpty
-    solution: drink
+    solution: exposed
 
 - type: entity
   parent: DrinkTeacupEmpty
@@ -283,7 +283,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: Tea
           Quantity: 20
@@ -291,7 +291,7 @@
     sprite: Objects/Consumable/Drinks/teacup.rsi
     state: icon-vend-tea
   - type: TrashOnSolutionEmpty
-    solution: drink
+    solution: exposed
 
 - type: entity
   parent: DrinkTeacupEmpty
@@ -300,7 +300,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: GreenTea
           Quantity: 20
@@ -308,7 +308,7 @@
     sprite: Objects/Consumable/Drinks/teacup.rsi
     state: icon-vend-green-tea
   - type: TrashOnSolutionEmpty
-    solution: drink
+    solution: exposed
 
 # TODO this needs fill levels
 - type: entity
@@ -319,7 +319,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: JuiceGrape
           Quantity: 20
@@ -328,7 +328,7 @@
   - type: Item
     sprite: Objects/Consumable/Drinks/lean.rsi
   - type: TrashOnSolutionEmpty
-    solution: drink
+    solution: exposed
 
 #[1] https://en.wikipedia.org/wiki/Cup
 #[2] https://en.wikipedia.org/wiki/Mug

@@ -1,25 +1,20 @@
 # When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\
 
-# Inheritors are an easily and freely accessible solution like cups, teapots, cans, flasks, bottles, or beakers.
+# This base is used for entities that have a mundane container with freely accessible liquid, such as a bucket.
 - type: entity
   abstract: true
-  parent: BaseItem
-  id: DrinkBase
+  id: BaseExposedSolutionContainer
   components:
-  - type: Sprite
-    state: icon
-  - type: MeleeWeapon
-    soundNoDamage:
-      path: "/Audio/Effects/Fluids/splat.ogg"
-    damage:
-      types:
-        Blunt: 0
+  - type: SolutionContainerManager
+    solutions:
+      exposed:
+        maxVol: 30
   - type: DnaSubstanceTrace
   - type: Edible
-    edible: Drink # Namesake. This entity is a sort of cup you can drink directly from.
+    edible: Drink
     destroyOnEmpty: false
-    utensil: None # Spoons don't fit in cups, also conflicts with bar spoon stirring
-    solution: &sol drink # solution name alias
+    utensil: None # Spoons conflict with MixableSolution
+    solution: &sol exposed
   - type: Spillable
     solution: *sol
   - type: MixableSolution
@@ -36,10 +31,21 @@
     solution: *sol
   - type: SolutionItemStatus
     solution: *sol
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
+
+# Base for items with an easily accessible liquid container like cups, teapots, cans, flasks, bottles, buckets, or beakers.
+- type: entity
+  abstract: true
+  parent: [ BaseItem, BaseExposedSolutionContainer ]
+  id: DrinkBase
+  components:
+  - type: Sprite
+    state: icon
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
   - type: SolutionTransfer
     canChangeTransferAmount: true
   - type: UserInterface
@@ -49,10 +55,10 @@
 
 ## Misc bases
 
-# This drink is empty trash
+# This solution is empty trash
 - type: entity
   abstract: true
-  id: DrinkBaseEmptyTrash
+  id: BaseSolEmptyTrash
   suffix: Empty
   components:
   - type: SpaceGarbage
@@ -62,12 +68,12 @@
     tags:
     - Trash
 
-## Bases for drinks with a lid
+## Bases for adding a lid
 
 # Un-opened
 - type: entity
   abstract: true
-  id: DrinkBaseOpenable
+  id: BaseSolOpenable
   components:
   - type: Openable
   - type: PressurizedSolution
@@ -78,8 +84,8 @@
 # Pre-opened
 - type: entity
   abstract: true
-  parent: DrinkBaseOpenable
-  id: DrinkBaseOpenableOpen
+  parent: BaseSolOpenable
+  id: BaseSolOpenableOpen
   components:
   - type: Openable
     opened: true
@@ -93,10 +99,10 @@
 ## Bases for visuals
 # New drinks should mirror these state names to reduce clutter when creating new prototypes
 
-# Basic visualizer for an openable entity. Requires DrinkBaseOpenable
+# Basic visualizer for an openable entity. Requires BaseSolOpenable
 - type: entity
   abstract: true
-  id: DrinkVisualsOpenable
+  id: BaseSolVisualsOpenable
   components:
   - type: Appearance
   - type: GenericVisualizer
@@ -117,7 +123,7 @@
 # Basic visualizer for an entity with fill levels
 - type: entity
   abstract: true
-  id: DrinkVisualsFill
+  id: BaseSolVisualsFill
   components:
   - type: Appearance
   - type: Sprite
@@ -136,8 +142,8 @@
 # Layered visualizer for an entity with fill levels, and an overlay over the fill levels
 - type: entity
   abstract: true
-  parent: DrinkVisualsFill
-  id: DrinkVisualsFillOverlay
+  parent: BaseSolVisualsFill
+  id: BaseSolVisualsFillOverlay
   components:
   - type: Sprite
     layers:
@@ -152,8 +158,8 @@
 # Basic visualizer for an entity with fill levels, already filled
 - type: entity
   abstract: true
-  parent: DrinkVisualsFill
-  id: DrinkVisualsFillFilled
+  parent: BaseSolVisualsFill
+  id: BaseSolVisualsFillFilled
   components:
   - type: Sprite
     layers:
@@ -161,11 +167,11 @@
     - state: fill-5 # this will need to be different with a different maxFillLevels
       map: ["enum.SolutionContainerLayers.Fill"]
 
-# Visualizer for an openable entity with fill levels. Requires DrinkBaseOpenable
+# Visualizer for an openable entity with fill levels. Requires BaseSolOpenable
 - type: entity
   abstract: true
-  parent: [DrinkVisualsOpenable, DrinkVisualsFill]
-  id: DrinkVisualsAll
+  parent: [BaseSolVisualsOpenable, BaseSolVisualsFill]
+  id: BaseSolVisualsAll
   components:
   - type: GenericVisualizer
     visuals:
@@ -184,11 +190,11 @@
     examinableWhileClosed: true # If you can see the fill levels it's not opaque
     heldOnly: false
 
-# Visualizer for an openable entity with fill levels, already filled. Requires DrinkBaseOpenable
+# Visualizer for an openable entity with fill levels, already filled. Requires BaseSolOpenable
 - type: entity
   abstract: true
-  parent: DrinkVisualsAll
-  id: DrinkVisualsAllFilled
+  parent: BaseSolVisualsAll
+  id: BaseSolVisualsAllFilled
   components:
   - type: Sprite
     layers:

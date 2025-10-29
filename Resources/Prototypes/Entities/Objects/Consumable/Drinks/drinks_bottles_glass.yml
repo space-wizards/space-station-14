@@ -2,7 +2,7 @@
 
 - type: entity
   abstract: true
-  parent: [ DrinkBaseMaterialGlass, DrinkBase, DrinkBaseOpenable ]
+  parent: [ DrinkBaseMaterialGlass, DrinkBase, BaseSolOpenable ]
   id: DrinkBottleGlassBaseFull
   suffix: Full
   components:
@@ -16,7 +16,7 @@
       collection: bottleCloseSounds
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alco-bottle.rsi # fallback
@@ -25,7 +25,7 @@
     - Rolling
     speedModifier: 0.75 # not as good as a rolling pin but does the job
   - type: TrashOnSolutionEmpty
-    solution: drink
+    solution: exposed
   - type: Tag
     tags:
     - DrinkBottle
@@ -61,26 +61,26 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 50
   - type: Item
     size: Small
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beer.rsi # fallback
   - type: FitsInDispenser
-    solution: drink
+    solution: exposed
 
 # Large Glass Bottles
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottleGlassBaseFull]
+  parent: [BaseSolVisualsAllFilled, DrinkBottleGlassBaseFull]
   id: DrinkAbsintheBottleFull
   name: Jailbreaker Verte
   description: One sip of this and you just know you're gonna have a good time.
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: Absinthe
           Quantity: 100
@@ -90,14 +90,14 @@
     sprite: Objects/Consumable/Drinks/absinthebottle.rsi
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottleGlassBaseFull]
+  parent: [BaseSolVisualsAllFilled, DrinkBottleGlassBaseFull]
   id: DrinkBlueCuracaoBottleFull
   name: Miss Blue Curaçao
   description: A fruity, exceptionally azure drink. Does not allow the imbiber to use the fifth magic.
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: BlueCuracao
           Quantity: 100
@@ -114,14 +114,14 @@
     maxFillLevels: 6
 
 - type: entity
-  parent: [DrinkVisualsOpenable, DrinkBottleGlassBaseFull]
+  parent: [BaseSolVisualsOpenable, DrinkBottleGlassBaseFull]
   id: DrinkBottleOfNothingFull
   name: bottle of nothing
   description: A bottle filled with nothing.
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: Nothing
           Quantity: 100
@@ -131,14 +131,14 @@
     sprite: Objects/Consumable/Drinks/bottleofnothing.rsi
 
 - type: entity
-  parent: [DrinkVisualsOpenable, DrinkBottleGlassBaseFull]
+  parent: [BaseSolVisualsOpenable, DrinkBottleGlassBaseFull]
   id: DrinkChampagneBottleFull
   name: champagne bottle
   description: Only people devoid of imagination can't find an excuse for champagne.
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: Champagne
           Quantity: 100
@@ -152,14 +152,14 @@
     examineTextUnsealed: "sealable-component-on-examine-is-unsealed-no-cork" # tell the player why it can't close
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottleGlassBaseFull]
+  parent: [BaseSolVisualsAllFilled, DrinkBottleGlassBaseFull]
   id: DrinkCognacBottleFull
   name: cognac bottle
   description: A sweet and strongly alcoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time.
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: Cognac
           Quantity: 100
@@ -169,14 +169,14 @@
     sprite: Objects/Consumable/Drinks/cognacbottle.rsi
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottleGlassBaseFull]
+  parent: [BaseSolVisualsAllFilled, DrinkBottleGlassBaseFull]
   id: DrinkGrenadineBottleFull
   name: Briar Rose grenadine syrup bottle
   description: Sweet and tangy, a bar syrup used to add color or flavor to drinks.
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: Grenadine
           Quantity: 100
@@ -193,14 +193,14 @@
     maxFillLevels: 6
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottleGlassBaseFull]
+  parent: [BaseSolVisualsAllFilled, DrinkBottleGlassBaseFull]
   id: DrinkGinBottleFull
   name: Griffeater gin
   description: A bottle of high quality gin, produced in the New London Space Station.
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: Gin
           Quantity: 100
@@ -210,14 +210,14 @@
     sprite: Objects/Consumable/Drinks/ginbottle.rsi
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottleGlassBaseFull]
+  parent: [BaseSolVisualsAllFilled, DrinkBottleGlassBaseFull]
   id: DrinkGildlagerBottleFull
   name: Gildlager bottle
   description: 100 proof cinnamon schnapps, made for alcoholic teen girls on spring break.
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: Gildlager
           Quantity: 100
@@ -227,14 +227,14 @@
     sprite: Objects/Consumable/Drinks/gildlagerbottle.rsi
 
 - type: entity
-  parent: [DrinkVisualsOpenable, DrinkBottleGlassBaseFull]
+  parent: [BaseSolVisualsOpenable, DrinkBottleGlassBaseFull]
   id: DrinkCoffeeLiqueurBottleFull
   name: coffee liqueur bottle
   description: The great taste of coffee with none of the benifits.
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: CoffeeLiqueur
           Quantity: 100
@@ -244,14 +244,14 @@
     sprite: Objects/Consumable/Drinks/coffeeliqueurbottle.rsi
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottleGlassBaseFull]
+  parent: [BaseSolVisualsAllFilled, DrinkBottleGlassBaseFull]
   id: DrinkMelonLiquorBottleFull
   name: Emeraldine melon liquor
   description: A bottle of 46 proof Emeraldine melon liquor. Sweet and light.
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: MelonLiquor
           Quantity: 100
@@ -268,14 +268,14 @@
     maxFillLevels: 6
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottleGlassBaseFull]
+  parent: [BaseSolVisualsAllFilled, DrinkBottleGlassBaseFull]
   id: DrinkPatronBottleFull
   name: Wrapp Artiste Patrón bottle
   description: Silver laced tequila, served in space night clubs across the galaxy.
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: Patron
           Quantity: 100
@@ -285,14 +285,14 @@
     sprite: Objects/Consumable/Drinks/patronbottle.rsi
 
 - type: entity
-  parent: [DrinkVisualsOpenable, DrinkBottleGlassBaseFull]
+  parent: [BaseSolVisualsOpenable, DrinkBottleGlassBaseFull]
   id: DrinkPoisonWinebottleFull
   name: Warlock's Velvet bottle
   description: What a delightful packaging for a surely high quality wine! The vintage must be amazing!
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: PoisonWine
           Quantity: 100
@@ -304,14 +304,14 @@
     - DrinkBottle
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottleGlassBaseFull]
+  parent: [BaseSolVisualsAllFilled, DrinkBottleGlassBaseFull]
   id: DrinkRumBottleFull
   name: Captain Pete's Cuban spiced rum
   description: This isn't just rum, oh no. It's practically GRIFF in a bottle.
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: Rum
           Quantity: 100
@@ -321,14 +321,14 @@
     sprite: Objects/Consumable/Drinks/rumbottle.rsi
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottleGlassBaseFull]
+  parent: [BaseSolVisualsAllFilled, DrinkBottleGlassBaseFull]
   id: DrinkTequilaBottleFull
   name: Caccavo Guaranteed Quality tequila bottle
   description: Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: Tequila
           Quantity: 100
@@ -338,14 +338,14 @@
     sprite: Objects/Consumable/Drinks/tequillabottle.rsi
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottleGlassBaseFull]
+  parent: [BaseSolVisualsAllFilled, DrinkBottleGlassBaseFull]
   id: DrinkVermouthBottleFull
   name: Goldeneye vermouth bottle
   description: Sweet, sweet dryness!
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: Vermouth
           Quantity: 100
@@ -355,14 +355,14 @@
     sprite: Objects/Consumable/Drinks/vermouthbottle.rsi
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottleGlassBaseFull]
+  parent: [BaseSolVisualsAllFilled, DrinkBottleGlassBaseFull]
   id: DrinkVodkaBottleFull
   name: vodka bottle
   description: Aah, vodka. Prime choice of drink AND fuel by Russians worldwide.
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: Vodka
           Quantity: 100
@@ -372,14 +372,14 @@
     sprite: Objects/Consumable/Drinks/vodkabottle.rsi
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottleGlassBaseFull]
+  parent: [BaseSolVisualsAllFilled, DrinkBottleGlassBaseFull]
   id: DrinkWhiskeyBottleFull
   name: Uncle Git's Special Reserve
   description: A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES.
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: Whiskey
           Quantity: 100
@@ -389,14 +389,14 @@
     sprite: Objects/Consumable/Drinks/whiskeybottle.rsi
 
 - type: entity
-  parent: [DrinkVisualsOpenable, DrinkBottleGlassBaseFull]
+  parent: [BaseSolVisualsOpenable, DrinkBottleGlassBaseFull]
   id: DrinkWineBottleFull
   name: Doublebearded Bearded Special wine bottle
   description: A faint aura of unease and asspainery surrounds the bottle.
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: Wine
           Quantity: 100
@@ -412,14 +412,14 @@
 # Extra large bottles
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottleGlassBaseFull]
+  parent: [BaseSolVisualsAllFilled, DrinkBottleGlassBaseFull]
   id: DrinkBeerGrowler # todo Needs to be renamed DrinkBeerBottleFullGrowler
   name: beer growler  # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e
   description: An alcoholic beverage made from malted grains, hops, yeast, and water. XL growler bottle.
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 150
         reagents:
         - ReagentId: Beer
@@ -438,14 +438,14 @@
     - DrinkBottle
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottleGlassBaseFull]
+  parent: [BaseSolVisualsAllFilled, DrinkBottleGlassBaseFull]
   id: DrinkAleBottleFullGrowler
   name: Magm-Ale growler
   description: A true dorf's drink of choice. XL growler bottle.
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 150
         reagents:
         - ReagentId: Ale
@@ -463,14 +463,14 @@
 # Small glass bottles
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottleGlassSmallBaseFull]
+  parent: [BaseSolVisualsAllFilled, DrinkBottleGlassSmallBaseFull]
   id: DrinkBeerBottleFull
   name: beer bottle # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e
   description: An alcoholic beverage made from malted grains, hops, yeast, and water.
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: Beer
           Quantity: 50
@@ -487,14 +487,14 @@
     - Beer
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottleGlassSmallBaseFull]
+  parent: [BaseSolVisualsAllFilled, DrinkBottleGlassSmallBaseFull]
   id: DrinkAleBottleFull
   name: Magm-Ale bottle
   description: A true dorf's drink of choice.
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: Ale
           Quantity: 50
@@ -508,14 +508,14 @@
     examineTextUnsealed: "sealable-component-on-examine-is-unsealed-crown-cap" # tell the player why it can't close
 
 - type: entity
-  parent: [DrinkVisualsOpenable, DrinkBottleGlassSmallBaseFull]
+  parent: [BaseSolVisualsOpenable, DrinkBottleGlassSmallBaseFull]
   id: DrinkSakeBottleFull
   name: small sake bottle
   description: The regret of the next morning seems to be nipping on the bottle too.
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: Sake
           Quantity: 50

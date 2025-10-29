@@ -1056,7 +1056,6 @@
   components:
   - type: Sprite
     sprite: Objects/Fun/glue.rsi
-    state: icon
     layers:
     - state: icon
       map: ["enum.OpenableVisuals.Layer"]
@@ -1073,7 +1072,7 @@
     sprite: Objects/Fun/glue.rsi
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 100
         reagents:
         - ReagentId: SpaceGlue
@@ -1082,7 +1081,7 @@
     sound:
       collection: packetOpenSounds
   - type: TrashOnSolutionEmpty
-    solution: drink
+    solution: exposed
   - type: Tag
     tags:
     - DrinkSpaceGlue
@@ -1104,7 +1103,7 @@
   - type: Appearance
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 100
         reagents:
         - ReagentId: SpaceLube
@@ -1117,7 +1116,7 @@
           False: {state: "icon"}
   - type: Lube
   - type: TrashOnSolutionEmpty
-    solution: drink
+    solution: exposed
 
 - type: entity
   parent: BaseItem

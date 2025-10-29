@@ -10,7 +10,7 @@
       - Debug
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 20
         reagents:
           - ReagentId: Desoxyephedrine

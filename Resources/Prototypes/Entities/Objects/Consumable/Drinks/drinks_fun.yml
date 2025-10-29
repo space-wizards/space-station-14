@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ DrinkBaseMaterialPlastic, DrinkBase, DrinkBaseOpenable, DrinkVisualsAllFilled ]
+  parent: [ DrinkBaseMaterialPlastic, DrinkBase, BaseSolOpenable, BaseSolVisualsAllFilled ]
   id: BaseSqueezeBottle
   components:
   - type: Openable
@@ -16,12 +16,12 @@
       map: [ "enum.SolutionContainerLayers.Overlay" ]
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 30
   - type: SolutionContainerVisuals
     maxFillLevels: 6
   - type: TrashOnSolutionEmpty
-    solution: drink
+    solution: exposed
 
 - type: entity
   parent: BaseSqueezeBottle
@@ -33,7 +33,7 @@
     sprite: Objects/Consumable/Drinks/glue-tube.rsi
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 30
         reagents:
         - ReagentId: SpaceGlue
@@ -53,7 +53,7 @@
     sprite: Objects/Consumable/Drinks/lube-tube.rsi
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 30
         reagents:
         - ReagentId: SpaceLube
@@ -91,7 +91,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/jar_what.rsi
   - type: FitsInDispenser
-    solution: drink
+    solution: exposed
   - type: Tag
     tags:
     - DrinkGlass
@@ -144,20 +144,20 @@
     - FourteenLoko
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottleGlassSmallBaseFull]
+  parent: [BaseSolVisualsAllFilled, DrinkBottleGlassSmallBaseFull]
   id: DrinkMopwataBottleRandom
   name: delicious mopwata
   description: A foggy brown bottle with a faded label depicting a mop. It comes full of murky... vintage.
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 50
         reagents:
         - ReagentId: Mopwata
           Quantity: 40
   - type: RandomFillSolution
-    solution: drink
+    solution: exposed
     weightedRandomId: RandomFillMopwata
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mopwata.rsi

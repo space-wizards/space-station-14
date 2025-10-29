@@ -1,11 +1,9 @@
 - type: entity
-  parent: [ DrinkBaseMaterialStrongPlastic, DrinkBase, DrinkVisualsFill ]
+  parent: [ DrinkBaseMaterialStrongPlastic, DrinkBase, BaseSolVisualsFill ]
   id: Bucket
   name: bucket
   description: It's a boring old bucket.
   components:
-  - type: Edible
-    utensil: Spoon
   - type: Sprite
     sprite: Objects/Tools/bucket.rsi
   - type: Item
@@ -17,14 +15,14 @@
     quickEquip: false
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 250
   - type: SolutionTransfer
     transferAmount: 100
     maxTransferAmount: 100
     minTransferAmount: 10
   - type: SpillWhenWorn
-    solution: drink
+    solution: exposed
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     inHandsFillBaseName: null
@@ -43,5 +41,5 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 500

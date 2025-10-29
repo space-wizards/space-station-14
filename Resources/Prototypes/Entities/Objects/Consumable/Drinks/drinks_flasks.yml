@@ -1,16 +1,16 @@
 - type: entity
   abstract: true
-  parent: [DrinkBaseMaterialStrongMetal, DrinkBase, DrinkBaseOpenable, DrinkVisualsOpenable]
+  parent: [DrinkBaseMaterialStrongMetal, DrinkBase, BaseSolOpenable, BaseSolVisualsOpenable]
   id: FlaskBase
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/flask.rsi
   - type: FitsInDispenser
-    solution: drink
+    solution: exposed
   - type: Openable
     sound:
       collection: flaskOpenSounds
@@ -28,12 +28,12 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/flask_old.rsi
   - type: FitsInDispenser
-    solution: drink
+    solution: exposed
 
 - type: entity
   parent: FlaskBase
@@ -55,12 +55,12 @@
     sprite: Objects/Consumable/Drinks/mreflask.rsi
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: Water
           Quantity: 50
   - type: TrashOnSolutionEmpty
-    solution: drink
+    solution: exposed
 
 - type: entity
   parent: FlaskBase

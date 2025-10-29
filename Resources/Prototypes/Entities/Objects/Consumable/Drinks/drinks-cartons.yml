@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ DrinkBaseMaterialCardboard, DrinkBase, DrinkBaseOpenable, DrinkVisualsOpenable ]
+  parent: [ DrinkBaseMaterialCardboard, DrinkBase, BaseSolOpenable, BaseSolVisualsOpenable ]
   id: DrinkCartonBaseFull
   suffix: Full
   components:
@@ -12,10 +12,10 @@
       collection: bottleCloseSounds
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 100
   - type: TrashOnSolutionEmpty
-    solution: drink
+    solution: exposed
   - type: Item
     size: Normal
 
@@ -26,7 +26,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 50
   - type: Item
     size: Small
@@ -38,7 +38,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 150
   - type: Tag
     tags:
@@ -54,7 +54,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: JuiceLime
           Quantity: 50
@@ -69,7 +69,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: JuiceOrange
           Quantity: 50
@@ -84,7 +84,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: JuiceTomato
           Quantity: 50
@@ -99,7 +99,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: CoconutWater
           Quantity: 50
@@ -114,7 +114,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: Cream
           Quantity: 50
@@ -129,7 +129,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: JuiceLemon
           Quantity: 50
@@ -144,7 +144,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: JuicePineapple
           Quantity: 50
@@ -161,7 +161,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: Milk
           Quantity: 100
@@ -176,7 +176,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: MilkSoy
           Quantity: 100
@@ -191,7 +191,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         reagents:
         - ReagentId: MilkOat
           Quantity: 100
@@ -208,7 +208,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 150
         reagents:
         - ReagentId: JuiceLime
@@ -226,7 +226,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 150
         reagents:
         - ReagentId: JuiceOrange
@@ -244,7 +244,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      exposed:
         maxVol: 150
         reagents:
         - ReagentId: Cream
