@@ -886,8 +886,7 @@ public sealed class PlantHolderSystem : EntitySystem
 
         if (solution.Volume > 0 && component.MutationLevel < 25)
         {
-            var sol = component.SoilSolution.Value.Comp.Solution;
-            foreach (var entry in sol.Contents)
+            foreach (var entry in component.SoilSolution.Value.Comp.Solution.Contents)
             {
                 var reagentProto = _prototype.Index<ReagentPrototype>(entry.Reagent.Prototype);
                 _entityEffects.ApplyEffects(uid, reagentProto.PlantMetabolisms.ToArray(), entry.Quantity.Float());
