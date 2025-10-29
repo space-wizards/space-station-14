@@ -1,6 +1,7 @@
 using Content.Shared.Actions.Events;
 using Content.Shared.Charges.Components;
 using Content.Shared.Examine;
+using Content.Shared.Rejuvenate;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
 
@@ -19,7 +20,7 @@ public abstract class SharedChargesSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<LimitedChargesComponent, ExaminedEvent>(OnExamine);
-
+        SubscribeLocalEvent<LimitedChargesComponent, RejuvenateEvent>(OnRejuvinate);
         SubscribeLocalEvent<LimitedChargesComponent, ActionAttemptEvent>(OnChargesAttempt);
         SubscribeLocalEvent<LimitedChargesComponent, MapInitEvent>(OnChargesMapInit);
         SubscribeLocalEvent<LimitedChargesComponent, ActionPerformedEvent>(OnChargesPerformed);
@@ -46,6 +47,11 @@ public abstract class SharedChargesSystem : EntitySystem
 
         var timeRemaining = GetNextRechargeTime(rechargeEnt);
         args.PushMarkup(Loc.GetString("limited-charges-recharging", ("seconds", timeRemaining.TotalSeconds.ToString("F1"))));
+    }
+
+    private void OnRejuvinate(EntityUid uid, LimitedChargesComponent comp, ref RejuvenateEvent args)
+    {
+        ResetCharges((uid, comp));
     }
 
     private void OnChargesAttempt(Entity<LimitedChargesComponent> ent, ref ActionAttemptEvent args)
