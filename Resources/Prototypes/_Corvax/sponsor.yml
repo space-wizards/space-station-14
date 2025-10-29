@@ -226,16 +226,41 @@
 
 # ken41k
 - type: entity
-  parent: ClothingHandsBase
+  parent: [BaseItem, AccessoryWristwatchBase] # DS14 accessory
   id: ClothingHandsWatchDivine
   name: divine watches
   description: This watch can only be worn by a divine person
   components:
     - type: Sprite
       sprite: _Corvax/Clothing/Hands/Accessories/watch.rsi
+      state: icon
     - type: Clothing
       sprite: _Corvax/Clothing/Hands/Accessories/watch.rsi
+      slots:
+      - gloves
     - type: Clock
+    - type: Item
+      sprite: _Corvax/Clothing/Hands/Accessories/watch.rsi
+      size: Small
+    - type: Damageable
+      damageContainer: Inorganic
+    - type: StaticPrice
+      price: 100
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageGroupTrigger
+          damageGroup: Brute
+          damage: 25
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Breakage" ]
     # DS14-start
     - type: PhysicalComposition
       materialComposition:

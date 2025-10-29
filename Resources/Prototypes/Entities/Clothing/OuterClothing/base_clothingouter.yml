@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: Clothing
+  parent: [Clothing, BaseUniformAccessoryItemOuterClothing] # DS14 accessory
   id: ClothingOuterBase
   components:
   - type: Clothing

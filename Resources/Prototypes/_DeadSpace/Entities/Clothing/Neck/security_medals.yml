@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, AccessoryMedalBase] # DS14 accessory
   id: ClothingNeckSecurityOfficerMedal
   name: медаль офицера службы безопасности
   description: Медаль для того, кто готов отдать свою жизнь ради защиты экипажа.
@@ -14,7 +14,7 @@
       - Medal
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, AccessoryMedalBase] # DS14 accessory
   id: ClothingNeckSecurityWardenMedal
   name: медаль смотрителя службы безопасности
   description: Медаль для того, кто милует невинных, и карает виновных.
@@ -29,7 +29,7 @@
       - Medal
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, AccessoryMedalBase] # DS14 accessory
   id: ClothingNeckSecurityHeadOfSecurityMedal
   name: медаль главы службы безопасности
   description: Медаль для того, кто готов взять на себя ответственность за безопасность целой станции.
@@ -44,7 +44,7 @@
       - Medal
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, AccessoryMedalBase] # DS14 accessory
   id: ClothingNeckSecurityBrigMedicMedal
   name: медаль бригмедика
   description: Медаль для того, кто рискует своей жизнью ради спасения своих товарищей.
@@ -59,7 +59,7 @@
       - Medal
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, AccessoryMedalBase] # DS14 accessory
   id: ClothingNeckSecuritySeniorOfficerMedal
   name: медаль инструктора службы безопасности
   description: Медаль для того, кто готов взять ответственность за обучнение новобранцев.
@@ -74,7 +74,7 @@
       - Medal
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, AccessoryMedalBase] # DS14 accessory
   id: ClothingNeckDetectiveMedal
   name: медаль детектива
   description: Медаль для того, кто раскрывает самые запутанные дела.
@@ -89,7 +89,7 @@
       - Medal
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, AccessoryMedalBase] # DS14 accessory
   id: ClothingNeckSecurityPilotMedal
   name: медаль пилота службы безопасности
   description: Медаль для аса, что пилотирует стальных птиц.

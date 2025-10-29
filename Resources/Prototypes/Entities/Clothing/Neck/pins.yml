@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, AccessoryMedalBase] # DS14 accessory
   id: ClothingNeckPinBase
   abstract: true
   name: pin
