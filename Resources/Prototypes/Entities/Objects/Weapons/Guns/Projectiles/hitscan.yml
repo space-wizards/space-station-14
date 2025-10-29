@@ -30,6 +30,9 @@
   impactFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: impact_laser
+# DS14-start
+  temperature: 10
+# DS14-end
 
 - type: hitscan
   id: RedLaserPractice
@@ -60,6 +63,9 @@
   impactFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: impact_laser
+# DS14-start
+  temperature: 15
+# DS14-end
 
 - type: hitscan
   id: RedLightLaser
@@ -75,13 +81,16 @@
   impactFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: impact_laser
+# DS14-start
+  temperature: 5
+# DS14-end
 
 - type: hitscan
   id: XrayLaser
   damage:
     types:
       Heat: 10
-      Radiation: 10
+      Radiation: 15 # DS14-value
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_xray
@@ -91,6 +100,9 @@
   impactFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: impact_xray
+# DS14-start
+  temperature: 15
+# DS14-end
 
 - type: hitscan
   id: RedHeavyLaser
@@ -106,6 +118,10 @@
   impactFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: impact_beam_heavy
+# DS14-start
+  temperature: 20
+  fireStacks: 1
+# DS14-end
 
 - type: hitscan
   id: Pulse
@@ -121,6 +137,9 @@
   impactFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: impact_blue
+# DS14-start
+  temperature: 20
+# DS14-end
 
 - type: hitscan
   id: MegaPulse # DS14 - Laser for death squad
@@ -137,6 +156,10 @@
   impactFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: impact_blue
+# DS14-start
+  temperature: 50
+  fireStacks: 2
+# DS14-end
 
 - type: hitscan
   id: RedShuttleLaser
@@ -154,3 +177,6 @@
   impactFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: impact_beam_heavy2
+# DS14-start
+  temperature: 25
+# DS14-end

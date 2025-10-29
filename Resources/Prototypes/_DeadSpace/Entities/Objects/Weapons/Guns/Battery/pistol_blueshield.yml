@@ -51,3 +51,4 @@
   impactFlash:
     sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/violethit.rsi
     state: impact_beam_violet
+  temperature: 10

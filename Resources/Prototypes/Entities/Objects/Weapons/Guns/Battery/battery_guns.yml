@@ -21,8 +21,8 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser.ogg
   - type: Battery
-    maxCharge: 1000
-    startingCharge: 1000
+    maxCharge: 1200 # DS14-value
+    startingCharge: 1200  # DS14-value
   - type: StaticPrice
     price: 500
 
@@ -144,7 +144,7 @@
     storedOffset: 0,-5
   - type: HitscanBatteryAmmoProvider
     proto: RedMediumLaser
-    fireCost: 62.5
+    fireCost: 60 # DS14-value
   - type: MagazineVisuals
     magState: mag
     steps: 5
@@ -178,8 +178,8 @@
     proto: RedLaser
     fireCost: 62.5
   - type: Battery
-    maxCharge: 500
-    startingCharge: 500
+    maxCharge: 750 # DS14-value
+    startingCharge: 750 # DS14-value
 
 - type: entity
   name: tesla gun
@@ -238,12 +238,13 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
   - type: Gun
+    fireRate: 2.5 # DS14-value
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
   - type: HitscanBatteryAmmoProvider
+    fireCost: 50 # DS14-value
     proto: RedLaser
-    fireCost: 62.5
   - type: StaticPrice
     price: 420
 
@@ -257,7 +258,7 @@
     price: 300
   - type: HitscanBatteryAmmoProvider
     proto: RedLaserPractice
-    fireCost: 62.5
+    fireCost: 50 # DS14-value
   - type: PacifismAllowedGun
 
 - type: entity
@@ -462,7 +463,7 @@
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: HitscanBatteryAmmoProvider
     proto: XrayLaser
-    fireCost: 100
+    fireCost: 80 # DS14-value
   - type: MagazineVisuals
     magState: mag
     steps: 5
@@ -703,6 +704,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
   - type: Gun
+    fireRate: 2.5 # DS14-value
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: HitscanBatteryAmmoProvider
