@@ -49,9 +49,9 @@ public abstract class SharedChargesSystem : EntitySystem
         args.PushMarkup(Loc.GetString("limited-charges-recharging", ("seconds", timeRemaining.TotalSeconds.ToString("F1"))));
     }
 
-    private void OnRejuvinate(EntityUid uid, LimitedChargesComponent comp, ref RejuvenateEvent args)
+    private void OnRejuvinate(Entity<LimitedChargesComponent> ent, ref RejuvenateEvent args)
     {
-        ResetCharges((uid, comp));
+        ResetCharges(ent);
     }
 
     private void OnChargesAttempt(Entity<LimitedChargesComponent> ent, ref ActionAttemptEvent args)
