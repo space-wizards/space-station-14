@@ -173,15 +173,16 @@
 - type: entity
   id: XenoArtifactBecomeLamp
   parent: BaseOneTimeXenoArtifactEffect
-  description: Emits light
+  description: Emits changing light
   components:
   - type: XAEApplyComponents
     components:
     - type: PointLight
       enabled: true
-      energy: 8
+      energy: 5
       radius: 8
       netsync: false
+    - type: RgbLightController
 
 - type: entity
   id: XenoArtifactEffectUniversalIntercom
