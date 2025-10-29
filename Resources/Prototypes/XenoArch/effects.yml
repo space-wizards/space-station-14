@@ -6,7 +6,7 @@
     #- id: XenoArtifactEffectUniversalIntercom
     #  weight: 10.0
     - id: XenoArtifactBecomeLamp
-      weight: 100.0
+      weight: 10.0
     - id: XenoArtifactSolutionStorage
       weight: 10.0
     - id: XenoArtifactPhasing
