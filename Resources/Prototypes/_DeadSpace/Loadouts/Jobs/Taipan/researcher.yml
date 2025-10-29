@@ -66,6 +66,7 @@
   groups:
   - TaipanResearcherUniform
   - TaipanResearcherUnderwear
+  - TaipanBackpack
   - TaipanSurvival
   - GroupSpeciesBreathTool
   - GroupTankHarness

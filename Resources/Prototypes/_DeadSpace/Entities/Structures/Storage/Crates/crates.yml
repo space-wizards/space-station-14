@@ -1,0 +1,73 @@
+- type: entity
+  parent: CrateBaseSecure
+  id: CrateCybersunSecure
+  name: защищённый ящик Cybersun
+  description: Тяжёлый бронированный ящик корпорации Cybersun Industries. Лучше не вскрывать без приказа.
+  components:
+  - type: Icon
+    sprite: _DeadSpace/Structures/Storage/Crates/cybersun_secure.rsi
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Storage/Crates/cybersun_secure.rsi
+  - type: AccessReader
+    access: [["SyndicateAgent"], ["NuclearOperative"], ["TaipanArmory"]]
+
+- type: entity
+  parent: CrateFreezer
+  id: CrateDonkFreezer
+  name: холодильник Donk Co.
+  description: Холодильный ящик корпорации Donk Co. Поддерживает температуру для хранения продукции и реагентов.
+  components:
+  - type: Icon
+    sprite: _DeadSpace/Structures/Storage/Crates/donk_freezer.rsi
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Storage/Crates/donk_freezer.rsi
+
+- type: entity
+  parent: CrateWeaponSecure
+  id: CrateGorlexWeapon
+  name: ящик Gorlex
+  description: Защищённый оружейный ящик корпорации Gorlex Marauders. От одной лишь его эмблемы веет агрессией.
+  components:
+  - type: Icon
+    sprite: _DeadSpace/Structures/Storage/Crates/gorlex_weapon.rsi
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Storage/Crates/gorlex_weapon.rsi
+  - type: AccessReader
+    access: [["SyndicateAgent"], ["NuclearOperative"], ["TaipanArmory"]]
+
+- type: entity
+  parent: CrateFreezer
+  id: CrateInterdyneFreezer
+  name: холодильник Interdyne
+  description: Промышленный холодильный ящик корпорации Interdyne Pharmaceuticals. Предназначен для хранения биоматериалов.
+  components:
+  - type: Icon
+    sprite: _DeadSpace/Structures/Storage/Crates/interdyne_freezer.rsi
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Storage/Crates/interdyne_freezer.rsi
+
+- type: entity
+  parent: CrateBaseSecure
+  id: CrateInterdyneSecure
+  name: защищённый ящик Interdyne
+  description: Надёжно запертый ящик корпорации Interdyne Pharmaceuticals. Никто не знает, что внутри — и лучше не проверять.
+  components:
+  - type: Icon
+    sprite: _DeadSpace/Structures/Storage/Crates/interdyne_secure.rsi
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Storage/Crates/interdyne_secure.rsi
+  - type: AccessReader
+    access: [["SyndicateAgent"], ["NuclearOperative"], ["TaipanMedical"], ["TaipanResearch"]]
+
+- type: entity
+  parent: CrateBaseSecure
+  id: CrateSyndicateSecure
+  name: защищённый ящик Синдиката
+  description: Тяжёлый чёрный ящик с эмблемой Синдиката. Открывать без санкции — верный способ исчезнуть без следа.
+  components:
+  - type: Icon
+    sprite: _DeadSpace/Structures/Storage/Crates/syndicate_secure.rsi
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Storage/Crates/syndicate_secure.rsi
+  - type: AccessReader
+    access: [["SyndicateAgent"], ["NuclearOperative"], ["TaipanMaint"]]

@@ -66,6 +66,7 @@
   groups:
   - TaipanChefUniform
   - TaipanChefUnderwear
+  - TaipanBackpack
   - TaipanSurvival
   - GroupSpeciesBreathTool
   - GroupTankHarness

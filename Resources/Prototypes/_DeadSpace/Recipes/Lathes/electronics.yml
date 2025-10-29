@@ -95,6 +95,11 @@
   result: AnomalyVesselExperimentalCircuitboardTaipan
 
 - type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseResearchMachineRecipeCategory ]
+  id: APECircuitboardTaipan
+  result: APECircuitboardTaipan
+
+- type: latheRecipe
   parent: BaseCheapElectronicsRecipe
   id: DoorElectronicsTaipan
   result: DoorElectronicsTaipan

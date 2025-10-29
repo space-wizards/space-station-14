@@ -108,9 +108,9 @@
     - WindowDirectional
     - WindowReinforcedDirectional
     - ReinforcedWindow
-    - Airlock
-    - AirlockGlass
-    - Firelock
+    - AirlockTaipan
+    - AirlockTaipanGlass
+    - FirelockTaipan
     - TubeLight
     - BulbLight
     - LVCable

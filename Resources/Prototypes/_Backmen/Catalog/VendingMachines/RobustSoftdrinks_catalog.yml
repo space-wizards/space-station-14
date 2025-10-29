@@ -1,0 +1,122 @@
+- type: listing
+  id: RobustSoftdrinksInventory1
+  productEntity: DrinkColaCan
+  cost:
+    SpaceCash: 15
+  categories:
+    - RobustSoftdrinksInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 4
+
+- type: listing
+  id: RobustSoftdrinksInventory2
+  productEntity: DrinkGrapeCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - RobustSoftdrinksInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: RobustSoftdrinksInventory3
+  productEntity: DrinkRootBeerCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - RobustSoftdrinksInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: RobustSoftdrinksInventory4
+  productEntity: DrinkIcedTeaCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - RobustSoftdrinksInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: RobustSoftdrinksInventory5
+  productEntity: DrinkSolDryCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - RobustSoftdrinksInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: RobustSoftdrinksInventory6
+  productEntity: DrinkLemonLimeCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - RobustSoftdrinksInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: RobustSoftdrinksInventory7
+  productEntity: DrinkLemonLimeCranberryCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - RobustSoftdrinksInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: RobustSoftdrinksInventory8
+  productEntity: DrinkFourteenLokoCan
+  cost:
+    SpaceCash: 5
+  categories:
+    - RobustSoftdrinksInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+# Contraband
+- type: listing
+  id: ColaRedContraband1
+  productEntity: DrinkColaBottleFull
+  cost:
+    SpaceCash: 20
+  categories:
+    - RobustSoftdrinksInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: ColaRedContraband2
+  productEntity: DrinkChangelingStingCan
+  cost:
+    SpaceCash: 25
+  categories:
+    - RobustSoftdrinksInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+# Emag
+- type: listing
+  id: ColaRedEmag1
+  productEntity: DrinkNukieCan
+  cost:
+    SpaceCash: 30
+  categories:
+    - RobustSoftdrinksInventoryEmag
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2

@@ -1,0 +1,9 @@
+- type: loadout
+  id: TaipanBackpack
+  equipment:
+    back: ClothingBackpackSyndicate
+- type: loadoutGroup
+  id: TaipanBackpack
+  name: loadout-group-backpack
+  loadouts:
+  - TaipanBackpack

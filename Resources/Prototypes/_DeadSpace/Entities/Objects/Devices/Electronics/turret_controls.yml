@@ -1,0 +1,12 @@
+- type: entity
+  parent: WeaponEnergyTurretStationControlPanelElectronicsBase
+  id: WeaponEnergyTurretCentralCommandControlPanelElectronics
+  name: машинная плата панели управления охранной турелью
+  description: Электронная плата, используемая в панели управления охранной турелью.
+  suffix: Центральное Командование
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/module.rsi
+    state: centcomm
+  - type: ElectronicsBoard
+    prototype: WeaponEnergyTurretCentralCommandControlPanel

@@ -7,7 +7,7 @@
     - DrGibbInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 6
 
 - type: listing
   id: DrGibbInventory2
@@ -18,7 +18,7 @@
     - DrGibbInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 2
 
 - type: listing
   id: DrGibbInventory3
@@ -29,7 +29,7 @@
     - DrGibbInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 2
 
 - type: listing
   id: DrGibbInventory4
@@ -40,7 +40,7 @@
     - DrGibbInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 2
 
 - type: listing
   id: DrGibbInventory5
@@ -51,10 +51,21 @@
     - DrGibbInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 2
 
 - type: listing
   id: DrGibbInventory6
+  productEntity: DrinkLemonLimeCranberryCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - DrGibbInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: DrGibbInventory7
   productEntity: DrinkFourteenLokoCan
   cost:
     SpaceCash: 5
@@ -62,5 +73,4 @@
     - DrGibbInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
-
+      stock: 2

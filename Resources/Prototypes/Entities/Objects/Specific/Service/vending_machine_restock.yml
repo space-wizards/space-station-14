@@ -216,6 +216,7 @@
     canRestock:
     - EngiVendInventory
     - YouToolInventory
+    - SyndieToolInventory # DS14
   - type: Sprite
     layers:
     - state: base
@@ -336,7 +337,7 @@
     - SpaceUpInventory
     - SodaInventory
     - DrGibbInventory
-    - SmiteInventory 
+    - SmiteInventory
   - type: Sprite
     layers:
     - state: base

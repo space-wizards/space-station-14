@@ -147,7 +147,7 @@
     contents:
     - id: ClothingHandsGlovesColorYellow
     - id: trayScanner
-    - id: RCD
+    - id: RCDSyndicate
     - id: RCDAmmo
 
 # Service
@@ -260,7 +260,7 @@
       prob: 0.15
     - id: ClothingBeltUtilityEngineering
     - id: ClothingEyesGlassesMeson
-    - id: RCD
+    - id: RCDSyndicate
     - id: RCDAmmo
 
 # Security

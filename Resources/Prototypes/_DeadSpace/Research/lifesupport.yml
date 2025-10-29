@@ -71,6 +71,18 @@
   recipeUnlocks:
   - ADTCyberHypospray
 
+- type: technology
+  id: TaipanSustainableContainers
+  name: research-technology-sustainable-containers
+  icon:
+    sprite: _DeadSpace/Objects/Consumable/Drinks/syndie_shaker.rsi
+    state: base
+  discipline: TaipanLifeSupport
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - DrinkShakerSyndie
+
 # Tier 2
 
 - type: technology

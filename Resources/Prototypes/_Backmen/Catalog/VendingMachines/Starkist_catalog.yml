@@ -7,7 +7,7 @@
     - StarkistInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 6
 
 - type: listing
   id: StarkistInventory2
@@ -18,7 +18,7 @@
     - StarkistInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 2
 
 - type: listing
   id: StarkistInventory3
@@ -29,7 +29,7 @@
     - StarkistInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 2
 
 - type: listing
   id: StarkistInventory4
@@ -40,7 +40,7 @@
     - StarkistInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 2
 
 - type: listing
   id: StarkistInventory5
@@ -51,7 +51,7 @@
     - StarkistInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 2
 
 - type: listing
   id: StarkistInventory6
@@ -62,4 +62,48 @@
     - StarkistInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 2
+
+- type: listing
+  id: StarkistInventory7
+  productEntity: DrinkSolDryCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - StarkistInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: StarkistInventory8
+  productEntity: DrinkLemonLimeCranberryCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - StarkistInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: StarkistContraband1
+  productEntity: FoodBurgerCarp
+  cost:
+    SpaceCash: 25
+  categories:
+    - StarkistInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: StarkistContraband2
+  productEntity: DrinkChangelingStingCan
+  cost:
+    SpaceCash: 20
+  categories:
+    - StarkistInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2

@@ -25,7 +25,7 @@
       - HumanoidAppearance
     equipmentWhitelist:
       tags:
-      - DeathRipleyEquipment
+      - TaipanRipleyEquipment
   - type: MeleeWeapon
     hidden: true
     attackRate: 1

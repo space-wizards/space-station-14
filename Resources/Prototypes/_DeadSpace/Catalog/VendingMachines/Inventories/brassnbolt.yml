@@ -1,0 +1,12 @@
+- type: vendingMachineInventory
+  id: BrassNBoltInventory
+  startingInventory:
+    DrinkNukieCan: 4
+    DrinkChangelingStingCan: 4
+    DrinkGrapeCan: 2
+    DrinkRootBeerCan: 2
+    DrinkIcedTeaCan: 2
+    DrinkSolDryCan: 2
+    DrinkLemonLimeCan: 2
+    DrinkLemonLimeCranberryCan: 2
+    DrinkFourteenLokoCan: 2

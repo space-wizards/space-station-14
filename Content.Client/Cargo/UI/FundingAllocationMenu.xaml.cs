@@ -83,6 +83,10 @@ public sealed partial class FundingAllocationMenu : FancyWindow
     {
         foreach (var kvp in bank.Accounts)
         {
+            // DS14-start
+            if (kvp.Key == "Taipan")
+                continue;
+            // DS14-end
             if (_allowPrimaryAccountAllocation || kvp.Key != bank.PrimaryAccount)
             {
                 yield return kvp;

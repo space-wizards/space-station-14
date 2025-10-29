@@ -7,7 +7,7 @@
     - DonutInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 5
 
 - type: listing
   id: DonutInventory2
@@ -18,7 +18,7 @@
     - DonutInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 3
 
 - type: listing
   id: DonutInventory3
@@ -29,7 +29,7 @@
     - DonutInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 3
 
 - type: listing
   id: DonutInventory4
@@ -40,5 +40,38 @@
     - DonutInventory
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 15
+      stock: 3
 
+# Contraband
+- type: listing
+  id: DonutContraband1
+  productEntity: FoodBagel
+  cost:
+    SpaceCash: 10
+  categories:
+    - DonutInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: DonutContraband2
+  productEntity: FoodBagelPoppy
+  cost:
+    SpaceCash: 10
+  categories:
+    - DonutInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: DonutContraband3
+  productEntity: FoodDonutPoison
+  cost:
+    SpaceCash: 20
+  categories:
+    - DonutInventoryContraband
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1

@@ -254,12 +254,14 @@
     - TaipanResearch
 
 - type: entity
-  parent: Emag
+  parent: [BaseItem, BaseSyndicateContraband]
   id: EmagTaipanLimited
   suffix: Тайпан, ЕМАГ, Ограниченный
   name: криптографический секвенсор
   description: Универсальное устройство для взлома. Специализированная версия для важных сотрудников Синдиката.
   components:
+  - type: Emag
+    emagType: All
   - type: Sprite
     sprite: _DeadSpace/Objects/Devices/idcards.rsi
     state: emag
@@ -273,6 +275,6 @@
   suffix: Тайпан, ЕМАГ, Ограниченный
   components:
   - type: LimitedCharges
-    maxCharges: 5
+    maxCharges: 1
   - type: AutoRecharge
     rechargeDuration: 30

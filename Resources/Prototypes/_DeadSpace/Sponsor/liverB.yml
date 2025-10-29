@@ -1,0 +1,362 @@
+- type: sponsorLoadout
+  id: LiverB
+  entity: ClothingBackpackLiverB
+  sponsorOnly: true
+
+- type: sponsorLoadout
+  id: LiverBChimp
+  entity: WeaponPistolCHIMPLiverB
+  sponsorOnly: true
+  whitelistJobs: [ResearchDirector, SeniorResearcher, Scientist, ResearchAssistant]
+
+# Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitAtmos
+  id: ClothingOuterHardsuitLiverB
+  name: скафандр "Aurelion"
+  description: Исследовательский защитный скафандр, созданный для работы в агрессивных средах и лабораториях повышенной опасности. Гладкая композитная оболочка с отражающими сегментами поглощает свет и создаёт ощущение невесомой защиты.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LiverB/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/LiverB/hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitLiverB
+  - type: Item
+    size: Huge
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.4
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSyndieMedic
+  id: ClothingHeadHelmetHardsuitLiverB
+  categories: [ HideSpawnMenu ]
+  name: гермошлем "Aurelion"
+  description: Герметичный шлем с двойным визором и мягким внутренним уплотнением. Полупрозрачное стекло даёт лёгкий бирюзовый отсвет, создавая впечатление лабораторного фильтра.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LiverB/helmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/LiverB/helmet.rsi
+  - type: PointLight
+    color: "#7cffff"
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Headset
+- type: entity
+  parent: ClothingHeadsetAlt
+  id: ClothingHeadsetLiverB
+  name: гарнитура "Aurelion Comms"
+  description: Компактная синяя гарнитура с мягкой подсветкой и встроенным фильтром шумов. Идеальна для работы в лабораториях и исследовательских выездах.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LiverB/headset.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/LiverB/headset.rsi
+  - type: Headset
+    color: "#571adc"
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Uniform
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitLiverB
+  name: комбинезон "Aurelion Mk.III"
+  description: Лёгкий и прочный комбинизон с фиолетово-черной расцветкой и голубыми акцентами на плечах. Предназначен для работы в лабораториях и при исследовательских выездах.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LiverB/jumpsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/LiverB/jumpsuit.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Gloves
+- type: entity
+  parent: ClothingHandsGlovesDominator
+  id: ClothingHandsGlovesLiverB
+  name: исследовательские перчатки "Aurelion"
+  description: Перчатки с гибкой робототехнической структурой, покрытые материалом с оттенками скафандра. Обеспечивают защиту и повышенную чувствительность к инструментам.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LiverB/gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/LiverB/gloves.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Boots
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsLiverB
+  name: магнитные ботинки "Aurelion"
+  description: Утилитарные ботинки с лёгкой магнитной подошвой, окрашенные в оттенки скафандра. Обеспечивают устойчивость на металлических поверхностях и комфорт при длительных исследованиях.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LiverB/magboots.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/LiverB/magboots.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Belt
+- type: entity
+  parent: ClothingBeltChiefEngineer
+  id: ClothingBeltLiverBFilled
+  name: пояс "Aurelion"
+  description: Пояс с интегрированными отсеками для инструментов. Цветовая гамма подчеркивает исследовательскую эстетику экипировки.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LiverB/belt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/LiverB/belt.rsi
+  - type: Item
+    size: Huge
+  - type: StorageFill
+    contents:
+    - id: PowerDrillLiverB
+    - id: WelderExperimental
+    - id: MultitoolLiverB
+    - id: JawsOfLifeLiverB
+    - id: trayScanner
+
+# Mask
+- type: entity
+  parent: ClothingMaskGasSyndicate
+  id: ClothingMaskGasLiverB
+  name: противогаз "Aurelion MK-II"
+  description: Противогаз с фильтрующей системой нового поколения, окрашен в гармонирующие скафандру цвета. Предназначен для защиты от химических и биологических угроз.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LiverB/gasmask.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/LiverB/gasmask.rsi
+  - type: EyeProtection
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Backpack
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackLiverB
+  name: исследовательская сумка "Aurelion"
+  description: Вместительная сумка с множеством карманов и отделений. Цветовая гамма подчёркивает научно-исследовательский стиль.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LiverB/backpack.rsi
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,19,9
+  - type: StorageFill
+    contents:
+    - id: ClothingBeltLiverBFilled
+    - id: ClothingOuterHardsuitLiverB
+    - id: ClothingMaskGasLiverB
+    - id: ClothingShoesBootsLiverB
+    - id: AirTankLiverB
+    - id: ClothingUniformJumpsuitLiverB
+    - id: ClothingHandsGlovesLiverB
+    - id: ClothingEyesHudLiverB
+    - id: ClothingOuterCoatLiverB
+    - id: ClothingHeadsetLiverB
+    - id: PaperLawLiverB
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# EYES
+- type: entity
+  parent: ClothingEyesHudMultiversal
+  id: ClothingEyesHudLiverB
+  name: очки "Aurelion Vision"
+  description: Защитные очки с красноватым фильтром, позволяющим видеть в лабораторных условиях с минимальным бликом. Лёгкий корпус и эргономика для длительного ношения.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LiverB/hud.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/LiverB/hud.rsi
+  - type: EyeProtection
+  - type: IdentityBlocker
+    coverage: EYES
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# OUTER
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatLiverB
+  name: лабораторный плащ "Aurelion"
+  description: Тёмный плащ с красноватой отделкой, открывающий вид на торс и обеспечивающий лёгкую защиту от разливов и искр лабораторного оборудования.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LiverB/coat.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/LiverB/coat.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# AIRTANK
+- type: entity
+  parent: DoubleEmergencyOxygenTank
+  id: AirTankLiverB
+  name: двойной баллон "Aurelion"
+  description: Баллон для длительной работы в изолированных помещениях. Цветовая гамма гармонирует с скафандром.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LiverB/tank.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/LiverB/tank.rsi
+  - type: GasTank
+    outputPressure: 101.3
+    air:
+      volume: 5
+      moles:
+      - 0.451303391 # 22% oxygen
+      - 1.600075659 # 78% nitrogen
+      temperature: 293.15
+
+# JawsOfLife
+- type: entity
+  parent: JawsOfLife
+  id: JawsOfLifeLiverB
+  name: клешни "Aurelion"
+  description: Массивные клешни с фиолетово-красной подсветкой, создающие ощущение живой энергии. Идеальны для спасательных и технических операций.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LiverB/tools_jawsoflife.rsi
+    state: jaws_pry
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+    size: Normal
+  - type: MultipleTool
+    entries:
+    - behavior: Prying
+      sprite:
+        sprite: _DeadSpace/Sponsor/LiverB/tools_jawsoflife.rsi
+        state: jaws_pry
+      useSound: /Audio/Items/jaws_pry.ogg
+      changeSound: /Audio/Items/change_jaws.ogg
+    - behavior: Cutting
+      sprite:
+        sprite: _DeadSpace/Sponsor/LiverB/tools_jawsoflife.rsi
+        state: jaws_cutter
+      useSound: /Audio/Items/jaws_cut.ogg
+      changeSound: /Audio/Items/change_jaws.ogg
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 14
+
+# drill
+- type: entity
+  parent: PowerDrill
+  id: PowerDrillLiverB
+  name: электродрель "Aurelion"
+  description: Цилиндрическое тело с графитовыми рёбрами, прозрачная секция мерцает арк-искрами, создавая ощущение миниатюрного шторма внутри.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LiverB/tools_powerdrill.rsi
+    state: drill_screw
+  - type: Item
+    sprite: _DeadSpace/Sponsor/LiverB/tools_powerdrill.rsi
+    size: Small
+  - type: Tool
+    qualities:
+    - Screwing
+    speedModifier: 1.5
+    useSound: /Audio/Items/drill_use.ogg
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+    - behavior: Screwing
+      sprite:
+        sprite: _DeadSpace/Sponsor/LiverB/tools_powerdrill.rsi
+        state: drill_screw
+      useSound:
+        path: /Audio/Items/drill_use.ogg
+      changeSound:
+        path: /Audio/Items/change_drill.ogg
+    - behavior: Anchoring
+      sprite:
+        sprite: _DeadSpace/Sponsor/LiverB/tools_powerdrill.rsi
+        state: drill_bolt
+      useSound:
+        path: /Audio/Items/drill_use.ogg
+      changeSound:
+        path: /Audio/Items/change_drill.ogg
+
+# multitool
+- type: entity
+  parent: Multitool
+  id: MultitoolLiverB
+  name: мультитул "Aurelion"
+  description: Компактный инструмент с голографическими метками на гранях. При касании по поверхности пробегает переливчатая сетка, напоминающая нервную систему живого организма.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LiverB/tools_multitool.rsi
+
+# chimp
+- type: entity
+  parent: WeaponPistolCHIMP
+  id: WeaponPistolCHIMPLiverB
+  name: излучатель М.А.Р.Т.Ы.Х. "Aurelion"
+  description: Компактный научный прибор М.А.Р.Т.Ы.Х., созданный для исследований и экспериментов. Бирюзовая отделка с мягкой подсветкой подчёркивает высокотехнологичный характер устройства.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LiverB/chimp.rsi
+
+# Law
+- type: entity
+  parent: PaperPrintedCentcomm
+  id: PaperLawLiverB
+  name: распечатанный документ
+  description: Лист бумаги с заголовком ЦентКома. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#006600FF'
+      stampedName: Центральное Командование
+    - stampedColor: '#00BE00FF'
+      stampedName: Одобрено
+    content: paper-law-liverb

@@ -34,6 +34,12 @@
   special:
   - !type:AddImplantSpecial
     implants: [ DeathRattleImplantTaipan ]
+  - !type:AddComponentSpecial
+    components:
+    - type: AntagImmune
+    - type: NpcFactionMember
+      factions:
+      - Taipan
 
 - type: startingGear
   id: TaipanTechnicalOperationsSupervisorGear
@@ -41,7 +47,6 @@
     ears: ClothingHeadsetAltTaipan
     shoes: ClothingShoesBootsLaceup
     id: TaipanTechnicalOperationsSupervisorPDA
-    back: ClothingBackpackSyndicate
     socks: ClothingUnderwearSocksTaipanTechnicalOperationsSupervisor
 
 - type: chameleonOutfit

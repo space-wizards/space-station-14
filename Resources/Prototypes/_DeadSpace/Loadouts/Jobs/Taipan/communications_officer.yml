@@ -66,6 +66,7 @@
   groups:
   - TaipanCommunicationsOfficerUniform
   - TaipanCommunicationsOfficerUnderwear
+  - GroupTankHarness
+  - TaipanBackpack
   - TaipanSurvival
   - GroupSpeciesBreathTool
-  - GroupTankHarness

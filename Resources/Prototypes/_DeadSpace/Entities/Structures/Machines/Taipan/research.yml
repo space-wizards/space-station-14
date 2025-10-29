@@ -108,3 +108,18 @@
     radius: 1.2
     energy: 2
     color: "#8B0000"
+
+- type: entity
+  id: MachineAPETaipan
+  parent: MachineAPE
+  name: М.А.К.А.К.
+  description: Мобильный Аномальный Кинетический Акселератор — эмиттер, способный излучать нестабильные частицы, которые взаимодействуют с аномалиями.
+  suffix: Тайпан
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _DeadSpace/Structures/Machines/Taipan/ape.rsi
+  - type: Machine
+    board: APECircuitboardTaipan
+  - type: AccessReader
+    access: [[ "TaipanResearch" ]]

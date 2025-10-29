@@ -14,6 +14,7 @@
   recipes:
   - WeaponSniperMosin
   - WeaponSniperHristov
+  - WeaponCarbineSKS
   - ADTWeaponRifleXC67
   - WeaponRifleAk
   - WeaponSubMachineGunC20r
@@ -64,6 +65,16 @@
   - MagazineTommyGun
   - MagazineDrumTommyGun
   - MagazineLightRifleBox
+  - SpeedLoader357
+  - MagazineBox357
+
+- type: latheRecipePack
+  id: TaipanAmmo
+  recipes:
+  - ADTExtMagazineRifle
+  - MagazineCarbineSKS
+  - MagazineCarbineSKSIncendiary
+  - MagazineCarbineSKSUranium
 
 ## Security
 - type: latheRecipePack
@@ -119,7 +130,7 @@
   - AnomalyVesselCircuitboardTaipan
   - AnomalyVesselExperimentalCircuitboardTaipan
   - AnomalySynchronizerCircuitboard
-  - APECircuitboard
+  - APECircuitboardTaipan
   - ArtifactAnalyzerMachineCircuitboard
   - ArtifactCrusherMachineCircuitboard
 
@@ -149,6 +160,16 @@
   - TaipanRightLegBorg
   - TaipanLightHeadBorg
   - TaipanTorsoBorg
+
+- type: latheRecipePack
+  id: TaipanBorgModules
+  recipes:
+  - BorgModuleL6C
+  - BorgModuleC20r
+  - BorgModuleSyndicateWeapon
+  - BorgModuleEsword
+  - BorgModuleDoubleEsword
+  - BorgModuleOperative
 
 ## Mechs
 - type: latheRecipePack
@@ -275,6 +296,7 @@
   - ClothingBackpackSatchelTaipan
   - ClothingBackpackSyndicate
   - ClothingBackpackDuffelSyndicate
+  - ClothingBeltMilitaryWebbing
 
 # Chameleon
 
@@ -334,6 +356,7 @@
   - Hypopen
   - HypoDart
   - DefibrillatorSyndicate
+  - DrinkShakerSyndie
 
 ## Cloning
 - type: latheRecipePack

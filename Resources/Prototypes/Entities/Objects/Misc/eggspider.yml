@@ -35,5 +35,4 @@
     radius: 1.5
     energy: 3
     color: "#4faffb"
-  - type: StaticPrice
-    price: 500
+  - type: CargoSellBlacklist

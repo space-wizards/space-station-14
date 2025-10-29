@@ -53,7 +53,8 @@
     JugSulfur: 1
     JugWeldingFuel: 1
     PlasmaChemistryVial: 1
-    TerratosomochromolinChemistryVial: 1 #DS14
+    VestineChemistryVial: 1 # DS14
+    TerratosomochromolinChemistryVial: 1 # DS14
   contrabandInventory:
     DrinkLithiumFlask: 1
     StrangePill: 3

@@ -1,0 +1,59 @@
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockChemVendSyndicate
+  name: набор пополнения СиндиСоки
+  description: Коробка, наполненная химикатами, и обклеенная опасно-ромбического вида наклейками, предостерегающими и инструктирующими на случай чрезвычайной ситуации. Поместите в слот для пополнения СиндиСоки, чтобы начать.
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - ChemVendInventorySyndicate
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Service/vending_machine_restock.rsi
+    layers:
+    - state: base
+    - state: refill_syndichem
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockCigsTaipan
+  name: набор пополнения СиндиСигс
+  description: Под всеми этими предупреждениями от Минздрава трудно что-либо разглядеть, однако местами упоминается загрузка в торгомат.
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - CigaretteMachineInventoryTaipan
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Service/vending_machine_restock.rsi
+    layers:
+    - state: base
+    - state: refill_syndismoke
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockDonkTaipan
+  name: набор пополнения Donk Co.
+  description: Самая полезная и вкусная еда в космосе. По крайней мере так гласит реклама на упаковке.
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - DonkInventory
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Service/vending_machine_restock.rsi
+    layers:
+    - state: base
+    - state: refill_donksnack
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockBrassNBoltTaipan
+  name: набор пополнения Brass & Bolt
+  description: Набор пополнения напитков от Brass & Bolt. Поместите в слот для пополнения Brass & Bolt.
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - BrassNBoltInventory
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Service/vending_machine_restock.rsi
+    layers:
+    - state: base
+    - state: refill_cola

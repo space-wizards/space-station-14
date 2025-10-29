@@ -235,6 +235,7 @@
     - Robotics
     - BorgModules
     - TaipanMech
+    - TaipanBorgModules
   - type: MaterialStorage
     whitelist:
       tags:
@@ -410,6 +411,7 @@
     - SecurityDisablers
     - TaipanPistols
     - TaipanWeapons
+    - TaipanAmmo
     - TaipanEnergyWeapons
     - TaipanMelee
     - TaipanGrenades

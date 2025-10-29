@@ -26,7 +26,7 @@
   name: chat-radio-taipan
   keycode: 'й' # DS14-Localization
   frequency: 6542
-  color: "#87181c"
+  color: "#ab292e"
   longRange: false
 
 - type: radioChannel
