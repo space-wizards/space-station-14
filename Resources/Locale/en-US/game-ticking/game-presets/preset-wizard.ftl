@@ -41,7 +41,7 @@ roles-antag-wizard-name = Wizard
 roles-antag-wizard-objective = Teach them a lesson they'll never forget.
 
 wizard-role-greeting =
-    You are a wizard!
+    YER A WIZARD!
     There's been tensions between the Space Wizards Federation and NanoTrasen. You've been selected by the Space Wizards Federation to pay a visit to the station and give them a good "demonstration" of your powers.
     What you do is up to you, but remember that the Space Wizards want you to make it out alive.
 
