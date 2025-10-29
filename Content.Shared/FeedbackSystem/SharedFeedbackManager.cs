@@ -86,12 +86,15 @@ public abstract partial class SharedFeedbackManager : ISharedFeedbackManager
     [Dependency] private readonly IPrototypeManager _proto = null!;
     [Dependency] protected readonly INetManager NetManager = null!;
 
-
     public virtual IReadOnlySet<ProtoId<FeedbackPopupPrototype>>? DisplayedPopups => null;
 
     // <inheritdoc />
     public event Action<bool>? DisplayedPopupsChanged;
 
+    /// <summary>
+    /// List of valid origns of the feedback popup that is filled from the CCVar. See
+    /// <see cref="Content.Shared.CCVar.CCVars.FeedbackValidOrigins">FeedbackValidOrigins</see>
+    /// </summary>
     private List<string> _validOrigins = [];
 
     [MustCallBase]

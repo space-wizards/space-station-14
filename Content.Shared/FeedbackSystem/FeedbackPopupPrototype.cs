@@ -36,7 +36,7 @@ public sealed partial class FeedbackPopupPrototype : IPrototype
     /// Will be listed near the "Open Link" button; rich text is not allowed.
     /// </summary>
     [DataField]
-    public string ResponseType = string.Empty;
+    public string? ResponseType;
 
     /// <summary>
     /// A link leading to where you want players to give feedback. Discord channel, form etc...
