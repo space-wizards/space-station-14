@@ -55,9 +55,6 @@ public sealed class MappingSystem : EntitySystem
 		var query = AllEntityQuery<AutoSaveComponent>();
 		while (query.MoveNext(out var uid, out var auto))
 		{
-			if (TerminatingOrDeleted(uid))
-				continue;
-
 			if (_timing.RealTime <= auto.NextSaveTime)
 				continue;
 
