@@ -1,14 +1,11 @@
 - type: entity
   abstract: true
-  parent: BaseStructure
+  parent: [ BaseStructure, BaseRelaxedAnchoring ]
   id: BaseMachine
   components:
   - type: Animateable
   - type: InteractionOutline
   - type: Anchorable
-    ignoreCollisionsWhitelist:
-      tags:
-      - Directional
     delay: 2
   - type: Physics
     bodyType: Static
@@ -60,6 +57,7 @@
 - type: entity
   abstract: true
   id: ConstructibleMachine
+  parent: BaseRelaxedAnchoring
   components:
   - type: Animateable
   - type: Machine
@@ -82,3 +80,4 @@
   id: SmallConstructibleMachine
   components:
     - type: RequireProjectileTarget
+

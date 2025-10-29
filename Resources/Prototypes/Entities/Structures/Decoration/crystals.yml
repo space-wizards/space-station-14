@@ -1,6 +1,6 @@
 - type: entity
   id: CrystalGreen
-  parent: BaseStructure
+  parent: [ BaseStructure, BaseRelaxedAnchoring ]
   suffix: green
   name: crystal
   description: A crystaline solid.
@@ -16,9 +16,6 @@
       - Energy
       spread: 75
     - type: Anchorable
-      ignoreCollisionsWhitelist:
-        tags:
-        - Directional
       delay: 2
     - type: Physics
       bodyType: Static

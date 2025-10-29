@@ -14,9 +14,6 @@
   - type: Charger
     slotId: charger_slot
   - type: Anchorable
-    ignoreCollisionsWhitelist:
-      tags:
-      - Directional
     delay: 1
   - type: Destructible
     thresholds:

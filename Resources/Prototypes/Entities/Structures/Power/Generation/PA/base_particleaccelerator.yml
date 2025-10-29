@@ -1,14 +1,12 @@
 - type: entity
   id: ParticleAcceleratorBase
+  parent: BaseRelaxedAnchoring
   abstract: true
   placement:
     mode: SnapgridCenter
   components:
   - type: InteractionOutline
   - type: Anchorable
-    ignoreCollisionsWhitelist:
-      tags:
-      - Directional
   - type: Rotatable
   - type: Physics
     bodyType: Static

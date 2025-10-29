@@ -35,9 +35,6 @@
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
   - type: Anchorable
-    ignoreCollisionsWhitelist:
-      tags:
-      - Directional
   - type: Pullable
   - type: Damageable
     damageContainer: StructuralInorganic

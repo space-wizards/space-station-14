@@ -1405,9 +1405,6 @@
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
   - type: Anchorable
-    ignoreCollisionsWhitelist:
-      tags:
-      - Directional
     flags:
     - Anchorable
   - type: CargoPalletConsole

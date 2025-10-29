@@ -1,5 +1,6 @@
 ﻿- type: entity
   id: UnfinishedMachineFrame
+  parent: BaseRelaxedAnchoring
   name: machine frame
   description: A machine under construction. Needs more parts.
   suffix: Unfinished
@@ -24,9 +25,6 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Anchorable
-      ignoreCollisionsWhitelist:
-        tags:
-        - Directional
     - type: Rotatable
     - type: Pullable
     - type: Construction
@@ -71,6 +69,7 @@
 
 - type: entity
   id: MachineFrame
+  parent: BaseRelaxedAnchoring
   name: machine frame
   suffix: Ready
   placement:
@@ -94,9 +93,6 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Anchorable
-      ignoreCollisionsWhitelist:
-        tags:
-        - Directional
     - type: Rotatable
     - type: Pullable
     - type: Construction

@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseRelaxedAnchoring ]
   id: LogicEmptyCircuit
   name: empty circuit
   description: Something seems to be missing.
@@ -10,9 +10,6 @@
     layers:
     - state: base
   - type: Anchorable
-    ignoreCollisionsWhitelist:
-      tags:
-      - Directional
   - type: Rotatable
   - type: Construction
     graph: LogicGate

@@ -1,14 +1,11 @@
 - type: entity
   id: BaseShowcaseRobot
   abstract: true
-  parent: BaseStructure
+  parent: [ BaseStructure, BaseRelaxedAnchoring ]
   name: security robot showcase
   description: A non-functional replica of an old security robot.
   components:
     - type: Anchorable
-      ignoreCollisionsWhitelist:
-        tags:
-        - Directional
     - type: Damageable
       damageContainer: StructuralInorganic
       damageModifierSet: Metallic

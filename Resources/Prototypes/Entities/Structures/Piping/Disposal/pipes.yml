@@ -2,6 +2,7 @@
 
 - type: entity
   id: DisposalPipeBase
+  parent: BaseRelaxedAnchoring
   abstract: true
   placement:
     mode: SnapgridCenter
@@ -32,9 +33,6 @@
   - type: Transform
     anchored: true
   - type: Anchorable
-    ignoreCollisionsWhitelist:
-      tags:
-      - Directional
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Metallic

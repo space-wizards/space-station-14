@@ -1,5 +1,6 @@
 - type: entity
   id: Stairs
+  parent: BaseRelaxedAnchoring
   name: stairs
   suffix: Steel
   description: The greatest invention since rocket-propelled grenades.
@@ -7,9 +8,6 @@
     mode: SnapgridCenter
   components:
   - type: Anchorable
-    ignoreCollisionsWhitelist:
-      tags:
-      - Directional
     flags:
     - Anchorable
   - type: Rotatable

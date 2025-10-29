@@ -17,9 +17,6 @@
         layer:
         - BulletImpassable
   - type: Anchorable
-    ignoreCollisionsWhitelist:
-      tags:
-      - Directional
   - type: Pullable
   - type: Sprite
     layers:

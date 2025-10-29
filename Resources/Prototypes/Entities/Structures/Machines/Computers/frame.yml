@@ -1,5 +1,5 @@
 - type: entity
-  id: BaseStructureComputer
+  id: [ BaseStructureComputer, BaseRelaxedAnchoring ]
   parent: BaseStructure
   abstract: true
   components:
@@ -19,9 +19,6 @@
   - type: InteractionOutline
   - type: Rotatable
   - type: Anchorable
-    ignoreCollisionsWhitelist:
-      tags:
-      - Directional
   - type: Construction
     graph: Computer
     node: frameUnsecured

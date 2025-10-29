@@ -190,7 +190,7 @@
 - type: entity
   name: floodlight
   id: Floodlight
-  parent: BaseLamp
+  parent: [ BaseLamp, BaseRelaxedAnchoring ]
   description: A pole with powerful mounted lights on it.
   components:
   - type: Item
@@ -225,9 +225,6 @@
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellMedium
   - type: Anchorable
-    ignoreCollisionsWhitelist:
-      tags:
-      - Directional
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Metallic
@@ -251,10 +248,11 @@
     materialComposition:
       Glass: 500
       Steel: 200
+
 - type: entity
   name: broken floodlight
   id: FloodlightBroken
-  parent: BaseItem
+  parent: [ BaseItem, BaseRelaxedAnchoring ]
   description: A pole with powerful mounted lights on it. It's broken.
   components:
   - type: Item
@@ -265,9 +263,6 @@
     sprite: Objects/Misc/Lights/lights.rsi
     state: floodlight-broken
   - type: Anchorable
-    ignoreCollisionsWhitelist:
-      tags:
-      - Directional
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Metallic

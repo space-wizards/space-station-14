@@ -1,6 +1,6 @@
 - type: entity
   id: Bookshelf
-  parent: BaseStructure
+  parent: [ BaseStructure, BaseRelaxedAnchoring ]
   name: "bookshelf"
   description: Mostly filled with books.
   components:
@@ -53,9 +53,6 @@
   - type: Physics
     bodyType: Static
   - type: Anchorable
-    ignoreCollisionsWhitelist:
-      tags:
-      - Directional
   - type: Pullable
   - type: Occluder
   - type: Storage

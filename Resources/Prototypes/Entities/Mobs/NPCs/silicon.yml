@@ -313,6 +313,7 @@
   - MobSiliconBase
   - ShowMedicalIcons
   - StripableInventoryBase
+  - BaseRelaxedAnchoring
   id: MobMedibot
   name: medibot
   description: No substitute for a doctor, but better than nothing.
@@ -347,9 +348,6 @@
     graph: MediBot
     node: bot
   - type: Anchorable
-    ignoreCollisionsWhitelist:
-      tags:
-      - Directional
   - type: InteractionPopup
     interactSuccessString: petting-success-medibot
     interactFailureString: petting-failure-medibot
@@ -465,7 +463,7 @@
     needsHands: false
 
 - type: entity
-  parent: [ MobSiliconBase, MobCombat ]
+  parent: [ MobSiliconBase, MobCombat, BaseRelaxedAnchoring ]
   id: MobHugBot
   name: hugbot
   description: Awww, who needs a hug?
@@ -488,9 +486,6 @@
       types:
         Blunt: 2
   - type: Anchorable
-    ignoreCollisionsWhitelist:
-      tags:
-      - Directional
   - type: Hands # This probably REALLY needs hand whitelisting, but we NEED hands for hugs, so...
   - type: ComplexInteraction # Hugging is a complex interaction, apparently.
   - type: HugBot

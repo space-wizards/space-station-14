@@ -1,5 +1,6 @@
 - type: entity
   id: TeslaCoil
+  parent: BaseRelaxedAnchoring
   name: tesla coil
   description: A machine that converts lightning strikes into an electric current.
   placement:
@@ -70,9 +71,6 @@
     maxSupply: 350000
     supplyRampTolerance: 350000
   - type: Anchorable
-    ignoreCollisionsWhitelist:
-      tags:
-      - Directional
   - type: Rotatable
   - type: Pullable
   - type: Clickable
@@ -120,6 +118,7 @@
 
 - type: entity
   id: TeslaGroundingRod
+  parent: BaseRelaxedAnchoring
   name: grounding rod
   description: A machine that keeps lightning from striking too far away.
   placement:
@@ -168,9 +167,6 @@
     lightningExplode: false
     damageFromLightning: 0
   - type: Anchorable
-    ignoreCollisionsWhitelist:
-      tags:
-      - Directional
   - type: Rotatable
   - type: Pullable
   - type: Clickable

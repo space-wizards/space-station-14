@@ -40,9 +40,6 @@
     messageSet: SpookySpeakerMessagesGeneric
     speakChance: 0.2
   - type: Anchorable
-    ignoreCollisionsWhitelist:
-      tags:
-      - Directional
   - type: Pullable
   - type: StaticPrice
     price: 300

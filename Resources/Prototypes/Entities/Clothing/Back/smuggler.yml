@@ -1,13 +1,11 @@
 - type: entity
   abstract: true
   id: BaseSubfloorAnchorStorage
+  parent: BaseRelaxedAnchoring
   components:
   - type: Appearance
   - type: SubFloorHide
   - type: Anchorable
-    ignoreCollisionsWhitelist:
-      tags:
-      - Directional
   - type: CollideOnAnchor
   - type: Transform
     anchored: false

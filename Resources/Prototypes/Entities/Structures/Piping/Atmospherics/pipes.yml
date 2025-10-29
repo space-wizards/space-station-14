@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: [ BaseItem, BaseRelaxedAnchoring ]
   id: GasPipeSansLayers
   name: gas pipe
   description: Holds gas.
@@ -19,9 +19,6 @@
   - type: SubFloorHide
   - type: CollideOnAnchor
   - type: Anchorable
-    ignoreCollisionsWhitelist:
-      tags:
-      - Directional
   - type: Rotatable
   - type: Destructible
     thresholds:

@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseStructure
+  parent: [ BaseStructure, BaseRelaxedAnchoring ]
   id: Rack
   name: rack
   description: A rack for storing things on.
@@ -13,9 +13,6 @@
     graph: Rack
     node: Rack
   - type: Anchorable
-    ignoreCollisionsWhitelist:
-      tags:
-      - Directional
   - type: InteractionOutline
   - type: PlaceableSurface
   - type: Sprite
