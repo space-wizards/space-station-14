@@ -51,10 +51,11 @@ public sealed class MappingSystem : EntitySystem
 		if (!_autosaveEnabled)
 			return;
 
+        // Maps are paused while in mapping, so we have to use AllEntityQuery and exclude all deleted entities.
 		var query = AllEntityQuery<AutoSaveComponent>();
 		while (query.MoveNext(out var uid, out var auto))
 		{
-			if (Deleted(uid))
+			if (TerminatingOrDeleted(uid))
 				continue;
 
 			if (_timing.RealTime <= auto.NextSaveTime)
@@ -62,7 +63,7 @@ public sealed class MappingSystem : EntitySystem
 
 			if (!HasComp<MapComponent>(uid) && !HasComp<MapGridComponent>(uid))
 			{
-				Log.Warning($"Can't autosave entity {uid}; it is not a map or grid. Removing component.");
+				Log.Warning($"Can't autosave entity {ToPrettyString(uid)}; it is not a map or grid. Removing component.");
 				RemCompDeferred<AutoSaveComponent>(uid);
 				continue;
 			}
@@ -73,7 +74,7 @@ public sealed class MappingSystem : EntitySystem
 			_resMan.UserData.CreateDir(new ResPath(saveDir).ToRootedPath());
 
 			var path = new ResPath(Path.Combine(saveDir, $"{DateTime.Now:yyyy-M-dd_HH.mm.ss}-AUTO.yml"));
-			Log.Info($"Autosaving map {auto.FileName} ({uid}) to {path}. Next save in {ReadableTimeLeft(uid)} seconds.");
+			Log.Info($"Autosaving map {auto.FileName} ({ToPrettyString(uid)}) to {path}. Next save in {ReadableTimeLeft(uid)} seconds.");
 
 			if (HasComp<MapComponent>(uid))
 				_loader.TrySaveMap(uid, path);
@@ -114,7 +115,7 @@ public sealed class MappingSystem : EntitySystem
 
 		if (!HasComp<MapComponent>(uid) && !HasComp<MapGridComponent>(uid))
 		{
-			Log.Error($"{ToPrettyString(uid)} is neither a grid or map");
+			Log.Error($"Tried to toggle autosave for {ToPrettyString(uid)}, but it is neither a grid or map!");
 			return;
 		}
 
@@ -122,7 +123,7 @@ public sealed class MappingSystem : EntitySystem
 		comp.FileName = Path.GetFileName(path);
 		comp.NextSaveTime = _timing.RealTime + TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.AutosaveInterval));
 
-        Log.Info($"Started autosaving map {path} ({uid}). Next save in {ReadableTimeLeft(uid)} seconds.");
+        Log.Info($"Enabled autosaving for map (or grid) {path} ({ToPrettyString(uid)}). Next save in {ReadableTimeLeft(uid)} seconds.");
     }
 
     #endregion
