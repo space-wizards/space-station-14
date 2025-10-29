@@ -903,6 +903,12 @@
     name: ghost-role-information-punpun-name
     description: ghost-role-information-punpun-description
     rules: ghost-role-information-nonantagonist-rules
+# DS14-start
+    requirements:
+    - !type:RoleTimeRequirement
+      role: JobBartender
+      time: 7200 # 2 hours
+# DS14-end
   - type: GhostTakeoverAvailable
   - type: Butcherable
     butcheringType: Spike
