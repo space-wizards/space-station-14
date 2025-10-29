@@ -51,12 +51,19 @@ public sealed class MappingSystem : EntitySystem
 		if (!_autosaveEnabled)
 			return;
 
-        // Maps are paused while in mapping, so we have to use AllEntityQuery and exclude all deleted entities.
+        // Maps are paused while in mapping, so we have to use AllEntityQuery to get them.
 		var query = AllEntityQuery<AutoSaveComponent>();
 		while (query.MoveNext(out var uid, out var auto))
 		{
 			if (_timing.RealTime <= auto.NextSaveTime)
 				continue;
+
+            if (!Paused(uid)) // Saving post-init maps or grids has a high chance of throwing errors.
+            {
+                Log.Warning($"Can't autosave entity {ToPrettyString(uid)}; it is not paused. Removing component.");
+                RemCompDeferred<AutoSaveComponent>(uid);
+                continue;
+            }
 
 			if (!HasComp<MapComponent>(uid) && !HasComp<MapGridComponent>(uid))
 			{
