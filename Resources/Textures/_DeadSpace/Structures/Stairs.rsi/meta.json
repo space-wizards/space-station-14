@@ -1,0 +1,40 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/blob/2ddbdca1b7fb5cb85cbdcd566a489cbc4794edcf/icons/obj/stairs.dmi and https://github.com/tgstation/tgstation/blob/b2dda940c5abb74d1a53d21c371788edffd0db5b/icons/turf/floors.dmi. Modified by sudakepta (discord)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "stairs_wood_black",
+            "directions": 4
+        },
+        {
+            "name": "stairs_wood_dark",
+            "directions": 4
+        },
+        {
+            "name": "stairs_wood_light",
+            "directions": 4
+        },
+        {
+            "name": "stairs_wood_red",
+            "directions": 4
+        },
+        {
+            "name": "stairs_stage_wood_black"
+        },
+        {
+            "name": "stairs_stage_wood_dark"
+        },
+        {
+            "name": "stairs_stage_wood_light"
+        },
+        {
+            "name": "stairs_stage_wood_red"
+        }
+        
+    ]
+}
