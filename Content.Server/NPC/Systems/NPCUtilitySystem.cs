@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Hands.Systems;
 using Content.Server.NPC.Queries;
@@ -5,8 +6,9 @@ using Content.Server.NPC.Queries.Considerations;
 using Content.Server.NPC.Queries.Curves;
 using Content.Server.NPC.Queries.Queries;
 using Content.Server.Nutrition.Components;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Examine;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Inventory;
@@ -17,6 +19,7 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Storage.Components;
 using Content.Shared.Stunnable;
+using Content.Shared.Temperature.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Turrets;
 using Content.Shared.Weapons.Melee;
@@ -27,10 +30,6 @@ using Microsoft.Extensions.ObjectPool;
 using Robust.Server.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using Content.Shared.Atmos.Components;
-using System.Linq;
-using Content.Shared.Nutrition.Prototypes;
-using Content.Shared.Temperature.Components;
 
 namespace Content.Server.NPC.Systems;
 
@@ -189,7 +188,7 @@ public sealed class NPCUtilitySystem : EntitySystem
                     return 0f;
 
                 var nutrition = _ingestion.TotalNutrition(targetUid, owner);
-                if (nutrition <= 1.0f)
+                if (nutrition == 0.0f)
                     return 0f;
 
                 return 1f;

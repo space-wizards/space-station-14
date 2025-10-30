@@ -146,7 +146,7 @@ public abstract partial class SharedChatSystem : EntitySystem
     /// <param name="channel">The channel that was requested, if any</param>
     /// <param name="quiet">Whether or not to generate an informative pop-up message.</param>
     /// <returns></returns>
-    public bool TryProccessRadioMessage(
+    public bool TryProcessRadioMessage(
         EntityUid source,
         string input,
         out string output,

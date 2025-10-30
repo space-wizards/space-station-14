@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Alert;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
@@ -55,7 +55,8 @@ public sealed partial class SatiationSystem : EntitySystem
         foreach (var (satiation, proto) in GetSatiationsAndTypes(entity))
         {
             // TODO: Replace with RandomPredicted once the engine PR is merged
-            var seed = SharedRandomExtensions.HashCodeCombine(new List<int> { (int)_timing.CurTick.Value, GetNetEntity(entity).Id });
+            var seed = SharedRandomExtensions.HashCodeCombine(new List<int>
+                { (int)_timing.CurTick.Value, GetNetEntity(entity).Id });
             var rand = new System.Random(seed);
             var value = rand.NextFloat(proto.StartingValueMinimum, proto.StartingValueMaximum);
 
@@ -152,7 +153,7 @@ public sealed partial class SatiationSystem : EntitySystem
                     if (!_mobState.IsDead(entity) &&
                         satiation.CurrentThresholdDamage is { } damage)
                     {
-                        _damageable.TryChangeDamage(entity, damage, true, false);
+                        _damageable.TryChangeDamage(entity.Owner, damage, true, false);
                     }
                 }
             }

@@ -114,7 +114,7 @@
   - type: ShowSatiationIcons
     shownTypes:
     - Hunger
-  - type: Food
+  - type: Edible
   - type: SolutionContainerManager
     solutions:
       food:

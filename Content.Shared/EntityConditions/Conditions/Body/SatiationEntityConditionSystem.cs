@@ -63,7 +63,7 @@ public sealed partial class SatiationCondition : EntityConditionBase<SatiationCo
 
     public override string EntityConditionGuidebookText(IPrototypeManager prototype)
     {
-        return Loc.GetString("reagent-effect-condition-guidebook-total-satiation",
+        return Loc.GetString("entity-condition-guidebook-total-satiation",
             ("max", float.IsPositiveInfinity(Max) ? int.MaxValue : Max),
             ("min", Min),
             ("type", Loc.GetString(prototype.Index(SatiationType).Name)));

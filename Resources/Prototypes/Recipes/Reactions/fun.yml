@@ -55,7 +55,7 @@
 - type: reaction
   id: Licoxide
   reactants:
-    Lead:
+    Lithium:
       amount: 1
     Zinc:
       amount: 1
@@ -208,7 +208,7 @@
     JuiceThatMakesYouHew:
       amount: 1
   effects:
-  - !type:ExplosionEffect
+  - !type:Explosion
     explosionType: Radioactive
     maxIntensity: 200
     intensityPerUnit: 2
