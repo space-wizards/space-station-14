@@ -53,6 +53,7 @@ public sealed class SingularityGeneratorSystem : SharedSingularityGeneratorSyste
             return;
 
         SetPower(uid, 0, comp);
+        comp.NextFailsafe = _timing.CurTime + comp.FailsafeCooldown;
         Spawn(comp.SpawnPrototype, Transform(uid).Coordinates);
     }
 
