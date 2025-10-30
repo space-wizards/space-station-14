@@ -1,0 +1,9 @@
+- type: deviceFrequency
+  id: SuitSensorTaipan
+  name: device-frequency-prototype-name-suit-sensors
+  frequency: 1742
+
+- type: deviceFrequency
+  id: CrewMonitorTaipan
+  name: device-frequency-prototype-name-crew-monitor
+  frequency: 1741

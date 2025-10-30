@@ -100,9 +100,24 @@
   result: APECircuitboardTaipan
 
 - type: latheRecipe
-  parent: BaseCheapElectronicsRecipe
+  parent: [ BaseCheapElectronicsRecipe, BaseCircuitryRecipeCategory ]
   id: DoorElectronicsTaipan
   result: DoorElectronicsTaipan
+
+- type: latheRecipe
+  parent: [ BaseCheapElectronicsRecipe, BaseCircuitryRecipeCategory ]
+  id: FirelockElectronicsTaipan
+  result: FirelockElectronicsTaipan
+
+- type: latheRecipe
+  parent: [ BaseElectronicsRecipe, BaseCircuitryRecipeCategory ]
+  id: AirAlarmElectronicsTaipan
+  result: AirAlarmElectronicsTaipan
+
+- type: latheRecipe
+  parent: [ BaseCheapCircuitboardRecipe, BaseCircuitryRecipeCategory ]
+  id: APCElectronicsTaipan
+  result: APCElectronicsTaipan
 
 - type: latheRecipe
   parent: BaseCircuitboardRecipe

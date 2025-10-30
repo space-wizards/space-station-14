@@ -1,0 +1,29 @@
+- type: entity
+  id: AirAlarmElectronicsTaipan
+  parent: AirAlarmElectronics
+  name: микросхема воздушной сигнализации
+  description: Микросхема, используемая в воздушных сигнализациях.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: airalarm_electronics
+
+- type: entity
+  id: FirelockElectronicsTaipan
+  parent: FirelockElectronics
+  name: микросхема пожарного шлюза
+  description: Продвинутая плата, используемая для обнаружения разницы в давлении, температуре и концентрации газов между двумя сторонами двери.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/module.rsi
+    state: mainboard
+
+- type: entity
+  id: APCElectronicsTaipan
+  parent: APCElectronics
+  name: микросхема ЛКП
+  description: Микросхема, используемая в создании ЛКП.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: charger_APC

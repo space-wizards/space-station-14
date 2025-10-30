@@ -15,6 +15,7 @@
   - WeaponSniperMosin
   - WeaponSniperHristov
   - WeaponCarbineSKS
+  - WeaponRifleEstoc
   - ADTWeaponRifleXC67
   - WeaponRifleAk
   - WeaponSubMachineGunC20r
@@ -32,6 +33,7 @@
   - EnergyShield
   - EnergySwordDouble
   - WeaponEnergyCrossbow
+  - WeaponEnergyCrossbowLarge
 
 ## Melee
 - type: latheRecipePack
@@ -67,12 +69,12 @@
   - MagazineLightRifleBox
   - SpeedLoader357
   - MagazineBox357
+  - ADTExtMagazineRifle
+  - MagazineCarbineSKS
 
 - type: latheRecipePack
   id: TaipanAmmo
   recipes:
-  - ADTExtMagazineRifle
-  - MagazineCarbineSKS
   - MagazineCarbineSKSIncendiary
   - MagazineCarbineSKSUranium
 
@@ -90,14 +92,14 @@
   id: TaipanElectronicsStatic
   recipes:
   - IntercomElectronics
-  - FirelockElectronics
+  - FirelockElectronicsTaipan
   - DoorElectronicsTaipan
-  - AirAlarmElectronics
+  - AirAlarmElectronicsTaipan
   - StationMapElectronics
   - FireAlarmElectronics
   - MailingUnitElectronics
   - SignalTimerElectronics
-  - APCElectronics
+  - APCElectronicsTaipan
   - SMESMachineCircuitboard
   - SubstationMachineCircuitboard
   - WallmountSubstationElectronics
@@ -368,7 +370,30 @@
 
 # Engineering
 
-## Tools
+# Tools
+- type: latheRecipePack
+  id: TaipanToolsStatic
+  recipes:
+  - Wirecutter
+  - Screwdriver
+  - Welder
+  - Wrench
+  - CrowbarGreen
+  - Multitool
+  - NetworkConfigurator
+  - Signaller
+  - SprayPainterTaipan
+  - SprayPainterAmmo
+  - FlashlightLantern
+  - HandheldGPSBasic
+  - TRayScanner
+  - UtilityBelt
+  - ClothingOuterVestTank
+  - HandheldStationMap
+  - ClothingHeadHatWelding
+  - ClothingHeadHatCone
+  - GeigerCounter # DS14
+
 - type: latheRecipePack
   id: SyndicateAdvancedTools
   recipes:

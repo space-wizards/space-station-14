@@ -9,6 +9,7 @@
   discipline: TaipanMechworks
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - MiningDrill
   - MineralScannerEmpty
@@ -24,6 +25,7 @@
   discipline: TaipanMechworks
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - RadarConsoleCircuitboard
   - HandHeldMassScanner
@@ -37,6 +39,7 @@
   discipline: TaipanMechworks
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - PowerCellHigh
   - TurboItemRechargerCircuitboard
@@ -51,6 +54,7 @@
   discipline: TaipanMechworks
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - FlatpackerMachineCircuitboard
 
@@ -63,6 +67,7 @@
   discipline: TaipanMechworks
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - AutolatheHyperConvectionMachineCircuitboardTaipan
   - ProtolatheHyperConvectionMachineCircuitboardTaipan
@@ -78,6 +83,7 @@
   discipline: TaipanMechworks
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - PortableGeneratorPacmanMachineCircuitboard
   - PortableGeneratorSuperPacmanMachineCircuitboard
@@ -95,6 +101,7 @@
   discipline: TaipanMechworks
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - ThermomachineFreezerMachineCircuitBoard
   - GasRecyclerMachineCircuitboard
@@ -108,6 +115,7 @@
   discipline: TaipanMechworks
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - TaipanRipleyHarness
   - TaipanRipleyLArm
@@ -127,6 +135,7 @@
   discipline: TaipanMechworks
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - ClothingOuterEVASuitSyndicate
   - ClothingHeadHelmetSyndicate
@@ -142,6 +151,7 @@
   discipline: TaipanMechworks
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - ShuttleConsoleCircuitboardTaipan
   - IFFConsoleCircuitboardTaipan
@@ -158,6 +168,7 @@
   discipline: TaipanMechworks
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - HellfireFreezerMachineCircuitBoard
   - PortableScrubberMachineCircuitBoard
@@ -174,6 +185,7 @@
   discipline: TaipanMechworks
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - SyndicateWelderExperimental
   - SyndicatePowerDrill
@@ -191,6 +203,7 @@
   discipline: TaipanMechworks
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - MiningDrillDiamond
   - AdvancedMineralScannerEmpty
@@ -206,6 +219,7 @@
   discipline: TaipanMechworks
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - ClothingEyesHudTaipanDiagnostic
   - ClothingEyesHudTaipanMedical
@@ -222,6 +236,7 @@
   discipline: TaipanMechworks
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - ClothingOuterHardsuitSyndie
   - ClothingOuterHardsuitSyndieMedic
@@ -237,6 +252,7 @@
   discipline: TaipanMechworks
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - ClothingOuterHardsuitSyndieElite
   - ClothingOuterHardsuitSyndieCommander
@@ -254,6 +270,7 @@
   discipline: TaipanMechworks
   tier: 3
   cost: 30000
+  diskAvailable: false
   recipeUnlocks:
   - PowerCellMicroreactor
   - PowerCellHyper
@@ -269,6 +286,7 @@
   discipline: TaipanMechworks
   tier: 3
   cost: 30000
+  diskAvailable: false
   recipeUnlocks:
   - ClothingOuterHardsuitJuggernaut
   technologyPrerequisites:

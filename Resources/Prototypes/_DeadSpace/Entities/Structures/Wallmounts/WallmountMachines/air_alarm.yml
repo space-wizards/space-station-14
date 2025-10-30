@@ -7,3 +7,6 @@
   components:
   - type: AccessReader
     access: [["TaipanAtmospherics"]]
+  - type: ContainerFill
+    containers:
+      board: [ AirAlarmElectronicsTaipan ]

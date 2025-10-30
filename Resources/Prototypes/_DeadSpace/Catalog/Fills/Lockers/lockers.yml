@@ -60,7 +60,7 @@
     - id: ClothingHandsGlovesNitrileTaipan
     - id: ClothingMaskSterile
     - id: HandheldGPSBasic
-    - id: SpyCrewMonitor
+    - id: TaipanCrewMonitor
     - id: MedkitFilled
       prob: 0.3
     - id: MedkitAdvancedFilled
@@ -240,7 +240,7 @@
     - id: DoorRemoteTaipan
     - id: ProtolatheMachineCircuitboardTaipan
     - id: ResearchComputerCircuitboardTaipan
-    - id: EncryptionKeyBinary
+    - id: EncryptionKeyBinarySyndicate
 
 - type: entity
   id: LockerTaipanTechnicalOperationsSupervisorFilled

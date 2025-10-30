@@ -11,15 +11,12 @@
   supervisors: job-supervisors-taipan-technical-supervisor
   canBeAntag: false
   requirements:
-  - !type:DepartmentTimeRequirement
-    department: Civilian
-    time: 18000 # 5 hours
   - !type:RoleTimeRequirement
     role: JobChef
-    time: 3600 # 1 hour
+    time: 18000 # 5 hours
   - !type:RoleTimeRequirement
     role: JobBartender
-    time: 3600 # 1 hour
+    time: 18000 # 5 hours
   access:
   - TaipanService
   - TaipanMaint

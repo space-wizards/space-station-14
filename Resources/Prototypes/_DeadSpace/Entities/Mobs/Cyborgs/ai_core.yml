@@ -38,10 +38,13 @@
         toggleAction: AIActionAGhostShowCrewMonitoring
       enum.CommunicationsConsoleUiKey.Key:
         toggleAction: AIActionAGhostShowCommunications
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: CrewMonitorTaipan
   - type: CommunicationsConsole
 #    canCallShuttle: false
 #    canCallERT: false
-    title: comms-console-announcement-title-station-ai
+    title: comms-console-announcement-title-station-ai-syndicate
     color: "#fc7777"
   - type: HolographicAvatar
     layerData:
@@ -55,9 +58,9 @@
   - type: MindContainer
   - type: GhostRole
     allowMovement: false
-    name: job-name-station-ai
+    name: job-name-taipan-station-ai
     description: job-description-station-ai
-    rules: ghost-role-information-taipan-personal-rules
+    rules: ghost-role-information-taipan-ai-rules
     requirements:
     - !type:DepartmentTimeRequirement
       department: Silicon

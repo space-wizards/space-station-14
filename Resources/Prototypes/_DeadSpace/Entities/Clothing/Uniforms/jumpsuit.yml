@@ -13,7 +13,7 @@
 
 - type: entity
   abstract: true
-  parent: ClothingUniformBase
+  parent: UnsensoredClothingUniformBase
   id: ClothingJumpsuitTaipanBase
   components:
   - type: Tag

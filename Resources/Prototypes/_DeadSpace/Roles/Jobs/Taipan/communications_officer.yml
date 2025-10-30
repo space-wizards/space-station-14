@@ -16,7 +16,7 @@
     time: 36000 # 10 hours
   - !type:DepartmentTimeRequirement
     department: Taipan
-    time: 360000 # 100 hours
+    time: 180000 # 50 hours
   access:
   - TaipanArmory
   - TaipanAtmospherics

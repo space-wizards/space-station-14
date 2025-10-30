@@ -103,7 +103,7 @@
   icon:
     sprite: Objects/Tools/rcd.rsi
     state: icon
-  product: CrateRCD
+  product: CrateRCDSyndicate
   cost: 800
   category: cargoproduct-category-name-engineering
   group: taipan_market

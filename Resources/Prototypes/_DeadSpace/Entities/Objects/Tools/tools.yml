@@ -104,10 +104,10 @@
     - Plating
     - Catwalk
     - Grille
-    - Window
-    - WindowDirectional
-    - WindowReinforcedDirectional
-    - ReinforcedWindow
+    - PlasmaWindow
+    - PlasmaWindowDirectional
+    - PlasmaReinforcedWindowDirectional
+    - ReinforcedPlasmaWindow
     - AirlockTaipan
     - AirlockTaipanGlass
     - FirelockTaipan

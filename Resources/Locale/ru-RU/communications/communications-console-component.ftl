@@ -3,6 +3,7 @@ comms-console-announcement-title-station = Консоль связи
 comms-console-announcement-title-centcom = Центральное командование
 comms-console-announcement-title-nukie = Ядерные оперативники
 comms-console-announcement-title-taipan = ННКСС Тайпан
+comms-console-announcement-title-station-ai-syndicate = Станционный ИИ Синдиката
 comms-console-menu-announcement-button-tooltip = Отправьте своё сообщение в качестве радиообъявления на всю станцию.
 comms-console-announcement-title-station-ai = Станционный ИИ
 # Popup

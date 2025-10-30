@@ -1,0 +1,20 @@
+- type: entity
+  name: портативный монитор экипажа Синдиката
+  parent: SpyCrewMonitor
+  id: TaipanCrewMonitor
+  description: Ручной монитор экипажа, отображающий состояние датчиков имплантов.
+  suffix: Тайпан
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: CrewMonitorTaipan
+
+- type: entity
+  id: TaipanCrewMonitorEmpty
+  parent: TaipanCrewMonitor
+  suffix: Тайпан, Пустой
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default

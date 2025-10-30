@@ -47,6 +47,10 @@ public sealed class TechnologyDiskSystem : EntitySystem
         {
             if (tech.Tier != tier)
                 continue;
+            // DS14-start
+            if (!tech.DiskAvailable)
+                continue;
+            // DS14-end
 
             techs.UnionWith(tech.RecipeUnlocks);
         }

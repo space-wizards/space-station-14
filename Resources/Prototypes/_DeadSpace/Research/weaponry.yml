@@ -9,6 +9,7 @@
   discipline: TaipanWeaponry
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - WeaponProtoKineticAccelerator
   - ShuttleGunKineticCircuitboard
@@ -23,6 +24,7 @@
   discipline: TaipanWeaponry
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - BoxShotgunIncendiary
   - MagazineRifleIncendiary
@@ -47,6 +49,7 @@
   discipline: TaipanWeaponry
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - MagazineShotgunBeanbag
   - BoxShellTranquilizer
@@ -62,6 +65,7 @@
   discipline: TaipanWeaponry
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - MagazineRifleUranium
   - MagazineCarbineSKSUranium
@@ -84,6 +88,7 @@
   discipline: TaipanWeaponry
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - Truncheon
   - TelescopicShield
@@ -99,6 +104,7 @@
   discipline: TaipanWeaponry
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - SignallerAdvanced
   - SignalTrigger
@@ -117,6 +123,7 @@
   discipline: TaipanWeaponry
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - ClothingBackpackElectropack
 
@@ -129,6 +136,7 @@
   discipline: TaipanWeaponry
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - WeaponPistolViper
   - WeaponRevolverPython
@@ -142,6 +150,7 @@
   discipline: TaipanWeaponry
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - ClothingHandsKnuckleDustersSyndicate
   - ThrowingKnife
@@ -155,6 +164,7 @@
   discipline: TaipanWeaponry
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - ClothingHandsGlovesNorthStar
   - ClothingHandsGlovesBoxingRigged
@@ -168,6 +178,7 @@
   discipline: TaipanWeaponry
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - WeaponSniperMosin
 
@@ -182,6 +193,7 @@
   discipline: TaipanWeaponry
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - PowerCageRechargerCircuitboard
   - PowerCageSmall
@@ -208,6 +220,7 @@
   discipline: TaipanWeaponry
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - ClothingEyesPNVAdvSyndicate
 
@@ -220,6 +233,7 @@
   discipline: TaipanWeaponry
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - WeaponPistolCobra
   - WeaponPistolDesertEagle
@@ -235,6 +249,7 @@
   discipline: TaipanWeaponry
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - GrenadeShrapnel
   - ExGrenade
@@ -255,8 +270,10 @@
   discipline: TaipanWeaponry
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - WeaponSniperHristov
+  - WeaponRifleEstoc
   technologyPrerequisites:
   - TaipanBasicRifles
 
@@ -269,6 +286,7 @@
   discipline: TaipanWeaponry
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - WeaponSubMachineGunC20r
   - WeaponSMGTommyGun
@@ -285,9 +303,9 @@
   discipline: TaipanWeaponry
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - WeaponCarbineSKS
-  - MagazineCarbineSKS
   technologyPrerequisites:
   - TaipanBasicRifles
 
@@ -300,9 +318,9 @@
   discipline: TaipanWeaponry
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - ADTWeaponRifleXC67
-  - ADTExtMagazineRifle
   - WeaponRifleAk
   technologyPrerequisites:
   - TaipanBasicRifles
@@ -316,6 +334,7 @@
   discipline: TaipanWeaponry
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - WeaponShotgunBulldog
 
@@ -330,6 +349,7 @@
   discipline: TaipanWeaponry
   tier: 3
   cost: 30000
+  diskAvailable: false
   recipeUnlocks:
   - HolyHandGrenade
   - WhiteholeGrenade
@@ -347,6 +367,7 @@
   discipline: TaipanWeaponry
   tier: 3
   cost: 30000
+  diskAvailable: false
   recipeUnlocks:
   - WeaponLightMachineGunL6
   - BorgModuleL6C
@@ -362,6 +383,7 @@
   discipline: TaipanWeaponry
   tier: 3
   cost: 30000
+  diskAvailable: false
   recipeUnlocks:
   - WeaponLauncherChinaLake
   technologyPrerequisites:
@@ -372,9 +394,11 @@
   name: research-technology-special-weapons
   icon:
     sprite: _DeadSpace/Objects/Weapons/Guns/Bow/crossbow.rsi
-    state: icon
+    state: icon-1
   discipline: TaipanWeaponry
   tier: 3
   cost: 30000
+  diskAvailable: false
   recipeUnlocks:
   - WeaponEnergyCrossbow
+  - WeaponEnergyCrossbowLarge

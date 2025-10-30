@@ -1,3 +1,56 @@
+# NPC
+- type: entity
+  id: CrateNPCGiantSpiderSpace
+  parent: CrateSecure
+  name: ящик с космическим пауком
+  description: Ящик для содержания гигантского космического паука.
+  components:
+  - type: StorageFill
+    contents:
+    - id: MobGiantSpiderSpace
+
+# Engineering
+- type: entity
+  id: CrateRCDSyndicate
+  parent: CrateSyndicateSecure
+  name: ящик РСУ
+  description: Ящик содержащий РСУ.
+  components:
+  - type: StorageFill
+    contents:
+    - id: RCDSyndicate
+
+# Food
+- type: entity
+  id: CrateFoodDonk
+  parent: CrateDonkFreezer
+  name: доставка донкпокетов
+  description: Холодильник, заполненный продукцией Donk Co.
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodBoxDonkpocket
+      amount: 1
+    - id: FoodBoxDonkpocketSpicy
+      amount: 1
+    - id: FoodBoxDonkpocketTeriyaki
+      amount: 1
+    - id: FoodBoxDonkpocketPizza
+      amount: 1
+    - id: FoodBoxDonkpocketStonk
+      amount: 1
+    - id: FoodBoxDonkpocketBerry
+      amount: 1
+    - id: FoodBoxDonkpocketHonk
+      amount: 1
+    - id: FoodBoxDonkpocketDink
+      amount: 1
+    - id: FoodBoxDonkpocketMoth
+      amount: 1
+    - id: FoodBoxDonkpocketCarp
+      amount: 1
+
+# Vending
 - type: entity
   id: CrateVendingMachineRestockChemVendSyndicateFilled
   parent: CrateInterdyneSecure

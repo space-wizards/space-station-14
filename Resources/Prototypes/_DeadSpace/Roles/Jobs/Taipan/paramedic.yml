@@ -11,8 +11,11 @@
   supervisors: job-supervisors-taipan-research-director
   canBeAntag: false
   requirements:
+  - !type:DepartmentTimeRequirement
+    department: Medical
+    time: 72000 #20 hrs
   - !type:RoleTimeRequirement
-    role: JobTaipanMedic
+    role: JobParamedic
     time: 36000 # 10 hours
   access:
   - TaipanMaint

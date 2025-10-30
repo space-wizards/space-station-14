@@ -101,7 +101,7 @@
   id: WeaponCarbineSKS
   result: WeaponCarbineSKS
   materials:
-    Steel: 600
+    Titanium: 600
     Plastic: 300
     Gold: 100
 
@@ -110,9 +110,18 @@
   id: ADTWeaponRifleXC67
   result: ADTWeaponRifleXC67
   materials:
-    Steel: 800
+    Titanium: 800
     Plastic: 400
-    Gold: 100
+    Gold: 200
+
+- type: latheRecipe
+  parent: BaseWeaponRecipeLong
+  id: WeaponRifleEstoc
+  result: WeaponRifleEstoc
+  materials:
+    Titanium: 800
+    Plastic: 300
+    Gold: 150
 
 - type: latheRecipe
   parent: BaseWeaponRecipeLong
@@ -224,10 +233,20 @@
   id: WeaponEnergyCrossbow
   result: WeaponEnergyCrossbow
   materials:
-    Titanium: 400
+    Titanium: 500
     Glass: 300
     Gold: 200
     Plasma: 100
+
+- type: latheRecipe
+  parent: BaseWeaponRecipe
+  id: WeaponEnergyCrossbowLarge
+  result: WeaponEnergyCrossbowLarge
+  materials:
+    Titanium: 800
+    Glass: 500
+    Gold: 300
+    Plasma: 200
 
 # Melee
 - type: latheRecipe
@@ -751,6 +770,14 @@
     Titanium: 700
     Plastic: 250
 
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: SprayPainterTaipan
+  result: SprayPainterTaipanEmpty
+  materials:
+    Steel: 300
+    Plastic: 100
+
 # Hardsuits
 - type: latheRecipe
   id: ClothingOuterEVASuitSyndicate
@@ -796,7 +823,7 @@
   parent: ClothingOuterEVASuitSyndicate
   result: ClothingOuterHardsuitSyndieElite
   materials:
-    Titanium: 4000
+    Plastitanium: 4000
     Plastic: 1200
     Glass: 600
     Gold: 400
@@ -807,7 +834,7 @@
   parent: ClothingOuterEVASuitSyndicate
   result: ClothingOuterHardsuitSyndieCommander
   materials:
-    Titanium: 5000
+    Plastitanium: 5000
     Plastic: 1500
     Glass: 800
     Gold: 600
@@ -818,7 +845,7 @@
   parent: ClothingOuterEVASuitSyndicate
   result: ClothingOuterHardsuitJuggernaut
   materials:
-    Titanium: 6000
+    Plastitanium: 6000
     Plastic: 2000
     Glass: 1000
     Gold: 800

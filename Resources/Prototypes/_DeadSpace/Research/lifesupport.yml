@@ -9,6 +9,7 @@
   discipline: TaipanLifeSupport
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - SeedExtractorMachineCircuitboard
   - HydroponicsTrayMachineCircuitboard
@@ -23,6 +24,7 @@
   discipline: TaipanLifeSupport
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - SynthesizerInstrument
   - DawInstrumentMachineCircuitboard
@@ -37,6 +39,7 @@
   discipline: TaipanLifeSupport
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - FatExtractorMachineCircuitboard
   - BiofabricatorMachineCircuitboardTaipan
@@ -51,6 +54,7 @@
   discipline: TaipanLifeSupport
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - FauxTileAstroGrass
   - FauxTileMowedAstroGrass
@@ -68,6 +72,7 @@
   discipline: TaipanLifeSupport
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - ADTCyberHypospray
 
@@ -80,6 +85,7 @@
   discipline: TaipanLifeSupport
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - DrinkShakerSyndie
 
@@ -94,6 +100,7 @@
   discipline: TaipanLifeSupport
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - AbominationCube
   - SpaceCarpCube
@@ -110,6 +117,7 @@
   discipline: TaipanLifeSupport
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - StasisBedMachineCircuitboard
   - CryoPodMachineCircuitboard
@@ -125,6 +133,7 @@
   discipline: TaipanLifeSupport
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - BorgModuleAdvancedChemical
 
@@ -137,6 +146,7 @@
   discipline: TaipanLifeSupport
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - AdvMopItem
   - MegaSprayBottle
@@ -152,6 +162,7 @@
   discipline: TaipanLifeSupport
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - WeaponSprayNozzle
   - ClothingBackpackWaterTank
@@ -165,6 +176,7 @@
   discipline: TaipanLifeSupport
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - CargoTelepadMachineCircuitboardTaipan
 
@@ -177,6 +189,7 @@
   discipline: TaipanLifeSupport
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - Hypopen
   - HypoDart
@@ -190,6 +203,7 @@
   discipline: TaipanLifeSupport
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - ClothingOuterVestWeb
   - ClothingOuterVestWebElite
@@ -203,6 +217,7 @@
   discipline: TaipanLifeSupport
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - ClothingBackpackChameleon
   - ClothingHeadsetChameleon
@@ -227,6 +242,7 @@
   discipline: TaipanLifeSupport
   tier: 3
   cost: 30000
+  diskAvailable: false
   recipeUnlocks:
   - CloningPodMachineCircuitboard
   - MedicalScannerMachineCircuitboard
@@ -241,6 +257,7 @@
   discipline: TaipanLifeSupport
   tier: 3
   cost: 30000
+  diskAvailable: false
   recipeUnlocks:
   - SyndiHypo
 
@@ -253,5 +270,6 @@
   discipline: TaipanLifeSupport
   tier: 3
   cost: 30000
+  diskAvailable: false
   recipeUnlocks:
   - DefibrillatorSyndicate
