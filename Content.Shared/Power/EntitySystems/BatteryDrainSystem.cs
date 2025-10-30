@@ -45,11 +45,8 @@ public sealed class BatteryDrainSystem : EntitySystem
     /// <returns>Does the entity have the required conditions ?</returns>
     private bool VerifyEntity(Entity<BatteryDrainComponent> ent)
     {
-        if (!Resolve(ent, ref ent.Comp, false))
-            return false;
-
         //If there is a power cell, it should use PowerCellDrain
-        if (HasComp<PowerCellComponent>(ent))
+        if (!HasComp<BatteryComponent>(ent) || HasComp<PowerCellComponent>(ent))
             return false;
 
         //If the item is turned off, don't drain
