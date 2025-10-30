@@ -24,7 +24,7 @@ public sealed class SolutionTests : ContentUnitTest
     {
         var solution = new Solution();
         solution.AddReagent(_water, FixedPoint2.New(1000));
-        var quantity = solution.GetTotalPrototypeQuantity("water");
+        var quantity = solution.GetTotalPrototypeQuantity(_water);
 
         Assert.That(quantity.Int(), Is.EqualTo(1000));
     }
