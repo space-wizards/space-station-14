@@ -7084,7 +7084,7 @@ entities:
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: BecomesStation
-      id: serpentcrest
+      id: Serpentcrest
     - type: ImplicitRoof
     - type: NavMap
   - uid: 26286
