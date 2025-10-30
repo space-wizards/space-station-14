@@ -13,7 +13,7 @@ public sealed class DrainTest : InteractionTest
     private static readonly EntProtoId PizzaPrototype = "FoodPizzaMargherita";
     private static readonly EntProtoId DrainPrototype = "FloorDrain";
     private static readonly EntProtoId BucketPrototype = "Bucket";
-    private static readonly EntProtoId BloodReagent = "Blood";
+    private static readonly ProtoId<ReagentPrototype> BloodReagent = "Blood";
     private static readonly ProtoId<ReagentPrototype> WaterReagent = "Water";
     private static readonly FixedPoint2 WaterVolume = 50; // 50u
     private static readonly FixedPoint2 PuddleVolume = 30; // 30u
