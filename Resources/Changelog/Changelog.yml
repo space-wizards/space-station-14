@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: Sparlight
   changes:
-  - message: Corgium has been added.  Consuming too much polymorphs you into a smart
-      corgi.
-    type: Add
-  id: 8672
-  time: '2025-06-14T09:07:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37951
-- author: Sparlight
-  changes:
   - message: A pet bag for smart corgis to wear and a construction option for them.  Not
       actually wearable by normal pets at this time.
     type: Add
@@ -3922,3 +3914,11 @@
   id: 9173
   time: '2025-10-30T02:30:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41191
+- author: SnappingOpossum
+  changes:
+  - message: Energy shotgun and energy magnum can now be used by pacifists in their
+      disabling modes.
+    type: Tweak
+  id: 9174
+  time: '2025-10-30T19:30:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41029
