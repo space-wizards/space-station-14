@@ -55,7 +55,7 @@
 - type: reaction
   id: Licoxide
   reactants:
-    Lead:
+    Lithium:
       amount: 1
     Zinc:
       amount: 1

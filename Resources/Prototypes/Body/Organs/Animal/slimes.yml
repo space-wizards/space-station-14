@@ -19,7 +19,7 @@
         - id: Poison
         - id: Narcotic
         - id: Alcohol
-          rateModifier: 0.2
+          rateModifier: 2
     - type: SolutionContainerManager
       solutions:
         stomach:
