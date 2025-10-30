@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Store.Systems;
 using Content.Shared.FixedPoint;
@@ -6,18 +5,18 @@ using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.Store.Systems;
 using Content.Shared.StoreDiscount.Components;
+using Content.Shared.StoreDiscount.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.StoreDiscount.Systems;
 
 /// <summary>
-/// Discount system that is part of <see cref="StoreSystem"/>.
+/// Discount system that is a part of <see cref="StoreSystem"/>.
+/// Server-side system handles initializing all discounts.
 /// </summary>
-public sealed class StoreDiscountSystem : EntitySystem
+public sealed class StoreDiscountSystem : SharedStoreDiscountSystem
 {
-    private static readonly ProtoId<StoreCategoryPrototype> DiscountedStoreCategoryPrototypeKey = "DiscountedItems";
-
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedStoreSystem _store = default!;
@@ -28,27 +27,6 @@ public sealed class StoreDiscountSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<StoreInitializedEvent>(OnStoreInitialized);
-        SubscribeLocalEvent<StoreBuyFinishedEvent>(OnBuyFinished);
-    }
-
-    /// <summary> Decrements discounted item count, removes discount modifier and category, if counter reaches zero. </summary>
-    private void OnBuyFinished(ref StoreBuyFinishedEvent ev)
-    {
-        var (storeId, purchasedItem) = ev;
-        if (!TryComp<StoreDiscountComponent>(storeId, out var discountsComponent))
-            return;
-
-        // find and decrement discount count for item, if there is one.
-        if (!TryGetDiscountData(discountsComponent.Discounts, purchasedItem, out var discountData) || discountData.Count == 0)
-            return;
-
-        discountData.Count--;
-        if (discountData.Count > 0)
-            return;
-
-        // if there were discounts, but they are all bought up now - restore state: remove modifier and remove store category
-        purchasedItem.RemoveCostModifier(discountData.DiscountCategory);
-        purchasedItem.Categories.Remove(DiscountedStoreCategoryPrototypeKey);
     }
 
     /// <summary> Initialized discounts if required. </summary>
@@ -65,9 +43,12 @@ public sealed class StoreDiscountSystem : EntitySystem
         var discounts = InitializeDiscounts(listings);
         ApplyDiscounts(listings, discounts, storeComp.ListingsModifiers);
         discountComponent.Discounts = discounts;
+
+        DirtyField(ev.Store, storeComp, nameof(StoreComponent.ListingsModifiers));
+        Dirty(ev.Store, discountComponent);
     }
 
-    private IReadOnlyList<StoreDiscountData> InitializeDiscounts(
+    private List<StoreDiscountData> InitializeDiscounts(
         IReadOnlyCollection<ListingDataWithCostModifiers> listings,
         int totalAvailableDiscounts = 6
     )
@@ -146,7 +127,7 @@ public sealed class StoreDiscountSystem : EntitySystem
     /// <param name="listings">List of all available listing items from which discounted ones could be selected.</param>
     /// <param name="chosenDiscounts"></param>
     /// <returns>Collection of containers with rolled discount data.</returns>
-    private IReadOnlyList<StoreDiscountData> RollItems(IEnumerable<ListingDataWithCostModifiers> listings, Dictionary<ProtoId<DiscountCategoryPrototype>, int> chosenDiscounts)
+    private List<StoreDiscountData> RollItems(IEnumerable<ListingDataWithCostModifiers> listings, Dictionary<ProtoId<DiscountCategoryPrototype>, int> chosenDiscounts)
     {
         // To roll for discounts on items we: pick listing items that have values inside 'DiscountDownTo'.
         // then we iterate over discount categories that were chosen on previous step and pick unique set
@@ -268,26 +249,6 @@ public sealed class StoreDiscountSystem : EntitySystem
         }
 
         return listingsByDiscountCategory;
-    }
-
-    private static bool TryGetDiscountData(
-        IReadOnlyList<StoreDiscountData> discounts,
-        ListingDataWithCostModifiers purchasedItem,
-        [MaybeNullWhen(false)] out StoreDiscountData discountData
-    )
-    {
-        for (var i = 0; i < discounts.Count; i++)
-        {
-            var current = discounts[i];
-            if (current.ListingId == purchasedItem.ID)
-            {
-                discountData = current;
-                return true;
-            }
-        }
-
-        discountData = null!;
-        return false;
     }
 
     /// <summary> Map for holding discount categories with their calculated cumulative weight.  </summary>

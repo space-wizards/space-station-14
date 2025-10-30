@@ -1,5 +1,6 @@
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -8,14 +9,14 @@ namespace Content.Shared.StoreDiscount.Components;
 /// <summary>
 /// Partner-component for adding discounts functionality to StoreSystem using StoreDiscountSystem.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class StoreDiscountComponent : Component
 {
     /// <summary>
     /// Discounts for items in <see cref="ListingData"/>.
     /// </summary>
-    [DataField]
-    public IReadOnlyList<StoreDiscountData> Discounts = Array.Empty<StoreDiscountData>();
+    [DataField, AutoNetworkedField]
+    public List<StoreDiscountData> Discounts = new();
 }
 
 /// <summary>
