@@ -825,12 +825,18 @@
       - state: base
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-unshaded-4
-        map: ["enum.GunVisualLayers.MagUnshaded"]
+        map: ["enum.BatteryWeaponFireModeVisuals.State", "enum.GunVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: MagazineVisuals
     magState: mag
     steps: 5
     zeroVisible: false
+  - type: GenericVisualizer
+    visuals:
+      enum.BatteryWeaponFireModeVisuals.State:
+        enum.BatteryWeaponFireModeVisuals.State:
+          BulletLaserSpreadNarrow: { color: "#ff0006"}
+          BulletDisablerSmgSpread: { color: "#5fcde4" }
   - type: Appearance
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
@@ -845,8 +851,25 @@
     fireModes:
     - proto: BulletLaserSpreadNarrow
       fireCost: 80
+      color: "#ff0006"
     - proto: BulletDisablerSmgSpread
       fireCost: 48
+      color: "#5fcde4"
+    inhandVisuals:
+      left:
+      - state: color-energy-inhand-left
+      right:
+      - state: color-energy-inhand-right
+    wieldedInhandVisuals:
+      left:
+      - state: color-wielded-inhand-left
+      right:
+      - state: color-wielded-inhand-right
+    clothingVisuals:
+      back:
+      - state: equipped-BACKPACK-color
+      suitstorage:
+      - state: equipped-SUITSTORAGE-color
   - type: Item
     size: Large
     sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
@@ -916,8 +939,14 @@
     - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-unshaded-1
-      map: ["enum.GunVisualLayers.MagUnshaded"]
+      map: ["enum.GunVisualLayers.MagUnshaded", "enum.BatteryWeaponFireModeVisuals.State"]
       shader: unshaded
+  - type: GenericVisualizer
+    visuals:
+      enum.BatteryWeaponFireModeVisuals.State:
+        enum.BatteryWeaponFireModeVisuals.State:
+          BoltTempgunCold: { color: "#a7ecde" }
+          BoltTempgunHot: { color: OrangeRed }
   - type: Appearance
   - type: Item
     size: Large
@@ -940,8 +969,25 @@
     fireModes:
     - proto: BoltTempgunCold
       fireCost: 100
+      color: "#a7ecde"
     - proto: BoltTempgunHot
       fireCost: 100
+      color: OrangeRed
+    inhandVisuals:
+      left:
+      - state: inhand-left-color
+      right:
+      - state: inhand-right-color
+    wieldedInhandVisuals:
+      left:
+      - state: wielded-inhand-left-color
+      right:
+      - state: wielded-inhand-right-color
+    clothingVisuals:
+      back:
+      - state: equipped-BACKPACK-color
+      suitstorage:
+      - state: equipped-SUITSTORAGE-color
   - type: Battery
     maxCharge: 1000
     startingCharge: 1000
