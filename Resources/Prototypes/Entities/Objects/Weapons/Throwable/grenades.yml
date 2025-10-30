@@ -16,7 +16,7 @@
     - Belt
   - type: TriggerOnUse
   - type: TimerTrigger
-    delay: 3.5
+    delay: 3
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -357,7 +357,7 @@
   - type: Appearance
   - type: TimerTriggerVisuals
     primingSound:
-      path: /Audio/Effects/countdown.ogg
+      path: /Audio/Effects/delta.ogg
 
 - type: entity
   name: modular grenade
@@ -448,7 +448,7 @@
     maxIntensity: 70
     canCreateVacuum: true
   - type: TimerTrigger
-    delay: 3 # by canon
+    delay: 7 # by canon
   - type: PointLight
     radius: 7
     energy: 3
