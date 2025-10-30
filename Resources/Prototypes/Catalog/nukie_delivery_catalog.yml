@@ -1,0 +1,11 @@
+- type: listing
+  id: NukieDeliveryMedicineBundle
+  name: nukie-delivery-medicine-bundle-name
+  description: nukie-delivery-medicine-bundle-desc
+  productEntity: ClothingBackpackDuffelSyndicateFilledMedicine
+  categories:
+  - NukieDelivery
+  restockTime: 1200
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
