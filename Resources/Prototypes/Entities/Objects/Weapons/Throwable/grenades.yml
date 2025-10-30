@@ -448,7 +448,7 @@
     maxIntensity: 70
     canCreateVacuum: true
   - type: TimerTrigger
-    delay: 7 # by canon
+    delay: 3 # by canon
   - type: PointLight
     radius: 7
     energy: 3
