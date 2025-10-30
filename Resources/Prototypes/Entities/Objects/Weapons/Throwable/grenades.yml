@@ -357,7 +357,7 @@
   - type: Appearance
   - type: TimerTriggerVisuals
     primingSound:
-      path: /Audio/Effects/delta.ogg
+      path: /Audio/Effects/countdown.ogg
 
 - type: entity
   name: modular grenade
