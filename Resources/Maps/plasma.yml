@@ -4,8 +4,8 @@ meta:
   engineVersion: 267.2.0
   forkId: ""
   forkVersion: ""
-  time: 10/09/2025 01:25:34
-  entityCount: 26492
+  time: 10/12/2025 22:58:09
+  entityCount: 26498
 maps:
 - 1
 grids:
@@ -14621,7 +14621,7 @@ entities:
       pos: -131.5,-45.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -61511.09
+      secondsUntilStateChange: -62401.16
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -84719,6 +84719,14 @@ entities:
       parent: 2
     - type: AtmosPipeColor
       color: '#990000FF'
+  - uid: 26495
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -151.5,-0.5
+      parent: 2
+    - type: AtmosPipeColor
+      color: '#FF0000FF'
 - proto: GasPipeBend
   entities:
   - uid: 1565
@@ -84965,14 +84973,6 @@ entities:
     - type: Transform
       pos: -146.5,3.5
       parent: 2
-  - uid: 6055
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -150.5,2.5
-      parent: 2
-    - type: AtmosPipeColor
-      color: '#FF0000FF'
   - uid: 6060
     components:
     - type: Transform
@@ -86499,6 +86499,21 @@ entities:
       parent: 2
     - type: AtmosPipeColor
       color: '#990000FF'
+  - uid: 26493
+    components:
+    - type: Transform
+      pos: -150.5,3.5
+      parent: 2
+    - type: AtmosPipeColor
+      color: '#FF0000FF'
+  - uid: 26494
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -151.5,3.5
+      parent: 2
+    - type: AtmosPipeColor
+      color: '#FF0000FF'
 - proto: GasPipeFourway
   entities:
   - uid: 2081
@@ -111999,6 +112014,13 @@ entities:
       parent: 2
     - type: AtmosPipeColor
       color: '#0055CCFF'
+  - uid: 26497
+    components:
+    - type: Transform
+      pos: -151.5,1.5
+      parent: 2
+    - type: AtmosPipeColor
+      color: '#FF0000FF'
 - proto: GasPipeTJunction
   entities:
   - uid: 13
@@ -112269,6 +112291,14 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -146.5,1.5
       parent: 2
+  - uid: 6055
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -150.5,2.5
+      parent: 2
+    - type: AtmosPipeColor
+      color: '#FF0000FF'
   - uid: 6102
     components:
     - type: Transform
@@ -115739,6 +115769,17 @@ entities:
       parent: 2
     - type: AtmosPipeColor
       color: '#0055CCFF'
+- proto: GasPressureRegulator
+  entities:
+  - uid: 26496
+    components:
+    - type: Transform
+      pos: -151.5,0.5
+      parent: 2
+    - type: GasPressureRegulator
+      threshold: 95000
+    - type: AtmosPipeColor
+      color: '#FF0000FF'
 - proto: GasThermoMachineFreezer
   entities:
   - uid: 1385
@@ -115814,6 +115855,13 @@ entities:
     - type: Transform
       pos: -140.5,-2.5
       parent: 2
+  - uid: 26498
+    components:
+    - type: Transform
+      pos: -151.5,2.5
+      parent: 2
+    - type: AtmosPipeColor
+      color: '#FF0000FF'
 - proto: GasVentPump
   entities:
   - uid: 275
@@ -131573,7 +131621,7 @@ entities:
       pos: -14.584713,16.470493
       parent: 2
     - type: MeleeWeapon
-      attackRate: 10
+      attackRate: 2
       autoAttack: True
     - type: Item
       size: Huge
@@ -172052,7 +172100,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -261617.84
+      secondsUntilStateChange: -262507.9
       state: Opening
     - type: Airlock
       autoClose: False
