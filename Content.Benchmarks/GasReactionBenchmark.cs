@@ -9,7 +9,6 @@ using Content.Shared.Atmos;
 using Robust.Shared;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
 namespace Content.Benchmarks;
@@ -23,11 +22,7 @@ namespace Content.Benchmarks;
 [MemoryDiagnoser]
 public class GasReactionBenchmark
 {
-    /// <summary>
-    /// Number of times to execute each reaction per benchmark iteration.
-    /// </summary>
-    [Params(1, 100, 1000, 10000)]
-    public int Iterations;
+    private const int Iterations = 100;
     private TestPair _pair = default!;
     private AtmosphereSystem _atmosphereSystem = default!;
 
