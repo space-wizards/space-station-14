@@ -53,6 +53,8 @@ public sealed class SingularityGeneratorSystem : SharedSingularityGeneratorSyste
             return;
 
         SetPower(uid, 0, comp);
+
+        // Other particle entities from the same wave could trigger additional teslas to spawn, so we must block the generator
         comp.NextFailsafe = _timing.CurTime + comp.FailsafeCooldown;
         Spawn(comp.SpawnPrototype, Transform(uid).Coordinates);
     }
