@@ -237,8 +237,6 @@
       amount: 2
     CarpoToxin:
       amount: 2
-    MuteToxin:
-      amount: 2
     Enzyme:
       amount: 1
   products:
@@ -252,8 +250,6 @@
     Cognizine:
       amount: 2
     Happiness:
-      amount: 2
-    MuteToxin:
       amount: 2
     Enzyme:
       amount: 1
