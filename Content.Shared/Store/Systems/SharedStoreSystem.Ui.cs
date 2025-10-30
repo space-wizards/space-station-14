@@ -288,6 +288,7 @@ public abstract partial class SharedStoreSystem
         var refundComp = EnsureComp<StoreRefundComponent>(purchase);
         refundComp.StoreEntity = store.Owner;
         refundComp.BoughtTime = _timing.CurTime;
+        Dirty(purchase, refundComp);
     }
 
     private bool IsOnStartingMap(Entity<StoreComponent> store)

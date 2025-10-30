@@ -59,6 +59,7 @@ public abstract partial class SharedStoreSystem
                 continue;
 
             refundComp.StoreEntity = null;
+            DirtyField(boughtEnt, refundComp, nameof(StoreRefundComponent.StoreEntity));
         }
     }
 
