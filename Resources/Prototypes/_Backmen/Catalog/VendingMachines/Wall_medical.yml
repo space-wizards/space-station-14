@@ -1,0 +1,43 @@
+- type: listing
+  id: WallMedicalBrutepack
+  productEntity: Brutepack
+  cost:
+    SpaceCash: 25
+  categories:
+    - VendingWallMedicalInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 6
+
+- type: listing
+  id: WallMedicalOintment
+  productEntity: Ointment
+  cost:
+    SpaceCash: 25
+  categories:
+    - VendingWallMedicalInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 6
+
+- type: listing
+  id: WallMedicalGauze
+  productEntity: Gauze
+  cost:
+    SpaceCash: 15
+  categories:
+    - VendingWallMedicalInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 6
+
+- type: listing
+  id: WallMedicalBloodpack
+  productEntity: Bloodpack
+  cost:
+    SpaceCash: 10
+  categories:
+    - VendingWallMedicalInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 6
