@@ -1,21 +1,22 @@
 #nullable enable
-using System.Linq;
 using System.Numerics;
 using Content.Client.Construction;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.IntegrationTests.Pair;
-using Content.Server.Body.Systems;
 using Content.Server.Hands.Systems;
 using Content.Server.Stack;
 using Content.Server.Tools;
-using Content.Shared.Body.Part;
+using Content.Shared.CombatMode;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.Mind;
 using Content.Shared.Players;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.Input;
+using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
@@ -24,8 +25,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.UnitTesting;
-using Content.Shared.Item.ItemToggle;
-using Robust.Client.State;
 
 namespace Content.IntegrationTests.Tests.Interaction;
 
@@ -110,6 +109,8 @@ public abstract partial class InteractionTest
     protected SharedMapSystem MapSystem = default!;
     protected ISawmill SLogger = default!;
     protected SharedUserInterfaceSystem SUiSys = default!;
+    protected SharedCombatModeSystem SCombatMode = default!;
+    protected SharedGunSystem SGun = default!;
 
     // CLIENT dependencies
     protected IEntityManager CEntMan = default!;
@@ -124,10 +125,10 @@ public abstract partial class InteractionTest
     protected SharedUserInterfaceSystem CUiSys = default!;
 
     // player components
-    protected HandsComponent Hands = default!;
-    protected DoAfterComponent DoAfters = default!;
+    protected HandsComponent? Hands;
+    protected DoAfterComponent? DoAfters;
 
-    public float TickPeriod => (float) STiming.TickPeriod.TotalSeconds;
+    public float TickPeriod => (float)STiming.TickPeriod.TotalSeconds;
 
     // Simple mob that has one hand and can perform misc interactions.
     [TestPrototypes]
@@ -135,25 +136,33 @@ public abstract partial class InteractionTest
 - type: entity
   id: InteractionTestMob
   components:
-  - type: Body
-    prototype: Aghost
   - type: DoAfter
   - type: Hands
+    hands:
+      hand_right: # only one hand, so that they do not accidentally pick up deconstruction products
+        location: Right
+    sortedHands:
+    - hand_right
   - type: ComplexInteraction
   - type: MindContainer
   - type: Stripping
   - type: Puller
   - type: Physics
+  - type: GravityAffected
   - type: Tag
     tags:
     - CanPilot
   - type: UserInterface
+  - type: CombatMode
 ";
+
+    protected static PoolSettings Default => new() { Connected = true, Dirty = true };
+    protected virtual PoolSettings Settings => Default;
 
     [SetUp]
     public virtual async Task Setup()
     {
-        Pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
+        Pair = await PoolManager.GetServerClient(Settings);
 
         // server dependencies
         SEntMan = Server.ResolveDependency<IEntityManager>();
@@ -162,6 +171,7 @@ public abstract partial class InteractionTest
         ProtoMan = Server.ResolveDependency<IPrototypeManager>();
         Factory = Server.ResolveDependency<IComponentFactory>();
         STiming = Server.ResolveDependency<IGameTiming>();
+        SLogger = Server.ResolveDependency<ILogManager>().RootSawmill;
         HandSys = SEntMan.System<HandsSystem>();
         InteractSys = SEntMan.System<SharedInteractionSystem>();
         ToolSys = SEntMan.System<ToolSystem>();
@@ -172,20 +182,21 @@ public abstract partial class InteractionTest
         SConstruction = SEntMan.System<Server.Construction.ConstructionSystem>();
         STestSystem = SEntMan.System<InteractionTestSystem>();
         Stack = SEntMan.System<StackSystem>();
-        SLogger = Server.ResolveDependency<ILogManager>().RootSawmill;
-        SUiSys = Client.System<SharedUserInterfaceSystem>();
+        SUiSys = SEntMan.System<SharedUserInterfaceSystem>();
+        SCombatMode = SEntMan.System<SharedCombatModeSystem>();
+        SGun = SEntMan.System<SharedGunSystem>();
 
         // client dependencies
         CEntMan = Client.ResolveDependency<IEntityManager>();
         UiMan = Client.ResolveDependency<IUserInterfaceManager>();
         CTiming = Client.ResolveDependency<IGameTiming>();
         InputManager = Client.ResolveDependency<IInputManager>();
+        CLogger = Client.ResolveDependency<ILogManager>().RootSawmill;
         InputSystem = CEntMan.System<Robust.Client.GameObjects.InputSystem>();
         CTestSystem = CEntMan.System<InteractionTestSystem>();
         CConSys = CEntMan.System<ConstructionSystem>();
         ExamineSys = CEntMan.System<ExamineSystem>();
-        CLogger = Client.ResolveDependency<ILogManager>().RootSawmill;
-        CUiSys = Client.System<SharedUserInterfaceSystem>();
+        CUiSys = CEntMan.System<SharedUserInterfaceSystem>();
 
         // Setup map.
         await Pair.CreateTestMap();
@@ -214,8 +225,8 @@ public abstract partial class InteractionTest
             SPlayer = SEntMan.SpawnEntity(PlayerPrototype, SEntMan.GetCoordinates(PlayerCoords));
             Player = SEntMan.GetNetEntity(SPlayer);
             Server.PlayerMan.SetAttachedEntity(ServerSession, SPlayer);
-            Hands = SEntMan.GetComponent<HandsComponent>(SPlayer);
-            DoAfters = SEntMan.GetComponent<DoAfterComponent>(SPlayer);
+            Hands = SEntMan.GetComponentOrNull<HandsComponent>(SPlayer);
+            DoAfters = SEntMan.GetComponentOrNull<DoAfterComponent>(SPlayer);
         });
 
         // Check player got attached.
@@ -228,20 +239,6 @@ public abstract partial class InteractionTest
         {
             if (old != null)
                 SEntMan.DeleteEntity(old.Value);
-        });
-
-        // Ensure that the player only has one hand, so that they do not accidentally pick up deconstruction products
-        await Server.WaitPost(() =>
-        {
-            // I lost an hour of my life trying to track down how the hell interaction tests were breaking
-            // so greatz to this. Just make your own body prototype!
-            var bodySystem = SEntMan.System<BodySystem>();
-            var hands = bodySystem.GetBodyChildrenOfType(SEntMan.GetEntity(Player), BodyPartType.Hand).ToArray();
-
-            for (var i = 1; i < hands.Length; i++)
-            {
-                SEntMan.DeleteEntity(hands[i].Id);
-            }
         });
 
         // Change UI state to in-game.
@@ -260,7 +257,7 @@ public abstract partial class InteractionTest
     [TearDown]
     public async Task TearDownInternal()
     {
-        await Server.WaitPost(() => MapMan.DeleteMap(MapId));
+        await Server.WaitPost(() => MapSystem.DeleteMap(MapId));
         await Pair.CleanReturnAsync();
         await TearDown();
     }

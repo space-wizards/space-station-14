@@ -19,6 +19,8 @@ public sealed class StorageSystem : SharedStorageSystem
 
     private Dictionary<EntityUid, ItemStorageLocation> _oldStoredItems = new();
 
+    private List<(StorageBoundUserInterface Bui, bool Value)> _queuedBuis = new();
+
     public override void Initialize()
     {
         base.Initialize();
@@ -38,6 +40,11 @@ public sealed class StorageSystem : SharedStorageSystem
         component.MaxItemSize = state.MaxItemSize;
         component.Whitelist = state.Whitelist;
         component.Blacklist = state.Blacklist;
+        component.StorageInsertSound = state.StorageInsertSound;
+        component.StorageRemoveSound = state.StorageRemoveSound;
+        component.StorageOpenSound = state.StorageOpenSound;
+        component.StorageCloseSound = state.StorageCloseSound;
+        component.DefaultStorageOrientation = state.DefaultStorageOrientation;
 
         _oldStoredItems.Clear();
 
@@ -61,6 +68,8 @@ public sealed class StorageSystem : SharedStorageSystem
             component.SavedLocations[loc.Key] = new(loc.Value);
         }
 
+        UpdateOccupied((uid, component));
+
         var uiDirty = !component.StoredItems.SequenceEqual(_oldStoredItems);
 
         if (uiDirty && UI.TryGetOpenUi<StorageBoundUserInterface>(uid, StorageComponent.StorageUiKey.Key, out var storageBui))
@@ -72,7 +81,7 @@ public sealed class StorageSystem : SharedStorageSystem
             if (NestedStorage && player != null && ContainerSystem.TryGetContainingContainer((uid, null, null), out var container) &&
                 UI.TryGetOpenUi<StorageBoundUserInterface>(container.Owner, StorageComponent.StorageUiKey.Key, out var containerBui))
             {
-                containerBui.Hide();
+                _queuedBuis.Add((containerBui, false));
             }
         }
     }
@@ -89,7 +98,7 @@ public sealed class StorageSystem : SharedStorageSystem
     {
         if (UI.TryGetOpenUi<StorageBoundUserInterface>(uid, StorageComponent.StorageUiKey.Key, out var storageBui))
         {
-            storageBui.Hide();
+            _queuedBuis.Add((storageBui, false));
         }
     }
 
@@ -97,7 +106,7 @@ public sealed class StorageSystem : SharedStorageSystem
     {
         if (UI.TryGetOpenUi<StorageBoundUserInterface>(uid, StorageComponent.StorageUiKey.Key, out var storageBui))
         {
-            storageBui.Show();
+            _queuedBuis.Add((storageBui, true));
         }
     }
 
@@ -151,5 +160,31 @@ public sealed class StorageSystem : SharedStorageSystem
                 _entityPickupAnimation.AnimateEntityPickup(entity, GetCoordinates(initialPosition), transformComp.LocalPosition, msg.EntityAngles[i]);
             }
         }
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        if (!_timing.IsFirstTimePredicted)
+        {
+            return;
+        }
+
+        // This update loop exists just to synchronize with UISystem and avoid 1-tick delays.
+        // If deferred opens / closes ever get removed you can dump this.
+        foreach (var (bui, open) in _queuedBuis)
+        {
+            if (open)
+            {
+                bui.Show();
+            }
+            else
+            {
+                bui.Hide();
+            }
+        }
+
+        _queuedBuis.Clear();
     }
 }

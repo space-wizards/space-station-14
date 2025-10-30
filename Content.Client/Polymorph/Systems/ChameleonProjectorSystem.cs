@@ -11,6 +11,7 @@ namespace Content.Client.Polymorph.Systems;
 public sealed class ChameleonProjectorSystem : SharedChameleonProjectorSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     private EntityQuery<AppearanceComponent> _appearanceQuery;
     private EntityQuery<SpriteComponent> _spriteQuery;
@@ -47,13 +48,13 @@ public sealed class ChameleonProjectorSystem : SharedChameleonProjectorSystem
             return;
 
         ent.Comp.WasVisible = sprite.Visible;
-        sprite.Visible = false;
+        _sprite.SetVisible((ent.Owner, sprite), false);
     }
 
     private void OnShutdown(Entity<ChameleonDisguisedComponent> ent, ref ComponentShutdown args)
     {
         if (_spriteQuery.TryComp(ent, out var sprite))
-            sprite.Visible = ent.Comp.WasVisible;
+            _sprite.SetVisible((ent.Owner, sprite), ent.Comp.WasVisible);
     }
 
     private void OnGetFlashEffectTargetEvent(Entity<ChameleonDisguisedComponent> ent, ref GetFlashEffectTargetEvent args)

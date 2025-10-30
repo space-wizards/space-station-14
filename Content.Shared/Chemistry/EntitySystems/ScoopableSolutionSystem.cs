@@ -24,7 +24,10 @@ public sealed class ScoopableSolutionSystem : EntitySystem
 
     private void OnInteractUsing(Entity<ScoopableSolutionComponent> ent, ref InteractUsingEvent args)
     {
-        TryScoop(ent, args.Used, args.User);
+        if (args.Handled)
+            return;
+
+        args.Handled = TryScoop(ent, args.Used, args.User);
     }
 
     public bool TryScoop(Entity<ScoopableSolutionComponent> ent, EntityUid beaker, EntityUid user)
@@ -33,7 +36,7 @@ public sealed class ScoopableSolutionSystem : EntitySystem
             !_solution.TryGetRefillableSolution(beaker, out var target, out _))
             return false;
 
-        var scooped = _solutionTransfer.Transfer(user, ent, src.Value, beaker, target.Value, srcSolution.Volume);
+        var scooped = _solutionTransfer.Transfer(new SolutionTransferData(user, ent, src.Value, beaker, target.Value, srcSolution.Volume));
         if (scooped == 0)
             return false;
 

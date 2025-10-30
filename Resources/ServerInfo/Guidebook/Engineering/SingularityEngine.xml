@@ -28,7 +28,7 @@
 
   It is suggested to use a max size containment field for the singularity. Any smaller and the singularity may outgrow its field and escape.
 
-  Containment pylons should be arranged in a square, with 7 tiles of spacing between each pylon.
+  Containment field generators should be arranged in a square, with 7 tiles of spacing between each field generator.
 
   <Box>
     <GuideEntityEmbed Entity="ContainmentFieldGenerator" Caption=""/>
@@ -62,11 +62,11 @@
   From here, you can refill the tank with plasma using a plasma canister and reinsert it into the collector.
 
   The maximum power the radiation collector can produce is determined by:
-  - The amount of radiation it is capturing (which is effectively the Singularity's power level),
-  - and the amount of plasma it has in its connected tank.
+  - The amount of radiation it is capturing (which is effectively the Singularity's power level)
+  - The amount of plasma it has in its connected tank
 
-  Over time, the collector will drain the tank of plasma, which reduces it's effective power output.
-  Eventually, the tank will be empty, and the collector will stop producing power. Be sure to refill the tank often!
+  Over time the collector will drain the tank of plasma, which reduces it's effective power output.
+  Eventually the tank will be empty, and the collector will stop producing power. Be sure to refill the tank often!
 
   ## Radiation Protection
   The singularity emits a massive amount of radiation, which can kill crew members who are not wearing proper protection.

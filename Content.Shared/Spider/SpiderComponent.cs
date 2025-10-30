@@ -18,6 +18,24 @@ public sealed partial class SpiderComponent : Component
     public string WebAction = "ActionSpiderWeb";
 
     [DataField] public EntityUid? Action;
+
+    /// <summary>
+    /// Whether the spider will spawn webs when not controlled by a player.
+    /// </summary>
+    [DataField]
+    public bool SpawnsWebsAsNonPlayer = true;
+
+    /// <summary>
+    /// The cooldown in seconds between web spawns when not controlled by a player.
+    /// </summary>
+    [DataField]
+    public TimeSpan WebSpawnCooldown = TimeSpan.FromSeconds(45f);
+
+    /// <summary>
+    /// The next time the spider can spawn a web when not controlled by a player.
+    /// </summary>
+    [DataField]
+    public TimeSpan? NextWebSpawn;
 }
 
 public sealed partial class SpiderWebActionEvent : InstantActionEvent { }

@@ -1,8 +1,8 @@
 <Document>
   # Thermo-electric Engine (TEG)
 
-  The TEG generates power by exchanging heat between hot and cold gases.
-  On the station, hot gas is usually created by burning plasma, and an array of [textlink="heat-exchanging" link="Radiators"] pipes in space radiates away heat to cool down circulated gases.
+  The TEG generates power by exchanging heat between hot and cold gasses.
+  On the station, hot gas is usually created by burning plasma, and an array of [textlink="heat-exchanging" link="Radiators"] pipes in space radiates away heat to cool down circulated gasses.
 
   The TEG relies heavily on [textlink="atmospherics" link="Atmospherics"] [textlink="piping." link="Pipes"]
   The only truly special component about it is the generator core and circulators; the rest is all off-the-shelf atmospherics equipment.
@@ -26,7 +26,7 @@
   A pressure difference is required across the input and output, so pumps are generally provided and must be turned on.
 
   There is no preference for which side must be hot or cold, there need only be a difference in temperature between them.
-  The gases in the two "loops" are never mixed, [color=#a4885c]only energy is exchanged between them[/color].
+  The gasses in the two "loops" are never mixed, [color=#a4885c]only energy is exchanged between them[/color].
   The hot side will cool down, the cold side will heat up.
 
   ## The Pipes
@@ -39,14 +39,14 @@
   As I'm sure a wise person once said: the best way to make something hot is to light it on fire.
   Well, depending on context, that may not be very wise, but luckily your engineering department has just what's needed to do it wisely after all.
 
-  As stated above, there are many different layouts one can follow to heat up (or cool down) gases; this part of the guide will cover some common methods one will often see for the hot loop, involving [color=red]the Burn Chamber[/color].
+  As stated above, there are many different layouts one can follow to heat up (or cool down) gasses; this part of the guide will cover some common methods one will often see for the hot loop, involving [color=red]the Burn Chamber[/color].
 
   Side note: Plasma fires burn relatively cool compared to, for example, Tritium fires.
   It may be viable to extract Tritium from an extraction setup and react it with Oxygen to get truly hellish temperatures for power.
 
   ## The Burn Chamber
 
-  The burn chamber is the preferred method for heating up gases, and it is commonly used for other purposes too. (see: Tritium production)
+  The burn chamber is the preferred method for heating up gasses, and it is commonly used for other purposes too. (see: Tritium production)
 
   Most (if not all) stations have the burn chamber separated from the main atmospherics block by a 1-wide spaced grid, to prevent the flow of scalding hot gas to Atmos if there was a breach. The chambers consist of 3 important parts:
   - The [textlink="Air Injector" link="AirInjector"]/[textlink="Passive Vent" link="PassiveVent"]
@@ -89,7 +89,7 @@
   There is a notable difference between the [textlink="passive vent" link="PassiveVent"] and the [textlink="air injector" link="AirInjector"]; the [textlink="air injector" link="AirInjector"] can only keep injecting air up to [color=#a4885c]9MPa[/color], which can be reached very easily with a good burn.
   Ideally, switch out the [textlink="air injector" link="AirInjector"] for a [textlink="passive vent" link="PassiveVent"] connected to a volume pump.
 
-  The space vent (designated as a blast door to space on one side of the burn chamber) allows waste gases to be expelled and destroyed.
+  The space vent (designated as a blast door to space on one side of the burn chamber) allows waste gasses to be expelled and destroyed.
   Open this occasionally to keep the pressure under control, or to space excess input gas.
   You even might find the pneumatic valve useful for occasionally spacing the gas.
 
@@ -221,14 +221,14 @@
 
   ## In the Pursuit of Greater Efficiency
   Remember, Atmospherics is a science, and as such, it is always evolving.
-  The setups above are just the tip of the iceberg; there are many ways to setup the TEG, and many ways to improve upon the setups above.
+  The setups above are just the tip of the iceberg; there are many ways to setup the TEG and many ways to improve upon the setups above.
   [color=#a4885c]Experiment![/color]
 
-  Always seek to improve upon the designs you see, and always seek to improve upon the designs you make.
-  The TEG is a powerful tool, and with great power comes great responsibility.
-  Make sure to use it wisely, and make sure to use it well.
+  Always seek to improve upon the designs you see and always seek to improve upon the designs you make.
+  The TEG is a powerful tool and with great power comes great responsibility.
+  Make sure to use it wisely and make sure to use it well.
 
-  Space Station 14 atmospherics is a complex system, and the TEG is just one part of it.
+  Space Station 14 atmospherics is a complex system and the TEG is just one part of it.
   [bold]It's like a giant puzzle, so go out and solve it![/bold]
 
 </Document>

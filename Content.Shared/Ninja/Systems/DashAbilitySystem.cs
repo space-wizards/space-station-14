@@ -22,7 +22,7 @@ public sealed class DashAbilitySystem : EntitySystem
 {
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedChargesSystem _charges = default!;
+    [Dependency] private readonly SharedChargesSystem _sharedCharges = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -56,9 +56,6 @@ public sealed class DashAbilitySystem : EntitySystem
     /// </summary>
     private void OnDash(Entity<DashAbilityComponent> ent, ref DashEvent args)
     {
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
         var (uid, comp) = ent;
         var user = args.Performer;
         if (!CheckDash(uid, user))
@@ -71,7 +68,7 @@ public sealed class DashAbilitySystem : EntitySystem
         }
 
         var origin = _transform.GetMapCoordinates(user);
-        var target = args.Target.ToMap(EntityManager, _transform);
+        var target = _transform.ToMapCoordinates(args.Target);
         if (!_examine.InRangeUnOccluded(origin, target, SharedInteractionSystem.MaxRaycastRange, null))
         {
             // can only dash if the destination is visible on screen
@@ -79,7 +76,7 @@ public sealed class DashAbilitySystem : EntitySystem
             return;
         }
 
-        if (!_charges.TryUseCharge(uid))
+        if (!_sharedCharges.TryUseCharge(uid))
         {
             _popup.PopupClient(Loc.GetString("dash-ability-no-charges", ("item", uid)), user, user);
             return;

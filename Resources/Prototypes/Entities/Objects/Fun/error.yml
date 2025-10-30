@@ -7,7 +7,7 @@
   - type: Sprite
     sprite: error.rsi
     state: error
-  - type: Food
+  - type: Edible
   - type: SolutionContainerManager
     solutions:
       food:
@@ -16,8 +16,9 @@
         - ReagentId: Nutriment
           Quantity: 5
   - type: Slippery
-    paralyzeTime: 3
-    launchForwardsMultiplier: 3
+    slipData:
+      knockdownTime: 3
+      launchForwardsMultiplier: 3
   - type: StepTrigger
     intersectRatio: 0.2
   - type: CollisionWake
