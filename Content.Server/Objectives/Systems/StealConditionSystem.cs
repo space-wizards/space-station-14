@@ -47,30 +47,43 @@ public sealed class StealConditionSystem : EntitySystem
     /// start checks of target acceptability, and generation of start values.
     private void OnAssigned(Entity<StealConditionComponent> condition, ref ObjectiveAssignedEvent args)
     {
-        // Select map: owner map if requested and available, otherwise default map
-        var filterByMap = condition.Comp.FilterByMap;
+        // Select map based on the filter mode
+        var mapFilterMode = condition.Comp.MapFilterMode;
         MapId selectedMapId = default;
         var hasSelectedMap = false;
-        if (filterByMap)
+
+        switch (mapFilterMode)
         {
-            if (condition.Comp.UseOwnerMap && args.Mind.OwnedEntity != null &&
-                TryComp<TransformComponent>(args.Mind.OwnedEntity.Value, out var ownerXform))
-            {
-                selectedMapId = ownerXform.MapID;
-                hasSelectedMap = true;
-            }
-            else
-            {
+            case StealMapFilterMode.AnyMap:
+                // No map filtering
+                hasSelectedMap = false;
+                break;
+            case StealMapFilterMode.DefaultMap:
                 selectedMapId = _gameTicker.DefaultMap;
                 hasSelectedMap = true;
-            }
+                break;
+            case StealMapFilterMode.MindOwnerCurrentMap:
+                if (args.Mind.OwnedEntity != null &&
+                    TryComp<TransformComponent>(args.Mind.OwnedEntity.Value, out var ownerXform))
+                {
+                    selectedMapId = ownerXform.MapID;
+                    hasSelectedMap = true;
+                }
+                else
+                {
+                    // Fallback to default map if owner has no transform
+                    selectedMapId = _gameTicker.DefaultMap;
+                    hasSelectedMap = true;
+                }
+                break;
         }
+
         List<StealTargetComponent?> targetList = new();
 
         var query = AllEntityQuery<StealTargetComponent, TransformComponent>();
         while (query.MoveNext(out var target, out var transform))
         {
-            if (filterByMap && hasSelectedMap && transform.MapID != selectedMapId)
+            if (hasSelectedMap && transform.MapID != selectedMapId)
                 continue;
 
             if (condition.Comp.StealGroup != target.StealGroup)

@@ -23,17 +23,11 @@ public sealed partial class StealConditionComponent : Component
     public bool VerifyMapExistence = true;
 
     /// <summary>
-    /// If true, only consider targets on a specific map during assignment.
-    /// Can be disabled for objectives where targets may be off-station (e.g., nukies).
+    /// Specifies how targets are filtered by map during assignment.
+    /// Can be set to AnyMap for objectives where targets may be off-station (e.g., nukies).
     /// </summary>
     [DataField]
-    public bool FilterByMap = true;
-
-    /// <summary>
-    /// If filtering by map, use the mind owner's current map instead of the default map.
-    /// </summary>
-    [DataField]
-    public bool UseOwnerMap = false;
+    public StealMapFilterMode MapFilterMode = StealMapFilterMode.DefaultMap;
 
     /// <summary>
     /// If true, counts objects that are close to steal areas.
@@ -81,4 +75,25 @@ public sealed partial class StealConditionComponent : Component
     public LocId DescriptionText;
     [DataField(required: true)]
     public LocId DescriptionMultiplyText;
+}
+
+/// <summary>
+/// Defines how targets are filtered by map during objective assignment.
+/// </summary>
+public enum StealMapFilterMode
+{
+    /// <summary>
+    /// Consider targets from any map.
+    /// </summary>
+    AnyMap,
+
+    /// <summary>
+    /// Only consider targets on the default map.
+    /// </summary>
+    DefaultMap,
+
+    /// <summary>
+    /// Only consider targets on the mind owner's current map.
+    /// </summary>
+    MindOwnerCurrentMap
 }
