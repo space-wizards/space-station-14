@@ -8,7 +8,6 @@ using Robust.Shared.Configuration;
 using Content.Server.Database;
 using Robust.Shared.Console;
 
-
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.MassBan)]
