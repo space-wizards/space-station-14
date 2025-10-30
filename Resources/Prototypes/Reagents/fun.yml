@@ -449,8 +449,7 @@
           min: 25
         damage:
           types:
-            Cellular: 0.5
-            Radiation: 1
+            Radiation: 0.5
       - !type:AdjustReagent
         reagent: Felinase
         amount: -15
@@ -505,8 +504,7 @@
           min: 25
         damage:
           types:
-            Cellular: 0.5
-            Radiation: 1
+            Radiation: 0.5
       - !type:AdjustReagent
         reagent: Borkinase
         amount: -15
