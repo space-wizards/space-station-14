@@ -151,6 +151,8 @@ public abstract partial class SharedStoreSystem
             {
                 if (listing.ProductActionEntity != null)
                     HandleRefundComp(ent, listing.ProductActionEntity.Value);
+
+                return;
             }
 
             listing.ProductActionEntity = upgradeActionId;
