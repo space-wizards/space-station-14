@@ -15,6 +15,7 @@ using Content.Shared.Implants;
 using Content.Shared.Mind;
 using Content.Shared.Store.Events;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Store.Systems;
@@ -29,6 +30,7 @@ public abstract partial class SharedStoreSystem : EntitySystem
     [Dependency] protected readonly SharedHandsSystem Hands = default!;
     [Dependency] protected readonly SharedUserInterfaceSystem Ui = default!;
     [Dependency] private   readonly IGameTiming _timing = default!;
+    [Dependency] private   readonly INetManager _netMan = default!;
     [Dependency] private   readonly ISharedAdminLogManager _admin = default!;
     [Dependency] private   readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private   readonly ActionUpgradeSystem _actionUpgrade = default!;

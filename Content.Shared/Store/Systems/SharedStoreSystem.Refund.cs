@@ -17,6 +17,7 @@ public abstract partial class SharedStoreSystem
         SubscribeLocalEvent<StoreRefundComponent, ActionPerformedEvent>(OnActionPerformed);
         SubscribeLocalEvent<StoreRefundComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<StoreRefundComponent, AttemptShootEvent>(OnShootAttempt);
+        SubscribeLocalEvent<StoreComponent, RefundEntityDeletedEvent>(OnRefundEntityDeleted);
         // TODO: Handle guardian refund disabling when guardians support refunds.
     }
 
@@ -85,5 +86,11 @@ public abstract partial class SharedStoreSystem
             return;
 
         DisableRefund((component.StoreEntity.Value, storeComp));
+    }
+
+    private void OnRefundEntityDeleted(Entity<StoreComponent> ent, ref RefundEntityDeletedEvent args)
+    {
+        ent.Comp.BoughtEntities.Remove(args.Uid);
+        DirtyField(ent.Owner, ent.Comp, nameof(StoreComponent.BoughtEntities));
     }
 }

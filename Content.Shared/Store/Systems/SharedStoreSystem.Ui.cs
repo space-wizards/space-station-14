@@ -9,7 +9,7 @@ public abstract partial class SharedStoreSystem
 {
     private void InitializeUi()
     {
-        SubscribeLocalEvent<StoreComponent, RefundEntityDeletedEvent>(OnRefundEntityDeleted);
+        SubscribeLocalEvent<StoreComponent, AfterAutoHandleStateEvent>(OnStoreAutoHandleState);
 
         Subs.BuiEvents<StoreComponent>(StoreUiKey.Key,
             subs =>
@@ -20,10 +20,10 @@ public abstract partial class SharedStoreSystem
             });
     }
 
-    private void OnRefundEntityDeleted(Entity<StoreComponent> ent, ref RefundEntityDeletedEvent args)
+    private void OnStoreAutoHandleState(Entity<StoreComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        ent.Comp.BoughtEntities.Remove(args.Uid);
-        DirtyField(ent.Owner, ent.Comp, nameof(StoreComponent.BoughtEntities));
+        // TODO STORE this just hides some problems with prediction, such as problems with discounts, refunds and limited stock condition.
+        UpdateUi(ent);
     }
 
     /// <summary>
@@ -69,9 +69,6 @@ public abstract partial class SharedStoreSystem
                 return;
         }
 
-        if (!IsOnStartingMap(ent))
-            DisableRefund(ent);
-
         // Subtract the cash
         foreach (var (currency, amount) in cost)
         {
@@ -79,6 +76,13 @@ public abstract partial class SharedStoreSystem
             component.BalanceSpent.TryAdd(currency, FixedPoint2.Zero);
             component.BalanceSpent[currency] += amount;
         }
+
+        // TODO STORE
+        // If we check it on first time predicted and add it on the first tick,
+        // on all next ticks LimitedStockCondition will be not available again while it really is not.
+        // That's why there's an evil NetManager in the middle of nowhere, someone send help.
+        if (_netMan.IsServer)
+            listing.PurchaseAmount++; // Track how many times something has been purchased.
 
         // Spawn entity
         if (listing.ProductEntity != null)
@@ -128,13 +132,14 @@ public abstract partial class SharedStoreSystem
                         {
                             ProductActionEntity = actionId.Value,
                         };
-                        component.ListingsModifiers.Add(modified);
+                        EnsureListingUnique(component.ListingsModifiers, modified);
                         break;
                     }
                 }
             }
         }
 
+        // Handle upgrading an action
         if (listing is { ProductUpgradeId: not null, ProductActionEntity: not null })
         {
             if (listing.ProductActionEntity != null)
@@ -146,8 +151,6 @@ public abstract partial class SharedStoreSystem
             {
                 if (listing.ProductActionEntity != null)
                     HandleRefundComp(ent, listing.ProductActionEntity.Value);
-
-                return;
             }
 
             listing.ProductActionEntity = upgradeActionId;
@@ -156,6 +159,7 @@ public abstract partial class SharedStoreSystem
                 HandleRefundComp(ent, upgradeActionId.Value);
         }
 
+        // Handle product event
         if (listing.ProductEvent != null)
         {
             if (!listing.RaiseProductEventOnUser)
@@ -174,10 +178,8 @@ public abstract partial class SharedStoreSystem
             LogImpact.Low,
             $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, Proto)}\" from {ToPrettyString(uid)}");
 
-        // Track how many times something has been purchased.
-        // Adding things in prediction will cause mispredicts, so we do it only once
-        if (_timing.IsFirstTimePredicted)
-            listing.PurchaseAmount++;
+        if (!IsOnStartingMap(ent))
+            DisableRefund(ent);
 
         _audio.PlayPredicted(component.BuySuccessSound, msg.Actor, uid); //cha-ching!
 
@@ -192,11 +194,14 @@ public abstract partial class SharedStoreSystem
         // Save everything that was changed in that listing (PurchaseAmount and whatever event subscribers had changed)
         EnsureListingUnique(component.ListingsModifiers, listing);
 
-        DirtyField(uid, component, nameof(StoreComponent.Balance));
-        DirtyField(uid, component, nameof(StoreComponent.BalanceSpent));
-        DirtyField(uid, component, nameof(StoreComponent.BoughtEntities));
-        DirtyField(uid, component, nameof(StoreComponent.RefundAllowed));
-        DirtyField(uid, component, nameof(StoreComponent.ListingsModifiers));
+        DirtyFields(uid,
+            component,
+            null,
+            nameof(StoreComponent.Balance),
+            nameof(StoreComponent.BalanceSpent),
+            nameof(StoreComponent.BoughtEntities),
+            nameof(StoreComponent.RefundAllowed),
+            nameof(StoreComponent.ListingsModifiers));
         UpdateUi(ent);
     }
 

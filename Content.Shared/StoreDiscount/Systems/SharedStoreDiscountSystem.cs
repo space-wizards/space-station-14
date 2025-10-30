@@ -2,12 +2,15 @@
 using Content.Shared.Store;
 using Content.Shared.Store.Systems;
 using Content.Shared.StoreDiscount.Components;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.StoreDiscount.Systems;
 
 public abstract class SharedStoreDiscountSystem : EntitySystem
 {
+    [Dependency] private readonly INetManager _netMan = default!;
+
     protected static readonly ProtoId<StoreCategoryPrototype> DiscountedStoreCategoryPrototypeKey = "DiscountedItems";
 
     public override void Initialize()
@@ -33,7 +36,13 @@ public abstract class SharedStoreDiscountSystem : EntitySystem
         // if there were discounts, but they are all bought up now - restore state: remove modifier and remove store category
         if (discountData.Count <= 0)
         {
-            purchasedItem.RemoveCostModifier(discountData.DiscountCategory);
+            // TODO STORE
+            // Since we are running code in prediction, it runs multiple times, and that causes a store to remove a discount on the first tick
+            // and then on all next ticks there will be no discount anymore, so it causes client to mispredict
+            // and sell the last discounted item in stock for full price. AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+            if (_netMan.IsServer)
+                purchasedItem.RemoveCostModifier(discountData.DiscountCategory);
+
             purchasedItem.Categories.Remove(DiscountedStoreCategoryPrototypeKey);
         }
 

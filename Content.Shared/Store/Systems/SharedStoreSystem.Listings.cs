@@ -28,7 +28,7 @@ public abstract partial class SharedStoreSystem
         if (!Resolve(store.Owner, ref store.Comp))
             return listings;
 
-        var defaultListings = GetAllListings().ToList();
+        var defaultListings = GetAllListings();
 
         foreach (var listing in defaultListings)
         {
