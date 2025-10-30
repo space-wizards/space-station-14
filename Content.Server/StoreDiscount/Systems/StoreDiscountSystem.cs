@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Store.Systems;
@@ -212,9 +211,9 @@ public sealed class StoreDiscountSystem : EntitySystem
     }
 
     private void ApplyDiscounts(
-        ImmutableHashSet<ListingDataWithCostModifiers> availableListings,
+        HashSet<ListingDataWithCostModifiers> availableListings,
         IReadOnlyCollection<StoreDiscountData> discounts,
-        Dictionary<ProtoId<ListingPrototype>, ListingDataWithCostModifiers> modifiers)
+        List<ListingDataWithCostModifiers> modifiers)
     {
         foreach (var discountData in discounts)
         {
@@ -242,8 +241,7 @@ public sealed class StoreDiscountSystem : EntitySystem
             found.AddCostModifier(discountData.DiscountCategory, discountData.DiscountAmountByCurrency);
             found.Categories.Add(DiscountedStoreCategoryPrototypeKey);
 
-            modifiers.TryAdd(found.ID, found);
-            modifiers[found.ID] = found;
+            _store.EnsureListingUnique(modifiers, found);
         }
     }
 

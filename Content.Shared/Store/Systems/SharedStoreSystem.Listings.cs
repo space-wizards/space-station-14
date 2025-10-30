@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Mind;
@@ -19,67 +18,30 @@ public abstract partial class SharedStoreSystem
     /// Do not modify this collection directly, it won't work.
     /// Instead, add a new key and value to <see cref="StoreComponent.ListingsModifiers"/> and dirty it.
     /// </remarks>
-    public ImmutableHashSet<ListingDataWithCostModifiers> GetAvailableListings(EntityUid buyer, Entity<StoreComponent?> store)
+    public HashSet<ListingDataWithCostModifiers> GetAvailableListings(
+        EntityUid buyer,
+        Entity<StoreComponent?> store,
+        bool checkConditions = true)
     {
         var listings = new HashSet<ListingDataWithCostModifiers>();
 
         if (!Resolve(store.Owner, ref store.Comp))
-            return listings.ToImmutableHashSet();
+            return listings;
 
-        var defaultListings = GetAvailableListingIDs(buyer, store).ToList();
+        var defaultListings = GetAllListings().ToList();
 
         foreach (var listing in defaultListings)
         {
-            if (!store.Comp.ListingsModifiers.TryGetValue(listing, out var resultListing))
+            if (!TryGetListing(store.Comp.ListingsModifiers, listing, out var resultListing))
                 resultListing = new ListingDataWithCostModifiers(Proto.Index(listing));
 
-            if (!CheckListingConditions(resultListing, buyer, store.Owner, store.Comp.Categories))
+            if (checkConditions && !CheckListingConditions(resultListing, buyer, store.Owner, store.Comp.Categories))
                 continue;
 
             listings.Add(resultListing);
         }
 
-        return listings.ToImmutableHashSet();
-    }
-
-    /// <summary>
-    /// Gets the available listings for a store. COntains onl
-    /// </summary>
-    /// <param name="buyer">Either the account owner, user, or an inanimate object (e.g., surplus bundle)</param>
-    /// <param name="store">Store to get all listings from.</param>
-    /// <returns>The available listings.</returns>
-    public IEnumerable<ProtoId<ListingPrototype>> GetAvailableListingIDs(EntityUid buyer, Entity<StoreComponent?> store)
-    {
-        if (!Resolve(store.Owner, ref store.Comp))
-            return Array.Empty<ProtoId<ListingPrototype>>();
-
-        return GetAvailableListingIDs(buyer, store.Comp.Categories, store.Owner);
-    }
-
-    /// <summary>
-    /// Gets the available listings for a user given an overall set of listings and categories to filter by.
-    /// </summary>
-    /// <param name="buyer">Either the account owner, user, or an inanimate object (e.g., surplus bundle)</param>
-    /// <param name="categories">What categories to filter by.</param>
-    /// <param name="storeEntity">The physial entity of the store. Can be null.</param>
-    /// <returns>The available listings.</returns>
-    public IEnumerable<ProtoId<ListingPrototype>> GetAvailableListingIDs(
-        EntityUid buyer,
-        HashSet<ProtoId<StoreCategoryPrototype>> categories,
-        EntityUid? storeEntity = null
-    )
-    {
-        var listings = GetAllListings();
-
-        foreach (var listingId in listings)
-        {
-            var listing = Proto.Index(listingId);
-
-            if (!CheckListingConditions(listing, buyer, storeEntity, categories))
-                continue;
-
-            yield return listing;
-        }
+        return listings;
     }
 
     private bool CheckListingConditions(
@@ -146,7 +108,25 @@ public abstract partial class SharedStoreSystem
         return prototypes.Select(prototype => (ProtoId<ListingPrototype>) prototype.ID).ToList();
     }
 
-    private bool TryGetListing(
+    /// <summary>
+    /// Adds a listing to the list and ensures that it has a unique ID.
+    /// If there's already a listing with the same ID, replaces it.
+    /// </summary>
+    /// <returns></returns>
+    public void EnsureListingUnique(List<ListingDataWithCostModifiers> collection, ListingDataWithCostModifiers listing)
+    {
+        // If modifier of this listing already exists, replace it.
+        if (TryGetListing(collection, listing.ID, out _, out var modifiedIndex))
+        {
+            collection[modifiedIndex.Value] = listing;
+        }
+        else
+        {
+            collection.Add(listing);
+        }
+    }
+
+    public bool TryGetListing(
         IReadOnlyCollection<ListingDataWithCostModifiers> collection,
         ProtoId<ListingPrototype> listingId,
         [NotNullWhen(true)] out ListingDataWithCostModifiers? found)
@@ -158,6 +138,28 @@ public abstract partial class SharedStoreSystem
                 continue;
 
             found = current;
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool TryGetListing(
+        List<ListingDataWithCostModifiers> collection,
+        ProtoId<ListingPrototype> listingId,
+        [NotNullWhen(true)] out ListingDataWithCostModifiers? found,
+        [NotNullWhen(true)] out int? foundIndex)
+    {
+        found = null;
+        foundIndex = null;
+        for (var i = 0; i < collection.Count; i++)
+        {
+            var current = collection[i];
+            if (current.ID != listingId)
+                continue;
+
+            found = current;
+            foundIndex = i;
             return true;
         }
 

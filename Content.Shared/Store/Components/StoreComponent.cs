@@ -49,7 +49,7 @@ public sealed partial class StoreComponent : Component
     /// we take the value from the dictionary instead of indexing the prototype.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public Dictionary<ProtoId<ListingPrototype>, ListingDataWithCostModifiers> ListingsModifiers = new();
+    public List<ListingDataWithCostModifiers> ListingsModifiers = new();
 
     /// <summary>
     ///     All current entities bought from this shop. Useful for keeping track of refunds and upgrades.

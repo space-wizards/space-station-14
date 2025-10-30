@@ -29,7 +29,7 @@ public sealed partial class BuyBeforeCondition : ListingCondition
             return false;
 
         var storeSystem = entMan.System<SharedStoreSystem>();
-        var allListings = storeSystem.GetAvailableListings(args.Buyer, (args.StoreEntity.Value, storeComp)).ToList();
+        var allListings = storeSystem.GetAvailableListings(args.Buyer, (args.StoreEntity.Value, storeComp), false).ToList();
 
         var purchasesFound = false;
 

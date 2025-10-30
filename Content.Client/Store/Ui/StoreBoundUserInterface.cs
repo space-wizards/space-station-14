@@ -84,7 +84,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         _menu.SetFooterVisibility(showFooter);
         _menu.UpdateRefund(store.RefundAllowed);
         _menu.UpdateBalance(store.Balance);
-        _listings = storeSystem.GetAvailableListings(player.Value, (Owner, store)).ToHashSet();
+        _listings = storeSystem.GetAvailableListings(player.Value, (Owner, store));
 
         UpdateListingsWithSearchFilter();
     }

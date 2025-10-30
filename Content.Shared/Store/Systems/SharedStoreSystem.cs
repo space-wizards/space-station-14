@@ -213,7 +213,7 @@ public abstract partial class SharedStoreSystem : EntitySystem
             return false;
 
         if (stack != null)
-            _stack.SetCount(currency.Owner, 0, stack);
+            _stack.SetCount((currency.Owner, stack), 0);
 
         // Delete it right here so it can't be reused again multiple times on the same tick.
         // Also prevents mispredicts

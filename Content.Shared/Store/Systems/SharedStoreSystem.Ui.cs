@@ -128,7 +128,7 @@ public abstract partial class SharedStoreSystem
                         {
                             ProductActionEntity = actionId.Value,
                         };
-                        component.ListingsModifiers.Add(upgradeListing.ID, modified);
+                        component.ListingsModifiers.Add(modified);
                         break;
                     }
                 }
@@ -174,7 +174,11 @@ public abstract partial class SharedStoreSystem
             LogImpact.Low,
             $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, Proto)}\" from {ToPrettyString(uid)}");
 
-        listing.PurchaseAmount++; //track how many times something has been purchased
+        // Track how many times something has been purchased.
+        // Adding things in prediction will cause mispredicts, so we do it only once
+        if (_timing.IsFirstTimePredicted)
+            listing.PurchaseAmount++;
+
         _audio.PlayPredicted(component.BuySuccessSound, msg.Actor, uid); //cha-ching!
 
         var buyFinished = new StoreBuyFinishedEvent
@@ -186,8 +190,7 @@ public abstract partial class SharedStoreSystem
         RaiseLocalEvent(ref buyFinished);
 
         // Save everything that was changed in that listing (PurchaseAmount and whatever event subscribers had changed)
-        component.ListingsModifiers.TryAdd(listing.ID, listing);
-        component.ListingsModifiers[listing.ID] = listing;
+        EnsureListingUnique(component.ListingsModifiers, listing);
 
         DirtyField(uid, component, nameof(StoreComponent.Balance));
         DirtyField(uid, component, nameof(StoreComponent.BalanceSpent));
