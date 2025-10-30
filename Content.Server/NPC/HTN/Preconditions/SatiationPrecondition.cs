@@ -6,29 +6,34 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.NPC.HTN.Preconditions;
 
 /// <summary>
-/// IsMet if has a satiation component whose satiation for <see cref="SatiationType"/> is at least
-/// <see cref="MinSatiationState"/>.
+/// IsMet if has a satiation component whose satiation for <see cref="BaseSatiationPrecondition.SatiationType"/> meets
+/// the criteria specified by <see cref="Above"/> and <see cref="AtOrBelow"/>.
 /// </summary>
-public sealed partial class SatiationPrecondition : HTNPrecondition
+public sealed partial class BaseSatiationPrecondition : HTNPrecondition
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
-    [DataField(required: true)]
-    public SatiationThreshold MinSatiationState = SatiationThreshold.Desperate;
+    [DataField]
+    public SatiationValue? Above;
+
+    [DataField]
+    public SatiationValue? AtOrBelow;
 
     [DataField]
     public ProtoId<SatiationTypePrototype> SatiationType;
 
     public override bool IsMet(NPCBlackboard blackboard)
     {
-        if (!blackboard.TryGetValue<EntityUid>(NPCBlackboard.Owner, out var owner, _entManager))
-        {
+        if (!blackboard.TryGetValue<EntityUid>(NPCBlackboard.Owner, out var owner, _entManager) ||
+            !_entManager.TryGetComponent<SatiationComponent>(owner, out var satiation))
             return false;
-        }
 
-        return _entManager.TryGetComponent<SatiationComponent>(owner, out var satiation) &&
-               _entManager.System<SatiationSystem>().GetThresholdOrNull((owner, satiation), SatiationType) is
-                   { } currentThreshold &&
-               currentThreshold <= MinSatiationState;
+        return _entManager.System<SatiationSystem>()
+            .IsValueInRange(
+                (owner, satiation),
+                SatiationType,
+                Above,
+                AtOrBelow
+            );
     }
 }

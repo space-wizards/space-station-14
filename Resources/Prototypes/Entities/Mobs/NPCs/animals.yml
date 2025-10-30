@@ -233,6 +233,7 @@
     breedChance: 0.05
     birthPopup: reproductive-laid-egg-popup
     makeOffspringInfant: false
+    minHungerThreshold: Peckish
     partnerWhitelist:
       tags:
       - Chicken
@@ -680,6 +681,7 @@
     breedChance: 0.05
     birthPopup: reproductive-laid-egg-popup
     makeOffspringInfant: false
+    minHungerThreshold: Peckish
     partnerWhitelist:
       tags:
       - Duck
@@ -870,6 +872,7 @@
     - DoorBumpOpener
     - Cow
   - type: Reproductive
+    minHungerThreshold: Peckish
     partnerWhitelist:
       tags:
       - Cow
@@ -904,6 +907,7 @@
         - ReagentId: Milk
           Quantity: 30
   - type: Udder
+    minHungerThreshold: Peckish
     reagentId: Milk
     quantityPerUpdate: 25
     growthDelay: 30
@@ -1038,6 +1042,7 @@
     - DoorBumpOpener
     - Goat
   - type: Reproductive
+    minHungerThreshold: Peckish
     partnerWhitelist:
       tags:
       - Goat
@@ -1063,6 +1068,7 @@
       wool:
         maxVol: 250
   - type: Udder
+    minHungerThreshold: Peckish
     reagentId: MilkGoat
     quantityPerUpdate: 25
     growthDelay: 20
@@ -1070,6 +1076,7 @@
     satiations:
       Hunger: HungerExamination
   - type: Wooly
+    minHungerThreshold: Peckish
   - type: Edible
     destroyOnEmpty: false
     solution: wool
@@ -3567,6 +3574,7 @@
     - Pig
     - VimPilot
   - type: Reproductive
+    minHungerThreshold: Peckish
     partnerWhitelist:
       tags:
       - Pig

@@ -71,7 +71,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
     private void OnSericultureStart(EntityUid uid, SericultureComponent comp, SericultureActionEvent args)
     {
         if (!TryComp<SatiationComponent>(uid, out var satiationComponent) ||
-            _satiation.GetThresholdWithDeltaOrNull((uid, satiationComponent), SatiationSystem.Hunger, -comp.HungerCost) < comp.MinHungerThreshold)
+            !_satiation.IsValueInRange((uid, satiationComponent), SatiationSystem.Hunger, above: comp.MinHungerThreshold, hypotheticalValueDelta: -comp.HungerCost))
         {
             _popupSystem.PopupClient(Loc.GetString(comp.PopupText), uid, uid);
             return;
@@ -96,7 +96,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
 
         // A check, just incase the doafter is somehow performed when the entity is not in the right hunger state.
         if (!TryComp<SatiationComponent>(uid, out var satiationComponent) ||
-            _satiation.GetThresholdWithDeltaOrNull((uid, satiationComponent), SatiationSystem.Hunger, -comp.HungerCost) < comp.MinHungerThreshold)
+            !_satiation.IsValueInRange((uid, satiationComponent), SatiationSystem.Hunger, above: comp.MinHungerThreshold, hypotheticalValueDelta: -comp.HungerCost))
         {
             _popupSystem.PopupClient(Loc.GetString(comp.PopupText), uid, uid);
             return;

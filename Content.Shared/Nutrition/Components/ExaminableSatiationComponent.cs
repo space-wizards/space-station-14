@@ -3,6 +3,7 @@ using Content.Shared.Nutrition.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 
 namespace Content.Shared.Nutrition.Components;
 
@@ -43,25 +44,13 @@ public sealed class SatiationExaminationPrototype : IPrototype, IInheritingProto
     /// <summary>
     /// Dictionary of satiation thresholds to LocIds of the messages to display.
     /// </summary>
-    [DataField(required: true)]
-    public Dictionary<SatiationThreshold, LocId> Descriptions = [];
+    [DataField(required: true, customTypeSerializer: typeof(DictionarySerializer<string, LocId>))]
+    public Dictionary<string, LocId> Descriptions = [];
 
     /// <summary>
-    /// LocId of a fallback message to display if the entity has no <see cref="SatiationComponent"/>, does not have the
-    /// satiation associated with this definition, or does not have a value in <see cref="Descriptions"/> for the
-    /// current threshold.
+    /// LocId of a fallback message to display if the entity has no <see cref="SatiationComponent"/>, or does not have
+    /// the satiation associated with this definition.
     /// </summary>
     [DataField(required: true)]
     public LocId NotApplicable;
-
-    /// <summary>
-    /// Gets the appropriate examine text's <see cref="LocId"/> for <paramref name="threshold"/>. If null or no such
-    /// text is in <see cref="Descriptions"/>, returns <see cref="NotApplicable"/>.
-    /// </summary>
-    public LocId GetDescriptionOrDefault(SatiationThreshold? threshold)
-    {
-        return threshold is { } t
-            ? Descriptions.GetValueOrDefault(t, NotApplicable)
-            : NotApplicable;
-    }
 }

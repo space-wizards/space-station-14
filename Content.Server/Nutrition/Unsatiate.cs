@@ -1,4 +1,3 @@
-using System.IO.Compression;
 using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
@@ -6,12 +5,11 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Nutrition.Prototypes;
 using Robust.Shared.Console;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Nutrition;
 
 /// <summary>
-/// This command sets the specified <see cref="Satiation">Satiation(s)</see> to <see cref="SatiationThreshold.Desperate"/>.
+/// This command sets the specified <see cref="Satiation">Satiation(s)</see> to 10% of its maximum.
 /// </summary>
 [AdminCommand(AdminFlags.Debug)]
 public sealed class Unsatiate : LocalizedEntityCommands
@@ -57,7 +55,10 @@ public sealed class Unsatiate : LocalizedEntityCommands
     {
         foreach (var satiation in entity.Comp.Satiations.Keys)
         {
-            _satiation.SetValue(entity, satiation, SatiationThreshold.Desperate);
+            if (_satiation.GetMaximumValue(entity, satiation) is not { } maxValue)
+                continue;
+
+            _satiation.SetValue(entity, satiation, maxValue / 10.0f);
         }
     }
 
@@ -76,14 +77,22 @@ public sealed class Unsatiate : LocalizedEntityCommands
 
         foreach (var arg in args)
         {
-            _satiation.SetValue(entity, arg, SatiationThreshold.Desperate);
+            if (_satiation.GetMaximumValue(entity, arg) is not { } maxValue)
+                continue;
+
+            _satiation.SetValue(entity, arg, maxValue / 10.0f);
         }
     }
 
     // Always suggest any satiation types which aren't already in the arg list.
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
-        var absentSatiationTypeIds = _satiation.GetTypes().Select(type => type.ID).Where(type => !args.Contains(type));
+        if (shell.Player?.AttachedEntity is not { } playerEntity ||
+            !EntityManager.TryGetComponent<SatiationComponent>(playerEntity, out var comp))
+            return CompletionResult.Empty;
+
+        var absentSatiationTypeIds =
+            comp.Satiations.Keys.Select(it => it.Id).Where(type => !args.Contains(type));
         return CompletionResult.FromHintOptions(absentSatiationTypeIds, nameof(SatiationTypePrototype));
     }
 }

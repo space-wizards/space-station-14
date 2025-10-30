@@ -76,7 +76,7 @@ public sealed class UdderSystem : EntitySystem
             if (TryComp<SatiationComponent>(uid, out var satiation))
             {
                 // Is there enough nutrition to produce reagent?
-                if (_satiation.GetThresholdWithDeltaOrNull((uid, satiation), SatiationSystem.Hunger, -udder.HungerUsage) < SatiationThreshold.Okay)
+                if (_satiation.IsValueInRange((uid, satiation), SatiationSystem.Hunger, above: udder.MinHungerThreshold, hypotheticalValueDelta: -udder.HungerUsage))
                 {
                     continue;
                 }

@@ -170,7 +170,7 @@ public sealed class NPCUtilitySystem : EntitySystem
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
         switch (consideration)
         {
-            case FoodValueCon:
+            case FoodValueCon foodValueConsideration:
             {
                 // do we have a mouth available? Is the food item opened?
                 if (!_ingestion.CanConsume(owner, targetUid))
@@ -180,7 +180,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 // only eat when hungry or if it will eat anything
                 if (TryComp<SatiationComponent>(owner, out var satiation) &&
-                    _satiation.GetThresholdOrNull((owner, satiation), SatiationSystem.Hunger) > SatiationThreshold.Okay &&
+                    _satiation.IsValueInRange((owner, satiation), SatiationSystem.Hunger, below: foodValueConsideration.HungerThreshold) &&
                     avoidBadFood)
                     return 0f;
 
@@ -194,7 +194,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 return 1f;
             }
-            case DrinkValueCon:
+            case DrinkValueCon drinkValueConsideration:
             {
                 // can't drink closed drinks and can't drink with a mask on...
                 if (!_ingestion.CanConsume(owner, targetUid))
@@ -202,7 +202,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 // only drink when thirsty
                 if (TryComp<SatiationComponent>(owner, out var satiation) &&
-                    _satiation.GetThresholdOrNull((owner, satiation), SatiationSystem.Thirst) > SatiationThreshold.Okay)
+                    _satiation.IsValueInRange((owner, satiation), SatiationSystem.Thirst, below: drinkValueConsideration.ThirstThreshold))
                     return 0f;
 
                 // no janicow don't drink the blood puddle

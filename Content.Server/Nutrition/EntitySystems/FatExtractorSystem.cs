@@ -120,7 +120,7 @@ public sealed class FatExtractorSystem : EntitySystem
             !_emag.CheckFlag(uid, EmagType.Interaction))
             return false;
 
-        if (_satiation.GetThresholdOrNull(entity, SatiationSystem.Hunger) < component.MinHungerThreshold &&
+        if (_satiation.IsValueInRange(entity, SatiationSystem.Hunger, below: component.MinHungerThreshold) &&
             !HasComp<EmaggedComponent>(uid))
             return false;
 

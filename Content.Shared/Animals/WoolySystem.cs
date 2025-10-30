@@ -69,7 +69,7 @@ public sealed class WoolySystem : EntitySystem
             if (TryComp<SatiationComponent>(uid, out var satiation))
             {
                 // Is there enough nutrition to produce reagent?
-                if (_satiation.GetThresholdWithDeltaOrNull((uid, satiation), SatiationSystem.Hunger, -wooly.HungerUsage) < SatiationThreshold.Okay)
+                if (_satiation.IsValueInRange((uid, satiation), SatiationSystem.Hunger, above: wooly.MinHungerThreshold, hypotheticalValueDelta: -wooly.HungerUsage))
                 {
                     continue;
                 }

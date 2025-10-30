@@ -34,12 +34,16 @@ public sealed class ExaminableSatiationSystem : EntitySystem
             if (!_prototype.TryIndex(exSatProto, out var exSatiation))
                 continue;
 
-            var thresholdOrNull = satiationComp is not null
-                ? _satiation.GetThresholdOrNull((entity.Owner, satiationComp), satType)
-                : null;
-            var msg = Loc.GetString(exSatiation.GetDescriptionOrDefault(thresholdOrNull),
-                ("entity", identity));
-            args.PushMarkup(msg);
+            if (satiationComp is null ||
+                !_satiation.GetValueByThreshold((entity.Owner, satiationComp),
+                    satType,
+                    exSatiation.Descriptions,
+                    out var descriptionLocId))
+            {
+                descriptionLocId = exSatiation.NotApplicable;
+            }
+
+            args.PushMarkup(Loc.GetString(descriptionLocId, ("entity", identity)));
         }
     }
 }

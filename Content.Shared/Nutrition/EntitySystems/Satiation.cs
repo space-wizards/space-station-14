@@ -9,8 +9,7 @@ namespace Content.Shared.Nutrition.EntitySystems;
 /// <summary>
 /// A need whose value decays over time. Examples include Thirst and Hunger.
 /// </summary>
-[DataDefinition]
-[Serializable, NetSerializable]
+[DataDefinition, Serializable, NetSerializable, Access(typeof(SatiationSystem))]
 public sealed partial class Satiation
 {
     [DataField(required: true), ViewVariables(VVAccess.ReadOnly)]
@@ -39,23 +38,23 @@ public sealed partial class Satiation
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public float ActualDecayRate;
 
-
     /// <summary>
-    /// The current <see cref="SatiationThreshold"/>, as determined by the <see cref="SatiationSystem.GetValueOrNull">current
-    /// satiation value</see>. This is stored here to avoid recalculation every time it's needed.
+    /// The highest value of the current threshold. This is used to track if threshold effects need to be recalculated
+    /// when <see cref="LastAuthoritativeValue"/> is modified.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public SatiationThreshold CurrentThreshold;
+    public int CurrentThresholdTop = -1;
+
 
     /// <summary>
-    /// <see cref="CurrentThreshold"/>'s <see cref="SatiationPrototype.ThresholdDamage"/>. This is stored here to avoid
+    /// The current threshold's <see cref="SatiationPrototype.Damages"/>. This is stored here to avoid
     /// recalculation every time it's needed.
     /// </summary>
     public DamageSpecifier? CurrentThresholdDamage;
 
 
     /// <summary>
-    /// When this satiation is expected to decay from <see cref="CurrentThreshold"/> to the next lower threshold. This
+    /// When this satiation is expected to decay from its current threshold to the next lower threshold. This
     /// is null when there is no lower threshold to decay to.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
@@ -72,33 +71,4 @@ public sealed partial class Satiation
     /// </summary>
     [DataField]
     public TimeSpan ContinuousEffectFrequency = TimeSpan.FromSeconds(1);
-}
-
-/// <summary>
-/// The broad thresholds which describe a <see cref="Satiation"/>'s state. Different thresholds cause the value to decay
-/// at different rates, and for different effecets to be applied.
-/// </summary>
-[Serializable, NetSerializable]
-public enum SatiationThreshold
-{
-    Dead,
-    Desperate,
-    Concerned,
-    Okay,
-    Full,
-}
-
-internal static class SatiationThresholdExtensions
-{
-    /// <summary>
-    /// Gets the next threshold "below" this one. For example, the next threshold below
-    /// <see cref="SatiationThreshold.Full">Full</see> is <see cref="SatiationThreshold.Okay">Okay</see>. Returns null
-    /// if there is no lower one.
-    /// </summary>
-    public static SatiationThreshold? NextLower(this SatiationThreshold self)
-    {
-        if (self == SatiationThreshold.Dead)
-            return null;
-        return (SatiationThreshold)((int)self - 1);
-    }
 }
