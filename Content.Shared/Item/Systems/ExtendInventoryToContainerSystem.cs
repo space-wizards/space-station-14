@@ -22,7 +22,7 @@ public sealed class ExtendInventoryToContainerSystem : EntitySystem
 
     private void OnItemInsertion(Entity<ExtendInventoryToContainerComponent> ent, ref InsertIntoItemSlotEvent args)
     {
-        var inventory = GetEntity(GetNetEntity(ent.Comp.Owner));
+        var inventory = ent.Owner;
         EnsureComp<ExtendedInventoryComponent>(args.Container, out var extendedInventory);
         extendedInventory.ConnectedContainer.Add(inventory);
     }
