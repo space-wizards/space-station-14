@@ -409,4 +409,10 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> GameHostnameInTitlebar =
         CVarDef.Create("game.hostname_in_titlebar", true, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
+    ///     Should CutWireVariationPass be run at round start?
+    /// </summary>
+    public static readonly CVarDef<bool> GameCutWireVariation =
+        CVarDef.Create("game.cut_wire_variation", true, CVar.SERVERONLY);
 }

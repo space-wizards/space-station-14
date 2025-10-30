@@ -1,6 +1,8 @@
 using Content.Server.GameTicking.Rules.VariationPass.Components;
 using Content.Server.Wires;
+using Content.Shared.CCVar;
 using Content.Shared.Whitelist;
+using Robust.Shared.Configuration;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules.VariationPass;
@@ -13,9 +15,13 @@ namespace Content.Server.GameTicking.Rules.VariationPass;
 public sealed class CutWireVariationPassSystem : VariationPassSystem<CutWireVariationPassComponent>
 {
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
 
     protected override void ApplyVariation(Entity<CutWireVariationPassComponent> ent, ref StationVariationPassEvent args)
     {
+        if (!_cfgManager.GetCVar(CCVars.GameCutWireVariation))
+            return;
+
         var wiresCut = 0;
         var query = AllEntityQuery<WiresComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out _, out var transform))
