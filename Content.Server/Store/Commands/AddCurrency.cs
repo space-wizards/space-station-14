@@ -9,15 +9,13 @@ using Robust.Shared.Console;
 namespace Content.Server.Store.Commands;
 
 [AdminCommand(AdminFlags.Fun)]
-public sealed class AddCurrency : IConsoleCommand
+public sealed class AddCurrency : LocalizedCommands
 {
     [Dependency] private readonly IEntityManager _entityMan = default!;
 
-    public string Command => "addcurrency";
-    public string Description => "Adds currency to the specified store";
-    public string Help => "addcurrency <uid> <currency prototype> <amount>";
+    public override string Command => "addcurrency";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 3)
         {
@@ -42,7 +40,7 @@ public sealed class AddCurrency : IConsoleCommand
         storeSys.TryAddCurrency(currency, (uid.Value, store));
     }
 
-    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
         {
