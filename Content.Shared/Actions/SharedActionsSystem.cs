@@ -373,7 +373,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
         if (!ValidateEntityTarget(user, target, ent))
         {
-            args.Invalid= true;
+            args.Invalid = true;
             return;
         }
 
