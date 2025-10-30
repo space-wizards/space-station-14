@@ -1,9 +1,7 @@
 using Content.Server.Atmos.Components;
-using Content.Server.Destructible;
 using Content.Shared.Atmos;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Explosion;
-using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Map.Components;
 
@@ -11,8 +9,6 @@ namespace Content.Server.Explosion.EntitySystems;
 
 public sealed partial class ExplosionSystem
 {
-    [Dependency] private readonly DestructibleSystem _destructibleSystem = default!;
-
     private readonly Dictionary<string, int> _explosionTypes = new();
 
     private void InitAirtightMap()
@@ -26,6 +22,8 @@ public sealed partial class ExplosionSystem
         int index = 0;
         foreach (var prototype in _prototypeManager.EnumeratePrototypes<ExplosionPrototype>())
         {
+            // TODO EXPLOSION
+            // just make this a field on the prototype
             _explosionTypes.Add(prototype.ID, index);
             index++;
         }
@@ -42,10 +40,10 @@ public sealed partial class ExplosionSystem
     // indices to this tile-data struct.
     private Dictionary<EntityUid, Dictionary<Vector2i, TileData>> _airtightMap = new();
 
-    public void UpdateAirtightMap(EntityUid gridId, Vector2i tile, MapGridComponent? grid = null, EntityQuery<AirtightComponent>? query = null)
+    public void UpdateAirtightMap(EntityUid gridId, Vector2i tile, MapGridComponent? grid = null)
     {
         if (Resolve(gridId, ref grid, false))
-            UpdateAirtightMap(gridId, grid, tile, query);
+            UpdateAirtightMap(gridId, grid, tile);
     }
 
     /// <summary>
@@ -58,7 +56,7 @@ public sealed partial class ExplosionSystem
     ///     something like a normal and a reinforced windoor on the same tile. But given that this is a pretty rare
     ///     occurrence, I am fine with this.
     /// </remarks>
-    public void UpdateAirtightMap(EntityUid gridId, MapGridComponent grid, Vector2i tile, EntityQuery<AirtightComponent>? query = null)
+    public void UpdateAirtightMap(EntityUid gridId, MapGridComponent grid, Vector2i tile)
     {
         var tolerance = new float[_explosionTypes.Count];
         var blockedDirections = AtmosDirection.Invalid;
@@ -66,18 +64,15 @@ public sealed partial class ExplosionSystem
         if (!_airtightMap.ContainsKey(gridId))
             _airtightMap[gridId] = new();
 
-        query ??= GetEntityQuery<AirtightComponent>();
-        var damageQuery = GetEntityQuery<DamageableComponent>();
-        var destructibleQuery = GetEntityQuery<DestructibleComponent>();
-        var anchoredEnumerator = _mapSystem.GetAnchoredEntitiesEnumerator(gridId, grid, tile);
+        var anchoredEnumerator = _map.GetAnchoredEntitiesEnumerator(gridId, grid, tile);
 
         while (anchoredEnumerator.MoveNext(out var uid))
         {
-            if (!query.Value.TryGetComponent(uid, out var airtight) || !airtight.AirBlocked)
+            if (!_airtightQuery.TryGetComponent(uid, out var airtight) || !airtight.AirBlocked)
                 continue;
 
             blockedDirections |= airtight.AirBlockedDirection;
-            var entityTolerances = GetExplosionTolerance(uid.Value, damageQuery, destructibleQuery);
+            var entityTolerances = GetExplosionTolerance(uid.Value);
             for (var i = 0; i < tolerance.Length; i++)
             {
                 tolerance[i] = Math.Max(tolerance[i], entityTolerances[i]);
@@ -105,28 +100,25 @@ public sealed partial class ExplosionSystem
         if (!TryComp<MapGridComponent>(transform.GridUid, out var grid))
             return;
 
-        UpdateAirtightMap(transform.GridUid.Value, grid, _mapSystem.CoordinatesToTile(transform.GridUid.Value, grid, transform.Coordinates));
+        UpdateAirtightMap(transform.GridUid.Value, grid, _map.CoordinatesToTile(transform.GridUid.Value, grid, transform.Coordinates));
     }
 
     /// <summary>
     ///     Return a dictionary that specifies how intense a given explosion type needs to be in order to destroy an entity.
     /// </summary>
-    public float[] GetExplosionTolerance(
-        EntityUid uid,
-        EntityQuery<DamageableComponent> damageQuery,
-        EntityQuery<DestructibleComponent> destructibleQuery)
+    public float[] GetExplosionTolerance(EntityUid uid)
     {
         // How much total damage is needed to destroy this entity? This also includes "break" behaviors. This ASSUMES
         // that this will result in a non-airtight entity.Entities that ONLY break via construction graph node changes
         // are currently effectively "invincible" as far as this is concerned. This really should be done more rigorously.
         var totalDamageTarget = FixedPoint2.MaxValue;
-        if (destructibleQuery.TryGetComponent(uid, out var destructible))
+        if (_destructibleQuery.TryGetComponent(uid, out var destructible))
         {
             totalDamageTarget = _destructibleSystem.DestroyedAt(uid, destructible);
         }
 
         var explosionTolerance = new float[_explosionTypes.Count];
-        if (totalDamageTarget == FixedPoint2.MaxValue || !damageQuery.TryGetComponent(uid, out var damageable))
+        if (totalDamageTarget == FixedPoint2.MaxValue || !_damageableQuery.TryGetComponent(uid, out var damageable))
         {
             for (var i = 0; i < explosionTolerance.Length; i++)
             {
@@ -139,9 +131,12 @@ public sealed partial class ExplosionSystem
         // does not support entities dynamically changing explosive resistances (e.g. via clothing). But these probably
         // shouldn't be airtight structures anyways....
 
+        var mod = _damageableSystem.UniversalAllDamageModifier * _damageableSystem.UniversalExplosionDamageModifier;
         foreach (var (id, index) in _explosionTypes)
         {
-            if (!_prototypeManager.TryIndex<ExplosionPrototype>(id, out var explosionType))
+            // TODO EXPLOSION SYSTEM
+            // cache explosion type damage.
+            if (!_prototypeManager.Resolve(id, out ExplosionPrototype? explosionType))
                 continue;
 
             // evaluate the damage that this damage type would do to this entity
@@ -151,10 +146,15 @@ public sealed partial class ExplosionSystem
                 if (!damageable.Damage.DamageDict.ContainsKey(type))
                     continue;
 
+                // TODO EXPLOSION SYSTEM
+                // add a variant of the event that gets raised once, instead of once per prototype.
+                // Or better yet, just calculate this manually w/o the event.
+                // The event mainly exists for indirect resistances via things like inventory & clothing
+                // But this shouldn't matter for airtight entities.
                 var ev = new GetExplosionResistanceEvent(explosionType.ID);
                 RaiseLocalEvent(uid, ref ev);
 
-                damagePerIntensity += value * Math.Max(0, ev.DamageCoefficient);
+                damagePerIntensity += value * mod * Math.Max(0, ev.DamageCoefficient);
             }
 
             explosionTolerance[index] = damagePerIntensity > 0
@@ -178,5 +178,17 @@ public sealed partial class ExplosionSystem
 
         public float[] ExplosionTolerance;
         public AtmosDirection BlockedDirections = AtmosDirection.Invalid;
+    }
+
+    public override void ReloadMap()
+    {
+        foreach (var(grid, dict) in _airtightMap)
+        {
+            var comp = Comp<MapGridComponent>(grid);
+            foreach (var index in dict.Keys)
+            {
+                UpdateAirtightMap(grid, comp, index);
+            }
+        }
     }
 }

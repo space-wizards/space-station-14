@@ -62,7 +62,7 @@ public sealed partial class ChameleonControllerMenu : FancyWindow
         // Go through every outfit and add them to the correct department.
         foreach (var outfit in _outfits)
         {
-            _prototypeManager.TryIndex(outfit.Job, out var jobProto);
+            _prototypeManager.Resolve(outfit.Job, out var jobProto);
 
             var name = outfit.LoadoutName ?? outfit.Name ?? jobProto?.Name ?? "Prototype has no name or job.";
 
@@ -116,7 +116,7 @@ public sealed partial class ChameleonControllerMenu : FancyWindow
         var button = new Button
         {
             HorizontalExpand = true,
-            StyleClasses = {StyleBase.ButtonSquare},
+            StyleClasses = {StyleClass.ButtonSquare},
             ToolTip = Loc.GetString(name),
             Text = Loc.GetString(name),
             Margin = new Thickness(0, 0, 15, 0),

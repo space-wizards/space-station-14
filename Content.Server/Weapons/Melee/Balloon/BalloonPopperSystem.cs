@@ -5,6 +5,7 @@ using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Throwing;
+using Content.Shared.Weapons.Melee.Balloon;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Weapons.Melee.Balloon;
