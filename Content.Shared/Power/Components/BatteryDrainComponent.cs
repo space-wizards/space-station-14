@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 namespace Content.Shared.Power.Components;
 
 /// <summary>
-/// Drains battery passively when the entity used ItemToggle and left it on
+/// Drains battery passively when the entity used ItemToggle and is activated
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class BatteryDrainComponent : Component
 {
     /// <summary>
@@ -19,16 +19,4 @@ public sealed partial class BatteryDrainComponent : Component
     /// </summary>
     [DataField]
     public float DrainAmount;
-
-    /// <summary>
-    /// When the next automatic power draw will occur
-    /// </summary>
-    [DataField, AutoPausedField, AutoNetworkedField]
-    public TimeSpan NextUpdateTime;
-
-    /// <summary>
-    /// How long to wait between power drawing.
-    /// </summary>
-    [DataField]
-    public TimeSpan Delay = TimeSpan.FromSeconds(1);
 }

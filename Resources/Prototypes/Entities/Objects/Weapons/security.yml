@@ -36,7 +36,7 @@
     wideAnimationRotation: -135
     damage:
       types:
-        Blunt: 9
+        Blunt: 8 # crowbar level
     bluntStaminaDamageFactor: 2.0
     angle: 60
     animation: WeaponArcThrust
@@ -48,10 +48,10 @@
     sound: /Audio/Weapons/egloves.ogg
   - type: LandAtCursor # it deals stamina damage when thrown
   - type: Battery
-    maxCharge: 500
-    startingCharge: 500
+    maxCharge: 505 # 500 + 5 to account for drain, so using it at full charge displays correct number of hits for a few seconds
+    startingCharge: 505
   - type: BatteryDrain
-    drainAmount: 0.41
+    drainAmount: 0.55 # ~15mn with full charge
   - type: UseDelay
   - type: Item
     heldPrefix: off

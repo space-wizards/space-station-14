@@ -17,15 +17,20 @@ public sealed class BatteryDrainSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
+        //We get all the entities with Battery and BatteryDrain
         var query = EntityQueryEnumerator<BatteryComponent, BatteryDrainComponent>();
         while (query.MoveNext(out var uid, out var battery, out var drain))
         {
             Entity<BatteryDrainComponent> ent = (uid, drain);
+
+            //Check for needed components / conditions
             if (VerifyEntity(ent))
             {
+                //We drain
                 if (_batterySystem.TryUseCharge(uid, drain.DrainAmount * frameTime, battery))
                 {
-                    //???
+                    //Not sure if necessary
+                    Dirty(ent);
                 }
 
             }
@@ -47,6 +52,7 @@ public sealed class BatteryDrainSystem : EntitySystem
         if (HasComp<PowerCellComponent>(ent))
             return false;
 
+        //If the item is turned off, don't drain
         if (!_toggle.IsActivated(ent.Owner))
             return false;
 
