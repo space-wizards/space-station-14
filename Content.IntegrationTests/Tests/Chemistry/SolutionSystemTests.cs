@@ -231,27 +231,31 @@ public sealed class SolutionSystemTests
         var protoMan = server.ResolveDependency<IPrototypeManager>();
         const float temp = 100.0f;
 
+        var testReagentA = "TestReagentA";
+        var testReagentB = "TestReagentB";
+        var testReagentC = "TestReagentC";
+
         // Adding reagent with adjusts temperature
         await server.WaitAssertion(() =>
         {
 
-            var solution = new Solution("TestReagentA", FixedPoint2.New(100)) { Temperature = temp };
+            var solution = new Solution(testReagentA, FixedPoint2.New(100)) { Temperature = temp };
             Assert.That(solution.Temperature, Is.EqualTo(temp * 1));
 
-            solution.AddSolution(new Solution("TestReagentA", FixedPoint2.New(100)) { Temperature = temp * 3 }, protoMan);
+            solution.AddSolution(new Solution(testReagentA, FixedPoint2.New(100)) { Temperature = temp * 3 }, protoMan);
             Assert.That(solution.Temperature, Is.EqualTo(temp * 2));
 
-            solution.AddSolution(new Solution("TestReagentB", FixedPoint2.New(100)) { Temperature = temp * 5 }, protoMan);
+            solution.AddSolution(new Solution(testReagentB, FixedPoint2.New(100)) { Temperature = temp * 5 }, protoMan);
             Assert.That(solution.Temperature, Is.EqualTo(temp * 3));
         });
 
         // adding solutions combines thermal energy
         await server.WaitAssertion(() =>
         {
-            var solutionOne = new Solution("TestReagentA", FixedPoint2.New(100)) { Temperature = temp };
+            var solutionOne = new Solution(testReagentA, FixedPoint2.New(100)) { Temperature = temp };
 
-            var solutionTwo = new Solution("TestReagentB", FixedPoint2.New(100)) { Temperature = temp };
-            solutionTwo.AddReagent("TestReagentC", FixedPoint2.New(100));
+            var solutionTwo = new Solution(testReagentB, FixedPoint2.New(100)) { Temperature = temp };
+            solutionTwo.AddReagent(testReagentC, FixedPoint2.New(100));
 
             var thermalEnergyOne = solutionOne.GetHeatCapacity(protoMan) * solutionOne.Temperature;
             var thermalEnergyTwo = solutionTwo.GetHeatCapacity(protoMan) * solutionTwo.Temperature;
