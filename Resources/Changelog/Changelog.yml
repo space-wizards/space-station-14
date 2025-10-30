@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Kittygyat
-  changes:
-  - message: Monkeys & kobolds can now wear emergency EVA suits, with a fresh new
-      sprite to go along with it! You're welcome, Pun-Pun enthusiasts!
-    type: Tweak
-  id: 8670
-  time: '2025-06-13T18:54:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37660
 - author: Nox38
   changes:
   - message: The warden's dresser now contains their jumpsuits!
@@ -3923,3 +3915,10 @@
   id: 9171
   time: '2025-10-29T05:50:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40565
+- author: Hitlinemoss
+  changes:
+  - message: Antagonist flavor text has been adjusted.
+    type: Tweak
+  id: 9172
+  time: '2025-10-30T01:08:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41184
