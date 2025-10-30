@@ -37,6 +37,10 @@
       - id: ClothingNeckCloakRedGeytide
       - id: ClothingUniformJumpsuitNanonachos
       - id: FoodSnackNanonachos
+      - id: JukeboxMK
+      - id: TapeRecorderr
+      - id: TapeEmpty
+        amount: 1
 
 - type: sponsorLoadout
   id: ClothingBackpackTier6HOSIAASponsorLoadout

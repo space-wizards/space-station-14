@@ -1,3 +1,4 @@
+using Content.Server.DeadSpace.Ports.Jukebox;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
@@ -85,6 +86,10 @@ namespace Content.Server.IoC
 
             IoCManager.Register<DiscordLink>();
             IoCManager.Register<DiscordChatLink>();
+
+            // Jukebox-port-edit
+            IoCManager.Register<ServerJukeboxSongsSyncManager>();
+            // Jukebox-port-edit
         }
     }
 }

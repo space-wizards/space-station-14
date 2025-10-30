@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+    "license": "CC0-1.0",
+    "copyright": "-",
+  "states": [
+    {
+      "name": "boombox_working_overlay",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "boombox"
+    },
+      {
+          "name": "boombox-inhand-right",
+          "directions": 4
+      },
+      {
+          "name": "boombox-inhand-left",
+          "directions": 4
+      }
+  ]
+}

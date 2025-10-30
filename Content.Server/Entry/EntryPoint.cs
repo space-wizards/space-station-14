@@ -1,3 +1,4 @@
+using Content.Server.DeadSpace.Ports.Jukebox;
 using Content.Server.Acz;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
@@ -125,6 +126,10 @@ namespace Content.Server.Entry
                 _watchlistWebhookManager.Initialize();
                 IoCManager.Resolve<JobWhitelistManager>().Initialize();
                 IoCManager.Resolve<PlayerRateLimitManager>().Initialize();
+
+                // Jukebox-port-edit
+                IoCManager.Resolve<ServerJukeboxSongsSyncManager>().Initialize();
+                // Jukebox-port-edit
             }
         }
 

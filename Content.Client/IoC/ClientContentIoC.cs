@@ -1,3 +1,4 @@
+using Content.Client.DeadSpace.Ports.Jukebox;
 using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
@@ -66,6 +67,10 @@ namespace Content.Client.IoC
             collection.Register<JoinQueueManager>(); // Corvax-Queue
             collection.Register<DiscordAuthManager>(); // Corvax-DiscordAuth
             collection.Register<ClientsidePlaytimeTrackingManager>();
+
+            // Jukebox-port-edit
+            collection.Register<ClientJukeboxSongsSyncManager>();
+            // Jukebox-port-edit
         }
     }
 }
