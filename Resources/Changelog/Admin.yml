@@ -1,7 +1,6 @@
 AdminOnly: true
 Name: Admin
 Order: 3
-# Do NOT put anything after the Entries section, in order to prevent merge conflict with new CL entries
 Entries:
 - author: DrSmugleaf
   changes:
