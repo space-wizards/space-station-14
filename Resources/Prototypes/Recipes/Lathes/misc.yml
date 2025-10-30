@@ -222,7 +222,7 @@
   completetime: 2
   materials:
     Wood: 100
-    Steel: 25
+    Steel: 50
 
 - type: latheRecipe
   id: BoxFolderPlasticClipboardEmpty
@@ -230,4 +230,11 @@
   completetime: 2
   materials:
     Plastic: 100
-    Steel: 25
+    Steel: 50
+
+- type: latheRecipe
+  id: TowelColorWhite
+  result: TowelColorWhite
+  completetime: 2
+  materials:
+    Cloth: 300

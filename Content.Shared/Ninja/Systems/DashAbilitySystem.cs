@@ -56,9 +56,6 @@ public sealed class DashAbilitySystem : EntitySystem
     /// </summary>
     private void OnDash(Entity<DashAbilityComponent> ent, ref DashEvent args)
     {
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
         var (uid, comp) = ent;
         var user = args.Performer;
         if (!CheckDash(uid, user))
