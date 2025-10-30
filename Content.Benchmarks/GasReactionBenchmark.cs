@@ -22,7 +22,7 @@ namespace Content.Benchmarks;
 [MemoryDiagnoser]
 public class GasReactionBenchmark
 {
-    private const int Iterations = 100;
+    private const int Iterations = 1000;
     private TestPair _pair = default!;
     private AtmosphereSystem _atmosphereSystem = default!;
 
