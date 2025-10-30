@@ -11,6 +11,7 @@ public sealed class ExtendInventoryToContainerSystem : EntitySystem
 {
     [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();
