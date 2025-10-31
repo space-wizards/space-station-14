@@ -146,9 +146,9 @@ public sealed class ThrowingSystem : EntitySystem
         if (baseThrowSpeed <= 0 || direction == Vector2Helpers.Infinity || direction == Vector2Helpers.NaN || direction == Vector2.Zero || friction < 0)
             return;
 
-        if (unanchor != ThrowingUnanchorStrength.None && _anchorableQuery.TryComp(uid, out var anchorableComponent) && _anchorable.TryGetAnchorableFlags((uid, anchorableComponent), out var flags))
+        if (unanchor != ThrowingUnanchorStrength.None && _anchorableQuery.TryComp(uid, out var anchorableComponent))
         {
-            if (unanchor == ThrowingUnanchorStrength.Unanchorable && flags.Value.HasFlag(AnchorableFlags.Unanchorable) || unanchor == ThrowingUnanchorStrength.All)
+            if (unanchor == ThrowingUnanchorStrength.Unanchorable && (anchorableComponent.Flags & AnchorableFlags.Unanchorable) != 0 || unanchor == ThrowingUnanchorStrength.All)
                 _transform.Unanchor(uid);
         }
 
