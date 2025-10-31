@@ -12,7 +12,9 @@ using Robust.Shared.Timing;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Network;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using System.Collections.Generic;
 
 namespace Content.Shared.Traits.Assorted;
 
@@ -26,10 +28,13 @@ public sealed class ImpairedMobilitySystem : EntitySystem
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+
+    // Per-entity RNG derived from the networked TripRngSeed field. Using System.Random
+    // here because it's deterministic given a seed and safe for perdiction.
+    private readonly Dictionary<EntityUid, System.Random> _localRngs = new();
 
     public override void Initialize()
     {
@@ -43,11 +48,34 @@ public sealed class ImpairedMobilitySystem : EntitySystem
 
     private void OnInit(Entity<ImpairedMobilityComponent> ent, ref ComponentInit args)
     {
+        // deterministic seed for predicted RNG
+        // The correct way to pronounce RNG is "R and G and G" but also for times sake, just "ring"
+        if (ent.Comp.TripRngSeed == 0u)
+        {
+            // Use a deterministic seed based on the entity so clients can predict immediately.
+            unchecked
+            {
+                ent.Comp.TripRngSeed = (uint)ent.Owner.GetHashCode();
+            }
+
+            if (_netManager.IsServer)
+            {
+                // Tell the client
+                EntityManager.Dirty(ent.Owner, ent.Comp);
+            }
+        }
+
+        // Initialize a local RNG for this entity so prediction can use it. IRobustRandom isn't predicted which is why we have to do all this.
+        _localRngs[ent.Owner] = new System.Random((int)ent.Comp.TripRngSeed);
+
         _speedModifier.RefreshMovementSpeedModifiers(ent);
     }
 
     private void OnShutdown(Entity<ImpairedMobilityComponent> ent, ref ComponentShutdown args)
     {
+        // Cleans up RNG so you don`t retain a System.Random for an entity that no longer has the component to avoid memory leaks and stale prediction state
+        _localRngs.Remove(ent.Owner);
+
         _speedModifier.RefreshMovementSpeedModifiers(ent);
     }
 
@@ -151,12 +179,26 @@ public sealed class ImpairedMobilitySystem : EntitySystem
 
         var currentTime = _timing.CurTime;
 
+        // Obtain the deterministic RNG for this entity. If none exists for some reason, create one
+        // from the component seed (falling back to the entity hash if the seed is zero).
+        if (!_localRngs.TryGetValue(ent.Owner, out var rng))
+        {
+            var seed = ent.Comp.TripRngSeed;
+            if (seed == 0u)
+            {
+                unchecked { seed = (uint)ent.Owner.GetHashCode(); }
+            }
+            rng = new System.Random((int)seed);
+            _localRngs[ent.Owner] = rng;
+        }
+
         // Initialize roll
         if (!ent.Comp.NextTripRollTime.HasValue)
         {
             // Set roll time using configured roll intervals
-            var initialDelay = _random.NextFloat(ent.Comp.MinTripRollInterval, ent.Comp.MaxTripRollInterval);
+            var initialDelay = (float)(rng.NextDouble() * (ent.Comp.MaxTripRollInterval - ent.Comp.MinTripRollInterval) + ent.Comp.MinTripRollInterval);
             ent.Comp.NextTripRollTime = currentTime + TimeSpan.FromSeconds(initialDelay);
+            EntityManager.Dirty(ent.Owner, ent.Comp);
             return;
         }
 
@@ -164,17 +206,19 @@ public sealed class ImpairedMobilitySystem : EntitySystem
             return;
 
         // Roll for trip chance
-        if (!_random.Prob(makeshiftAid.TripChance))
+        if (!(rng.NextDouble() < makeshiftAid.TripChance))
         {
             // Failed to trip, roll again after roll interval
-            var nextDelay = _random.NextFloat(ent.Comp.MinTripRollInterval, ent.Comp.MaxTripRollInterval);
+            var nextDelay = (float)(rng.NextDouble() * (ent.Comp.MaxTripRollInterval - ent.Comp.MinTripRollInterval) + ent.Comp.MinTripRollInterval);
             ent.Comp.NextTripRollTime = currentTime + TimeSpan.FromSeconds(nextDelay);
+            EntityManager.Dirty(ent.Owner, ent.Comp);
             return;
         }
 
         // Tripped! Set cooldown
         ent.Comp.LastTripTime = currentTime;
         ent.Comp.NextTripRollTime = currentTime + TimeSpan.FromSeconds(ent.Comp.TripCooldownTime);
+        EntityManager.Dirty(ent.Owner, ent.Comp);
 
         // get tripped dork
         if (_netManager.IsServer)
@@ -187,7 +231,7 @@ public sealed class ImpairedMobilitySystem : EntitySystem
             if (makeshiftAid.TripDamage != null)
             {
                 _damageableSystem.TryChangeDamage(ent.Owner, makeshiftAid.TripDamage);
-                _audioSystem.PlayPvs("/Audio/Effects/hit_kick.ogg", ent.Owner);
+                _audioSystem.PlayPvs(new SoundPathSpecifier("/Audio/Effects/hit_kick.ogg"), ent.Owner);
             }
 
             // Trip popups

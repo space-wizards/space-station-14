@@ -28,14 +28,14 @@ public sealed partial class ImpairedMobilityComponent : Component
     /// Used to prevent repeated tripping and infinite recursion.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan? LastTripTime = null;
+    public TimeSpan? LastTripTime;
 
     /// <summary>
     /// The next time a trip chance roll can occur when using a makeshift mobility aid.
     /// Used to limit rolling to every 2-5 seconds instead of every movement input.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan? NextTripRollTime = null;
+    public TimeSpan? NextTripRollTime;
 
     /// <summary>
     /// Minimum time between trip chance rolls (in seconds).
@@ -54,4 +54,13 @@ public sealed partial class ImpairedMobilityComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float TripCooldownTime = 10.0f;
+
+    /// <summary>
+    /// Seed used to create RNG for predicted behavior (trip rolls).
+    /// This is networked so clients can independently create the same RNG and predict random rolls.
+    /// If 0, the system will initialize it deterministically based on the entity.
+    /// This is genuinely so cursed to me.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public uint TripRngSeed;
 }
