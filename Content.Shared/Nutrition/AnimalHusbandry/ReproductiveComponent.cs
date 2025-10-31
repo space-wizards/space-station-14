@@ -91,13 +91,13 @@ public sealed partial class ReproductiveComponent : Component
     /// If the entity's hunger satiation is below this value, it cannot reproduce.
     /// </summary>
     [DataField]
-    public SatiationValue MinHungerThreshold;
+    public SatiationValue? MinHungerThreshold;
 
     /// <summary>
     /// If the entity's thirst satiation is below this value, it cannot reproduce.
     /// </summary>
     [DataField]
-    public SatiationValue MinThirstThreshold;
+    public SatiationValue? MinThirstThreshold;
 
     /// <summary>
     /// Popup shown when an entity gives birth.

@@ -35,7 +35,7 @@ public sealed class ExaminableSatiationSystem : EntitySystem
                 continue;
 
             if (satiationComp is null ||
-                !_satiation.GetValueByThreshold((entity.Owner, satiationComp),
+                !_satiation.TryGetValueByThreshold((entity.Owner, satiationComp),
                     satType,
                     exSatiation.Descriptions,
                     out var descriptionLocId))

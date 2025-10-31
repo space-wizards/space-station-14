@@ -26,17 +26,17 @@ public sealed partial class SatiationSystem
 
     /// <summary>
     /// Sets <paramref name="entity"/>'s current satiation of <paramref name="type"/> to a value corresponding to
-    /// <paramref name="valueKey"/>. If this entity does not have that satiation, or the key does not correspond to
+    /// <paramref name="satiationValue"/>. If this entity does not have that satiation, or the key does not correspond to
     /// any threshold, has no effect.
     /// </summary>
     public void SetValue(
         Entity<SatiationComponent> entity,
         [ForbidLiteral] ProtoId<SatiationTypePrototype> type,
-        [ForbidLiteral] string valueKey
+        [ForbidLiteral] SatiationValue satiationValue
     )
     {
         if (GetAndResolveSatiationOfType(entity, type) is not var (satiation, proto) ||
-            !proto.Keys.TryGetValue(valueKey, out var value))
+            proto.GetValueOrNull(satiationValue) is not {} value)
             return;
 
         SetAuthoritativeValue(entity, satiation, proto, value);
@@ -46,6 +46,7 @@ public sealed partial class SatiationSystem
     /// Sets <paramref name="entity"/>'s current satiation of <paramref name="type"/> to <paramref name="value"/>. If
     /// this entity does not have that satiation, has no effect.
     /// </summary>
+    // [OverloadResolutionPriority(1)] // If you pass in an int, avoid instantiating a record to hold it. // Requires a newer language version :agony:
     public void SetValue(
         Entity<SatiationComponent> entity,
         [ForbidLiteral] ProtoId<SatiationTypePrototype> type,
@@ -126,13 +127,13 @@ public sealed partial class SatiationSystem
     }
 
     /// <summary>
-    /// Like <see cref="GetValueByThreshold{T}(Robust.Shared.GameObjects.Entity{Content.Shared.Nutrition.Components.SatiationComponent},Robust.Shared.Prototypes.ProtoId{Content.Shared.Nutrition.Prototypes.SatiationTypePrototype},System.Collections.Generic.Dictionary{int,T},out T?)">
+    /// Like <see cref="TryGetValueByThreshold{T}(Robust.Shared.GameObjects.Entity{Content.Shared.Nutrition.Components.SatiationComponent},Robust.Shared.Prototypes.ProtoId{Content.Shared.Nutrition.Prototypes.SatiationTypePrototype},System.Collections.Generic.Dictionary{int,T},out T?)">
     /// the other overload</see>, except that <paramref name="valuesByThreshold"/>'s keys are
     /// <see cref="SatiationPrototype.Keys">key strings</see>, and will be resolved to threshold values.
     /// In the case that any key string in <paramref name="valuesByThreshold"/> cannot be resolved to a value, its entry
     /// is simply ignored, possibly leading to the dictionary being treated as empty.
     /// </summary>
-    public bool GetValueByThreshold<T>(
+    public bool TryGetValueByThreshold<T>(
         Entity<SatiationComponent> entity,
         [ForbidLiteral] ProtoId<SatiationTypePrototype> type,
         Dictionary<string, T> valuesByThreshold,
@@ -151,7 +152,7 @@ public sealed partial class SatiationSystem
             newValues[threshold] = value;
         }
 
-        return GetValueByThreshold(entity, type, newValues, out result);
+        return TryGetValueByThreshold(entity, type, newValues, out result);
     }
 
     /// <summary>
@@ -163,7 +164,7 @@ public sealed partial class SatiationSystem
     /// returns false.
     /// In the case that <paramref name="valuesByThreshold"/> is empty, returns false.
     /// </summary>
-    public bool GetValueByThreshold<T>(
+    public bool TryGetValueByThreshold<T>(
         Entity<SatiationComponent> entity,
         [ForbidLiteral] ProtoId<SatiationTypePrototype> type,
         Dictionary<int, T> valuesByThreshold,
@@ -174,7 +175,7 @@ public sealed partial class SatiationSystem
         if (GetValueOrNull(entity, type) is not { } currentValue)
             return false;
 
-        var ret = GetValueByThreshold(currentValue, valuesByThreshold, it => it.Key, out var resultPair, out _);
+        var ret = TryGetValueByThreshold(currentValue, valuesByThreshold, it => it.Key, out var resultPair, out _);
         result = resultPair.Value;
         return ret;
     }

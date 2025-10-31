@@ -7,7 +7,7 @@
           preconditions:
             - !type:SatiationPrecondition
               satiationType: Hunger
-              atOrBelow: Peckish
+              below: Peckish
           operator: !type:UtilityOperator
             proto: NearbyFood
 
@@ -38,7 +38,7 @@
           preconditions:
             - !type:SatiationPrecondition
               satiationType: Thirst
-              atOrBelow: Parched
+              below: Parched
           operator: !type:UtilityOperator
             proto: NearbyDrink
 

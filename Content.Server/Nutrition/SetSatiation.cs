@@ -66,7 +66,7 @@ public sealed class SetSatiation : LocalizedEntityCommands
         {
             shell.WriteError(Loc.GetString(
                 "cmd-nutrition-setsatiation-prototype-error",
-                ("prototype", satiation.Prototype)
+                ("satiation-proto-id", satiation.Prototype)
             ));
             return;
         }
@@ -80,14 +80,14 @@ public sealed class SetSatiation : LocalizedEntityCommands
         if (!proto.Keys.TryGetValue(args[1], out var valueFromKey))
         {
             shell.WriteLine(Loc.GetString(
-                "cmd-nutrition-setsatiation-no-matching-key",
+                "cmd-nutrition-setsatiation-no-matching-key-error",
                 ("key", args[1]),
                 ("satiation-proto-id", proto.ID)
             ));
             return;
         }
 
-        _satiation.SetValue((playerEntity, comp), type, valueFromKey);
+        _satiation.SetValue((playerEntity, comp), type, value: valueFromKey);
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -106,7 +106,7 @@ public sealed class SetSatiation : LocalizedEntityCommands
                     nameof(SatiationTypePrototype)
                 );
             case 2:
-                if (_satiation.GetTypeOrNull(args[1]) is not { } satiationProto ||
+                if (_satiation.GetTypeOrNull(args[0]) is not { } satiationProto ||
                     _satiation.GetMaximumValue(entity, satiationProto) is not { } maxValue)
                     return CompletionResult.Empty;
 

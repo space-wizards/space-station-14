@@ -164,12 +164,21 @@ public sealed class AnimalHusbandrySystem : EntitySystem
             return true;
         }
 
-        // If has hunger or thirst, check that they're high enough.
-        if (satiation.Has(SatiationSystem.Hunger) && _satiation.IsValueInRange((uid, satiation), SatiationSystem.Hunger, below: component!.MinHungerThreshold) ||
-            satiation.Has(SatiationSystem.Thirst) && _satiation.IsValueInRange((uid, satiation), SatiationSystem.Thirst, below: component!.MinThirstThreshold))
-        {
+        // Check minimum hunger requirement
+        if (component!.MinHungerThreshold is { } minHunger &&
+            (
+                !satiation.Has(SatiationSystem.Hunger) ||
+                _satiation.IsValueInRange((uid, satiation), SatiationSystem.Hunger, below: minHunger)
+            ))
             return false;
-        }
+
+        // Check minimum thirst requirement
+        if (component.MinThirstThreshold is { } minThirst &&
+            (
+                !satiation.Has(SatiationSystem.Thirst) ||
+                _satiation.IsValueInRange((uid, satiation), SatiationSystem.Thirst, below: minThirst)
+            ))
+            return false;
 
         return true;
     }

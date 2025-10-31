@@ -117,7 +117,7 @@ public sealed partial class SatiationSystem : EntitySystem
     {
         foreach (var type in entity.Comp.Satiations.Keys)
         {
-            SetValue(entity, type, int.MaxValue);
+            SetValue(entity, type, satiationValue: int.MaxValue);
         }
     }
 
@@ -163,7 +163,7 @@ public sealed partial class SatiationSystem : EntitySystem
 
     /// <summary>
     /// Shared implementation for <see cref="GetCurrentAndNextLowestThresholds"/> and
-    /// <see cref="GetValueByThreshold{T}(Robust.Shared.GameObjects.Entity{Content.Shared.Nutrition.Components.SatiationComponent},Robust.Shared.Prototypes.ProtoId{Content.Shared.Nutrition.Prototypes.SatiationTypePrototype},System.Collections.Generic.Dictionary{int,T},out T?)">GetValueByThreshold</see>
+    /// <see cref="TryGetValueByThreshold{T}(Robust.Shared.GameObjects.Entity{Content.Shared.Nutrition.Components.SatiationComponent},Robust.Shared.Prototypes.ProtoId{Content.Shared.Nutrition.Prototypes.SatiationTypePrototype},System.Collections.Generic.Dictionary{int,T},out T?)">GetValueByThreshold</see>
     /// which selects a value from <paramref name="values"/> based on <paramref name="currentSatiation"/>. Each value is
     /// assigned a threshold value by <paramref name="thresholdGetter"/>, and then the value with the lowest threshold
     /// greater than <paramref name="currentSatiation"/> is returned as <paramref name="currentValue"/>.
@@ -173,7 +173,7 @@ public sealed partial class SatiationSystem : EntitySystem
     /// If <paramref name="values"/> is empty, returns false.
     /// If <paramref name="currentSatiation"/> is greater than all threshold values assigned, returns false.
     /// </summary>
-    private bool GetValueByThreshold<T>(
+    private bool TryGetValueByThreshold<T>(
         float currentSatiation,
         IEnumerable<T> values,
         Func<T, int> thresholdGetter,
@@ -237,7 +237,7 @@ public sealed partial class SatiationSystem : EntitySystem
             return default;
         var thresholds = GetThresholds(satiation.Prototype);
 
-        if (!GetValueByThreshold(
+        if (!TryGetValueByThreshold(
                 CalculateCurrentValue(satiation, proto),
                 thresholds,
                 it => it.Threshold,

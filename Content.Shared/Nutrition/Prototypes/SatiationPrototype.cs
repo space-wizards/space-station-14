@@ -45,9 +45,22 @@ public sealed class SatiationPrototype : IPrototype, IInheritingPrototype
     [DataField(required: true)]
     public float BaseDecayRate;
 
+    /// <summary>
+    /// The highest value this satiation can have. Increases beyond this value are clamped to this value.
+    /// </summary>
     [DataField(required: true)]
     public int MaximumValue;
 
+    /// <summary>
+    /// The definition of key strings referentiable by <see cref="SatiationValue.SatiationValueByKey"/>. Any reference
+    /// to a key in this map by a <see cref="SatiationValue.SatiationValueByKey"/> will be resolved to the numeric value
+    /// associated to that key here before use.
+    /// <br/>
+    /// Note hat different satiations can use the same keys without issue. Indeed, the intention is that a "base"
+    /// satiation can define values and modifiers on itself using these keys, and then inheriting satiation prototypes
+    /// can simply change the numeric values associated with those keys without needing to redefine the values and
+    /// modifiers.
+    /// </summary>
     [DataField(customTypeSerializer: typeof(DictionarySerializer<string, int>))]
     public Dictionary<string, int> Keys = [];
 
@@ -140,16 +153,16 @@ public sealed class SatiationPrototype : IPrototype, IInheritingPrototype
 /// <see cref="SatiationPrototype"/> to resolve its integer value before use.
 /// </summary>
 /// <seealso cref="SatiationPrototype.GetValueOrNull"/>
-[Serializable, NetSerializable]
+[ImplicitDataRecord, Serializable, NetSerializable]
 public abstract record SatiationValue
 {
-    [Serializable, NetSerializable]
+    [DataRecord, Serializable, NetSerializable] // It's `ImplicitDataRecord`, but the game still crashed without the explicit `DataRecord` so idk
     public sealed record SatiationValueByValue(
         [field: DataField("value", required: true)]
         int V
     ) : SatiationValue;
 
-    [Serializable, NetSerializable]
+    [DataRecord, Serializable, NetSerializable]
     public sealed record SatiationValueByKey(
         [field: DataField("key", required: true)]
         string K

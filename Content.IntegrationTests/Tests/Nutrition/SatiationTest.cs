@@ -78,26 +78,26 @@ public sealed class SatiationTest
                 [60] = 60,
             };
 
-            sys.SetValue(entity, SatType, 100);
+            sys.SetValue(entity, SatType, value: 100);
             Assert.Multiple(() =>
             {
-                var res = sys.GetValueByThreshold(entity, SatType, dict, out var result);
+                var res = sys.TryGetValueByThreshold(entity, SatType, dict, out var result);
                 Assert.That(res, Is.True);
                 Assert.That(result, Is.EqualTo(100));
             });
 
-            sys.SetValue(entity, SatType, 55);
+            sys.SetValue(entity, SatType, value: 55);
             Assert.Multiple(() =>
             {
-                var res = sys.GetValueByThreshold(entity, SatType, dict, out var result);
+                var res = sys.TryGetValueByThreshold(entity, SatType, dict, out var result);
                 Assert.That(res, Is.True);
                 Assert.That(result, Is.EqualTo(60));
             });
 
-            sys.SetValue(entity, SatType, 0);
+            sys.SetValue(entity, SatType, value: 0);
             Assert.Multiple(() =>
             {
-                var res = sys.GetValueByThreshold(entity, SatType, dict, out var result);
+                var res = sys.TryGetValueByThreshold(entity, SatType, dict, out var result);
                 Assert.That(res, Is.True);
                 Assert.That(result, Is.EqualTo(0));
             });
@@ -129,7 +129,7 @@ public sealed class SatiationTest
             sys.SetValue(entity, SatType, MaxxedKey);
             Assert.Multiple(() =>
             {
-                var res = sys.GetValueByThreshold(entity, SatType, dict, out var result);
+                var res = sys.TryGetValueByThreshold(entity, SatType, dict, out var result);
                 Assert.That(res, Is.True);
                 Assert.That(result, Is.EqualTo(0));
             });
@@ -137,7 +137,7 @@ public sealed class SatiationTest
             sys.ModifyValue(entity, SatType, -10);
             Assert.Multiple(() =>
             {
-                var res = sys.GetValueByThreshold(entity, SatType, dict, out var result);
+                var res = sys.TryGetValueByThreshold(entity, SatType, dict, out var result);
                 Assert.That(res, Is.True);
                 Assert.That(result, Is.EqualTo(0));
             });
@@ -145,7 +145,7 @@ public sealed class SatiationTest
             sys.SetValue(entity, SatType, MiddleKey);
             Assert.Multiple(() =>
             {
-                var res = sys.GetValueByThreshold(entity, SatType, dict, out var result);
+                var res = sys.TryGetValueByThreshold(entity, SatType, dict, out var result);
                 Assert.That(res, Is.True);
                 Assert.That(result, Is.EqualTo(40));
             });
@@ -153,7 +153,7 @@ public sealed class SatiationTest
             sys.SetValue(entity, SatType, DeadKey);
             Assert.Multiple(() =>
             {
-                var res = sys.GetValueByThreshold(entity, SatType, dict, out var result);
+                var res = sys.TryGetValueByThreshold(entity, SatType, dict, out var result);
                 Assert.That(res, Is.True);
                 Assert.That(result, Is.EqualTo(20));
             });
@@ -175,7 +175,7 @@ public sealed class SatiationTest
             var ent = entMan.Spawn(TestProto, MapCoordinates.Nullspace);
             var entity = new Entity<SatiationComponent>(ent, server.EntMan.GetComponent<SatiationComponent>(ent));
 
-            sys.SetValue(entity, SatType, 100);
+            sys.SetValue(entity, SatType, value: 100);
             Assert.Multiple(() =>
             {
                 Assert.That(sys.IsValueInRange(entity, SatType, above: DeadKey), Is.True);
@@ -183,7 +183,7 @@ public sealed class SatiationTest
                 Assert.That(sys.IsValueInRange(entity, SatType, below: MaxxedKey), Is.True);
             });
 
-            sys.SetValue(entity, SatType, MiddleValue + 5);
+            sys.SetValue(entity, SatType, value: MiddleValue + 5);
             Assert.Multiple(() =>
             {
                 Assert.That(sys.IsValueInRange(entity, SatType, above: MiddleKey), Is.True);
@@ -213,7 +213,7 @@ public sealed class SatiationTest
 #pragma warning restore RA0033
             });
 
-            sys.SetValue(entity, SatType, 0);
+            sys.SetValue(entity, SatType, value: 0);
             Assert.Multiple(() =>
             {
                 Assert.That(sys.IsValueInRange(entity, SatType, above: NotRealKey), Is.False);

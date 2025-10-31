@@ -214,6 +214,9 @@ public enum LogType
     /// Entity started or stopped taking temperature damage.
     /// </summary>
     Temperature = 49,
+
+    // This log type was consolidated from separate `Hunger` and `Thirst` log types. Neither were used before, so don't
+    // ask me why this one isn't used now.
     Satiation = 50,
 
     /// <summary>

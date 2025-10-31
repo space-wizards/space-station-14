@@ -7,7 +7,7 @@ namespace Content.Server.NPC.HTN.Preconditions;
 
 /// <summary>
 /// IsMet if has a satiation component whose satiation for <see cref="BaseSatiationPrecondition.SatiationType"/> meets
-/// the criteria specified by <see cref="Above"/> and <see cref="AtOrBelow"/>.
+/// the criteria specified by <see cref="Above"/> and <see cref="Below"/>.
 /// </summary>
 public sealed partial class BaseSatiationPrecondition : HTNPrecondition
 {
@@ -17,7 +17,7 @@ public sealed partial class BaseSatiationPrecondition : HTNPrecondition
     public SatiationValue? Above;
 
     [DataField]
-    public SatiationValue? AtOrBelow;
+    public SatiationValue? Below;
 
     [DataField]
     public ProtoId<SatiationTypePrototype> SatiationType;
@@ -33,7 +33,7 @@ public sealed partial class BaseSatiationPrecondition : HTNPrecondition
                 (owner, satiation),
                 SatiationType,
                 Above,
-                AtOrBelow
+                Below
             );
     }
 }
