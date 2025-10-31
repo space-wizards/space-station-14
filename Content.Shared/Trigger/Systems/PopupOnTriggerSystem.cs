@@ -13,25 +13,33 @@ public sealed class PopupOnTriggerSystem : XOnTriggerSystem<PopupOnTriggerCompon
 
     protected override void OnTrigger(Entity<PopupOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
-        if(args.User is null)
-            return;
+        EntityUid user;
 
-        EntityUid user = Identity.Entity(args.User.Value, EntityManager);
+        if(args.User != null)
+        {
+            user = Identity.Entity(args.User.Value, EntityManager);
+        }
+
+        else
+        {
+            //fallback in case event has no user
+            user = Identity.Entity(target, EntityManager);
+        }
 
         // Popups only play for one entity
         if (ent.Comp.Quiet)
         {
             if (ent.Comp.Predicted)
             {
-                _popup.PopupClient(Loc.GetString(ent.Comp.Text,("entity",target),("user",user)),
+                _popup.PopupClient(Loc.GetString(ent.Comp.Text,("entity",ent),("user",user)),
                     target,
                     ent.Comp.UserIsRecipient ? args.User : ent.Owner,
                     ent.Comp.PopupType);
             }
 
-            else
+            else if (args.User != null)
             {
-                _popup.PopupEntity(Loc.GetString(ent.Comp.OtherText ?? ent.Comp.Text,("entity",target),("user",user)),
+                _popup.PopupEntity(Loc.GetString(ent.Comp.OtherText ?? ent.Comp.Text,("entity",ent),("user",user)),
                     target,
                     args.User.Value,
                     ent.Comp.PopupType);
@@ -43,8 +51,8 @@ public sealed class PopupOnTriggerSystem : XOnTriggerSystem<PopupOnTriggerCompon
         // Popups play for all entities
         if (ent.Comp.Predicted)
         {
-            _popup.PopupPredicted(Loc.GetString(ent.Comp.Text,("entity",target),("user",user)),
-                Loc.GetString(ent.Comp.OtherText ?? ent.Comp.Text,("entity",target),("user",user)),
+            _popup.PopupPredicted(Loc.GetString(ent.Comp.Text,("entity",ent),("user",user)),
+                Loc.GetString(ent.Comp.OtherText ?? ent.Comp.Text,("entity",ent),("user",user)),
                 target,
                 ent.Comp.UserIsRecipient ? args.User : ent.Owner,
                 ent.Comp.PopupType);
@@ -52,7 +60,7 @@ public sealed class PopupOnTriggerSystem : XOnTriggerSystem<PopupOnTriggerCompon
 
         else
         {
-            _popup.PopupEntity(Loc.GetString(ent.Comp.OtherText ?? ent.Comp.Text,("entity",target),("user",user)),
+            _popup.PopupEntity(Loc.GetString(ent.Comp.OtherText ?? ent.Comp.Text,("entity",ent),("user",user)),
                 target,
                 ent.Comp.PopupType);
         }
