@@ -5,10 +5,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed partial class HandTriggerSystem : EntitySystem
+public sealed partial class HandTriggerSystem : TriggerOnXSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly TriggerSystem _trigger = default!;
 
     public override void Initialize()
     {
@@ -29,7 +28,7 @@ public sealed partial class HandTriggerSystem : EntitySystem
         if (_timing.ApplyingState)
             return;
 
-        _trigger.Trigger(ent.Owner, args.User, ent.Comp.KeyOut);
+        Trigger.Trigger(ent.Owner, args.User, ent.Comp.KeyOut);
     }
 
     private void OnGotUnequipped(Entity<TriggerOnGotUnequippedHandComponent> ent, ref GotUnequippedHandEvent args)
@@ -37,7 +36,7 @@ public sealed partial class HandTriggerSystem : EntitySystem
         if (_timing.ApplyingState)
             return;
 
-        _trigger.Trigger(ent.Owner, args.User, ent.Comp.KeyOut);
+        Trigger.Trigger(ent.Owner, args.User, ent.Comp.KeyOut);
     }
 
     private void OnDidEquip(Entity<TriggerOnDidEquipHandComponent> ent, ref DidEquipHandEvent args)
@@ -45,7 +44,7 @@ public sealed partial class HandTriggerSystem : EntitySystem
         if (_timing.ApplyingState)
             return;
 
-        _trigger.Trigger(ent.Owner, args.Equipped, ent.Comp.KeyOut);
+        Trigger.Trigger(ent.Owner, args.Equipped, ent.Comp.KeyOut);
     }
 
     private void OnDidUnequip(Entity<TriggerOnDidUnequipHandComponent> ent, ref DidUnequipHandEvent args)
@@ -53,12 +52,12 @@ public sealed partial class HandTriggerSystem : EntitySystem
         if (_timing.ApplyingState)
             return;
 
-        _trigger.Trigger(ent.Owner, args.Unequipped, ent.Comp.KeyOut);
+        Trigger.Trigger(ent.Owner, args.Unequipped, ent.Comp.KeyOut);
     }
 
     private void OnDropped(Entity<TriggerOnDroppedComponent> ent, ref DroppedEvent args)
     {
         // We don't need the guard statement here because this one is not a container event, but raised directly when interacting.
-        _trigger.Trigger(ent.Owner, args.User, ent.Comp.KeyOut);
+        Trigger.Trigger(ent.Owner, args.User, ent.Comp.KeyOut);
     }
 }

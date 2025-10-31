@@ -95,6 +95,8 @@
     - HEAD
     quickEquip: false
     sprite: Clothing/Head/Hats/party_water_cup.rsi
+  - type: SpillWhenWorn
+    solution: drink
 
 # Mugs
 - type: entity
