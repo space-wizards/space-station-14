@@ -2,6 +2,7 @@ using Content.Client.UserInterface.Controls;
 using Content.Shared.Weapons.Melee.EnergySword;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Weapons.Melee.UI;
@@ -41,22 +42,25 @@ public sealed class EnergySwordColorBoundUserInterface : BoundUserInterface
             return;
 
         List<RadialMenuOptionBase> list = new();
+        var meta = EntMan.GetComponent<MetaDataComponent>(Owner);
+        if (meta.EntityPrototype == null)
+            return;
+
         foreach (var color in esword.ColorOptions)
         {
-            var button = MakeAButton(color);
+            var button = MakeAButton(color, meta.EntityPrototype.ID);
             list.Add(button);
         }
 
-        var hackedButton = MakeAButton(Color.White, hacked: true);
+        var hackedButton = MakeAButton(Color.White, meta.EntityPrototype.ID, hacked: true);
         list.Add(hackedButton);
 
         _radialMenu.SetButtons(list);
     }
 
-    private RadialMenuActionOption<Color> MakeAButton(Color color, bool hacked = false)
+    private RadialMenuActionOption<Color> MakeAButton(Color color, string protoID, bool hacked = false)
     {
-        EntProtoId<EnergySwordComponent> proto = new("EnergySword"); //Hardcoded bad
-        Entity<EnergySwordComponent?> ent = EntMan.Spawn(proto);
+        Entity<EnergySwordComponent?> ent = EntMan.Spawn(protoID);
 
         //No comp ?
         ent.Comp ??= EntMan.EnsureComponent<EnergySwordComponent>(ent);
