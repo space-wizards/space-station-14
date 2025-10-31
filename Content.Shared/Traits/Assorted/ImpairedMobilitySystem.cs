@@ -49,7 +49,6 @@ public sealed class ImpairedMobilitySystem : EntitySystem
     private void OnInit(Entity<ImpairedMobilityComponent> ent, ref ComponentInit args)
     {
         // deterministic seed for predicted RNG
-        // The correct way to pronounce RNG is "R and G and G" but also for times sake, just "ring"
         if (ent.Comp.TripRngSeed == 0u)
         {
             // Use a deterministic seed based on the entity so clients can predict immediately.
