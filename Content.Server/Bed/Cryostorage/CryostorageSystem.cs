@@ -1,6 +1,6 @@
-using System.Globalization;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
+using Content.Server.GameTicking;
 using Content.Server.Ghost;
 using Content.Server.Hands.Systems;
 using Content.Server.Inventory;
@@ -24,9 +24,12 @@ using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
+using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
+using System.Globalization;
 
 namespace Content.Server.Bed.Cryostorage;
 
@@ -49,7 +52,8 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
-
+    [Dependency] private readonly MapLoaderSystem _loader = default!;
+    [Dependency] private readonly GameTicker _ticker = default!;
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -193,30 +197,38 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
 
                 _stationJobs.TryRemovePlayerJobs(uniqueStation, userId.Value, stationJobs);
             }
+
+            var saveFilePath = new ResPath($"{userId}]{name}");
+            _loader.TrySaveGeneric(ent.Owner, saveFilePath, out var use);
+            if (TryComp<ActorComponent>(ent.Owner, out var actor))
+                _ticker.PlayerJoinLobby(actor.PlayerSession);
+            QueueDel(ent.Owner);
         }
 
         _audio.PlayPvs(cryostorageComponent.RemoveSound, ent);
+        
 
-        EnsurePausedMap();
-        if (PausedMap == null)
-        {
-            Log.Error("CryoSleep map was unexpectedly null");
-            return;
-        }
+        //EnsurePausedMap();
+        //if (PausedMap == null)
+        //{
+        //    Log.Error("CryoSleep map was unexpectedly null");
+        //    return;
+        //}
 
-        if (!CryoSleepRejoiningEnabled || !comp.AllowReEnteringBody)
-        {
-            if (userId != null && Mind.TryGetMind(userId.Value, out var mind) &&
-                HasComp<CryostorageContainedComponent>(mind.Value.Comp.CurrentEntity))
-            {
-                _ghostSystem.OnGhostAttempt(mind.Value, false);
-            }
-        }
+        //if (!CryoSleepRejoiningEnabled || !comp.AllowReEnteringBody)
+        //{
+        //    if (userId != null && Mind.TryGetMind(userId.Value, out var mind) &&
+        //        HasComp<CryostorageContainedComponent>(mind.Value.Comp.CurrentEntity))
+        //    {
+        //        _ghostSystem.OnGhostAttempt(mind.Value, false);
+        //    }
+        //}
 
-        comp.AllowReEnteringBody = false;
-        _transform.SetParent(ent, PausedMap.Value);
-        cryostorageComponent.StoredPlayers.Add(ent);
-        Dirty(ent, comp);
+        //comp.AllowReEnteringBody = false;
+        //_transform.SetParent(ent, PausedMap.Value);
+        //cryostorageComponent.StoredPlayers.Add(ent);
+        //Dirty(ent, comp);
+
         UpdateCryostorageUIState((cryostorageEnt.Value, cryostorageComponent));
         AdminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent):player} was entered into cryostorage inside of {ToPrettyString(cryostorageEnt.Value)}");
 
@@ -287,7 +299,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             ? "cryostorage-insert-message-temp"
             : "cryostorage-insert-message-permanent";
 
-        var msg = Loc.GetString(locKey, ("time", comp.GracePeriod.TotalMinutes));
+        var msg = Loc.GetString(locKey, ("time", comp.GracePeriod.TotalSeconds));
         if (TryComp<ActorComponent>(args.Entity, out var actor))
             _chatManager.ChatMessageToOne(ChatChannel.Server, msg, msg, uid, false, actor.PlayerSession.Channel);
     }

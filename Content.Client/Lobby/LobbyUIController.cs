@@ -291,12 +291,12 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         _characterSetup.CloseButton.OnPressed += _ =>
         {
             // Open the save panel if we have unsaved changes.
-            if (_profileEditor.Profile != null && _profileEditor.IsDirty)
-            {
+         //   if (_profileEditor.Profile != null && _profileEditor.IsDirty)
+        //    {
           //      OpenSavePanel();
 
-                return;
-            }
+        //        return;
+        //    }
 
             // Reset sliders etc.
             CloseProfileEditor();
