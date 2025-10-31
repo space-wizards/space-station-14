@@ -11,6 +11,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Configuration;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Content.Shared.CCVar;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -110,7 +111,7 @@ namespace Content.Server.Atmos.EntitySystems
                     if (!MathHelper.CloseTo(newPressure, comp.InternalPressure, 0.1f))
                     {
                         comp.InternalPressure = newPressure;
-                        Dirty(uid, comp);
+                        RaiseNetworkEvent(new GasTankPressureChangedEvent(GetNetEntity(uid), newPressure), Filter.Pvs(uid));
                     }
                 }
 
