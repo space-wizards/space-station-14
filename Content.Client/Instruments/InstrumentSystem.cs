@@ -75,6 +75,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         component.AllowProgramChange = state.AllowProgramChange;
         component.RespectMidiLimits = state.RespectMidiLimits;
         component.Master = EnsureEntity<InstrumentComponent>(state.Master, uid);
+        component.MinVolume = state.MinVolume;
         component.FilteredChannels = state.FilteredChannels;
 
         if (component.Playing)
@@ -94,6 +95,13 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             return;
 
         RaiseNetworkEvent(new InstrumentSetMasterEvent(GetNetEntity(uid), GetNetEntity(masterUid)));
+    }
+
+    public void SetMinVolume(EntityUid uid, byte volume)
+    {
+        if (!TryComp(uid, out InstrumentComponent? instrument))
+            return;
+        instrument.MinVolume = volume;
     }
 
     public void SetFilteredChannel(EntityUid uid, int channel, bool value)
@@ -186,6 +194,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         UpdateRendererMaster(instrument);
 
         instrument.Renderer.LoopMidi = instrument.LoopMidi;
+        instrument.Renderer.MinVolume = instrument.MinVolume;
     }
 
     private void UpdateRendererMaster(InstrumentComponent instrument)
