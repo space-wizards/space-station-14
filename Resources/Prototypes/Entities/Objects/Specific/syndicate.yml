@@ -171,3 +171,29 @@
   - type: Store
     balance:
       Telecrystal: 45
+
+#TTT
+
+- type: entity
+  parent: [BaseItem, StorePresetTTT]
+  id: BaseUplinkRadioTTT
+  name: ttt uplink.
+  description: dire's tech
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Other/RadioT.rsi
+    layers:
+    - state: old-radio
+  - type: Item
+    sprite: Objects/counterstrike/Other/RadioT.rsi
+    heldPrefix: old-radio
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: Store
+    balance:
+      Telecrystal: 1

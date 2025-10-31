@@ -1,0 +1,25 @@
+#STEALTH
+
+- type: listing
+  id: UplinkTTTKnife
+  name: Jeff's Knife
+  description: a sharp knife.
+  icon: { sprite: /Textures/Objects/counterstrike/Weapons/TTT/jeffKnife.rsi, state: icon }
+  productEntity: JeffKnife
+  cost:
+    Telecrystal: 1
+  categories:
+  - tttStealth
+
+#LOUD 
+
+- type: listing
+  id: UplinkTTTMoonmanBundle
+  name: Moonman Bundle
+  description: kkk.
+  icon: { sprite: /Textures/Objects/counterstrike/Clothing/Hats/moonman.rsi, state: icon }
+  productEntity: tttMoonmanBundle
+  cost:
+    Telecrystal: 1
+  categories:
+  - tttLoud

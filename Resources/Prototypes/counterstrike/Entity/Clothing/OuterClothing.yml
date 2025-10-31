@@ -1,0 +1,18 @@
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingCoatMoonman
+  name: LEATHER COAT
+  description: good thing.
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Uniform/moonman.rsi
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Uniform/moonman.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.80
+        Slash: 0.90
+        Piercing: 0.85
+        Heat: 0.95
+        Caustic: 0.90

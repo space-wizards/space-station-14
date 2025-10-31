@@ -1,12 +1,10 @@
 - type: gamePreset
   id: Secret
-  name: Counter Strike Round
+  name: Default Round
   showInVote: true
   description: secret-description
   rules:
   - BasicRoundstartVariation
-  - AutoRoundRestart
-  - AutoRoundEnding
 
 - type: gamePreset
   id: Sandbox
@@ -27,7 +25,7 @@
   name: death-match-title
   description: death-match-description
   maxPlayers: 15
-  showInVote: true
+  showInVote: false
   supportedMaps: DeathMatchMapPool
   rules:
     - DeathMatch31

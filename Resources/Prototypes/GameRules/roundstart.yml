@@ -245,13 +245,14 @@
       playerRatio: 20
       briefing:
         text: assassin-role-greeting
-        color: Crimson
         sound: "/Audio/Misc/holyshit.ogg"
       mindRoles:
       - MindRoleAssassin
+      startingGear: AssassinGear
   - type: AntagObjectives
     objectives:
     - AssassinEliminateCargoObjective
+  - type: AssassinRule
   - type: DynamicRuleCost
     cost: 100
 

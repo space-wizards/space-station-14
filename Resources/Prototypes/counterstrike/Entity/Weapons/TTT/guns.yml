@@ -1,0 +1,24 @@
+- type: entity
+  name: NAGAN
+  parent: [BaseWeaponRevolver, BaseSecurityCommandContraband]
+  id: WeaponNagan
+  description: Oruzhie VOVI ADIDASA.
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Weapons/TTT/nagan.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Gun
+    fireRate: 1
+  - type: Clothing
+    sprite: Objects/counterstrike/Weapons/TTT/nagan.rsi
+  - type: Item
+    storedOffset: 0,-2
+  - type: RevolverAmmoProvider
+    capacity: 7
+    chambers: [ True, True, True, True, True, True, True ]
+    ammoSlots: [ null, null, null, null, null, null, null ]
+    whitelist:
+      tags:
+        - CartridgeMagnum

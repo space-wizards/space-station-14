@@ -1,0 +1,23 @@
+#JEFF THE KILLER
+
+- type: entity
+  name: Large Knife
+  parent: [ BaseSword, BaseMajorContraband ]
+  id: JeffKnife
+  description: A large, vicious looking blade.
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Weapons/TTT/jeffKnife.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 34
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/machete.rsi
+    shape:
+    - 0,0,0,2
+  - type: DisarmMalus

@@ -26,11 +26,12 @@
 - type: startingGear
   id: QuartermasterGear
   equipment:
+    eyes: ClothingEyesGlassesSecurity
     id: PassengerPDA
     ears: ClothingHeadsetService
     outerClothing: ClothingOuterVestWebMerc
-    pocket1: WeaponPistolFiveseven
-    pocket2: MagazinePistolHighCapacity
+    pocket1: WeaponNagan
+    pocket2: SpeedLoaderMagnum
     shoes: ClothingShoesColorBlack
 
 - type: chameleonOutfit

@@ -1,0 +1,14 @@
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: tttMoonmanBundle
+  name: Moonman Bundle
+  description: "MAC TONIGHT" #, and a pair of Thermal Imaging Goggles.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingCoatMoonman
+      - id: ClothingShoesBootsLaceup
+      - id: ClothingHandsGlovesLatex
+      - id: ClothingHeadHatMoonman
+      - id: WeaponShotgunNova
+      - id: BoxLethalshot

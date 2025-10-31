@@ -184,3 +184,63 @@
     steps: 1
     zeroVisible: true
   - type: Appearance
+
+- type: entity
+  name: MP9
+  parent: WeaponRifleM4
+  id: WeaponRifleMp9
+  description: mp9.
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Weapons/PrimaryCT/mp9.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Gun
+    fireRate: 8
+    minAngle: 3
+    maxAngle: 70
+    angleIncrease: 7
+    angleDecay: 13
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/counterstrike/guns/m4s.ogg
+  - type: GunWieldBonus
+    minAngle: -1
+    maxAngle: -1
+  - type: Clothing
+    sprite: Objects/counterstrike/Weapons/PrimaryCT/mp9.rsi
+
+- type: entity
+  name: UMP45
+  parent: WeaponRifleM4
+  id: WeaponRifleUmp
+  description: ump from csgo.
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Weapons/PrimaryCT/ump.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Gun
+    fireRate: 5
+    minAngle: 3
+    maxAngle: 50
+    angleIncrease: 8
+    angleDecay: 13
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/counterstrike/guns/aug.ogg
+  - type: GunWieldBonus
+    minAngle: -1
+    maxAngle: -1
+  - type: Clothing
+    sprite: Objects/counterstrike/Weapons/PrimaryCT/ump.rsi

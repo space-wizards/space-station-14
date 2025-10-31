@@ -145,3 +145,14 @@
   id: UplinkGrenadesCS
   name: Grenades CS
   priority: 3
+
+#TTT
+- type: storeCategory
+  id: tttLoud
+  name: Loud Game
+  priority: 1
+
+- type: storeCategory
+  id: tttStealth
+  name: Stealth Game
+  priority: 0

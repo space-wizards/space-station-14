@@ -67,3 +67,17 @@
     - Telecrystal
     balance:
       Telecrystal: 40
+
+- type: entity
+  id: StorePresetTTT
+  abstract: true
+  components:
+  - type: Store
+    name: Aliexpress
+    categories:
+    - tttStealth
+    - tttLoud
+    currencyWhitelist:
+    - Telecrystal
+    balance:
+      Telecrystal: 1

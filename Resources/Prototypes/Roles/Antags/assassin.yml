@@ -5,3 +5,9 @@
   setPreference: true
   objective: roles-antag-assassin-objective
   guides: [ Traitors ]
+  startingGear: AssassinGear
+
+- type: startingGear
+  id: AssassinGear
+  equipment:
+    pocket1: BaseUplinkRadioTTT

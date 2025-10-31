@@ -23,7 +23,7 @@
 - type: entity
   parent: ClothingHeadHelmetBase
   id: ClothingHeadHatBalaklava
-  name: Kufia
+  name: Balaklava
   description: "obormoti syka"
   components:
   - type: HideLayerClothing
@@ -33,3 +33,17 @@
     sprite: Objects/counterstrike/Clothing/Hats/balaklava.rsi
   - type: Clothing
     sprite: Objects/counterstrike/Clothing/Hats/balaklava.rsi
+
+- type: entity
+  parent: ClothingHeadHelmetBase
+  id: ClothingHeadHatMoonman
+  name: Munman Head
+  description: "kkk"
+  components:
+  - type: HideLayerClothing
+    layers:
+      Hair : HEAD
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Hats/moonman.rsi
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Hats/moonman.rsi
