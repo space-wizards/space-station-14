@@ -829,9 +829,9 @@ namespace Content.Shared.Cuffs
         public IReadOnlyList<EntityUid> GetAllCuffs(Entity<CuffableComponent?> entity)
         {
             if (!Resolve(entity, ref entity.Comp))
-                return Array.Empty<EntityUid>();
+                return [];
 
-            return entity.Comp.Container.ContainedEntities.Count == 0 ? Array.Empty<EntityUid>() : entity.Comp.Container.ContainedEntities;
+            return entity.Comp.Container.ContainedEntities;
         }
 
         /// <summary>
