@@ -28,11 +28,15 @@ public abstract partial class SharedInstrumentComponent : Component
     [DataField("respectMidiLimits"), ViewVariables(VVAccess.ReadWrite)]
     public bool RespectMidiLimits { get; set; } = true;
 
+    [DataField("minVolume"), ViewVariables(VVAccess.ReadWrite)]
+    public byte MinVolume { get; set; } = 0;
+
     [ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? Master { get; set; } = null;
 
     [ViewVariables]
     public BitArray FilteredChannels { get; set; } = new(RobustMidiEvent.MaxChannels, true);
+
 }
 
 /// <summary>
@@ -63,6 +67,8 @@ public sealed class InstrumentComponentState : ComponentState
     public bool RespectMidiLimits;
 
     public NetEntity? Master;
+
+    public byte MinVolume;
 
     public BitArray FilteredChannels = default!;
 }
