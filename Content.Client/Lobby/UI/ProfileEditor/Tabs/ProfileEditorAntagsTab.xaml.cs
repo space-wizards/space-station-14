@@ -28,7 +28,7 @@ public sealed partial class ProfileEditorAntagsTab : BoxContainer
     private HumanoidCharacterProfile? _profile;
 
     private const int YesOption = 0;
-    private const int NoOption = 0;
+    private const int NoOption = 1;
 
     public ProfileEditorAntagsTab()
     {
