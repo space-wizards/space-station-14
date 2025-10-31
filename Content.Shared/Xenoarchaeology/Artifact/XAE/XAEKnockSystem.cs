@@ -14,9 +14,6 @@ public sealed class XAEKnockSystem : BaseXAESystem<XAEKnockComponent>
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEKnockComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
         var ev = new KnockSpellEvent
         {
             Performer = ent.Owner,
