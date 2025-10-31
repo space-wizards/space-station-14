@@ -386,16 +386,16 @@ namespace Content.Server.GameTicking
 #endif
 
                 readyPlayers.Add(session);
-                HumanoidCharacterProfile profile;
+                HumanoidCharacterProfile? profile;
                 if (_prefsManager.TryGetCachedPreferences(userId, out var preferences))
                 {
-                    profile = (HumanoidCharacterProfile)preferences.SelectedCharacter;
+                    profile = preferences.SelectedCharacter as HumanoidCharacterProfile;
                 }
                 else
                 {
                     profile = HumanoidCharacterProfile.Random();
                 }
-                readyPlayerProfiles.Add(userId, profile);
+                readyPlayerProfiles.Add(userId, profile!);
             }
 
             DebugTools.AssertEqual(readyPlayers.Count, ReadyPlayerCount());

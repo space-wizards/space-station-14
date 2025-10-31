@@ -157,7 +157,7 @@ namespace Content.Server.GameTicking
                     return;
             }
 
-            SpawnPlayer(player, character, station, jobId, lateJoin, silent);
+            SpawnPlayer(player, character!, station, jobId, lateJoin, silent);
         }
 
 
@@ -168,7 +168,7 @@ namespace Content.Server.GameTicking
                 return;
             var silent = false;
             var lateJoin = true;
-            HumanoidCharacterProfile character = GetPlayerProfile(player);
+            HumanoidCharacterProfile? character = GetPlayerProfile(player);
             EntityUid station;
             var stations = GetSpawnableStations();
             _robustRandom.Shuffle(stations);
@@ -184,7 +184,7 @@ namespace Content.Server.GameTicking
 
             DebugTools.AssertNotNull(data);
             var jobId = "Passenger";
-            var newMind = _mind.CreateMind(data!.UserId, character.Name);
+            var newMind = _mind.CreateMind(data!.UserId, character!.Name);
             _mind.SetUserId(newMind, data.UserId);
 
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
@@ -252,7 +252,7 @@ namespace Content.Server.GameTicking
                 return;
             var silent = false;
             var lateJoin = true;
-            HumanoidCharacterProfile character = GetPlayerProfile(player);
+            HumanoidCharacterProfile? character = GetPlayerProfile(player);
             EntityUid station;
             var stations = GetSpawnableStations();
             _robustRandom.Shuffle(stations);
@@ -273,7 +273,7 @@ namespace Content.Server.GameTicking
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
 
             _playTimeTrackings.PlayerRolesChanged(player);
-            var saveFilePath = new ResPath($"{data!.UserId}]{character.Name}");
+            var saveFilePath = new ResPath($"{data!.UserId}]{character!.Name}");
             _loader.TryLoadEntity(saveFilePath, out var mobMaybe);
             DebugTools.AssertNotNull(mobMaybe);
             Entity<TransformComponent> EC = (Entity<TransformComponent>)mobMaybe!;
@@ -615,7 +615,7 @@ namespace Content.Server.GameTicking
             Entity<MindComponent?>? mind = player.GetMind();
             if (mind == null)
             {
-                var name = GetPlayerProfile(player).Name;
+                var name = GetPlayerProfile(player)!.Name;
                 var (mindId, mindComp) = _mind.CreateMind(player.UserId, name);
                 mind = (mindId, mindComp);
                 _mind.SetUserId(mind.Value, player.UserId);
