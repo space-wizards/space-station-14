@@ -140,8 +140,8 @@ public sealed class SatiationPrototype : IPrototype, IInheritingPrototype
 /// <see cref="SatiationPrototype"/> to resolve its integer value before use.
 /// </summary>
 /// <seealso cref="SatiationPrototype.GetValueOrNull"/>
-[ImplicitDataRecord, Serializable, NetSerializable]
-public record SatiationValue
+[Serializable, NetSerializable]
+public abstract record SatiationValue
 {
     [Serializable, NetSerializable]
     public sealed record SatiationValueByValue(
