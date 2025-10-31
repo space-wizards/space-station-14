@@ -26,7 +26,7 @@
     canUnstick: false
     blacklist: # can't stick it to movable things, even if they are in the target area
       components:
-      - Anchorable
+      - Animatable
       - Item
       - MobState
   - type: Explosive # Powerful explosion in a large radius. Will break underplating.
