@@ -1,5 +1,5 @@
 using Content.Server.Destructible;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.GhostTypes;
 using Content.Shared.Gibbing.Events;
 using Content.Shared.Mind;
