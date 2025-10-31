@@ -96,7 +96,7 @@ public sealed partial class GasTankComponent : Component, IGasMixtureHolder
     /// <summary>
     ///     Current internal pressure of the tank in kPa. Replicated to clients for UI purposes.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float InternalPressure;
 
     [DataField]

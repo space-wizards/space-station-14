@@ -165,6 +165,7 @@
     delay: 1
   - type: LimitedCharges
     maxCharges: 3
+  - type: ChargeItemStatus
   - type: AutoRecharge
     rechargeDuration: 30
   - type: MeleeWeapon

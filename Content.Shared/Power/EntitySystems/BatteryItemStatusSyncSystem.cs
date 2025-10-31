@@ -1,19 +1,14 @@
-using Content.Server.Weapons.Ranged.Components;
-using Content.Server.PowerCell;
 using Content.Shared.Power.Components;
 using Content.Shared.PowerCell.Components;
-using Content.Shared.Power;
 using Content.Shared.Item;
 
-namespace Content.Server.Power.EntitySystems;
+namespace Content.Shared.Power.EntitySystems;
 
 /// <summary>
 /// Keeps <see cref="BatteryItemStatusComponent"/> on items with batteries up to date for item status UI.
 /// </summary>
 public sealed class BatteryItemStatusSyncSystem : EntitySystem
 {
-    [Dependency] private readonly PowerCellSystem _powerCell = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -52,12 +47,7 @@ public sealed class BatteryItemStatusSyncSystem : EntitySystem
     /// </summary>
     private void UpdateStatus(EntityUid uid)
     {
-        // Do not add battery status to guns that already show an ammo counter.
-        if (HasComp<AmmoCounterComponent>(uid))
-            return;
-
-        var hasBattery = TryGetDirectBatteryCharge(uid, out var current, out var max) ||
-            TryGetSlottedBatteryCharge(uid, out current, out max);
+        var hasBattery = TryGetDirectBatteryCharge(uid, out var current, out var max);
 
         // If there is no battery at all, remove the status component.
         if (!hasBattery)
@@ -87,24 +77,6 @@ public sealed class BatteryItemStatusSyncSystem : EntitySystem
 
         var get = new GetChargeEvent();
         RaiseLocalEvent(uid, ref get);
-        current = get.CurrentCharge;
-        max = get.MaxCharge;
-        return true;
-    }
-
-    private bool TryGetSlottedBatteryCharge(EntityUid uid, out float current, out float max)
-    {
-        current = 0f;
-        max = 0f;
-
-        if (!TryComp<PowerCellSlotComponent>(uid, out var slot))
-            return false;
-
-        if (!_powerCell.TryGetBatteryFromSlot(uid, out var batteryEnt, out _, slot) || batteryEnt == null)
-            return false;
-
-        var get = new GetChargeEvent();
-        RaiseLocalEvent(batteryEnt.Value, ref get);
         current = get.CurrentCharge;
         max = get.MaxCharge;
         return true;

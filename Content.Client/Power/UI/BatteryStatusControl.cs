@@ -1,4 +1,5 @@
 using Content.Shared.Power.Components;
+using Content.Client.Weapons.Ranged.Components;
 using Content.Client.Items.UI;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
@@ -30,6 +31,10 @@ public sealed class BatteryStatusControl : PollingItemStatusControl<BatteryStatu
 
     protected override Data PollData()
     {
+        // Do not add battery status to guns that already show an ammo counter.
+        if (_entityManager.TryGetComponent(_parent.Owner, out AmmoCounterComponent? _))
+            return default;
+
         var chargePercent = _parent.Comp.ChargePercent;
 
         bool? toggleState = null;
