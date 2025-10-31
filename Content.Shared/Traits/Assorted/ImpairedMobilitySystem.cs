@@ -8,6 +8,7 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Stunnable;
 using Content.Shared.Examine;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
