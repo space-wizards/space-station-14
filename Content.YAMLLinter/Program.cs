@@ -27,6 +27,15 @@ namespace Content.YAMLLinter
 
             if (arguments.Save)
             {
+                try
+                {
+                    Console.WriteLine($"Saving prototypes in path {new ResPath(arguments.SavePath).CanonPath}...");
+                }
+                catch (NullReferenceException)
+                {
+                    Console.WriteLine($"Unknown file path provided for argument -path.");
+                    return -1;
+                }
                 var server = pair.Server;
                 var protoMan = server.ResolveDependency<IPrototypeManager>();
                 protoMan.SaveEntityPrototypes(new(arguments.SavePath), out _, arguments.SaveIncludeAbstract, true);
@@ -36,6 +45,25 @@ namespace Content.YAMLLinter
 
             else if (arguments.Diff)
             {
+                try
+                {
+                    Console.WriteLine($"Creating a new diff from {new ResPath(arguments.DiffPathBefore).CanonPath}.");
+                }
+                catch (NullReferenceException)
+                {
+                    Console.WriteLine($"Unknown file path provided for argument -before.");
+                    return -1;
+                }
+                try
+                {
+                    Console.WriteLine($"Saving prototypes in path {new ResPath(arguments.SavePath).CanonPath}...");
+                }
+                catch (NullReferenceException)
+                {
+                    Console.WriteLine($"Unknown file path provided for argument -path.");
+                    return -1;
+                }
+
                 var server = pair.Server;
                 var protoMan = server.ResolveDependency<IPrototypeManager>();
                 protoMan.SaveEntityPrototypes(new(arguments.SavePath), out var after, true, false);
