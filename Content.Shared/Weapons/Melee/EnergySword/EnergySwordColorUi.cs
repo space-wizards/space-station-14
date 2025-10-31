@@ -17,9 +17,11 @@ public enum EnergySwordColorUiKey : byte
 public sealed class EnergySwordColorMessage : BoundUserInterfaceMessage
 {
     public readonly Color ChoosenColor;
+    public readonly bool RGB;
 
-    public EnergySwordColorMessage(Color color)
+    public EnergySwordColorMessage(Color color, bool rgb = false)
     {
         ChoosenColor = color;
+        RGB = rgb;
     }
 }

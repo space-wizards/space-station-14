@@ -78,7 +78,9 @@ public sealed class EnergySwordColorBoundUserInterface : BoundUserInterface
             _eswordSystem.ActivateRGB(entity);
         else
             _eswordSystem.ChangeColor(entity, color);
-        var button = new RadialMenuActionOption<Color>(PickColor, color)
+
+        Action<Color> fuctionToCall = hacked ? EnergySwordRGB : PickColor;
+        var button = new RadialMenuActionOption<Color>(fuctionToCall, color)
         {
             IconSpecifier = RadialMenuIconSpecifier.With(ent),
             //BackgroundColor = color.WithAlpha(140),
@@ -92,6 +94,12 @@ public sealed class EnergySwordColorBoundUserInterface : BoundUserInterface
     {
         SendPredictedMessage(new EnergySwordColorMessage(color));
 
+        Close();
+    }
+
+    private void EnergySwordRGB(Color color)
+    {
+        SendPredictedMessage(new EnergySwordColorMessage(color, rgb: true));
         Close();
     }
 

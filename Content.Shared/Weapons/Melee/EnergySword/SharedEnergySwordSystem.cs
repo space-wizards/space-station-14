@@ -28,11 +28,11 @@ public abstract class SharedEnergySwordSystem : EntitySystem
     // Used to pick a random color for the blade on map init.
     private void OnMapInit(Entity<EnergySwordComponent> entity, ref MapInitEvent args)
     {
-        //if (entity.Comp.ColorOptions.Count != 0)
-        //{
-        //    entity.Comp.ActivatedColor = _random.Pick(entity.Comp.ColorOptions);
-        //    Dirty(entity);
-        //}
+        if (entity.Comp.ColorOptions.Count != 0)
+        {
+            entity.Comp.ActivatedColor = _random.Pick(entity.Comp.ColorOptions);
+            Dirty(entity);
+        }
 
         if (!TryComp(entity, out AppearanceComponent? appearanceComponent))
             return;
@@ -53,30 +53,34 @@ public abstract class SharedEnergySwordSystem : EntitySystem
 
         OpenInterface(entity, args.User);
 
-        //entity.Comp.Hacked = !entity.Comp.Hacked;
 
-        //if (entity.Comp.Hacked)
-        //{
-        //    var rgb = EnsureComp<RgbLightControllerComponent>(entity);
-        //    _rgbSystem.SetCycleRate(entity, entity.Comp.CycleRate, rgb);
-        //}
-        //else
-        //    RemComp<RgbLightControllerComponent>(entity);
 
         Dirty(entity);
     }
 
     private void OnPickedColor(Entity<EnergySwordComponent> ent, ref EnergySwordColorMessage args)
     {
-        //Is the color in the authorized colors ?
-        if (ent.Comp.ColorOptions.Contains(args.ChoosenColor))
+
+        //Is the color in the authorized colors or is it rgb?
+        if (ent.Comp.ColorOptions.Contains(args.ChoosenColor) || args.RGB)
         {
             if (!TryComp(ent, out AppearanceComponent? appearanceComponent))
                 return;
+            if (args.RGB)
+            {
+                ent.Comp.Hacked = true;
+                var rgb = EnsureComp<RgbLightControllerComponent>(ent);
+                _rgbSystem.SetCycleRate(ent, ent.Comp.CycleRate, rgb);
+            }
+            else
+            {
+                ent.Comp.ActivatedColor = args.ChoosenColor;
+                ent.Comp.Hacked = false;
+                RemComp<RgbLightControllerComponent>(ent);
+                Dirty(ent);
+                _appearance.SetData(ent, ToggleableVisuals.Color, ent.Comp.ActivatedColor, appearanceComponent);
 
-            ent.Comp.ActivatedColor = args.ChoosenColor;
-            Dirty(ent);
-            _appearance.SetData(ent, ToggleableVisuals.Color, ent.Comp.ActivatedColor, appearanceComponent);
+            }
         }
     }
 
