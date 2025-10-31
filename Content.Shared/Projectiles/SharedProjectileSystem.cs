@@ -90,11 +90,10 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         EmbedAttach(embeddable, args.Target, args.Shooter, embeddable.Comp);
 
         // Raise a specific event for projectiles.
-        if (!TryComp<ProjectileComponent>(embeddable, out var projectile)
-            || !projectile.Weapon.HasValue)
+        if (!TryComp<ProjectileComponent>(embeddable, out var projectile))
             return;
 
-        var ev = new ProjectileEmbedEvent(projectile.Shooter, projectile.Weapon.Value, args.Target);
+        var ev = new ProjectileEmbedEvent(projectile.Shooter, projectile.Weapon, args.Target);
         RaiseLocalEvent(embeddable, ref ev);
     }
 
