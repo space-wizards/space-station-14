@@ -20,7 +20,6 @@ public sealed class XAEPortalSystem : BaseXAESystem<XAEPortalComponent>
     [Dependency] private readonly LinkedEntitySystem _link = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
 
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEPortalComponent> ent, ref XenoArtifactNodeActivatedEvent args)
