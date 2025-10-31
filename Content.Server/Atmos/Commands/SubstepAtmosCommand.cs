@@ -23,8 +23,7 @@ public sealed class SubstepAtmosCommand : LocalizedEntityCommands
         switch (args.Length)
         {
             case 0:
-                if (shell.Player is null ||
-                    !EntityManager.TryGetComponent<TransformComponent>(shell.Player.AttachedEntity,
+                if (!EntityManager.TryGetComponent<TransformComponent>(shell.Player?.AttachedEntity,
                         out var playerxform) ||
                     playerxform.GridUid == null)
                 {
