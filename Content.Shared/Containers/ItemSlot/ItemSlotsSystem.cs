@@ -395,7 +395,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (!Resolve(user, ref hands, false))
                 return false;
 
-            if (!_handsSystem.TryGetActiveItem((uid, hands), out var held))
+            if (!_handsSystem.TryGetActiveItem((user, hands), out var held))
                 return false;
 
             if (!CanInsert(uid, held.Value, user, slot))
@@ -573,7 +573,7 @@ namespace Content.Shared.Containers.ItemSlots
             item = slot.Item;
 
             // This handles user logic
-            if (user != null && item != null && !_actionBlockerSystem.CanPickup(user.Value, item.Value))
+            if (user != null && item != null && !_actionBlockerSystem.CanPickup(user.Value, item.Value, showPopup: true))
                 return false;
 
             Eject(uid, slot, item!.Value, user, excludeUserAudio);

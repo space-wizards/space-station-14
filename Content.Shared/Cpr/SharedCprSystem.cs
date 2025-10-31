@@ -1,5 +1,6 @@
 using Content.Shared.CCVar;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs;
@@ -124,7 +125,7 @@ public abstract partial class SharedCprSystem : EntitySystem
             ? cpr.Change
             : cpr.Change * ((CprManualEffectDuration - CprManualThreshold) / CprDoAfterDelay);
 
-        _damage.TryChangeDamage(ent, scaledDamage, interruptsDoAfters: false, damageable: damage, ignoreResistances: true);
+        _damage.TryChangeDamage((ent, damage), scaledDamage, interruptsDoAfters: false, ignoreResistances: true);
 
         // assist respiration of the target
         var assist = EnsureComp<AssistedRespirationComponent>(ent);
@@ -141,7 +142,7 @@ public abstract partial class SharedCprSystem : EntitySystem
         // burst of oxygen when not critical anymore
         if (thresholds.CurrentThresholdState != MobState.Critical)
         {
-            _damage.TryChangeDamage(ent, cpr.BonusHeal, interruptsDoAfters: false, damageable: damage, ignoreResistances: true);
+            _damage.TryChangeDamage((ent, damage), cpr.BonusHeal, interruptsDoAfters: false, ignoreResistances: true);
         }
 
         // set the cpr's latest caretaker and time
