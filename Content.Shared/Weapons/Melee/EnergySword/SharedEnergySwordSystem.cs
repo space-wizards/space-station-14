@@ -1,10 +1,8 @@
 using Content.Shared.Interaction;
-using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Light;
 using Content.Shared.Light.Components;
 using Content.Shared.Toggleable;
 using Content.Shared.Tools.Systems;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Weapons.Melee.EnergySword;

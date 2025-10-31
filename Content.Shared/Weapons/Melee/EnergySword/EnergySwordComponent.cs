@@ -10,7 +10,7 @@ public sealed partial class EnergySwordComponent : Component
     /// What color the blade will be when activated.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public Color ActivatedColor = Color.Tomato;
+    public Color ActivatedColor = Color.DodgerBlue;
 
     /// <summary>
     ///     A color option list for the random color picker.

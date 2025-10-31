@@ -1,18 +1,8 @@
 using Content.Client.UserInterface.Controls;
-using Content.Shared.Actions.Components;
 using Content.Shared.Weapons.Melee.EnergySword;
-using JetBrains.Annotations;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Content.Client.Weapons.Melee.UI;
 
@@ -65,7 +55,7 @@ public sealed class EnergySwordColorBoundUserInterface : BoundUserInterface
 
     private RadialMenuActionOption<Color> MakeAButton(Color color, bool hacked = false)
     {
-        EntProtoId<EnergySwordComponent> proto = new("EnergySword");
+        EntProtoId<EnergySwordComponent> proto = new("EnergySword"); //Hardcoded bad
         Entity<EnergySwordComponent?> ent = EntMan.Spawn(proto);
 
         //No comp ?
@@ -73,18 +63,18 @@ public sealed class EnergySwordColorBoundUserInterface : BoundUserInterface
 
 
         Entity<EnergySwordComponent> entity = (ent.Owner, ent.Comp);
+
+        //Toggle the esword ON so the blade is out
         _eswordSystem.ActivateSword(entity);
         if (hacked)
-            _eswordSystem.ActivateRGB(entity);
+            _eswordSystem.ActivateRGB(entity); //RGB when hacked
         else
             _eswordSystem.ChangeColor(entity, color);
 
         Action<Color> fuctionToCall = hacked ? EnergySwordRGB : PickColor;
         var button = new RadialMenuActionOption<Color>(fuctionToCall, color)
         {
-            IconSpecifier = RadialMenuIconSpecifier.With(ent),
-            //BackgroundColor = color.WithAlpha(140),
-            //HoverBackgroundColor = color.WithAlpha(140)
+            IconSpecifier = RadialMenuIconSpecifier.With(ent) //The esword sprite with color applied
         };
 
         return button;

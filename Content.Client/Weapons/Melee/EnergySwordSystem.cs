@@ -1,17 +1,10 @@
 using Content.Client.Light;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
-using Content.Shared.Light;
 using Content.Shared.Light.Components;
 using Content.Shared.Toggleable;
 using Content.Shared.Weapons.Melee.EnergySword;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Content.Client.Weapons.Melee;
 public sealed class EnergySwordSystem : SharedEnergySwordSystem
@@ -34,6 +27,11 @@ public sealed class EnergySwordSystem : SharedEnergySwordSystem
         }
     }
 
+    /// <summary>
+    /// Change the color of the energy sword blade.
+    /// </summary>
+    /// <param name="ent"></param>
+    /// <param name="color"></param>
     public void ChangeColor(Entity<EnergySwordComponent> ent, Color color)
     {
         if (!TryComp(ent, out AppearanceComponent? appearance))
@@ -43,6 +41,10 @@ public sealed class EnergySwordSystem : SharedEnergySwordSystem
         _appearance.SetData(ent, ToggleableVisuals.Color, ent.Comp.ActivatedColor, appearance);
     }
 
+    /// <summary>
+    /// Uses ItemToggle to turn the energy sword on (blade out).
+    /// </summary>
+    /// <param name="ent"></param>
     public void ActivateSword(Entity<EnergySwordComponent> ent)
     {
         if (!TryComp(ent, out ItemToggleComponent? toggle) || !TryComp(ent, out AppearanceComponent? appearance))
@@ -51,6 +53,10 @@ public sealed class EnergySwordSystem : SharedEnergySwordSystem
         _appearance.SetData(ent, ToggleableVisuals.Enabled, true, appearance);
     }
 
+    /// <summary>
+    /// Activate RGB cycling instead of a solid color.
+    /// </summary>
+    /// <param name="ent"></param>
     public void ActivateRGB(Entity<EnergySwordComponent> ent)
     {
         if (!TryComp(ent, out AppearanceComponent? appearance))
