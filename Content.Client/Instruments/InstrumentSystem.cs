@@ -38,6 +38,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         SubscribeNetworkEvent<InstrumentMidiEventEvent>(OnMidiEventRx);
         SubscribeNetworkEvent<InstrumentStartMidiEvent>(OnMidiStart);
         SubscribeNetworkEvent<InstrumentStopMidiEvent>(OnMidiStop);
+        SubscribeNetworkEvent<InstrumentSetMidiMinVolumeEvent>(OnSetMidiMinVolume);
 
         SubscribeLocalEvent<InstrumentComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<InstrumentComponent, ComponentHandleState>(OnHandleState);
@@ -102,6 +103,8 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         if (!TryComp(uid, out InstrumentComponent? instrument))
             return;
         instrument.MinVolume = volume;
+
+        RaiseNetworkEvent(new InstrumentSetMidiMinVolumeEvent(GetNetEntity(uid), volume));
     }
 
     public void SetFilteredChannel(EntityUid uid, int channel, bool value)
@@ -425,6 +428,16 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
     private void OnMidiStop(InstrumentStopMidiEvent ev)
     {
         EndRenderer(GetEntity(ev.Uid), true);
+    }
+
+    private void OnSetMidiMinVolume(InstrumentSetMidiMinVolumeEvent ev)
+    {
+        TryComp<InstrumentComponent>(GetEntity(ev.Uid), out var localComp);
+        if (localComp != null)
+        {
+            localComp.MinVolume = ev.MinVolume;
+            UpdateRenderer(GetEntity(ev.Uid), localComp);
+        }
     }
 
     public override void Update(float frameTime)
