@@ -5,7 +5,6 @@ namespace Content.YAMLLinter;
 
 public sealed class CommandLineArguments
 {
-    // TODO docs
     public bool Save { get; set; } = false;
     public string SavePath { get; set; } = "/Prototypes";
     public bool SaveIncludeAbstract { get; set; } = false;

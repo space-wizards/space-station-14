@@ -1,4 +1,5 @@
 using Content.IntegrationTests;
+using DiffPlex.Renderer;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization.Markdown.Validation;
@@ -7,6 +8,7 @@ using Robust.Shared.Utility;
 using Robust.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -67,7 +69,16 @@ namespace Content.YAMLLinter
                 var server = pair.Server;
                 var protoMan = server.ResolveDependency<IPrototypeManager>();
                 protoMan.SaveEntityPrototypes(new(arguments.SavePath), out var after, true, false);
-                protoMan.GenerateDiff(new(arguments.DiffPathBefore), after);
+
+                var before = File.ReadAllText(new ResPath(arguments.DiffPathBefore).ToRelativeSystemPath());
+                var diff = UnidiffRenderer.GenerateUnidiff(before, after);
+
+                // TODO: probably dont want to use streamwriter here.
+                // instead we should return our output so this can be used in other apps.
+                // maybe make this a bool?
+                using var writer = new StreamWriter("prototype-diff.yml", false);
+                writer.WriteLine(diff);
+
                 await pair.CleanReturnAsync();
                 Console.WriteLine($"Saved in {(int)stopwatch.Elapsed.TotalMilliseconds} ms.");
             }
