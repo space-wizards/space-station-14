@@ -1,4 +1,5 @@
 using Content.IntegrationTests;
+using Content.IntegrationTests.Pair;
 using DiffPlex.Renderer;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
@@ -29,56 +30,15 @@ namespace Content.YAMLLinter
 
             if (arguments.Save)
             {
-                try
-                {
-                    Console.WriteLine($"Saving prototypes in path {new ResPath(arguments.SavePath).CanonPath}...");
-                }
-                catch (NullReferenceException)
-                {
-                    Console.WriteLine($"Unknown file path provided for argument -path.");
+                if (!RunSave(arguments, pair))
                     return -1;
-                }
-                var server = pair.Server;
-                var protoMan = server.ResolveDependency<IPrototypeManager>();
-                protoMan.SaveEntityPrototypes(new(arguments.SavePath), out _, arguments.SaveIncludeAbstract, true);
                 await pair.CleanReturnAsync();
                 Console.WriteLine($"Saved in {(int)stopwatch.Elapsed.TotalMilliseconds} ms.");
             }
-
             else if (arguments.Diff)
             {
-                try
-                {
-                    Console.WriteLine($"Creating a new diff from {new ResPath(arguments.DiffPathBefore).CanonPath}.");
-                }
-                catch (NullReferenceException)
-                {
-                    Console.WriteLine($"Unknown file path provided for argument -before.");
+                if (!RunDiff(arguments, pair))
                     return -1;
-                }
-                try
-                {
-                    Console.WriteLine($"Saving prototypes in path {new ResPath(arguments.SavePath).CanonPath}...");
-                }
-                catch (NullReferenceException)
-                {
-                    Console.WriteLine($"Unknown file path provided for argument -path.");
-                    return -1;
-                }
-
-                var server = pair.Server;
-                var protoMan = server.ResolveDependency<IPrototypeManager>();
-                protoMan.SaveEntityPrototypes(new(arguments.SavePath), out var after, true, false);
-
-                var before = File.ReadAllText(new ResPath(arguments.DiffPathBefore).ToRelativeSystemPath());
-                var diff = UnidiffRenderer.GenerateUnidiff(before, after);
-
-                // TODO: probably dont want to use streamwriter here.
-                // instead we should return our output so this can be used in other apps.
-                // maybe make this a bool?
-                using var writer = new StreamWriter("prototype-diff.yml", false);
-                writer.WriteLine(diff);
-
                 await pair.CleanReturnAsync();
                 Console.WriteLine($"Saved in {(int)stopwatch.Elapsed.TotalMilliseconds} ms.");
             }
@@ -237,6 +197,60 @@ namespace Content.YAMLLinter
                 .ToList();
 
             return (yamlErrors, fieldErrors);
+        }
+
+        private static bool RunSave(CommandLineArguments arguments, TestPair pair)
+        {
+            try
+            {
+                Console.WriteLine($"Saving prototypes in path {new ResPath(arguments.SavePath).CanonPath}...");
+            }
+            catch (NullReferenceException)
+            {
+                Console.WriteLine($"Unknown file path provided for argument -path.");
+                return false;
+            }
+            var server = pair.Server;
+            var protoMan = server.ResolveDependency<IPrototypeManager>();
+            protoMan.SaveEntityPrototypes(new(arguments.SavePath), out _, arguments.SaveIncludeAbstract, true);
+            return true;
+        }
+
+        private static bool RunDiff(CommandLineArguments arguments, TestPair pair)
+        {
+            try
+            {
+                Console.WriteLine($"Creating a new diff from {new ResPath(arguments.DiffPathBefore).CanonPath}.");
+            }
+            catch (NullReferenceException)
+            {
+                Console.WriteLine($"Unknown file path provided for argument -before.");
+                return false;
+            }
+            try
+            {
+                Console.WriteLine($"Saving prototypes in path {new ResPath(arguments.SavePath).CanonPath}...");
+            }
+            catch (NullReferenceException)
+            {
+                Console.WriteLine($"Unknown file path provided for argument -path.");
+                return false;
+            }
+
+            var server = pair.Server;
+            var protoMan = server.ResolveDependency<IPrototypeManager>();
+            protoMan.SaveEntityPrototypes(new(arguments.SavePath), out var after, true, false);
+
+            var before = File.ReadAllText(new ResPath(arguments.DiffPathBefore).ToRelativeSystemPath());
+            var diff = UnidiffRenderer.GenerateUnidiff(before, after);
+
+            // TODO: probably dont want to use streamwriter here.
+            // instead we should return our output so this can be used in other apps.
+            // maybe make this a bool?
+            using var writer = new StreamWriter("prototype-diff.yml", false);
+            writer.WriteLine(diff);
+
+            return true;
         }
 
         private static async Task<(Assembly[] clientAssemblies, Assembly[] serverAssemblies)>
