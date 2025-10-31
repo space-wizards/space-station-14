@@ -1,6 +1,4 @@
 using Content.IntegrationTests;
-using DiffPlex.DiffBuilder;
-using DiffPlex.DiffBuilder.Model;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization.Markdown.Validation;
@@ -9,7 +7,6 @@ using Robust.Shared.Utility;
 using Robust.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -28,21 +25,21 @@ namespace Content.YAMLLinter
             stopwatch.Start();
             await using var pair = await PoolManager.GetServerClient();
 
-            if (arguments.Diff)
+            if (arguments.Save)
             {
                 var server = pair.Server;
                 var protoMan = server.ResolveDependency<IPrototypeManager>();
-                protoMan.SaveEntityPrototypes(new(arguments.DiffPath), arguments.DiffIncludeAbstract);
+                protoMan.SaveEntityPrototypes(new(arguments.SavePath), out _, arguments.SaveIncludeAbstract, true);
                 await pair.CleanReturnAsync();
                 Console.WriteLine($"Saved in {(int)stopwatch.Elapsed.TotalMilliseconds} ms.");
             }
 
-            else if (arguments.Diff2)
+            else if (arguments.Diff)
             {
-                // TODO get rid of like half this server shit i cbf figuring it out at 2am
                 var server = pair.Server;
                 var protoMan = server.ResolveDependency<IPrototypeManager>();
-                protoMan.GenerateDiff(new(arguments.Diff2PathBefore), new(arguments.Diff2PathAfter));
+                protoMan.SaveEntityPrototypes(new(arguments.SavePath), out var after, true, false);
+                protoMan.GenerateDiff(new(arguments.DiffPathBefore), after);
                 await pair.CleanReturnAsync();
                 Console.WriteLine($"Saved in {(int)stopwatch.Elapsed.TotalMilliseconds} ms.");
             }

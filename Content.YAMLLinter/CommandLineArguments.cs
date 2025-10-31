@@ -5,14 +5,13 @@ namespace Content.YAMLLinter;
 
 public sealed class CommandLineArguments
 {
-    public bool Diff { get; set; } = false;
-    public string DiffPath { get; set; } = "/Prototypes";
-    public bool DiffIncludeAbstract { get; set; } = false;
+    // TODO docs
+    public bool Save { get; set; } = false;
+    public string SavePath { get; set; } = "/Prototypes";
+    public bool SaveIncludeAbstract { get; set; } = false;
 
-    // TODO rename this shit
-    public bool Diff2 { get; set; } = false;
-    public string Diff2PathBefore { get; set; } = null;
-    public string Diff2PathAfter { get; set; } = null;
+    public bool Diff { get; set; } = false;
+    public string DiffPathBefore { get; set; } = null;
 
     public static bool TryParse(IReadOnlyList<string> args, [NotNullWhen(true)] out CommandLineArguments parsed)
     {
@@ -30,23 +29,20 @@ public sealed class CommandLineArguments
             var argument = enumerator.Current;
             switch (argument)
             {
-                case "--diff":
-                    if (!enumerator.MoveNext())
+                case "--save":
+                    if (enumerator.MoveNext())
                     {
-                        Console.WriteLine("No file path provided!");
-                        parsed = null;
-                        return false;
+                        parsed.SavePath = enumerator.Current;
                     }
-                    parsed.Diff = true;
-                    parsed.DiffPath = enumerator.Current;
+                    parsed.Save = true;
                     // optionally include abstract protos
                     if (enumerator.MoveNext() && enumerator.Current == "true")
                     {
-                        parsed.DiffIncludeAbstract = true; // probably a cleaner way to do this but idgaf!
+                        parsed.SaveIncludeAbstract = true; // probably a cleaner way to do this but idgaf!
                     }
                     break;
 
-                case "--diff2":
+                case "--diff":
                     if (!enumerator.MoveNext())
                     {
                         Console.WriteLine("No file path provided for before state!");
@@ -55,12 +51,12 @@ public sealed class CommandLineArguments
                     }
                     if (!enumerator.MoveNext())
                     {
-                        Console.WriteLine("No file path provided for after state!");
+                        Console.WriteLine("No file path provided!");
                         parsed = null;
                         return false;
                     }
-                    parsed.Diff2PathAfter = enumerator.Current;
-                    parsed.Diff2 = true;
+                    parsed.SavePath = enumerator.Current;
+                    parsed.Diff = true;
                     break;
 
                 default:
