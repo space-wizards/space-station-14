@@ -306,3 +306,4 @@ Resources/MapImages
 
 # Direnv stuff
 .direnv/
+/Content.Client/Lobby/UI/HumanoidProfileEditor.xaml.cs

@@ -33,7 +33,7 @@ public sealed partial class CharacterPickerButton : ContainerButton
         IEntityManager entityManager,
         IPrototypeManager prototypeManager,
         ButtonGroup group,
-        ICharacterProfile profile,
+        ICharacterProfile? profile,
         bool isSelected)
     {
         RobustXamlLoader.Load(this);
@@ -41,27 +41,35 @@ public sealed partial class CharacterPickerButton : ContainerButton
         AddStyleClass(StyleClassButton);
         ToggleMode = true;
         Group = group;
-        var description = profile.Name;
-
-        if (profile is not HumanoidCharacterProfile humanoid)
+        var description = "Empty Slot";
+        if (profile != null)
         {
-            _previewDummy = entityManager.SpawnEntity(prototypeManager.Index<SpeciesPrototype>(SharedHumanoidAppearanceSystem.DefaultSpecies).DollPrototype, MapCoordinates.Nullspace);
+            description = profile.Name;
+
+            if (profile is not HumanoidCharacterProfile humanoid)
+            {
+                _previewDummy = entityManager.SpawnEntity(prototypeManager.Index<SpeciesPrototype>(SharedHumanoidAppearanceSystem.DefaultSpecies).DollPrototype, MapCoordinates.Nullspace);
+            }
+            else
+            {
+                _previewDummy = UserInterfaceManager.GetUIController<LobbyUIController>()
+                    .LoadProfileEntity(humanoid, null, true);
+
+                var highPriorityJob = humanoid.JobPriorities.SingleOrDefault(p => p.Value == JobPriority.High).Key;
+                if (highPriorityJob != default)
+                {
+                    var jobName = prototypeManager.Index(highPriorityJob).LocalizedName;
+                    description = $"{description}\n{jobName}";
+                }
+            }
         }
         else
         {
-            _previewDummy = UserInterfaceManager.GetUIController<LobbyUIController>()
-                .LoadProfileEntity(humanoid, null, true);
 
-            var highPriorityJob = humanoid.JobPriorities.SingleOrDefault(p => p.Value == JobPriority.High).Key;
-            if (highPriorityJob != default)
-            {
-                var jobName = prototypeManager.Index(highPriorityJob).LocalizedName;
-                description = $"{description}\n{jobName}";
-            }
         }
 
         Pressed = isSelected;
-        DeleteButton.Visible = !isSelected;
+        DeleteButton.Visible = !isSelected && profile != null;
 
         View.SetEntity(_previewDummy);
         DescriptionLabel.Text = description;

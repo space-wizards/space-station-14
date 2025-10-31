@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Client.Guidebook;
 using Content.Client.Humanoid;
 using Content.Client.Inventory;
@@ -15,6 +14,7 @@ using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Traits;
+using Robust.Client.Console;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
 using Robust.Client.State;
@@ -24,6 +24,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Client.Lobby;
 
@@ -42,7 +43,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     [UISystemDependency] private readonly ClientInventorySystem _inventory = default!;
     [UISystemDependency] private readonly StationSpawningSystem _spawn = default!;
     [UISystemDependency] private readonly GuidebookSystem _guide = default!;
-
+    [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
     private CharacterSetupGui? _characterSetup;
     private HumanoidProfileEditor? _profileEditor;
     private CharacterSetupGuiSavePanel? _savePanel;
@@ -213,7 +214,14 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
 
         _preferencesManager.UpdateCharacter(EditedProfile, EditedSlot.Value);
         ReloadCharacterSetup();
+        _consoleHost.ExecuteCommand($"joingamepersistent false");
     }
+
+    private void JoinProfile()
+    {
+        _consoleHost.ExecuteCommand($"joingamepersistent true");
+    }
+
 
     private void CloseProfileEditor()
     {
@@ -285,7 +293,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
             // Open the save panel if we have unsaved changes.
             if (_profileEditor.Profile != null && _profileEditor.IsDirty)
             {
-                OpenSavePanel();
+          //      OpenSavePanel();
 
                 return;
             }
@@ -295,7 +303,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         };
 
         _profileEditor.Save += SaveProfile;
-
+        _profileEditor.Join += JoinProfile;
         _characterSetup.SelectCharacter += args =>
         {
             _preferencesManager.SelectCharacter(args);

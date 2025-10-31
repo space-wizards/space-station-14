@@ -26,7 +26,7 @@ namespace Content.Client.Lobby.UI
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-        private readonly Button _createNewCharacterButton;
+        private readonly Button? _createNewCharacterButton;
 
         public event Action<int>? SelectCharacter;
         public event Action<int>? DeleteCharacter;
@@ -46,17 +46,17 @@ namespace Content.Client.Lobby.UI
 
             BackgroundPanel.PanelOverride = back;
 
-            _createNewCharacterButton = new Button
-            {
-                Text = Loc.GetString("character-setup-gui-create-new-character-button"),
-            };
+            //_createNewCharacterButton = new Button
+            //{
+            //    Text = Loc.GetString("character-setup-gui-create-new-character-button"),
+            //};
 
-            _createNewCharacterButton.OnPressed += args =>
-            {
-                _preferencesManager.CreateCharacter(HumanoidCharacterProfile.Random());
-                ReloadCharacterPickers();
-                args.Event.Handle();
-            };
+            //_createNewCharacterButton.OnPressed += args =>
+            //{
+            //    _preferencesManager.CreateCharacter(HumanoidCharacterProfile.Random());
+            //    ReloadCharacterPickers();
+            //    args.Event.Handle();
+            //};
 
             CharEditor.AddChild(profileEditor);
             RulesButton.OnPressed += _ => new RulesAndInfoWindow().Open();
@@ -71,7 +71,7 @@ namespace Content.Client.Lobby.UI
         /// </summary>
         public void ReloadCharacterPickers()
         {
-            _createNewCharacterButton.Orphan();
+            //   _createNewCharacterButton.Orphan();
             Characters.RemoveAllChildren();
 
             var numberOfFullSlots = 0;
@@ -82,23 +82,21 @@ namespace Content.Client.Lobby.UI
                 return;
             }
 
-            _createNewCharacterButton.ToolTip =
-                Loc.GetString("character-setup-gui-create-new-character-button-tooltip",
-                    ("maxCharacters", _preferencesManager.Settings!.MaxCharacterSlots));
+            //_createNewCharacterButton.ToolTip =
+            //    Loc.GetString("character-setup-gui-create-new-character-button-tooltip",
+            //        ("maxCharacters", _preferencesManager.Settings!.MaxCharacterSlots));
 
             var selectedSlot = _preferencesManager.Preferences?.SelectedCharacterIndex;
-
-            foreach (var (slot, character) in _preferencesManager.Preferences!.Characters)
+            for (int i = 0; i <= _preferencesManager.Settings!.MaxCharacterSlots; i++)
             {
-                numberOfFullSlots++;
+                _preferencesManager.Preferences!.Characters.TryGetValue(i, out ICharacterProfile? characterProfile);
                 var characterPickerButton = new CharacterPickerButton(_entManager,
                     _protomanager,
                     characterButtonsGroup,
-                    character,
-                    slot == selectedSlot);
-
+                    characterProfile,
+                    i == selectedSlot);
                 Characters.AddChild(characterPickerButton);
-
+                var slot = i;
                 characterPickerButton.OnPressed += args =>
                 {
                     SelectCharacter?.Invoke(slot);
@@ -108,10 +106,12 @@ namespace Content.Client.Lobby.UI
                 {
                     DeleteCharacter?.Invoke(slot);
                 };
+
             }
 
-            _createNewCharacterButton.Disabled = numberOfFullSlots >= _preferencesManager.Settings.MaxCharacterSlots;
-            Characters.AddChild(_createNewCharacterButton);
+
+            //     _createNewCharacterButton.Disabled = numberOfFullSlots >= _preferencesManager.Settings.MaxCharacterSlots;
+            //     Characters.AddChild(_createNewCharacterButton);
         }
     }
 }

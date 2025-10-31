@@ -2,6 +2,7 @@ using Content.Shared.Construction.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Serilog;
 
 namespace Content.Shared.Preferences
 {
@@ -41,8 +42,8 @@ namespace Content.Shared.Preferences
         /// <summary>
         ///     The currently selected character.
         /// </summary>
-        public ICharacterProfile SelectedCharacter => Characters[SelectedCharacterIndex];
-
+        public ICharacterProfile? SelectedCharacter => Characters.TryGetValue(SelectedCharacterIndex, out var Sel) ? Sel : null;
+        
         public Color AdminOOCColor { get; set; }
 
         /// <summary>
