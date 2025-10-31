@@ -93,7 +93,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         if (string.IsNullOrEmpty(humanoid.Initial)
             || !_proto.Resolve(humanoid.Initial, out HumanoidProfilePrototype? startingSet))
         {
-            LoadProfile(uid, HumanoidCharacterProfile.DefaultWithSpecies(humanoid.Species), humanoid);
+       //   LoadProfile(uid, HumanoidCharacterProfile.DefaultWithSpecies(humanoid.Species), humanoid);
             return;
         }
 
@@ -458,7 +458,6 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         {
             _grammarSystem.SetGender((uid, grammar), profile.Gender);
         }
-
         humanoid.Age = profile.Age;
 
         Dirty(uid, humanoid);
