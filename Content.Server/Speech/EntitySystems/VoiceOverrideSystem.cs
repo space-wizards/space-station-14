@@ -1,5 +1,6 @@
 using Content.Shared.Chat;
 using Content.Server.Speech.Components;
+using Content.Shared.Inventory;
 
 namespace Content.Server.Speech.EntitySystems;
 
@@ -8,7 +9,7 @@ public sealed partial class VoiceOverrideSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<VoiceOverrideComponent, TransformSpeakerNameEvent>(OnTransformSpeakerName);
+        Subs.SubscribeWithRelay<VoiceOverrideComponent, TransformSpeakerNameEvent>(OnTransformSpeakerName, held: false);
     }
 
     private void OnTransformSpeakerName(Entity<VoiceOverrideComponent> entity, ref TransformSpeakerNameEvent args)
