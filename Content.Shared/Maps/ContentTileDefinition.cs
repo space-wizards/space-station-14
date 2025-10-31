@@ -34,7 +34,8 @@ namespace Content.Shared.Maps
         public string Name { get; private set; } = "";
         [DataField("sprite")] public ResPath? Sprite { get; private set; }
 
-        [DataField("edgeSprites")] public Dictionary<Direction, ResPath> EdgeSprites { get; private set; } = new();
+        [DataField] public Dictionary<Direction, ResPath> EdgeSprites { get; private set; } = new();
+        [DataField] public Dictionary<Direction, ResPath> EdgeSpaceSprites { get; private set; } = new();
 
         [DataField("edgeSpritePriority")] public int EdgeSpritePriority { get; private set; } = 0;
 
