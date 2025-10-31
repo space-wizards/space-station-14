@@ -1,6 +1,9 @@
+using Content.Shared.Item.ItemToggle;
+using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Toggleable;
 using Content.Shared.Weapons.Melee.EnergySword;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +15,7 @@ public sealed class EnergySwordSystem : SharedEnergySwordSystem
 {
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly ItemToggleSystem _toggle = default!;
 
     public override void Initialize()
     {
@@ -26,13 +30,20 @@ public sealed class EnergySwordSystem : SharedEnergySwordSystem
         }
     }
 
-    public void ChangeColorByClient(Entity<EnergySwordComponent> ent, Color color)
+    public void ChangeColor(Entity<EnergySwordComponent> ent, Color color)
     {
         if (!TryComp(ent, out AppearanceComponent? appearanceComponent))
             return;
 
         ent.Comp.ActivatedColor = color;
-        Dirty(ent);
         _appearance.SetData(ent, ToggleableVisuals.Color, ent.Comp.ActivatedColor, appearanceComponent);
+    }
+
+    public void ActivateSword(Entity<EnergySwordComponent> ent)
+    {
+        if (!TryComp(ent, out ItemToggleComponent? toggle))
+            return;
+
+        _toggle.TryActivate((ent.Owner, toggle), null, false);
     }
 }

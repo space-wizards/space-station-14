@@ -71,30 +71,16 @@ public abstract class SharedEnergySwordSystem : EntitySystem
         //Is the color in the authorized colors ?
         if (ent.Comp.ColorOptions.Contains(args.ChoosenColor))
         {
-            ChangeColor(ent, args.ChoosenColor);
+            if (!TryComp(ent, out AppearanceComponent? appearanceComponent))
+                return;
+
+            ent.Comp.ActivatedColor = args.ChoosenColor;
+            Dirty(ent);
+            _appearance.SetData(ent, ToggleableVisuals.Color, ent.Comp.ActivatedColor, appearanceComponent);
         }
     }
 
     protected virtual void OpenInterface(Entity<EnergySwordComponent> ent, EntityUid actor)
     {
-    }
-
-    public void ActivateSword(Entity<EnergySwordComponent> ent)
-    {
-        if (!TryComp(ent, out ItemToggleComponent? toggle))
-            return;
-
-        toggle.Activated = true;
-        Dirty(ent);
-    }
-
-    public void ChangeColor(Entity<EnergySwordComponent> ent, Color color)
-    {
-        if (!TryComp(ent, out AppearanceComponent? appearanceComponent))
-            return;
-
-        ent.Comp.ActivatedColor = color;
-        Dirty(ent);
-        _appearance.SetData(ent, ToggleableVisuals.Color, ent.Comp.ActivatedColor, appearanceComponent);
     }
 }

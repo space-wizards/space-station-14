@@ -53,7 +53,7 @@ public sealed class EnergySwordColorBoundUserInterface : BoundUserInterface
         List<RadialMenuOptionBase> list = new();
         foreach (var color in esword.ColorOptions)
         {
-            EntProtoId<EnergySwordComponent> proto = new("BUIEnergySword");
+            EntProtoId<EnergySwordComponent> proto = new("EnergySword");
             Entity<EnergySwordComponent?> ent = EntMan.Spawn(proto);
 
             //No comp ?
@@ -62,11 +62,10 @@ public sealed class EnergySwordColorBoundUserInterface : BoundUserInterface
 
             Entity<EnergySwordComponent> entity = (ent.Owner, ent.Comp);
             //_eswordSystem.ActivateSword(entity);
-            _eswordSystem.ChangeColorByClient(entity, color);
+            _eswordSystem.ChangeColor(entity, color);
             var button = new RadialMenuActionOption<Color>(PickColor, color)
             {
                 IconSpecifier = RadialMenuIconSpecifier.With(ent),
-                //ToolTip = color.Name(),
                 BackgroundColor = color.WithAlpha(140),
                 HoverBackgroundColor = color.WithAlpha(140)
             };

@@ -5,6 +5,7 @@
   components:
   - type: EnergySword
   - type: ItemToggle
+    activated: true
     soundActivate:
       path: /Audio/Weapons/ebladeon.ogg
     soundDeactivate:
@@ -96,16 +97,6 @@
     interfaces:
       enum.EnergySwordColorUiKey.Key:
         type: EnergySwordColorBoundUserInterface
-
-- type: entity
-  name: BUI esword
-  parent: EnergySword
-  id: BUIEnergySword
-  components:
-  - type: ItemToggle
-    activated: true
-  
-
 
 - type: entity
   name: energy dagger
