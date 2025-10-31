@@ -26,6 +26,12 @@
             <Slider Name="PlaybackSlider" HorizontalExpand="True" />
             <Control HorizontalExpand="True" SizeFlagsStretchRatio="0.125" />
         </BoxContainer>
+        <Label HorizontalExpand="True" Name="MidiMinVolumeLabel" Text="{Loc 'instruments-component-menu-midi-min-volume-slider-label'}" />
+        <BoxContainer Orientation="Horizontal" VerticalExpand="True">
+            <Control HorizontalExpand="True" SizeFlagsStretchRatio="0.125" />
+            <Slider Name="MidiMinVolumeSlider" HorizontalExpand="True" MinValue="0" MaxValue="127" />
+            <Control HorizontalExpand="True" SizeFlagsStretchRatio="0.125" />
+        </BoxContainer>
     </BoxContainer>
     <PanelContainer Name="UnavailableOverlay" Visible="False" MouseFilter="Stop">
         <PanelContainer.PanelOverride>
