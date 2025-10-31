@@ -53,33 +53,39 @@ public sealed class EnergySwordColorBoundUserInterface : BoundUserInterface
         List<RadialMenuOptionBase> list = new();
         foreach (var color in esword.ColorOptions)
         {
-            EntProtoId<EnergySwordComponent> proto = new("EnergySword");
-            Entity<EnergySwordComponent?> ent = EntMan.Spawn(proto);
-
-            //No comp ?
-            ent.Comp ??= EntMan.EnsureComponent<EnergySwordComponent>(ent);
-
-
-            Entity<EnergySwordComponent> entity = (ent.Owner, ent.Comp);
-            //_eswordSystem.ActivateSword(entity);
-            _eswordSystem.ChangeColor(entity, color);
-            var button = new RadialMenuActionOption<Color>(PickColor, color)
-            {
-                IconSpecifier = RadialMenuIconSpecifier.With(ent),
-                BackgroundColor = color.WithAlpha(140),
-                HoverBackgroundColor = color.WithAlpha(140)
-            };
+            var button = MakeAButton(color);
             list.Add(button);
         }
 
-        //Add rgb option
-        list.Add(new RadialMenuActionOption<Color>(PickColor, Color.White)
-        {
-            IconSpecifier = RadialMenuIconSpecifier.With(Owner),
-            BackgroundColor = Color.White.WithAlpha(140),
-            HoverBackgroundColor = Color.White.WithAlpha(140)
-        });
+        var hackedButton = MakeAButton(Color.White, hacked: true);
+        list.Add(hackedButton);
+
         _radialMenu.SetButtons(list);
+    }
+
+    private RadialMenuActionOption<Color> MakeAButton(Color color, bool hacked = false)
+    {
+        EntProtoId<EnergySwordComponent> proto = new("EnergySword");
+        Entity<EnergySwordComponent?> ent = EntMan.Spawn(proto);
+
+        //No comp ?
+        ent.Comp ??= EntMan.EnsureComponent<EnergySwordComponent>(ent);
+
+
+        Entity<EnergySwordComponent> entity = (ent.Owner, ent.Comp);
+        _eswordSystem.ActivateSword(entity);
+        if (hacked)
+            _eswordSystem.ActivateRGB(entity);
+        else
+            _eswordSystem.ChangeColor(entity, color);
+        var button = new RadialMenuActionOption<Color>(PickColor, color)
+        {
+            IconSpecifier = RadialMenuIconSpecifier.With(ent),
+            //BackgroundColor = color.WithAlpha(140),
+            //HoverBackgroundColor = color.WithAlpha(140)
+        };
+
+        return button;
     }
 
     private void PickColor(Color color)
@@ -88,4 +94,5 @@ public sealed class EnergySwordColorBoundUserInterface : BoundUserInterface
 
         Close();
     }
+
 }
