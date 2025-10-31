@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Construction.Components
 {
-    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+    [RegisterComponent, Access(typeof(AnchorableSystem)), NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class AnchorableComponent : Component
     {
         [DataField]

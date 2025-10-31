@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Examine;
 using Content.Shared.Construction.Components;
@@ -360,6 +361,23 @@ public sealed partial class AnchorableSystem : EntitySystem
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// Try to get the <see cref="AnchorableFlags"/> belonging to an entity.
+    /// </summary>
+    /// <param name="entity">The entity to check for.</param>
+    /// <param name="flags">The flags the entity has, if any. Returns null if the component couldn't be resolved.</param>
+    /// <returns>Returns true if the component could be resolved.</returns>
+    public bool TryGetAnchorableFlags(Entity<AnchorableComponent?> entity, [NotNullWhen(true)] out AnchorableFlags? flags)
+    {
+        flags = null;
+
+        if (!Resolve(entity.Owner, ref entity.Comp))
+            return false;
+
+        flags = entity.Comp.Flags;
+        return true;
     }
 
     [Serializable, NetSerializable]
