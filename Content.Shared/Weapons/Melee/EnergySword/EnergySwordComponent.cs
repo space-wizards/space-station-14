@@ -2,7 +2,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Weapons.Melee.EnergySword;
 
-[RegisterComponent, NetworkedComponent, Access(typeof(EnergySwordSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedEnergySwordSystem))]
 [AutoGenerateComponentState]
 public sealed partial class EnergySwordComponent : Component
 {
@@ -10,7 +10,7 @@ public sealed partial class EnergySwordComponent : Component
     /// What color the blade will be when activated.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public Color ActivatedColor = Color.DodgerBlue;
+    public Color ActivatedColor = Color.Tomato;
 
     /// <summary>
     ///     A color option list for the random color picker.

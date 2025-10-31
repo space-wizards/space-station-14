@@ -92,6 +92,20 @@
     sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
   - type: StaticPrice
     price: 2500
+  - type: UserInterface
+    interfaces:
+      enum.EnergySwordColorUiKey.Key:
+        type: EnergySwordColorBoundUserInterface
+
+- type: entity
+  name: BUI esword
+  parent: EnergySword
+  id: BUIEnergySword
+  components:
+  - type: ItemToggle
+    activated: true
+  
+
 
 - type: entity
   name: energy dagger
