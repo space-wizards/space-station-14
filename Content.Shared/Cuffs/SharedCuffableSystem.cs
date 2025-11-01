@@ -62,7 +62,7 @@ namespace Content.Shared.Cuffs
             base.Initialize();
 
             SubscribeLocalEvent<CuffableComponent, HandCountChangedEvent>(OnHandCountChanged);
-            SubscribeLocalEvent<UncuffAttemptEvent>(OnUncuffAttempt);
+            SubscribeLocalEvent<CuffableComponent, UncuffAttemptEvent>(OnUncuffAttempt);
 
             SubscribeLocalEvent<CuffableComponent, EntRemovedFromContainerMessage>(OnCuffsRemovedFromContainer);
             SubscribeLocalEvent<CuffableComponent, EntInsertedIntoContainerMessage>(OnCuffsInsertedIntoContainer);
@@ -98,11 +98,12 @@ namespace Content.Shared.Cuffs
                 args.Cancelled = true;
         }
 
-        private void OnUncuffAttempt(ref UncuffAttemptEvent args)
+        private void OnUncuffAttempt(Entity<CuffableComponent> entity, ref UncuffAttemptEvent args)
         {
             if (args.Cancelled)
                 return;
 
+            // TODO: This should probably be deleted but I don't want my PR reverted if cuffable breaks AGAIN.
             if (!Exists(args.User) || Deleted(args.User))
             {
                 // Should this even be possible?
@@ -110,39 +111,27 @@ namespace Content.Shared.Cuffs
                 return;
             }
 
-            // If the user is the target, special logic applies.
-            // This is because the CanInteract blocking of the cuffs prevents self-uncuff.
-            if (args.User == args.Target)
+            // We temporarily allow interactions so the cuffable system does not block itself.
+            // It's assumed that this will always be false.
+            // Otherwise they would not be trying to uncuff themselves.
+            // TODO: This is gross but it used to dirty this temporary change before so it's less gross now!
+            if (!entity.Comp.CanStillInteract)
             {
-                if (!TryComp<CuffableComponent>(args.User, out var cuffable))
-                {
-                    DebugTools.Assert($"{args.User} tried to uncuff themselves but they are not cuffable.");
-                    return;
-                }
+                entity.Comp.CanStillInteract = true;
 
-                // We temporarily allow interactions so the cuffable system does not block itself.
-                // It's assumed that this will always be false.
-                // Otherwise they would not be trying to uncuff themselves.
-                cuffable.CanStillInteract = true;
-                Dirty(args.User, cuffable);
-
-                if (!_actionBlocker.CanInteract(args.User, args.User))
+                if (!_actionBlocker.CanInteract(args.User, entity.Owner))
                     args.Cancelled = true;
 
-                cuffable.CanStillInteract = false;
-                Dirty(args.User, cuffable);
+                entity.Comp.CanStillInteract = false;
             }
             else
             {
-                // Check if the user can interact.
-                if (!_actionBlocker.CanInteract(args.User, args.Target))
+                if (!_actionBlocker.CanInteract(args.User, entity.Owner))
                     args.Cancelled = true;
             }
 
             if (args.Cancelled)
-            {
-                _popup.PopupClient(Loc.GetString("cuffable-component-cannot-interact-message"), args.Target, args.User);
-            }
+                _popup.PopupClient(Loc.GetString("cuffable-component-cannot-interact-message"), entity.Owner, args.User);
         }
 
         private void OnStartup(EntityUid uid, CuffableComponent component, ComponentInit args)
@@ -173,6 +162,11 @@ namespace Content.Shared.Cuffs
 
         public void UpdateCuffState(EntityUid uid, CuffableComponent component)
         {
+            if (component.CuffedHandCount == 0)
+                _alerts.ClearAlert(uid, component.CuffedAlert);
+            else
+                _alerts.ShowAlert(uid, component.CuffedAlert);
+
             var canInteract = component.CuffedHandCount == 0 || TryComp(uid, out HandsComponent? hands) && hands.Hands.Count > component.CuffedHandCount;
 
             if (canInteract == component.CanStillInteract)
@@ -181,11 +175,6 @@ namespace Content.Shared.Cuffs
             component.CanStillInteract = canInteract;
             Dirty(uid, component);
             _actionBlocker.UpdateCanMove(uid);
-
-            if (component.CanStillInteract)
-                _alerts.ClearAlert(uid, component.CuffedAlert);
-            else
-                _alerts.ShowAlert(uid, component.CuffedAlert);
 
             var ev = new CuffedStateChangeEvent();
             RaiseLocalEvent(uid, ref ev);
@@ -407,23 +396,18 @@ namespace Content.Shared.Cuffs
             if (ent.Comp.Container == default!)
                 return;
 
-            var dirty = false;
             var handCount = CompOrNull<HandsComponent>(ent.Owner)?.Count ?? 0;
 
-            while (ent.Comp.CuffedHandCount > handCount && ent.Comp.CuffedHandCount > 0)
+            // This assumes that one pair of cuffs can cuff up to two hands and a minimum of 1 hand.
+            while (ent.Comp.CuffedHandCount > handCount + 1 && ent.Comp.CuffedHandCount > 0)
             {
-                dirty = true;
-
                 var handcuffContainer = ent.Comp.Container;
                 var handcuffEntity = handcuffContainer.ContainedEntities[^1];
 
                 _transform.PlaceNextTo(handcuffEntity, ent.Owner);
             }
 
-            if (dirty)
-            {
-                UpdateCuffState(ent.Owner, ent.Comp);
-            }
+            UpdateCuffState(ent.Owner, ent.Comp);
         }
 
         /// <summary>
@@ -612,8 +596,8 @@ namespace Content.Shared.Cuffs
             if (!target.Comp.Container.ContainedEntities.Contains(cuff))
                 Log.Warning("A user is trying to remove handcuffs that aren't in the owner's container. This should never happen!");
 
-            var attempt = new UncuffAttemptEvent(user, target);
-            RaiseLocalEvent(user, ref attempt, true);
+            var attempt = new UncuffAttemptEvent(user);
+            RaiseLocalEvent(target, ref attempt, true);
 
             if (attempt.Cancelled)
             {
@@ -697,8 +681,8 @@ namespace Content.Shared.Cuffs
 
             if (user != null)
             {
-                var attempt = new UncuffAttemptEvent(user.Value, target);
-                RaiseLocalEvent(user.Value, ref attempt);
+                var attempt = new UncuffAttemptEvent(user.Value);
+                RaiseLocalEvent(target, ref attempt);
                 if (attempt.Cancelled)
                     return;
             }
