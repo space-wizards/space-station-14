@@ -880,7 +880,8 @@
   id: Knife # MachineBoard construction: BiomassReclaimerMachineCircuitboard. Storage whitelist: ClothingShoesMilitaryBase, ClothingShoesClownBase
 
 - type: Tag
-  id: KnockdownImmune # Blacklisted by MobStandStatusEffectBase
+  id: KnockdownImmune # Tagged mob entity is immune to knockdown I'm guessing. (no implementations of MobStandStatusEffectBase).
+                      # Blacklist on MobStandStatusEffectBase.
 
 ## L ##
 
@@ -1039,7 +1040,7 @@
   id: NoConsoleSound # Blacklist on BaseComputer, StationMap. Tagged entity will not make sound when opening the UI.
 
 - type: Tag
-  id: NozzleBackTank # Storage whitelist: WeaponSprayNozzle
+  id: NozzleBackTank # Used by WeaponSprayNozzle to find a tagged entity for supplying ammo.
 
 - type: Tag
   id: Nugget # ItemCounter: FoodBoxNugget
@@ -1272,178 +1273,176 @@
 ## S ##
 
 - type: Tag
-  id: SaltShaker
+  id: SaltShaker # Storage whitelist: ClothingBeltChef. ItemMapper: ClothingBeltChef
+
+- type: Tag # Used on DungeonRoom prototypes.
+  id: SalvageExperiment # PrefabDunGen whitelist on Experiment DungeonConfig.
 
 - type: Tag
-  id: SalvageExperiment
+  id: SalvageScrap # CargoBounty: BountySalvageScrap
 
 - type: Tag
-  id: SalvageScrap
+  id: Scarf # CargoBounty: BountyWarmCloth
 
 - type: Tag
-  id: Scarf
-
-- type: Tag
-  id: Screwdriver
+  id: Screwdriver # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering
 
 - type: Tag # Flags items that scurrets can wear in their back and outerwear slots.
   id: ScurretWearable
 
 - type: Tag
-  id: SecBeltEquip
+  id: SecBeltEquip # Storage whitelist: ClothingBeltSecurity
 
 - type: Tag
-  id: SecurePlasmaWindoor
+  id: SecurePlasmaWindoor # Used in ConstructionGraph "Windoor" to navigate between Windoor, PlasmaWindoor, and UraniumWindoor airlocks.
 
 - type: Tag
-  id: SecureUraniumWindoor
+  id: SecureUraniumWindoor # Used in ConstructionGraph "Windoor" to navigate between Windoor, PlasmaWindoor, and UraniumWindoor airlocks.
 
 - type: Tag
-  id: SecureWindoor
+  id: SecureWindoor # Used in ConstructionGraph "Windoor" to navigate between Windoor, PlasmaWindoor, and UraniumWindoor airlocks.
 
 - type: Tag
-  id: SecurityHelmet
+  id: SecurityHelmet # ConstructionGraph: HelmetJustice
 
 - type: Tag
-  id: SecwayKeys
+  id: SecwayKeys # Unused x2
 
 - type: Tag
-  id: Sheet
+  id: Sheet # MaterialStorage whitelist for many machines and lathes. Storage whitelist: MaterialBag
 
 - type: Tag
-  id: ShellShotgun
+  id: ShellShotgun # Ammo: AmmoProviderShotgunShell, ClothingBeltBandolier, BaseMagazineShotgun, BaseWeaponShotgun, WeaponFlareGunSecurity
 
 - type: Tag
-  id: ShellShotgunLight # shotgun shells that are compatible with the flare gun.
+  id: ShellShotgunLight # Shotgun shells that are compatible with the flare gun. Subset of ShellShotgun.
 
 - type: Tag
-  id: Shiv
+  id: Shiv # CargoBounty: BountyShiv
 
 - type: Tag
-  id: Shovel
+  id: Sidearm # Storage whitelist: ClothingBeltSecurity, ClothingShoesMilitaryBase
 
 - type: Tag
-  id: Sidearm
-
-- type: Tag
-  id: SignalTrigger
+  id: SignalTrigger # ConstructionGraph: GlassBox
 
 - type: Tag
   id: SilentStorageUser # used in SharedStorageSystem, so the entity will do all silently
 
 - type: Tag
-  id: SiliconEmotes
+  id: SiliconEmotes # Whitelisted and blacklisted in various EmotePrototypes to create a silicon emote group.
 
 - type: Tag
-  id: SkeletonMotorcycleKeys
+  id: SkeletonMotorcycleKeys # Unused x2
 
 - type: Tag
   id: Skewer # Food sequence key
 
-- type: Tag
-  id: Slice # sliced fruit, vegetables, pizza etc.
+- type: Tag # sliced fruit, vegetables, pizza etc.
+  id: Slice # CargoBounty blacklist: BountyFruit, BountyVegetable, BountyBread, BountyPie
 
 - type: Tag
-  id: SlowImmune
+  id: SlowImmune # Tagged mob entity cannot gain the slowed status effect. Blacklist on StatusEffectSlowdown.
 
 - type: Tag
-  id: SmallAIChip
+  id: SmallAIChip # ConstructionGraph: PotatoAI
+
+- type: Tag # Used on mech equipment.
+  id: SmallMech # Equipment whitelist on MechHamtr
 
 - type: Tag
-  id: SmallMech
+  id: Smokable # Storage whitelist: BaseSmokingPipe (and children)
+
+- type: Tag # Used on DungeonRoom prototypes.
+  id: SnowyLabs # PrefabDunGen whitelist on SnowyLabs DungeonConfig.
 
 - type: Tag
-  id: Smokable
+  id: Soap # Storage whitelist: BorgModuleCustodial, ClothingBeltJanitor. CargoBounty: BountySoap
 
 - type: Tag
-  id: SnowyLabs
+  id: SolarTrackerElectronics # ConstructionGraph: SolarPanel
 
 - type: Tag
-  id: Soap
+  id: Soup # CargoBounty: BountySoup
 
 - type: Tag
-  id: SolarTrackerElectronics
+  id: Spear # CargoBounty: BountySpear
 
 - type: Tag
-  id: Soup
+  id: SpeedLoaderCap # Ammo: RevolverCapGun, RevolverCapGunFake
 
 - type: Tag
-  id: Spear
+  id: SpeedLoaderMagnum # Ammo: BaseWeaponRevolver, XenoArtifactGun
 
 - type: Tag
-  id: SpeedLoaderCap
+  id: SpeedLoaderPistol # Unused (Exists on BaseSpeedLoaderPistol)
 
 - type: Tag
-  id: SpeedLoaderMagnum
+  id: SpeedLoaderRifle # Unused (Exists on SpeedLoaderLightRifle)
 
 - type: Tag
-  id: SpeedLoaderPistol
+  id: SpiderCraft # Used on various ConstructionPrototypes to create exclusive recipes for tagged entity.
 
 - type: Tag
-  id: SpeedLoaderRifle
+  id: SpookyFog # Used by RulesPrototype SpookyFog inside AmbientMusicPrototype to play sounds when tagged entity is near the listener.
 
 - type: Tag
-  id: SpiderCraft
+  id: Spray # Storage whitelist: ClothingBeltJanitor, ClothingBeltMedical, JanitorialTrolley.
+            # ItemMapper: ClothingBeltJanitor, ClothingBeltMedical, JanitorialTrolley
 
 - type: Tag
-  id: SpookyFog
+  id: SprayNozzle # Storage whitelist: ClothingBackpackWaterTank. ItemMapper: ClothingBackpackWaterTank
 
 - type: Tag
-  id: Spray
+  id: SpreaderIgnore # Used by SpreaderSystem to block spreading in a direction when a tagged airtight entity is on the same tile.
 
 - type: Tag
-  id: SprayNozzle
+  id: StationAi # Storage whitelist: AiHolder
 
 - type: Tag
-  id: SpreaderIgnore
+  id: StationAiCoreElectronics # ConstructionGraph: StationAiCore
 
 - type: Tag
-  id: StationAi
+  id: StationMapElectronics # ConstructionGraph: StationMap
 
 - type: Tag
-  id: StationAiCoreElectronics
-
-- type: Tag
-  id: StationMapElectronics
-
-- type: Tag
-  id: Steak
+  id: Steak # CargoBounty: BountySteak
 
 - type: Tag
   id: StringInstrument # MachineBoard construction: DawInstrumentMachineCircuitboard
 
 - type: Tag
-  id: StunImmune
+  id: StunImmune # Tagged mob entity cannot gain the stunned status effect. Blacklist on StatusEffectStunned.
 
 - type: Tag
-  id: SubdermalImplant
+  id: SubdermalImplant # Storage whitelist: BaseImplanter
 
 - type: Tag
-  id: SuitEVA
+  id: SuitEVA # ConstructionGraph: ClownHardsuit, MimeHardsuit
 
 - type: Tag
-  id: Sunglasses
+  id: Sunglasses # ConstructionGraph: GlassesSecHUD
 
 - type: Tag
-  id: SurgeryTool
+  id: SurgeryTool # Storage whitelist: ClothingBeltMedical
 
 - type: Tag
-  id: SurveillanceCameraMonitorCircuitboard
+  id: SurveillanceCameraMonitorCircuitboard # ConstructionGraph: WallmountTelescreen
 
 - type: Tag
-  id: Syndicate
+  id: Syndicate # FTLDestination whitelist in nukieplanet.yml. Tag exists on ComputerShuttleSyndie and infiltrator.yml
 
 - type: Tag
-  id: SyndicateSegwayKeys
+  id: SyndicateSegwayKeys # Unused x2
 
 - type: Tag
-  id: Syringe
+  id: Syringe # Storage whitelist: ClothingBeltPlant, ChemBag, SmartFridge. CargoBounty: BountySyringe
 
 - type: Tag
-  id: SyringeGunAmmo
+  id: SyringeGunAmmo # Storage whitelist: LauncherSyringe
 
 - type: Tag
-  id: Spellbook
+  id: Spellbook # Storage whitelist: Bookshelf
 
 ## T ##
 
