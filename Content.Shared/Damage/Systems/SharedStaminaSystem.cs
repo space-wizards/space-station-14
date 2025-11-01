@@ -147,8 +147,8 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 
     private void OnMeleeHit(EntityUid uid, StaminaDamageOnHitComponent component, MeleeHitEvent args)
     {
-        if (!args.IsHit ||
-            !args.HitEntities.Any() ||
+        // TODO: This is probably not the event to do this with, as any other subscription that marks the event as handled will stop this if the event order is wrong.
+        if (!args.HitEntities.Any() ||
             component.Damage <= 0f)
         {
             return;
