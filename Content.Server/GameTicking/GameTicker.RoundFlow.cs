@@ -459,7 +459,7 @@ namespace Content.Server.GameTicking
                 return;
             }
             var skipinit = false;
-            if (_ent.TryGetComponent(_map.GetMap(DefaultMap), out MapComponent mc))
+            if (_ent.TryGetComponent(_map.GetMap(DefaultMap), out MapComponent? mc))
             {
                 if (mc.Initialized) skipinit = true;
             }
