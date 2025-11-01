@@ -14,7 +14,7 @@ namespace Content.Server.Gravity
         /// <summary>
         /// Is the gravity generator currently "producing" gravity?
         /// </summary>
-        [ViewVariables]
+        [DataField, ViewVariables]
         public bool GravityActive { get; set; } = false;
     }
 }

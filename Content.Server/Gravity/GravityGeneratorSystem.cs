@@ -16,6 +16,29 @@ public sealed class GravityGeneratorSystem : EntitySystem
         SubscribeLocalEvent<GravityGeneratorComponent, EntParentChangedMessage>(OnParentChanged);
         SubscribeLocalEvent<GravityGeneratorComponent, ChargedMachineActivatedEvent>(OnActivated);
         SubscribeLocalEvent<GravityGeneratorComponent, ChargedMachineDeactivatedEvent>(OnDeactivated);
+        SubscribeLocalEvent<GravityGeneratorComponent, ComponentInit>(OnComponentInit);
+    }
+    private void OnComponentInit(Entity<GravityGeneratorComponent> ent, ref ComponentInit args)
+    {
+        if (ent.Comp.GravityActive)
+        {
+            var xform = Transform(ent);
+
+            if (TryComp(xform.ParentUid, out GravityComponent? gravity))
+            {
+                _gravitySystem.EnableGravity(xform.ParentUid, gravity);
+            }
+        }
+        else
+        {
+            var xform = Transform(ent);
+
+            if (TryComp(xform.ParentUid, out GravityComponent? gravity))
+            {
+                _gravitySystem.RefreshGravity(xform.ParentUid, gravity);
+            }
+        }
+
     }
 
     public override void Update(float frameTime)
