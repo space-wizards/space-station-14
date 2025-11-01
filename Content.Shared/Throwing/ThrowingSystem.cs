@@ -301,8 +301,9 @@ public sealed class ThrowingSystem : EntitySystem
                 currentDir = _random.NextAngle().ToVec();
             }
 
-            var throwSpeed = _random.NextFloat() * maxThrowImpulse;
-            TryThrow(item, currentDir * throwSpeed, throwSpeed * 2.0f + 2.0f);
+            var throwSpeed = _random.NextFloat(0.4f, 1.0f) * maxThrowImpulse;
+            var airTimeVariance = _random.NextFloat(0.5f, 1.5f);
+            TryThrow(item, currentDir * throwSpeed, throwSpeed * airTimeVariance * 2.0f + 2.0f);
         }
     }
 }
