@@ -1,35 +1,4 @@
 ﻿Entries:
-- author: Kittygyat
-  changes:
-  - message: Monkeys & kobolds can now wear emergency EVA suits, with a fresh new
-      sprite to go along with it! You're welcome, Pun-Pun enthusiasts!
-    type: Tweak
-  id: 8670
-  time: '2025-06-13T18:54:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37660
-- author: Nox38
-  changes:
-  - message: The warden's dresser now contains their jumpsuits!
-    type: Add
-  id: 8671
-  time: '2025-06-14T08:59:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38283
-- author: Sparlight
-  changes:
-  - message: Corgium has been added.  Consuming too much polymorphs you into a smart
-      corgi.
-    type: Add
-  id: 8672
-  time: '2025-06-14T09:07:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37951
-- author: Sparlight
-  changes:
-  - message: A pet bag for smart corgis to wear and a construction option for them.  Not
-      actually wearable by normal pets at this time.
-    type: Add
-  id: 8673
-  time: '2025-06-14T16:09:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37440
 - author: Nikitosych
   changes:
   - message: Fixed the ability for holoparasite to kill the host through the mech
@@ -3923,3 +3892,32 @@
   id: 9171
   time: '2025-10-29T05:50:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40565
+- author: Hitlinemoss
+  changes:
+  - message: Antagonist flavor text has been adjusted.
+    type: Tweak
+  id: 9172
+  time: '2025-10-30T01:08:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41184
+- author: kontakt
+  changes:
+  - message: Wires will once again break randomly at roundstart.
+    type: Fix
+  id: 9173
+  time: '2025-10-30T02:30:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41191
+- author: SnappingOpossum
+  changes:
+  - message: Energy shotgun and energy magnum can now be used by pacifists in their
+      disabling modes.
+    type: Tweak
+  id: 9174
+  time: '2025-10-30T19:30:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41029
+- author: rumaks-xyz
+  changes:
+  - message: Changed the recipe for licoxide to require lithium instead of lead.
+    type: Tweak
+  id: 9175
+  time: '2025-10-30T20:04:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40991
