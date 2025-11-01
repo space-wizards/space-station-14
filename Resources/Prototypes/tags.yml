@@ -1214,59 +1214,60 @@
 ## R ##
 
 - type: Tag
-  id: Radio
+  id: Radio # Storage whitelist: BaseClothingBeltEngineering, ClothingBeltMedical, ClothingBeltSecurity.
+            # CargoBounty: BountyRadio. ConstructionGraph: HudMedSec
 
 - type: Tag
-  id: RawMaterial
+  id: RawMaterial # MaterialStorage whitelist for many machines and lathes. Storage whitelist: MaterialBag
 
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.
 - type: Tag
   id: Recyclable
 
 - type: Tag
-  id: ReinforcedGlassShard
+  id: ReinforcedGlassShard # ConstructionGraph: ReinforcedShiv, SpearReinforced
 
 - type: Tag
-  id: RemoteSignaller
+  id: RemoteSignaller # Storage whitelist: BaseClothingBeltEngineering
 
 - type: Tag
-  id: ReptilianFood
+  id: ReptilianFood # SpecialDigestible: OrganReptilianStomach
 
 - type: Tag
-  id: RifleStock
+  id: RifleStock # ConstructionGraph: ImprovisedShotgunGraph
 
 - type: Tag
-  id: Ring
+  id: Ring # CargoBounty: BountyRing
 
 - type: Tag
-  id: RipleyCentralControlModule
+  id: RipleyCentralControlModule # ConstructionGraph: Ripley
 
 - type: Tag
-  id: RipleyPeripheralsControlModule
+  id: RipleyPeripheralsControlModule # ConstructionGraph: Ripley
 
 - type: Tag
-  id: RipleyLArm
+  id: RipleyLArm # PartAssembly: RipleyHarness. ItemMapper: RipleyHarness
 
 - type: Tag
-  id: RipleyLLeg
+  id: RipleyLLeg # PartAssembly: RipleyHarness. ItemMapper: RipleyHarness
 
 - type: Tag
-  id: RipleyRArm
+  id: RipleyRArm # PartAssembly: RipleyHarness. ItemMapper: RipleyHarness
 
 - type: Tag
-  id: RipleyRLeg
+  id: RipleyRLeg # PartAssembly: RipleyHarness. ItemMapper: RipleyHarness
 
 - type: Tag
-  id: RodMetal1
+  id: RodMetal1 # Unused (Exists on PartRodMetal1, PartRodMetal10)
 
 - type: Tag
-  id: RollingPaper
+  id: RollingPaper # Storage whitelist: PackPaperRolling, PackPaperRollingFilters
 
 - type: Tag
-  id: RollingPin
+  id: RollingPin # Storage whitelist: ClothingBeltChef. ItemMapper: ClothingBeltChef
 
 - type: Tag
-  id: Ruminant
+  id: Ruminant # SpecialDigestible: OrganAnimalRuminantStomach
 
 ## S ##
 
