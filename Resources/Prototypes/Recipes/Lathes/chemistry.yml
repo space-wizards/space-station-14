@@ -77,7 +77,7 @@
   result: ChemistryEmptyBottle01
   completetime: 2
   materials:
-    Glass: 50
+    Glass: 100
 
 - type: latheRecipe
   id: Vape
@@ -103,7 +103,7 @@
   result: ChemistryEmptyVialSmall
   completetime: 2
   materials:
-    Glass: 50
+    Glass: 100
     Wood: 20
 
 - type: latheRecipe

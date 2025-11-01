@@ -1230,18 +1230,18 @@
 
 - type: entity
   parent: DrinkGlass
-  id: DrinkKiraSpecial
-  suffix: kira special
+  id: DrinkOrangeLimeSodaGlass
+  suffix: citrus bikeshed
   components:
   - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 30
         reagents:
-        - ReagentId: KiraSpecial
+        - ReagentId: OrangeLimeSoda
           Quantity: 30
   - type: Icon
-    sprite: Objects/Consumable/Drinks/kiraspecial.rsi
+    sprite: Objects/Consumable/Drinks/orangelime_soda.rsi
     state: icon
 
 - type: entity
