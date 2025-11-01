@@ -287,7 +287,6 @@ namespace Content.Server.GameTicking
                     _mind.WipeMind(mob);
                 }
             }
-            _sawmill.Info("MAKING NEW MIND");
             var newMind = _mind.CreateMind(data!.UserId, character.Name);
             _mind.SetUserId(newMind, data.UserId);
             _mind.TransferTo(newMind, mob);

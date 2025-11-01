@@ -237,7 +237,7 @@ public sealed class AdminSystem : EntitySystem
         LocId? subtype = null;
         if (_minds.TryGetMind(session, out var mindId, out var mindComp) && mindComp is not null)
         {
-            sortWeight = _role.GetRoleCompByTime(mindComp)?.Comp.SortWeight ?? 0;
+            sortWeight = 0; //_role.GetRoleCompByTime(mindComp)?.Comp.SortWeight ?? 0;
 
             if (_proto.TryIndex(mindComp.RoleType, out var role))
             {

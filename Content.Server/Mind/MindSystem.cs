@@ -273,11 +273,12 @@ public sealed class MindSystem : SharedMindSystem
     /// </summary>
     public override void SetUserId(EntityUid mindId, NetUserId? userId, MindComponent? mind = null)
     {
+        Log.Info($"SetUserId 1");
         if (!Resolve(mindId, ref mind))
             return;
-
-        if (mind.UserId == userId)
-            return;
+        Log.Info($"SetUserId 2");
+        //    if (mind.UserId == userId)
+        //       return;
 
         Dirty(mindId, mind);
 
@@ -286,7 +287,7 @@ public sealed class MindSystem : SharedMindSystem
             Log.Error($"Attempted to set mind user to invalid value {userId}");
             return;
         }
-
+        Log.Info($"SetUserId 3");
         // Clear any existing entity attachment
         if (_players.TryGetSessionById(mind.UserId, out var oldSession))
         {
@@ -304,7 +305,7 @@ public sealed class MindSystem : SharedMindSystem
 
         if (userId == null)
             return;
-
+        Log.Info($"SetUserId 4");
         if (UserMinds.TryGetValue(userId.Value, out var oldMindId) &&
             TryComp(oldMindId, out MindComponent? oldMind))
         {
@@ -316,16 +317,17 @@ public sealed class MindSystem : SharedMindSystem
         UserMinds[userId.Value] = mindId;
         mind.UserId = userId;
         mind.OriginalOwnerUserId ??= userId;
-
+        Log.Info($"SetUserId 5");
         // The UserId may not have a current session, but user data may still exist for disconnected players.
         // So we cannot combine this with the TryGetSessionById() check below.
         if (_players.GetPlayerData(userId.Value).ContentData() is { } data)
             data.Mind = mindId;
-
+            Log.Info($"SetUserId mindset");
         if (_players.TryGetSessionById(userId.Value, out var session))
         {
             _pvsOverride.AddSessionOverride(mindId, session);
             _players.SetAttachedEntity(session, mind.CurrentEntity);
+            Log.Info($"SetUserId bodyset");
         }
     }
 

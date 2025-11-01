@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Numerics;
 using Content.Server.Announcements;
 using Content.Server.Discord;
 using Content.Server.GameTicking.Events;
@@ -23,6 +21,9 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using System.IO;
+using System.Linq;
+using System.Numerics;
 
 namespace Content.Server.GameTicking
 {
@@ -91,6 +92,41 @@ namespace Content.Server.GameTicking
         {
             if (_map.MapExists(DefaultMap))
                 return;
+            bool finalSaveFound = false;
+            var initial = new ResPath("current");
+            ResPath path = initial;
+            int indof = 0;
+            if (_resourceManager.UserData.Exists(initial.ToRootedPath()))
+            { 
+                while(!finalSaveFound)
+                {
+                    indof++;
+                    if (path == null) break;
+                    var next = new ResPath($"current{indof}");
+                    if (_resourceManager.UserData.Exists(next.ToRootedPath()))
+                    {
+                        path = next;
+                    }
+                    else
+                    {
+                        finalSaveFound = true;
+                    }
+                }
+                var start = _gameTiming.CurTime;
+                bool save_stat = _loader.TryLoadMap(path!, out var entity, out var grids);
+                if (entity.HasValue)
+                {
+                    DefaultMap = entity.Value.Comp.MapId;
+
+                }
+                
+                var end = _gameTiming.CurTime;
+                var finaltime = start - end;
+                _adminLogger.Add(LogType.EventRan, LogImpact.Extreme, $"MAP LOAD STATUS: {save_stat} TIME TAKEN: {finaltime.TotalSeconds}");
+                if (save_stat) return;
+                
+            }
+
 
             AddGamePresetRules();
 
