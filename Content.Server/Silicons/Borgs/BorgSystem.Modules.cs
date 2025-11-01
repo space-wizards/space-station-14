@@ -68,15 +68,13 @@ public sealed partial class BorgSystem
 
             /// Set a custom name and description on the action. The borg module action prototypes are shared across
             /// all modules. Extract localized names, then populate variables with the info from the module itself.
-            {
-                var moduleName = Name(uid);
-                var actionMetaData = MetaData(component.ModuleSwapActionEntity.Value);
+            var moduleName = Name(uid);
+            var actionMetaData = MetaData(component.ModuleSwapActionEntity.Value);
 
-                var instanceName = Loc.GetString("borg-module-action-name", ("moduleName", moduleName));
-                _metaData.SetEntityName(component.ModuleSwapActionEntity.Value, instanceName, actionMetaData);
-                var instanceDesc = Loc.GetString("borg-module-action-description", ("moduleName", moduleName));
-                _metaData.SetEntityDescription(component.ModuleSwapActionEntity.Value, instanceDesc, actionMetaData);
-            }
+            var instanceName = Loc.GetString("borg-module-action-name", ("moduleName", moduleName));
+            _metaData.SetEntityName(component.ModuleSwapActionEntity.Value, instanceName, actionMetaData);
+            var instanceDesc = Loc.GetString("borg-module-action-description", ("moduleName", moduleName));
+            _metaData.SetEntityDescription(component.ModuleSwapActionEntity.Value, instanceDesc, actionMetaData);
         }
 
         if (!TryComp(chassis, out BorgChassisComponent? chassisComp))
