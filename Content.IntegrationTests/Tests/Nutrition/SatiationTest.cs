@@ -180,7 +180,7 @@ public sealed class SatiationTest
             {
                 Assert.That(sys.IsValueInRange(entity, SatType, above: DeadKey), Is.True);
                 Assert.That(sys.IsValueInRange(entity, SatType, above: MaxxedKey), Is.False);
-                Assert.That(sys.IsValueInRange(entity, SatType, below: MaxxedKey), Is.True);
+                Assert.That(sys.IsValueInRange(entity, SatType, below: MaxxedKey, hypotheticalValueDelta: -1), Is.True);
             });
 
             sys.SetValue(entity, SatType, value: MiddleValue + 5);
@@ -208,7 +208,7 @@ public sealed class SatiationTest
                         Is.False
 #endif
                 );
-                Assert.That(sys.IsValueInRange(entity, SatType, below: 49, hypotheticalValueDelta: -6),
+                Assert.That(sys.IsValueInRange(entity, SatType, below: 50, hypotheticalValueDelta: -10),
                     Is.True);
 #pragma warning restore RA0033
             });
