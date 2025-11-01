@@ -18,5 +18,6 @@ chatsan-unimpressed = seems unimpressed
 chatsan-waves = waves
 chatsan-salutes = salutes
 chatsan-tearfully-salutes = tearfully salutes
+chatsan-shrugs = shrugs
 chatsan-tearfully-smiles = tearfully smiles
 chatsan-winks = winks
