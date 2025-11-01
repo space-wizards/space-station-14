@@ -21,11 +21,11 @@ public sealed partial class TestPair
         => CreateTestMap(initialized, "Plating");
 
     /// <summary>
-    /// Load a test map and returns a <see cref="TestMapData"/> representing it.
+    /// Loads a test map and returns a <see cref="TestMapData"/> representing it.
     /// </summary>
     /// <param name="testMapPath">The <see cref="ResPath"/> to the test map to load.</param>
     /// <param name="initialized">Whether to initialize the map on load.</param>
-    /// <returns></returns>
+    /// <returns>A <see cref="TestMapData"/> representing the loaded map.</returns>
     public async Task<TestMapData> LoadTestMap(ResPath testMapPath, bool initialized = true)
     {
         TestMapData mapData = new();
