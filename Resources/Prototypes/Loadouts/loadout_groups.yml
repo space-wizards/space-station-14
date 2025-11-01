@@ -298,7 +298,6 @@
   id: BartenderJobTrinkets
   name: loadout-group-jobtrinkets
   minLimit: 0
-  maxLimit: 2
   loadouts:
   - LizardPlushieBartender
   - BartenderGoldenShaker
@@ -489,7 +488,6 @@
   id: JanitorJobTrinkets
   name: loadout-group-jobtrinkets
   minLimit: 0
-  maxLimit: 2
   loadouts:
   - LizardPlushieJanitor
   - JanitorGoldenPlunger
@@ -1178,7 +1176,6 @@
   id: HeadofSecurityJobTrinkets
   name: loadout-group-jobtrinkets
   minLimit: 0
-  maxLimit: 2
   loadouts:
   - LizardPlushieHeadofSecurity
   - SecStar
@@ -1209,7 +1206,6 @@
   id: WardenJobTrinkets
   name: loadout-group-jobtrinkets
   minLimit: 0
-  maxLimit: 2
   loadouts:
   - LizardPlushieWarden
   - SecStar
@@ -1277,7 +1273,6 @@
   id: SecurityJobTrinkets
   name: loadout-group-jobtrinkets
   minLimit: 0
-  maxLimit: 2
   loadouts:
   - LizardPlushieSecurity
   - SecStar
@@ -1318,7 +1313,6 @@
   id: DetectiveJobTrinkets
   name: loadout-group-jobtrinkets
   minLimit: 0
-  maxLimit: 2
   loadouts:
   - LizardPlushieDetective
   - SecStar
