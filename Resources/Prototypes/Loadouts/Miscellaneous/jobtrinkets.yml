@@ -345,20 +345,14 @@
     back:
     - PlushieLizardJobSecurityofficer
 
-- type: loadoutEffectGroup # Security Star playtime requirement; this can also be used by other "100-security-hour award" job trinkets
-  id: SecurityStarWorthy
+- type: loadout
+  id: SecStar
   effects:
     - !type:JobRequirementLoadoutEffect
       requirement:
         !type:DepartmentTimeRequirement
         department: Security
         time: 100h
-
-- type: loadout
-  id: SecStar
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SecurityStarWorthy
   storage:
     back:
     - Dinkystar
