@@ -97,11 +97,11 @@ public abstract class SharedCryostorageSystem : EntitySystem
             return;
         }
 
-        if (Mind.TryGetMind(args.EntityUid, out _, out var mindComp, mindContainer) &&
-            (mindComp.PreventSuicide || mindComp.PreventGhosting))
-        {
-            args.Cancel();
-        }
+        //if (Mind.TryGetMind(args.EntityUid, out _, out var mindComp, mindContainer) &&
+        //    (mindComp.PreventSuicide || mindComp.PreventGhosting))
+        //{
+        //    args.Cancel();
+        //}
     }
 
     private void OnShutdownContainer(Entity<CryostorageComponent> ent, ref ComponentShutdown args)

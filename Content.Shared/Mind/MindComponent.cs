@@ -90,7 +90,7 @@ public sealed partial class MindComponent : Component
     ///     Prevents user from ghosting out
     /// </summary>
     [DataField]
-    public bool PreventGhosting { get; set; }
+    public bool PreventGhosting { get; set; } = true;
 
     /// <summary>
     ///     Prevents user from suiciding
