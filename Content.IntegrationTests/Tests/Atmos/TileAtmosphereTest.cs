@@ -7,10 +7,8 @@ using Content.Shared.Tests;
 using Robust.Shared.EntitySerialization;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
-using System.Linq;
 
 namespace Content.IntegrationTests.Tests.Atmos;
 
@@ -36,26 +34,10 @@ public sealed class TileAtmosphereTest
         var entityManager = server.EntMan;
         var mapLoader = entityManager.System<MapLoaderSystem>();
         var atmosSystem = entityManager.System<AtmosphereSystem>();
-        var deserializationOptions = DeserializationOptions.Default with { InitializeMaps = true };
 
-        Entity<MapGridComponent> grid = default;
-        Entity<MapComponent>? mapID = default;
+        var mapData = await pair.LoadTestMap(new ResPath(mapPath));
 
-        // Load our test map in and assert that it exists.
-        await server.WaitPost(() =>
-        {
-            var map = new ResPath(mapPath);
-#pragma warning disable NUnit2045
-            Assert.That(mapLoader.TryLoadMap(map, out mapID, out var gridSet, deserializationOptions),
-                $"Failed to load map {map}.");
-            Assert.That(gridSet, Is.Not.Null, "There were no grids loaded from the map!");
-#pragma warning restore NUnit2045
-            grid = gridSet.First();
-        });
-
-        await server.WaitRunTicks(10);
-
-        Entity<GridAtmosphereComponent> relevantAtmos = (grid, entityManager.GetComponent<GridAtmosphereComponent>(grid));
+        Entity<GridAtmosphereComponent> relevantAtmos = (mapData.Grid, entityManager.GetComponent<GridAtmosphereComponent>(mapData.Grid));
 
         var markers = entityManager.AllEntities<TestMarkerComponent>();
 
@@ -91,7 +73,7 @@ public sealed class TileAtmosphereTest
 
         await server.WaitAssertion(() =>
         {
-            entityManager.DeleteEntity(mapID);
+            entityManager.DeleteEntity(mapData.MapUid);
         });
 
         await pair.CleanReturnAsync();
@@ -112,26 +94,10 @@ public sealed class TileAtmosphereTest
         var atmosSystem = entityManager.System<AtmosphereSystem>();
         var itemToggleSystem = entityManager.System<ItemToggleSystem>();
         var transformSystem = entityManager.System<SharedTransformSystem>();
-        var deserializationOptions = DeserializationOptions.Default with { InitializeMaps = true };
 
-        Entity<MapGridComponent> grid = default;
-        Entity<MapComponent>? mapID = default;
+        var mapData = await pair.LoadTestMap(new ResPath(mapPath));
 
-        // Load our test map in and assert that it exists.
-        await server.WaitPost(() =>
-        {
-            var map = new ResPath(mapPath);
-#pragma warning disable NUnit2045
-            Assert.That(mapLoader.TryLoadMap(map, out mapID, out var gridSet, deserializationOptions),
-                $"Failed to load map {map}.");
-            Assert.That(gridSet, Is.Not.Null, "There were no grids loaded from the map!");
-#pragma warning restore NUnit2045
-            grid = gridSet.First();
-        });
-
-        await server.WaitRunTicks(10);
-
-        Entity<GridAtmosphereComponent> relevantAtmos = (grid, entityManager.GetComponent<GridAtmosphereComponent>(grid));
+        Entity<GridAtmosphereComponent> relevantAtmos = (mapData.Grid, entityManager.GetComponent<GridAtmosphereComponent>(mapData.Grid));
 
         var markers = entityManager.AllEntities<TestMarkerComponent>();
 
@@ -147,9 +113,9 @@ public sealed class TileAtmosphereTest
             Assert.That(GetMarker(markers, "point1", out point1));
             Assert.That(GetMarker(markers, "point2", out point2));
 
-            Assert.That(transformSystem.TryGetGridTilePosition(source, out sourceXY, grid));
-            Assert.That(transformSystem.TryGetGridTilePosition(source, out point1XY, grid));
-            Assert.That(transformSystem.TryGetGridTilePosition(source, out point2XY, grid));
+            Assert.That(transformSystem.TryGetGridTilePosition(source, out sourceXY, mapData.Grid));
+            Assert.That(transformSystem.TryGetGridTilePosition(source, out point1XY, mapData.Grid));
+            Assert.That(transformSystem.TryGetGridTilePosition(source, out point2XY, mapData.Grid));
         });
 
         Assert.That(GetGridMoles(relevantAtmos), Is.EqualTo(0));
@@ -164,9 +130,9 @@ public sealed class TileAtmosphereTest
 
         Assert.Multiple(() =>
         {
-            Assert.That(atmosSystem.IsHotspotActive(grid, sourceXY), Is.False);
-            Assert.That(atmosSystem.IsHotspotActive(grid, point1XY), Is.False);
-            Assert.That(atmosSystem.IsHotspotActive(grid, point2XY), Is.False);
+            Assert.That(atmosSystem.IsHotspotActive(mapData.Grid, sourceXY), Is.False);
+            Assert.That(atmosSystem.IsHotspotActive(mapData.Grid, point1XY), Is.False);
+            Assert.That(atmosSystem.IsHotspotActive(mapData.Grid, point2XY), Is.False);
         });
 
         await server.WaitAssertion(() =>
@@ -179,9 +145,9 @@ public sealed class TileAtmosphereTest
 
         Assert.Multiple(() =>
         {
-            Assert.That(atmosSystem.IsHotspotActive(grid, sourceXY), Is.True);
-            Assert.That(atmosSystem.IsHotspotActive(grid, point1XY), Is.True);
-            Assert.That(atmosSystem.IsHotspotActive(grid, point2XY), Is.True);
+            Assert.That(atmosSystem.IsHotspotActive(mapData.Grid, sourceXY), Is.True);
+            Assert.That(atmosSystem.IsHotspotActive(mapData.Grid, point1XY), Is.True);
+            Assert.That(atmosSystem.IsHotspotActive(mapData.Grid, point2XY), Is.True);
         });
 
         Assert.Multiple(() =>
@@ -195,7 +161,7 @@ public sealed class TileAtmosphereTest
 
         await server.WaitAssertion(() =>
         {
-            entityManager.DeleteEntity(mapID);
+            entityManager.DeleteEntity(mapData.MapUid);
         });
 
         await pair.CleanReturnAsync();
