@@ -1,12 +1,12 @@
 using Content.Server.Mind;
 using Content.Server.Objectives.Components;
-using Content.Server.Roles;
 using Content.Server.Thief.Components;
 using Content.Shared.Examine;
 using Content.Shared.Foldable;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Roles;
+using Content.Shared.Roles.Components;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Thief.Systems;
