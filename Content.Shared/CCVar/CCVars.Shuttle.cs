@@ -201,7 +201,7 @@ public sealed partial class CCVars
     ///     That can break Nukeops win conditions (disk/bomb delivery on Centcomm).
     /// </summary>
     public static readonly CVarDef<float> RoundEndBufferTime =
-        CVarDef.Create("shuttle.round_end_buffer_time", 0.5f, CVar.SERVERONLY);
+        CVarDef.Create("shuttle.round_end_buffer_time", 1.0f, CVar.SERVERONLY);
 
     #region impacts
 

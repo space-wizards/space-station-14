@@ -242,8 +242,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             : WinCondition.AllNukiesDead);
 
         var diskAtCentCom = false;
-        var diskQuery = AllEntityQuery<NukeDiskComponent, TransformComponent>();
-        while (diskQuery.MoveNext(out var diskUid, out _, out var _))
+        var diskQuery = AllEntityQuery<NukeDiskComponent>();
+        while (diskQuery.MoveNext(out var diskUid, out var _))
         {
             diskAtCentCom = _emergency.IsTargetEscaping(diskUid);
 
