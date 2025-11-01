@@ -20,8 +20,8 @@ public sealed class InteractionTestTests : InteractionTest
     {
         // Make sure that there is only one grid.
         var grids = SEntMan.AllEntities<MapGridComponent>().ToList();
-        Assert.That(grids.Count, Is.EqualTo(1), "Test map did not have exactly one grid.");
-        Assert.That(grids.Contains(MapData.Grid), "MapData did not contain the loaded grid.");
+        Assert.That(grids, Has.Count.EqualTo(1), "Test map did not have exactly one grid.");
+        Assert.That(grids, Does.Contain(MapData.Grid), "MapData did not contain the loaded grid.");
 
         // Make sure we loaded the right map.
         // This name is defined in empty.yml
