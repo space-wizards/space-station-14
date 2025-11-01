@@ -1,5 +1,5 @@
 # These options are kept very sparse to not put emphasis on nudity, and to provide a base for players to feel comfortable with.
-# It's unlikely more will be added to upstream for cosmetic reasons. 
+# It's unlikely more will be added to upstream for cosmetic reasons.
 
 - type: marking
   id: UndergarmentBottomBoxers
@@ -71,6 +71,7 @@
   bodyPart: UndergarmentTop
   markingCategory: UndergarmentTop
   speciesRestriction: [Arachnid, Diona, Human, Dwarf, Moth, Reptilian, SlimePerson]
+  sexRestriction: [Male]
   coloring:
     default:
       type: null
@@ -80,10 +81,39 @@
     state: binder
 
 - type: marking
+  id: UndergarmentTopBinderU
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [Arachnid, Diona, Human, Dwarf, Moth, Reptilian, SlimePerson]
+  sexRestriction: [Unsexed]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: Mobs/Customization/undergarments.rsi
+    state: binder
+
+- type: marking
+  id: UndergarmentTopBinderF
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [Arachnid, Diona, Human, Dwarf, Moth, Reptilian, SlimePerson]
+  sexRestriction: [Female]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: Mobs/Customization/undergarments.rsi
+    state: binder_f
+
+- type: marking
   id: UndergarmentTopTanktop
   bodyPart: UndergarmentTop
   markingCategory: UndergarmentTop
   speciesRestriction: [Arachnid, Diona, Human, Dwarf, Moth, Reptilian, SlimePerson]
+  sexRestriction: [Male]
   coloring:
     default:
       type: null
@@ -91,6 +121,34 @@
   sprites:
   - sprite: Mobs/Customization/undergarments.rsi
     state: tanktop
+
+- type: marking
+  id: UndergarmentTopTanktopU
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [Arachnid, Diona, Human, Dwarf, Moth, Reptilian, SlimePerson]
+  sexRestriction: [Unsexed]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: Mobs/Customization/undergarments.rsi
+    state: tanktop
+
+- type: marking
+  id: UndergarmentTopTanktopF
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [Arachnid, Diona, Human, Dwarf, Moth, Reptilian, SlimePerson]
+  sexRestriction: [Female]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: Mobs/Customization/undergarments.rsi
+    state: tanktop_f
 
 - type: marking
   id: UndergarmentBottomBoxersVox # Voxers.
@@ -312,4 +370,3 @@
   sprites:
   - sprite: Mobs/Customization/undergarments.rsi
     state: tanktop_vulpkanin
-    

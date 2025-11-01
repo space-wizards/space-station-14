@@ -1,7 +1,15 @@
 marking-UndergarmentTopTanktop = Tanktop
 marking-UndergarmentTopTanktop-tanktop = Tanktop
+marking-UndergarmentTopTanktopU = Tanktop
+marking-UndergarmentTopTanktopU-tanktop = Tanktop
+marking-UndergarmentTopTanktopF = Tanktop
+marking-UndergarmentTopTanktopF-tanktop_f = Tanktop
 marking-UndergarmentTopBinder = Binder
 marking-UndergarmentTopBinder-binder = Binder
+marking-UndergarmentTopBinderU = Binder
+marking-UndergarmentTopBinderU-binder = Binder
+marking-UndergarmentTopBinderF = Binder
+marking-UndergarmentTopBinderF-binder_f = Binder
 marking-UndergarmentTopBra = Classic Bra
 marking-UndergarmentTopBra-classic = Classic Bra
 marking-UndergarmentTopSportsbra = Sports Bra

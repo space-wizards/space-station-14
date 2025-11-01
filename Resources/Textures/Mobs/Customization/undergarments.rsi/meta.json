@@ -32,7 +32,15 @@
       "directions": 4
     },
     {
+      "name": "binder_f",
+      "directions": 4
+    },
+    {
       "name": "tanktop",
+      "directions": 4
+    },
+    {
+      "name": "tanktop_f",
       "directions": 4
     },
     {
