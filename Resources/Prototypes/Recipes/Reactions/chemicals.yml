@@ -534,22 +534,6 @@
     ArtifactGlue: 2
 
 - type: reaction
-  id: ChargedElectrovaeEmpExplosion
-  impact: High
-  priority: 20
-  reactants:
-    ChargedElectrovae:
-      amount: 5
-    Oxygen:
-      amount: 1
-  effects:
-    - !type:EmpReactionEffect
-      rangePerUnit: 0.2
-      maxRange: 6
-      energyConsumption: 12500
-      duration: 15
-
-- type: reaction
   id: Lye
   reactants:
     Water:
@@ -569,8 +553,8 @@
     Oxygen:
       amount: 1
   effects:
-    - !type:EmpReactionEffect
-      rangePerUnit: 0.2
-      maxRange: 6
-      energyConsumption: 12500
-      duration: 15
+    - !type:Emp
+      rangeModifier: 0.2
+      maxRange: 10
+      energyConsumption: 10000
+      duration: 12
