@@ -4,7 +4,6 @@ using Content.Shared.Atmos;
 using Content.Shared.Coordinates;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Tests;
-using Robust.Shared.EntitySerialization;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
@@ -28,7 +27,8 @@ public sealed class TileAtmosphereTest
     [TestCase(TestMap2)]
     public async Task TileAtmosphere(string mapPath)
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var settings = new PoolSettings { Connected = true, Dirty = true };
+        await using var pair = await PoolManager.GetServerClient(settings);
         var server = pair.Server;
 
         var entityManager = server.EntMan;
@@ -71,11 +71,6 @@ public sealed class TileAtmosphereTest
             Assert.That(MathHelper.CloseToPercent(moles, Moles, Tolerance), $"moles was {moles}");
         });
 
-        await server.WaitAssertion(() =>
-        {
-            entityManager.DeleteEntity(mapData.MapUid);
-        });
-
         await pair.CleanReturnAsync();
     }
 
@@ -84,7 +79,8 @@ public sealed class TileAtmosphereTest
     [TestCase(TestMap2)]
     public async Task FireSpreading(string mapPath)
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var settings = new PoolSettings { Connected = true, Dirty = true };
+        await using var pair = await PoolManager.GetServerClient(settings);
         var server = pair.Server;
 
         await server.WaitIdleAsync();
@@ -157,11 +153,6 @@ public sealed class TileAtmosphereTest
 
             // Make sure we're not creating/destroying matter
             Assert.That(MathHelper.CloseToPercent(GetGridMoles(relevantAtmos), Moles, Tolerance));
-        });
-
-        await server.WaitAssertion(() =>
-        {
-            entityManager.DeleteEntity(mapData.MapUid);
         });
 
         await pair.CleanReturnAsync();
