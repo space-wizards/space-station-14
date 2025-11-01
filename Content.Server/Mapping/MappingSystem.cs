@@ -58,7 +58,7 @@ public sealed class MappingSystem : EntitySystem
 			if (_timing.RealTime <= auto.NextSaveTime)
 				continue;
 
-            if (!Paused(uid)) // Saving post-init maps or grids has a high chance of throwing errors.
+            if (LifeStage(uid) >= EntityLifeStage.MapInitialized) // Saving post-init maps or grids has a high chance of throwing errors.
             {
                 Log.Warning($"Can't autosave entity {ToPrettyString(uid)}; it is not paused. Removing component.");
                 RemCompDeferred<AutoSaveComponent>(uid);
