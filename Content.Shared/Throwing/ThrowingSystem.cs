@@ -146,11 +146,12 @@ public sealed class ThrowingSystem : EntitySystem
         if (baseThrowSpeed <= 0 || direction == Vector2Helpers.Infinity || direction == Vector2Helpers.NaN || direction == Vector2.Zero || friction < 0)
             return;
 
-        if (unanchor != ThrowingUnanchorStrength.None && _anchorableQuery.TryComp(uid, out var anchorableComponent))
-        {
-            if (unanchor == ThrowingUnanchorStrength.Unanchorable && (anchorableComponent.Flags & AnchorableFlags.Unanchorable) != 0 || unanchor == ThrowingUnanchorStrength.All)
-                _transform.Unanchor(uid);
-        }
+        // Unanchor the entity if applicable
+        if (unanchor == ThrowingUnanchorStrength.All ||
+            unanchor == ThrowingUnanchorStrength.Unanchorable &&
+            _anchorableQuery.TryComp(uid, out var anchorableComponent) &&
+            (anchorableComponent.Flags & AnchorableFlags.Unanchorable) != 0)
+            _transform.Unanchor(uid);
 
         if ((physics.BodyType & (BodyType.Dynamic | BodyType.KinematicController)) == 0x0)
             return;
@@ -258,15 +259,21 @@ public sealed class ThrowingSystem : EntitySystem
 }
 
 /// <summary>
-/// If a throwing action should affect anchored entity:
-///   None = No unanchoring at all
-///   Unanchorable = Entity must be unanchorable by normal means
-///   All = All entities, unanchorable or not (e.g. walls)
+/// If a throwing action should attempt to unanchor anchored entities.
 /// </summary>
 [Serializable, NetSerializable]
-public enum ThrowingUnanchorStrength
+public enum ThrowingUnanchorStrength : byte
 {
+    /// <summary>
+    /// No entites will be unanchored.
+    /// </summary>
     None,
+    /// <summary>
+    /// Only entities that can be unanchored (e.g. via wrench) will be unanchored.
+    /// </summary>
     Unanchorable,
-    All
+    /// <summary>
+    /// All entities will be unanchored.
+    /// </summary>
+    All,
 }
