@@ -23,3 +23,25 @@
     Telecrystal: 1
   categories:
   - tttLoud
+
+- type: listing
+  id: UplinkTTTBigDRandy
+  name: Big D Randy's bundle
+  description: big scar n.
+  icon: { sprite: /Textures/Objects/counterstrike/Clothing/Hats/bdrandy.rsi, state: icon }
+  productEntity: tttRandyBundle
+  cost:
+    Telecrystal: 1
+  categories:
+  - tttLoud
+
+- type: listing
+  id: UplinkTTTJeff
+  name: Jeff The Killer Bundle
+  description: scary motherfucker.
+  icon: { sprite: /Textures/Objects/counterstrike/Weapons/TTT/jeffKnife.rsi, state: icon }
+  productEntity: tttJeffBundle
+  cost:
+    Telecrystal: 1
+  categories:
+  - tttLoud

@@ -11,9 +11,35 @@
   - type: MeleeWeapon
     damage:
       types:
-        Slash: 34
+        Slash: 15
+    autoAttack: true
+    attackRate: 3
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/machete.rsi
+    shape:
+    - 0,0,0,2
+  - type: DisarmMalus
+
+#BIG DICK RENDY
+
+- type: entity
+  name:  Big D Randy's KOK
+  parent: [ BaseSword, BaseMajorContraband ]
+  id: WeaponBBC
+  description: BBC.
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Weapons/TTT/bdrandy.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 25
+    soundHit:
+      path: /Audio/Weapons/counterstrike/other/hits/hit1.ogg
   - type: Item
     storedSprite:
       state: storage

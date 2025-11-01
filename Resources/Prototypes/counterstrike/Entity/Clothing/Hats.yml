@@ -47,3 +47,31 @@
     sprite: Objects/counterstrike/Clothing/Hats/moonman.rsi
   - type: Clothing
     sprite: Objects/counterstrike/Clothing/Hats/moonman.rsi
+
+- type: entity
+  parent: ClothingHeadHelmetBase
+  id: ClothingHeadHatGrannyMask
+  name: granny's mask
+  description: "scary ng"
+  components:
+  - type: HideLayerClothing
+    layers:
+      Hair : HEAD
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Hats/bdrandy.rsi
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Hats/bdrandy.rsi
+
+- type: entity
+  parent: ClothingHeadHelmetBase
+  id: ClothingHeadHoodJeff
+  name: jeff's hood
+  description: "scary"
+  components:
+  - type: HideLayerClothing
+    layers:
+      Hair : HEAD
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Uniform/jeff/hood.rsi
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Uniform/jeff/hood.rsi

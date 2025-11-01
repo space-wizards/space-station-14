@@ -1,8 +1,10 @@
+#loud
+
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: tttMoonmanBundle
   name: Moonman Bundle
-  description: "MAC TONIGHT" #, and a pair of Thermal Imaging Goggles.
+  description: "MAC TONIGHT"
   components:
   - type: StorageFill
     contents:
@@ -12,3 +14,30 @@
       - id: ClothingHeadHatMoonman
       - id: WeaponShotgunNova
       - id: BoxLethalshot
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: tttRandyBundle
+  name: Granny's jumpsuit
+  description: my dick is very big.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingBigDickRandy
+      - id: WeaponBBC
+      - id: ClothingHeadHatGrannyMask
+      - id: ClothingShoesColorWhite
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: tttJeffBundle
+  name: white scary costume
+  description: fucking scary.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterHoodieJeff
+      - id: JeffKnife
+      - id: ClothingShoesColorWhite
+
+#stealth

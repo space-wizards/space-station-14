@@ -16,3 +16,42 @@
         Piercing: 0.85
         Heat: 0.95
         Caustic: 0.90
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingBigDickRandy
+  name: Grandma suit
+  description: not a track suit.
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Uniform/BigDRandy.rsi
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Uniform/BigDRandy.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.90
+        Piercing: 0.85
+        Heat: 0.95
+        Caustic: 0.90
+  - type: HideLayerClothing
+    layers:
+      Hair : HEAD
+
+- type: entity
+  parent: ClothingOuterWinterCoatToggleable
+  id: ClothingOuterHoodieJeff
+  name: white scary hoodie
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Uniform/jeff/hoodie.rsi
+    layers:
+    - state: icon
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Uniform/jeff/hoodie.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHoodJeff
