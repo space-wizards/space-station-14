@@ -17,6 +17,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.EntitySerialization;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -457,9 +458,17 @@ namespace Content.Server.GameTicking
                 _startingRound = false;
                 return;
             }
-
-            // MapInitialize *before* spawning players, our codebase is too shit to do it afterwards...
-            _map.InitializeMap(DefaultMap);
+            var skipinit = false;
+            if (_ent.TryGetComponent(_map.GetMap(DefaultMap), out MapComponent mc))
+            {
+                if (mc.Initialized) skipinit = true;
+            }
+            if (!skipinit)
+            {
+                // MapInitialize *before* spawning players, our codebase is too shit to do it afterwards...
+                _map.InitializeMap(DefaultMap);
+            }
+            
 
             SpawnPlayers(readyPlayers, readyPlayerProfiles, force);
 
