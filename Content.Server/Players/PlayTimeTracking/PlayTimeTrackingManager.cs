@@ -422,6 +422,7 @@ public sealed class PlayTimeTrackingManager : ISharedPlaytimeManager, IPostInjec
 
     private PlayTimeData? DirtyPlayer(ICommonSession player)
     {
+        if (player == null) return null;
         if (!_playTimeData.TryGetValue(player, out var data) || !data.Initialized)
             return null;
 

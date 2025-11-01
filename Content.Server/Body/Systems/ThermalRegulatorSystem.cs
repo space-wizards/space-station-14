@@ -17,7 +17,14 @@ public sealed class ThermalRegulatorSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ThermalRegulatorComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<ThermalRegulatorComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<ThermalRegulatorComponent, EntityUnpausedEvent>(OnUnpaused);
+    }
+
+    private void OnComponentInit(Entity<ThermalRegulatorComponent> ent, ref ComponentInit args)
+    {
+        ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
+
     }
 
     private void OnMapInit(Entity<ThermalRegulatorComponent> ent, ref MapInitEvent args)

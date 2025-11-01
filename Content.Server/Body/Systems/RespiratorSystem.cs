@@ -2,12 +2,12 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Chat.Systems;
-using Content.Shared.Body.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Prototypes;
+using Content.Shared.Body.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -20,7 +20,9 @@ using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects;
 using Content.Shared.EntityEffects.Effects.Body;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Timing;
 using JetBrains.Annotations;
+using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -52,6 +54,7 @@ public sealed class RespiratorSystem : EntitySystem
         UpdatesAfter.Add(typeof(MetabolizerSystem));
         SubscribeLocalEvent<RespiratorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<RespiratorComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
+        SubscribeLocalEvent<RespiratorComponent, ComponentInit>(OnComponentInit);
 
         // BodyComp stuff
         SubscribeLocalEvent<BodyComponent, InhaledGasEvent>(OnGasInhaled);
@@ -59,8 +62,13 @@ public sealed class RespiratorSystem : EntitySystem
         SubscribeLocalEvent<BodyComponent, CanMetabolizeGasEvent>(CanBodyMetabolizeGas);
         SubscribeLocalEvent<BodyComponent, SuffocationEvent>(OnSuffocation);
         SubscribeLocalEvent<BodyComponent, StopSuffocatingEvent>(OnStopSuffocating);
+        ;
     }
-
+    private void OnComponentInit(Entity<RespiratorComponent> ent, ref ComponentInit args)
+    {
+        ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.AdjustedUpdateInterval;
+        
+    }
     private void OnMapInit(Entity<RespiratorComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.AdjustedUpdateInterval;
@@ -411,7 +419,6 @@ public sealed class RespiratorSystem : EntitySystem
     {
         if (!Resolve(uid, ref respirator, false))
             return;
-
         respirator.Saturation += amount;
         respirator.Saturation =
             Math.Clamp(respirator.Saturation, respirator.MinSaturation, respirator.MaxSaturation);

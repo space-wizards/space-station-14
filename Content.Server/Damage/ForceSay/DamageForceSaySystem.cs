@@ -74,7 +74,7 @@ public sealed class DamageForceSaySystem : EntitySystem
 
     private void AllowNextSpeech(EntityUid uid)
     {
-        if (!TryComp<ActorComponent>(uid, out var actor))
+        if (!TryComp<ActorComponent>(uid, out var actor) || actor.PlayerSession == null)
             return;
 
         var nextCrit = EnsureComp<AllowNextCritSpeechComponent>(uid);

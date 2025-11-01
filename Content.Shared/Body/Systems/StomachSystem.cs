@@ -5,6 +5,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -20,9 +21,17 @@ namespace Content.Shared.Body.Systems
         public override void Initialize()
         {
             SubscribeLocalEvent<StomachComponent, MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<StomachComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<StomachComponent, EntityUnpausedEvent>(OnUnpaused);
             SubscribeLocalEvent<StomachComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
             SubscribeLocalEvent<StomachComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
+
+        }
+
+        private void OnComponentInit(Entity<StomachComponent> ent, ref ComponentInit args)
+        {
+            ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.AdjustedUpdateInterval;
+
         }
 
         private void OnMapInit(Entity<StomachComponent> ent, ref MapInitEvent args)

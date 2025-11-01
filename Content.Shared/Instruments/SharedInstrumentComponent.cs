@@ -42,7 +42,6 @@ public abstract partial class SharedInstrumentComponent : Component
 [AutoGenerateComponentState(true)]
 public sealed partial class ActiveInstrumentComponent : Component
 {
-    [DataField]
     [AutoNetworkedField]
     public MidiTrack?[] Tracks = [];
 }
