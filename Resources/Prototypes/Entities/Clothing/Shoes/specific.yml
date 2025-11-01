@@ -169,8 +169,6 @@
   suffix: Chameleon
   description: Stylish black shoes.
   components:
-    - type: Tag
-      tags: [] # ignore "WhitelistChameleon" tag
     - type: Sprite
       sprite: Clothing/Shoes/color.rsi
       layers:
