@@ -1,0 +1,10 @@
+- type: entity
+  id: IntegrationTestMarker
+  parent: MarkerBase
+  name: Integration test marker
+  components:
+  - type: Sprite
+    sprite: Markers/cross.rsi
+    state: green
+  - type: IntegrationTestMarker
+    name: change me
