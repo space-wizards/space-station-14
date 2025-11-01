@@ -17,7 +17,6 @@ public sealed class SingularityGeneratorSystem : SharedSingularityGeneratorSyste
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly MetaDataSystem _metadata = default!;
     #endregion Dependencies
 
     public override void Initialize()
