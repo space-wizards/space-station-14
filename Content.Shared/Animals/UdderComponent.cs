@@ -3,6 +3,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Animals;
 
@@ -46,12 +47,12 @@ public sealed partial class UdderComponent : Component
     /// <summary>
     ///     How long to wait before producing.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
     public TimeSpan GrowthDelay = TimeSpan.FromMinutes(1);
 
     /// <summary>
     ///     When to next try to produce.
     /// </summary>
-    [DataField, AutoPausedField, Access(typeof(UdderSystem))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, Access(typeof(UdderSystem))]
     public TimeSpan NextGrowth = TimeSpan.Zero;
 }

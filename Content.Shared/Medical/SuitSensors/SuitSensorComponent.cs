@@ -71,7 +71,7 @@ public sealed partial class SuitSensorComponent : Component
     /// <summary>
     ///     The station this suit sensor belongs to. If it's null the suit didn't spawn on a station and the sensor doesn't work.
     /// </summary>
-    [DataField("station"), AutoNetworkedField]
+    [AutoNetworkedField]
     public EntityUid? StationId = null;
 
     /// <summary>

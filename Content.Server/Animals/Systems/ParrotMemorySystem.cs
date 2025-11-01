@@ -13,6 +13,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Speech;
 using Content.Shared.Speech.Components;
 using Content.Shared.Whitelist;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -41,13 +42,19 @@ public sealed partial class ParrotMemorySystem : SharedParrotMemorySystem
         SubscribeLocalEvent<EraseEvent>(OnErase);
 
         SubscribeLocalEvent<ParrotListenerComponent, MapInitEvent>(ListenerOnMapInit);
+        SubscribeLocalEvent<ParrotMemoryComponent, ComponentInit>(OnComponentInit);
 
         SubscribeLocalEvent<ParrotListenerComponent, ListenEvent>(OnListen);
         SubscribeLocalEvent<ParrotListenerComponent, HeadsetRadioReceiveRelayEvent>(OnHeadsetReceive);
 
         SubscribeLocalEvent<ParrotMemoryComponent, TryVocalizeEvent>(OnTryVocalize);
-    }
 
+    }
+    private void OnComponentInit(Entity<ParrotMemoryComponent> ent, ref ComponentInit args)
+    {
+        ent.Comp.NextLearnInterval = _gameTiming.CurTime + ent.Comp.LearnCooldown;
+
+    }
     private void OnErase(ref EraseEvent args)
     {
         DeletePlayerMessages(args.PlayerNetUserId);

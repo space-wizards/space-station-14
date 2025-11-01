@@ -24,6 +24,7 @@ public sealed class RottingSystem : SharedRottingSystem
         SubscribeLocalEvent<RottingComponent, BeingGibbedEvent>(OnGibbed);
 
         SubscribeLocalEvent<TemperatureComponent, IsRottingEvent>(OnTempIsRotting);
+        
     }
 
     private void OnGibbed(EntityUid uid, RottingComponent component, BeingGibbedEvent args)

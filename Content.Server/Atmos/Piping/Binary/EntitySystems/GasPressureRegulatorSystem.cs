@@ -7,6 +7,7 @@ using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Audio;
+using Content.Shared.Hands.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
 
@@ -33,8 +34,8 @@ public sealed class GasPressureRegulatorSystem : SharedGasPressureRegulatorSyste
         SubscribeLocalEvent<GasPressureRegulatorComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<GasPressureRegulatorComponent, AtmosDeviceUpdateEvent>(OnPressureRegulatorUpdated);
         SubscribeLocalEvent<GasPressureRegulatorComponent, MapInitEvent>(OnMapInit);
-    }
 
+    }
     private void OnMapInit(Entity<GasPressureRegulatorComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextUiUpdate = _timing.CurTime + ent.Comp.UpdateInterval;
@@ -70,6 +71,7 @@ public sealed class GasPressureRegulatorSystem : SharedGasPressureRegulatorSyste
     private void OnInit(Entity<GasPressureRegulatorComponent> ent, ref ComponentInit args)
     {
         UpdateAppearance(ent);
+        ent.Comp.NextUiUpdate = _timing.CurTime + ent.Comp.UpdateInterval;
     }
 
     /// <summary>

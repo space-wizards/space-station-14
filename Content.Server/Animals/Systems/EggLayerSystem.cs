@@ -2,14 +2,17 @@ using Content.Server.Actions;
 using Content.Server.Animals.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions.Events;
+using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Storage;
 using Robust.Server.Audio;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using System.ComponentModel;
 
 namespace Content.Server.Animals.Systems;
 
@@ -33,6 +36,7 @@ public sealed class EggLayerSystem : EntitySystem
 
         SubscribeLocalEvent<EggLayerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<EggLayerComponent, EggLayInstantActionEvent>(OnEggLayAction);
+        SubscribeLocalEvent<EggLayerComponent, ComponentInit>(OnComponentInit);
     }
 
     public override void Update(float frameTime)
@@ -61,6 +65,12 @@ public sealed class EggLayerSystem : EntitySystem
         }
     }
 
+    private void OnComponentInit(Entity<EggLayerComponent> ent, ref ComponentInit args)
+    {
+        var component = ent.Comp;
+        component.NextGrowth = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(component.EggLayCooldownMin, component.EggLayCooldownMax));
+
+    }
     private void OnMapInit(EntityUid uid, EggLayerComponent component, MapInitEvent args)
     {
         _actions.AddAction(uid, ref component.Action, component.EggLayAction);

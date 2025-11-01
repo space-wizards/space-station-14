@@ -47,6 +47,7 @@ public sealed class AmeControllerSystem : EntitySystem
         _itemSlots.AddItemSlot(uid, SharedAmeControllerComponent.FuelSlotId, component.FuelSlot);
 
         UpdateUi(uid, component);
+        component.NextUIUpdate = _gameTiming.CurTime;
     }
 
     public override void Update(float frameTime)

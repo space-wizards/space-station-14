@@ -124,6 +124,7 @@ public sealed class AdminSystem : EntitySystem
 
     public void UpdatePlayerList(ICommonSession player)
     {
+        if (player == null) return;
         _playerList[player.UserId] = GetPlayerInfo(player.Data, player);
 
         var playerInfoChangedEvent = new PlayerInfoChangedEvent

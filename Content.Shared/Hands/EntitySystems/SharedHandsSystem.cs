@@ -58,6 +58,7 @@ public abstract partial class SharedHandsSystem
         {
             ContainerSystem.EnsureContainer<ContainerSlot>(ent, id, container);
         }
+        ent.Comp.NextThrowTime = TimeSpan.Zero;
     }
 
     private void OnMapInit(Entity<HandsComponent> ent, ref MapInitEvent args)
