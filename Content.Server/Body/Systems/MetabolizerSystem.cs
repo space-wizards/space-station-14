@@ -17,7 +17,6 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Random.Helpers;
-using JetBrains.FormatRipper.Elf;
 using Robust.Shared.Collections;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
