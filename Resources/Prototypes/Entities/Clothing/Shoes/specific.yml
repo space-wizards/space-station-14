@@ -170,7 +170,7 @@
   description: Stylish black shoes.
   components:
     - type: Tag
-      tags:
+      tags: # ignore "WhitelistChameleon" tag
       - ClothMade
       - Recyclable
     - type: Sprite
