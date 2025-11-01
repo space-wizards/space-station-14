@@ -126,6 +126,10 @@
     - sob
     - sobs
     - sobbing
+    - whine
+    - whines
+    - whined
+    - whining
 
 - type: emote
   id: Squish
