@@ -28,3 +28,14 @@
   copyright: "raptorgoesextinct.wav by Nerdwizard78"
   source: "https://freesound.org/people/Nerdwizard78/sounds/643928/"
 
+- files:
+  - vox_chitter.ogg
+  license: "CC0-1.0"
+  copyright: "dinosaur.wav by JhennaSide"
+  source: "https://freesound.org/people/JhennaSide/sounds/455906/"
+  
+- files:
+  - vox_click.ogg
+  license: "CC0-1.0"
+  copyright: "Storks bill-clapping by Breviceps"
+  source: "https://freesound.org/people/Breviceps/sounds/705861/"

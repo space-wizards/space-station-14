@@ -3,6 +3,7 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Gravity;
@@ -95,7 +96,7 @@ public abstract partial class SharedStunSystem
 
     private void OnRejuvenate(Entity<KnockedDownComponent> entity, ref RejuvenateEvent args)
     {
-        SetKnockdownNextUpdate((entity, entity), GameTiming.CurTime);
+        SetKnockdownNextUpdate(entity, GameTiming.CurTime);
 
         if (entity.Comp.AutoStand)
             RemComp<KnockedDownComponent>(entity);
@@ -166,7 +167,7 @@ public abstract partial class SharedStunSystem
         if (!Resolve(entity, ref entity.Comp, false))
             return;
 
-        SetKnockdownNextUpdate(entity, GameTiming.CurTime + time);
+        SetKnockdownNextUpdate((entity, entity.Comp), GameTiming.CurTime + time);
     }
 
     /// <summary>
@@ -227,11 +228,8 @@ public abstract partial class SharedStunSystem
     /// </summary>
     /// <param name="entity">Entity whose timer we're updating</param>
     /// <param name="time">The exact time we're setting the next update to.</param>
-    private void SetKnockdownNextUpdate(Entity<KnockedDownComponent?> entity, TimeSpan time)
+    private void SetKnockdownNextUpdate(Entity<KnockedDownComponent> entity, TimeSpan time)
     {
-        if (!Resolve(entity, ref entity.Comp, false))
-            return;
-
         if (GameTiming.CurTime > time)
             time = GameTiming.CurTime;
 

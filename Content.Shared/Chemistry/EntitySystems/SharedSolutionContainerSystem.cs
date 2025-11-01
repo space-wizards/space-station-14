@@ -588,7 +588,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     ///     Adds a solution to the container, if it can fully fit.
     /// </summary>
     /// <param name="targetUid">entity holding targetSolution</param>
-    ///  <param name="targetSolution">entity holding targetSolution</param>
+    /// <param name="targetSolution">entity holding targetSolution</param>
     /// <param name="toAdd">solution being added</param>
     /// <returns>If the solution could be added.</returns>
     public bool TryAddSolution(Entity<SolutionComponent> soln, Solution toAdd)
@@ -606,40 +606,44 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Adds as much of a solution to a container as can fit.
+    ///     Adds as much of a solution to a container as can fit and updates the container.
     /// </summary>
     /// <param name="targetUid">The entity containing <paramref cref="targetSolution"/></param>
     /// <param name="targetSolution">The solution being added to.</param>
-    /// <param name="toAdd">The solution being added to <paramref cref="targetSolution"/></param>
+    /// <param name="toAdd">The solution being added to <paramref cref="targetSolution"/>. This solution is not modified.</param>
     /// <returns>The quantity of the solution actually added.</returns>
     public FixedPoint2 AddSolution(Entity<SolutionComponent> soln, Solution toAdd)
     {
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
+        var solution = soln.Comp.Solution;
 
         if (toAdd.Volume == FixedPoint2.Zero)
             return FixedPoint2.Zero;
 
         var quantity = FixedPoint2.Max(FixedPoint2.Zero, FixedPoint2.Min(toAdd.Volume, solution.AvailableVolume));
         if (quantity < toAdd.Volume)
-            TryTransferSolution(soln, toAdd, quantity);
+        {
+            // TODO: This should be made into a function that directly transfers reagents.
+            // Currently this is quite inefficient.
+            solution.AddSolution(toAdd.Clone().SplitSolution(quantity), PrototypeManager);
+        }
         else
-            ForceAddSolution(soln, toAdd);
+            solution.AddSolution(toAdd, PrototypeManager);
 
+        UpdateChemicals(soln);
         return quantity;
     }
 
     /// <summary>
     ///     Adds a solution to a container and updates the container.
+    ///     This can exceed the maximum volume of the solution added to.
     /// </summary>
     /// <param name="targetUid">The entity containing <paramref cref="targetSolution"/></param>
     /// <param name="targetSolution">The solution being added to.</param>
-    /// <param name="toAdd">The solution being added to <paramref cref="targetSolution"/></param>
+    /// <param name="toAdd">The solution being added to <paramref cref="targetSolution"/>. This solution is not modified.</param>
     /// <returns>Whether any reagents were added to the solution.</returns>
     public bool ForceAddSolution(Entity<SolutionComponent> soln, Solution toAdd)
     {
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
+        var solution = soln.Comp.Solution;
 
         if (toAdd.Volume == FixedPoint2.Zero)
             return false;
@@ -707,6 +711,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     }
 
     // Thermal energy and temperature management.
+    // TODO: ENERGY CONSERVATION!!! Nuke this once we have HeatContainers and use methods which properly conserve energy and model heat transfer correctly!
 
     #region Thermal Energy and Temperature
 
@@ -760,6 +765,26 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         var heatCap = solution.GetHeatCapacity(PrototypeManager);
         solution.Temperature += heatCap == 0 ? 0 : thermalEnergy / heatCap;
+        UpdateChemicals(soln);
+    }
+
+    /// <summary>
+    /// Same as <see cref="AddThermalEnergy"/> but clamps the value between two temperature values.
+    /// </summary>
+    /// <param name="soln">Solution we're adjusting the energy of</param>
+    /// <param name="thermalEnergy">Thermal energy we're adding or removing</param>
+    /// <param name="min">Min desired temperature</param>
+    /// <param name="max">Max desired temperature</param>
+    public void AddThermalEnergyClamped(Entity<SolutionComponent> soln, float thermalEnergy, float min, float max)
+    {
+        var solution = soln.Comp.Solution;
+
+        if (thermalEnergy == 0.0f)
+            return;
+
+        var heatCap = solution.GetHeatCapacity(PrototypeManager);
+        var deltaT = thermalEnergy / heatCap;
+        solution.Temperature = Math.Clamp(solution.Temperature + deltaT, min, max);
         UpdateChemicals(soln);
     }
 
