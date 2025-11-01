@@ -116,11 +116,11 @@ namespace Content.Server.GameTicking
                     {
                         DebugTools.Assert(mind.CurrentEntity == null, "a mind's current entity was deleted without updating the mind");
 
-                        // This player is joining the game with an existing mind, but the mind has no entity.
-                        // Their entity was probably deleted sometime while they were disconnected, or they were an observer.
-                        // Instead of allowing them to spawn in, we will dump and their existing mind in an observer ghost.
-                        SpawnObserverWaitDb();
-                    }
+                            // This player is joining the game with an existing mind, but the mind has no entity.
+                            // Their entity was probably deleted sometime while they were disconnected, or they were an observer.
+                            // Instead of allowing them to spawn in, we will dump and their existing mind in an observer ghost.
+                            PlayerJoinLobby(session);
+                        }
                     else
                     {
                         if (_playerManager.SetAttachedEntity(session, mind.CurrentEntity,true))

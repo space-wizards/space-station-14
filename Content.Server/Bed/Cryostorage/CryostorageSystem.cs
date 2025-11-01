@@ -202,6 +202,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             _loader.TrySaveGeneric(ent.Owner, saveFilePath, out var use);
             if (TryComp<ActorComponent>(ent.Owner, out var actor))
                 _ticker.PlayerJoinLobby(actor.PlayerSession);
+            _transform.DetachEntity(ent, Transform(ent));
             QueueDel(ent.Owner);
         }
 

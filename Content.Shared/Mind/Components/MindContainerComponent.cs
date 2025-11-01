@@ -34,7 +34,7 @@ public sealed partial class MindContainerComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("ghostOnShutdown")]
-    public bool GhostOnShutdown { get; set; } = true;
+    public bool GhostOnShutdown { get; set; } = false;
 }
 
 public abstract class MindEvent : EntityEventArgs
