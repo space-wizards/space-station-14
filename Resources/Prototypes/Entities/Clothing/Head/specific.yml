@@ -5,6 +5,9 @@
   description: A beret, an artists favorite headwear.
   suffix: Chameleon
   components:
+    - type: Tag
+      tags:
+      - ClothMade
     - type: Sprite
       sprite: Clothing/Head/Hats/beret.rsi
     - type: Clothing

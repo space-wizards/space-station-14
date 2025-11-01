@@ -5,6 +5,10 @@
   description: A generic black jumpsuit with no rank markings.
   suffix: Chameleon
   components:
+    - type: Tag
+      tags:
+      - ClothMade
+      - Recyclable
     - type: Sprite
       sprite: Clothing/Uniforms/Jumpsuit/color.rsi
       layers:
