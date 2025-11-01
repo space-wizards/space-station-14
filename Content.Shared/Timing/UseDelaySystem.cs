@@ -19,6 +19,13 @@ public sealed class UseDelaySystem : EntitySystem
         SubscribeLocalEvent<UseDelayComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<UseDelayComponent, ComponentGetState>(OnDelayGetState);
         SubscribeLocalEvent<UseDelayComponent, ComponentHandleState>(OnDelayHandleState);
+        SubscribeLocalEvent<UseDelayComponent, ComponentInit>(OnComponentInit);
+    }
+
+    private void OnComponentInit(Entity<UseDelayComponent> ent, ref ComponentInit args)
+    {
+        ResetAllDelays(ent);
+
     }
 
     private void OnDelayHandleState(Entity<UseDelayComponent> ent, ref ComponentHandleState args)

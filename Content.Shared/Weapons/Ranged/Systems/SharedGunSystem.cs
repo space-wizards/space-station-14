@@ -1,8 +1,8 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Numerics;
+using Content.Shared.Abilities.Mime;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Alert;
 using Content.Shared.Audio;
 using Content.Shared.CombatMode;
 using Content.Shared.Containers.ItemSlots;
@@ -11,8 +11,10 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Paper;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
+using Content.Shared.Speech.Muting;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Content.Shared.Timing;
@@ -35,6 +37,8 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
@@ -100,6 +104,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         SubscribeLocalEvent<GunComponent, CycleModeEvent>(OnCycleMode);
         SubscribeLocalEvent<GunComponent, HandSelectedEvent>(OnGunSelected);
         SubscribeLocalEvent<GunComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<GunComponent, ComponentInit>(OnComponentInit);
     }
 
     private void OnMapInit(Entity<GunComponent> gun, ref MapInitEvent args)
@@ -648,6 +653,12 @@ public abstract partial class SharedGunSystem : EntitySystem
         var ammoEv = new GetAmmoCountEvent();
         RaiseLocalEvent(uid, ref ammoEv);
         return ammoEv.Capacity;
+    }
+
+    private void OnComponentInit(Entity<GunComponent> ent, ref ComponentInit args)
+    {
+        RefreshModifiers(ent.AsNullable());
+
     }
 }
 
