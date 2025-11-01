@@ -96,8 +96,8 @@ public sealed class SolutionTests : ContentUnitTest
     [Test]
     public void AddLessThanZeroReagentReturnsZero()
     {
-        var solution = new Solution(_water, FixedPoint2.New(-1000));
-        var quantity = solution.GetTotalPrototypeQuantity(_water);
+        var solution = new Solution(Water, FixedPoint2.New(-1000));
+        var quantity = solution.GetTotalPrototypeQuantity(Water);
 
         Assert.That(quantity.Int(), Is.EqualTo(0));
     }
