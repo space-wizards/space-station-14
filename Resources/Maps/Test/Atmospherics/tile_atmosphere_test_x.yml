@@ -4,7 +4,7 @@ meta:
   engineVersion: 267.3.0
   forkId: ""
   forkVersion: ""
-  time: 10/31/2025 03:23:26
+  time: 11/01/2025 12:20:35
   entityCount: 29
 maps:
 - 1
@@ -78,22 +78,22 @@ entities:
     - type: Transform
       pos: 3.5,-2.5
       parent: 2
-    - type: IntegrationTestMarker
-      name: source
+    - type: TestMarker
+      id: source
   - uid: 37
     components:
     - type: Transform
       pos: 1.5,-2.5
       parent: 2
-    - type: IntegrationTestMarker
-      name: point1
+    - type: TestMarker
+      id: point1
   - uid: 38
     components:
     - type: Transform
       pos: 3.5,-0.5
       parent: 2
-    - type: IntegrationTestMarker
-      name: point2
+    - type: TestMarker
+      id: point2
 - proto: WallSolid
   entities:
   - uid: 3

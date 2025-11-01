@@ -3,6 +3,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Coordinates;
 using Content.Shared.Item.ItemToggle;
+using Content.Shared.Tests;
 using Robust.Shared.EntitySerialization;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.GameObjects;
@@ -56,7 +57,7 @@ public sealed class TileAtmosphereTest
 
         Entity<GridAtmosphereComponent> relevantAtmos = (grid, entityManager.GetComponent<GridAtmosphereComponent>(grid));
 
-        var markers = entityManager.AllEntities<IntegrationTestMarkerComponent>();
+        var markers = entityManager.AllEntities<TestMarkerComponent>();
 
         EntityUid source, point1, point2;
         source = point1 = point2 = EntityUid.Invalid;
@@ -132,7 +133,7 @@ public sealed class TileAtmosphereTest
 
         Entity<GridAtmosphereComponent> relevantAtmos = (grid, entityManager.GetComponent<GridAtmosphereComponent>(grid));
 
-        var markers = entityManager.AllEntities<IntegrationTestMarkerComponent>();
+        var markers = entityManager.AllEntities<TestMarkerComponent>();
 
         EntityUid source, point1, point2;
         source = point1 = point2 = EntityUid.Invalid;
@@ -200,11 +201,11 @@ public sealed class TileAtmosphereTest
         await pair.CleanReturnAsync();
     }
 
-    private static bool GetMarker(Entity<IntegrationTestMarkerComponent>[] markers, string name, out EntityUid marker)
+    private static bool GetMarker(Entity<TestMarkerComponent>[] markers, string id, out EntityUid marker)
     {
         foreach (var ent in markers)
         {
-            if (ent.Comp.Name == name)
+            if (ent.Comp.Id == id)
             {
                 marker = ent;
                 return true;
