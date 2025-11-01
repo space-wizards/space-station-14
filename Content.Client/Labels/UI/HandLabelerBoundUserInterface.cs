@@ -33,6 +33,7 @@ namespace Content.Client.Labels.UI
 
             _window.OnLabelChanged += OnLabelChanged;
             Reload();
+            _window.SetInitialLabelState(); // Must be after Reload() has set the label text
         }
 
         private void OnLabelChanged(string newLabel)

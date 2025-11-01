@@ -20,6 +20,7 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Numerics;
+using Content.Shared.Damage.Components;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -249,7 +250,7 @@ public sealed partial class ShuttleSystem
 
             if (direction.LengthSquared() > minsq)
             {
-                _stuns.TryKnockdown(uid, knockdownTime, true);
+                _stuns.TryCrawling(uid, knockdownTime);
                 _throwing.TryThrow(uid, direction, physics, Transform(uid), _projQuery, direction.Length(), playSound: false);
             }
             else
@@ -275,7 +276,7 @@ public sealed partial class ShuttleSystem
 
         foreach (var tileRef in _mapSystem.GetLocalTilesIntersecting(uid, grid, new Circle(centerTile, radius)))
         {
-            var def = (ContentTileDefinition)_tileDefManager[tileRef.Tile.TypeId];
+            var def = _turf.GetContentTileDefinition(tileRef);
             mass += def.Mass;
             tileCount++;
 
@@ -372,7 +373,7 @@ public sealed partial class ShuttleSystem
                     damageSpec.DamageDict["Blunt"] = scaledDamage;
                     damageSpec.DamageDict["Structural"] = scaledDamage * _structuralDamage;
 
-                    _damageSys.TryChangeDamage(localEnt, damageSpec, damageable: damageable);
+                    _damageSys.ChangeDamage((localEnt, damageable), damageSpec);
                 }
                 // might've been destroyed
                 if (TerminatingOrDeleted(localEnt) || EntityManager.IsQueuedForDeletion(localEnt))
@@ -402,7 +403,7 @@ public sealed partial class ShuttleSystem
                 continue;
 
             // Mark tiles for breaking/effects
-            var def = (ContentTileDefinition)_tileDefManager[_mapSystem.GetTileRef(uid, grid, tileData.Tile).Tile.TypeId];
+            var def = _turf.GetContentTileDefinition(_mapSystem.GetTileRef(uid, grid, tileData.Tile));
             if (tileData.Energy > def.Mass * _tileBreakEnergyMultiplier)
                 brokenTiles.Add((tileData.Tile, Tile.Empty));
 

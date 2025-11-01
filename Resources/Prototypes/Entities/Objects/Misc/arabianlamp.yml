@@ -110,6 +110,8 @@
     solution: Welder
   - type: ExaminableSolution
     solution: Welder
+    heldOnly: true
+    exactVolume: true
   - type: SolutionRegeneration
     solution: Welder
     generated:
