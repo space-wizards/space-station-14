@@ -247,20 +247,23 @@
 
 #region Cartridge (Ammo)
 
-# Entities tagged with the following are some fashion of bullet, loaded into gun chambers and magazines to act as ammo.
+# Entities tagged with the following are some fashion of bullet. Guns, magazines, and ammo boxes have storage whitelists for these tags.
 # Tagged entities always have CartridgeAmmoComponent.
 
 - type: Tag
-  id: CartridgeAntiMateriel # High caliber ammo for powerful rifles like WeaponSniperHristov, Musket.
+  id: CartridgeAntiMateriel # .60 high caliber ammo for powerful rifles like WeaponSniperHristov, Musket.
 
 - type: Tag
-  id: CartridgeCap # Specialty ammo for noise guns like RevolverCapGun, RevolverCapGunFake.
+  id: CartridgeCap # Specialty ammo for RevolverCapGun, RevolverCapGunFake.
 
 - type: Tag
   id: CartridgeCaselessRifle # Specialty ammo for WeaponPistolCobra.
 
 - type: Tag
   id: CartridgeDebug # Specialty ammo for debug guns like the deadly WeaponPistolDebug.
+
+- type: Tag
+  id: CartridgeHeavyRifle # .10 caliber ammo type only used by WeaponMinigun (but the tag is unused).
 
 - type: Tag
   id: CartridgeLightRifle # .30 caliber used by lmgs and middle range rifles like WeaponLightMachineGunL6, WeaponRifleAk, WeaponSniperMosin.
@@ -850,52 +853,54 @@
 
 ## M ##
 
-#region Magazines
-# Magazines ordered by slot then caliber
+#region Magazine (Ammo)
+
+# Entities tagged with the following are some sort of gun magazine. Guns whitelist their storage using these tags.
+# Tagged entities always have BallisticAmmoProviderComponent.
 
 - type: Tag
   id: MagazineCaselessRifle # Unused (Exists on BaseMagazineCaselessRifle)
 
 - type: Tag
+  id: MagazineDebug # WeaponPistolDebug
+
+- type: Tag
+  id: MagazineGrenade # ShuttleGunDuster
+
+- type: Tag
   id: MagazineHeavyRifle # Unused (Exists on BaseMagazineHeavyRifle)
 
 - type: Tag
-  id: MagazineLightRifle # Storage whitelist: BaseWeaponRifle, WeaponRifleAk
+  id: MagazineLightRifle # WeaponRifleAk
 
 - type: Tag
-  id: MagazineLightRifleBox # Storage whitelist: BaseWeaponLightMachineGun
+  id: MagazineLightRifleBox # WeaponLightMachineGunL6
 
 - type: Tag
-  id: MagazineMagnum # Storage whitelist: ClothingBeltSecurity, WeaponPistolN1984
+  id: MagazineMagnum # WeaponPistolN1984
 
 - type: Tag
-  id: MagazinePistol # Storage whitelist: ClothingBeltSecurity, BaseWeaponPistol, WeaponPistolViper
+  id: MagazinePistol # WeaponPistolMk58, WeaponPistolViper, ClothingBeltSecurity
 
 - type: Tag
-  id: MagazinePistolCaselessRifle # Storage whitelist: WeaponPistolCobra
+  id: MagazinePistolCaselessRifle # WeaponPistolCobra
 
 - type: Tag
-  id: MagazinePistolHighCapacity # Storage whitelist: WeaponPistolViper
+  id: MagazinePistolHighCapacity # WeaponPistolViper
 
 - type: Tag
-  id: MagazinePistolSubMachineGunTopMounted # Storage whitelist: WeaponSubMachineGunWt550
+  id: MagazinePistolSubMachineGun # WeaponSubMachineGunC20r, WeaponSubMachineGunDrozd, WeaponSubMachineGunAtreides
 
 - type: Tag
-  id: MagazineRifle # Storage whitelist: WeaponRifleLecter, WeaponRifleEstoc, WeaponRifleM90GrenadeLauncher
+  id: MagazinePistolSubMachineGunTopMounted # WeaponSubMachineGunWt550
 
 - type: Tag
-  id: MagazineShotgun # Storage whitelist: WeaponShotgunBulldog
+  id: MagazineRifle # WeaponRifleLecter, WeaponRifleEstoc, WeaponRifleM90GrenadeLauncher
 
 - type: Tag
-  id: MagazinePistolSubMachineGun # Storage whitelist: BaseWeaponSubMachineGun, WeaponSubMachineGunDrozd
+  id: MagazineShotgun # WeaponShotgunBulldog
 
-- type: Tag
-  id: MagazineGrenade # Storage whitelist: ShuttleGunDuster
-
-- type: Tag
-  id: MagazineDebug # Tagged entity fits in the magazine storage of the coveted WeaponPistolDebug.
-
-# Magazines end
+#endregion
 
 - type: Tag
   id: MailingUnitElectronics # ConstructionGraph: DisposalMachine
