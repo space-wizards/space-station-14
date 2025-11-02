@@ -40,17 +40,18 @@
   - !type:FrezonProductionReaction {}
 
 - type: gasReaction
-  id: ElectrovaeEMP
+  id: ElectrovaeDischarge
   priority: 2
   minimumRequirements:
+    ChargedElectrovae: 0.01
     Oxygen: 0.01
-    ChargedElectrovae: 2
   effects:
-  - !type:ChargedElectrovaeEmpReaction {}
+  - !type:ChargedElectrovaeDischargeReaction {}
 
 - type: gasReaction
   id: ChargeElectrovae
   priority: 3
+  minimumTemperature: 400 # Requires high heat to charge
   minimumRequirements:
     Electrovae: 0.01
   effects:
@@ -59,8 +60,7 @@
 - type: gasReaction
   id: ElectrovaeProduction
   priority: 4
-  minimumTemperature: 39.15
-  maximumTemperature: 149.15
+  minimumTemperature: 200
   minimumRequirements:
     Nitrogen: 0.01
     WaterVapor: 0.01

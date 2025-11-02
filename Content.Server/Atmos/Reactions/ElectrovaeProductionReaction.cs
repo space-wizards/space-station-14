@@ -1,4 +1,4 @@
-﻿using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Reactions;
 using JetBrains.Annotations;
@@ -10,7 +10,7 @@ namespace Content.Server.Atmos.Reactions;
 ///     Chemical Equation: 11N₂O + 2H₂O → H₄N₂₂O₁₁ + O₂
 ///     (H₄N₂₂O₁₁ = Electrovae), and yes, O₂ is created;
 ///     So avoid having electricity nearby if you don't want it rapidly changing to charged electrovae and EMPing everything.
-///     This reaction is temperature-dependent, with lower temperatures increasing efficiency.
+///     This reaction is temperature-dependent, with higher temperatures increasing efficiency.
 ///     Nitrogen acts as both a catalyst (enabling the reaction) and a limiter (preventing runaway production), is not consumed.
 /// </summary>
 [UsedImplicitly]
@@ -42,8 +42,8 @@ public sealed partial class ElectrovaeProductionReaction : IGasReactionEffect
         // Apply catalyst limit: The reaction cannot proceed faster than the catalyst allows.
         possibleSets *= catalystFactor;
 
-        // INVERSE ARRHENIUS: Yield is highest at low temperatures and drops to zero as temperature increases.
-        var efficiency = CalculateInverseArrheniusEfficiency(mixture.Temperature);
+        // Arrhenius: Yield is highest at high temperatures and drops to zero as temperature decreases.
+        var efficiency = CalculateArrheniusEfficiency(mixture.Temperature);
         if (efficiency < 0.01f)
             return ReactionResult.NoReaction;
 
@@ -62,17 +62,17 @@ public sealed partial class ElectrovaeProductionReaction : IGasReactionEffect
         return (reactionSets > 0.01f) ? ReactionResult.Reacting : ReactionResult.NoReaction;
     }
 
-    private static float CalculateInverseArrheniusEfficiency(float temperature)
+    private static float CalculateArrheniusEfficiency(float temperature)
     {
-        var maxTemp = Atmospherics.ElectrovaeProductionMaxTemperature;
-        if (temperature >= maxTemp)
+        var minTemp = Atmospherics.ElectrovaeProductionMinTemperature;
+        if (temperature < minTemp)
             return 0f;
 
-        var minTemp = Atmospherics.ElectrovaeProductionMinTemperature;
+        var maxTemp = Atmospherics.ElectrovaeProductionMaxTemperature;
+        if (temperature >= maxTemp)
+            return 1f;
 
-        // Normalize the temperature to a 0-1 range, where 1 is max efficiency (coldest)
-        // and 0 is no efficiency (hottest within range).
-        var normalizedEfficiency = 1 - (temperature - minTemp) / (maxTemp - minTemp);
+        var normalizedEfficiency = (temperature - minTemp) / (maxTemp - minTemp);
 
         normalizedEfficiency = MathF.Pow(normalizedEfficiency, Atmospherics.ElectrovaeProductionTemperatureExponent);
 

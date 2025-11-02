@@ -443,6 +443,26 @@ namespace Content.Server.Atmos.EntitySystems
             return true;
         }
 
+        private bool ProcessChargedElectrovaeTiles(
+            Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent)
+        {
+            var atmosphere = ent.Comp1;
+
+            var tilesToProcess = new List<TileAtmosphere>();
+            foreach (var tile in atmosphere.ActiveTiles)
+            {
+                if (tile.ChargedEffect.Active)
+                    tilesToProcess.Add(tile);
+            }
+
+            foreach (var tile in tilesToProcess)
+            {
+                ProcessChargedElectrovae(ent, tile);
+            }
+
+            return true;
+        }
+
         private bool ProcessSuperconductivity(GridAtmosphereComponent atmosphere)
         {
             if(!atmosphere.ProcessingPaused)
@@ -771,6 +791,9 @@ namespace Content.Server.Atmos.EntitySystems
                     }
 
                     atmosphere.ProcessingPaused = false;
+
+                    ProcessChargedElectrovaeTiles(ent);
+
                     // Next state depends on whether superconduction is enabled or not.
                     // Note: We do this here instead of on the tile equalization step to prevent ending it early.
                     //       Therefore, a change to this CVar might only be applied after that step is over.

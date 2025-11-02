@@ -546,7 +546,6 @@
 - type: reaction
   id: ChargedElectrovaeEmpExplosion
   impact: High
-  priority: 20
   reactants:
     ChargedElectrovae:
       amount: 5
@@ -558,3 +557,17 @@
       maxRange: 10
       energyConsumption: 10000
       duration: 12
+
+- type: reaction
+  id: ChargedElectrovaeRelease
+  reactants:
+    ChargedElectrovae:
+      amount: 5
+    Water:
+      amount: 1
+  products:
+    ChargedElectrovae: 5
+  effects:
+    - !type:CreateGas
+      gas: ChargedElectrovae
+      multiplier: 20

@@ -419,11 +419,8 @@
   flavor: bitter
   color: "#0022FF"
   recognizable: true
-  boilingPoint: -127.3
-  meltingPoint: -186.4
-  tileReactions:
-  - !type:FlammableTileReaction
-    temperatureMultiplier: 1.5
+  boilingPoint: -116.1
+  meltingPoint: -149.9
   metabolisms:
     Poison:
       effects:
@@ -439,7 +436,7 @@
         damage:
           types:
             Poison:
-              1
+              0.1
       - !type:AdjustAlert
         alertType: Toxins
         minScale: 3
@@ -454,11 +451,8 @@
   flavor: metallic
   color: "#ddff00"
   recognizable: true
-  boilingPoint: -127.3
-  meltingPoint: -186.4
-  tileReactions:
-  - !type:FlammableTileReaction
-    temperatureMultiplier: 1.5
+  boilingPoint: -114.3
+  meltingPoint: -142.8
   metabolisms:
     Poison:
       effects:
@@ -474,7 +468,7 @@
         damage:
           types:
             Poison:
-              1.5
+              0.15
       - !type:AdjustAlert
         alertType: Toxins
         minScale: 3

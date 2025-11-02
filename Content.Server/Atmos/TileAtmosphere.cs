@@ -66,6 +66,9 @@ namespace Content.Server.Atmos
         public Hotspot Hotspot;
 
         [ViewVariables]
+        public ChargedElectrovaeEffect ChargedEffect;
+
+        [ViewVariables]
         public AtmosDirection PressureDirection;
 
         // For debug purposes.
