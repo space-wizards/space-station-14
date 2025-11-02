@@ -56,14 +56,18 @@ public sealed class NinjaConditionsSystem : EntitySystem
         var warps = new List<EntityUid>();
         var allEnts = EntityQueryEnumerator<WarpPointComponent>();
         var bombingWhitelist = comp.Whitelist;
+        var bombingBlacklist = comp.Blacklist;
 
         while (allEnts.MoveNext(out var warpUid, out var warp))
         {
-            if (_whitelist.IsWhitelistPass(bombingWhitelist, warpUid)
-                && !string.IsNullOrWhiteSpace(warp.Location))
-            {
-                warps.Add(warpUid);
-            }
+            if (string.IsNullOrWhiteSpace(warp.Location))
+                continue;
+
+            if (_whitelist.IsWhitelistFail(bombingWhitelist, warpUid) ||
+                _whitelist.IsBlacklistPass(bombingBlacklist, warpUid))
+                continue;
+
+            warps.Add(warpUid);
         }
 
         if (warps.Count <= 0)

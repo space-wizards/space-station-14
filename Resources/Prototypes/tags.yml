@@ -1020,8 +1020,12 @@
   id: Mushroom
 
 ## N ##
+
 - type: Tag
   id: NinjaBombingTarget # Ninjas will target this warp point
+
+- type: Tag
+  id: NinjaBombingTargetBlacklist # Ninjas will not target this warp point
 
 - type: Tag
   id: NoBlockAnchoring
@@ -1446,6 +1450,9 @@
 
 - type: Tag
   id: TeleportScrollWarp
+
+- type: Tag
+  id: TeleportScrollWarpBlacklist
 
 - type: Tag
   id: TimerBrigElectronics

@@ -21,4 +21,10 @@ public sealed partial class SpiderChargeConditionComponent : Component
     /// </summary>
     [DataField]
     public EntityWhitelist? Whitelist;
+
+    /// <summary>
+    /// Which points are in the list of invalid bombing targets
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Blacklist;
 }

@@ -52,6 +52,12 @@ public sealed partial class TeleportLocationsComponent : Component
     /// </summary>
     [DataField]
     public EntityWhitelist? Whitelist;
+
+    /// <summary>
+    /// Which warp points should be made unavailable for teleportation?
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Blacklist;
 }
 
 /// <summary>
