@@ -458,9 +458,16 @@ namespace Content.Server.GameTicking
                 _startingRound = false;
                 return;
             }
+            var skipinit = false;
+            if (_ent.TryGetComponent(_map.GetMap(DefaultMap), out MapComponent? mc))
+            {
+                if (mc.MapInitialized) skipinit = true;
+            }
+            if (!skipinit)
+            {
                 // MapInitialize *before* spawning players, our codebase is too shit to do it afterwards...
-            _map.InitializeMap(DefaultMap);
-           
+                _map.InitializeMap(DefaultMap);
+            }
             
 
             SpawnPlayers(readyPlayers, readyPlayerProfiles, force);
