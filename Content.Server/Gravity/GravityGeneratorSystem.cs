@@ -1,6 +1,9 @@
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Popups;
 using Content.Shared.Gravity;
+using Content.Shared.Construction.Components;
+using Content.Shared.Popups;
 
 namespace Content.Server.Gravity;
 
@@ -8,12 +11,14 @@ public sealed class GravityGeneratorSystem : EntitySystem
 {
     [Dependency] private readonly GravitySystem _gravitySystem = default!;
     [Dependency] private readonly SharedPointLightSystem _lights = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<GravityGeneratorComponent, EntParentChangedMessage>(OnParentChanged);
+        SubscribeLocalEvent<GravityGeneratorComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
         SubscribeLocalEvent<GravityGeneratorComponent, ChargedMachineActivatedEvent>(OnActivated);
         SubscribeLocalEvent<GravityGeneratorComponent, ChargedMachineDeactivatedEvent>(OnDeactivated);
     }
@@ -55,6 +60,23 @@ public sealed class GravityGeneratorSystem : EntitySystem
         {
             _gravitySystem.RefreshGravity(xform.ParentUid, gravity);
         }
+    }
+
+    /// <summary>
+    /// Prevent unanchoring when gravity is active
+    /// </summary>
+    private void OnUnanchorAttempt(Entity<GravityGeneratorComponent> ent, ref UnanchorAttemptEvent args)
+    {
+        if (!ent.Comp.GravityActive)
+            return;
+
+        _popupSystem.PopupEntity(
+            Loc.GetString("gravity-generator-unanchoring-failed"),
+            ent,
+            args.User,
+            PopupType.Medium);
+
+        args.Cancel();
     }
 
     private void OnParentChanged(EntityUid uid, GravityGeneratorComponent component, ref EntParentChangedMessage args)
