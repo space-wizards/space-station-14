@@ -206,6 +206,7 @@ public sealed partial class ExplosionSystem
         HashSet<EntityUid> processed,
         string id,
         float? fireStacks,
+        float? temperature,
         EntityUid? cause)
     {
         var size = grid.Comp.TileSize;
@@ -225,7 +226,7 @@ public sealed partial class ExplosionSystem
         // process those entities
         foreach (var (uid, xform) in list)
         {
-            ProcessEntity(uid, epicenter, damage, throwForce, id, xform, fireStacks, cause);
+            ProcessEntity(uid, epicenter, damage, throwForce, id, xform, fireStacks, temperature, cause);
         }
 
         // process anchored entities
@@ -235,7 +236,7 @@ public sealed partial class ExplosionSystem
         foreach (var entity in _anchored)
         {
             processed.Add(entity);
-            ProcessEntity(entity, epicenter, damage, throwForce, id, null, fireStacks, cause);
+            ProcessEntity(entity, epicenter, damage, throwForce, id, null, fireStacks, temperature, cause);
         }
 
         // Walls and reinforced walls will break into girders. These girders will also be considered turf-blocking for
@@ -271,7 +272,7 @@ public sealed partial class ExplosionSystem
         {
             // Here we only throw, no dealing damage. Containers n such might drop their entities after being destroyed, but
             // they should handle their own damage pass-through, with their own damage reduction calculation.
-            ProcessEntity(uid, epicenter, null, throwForce, id, xform, null, cause);
+            ProcessEntity(uid, epicenter, null, throwForce, id, xform, null, temperature, cause);
         }
 
         return !tileBlocked;
@@ -308,6 +309,7 @@ public sealed partial class ExplosionSystem
         HashSet<EntityUid> processed,
         string id,
         float? fireStacks,
+        float? temperature,
         EntityUid? cause)
     {
         var gridBox = Box2.FromDimensions(tile * DefaultTileSize, new Vector2(DefaultTileSize, DefaultTileSize));
@@ -324,7 +326,7 @@ public sealed partial class ExplosionSystem
         foreach (var (uid, xform) in state.Item1)
         {
             processed.Add(uid);
-            ProcessEntity(uid, epicenter, damage, throwForce, id, xform, fireStacks, cause);
+            ProcessEntity(uid, epicenter, damage, throwForce, id, xform, fireStacks, temperature, cause);
         }
 
         if (throwForce <= 0)
@@ -338,7 +340,7 @@ public sealed partial class ExplosionSystem
 
         foreach (var (uid, xform) in list)
         {
-            ProcessEntity(uid, epicenter, null, throwForce, id, xform, fireStacks, cause);
+            ProcessEntity(uid, epicenter, null, throwForce, id, xform, fireStacks, temperature, cause);
         }
     }
 
@@ -437,6 +439,7 @@ public sealed partial class ExplosionSystem
         string id,
         TransformComponent? xform,
         float? fireStacksOnIgnite,
+        float? temperature,
         EntityUid? cause)
     {
         if (originalDamage != null)
@@ -464,7 +467,7 @@ public sealed partial class ExplosionSystem
             }
         }
 
-        // ignite components
+        // ignite entities with the flammable component
         if (fireStacksOnIgnite != null)
         {
             if (_flammableQuery.TryGetComponent(uid, out var flammable))
@@ -475,7 +478,6 @@ public sealed partial class ExplosionSystem
         }
 
         // heat the atmosphere
-        float? temperature = fireStacksOnIgnite * 500;
         if ((temperature != null) && (xform != null) && (xform.GridUid is { } gridUid))
         {
             var position = _transformSystem.GetGridOrMapTilePosition(uid, xform);
@@ -870,6 +872,7 @@ sealed class Explosion
                     ProcessedEntities,
                     ExplosionType.ID,
                     ExplosionType.FireStacks,
+                    ExplosionType.Temperature,
                     Cause);
 
                 // If the floor is not blocked by some dense object, damage the floor tiles.
@@ -889,6 +892,7 @@ sealed class Explosion
                     ProcessedEntities,
                     ExplosionType.ID,
                     ExplosionType.FireStacks,
+                    ExplosionType.Temperature,
                     Cause);
             }
 

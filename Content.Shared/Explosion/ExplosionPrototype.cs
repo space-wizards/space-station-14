@@ -28,12 +28,14 @@ public sealed partial class ExplosionPrototype : IPrototype
     /// <summary>
     ///     Amount of firestacks to apply in addition to igniting.
     /// </summary>
-    /// <remarks>
-    ///     Setting this to zero means that the explosion won't ignite any gas present.
-    ///     (For instance : cleaning grenades)
-    /// </remarks>
     [DataField]
     public float? FireStacks;
+
+    /// <summary>
+    ///     Temperature of the explosion
+    /// </summary>
+    [DataField]
+    public float? Temperature;
 
     /// <summary>
     ///     This set of points, together with <see cref="_tileBreakIntensity"/> define a function that maps the
