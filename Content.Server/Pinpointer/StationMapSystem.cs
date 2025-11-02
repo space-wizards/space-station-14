@@ -46,10 +46,10 @@ public sealed class StationMapSystem : EntitySystem
         if (args.TargetStation == null)
             return;
 
-        if (!TryComp<StationMapComponent>(ent, out var stationMap))
+        if (!TryComp<StationMapComponent>(ent, out var stationMap) || !TryComp<RuleGridsComponent>(args.RuleEntity, out var ruleGrids))
             return;
 
-        if (Transform(ent).MapID != Transform(args.TargetStation.Value).MapID)
+        if (Transform(ent).MapID != ruleGrids.Map)
             return;
 
         stationMap.TargetGrid = _station.GetLargestGrid((args.TargetStation.Value, null));

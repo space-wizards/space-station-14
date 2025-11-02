@@ -86,7 +86,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             return;
 
         component.TargetStation = RobustRandom.Pick(eligible);
-        var ev = new NukeopsTargetStationSelectedEvent(component.TargetStation);
+        var ev = new NukeopsTargetStationSelectedEvent(uid, component.TargetStation);
         RaiseLocalEvent(ref ev);
     }
 
@@ -557,10 +557,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 [ByRefEvent]
 public readonly struct NukeopsTargetStationSelectedEvent
 {
+    public readonly EntityUid RuleEntity;
+
     public readonly EntityUid? TargetStation;
 
-    public NukeopsTargetStationSelectedEvent(EntityUid? targetStation)
+    public NukeopsTargetStationSelectedEvent(EntityUid ruleEntity, EntityUid? targetStation)
     {
+        RuleEntity = ruleEntity;
         TargetStation = targetStation;
     }
 }
