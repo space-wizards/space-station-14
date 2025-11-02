@@ -42,9 +42,6 @@
 - type: Tag
   id: ArtifactFragment # Storage whitelist: OreBag. CargoBounty: BountyArtifactFragment. ConstructionGraph: Artifact
 
-- type: Tag
-  id: ATVKeys # Unused x2
-
 ## B ##
 
 - type: Tag
@@ -261,9 +258,6 @@
   id: CartridgeCaselessRifle # Ammo: WeaponPistolCobra, BaseMagazineCaselessRifle, BaseMagazineBoxCaselessRifle
 
 - type: Tag
-  id: CartridgeCHIMP # Unused x2
-
-- type: Tag
   id: CartridgeHeavyRifle # Unused (exists on BaseCartridgeHeavyRifle)
 
 - type: Tag
@@ -423,9 +417,6 @@
   id: CrowbarRed # Storage whitelist: BaseClothingBeltEngineering, ClothingBeltChiefEngineer. ItemMapper: BaseClothingBeltEngineering, ClothingBeltChiefEngineer
 
 - type: Tag
-  id: Cryobeaker # Unused x2
-
-- type: Tag
   id: CrystalBlack # ConstructionGraph: BlackLight, BlackLightBulb
 
 - type: Tag
@@ -477,9 +468,6 @@
 
 - type: Tag
   id: DockArrivals # Used by ArrivalsSystem for finding a priority FTL destination.
-
-- type: Tag
-  id: DockCargo # Unused x2
 
 - type: Tag
   id: DockEmergency # Used bv EmergencyShuttleSystem for finding a priority FTL destination.
@@ -548,9 +536,6 @@
   id: EncryptionCommon # ItemMapper: TelecomServer
 
 - type: Tag
-  id: EncryptionElse # Unused x2
-
-- type: Tag
   id: EncryptionEngineering # ItemMapper: TelecomServer
 
 - type: Tag
@@ -570,9 +555,6 @@
 
 - type: Tag
   id: ExCable # Placement blacklist on CableDetStack. Placement whitelist on WiredDetonator
-
-- type: Tag
-  id: ExplosivePassable # Unused x2
 
 ## F ##
 
@@ -768,9 +750,6 @@
   id: HidesHair # Used by MagicMirrorSystem to prevent haircuts if a tagged entity is worn.
 
 - type: Tag
-  id: HidesNose # Unused x2
-
-- type: Tag
   id: HighRiskItem # Storage blacklist: ClothingHeadHatDetGadget. Blacklisted on MaterialReclaimerComponent by both entities
                    # Used by EventHorizonSystem to send an admin alert.
 
@@ -909,25 +888,16 @@
 # Magazines ordered by slot then caliber
 
 - type: Tag
-  id: MagazineCalico # Unused x2
-
-- type: Tag
   id: MagazineCaselessRifle # Unused (Exists on BaseMagazineCaselessRifle)
 
 - type: Tag
   id: MagazineHeavyRifle # Unused (Exists on BaseMagazineHeavyRifle)
 
 - type: Tag
-  id: MagazineHeavyRifleBox # Unused x2
-
-- type: Tag
   id: MagazineLightRifle # Storage whitelist: BaseWeaponRifle, WeaponRifleAk
 
 - type: Tag
   id: MagazineLightRifleBox # Storage whitelist: BaseWeaponLightMachineGun
-
-- type: Tag
-  id: MagazineLightRiflePan # Unused x2
 
 - type: Tag
   id: MagazineMagnum # Storage whitelist: ClothingBeltSecurity, WeaponPistolN1984
@@ -1033,9 +1003,6 @@
 ## N ##
 - type: Tag
   id: NinjaBombingTargetBlocker # Ninjas will not target this warp point
-
-- type: Tag
-  id: NoBlockAnchoring # Unused x2
 
 - type: Tag
   id: NoConsoleSound # Blacklist on BaseComputer, StationMap. Tagged entity will not make sound when opening the UI.
@@ -1307,9 +1274,6 @@
   id: SecurityHelmet # ConstructionGraph: HelmetJustice
 
 - type: Tag
-  id: SecwayKeys # Unused x2
-
-- type: Tag
   id: Sheet # MaterialStorage whitelist for many machines and lathes. Storage whitelist: MaterialBag
 
 - type: Tag
@@ -1332,9 +1296,6 @@
 
 - type: Tag
   id: SiliconEmotes # Whitelisted and blacklisted in various EmotePrototypes to create a silicon emote group.
-
-- type: Tag
-  id: SkeletonMotorcycleKeys # Unused x2
 
 - type: Tag
   id: Skewer # Food sequence key
@@ -1432,9 +1393,6 @@
 
 - type: Tag
   id: Syndicate # FTLDestination whitelist in nukieplanet.yml. Tag exists on ComputerShuttleSyndie and infiltrator.yml
-
-- type: Tag
-  id: SyndicateSegwayKeys # Unused x2
 
 - type: Tag
   id: Syringe # Storage whitelist: ClothingBeltPlant, ChemBag, SmartFridge. CargoBounty: BountySyringe
