@@ -4,9 +4,6 @@
   parent: [ BaseCartridge, BaseSecurityContraband ]
   abstract: true
   components:
-  - type: Tag
-    tags:
-      - CartridgeHeavyRifle
   - type: CartridgeAmmo
     proto: BulletHeavyRifle
   - type: Sprite

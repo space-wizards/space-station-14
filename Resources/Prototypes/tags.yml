@@ -144,7 +144,7 @@
   id: BorgModuleSyndicateAssault # Cyborg module category for extra evil red robots (nukies)
 
 - type: Tag
-  id: Bot # Unused (Exists on MobRobotic, MobSupplyBot)
+  id: Bot # Targeting whitelist: ChameleonProjector
 
 - type: Tag
   id: BotanyHatchet # Storage whitelist: ClothingBeltPlant. ItemMapper: ClothingBeltPlant
@@ -174,9 +174,6 @@
   id: Bread # CargoBounty: BountyBread. Blacklisted in BountyFruit and BountyVegetable
 
 - type: Tag
-  id: Briefcase # Unused (exists on BriefcaseBase)
-
-- type: Tag
   id: BrimFlatcapBrown # ConstructionGraph: BladedFlatcapBrown
 
 - type: Tag
@@ -198,7 +195,7 @@
   id: Burnt # Storage whitelist: ashtray. Seemingly redundant?
 
 - type: Tag
-  id: Bun # Unused (Exists on FoodSequenceElements BunTopBurger and CottonBunTopBurger)
+  id: Bun # LastElement key on burger associated MetamorphRecipes.
 
 - type: Tag
   id: BypassDropChecks # Tagged entities don't care about drop distance or walls (Aghost).
@@ -258,9 +255,6 @@
   id: CartridgeCaselessRifle # Ammo: WeaponPistolCobra, BaseMagazineCaselessRifle, BaseMagazineBoxCaselessRifle
 
 - type: Tag
-  id: CartridgeHeavyRifle # Unused (exists on BaseCartridgeHeavyRifle)
-
-- type: Tag
   id: CartridgeLightRifle # Ammo: BaseWeaponLightMachineGun, BaseWeaponRifle, BaseWeaponSniper
                           # SpeedLoaderLightRifle, BaseMagazineLightRifle, BaseMagazineBoxLightRifle
 
@@ -315,9 +309,6 @@
   id: Cleaver # Storage whitelist: ClothingBeltChef. ItemMapper: ClothingBeltChef
 
 - type: Tag
-  id: ClockworkGlassShard # Unused (Exists on ShardGlassClockwork)
-
-- type: Tag
   id: ClothMade # SpecialDigestible: OrganMothStomach. Storage whitelist: FoodBoxCloth
 
 - type: Tag
@@ -325,9 +316,6 @@
 
 - type: Tag
   id: ClownRecorder # ConstructionGraph: ClownHardsuit
-
-- type: Tag
-  id: ClownRubberStamp # Unused (Exists on RubberStampClown)
 
 - type: Tag
   id: ClownShoes # CargoBounty: BountyClownCostume. ConstructionGraph: Honker, BananaClownShoes
