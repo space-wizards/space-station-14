@@ -2,7 +2,7 @@ using Content.Server.Access.Systems;
 using Content.Server.AlertLevel;
 using Content.Server.CartridgeLoader;
 using Content.Server.Chat.Managers;
-using Content.Server.Instruments;
+using Content.Shared.Instruments;
 using Content.Server.PDA.Ringer;
 using Content.Server.Station.Systems;
 using Content.Server.Store.Systems;
@@ -28,7 +28,7 @@ namespace Content.Server.PDA
     public sealed class PdaSystem : SharedPdaSystem
     {
         [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoader = default!;
-        [Dependency] private readonly InstrumentSystem _instrument = default!;
+        [Dependency] private readonly SharedInstrumentSystem _instrument = default!;
         [Dependency] private readonly RingerSystem _ringer = default!;
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly StoreSystem _store = default!;
@@ -263,7 +263,10 @@ namespace Content.Server.PDA
                 return;
 
             if (TryComp<InstrumentComponent>(uid, out var instrument))
-                _instrument.ToggleInstrumentUi(uid, msg.Actor, instrument);
+            {
+                var ev = new InstrumentMidiEvent(uid, Array.Empty<byte>());
+                RaiseLocalEvent(uid, ev);
+            }
         }
 
         private void OnUiMessage(EntityUid uid, PdaComponent pda, PdaShowUplinkMessage msg)
