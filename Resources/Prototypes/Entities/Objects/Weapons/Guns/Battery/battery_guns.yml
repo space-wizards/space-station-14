@@ -515,6 +515,7 @@
     - Taser
     - Sidearm
   - type: PacifismAllowedGun
+  - type: StaminaDamageExaminable
 
 - type: entity
   name: disabler
@@ -544,6 +545,7 @@
     - Security
     - Antagonists
   - type: PacifismAllowedGun
+  - type: StaminaDamageExaminable
 
 - type: entity
   name: disabler SMG
@@ -585,6 +587,7 @@
   - type: StaticPrice
     price: 260
   - type: PacifismAllowedGun
+  - type: StaminaDamageExaminable
 
 - type: entity
   name: taser
@@ -856,6 +859,7 @@
   - type: Battery
     maxCharge: 480
     startingCharge: 480
+  - type: StaminaDamageExaminable
 
 - type: entity
   name: energy magnum
@@ -905,6 +909,7 @@
     autoRechargeRate: 48
     autoRechargePause: true
     autoRechargePauseTime: 10
+  - type: StaminaDamageExaminable
 
 - type: entity
   name: temperature gun

@@ -1,4 +1,5 @@
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
 using Content.Shared.Projectiles;
@@ -9,6 +10,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using static Content.Shared.Damage.Systems.SharedStaminaSystem;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
@@ -23,6 +25,7 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<HitscanBatteryAmmoProviderComponent, TakeAmmoEvent>(OnBatteryTakeAmmo);
         SubscribeLocalEvent<HitscanBatteryAmmoProviderComponent, GetAmmoCountEvent>(OnBatteryAmmoCount);
         SubscribeLocalEvent<HitscanBatteryAmmoProviderComponent, ExaminedEvent>(OnBatteryExamine);
+        SubscribeLocalEvent<HitscanBatteryAmmoProviderComponent, StaminaExamineEvent>(OnBatteryStaminaExamine);
         SubscribeLocalEvent<HitscanBatteryAmmoProviderComponent, DamageExamineEvent>(OnBatteryDamageExamine);
 
         // Projectile
@@ -31,6 +34,7 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, TakeAmmoEvent>(OnBatteryTakeAmmo);
         SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, GetAmmoCountEvent>(OnBatteryAmmoCount);
         SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, ExaminedEvent>(OnBatteryExamine);
+        SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, StaminaExamineEvent>(OnBatteryStaminaExamine);
         SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, DamageExamineEvent>(OnBatteryDamageExamine);
     }
 
@@ -77,6 +81,17 @@ public abstract partial class SharedGunSystem
         _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), damageType);
     }
 
+    private void OnBatteryStaminaExamine<T>(Entity<T> entity, ref StaminaExamineEvent args) where T : BatteryAmmoProviderComponent
+    {
+        var damage = GetStaminaDamage(entity.Comp);
+
+        if (damage == 0)
+            return;
+
+        args.Message.PushNewline();
+        args.Message.AddMarkupOrThrow(Loc.GetString("stamina-damage-examine-collide", ("amount", damage)));
+    }
+
     private DamageSpecifier? GetDamage(BatteryAmmoProviderComponent component)
     {
         if (component is ProjectileBatteryAmmoProviderComponent battery)
@@ -84,7 +99,7 @@ public abstract partial class SharedGunSystem
             if (ProtoManager.Index<EntityPrototype>(battery.Prototype).Components
                 .TryGetValue(Factory.GetComponentName<ProjectileComponent>(), out var projectile))
             {
-                var p = (ProjectileComponent) projectile.Component;
+                var p = (ProjectileComponent)projectile.Component;
 
                 if (!p.Damage.Empty)
                 {
@@ -105,6 +120,36 @@ public abstract partial class SharedGunSystem
         }
 
         return null;
+    }
+
+    private float GetStaminaDamage(BatteryAmmoProviderComponent component)
+    {
+        if (component is ProjectileBatteryAmmoProviderComponent battery)
+        {
+            if (ProtoManager.Index<EntityPrototype>(battery.Prototype).Components
+                .TryGetValue(Factory.GetComponentName<StaminaDamageOnCollideComponent>(), out var projectile))
+            {
+                var p = (StaminaDamageOnCollideComponent)projectile.Component;
+
+                if (p.Damage != 0)
+                {
+                    return p.Damage * Damageable.UniversalProjectileDamageModifier;
+                }
+            }
+
+            return 0;
+        }
+
+        if (component is HitscanBatteryAmmoProviderComponent hitscan)
+        {
+            var dmg = ProtoManager.Index(hitscan.HitscanEntityProto);
+            if (!dmg.TryGetComponent<StaminaDamageOnCollideComponent>(out var basicDamageComp, Factory))
+                return 0;
+
+            return basicDamageComp.Damage * Damageable.UniversalHitscanDamageModifier;
+        }
+
+        return 0;
     }
 
     private void OnBatteryTakeAmmo(EntityUid uid, BatteryAmmoProviderComponent component, TakeAmmoEvent args)
