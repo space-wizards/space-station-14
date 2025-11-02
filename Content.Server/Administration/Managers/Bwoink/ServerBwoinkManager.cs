@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Content.Server.Players.RateLimiting;
 using Content.Shared.Administration.Managers.Bwoink;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -13,6 +14,8 @@ namespace Content.Server.Administration.Managers.Bwoink;
 /// <seealso cref="SharedBwoinkManager"/>
 public sealed partial class ServerBwoinkManager : SharedBwoinkManager
 {
+    private const string RateLimitKey = "AdminHelp";
+
     /// <summary>
     /// The amount of time required for a person to be no longer typing.
     /// </summary>
@@ -28,6 +31,7 @@ public sealed partial class ServerBwoinkManager : SharedBwoinkManager
 
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly PlayerRateLimitManager _rateLimitManager = default!;
 
     public override void Initialize()
     {

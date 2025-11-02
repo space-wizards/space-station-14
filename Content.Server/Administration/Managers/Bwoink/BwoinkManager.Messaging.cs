@@ -2,8 +2,11 @@
 using Content.Shared.Administration.Managers.Bwoink;
 using Content.Shared.Administration.Managers.Bwoink.Features;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.Shared.CCVar;
+using Content.Shared.Players.RateLimiting;
 
 namespace Content.Server.Administration.Managers.Bwoink;
 
@@ -21,6 +24,13 @@ public sealed partial class ServerBwoinkManager
         _netManager.RegisterNetMessage<MsgBwoinkSyncChannels>();
 
         _netManager.Connected += NetManagerOnConnected;
+
+        _rateLimitManager.Register(
+            RateLimitKey,
+            new RateLimitRegistration(CCVars.AhelpRateLimitPeriod,
+                CCVars.AhelpRateLimitCount,
+                null)
+        );
     }
 
     private void TypingUpdated(MsgBwoinkTypingUpdate message)
@@ -109,6 +119,24 @@ public sealed partial class ServerBwoinkManager
     /// </summary>
     private void SynchronizeMessage(ProtoId<BwoinkChannelPrototype> channel, NetUserId target, BwoinkMessage message)
     {
+        var targetSes = PlayerManager.GetSessionById(target);
+
+        var gotRateLimited = _rateLimitManager.CountAction(targetSes, RateLimitKey);
+        if (gotRateLimited == RateLimitStatus.Blocked)
+        {
+            var rateLimitMessage = CreateSystemMessage(LocalizationManager.GetString("bwoink-system-rate-limited"),
+                MessageFlags.Silent | MessageFlags.Manager);
+
+            var rateLimitMessageMsg = new MsgBwoinkNonAdmin()
+            {
+                Message = rateLimitMessage,
+                Channel = channel,
+            };
+
+            _netManager.ServerSendMessage(rateLimitMessageMsg, PlayerManager.GetSessionById(target).Channel);
+            return;
+        }
+
         InvokeMessageReceived(channel, target, message);
 
         var msgBwoink = new MsgBwoink()
@@ -132,8 +160,6 @@ public sealed partial class ServerBwoinkManager
 
         if (message.Flags.HasFlag(MessageFlags.ManagerOnly))
             return; // Stop here.
-
-        var targetSes = PlayerManager.GetSessionById(target);
 
         if (CanManageChannel(channel, targetSes))
             return; // Don't need to send it to the admin client.
