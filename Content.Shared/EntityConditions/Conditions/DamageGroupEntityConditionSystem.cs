@@ -1,4 +1,4 @@
-﻿using Content.Shared.Damage;
+﻿using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
@@ -31,7 +31,7 @@ public sealed partial class DamageGroupCondition : EntityConditionBase<DamageGro
     public ProtoId<DamageGroupPrototype> DamageGroup;
 
     public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>
-        Loc.GetString("reagent-effect-condition-guidebook-group-damage",
+        Loc.GetString("entity-condition-guidebook-group-damage",
             ("max", Max == FixedPoint2.MaxValue ? int.MaxValue : Max.Float()),
             ("min", Min.Float()),
             ("type", prototype.Index(DamageGroup).LocalizedName));
