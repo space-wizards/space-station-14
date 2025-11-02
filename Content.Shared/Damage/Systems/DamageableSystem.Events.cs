@@ -220,7 +220,7 @@ public sealed class DamageModifyEvent(DamageSpecifier damage, EntityUid? origin 
     : EntityEventArgs, IInventoryRelayEvent
 {
     /// <summary>
-    ///     Contains locations to be targeted by the damage.
+    ///     Contains slots that will be affected by relayed damage.
     /// </summary>
     /// <remarks>
     ///     Whenever locational damage is a thing, this should just check only that bit of armor.
@@ -239,7 +239,7 @@ public sealed class DamageModifyEvent(DamageSpecifier damage, EntityUid? origin 
     public DamageSpecifier Damage = damage;
 
     /// <summary>
-    ///     Contains the entity which caused the change in damage, if any was responsible.
+    ///     Contains the entity which caused damage event, if any was responsible.
     /// </summary>
     public readonly EntityUid? Origin = origin;
 }
