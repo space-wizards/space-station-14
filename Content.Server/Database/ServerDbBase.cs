@@ -685,20 +685,7 @@ namespace Content.Server.Database
                 player.LastSeenHWId);
         }
 
-        /// <returns>A <see cref="Task{}"/> object returning <see cref="TimeSpan.MinValue"/> if the found user's <see cref="Player.LastRolledAntag"/> was null, or no user was found.</returns>
-        public async Task<TimeSpan> GetLastRolledAntag(NetUserId userId)
-        {
-            await using var db = await GetDb();
-
-            var lastRolledTimespan = await db.DbContext.Player
-                .Where(dbPlayer => dbPlayer.UserId == userId)
-                .Select(dbPlayer => dbPlayer.LastRolledAntag)
-                .SingleOrDefaultAsync();
-
-            return lastRolledTimespan ?? TimeSpan.MinValue;
-        }
-
-        /// <returns>A <see cref="Task{}"/> object returning True, if the given user's <see cref="Player.LastRolledAntag"/> was successfully set to the new value.</returns>
+        /// <inheritdoc cref="ServerDbManager.SetLastRolledAntag(NetUserId, TimeSpan)"/>
         public async Task<bool> SetLastRolledAntag(NetUserId userId, TimeSpan value)
         {
             await using var db = await GetDb();
@@ -711,6 +698,19 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync();
 
             return true;
+        }
+
+        /// <inheritdoc cref="ServerDbManager.GetLastRolledAntag(NetUserId)"/>
+        public async Task<TimeSpan> GetLastRolledAntag(NetUserId userId)
+        {
+            await using var db = await GetDb();
+
+            var lastRolledTimespan = await db.DbContext.Player
+                .Where(dbPlayer => dbPlayer.UserId == userId)
+                .Select(dbPlayer => dbPlayer.LastRolledAntag)
+                .SingleOrDefaultAsync();
+
+            return lastRolledTimespan ?? TimeSpan.MinValue;
         }
 
         #endregion

@@ -244,9 +244,14 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         AssignPreSelectedSessions((uid, component));
     }
 
+    /// <summary>
+    /// Creates weights for individual sessions, weighing players heavier
+    /// with longer time passed since the last time that they rolled antag, given their overall playtime.
+    /// </summary>
+    /// <returns>Dictionary containing every player specified in <paramref name="pool"/> and their weight.</returns>
     public Dictionary<ICommonSession, float> ToWeightsDict(IList<ICommonSession> pool)
     {
-        Dictionary<ICommonSession, float> weights = new();
+        var weights = new Dictionary<ICommonSession, float>();
 
         // weight by playtime since last rolled
         foreach (var se in pool)
@@ -354,7 +359,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     }
 
     /// <summary>
-    /// Tries to makes a given player into the specified antagonist.
+    /// Tries to make a given player into the specified antagonist.
     /// </summary>
     public bool TryMakeAntag(Entity<AntagSelectionComponent> ent, ICommonSession? session, AntagSelectionDefinition def, bool ignoreSpawner = false, bool checkPref = true, bool onlyPreSelect = false)
     {
@@ -365,6 +370,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         if (!IsSessionValid(ent, session, def) || !IsEntityValid(session?.AttachedEntity, def))
             return false;
+
+        if (session != null)
+            _lastRolledAntagManager.SetLastRolled(session.UserId, _playTimeManager.GetOverallPlaytime(session));
 
         if (onlyPreSelect && session != null)
         {
