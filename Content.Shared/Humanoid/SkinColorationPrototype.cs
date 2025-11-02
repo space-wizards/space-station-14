@@ -196,9 +196,23 @@ public sealed partial class ClampedHsvColoration : ISkinColorationStrategy
     /// </summary>
     private const float Epsilon = 1e-5f; // 0.00001
 
-    [DataField] public (float, float)? Hue;
-    [DataField] public (float, float)? Saturation;
-    [DataField] public (float, float)? Value;
+    /// <summary>
+    /// The (min, max) of the hue channel.
+    /// </summary>
+    [DataField]
+    public (float, float)? Hue;
+
+    /// <summary>
+    /// The (min, max) of the saturation channel.
+    /// </summary>
+    [DataField]
+    public (float, float)? Saturation;
+
+    /// <summary>
+    /// The (min, max) of the value channel.
+    /// </summary>
+    [DataField]
+    public (float, float)? Value;
 
     public SkinColorationStrategyInput InputType => SkinColorationStrategyInput.Color;
 
@@ -247,11 +261,11 @@ public sealed partial class ClampedHsvColoration : ISkinColorationStrategy
             if (hue >= minHue || hue <= maxHue)
                 return hue;
 
-            // It's in the "invalid" gap. Find the closest boundary.
-            var mid = (minHue + maxHue + 1) / 2f;
-            if (hue < mid)
-                return maxHue;
-            return minHue;
+            // It's in the "invalid" gap between maxHue and minHue. Find the closest boundary.
+            var mid = (maxHue + minHue) / 2f;
+            if (hue > mid)
+                return minHue;
+            return maxHue;
         }
 
         return Math.Clamp(hue, minHue, maxHue);
@@ -272,9 +286,23 @@ public sealed partial class ClampedHslColoration : ISkinColorationStrategy
     /// </summary>
     private const float Epsilon = 1e-5f; // 0.00001
 
-    [DataField] public (float, float)? Hue;
-    [DataField] public (float, float)? Saturation;
-    [DataField] public (float, float)? Lightness;
+    /// <summary>
+    /// The (min, max) of the hue channel.
+    /// </summary>
+    [DataField]
+    public (float, float)? Hue;
+
+    /// <summary>
+    /// The (min, max) of the saturation channel.
+    /// </summary>
+    [DataField]
+    public (float, float)? Saturation;
+
+    /// <summary>
+    /// The (min, max) of the lightness channel.
+    /// </summary>
+    [DataField]
+    public (float, float)? Lightness;
 
     public SkinColorationStrategyInput InputType => SkinColorationStrategyInput.Color;
 
@@ -322,10 +350,11 @@ public sealed partial class ClampedHslColoration : ISkinColorationStrategy
             if (hue >= minHue || hue <= maxHue)
                 return hue;
 
-            var mid = (minHue + maxHue + 1) / 2f;
-            if (hue < mid)
-                return maxHue;
-            return minHue;
+            // It's in the "invalid" gap between maxHue and minHue. Find the closest boundary.
+            var mid = (maxHue + minHue) / 2f;
+            if (hue > mid)
+                return minHue;
+            return maxHue;
         }
         return Math.Clamp(hue, minHue, maxHue);
     }
