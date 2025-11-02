@@ -477,17 +477,19 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         var msg = new FormattedMessage();
         msg.AddMarkupOrThrow(Loc.GetString(ent.Comp.ExamineMessage));
 
-        var ev = new StaminaExamineEvent(msg);
+        var ev = new StaminaExamineEvent(new FormattedMessage());
         RaiseLocalEvent(ent, ref ev);
 
-        if (!ev.Message.IsEmpty)
-        {
-            _examine.AddDetailedExamineVerb(args, ent.Comp, ev.Message,
-                Loc.GetString(ent.Comp.VerbName),
-                "/Textures/Objects/Weapons/Melee/stunbaton.rsi/stunbaton_off.png",
-                Loc.GetString(ent.Comp.VerbMsg)
-            );
-        }
+        if (ev.Message.IsEmpty)
+            return;
+
+        msg.AddMessage(ev.Message);
+
+        _examine.AddDetailedExamineVerb(args, ent.Comp, msg,
+            Loc.GetString(ent.Comp.VerbName),
+            "/Textures/Objects/Weapons/Melee/stunbaton.rsi/stunbaton_off.png",
+            Loc.GetString(ent.Comp.VerbMsg)
+        );
     }
 
     private void OnGetHitVerbs(Entity<StaminaDamageOnHitComponent> ent, ref StaminaExamineEvent args)
