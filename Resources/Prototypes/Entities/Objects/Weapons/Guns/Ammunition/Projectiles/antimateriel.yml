@@ -14,3 +14,4 @@
     - Structural
   - type: StaminaDamageOnCollide
     damage: 60
+  - type: StaminaDamageExaminable

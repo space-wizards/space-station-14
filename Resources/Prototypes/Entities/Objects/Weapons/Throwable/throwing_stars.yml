@@ -41,6 +41,7 @@
     damage: 45
   - type: StaminaDamageOnEmbed
     damage: 10
+  - type: StaminaDamageExaminable
 
 - type: entity
   parent: ThrowingStar

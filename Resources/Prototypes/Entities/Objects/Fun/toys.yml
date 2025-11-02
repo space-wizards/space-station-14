@@ -760,6 +760,7 @@
     malus: 0
   - type: StaminaDamageOnHit
     damage: 8
+  - type: StaminaDamageExaminable
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
@@ -856,6 +857,7 @@
     - SuitStorage
   - type: StaminaDamageOnHit
     damage: 6
+  - type: StaminaDamageExaminable
   - type: Appearance
   - type: DisarmMalus
     malus: 0
@@ -924,6 +926,7 @@
         Blunt: 1000
   - type: StaminaDamageOnHit
     damage: 8
+  - type: StaminaDamageExaminable
   - type: Item
     size: Small
     sprite: Objects/Fun/rubber_hammer.rsi

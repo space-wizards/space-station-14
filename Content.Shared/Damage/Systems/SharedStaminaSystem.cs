@@ -78,7 +78,10 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 
         SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnMeleeHit);
 
-        SubscribeLocalEvent<ArmorComponent, GetVerbsEvent<ExamineVerb>>(OnArmorVerbExamine);
+        SubscribeLocalEvent<StaminaDamageExaminableComponent, GetVerbsEvent<ExamineVerb>>(OnGetExamineVerbs);
+        SubscribeLocalEvent<StaminaDamageOnHitComponent, StaminaExamineEvent>(OnGetHitVerbs);
+        SubscribeLocalEvent<StaminaDamageOnCollideComponent, StaminaExamineEvent>(OnGetCollideVerbs);
+        SubscribeLocalEvent<StaminaDamageOnEmbedComponent, StaminaExamineEvent>(OnGetEmbedVerbs);
 
         Subs.CVar(_config, CCVars.PlaytestStaminaDamageModifier, value => UniversalStaminaDamageModifier = value, true);
     }
@@ -467,69 +470,55 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     public readonly record struct StaminaExamineEvent(FormattedMessage Message);
 
     #region Examine
-    private void OnHitDamageExamine(Entity<StaminaDamageOnHitComponent> ent, ref DamageExamineEvent args)
-    {
-        if (ent.Comp.Damage == 0 || !_itemToggle.IsActivated(ent.Owner))
-            return;
-
-        args.Message.PushNewline();
-        args.Message.AddMarkupOrThrow(Loc.GetString(ent.Comp.ExamineMessage, ("amount", ent.Comp.Damage)));
-    }
-
-    private void OnDamageExamine(Entity<StaminaDamageOnHitComponent> ent, ref DamageExamineEvent args)
-    {
-        if (ent.Comp.Damage == 0 || !_itemToggle.IsActivated(ent.Owner))
-            return;
-
-        args.Message.PushNewline();
-        args.Message.AddMarkupOrThrow(Loc.GetString(ent.Comp.ExamineMessage, ("amount", ent.Comp.Damage)));
-    }
 
     // Hardcoded to separated from damage verb, because it were coded only for DamageSpecifiers
-    private void OnGetExamineVerbs(Entity<StaminaDamageOnHitComponent> ent, GetVerbsEvent<ExamineVerb> args)
+    private void OnGetExamineVerbs(Entity<StaminaDamageExaminableComponent> ent, ref GetVerbsEvent<ExamineVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess)
+        if (!args.CanInteract || !args.CanAccess || !_itemToggle.IsActivated(ent.Owner))
             return;
 
-        var examineMarkup = GetExamineMsg(ent);
+        var msg = new FormattedMessage();
+        msg.AddMarkupOrThrow(Loc.GetString(ent.Comp.ExamineMessage));
 
-        var ev = new StaminaExamineEvent(examineMarkup);
+        var ev = new StaminaExamineEvent(msg);
         RaiseLocalEvent(ent, ref ev);
+
         if (!ev.Message.IsEmpty)
         {
             _examine.AddDetailedExamineVerb(args, ent.Comp, ev.Message,
-                Loc.GetString("damage-examinable-verb-text"),
-                "/Textures/Interface/VerbIcons/smite.svg.192dpi.png",
-                Loc.GetString("damage-examinable-verb-message")
+                Loc.GetString(ent.Comp.VerbName),
+                "/Textures/Objects/Weapons/Melee/stunbaton.rsi/stunbaton_off.png",
+                Loc.GetString(ent.Comp.VerbMsg)
             );
         }
     }
 
-    private FormattedMessage GetExamineMsg(EntityUid uid,
-        StaminaDamageOnHitComponent? hitComp = null,
-        StaminaDamageOnCollideComponent? collideComp = null,
-        StaminaDamageOnEmbedComponent? embedComp = null)
+    private void OnGetHitVerbs(Entity<StaminaDamageOnHitComponent> ent, ref StaminaExamineEvent args)
     {
-        var msg = new FormattedMessage();
-        if (Resolve(uid, ref hitComp))
+        if (ent.Comp.Damage != 0)
         {
-            msg.PushNewline();
-            msg.AddMarkupOrThrow(Loc.GetString(hitComp.ExamineMessage, ("amount", hitComp.Damage)));
+            args.Message.PushNewline();
+            args.Message.AddMarkupOrThrow(Loc.GetString(ent.Comp.ExamineMessage, ("amount", ent.Comp.Damage)));
         }
 
-        if (Resolve(uid, ref collideComp))
-        {
-            msg.PushNewline();
-            msg.AddMarkupOrThrow(Loc.GetString(collideComp.ExamineMessage, ("amount", collideComp.Damage)));
-        }
+    }
 
-        if (Resolve(uid, ref embedComp))
+    private void OnGetCollideVerbs(Entity<StaminaDamageOnCollideComponent> ent, ref StaminaExamineEvent args)
+    {
+        if (ent.Comp.Damage != 0)
         {
-            msg.PushNewline();
-            msg.AddMarkupOrThrow(Loc.GetString(embedComp.ExamineMessage, ("amount", embedComp.Damage)));
+            args.Message.PushNewline();
+            args.Message.AddMarkupOrThrow(Loc.GetString(ent.Comp.ExamineMessage, ("amount", ent.Comp.Damage)));
         }
+    }
 
-        return msg;
+    private void OnGetEmbedVerbs(Entity<StaminaDamageOnEmbedComponent> ent, ref StaminaExamineEvent args)
+    {
+        if (ent.Comp.Damage != 0)
+        {
+            args.Message.PushNewline();
+            args.Message.AddMarkupOrThrow(Loc.GetString(ent.Comp.ExamineMessage, ("amount", ent.Comp.Damage)));
+        }
     }
     #endregion
 }
