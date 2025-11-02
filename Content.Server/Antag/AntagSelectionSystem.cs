@@ -507,7 +507,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     }
 
     /// <summary>
-    /// Gets an ordered player pool based on player preferences and the antagonist definition.
+    /// Gets an ordered player pool based on: player preferences, antagonist definition and antag weights from <see cref="LastRolledAntagManager"/>. 
     /// </summary>
     public AntagSelectionPlayerPool GetPlayerPool(Entity<AntagSelectionComponent> ent, IList<ICommonSession> sessions, AntagSelectionDefinition def)
     {
