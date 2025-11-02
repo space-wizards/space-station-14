@@ -570,4 +570,3 @@
   effects:
     - !type:CreateGas
       gas: ChargedElectrovae
-      multiplier: 20
