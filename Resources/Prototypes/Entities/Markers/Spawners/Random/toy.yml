@@ -34,6 +34,8 @@
         - ToyMouse
         - PlushieDiona
         - PlushieArachind
+        - PlushieSheep
+        - PlushieSpaceSheep
       chance: 0.5
       offset: 0.2
 

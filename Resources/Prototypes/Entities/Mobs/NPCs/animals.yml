@@ -1103,6 +1103,167 @@
     rootTask:
       task: RuminantHostileCompound
 
+- type: entity
+  name: sheepBase
+  id: MobSheepBase
+  description: A sheep.
+  abstract: true
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - state: sheep_bare
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+      visible: true
+      sprite: Mobs/Animals/sheep.rsi
+    # this wooly layer relates to the shearable component.
+    - state: sheep_wool
+      map: [ "wooly" ]
+      visible: true
+      sprite: Mobs/Animals/sheep.rsi
+  - type: GenericVisualizer
+    visuals:
+      enum.ShearableVisuals.Shearable:
+        wooly:
+          True: {visible: true}
+          False: {visible: false}
+      enum.MobStateVisuals.State:
+        wooly:
+          Alive: {state: sheep_wool}
+          Dead: {state: sheep_wool_dead}
+          Critical: {state: sheep_wool_dead}
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 150
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Tag
+    tags:
+    # let moths eat wool directly
+    - ClothMade
+    - DoorBumpOpener
+    - Sheep
+  - type: Reproductive
+    partnerWhitelist:
+      tags:
+      - Sheep
+    offspring:
+    - id: MobSheep
+  - type: ReproductivePartner
+  - type: Appearance
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: sheep_bare
+      Critical:
+        Base: sheep_dead
+      Dead:
+        Base: sheep_dead
+  - type: SolutionContainerManager
+    solutions:
+      udder:
+        maxVol: 250
+        reagents:
+        - ReagentId: MilkSheep
+          Quantity: 25
+      wool:
+        maxVol: 250
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 25
+  - type: Udder
+    reagentId: MilkSheep
+    quantityPerUpdate: 25
+    growthDelay: 20
+  - type: Wooly
+  - type: Shearable
+    targetSolutionName: wool
+    shearedProductID: MaterialCotton1 # Cotton is spawned because there is no wool item.
+    productsPerSolution: 0.2 # To moths 1 Wool is worth 3 Hunger; 1 Cotton is worth 15 Hunger. Therefore, 5 Wool needed for 1 Cotton. 1 ÷ 5 = 0.2
+    toolQuality: Cutting # Wirecutters and barber's scissors.
+    shearableMarkupText: sheep-shearable-examine-markup
+    unShearableMarkupText: sheep-not-shearable-examine-markup
+  - type: Food
+    solution: wool
+    requiresSpecialDigestion: true
+    # Wooly prevents eating wool deleting the sheep so its fine
+    requireDead: false
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 4
+  - type: Grammar
+    attributes:
+      gender: female # Here because of UdderComponent
+  - type: InteractionPopup
+    successChance: 0.8 #SHEEP so FRIEND!!! HUG! SQUISHY! SOFT!
+    interactDelay: 1
+    interactSuccessString: petting-success-sheep
+    interactFailureString: petting-failure-sheep
+    interactSuccessSpawn: EffectHearts #🥰
+    interactSuccessSound:
+      collection: Sheep
+      params:
+        variation: 0.05
+      
+  - type: NpcFactionMember
+    factions:
+    - Passive
+  - type: Body
+    prototype: AnimalRuminant
+  - type: HTN
+    rootTask:
+      task: RuminantCompound
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 0.6
+    baseSprintSpeed: 0.8
+
+- type: entity
+  name: sheep
+  parent: [MobSheepBase, SimpleMobBase]
+  id: MobSheep
+  description: An adorable genetically engineered chemical factory producing milk and cotton.
+
+- type: entity
+  name: rainbow sheep
+  parent: MobSheep
+  id: MobSheepRainbow
+  description: A sheep; this one seems... glowy.
+  components:
+    - type: PointLight
+      radius: 1.5
+      energy: 0.5
+    - type: RgbLightController
+      layers: [ 1 ]
+    - type: Wooly
+      reagentId: SpaceDrugs
+    - type: Shearable
+      targetSolutionName: wool
+      shearedProductID: LeavesCannabisRainbow
+      productsPerSolution: 0.2
+      toolQuality: Cutting
+      shearableMarkupText: rainbow-sheep-shearable-examine-markup
+      unShearableMarkupText: rainbow-sheep-not-shearable-examine-markup
+      verb: rainbow-sheep-shearable-verb
+    - type: SolutionContainerManager
+      solutions:
+        udder:
+          maxVol: 250
+          reagents:
+          - ReagentId: MilkSheep
+            Quantity: 30
+        wool:
+          maxVol: 250
+          reagents:
+          - ReagentId: SpaceDrugs
+            Quantity: 25
+
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
   name: goose

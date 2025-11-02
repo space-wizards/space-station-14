@@ -274,6 +274,54 @@
 
 - type: entity
   parent: MarkerBase
+  id: SpawnMobSheep
+  name: Sheep Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: sheep_bare
+      sprite: Mobs/Animals/sheep.rsi
+    - state: sheep_wool
+      sprite: Mobs/Animals/sheep.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSheep
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobSheepRainbow
+  name: Rainbow Sheep Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: sheep_bare
+      sprite: Mobs/Animals/sheep.rsi
+    - state: sheep_wool
+      sprite: Mobs/Animals/sheep.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSheepRainbow
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobSheepSpace
+  name: Space Sheep Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: space_sheep_bare
+      sprite: Mobs/Animals/sheep.rsi
+    - state: space_sheep_wool_glowmask
+      sprite: Mobs/Animals/sheep.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSheepSpace
+
+- type: entity
+  parent: MarkerBase
   id: SpawnMobSlug
   name: Slug Spawner
   components:
@@ -285,3 +333,24 @@
   - type: ConditionalSpawner
     prototypes:
     - MobSlug
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnWoolyAnimalGeneric
+  name: Wooly Animal Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: sheep_bare
+      sprite: Mobs/Animals/sheep.rsi
+    - state: sheep_wool
+      sprite: Mobs/Animals/sheep.rsi
+  - type: RandomSpawner
+    prototypes:
+    - SpawnMobSheep
+    - SpawnMobGoat
+    rarePrototypes:
+    - SpawnMobSheepRainbow
+    - SpawnMobSheepSpace
+    rareChance: 0.2
