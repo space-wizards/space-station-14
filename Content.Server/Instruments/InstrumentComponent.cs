@@ -1,22 +1,35 @@
-using Content.Shared.Instruments;
-using Robust.Shared.Player;
-using ActivatableUIComponent = Content.Shared.UserInterface.ActivatableUIComponent;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Instruments;
+namespace Content.Shared.Instruments;
 
-[RegisterComponent]
-public sealed partial class InstrumentComponent : SharedInstrumentComponent
+/// <summary>
+/// Shared component representing an instrument that can be played.
+/// Stores only network-synchronized data used by both client and server.
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class InstrumentComponent : Component
 {
-    [Dependency] private readonly IEntityManager _entMan = default!;
+    /// <summary>
+    /// True if the instrument is currently being played by a user.
+    /// </summary>
+    [AutoNetworkedField]
+    public bool Playing = false;
 
-    [ViewVariables] public float Timer = 0f;
-    [ViewVariables] public int BatchesDropped = 0;
-    [ViewVariables] public int LaggedBatches = 0;
-    [ViewVariables] public int MidiEventCount = 0;
-    [ViewVariables] public uint LastSequencerTick = 0;
+    /// <summary>
+    /// The current player using this instrument, if any.
+    /// </summary>
+    [AutoNetworkedField]
+    public EntityUid? CurrentPlayer;
 
-    // TODO Instruments: Make this ECS
-    public EntityUid? InstrumentPlayer =>
-        _entMan.GetComponentOrNull<ActivatableUIComponent>(Owner)?.CurrentSingleUser
-        ?? _entMan.GetComponentOrNull<ActorComponent>(Owner)?.PlayerSession.AttachedEntity;
+    /// <summary>
+    /// The sound bank or instrument preset (e.g., "piano", "guitar").
+    /// </summary>
+    [AutoNetworkedField]
+    public string Program = "piano";
+
+    /// <summary>
+    /// Whether this instrument accepts external MIDI input (e.g. keyboard devices).
+    /// </summary>
+    [AutoNetworkedField]
+    public bool AllowMidiInput = true;
 }

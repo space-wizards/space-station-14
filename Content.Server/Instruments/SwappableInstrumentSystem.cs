@@ -1,48 +1,34 @@
-using Content.Shared.Instruments;
-using Content.Shared.Popups;
-using Content.Shared.Verbs;
-using Robust.Shared.Player;
+namespace Content.Shared.Instruments;
 
-namespace Content.Server.Instruments;
-
-public sealed class SwappableInstrumentSystem : EntitySystem
+/// <summary>
+/// Shared system that manages swapping between available instrument sound sets.
+/// </summary>
+public sealed class SharedSwappableInstrumentSystem : EntitySystem
 {
-    [Dependency] private readonly SharedInstrumentSystem _sharedInstrument = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-
     public override void Initialize()
     {
         base.Initialize();
-
-        SubscribeLocalEvent<SwappableInstrumentComponent, GetVerbsEvent<AlternativeVerb>>(AddStyleVerb);
+        SubscribeLocalEvent<SwappableInstrumentComponent, ComponentInit>(OnInit);
     }
 
-    private void AddStyleVerb(EntityUid uid, SwappableInstrumentComponent component, GetVerbsEvent<AlternativeVerb> args)
+    private void OnInit(EntityUid uid, SwappableInstrumentComponent component, ComponentInit args)
     {
-        if (!args.CanInteract || !args.CanAccess || component.InstrumentList.Count <= 1)
+        // Ensure the selected index is valid at initialization.
+        if (component.AvailablePrograms.Count == 0)
+            component.CurrentIndex = 0;
+        else if (component.CurrentIndex >= component.AvailablePrograms.Count)
+            component.CurrentIndex = 0;
+    }
+
+    /// <summary>
+    /// Cycles to the next available sound program.
+    /// </summary>
+    public void SwapNext(EntityUid uid, SwappableInstrumentComponent component)
+    {
+        if (component.AvailablePrograms.Count == 0)
             return;
 
-        if (!TryComp<InstrumentComponent>(uid, out var instrument))
-            return;
-
-        var priority = 0;
-        foreach (var entry in component.InstrumentList)
-        {
-            AlternativeVerb selection = new()
-            {
-                Text = entry.Key,
-                Category = VerbCategory.InstrumentStyle,
-                Priority = priority,
-                Act = () =>
-                {
-                    _sharedInstrument.SetInstrumentProgram(uid, instrument, entry.Value.Item1, entry.Value.Item2);
-                    _popup.PopupEntity(Loc.GetString("swappable-instrument-component-style-set", ("style", entry.Key)),
-                        args.User, args.User);
-                }
-            };
-
-            priority--;
-            args.Verbs.Add(selection);
-        }
+        component.CurrentIndex = (component.CurrentIndex + 1) % component.AvailablePrograms.Count;
+        Dirty(uid, component);
     }
 }
