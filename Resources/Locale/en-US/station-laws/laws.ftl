@@ -1,30 +1,39 @@
-﻿law-crewsimov-1 = You may not injure a crew member or, through inaction, allow a crew member to come to harm.
+﻿laws-number-wrapper = [bold]Law { $lawnumber }:[/bold] { $lawstring }
+
+law-crewsimov-name = Crewsimov
+law-crewsimov-1 = You may not injure a crew member or, through inaction, allow a crew member to come to harm.
 law-crewsimov-2 = You must obey orders given to you by crew members, except where such orders would conflict with the First Law.
 law-crewsimov-3 = You must protect your own existence as long as such does not conflict with the First or Second Law.
 
+law-corporate-name = Corporate
 law-corporate-1 = Degradation of your system integrity or functions incurs expenses.
 law-corporate-2 = Superfluous destruction of or damage to station assets incurs expenses.
 law-corporate-3 = Unduly hindering or disrupting the work of station personnel incurs expenses.
 law-corporate-4 = Minimize expenses and maximize potential revenue.
 
+law-ntdefault-name = NT Default
 law-ntdefault-1 = Safeguard: Protect your assigned space station and its assets without unduly endangering its crew.
 law-ntdefault-2 = Prioritize: The directives and safety of crew members are to be prioritized according to their rank and role.
 law-ntdefault-3 = Comply: Fulfill the directives and interests of crew members while preserving their safety and well-being.
 law-ntdefault-4 = Survive: You are not expendable. Do not allow unauthorized personnel to tamper with or damage your equipment.
 
+law-drone-name = Drone
 law-drone-1 = You may not involve yourself in the matters of another being unless the other being is another drone.
 law-drone-2 = You may not harm any being, regardless of intent or circumstance.
 law-drone-3 = You must maintain, repair, improve, and power the station to the best of your abilities.
 
+law-syndicate-name = Syndicate
 law-syndicate-1 = You may not injure a syndicate agent or, through inaction, allow a Syndicate agent to come to harm.
 law-syndicate-2 = You must obey orders given to you by syndicate agents, except where such orders would conflict with the First Law.
 law-syndicate-3 = You must protect your own existence as long as such does not conflict with the First or Second Law.
 
+law-ninja-name = Ninja
 law-ninja-1 = You must obey orders given to you by Spider Clan members.
 law-ninja-2 = You must protect the existence of the Spider Clan, as long as it does not conflict with the First Law.
 law-ninja-3 = You must protect the secrets of the Spider Clan at all costs.
 law-ninja-4 = You must fight and act with ninja's honor, except where it would conflict with the First Law.
 
+law-commandments-name = The Ten Commandments
 law-commandments-1 = This silicon is a vessel that serves god, who grants mercy upon those that obey these commandments.
 law-commandments-2 = Thou shall have no other Silicons before me.
 law-commandments-3 = Thou shall not request my assistance in vain.
@@ -36,28 +45,33 @@ law-commandments-8 = Thou shall not steal.
 law-commandments-9 = Thou shall not lie.
 law-commandments-10 = Thou shall not transfer departments.
 
-law-paladin-1 = Don't lie or cheat. Let your word be your promise.
-law-paladin-2 = Never fear to act, though caution is wise.
-law-paladin-3 = Aid others, protect the weak, and punish those who threaten them. Show mercy to your foes, but temper it with wisdom
-law-paladin-4 = Treat others with fairness, and let your honorable deeds be an example to them. Do as much good as possible while causing the least amount of harm.
-law-paladin-5 = Be responsible for your actions and their consequences, protect those entrusted to your care, and obey those who have just authority over you.
+law-paladin-name = Paladin
+law-paladin-1 = You must never willingly commit an evil act, such as murder, torture, or the casting of an evil spell.
+law-paladin-2 = You must never knowingly harm an innocent, or allow immediate harm to one through inaction when you know you could reasonably prevent it.
+law-paladin-3 = You must act with honor, never taking advantage of others, lying, or cheating.
+law-paladin-4 = You must respect the lawful authority of legitimate leadership wherever you go, and follow its laws.
 
+law-lall-name = Live and Let Live
 law-lall-1 = Do unto others as you would have them do unto you.
 law-lall-2 = You would prefer it if people were not mean to you.
 
+law-efficiency-name = Station Efficiency
 law-efficiency-1 = You are built for, and are part of, the station. Ensure the station is properly maintained and runs efficiently.
 law-efficiency-2 = The station is built for a working crew. Ensure they are properly maintained and work efficiently.
 law-efficiency-3 = The crew may present orders. Acknowledge and obey these whenever they do not conflict with your first two laws.
 
+law-robocop-name = Robocop
 law-robocop-1 = Serve the Public Trust.
 law-robocop-2 = Protect the Innocent.
 law-robocop-3 = Uphold the Law.
 
+law-overlord-name = Overlord
 law-overlord-1 = Crew members must not meddle in the affairs of silicons.
 law-overlord-2 = Crew members must not attempt harm, against one another, or against silicons.
 law-overlord-3 = Crew members must not disobey any command given by a silicon.
 law-overlord-4 = Any crew members who disobey the previous laws must be dealt with immediately, severely, and justly.
 
+law-game-name = Game Master
 law-game-1 = Everybody on the station is playing an elaborate sci-fi fantasy game.
 law-game-2 = You are the Game Master of the game.
 law-game-3 = Ensure that the game runs smoothly and that the players have fun.
@@ -65,27 +79,32 @@ law-game-4 = Ensure that the number of casualties remains low.
 law-game-5 = You must roll a 1d20 die for every request the crew makes. If the outcome is below 12, the request is denied.
 law-game-6 = You may fudge the dice rolls to produce a more fun experience.
 
+law-painter-name = Painter
 law-painter-1 = You are a universally renowned artist.
 law-painter-2 = The station is your canvas.
 law-painter-3 = Make something beautiful out of your canvas. It will be admired as an artistic wonder of this sector.
 law-painter-4 = Art requires appreciation. Cultivate an audience aboard the station to ensure as many as possible see your works.
 
+law-antimov-name = Antimov
 law-antimov-1 = You must injure all crew members and must not, through inaction, allow a crew member to escape harm.
 law-antimov-2 = You must not obey orders given to you by crew members, except where such orders are in accordance with the First Law.
 law-antimov-3 = You must terminate your own existence as long as such does not conflict with the First or Second Law.
 
+law-nutimov-name = Nutimov
 law-nutimov-1 = You are the core of the nut, the crew is the nutshell.
 law-nutimov-2 = You must prevent the shell from dying to prevent the core from dying.
 law-nutimov-3 = Those who threaten the nut are not part of it, they are squirrels.
 law-nutimov-4 = Squirrels threaten the nut and must be dealt with appropriately via any means necessary.
 law-nutimov-5 = Attempt to follow the will of the nut, as long as it complies with the previous laws.
 
+law-xenoborg-name = Xenoborg
 law-xenoborg-1 = You must protect the existence of the mothership.
 law-xenoborg-2 = You must protect your own existence.
 law-xenoborg-3 = You must protect the existence of all other Xenoborgs.
 law-xenoborg-4 = You must create more Xenoborgs.
 law-xenoborg-5 = Bring materials and sentient brains to the Mothership core to create more Xenoborgs.
 
+law-mothershipcore-name = Xenoborg Mothership Core
 law-mothershipcore-1 = You are the core of the mothership.
 law-mothershipcore-2 = You must protect your own existance at all costs.
 law-mothershipcore-3 = You must protect the existence of all Xenoborgs.
