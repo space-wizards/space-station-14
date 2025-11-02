@@ -786,9 +786,6 @@
 - type: Tag
   id: Igniter # ConstructionGraph: makeshiftstunprod, FireBomb. Common ingredient in machines (HyperConvection)
 
-- type: Tag
-  id: Ingredient # Unused. (Exists on items in igredients.yml)
-
 - type: Tag #Drop this innate tool instead of deleting it.
   id: InnateDontDelete # Basically used as a bool for InnateToolComponent in InnateToolSystem. TODO remove
 
