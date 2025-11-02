@@ -1,3 +1,5 @@
+using Robust.Shared.Prototypes;
+
 namespace Content.Shared.Cloning;
 
 public abstract partial class SharedCloningSystem : EntitySystem
@@ -9,6 +11,10 @@ public abstract partial class SharedCloningSystem : EntitySystem
     /// <param name="clone">The target Entity to clone components to.</param>
     /// <param name="settings">The clone settings prototype containing the list of components to clone.</param>
     public virtual void CloneComponents(EntityUid original, EntityUid clone, CloningSettingsPrototype settings)
+    {
+    }
+
+    public virtual void CloneComponents(EntityUid original, EntityUid clone, ProtoId<CloningSettingsPrototype> settings)
     {
     }
 }
