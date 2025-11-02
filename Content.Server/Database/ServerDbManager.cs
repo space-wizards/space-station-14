@@ -197,7 +197,7 @@ namespace Content.Server.Database
         Task<bool> SetLastRolledAntag(NetUserId userId, TimeSpan to);
 
         /// <returns>A <see cref="Task{}"/> object returning <see cref="TimeSpan.MinValue"/> if the found user's <see cref="Player.LastRolledAntag"/> was null, or no user was found.</returns>
-        Task<TimeSpan> GetLastRolledAntag(NetUserId userId);
+        Task<TimeSpan> GetLastTimeAntagRolled(NetUserId userId);
         #endregion
 
         #region Connection Logs
@@ -654,10 +654,10 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.GetPlayerRecordByUserId(userId, cancel));
         }
 
-        public Task<TimeSpan> GetLastRolledAntag(NetUserId userId)
+        public Task<TimeSpan> GetLastTimeAntagRolled(NetUserId userId)
         {
             DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetLastRolledAntag(userId));
+            return RunDbCommand(() => _db.GetLastTimeAntagRolled(userId));
         }
 
         public Task<bool> SetLastRolledAntag(NetUserId userId, TimeSpan to)

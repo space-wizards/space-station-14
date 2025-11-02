@@ -700,8 +700,8 @@ namespace Content.Server.Database
             return true;
         }
 
-        /// <inheritdoc cref="ServerDbManager.GetLastRolledAntag(NetUserId)"/>
-        public async Task<TimeSpan> GetLastRolledAntag(NetUserId userId)
+        /// <inheritdoc cref="ServerDbManager.GetLastTimeAntagRolled(NetUserId)"/>
+        public async Task<TimeSpan> GetLastTimeAntagRolled(NetUserId userId)
         {
             await using var db = await GetDb();
 

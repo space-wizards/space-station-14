@@ -9,9 +9,22 @@ namespace Content.Server.Antag;
 
 /// <summary>
 /// Manages saving and retrieving the last time that a player rolled any antag.
+/// For every query, an internal cache is used rather than querying the DB.
 /// </summary>
-// ported from https://github.com/Goob-Station/Goob-Station/blob/f6453f5ce37af138d28b8077ef33b0282d2bc52d/Content.Server/_Goobstation/Antag/LastRolledAntagManager.cs
-// with permission from the singular codeowner at the point of that commit
+/*
+    mostly ported from https://github.com/Goob-Station/Goob-Station/blob/f6453f5ce37af138d28b8077ef33b0282d2bc52d/Content.Server/_Goobstation/Antag/LastRolledAntagManager.cs
+    with permission from the singular codeowner at the point of that commit
+
+    this uses a model of operations stolen from PlaytimeTrackingManager:
+        - for every player joined, their last-rolled-antag time is read from the db and stored in an internal cache
+
+        - when something calls the public method to access their last-rolled time, the internal cache is referenced
+        - when the player leaves:
+        - - if their last-rolled time was modified since their join,
+        - - - it is saved in the DB
+        - - if it wasn't, then nothing happens
+        - - the player's data is then removed from the internal cache
+*/
 public sealed class LastRolledAntagManager : IPostInjectInit
 {
     [Dependency] private readonly IServerDbManager _dbManager = default!;
@@ -42,62 +55,61 @@ public sealed class LastRolledAntagManager : IPostInjectInit
     public async Task LoadData(ICommonSession session, CancellationToken token)
     {
         var userId = session.UserId;
+        var lastRolledTimespan = await _dbManager.GetLastTimeAntagRolled(userId);
+        _sawmill.Debug($"Successfully retrieved LastRolledAntag for {userId}; value: {lastRolledTimespan}");
 
-        var lastRolledTimespan = await GetLastRolledAsync(userId);
         _lastRolledData.Add(userId, lastRolledTimespan);
     }
 
     public void ClientDisconnected(ICommonSession session)
     {
-        _lastRolledData.Remove(session.UserId);
+        var userId = session.UserId;
+        SaveSession(userId);
+
+        _lastRolledData.Remove(userId);
     }
 
-    /// <inheritdoc cref="SetTimeAsyncInternal(NetUserId, TimeSpan, TimeSpan?)"/>
-    public void SetLastRolled(NetUserId userId, TimeSpan to)
+    /// <inheritdoc cref="SaveSessionAsync(NetUserId, TimeSpan)"/>
+    /// <param name="savedLastRolledTime">If null, defaults to the last-rolled time in the internal cache.</param>
+    public void SaveSession(NetUserId userId, TimeSpan? savedLastRolledTime = null)
     {
-        Task.Run(() => SetTimeAsync(userId, to));
+        savedLastRolledTime ??= _lastRolledData.GetValueOrDefault(userId);
+        TrackPending(SaveSessionAsync(userId, savedLastRolledTime.Value));
     }
 
-    /// <inheritdoc cref="GetLastRolledAsync(NetUserId)"/>
+    /// <summary>
+    /// Saves a player's last rolled antag time to the internal cache.
+    /// </summary>
+    public void SetLastRolled(NetUserId userId, TimeSpan value)
+    {
+        _lastRolledData[userId] = value;
+    }
+
+    /// <summary>
+    /// Gets a player's last rolled antag time from the internal cache.
+    /// </summary>
     public TimeSpan GetLastRolled(NetUserId userId)
     {
-        return Task.Run(() => GetLastRolledAsync(userId)).GetAwaiter().GetResult();
+        return _lastRolledData.GetValueOrDefault(userId);
     }
 
     #region Internal/Async tasks
 
     /// <summary>
-    /// Sets a player's last rolled antag time.
+    /// Saves the last-rolled-antag time for the player, to the database.
+    /// This does not update the internal cache (<see cref="_lastRolledData"/>),
+    /// but may query it.
     /// </summary>
-    /// <param name="oldTime">Optional parameter used to provide more data for logging.</param>
-    private async Task SetTimeAsyncInternal(NetUserId userId, TimeSpan time, TimeSpan? oldTime = null)
+    private async Task SaveSessionAsync(NetUserId userId, TimeSpan savedLastRolledTime)
     {
-        var setTimeTask = _dbManager.SetLastRolledAntag(userId, time);
+        var setTimeTask = _dbManager.SetLastRolledAntag(userId, savedLastRolledTime);
         TrackPending(setTimeTask); // Track the Task<bool>
         var success = await setTimeTask;
 
         if (success)
-        {
-            // only set on db-operation success, since ideally we would want to keep db state and _lastRolledData state synchronised
-            _lastRolledData[userId] = time;
-            _sawmill.Debug($"Successfully set LastRolledAntag for {userId} from {oldTime?.ToString() ?? "N/A"} to {time}");
-        }
+            _sawmill.Debug($"Successfully saved LastRolledAntag for {userId} from {_lastRolledData.GetValueOrDefault(userId)} to {savedLastRolledTime}.");
         else
-            _sawmill.Error($"Failed to set LastRolledAntag for {userId}. Player not found or other issue.");
-    }
-
-    /// <inheritdoc cref="SetTimeAsyncInternal(NetUserId, TimeSpan, TimeSpan?)"/>
-    private async Task SetTimeAsync(NetUserId userId, TimeSpan to)
-    {
-        await SetTimeAsyncInternal(userId, to, await GetLastRolledAsync(userId));
-    }
-
-    /// <summary>
-    /// Gets a player's last rolled antag time.
-    /// </summary>
-    private async Task<TimeSpan> GetLastRolledAsync(NetUserId userId)
-    {
-        return await _dbManager.GetLastRolledAntag(userId);
+            _sawmill.Error($"Failed to save LastRolledAntag for {userId}. Player not found or other issue.");
     }
 
     /// <summary>

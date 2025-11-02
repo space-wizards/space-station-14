@@ -249,7 +249,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// with longer time passed since the last time that they rolled antag, given their overall playtime.
     /// </summary>
     /// <returns>Dictionary containing every player specified in <paramref name="pool"/> and their weight.</returns>
-    public Dictionary<ICommonSession, float> ToWeightsDict(IList<ICommonSession> pool)
+    public Dictionary<ICommonSession, float> ToAntagWeightsDictionary(IList<ICommonSession> pool)
     {
         var weights = new Dictionary<ICommonSession, float>();
 
