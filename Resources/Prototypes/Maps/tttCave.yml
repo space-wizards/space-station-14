@@ -1,14 +1,14 @@
 - type: gameMap
-  id: TTTplane
-  mapName: 'TTT_plane'
-  mapPath: /Maps/tttPlane.yml
+  id: TTTcave
+  mapName: 'TTT_cave'
+  mapPath: /Maps/tttCave.yml
   minPlayers: 0
   stations:
-   TTTplane:
+   tttCave:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: "Airbus A333"
+          mapNameTemplate: "Yakutski cave"
         - type: StationJobs
           availableJobs:
             CargoTechnician: [ -1, -1 ]
