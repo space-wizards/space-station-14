@@ -8,6 +8,7 @@ using Content.Shared.Damage.Events;
 using Content.Shared.Database;
 using Content.Shared.Effects;
 using Content.Shared.FixedPoint;
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Projectiles;
@@ -44,6 +45,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly StatusEffectsSystem _status = default!;
     [Dependency] protected readonly SharedStunSystem StunSystem = default!;
+    [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
 
     /// <summary>
     /// How much of a buffer is there between the stun duration and when stuns can be re-applied.
@@ -71,6 +73,9 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, ThrowDoHitEvent>(OnThrowHit);
 
         SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnMeleeHit);
+
+        SubscribeLocalEvent<StaminaDamageOnHitComponent, DamageExamineEvent>(OnHitDamageExamine, after: [typeof(SharedDamageOtherOnHitSystem)]);
+        SubscribeLocalEvent<StaminaDamageOnHitComponent, DamageExamineEvent>(OnDamageExamine, after: [typeof(SharedDamageOtherOnHitSystem)]);
 
         Subs.CVar(_config, CCVars.PlaytestStaminaDamageModifier, value => UniversalStaminaDamageModifier = value, true);
     }
@@ -110,7 +115,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 
         var curTime = Timing.CurTime;
         var pauseTime = _metadata.GetPauseTime(uid);
-        return MathF.Max(0f, component.StaminaDamage - MathF.Max(0f, (float) (curTime - (component.NextUpdate + pauseTime)).TotalSeconds * component.Decay));
+        return MathF.Max(0f, component.StaminaDamage - MathF.Max(0f, (float)(curTime - (component.NextUpdate + pauseTime)).TotalSeconds * component.Decay));
     }
 
     private void OnRejuvenate(Entity<StaminaComponent> entity, ref RejuvenateEvent args)
@@ -229,7 +234,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     }
 
     // Here so server can properly tell all clients in PVS range to start the animation
-    protected virtual void SetStaminaAnimation(Entity<StaminaComponent> entity){}
+    protected virtual void SetStaminaAnimation(Entity<StaminaComponent> entity) { }
 
     private void SetStaminaAlert(EntityUid uid, StaminaComponent? component = null)
     {
@@ -237,7 +242,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
             return;
 
         var severity = ContentHelpers.RoundToLevels(MathF.Max(0f, component.CritThreshold - component.StaminaDamage), component.CritThreshold, 7);
-        _alerts.ShowAlert(uid, component.StaminaAlert, (short) severity);
+        _alerts.ShowAlert(uid, component.StaminaAlert, (short)severity);
     }
 
     /// <summary>
@@ -454,4 +459,24 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     {
         public NetEntity Entity = entity;
     }
+
+    #region Examine
+    private void OnHitDamageExamine(Entity<StaminaDamageOnHitComponent> ent, ref DamageExamineEvent args)
+    {
+        if (ent.Comp.Damage == 0 || !_itemToggle.IsActivated(ent.Owner))
+            return;
+
+        args.Message.PushNewline();
+        args.Message.AddMarkupOrThrow(Loc.GetString(ent.Comp.ExamineMessage, ("amount", ent.Comp.Damage)));
+    }
+
+    private void OnDamageExamine(Entity<StaminaDamageOnHitComponent> ent, ref DamageExamineEvent args)
+    {
+        if (ent.Comp.Damage == 0 || !_itemToggle.IsActivated(ent.Owner))
+            return;
+
+        args.Message.PushNewline();
+        args.Message.AddMarkupOrThrow(Loc.GetString(ent.Comp.ExamineMessage, ("amount", ent.Comp.Damage)));
+    }
+    #endregion
 }

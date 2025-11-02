@@ -10,4 +10,10 @@ public sealed partial class StaminaDamageOnHitComponent : Component
 
     [DataField("sound")]
     public SoundSpecifier? Sound;
+
+    /// <summary>
+    /// LocId for message that will be shown on detailed examine.
+    /// </summary>
+    [DataField]
+    public LocId ExamineMessage = "stamina-damage-examine-hit";
 }
