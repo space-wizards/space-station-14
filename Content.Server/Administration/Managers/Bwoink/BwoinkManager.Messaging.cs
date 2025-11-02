@@ -103,12 +103,7 @@ public sealed partial class ServerBwoinkManager
     /// </summary>
     private void SynchronizeMessage(ProtoId<BwoinkChannelPrototype> channel, NetUserId target, BwoinkMessage message)
     {
-        InvokeMessageReceived(channel,
-            target,
-            message.Content,
-            message.SenderId,
-            message.Sender,
-            message.Flags);
+        InvokeMessageReceived(channel, target, message);
 
         var msgBwoink = new MsgBwoink()
         {
@@ -140,12 +135,11 @@ public sealed partial class ServerBwoinkManager
         if (!CanReadChannel(channel, targetSes))
         {
             // Target can't read it. Womp. Womp.
-            var notificationMessage = CreateSystemMessage(_localizationManager.GetString("bwoink-channel-no-readers"), MessageFlags.Manager | MessageFlags.ManagerOnly);
+            var notificationMessage = CreateSystemMessage(LocalizationManager.GetString("bwoink-channel-no-readers"), MessageFlags.Manager | MessageFlags.ManagerOnly);
             SynchronizeMessage(channel, target, notificationMessage);
             return;
         }
 
-        // TODO: Predict on client, so that we don't have to send the message back to the client here.
         _netManager.ServerSendMessage(msgNonAdminBwoink, PlayerManager.GetSessionById(target).Channel);
     }
 }

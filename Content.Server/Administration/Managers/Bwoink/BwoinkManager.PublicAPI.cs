@@ -68,17 +68,4 @@ public sealed partial class ServerBwoinkManager
             SynchronizeMessages(session);
         }
     }
-
-    /// <summary>
-    /// Creates a bwoink message for a given sender.
-    /// </summary>
-    private BwoinkMessage CreateUserMessage(string text, MessageFlags flags, NetUserId sender)
-    {
-        return new BwoinkMessage(PlayerManager.GetSessionById(sender).Name, sender, DateTime.UtcNow, text, flags);
-    }
-
-    private BwoinkMessage CreateSystemMessage(string text, MessageFlags flags = MessageFlags.Manager)
-    {
-        return new BwoinkMessage(_localizationManager.GetString("bwoink-system-user"), null, DateTime.UtcNow, text, flags);
-    }
 }

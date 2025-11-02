@@ -125,26 +125,26 @@ public sealed partial class ClientBwoinkManager : SharedBwoinkManager
 
     private void AdminBwoinkAttempted(MsgBwoink message)
     {
-        InvokeMessageReceived(message.Channel,
-            message.Target,
-            message.Message.Content,
+        var messageObj = CreateUserMessage(message.Message.Content,
             message.Message.SenderId,
             message.Message.Sender,
             message.Message.Flags);
+
+        InvokeMessageReceived(message.Channel, message.Target, messageObj);
     }
 
     private void BwoinkAttempted(MsgBwoinkNonAdmin message)
     {
+        var messageObj = CreateUserMessage(message.Message.Content,
+            message.Message.SenderId,
+            message.Message.Sender,
+            message.Message.Flags);
+
         // This one is targeted to us, so we use our local session as the target.
         // ReSharper disable once NullableWarningSuppressionIsUsed
         // "The user Id of the local player. This will be null on the server.".
         // Null suppression because we will only ever receive this while being connected. If it is null, something has gone wrong.
-        InvokeMessageReceived(message.Channel,
-            _playerManager.LocalUser!.Value,
-            message.Message.Content,
-            message.Message.SenderId,
-            message.Message.Sender,
-            message.Message.Flags);
+        InvokeMessageReceived(message.Channel, _playerManager.LocalUser!.Value, messageObj);
     }
 
     /// <summary>

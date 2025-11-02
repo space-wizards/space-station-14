@@ -28,7 +28,6 @@ public sealed partial class ServerBwoinkManager : SharedBwoinkManager
 
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly ILocalizationManager _localizationManager = default!;
 
     public override void Initialize()
     {

@@ -16,6 +16,7 @@ public abstract partial class SharedBwoinkManager : IPostInjectInit
 
     // Protected members:
     [Dependency] protected readonly ISharedPlayerManager PlayerManager = default!;
+    [Dependency] protected readonly ILocalizationManager LocalizationManager = default!;
     [Dependency] protected readonly ISharedAdminManager AdminManager = default!;
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
 
@@ -85,32 +86,17 @@ public abstract partial class SharedBwoinkManager : IPostInjectInit
     /// <remarks>
     /// This is needed because only the class that declared an event can invoke that event.
     /// </remarks>
-    /// <param name="senderName">The name of the sender to use. If null, the sender user ID will be resolved to a name.</param>
-    protected void InvokeMessageReceived(ProtoId<BwoinkChannelPrototype> channel, NetUserId target, string message, NetUserId? sender, string? senderName, MessageFlags flags)
+    protected void InvokeMessageReceived(ProtoId<BwoinkChannelPrototype> channel, NetUserId target, BwoinkMessage message)
     {
-        if (senderName == null)
-        {
-            DebugTools.AssertNotNull(sender, "sender must not be null when senderName is.");
-            if (!sender.HasValue)
-            {
-                Log.Error("Received null sender with null senderName!");
-                return;
-            }
-
-            senderName = PlayerManager.GetSessionById(sender.Value).Name;
-        }
-
-        var messageObject = new BwoinkMessage(senderName, sender, DateTime.UtcNow, message, flags);
-
         if (Conversations[channel].TryGetValue(target, out var value))
-            value.Messages.Add(messageObject);
+            value.Messages.Add(message);
         else
         {
             // ReSharper disable once UseCollectionExpression I wish. But this fails sandbox.
-            Conversations[channel].Add(target, new Conversation(target, new List<BwoinkMessage>() { messageObject }));
+            Conversations[channel].Add(target, new Conversation(target, new List<BwoinkMessage>() { message }));
         }
 
-        MessageReceived?.Invoke(channel, (target, messageObject));
+        MessageReceived?.Invoke(channel, (target, message));
     }
 
     private void RefreshChannels(PrototypesReloadedEventArgs obj)
