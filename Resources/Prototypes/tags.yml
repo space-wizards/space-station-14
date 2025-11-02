@@ -245,32 +245,39 @@
 - type: Tag # NOT bullets. This is for the cart to load PDA programs.
   id: Cartridge # Storage whitelist: BasePDA
 
-- type: Tag
-  id: CartridgeAntiMateriel # Ammo: WeaponSniperHristov, Musket, BaseMagazineBoxAntiMateriel
+#region Cartridge (Ammo)
+
+# Entities tagged with the following are some fashion of bullet, loaded into gun chambers and magazines to act as ammo.
+# Tagged entities always have CartridgeAmmoComponent.
 
 - type: Tag
-  id: CartridgeCap # Ammo: RevolverCapGun, RevolverCapGunFake, BaseSpeedLoaderCap
+  id: CartridgeAntiMateriel # High caliber ammo for powerful rifles like WeaponSniperHristov, Musket.
 
 - type: Tag
-  id: CartridgeCaselessRifle # Ammo: WeaponPistolCobra, BaseMagazineCaselessRifle, BaseMagazineBoxCaselessRifle
+  id: CartridgeCap # Specialty ammo for noise guns like RevolverCapGun, RevolverCapGunFake.
 
 - type: Tag
-  id: CartridgeLightRifle # Ammo: BaseWeaponLightMachineGun, BaseWeaponRifle, BaseWeaponSniper
-                          # SpeedLoaderLightRifle, BaseMagazineLightRifle, BaseMagazineBoxLightRifle
+  id: CartridgeCaselessRifle # Specialty ammo for WeaponPistolCobra.
 
 - type: Tag
-  id: CartridgeMagnum # Ammo: BaseWeaponRevolver, RevolverCapGunFake, WeaponPistolN1984, WeaponPistolFlintlock, XenoArtifactGun
-                      # BaseMagazineBoxMagnum, BaseMagazineMagnum, BaseSpeedLoaderMagnum
+  id: CartridgeDebug # Specialty ammo for debug guns like the deadly WeaponPistolDebug.
 
 - type: Tag
-  id: CartridgePistol # Ammo: BaseWeaponPistol, BasePistol, BaseWeaponSubMachineGun, WeaponPistolViper, WeaponSubMachineGunDrozd, WeaponSubMachineGunWt550
-                      # BaseMagazineBoxPistol, BaseMagazinePistol, BaseMagazinePistolHighCapacity, BaseMagazinePistolSubMachineGun, MagazinePistolSubMachineGunTopMounted, BaseSpeedLoaderPistol
+  id: CartridgeLightRifle # .30 caliber used by lmgs and middle range rifles like WeaponLightMachineGunL6, WeaponRifleAk, WeaponSniperMosin.
 
 - type: Tag
-  id: CartridgeRifle # Ammo: BaseMagazineRifle, WeaponRifleLecter, WeaponRifleEstoc, WeaponRifleM90GrenadeLauncher, BaseMagazineBoxRifle
+  id: CartridgeMagnum # .45 caliber used by revolvers and big boy pistols like BaseWeaponRevolver, WeaponPistolN1984.
 
 - type: Tag
-  id: CartridgeRocket # Ammo: WeaponLauncherRocket, WeaponLauncherMultipleRocket
+  id: CartridgePistol # .35 caliber used by pistols and smgs like WeaponPistolMk58, WeaponSubMachineGunC20r, WeaponSubMachineGunDrozd.
+
+- type: Tag
+  id: CartridgeRifle # .20 caliber used by precise rifles like WeaponRifleLecter, WeaponRifleEstoc.
+
+- type: Tag
+  id: CartridgeRocket # Specialty ammo for WeaponLauncherRocket.
+
+#endregion
 
 - type: Tag
   id: Catwalk # If a tagged entity is intersecting a hazard tile entity such as lava or chasms, step triggers on those hazards are cancelled.
@@ -433,12 +440,6 @@
 
 ## D ##
 
-- type: Tag
-  id: DeathAcidifier # Unused (Exists on DeathAcidifierImplant)
-
-- type: Tag
-  id: Debug # Exists on various debug / testing entities, but seemingly unused.
-
 - type: Tag # Exists on diagonal walls and windows
   id: Diagonal # Used by TileWallsCommand and FixRotationsCommand
 
@@ -484,15 +485,6 @@
 
 - type: Tag
   id: DrinkCan # ConstructionGraph: FireBomb
-
-- type: Tag
-  id: DrinkCup # Unused (Exists on DrinkBaseCup, DrinkWaterCup, DrinkGlass)
-
-- type: Tag
-  id: DrinkGlass # Unused (Exists on DrinkGlass, DrinkShotGlass, DrinkJarWhat, DrinkShakeBase)
-
-- type: Tag
-  id: DrinkSpaceGlue # Unused (Exists on DrinkSpaceGlue, CrazyGlue)
 
 - type: Tag
   id: Dropper # Storage whitelist: ClothingBeltMedical, ClothingBeltPlant, ChemBag
@@ -913,6 +905,9 @@
 
 - type: Tag
   id: MagazineGrenade # Storage whitelist: ShuttleGunDuster
+
+- type: Tag
+  id: MagazineDebug # Tagged entity fits in the magazine storage of the coveted WeaponPistolDebug.
 
 # Magazines end
 

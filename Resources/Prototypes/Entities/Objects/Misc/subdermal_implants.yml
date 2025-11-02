@@ -339,7 +339,6 @@
     tags:
     - SubdermalImplant
     - HideContextMenu
-    - DeathAcidifier
 
 - type: entity
   parent: BaseSubdermalImplant
