@@ -1540,61 +1540,64 @@
 ## W ##
 
 - type: Tag
-  id: Wall
+  id: Wall # Tagged entity is a wall. Several systems and several targeting whitelists (BaseMobDragon) care about this.
+           # .cs: SharedNavMapSystem, WallmountCondition, TileWallsCommand, DungeonJob
 
 - type: Tag
-  id: WallmountGeneratorAPUElectronics
+  id: WallmountGeneratorAPUElectronics # ConstructionGraph: WallmountGenerator
 
 - type: Tag
-  id: WallmountGeneratorElectronics
+  id: WallmountGeneratorElectronics # ConstructionGraph: WallmountGenerator
 
 - type: Tag
-  id: WallmountSubstationElectronics
+  id: WallmountSubstationElectronics # ConstructionGraph: WallmountSubstation
 
 - type: Tag
-  id: WeaponAntiqueLaser
+  id: WeaponAntiqueLaser # Storage whitelist: GlassBoxLaser
 
 - type: Tag
-  id: WeaponPistolCHIMPUpgradeKit
+  id: WeaponPistolCHIMPUpgradeKit # ConstructionGraph: UpgradeWeaponPistolCHIMP
 
 - type: Tag
-  id: WeaponShotgunKammerer
+  id: WeaponShotgunKammerer # Storage whitelist: ShotGunCabinet
 
 - type: Tag
-  id: WeldingMask
+  id: WeldingMask # Storage whitelist: BaseClothingBeltEngineering
 
 - type: Tag
-  id: WetFloorSign
+  id: WetFloorSign # Storage whitelist: ClothingBeltJanitor, JanitorialTrolley. ItemMapper: JanitorialTrolley
 
 - type: Tag
-  id: Wheat
+  id: Wheat # SpecialDigestible: OrganAnimalRuminantStomach. ConstructionGraph: StrawHat
 
 - type: Tag
-  id: WhitelistChameleon
+  id: WhitelistChameleon # Used by SharedChameleonClothingSystem to validate if tagged entity can be a disguise.
 
 - type: Tag
-  id: WhitelistChameleonIdCard
+  id: WhitelistChameleonIdCard # Chameleon key for AgentIDCard
 
 - type: Tag
-  id: WhitelistChameleonPDA
+  id: WhitelistChameleonPDA # Chameleon key for ChameleonPDA
 
 - type: Tag
-  id: Window
+  id: Window # Tagged entity is a window. Several systems and several targeting whitelists (XenoArtifactShatterWindows) care about this.
+             # .cs: SharedNavMapSystem, ElectrocutionSystem, RevenantSystem, NoWindowsInTile
 
 - type: Tag
-  id: Wine
+  id: Wine # CargoBounty: BountyWine
 
 - type: Tag
-  id: WireBrush
+  id: WireBrush # Storage whitelist: ClothingBeltJanitor
 
 - type: Tag
-  id: Wirecutter
+  id: Wirecutter # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering
 
 - type: Tag
-  id: WizardStaff
+  id: WizardStaff # Unused (Exists on WeaponStaffBase)
 
 - type: Tag
   id: WizardWand # that evil vvizard vvand
+                 # .cs: ChargeSpellEvent. Storage whitelist: ClothingBeltWand
 
 - type: Tag
   id: Wooden # just like our atmos
@@ -1605,16 +1608,17 @@
                          # MachineBoard construction: DawInstrumentMachineCircuitboard
 
 - type: Tag
-  id: Wrench
+  id: Wrench # Storage whitelist: BaseClothingBeltEngineering, ClothingBeltJanitor, ClothingBeltMedical.
+             # ItemMapper: BaseClothingBeltEngineering, ClothingBeltJanitor, ClothingBeltMedical
 
 - type: Tag
-  id: Wringer
+  id: Wringer # Unused (Exists on JanitorialTrolley, MopBucket)
 
 - type: Tag
-  id: Write
+  id: Write # Used by PaperSystem to make tagged entity a writing tool. Many storages whitelist this as well.
 
 - type: Tag
-  id: WriteIgnoreStamps
+  id: WriteIgnoreStamps # Used by PaperSystem to allow tagged entity to bypass stamps.
 
 ## X ##
 
