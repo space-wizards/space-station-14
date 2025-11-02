@@ -40,22 +40,9 @@ public sealed partial class BwoinkControl : Control
 
         // TODO: Dont use static LOC
         Name = Loc.GetString(channel.Name);
-
-        clientBwoinkManager.MessageReceived += MessageReceived;
-
         _parentWindow = parentWindow;
         _channel = channel;
         _clientBwoinkManager = clientBwoinkManager;
-
-        _cfg.OnValueChanged(CCVars.NewPlayerThreshold, (val) => { _newPlayerThreshold = val; }, true);
-
-        _adminManager.AdminStatusUpdated += UpdateButtons;
-        UpdateButtons();
-
-        ChannelSelector.OnSelectionChanged += OnSelectionChanged;
-
-        ChannelSelector.OverrideText += OnChannelSelectorOverrideText;
-        ChannelSelector.Comparison = ChannelSelectorComparison;
 
         Playerpanel.OnPressed += _ =>
         {
@@ -63,8 +50,10 @@ public sealed partial class BwoinkControl : Control
                 _console.ExecuteCommand($"playerpanel \"{_currentPlayer.Username}\"");
         };
 
-        ChannelSelector.StopFiltering();
-        ChannelSelector.PopulateList();
+        ChannelSelector.OnSelectionChanged += OnSelectionChanged;
+
+        ChannelSelector.OverrideText += OnChannelSelectorOverrideText;
+        ChannelSelector.Comparison = ChannelSelectorComparison;
     }
 
     private void OnSelectionChanged(PlayerInfo? sel)
@@ -141,11 +130,34 @@ public sealed partial class BwoinkControl : Control
         return bch.LastMessage.CompareTo(ach.LastMessage);
     }
 
+    protected override void EnteredTree()
+    {
+        base.EnteredTree();
+
+        _clientBwoinkManager.MessageReceived += MessageReceived;
+
+        _cfg.OnValueChanged(CCVars.NewPlayerThreshold, OnNewPlayerThresholdChanged, true);
+
+        _adminManager.AdminStatusUpdated += UpdateButtons;
+        UpdateButtons();
+
+        ChannelSelector.StopFiltering();
+        ChannelSelector.PopulateList();
+    }
+
     protected override void ExitedTree()
     {
         base.ExitedTree();
+
         _clientBwoinkManager.MessageReceived -= MessageReceived;
         _adminManager.AdminStatusUpdated -= UpdateButtons;
+
+        _cfg.UnsubValueChanged(CCVars.NewPlayerThreshold, OnNewPlayerThresholdChanged);
+    }
+
+    private void OnNewPlayerThresholdChanged(int val)
+    {
+        _newPlayerThreshold = val;
     }
 
     private string OnChannelSelectorOverrideText(PlayerInfo info, string text)
