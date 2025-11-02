@@ -59,7 +59,7 @@ public sealed class CloningPodSystem : EntitySystem
     public readonly Dictionary<MindComponent, EntityUid> ClonesWaitingForMind = new();
     public readonly ProtoId<CloningSettingsPrototype> SettingsId = "CloningPod";
     public const float EasyModeCloningCost = 0.7f;
-    private readonly ProtoId<ReagentPrototype> _blood = "Blood";
+    private static readonly ProtoId<ReagentPrototype> BloodId = "Blood";
 
     public override void Initialize()
     {
@@ -304,7 +304,7 @@ public sealed class CloningPodSystem : EntitySystem
         while (i < 1)
         {
             tileMix?.AdjustMoles(Gas.Ammonia, 6f);
-            bloodSolution.AddReagent(_blood, 50);
+            bloodSolution.AddReagent(BloodId, 50);
             if (_robustRandom.Prob(0.2f))
                 i++;
         }
