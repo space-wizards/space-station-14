@@ -896,13 +896,6 @@
   - YellowJumpskirt
 
 - type: loadoutGroup
-  id: TechnicalAssistantJobTrinkets
-  name: loadout-group-jobtrinkets
-  minLimit: 0
-  loadouts:
-  - LizardPlushieTechnicalAssistant
-
-- type: loadoutGroup
   id: StationEngineerHead
   name: loadout-group-station-engineer-head
   minLimit: 0
@@ -1136,13 +1129,6 @@
   - WhiteJumpsuit
   - WhiteJumpskirt
 
-- type: loadoutGroup
-  id: ResearchAssistantJobTrinkets
-  name: loadout-group-jobtrinkets
-  minLimit: 0
-  loadouts:
-  - LizardPlushieResearchAssistant
-
 # Security
 - type: loadoutGroup
   id: HeadofSecurityHead
@@ -1327,13 +1313,6 @@
   - RedJumpskirt
 
 - type: loadoutGroup
-  id: SecurityCadetJobTrinkets
-  name: loadout-group-jobtrinkets
-  minLimit: 0
-  loadouts:
-  - LizardPlushieSecurityCadet
-
-- type: loadoutGroup
   id: SurvivalSecurity
   name: loadout-group-survival-security
   minLimit: 2
@@ -1482,13 +1461,6 @@
   loadouts:
   - WhiteJumpsuit
   - WhiteJumpskirt
-
-- type: loadoutGroup
-  id: MedicalInternJobTrinkets
-  name: loadout-group-jobtrinkets
-  minLimit: 0
-  loadouts:
-  - LizardPlushieMedicalIntern
 
 - type: loadoutGroup
   id: ChemistJumpsuit

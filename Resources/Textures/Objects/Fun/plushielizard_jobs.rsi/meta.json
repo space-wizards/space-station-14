@@ -65,9 +65,6 @@
             "name": "medicaldoctor"
         },
         {
-            "name": "medicalintern"
-        },
-        {
             "name": "mime"
         },
         {
@@ -89,9 +86,6 @@
             "name": "reporter"
         },
         {
-            "name": "researchassistant"
-        },
-        {
             "name": "researchdirector"
         },
         {
@@ -101,9 +95,6 @@
             "name": "scientist"
         },
         {
-            "name": "securitycadet"
-        },
-        {
             "name": "securityofficer"
         },
         {
@@ -111,9 +102,6 @@
         },
         {
             "name": "stationengineer"
-        },
-        {
-            "name": "technicalassistant"
         },
         {
             "name": "warden"
