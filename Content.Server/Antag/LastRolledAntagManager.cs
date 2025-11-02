@@ -41,7 +41,7 @@ public sealed class LastRolledAntagManager : IPostInjectInit
 
     public void Initialize()
     {
-        _sawmill = Logger.GetSawmill("last_roled_antag");
+        _sawmill = Logger.GetSawmill("last_rolled_antag");
     }
 
     /// <summary>
