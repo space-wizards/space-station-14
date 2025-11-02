@@ -196,7 +196,7 @@ namespace Content.Server.Database
         /// <returns>A <see cref="Task{}"/> object returning True, if the given user's <see cref="Player.LastRolledAntag"/> was successfully set to the new value.</returns>
         Task<bool> SetLastRolledAntag(NetUserId userId, TimeSpan to);
 
-        /// <returns>A <see cref="Task{}"/> object returning <see cref="TimeSpan.MinValue"/> if the found user's <see cref="Player.LastRolledAntag"/> was null, or no user was found.</returns>
+        /// <returns>A <see cref="Task{}"/> object returning <see cref="TimeSpan.Zero"/> if the found user's <see cref="Player.LastRolledAntag"/> was null, or no user was found.</returns>
         Task<TimeSpan> GetLastTimeAntagRolled(NetUserId userId);
         #endregion
 
