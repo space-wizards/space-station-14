@@ -36,7 +36,7 @@ public sealed partial class SatiationSystem
     )
     {
         if (GetAndResolveSatiationOfType(entity, type) is not var (satiation, proto) ||
-            proto.GetValueOrNull(satiationValue) is not {} value)
+            proto.GetValueOrNull(satiationValue) is not { } value)
             return;
 
         SetAuthoritativeValue(entity, satiation, proto, value);
@@ -102,11 +102,11 @@ public sealed partial class SatiationSystem
 
         // Resolve the bounds to integers we can actually compare against.
         int? valueAbove = null;
-        if (above is not null && (valueAbove = proto.GetValueOrNull(above)) is null)
+        if (above is { } a && (valueAbove = proto.GetValueOrNull(a)) is null)
             return false; // `above` is not null, but we failed to resolve its value.
 
         int? valueAtOrBelow = null;
-        if (below is not null && (valueAtOrBelow = proto.GetValueOrNull(below)) is null)
+        if (below is { } b && (valueAtOrBelow = proto.GetValueOrNull(b)) is null)
             return false; // `atOrBelow` is not null, but we failed to resolve its value.
 
         if (valueAbove > valueAtOrBelow)

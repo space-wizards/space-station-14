@@ -1,5 +1,3 @@
-using System.Globalization;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
@@ -15,8 +13,6 @@ using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
-using YamlDotNet.Core.Tokens;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Nutrition.Prototypes;
 
@@ -52,9 +48,8 @@ public sealed class SatiationPrototype : IPrototype, IInheritingPrototype
     public int MaximumValue;
 
     /// <summary>
-    /// The definition of key strings referentiable by <see cref="SatiationValue.SatiationValueByKey"/>. Any reference
-    /// to a key in this map by a <see cref="SatiationValue.SatiationValueByKey"/> will be resolved to the numeric value
-    /// associated to that key here before use.
+    /// The definition of key strings referentiable by <see cref="SatiationValue"/>s. Any reference to a key in this map
+    /// by a <see cref="SatiationValue"/> will be resolved to the numeric value associated to that key here before use.
     /// <br/>
     /// Note hat different satiations can use the same keys without issue. Indeed, the intention is that a "base"
     /// satiation can define values and modifiers on itself using these keys, and then inheriting satiation prototypes
@@ -133,16 +128,17 @@ public sealed class SatiationPrototype : IPrototype, IInheritingPrototype
 
     /// <summary>
     /// Attempts to get an integer value from the given <paramref name="satiationValue"/>. If
-    /// <paramref name="satiationValue"/> is a <see cref="SatiationValue.SatiationValueByValue"/>, use its contained integer value. If
-    /// it is a <see cref="SatiationValue.SatiationValueByKey"/>, attempts to look up the integer value of that key in
-    /// <see cref="Keys"/>; in the case that a key not present in this proto type is requested, returns null.
+    /// <paramref name="satiationValue"/> is an immediate value, use its contained integer value. If it is a key,
+    /// attempts to look up the integer value of that key in <see cref="Keys"/>; in the case that a key not present in
+    /// this proto type is requested, returns null.
     /// </summary>
-    public int? GetValueOrNull(SatiationValue satiationValue) => satiationValue switch
+    public int? GetValueOrNull(SatiationValue satiationValue)
     {
-        SatiationValue.SatiationValueByKey key => Keys.TryGetValue(key.K, out var v) ? v : null,
-        SatiationValue.SatiationValueByValue value => value.V,
-        _ => throw new ArgumentOutOfRangeException(nameof(satiationValue)),
-    };
+        if (satiationValue.Key is { } key)
+            return Keys.TryGetValue(key, out var v) ? v : null;
+
+        return satiationValue.Value;
+    }
 
     public override string ToString() => $"{nameof(SatiationPrototype)}(\"{ID}\")";
 }
@@ -152,42 +148,37 @@ public sealed class SatiationPrototype : IPrototype, IInheritingPrototype
 /// value, that value is used. When it contains a string key, that key is looked up in a
 /// <see cref="SatiationPrototype"/> to resolve its integer value before use.
 /// </summary>
+/// <remarks>
+/// Values of this type should not be created directly. Instead, rely on the implicit conversion operators. Similarly,
+/// the fields in this type should not have their values modified.
+/// </remarks>
 /// <seealso cref="SatiationPrototype.GetValueOrNull"/>
-[ImplicitDataRecord, Serializable, NetSerializable]
-public abstract record SatiationValue
+[DataRecord, Serializable, NetSerializable]
+public record struct SatiationValue()
 {
-    [DataRecord, Serializable, NetSerializable] // It's `ImplicitDataRecord`, but the game still crashed without the explicit `DataRecord` so idk
-    public sealed record SatiationValueByValue(
-        [field: DataField("value", required: true)]
-        int V
-    ) : SatiationValue;
+    [DataField, Access]
+    public int Value = -1;
 
-    [DataRecord, Serializable, NetSerializable]
-    public sealed record SatiationValueByKey(
-        [field: DataField("key", required: true)]
-        string K
-    ) : SatiationValue;
+    [DataField, Access]
+    public string? Key = null;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static implicit operator SatiationValue(int value) => new SatiationValueByValue(value);
+    public static implicit operator SatiationValue(int value) => new() { Value = value };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static implicit operator SatiationValue(string key) => new SatiationValueByKey(key);
+    public static implicit operator SatiationValue(string key) => new() { Key = key };
 
     [UsedImplicitly, TypeSerializer]
-    public sealed class SatiationValueSerializer : ITypeReader<SatiationValue, ValueDataNode>
+    public sealed class SatiationValueSerializer : ITypeSerializer<SatiationValue, ValueDataNode>
     {
         public ValidationNode Validate(
             ISerializationManager serializationManager,
             ValueDataNode node,
             IDependencyCollection dependencies,
             ISerializationContext? context = null
-        )
-        {
-            return int.TryParse(node.Value, out _)
-                ? serializationManager.ValidateNode<int>(node, context)
-                : serializationManager.ValidateNode<string>(node, context);
-        }
+        ) => int.TryParse(node.Value, out _)
+            ? serializationManager.ValidateNode<int>(node, context)
+            : serializationManager.ValidateNode<string>(node, context);
 
         public SatiationValue Read(
             ISerializationManager serializationManager,
@@ -196,12 +187,18 @@ public abstract record SatiationValue
             SerializationHookContext hookCtx,
             ISerializationContext? context = null,
             ISerializationManager.InstantiationDelegate<SatiationValue>? instanceProvider = null
-        )
-        {
-            if (int.TryParse(node.Value, out _))
-                return new SatiationValueByValue(serializationManager.Read<int>(node, context));
+        ) => int.TryParse(node.Value, out _)
+            ? serializationManager.Read<int>(node, context)
+            : serializationManager.Read<string>(node, context, notNullableOverride: true);
 
-            return new SatiationValueByKey(serializationManager.Read<string>(node, context, notNullableOverride: true));
-        }
+        public DataNode Write(
+            ISerializationManager serializationManager,
+            SatiationValue value,
+            IDependencyCollection dependencies,
+            bool alwaysWrite = false,
+            ISerializationContext? context = null
+        ) => value.Key is not null
+            ? serializationManager.WriteValue(value.Key, notNullableOverride: true)
+            : serializationManager.WriteValue(value.Value);
     }
 }

@@ -15,20 +15,17 @@
     Okay: 1.0
     Thirsty: 0.8
     Parched: 0.6
-    Dead: 0.6
   speedModifiers:
     Parched: 0.75
   alertCategory: Thirst
   alerts:
     Thirsty: Thirsty
     Parched: Parched
-    Dead: Parched
   icons:
-    Overhydrated: "ThirstIconOverhydrated"
+    Overhydrated: ThirstIconOverhydrated
     Okay: null
-    Thirsty: "ThirstIconThirsty"
-    Parched: "ThirstIconParched"
-    Dead: "ThirstIconParched"
+    Thirsty: ThirstIconThirsty
+    Parched: ThirstIconParched
 
 - type: satiation
   id: MouseThirst
@@ -63,13 +60,3 @@
   id: DionaThirst
   parent: NormalSatiationThirst
   baseDecayRate: 0.0083
-
-- type: satiationExamination
-  id: ThirstExamination
-  descriptions:
-    Dead: "examinable-satiation-component-examine-thirst-desperate"
-    Parched: "examinable-satiation-component-examine-thirst-desperate"
-    Thirsty: "examinable-satiation-component-examine-thirst-concerned"
-    Okay: "examinable-satiation-component-examine-thirst-okay"
-    Overhydrated: "examinable-satiation-component-examine-thirst-full"
-  notApplicable: "examinable-satiation-component-examine-thirst-none"
