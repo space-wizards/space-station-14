@@ -3,6 +3,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Notes;
 using Content.Server.Afk;
+using Content.Server.Antag;
 using Content.Server.Chat.Managers;
 using Content.Server.Connection;
 using Content.Server.Database;
@@ -69,6 +70,7 @@ internal static class ServerContentIoC
         deps.Register<VoteWebhooks>();
         deps.Register<ServerDbEntryManager>();
         deps.Register<ISharedPlaytimeManager, PlayTimeTrackingManager>();
+        deps.Register<LastRolledAntagManager>();
         deps.Register<ServerApi>();
         deps.Register<JobWhitelistManager>();
         deps.Register<PlayerRateLimitManager>();

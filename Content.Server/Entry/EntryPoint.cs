@@ -3,6 +3,7 @@ using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
+using Content.Server.Antag;
 using Content.Server.Chat.Managers;
 using Content.Server.Connection;
 using Content.Server.Database;
@@ -70,6 +71,7 @@ namespace Content.Server.Entry
         [Dependency] private readonly JobWhitelistManager _job = default!;
         [Dependency] private readonly MultiServerKickManager _multiServerKick = default!;
         [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
+        [Dependency] private readonly LastRolledAntagManager _lastRolledAntagManager = default!;
         [Dependency] private readonly PlayerRateLimitManager _rateLimit = default!;
         [Dependency] private readonly RecipeManager _recipe = default!;
         [Dependency] private readonly RulesManager _rules = default!;
@@ -174,11 +176,11 @@ namespace Content.Server.Entry
             switch (level)
             {
                 case ModUpdateLevel.PostEngine:
-                {
-                    _euiManager.SendUpdates();
-                    _voteManager.Update();
-                    break;
-                }
+                    {
+                        _euiManager.SendUpdates();
+                        _voteManager.Update();
+                        break;
+                    }
 
                 case ModUpdateLevel.FramePostEngine:
                     _updateManager.Update();
@@ -195,6 +197,7 @@ namespace Content.Server.Entry
             if (!string.IsNullOrEmpty(dest))
             {
                 _playTimeTracking.Shutdown();
+                _lastRolledAntagManager.Shutdown();
                 _dbManager.Shutdown();
             }
 
