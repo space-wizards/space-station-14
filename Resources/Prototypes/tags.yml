@@ -819,9 +819,6 @@
   id: Kangaroo # Used by inventoryTemplate:kangaroo to whitelist clothes wearable by the man shaped animal.
 
 - type: Tag
-  id: Katana # Unused. (Exists on Katana)
-
-- type: Tag
   id: Ketchup # Storage whitelist: ClothingBeltChef and FoodCartHot. ItemMapper: ClothingBeltChef and FoodCartHot
 
 - type: Tag
