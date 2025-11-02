@@ -230,7 +230,8 @@
   id: CannotSuicide # Used by SuicideSystem. Tagged entities ghost when attempting to suicide.
 
 - type: Tag
-  id: CanPilot # Used by ShuttleConsoleSystem to guard who's allowed to pilot ships.
+  id: CanPilot # Used by ShuttleConsoleSystem to guard who's allowed to pilot ships. Semi-synonymous with a sentient person/creature.
+               # Storage whitelist: BodyBag, MachineArtifactCrusher
 
 - type: Tag
   id: CaptainSabre # Storage whitelist: ClothingBeltSheath. ItemMapper: ClothingBeltSheath
@@ -710,7 +711,7 @@
 ## H ##
 
 - type: Tag
-  id: Hamster # Pilot whitelist: MechHamtr
+  id: Hamster # storage whitelist: MechHamtr
 
 - type: Tag
   id: HamsterWearable # Used by inventoryTemplate:hamster to whitelist clothes wearable by brown rats
@@ -1524,16 +1525,17 @@
 ## V ##
 
 - type: Tag
-  id: Vegetable
+  id: Vegetable # CargoBounty: BountyVegetable
+
+- type: Tag # Used on DungeonRoom prototypes.
+  id: VGRoidInterior # RoomFill spawner whitelist for VGRoidInteriorRoomMarker.
 
 - type: Tag
-  id: VGRoidInterior
+  id: VimPilot # Used synonymously with harmless animals such as mice, station pets, or genetic ancestors (monkeys).
+               # Storage whitelist: MechVim, PetCarrier, BodyBag, MachineArtifactCrusher
 
 - type: Tag
-  id: VimPilot
-
-- type: Tag
-  id: VoiceTrigger
+  id: VoiceTrigger # ConstructionGraph: Vim
 
 ## W ##
 
