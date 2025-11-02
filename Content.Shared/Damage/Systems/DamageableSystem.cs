@@ -103,7 +103,7 @@ public sealed partial class DamageableSystem : EntitySystem
     {
         var damageTypes = new Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2>();
 
-        foreach (var (damageGroupId, damageAmount) in damagePerGroup)  //go through each group
+        foreach (var (damageGroupId, _) in damagePerGroup)  //go through each group
         {
             var group = _prototypeManager.Index<DamageGroupPrototype>(damageGroupId);  //get group
             foreach (var type in group.DamageTypes) //go through each type inside that group

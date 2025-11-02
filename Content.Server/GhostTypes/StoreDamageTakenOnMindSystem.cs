@@ -39,7 +39,6 @@ public sealed class StoreDamageTakenOnMindSystem : EntitySystem
     /// <summary>
     /// Gets an entity Mind and stores it's current body damages inside of it's LastBodyDamageComponent
     /// </summary>
-    /// <param name="ent"></param>
     private void SaveBody(EntityUid ent)
     {
         if (!TryComp<DamageableComponent>(ent, out var damageable)

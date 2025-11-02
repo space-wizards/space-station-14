@@ -10,7 +10,7 @@ namespace Content.Shared.GhostTypes;
 public sealed partial class LastBodyDamageComponent : Component
 {
     /// <summary>
-    /// Entity damage stored by the StoreDamageTakenOnMind, indexed by the DamageableSystem.
+    /// Dictionary DamageGroupPrototype proto ids to how much damage was received from that damage type.
     /// </summary>
     [DataField]
     public Dictionary<string, FixedPoint2>? DamagePerGroup;
