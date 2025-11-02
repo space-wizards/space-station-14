@@ -38,6 +38,14 @@ public sealed partial class ServerBwoinkManager
         }, session.Channel);
     }
 
+    protected override void UpdatedChannels()
+    {
+        foreach (var session in PlayerManager.Sessions)
+        {
+            SyncChannels(session);
+        }
+    }
+
     /// <summary>
     /// Checks if a given session is able to manage a given bwoink channel.
     /// </summary>
