@@ -1,0 +1,53 @@
+- type: entity
+  id: CSBarrelRed
+  parent: BaseStructureDynamic
+  name: red barrel
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Structures/barrel.rsi
+    state: base-1
+  - type: Transform
+    anchored: false
+  - type: Clickable
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.45,0.15,0.25"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+  - type: Anchorable
+
+- type: entity
+  id: CSBarrelBlue
+  parent: BaseStructureDynamic
+  name: blue barrel
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Structures/barrel.rsi
+    state: base-0
+  - type: Transform
+    anchored: false
+  - type: Clickable
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.45,0.15,0.25"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+  - type: Anchorable
