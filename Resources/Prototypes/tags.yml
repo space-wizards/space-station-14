@@ -1508,9 +1508,6 @@
   id: Wirecutter # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering
 
 - type: Tag
-  id: WizardStaff # Unused (Exists on WeaponStaffBase)
-
-- type: Tag
   id: WizardWand # that evil vvizard vvand
                  # .cs: ChargeSpellEvent. Storage whitelist: ClothingBeltWand
 
@@ -1525,9 +1522,6 @@
 - type: Tag
   id: Wrench # Storage whitelist: BaseClothingBeltEngineering, ClothingBeltJanitor, ClothingBeltMedical.
              # ItemMapper: BaseClothingBeltEngineering, ClothingBeltJanitor, ClothingBeltMedical
-
-- type: Tag
-  id: Wringer # Unused (Exists on JanitorialTrolley, MopBucket)
 
 - type: Tag
   id: Write # Used by PaperSystem to make tagged entity a writing tool. Many storages whitelist this as well.
