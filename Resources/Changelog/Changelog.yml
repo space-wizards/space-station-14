@@ -1,116 +1,4 @@
 ﻿Entries:
-- author: Boaz1111
-  changes:
-  - message: Various species can now have the same scars as humans do, with exceptions.
-    type: Add
-  - message: A smaller variant of the eye scars has been added.
-    type: Add
-  id: 8660
-  time: '2025-06-11T21:56:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35645
-- author: SlamBamActionman
-  changes:
-  - message: Propeller hats can now be found in the Clothesmate.
-    type: Add
-  - message: Swirl lollipops can now be found in the manager inventory of GetMore
-      Chocolate Corp. vending machines.
-    type: Add
-  id: 8661
-  time: '2025-06-12T01:22:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38260
-- author: themias
-  changes:
-  - message: Fixed an issue where the gas analyzer and anomaly scanner would need
-      to be reactivated to open the UI
-    type: Fix
-  id: 8662
-  time: '2025-06-12T21:16:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38285
-- author: BigfootBravo
-  changes:
-  - message: Utensils don't spam a warning for incompatible foods.
-    type: Fix
-  id: 8663
-  time: '2025-06-13T01:48:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38297
-- author: hoshizora-sayo
-  changes:
-  - message: Fixed crafting menu entries that included modular machine parts
-    type: Fix
-  id: 8664
-  time: '2025-06-13T05:21:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38299
-- author: nkokic
-  changes:
-  - message: Tear gas smoke is now white and semi-transparent.
-    type: Tweak
-  - message: Tear gas now causes coughing, slows you down and hits a bit faster than
-      before.
-    type: Add
-  id: 8665
-  time: '2025-06-13T13:53:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36440
-- author: M1tht1c
-  changes:
-  - message: You can now remove visitors mindshields.
-    type: Fix
-  - message: Disaster victims now have mindshields when appropriate.
-    type: Fix
-  id: 8666
-  time: '2025-06-13T14:43:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36537
-- author: SyaoranFox
-  changes:
-  - message: Rat King is now a full antag.
-    type: Tweak
-  id: 8667
-  time: '2025-06-13T15:52:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38124
-- author: qrwas
-  changes:
-  - message: add missing locale for Undergarment
-    type: Fix
-  id: 8668
-  time: '2025-06-13T16:09:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38304
-- author: slarticodefast
-  changes:
-  - message: Fixed some reagents like puncturase healing bleeding when they shouldn't.
-    type: Fix
-  id: 8669
-  time: '2025-06-13T16:11:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38289
-- author: Kittygyat
-  changes:
-  - message: Monkeys & kobolds can now wear emergency EVA suits, with a fresh new
-      sprite to go along with it! You're welcome, Pun-Pun enthusiasts!
-    type: Tweak
-  id: 8670
-  time: '2025-06-13T18:54:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37660
-- author: Nox38
-  changes:
-  - message: The warden's dresser now contains their jumpsuits!
-    type: Add
-  id: 8671
-  time: '2025-06-14T08:59:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38283
-- author: Sparlight
-  changes:
-  - message: Corgium has been added.  Consuming too much polymorphs you into a smart
-      corgi.
-    type: Add
-  id: 8672
-  time: '2025-06-14T09:07:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37951
-- author: Sparlight
-  changes:
-  - message: A pet bag for smart corgis to wear and a construction option for them.  Not
-      actually wearable by normal pets at this time.
-    type: Add
-  id: 8673
-  time: '2025-06-14T16:09:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37440
 - author: Nikitosych
   changes:
   - message: Fixed the ability for holoparasite to kill the host through the mech
@@ -3929,3 +3817,107 @@
   id: 9161
   time: '2025-10-26T18:50:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41068
+- author: ArtisticRoomba
+  changes:
+  - message: Examine text for whether an object is currently taking Delta-Pressure
+      damage is predicted, so you no longer have to wait for it to pop into place,
+      it just shows up instantly.
+    type: Tweak
+  id: 9162
+  time: '2025-10-27T11:12:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41135
+- author: lzk228
+  changes:
+  - message: Water cup spills when worn
+    type: Tweak
+  id: 9163
+  time: '2025-10-27T18:56:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41148
+- author: Princess-Cheeseballs
+  changes:
+  - message: Wizard is now only a midround spawn.
+    type: Tweak
+  id: 9164
+  time: '2025-10-23T15:29:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40983
+- author: Princess-Cheeseballs
+  changes:
+  - message: Explosions now scale properly with reagent quantity
+    type: Fix
+  id: 9165
+  time: '2025-10-27T22:54:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41153
+- author: scrivoy
+  changes:
+  - message: Fuel dispensers now explode when ignited with a welding tool, similar
+      to fuel tanks.
+    type: Tweak
+  id: 9166
+  time: '2025-10-27T23:09:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36251
+- author: TheGrimbeeper
+  changes:
+  - message: Artifact phasing fixed.
+    type: Fix
+  id: 9167
+  time: '2025-10-28T07:21:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41160
+- author: emberwinters
+  changes:
+  - message: Diphenhydramine now respects its maximum drowsiness
+    type: Fix
+  id: 9168
+  time: '2025-10-28T17:14:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41169
+- author: kosticia
+  changes:
+  - message: Kira special drink has been renamed to the citrus bikeshed.
+    type: Tweak
+  id: 9169
+  time: '2025-10-28T19:58:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41167
+- author: SirWarock
+  changes:
+  - message: Certain low-capacity weapons, like Mosin, Shotguns and Handguns will
+      have their ammo counter UI enlargened to have an easier time gauging your ammo.
+    type: Tweak
+  id: 9170
+  time: '2025-10-29T03:05:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40570
+- author: Hitlinemoss
+  changes:
+  - message: Department heads are now legally able to approve the use of their departmentally-restricted
+      items without requiring Captain/HoS oversight.
+    type: Tweak
+  id: 9171
+  time: '2025-10-29T05:50:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40565
+- author: Hitlinemoss
+  changes:
+  - message: Antagonist flavor text has been adjusted.
+    type: Tweak
+  id: 9172
+  time: '2025-10-30T01:08:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41184
+- author: kontakt
+  changes:
+  - message: Wires will once again break randomly at roundstart.
+    type: Fix
+  id: 9173
+  time: '2025-10-30T02:30:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41191
+- author: SnappingOpossum
+  changes:
+  - message: Energy shotgun and energy magnum can now be used by pacifists in their
+      disabling modes.
+    type: Tweak
+  id: 9174
+  time: '2025-10-30T19:30:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41029
+- author: rumaks-xyz
+  changes:
+  - message: Changed the recipe for licoxide to require lithium instead of lead.
+    type: Tweak
+  id: 9175
+  time: '2025-10-30T20:04:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40991
