@@ -1507,19 +1507,19 @@
 ## U ##
 
 - type: Tag
-  id: Unimplantable
+  id: Unimplantable # Targeting blacklist: BaseImplanter
 
 - type: Tag
   id: Unstackable # To prevent things like atmos devices (filters etc) being stacked on one tile. See NoUnstackableInTile
 
 - type: Tag
-  id: UraniumGlassShard
+  id: UraniumGlassShard # ConstructionGraph: ImprovisedArrowUranium, UraniumShiv, SpearUranium
 
 - type: Tag
-  id: UtilityBelt
+  id: UtilityBelt # ConstructionGraph: scraparmor
 
 - type: Tag
-  id: UtilityKnife
+  id: UtilityKnife # Storage whitelist: BaseClothingBeltEngineering, BountyKnife
 
 ## V ##
 
