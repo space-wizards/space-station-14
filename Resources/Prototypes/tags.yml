@@ -1623,19 +1623,19 @@
 ## X ##
 
 - type: Tag
-  id: XenoborgModuleEngi
+  id: XenoborgModuleEngi # Cyborg module category
 
 - type: Tag
-  id: XenoborgModuleGeneric
+  id: XenoborgModuleGeneric # Cyborg module category
 
 - type: Tag
-  id: XenoborgModuleHeavy
+  id: XenoborgModuleHeavy # Cyborg module category
 
 - type: Tag
-  id: XenoborgModuleScout
+  id: XenoborgModuleScout # Cyborg module category
 
 - type: Tag
-  id: XenoborgModuleStealth
+  id: XenoborgModuleStealth # Cyborg module category
 
 ## Y ##
 ## Z ##
