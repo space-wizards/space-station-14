@@ -1447,55 +1447,56 @@
 ## T ##
 
 - type: Tag
-  id: TabletopBoard
+  id: TabletopBoard # Storage whitelist: BooksBag, BorgModuleService
 
 - type: Tag
   id: Taco # Food sequence key
 
 - type: Tag
-  id: TabletopPiece
+  id: TabletopPiece # Unused (Exists on BaseTabletopPiece)
 
 - type: Tag
-  id: Taser
+  id: Taser # Storage whitelist: ClothingBeltSecurity
 
 - type: Tag
-  id: TimerBrigElectronics
+  id: TimerBrigElectronics # ConstructionGraph: Timer
 
 - type: Tag
-  id: TimerScreenElectronics
+  id: TimerScreenElectronics # ConstructionGraph: Timer
 
 - type: Tag
-  id: TimerSignalElectronics
+  id: TimerSignalElectronics # ConstructionGraph: Timer
 
 - type: Tag
-  id: Toolbox
+  id: Toolbox # CargoBounty: BountyToolbox
 
 - type: Tag
-  id: ToothSharkminnow
+  id: ToothSharkminnow # CargoBounty: BountyTeethSharkminnow
 
 - type: Tag
-  id: ToothSpaceCarp
+  id: ToothSpaceCarp # CargoBounty: BountyTeethSpaceCarp
 
 - type: Tag
-  id: Torch
+  id: Torch # CargoBounty: BountyTorch. ConstructionGraph: PumpkinAddLight
 
 - type: Tag
-  id: ToteBase
+  id: ToteBase # Unused (Exists on ToteBase)
 
 - type: Tag
-  id: ToyRubberDuck
+  id: ToyRubberDuck # ConstructionGraph: ClothingShoeSlippersDuck
 
 - type: Tag
-  id: ToySidearm
+  id: ToySidearm # Storage whitelist: ClothingShoesClownBase
 
 - type: Tag
-  id: Trash
+  id: Trash # Tagged entities are generic garbage. They fit inside TrashBag and are destroyed by Recycler.
+            # CargoBounty: BountyTrash. SpecialDigestible: OrganVoxStomach
 
 - type: Tag
-  id: TrashBag
+  id: TrashBag # Storage whitelist: BoxTrashbag, ClothingBeltJanitor, JanitorialTrolley. ItemMapper: JanitorialTrolley
 
 - type: Tag
-  id: Truncheon
+  id: Truncheon # Storage whitelist: ClothingBeltSecurity
 
 - type: Tag
   id: TurretCompatibleWeapon # Used in the construction of sentry turrets
