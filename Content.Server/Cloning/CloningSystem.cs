@@ -86,7 +86,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
 
     public override void CloneComponents(EntityUid original, EntityUid clone, ProtoId<CloningSettingsPrototype> settings)
     {
-        if (!_prototype.TryIndex(settings, out var proto))
+        if (!_prototype.Resolve(settings, out var proto))
             return;
 
         CloneComponents(original, clone, proto);
