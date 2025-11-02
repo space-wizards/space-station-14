@@ -24,6 +24,7 @@ namespace Content.Server.Antag;
         - - - it is saved in the DB
         - - if it wasn't, then nothing happens
         - - the player's data is then removed from the internal cache
+        - everything is stored to internal cache when the manager shuts down
 */
 public sealed class LastRolledAntagManager : IPostInjectInit
 {
@@ -38,11 +39,17 @@ public sealed class LastRolledAntagManager : IPostInjectInit
 
     private ISawmill _sawmill = default!;
 
+    public void Initialize()
+    {
+        _sawmill = Logger.GetSawmill("last_roled_antag");
+    }
+
     /// <summary>
     /// Saves last rolled values to the database before allowing the server to shutdown.
     /// </summary>
     public void Shutdown()
     {
+        Save();
         _taskManager.BlockWaitOnTask(Task.WhenAll(_pendingSaveTasks));
     }
 
@@ -75,6 +82,16 @@ public sealed class LastRolledAntagManager : IPostInjectInit
     {
         savedLastRolledTime ??= _lastRolledData.GetValueOrDefault(userId);
         TrackPending(SaveSessionAsync(userId, savedLastRolledTime.Value));
+    }
+
+
+    /// <summary>
+    /// Save all modified time trackers for all players to the database.
+    /// Saves the last-rolled time of each player as the last-rolled time in the internal cache.
+    /// </summary>
+    public void Save()
+    {
+        TrackPending(SaveAllAsync());
     }
 
     /// <summary>
@@ -110,6 +127,18 @@ public sealed class LastRolledAntagManager : IPostInjectInit
             _sawmill.Debug($"Successfully saved LastRolledAntag for {userId} from {_lastRolledData.GetValueOrDefault(userId)} to {savedLastRolledTime}.");
         else
             _sawmill.Error($"Failed to save LastRolledAntag for {userId}. Player not found or other issue.");
+    }
+
+    /// <summary>
+    /// Saves the last-rolled-antag time for every player, to the database.
+    /// Uses the internally cached last-rolled time to save.
+    /// </summary>
+    private async Task SaveAllAsync()
+    {
+        // variable assign is to silence CS4014: "Because this call is not awaited, execution of the current method continues before the call is completed. Consider applying the await operator to the result of the call."
+        Task saveTask;
+        foreach (var (userId, lastRolledTime) in _lastRolledData)
+            saveTask = SaveSessionAsync(userId, lastRolledTime);
     }
 
     /// <summary>

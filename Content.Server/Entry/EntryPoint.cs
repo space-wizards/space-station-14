@@ -129,6 +129,7 @@ namespace Content.Server.Entry
             _voteManager.Initialize();
             _updateManager.Initialize();
             _playTimeTracking.Initialize();
+            _lastRolledAntagManager.Initialize();
             _watchlistWebhookManager.Initialize();
             _job.Initialize();
             _rateLimit.Initialize();
