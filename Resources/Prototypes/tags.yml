@@ -850,12 +850,7 @@
 
 ## M ##
 
-- type: Tag
-  id: Machete # Unused (Exists on Machete, Cutlass)
-
-- type: Tag
-  id: MacroBomb # Unused (Exists on MacroBombImplant)
-
+#region Magazines
 # Magazines ordered by slot then caliber
 
 - type: Tag
@@ -1075,9 +1070,6 @@
 
 - type: Tag
   id: PKAUpgrade # UpgradeableGun whitelist for WeaponProtoKineticAccelerator.
-
-- type: Tag
-  id: PlantAnalyzer # Commented out on ClothingBeltPlant, so currently unused x2.
 
 - type: Tag
   id: PlantBGone # Storage whitelist: ClothingBeltPlant. ItemMapper: ClothingBeltPlant
