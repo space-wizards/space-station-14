@@ -13,13 +13,27 @@ public sealed class BwoinkCommand : ToolshedCommand
 {
     [Dependency] private readonly ServerBwoinkManager _bwoinkManager = default!;
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
+    [Dependency] private readonly ILocalizationManager _localizationManager = default!;
 
     [CommandImplementation("message")]
-    public void Message([PipedArgument] IEnumerable<ICommonSession> input, [CommandArgument] ProtoId<BwoinkChannelPrototype> channel, [CommandArgument] string message)
+    public void Message(IInvocationContext ctx, [PipedArgument] IEnumerable<ICommonSession> input, [CommandArgument] ProtoId<BwoinkChannelPrototype> channel, [CommandArgument] string message)
     {
+        if (ctx.Session is not null && !_bwoinkManager.CanManageChannel(channel, ctx.Session))
+        {
+            ctx.WriteLine(_localizationManager.GetString("command-description-bwoink-1984", [("proto", channel)]));
+            return;
+        }
+
         foreach (var session in input)
         {
-            _bwoinkManager.SendMessageInChannel(channel, session.UserId, message, MessageFlags.Manager);
+            if (ctx.Session is not null)
+            {
+                _bwoinkManager.SendMessageInChannel(channel, session.UserId, message, MessageFlags.Manager, ctx.Session.UserId);
+            }
+            else
+            {
+                _bwoinkManager.SendMessageInChannel(channel, session.UserId, message, MessageFlags.Manager);
+            }
         }
     }
 

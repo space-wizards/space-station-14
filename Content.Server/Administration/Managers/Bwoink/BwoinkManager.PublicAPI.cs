@@ -20,6 +20,21 @@ public sealed partial class ServerBwoinkManager
     }
 
     /// <summary>
+    /// Sends a message to a given channel and user channel using the provided sender.
+    /// </summary>
+    [PublicAPI]
+    public void SendMessageInChannel(ProtoId<BwoinkChannelPrototype> channel,
+        NetUserId userChannel,
+        string text,
+        MessageFlags flags,
+        NetUserId sender)
+    {
+        SynchronizeMessage(channel,
+            userChannel,
+            CreateUserMessage(text, flags, sender));
+    }
+
+    /// <summary>
     /// Sets the allow list status of a person. Allow lists are used when for the <see cref="ListRequirement"/>.
     /// </summary>
     [PublicAPI]
@@ -52,6 +67,14 @@ public sealed partial class ServerBwoinkManager
             SyncChannels(session);
             SynchronizeMessages(session);
         }
+    }
+
+    /// <summary>
+    /// Creates a bwoink message for a given sender.
+    /// </summary>
+    private BwoinkMessage CreateUserMessage(string text, MessageFlags flags, NetUserId sender)
+    {
+        return new BwoinkMessage(PlayerManager.GetSessionById(sender).Name, sender, DateTime.UtcNow, text, flags);
     }
 
     private BwoinkMessage CreateSystemMessage(string text, MessageFlags flags = MessageFlags.Manager)
