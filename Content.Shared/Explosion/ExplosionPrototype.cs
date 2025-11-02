@@ -28,6 +28,10 @@ public sealed partial class ExplosionPrototype : IPrototype
     /// <summary>
     ///     Amount of firestacks to apply in addition to igniting.
     /// </summary>
+    /// <remarks>
+    ///     Setting this to zero means that the explosion won't ignite any gas present.
+    ///     (For instance : cleaning grenades)
+    /// </remarks>
     [DataField]
     public float? FireStacks;
 

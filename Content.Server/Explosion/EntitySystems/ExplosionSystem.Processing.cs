@@ -464,7 +464,7 @@ public sealed partial class ExplosionSystem
             }
         }
 
-        // ignite
+        // ignite components
         if (fireStacksOnIgnite != null)
         {
             if (_flammableQuery.TryGetComponent(uid, out var flammable))
@@ -472,6 +472,14 @@ public sealed partial class ExplosionSystem
                 flammable.FireStacks += fireStacksOnIgnite.Value;
                 _flammableSystem.Ignite(uid, uid, flammable);
             }
+        }
+
+        // heat the atmosphere
+        float? temperature = fireStacksOnIgnite * 500;
+        if ((temperature != null) && (xform != null) && (xform.GridUid is { } gridUid))
+        {
+            var position = _transformSystem.GetGridOrMapTilePosition(uid, xform);
+            _atmosphere.HotspotExpose(gridUid, position, temperature.Value, 50, uid, true);
         }
 
         // throw
