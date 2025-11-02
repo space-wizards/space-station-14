@@ -4,7 +4,7 @@ meta:
   engineVersion: 267.3.0
   forkId: ""
   forkVersion: ""
-  time: 10/27/2025 07:11:36
+  time: 11/02/2025 23:05:17
   entityCount: 2641
 maps:
 - 1
@@ -14666,7 +14666,7 @@ entities:
   - uid: 2640
     components:
     - type: Transform
-      pos: -6.5,-3.5
+      pos: -4.5,-2.5
       parent: 2
 - proto: SpawnPointHeadOfSecurity
   entities:
@@ -14738,7 +14738,7 @@ entities:
   - uid: 1993
     components:
     - type: Transform
-      pos: -4.5,-2.5
+      pos: -6.5,-3.5
       parent: 2
 - proto: SpawnPointObserver
   entities:
