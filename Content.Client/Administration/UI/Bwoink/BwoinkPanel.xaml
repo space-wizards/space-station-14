@@ -7,6 +7,7 @@
     <RichTextLabel Name="TypingIndicator" Access="Public" />
     <BoxContainer Name="MessagePropsContainer">
         <CheckBox Name="ManagerOnly"></CheckBox>
+        <CheckBox Pressed="True" Name="Silent" Text="{Loc 'admin-bwoink-play-sound'}"></CheckBox>
     </BoxContainer>
     <HistoryLineEdit Name="SenderLineEdit" />
     <RichTextLabel Text="{Loc 'bwoink-read-only'}" Visible="False" Name="ReadOnlyLabel"></RichTextLabel>

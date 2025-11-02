@@ -71,6 +71,12 @@ public sealed partial class ServerBwoinkManager
             flags |= MessageFlags.ManagerOnly;
         }
 
+        if (ProtoCache[message.Channel].TryGetFeature<SoundOnMessage>(out var soundOnMessage) &&
+            message.Message.Flags.HasFlag(MessageFlags.Silent) && soundOnMessage.AllowSilent)
+        {
+            flags |= MessageFlags.Silent;
+        }
+
         SynchronizeMessage(message.Channel,
             message.Target,
             new BwoinkMessage(message.MsgChannel.UserName,

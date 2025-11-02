@@ -9,4 +9,10 @@ public sealed partial class SoundOnMessage : BwoinkChannelFeature
 {
     [DataField(required: true)]
     public SoundPathSpecifier Sound { get; set; }
+
+    /// <summary>
+    /// If true, allows managers to check a "silent" tickbox that (you guessed it) makes a message NOT make a sound.
+    /// </summary>
+    [DataField]
+    public bool AllowSilent { get; set; } = true;
 }

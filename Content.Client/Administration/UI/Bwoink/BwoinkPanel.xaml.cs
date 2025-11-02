@@ -77,6 +77,8 @@ public sealed partial class BwoinkPanel : BoxContainer
         }
         else
             ManagerOnly.Visible = false;
+
+        Silent.Visible = _channel.TryGetFeature<SoundOnMessage>(out var soundOnMessage) && soundOnMessage.AllowSilent;
     }
 
     protected override void ExitedTree()
@@ -106,6 +108,9 @@ public sealed partial class BwoinkPanel : BoxContainer
 
         if (ManagerOnly.Pressed)
             flags |= MessageFlags.ManagerOnly;
+
+        if (!Silent.Pressed)
+            flags |= MessageFlags.Silent;
 
         MessageSent?.Invoke((args.Text, flags));
         _bwoinkManager.SetTypingStatus(_channel.ID, false, _managingFor);
@@ -172,6 +177,11 @@ public sealed partial class BwoinkPanel : BoxContainer
             formatted.AddText(_channel.TryGetFeature<ManagerOnlyMessages>(out var managerOnlyMessages)
                 ? $"{Loc.GetString(managerOnlyMessages.Prefix)} "
                 : $"{Loc.GetString("bwoink-message-manager-only")} ");
+        }
+
+        if (message.Flags.HasFlag(MessageFlags.Silent))
+        {
+            formatted.AddText($"{Loc.GetString("bwoink-message-silent")} ");
         }
 
         formatted.PushColor(color);

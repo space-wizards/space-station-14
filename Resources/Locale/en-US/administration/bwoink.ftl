@@ -25,7 +25,7 @@ admin-ahelp-manager-only = Manager Only
 
 admin-ahelp-admin-only = Admin Only
 
-admin-bwoink-play-sound = Bwoink?
+admin-bwoink-play-sound = Play Sound
 
 bwoink-title-none-selected = None selected
 
