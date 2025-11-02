@@ -6,14 +6,14 @@ namespace Content.Shared.Light.Components;
 public sealed partial class RandomPointLightComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public float MaxRadius = 8;
+    public float MaxRadius = 6;
 
     [DataField, AutoNetworkedField]
-    public float MinRadius = 3;
+    public float MinRadius = 1;
 
     [DataField, AutoNetworkedField]
     public float MaxEnergy = 5;
 
     [DataField, AutoNetworkedField]
-    public float MinEnergy = 0;
+    public float MinEnergy = 1;
 }

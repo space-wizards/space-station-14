@@ -1,10 +1,9 @@
 using Robust.Shared.Random;
+using Content.Shared.Light.Components;
 
 namespace Content.Shared.Light.EntitySystems;
 
-using Content.Shared.Light.Components;
-
-public sealed class SharedRandomPointLightSystem : EntitySystem
+public sealed class RandomPointLightSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedPointLightSystem _light = default!;
