@@ -152,7 +152,7 @@ namespace Content.Server.GameTicking
             }
 
 
-            
+
             //When the status of a player changes, update the server info text
             UpdateInfoText();
 
@@ -199,7 +199,7 @@ namespace Content.Server.GameTicking
 
         public HumanoidCharacterProfile? GetPlayerProfile(ICommonSession p)
         {
-            return _prefsManager.GetPreferences(p.UserId).SelectedCharacter as HumanoidCharacterProfile;
+            return (HumanoidCharacterProfile?) _prefsManager.GetPreferences(p.UserId).SelectedCharacter;
         }
 
         public void PlayerJoinGame(ICommonSession session, bool silent = false)
