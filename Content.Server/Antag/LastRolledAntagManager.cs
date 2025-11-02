@@ -24,7 +24,7 @@ namespace Content.Server.Antag;
         - - - it is saved in the DB
         - - if it wasn't, then nothing happens
         - - the player's data is then removed from the internal cache
-        - everything is stored to internal cache when the manager shuts down
+        - everything is stored to the DB when the manager shuts down
 */
 public sealed class LastRolledAntagManager : IPostInjectInit
 {
