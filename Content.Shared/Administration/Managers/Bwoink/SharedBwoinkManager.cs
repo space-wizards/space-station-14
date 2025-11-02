@@ -259,7 +259,11 @@ public sealed record BwoinkMessage(string Sender, NetUserId? SenderId, DateTime 
     /// <summary>
     /// The contents of this message.
     /// </summary>
+#if DEBUG
+    [ViewVariables(VVAccess.ReadWrite)]
+#else
     [ViewVariables]
+#endif
     public string Content { get; init; } = Content;
 
     /// <summary>

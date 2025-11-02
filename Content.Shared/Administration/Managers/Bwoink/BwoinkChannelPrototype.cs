@@ -1,4 +1,7 @@
-﻿using Robust.Shared.Prototypes;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Administration.Managers.Bwoink;
 
@@ -56,4 +59,20 @@ public sealed class BwoinkChannelPrototype : IPrototype
 
     [DataField(required: true)]
     public List<BwoinkChannelFeature> Features { get; set; } = new();
+}
+
+public static class BwoinkChannelExtensions
+{
+    public static bool HasFeature<T>(this BwoinkChannelPrototype prototype) where T : BwoinkChannelFeature
+    {
+        return prototype.Features.Any(f => f is T);
+    }
+
+    public static bool TryGetFeature<T>(this BwoinkChannelPrototype prototype, [NotNullWhen(true)] out T? feature)
+        where T : BwoinkChannelFeature
+    {
+        var hasValue = prototype.Features.TryFirstOrDefault(x => x is T, out var featureTemp);
+        feature = hasValue ? featureTemp as T : null;
+        return hasValue;
+    }
 }

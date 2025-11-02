@@ -163,12 +163,12 @@ public sealed partial class ClientBwoinkManager : SharedBwoinkManager
     /// <summary>
     /// Attempts to send a message *as* an admin. If called when you are not a manager of the channel, this does nothing but explode you (server rejects the packet).
     /// </summary>
-    public void SendMessageAdmin(BwoinkChannelPrototype channel, NetUserId user, string text)
+    public void SendMessageAdmin(BwoinkChannelPrototype channel, NetUserId user, string text, MessageFlags flags)
     {
         _netManager.ClientSendMessage(new MsgBwoink()
         {
             // We can leave all of this null since the server will set all of this anyways.
-            Message = new BwoinkMessage(string.Empty, null, DateTime.UtcNow, text, MessageFlags.None),
+            Message = new BwoinkMessage(string.Empty, null, DateTime.UtcNow, text, flags),
             Channel = channel,
             Target = user,
         });

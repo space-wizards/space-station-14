@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Shared.Administration.Managers.Bwoink;
+using Content.Shared.Administration.Managers.Bwoink.Features;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -61,13 +62,22 @@ public sealed partial class ServerBwoinkManager
 
         // TODO: Logging for when a person can't manage a channel.
 
+        var flags = MessageFlags.Manager;
+
+        // Validating message flags.
+        if (ProtoCache[message.Channel].HasFeature<ManagerOnlyMessages>() &&
+            message.Message.Flags.HasFlag(MessageFlags.ManagerOnly))
+        {
+            flags |= MessageFlags.ManagerOnly;
+        }
+
         SynchronizeMessage(message.Channel,
             message.Target,
             new BwoinkMessage(message.MsgChannel.UserName,
                 message.MsgChannel.UserId,
                 DateTime.UtcNow,
                 message.Message.Content,
-                MessageFlags.Manager));
+                flags));
     }
 
     private void BwoinkAttempted(MsgBwoinkNonAdmin message)

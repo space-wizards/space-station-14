@@ -11,6 +11,9 @@
   - !type:SoundOnMessage
     sound: !type:SoundPathSpecifier
       path: /Audio/Animals/cat_meow.ogg
+  - !type:ManagerOnlyMessages
+    prefix: bwoink-message-admin-only
+    checkName: admin-ahelp-admin-only
 
 # TODO: Remove, this is only for testing.
 - type: bwoinkChannel

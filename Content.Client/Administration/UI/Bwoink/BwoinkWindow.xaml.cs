@@ -90,7 +90,7 @@ public sealed partial class BwoinkWindow : DefaultWindow
                     control.UpdateAllLines(existingConvo.Messages);
                 }
 
-                control.MessageSent += text => _bwoinkManager.SendMessageNonAdmin(channel, text);
+                control.MessageSent += text => _bwoinkManager.SendMessageNonAdmin(channel, text.text);
                 Channels.AddChild(control);
             }
         }

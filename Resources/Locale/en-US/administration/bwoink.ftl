@@ -18,9 +18,12 @@ bwoink-system-typing-indicator = {$players} {$count ->
 *[other] are
 } typing...
 
+admin-ahelp-manager-only-tooltip = If checked, then the message won't be visible for the player,
+    but will be visible for other managers and still will be Discord relayed.
+admin-ahelp-manager-only = Manager Only
+
+
 admin-ahelp-admin-only = Admin Only
-admin-ahelp-admin-only-tooltip = If checked, then the message won't be visible for the player,
-    but will be visible for other admins and still will be Discord relayed.
 
 admin-bwoink-play-sound = Bwoink?
 
@@ -32,6 +35,7 @@ bwoink-system-player-reconnecting = has reconnected.
 bwoink-system-player-banned = has been banned for: {$banReason}
 
 bwoink-message-admin-only = (Admin Only)
+bwoink-message-manager-only = (Manager Only)
 bwoink-message-silent = (S)
 
 bwoink-system-user = System

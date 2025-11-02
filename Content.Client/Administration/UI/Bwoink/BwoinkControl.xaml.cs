@@ -233,7 +233,7 @@ public sealed partial class BwoinkControl : Control
         newPanel.Visible = false;
         newPanel.MessageSent += s =>
         {
-            _clientBwoinkManager.SendMessageAdmin(_channel, user, s);
+            _clientBwoinkManager.SendMessageAdmin(_channel, user, s.text, s.flags);
         };
 
         if (_clientBwoinkManager.Conversations[_channel].TryGetValue(user, out var existingConvo))

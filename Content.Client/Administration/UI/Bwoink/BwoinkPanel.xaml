@@ -5,6 +5,9 @@
     HorizontalExpand="True">
     <OutputPanel Name="TextOutput" VerticalExpand="true" Margin="5"/>
     <RichTextLabel Name="TypingIndicator" Access="Public" />
+    <BoxContainer Name="MessagePropsContainer">
+        <CheckBox Name="ManagerOnly"></CheckBox>
+    </BoxContainer>
     <HistoryLineEdit Name="SenderLineEdit" />
     <RichTextLabel Text="{Loc 'bwoink-read-only'}" Visible="False" Name="ReadOnlyLabel"></RichTextLabel>
     <RichTextLabel Name="RelayedToDiscordLabel" Access="Public" Visible="False" />
