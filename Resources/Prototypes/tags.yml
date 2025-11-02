@@ -1375,9 +1375,6 @@
   id: Taco # Food sequence key
 
 - type: Tag
-  id: TabletopPiece # Unused (Exists on BaseTabletopPiece)
-
-- type: Tag
   id: Taser # Storage whitelist: ClothingBeltSecurity
 
 - type: Tag
@@ -1400,9 +1397,6 @@
 
 - type: Tag
   id: Torch # CargoBounty: BountyTorch. ConstructionGraph: PumpkinAddLight
-
-- type: Tag
-  id: ToteBase # Unused (Exists on ToteBase)
 
 - type: Tag
   id: ToyRubberDuck # ConstructionGraph: ClothingShoeSlippersDuck
