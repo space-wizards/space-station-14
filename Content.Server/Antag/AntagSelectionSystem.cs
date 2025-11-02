@@ -255,7 +255,15 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         // weight by playtime since last rolled
         foreach (var se in pool)
-            weights[se] = (float)(_playTimeManager.GetOverallPlaytime(se) - _lastRolledAntagManager.GetLastRolled(se.UserId)).TotalSeconds;
+        {
+            if (!_lastRolledAntagManager.TryGetLastRolled(se.UserId, out var lastRolledTime))
+            {
+                weights[se] = 0f;
+                continue;
+            }
+
+            weights[se] = (float)(_playTimeManager.GetOverallPlaytime(se) - lastRolledTime.Value).TotalSeconds;
+        }
 
         return weights;
     }
@@ -372,7 +380,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             return false;
 
         if (session != null)
-            _lastRolledAntagManager.SetLastRolled(session.UserId, _playTimeManager.GetOverallPlaytime(session));
+            _lastRolledAntagManager.TrySetLastRolled(session.UserId, _playTimeManager.GetOverallPlaytime(session));
 
         if (onlyPreSelect && session != null)
         {

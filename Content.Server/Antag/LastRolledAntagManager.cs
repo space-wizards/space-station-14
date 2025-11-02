@@ -2,6 +2,7 @@ using Content.Server.Database;
 using Robust.Shared.Asynchronous;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -34,7 +35,7 @@ public sealed class LastRolledAntagManager : IPostInjectInit
 
     private readonly List<Task> _pendingSaveTasks = new();
 
-    /// <summary>Cache of players and the last time they rolled antag.</summary>
+    /// <summary>Cache of players and the last time they rolled antag. This is assumed to not have any invalid NetUserIds.</summary>
     private readonly Dictionary<NetUserId, TimeSpan> _lastRolledData = new();
 
     private ISawmill _sawmill = default!;
@@ -62,6 +63,9 @@ public sealed class LastRolledAntagManager : IPostInjectInit
     public async Task LoadData(ICommonSession session, CancellationToken token)
     {
         var userId = session.UserId;
+        if (userId.UserId == default)
+            return;
+
         var lastRolledTimespan = await _dbManager.GetLastTimeAntagRolled(userId);
         _sawmill.Debug($"Successfully retrieved LastRolledAntag for {userId}; value: {lastRolledTimespan}");
 
@@ -71,6 +75,9 @@ public sealed class LastRolledAntagManager : IPostInjectInit
     public void ClientDisconnected(ICommonSession session)
     {
         var userId = session.UserId;
+        if (userId.UserId == default)
+            return;
+
         SaveSession(userId);
 
         _lastRolledData.Remove(userId);
@@ -95,19 +102,34 @@ public sealed class LastRolledAntagManager : IPostInjectInit
     }
 
     /// <summary>
-    /// Saves a player's last rolled antag time to the internal cache.
+    /// Tries to save a player's last rolled antag time to the internal cache.
+    /// Fails if the given <paramref name="userId"/> is invalid.
     /// </summary>
-    public void SetLastRolled(NetUserId userId, TimeSpan value)
+    /// <returns>True if the last-rolled time was successfully set.</returns>
+    public bool TrySetLastRolled(NetUserId userId, TimeSpan value)
     {
+        if (userId.UserId == default)
+            return false;
+
         _lastRolledData[userId] = value;
+        return true;
     }
 
     /// <summary>
-    /// Gets a player's last rolled antag time from the internal cache.
+    /// Tries to get a player's last rolled antag time from the internal cache.
     /// </summary>
-    public TimeSpan GetLastRolled(NetUserId userId)
+    /// <returns>True if the last-rolled time was successfully retrieved.</returns>
+    public bool TryGetLastRolled(NetUserId userId, [NotNullWhen(true)] out TimeSpan? lastRolledTime)
     {
-        return _lastRolledData.GetValueOrDefault(userId);
+        if (userId.UserId == default ||
+            !_lastRolledData.TryGetValue(userId, out var retrievedLastRolledTime))
+        {
+            lastRolledTime = null;
+            return false;
+        }
+
+        lastRolledTime = retrievedLastRolledTime;
+        return true;
     }
 
     #region Internal/Async tasks
