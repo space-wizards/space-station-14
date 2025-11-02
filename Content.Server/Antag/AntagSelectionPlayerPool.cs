@@ -5,7 +5,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Antag;
 
-public sealed class AntagSelectionPlayerPool (List<List<ICommonSession>> orderedPools)
+public sealed class AntagSelectionPlayerPool(List<List<ICommonSession>> orderedPools)
 {
     public bool TryPickAndTake(IRobustRandom random, [NotNullWhen(true)] out ICommonSession? session)
     {

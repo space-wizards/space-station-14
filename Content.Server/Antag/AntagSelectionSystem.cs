@@ -48,7 +48,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     [Dependency] private readonly LoadoutSystem _loadout = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly PlayTimeTrackingSystem _playTime = default!;
+    [Dependency] private readonly LastRolledAntagManager _lastRolledAntagManager = default!;
+    [Dependency] private readonly PlayTimeTrackingManager _playTimeManager = default!;
+    [Dependency] private readonly PlayTimeTrackingSystem _playTimeSystem = default!;
     [Dependency] private readonly IServerPreferencesManager _pref = default!;
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
@@ -242,6 +244,17 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         AssignPreSelectedSessions((uid, component));
     }
 
+    public Dictionary<ICommonSession, float> ToWeightsDict(IList<ICommonSession> pool)
+    {
+        Dictionary<ICommonSession, float> weights = new();
+
+        // weight by playtime since last rolled
+        foreach (var se in pool)
+            weights[se] = (float)(_playTimeManager.GetOverallPlaytime(se) - _lastRolledAntagManager.GetLastRolled(se.UserId)).TotalSeconds;
+
+        return weights;
+    }
+
     /// <summary>
     /// Chooses antagonists from the given selection of players
     /// </summary>
@@ -271,7 +284,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         bool midround = false)
     {
         var playerPool = GetPlayerPool(ent, pool, def);
-        var existingAntagCount = ent.Comp.PreSelectedSessions.TryGetValue(def, out var existingAntags) ?  existingAntags.Count : 0;
+        var existingAntagCount = ent.Comp.PreSelectedSessions.TryGetValue(def, out var existingAntags) ? existingAntags.Count : 0;
         var count = GetTargetAntagCount(ent, GetTotalPlayerCount(pool), def) - existingAntagCount;
 
         // if there is both a spawner and players getting picked, let it fall back to a spawner.
@@ -404,7 +417,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (antagEnt is not { } player)
         {
             Log.Error($"Attempted to make {session} antagonist in gamerule {ToPrettyString(ent)} but there was no valid entity for player.");
-            _adminLogger.Add(LogType.AntagSelection,$"Attempted to make {session} antagonist in gamerule {ToPrettyString(ent)} but there was no valid entity for player.");
+            _adminLogger.Add(LogType.AntagSelection, $"Attempted to make {session} antagonist in gamerule {ToPrettyString(ent)} but there was no valid entity for player.");
             if (session != null && ent.Comp.RemoveUponFailedSpawn)
             {
                 ent.Comp.AssignedSessions.Remove(session);
@@ -435,7 +448,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             if (!TryComp<GhostRoleAntagSpawnerComponent>(player, out var spawnerComp))
             {
                 Log.Error($"Antag spawner {player} does not have a GhostRoleAntagSpawnerComponent.");
-                _adminLogger.Add(LogType.AntagSelection,$"Antag spawner {player} in gamerule {ToPrettyString(ent)} failed due to not having GhostRoleAntagSpawnerComponent.");
+                _adminLogger.Add(LogType.AntagSelection, $"Antag spawner {player} in gamerule {ToPrettyString(ent)} failed due to not having GhostRoleAntagSpawnerComponent.");
                 if (session != null)
                 {
                     ent.Comp.AssignedSessions.Remove(session);
@@ -538,21 +551,21 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         switch (def.MultiAntagSetting)
         {
             case AntagAcceptability.None:
-            {
-                if (_role.MindIsAntagonist(mind))
-                    return false;
-                if (GetPreSelectedAntagSessions(def).Contains(session)) // Used for rules where the antag has been selected, but not started yet
-                    return false;
-                break;
-            }
+                {
+                    if (_role.MindIsAntagonist(mind))
+                        return false;
+                    if (GetPreSelectedAntagSessions(def).Contains(session)) // Used for rules where the antag has been selected, but not started yet
+                        return false;
+                    break;
+                }
             case AntagAcceptability.NotExclusive:
-            {
-                if (_role.MindIsExclusiveAntagonist(mind))
-                    return false;
-                if (GetPreSelectedExclusiveAntagSessions(def).Contains(session))
-                    return false;
-                break;
-            }
+                {
+                    if (_role.MindIsExclusiveAntagonist(mind))
+                        return false;
+                    if (GetPreSelectedExclusiveAntagSessions(def).Contains(session))
+                        return false;
+                    break;
+                }
         }
 
         // todo: expand this to allow for more fine antag-selection logic for game rules.
