@@ -1,7 +1,9 @@
+using Content.Server.GameTicking.Rules;
 using Content.Server.PowerCell;
 using Content.Shared.Pinpointer;
+using Content.Shared.Station;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Pinpointer;
 
@@ -9,10 +11,14 @@ public sealed class StationMapSystem : EntitySystem
 {
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly PowerCellSystem _cell = default!;
+    [Dependency] private readonly SharedStationSystem _station = default!;
+    [Dependency] private readonly SharedTransformSystem _xform = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<StationMapComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<NukeopsStationMapComponent, NukeopsTargetStationSelectedEvent>(OnNukeopsStationSelected);
         SubscribeLocalEvent<StationMapUserComponent, EntParentChangedMessage>(OnUserParentChanged);
 
         Subs.BuiEvents<StationMapComponent>(StationMapUiKey.Key, subs =>
@@ -20,6 +26,33 @@ public sealed class StationMapSystem : EntitySystem
             subs.Event<BoundUIOpenedEvent>(OnStationMapOpened);
             subs.Event<BoundUIClosedEvent>(OnStationMapClosed);
         });
+    }
+
+    private void OnMapInit(Entity<StationMapComponent> ent, ref MapInitEvent args)
+    {
+        if (ent.Comp.InitializeWithStation)
+        {
+            var station = _station.GetStationInMap(_xform.GetMapId(ent.Owner)) ?? _station.GetStationsSet().FirstOrNull();
+            if (station != null)
+            {
+                ent.Comp.TargetGrid = _station.GetLargestGrid((station.Value, null));
+                Dirty(ent);
+            }
+        }
+    }
+
+    private void OnNukeopsStationSelected(Entity<NukeopsStationMapComponent> ent, ref NukeopsTargetStationSelectedEvent args)
+    {
+        if (args.TargetStation == null)
+            return;
+
+        if (!TryComp<StationMapComponent>(ent, out var stationMap))
+            return;
+
+        if (Transform(ent).MapID != Transform(args.TargetStation.Value).MapID)
+            return;
+
+        stationMap.TargetGrid = _station.GetLargestGrid((args.TargetStation.Value, null));
     }
 
     private void OnStationMapClosed(EntityUid uid, StationMapComponent component, BoundUIClosedEvent args)

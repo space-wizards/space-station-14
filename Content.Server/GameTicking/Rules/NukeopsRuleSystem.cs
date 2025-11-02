@@ -86,6 +86,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             return;
 
         component.TargetStation = RobustRandom.Pick(eligible);
+        var ev = new NukeopsTargetStationSelectedEvent(component.TargetStation);
+        RaiseLocalEvent(ref ev);
     }
 
     #region Event Handlers
@@ -546,5 +548,19 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         }
 
         return null;
+    }
+}
+
+/// <summary>
+/// Raised when a station has been assigned as a target for the NukeOps rule.
+/// </summary>
+[ByRefEvent]
+public readonly struct NukeopsTargetStationSelectedEvent
+{
+    public readonly EntityUid? TargetStation;
+
+    public NukeopsTargetStationSelectedEvent(EntityUid? targetStation)
+    {
+        TargetStation = targetStation;
     }
 }
