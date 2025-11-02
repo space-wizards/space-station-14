@@ -229,7 +229,6 @@ public sealed class DamageModifyEvent(DamageSpecifier damage, EntityUid? origin 
     ///     Contains the entity which caused the change in damage, if any was responsible.
     /// </summary>
     public readonly EntityUid? Origin = origin;
-
 }
 
 public sealed class DamageChangedEvent : EntityEventArgs
