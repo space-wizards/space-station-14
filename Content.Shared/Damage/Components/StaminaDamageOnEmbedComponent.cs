@@ -14,4 +14,10 @@ public sealed partial class StaminaDamageOnEmbedComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public float Damage = 10f;
+
+    /// <summary>
+    /// LocId for message that will be shown on detailed examine.
+    /// </summary>
+    [DataField]
+    public LocId ExamineMessage = "stamina-damage-examine-embed";
 }

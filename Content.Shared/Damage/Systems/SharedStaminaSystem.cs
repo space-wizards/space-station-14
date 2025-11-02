@@ -7,6 +7,7 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Database;
 using Content.Shared.Effects;
+using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Movement.Components;
@@ -17,6 +18,7 @@ using Content.Shared.Rounding;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
+using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -27,6 +29,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Damage.Systems;
 
@@ -46,6 +49,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     [Dependency] private readonly StatusEffectsSystem _status = default!;
     [Dependency] protected readonly SharedStunSystem StunSystem = default!;
     [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
+    [Dependency] private readonly ExamineSystemShared _examine = default!;
 
     /// <summary>
     /// How much of a buffer is there between the stun duration and when stuns can be re-applied.
@@ -74,8 +78,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 
         SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnMeleeHit);
 
-        SubscribeLocalEvent<StaminaDamageOnHitComponent, DamageExamineEvent>(OnHitDamageExamine, after: [typeof(SharedDamageOtherOnHitSystem)]);
-        SubscribeLocalEvent<StaminaDamageOnHitComponent, DamageExamineEvent>(OnDamageExamine, after: [typeof(SharedDamageOtherOnHitSystem)]);
+        SubscribeLocalEvent<ArmorComponent, GetVerbsEvent<ExamineVerb>>(OnArmorVerbExamine);
 
         Subs.CVar(_config, CCVars.PlaytestStaminaDamageModifier, value => UniversalStaminaDamageModifier = value, true);
     }
@@ -460,6 +463,9 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         public NetEntity Entity = entity;
     }
 
+    [ByRefEvent]
+    public readonly record struct StaminaExamineEvent(FormattedMessage Message);
+
     #region Examine
     private void OnHitDamageExamine(Entity<StaminaDamageOnHitComponent> ent, ref DamageExamineEvent args)
     {
@@ -477,6 +483,53 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 
         args.Message.PushNewline();
         args.Message.AddMarkupOrThrow(Loc.GetString(ent.Comp.ExamineMessage, ("amount", ent.Comp.Damage)));
+    }
+
+    // Hardcoded to separated from damage verb, because it were coded only for DamageSpecifiers
+    private void OnGetExamineVerbs(Entity<StaminaDamageOnHitComponent> ent, GetVerbsEvent<ExamineVerb> args)
+    {
+        if (!args.CanInteract || !args.CanAccess)
+            return;
+
+        var examineMarkup = GetExamineMsg(ent);
+
+        var ev = new StaminaExamineEvent(examineMarkup);
+        RaiseLocalEvent(ent, ref ev);
+        if (!ev.Message.IsEmpty)
+        {
+            _examine.AddDetailedExamineVerb(args, ent.Comp, ev.Message,
+                Loc.GetString("damage-examinable-verb-text"),
+                "/Textures/Interface/VerbIcons/smite.svg.192dpi.png",
+                Loc.GetString("damage-examinable-verb-message")
+            );
+        }
+    }
+
+    private FormattedMessage GetExamineMsg(EntityUid uid,
+        StaminaDamageOnHitComponent? hitComp = null,
+        StaminaDamageOnCollideComponent? collideComp = null,
+        StaminaDamageOnEmbedComponent? embedComp = null)
+    {
+        var msg = new FormattedMessage();
+        if (Resolve(uid, ref hitComp))
+        {
+            msg.PushNewline();
+            msg.AddMarkupOrThrow(Loc.GetString(hitComp.ExamineMessage, ("amount", hitComp.Damage)));
+        }
+
+        if (Resolve(uid, ref collideComp))
+        {
+            msg.PushNewline();
+            msg.AddMarkupOrThrow(Loc.GetString(collideComp.ExamineMessage, ("amount", collideComp.Damage)));
+        }
+
+        if (Resolve(uid, ref embedComp))
+        {
+            msg.PushNewline();
+            msg.AddMarkupOrThrow(Loc.GetString(embedComp.ExamineMessage, ("amount", embedComp.Damage)));
+        }
+
+        return msg;
     }
     #endregion
 }
