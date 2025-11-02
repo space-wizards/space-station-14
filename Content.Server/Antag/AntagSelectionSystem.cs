@@ -532,7 +532,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             }
         }
 
-        return new AntagSelectionPlayerPool(new() { preferredList, fallbackList });
+        return new AntagSelectionPlayerPool(new() { ToAntagWeightsDictionary(preferredList), ToAntagWeightsDictionary(fallbackList) });
     }
 
     /// <summary>
