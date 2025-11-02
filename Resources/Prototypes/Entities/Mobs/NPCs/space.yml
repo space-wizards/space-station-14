@@ -56,7 +56,11 @@
         Slash: 10
   - type: Tag
     tags:
+    - CannotSuicide
     - DoorBumpOpener
+    - StunImmune
+    - VimPilot
+    - SimpleMobStorage
     - FootstepSound
   - type: Puller
     needsHands: false
@@ -487,7 +491,10 @@
   - type: Tag
     tags:
     - Trash
+    - CannotSuicide
+    - StunImmune
     - VimPilot
+    - SimpleMobStorage
     - ChefPilot
     - Meat
   - type: CombatMode

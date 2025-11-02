@@ -35,7 +35,11 @@
   - type: Tag
     tags:
     - FootstepSound
+    - CannotSuicide
     - DoorBumpOpener
+    - StunImmune
+    - VimPilot
+    - SimpleMobStorage
   - type: Butcherable
     butcheringType: Knife
     spawned:

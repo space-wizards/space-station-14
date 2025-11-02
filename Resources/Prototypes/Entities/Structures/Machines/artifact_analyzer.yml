@@ -127,9 +127,7 @@
     whitelist:
       components:
       - XenoArtifact
-      tags:
-      - CanPilot # People
-      - VimPilot # Pets
+      - Body # ToDo: This should changed to Gibbable when Gibbable is more widely used (and the gibbing function in ArtifactCrusherSys utilizes it)
   - type: Appearance
   - type: GenericVisualizer
     visuals:

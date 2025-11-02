@@ -46,7 +46,12 @@
       baseSprintSpeed: 5
     - type: Tag
       tags:
-        - FootstepSound
+      - CannotSuicide
+      - DoorBumpOpener # clever girl
+      - StunImmune
+      - VimPilot
+      - SimpleMobStorage
+      - FootstepSound
     - type: HitscanBatteryAmmoProvider
       proto: RedLightLaser
       fireCost: 50
@@ -214,8 +219,13 @@
       collection: FootstepSlime
   - type: Tag
     tags:
-      - FootstepSound
-      - Fruit
+    - CannotSuicide
+    - DoorBumpOpener
+    - StunImmune
+    - VimPilot
+    - SimpleMobStorage
+    - FootstepSound
+    - Fruit
   - type: Extractable
     grindableSolutionName: bloodstream
   - type: PotencyVisuals
