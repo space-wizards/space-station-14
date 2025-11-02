@@ -466,9 +466,6 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         public NetEntity Entity = entity;
     }
 
-    [ByRefEvent]
-    public readonly record struct StaminaExamineEvent(FormattedMessage Message);
-
     #region Examine
 
     // Hardcoded to separated from damage verb, because it were coded only for DamageSpecifiers
@@ -520,5 +517,10 @@ public abstract partial class SharedStaminaSystem : EntitySystem
             args.Message.AddMarkupOrThrow(Loc.GetString(ent.Comp.ExamineMessage, ("amount", ent.Comp.Damage)));
         }
     }
+
+
+    [ByRefEvent]
+    public readonly record struct StaminaExamineEvent(FormattedMessage Message);
+
     #endregion
 }
