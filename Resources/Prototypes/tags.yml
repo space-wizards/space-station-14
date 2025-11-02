@@ -1193,9 +1193,6 @@
   id: RipleyRLeg # PartAssembly: RipleyHarness. ItemMapper: RipleyHarness
 
 - type: Tag
-  id: RodMetal1 # Unused (Exists on PartRodMetal1, PartRodMetal10)
-
-- type: Tag
   id: RollingPaper # Storage whitelist: PackPaperRolling, PackPaperRollingFilters
 
 - type: Tag
