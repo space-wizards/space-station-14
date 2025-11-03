@@ -5,9 +5,6 @@
   description: Just a whole glass of meth.
   suffix: DEBUG
   components:
-  - type: Tag
-    tags:
-      - Debug
   - type: SolutionContainerManager
     solutions:
       drink:

@@ -4,7 +4,6 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.DragDrop;
 using Content.Shared.FixedPoint;
-using Content.Shared.Item;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
@@ -20,7 +19,6 @@ namespace Content.Shared.Fluids.EntitySystems;
 /// </remarks>
 /// <seealso cref="DumpableSolutionComponent" />
 /// <seealso cref="DrainableSolutionComponent" />
-/// <seealso cref="RefillableSolutionComponent" />
 public sealed class SolutionDumpingSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
@@ -30,8 +28,6 @@ public sealed class SolutionDumpingSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solContainer = default!;
 
-    private EntityQuery<ItemComponent> _itemQuery;
-    private EntityQuery<RefillableSolutionComponent> _refillableQuery;
     private EntityQuery<DumpableSolutionComponent> _dumpQuery;
 
     public override void Initialize()
@@ -40,29 +36,23 @@ public sealed class SolutionDumpingSystem : EntitySystem
 
         SubscribeLocalEvent<DrainableSolutionComponent, CanDragEvent>(OnDrainableCanDrag);
         SubscribeLocalEvent<DrainableSolutionComponent, CanDropDraggedEvent>(OnDrainableCanDragDropped);
-
-        //SubscribeLocalEvent<RefillableSolutionComponent, DragDropDraggedEvent>(OnRefillableDragged); For if you want to refill a container by dragging it into another one. Can't find a use for that currently.
         SubscribeLocalEvent<DrainableSolutionComponent, DragDropDraggedEvent>(OnDrainableDragged);
 
-        SubscribeLocalEvent<RefillableSolutionComponent, DrainedTargetEvent>(OnDrainedToRefillableDragged);
         SubscribeLocalEvent<DumpableSolutionComponent, DrainedTargetEvent>(OnDrainedToDumpableDragged);
 
         // We use queries for these since CanDropDraggedEvent gets called pretty rapidly
-        _itemQuery = GetEntityQuery<ItemComponent>();
-        _refillableQuery = GetEntityQuery<RefillableSolutionComponent>();
         _dumpQuery = GetEntityQuery<DumpableSolutionComponent>();
     }
 
     private void OnDrainableCanDrag(Entity<DrainableSolutionComponent> ent, ref CanDragEvent args)
     {
-        if (_itemQuery.HasComp(ent))
-            args.Handled = true;
+        args.Handled = true;
     }
 
     private void OnDrainableCanDragDropped(Entity<DrainableSolutionComponent> ent, ref CanDropDraggedEvent args)
     {
         // Easily drawn-from thing can be dragged onto easily refillable thing.
-        if (!_refillableQuery.HasComp(args.Target) && !_dumpQuery.HasComp(args.Target))
+        if (!_dumpQuery.HasComp(args.Target))
             return;
 
         args.CanDrop = true;
@@ -117,28 +107,6 @@ public sealed class SolutionDumpingSystem : EntitySystem
             _solContainer.TryAddSolution(targetSolEnt.Value,
                 _solContainer.SplitSolution(sourceEnt.Value, targetSol.AvailableVolume));
         }
-
-        _audio.PlayPredicted(AbsorbentComponent.DefaultTransferSound, ent, args.User);
-    }
-
-    private void OnDrainedToRefillableDragged(Entity<RefillableSolutionComponent> ent, ref DrainedTargetEvent args)
-    {
-        if (!_solContainer.TryGetRefillableSolution((ent, ent.Comp),
-                out var targetSolEnt,
-                out var targetSol))
-            return;
-
-        // Check openness, hands, source being empty, and target being full.
-        if (!DragInteractionChecks(args.User,
-                args.Source,
-                ent.Owner,
-                args.SourceSolution,
-                targetSol,
-                out var sourceEnt))
-            return;
-
-        _solContainer.TryAddSolution(targetSolEnt.Value,
-            _solContainer.SplitSolution(sourceEnt.Value, targetSol.AvailableVolume));
 
         _audio.PlayPredicted(AbsorbentComponent.DefaultTransferSound, ent, args.User);
     }

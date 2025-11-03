@@ -243,8 +243,7 @@
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Items/Toys/ian.ogg
-  - type: Food
-    requiresSpecialDigestion: true
+  - type: Edible
     useSound:
       path: /Audio/Items/Toys/ian.ogg
   - type: FoodSequenceElement
@@ -498,32 +497,61 @@
   name: beach ball
   description: The simple beach ball is one of Nanotrasen's most popular products. 'Why do we make beach balls? Because we can! (TM)' - Nanotrasen
   components:
-  - type: Sprite
-    sprite: Objects/Fun/Balls/beach_ball.rsi
-    state: icon
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape: !type:PhysShapeCircle
-          radius: 0.3
-          position: "0,-0.2"
-        density: 20
-        mask:
-        - ItemMask
-        restitution: 0.1 # not bouncy
-        friction: 0.2
-  - type: Catchable
-    catchChance: 0.8
-    catchSuccessSound:
-      path: /Audio/Effects/Footsteps/bounce.ogg
-  - type: EmitSoundOnCollide
-    sound:
-      path: /Audio/Effects/Footsteps/bounce.ogg
-  - type: Item
-    size: Normal
-    sprite: Objects/Fun/Balls/beach_ball.rsi
-  - type: TileFrictionModifier
-    modifier: 0.05
+    - type: Sprite
+      sprite: Objects/Fun/Balls/beach_ball.rsi
+      state: icon
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape: !type:PhysShapeCircle
+            radius: 0.3
+            position: "0,-0.2"
+          density: 20
+          mask:
+            - ThrownItem
+          restitution: 0.2 # not bouncy
+          friction: 0.2
+    - type: Catchable
+      catchChance: 0.8
+      catchSuccessSound:
+        path: /Audio/Effects/Footsteps/bounce.ogg
+    - type: Item
+      size: Normal
+      sprite: Objects/Fun/Balls/beach_ball.rsi
+    - type: TileFrictionModifier
+      modifier: 0.05
+    - type: TriggerOnCollide
+      fixtureID: fix1
+      keyOut: OnCollide
+    - type: EmitSoundOnTrigger
+      sound:
+        path: /Audio/Effects/Footsteps/bounce.ogg
+      keysIn:
+        - OnCollide
+
+- type: entity
+  parent: BeachBall
+  id: EvilBeachBall
+  suffix: evil
+  name: beach ball
+  description: Someone's drawn ">:3c" on the side of this beach ball in indelible ink.
+  components:
+    - type: LaunchOnTrigger
+      impulse: 100.0
+      keysIn:
+        - OnCollide
+    - type: StaminaDamageOnTrigger
+      stamina: 25.0
+      keysIn:
+        - OnCollide
+      targetUser: true
+    - type: DamageOnTrigger
+      damage:
+        types:
+          Blunt: 20
+      keysIn:
+        - OnCollide
+      targetUser: true
 
 - type: entity
   parent: BaseItem
@@ -1009,7 +1037,7 @@
   - type: FlavorProfile
     flavors:
     - plastic
-  - type: Food
+  - type: Edible
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1055,9 +1083,38 @@
       collection: packetOpenSounds
   - type: TrashOnSolutionEmpty
     solution: drink
-  - type: Tag
-    tags:
-    - DrinkSpaceGlue
+
+- type: entity
+  parent: DrinkBase
+  id: CrazyLube
+  name: crazy lube
+  description: A bottle of super slipery crazy lube manufactured by Honk! Co.
+  components:
+  - type: Openable
+    sound:
+      collection: packetOpenSounds
+  - type: Sprite
+    sprite: Objects/Fun/lube.rsi
+    layers:
+    - state: icon
+      map: ["enum.OpenableVisuals.Layer"]
+  - type: Appearance
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: SpaceLube
+          Quantity: 100
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "icon_open"}
+          False: {state: "icon"}
+  - type: Lube
+  - type: TrashOnSolutionEmpty
+    solution: drink
 
 - type: entity
   parent: BaseItem

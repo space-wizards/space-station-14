@@ -567,15 +567,15 @@
   color: "#B3B599"
 
 - type: reagent
-  id: KiraSpecial
-  name: reagent-name-kira-special
+  id: OrangeLimeSoda
+  name: reagent-name-orange-lime-soda
   parent: BaseDrink
-  desc: reagent-desc-kira-special
+  desc: reagent-desc-orange-lime-soda
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: sweet
   color: "#CCCC99"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/kiraspecial.rsi
+    sprite: Objects/Consumable/Drinks/orangelime_soda.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 3
   metamorphicFillBaseName: fill-
