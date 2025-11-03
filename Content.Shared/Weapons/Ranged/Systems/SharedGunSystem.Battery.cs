@@ -124,26 +124,19 @@ public abstract partial class SharedGunSystem
 
     private float GetStaminaDamage(BatteryAmmoProviderComponent component)
     {
-        if (component is ProjectileBatteryAmmoProviderComponent battery)
+        if (component is ProjectileBatteryAmmoProviderComponent projectile)
         {
-            if (ProtoManager.Index<EntityPrototype>(battery.Prototype).Components
-                .TryGetValue(Factory.GetComponentName<StaminaDamageOnCollideComponent>(), out var projectile))
-            {
-                var p = (StaminaDamageOnCollideComponent)projectile.Component;
+            var projectileEnt = ProtoManager.Index(projectile.Prototype);
+            if (!projectileEnt.TryGetComponent<StaminaDamageOnCollideComponent>(out var stamina, Factory))
+                return 0;
 
-                if (p.Damage != 0)
-                {
-                    return p.Damage * Damageable.UniversalProjectileDamageModifier;
-                }
-            }
-
-            return 0;
+            return stamina.Damage * Damageable.UniversalProjectileDamageModifier;
         }
 
         if (component is HitscanBatteryAmmoProviderComponent hitscan)
         {
-            var dmg = ProtoManager.Index(hitscan.HitscanEntityProto);
-            if (!dmg.TryGetComponent<StaminaDamageOnCollideComponent>(out var basicDamageComp, Factory))
+            var hitscanEnt = ProtoManager.Index(hitscan.HitscanEntityProto);
+            if (!hitscanEnt.TryGetComponent<StaminaDamageOnCollideComponent>(out var basicDamageComp, Factory))
                 return 0;
 
             return basicDamageComp.Damage * Damageable.UniversalHitscanDamageModifier;

@@ -4,7 +4,7 @@ stamina-resistance-coefficient-value = - [color=lightyellow]Stamina[/color] dama
 
 stamina-damage-examine-verb = Stamina
 stamina-damage-examine-text = Examine the stamina values.
-stamina-damage-examine-start = It does next [color=lightyellow]Stamina[/color] damage:
+stamina-damage-examine-start = It does the following [color=lightyellow]Stamina[/color] damage:
 stamina-damage-examine-hit = - [color=lightblue]{$amount}[/color] units on hit.
 stamina-damage-examine-collide = - [color=lightblue]{$amount}[/color] units on collide.
-stamina-damage-examine-embed = - [color=lightblue]{$amount}[/color] units when emded.
+stamina-damage-examine-embed = - [color=lightblue]{$amount}[/color] units on emded.
