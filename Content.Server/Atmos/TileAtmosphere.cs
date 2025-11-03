@@ -28,6 +28,7 @@ public sealed class TileAtmosphere : IGasMixtureHolder
 
     /// <summary>
     /// Current temperature of this tile, in Kelvin.
+    /// Used for Superconduction.
     /// This is not the temperature of the attached <see cref="GasMixture"/>!
     /// </summary>
     [ViewVariables]
@@ -50,6 +51,7 @@ public sealed class TileAtmosphere : IGasMixtureHolder
 
     /// <summary>
     /// The current heat capacity of this tile.
+    /// Used for Superconduction.
     /// This is not the heat capacity of the attached <see cref="GasMixture"/>!
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
