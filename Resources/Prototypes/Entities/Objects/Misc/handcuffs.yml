@@ -166,7 +166,7 @@
   description: Cuffs made of hardlight that lasts for 30 seconds. Breaks on the wearer taking damage.
   components:
   - type: TimedDespawn
-    lifetime: 30
+    lifetime: 45
   - type: Handcuff
     cuffTime: 2.5
     breakoutTime: 8
