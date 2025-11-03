@@ -260,7 +260,7 @@ public sealed class ChangelingClonerSystem : EntitySystem
         // Do the actual transformation.
         _humanoidAppearance.CloneAppearance(ent.Comp.ClonedBackup.Value, target);
         _cloning.CloneComponents(ent.Comp.ClonedBackup.Value, target, settings);
-        _metaData.SetEntityName(target, Name(ent.Comp.ClonedBackup.Value), raiseEvents: false);
+        _metaData.SetEntityName(target, Name(ent.Comp.ClonedBackup.Value), raiseEvents: ent.Comp.RaiseNameChangeEvents);
 
     }
 
