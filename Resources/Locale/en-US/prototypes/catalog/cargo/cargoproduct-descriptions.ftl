@@ -3,10 +3,10 @@ cargoproduct-description-emergencyinflatablewall = Three stacks of inflatable wa
 
 # Materials
 cargoproduct-name-material-gold = gold ingots
-cargoproduct-description-material-gold = 30 ingots of gold
+cargoproduct-description-material-gold = 30 ingots of gold.
 
 cargoproduct-name-material-plasteel = plasteel sheets
-cargoproduct-description-material-plasteel = 30 sheets of plasteel
+cargoproduct-description-material-plasteel = 30 sheets of plasteel.
 
 cargoproduct-name-material-silver = silver ingots
-cargoproduct-description-material-silver = 30 ingots of silver
+cargoproduct-description-material-silver = 30 ingots of silver.
