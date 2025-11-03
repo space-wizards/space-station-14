@@ -19,10 +19,6 @@ public sealed partial class SpaceVillainGame
     private readonly SpaceVillainArcadeSystem _svArcade = default!;
     private readonly ArcadeSystem _arcade = default!;
 
-
-    [ViewVariables]
-    private readonly EntityUid _owner = default!;
-
     [ViewVariables]
     private bool _running = true;
 
@@ -79,7 +75,6 @@ public sealed partial class SpaceVillainGame
         _svArcade = svArcade;
         _arcade = arcade;
 
-        _owner = owner;
         //todo defeat the curse secret game mode
         _fightVerb = fightVerb;
         _villainName = enemyName;
