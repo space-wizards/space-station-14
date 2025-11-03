@@ -49,17 +49,24 @@ public sealed partial class SpaceVillainGame
     [ViewVariables]
     private string _latestEnemyActionMessage = "";
 
-    public SpaceVillainGame(EntityUid owner, SpaceVillainArcadeComponent arcade, SpaceVillainArcadeSystem arcadeSystem)
-        : this(owner, arcade, arcadeSystem, arcadeSystem.GenerateFightVerb(arcade), arcadeSystem.GenerateEnemyName(arcade))
-    {
-    }
+    public SpaceVillainGame(EntityUid owner,
+        SpaceVillainArcadeComponent arcade,
+        SpaceVillainArcadeSystem arcadeSystem)
+        : this(owner,
+            arcadeSystem,
+            arcadeSystem.GenerateFightVerb(arcade),
+            arcadeSystem.GenerateEnemyName(arcade))
+    { }
 
-    public SpaceVillainGame(EntityUid owner, SpaceVillainArcadeComponent arcade, SpaceVillainArcadeSystem arcadeSystem, string fightVerb, string enemyName)
+    public SpaceVillainGame(EntityUid owner,
+        SpaceVillainArcadeSystem arcadeSystem,
+        string fightVerb,
+        string enemyName)
     {
         IoCManager.InjectDependencies(this);
         _audioSystem = _entityManager.System<SharedAudioSystem>();
         _uiSystem = _entityManager.System<UserInterfaceSystem>();
-        _svArcade = _entityManager.System<SpaceVillainArcadeSystem>();
+        _svArcade = arcadeSystem;
 
         _owner = owner;
         //todo defeat the curse secret game mode
