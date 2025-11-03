@@ -7,6 +7,7 @@ using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands;
@@ -85,6 +86,7 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<CuffableComponent, AttackAttemptEvent>(CheckAct);
             SubscribeLocalEvent<CuffableComponent, UseAttemptEvent>(CheckAct);
             SubscribeLocalEvent<CuffableComponent, InteractionAttemptEvent>(CheckInteract);
+            SubscribeLocalEvent<CuffableComponent, DamageChangedEvent>(OnDamage);
 
             SubscribeLocalEvent<HandcuffComponent, AfterInteractEvent>(OnCuffAfterInteract);
             SubscribeLocalEvent<HandcuffComponent, MeleeHitEvent>(OnCuffMeleeHit);
@@ -304,6 +306,27 @@ namespace Content.Shared.Cuffs
             else
             {
                 _popup.PopupClient(Loc.GetString("cuffable-component-remove-cuffs-fail-message"), user, user);
+            }
+        }
+
+        private void OnDamage(Entity<CuffableComponent> ent, ref DamageChangedEvent args)
+        {
+            if (args.DamageDelta == null || !args.DamageIncreased || !IsCuffed(ent))
+                return;
+
+            var destroyableCuffs = new List<Entity<HandcuffComponent>>();
+
+            foreach (var cuffsEnt in GetAllCuffs((ent, ent)))
+            {
+                if (!TryComp<HandcuffComponent>(cuffsEnt, out var handcuff) || handcuff.BreakOnDamageThreshold == null || handcuff.BreakOnDamageThreshold >= args.DamageDelta.GetTotal())
+                    continue;
+
+                destroyableCuffs.Add((cuffsEnt, handcuff));
+            }
+
+            foreach (var cuffsEnt in destroyableCuffs)
+            {
+                Uncuff(ent.Owner, null, cuffsEnt.Owner, ent.Comp, cuffsEnt.Comp);
             }
         }
 

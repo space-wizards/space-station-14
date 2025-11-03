@@ -45,6 +45,12 @@ public sealed partial class HandcuffComponent : Component
     public EntProtoId? BrokenPrototype;
 
     /// <summary>
+    ///     If set, the cuffs will break if the cuffed entity takes damage at or over the threshold.
+    /// </summary>
+    [DataField]
+    public float? BreakOnDamageThreshold;
+
+    /// <summary>
     /// Whether or not these cuffs are in the process of being removed.
     /// Used simply to prevent spawning multiple <see cref="BrokenPrototype"/>.
     /// </summary>

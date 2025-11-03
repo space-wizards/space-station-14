@@ -20,19 +20,27 @@ public abstract class SharedItemCreatorSystem : EntitySystem
 
     private void OnMapInit(Entity<ItemCreatorComponent> ent, ref MapInitEvent args)
     {
-        var (uid, comp) = ent;
-        // test funny dont mind me
-        if (string.IsNullOrEmpty(comp.Action))
-            return;
+        foreach (var entry in ent.Comp.Entries)
+        {
+            // test funny dont mind me
+            if (string.IsNullOrEmpty(entry.Action))
+                return;
 
-        _actionContainer.EnsureAction(uid, ref comp.ActionEntity, comp.Action);
-        Dirty(uid, comp);
+            _actionContainer.EnsureAction(ent, ref entry.ActionEntity, entry.Action);
+        }
+
+        Dirty(ent);
     }
 
     private void OnGetActions(Entity<ItemCreatorComponent> ent, ref GetItemActionsEvent args)
     {
         if (CheckItemCreator(ent, args.User))
-            args.AddAction(ent.Comp.ActionEntity);
+        {
+            foreach (var entry in ent.Comp.Entries)
+            {
+                args.AddAction(entry.ActionEntity);
+            }
+        }
     }
 
     public bool CheckItemCreator(EntityUid uid, EntityUid user)
