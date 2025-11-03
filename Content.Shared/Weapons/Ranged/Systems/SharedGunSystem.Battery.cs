@@ -2,6 +2,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
+using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Ranged.Components;
@@ -10,7 +11,6 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using static Content.Shared.Damage.Systems.SharedStaminaSystem;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
@@ -25,7 +25,6 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<HitscanBatteryAmmoProviderComponent, TakeAmmoEvent>(OnBatteryTakeAmmo);
         SubscribeLocalEvent<HitscanBatteryAmmoProviderComponent, GetAmmoCountEvent>(OnBatteryAmmoCount);
         SubscribeLocalEvent<HitscanBatteryAmmoProviderComponent, ExaminedEvent>(OnBatteryExamine);
-        SubscribeLocalEvent<HitscanBatteryAmmoProviderComponent, StaminaExamineEvent>(OnBatteryStaminaExamine);
         SubscribeLocalEvent<HitscanBatteryAmmoProviderComponent, DamageExamineEvent>(OnBatteryDamageExamine);
 
         // Projectile
@@ -34,7 +33,6 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, TakeAmmoEvent>(OnBatteryTakeAmmo);
         SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, GetAmmoCountEvent>(OnBatteryAmmoCount);
         SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, ExaminedEvent>(OnBatteryExamine);
-        SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, StaminaExamineEvent>(OnBatteryStaminaExamine);
         SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, DamageExamineEvent>(OnBatteryDamageExamine);
     }
 
@@ -81,17 +79,6 @@ public abstract partial class SharedGunSystem
         _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), damageType);
     }
 
-    private void OnBatteryStaminaExamine<T>(Entity<T> entity, ref StaminaExamineEvent args) where T : BatteryAmmoProviderComponent
-    {
-        var damage = GetStaminaDamage(entity.Comp);
-
-        if (damage == 0)
-            return;
-
-        args.Message.PushNewline();
-        args.Message.AddMarkupOrThrow(Loc.GetString("stamina-damage-examine-collide", ("amount", damage)));
-    }
-
     private DamageSpecifier? GetDamage(BatteryAmmoProviderComponent component)
     {
         if (component is ProjectileBatteryAmmoProviderComponent battery)
@@ -103,7 +90,10 @@ public abstract partial class SharedGunSystem
 
                 if (!p.Damage.Empty)
                 {
-                    return p.Damage * Damageable.UniversalProjectileDamageModifier;
+                    var damage = new DamageSpecifier(p.Damage);
+                    if (ProtoManager.Index<EntityPrototype>(battery.Prototype).TryGetComponent<StaminaDamageOnCollideComponent>(out var staminaComp, Factory))
+                        damage.DamageDict.Add(staminaComp.StaminaName, FixedPoint2.New(staminaComp.Damage));
+                    return damage * Damageable.UniversalProjectileDamageModifier;
                 }
             }
 
@@ -116,33 +106,14 @@ public abstract partial class SharedGunSystem
             if (!dmg.TryGetComponent<HitscanBasicDamageComponent>(out var basicDamageComp, Factory))
                 return null;
 
-            return basicDamageComp.Damage * Damageable.UniversalHitscanDamageModifier;
+            var damage = new DamageSpecifier(basicDamageComp.Damage);
+            if (dmg.TryGetComponent<StaminaDamageOnCollideComponent>(out var staminaComp, Factory))
+                damage.DamageDict.Add(staminaComp.StaminaName, FixedPoint2.New(staminaComp.Damage));
+
+            return damage * Damageable.UniversalHitscanDamageModifier;
         }
 
         return null;
-    }
-
-    private float GetStaminaDamage(BatteryAmmoProviderComponent component)
-    {
-        if (component is ProjectileBatteryAmmoProviderComponent projectile)
-        {
-            var projectileEnt = ProtoManager.Index(projectile.Prototype);
-            if (!projectileEnt.TryGetComponent<StaminaDamageOnCollideComponent>(out var stamina, Factory))
-                return 0;
-
-            return stamina.Damage * Damageable.UniversalProjectileDamageModifier;
-        }
-
-        if (component is HitscanBatteryAmmoProviderComponent hitscan)
-        {
-            var hitscanEnt = ProtoManager.Index(hitscan.HitscanEntityProto);
-            if (!hitscanEnt.TryGetComponent<StaminaDamageOnCollideComponent>(out var basicDamageComp, Factory))
-                return 0;
-
-            return basicDamageComp.Damage * Damageable.UniversalHitscanDamageModifier;
-        }
-
-        return 0;
     }
 
     private void OnBatteryTakeAmmo(EntityUid uid, BatteryAmmoProviderComponent component, TakeAmmoEvent args)

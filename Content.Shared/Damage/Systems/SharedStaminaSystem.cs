@@ -19,6 +19,7 @@ using Content.Shared.StatusEffectNew;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
+using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -71,17 +72,13 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         SubscribeLocalEvent<StaminaComponent, DisarmedEvent>(OnDisarmed);
         SubscribeLocalEvent<StaminaComponent, RejuvenateEvent>(OnRejuvenate);
 
-        SubscribeLocalEvent<StaminaDamageOnEmbedComponent, EmbedEvent>(OnProjectileEmbed);
-
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, ProjectileHitEvent>(OnProjectileHit);
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, ThrowDoHitEvent>(OnThrowHit);
 
         SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnMeleeHit);
 
-        SubscribeLocalEvent<StaminaDamageExaminableComponent, GetVerbsEvent<ExamineVerb>>(OnGetExamineVerbs);
-        SubscribeLocalEvent<StaminaDamageOnHitComponent, StaminaExamineEvent>(OnGetHitVerbs);
-        SubscribeLocalEvent<StaminaDamageOnCollideComponent, StaminaExamineEvent>(OnGetCollideVerbs);
-        SubscribeLocalEvent<StaminaDamageOnEmbedComponent, StaminaExamineEvent>(OnGetEmbedVerbs);
+        SubscribeLocalEvent<StaminaDamageOnHitComponent, SharedMeleeWeaponSystem.HitDamageExamineEvent>(OnGetHitExamine);
+        SubscribeLocalEvent<StaminaDamageOnCollideComponent, SharedDamageOtherOnHitSystem.CollideDamageExamineEvent >(OnGetCollideExamine);
 
         Subs.CVar(_config, CCVars.PlaytestStaminaDamageModifier, value => UniversalStaminaDamageModifier = value, true);
     }
@@ -203,14 +200,6 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     private void OnProjectileHit(EntityUid uid, StaminaDamageOnCollideComponent component, ref ProjectileHitEvent args)
     {
         OnCollide(uid, component, args.Target);
-    }
-
-    private void OnProjectileEmbed(EntityUid uid, StaminaDamageOnEmbedComponent component, ref EmbedEvent args)
-    {
-        if (!TryComp<StaminaComponent>(args.Embedded, out var stamina))
-            return;
-
-        TakeStaminaDamage(args.Embedded, component.Damage, stamina, source: uid);
     }
 
     private void OnThrowHit(EntityUid uid, StaminaDamageOnCollideComponent component, ThrowDoHitEvent args)
@@ -468,61 +457,17 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 
     #region Examine
 
-    // Hardcoded to separated from damage verb, because it were coded only for DamageSpecifiers
-    private void OnGetExamineVerbs(Entity<StaminaDamageExaminableComponent> ent, ref GetVerbsEvent<ExamineVerb> args)
-    {
-        if (!args.CanInteract || !args.CanAccess || !_itemToggle.IsActivated(ent.Owner))
-            return;
-
-        var msg = new FormattedMessage();
-        msg.AddMarkupOrThrow(Loc.GetString(ent.Comp.ExamineMessage));
-
-        var ev = new StaminaExamineEvent(new FormattedMessage());
-        RaiseLocalEvent(ent, ref ev);
-
-        if (ev.Message.IsEmpty)
-            return;
-
-        msg.AddMessage(ev.Message);
-
-        _examine.AddDetailedExamineVerb(args, ent.Comp, msg,
-            Loc.GetString(ent.Comp.VerbName),
-            "/Textures/Objects/Weapons/Melee/stunbaton.rsi/stunbaton_off.png",
-            Loc.GetString(ent.Comp.VerbMsg)
-        );
-    }
-
-    private void OnGetHitVerbs(Entity<StaminaDamageOnHitComponent> ent, ref StaminaExamineEvent args)
+    private static void OnGetHitExamine(Entity<StaminaDamageOnHitComponent> ent, ref SharedMeleeWeaponSystem.HitDamageExamineEvent args)
     {
         if (ent.Comp.Damage != 0)
-        {
-            args.Message.PushNewline();
-            args.Message.AddMarkupOrThrow(Loc.GetString(ent.Comp.ExamineMessage, ("amount", ent.Comp.Damage)));
-        }
-
+            args.Damage.DamageDict.Add(ent.Comp.StaminaName, FixedPoint2.New(ent.Comp.Damage));
     }
 
-    private void OnGetCollideVerbs(Entity<StaminaDamageOnCollideComponent> ent, ref StaminaExamineEvent args)
+    private static void OnGetCollideExamine(Entity<StaminaDamageOnCollideComponent> ent, ref SharedDamageOtherOnHitSystem.CollideDamageExamineEvent args)
     {
         if (ent.Comp.Damage != 0)
-        {
-            args.Message.PushNewline();
-            args.Message.AddMarkupOrThrow(Loc.GetString(ent.Comp.ExamineMessage, ("amount", ent.Comp.Damage)));
-        }
+            args.Damage.DamageDict.Add(ent.Comp.StaminaName, FixedPoint2.New(ent.Comp.Damage));
     }
-
-    private void OnGetEmbedVerbs(Entity<StaminaDamageOnEmbedComponent> ent, ref StaminaExamineEvent args)
-    {
-        if (ent.Comp.Damage != 0)
-        {
-            args.Message.PushNewline();
-            args.Message.AddMarkupOrThrow(Loc.GetString(ent.Comp.ExamineMessage, ("amount", ent.Comp.Damage)));
-        }
-    }
-
-
-    [ByRefEvent]
-    public readonly record struct StaminaExamineEvent(FormattedMessage Message);
 
     #endregion
 }
