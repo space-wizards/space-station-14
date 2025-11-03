@@ -59,7 +59,17 @@ public abstract partial class SharedSpaceVillainArcadeComponent : Component
         public readonly string GameTitle;
         public readonly string EnemyName;
         public readonly bool ButtonsDisabled;
-        public SpaceVillainArcadeMetaDataUpdateMessage(int playerHp, int playerMp, int enemyHp, int enemyMp, string playerActionMessage, string enemyActionMessage, string gameTitle, string enemyName, bool buttonsDisabled) : base(playerHp, playerMp, enemyHp, enemyMp, playerActionMessage, enemyActionMessage)
+
+        public SpaceVillainArcadeMetaDataUpdateMessage(int playerHp,
+            int playerMp,
+            int enemyHp,
+            int enemyMp,
+            string playerActionMessage,
+            string enemyActionMessage,
+            string gameTitle,
+            string enemyName,
+            bool buttonsDisabled)
+            : base(playerHp, playerMp, enemyHp, enemyMp, playerActionMessage, enemyActionMessage)
         {
             GameTitle = gameTitle;
             EnemyName = enemyName;
@@ -76,7 +86,13 @@ public abstract partial class SharedSpaceVillainArcadeComponent : Component
         public readonly int EnemyMP;
         public readonly string PlayerActionMessage;
         public readonly string EnemyActionMessage;
-        public SpaceVillainArcadeDataUpdateMessage(int playerHp, int playerMp, int enemyHp, int enemyMp, string playerActionMessage, string enemyActionMessage)
+
+        public SpaceVillainArcadeDataUpdateMessage(int playerHp,
+            int playerMp,
+            int enemyHp,
+            int enemyMp,
+            string playerActionMessage,
+            string enemyActionMessage)
         {
             PlayerHP = playerHp;
             PlayerMP = playerMp;
