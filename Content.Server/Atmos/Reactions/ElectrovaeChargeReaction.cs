@@ -47,9 +47,9 @@ public sealed partial class ElectrovaeChargeReaction : IGasReactionEffect
     /// </summary>
     private static float CalculateHeatBasedEfficiency(float temperature)
     {
-        // Efficient above 400K, peaks around 600K+
-        const float minTemp = 400f;
-        const float maxTemp = 600f;
+        // Efficient above 1508K, peaks around 1984K+
+        const float minTemp = 1508f;
+        const float maxTemp = 1984f;
 
         if (temperature < minTemp)
             return 0f;
