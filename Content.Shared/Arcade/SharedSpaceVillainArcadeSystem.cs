@@ -27,13 +27,3 @@ public enum SpaceVillainPlayerAction
     NewGame,
     RequestData
 }
-
-[Serializable, NetSerializable]
-public enum SpaceVillainArcadeVisualState
-{
-    Normal,
-    Off,
-    Broken,
-    Win,
-    GameOver,
-}
