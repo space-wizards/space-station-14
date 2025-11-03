@@ -1,4 +1,5 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.CCVar;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -9,6 +10,8 @@ using Content.Shared.Stacks;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Whitelist;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
@@ -20,6 +23,7 @@ namespace Content.Shared.Interaction;
 /// </summary>
 public sealed class SmartEquipSystem : EntitySystem
 {
+    [Dependency] private readonly INetConfigurationManager _netConfigurationManager = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
@@ -29,9 +33,19 @@ public sealed class SmartEquipSystem : EntitySystem
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
+    private HashSet<ICommonSession> _getItemBeforeStorage = new();
+
     /// <inheritdoc/>
     public override void Initialize()
     {
+        _netConfigurationManager.OnClientCVarChanges(CCVars.TakeBeforeStorage, (x, session) =>
+        {
+            if (x)
+                _getItemBeforeStorage.Add(session);
+            else
+                _getItemBeforeStorage.Remove(session);
+        });
+
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack, handle: false, outsidePrediction: false))
             .Bind(ContentKeyFunctions.SmartEquipBelt, InputCmdHandler.FromDelegate(HandleSmartEquipBelt, handle: false, outsidePrediction: false))
@@ -70,10 +84,10 @@ public sealed class SmartEquipSystem : EntitySystem
 
     private void HandleSmartEquipSuitStorage(ICommonSession? session)
     {
-        HandleSmartEquip(session, "suitstorage");
+        HandleSmartEquip(session, "suitstorage", session is null ? false : _getItemBeforeStorage.Contains(session));
     }
 
-    private void HandleSmartEquip(ICommonSession? session, string equipmentSlot)
+    private void HandleSmartEquip(ICommonSession? session, string equipmentSlot, bool takeBeforeStorage = false)
     {
         if (session is not { } playerSession)
             return;
@@ -142,6 +156,14 @@ public sealed class SmartEquipSystem : EntitySystem
             _hands.TryDrop((uid, hands), hands.ActiveHandId!);
             _inventory.TryEquip(uid, handItem.Value, equipmentSlot, predicted: true, checkDoafter:true);
             return;
+        }
+
+        if (takeBeforeStorage && handItem == null
+            && _inventory.CanUnequip(uid, equipmentSlot, out var _))
+        {
+            if (_inventory.TryUnequip(uid, equipmentSlot, inventory: inventory, predicted: true, checkDoafter: true)
+                && _hands.TryPickup(uid, slotItem, handsComp: hands))
+                return;
         }
 
         // case 2 (storage item):
