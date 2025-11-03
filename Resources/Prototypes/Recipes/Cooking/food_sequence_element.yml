@@ -6,6 +6,8 @@
   sprites:
   - sprite: Objects/Consumable/Food/burger_sequence.rsi
     state: bun_top
+  tags:
+  - Bun
 
 # Mice
 
@@ -1237,6 +1239,7 @@
   - sprite: Objects/Consumable/Food/cottonburger.rsi
     state: cottonbun_top
   tags:
+  - Bun
   - ClothMade
 
 # Cotton Bol
