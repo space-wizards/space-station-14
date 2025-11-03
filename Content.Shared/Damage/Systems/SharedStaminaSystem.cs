@@ -18,7 +18,6 @@ using Content.Shared.Rounding;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
-using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
@@ -30,7 +29,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Damage.Systems;
 
@@ -50,7 +48,6 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     [Dependency] private readonly StatusEffectsSystem _status = default!;
     [Dependency] protected readonly SharedStunSystem StunSystem = default!;
     [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
-    [Dependency] private readonly ExamineSystemShared _examine = default!;
 
     /// <summary>
     /// How much of a buffer is there between the stun duration and when stuns can be re-applied.
@@ -78,7 +75,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnMeleeHit);
 
         SubscribeLocalEvent<StaminaDamageOnHitComponent, SharedMeleeWeaponSystem.HitDamageExamineEvent>(OnGetHitExamine);
-        SubscribeLocalEvent<StaminaDamageOnCollideComponent, SharedDamageOtherOnHitSystem.CollideDamageExamineEvent >(OnGetCollideExamine);
+        SubscribeLocalEvent<StaminaDamageOnCollideComponent, SharedDamageOtherOnHitSystem.CollideDamageExamineEvent>(OnGetCollideExamine);
 
         Subs.CVar(_config, CCVars.PlaytestStaminaDamageModifier, value => UniversalStaminaDamageModifier = value, true);
     }
@@ -457,15 +454,15 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 
     #region Examine
 
-    private static void OnGetHitExamine(Entity<StaminaDamageOnHitComponent> ent, ref SharedMeleeWeaponSystem.HitDamageExamineEvent args)
+    private void OnGetHitExamine(Entity<StaminaDamageOnHitComponent> ent, ref SharedMeleeWeaponSystem.HitDamageExamineEvent args)
     {
-        if (ent.Comp.Damage != 0)
+        if (_itemToggle.IsActivated(ent.Owner) && ent.Comp.Damage != 0)
             args.Damage.DamageDict.Add(ent.Comp.StaminaName, FixedPoint2.New(ent.Comp.Damage));
     }
 
-    private static void OnGetCollideExamine(Entity<StaminaDamageOnCollideComponent> ent, ref SharedDamageOtherOnHitSystem.CollideDamageExamineEvent args)
+    private void OnGetCollideExamine(Entity<StaminaDamageOnCollideComponent> ent, ref SharedDamageOtherOnHitSystem.CollideDamageExamineEvent args)
     {
-        if (ent.Comp.Damage != 0)
+        if (_itemToggle.IsActivated(ent.Owner) && ent.Comp.Damage != 0)
             args.Damage.DamageDict.Add(ent.Comp.StaminaName, FixedPoint2.New(ent.Comp.Damage));
     }
 

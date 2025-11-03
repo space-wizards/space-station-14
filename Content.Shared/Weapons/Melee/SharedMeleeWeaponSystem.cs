@@ -132,7 +132,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (component.Hidden)
             return;
 
-        var ev = new HitDamageExamineEvent(component.Damage);
+        var ev = new HitDamageExamineEvent(new(component.Damage));
         RaiseLocalEvent(uid, ref ev);
 
         _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(ev.Damage), Loc.GetString("damage-melee"));
