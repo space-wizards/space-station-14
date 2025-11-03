@@ -3,8 +3,7 @@ bwoink-admin-title = Admin Help
 
 bwoink-system-starmute-message-no-other-users = *System: Nobody is available to receive your message. Try pinging Game Admins on Discord.
 
-bwoink-system-messages-being-relayed-to-discord =
-    All messages are relayed to game administrators via Discord.
+bwoink-system-messages-being-handled =
     Issues may be handled without a response.
 
 bwoink-system-typing-indicator = {$players} {$count ->

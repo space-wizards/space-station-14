@@ -36,6 +36,7 @@ public sealed partial class BwoinkPanel : BoxContainer
             var helpText = new FormattedMessage(1);
             helpText.AddMarkupOrThrow(Loc.GetString(channel.HelpText));
             TextOutput.AddMessage(helpText);
+            HandledLabel.Visible = true;
         }
 
         if (!_bwoinkManager.CanWriteChannel(channel))
@@ -43,12 +44,6 @@ public sealed partial class BwoinkPanel : BoxContainer
             ReadOnlyLabel.Visible = true;
             SenderLineEdit.Visible = false;
         }
-
-        var msg = new FormattedMessage();
-        msg.PushColor(Color.LightGray);
-        msg.AddText(Loc.GetString("bwoink-system-messages-being-relayed-to-discord"));
-        msg.Pop();
-        RelayedToDiscordLabel.SetMessage(msg);
 
         OnVisibilityChanged += c =>
         {
