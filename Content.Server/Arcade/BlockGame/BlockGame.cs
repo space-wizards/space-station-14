@@ -43,6 +43,10 @@ public sealed partial class BlockGame
     /// </summary>
     private bool IsGameOver => _field.Any(block => block.Position.Y == 0);
 
+    /// <summary>
+    /// The amount of time that has passed since the active piece last moved vertically,
+    /// </summary>
+    private float _accumulatedFieldFrameTime;
 
     public BlockGame(EntityUid owner)
     {
@@ -100,11 +104,6 @@ public sealed partial class BlockGame
 
         FieldTick(frameTime);
     }
-
-    /// <summary>
-    /// The amount of time that has passed since the active piece last moved vertically,
-    /// </summary>
-    private float _accumulatedFieldFrameTime;
 
     /// <summary>
     /// Handles timing the movements of the active game piece.
