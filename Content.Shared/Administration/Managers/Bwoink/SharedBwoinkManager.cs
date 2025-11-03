@@ -26,6 +26,11 @@ public abstract partial class SharedBwoinkManager : IPostInjectInit
     /// </summary>
     public event EventHandler<ProtoId<BwoinkChannelPrototype>, (NetUserId person, BwoinkMessage message)>? MessageReceived;
     /// <summary>
+    /// Called whenever our prototypes change, or a full state update is applied.
+    /// </summary>
+    public event Action? ReloadedData;
+
+    /// <summary>
     /// A cache of ProtoIds for the channels resolving to a cached copy of the prototype behind it.
     /// </summary>
     protected Dictionary<ProtoId<BwoinkChannelPrototype>, BwoinkChannelPrototype> ProtoCache = new();
@@ -99,6 +104,14 @@ public abstract partial class SharedBwoinkManager : IPostInjectInit
         MessageReceived?.Invoke(channel, (target, message));
     }
 
+    /// <summary>
+    /// Proxy method that calls Invoke on <see cref="ReloadedData"/>
+    /// </summary>
+    protected void InvokeReloadedData()
+    {
+        ReloadedData?.Invoke();
+    }
+
     private void RefreshChannels(PrototypesReloadedEventArgs obj)
         => RefreshChannels();
 
@@ -136,6 +149,7 @@ public abstract partial class SharedBwoinkManager : IPostInjectInit
         }
 
         UpdatedChannels();
+        ReloadedData?.Invoke();
     }
 
     void IPostInjectInit.PostInject()
@@ -256,7 +270,7 @@ public sealed record BwoinkMessage(string Sender, NetUserId? SenderId, DateTime 
     /// The flags this message has.
     /// </summary>
     [ViewVariables]
-    public MessageFlags Flags { get; init; } = Flags;
+    public MessageFlags Flags { get; set; } = Flags;
 }
 
 public delegate void EventHandler<in TSender, in TArgs>(TSender sender, TArgs args);
@@ -283,6 +297,11 @@ public enum MessageFlags : byte
     /// This message can only be seen by other managers of this channel.
     /// </summary>
     ManagerOnly = 4,
+
+    /// <summary>
+    /// No manager recieved this specific message.
+    /// </summary>
+    NoReceivers = 8,
 }
 
 /// <summary>

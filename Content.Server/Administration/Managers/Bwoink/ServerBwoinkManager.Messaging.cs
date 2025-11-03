@@ -169,10 +169,6 @@ public sealed partial class ServerBwoinkManager
             Channel = channel,
         };
 
-        var managers = PlayerManager.Sessions.Where(x => CanManageChannel(channel, x))
-            .Select(x => x.Channel)
-            .ToList();
-
         _netManager.ServerSendToMany(msgBwoink, managers);
 
         if (message.Flags.HasFlag(MessageFlags.ManagerOnly))
