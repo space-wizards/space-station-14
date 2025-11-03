@@ -1,4 +1,4 @@
-﻿<Document>
+<Document>
   # Gasses
   Gasses are a critical part of the station's operation.
   You may know them as the stuff you breathe, but they are also used in many other ways.
@@ -111,26 +111,31 @@
 
   A highly electrolytic gas.
 
-  It will drain electricity when exposed to an electrical field; which will create charged electrovae.
+  Electrovae serves as the precursor to charged electrovae, which has powerful electrical applications.
 
   Electrovae is complicated to create, requiring a mix of water vapor, nitrogen, and nitrous oxide, all tuned precisely to create the gas.
   If you're looking to create this gas yourself, here's what you need to know:
-  - Water vapor and nitrous oxide are mixed at a ratio of around 2:11.
-  - Nitrogen is required as a catalyst for the reaction. The amount of nitrogen consumed is dependent on the efficiency of the reaction.
-  - The reaction only occurs at cryogenic temperatures between 39.15 K and 149.15 K. The efficency of the reaction (how much electrovae is produced) is dependent on the temperature. The closer to 84.15K, the more electrovae is produced, and the less nitrogen is consumed.
+  - Water vapor and nitrous oxide are mixed at a ratio of 2:11.
+  - Nitrogen acts as a catalyst, limiting the reaction rate. The optimal catalyst proportion is around 6% of the total gas mixture.
+  - The reaction requires heat to proceed efficiently. It begins at 373.15 K (100°C) and reaches maximum efficiency at 1370 K (1097°C).
+  - As a byproduct, oxygen is produced alongside electrovae. Be careful, as this oxygen can trigger charged electrovae discharge reactions.
 
   ## Charged Electrovae
   <Box>
     <GuideEntityEmbed Entity="ChargedElectrovaeCanister" Caption=""/>
   </Box>
 
-  A highly charged electrolytic gas.
+  A highly charged electrolytic gas with powerful electrical properties.
 
-  It will send EMP pulses when exposed to oxygen. Enough to disable devices and shock nearby personnel.
+  Charged electrovae can power machines directly, bypassing normal APC power requirements.
+  It also charges batteries and can temporarily expand their capacity up to twice their normal size.
 
-  Research suggests that it may have some useful applications as a storage medium for electricity, but it is yet to be proven.
+  However, it is dangerous to organic life. When exposed to oxygen, it will discharge, creating lightning strikes that can shock nearby personnel.
 
-  Charged electrovae is created by electrolysis of electrovae.
+  Charged electrovae is created by heating electrovae to extreme temperatures:
+  - The charging reaction begins at 1508 K (1235°C) and reaches maximum efficiency at 1984 K (1711°C).
+  - The reaction consumes thermal energy, cooling the gas mixture as it proceeds.
+  - Charged electrovae will slowly discharge back into electrovae over time, even without oxygen present.
 
   ## Nitrous Oxide
   <Box>
