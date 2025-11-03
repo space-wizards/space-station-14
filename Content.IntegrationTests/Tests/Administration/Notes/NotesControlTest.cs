@@ -1,9 +1,5 @@
-using System.Linq;
-using Content.Client.Administration.UI.Bwoink;
-using Content.Client.Administration.UI.CustomControls;
 using Content.Client.Administration.UI.Notes;
-using Content.Client.UserInterface.Controls;
-using Content.Client.UserInterface.Systems.MenuBar.Widgets;
+using Content.Client.Administration.UI.PlayerPanel;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Database;
 using Robust.Shared.Utility;
@@ -20,19 +16,12 @@ public sealed class NotesControlTest : InteractionTest
     [Test]
     public async Task TestNotesControl()
     {
-        // Click the ahelp button in the menu bar
-        await ClickWidgetControl<GameTopMenuBar, MenuButton>(nameof(GameTopMenuBar.AHelpButton));
-        var bwoink = GetWindow<BwoinkWindow>();
-
-        // Damn, if only I had an excuse to use bwoink.Bwoink.BwoinkArea
-        var players = bwoink.Bwoink.ChannelSelector.PlayerListContainer;
-
-        // Check that the player is in the menu, and make sure it is selected
-        var entry = players.Data.Cast<PlayerListData>().Single(x => x.Info.SessionId == ServerSession.UserId);
-        await Client.WaitPost(() => players.Select(entry));
+        await Client.ExecuteCommand($"playerpanel \"{Client.Session?.Name}\"");
+        await RunTicks(5); // Wait for playerpanel to finish loading
+        var playerPanelWindow = GetWindow<PlayerPanel>();
 
         // Open their notes
-        await ClickControl(bwoink.Bwoink.Notes);
+        await ClickControl(playerPanelWindow.NotesButton);
         var noteCtrl = GetWindow<AdminNotesWindow>().Notes;
         Assert.That(noteCtrl.Notes.ChildCount, Is.EqualTo(0));
 
