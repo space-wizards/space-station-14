@@ -365,7 +365,6 @@ namespace Content.Server.Atmos.EntitySystems
                     ExcitedGroupSelfBreakdown(ent, excitedGroup);
                 else if (excitedGroup.DismantleCooldown > Atmospherics.ExcitedGroupsDismantleCycles)
                     DeactivateGroupTiles(gridAtmosphere, excitedGroup);
-                // TODO ATMOS. What is the point of this? why is this only de-exciting the group? Shouldn't it also dismantle it?
 
                 if (number++ < LagCheckIterations)
                     continue;
