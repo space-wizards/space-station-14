@@ -36,7 +36,6 @@ public abstract partial class SharedInstrumentComponent : Component
 
     [ViewVariables]
     public BitArray FilteredChannels { get; set; } = new(RobustMidiEvent.MaxChannels, true);
-
 }
 
 /// <summary>
