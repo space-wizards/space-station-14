@@ -134,7 +134,7 @@ public sealed partial class BwoinkPanel : BoxContainer
 
         foreach (var message in messages)
         {
-            TextOutput.AddMessage(FormatMessage(message));
+            TextOutput.AddMessage(_bwoinkManager.FormatMessage(_channel, message));
             if (_managingFor.HasValue)
             {
                 _bwoinkManager.GetOrCreatePlayerPropertiesForChannel(_channel.ID, _managingFor.Value).LastMessage = message.SentAt;
@@ -152,40 +152,7 @@ public sealed partial class BwoinkPanel : BoxContainer
                 info.Unread++;
         }
 
-        TextOutput.AddMessage(FormatMessage(message));
-    }
-
-    private FormattedMessage FormatMessage(BwoinkMessage message)
-    {
-        var formatted = new FormattedMessage();
-
-        var color = Color.White;
-        if (message.Flags.HasFlag(MessageFlags.Manager))
-            color = Color.Red;
-
-        formatted.PushColor(Color.Gray);
-        formatted.AddText($"{message.SentAt.ToShortTimeString()} ");
-        formatted.Pop();
-
-        if (message.Flags.HasFlag(MessageFlags.ManagerOnly))
-        {
-            formatted.AddText(_channel.TryGetFeature<ManagerOnlyMessages>(out var managerOnlyMessages)
-                ? $"{Loc.GetString(managerOnlyMessages.Prefix)} "
-                : $"{Loc.GetString("bwoink-message-manager-only")} ");
-        }
-
-        if (message.Flags.HasFlag(MessageFlags.Silent))
-        {
-            formatted.AddText($"{Loc.GetString("bwoink-message-silent")} ");
-        }
-
-        formatted.PushColor(color);
-        formatted.AddText($"{message.Sender} ");
-        formatted.Pop();
-
-        formatted.AddText(message.Content);
-
-        return formatted;
+        TextOutput.AddMessage(_bwoinkManager.FormatMessage(_channel, message));
     }
 
     private void UpdateTypingIndicator()
