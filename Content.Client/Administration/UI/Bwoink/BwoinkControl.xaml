@@ -4,7 +4,7 @@
     <PanelContainer StyleClasses="BackgroundDark">
         <SplitContainer Orientation="Vertical" ResizeMode="NotResizable">
             <SplitContainer Orientation="Horizontal" VerticalExpand="True">
-                <cc:PlayerListControl Access="Public" Name="ChannelSelector" HorizontalExpand="True" SizeFlagsStretchRatio="2" />
+                <cc:PlayerListControl Access="Public" Name="ChannelSelector" HorizontalExpand="True" SizeFlagsStretchRatio="1.5"/>
                 <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="2">
                     <BoxContainer Access="Public" Name="BwoinkArea" VerticalExpand="True" />
                 </BoxContainer>
