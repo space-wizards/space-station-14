@@ -2,8 +2,6 @@ using Content.Client.UserInterface.Controls;
 using Content.Shared.Weapons.Melee.EnergySword;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Weapons.Melee.UI;
 
@@ -13,6 +11,8 @@ public sealed class EnergySwordColorBoundUserInterface : BoundUserInterface
 
     private SimpleRadialMenu? _radialMenu;
     private readonly EnergySwordSystem _eswordSystem;
+    private List<Entity<EnergySwordComponent>> _colorEswords = new();
+    private Entity<EnergySwordComponent> _rgbEsword;
 
     public EnergySwordColorBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
@@ -22,6 +22,19 @@ public sealed class EnergySwordColorBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
+
+        if (!EntMan.TryGetComponent<EnergySwordComponent>(Owner, out var esword))
+            return;
+
+        if (_player.LocalSession?.AttachedEntity is not { } user)
+            return;
+
+        foreach (var color in esword.ColorOptions)
+        {
+            _colorEswords.Add(SpawnEsword(color));
+        }
+
+        _rgbEsword = SpawnRgbEsword();
 
         _radialMenu = this.CreateWindow<SimpleRadialMenu>();
 
@@ -35,53 +48,26 @@ public sealed class EnergySwordColorBoundUserInterface : BoundUserInterface
         if (_radialMenu == null)
             return;
 
-        if (!EntMan.TryGetComponent<EnergySwordComponent>(Owner, out var esword))
-            return;
-
-        if (_player.LocalSession?.AttachedEntity is not { } user)
-            return;
-
         List<RadialMenuOptionBase> list = new();
-        var meta = EntMan.GetComponent<MetaDataComponent>(Owner);
-        if (meta.EntityPrototype == null)
-            return;
 
-        foreach (var color in esword.ColorOptions)
+        foreach (var eswordEnt in _colorEswords)
         {
-            var button = MakeAButton(color, meta.EntityPrototype.ID);
+            var button = new RadialMenuActionOption<Color>(PickColor, eswordEnt.Comp.ActivatedColor)
+            {
+                //The esword sprite with color applied
+                IconSpecifier = RadialMenuIconSpecifier.With(eswordEnt)
+            };
             list.Add(button);
         }
 
-        var hackedButton = MakeAButton(Color.White, meta.EntityPrototype.ID, hacked: true);
-        list.Add(hackedButton);
+        //Color is useless here but we still need to pass an argument, not great
+        var rgbButton = new RadialMenuActionOption<Color>(EnergySwordRGB, _rgbEsword.Comp.ActivatedColor)
+        {
+            IconSpecifier = RadialMenuIconSpecifier.With(_rgbEsword)
+        };
+        list.Add(rgbButton);
 
         _radialMenu.SetButtons(list);
-    }
-
-    private RadialMenuActionOption<Color> MakeAButton(Color color, string protoID, bool hacked = false)
-    {
-        Entity<EnergySwordComponent?> ent = EntMan.Spawn(protoID);
-
-        //No comp ?
-        ent.Comp ??= EntMan.EnsureComponent<EnergySwordComponent>(ent);
-
-
-        Entity<EnergySwordComponent> entity = (ent.Owner, ent.Comp);
-
-        //Toggle the esword ON so the blade is out
-        _eswordSystem.ActivateSword(entity);
-        if (hacked)
-            _eswordSystem.ActivateRGB(entity); //RGB when hacked
-        else
-            _eswordSystem.ChangeColor(entity, color);
-
-        Action<Color> fuctionToCall = hacked ? EnergySwordRGB : PickColor;
-        var button = new RadialMenuActionOption<Color>(fuctionToCall, color)
-        {
-            IconSpecifier = RadialMenuIconSpecifier.With(ent) //The esword sprite with color applied
-        };
-
-        return button;
     }
 
     private void PickColor(Color color)
@@ -97,4 +83,45 @@ public sealed class EnergySwordColorBoundUserInterface : BoundUserInterface
         Close();
     }
 
+    private Entity<EnergySwordComponent> SpawnEsword(Color color)
+    {
+        var meta = EntMan.GetComponent<MetaDataComponent>(Owner);
+        Entity<EnergySwordComponent?> ent = EntMan.Spawn(meta.EntityPrototype!.ID);
+
+        
+        ent.Comp ??= EntMan.EnsureComponent<EnergySwordComponent>(ent);
+
+        Entity<EnergySwordComponent> entity = (ent.Owner, ent.Comp);
+
+        //Toggle the esword ON so the blade is out
+        _eswordSystem.ActivateSword(entity);
+        _eswordSystem.ChangeColor(entity, color);
+
+        return entity;
+    }
+
+    private Entity<EnergySwordComponent> SpawnRgbEsword()
+    {
+        var esword = EntMan.GetComponent<EnergySwordComponent>(Owner);
+
+        var swordEnt = SpawnEsword(esword.ColorOptions[0]);
+
+        //RGB, color switching every second
+        _eswordSystem.ActivateRGB(swordEnt);
+
+        return swordEnt;
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+
+        //We need to delete the spawned eswords
+        foreach (var esword in _colorEswords)
+        {
+            EntMan.DeleteEntity(esword.Owner);
+        }
+
+        EntMan.DeleteEntity(_rgbEsword);
+    }
 }
