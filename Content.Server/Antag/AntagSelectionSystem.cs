@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Administration.Managers;
 using Content.Server.Antag.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
@@ -8,11 +9,11 @@ using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind;
 using Content.Server.Objectives;
+using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
 using Content.Server.Roles.Jobs;
 using Content.Server.Shuttles.Components;
-using Content.Server.Station.Events;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Antag;
 using Content.Shared.Clothing;
@@ -34,19 +35,21 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Content.DeadSpace.Interfaces.Server;
+using Content.DeadSpace.Interfaces.Server; // DS14-sponsors
 
 namespace Content.Server.Antag;
 
 public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelectionComponent>
 {
     [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private readonly IBanManager _ban = default!;
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly GhostRoleSystem _ghostRole = default!;
     [Dependency] private readonly JobSystem _jobs = default!;
     [Dependency] private readonly LoadoutSystem _loadout = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly PlayTimeTrackingSystem _playTime = default!;
     [Dependency] private readonly IServerPreferencesManager _pref = default!;
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
@@ -502,15 +505,16 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             if (ent.Comp.PreSelectedSessions.TryGetValue(def, out var preSelected) && preSelected.Contains(session))
                 continue;
 
+            // DS14-sponsors
             if (HasPrimaryAntagPreference(session, def) && def.SponsorsPriority && _sponsorsManager != null && _sponsorsManager.TryCalcAntagPriority(session.UserId))
             {
                 priorityList.Add(session);
             }
-            else if (HasPrimaryAntagPreference(session, def))
+            else if (ValidAntagPreference(session, def.PrefRoles))
             {
                 preferredList.Add(session);
             }
-            else if (HasFallbackAntagPreference(session, def))
+            else if (ValidAntagPreference(session, def.FallbackRoles))
             {
                 fallbackList.Add(session);
             }
@@ -604,6 +608,18 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         args.Minds = ent.Comp.AssignedMinds;
         args.AgentName = Loc.GetString(name);
+    }
+
+    // DS14-sponsors
+    private bool HasPrimaryAntagPreference(ICommonSession? session, AntagSelectionDefinition def)
+    {
+        return ValidAntagPreference(session, def.PrefRoles);
+    }
+
+    // DS14-sponsors
+    private bool HasFallbackAntagPreference(ICommonSession? session, AntagSelectionDefinition def)
+    {
+        return ValidAntagPreference(session, def.FallbackRoles);
     }
 }
 

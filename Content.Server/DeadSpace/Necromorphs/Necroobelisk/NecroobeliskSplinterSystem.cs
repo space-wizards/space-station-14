@@ -1,33 +1,33 @@
 // Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
 
-using Content.Shared.Stunnable;
-using Content.Server.Emp;
-using Content.Shared.DeadSpace.Necromorphs.Sanity;
-using Content.Server.DeadSpace.Necromorphs.Necroobelisk.Components;
-using Robust.Shared.Audio.Systems;
-using Robust.Shared.Player;
-using Timer = Robust.Shared.Timing.Timer;
 using System.Threading;
-using Content.Shared.Interaction;
+using Content.Server.DeadSpace.Necromorphs.Necroobelisk.Components;
+using Content.Server.Emp;
 using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
-using Robust.Shared.Timing;
+using Content.Shared.DeadSpace.Necromorphs.Sanity;
+using Content.Shared.Interaction;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Content.Shared.Stunnable;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player;
+using Robust.Shared.Timing;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.DeadSpace.Necromorphs.Necroobelisk;
 
 public sealed class NecroobeliskSplinterSystem : EntitySystem
 {
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedStunSystem _stun = default!;
-    [Dependency] private readonly EmpSystem _epm = default!;
-    [Dependency] private readonly SharedSanitySystem _sharedSanity = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedChargesSystem _charges = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly EmpSystem _epm = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private readonly SharedSanitySystem _sharedSanity = default!;
+    [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -74,10 +74,10 @@ public sealed class NecroobeliskSplinterSystem : EntitySystem
         if (component.SoundHeadaches != null)
         {
             if (TryComp<MindContainerComponent>(args.Target.Value, out var mind)
-            && TryComp<MindComponent>(mind.Mind, out var mindComp)
-            && _player.TryGetSessionById(mindComp.UserId, out var session))
+                && TryComp<MindComponent>(mind.Mind, out var mindComp)
+                && _player.TryGetSessionById(mindComp.UserId, out var session))
             {
-                Filter playerFilter = Filter.Empty().AddPlayer(session);
+                var playerFilter = Filter.Empty().AddPlayer(session);
                 _audio.PlayGlobal(component.SoundHeadaches, playerFilter, false);
             }
         }
@@ -86,17 +86,25 @@ public sealed class NecroobeliskSplinterSystem : EntitySystem
         _sharedSanity.TryAddSanityLvl(args.Target.Value, -component.SanityDamage);
     }
 
-    private void OnAfterStoper(EntityUid uid, NecroobeliskSplinterComponent component, NecroSplinterAfterStoperEvent args)
+    private void OnAfterStoper(EntityUid uid,
+        NecroobeliskSplinterComponent component,
+        NecroSplinterAfterStoperEvent args)
     {
-        var entities = _lookup.GetEntitiesInRange<SanityComponent>(_transform.GetMapCoordinates(uid, Transform(uid)), component.Range);
+        var entities =
+            _lookup.GetEntitiesInRange<SanityComponent>(_transform.GetMapCoordinates(uid, Transform(uid)),
+                component.Range);
 
         if (component.SoundHeadaches != null)
         {
-            Filter playerFilter = Filter.Empty().AddInRange(_transform.GetMapCoordinates(uid), component.Range);
+            var playerFilter = Filter.Empty().AddInRange(_transform.GetMapCoordinates(uid), component.Range);
             _audio.PlayGlobal(component.SoundHeadaches, playerFilter, false);
         }
 
-        _epm.EmpPulse(_transform.GetMapCoordinates(uid), component.Range * 2, component.EnergyConsumption, component.Duration);
+        _epm.EmpPulse(_transform.GetMapCoordinates(uid),
+            component.Range * 2,
+            component.EnergyConsumption,
+            TimeSpan.FromSeconds(component.Duration));
+
         HashSet<Entity<SanityComponent>> targets = new HashSet<Entity<SanityComponent>>();
 
         foreach (var entity in entities)
@@ -108,40 +116,43 @@ public sealed class NecroobeliskSplinterSystem : EntitySystem
             CauseDamageSanity(uid, targets, component);
     }
 
-    private void CauseDamageSanity(EntityUid uid, HashSet<Entity<SanityComponent>> targets, NecroobeliskSplinterComponent? component = null)
+    private void CauseDamageSanity(EntityUid uid,
+        HashSet<Entity<SanityComponent>> targets,
+        NecroobeliskSplinterComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
-        int impulseCount = 0;
-        int time = component.SanityDamageRepeatingTime * 1000;
+        var impulseCount = 0;
+        var time = component.SanityDamageRepeatingTime * 1000;
 
-        CancellationTokenSource sanityDamageTokenSource = new CancellationTokenSource();
+        var sanityDamageTokenSource = new CancellationTokenSource();
 
-        Timer.SpawnRepeating(time, () =>
-        {
-            foreach (var (entity, sanity) in targets)
+        Timer.SpawnRepeating(time,
+            () =>
             {
-                if (!EntityManager.EntityExists(entity))
-                    continue;
+                foreach (var (entity, sanity) in targets)
+                {
+                    if (!EntityManager.EntityExists(entity))
+                        continue;
 
-                _sharedSanity.TryAddSanityLvl(entity, -component.SanityDamage, sanity);
-            }
+                    _sharedSanity.TryAddSanityLvl(entity, -component.SanityDamage, sanity);
+                }
 
-            impulseCount++;
+                impulseCount++;
 
-            if (!EntityManager.EntityExists(uid))
-                sanityDamageTokenSource.Cancel();
+                if (!EntityManager.EntityExists(uid))
+                    sanityDamageTokenSource.Cancel();
 
-            if (impulseCount >= component.SanityDamageImpulseCount)
-            {
-                sanityDamageTokenSource.Cancel();
-                QueueDel(uid);
-            }
-
-        }, sanityDamageTokenSource.Token);
+                if (impulseCount >= component.SanityDamageImpulseCount)
+                {
+                    sanityDamageTokenSource.Cancel();
+                    QueueDel(uid);
+                }
+            },
+            sanityDamageTokenSource.Token);
     }
 }
 
 [ByRefEvent]
-public readonly record struct NecroSplinterAfterStoperEvent();
+public readonly record struct NecroSplinterAfterStoperEvent;

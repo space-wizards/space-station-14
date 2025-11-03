@@ -5,7 +5,7 @@
   playTimeTracker: JobServiceWorker
   requirements:
     - !type:OverallPlaytimeRequirement
-        time: 3600 # 1 hour
+      time: 1h
   startingGear: ServiceWorkerGear
   icon: "JobIconServiceWorker"
   supervisors: job-supervisors-service

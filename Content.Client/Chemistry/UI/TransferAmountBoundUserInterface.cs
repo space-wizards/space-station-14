@@ -29,11 +29,6 @@ namespace Content.Client.Chemistry.UI
             if (_entManager.TryGetComponent<SolutionTransferComponent>(_owner, out var comp))
                 _window.SetBounds(comp.MinimumTransferAmount.Int(), comp.MaximumTransferAmount.Int());
 
-            // DS14-transfer-amount-ui-for-injector-component-start
-            if (_entManager.TryGetComponent<InjectorComponent>(_owner, out var injector))
-                _window.SetBounds(injector.MinimumTransferAmount.Int(), injector.MaximumTransferAmount.Int());
-            // DS14-transfer-amount-ui-for-injector-component-end
-
             _window.ApplyButton.OnPressed += _ =>
             {
                 if (int.TryParse(_window.AmountLineEdit.Text, out var i))

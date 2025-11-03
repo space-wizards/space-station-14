@@ -44,7 +44,7 @@
   - Умереть славной смертью.
   - Украсть у Капитана [color=#a4885c]ID карту[/color].
   <Box>
-    <GuideEntityEmbed Entity="CaptainIDCard" Caption="ID-карта капитана"/>
+    <GuideEntityEmbed Entity="CaptainIDCard" Caption="ID карта капитана"/>
   </Box>
   - Украсть у Капитана [color=#a4885c]Антикварный Лазерный Пистолет[/color].
   <Box>

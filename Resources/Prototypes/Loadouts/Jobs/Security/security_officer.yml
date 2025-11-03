@@ -21,7 +21,7 @@
       requirement:
         !type:DepartmentTimeRequirement
         department: Security
-        time: 360000 #100 hrs
+        time: 100h
 
 # Head
 - type: loadout
@@ -73,18 +73,18 @@
 
 - type: loadout
   id: TrooperUniform
-  equipment: 
+  equipment:
     jumpsuit: ClothingUniformSecurityTrooper
 
 # DS14-start
 - type: loadout
   id: SecurityJumpsuitBlack
-  equipment: 
+  equipment:
     jumpsuit: ClothingUniformJumpsuitSecBlack
 
 - type: loadout
   id: SecurityJumpskirtPencil
-  equipment: 
+  equipment:
     jumpsuit: ClothingUniformJumpskirtPencilSec
 # DS14 -end
 

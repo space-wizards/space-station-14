@@ -4,13 +4,13 @@
   antagonist: true
   setPreference: true
   objective: roles-antag-rev-head-objective
+  # guides: [ Revolutionaries ] # DS14: disabled due to lack of localization
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 360000 # 100 hours
+      time: 100h
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 72000 # 20 hours
-  # guides: [ Revolutionaries ] # DS14: disabled due to lack of localization
+      time: 20h
 
 - type: antag
   id: Rev

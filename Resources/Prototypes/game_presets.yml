@@ -56,31 +56,6 @@
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
 
-# - type: gamePreset
-#   id: AllerAtOnce
-#   alias:
-#   - allall
-#   - aller
-#   - badidea
-#   - punishment
-#   name: aller-at-once-title
-#   description: aller-at-once-description
-#   showInVote: false #Please god dont do this
-#   rules:
-#   - WageScheduler # backmen: currency
-#   - Nukeops
-#   - Traitor
-#   - Revolutionary
-#   - Zombie
-#   - BasicStationEventScheduler
-#   - KesslerSyndromeScheduler
-#   - MeteorSwarmMildScheduler
-#   - MeteorSwarmScheduler
-#   - RampingStationEventScheduler
-#   - SpaceTrafficControlEventScheduler
-#   - SpaceTrafficControlFriendlyEventScheduler
-#   - BasicRoundstartVariation
-
 - type: gamePreset
   id: Extended
   alias:
@@ -177,8 +152,6 @@
   name: sandbox-title
   description: sandbox-description
   showInVote: false # Not suitable for use without admin intervention, since entity spamming can quickly crash a server
-  showInAdminVote: false # DS14
-  voteType: admin # DS14
   maxPlayers: 5
   rules:
     - Sandbox
@@ -209,6 +182,7 @@
     - deathmatch
   name: death-match-title
   description: death-match-description
+  maxPlayers: 15
   showInVote: true
   showInAdminVote: true # DS14
   voteType: admin # DS14
@@ -227,7 +201,6 @@
   voteType: rdm # DS14
   rules:
   - WageScheduler # backmen: currency
-  - DummyNonAntagChance
   - Nukeops
   # - SubGamemodesRule # DS14
   - BasicStationEventScheduler

@@ -5,10 +5,10 @@
   playTimeTracker: JobResearchAssistant
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 3600 # 1 hours
+      time: 1h
     - !type:DepartmentTimeRequirement
       department: Science
-      time: 54000 # 15 hours
+      time: 15h
       inverted: true # stop playing intern if you're good at science!
   startingGear: ResearchAssistantGear
   icon: "JobIconResearchAssistant"

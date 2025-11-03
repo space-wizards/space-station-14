@@ -76,18 +76,21 @@ namespace Content.Client.Access.UI
 
             foreach (var job in jobs)
             {
-                // DS14-start
-                // if (!job.OverrideConsoleVisibility.GetValueOrDefault(job.SetPreference))
-                // {
-                //     continue;
-                // }
-                // DS14-end
-
                 _jobPrototypeIds.Add(job.ID);
                 JobPresetOptionButton.AddItem(Loc.GetString(job.Name), _jobPrototypeIds.Count - 1);
             }
 
-            SelectAllAccessesButton.OnPressed += _ => SelectAllAccess();
+            SelectAllButton.OnPressed += _ =>
+            {
+                SetAllAccess(true);
+                SubmitData();
+            };
+
+            DeselectAllButton.OnPressed += _ =>
+            {
+                SetAllAccess(false);
+                SubmitData();
+            };
 
             JobPresetOptionButton.OnItemSelected += SelectJobPreset;
             _accessButtons.Populate(accessLevels, prototypeManager);
@@ -99,14 +102,13 @@ namespace Content.Client.Access.UI
             }
         }
 
-        private void ClearAllAccess()
+        /// <param name="enabled">If true, every individual access button will be pressed. If false, each will be depressed.</param>
+        private void SetAllAccess(bool enabled)
         {
             foreach (var button in _accessButtons.ButtonsList.Values)
             {
-                if (button.Pressed)
-                {
-                    button.Pressed = false;
-                }
+                if (!button.Disabled && button.Pressed != enabled)
+                    button.Pressed = enabled;
             }
         }
 
@@ -120,7 +122,7 @@ namespace Content.Client.Access.UI
             JobTitleLineEdit.Text = Loc.GetString(job.Name);
             args.Button.SelectId(args.Id);
 
-            ClearAllAccess();
+            SetAllAccess(false);
 
             // this is a sussy way to do this
             foreach (var access in job.Access)
@@ -133,7 +135,7 @@ namespace Content.Client.Access.UI
 
             foreach (var group in job.AccessGroups)
             {
-                if (!_prototypeManager.TryIndex(group, out AccessGroupPrototype? groupPrototype))
+                if (!_prototypeManager.Resolve(group, out AccessGroupPrototype? groupPrototype))
                 {
                     continue;
                 }
@@ -148,16 +150,6 @@ namespace Content.Client.Access.UI
             }
 
             SubmitData();
-        }
-
-        private void SelectAllAccess()
-        {
-            foreach (var button in _accessButtons.ButtonsList.Values.Where(x => !x.Disabled))
-            {
-                button.Pressed = true;
-            }
-
-            SubmitData(true);
         }
 
         public void UpdateState(IdCardConsoleBoundUserInterfaceState state)
@@ -199,7 +191,6 @@ namespace Content.Client.Access.UI
             JobTitleSaveButton.Disabled = !interfaceEnabled || !jobTitleDirty;
 
             JobPresetOptionButton.Disabled = !interfaceEnabled;
-            SelectAllAccessesButton.Disabled = !interfaceEnabled;
 
             _accessButtons.UpdateState(state.TargetIdAccessList?.ToList() ??
                                        new List<ProtoId<AccessLevelPrototype>>(),
@@ -231,20 +222,18 @@ namespace Content.Client.Access.UI
             _lastJobProto = state.TargetIdJobPrototype;
         }
 
-        private void SubmitData(bool isSelectAll=false)
+        private void SubmitData()
         {
             // Don't send this if it isn't dirty.
             var jobProtoDirty = _lastJobProto != null &&
                                 _jobPrototypeIds[JobPresetOptionButton.SelectedId] != _lastJobProto;
-
-            var newJobProto = isSelectAll ? _lastJobProto ?? "" : _jobPrototypeIds[JobPresetOptionButton.SelectedId];
 
             _owner.SubmitData(
                 FullNameLineEdit.Text,
                 JobTitleLineEdit.Text,
                 // Iterate over the buttons dictionary, filter by `Pressed`, only get key from the key/value pair
                 _accessButtons.ButtonsList.Where(x => x.Value.Pressed).Select(x => x.Key).ToList(),
-                jobProtoDirty ? newJobProto : string.Empty);
+                jobProtoDirty ? _jobPrototypeIds[JobPresetOptionButton.SelectedId] : string.Empty);
         }
     }
 }

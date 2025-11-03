@@ -1,3 +1,7 @@
+# The mind roles specified here will be overwritten by the actual entities' GhostRoleComponent when they spawn
+# But the mind roles specified here are the ones checked for role bans when taking a ghost role!
+# TODO make this simpler
+
 - type: entity
   abstract: true
   parent: MarkerBase
@@ -91,7 +95,7 @@
   - type: GhostRole
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    - MindRoleNukeops
     requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
@@ -145,7 +149,7 @@
     description: roles-antag-nuclear-operative-commander-objective
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    - MindRoleNukeopsCommander
     requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
@@ -167,7 +171,7 @@
     description: roles-antag-nuclear-operative-agent-objective
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    - MindRoleNukeopsMedic
     requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
@@ -189,7 +193,7 @@
     description: roles-antag-nuclear-operative-objective
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    - MindRoleNukeops
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -201,7 +205,7 @@
     description: ghost-role-information-space-dragon-description
     rules: ghost-role-information-space-dragon-rules
     mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    - MindRoleDragon
     requirements:
     - !type:OverallPlaytimeRequirement
       time: 36000 # 10h overall
@@ -221,7 +225,7 @@
     description: ghost-role-information-space-ninja-description
     rules: ghost-role-information-space-ninja-rules
     mindRoles:
-    - MindRoleGhostRoleSoloAntagonist
+    - MindRoleNinja
     requirements:
     - !type:OverallPlaytimeRequirement
       time: 144000 # 40h overall
@@ -244,7 +248,7 @@
     description: ghost-role-information-paradox-clone-description
     rules: ghost-role-information-antagonist-rules
     mindRoles:
-    - MindRoleGhostRoleSoloAntagonist
+    - MindRoleParadoxClone
     requirements:
     - !type:DepartmentTimeRequirement
       department: Security
@@ -279,6 +283,8 @@
     name: ghost-role-information-derelict-cyborg-name
     description: ghost-role-information-derelict-cyborg-description
     rules: ghost-role-information-silicon-rules
+    mindRoles:
+    - MindRoleSubvertedSilicon
     raffle:
       settings: default
   - type: Sprite
@@ -348,7 +354,7 @@
     description: ghost-role-information-wizard-desc
     rules: ghost-role-information-freeagent-rules # DS14
     mindRoles:
-    - MindRoleGhostRoleFreeAgent # DS14
+    - MindRoleWizard
     requirements:
     - !type:OverallPlaytimeRequirement
       time: 216000 # 60h overall

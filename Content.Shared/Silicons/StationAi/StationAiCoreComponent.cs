@@ -38,12 +38,20 @@ public sealed partial class StationAiCoreComponent : Component
     [DataField(readOnly: true)]
     public EntProtoId? PhysicalEntityProto = "StationAiHoloLocal";
 
+    /// <summary>
+    /// Name of the container slot that holds the inhabiting AI's mind
+    /// </summary>
+    public const string Container = "station_ai_mind_slot";
+
+    /// <summary>
+    /// Name of the container slot that holds the 'brain' used to construct the AI core
+    /// </summary>
+    public const string BrainContainer = "station_ai_brain_slot";
+
     // DS14-start
     [DataField(readOnly: true)]
     public EntProtoId? SpawnedBrainProto = "StationAiBrain";
     // DS14-end
-
-    public const string Container = "station_ai_mind_slot";
 }
 
 /// <summary>

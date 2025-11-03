@@ -8,12 +8,12 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobChemist
-      time: 36000 # 10 hours
+      time: 10h
     - !type:RoleTimeRequirement
       role: JobMedicalDoctor
-      time: 72000 # 20 hours
+      time: 20h
     - !type:OverallPlaytimeRequirement
-      time: 144000 # 40 hours
+      time: 40h
     - !type:AgeRequirement
       requiredAge: 24
   weight: 10

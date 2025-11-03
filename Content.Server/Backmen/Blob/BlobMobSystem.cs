@@ -1,13 +1,13 @@
 using Content.Server.Backmen.Blob.Components;
 using Content.Server.Chat.Systems;
 using Content.Server.Popups;
-using Content.Server.Radio.Components;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Backmen.Blob.Components;
 using Content.Shared.Chat;
 using Content.Shared.Damage;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
+using Content.Shared.Radio.Components;
 using Content.Shared.Speech;
 using Robust.Shared.Prototypes;
 

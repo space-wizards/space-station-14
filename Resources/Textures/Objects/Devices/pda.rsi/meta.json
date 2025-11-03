@@ -695,6 +695,9 @@
       ]
     },
     {
+       "name": "pda-seniorcourier"
+    },
+    {
       "name": "pda-seniorminer",
       "delays": [
         [

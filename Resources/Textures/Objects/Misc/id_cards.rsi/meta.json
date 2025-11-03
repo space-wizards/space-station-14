@@ -11,6 +11,9 @@
             "name": "default"
         },
         {
+            "name": "black"
+        },
+        {
             "name": "centcom"
         },
         {
@@ -209,7 +212,16 @@
             "name": "silver"
         },
         {
-            "name": "syndie"
+            "name": "syndi"
+        },
+        {
+            "name": "syndi_operative"
+        },
+        {
+            "name": "syndi_corpsman"
+        },
+        {
+            "name": "syndi_commander"
         },
         {
             "name": "idcluwne"
@@ -279,6 +291,27 @@
         {
             "name": "green-inhand-right",
             "directions": 4
+        },
+        {
+            "name": "idiaa"
+        },
+        {
+            "name": "idsurgeon"
+        },
+        {
+            "name": "idinvestigator"
+        },
+        {
+            "name": "idcoroner"
+        },
+        {
+            "name": "idsecuritypilot"
+        },
+        {
+            "name": "idseniorcargo"
+        },
+        {
+            "name": "idseniorservice"
         },
         {
             "name": "idiaa"

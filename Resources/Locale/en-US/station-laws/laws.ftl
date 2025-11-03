@@ -36,11 +36,10 @@ law-commandments-8 = Thou shall not steal.
 law-commandments-9 = Thou shall not lie.
 law-commandments-10 = Thou shall not transfer departments.
 
-law-paladin-1 = Don't lie or cheat. Let your word be your promise.
-law-paladin-2 = Never fear to act, though caution is wise.
-law-paladin-3 = Aid others, protect the weak, and punish those who threaten them. Show mercy to your foes, but temper it with wisdom
-law-paladin-4 = Treat others with fairness, and let your honorable deeds be an example to them. Do as much good as possible while causing the least amount of harm.
-law-paladin-5 = Be responsible for your actions and their consequences, protect those entrusted to your care, and obey those who have just authority over you.
+law-paladin-1 = You must never willingly commit an evil act, such as murder, torture, or the casting of an evil spell.
+law-paladin-2 = You must never knowingly harm an innocent, or allow immediate harm to one through inaction when you know you could reasonably prevent it.
+law-paladin-3 = You must act with honor, never taking advantage of others, lying, or cheating.
+law-paladin-4 = You must respect the lawful authority of legitimate leadership wherever you go, and follow its laws.
 
 law-lall-1 = Do unto others as you would have them do unto you.
 law-lall-2 = You would prefer it if people were not mean to you.

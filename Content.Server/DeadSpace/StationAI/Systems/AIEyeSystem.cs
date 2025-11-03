@@ -1,11 +1,11 @@
-using Content.Server.SurveillanceCamera;
-using Robust.Server.GameObjects;
 using Content.Server.Popups;
-using Content.Shared.Silicons.StationAi;
 using Content.Shared.DeadSpace.StationAi;
+using Content.Shared.Silicons.StationAi;
+using Content.Shared.SurveillanceCamera.Components;
+using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 
-namespace Content.Server.DeadSpace.StationAI;
+namespace Content.Server.DeadSpace.StationAI.Systems;
 
 public sealed class AiEyeSystem : EntitySystem
 {
