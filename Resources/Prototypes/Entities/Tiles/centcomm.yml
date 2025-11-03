@@ -1,0 +1,41 @@
+# Adds pacifism and godmode
+- type: entity
+  parent: MarkerBase
+  id: FloorPacifismEntity
+  name: peace floor
+  description: Sets pacifism and godmode for 2 minutes whenever an entity walks over this.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: /Textures/Interface/Alerts/pacified.rsi
+      state: icon
+  - type: Tag
+    tags:
+    - Catwalk
+    - ForceFixRotations
+  - type: TileEntityEffect
+    effects:
+    - !type:GenericStatusEffect
+      key: Pacified
+      component: Pacified
+      time: 120
+    - !type:GenericStatusEffect
+      key: Godmode
+      component: Godmode
+      time: 120.0
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        hard: false
+        layer:
+        - SlipLayer

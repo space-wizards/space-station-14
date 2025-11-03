@@ -137,3 +137,4 @@ tips-dataset-136 = If you're trapped behind an electrified door, disable the APC
 tips-dataset-137 = If the AI electrifies a door and you have insulated gloves, snip and mend the power wire to reset their electrification!
 tips-dataset-138 = If you want to stop your prisoner from escaping from the cell right after being uncuffed, turn on combat mode while uncuffing - this will shove the prisoner down.
 tips-dataset-139 = Make sure to clean your illegal implanters with a soap or a damp rag after you use them! Detectives can scan used implanters for incriminating DNA evidence, but not if they've been wiped clean.
+tips-dataset-140 = Want to avoid the end-of-round chaos at Central Command? If you can survive getting out of the Evac shuttle, head south into the bar area - anyone who enters becomes pacified, so you can share a drink in peace.
