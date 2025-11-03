@@ -94,7 +94,7 @@
 - type: entity
   parent: DefaultStationBeacon
   id: DefaultStationBeaconNinjaBombingTargetBlacklist
-  suffix: Not Teleport point
+  suffix: Ninja bombing target blacklist
   components:
   - type: Tag
     tags:
