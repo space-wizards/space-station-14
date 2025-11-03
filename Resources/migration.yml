@@ -736,6 +736,9 @@ ToyGriffin: ToyFigurineGriffin
 ToyOwlman: ToyFigurineOwlman
 ToySkeleton: ToyFigurineSkeleton
 
+# 2025-10-28
+DrinkKiraSpecial: DrinkOrangeLimeSodaGlass
+
 # 2025-11-03
 # Replace cargo order crates which contain exactly one item with the item, parcel wrapped.
 CrateVendingMachineRestockBoozeFilled: VendingMachineRestockBooze
