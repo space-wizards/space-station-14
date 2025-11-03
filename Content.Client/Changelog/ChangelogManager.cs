@@ -52,7 +52,7 @@ namespace Content.Client.Changelog
             // Open changelog purely to compare to the last viewed date.
             var changelogs = await LoadChangelog();
             UpdateChangelogs(changelogs);
-            _configManager.OnCVarValueChanged += OnCVarValueChanged;
+            _configManager.OnValueChanged(CCVars.ServerId, OnServerIdCVarChanged);
         }
 
         private void UpdateChangelogs(List<Changelog> changelogs)
@@ -98,12 +98,9 @@ namespace Content.Client.Changelog
             NewChangelogEntriesChanged?.Invoke();
         }
 
-        private void OnCVarValueChanged(CVarChangeInfo changedVar)
+        private void OnServerIdCVarChanged(string newValue)
         {
-            if (changedVar.Name == CCVars.ServerId.Name)
-            {
-                CheckLastSeenEntry();
-            }
+            CheckLastSeenEntry();
         }
 
         public Task<List<Changelog>> LoadChangelog()
