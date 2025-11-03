@@ -338,6 +338,7 @@
   - type: Ringer
     ringerSound: /Audio/Items/bikehorn.ogg
     tempo: 240
+    volume: -10
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -442,8 +443,9 @@
     id: ChaplainIDCard
   - type: Ringer
     ringerSound: /Audio/Effects/holy.ogg
-    tempo: 160
-    semitoneOffset: -4
+    tempo: 200
+    semitoneOffset: -3
+    volume: -8
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
