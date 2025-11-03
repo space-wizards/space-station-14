@@ -33,7 +33,6 @@ public sealed class AdminFrozenSystem : EntitySystem
         SubscribeLocalEvent<AdminFrozenComponent, EmoteAttemptEvent>(OnEmoteAttempt);
         SubscribeLocalEvent<AdminFrozenComponent, SpeakAttemptEvent>(OnSpeakAttempt);
         SubscribeLocalEvent<AdminFrozenComponent, LoocSpeakAttemptEvent>(OnLoocSpeakAttempt);
-        SubscribeLocalEvent<AdminFrozenComponent, DeadChatSpeakAttemptEvent>(OnDeadChatSpeakAttempt);
     }
 
     /// <summary>
@@ -64,14 +63,7 @@ public sealed class AdminFrozenSystem : EntitySystem
         if (!ent.Comp.Muted)
             return;
 
-        args.Cancelled = true;
-    }
-
-    private void OnDeadChatSpeakAttempt(Entity<AdminFrozenComponent> ent, ref DeadChatSpeakAttemptEvent args)
-    {
-        if (!ent.Comp.Muted)
-            return;
-
+        // Despite Type being available, Admin Mute does not care to differentiate. If you are out, you are out.
         args.Cancelled = true;
     }
 

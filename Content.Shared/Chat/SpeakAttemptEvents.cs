@@ -1,13 +1,7 @@
 namespace Content.Shared.Chat;
 
 /// <summary>
-/// Event fired before a player's entity speaks on LOOC
+/// Event fired before a player's entity speaks on LOOC or Deadchat.
 /// </summary>
 [ByRefEvent]
-public record struct LoocSpeakAttemptEvent(bool Cancelled = false);
-
-/// <summary>
-/// Event fired before a player's entity speaks on Dead Chat
-/// </summary>
-[ByRefEvent]
-public record struct DeadChatSpeakAttemptEvent(bool Cancelled = false);
+public record struct LoocSpeakAttemptEvent(InGameOOCChatType Type, bool Cancelled = false);

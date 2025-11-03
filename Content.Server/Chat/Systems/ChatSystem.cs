@@ -270,22 +270,18 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (!_critLoocEnabled && _mobStateSystem.IsCritical(source))
             return;
 
+        // Systems can differentiate Looc and DeadChat by type, and cancel the speak attempt if necessary.
+        var ev = new LoocSpeakAttemptEvent(sendType);
+        RaiseLocalEvent(source, ref ev);
+        if (ev.Cancelled)
+            return;
+
         switch (sendType)
         {
             case InGameOOCChatType.Dead:
-                var evGhost = new DeadChatSpeakAttemptEvent();
-                RaiseLocalEvent(source, ref evGhost);
-
-                if (evGhost.Cancelled)
-                    return;
                 SendDeadChat(source, player, message, hideChat);
                 break;
             case InGameOOCChatType.Looc:
-                var evLooc = new LoocSpeakAttemptEvent();
-                RaiseLocalEvent(source, ref evLooc);
-
-                if (evLooc.Cancelled)
-                    return;
                 SendLOOC(source, player, message, hideChat);
                 break;
         }
