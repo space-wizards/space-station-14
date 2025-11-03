@@ -16,7 +16,6 @@ public sealed partial class SpaceVillainGame
     [Dependency] private readonly IRobustRandom _random = default!;
     private readonly SharedAudioSystem _audioSystem = default!;
     private readonly UserInterfaceSystem _uiSystem = default!;
-    private readonly SpaceVillainArcadeSystem _svArcade = default!;
     private readonly ArcadeSystem _arcade = default!;
 
     [ViewVariables]
@@ -52,27 +51,21 @@ public sealed partial class SpaceVillainGame
     private static readonly LocId EnemyWinsMessage = "space-villain-game-enemy-cheers-message";
     private static readonly LocId BothDieMessage = "space-villain-game-enemy-dies-with-player-message";
 
-    public SpaceVillainGame(EntityUid owner,
-        SpaceVillainArcadeComponent arcade,
+    public SpaceVillainGame(SpaceVillainArcadeComponent arcade,
         SpaceVillainArcadeSystem svArcade,
         ArcadeSystem arcadeSystem)
-        : this(owner,
-            svArcade,
-            arcadeSystem,
+        : this(arcadeSystem,
             svArcade.GenerateFightVerb(arcade),
             svArcade.GenerateEnemyName(arcade))
     { }
 
-    public SpaceVillainGame(EntityUid owner,
-        SpaceVillainArcadeSystem svArcade,
-        ArcadeSystem arcade,
+    public SpaceVillainGame(ArcadeSystem arcade,
         string fightVerb,
         string enemyName)
     {
         IoCManager.InjectDependencies(this);
         _audioSystem = _entityManager.System<SharedAudioSystem>();
         _uiSystem = _entityManager.System<UserInterfaceSystem>();
-        _svArcade = svArcade;
         _arcade = arcade;
 
         //todo defeat the curse secret game mode

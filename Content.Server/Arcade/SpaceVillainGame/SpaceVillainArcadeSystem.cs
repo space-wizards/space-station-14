@@ -73,7 +73,7 @@ public sealed partial class SpaceVillainArcadeSystem : SharedSpaceVillainArcadeS
             case SpaceVillainPlayerAction.NewGame:
                 _audioSystem.PlayPvs(component.NewGameSound, uid, AudioParams.Default.WithVolume(-4f));
 
-                component.Game = new SpaceVillainGame(uid, component, this, _arcade);
+                component.Game = new SpaceVillainGame(component, this, _arcade);
                 _uiSystem.ServerSendUiMessage(uid, SpaceVillainArcadeUiKey.Key, component.Game.GenerateMetaDataMessage());
                 break;
             case SpaceVillainPlayerAction.RequestData:
@@ -84,7 +84,7 @@ public sealed partial class SpaceVillainArcadeSystem : SharedSpaceVillainArcadeS
 
     private void OnAfterUIOpenSV(EntityUid uid, SpaceVillainArcadeComponent component, AfterActivatableUIOpenEvent args)
     {
-        component.Game ??= new(uid, component, this, _arcade);
+        component.Game ??= new(component, this, _arcade);
     }
 
     private void OnSVillainPower(EntityUid uid, SpaceVillainArcadeComponent component, ref PowerChangedEvent args)
