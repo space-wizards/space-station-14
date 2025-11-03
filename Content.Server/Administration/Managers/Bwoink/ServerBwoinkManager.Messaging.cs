@@ -145,6 +145,15 @@ public sealed partial class ServerBwoinkManager
             return;
         }
 
+        var managers = PlayerManager.Sessions.Where(x => CanManageChannel(channel, x))
+            .Select(x => x.Channel)
+            .ToList();
+
+        if (managers.Count == 0)
+        {
+            message.Flags |= MessageFlags.NoReceivers;
+        }
+
         InvokeMessageReceived(channel, target, message);
 
         var msgBwoink = new MsgBwoink()
