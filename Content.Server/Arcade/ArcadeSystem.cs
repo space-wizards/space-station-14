@@ -1,10 +1,22 @@
+using Content.Server.Arcade.Components;
 using Content.Shared.Arcade;
+using Content.Shared.EntityTable;
 using JetBrains.Annotations;
 
 namespace Content.Server.Arcade;
 
 public sealed partial class ArcadeSystem : SharedArcadeSystem
 {
+    [Dependency] private readonly EntityTableSystem _entityTable = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<ArcadeRewardComponent, ComponentInit>(OnArcadeRewardComponentInit);
+        SubscribeLocalEvent<ArcadeRewardComponent, ArcadeGameEndedEvent>(OnArcadeRewardGameEnded);
+    }
+
     /// <summary>
     ///     Ends the arcade game on a win.
     /// </summary>

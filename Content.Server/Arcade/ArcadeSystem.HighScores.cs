@@ -9,11 +9,6 @@ public sealed partial class ArcadeSystem
     private readonly List<BlockGameMessages.HighScoreEntry> _roundHighscores = new();
     private readonly List<BlockGameMessages.HighScoreEntry> _globalHighscores = new();
 
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
-
     public HighScorePlacement RegisterHighScore(string name, int score)
     {
         var entry = new BlockGameMessages.HighScoreEntry(name, score);
