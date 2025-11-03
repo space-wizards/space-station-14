@@ -27,7 +27,6 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SpaceVillainArcadeComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<SpaceVillainArcadeComponent, AfterActivatableUIOpenEvent>(OnAfterUIOpenSV);
         SubscribeLocalEvent<SpaceVillainArcadeComponent, SharedSpaceVillainArcadeComponent.SpaceVillainArcadePlayerActionMessage>(OnSVPlayerAction);
         SubscribeLocalEvent<SpaceVillainArcadeComponent, PowerChangedEvent>(OnSVillainPower);
@@ -52,12 +51,6 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
         var possibleLastEnemyNames = _prototypeManager.Index(arcade.PossibleLastEnemyNames);
 
         return $"{_random.Pick(possibleFirstEnemyNames)} {_random.Pick(possibleLastEnemyNames)}";
-    }
-
-    private void OnComponentInit(EntityUid uid, SpaceVillainArcadeComponent component, ComponentInit args)
-    {
-        // Random amount of prizes
-        component.RewardAmount = new Random().Next(component.RewardMinAmount, component.RewardMaxAmount + 1);
     }
 
     private void OnSVPlayerAction(EntityUid uid, SpaceVillainArcadeComponent component, SharedSpaceVillainArcadeComponent.SpaceVillainArcadePlayerActionMessage msg)
