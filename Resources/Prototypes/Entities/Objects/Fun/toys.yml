@@ -412,7 +412,7 @@
     - Balloon
 
 - type: entity
-  parent: [ BaseBalloon, BaseItem ]
+  parent: BaseBalloon
   id: BalloonSyn
   name: syndie balloon
   description: Handed out to the bravest souls who survived the "atomic twister" ride at Syndieland.
@@ -421,15 +421,12 @@
     sprite: Objects/Fun/Balloons/syndicate.rsi
     state: icon
   - type: Item
-    size: Small
     sprite: Objects/Fun/Balloons/syndicate.rsi
-  - type: Damageable
-    damageContainer: Inorganic
   - type: StaticPrice
     price: 5000 # Entertainment.
 
 - type: entity
-  parent: [ BaseBalloon, BaseItem ]
+  parent: BaseBalloon
   id: BalloonNT
   name: nanotrasen balloon
   description: Specially designed to inflict maximum psychological damage to Syndicate operatives.
@@ -438,13 +435,10 @@
     sprite: Objects/Fun/Balloons/nanotrasen.rsi
     state: icon
   - type: Item
-    size: Small
     sprite: Objects/Fun/Balloons/nanotrasen.rsi
-  - type: Damageable
-    damageContainer: Inorganic
 
 - type: entity
-  parent: [ BaseBalloon, BaseItem ]
+  parent: BaseBalloon
   id: BalloonCorgi
   name: corgi balloon
   description: Just like owning a real dog - but a lot floatier.
@@ -453,10 +447,7 @@
     sprite: Objects/Fun/Balloons/corgi.rsi
     state: icon
   - type: Item
-    size: Small
     sprite: Objects/Fun/Balloons/corgi.rsi
-  - type: Damageable
-    damageContainer: Inorganic
 
 # MISC
 
