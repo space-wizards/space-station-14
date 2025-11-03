@@ -238,6 +238,11 @@ namespace Content.Shared.Atmos
         /// </summary>
         public const float MinimumTritiumOxyburnEnergy = 143000f;
 
+        /// <summary>
+        ///     Scales the amount of radiation released per mole of tritium burnt.
+        /// </summary>
+        public const float TritiumRadiationFactor = 1f;
+
         public const float TritiumBurnOxyFactor = 100f;
         public const float TritiumBurnTritFactor = 10f;
 

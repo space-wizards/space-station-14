@@ -2,17 +2,22 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.NodeContainer.EntitySystems;
+using Content.Server.NodeContainer.NodeGroups;
+using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Decals;
 using Content.Shared.Doors.Components;
 using Content.Shared.Maps;
+using Content.Shared.Radiation.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Server.Spawners;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Spawners;
 using System.Linq;
 using Content.Shared.Damage.Systems;
 using Robust.Shared.Threading;
@@ -39,8 +44,11 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     [Dependency] private readonly TileSystem _tile = default!;
     [Dependency] private readonly MapSystem _map = default!;
     [Dependency] public readonly PuddleSystem Puddle = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly TritiumRadiationSourceSystem _tritiumRadSystem = default!;
+    [Dependency] private readonly TimedDespawnSystem _timedDespawnSystem = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
-
+    
     private const float ExposedUpdateDelay = 1f;
     private float _exposedTimer = 0f;
 
@@ -126,5 +134,55 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     private void CacheDecals()
     {
         _burntDecals = _protoMan.EnumeratePrototypes<DecalPrototype>().Where(x => x.Tags.Contains("burnt")).Select(x => x.ID).ToArray();
+    }
+
+    public void ActivateTritiumFire(IGasMixtureHolder? holder, float burnedFuel)
+    {
+        if (holder == null || burnedFuel <= 0)
+            return;
+
+        if (holder is PipeNet pipeNet) // Catch pipes
+        {
+            if (burnedFuel > 0)
+            {
+                foreach (var node in pipeNet.Nodes)
+                {
+                    var radSource = EnsureComp<RadiationSourceComponent>(node.Owner);
+                    var timer = EnsureComp<TritiumRadiationSourceComponent>(node.Owner);
+
+                    radSource.Intensity = burnedFuel * Atmospherics.TritiumRadiationFactor / pipeNet.NodeCount;
+                    radSource.Slope = 1.0f;
+                    timer.Lifetime = 2.0f;
+                }
+            }
+            return;
+        }
+
+        if (holder is IComponent component) // Catch canisters, tanks, etc
+        {
+            var radSource = EnsureComp<RadiationSourceComponent>(component.Owner);
+            var timer = EnsureComp<TritiumRadiationSourceComponent>(component.Owner);
+
+            radSource.Intensity = burnedFuel * Atmospherics.TritiumRadiationFactor;
+            radSource.Slope = 1.0f;
+            timer.Lifetime = 2.0f;
+            return;
+        }
+
+        if (holder is TileAtmosphere tile) // Catch tiles
+        {
+            if (!_entityManager.EntityExists(tile.RadiationSource))
+            {
+                var coords = _mapSystem.ToCenterCoordinates(tile.GridIndex, tile.GridIndices);
+                tile.RadiationSource = _entityManager.SpawnEntity(null, coords);
+            }
+
+            var radSource = EnsureComp<RadiationSourceComponent>(tile.RadiationSource.Value);
+            radSource.Intensity = burnedFuel * Atmospherics.TritiumRadiationFactor;
+            radSource.Slope = 1.0f;
+
+            var timedDespawn = EnsureComp<TimedDespawnComponent>(tile.RadiationSource.Value);
+            timedDespawn.Lifetime = 2f;
+        }
     }
 }
