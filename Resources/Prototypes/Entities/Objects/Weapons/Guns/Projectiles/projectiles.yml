@@ -297,7 +297,6 @@
   - type: Ammo
   - type: StaminaDamageOnCollide
     damage: 33
-  - type: StaminaDamageExaminable
   - type: Projectile
     impactEffect: BulletImpactEffectDisabler
     damage:
@@ -339,7 +338,6 @@
   - type: Ammo
   - type: StaminaDamageOnCollide
     damage: 1
-  - type: StaminaDamageExaminable
   - type: Projectile
     impactEffect: BulletImpactEffectDisabler
     damage:
@@ -865,7 +863,6 @@
       path: /Audio/Effects/gen_hit.ogg
   - type: StaminaDamageOnCollide
     damage: 80
-  - type: StaminaDamageExaminable
 
 - type: entity
   id: BulletGrenadeBlast
@@ -1155,7 +1152,6 @@
   - type: Ammo
   - type: StaminaDamageOnCollide
     damage: 15
-  - type: StaminaDamageExaminable
   - type: Projectile
     impactEffect: BulletImpactEffectDisabler
     damage:
@@ -1231,7 +1227,6 @@
       shader: unshaded
   - type: StaminaDamageOnCollide
     damage: 30
-  - type: StaminaDamageExaminable
   - type: Projectile
     impactEffect: BulletImpactEffectDisabler
     damage:
@@ -1256,7 +1251,6 @@
       shader: unshaded
   - type: StaminaDamageOnCollide
     damage: 15
-  - type: StaminaDamageExaminable
   - type: EmbeddableProjectile
   - type: Projectile
     deleteOnCollide: false

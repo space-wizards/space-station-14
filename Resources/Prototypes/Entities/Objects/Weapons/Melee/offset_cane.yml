@@ -29,7 +29,6 @@
         Blunt: 5
   - type: StaminaDamageOnHit
     damage: 5
-  - type: StaminaDamageExaminable
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:

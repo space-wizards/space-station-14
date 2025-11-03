@@ -39,7 +39,6 @@
         Piercing: 10
   - type: StaminaDamageOnCollide
     damage: 55
-  - type: StaminaDamageExaminable
 
 - type: entity
   parent: ThrowingStar
