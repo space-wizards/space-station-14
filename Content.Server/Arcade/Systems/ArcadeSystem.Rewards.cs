@@ -1,6 +1,6 @@
 using Content.Server.Arcade.Components;
 
-namespace Content.Server.Arcade;
+namespace Content.Server.Arcade.Systems;
 
 public sealed partial class ArcadeSystem
 {

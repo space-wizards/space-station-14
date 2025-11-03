@@ -2,7 +2,7 @@ using System.Linq;
 using Content.Shared.Arcade;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Arcade;
+namespace Content.Server.Arcade.Systems;
 
 public sealed partial class ArcadeSystem
 {
