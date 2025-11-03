@@ -10,6 +10,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Server.Arcade.Systems;
 
 namespace Content.Server.Arcade.SpaceVillain;
 
@@ -20,6 +21,7 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SpeakOnUIClosedSystem _speakOnUIClosed = default!;
+    [Dependency] private readonly ArcadeSystem _arcade = default!;
 
     public override void Initialize()
     {
@@ -29,24 +31,6 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
         SubscribeLocalEvent<SpaceVillainArcadeComponent, AfterActivatableUIOpenEvent>(OnAfterUIOpenSV);
         SubscribeLocalEvent<SpaceVillainArcadeComponent, SharedSpaceVillainArcadeComponent.SpaceVillainArcadePlayerActionMessage>(OnSVPlayerAction);
         SubscribeLocalEvent<SpaceVillainArcadeComponent, PowerChangedEvent>(OnSVillainPower);
-    }
-
-    /// <summary>
-    /// Called when the user wins the game.
-    /// Dispenses a prize if the arcade machine has any left.
-    /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="arcade"></param>
-    /// <param name="xform"></param>
-    public void ProcessWin(EntityUid uid, SpaceVillainArcadeComponent? arcade = null, TransformComponent? xform = null)
-    {
-        if (!Resolve(uid, ref arcade, ref xform))
-            return;
-        if (arcade.RewardAmount <= 0)
-            return;
-
-        Spawn(_random.Pick(arcade.PossibleRewards), xform.Coordinates);
-        arcade.RewardAmount--;
     }
 
     /// <summary>
@@ -96,7 +80,7 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
             case SharedSpaceVillainArcadeComponent.PlayerAction.NewGame:
                 _audioSystem.PlayPvs(component.NewGameSound, uid, AudioParams.Default.WithVolume(-4f));
 
-                component.Game = new SpaceVillainGame(uid, component, this);
+                component.Game = new SpaceVillainGame(uid, component, this, _arcade);
                 _uiSystem.ServerSendUiMessage(uid, SharedSpaceVillainArcadeComponent.SpaceVillainArcadeUiKey.Key, component.Game.GenerateMetaDataMessage());
                 break;
             case SharedSpaceVillainArcadeComponent.PlayerAction.RequestData:
@@ -107,7 +91,7 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
 
     private void OnAfterUIOpenSV(EntityUid uid, SpaceVillainArcadeComponent component, AfterActivatableUIOpenEvent args)
     {
-        component.Game ??= new(uid, component, this);
+        component.Game ??= new(uid, component, this, _arcade);
     }
 
     private void OnSVillainPower(EntityUid uid, SpaceVillainArcadeComponent component, ref PowerChangedEvent args)

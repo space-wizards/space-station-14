@@ -3,6 +3,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
+using Content.Server.Arcade.Systems;
 
 namespace Content.Server.Arcade.SpaceVillain;
 
@@ -17,6 +18,7 @@ public sealed partial class SpaceVillainGame
     private readonly SharedAudioSystem _audioSystem = default!;
     private readonly UserInterfaceSystem _uiSystem = default!;
     private readonly SpaceVillainArcadeSystem _svArcade = default!;
+    private readonly ArcadeSystem _arcade = default!;
 
 
     [ViewVariables]
@@ -49,24 +51,34 @@ public sealed partial class SpaceVillainGame
     [ViewVariables]
     private string _latestEnemyActionMessage = "";
 
+    private static readonly LocId WinMessage = "space-villain-game-player-wins-message";
+    private static readonly LocId LoseMessage = "space-villain-game-player-loses-message";
+    private static readonly LocId EnemyDiesMessage = "space-villain-game-enemy-dies-message";
+    private static readonly LocId EnemyWinsMessage = "space-villain-game-enemy-cheers-message";
+    private static readonly LocId BothDieMessage = "space-villain-game-enemy-dies-with-player-message";
+
     public SpaceVillainGame(EntityUid owner,
         SpaceVillainArcadeComponent arcade,
-        SpaceVillainArcadeSystem arcadeSystem)
+        SpaceVillainArcadeSystem svArcade,
+        ArcadeSystem arcadeSystem)
         : this(owner,
+            svArcade,
             arcadeSystem,
-            arcadeSystem.GenerateFightVerb(arcade),
-            arcadeSystem.GenerateEnemyName(arcade))
+            svArcade.GenerateFightVerb(arcade),
+            svArcade.GenerateEnemyName(arcade))
     { }
 
     public SpaceVillainGame(EntityUid owner,
-        SpaceVillainArcadeSystem arcadeSystem,
+        SpaceVillainArcadeSystem svArcade,
+        ArcadeSystem arcade,
         string fightVerb,
         string enemyName)
     {
         IoCManager.InjectDependencies(this);
         _audioSystem = _entityManager.System<SharedAudioSystem>();
         _uiSystem = _entityManager.System<UserInterfaceSystem>();
-        _svArcade = arcadeSystem;
+        _svArcade = svArcade;
+        _arcade = arcade;
 
         _owner = owner;
         //todo defeat the curse secret game mode
@@ -222,39 +234,46 @@ public sealed partial class SpaceVillainGame
             VillainChar.Hp > 0 && VillainChar.Mp > 0
         )
         {
+            // Both are alive
             case (true, true):
                 return true;
+
+            // Player alive, enemy dead: Win game
             case (true, false):
-                _running = false;
-                UpdateUi(
-                    uid,
-                    Loc.GetString("space-villain-game-player-wins-message"),
-                    Loc.GetString("space-villain-game-enemy-dies-message", ("enemyName", _villainName)),
-                    true
-                );
-                _audioSystem.PlayPvs(arcade.WinSound, uid, AudioParams.Default.WithVolume(-4f));
-                _svArcade.ProcessWin(uid, arcade);
+                CompleteGame(uid,
+                    Loc.GetString(WinMessage),
+                    Loc.GetString(EnemyDiesMessage, ("enemyName", _villainName)),
+                    arcade.WinSound);
+                _arcade.WinGame(player: null, machine: uid);
+
                 return false;
+
+            // Enemy dead, player alive: Lose game
             case (false, true):
-                _running = false;
-                UpdateUi(
-                    uid,
-                    Loc.GetString("space-villain-game-player-loses-message"),
-                    Loc.GetString("space-villain-game-enemy-cheers-message", ("enemyName", _villainName)),
-                    true
-                );
-                _audioSystem.PlayPvs(arcade.GameOverSound, uid, AudioParams.Default.WithVolume(-4f));
+                CompleteGame(uid,
+                    Loc.GetString(LoseMessage),
+                    Loc.GetString(EnemyWinsMessage, ("enemyName", _villainName)),
+                    arcade.GameOverSound);
+                _arcade.LoseGame(player: null, machine: uid);
+
                 return false;
+
+            // Player dead, enemy dead: Draw game
             case (false, false):
-                _running = false;
-                UpdateUi(
-                    uid,
-                    Loc.GetString("space-villain-game-player-loses-message"),
-                    Loc.GetString("space-villain-game-enemy-dies-with-player-message", ("enemyName", _villainName)),
-                    true
-                );
-                _audioSystem.PlayPvs(arcade.GameOverSound, uid, AudioParams.Default.WithVolume(-4f));
+                CompleteGame(uid,
+                    Loc.GetString(LoseMessage),
+                    Loc.GetString(BothDieMessage, ("enemyName", _villainName)),
+                    arcade.GameOverSound);
+                _arcade.DrawGame(player: null, machine: uid);
+
                 return false;
         }
+    }
+
+    private void CompleteGame(EntityUid uid, string playerMessage, string enemyMessage, SoundSpecifier sound)
+    {
+        _running = false;
+        UpdateUi(uid, playerMessage, enemyMessage, metadata: true);
+        _audioSystem.PlayPvs(sound, uid, AudioParams.Default.WithVolume(-4f));
     }
 }
