@@ -27,7 +27,7 @@ namespace Content.Shared.Atmos.EntitySystems
             foreach (var gas in Enum.GetValues<Gas>())
             {
                 var idx = (int)gas;
-                // We want to resolve here since not having a gas prototype is not allowed.
+                // Log an error if the corresponding prototype isn't found
                 if (!_prototypeManager.TryIndex<GasPrototype>(gas.ToString(), out var gasPrototype))
                 {
                     Log.Error($"Failed to find corresponding {nameof(GasPrototype)} for gas ID {(int) gas} ({gas}) with expected ID \"{gas.ToString()}\". Is your prototype named correctly?");
