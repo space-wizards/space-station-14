@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Mind;
 using Content.Shared.PDA.Ringer;
 using Content.Shared.Popups;
@@ -19,8 +20,6 @@ namespace Content.Shared.PDA;
 public abstract class SharedRingerSystem : EntitySystem
 {
     public const int RingtoneLength = 6;
-    public const int NoteTempo = 300;
-    public const float NoteDelay = 60f / NoteTempo;
 
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
@@ -61,17 +60,22 @@ public abstract class SharedRingerSystem : EntitySystem
             // and play it separately with PlayLocal, so that it's actually predicted
             if (_net.IsServer)
             {
+
+                var semitone = ringer.SemitoneOffset + GetSemitone(ringer.Ringtone[ringer.NoteCount]);
+
+                AudioParams? audioParams = AudioHelpers.ShiftSemitone(AudioParams.Default, semitone).WithMaxDistance(ringer.Range).WithVolume(ringer.Volume);
+
                 _audio.PlayEntity(
-                    GetSound(ringer.Ringtone[ringer.NoteCount]),
+                    ringer.RingerSound,
                     Filter.Empty().AddInRange(_xform.GetMapCoordinates(uid, xform), ringer.Range),
                     uid,
                     true,
-                    AudioParams.Default.WithMaxDistance(ringer.Range).WithVolume(ringer.Volume)
+                    audioParams
                 );
             }
 
             // Schedule next note
-            ringer.NextNoteTime = curTime + TimeSpan.FromSeconds(NoteDelay);
+            ringer.NextNoteTime = curTime + TimeSpan.FromSeconds(60f / ringer.Tempo);
             ringer.NoteCount++;
 
             // Dirty the fields we just changed
@@ -255,13 +259,29 @@ public abstract class SharedRingerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Gets the sound path for a specific note.
+    /// Gets the semitone for a note starting from C
     /// </summary>
-    /// <param name="note">The note to get the sound for.</param>
-    /// <returns>A SoundPathSpecifier pointing to the sound file for the note.</returns>
-    private static SoundPathSpecifier GetSound(Note note)
+    /// <param name="note">The note to get the semitone of.</param>
+    /// <returns>An int representing the semitone of the note from C.</returns>
+    private static int GetSemitone(Note note)
     {
-        return new SoundPathSpecifier($"/Audio/Effects/RingtoneNotes/{note.ToString().ToLower()}.ogg");
+        var semitone = note switch
+        {
+            Note.A => 9,
+            Note.Asharp => 10,
+            Note.B => 11,
+            Note.C => 0,
+            Note.Csharp => 1,
+            Note.D => 2,
+            Note.Dsharp => 3,
+            Note.E => 4,
+            Note.F => 5,
+            Note.Fsharp => 6,
+            Note.G => 7,
+            Note.Gsharp => 8
+        };
+
+        return semitone;
     }
 
     /// <summary>
