@@ -99,6 +99,9 @@
   id: BorgHead # Used by PartAssemblyComponent on CyborgEndoskeleton. Also in ConstructionGraphs for various bots
 
 - type: Tag
+  id: BorgLeg # Used by PartAssemblyComponent on VimHarness
+
+- type: Tag
   id: BorgLArm # Used by PartAssemblyComponent on CyborgEndoskeleton
 
 - type: Tag
@@ -112,9 +115,6 @@
 
 - type: Tag
   id: BorgTorso # Used by PartAssemblyComponent on CyborgEndoskeleton
-
-- type: Tag
-  id: BorgLeg # Used by PartAssemblyComponent on VimHarness
 
 - type: Tag
   id: BorgModuleCargo # Cyborg module category for salvage and cargo
@@ -186,16 +186,16 @@
   id: Bucket # Storage whitelist: JanitorialTrolley. ItemMapper: JanitorialTrolley. ConstructionGraph: CleanBot, scraphelmet
 
 - type: Tag
-  id: Burger # Food sequence key
-
-- type: Tag
   id: BulletFoam # Ammo: WeaponRifleFoam, FoamCrossbow, MagazineFoamBox, BoxDonkSoftBox
 
 - type: Tag
-  id: Burnt # Storage whitelist: ashtray. Seemingly redundant?
+  id: Bun # LastElement key on burger associated MetamorphRecipes.
 
 - type: Tag
-  id: Bun # LastElement key on burger associated MetamorphRecipes.
+  id: Burger # Food sequence key
+
+- type: Tag
+  id: Burnt # Storage whitelist: ashtray. Seemingly redundant?
 
 - type: Tag
   id: BypassDropChecks # Tagged entities don't care about drop distance or walls (Aghost).
@@ -209,10 +209,10 @@
   id: CableCoil # Storage whitelist: BaseClothingBeltEngineering, BorgModuleCable
 
 - type: Tag
-  id: Candle # Storage whitelist: BoxCandle
+  id: Cake # CargoBounty blacklist: BountyFruit, BountyVegetable
 
 - type: Tag
-  id: Cake # CargoBounty blacklist: BountyFruit, BountyVegetable
+  id: Candle # Storage whitelist: BoxCandle
 
 - type: Tag
   id: CaneBlade # Storage whitelist: CaneSheath. ItemMapper: CaneSheath
@@ -231,6 +231,9 @@
   id: CaptainSabre # Storage whitelist: ClothingBeltSheath. ItemMapper: ClothingBeltSheath
 
 - type: Tag
+  id: Carp # CargoBounty: BountyCarp
+
+- type: Tag
   id: Carpet # CreateEntityTileReaction whitelist on Carpetium
 
 - type: Tag
@@ -238,9 +241,6 @@
 
 - type: Tag
   id: CarrotFries # CargoBounty: BountyCarrotFries
-
-- type: Tag
-  id: Carp # CargoBounty: BountyCarp
 
 - type: Tag # NOT bullets. This is for the cart to load PDA programs.
   id: Cartridge # Storage whitelist: BasePDA
@@ -289,9 +289,6 @@
   id: CentrifugeCompatible # Storage whitelist: MachineCentrifuge
 
 - type: Tag
-  id: Chicken # Reproductive partner key. MetamorphRecipe: FoodBurgerChicken
-
-- type: Tag
   id: Cheese # MetamorphRecipe: FoodBurgerCheese, FoodBurgerDuck
 
 - type: Tag
@@ -299,6 +296,9 @@
 
 - type: Tag
   id: ChemDispensable # Storage whitelist: ChemDispenserEmpty, SmartFridge, BorgModuleAdvancedChemical
+
+- type: Tag
+  id: Chicken # Reproductive partner key. MetamorphRecipe: FoodBurgerChicken
 
 - type: Tag
   id: ChiliBowl # CargoBounty: BountyChili
@@ -560,13 +560,13 @@
   id: FireAxe # Storage whitelist: FireAxeCabinet
 
 - type: Tag
-  id: FirelockElectronics # ConstructionGraph: Firelock
-
-- type: Tag
   id: FireExtinguisher # ConstructionGraph: FireBot
 
 - type: Tag
   id: FireHelmet # ConstructionGraph: FireBot
+
+- type: Tag
+  id: FirelockElectronics # ConstructionGraph: Firelock
 
 - type: Tag
   id: Flare # Storage whitelist: BaseClothingBeltEngineering
@@ -626,7 +626,7 @@
   id: GhostOnlyWarp
 
 - type: Tag
-  id: GenderPin # ChameleonClothing key.
+  id: GenderPin #  Chameleon key for ClothingGenderPinBase.
 
 - type: Tag
   id: GlassAirlock # Used in ConstructionGraph "Airlock" to navigate between regular, glass, and highsec airlocks.
@@ -682,13 +682,13 @@
   id: HamtrCentralControlModule # ConstructionGraph: Hamtr
 
 - type: Tag
-  id: HamtrPeripheralsControlModule # ConstructionGraph: Hamtr
-
-- type: Tag
   id: HamtrLArm # PartAssembly: HamtrHarness. ItemMapper: HamtrHarness
 
 - type: Tag
   id: HamtrLLeg # PartAssembly: HamtrHarness. ItemMapper: HamtrHarness
+
+- type: Tag
+  id: HamtrPeripheralsControlModule # ConstructionGraph: Hamtr
 
 - type: Tag
   id: HamtrRArm # PartAssembly: HamtrHarness. ItemMapper: HamtrHarness
@@ -755,22 +755,22 @@
   id: HonkerCentralControlModule # ConstructionGraph: Honker
 
 - type: Tag
-  id: HonkerPeripheralsControlModule # ConstructionGraph: Honker
-
-- type: Tag
-  id: HonkerTargetingControlModule # ConstructionGraph: Honker
-
-- type: Tag
   id: HonkerLArm # PartAssembly: HonkerHarness. ItemMapper: HonkerHarness
 
 - type: Tag
   id: HonkerLLeg # PartAssembly: HonkerHarness. ItemMapper: HonkerHarness
 
 - type: Tag
+  id: HonkerPeripheralsControlModule # ConstructionGraph: Honker
+
+- type: Tag
   id: HonkerRArm # PartAssembly: HonkerHarness. ItemMapper: HonkerHarness
 
 - type: Tag
   id: HonkerRLeg # PartAssembly: HonkerHarness. ItemMapper: HonkerHarness
+
+- type: Tag
+  id: HonkerTargetingControlModule # ConstructionGraph: Honker
 
 - type: Tag
   id: Hotsauce # Storage whitelist: ClothingBeltChef and FoodCartHot. ItemMapper: ClothingBeltChef and FoodCartHot
@@ -789,14 +789,14 @@
 - type: Tag
   id: Igniter # ConstructionGraph: makeshiftstunprod, FireBomb. Common ingredient in machines (HyperConvection)
 
-- type: Tag #Drop this innate tool instead of deleting it.
-  id: InnateDontDelete # Basically used as a bool for InnateToolComponent in InnateToolSystem. TODO remove
+- type: Tag
+  id: Inflatable # Storage whitelist: BorgModuleInflatable
 
 - type: Tag
   id: Ingot # MaterialStorage whitelist for many machines and lathes. Storage whitelist: MaterialBag
 
-- type: Tag
-  id: Inflatable # Storage whitelist: BorgModuleInflatable
+- type: Tag #Drop this innate tool instead of deleting it.
+  id: InnateDontDelete # Basically used as a bool for InnateToolComponent in InnateToolSystem. TODO remove
 
 - type: Tag
   id: InstantDoAfters # Used by SharedDoAfterSystem for tagged entities to skip DoAfters (aghost). TODO remove
@@ -1019,13 +1019,13 @@
   id: Packet # Storage whitelist: ClothingBeltChef
 
 - type: Tag
-  id: ParadoxCloneObjectiveBlacklist # objective entities with this tag don't get copied to paradox clones
+  id: Pancake # CargoBounty: BountyPancake
 
 - type: Tag
   id: Paper # A writeable piece of paper. Subset of Document tag. SpecialDigestible: OrganMothStomach, OrganReptilianStomach
 
 - type: Tag
-  id: Pancake # CargoBounty: BountyPancake
+  id: ParadoxCloneObjectiveBlacklist # objective entities with this tag don't get copied to paradox clones
 
 - type: Tag
   id: ParcelWrapBlacklist # Tagged entities can't be wrapped in ParcelWrap.
@@ -1183,13 +1183,13 @@
   id: RipleyCentralControlModule # ConstructionGraph: Ripley
 
 - type: Tag
-  id: RipleyPeripheralsControlModule # ConstructionGraph: Ripley
-
-- type: Tag
   id: RipleyLArm # PartAssembly: RipleyHarness. ItemMapper: RipleyHarness
 
 - type: Tag
   id: RipleyLLeg # PartAssembly: RipleyHarness. ItemMapper: RipleyHarness
+
+- type: Tag
+  id: RipleyPeripheralsControlModule # ConstructionGraph: Ripley
 
 - type: Tag
   id: RipleyRArm # PartAssembly: RipleyHarness. ItemMapper: RipleyHarness
