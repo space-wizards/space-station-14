@@ -4,3 +4,9 @@ bwoink-channel-ahelp-help =
     Please do not ask for special events or punishments for other players.
     Any bugs and other related issues should be reported through Discord or Github.
     Misuse of this message system may result in disciplinary action.
+
+bwoink-message-admin-only = (Admin Only)
+bwoink-message-manager-only = (Manager Only)
+bwoink-message-silent = (S)
+
+bwoink-channel-header-unread = {$title} {$unread}

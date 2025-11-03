@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Text;
 using Content.Client.Administration.Managers;
 using Content.Shared.Administration;
@@ -71,6 +72,7 @@ public sealed partial class BwoinkControl : Control
         _parentWindow.Title = $"{sel.CharacterName} / {sel.Username} | {Loc.GetString("generic-playtime-title")}: ";
 
         _parentWindow.Title += sel.OverallPlaytime != null ? sel.PlaytimeString : Loc.GetString("generic-unknown-title");
+        UpdateUnreadHeader();
     }
 
     private int ChannelSelectorComparison(PlayerInfo a, PlayerInfo b)
@@ -143,6 +145,7 @@ public sealed partial class BwoinkControl : Control
 
         ChannelSelector.StopFiltering();
         ChannelSelector.PopulateList();
+        UpdateUnreadHeader();
     }
 
     protected override void ExitedTree()
@@ -173,11 +176,7 @@ public sealed partial class BwoinkControl : Control
         var channelProperties = _clientBwoinkManager.GetOrCreatePlayerPropertiesForChannel(_channel.ID, info.SessionId);
         if (channelProperties.Unread > 0)
         {
-            if (channelProperties.Unread < 11)
-                sb.Append(new Rune('➀' + (channelProperties.Unread - 1)));
-            else
-                sb.Append(new Rune(0x2639)); // ☹
-            sb.Append(' ');
+            sb.Append($"{GetUnreadRune(channelProperties.Unread)} ");
         }
 
         // Mark antagonists with symbol
@@ -193,6 +192,11 @@ public sealed partial class BwoinkControl : Control
         return sb.ToString();
     }
 
+    public Rune GetUnreadRune(int unread)
+    {
+        return unread < 11 ? new Rune('➀' + (unread - 1)) : new Rune(0x2639); // ☹
+    }
+
     private void MessageReceived(ProtoId<BwoinkChannelPrototype> sender, (NetUserId person, BwoinkMessage message) args)
     {
         if (_channel.ID != sender.Id)
@@ -202,6 +206,23 @@ public sealed partial class BwoinkControl : Control
         panel.ReceiveLine(args.message);
 
         OnBwoink(args.person);
+        UpdateUnreadHeader();
+    }
+
+    public void UpdateUnreadHeader()
+    {
+        var unread = _panels.Keys
+            .Select(x => _clientBwoinkManager.GetOrCreatePlayerPropertiesForChannel(_channel, x))
+            .Sum(x => x.Unread);
+
+        if (unread == 0)
+        {
+            Name = Loc.GetString(_channel.Name);
+        }
+        else
+        {
+            Name = Loc.GetString("bwoink-channel-header-unread", ("title", Loc.GetString(_channel.Name)), ("unread", GetUnreadRune(unread)));
+        }
     }
 
     /// <summary>
@@ -264,5 +285,7 @@ public sealed partial class BwoinkControl : Control
             var panel = EnsurePanel(ch.Value);
             panel.Visible = true;
         }
+
+        UpdateUnreadHeader();
     }
 }
