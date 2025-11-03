@@ -14,6 +14,8 @@
   - !type:ManagerOnlyMessages
     prefix: bwoink-message-admin-only
     checkName: admin-ahelp-admin-only
+  - !type:DiscordRelay
+    channelCvar: discord.bwoink.channel.ahelp
 
 # TODO: Remove, this is only for testing.
 - type: bwoinkChannel

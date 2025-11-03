@@ -86,5 +86,7 @@ internal static class ServerContentIoC
         var bwoinkInstance = new ServerBwoinkManager(); // There HAS to be a better way of doing this.
         deps.RegisterInstance<ServerBwoinkManager>(bwoinkInstance);
         deps.RegisterInstance<SharedBwoinkManager>(bwoinkInstance);
+
+        deps.Register<BwoinkDiscordRelayManager>();
     }
 }
