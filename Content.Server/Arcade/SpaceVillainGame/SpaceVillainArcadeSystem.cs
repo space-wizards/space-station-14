@@ -14,7 +14,7 @@ using Content.Server.Arcade.Systems;
 
 namespace Content.Server.Arcade.SpaceVillain;
 
-public sealed partial class SpaceVillainArcadeSystem : EntitySystem
+public sealed partial class SpaceVillainArcadeSystem : SharedSpaceVillainArcadeSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -28,7 +28,7 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SpaceVillainArcadeComponent, AfterActivatableUIOpenEvent>(OnAfterUIOpenSV);
-        SubscribeLocalEvent<SpaceVillainArcadeComponent, SharedSpaceVillainArcadeComponent.SpaceVillainArcadePlayerActionMessage>(OnSVPlayerAction);
+        SubscribeLocalEvent<SpaceVillainArcadeComponent, SpaceVillainArcadePlayerActionMessage>(OnSVPlayerAction);
         SubscribeLocalEvent<SpaceVillainArcadeComponent, PowerChangedEvent>(OnSVillainPower);
     }
 
@@ -53,7 +53,7 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
         return $"{_random.Pick(possibleFirstEnemyNames)} {_random.Pick(possibleLastEnemyNames)}";
     }
 
-    private void OnSVPlayerAction(EntityUid uid, SpaceVillainArcadeComponent component, SharedSpaceVillainArcadeComponent.SpaceVillainArcadePlayerActionMessage msg)
+    private void OnSVPlayerAction(EntityUid uid, SpaceVillainArcadeComponent component, SpaceVillainArcadePlayerActionMessage msg)
     {
         if (component.Game == null)
             return;
@@ -62,22 +62,22 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
 
         switch (msg.PlayerAction)
         {
-            case SharedSpaceVillainArcadeComponent.PlayerAction.Attack:
-            case SharedSpaceVillainArcadeComponent.PlayerAction.Heal:
-            case SharedSpaceVillainArcadeComponent.PlayerAction.Recharge:
+            case SpaceVillainPlayerAction.Attack:
+            case SpaceVillainPlayerAction.Heal:
+            case SpaceVillainPlayerAction.Recharge:
                 component.Game.ExecutePlayerAction(uid, msg.PlayerAction, component);
                 // Any sort of gameplay action counts
                 if (TryComp<SpeakOnUIClosedComponent>(uid, out var speakComponent))
                     _speakOnUIClosed.TrySetFlag((uid, speakComponent));
                 break;
-            case SharedSpaceVillainArcadeComponent.PlayerAction.NewGame:
+            case SpaceVillainPlayerAction.NewGame:
                 _audioSystem.PlayPvs(component.NewGameSound, uid, AudioParams.Default.WithVolume(-4f));
 
                 component.Game = new SpaceVillainGame(uid, component, this, _arcade);
-                _uiSystem.ServerSendUiMessage(uid, SharedSpaceVillainArcadeComponent.SpaceVillainArcadeUiKey.Key, component.Game.GenerateMetaDataMessage());
+                _uiSystem.ServerSendUiMessage(uid, SpaceVillainArcadeUiKey.Key, component.Game.GenerateMetaDataMessage());
                 break;
-            case SharedSpaceVillainArcadeComponent.PlayerAction.RequestData:
-                _uiSystem.ServerSendUiMessage(uid, SharedSpaceVillainArcadeComponent.SpaceVillainArcadeUiKey.Key, component.Game.GenerateMetaDataMessage());
+            case SpaceVillainPlayerAction.RequestData:
+                _uiSystem.ServerSendUiMessage(uid, SpaceVillainArcadeUiKey.Key, component.Game.GenerateMetaDataMessage());
                 break;
         }
     }
@@ -92,6 +92,6 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
         if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && power.Powered)
             return;
 
-        _uiSystem.CloseUi(uid, SharedSpaceVillainArcadeComponent.SpaceVillainArcadeUiKey.Key);
+        _uiSystem.CloseUi(uid, SpaceVillainArcadeUiKey.Key);
     }
 }

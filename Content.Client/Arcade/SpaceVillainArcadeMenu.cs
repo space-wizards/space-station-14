@@ -16,7 +16,7 @@ namespace Content.Client.Arcade
 
         private readonly Button[] _gameButtons = new Button[3]; //used to disable/enable all game buttons
 
-        public event Action<SharedSpaceVillainArcadeComponent.PlayerAction>? OnPlayerAction;
+        public event Action<SpaceVillainPlayerAction>? OnPlayerAction;
 
         public SpaceVillainArcadeMenu()
         {
@@ -53,7 +53,7 @@ namespace Content.Client.Arcade
             };
 
             _gameButtons[0].OnPressed +=
-                _ => OnPlayerAction?.Invoke(SharedSpaceVillainArcadeComponent.PlayerAction.Attack);
+                _ => OnPlayerAction?.Invoke(SpaceVillainPlayerAction.Attack);
             buttonGrid.AddChild(_gameButtons[0]);
 
             _gameButtons[1] = new Button()
@@ -62,7 +62,7 @@ namespace Content.Client.Arcade
             };
 
             _gameButtons[1].OnPressed +=
-                _ => OnPlayerAction?.Invoke(SharedSpaceVillainArcadeComponent.PlayerAction.Heal);
+                _ => OnPlayerAction?.Invoke(SpaceVillainPlayerAction.Heal);
             buttonGrid.AddChild(_gameButtons[1]);
 
             _gameButtons[2] = new Button()
@@ -71,7 +71,7 @@ namespace Content.Client.Arcade
             };
 
             _gameButtons[2].OnPressed +=
-                _ => OnPlayerAction?.Invoke(SharedSpaceVillainArcadeComponent.PlayerAction.Recharge);
+                _ => OnPlayerAction?.Invoke(SpaceVillainPlayerAction.Recharge);
             buttonGrid.AddChild(_gameButtons[2]);
 
             centerContainer = new CenterContainer();
@@ -83,13 +83,13 @@ namespace Content.Client.Arcade
                 Text = Loc.GetString("spacevillain-menu-button-new-game")
             };
 
-            newGame.OnPressed += _ => OnPlayerAction?.Invoke(SharedSpaceVillainArcadeComponent.PlayerAction.NewGame);
+            newGame.OnPressed += _ => OnPlayerAction?.Invoke(SpaceVillainPlayerAction.NewGame);
             grid.AddChild(newGame);
 
             ContentsContainer.AddChild(grid);
         }
 
-        private void UpdateMetadata(SharedSpaceVillainArcadeComponent.SpaceVillainArcadeMetaDataUpdateMessage message)
+        private void UpdateMetadata(SpaceVillainArcadeMetaDataUpdateMessage message)
         {
             Title = message.GameTitle;
             _enemyNameLabel.Text = message.EnemyName;
@@ -100,9 +100,9 @@ namespace Content.Client.Arcade
             }
         }
 
-        public void UpdateInfo(SharedSpaceVillainArcadeComponent.SpaceVillainArcadeDataUpdateMessage message)
+        public void UpdateInfo(SpaceVillainArcadeDataUpdateMessage message)
         {
-            if (message is SharedSpaceVillainArcadeComponent.SpaceVillainArcadeMetaDataUpdateMessage metaMessage)
+            if (message is SpaceVillainArcadeMetaDataUpdateMessage metaMessage)
                 UpdateMetadata(metaMessage);
 
             _playerInfoLabel.Text = $"HP: {message.PlayerHP} MP: {message.PlayerMP}";

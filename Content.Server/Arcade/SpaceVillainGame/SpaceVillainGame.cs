@@ -1,12 +1,11 @@
-using static Content.Shared.Arcade.SharedSpaceVillainArcadeComponent;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 using Content.Server.Arcade.Systems;
+using Content.Shared.Arcade;
 
 namespace Content.Server.Arcade.SpaceVillain;
-
 
 /// <summary>
 /// A Class to handle all the game-logic of the SpaceVillain-game.
@@ -108,14 +107,14 @@ public sealed partial class SpaceVillainGame
     /// <param name="uid">The action the user picked.</param>
     /// <param name="action">The action the user picked.</param>
     /// <param name="arcade">The action the user picked.</param>
-    public void ExecutePlayerAction(EntityUid uid, PlayerAction action, SpaceVillainArcadeComponent arcade)
+    public void ExecutePlayerAction(EntityUid uid, SpaceVillainPlayerAction action, SpaceVillainArcadeComponent arcade)
     {
         if (!_running)
             return;
 
         switch (action)
         {
-            case PlayerAction.Attack:
+            case SpaceVillainPlayerAction.Attack:
                 var attackAmount = _random.Next(2, 6);
                 _latestPlayerActionMessage = Loc.GetString(
                     "space-villain-game-player-attack-message",
@@ -127,7 +126,7 @@ public sealed partial class SpaceVillainGame
                     VillainChar.Hp -= attackAmount;
                 _turtleTracker -= _turtleTracker > 0 ? 1 : 0;
                 break;
-            case PlayerAction.Heal:
+            case SpaceVillainPlayerAction.Heal:
                 var pointAmount = _random.Next(1, 3);
                 var healAmount = _random.Next(6, 8);
                 _latestPlayerActionMessage = Loc.GetString(
@@ -141,7 +140,7 @@ public sealed partial class SpaceVillainGame
                 PlayerChar.Hp += healAmount;
                 _turtleTracker++;
                 break;
-            case PlayerAction.Recharge:
+            case SpaceVillainPlayerAction.Recharge:
                 var chargeAmount = _random.Next(4, 7);
                 _latestPlayerActionMessage = Loc.GetString(
                     "space-villain-game-player-recharge-message",

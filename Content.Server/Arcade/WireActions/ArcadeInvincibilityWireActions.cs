@@ -11,7 +11,7 @@ public sealed partial class ArcadePlayerInvincibleWireAction : BaseToggleWireAct
 
     public override Color Color { get; set; } = Color.Purple;
 
-    public override object? StatusKey { get; } = SharedSpaceVillainArcadeComponent.Indicators.HealthManager;
+    public override object? StatusKey { get; } = SpaceVillainIndicators.HealthManager;
 
     public override void ToggleValue(EntityUid owner, bool setting)
     {
