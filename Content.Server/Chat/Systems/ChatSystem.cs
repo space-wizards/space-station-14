@@ -273,9 +273,19 @@ public sealed partial class ChatSystem : SharedChatSystem
         switch (sendType)
         {
             case InGameOOCChatType.Dead:
+                var evGhost = new DeadChatSpeakAttemptEvent();
+                RaiseLocalEvent(source, ref evGhost);
+
+                if (evGhost.Cancelled)
+                    return;
                 SendDeadChat(source, player, message, hideChat);
                 break;
             case InGameOOCChatType.Looc:
+                var evLooc = new LoocSpeakAttemptEvent();
+                RaiseLocalEvent(source, ref evLooc);
+
+                if (evLooc.Cancelled)
+                    return;
                 SendLOOC(source, player, message, hideChat);
                 break;
         }

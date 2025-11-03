@@ -1,4 +1,5 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Chat;
 using Content.Shared.Emoting;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
@@ -31,6 +32,8 @@ public sealed class AdminFrozenSystem : EntitySystem
         SubscribeLocalEvent<AdminFrozenComponent, ChangeDirectionAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<AdminFrozenComponent, EmoteAttemptEvent>(OnEmoteAttempt);
         SubscribeLocalEvent<AdminFrozenComponent, SpeakAttemptEvent>(OnSpeakAttempt);
+        SubscribeLocalEvent<AdminFrozenComponent, LoocSpeakAttemptEvent>(OnLoocSpeakAttempt);
+        SubscribeLocalEvent<AdminFrozenComponent, DeadChatSpeakAttemptEvent>(OnDeadChatSpeakAttempt);
     }
 
     /// <summary>
@@ -54,6 +57,22 @@ public sealed class AdminFrozenSystem : EntitySystem
             return;
 
         args.Cancel();
+    }
+
+    private void OnLoocSpeakAttempt(Entity<AdminFrozenComponent> ent, ref LoocSpeakAttemptEvent args)
+    {
+        if (!ent.Comp.Muted)
+            return;
+
+        args.Cancelled = true;
+    }
+
+    private void OnDeadChatSpeakAttempt(Entity<AdminFrozenComponent> ent, ref DeadChatSpeakAttemptEvent args)
+    {
+        if (!ent.Comp.Muted)
+            return;
+
+        args.Cancelled = true;
     }
 
     private void OnAttempt(EntityUid uid, AdminFrozenComponent component, CancellableEntityEventArgs args)
