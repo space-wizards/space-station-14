@@ -1,4 +1,3 @@
-using Content.Shared.Arcade;
 using Content.Shared.Dataset;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;

@@ -2,7 +2,6 @@ using Content.Server.Power.Components;
 using Content.Shared.UserInterface;
 using Content.Server.Advertise.EntitySystems;
 using Content.Shared.Advertise.Components;
-using Content.Shared.Arcade;
 using Content.Shared.Power;
 using Content.Shared.Random.Helpers;
 using Robust.Server.GameObjects;
@@ -11,6 +10,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Server.Arcade.Systems;
+using Content.Shared.Arcade.SpaceVillain;
 
 namespace Content.Server.Arcade.SpaceVillain;
 

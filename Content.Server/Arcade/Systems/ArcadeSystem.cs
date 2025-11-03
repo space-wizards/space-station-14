@@ -1,5 +1,5 @@
 using Content.Server.Arcade.Components;
-using Content.Shared.Arcade;
+using Content.Shared.Arcade.Systems;
 using Content.Shared.EntityTable;
 using JetBrains.Annotations;
 

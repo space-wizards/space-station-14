@@ -5,7 +5,7 @@ using System.Numerics;
 using System.Text;
 using Content.Client.Arcade.UI;
 using Content.Client.Resources;
-using Content.Shared.Arcade;
+using Content.Shared.Arcade.BlockGame;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;

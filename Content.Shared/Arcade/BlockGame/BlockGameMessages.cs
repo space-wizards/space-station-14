@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Arcade;
+namespace Content.Shared.Arcade.BlockGame;
 
 public enum BlockGameVisualType
 {

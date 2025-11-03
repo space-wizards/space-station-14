@@ -1,6 +1,6 @@
-using Content.Shared.Arcade;
 using System.Linq;
 using Robust.Shared.Player;
+using Content.Shared.Arcade.BlockGame;
 
 namespace Content.Server.Arcade.BlockGame;
 

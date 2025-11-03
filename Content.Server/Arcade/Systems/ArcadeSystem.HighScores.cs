@@ -1,5 +1,5 @@
 using System.Linq;
-using Content.Shared.Arcade;
+using Content.Shared.Arcade.BlockGame;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Arcade.Systems;

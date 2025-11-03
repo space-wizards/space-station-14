@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 using Content.Server.Arcade.Systems;
-using Content.Shared.Arcade;
+using Content.Shared.Arcade.SpaceVillain;
 
 namespace Content.Server.Arcade.SpaceVillain;
 

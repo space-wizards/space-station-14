@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Arcade;
+namespace Content.Shared.Arcade.SpaceVillain;
 
 public abstract partial class SharedSpaceVillainArcadeSystem : EntitySystem
 { }

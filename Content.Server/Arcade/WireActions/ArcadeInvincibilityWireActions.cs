@@ -1,6 +1,6 @@
 using Content.Server.Arcade.SpaceVillain;
 using Content.Server.Wires;
-using Content.Shared.Arcade;
+using Content.Shared.Arcade.SpaceVillain;
 using Content.Shared.Wires;
 
 namespace Content.Server.Arcade;

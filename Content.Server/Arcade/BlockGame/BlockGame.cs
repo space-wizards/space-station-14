@@ -1,5 +1,5 @@
 using Content.Server.Arcade.Systems;
-using Content.Shared.Arcade;
+using Content.Shared.Arcade.BlockGame;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using System.Linq;
