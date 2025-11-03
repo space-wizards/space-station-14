@@ -2,7 +2,6 @@
 using Content.Shared.Administration.Managers.Bwoink;
 using Content.Shared.Administration.Managers.Bwoink.Features;
 using Robust.Shared.Network;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Content.Shared.CCVar;
@@ -120,8 +119,15 @@ public sealed partial class ServerBwoinkManager
     private void SynchronizeMessage(ProtoId<BwoinkChannelPrototype> channel, NetUserId target, BwoinkMessage message)
     {
         var targetSes = PlayerManager.GetSessionById(target);
+        var senderSes = message.SenderId.HasValue ? PlayerManager.GetSessionById(message.SenderId.Value) : null;
 
-        var gotRateLimited = _rateLimitManager.CountAction(targetSes, RateLimitKey);
+        // Since the sender session can be null, we default to allowed and then check if there only is a session.
+        var gotRateLimited = RateLimitStatus.Allowed;
+        if (senderSes != null)
+        {
+            gotRateLimited = _rateLimitManager.CountAction(senderSes, RateLimitKey);
+        }
+
         if (gotRateLimited == RateLimitStatus.Blocked)
         {
             var rateLimitMessage = CreateSystemMessage(LocalizationManager.GetString("bwoink-system-rate-limited"),
@@ -133,7 +139,9 @@ public sealed partial class ServerBwoinkManager
                 Channel = channel,
             };
 
-            _netManager.ServerSendMessage(rateLimitMessageMsg, PlayerManager.GetSessionById(target).Channel);
+            // ReSharper disable once NullableWarningSuppressionIsUsed
+            // Assuming no cosmic ray hits us, we will only ever reach this path if senderSes is not null
+            _netManager.ServerSendMessage(rateLimitMessageMsg, senderSes!.Channel);
             return;
         }
 
