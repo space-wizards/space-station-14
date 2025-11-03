@@ -1,4 +1,4 @@
-# Donut
+﻿# Donut
 
 # There is a newer, better version of the donutbox from tgstation included in the
 # donut.rsi. The reason it isn't implemented is it requires a StackVisuals offsetting
@@ -46,7 +46,9 @@
       - Donut
   - type: Item
     sprite: Objects/Consumable/Food/Baked/donut.rsi
-    size: Small
+    size: Normal
+    shape:
+    - 0,0,2,1
     heldPrefix: box
   - type: StorageFill
     contents:
@@ -128,7 +130,10 @@
       - Egg
   - type: Item
     sprite: Objects/Consumable/Food/egg.rsi
-    size: Small
+    size: Normal
+    shape:
+    - 0,0,2,1
+    storedOffset: 0,-6
   - type: StorageFill
     contents:
     - id: FoodEgg
@@ -199,6 +204,7 @@
   parent: BoxCardboard
   id: FoodBoxPizza
   name: pizza box
+  description: A box for pizza. It keeps in the heat, the smell, and the memories of the best five minutes of your life.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
@@ -223,6 +229,7 @@
     heldPrefix: box
     shape:
     - 0,0,2,1
+    storedOffset: 0,-6
   - type: Appearance
   - type: EntityStorageVisuals
     stateDoorOpen: box-open
@@ -231,16 +238,10 @@
     price: 0
 
 - type: entity
-  name: pizza box
   parent: FoodBoxPizza
   id: FoodBoxPizzaFilled
   suffix: Filled
   components:
-  - type: Sprite
-    layers:
-    - state: box
-    - state: box-open
-      map: ["enum.StorageVisualLayers.Door"]
   - type: StorageFill
     contents:
     - id: FoodPizzaArnold
@@ -273,11 +274,13 @@
     - id: FoodPizzaCotton
       prob: 0.10
       orGroup: Pizza
+    - id: FoodPizzaWorldpeas
+      prob: 0.05
+      orGroup: Pizza
     - id: KnifePlastic
-  
+
 - type: entity
-  name: pizza box
-  parent: FoodBoxPizzaFilled
+  parent: FoodBoxPizza
   id: FoodBoxPizzaCotton
   suffix: Cotton Pizza
   components:
@@ -364,11 +367,17 @@
       - DonkPocket
   - type: Item
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
-    size: Small
+    size: Normal
+    shape:
+    - 0,0,2,1
+    storedOffset: -1,1
   - type: StorageFill
     contents:
     - id: FoodDonkpocket
       amount: 6
+    - id: DonkcoLighter
+      amount: 1
+      prob: 0.10
 
 - type: entity
   parent: FoodBoxDonkpocket
@@ -377,8 +386,6 @@
   components:
   - type: Sprite
     state: spicy-box
-  - type: Item
-    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
   - type: StorageFill
     contents:
     - id: FoodDonkpocketSpicy
@@ -391,8 +398,6 @@
   components:
   - type: Sprite
     state: teriyaki-box
-  - type: Item
-    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
   - type: StorageFill
     contents:
     - id: FoodDonkpocketTeriyaki
@@ -405,8 +410,6 @@
   components:
   - type: Sprite
     state: pizza-box
-  - type: Item
-    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
   - type: StorageFill
     contents:
     - id: FoodDonkpocketPizza
@@ -419,8 +422,6 @@
   components:
   - type: Sprite
     state: stonk-box
-  - type: Item
-    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
   - type: StorageFill
     contents:
     - id: FoodDonkpocketStonk
@@ -445,8 +446,6 @@
   components:
   - type: Sprite
     state: berry-box
-  - type: Item
-    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
   - type: StorageFill
     contents:
     - id: FoodDonkpocketBerry
@@ -459,8 +458,6 @@
   components:
   - type: Sprite
     state: banana-box
-  - type: Item
-    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
   - type: StorageFill
     contents:
     - id: FoodDonkpocketHonk
@@ -474,11 +471,21 @@
   components:
   - type: Sprite
     state: dink-box
-  - type: Item
-    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
   - type: StorageFill
     contents:
     - id: FoodDonkpocketDink
+      amount: 6
+
+- type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketMoth
+  name: box of moth-pockets
+  components:
+  - type: Sprite
+    state: moth-box
+  - type: StorageFill
+    contents:
+    - id: FoodDonkpocketMoth
       amount: 6
 
 - type: entity
@@ -491,8 +498,6 @@
   - type: Sprite
     sprite: Objects/Storage/Happyhonk/clown.rsi
     state: box
-    layers:
-    - state: box
   - type: Item
     sprite: Objects/Storage/Happyhonk/clown.rsi
     heldPrefix: box
@@ -504,6 +509,7 @@
     tags:
     - Trash
     - HappyHonk
+    - BoxCardboard
   - type: StorageFill
     contents:
       - id: ToyMouse
@@ -514,7 +520,7 @@
         orGroup: GiftPool
       - id: ToyFigurinePassenger
         orGroup: GiftPool
-      - id: ToyGriffin
+      - id: ToyFigurineGriffin
         orGroup: GiftPool
       - id: ToyHonk
         orGroup: GiftPool
@@ -528,7 +534,7 @@
         orGroup: GiftPool
       - id: ToyOdysseus
         orGroup: GiftPool
-      - id: ToyOwlman
+      - id: ToyFigurineOwlman
         orGroup: GiftPool
       - id: ToyDeathRipley
         orGroup: GiftPool
@@ -544,7 +550,7 @@
         orGroup: GiftPool
       - id: ToyDurand
         orGroup: GiftPool
-      - id: ToySkeleton
+      - id: ToyFigurineSkeleton
         orGroup: GiftPool
       - id: FoamBlade
         orGroup: GiftPool
@@ -579,10 +585,8 @@
     - MimeHappyHonk
   - type: Sprite
     sprite: Objects/Storage/Happyhonk/mime.rsi
-    state: box
   - type: Item
     sprite: Objects/Storage/Happyhonk/mime.rsi
-    heldPrefix: box
 
 - type: entity
   id: HappyHonkNukie
@@ -593,10 +597,8 @@
   components:
   - type: Sprite
     sprite: Objects/Storage/Happyhonk/nukie.rsi
-    state: box
   - type: Item
     sprite: Objects/Storage/Happyhonk/nukie.rsi
-    heldPrefix: box
   - type: StorageFill
     contents:
       - id: C4
@@ -675,13 +677,12 @@
   - type: Tag
     tags:
     - Trash
-    - CluwneHappyHonk
+    - CluwneHappyHonk # BAD: Intentional removal of parent tag
+    - BoxCardboard
   - type: Sprite
     sprite: Objects/Storage/Happyhonk/cluwne.rsi
-    state: box
   - type: Item
     sprite: Objects/Storage/Happyhonk/cluwne.rsi
-    heldPrefix: box
   - type: StorageFill
     contents:
       - id: CluwneHorn
@@ -694,8 +695,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: FoodBurgerCrazy
-        orGroup: Burgers
       - id: FoodBurgerCheese
         orGroup: Burgers
       - id: DrinkColaCan
@@ -714,7 +713,7 @@
         orGroup: GiftPool
       - id: ToyFigurinePassenger
         orGroup: GiftPool
-      - id: ToyGriffin
+      - id: ToyFigurineGriffin
         orGroup: GiftPool
       - id: ToyHonk
         orGroup: GiftPool
@@ -728,7 +727,7 @@
         orGroup: GiftPool
       - id: ToyOdysseus
         orGroup: GiftPool
-      - id: ToyOwlman
+      - id: ToyFigurineOwlman
         orGroup: GiftPool
       - id: ToyDeathRipley
         orGroup: GiftPool
@@ -744,7 +743,7 @@
         orGroup: GiftPool
       - id: ToyDurand
         orGroup: GiftPool
-      - id: ToySkeleton
+      - id: ToyFigurineSkeleton
         orGroup: GiftPool
       - id: FoamBlade
         orGroup: GiftPool
@@ -753,6 +752,81 @@
       - id: PersonalAI
         orGroup: GiftPool
       - id: CrayonBox
+        orGroup: GiftPool
+      - id: ToySword
+        orGroup: GiftPool
+      - id: RevolverCapGun
+        orGroup: GiftPool
+      - id: ToyRubberDuck
+        orGroup: GiftPool
+      - id: BikeHorn
+        prob: 0.5
+        orGroup: GiftPool
+      - id: GoldenBikeHorn
+        prob: 0.1
+        orGroup: GiftPool
+
+- type: entity
+  id: FoodMealHappyHonkBigBite
+  parent: HappyHonk
+  name: Happy Honk Big Bite Meal
+  description: Someone paid good money to get this fast food meal shipped out this way. It smells fresh, somehow.
+  components:
+  - type: StorageFill
+    contents:
+      - id: FoodBurgerBig
+        amount: 1
+      - id: FoodMealFriesCheesy
+        amount: 1
+      - id: DrinkColaBottleFull
+        amount: 1
+      - id: FoodPieAppleSlice
+        amount: 1
+      - id: ToyMouse
+        orGroup: GiftPool
+      - id: ToyAi
+        orGroup: GiftPool
+      - id: ToyNuke
+        orGroup: GiftPool
+      - id: ToyFigurinePassenger
+        orGroup: GiftPool
+      - id: ToyFigurineGriffin
+        orGroup: GiftPool
+      - id: ToyHonk
+        orGroup: GiftPool
+      - id: ToyIan
+        orGroup: GiftPool
+      - id: ToyMarauder
+        orGroup: GiftPool
+      - id: ToyMauler
+        orGroup: GiftPool
+      - id: ToyGygax
+        orGroup: GiftPool
+      - id: ToyOdysseus
+        orGroup: GiftPool
+      - id: ToyFigurineOwlman
+        orGroup: GiftPool
+      - id: ToyDeathRipley
+        orGroup: GiftPool
+      - id: ToyPhazon
+        orGroup: GiftPool
+      - id: ToyFireRipley
+        orGroup: GiftPool
+      - id: ToyReticence
+        orGroup: GiftPool
+      - id: ToyRipley
+        orGroup: GiftPool
+      - id: ToySeraph
+        orGroup: GiftPool
+      - id: ToyDurand
+        orGroup: GiftPool
+      - id: ToyFigurineSkeleton
+        orGroup: GiftPool
+      - id: FoamBlade
+        orGroup: GiftPool
+      - id: ClothingHeadHatBunny
+        orGroup: GiftPool
+      - id: PersonalAI
         orGroup: GiftPool
       - id: ToySword
         orGroup: GiftPool
@@ -780,11 +854,13 @@
     grid:
     - 0,0,1,1
     maxItemSize: Normal
-    whitelist:
+    whitelist: # TODO BoxCardboard shouldn't have whitelisted storage
       tags:
       - ClothMade
   - type: Item
     size: Normal
+    shape:
+    - 0,0,1,1
   - type: StorageFill
     contents:
     - id: MaterialCloth10

@@ -90,7 +90,7 @@ names-ai-dataset-64 = Knight
 names-ai-dataset-65 = Louie
 
 # Named after the Manchester Mark 1, the successor of which was actually named the Ferranti Mark 1, rather than Manchester Mark 2
-names-ai-dataset-66 = Manchester Mark 2 
+names-ai-dataset-66 = Manchester Mark 2
 
 names-ai-dataset-67 = MARK13
 names-ai-dataset-68 = Maria
@@ -98,7 +98,7 @@ names-ai-dataset-69 = Marvin
 names-ai-dataset-70 = Max 404
 names-ai-dataset-71 = Metalhead
 names-ai-dataset-72 = M.I.M.I
-names-ai-dataset-73 = MK ULTRA
+names-ai-dataset-73 = Large Language Model
 names-ai-dataset-74 = Monarch
 names-ai-dataset-75 = Mugsy3000
 names-ai-dataset-76 = Multivac

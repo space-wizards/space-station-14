@@ -147,6 +147,19 @@
     stock: 1
 
 - type: listing
+  id: SpellbookKnock
+  name: spellbook-knock-name
+  description: spellbook-knock-desc
+  productAction: ActionKnock
+  cost:
+    WizCoin: 1
+  categories:
+  - SpellbookUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
   id: SpellbookCharge
   name: spellbook-charge-name
   description: spellbook-charge-desc

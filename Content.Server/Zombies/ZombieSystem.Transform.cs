@@ -1,21 +1,22 @@
+using Content.Server.Administration.Managers;
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Server.Chat;
 using Content.Server.Chat.Managers;
+using Content.Server.Ghost;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Humanoid;
-using Content.Server.IdentityManagement;
 using Content.Server.Inventory;
 using Content.Server.Mind;
-using Content.Server.Mind.Commands;
 using Content.Server.NPC;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
+using Content.Server.StationEvents.Components;
 using Content.Server.Speech.Components;
-using Content.Server.Temperature.Components;
+using Content.Shared.Body.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.CombatMode.Pacification;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid;
@@ -35,7 +36,13 @@ using Content.Shared.Prying.Components;
 using Content.Shared.Traits.Assorted;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Ghost.Roles.Components;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Tag;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using Content.Shared.NPC.Prototypes;
+using Content.Shared.Roles;
+using Content.Shared.Temperature.Components;
 
 namespace Content.Server.Zombies;
 
@@ -48,18 +55,27 @@ namespace Content.Server.Zombies;
 public sealed partial class ZombieSystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly IBanManager _ban = default!;
     [Dependency] private readonly IChatManager _chatMan = default!;
     [Dependency] private readonly SharedCombatModeSystem _combat = default!;
     [Dependency] private readonly NpcFactionSystem _faction = default!;
+    [Dependency] private readonly GhostSystem _ghost = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearance = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
     [Dependency] private readonly ServerInventorySystem _inventory = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
+    [Dependency] private readonly NameModifierSystem _nameMod = default!;
     [Dependency] private readonly NPCSystem _npc = default!;
     [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly NameModifierSystem _nameMod = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
+
+    private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
+    private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
+    private static readonly ProtoId<NpcFactionPrototype> ZombieFaction = "Zombie";
+    private static readonly string MindRoleZombie = "MindRoleZombie";
+    private static readonly List<ProtoId<AntagPrototype>> BannableZombiePrototypes = ["Zombie"];
 
     /// <summary>
     /// Handles an entity turning into a zombie when they die or go into crit
@@ -94,11 +110,29 @@ public sealed partial class ZombieSystem
         if (!Resolve(target, ref mobState, logMissing: false))
             return;
 
+        // Detach role-banned players before zombification
+        if (TryComp<ActorComponent>(target, out var actor) && _ban.IsRoleBanned(actor.PlayerSession, BannableZombiePrototypes))
+        {
+            var sess = actor.PlayerSession;
+            var message = Loc.GetString("zombie-roleban-ghosted");
+
+            if (_mind.TryGetMind(sess, out var playerMindEnt, out var playerMind))
+            {
+                // Detach
+                _ghost.SpawnGhost((playerMindEnt, playerMind), target);
+
+                // Notify
+                _chatMan.DispatchServerMessage(sess, message);
+            }
+            else
+                Log.Error($"Mind for session '{sess}' could not be found");
+        }
+
         //you're a real zombie now, son.
         var zombiecomp = AddComp<ZombieComponent>(target);
 
         //we need to basically remove all of these because zombies shouldn't
-        //get diseases, breath, be thirst, be hungry, die in space, have offspring or be paraplegic.
+        //get diseases, breath, be thirst, be hungry, die in space, get double sentience, have offspring or be paraplegic.
         RemComp<RespiratorComponent>(target);
         RemComp<BarotraumaComponent>(target);
         RemComp<HungerComponent>(target);
@@ -107,6 +141,7 @@ public sealed partial class ZombieSystem
         RemComp<ReproductivePartnerComponent>(target);
         RemComp<LegsParalyzedComponent>(target);
         RemComp<ComplexInteractionComponent>(target);
+        RemComp<SentienceTargetComponent>(target);
 
         //funny voice
         var accentType = "zombie";
@@ -120,7 +155,6 @@ public sealed partial class ZombieSystem
         var combat = EnsureComp<CombatModeComponent>(target);
         RemComp<PacifiedComponent>(target);
         _combat.SetCanDisarm(target, false, combat);
-        _combat.SetInCombatMode(target, true, combat);
 
         //This is the actual damage of the zombie. We assign the visual appearance
         //and range here because of stuff we'll find out later
@@ -131,6 +165,16 @@ public sealed partial class ZombieSystem
         melee.Range = 1.2f;
         melee.Angle = 0.0f;
         melee.HitSound = zombiecomp.BiteSound;
+
+        DirtyFields(target, melee, null, fields:
+        [
+            nameof(MeleeWeaponComponent.Animation),
+            nameof(MeleeWeaponComponent.WideAnimation),
+            nameof(MeleeWeaponComponent.AltDisarm),
+            nameof(MeleeWeaponComponent.Range),
+            nameof(MeleeWeaponComponent.Angle),
+            nameof(MeleeWeaponComponent.HitSound),
+        ]);
 
         if (mobState.CurrentState == MobState.Alive)
         {
@@ -165,17 +209,7 @@ public sealed partial class ZombieSystem
             _humanoidAppearance.SetBaseLayerId(target, HumanoidVisualLayers.Snout, zombiecomp.BaseLayerExternal, humanoid: huApComp);
 
             //This is done here because non-humanoids shouldn't get baller damage
-            //lord forgive me for the hardcoded damage
-            DamageSpecifier dspec = new()
-            {
-                DamageDict = new()
-                {
-                    { "Slash", 13 },
-                    { "Piercing", 7 },
-                    { "Structural", 10 }
-                }
-            };
-            melee.Damage = dspec;
+            melee.Damage = zombiecomp.DamageOnBite;
 
             // humanoid zombies get to pry open doors and shit
             var pryComp = EnsureComp<PryingComponent>(target);
@@ -206,19 +240,18 @@ public sealed partial class ZombieSystem
         _popup.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, PopupType.LargeCaution);
 
         //Make it sentient if it's an animal or something
-        MakeSentientCommand.MakeSentient(target, EntityManager);
+        _mind.MakeSentient(target);
 
         //Make the zombie not die in the cold. Good for space zombies
         if (TryComp<TemperatureComponent>(target, out var tempComp))
             tempComp.ColdDamage.ClampMax(0);
 
         //Heals the zombie from all the damage it took while human
-        if (TryComp<DamageableComponent>(target, out var damageablecomp))
-            _damageable.SetAllDamage(target, damageablecomp, 0);
+        _damageable.ClearAllDamage(target);
         _mobState.ChangeMobState(target, MobState.Alive);
 
         _faction.ClearFactions(target, dirty: false);
-        _faction.AddFaction(target, "Zombie");
+        _faction.AddFaction(target, ZombieFaction);
 
         //gives it the funny "Zombie ___" name.
         _nameMod.RefreshNameModifiers(target);
@@ -231,11 +264,11 @@ public sealed partial class ZombieSystem
         _npc.SleepNPC(target, htn);
 
         //He's gotta have a mind
-        var hasMind = _mind.TryGetMind(target, out var mindId, out _);
-        if (hasMind && _mind.TryGetSession(mindId, out var session))
+        var hasMind = _mind.TryGetMind(target, out var mindId, out var mind);
+        if (hasMind && mind != null && _player.TryGetSessionById(mind.UserId, out var session))
         {
             //Zombie role for player manifest
-            _role.MindAddRole(mindId, "MindRoleZombie", mind: null, silent: true);
+            _role.MindAddRole(mindId, MindRoleZombie, mind: null, silent: true);
 
             //Greeting message for new bebe zombers
             _chatMan.DispatchServerMessage(session, Loc.GetString("zombie-infection-greeting"));
@@ -256,6 +289,7 @@ public sealed partial class ZombieSystem
             ghostRole.RoleName = Loc.GetString("zombie-generic");
             ghostRole.RoleDescription = Loc.GetString("zombie-role-desc");
             ghostRole.RoleRules = Loc.GetString("zombie-role-rules");
+            ghostRole.MindRoles.Add(MindRoleZombie);
         }
 
         if (TryComp<HandsComponent>(target, out var handsComp))
@@ -280,6 +314,7 @@ public sealed partial class ZombieSystem
 
         //Need to prevent them from getting an item, they have no hands.
         // Also prevents them from becoming a Survivor. They're undead.
-        _tag.AddTag(target, "InvalidForGlobalSpawnSpell");
+        _tag.AddTag(target, InvalidForGlobalSpawnSpellTag);
+        _tag.AddTag(target, CannotSuicideTag);
     }
 }

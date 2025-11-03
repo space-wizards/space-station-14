@@ -1,15 +1,25 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
 namespace Content.Shared.Preferences.Loadouts;
 
 /// <summary>
 /// Corresponds to a set of loadouts for a particular slot.
 /// </summary>
-[Prototype("loadoutGroup")]
-public sealed partial class LoadoutGroupPrototype : IPrototype
+[Prototype]
+public sealed partial class LoadoutGroupPrototype : IPrototype, IInheritingPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = string.Empty;
+
+    /// <inheritdoc />
+    [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<LoadoutGroupPrototype>))]
+    public string[]? Parents { get; }
+
+    /// <inheritdoc />
+    [NeverPushInheritance]
+    [AbstractDataField]
+    public bool Abstract { get; }
 
     /// <summary>
     /// User-friendly name for the group.
@@ -22,6 +32,12 @@ public sealed partial class LoadoutGroupPrototype : IPrototype
     /// </summary>
     [DataField]
     public int MinLimit = 1;
+    
+    /// <summary>
+    /// Number of loadouts that are selected by default.
+    /// </summary>
+    [DataField]
+    public int DefaultSelected = 0;
 
     /// <summary>
     /// Maximum limit for the category.
@@ -35,6 +51,7 @@ public sealed partial class LoadoutGroupPrototype : IPrototype
     [DataField]
     public bool Hidden;
 
+    [AlwaysPushInheritance]
     [DataField(required: true)]
     public List<ProtoId<LoadoutPrototype>> Loadouts = new();
 }

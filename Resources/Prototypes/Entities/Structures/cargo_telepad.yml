@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: CargoTelepad
   parent: [ BaseMachinePowered, ConstructibleMachine ]
   name: cargo telepad
@@ -49,3 +49,4 @@
   - type: CollideOnAnchor
   - type: NameIdentifier
     group: CargoTelepads
+  - type: AnimationPlayer

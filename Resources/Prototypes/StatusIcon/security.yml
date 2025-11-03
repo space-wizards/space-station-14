@@ -33,6 +33,20 @@
   icon:
     sprite: /Textures/Interface/Misc/security_icons.rsi
     state: hud_suspected
+  
+- type: securityIcon
+  parent: SecurityIcon
+  id: SecurityIconHostile
+  icon:
+    sprite: /Textures/Interface/Misc/security_icons.rsi
+    state: hud_hostile
+
+- type: securityIcon
+  parent: SecurityIcon
+  id: SecurityIconEliminated
+  icon:
+    sprite: /Textures/Interface/Misc/security_icons.rsi
+    state: hud_eliminated
 
 - type: securityIcon
   parent: SecurityIcon

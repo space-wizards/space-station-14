@@ -79,10 +79,28 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
 
         NoServerLabel.Visible = false;
 
+        // Collect one status per user, using the sensor with the most data available.
+        Dictionary<NetEntity, SuitSensorStatus> uniqueSensorsMap = new();
+        foreach (var sensor in sensors)
+        {
+            if (uniqueSensorsMap.TryGetValue(sensor.OwnerUid, out var existingSensor))
+            {
+                // Skip if we already have a sensor with more data for this mob.
+                if (existingSensor.Coordinates != null && sensor.Coordinates == null)
+                    continue;
+
+                if (existingSensor.DamagePercentage != null && sensor.DamagePercentage == null)
+                    continue;
+            }
+
+            uniqueSensorsMap[sensor.OwnerUid] = sensor;
+        }
+        var uniqueSensors = uniqueSensorsMap.Values.ToList();
+
         // Order sensor data
-        var orderedSensors = sensors.OrderBy(n => n.Name).OrderBy(j => j.Job);
+        var orderedSensors = uniqueSensors.OrderBy(n => n.Name).OrderBy(j => j.Job);
         var assignedSensors = new HashSet<SuitSensorStatus>();
-        var departments = sensors.SelectMany(d => d.JobDepartments).Distinct().OrderBy(n => n);
+        var departments = uniqueSensors.SelectMany(d => d.JobDepartments).Distinct().OrderBy(n => n);
 
         // Create department labels and populate lists
         foreach (var department in departments)
@@ -112,7 +130,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             };
 
             deparmentLabel.SetMessage(department);
-            deparmentLabel.StyleClasses.Add(StyleNano.StyleClassTooltipActionDescription);
+            deparmentLabel.StyleClasses.Add("font-large");
 
             SensorsTable.AddChild(deparmentLabel);
 
@@ -137,8 +155,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
                 HorizontalExpand = true,
             };
 
-            deparmentLabel.SetMessage(Loc.GetString("crew-monitoring-user-interface-no-department"));
-            deparmentLabel.StyleClasses.Add(StyleNano.StyleClassTooltipActionDescription);
+            deparmentLabel.SetMessage(Loc.GetString("crew-monitoring-ui-no-department-label"));
 
             SensorsTable.AddChild(deparmentLabel);
 
@@ -176,7 +193,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             };
 
             if (sensor.SuitSensorUid == _trackedEntity)
-                sensorButton.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
+                sensorButton.AddStyleClass(StyleClass.Positive);
 
             SensorsTable.AddChild(sensorButton);
 
@@ -346,10 +363,10 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             var castSensor = (CrewMonitoringButton) sensor;
 
             if (castSensor.SuitSensorUid == prevTrackedEntity)
-                castSensor.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
+                castSensor.RemoveStyleClass(StyleClass.Positive);
 
             else if (castSensor.SuitSensorUid == currTrackedEntity)
-                castSensor.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
+                castSensor.AddStyleClass(StyleClass.Positive);
 
             if (castSensor?.Coordinates == null)
                 continue;

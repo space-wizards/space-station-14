@@ -1,6 +1,8 @@
-using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage.Systems;
+using Content.Shared.Destructible.Thresholds.Triggers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototypes;
@@ -49,8 +51,8 @@ namespace Content.IntegrationTests.Tests.Destructible
 
             await server.WaitAssertion(() =>
             {
-                var bluntDamageType = protoManager.Index<DamageTypePrototype>("TestBlunt");
-                var slashDamageType = protoManager.Index<DamageTypePrototype>("TestSlash");
+                var bluntDamageType = protoManager.Index<DamageTypePrototype>(TestBluntDamageTypeId);
+                var slashDamageType = protoManager.Index<DamageTypePrototype>(TestSlashDamageTypeId);
 
                 var bluntDamage = new DamageSpecifier(bluntDamageType, 5);
                 var slashDamage = new DamageSpecifier(slashDamageType, 5);
@@ -86,7 +88,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                     Assert.That(threshold.Trigger, Is.InstanceOf<AndTrigger>());
                 });
 
-                var trigger = (AndTrigger) threshold.Trigger;
+                var trigger = (AndTrigger)threshold.Trigger;
 
                 Assert.Multiple(() =>
                 {
@@ -154,7 +156,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                     Assert.That(threshold.Trigger, Is.InstanceOf<AndTrigger>());
                 });
 
-                trigger = (AndTrigger) threshold.Trigger;
+                trigger = (AndTrigger)threshold.Trigger;
 
                 Assert.Multiple(() =>
                 {

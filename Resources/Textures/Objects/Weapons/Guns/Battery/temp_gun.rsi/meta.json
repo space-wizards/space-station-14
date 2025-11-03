@@ -1,0 +1,53 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/b98afcd1400b0f398bf1322b2b20de57ccf7bb0c and modified by Flareguy. equipped-BACKPACK, equipped-SUITSTORAGE, inhand-left and inhand-right states modified by Flareguy using ion rifle states",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "base"
+        },
+        {
+            "name": "mag-unshaded-1"
+        },
+        {
+            "name": "mag-unshaded-2"
+        },
+        {
+            "name": "mag-unshaded-3"
+        },
+        {
+            "name": "mag-unshaded-4"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "wielded-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "wielded-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "equipped-BACKPACK",
+            "directions": 4
+        },
+        {
+            "name": "equipped-SUITSTORAGE",
+            "directions": 4
+        }
+    ]
+}

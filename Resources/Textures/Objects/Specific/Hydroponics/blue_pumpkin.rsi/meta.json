@@ -1,32 +1,40 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/tgstation/tgstation/commit/5d507cfbad6f73d1beaba66d93f31f893adb3a84, modified by potato1234_x (github)",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "dead"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/commit/5d507cfbad6f73d1beaba66d93f31f893adb3a84, modified by potato1234_x (github), inhands by mubururu_ (github), Growth, harvest, and dead created by Chaoticaa (GitHub)",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "harvest"
-    },
-    {
-      "name": "produce"
-    },
-    {
-      "name": "seed"
-    },
-    {
-      "name": "stage-1"
-    },
-    {
-      "name": "stage-2"
-    },
-    {
-      "name": "stage-3"
-    }
-  ]
+    "states": [
+        {
+            "name": "dead"
+        },
+        {
+            "name": "harvest"
+        },
+        {
+            "name": "produce"
+        },
+        {
+            "name": "seed"
+        },
+        {
+            "name": "stage-1"
+        },
+        {
+            "name": "stage-2"
+        },
+        {
+            "name": "stage-3"
+        },
+        {
+            "name": "produce-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "produce-inhand-right",
+            "directions": 4
+        }
+    ]
 }
