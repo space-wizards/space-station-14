@@ -6,27 +6,27 @@ namespace Content.Server.Arcade.Systems;
 
 public sealed partial class ArcadeSystem
 {
-    private readonly List<BlockGameMessages.HighScoreEntry> _roundHighscores = new();
-    private readonly List<BlockGameMessages.HighScoreEntry> _globalHighscores = new();
+    private readonly List<BlockGameHighScoreEntry> _roundHighscores = new();
+    private readonly List<BlockGameHighScoreEntry> _globalHighscores = new();
 
     public HighScorePlacement RegisterHighScore(string name, int score)
     {
-        var entry = new BlockGameMessages.HighScoreEntry(name, score);
+        var entry = new BlockGameHighScoreEntry(name, score);
         return new HighScorePlacement(TryInsertIntoList(_roundHighscores, entry), TryInsertIntoList(_globalHighscores, entry));
     }
 
-    public List<BlockGameMessages.HighScoreEntry> GetLocalHighscores() => GetSortedHighscores(_roundHighscores);
+    public List<BlockGameHighScoreEntry> GetLocalHighscores() => GetSortedHighscores(_roundHighscores);
 
-    public List<BlockGameMessages.HighScoreEntry> GetGlobalHighscores() => GetSortedHighscores(_globalHighscores);
+    public List<BlockGameHighScoreEntry> GetGlobalHighscores() => GetSortedHighscores(_globalHighscores);
 
-    private List<BlockGameMessages.HighScoreEntry> GetSortedHighscores(List<BlockGameMessages.HighScoreEntry> highScoreEntries)
+    private List<BlockGameHighScoreEntry> GetSortedHighscores(List<BlockGameHighScoreEntry> highScoreEntries)
     {
         var result = highScoreEntries.ShallowClone();
         result.Sort((p1, p2) => p2.Score.CompareTo(p1.Score));
         return result;
     }
 
-    private int? TryInsertIntoList(List<BlockGameMessages.HighScoreEntry> highScoreEntries, BlockGameMessages.HighScoreEntry entry)
+    private int? TryInsertIntoList(List<BlockGameHighScoreEntry> highScoreEntries, BlockGameHighScoreEntry entry)
     {
         if (highScoreEntries.Count < 5)
         {
@@ -46,7 +46,7 @@ public sealed partial class ArcadeSystem
 
     }
 
-    private int? GetPlacement(List<BlockGameMessages.HighScoreEntry> highScoreEntries, BlockGameMessages.HighScoreEntry entry)
+    private int? GetPlacement(List<BlockGameHighScoreEntry> highScoreEntries, BlockGameHighScoreEntry entry)
     {
         int? placement = null;
         if (highScoreEntries.Contains(entry))

@@ -488,32 +488,32 @@ public sealed class BlockGameMenu : DefaultWindow
         _unpauseButtonMargin.Visible = true;
     }
 
-    public void SetScreen(BlockGameMessages.BlockGameScreen screen)
+    public void SetScreen(BlockGameScreen screen)
     {
         if (_gameOver)
             return;
 
         switch (screen)
         {
-            case BlockGameMessages.BlockGameScreen.Game:
+            case BlockGameScreen.Game:
                 GrabKeyboardFocus();
                 CloseMenus();
                 _pauseButton.Disabled = !_isPlayer;
                 break;
-            case BlockGameMessages.BlockGameScreen.Pause:
+            case BlockGameScreen.Pause:
                 //ReleaseKeyboardFocus();
                 CloseMenus();
                 _mainPanel.AddChild(_menuRootContainer);
                 _pauseButton.Disabled = true;
                 break;
-            case BlockGameMessages.BlockGameScreen.Gameover:
+            case BlockGameScreen.Gameover:
                 _gameOver = true;
                 _pauseButton.Disabled = true;
                 //ReleaseKeyboardFocus();
                 CloseMenus();
                 _mainPanel.AddChild(_gameOverRootContainer);
                 break;
-            case BlockGameMessages.BlockGameScreen.Highscores:
+            case BlockGameScreen.Highscores:
                 //ReleaseKeyboardFocus();
                 CloseMenus();
                 _mainPanel.AddChild(_highscoresRootContainer);
@@ -552,8 +552,8 @@ public sealed class BlockGameMenu : DefaultWindow
         _levelLabel.Text = Loc.GetString("blockgame-menu-label-level", ("level", level + 1));
     }
 
-    public void UpdateHighscores(List<BlockGameMessages.HighScoreEntry> localHighscores,
-        List<BlockGameMessages.HighScoreEntry> globalHighscores)
+    public void UpdateHighscores(List<BlockGameHighScoreEntry> localHighscores,
+        List<BlockGameHighScoreEntry> globalHighscores)
     {
         var localHighscoreText = new StringBuilder(Loc.GetString("blockgame-menu-text-station") + "\n");
         var globalHighscoreText = new StringBuilder(Loc.GetString("blockgame-menu-text-nanotrasen") + "\n");
