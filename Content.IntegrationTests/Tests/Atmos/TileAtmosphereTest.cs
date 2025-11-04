@@ -1,10 +1,6 @@
-using Content.Server.Atmos.Components;
-using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Coordinates;
-using Content.Shared.Item.ItemToggle;
 using Content.Shared.Tests;
-using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
@@ -12,34 +8,12 @@ using Robust.Shared.Utility;
 namespace Content.IntegrationTests.Tests.Atmos;
 
 [TestOf(typeof(Atmospherics))]
-public sealed class TileAtmosphereTest
+public abstract class TileAtmosphereTest : AtmosTest
 {
-    private const string TestMap1 = "Maps/Test/Atmospherics/tile_atmosphere_test_x.yml";
-    private const string TestMap2 = "Maps/Test/Atmospherics/tile_atmosphere_test_snake.yml";
-
-    private const float Moles = 1000.0f;
-
-    // 5% is a lot, but it can get this bad ATM...
-    private const float Tolerance = 0.05f;
-
     [Test]
-    [TestCase(TestMap1)]
-    [TestCase(TestMap2)]
-    public async Task TileAtmosphere(string mapPath)
+    public async Task GasSpreading()
     {
-        var settings = new PoolSettings { Connected = true, Dirty = true };
-        await using var pair = await PoolManager.GetServerClient(settings);
-        var server = pair.Server;
-
-        var entityManager = server.EntMan;
-        var mapLoader = entityManager.System<MapLoaderSystem>();
-        var atmosSystem = entityManager.System<AtmosphereSystem>();
-
-        var mapData = await pair.LoadTestMap(new ResPath(mapPath));
-
-        Entity<GridAtmosphereComponent> relevantAtmos = (mapData.Grid, entityManager.GetComponent<GridAtmosphereComponent>(mapData.Grid));
-
-        var markers = entityManager.AllEntities<TestMarkerComponent>();
+        var markers = SEntMan.AllEntities<TestMarkerComponent>();
 
         EntityUid source, point1, point2;
         source = point1 = point2 = EntityUid.Invalid;
@@ -51,15 +25,15 @@ public sealed class TileAtmosphereTest
             Assert.That(GetMarker(markers, "point2", out point2));
         });
 
-        Assert.That(GetGridMoles(relevantAtmos), Is.EqualTo(0.0f));
+        Assert.That(GetGridMoles(RelevantAtmos), Is.EqualTo(0.0f));
 
-        var sourceMix = atmosSystem.GetTileMixture(source, true);
+        var sourceMix = SAtmos.GetTileMixture(source, true);
         sourceMix.AdjustMoles(Gas.Frezon, Moles);
 
-        var mix1 = atmosSystem.GetTileMixture(point1);
-        var mix2 = atmosSystem.GetTileMixture(point2);
+        var mix1 = SAtmos.GetTileMixture(point1);
+        var mix2 = SAtmos.GetTileMixture(point2);
 
-        await server.WaitRunTicks(300);
+        await Pair.Server.WaitRunTicks(300);
 
         Assert.Multiple(() =>
         {
@@ -67,35 +41,15 @@ public sealed class TileAtmosphereTest
             Assert.That(MathHelper.CloseToPercent(mix1.TotalMoles, mix2.TotalMoles, Tolerance));
 
             // Make sure we're not creating/destroying matter
-            var moles = GetGridMoles(relevantAtmos);
+            var moles = GetGridMoles(RelevantAtmos);
             Assert.That(MathHelper.CloseToPercent(moles, Moles, Tolerance), $"moles was {moles}");
         });
-
-        await pair.CleanReturnAsync();
     }
 
     [Test]
-    [TestCase(TestMap1)]
-    [TestCase(TestMap2)]
-    public async Task FireSpreading(string mapPath)
+    public async Task FireSpreading()
     {
-        var settings = new PoolSettings { Connected = true, Dirty = true };
-        await using var pair = await PoolManager.GetServerClient(settings);
-        var server = pair.Server;
-
-        await server.WaitIdleAsync();
-
-        var entityManager = server.EntMan;
-        var mapLoader = entityManager.System<MapLoaderSystem>();
-        var atmosSystem = entityManager.System<AtmosphereSystem>();
-        var itemToggleSystem = entityManager.System<ItemToggleSystem>();
-        var transformSystem = entityManager.System<SharedTransformSystem>();
-
-        var mapData = await pair.LoadTestMap(new ResPath(mapPath));
-
-        Entity<GridAtmosphereComponent> relevantAtmos = (mapData.Grid, entityManager.GetComponent<GridAtmosphereComponent>(mapData.Grid));
-
-        var markers = entityManager.AllEntities<TestMarkerComponent>();
+        var markers = SEntMan.AllEntities<TestMarkerComponent>();
 
         EntityUid source, point1, point2;
         source = point1 = point2 = EntityUid.Invalid;
@@ -109,41 +63,41 @@ public sealed class TileAtmosphereTest
             Assert.That(GetMarker(markers, "point1", out point1));
             Assert.That(GetMarker(markers, "point2", out point2));
 
-            Assert.That(transformSystem.TryGetGridTilePosition(source, out sourceXY, mapData.Grid));
-            Assert.That(transformSystem.TryGetGridTilePosition(source, out point1XY, mapData.Grid));
-            Assert.That(transformSystem.TryGetGridTilePosition(source, out point2XY, mapData.Grid));
+            Assert.That(Transform.TryGetGridTilePosition(source, out sourceXY, MapData.Grid));
+            Assert.That(Transform.TryGetGridTilePosition(source, out point1XY, MapData.Grid));
+            Assert.That(Transform.TryGetGridTilePosition(source, out point2XY, MapData.Grid));
         });
 
-        Assert.That(GetGridMoles(relevantAtmos), Is.EqualTo(0));
+        Assert.That(GetGridMoles(RelevantAtmos), Is.EqualTo(0));
 
-        var sourceMix = atmosSystem.GetTileMixture(source, true);
+        var sourceMix = SAtmos.GetTileMixture(source, true);
         sourceMix.AdjustMoles(Gas.Plasma, Moles / 10);
         sourceMix.AdjustMoles(Gas.Oxygen, Moles - Moles / 10);
         sourceMix.Temperature = Atmospherics.FireMinimumTemperatureToExist - 10;
 
-        var mix1 = atmosSystem.GetTileMixture(point1);
-        var mix2 = atmosSystem.GetTileMixture(point2);
+        var mix1 = SAtmos.GetTileMixture(point1);
+        var mix2 = SAtmos.GetTileMixture(point2);
 
         Assert.Multiple(() =>
         {
-            Assert.That(atmosSystem.IsHotspotActive(mapData.Grid, sourceXY), Is.False);
-            Assert.That(atmosSystem.IsHotspotActive(mapData.Grid, point1XY), Is.False);
-            Assert.That(atmosSystem.IsHotspotActive(mapData.Grid, point2XY), Is.False);
+            Assert.That(SAtmos.IsHotspotActive(MapData.Grid, sourceXY), Is.False);
+            Assert.That(SAtmos.IsHotspotActive(MapData.Grid, point1XY), Is.False);
+            Assert.That(SAtmos.IsHotspotActive(MapData.Grid, point2XY), Is.False);
         });
 
-        await server.WaitAssertion(() =>
+        await Pair.Server.WaitAssertion(() =>
         {
-            var welder = entityManager.SpawnEntity("Welder", source.ToCoordinates());
-            Assert.That(itemToggleSystem.TryActivate(welder));
+            var welder = SEntMan.SpawnEntity("Welder", source.ToCoordinates());
+            Assert.That(ItemToggleSys.TryActivate(welder));
         });
 
-        await pair.RunTicksSync(500);
+        await Pair.RunTicksSync(500);
 
         Assert.Multiple(() =>
         {
-            Assert.That(atmosSystem.IsHotspotActive(mapData.Grid, sourceXY), Is.True);
-            Assert.That(atmosSystem.IsHotspotActive(mapData.Grid, point1XY), Is.True);
-            Assert.That(atmosSystem.IsHotspotActive(mapData.Grid, point2XY), Is.True);
+            Assert.That(SAtmos.IsHotspotActive(MapData.Grid, sourceXY), Is.True);
+            Assert.That(SAtmos.IsHotspotActive(MapData.Grid, point1XY), Is.True);
+            Assert.That(SAtmos.IsHotspotActive(MapData.Grid, point2XY), Is.True);
         });
 
         Assert.Multiple(() =>
@@ -152,34 +106,17 @@ public sealed class TileAtmosphereTest
             Assert.That(MathHelper.CloseToPercent(mix1.TotalMoles, mix2.TotalMoles, Tolerance));
 
             // Make sure we're not creating/destroying matter
-            Assert.That(MathHelper.CloseToPercent(GetGridMoles(relevantAtmos), Moles, Tolerance));
+            Assert.That(MathHelper.CloseToPercent(GetGridMoles(RelevantAtmos), Moles, Tolerance));
         });
-
-        await pair.CleanReturnAsync();
     }
+}
 
-    private static bool GetMarker(Entity<TestMarkerComponent>[] markers, string id, out EntityUid marker)
-    {
-        foreach (var ent in markers)
-        {
-            if (ent.Comp.Id == id)
-            {
-                marker = ent;
-                return true;
-            }
-        }
-        marker = EntityUid.Invalid;
-        return false;
-    }
+public sealed class TileAtmosphereTest_X : TileAtmosphereTest
+{
+    protected override ResPath? TestMapPath => new("Maps/Test/Atmospherics/tile_atmosphere_test_x.yml");
+}
 
-    private static float GetGridMoles(Entity<GridAtmosphereComponent> grid)
-    {
-        var moles = 0.0f;
-        foreach (var tile in grid.Comp.Tiles.Values)
-        {
-            moles += tile.Air?.TotalMoles ?? 0.0f;
-        }
-
-        return moles;
-    }
+public sealed class TileAtmosphereTest_Snake : TileAtmosphereTest
+{
+    protected override ResPath? TestMapPath => new("Maps/Test/Atmospherics/tile_atmosphere_test_snake.yml");
 }
