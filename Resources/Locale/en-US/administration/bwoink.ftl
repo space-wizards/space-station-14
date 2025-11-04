@@ -30,3 +30,9 @@ bwoink-system-player-banned = has been banned for: {$banReason}
 bwoink-system-user = System
 bwoink-read-only = You cannot write in this channel.
 bwoink-channel-no-readers = This person cannot read the channel. The message will only be seen by other managers.
+
+bwoink-discord-relay-footer = {$serverName} (round {$roundId})
+bwoink-discord-relay-title = {$username} ({$roundRep})
+bwoink-discord-relay-title-no-rep = {$username}
+bwoink-discord-relay-prev = **[Jump to previous conversation]({$link})**
+bwoink-discord-relay-next = **[Jump to next conversation]({$link})**

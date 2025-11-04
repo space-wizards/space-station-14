@@ -19,7 +19,7 @@ public sealed partial class ClientBwoinkManager
     private void SyncChannels(MsgBwoinkSyncChannels message)
     {
         _accessCache = message.Channels;
-        ReloadedData?.Invoke();
+        InvokeReloadedData();
     }
 
     public void RequestChannels()

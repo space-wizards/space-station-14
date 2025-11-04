@@ -228,24 +228,25 @@ public sealed class DiscordLink : IPostInjectInit
     /// <summary>
     /// Sends a message to a Discord channel with the specified ID. Without any mentions.
     /// </summary>
-    public async Task SendMessageAsync(ulong channelId, string message)
+    public async Task<RestMessage?> SendMessageAsync(ulong channelId, string? message, List<EmbedProperties>? embeds = null)
     {
         if (_client == null)
         {
-            return;
+            return null;
         }
 
         var channel = await _client.Rest.GetChannelAsync(channelId) as TextChannel;
         if (channel == null)
         {
             _sawmill.Error("Tried to send a message to Discord but the channel {Channel} was not found.", channel);
-            return;
+            return null;
         }
 
-        await channel.SendMessageAsync(new MessageProperties()
+        return await channel.SendMessageAsync(new MessageProperties()
         {
             AllowedMentions = AllowedMentionsProperties.None,
             Content = message,
+            Embeds = embeds,
         });
     }
 

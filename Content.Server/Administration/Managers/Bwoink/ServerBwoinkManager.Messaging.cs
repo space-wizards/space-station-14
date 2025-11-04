@@ -86,13 +86,17 @@ public sealed partial class ServerBwoinkManager
             flags |= MessageFlags.Silent;
         }
 
+        var gameTickerNonsense = GetRoundIdAndTime();
+
         SynchronizeMessage(message.Channel,
             message.Target,
             new BwoinkMessage(message.MsgChannel.UserName,
                 message.MsgChannel.UserId,
                 DateTime.UtcNow,
                 message.Message.Content,
-                flags));
+                flags,
+                gameTickerNonsense.roundTime,
+                gameTickerNonsense.roundId));
     }
 
     private void BwoinkAttempted(MsgBwoinkNonAdmin message)
@@ -103,13 +107,17 @@ public sealed partial class ServerBwoinkManager
         if (!CanWriteChannel(message.Channel, PlayerManager.GetSessionByChannel(message.MsgChannel)))
             return; // TODO: Logging.
 
+        var gameTickerNonsense = GetRoundIdAndTime();
+
         SynchronizeMessage(message.Channel,
             message.MsgChannel.UserId,
             new BwoinkMessage(message.MsgChannel.UserName,
                 message.MsgChannel.UserId,
                 DateTime.UtcNow,
                 message.Message.Content,
-                MessageFlags.None));
+                MessageFlags.None,
+                gameTickerNonsense.roundTime,
+                gameTickerNonsense.roundId));
     }
 
     /// <summary>

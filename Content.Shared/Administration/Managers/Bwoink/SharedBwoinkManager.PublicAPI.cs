@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Administration.Managers.Bwoink.Features;
+using JetBrains.Annotations;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -12,13 +13,16 @@ public abstract partial class SharedBwoinkManager
     /// </summary>
     public BwoinkMessage CreateUserMessage(string text, MessageFlags flags, NetUserId sender)
     {
-        return new BwoinkMessage(PlayerManager.GetSessionById(sender).Name, sender, DateTime.UtcNow, text, flags);
+        var tickerNonsense = GetRoundIdAndTime();
+        return new BwoinkMessage(PlayerManager.GetSessionById(sender).Name, sender, DateTime.UtcNow, text, flags, tickerNonsense.roundTime, tickerNonsense.roundId);
     }
 
     public BwoinkMessage CreateUserMessage(string message, NetUserId? sender, string? senderName, MessageFlags flags)
     {
+        var tickerNonsense = GetRoundIdAndTime();
+
         if (senderName != null)
-            return new BwoinkMessage(senderName, sender, DateTime.UtcNow, message, flags);
+            return new BwoinkMessage(senderName, sender, DateTime.UtcNow, message, flags, tickerNonsense.roundTime, tickerNonsense.roundId);
 
 
         DebugTools.AssertNotNull(sender, "sender must not be null when senderName is.");
@@ -32,25 +36,30 @@ public abstract partial class SharedBwoinkManager
             senderName = PlayerManager.GetSessionById(sender.Value).Name;
         }
 
-        return new BwoinkMessage(senderName, sender, DateTime.UtcNow, message, flags);
+        return new BwoinkMessage(senderName, sender, DateTime.UtcNow, message, flags, tickerNonsense.roundTime, tickerNonsense.roundId);
     }
 
     /// <summary>
     /// Creates a bwoink message for a given channel using the system user.
     /// </summary>
+    [PublicAPI]
     public BwoinkMessage CreateSystemMessage(string text, MessageFlags flags = MessageFlags.Manager)
     {
+        var tickerNonsense = GetRoundIdAndTime();
+
         return new BwoinkMessage(LocalizationManager.GetString("bwoink-system-user"),
             null,
             DateTime.UtcNow,
             text,
-            flags);
+            flags,
+            tickerNonsense.roundTime,
+            tickerNonsense.roundId);
     }
 
     /// <summary>
     /// Formats a bwoink message into a string that can be displayed in UIs.
     /// </summary>
-    public FormattedMessage FormatMessage(ProtoId<BwoinkChannelPrototype> channelId ,BwoinkMessage message)
+    public FormattedMessage FormatMessage(ProtoId<BwoinkChannelPrototype> channelId, BwoinkMessage message, bool useRoundTime = false)
     {
         var channel = ProtoCache[channelId];
 
@@ -61,7 +70,12 @@ public abstract partial class SharedBwoinkManager
             color = Color.Red;
 
         formatted.PushColor(Color.Gray);
-        formatted.AddText($"{message.SentAt.ToShortTimeString()} ");
+
+        if (useRoundTime)
+            formatted.AddText($@"{message.RoundTime:hh\:mm\:ss} ");
+        else
+            formatted.AddText($"{message.SentAt.ToShortTimeString()} ");
+
         formatted.Pop();
 
         if (message.Flags.HasFlag(MessageFlags.ManagerOnly))

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Shared.Administration.Managers.Bwoink.Features;
+using Content.Shared.GameTicking;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -19,6 +20,7 @@ public abstract partial class SharedBwoinkManager : IPostInjectInit
     [Dependency] protected readonly ILocalizationManager LocalizationManager = default!;
     [Dependency] protected readonly ISharedAdminManager AdminManager = default!;
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
+    [Dependency] protected readonly IEntitySystemManager EntitySystemManager = default!;
 
     protected ISawmill Log = default!;
     /// <summary>
@@ -204,6 +206,14 @@ public abstract partial class SharedBwoinkManager : IPostInjectInit
     /// </summary>
     protected virtual void UpdatedChannels() { }
 
+    protected (TimeSpan roundTime, int roundId) GetRoundIdAndTime()
+    {
+        if (!EntitySystemManager.TryGetEntitySystem<SharedGameTicker>(out var gameTicker))
+            return (TimeSpan.MinValue, -1);
+
+        return (gameTicker.RoundDuration(), gameTicker.RoundId);
+    }
+
     /// <summary>
     /// Holds a history of all of our conversations.
     /// This is synced between client -> server and may periodically be cleared out and re-synced.
@@ -235,13 +245,17 @@ public sealed record Conversation(NetUserId Who, List<BwoinkMessage> Messages)
 /// <summary>
 /// Represents a message sent into an ahelp channel.
 /// </summary>
-public sealed record BwoinkMessage(string Sender, NetUserId? SenderId, DateTime SentAt, string Content, MessageFlags Flags)
+public sealed record BwoinkMessage(string Sender, NetUserId? SenderId, DateTime SentAt, string Content, MessageFlags Flags, TimeSpan RoundTime, int RoundId)
 {
     /// <summary>
     /// The sender of this message.
     /// For reasons of (for example) hiding the sender, this is a string of the sender name.
     /// </summary>
+#if DEBUG
+    [ViewVariables(VVAccess.ReadWrite)]
+#else
     [ViewVariables]
+#endif
     public string Sender { get; init; } = Sender;
 
     /// <summary>
@@ -255,6 +269,17 @@ public sealed record BwoinkMessage(string Sender, NetUserId? SenderId, DateTime 
     /// </summary>
     [ViewVariables]
     public DateTime SentAt { get; init; } = SentAt;
+
+    /// <summary>
+    /// The time elapsed into the round when this message was sent.
+    /// </summary>
+    [ViewVariables]
+    public TimeSpan RoundTime { get; init; } = RoundTime;
+    /// <summary>
+    /// The round ID when this message was sent, crazy.
+    /// </summary>
+    [ViewVariables]
+    public int RoundId { get; init; } = RoundId;
 
     /// <summary>
     /// The contents of this message.

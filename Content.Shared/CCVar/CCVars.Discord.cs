@@ -7,7 +7,7 @@ public sealed partial class CCVars
     /// <summary>
     ///     The channel ID of which to relay ahelp messages to.
     /// </summary>
-    public static readonly CVarDef<string> DiscordAHelpWebhook =
+    public static readonly CVarDef<string> DiscordBwoinkChannelAhelp =
         CVarDef.Create("discord.bwoink.channel.ahelp", string.Empty, CVar.SERVERONLY);
 
     /// <summary>

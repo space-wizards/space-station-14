@@ -46,8 +46,10 @@ public sealed class MsgBwoinkSync : NetMessage
                     var sentAt = DateTime.FromBinary(buffer.ReadInt64());
                     var content = buffer.ReadString();
                     var flags = (MessageFlags)buffer.ReadByte();
+                    var roundTime = buffer.ReadTimeSpan();
+                    var roundId = buffer.ReadInt32();
 
-                    messages.Add(new BwoinkMessage(sender, senderId, sentAt, content, flags));
+                    messages.Add(new BwoinkMessage(sender, senderId, sentAt, content, flags, roundTime, roundId));
                 }
 
                 var conversation = new Conversation(who, messages);
@@ -83,6 +85,8 @@ public sealed class MsgBwoinkSync : NetMessage
                     buffer.Write(message.SentAt.ToBinary());
                     buffer.Write(message.Content);
                     buffer.Write((byte)message.Flags);
+                    buffer.Write(message.RoundTime);
+                    buffer.Write(message.RoundId);
                 }
             }
         }
@@ -250,8 +254,10 @@ public sealed class MsgBwoinkNonAdmin : NetMessage
         // The non admin clients don't get the sender id.
         var sentAt = DateTime.FromBinary(buffer.ReadInt64());
         var message = buffer.ReadString();
+        var roundTime = buffer.ReadTimeSpan();
+        var roundId = buffer.ReadInt32();
 
-        Message = new BwoinkMessage(sender, null, sentAt, message, (MessageFlags)buffer.ReadByte());
+        Message = new BwoinkMessage(sender, null, sentAt, message, (MessageFlags)buffer.ReadByte(), roundTime, roundId);
         Channel = buffer.ReadString();
     }
 
@@ -263,6 +269,8 @@ public sealed class MsgBwoinkNonAdmin : NetMessage
         buffer.Write(Message.Sender);
         buffer.Write(Message.SentAt.ToBinary());
         buffer.Write(Message.Content);
+        buffer.Write(Message.RoundTime);
+        buffer.Write(Message.RoundId);
         buffer.Write((byte)Message.Flags);
 
         buffer.Write(Channel.Id);
@@ -290,8 +298,10 @@ public sealed class MsgBwoink : NetMessage
             senderId = new NetUserId(buffer.ReadGuid());
         var sentAt = DateTime.FromBinary(buffer.ReadInt64());
         var message = buffer.ReadString();
+        var roundTime = buffer.ReadTimeSpan();
+        var roundId = buffer.ReadInt32();
 
-        Message = new BwoinkMessage(sender, senderId, sentAt, message, (MessageFlags)buffer.ReadByte());
+        Message = new BwoinkMessage(sender, senderId, sentAt, message, (MessageFlags)buffer.ReadByte(), roundTime, roundId);
         Channel = new ProtoId<BwoinkChannelPrototype>(buffer.ReadString());
 
         Target = new NetUserId(buffer.ReadGuid());
@@ -309,6 +319,8 @@ public sealed class MsgBwoink : NetMessage
             buffer.Write(Message.SenderId.Value.UserId);
         buffer.Write(Message.SentAt.ToBinary());
         buffer.Write(Message.Content);
+        buffer.Write(Message.RoundTime);
+        buffer.Write(Message.RoundId);
         buffer.Write((byte)Message.Flags);
 
         buffer.Write(Channel.Id);

@@ -42,11 +42,6 @@ public sealed partial class ClientBwoinkManager : SharedBwoinkManager
     public readonly Dictionary<ProtoId<BwoinkChannelPrototype>, IAudioSource?> CachedSounds = new();
 
     /// <summary>
-    /// Called whenever our prototypes change, or a full state update is applied.
-    /// </summary>
-    public event Action? ReloadedData;
-
-    /// <summary>
     /// Called whenever we receive a <see cref="MsgBwoinkTypings"/>
     /// </summary>
     public event Action? TypingsUpdated;
@@ -112,15 +107,13 @@ public sealed partial class ClientBwoinkManager : SharedBwoinkManager
                 break;
             }
         }
-
-        ReloadedData?.Invoke();
     }
 
     private void SyncBwoinks(MsgBwoinkSync message)
     {
         Log.Info($"Received full state! {message.Conversations.Count} channels with {message.Conversations.Values.Select(x => x.Count).Count()} conversations.");
         Conversations = message.Conversations;
-        ReloadedData?.Invoke();
+        InvokeReloadedData();
     }
 
     private void AdminBwoinkAttempted(MsgBwoink message)
@@ -152,10 +145,12 @@ public sealed partial class ClientBwoinkManager : SharedBwoinkManager
     /// </summary>
     public void SendMessageNonAdmin(ProtoId<BwoinkChannelPrototype> channel, string text)
     {
+        var gameTickerNonsense = GetRoundIdAndTime();
+
         _netManager.ClientSendMessage(new MsgBwoinkNonAdmin()
         {
             // We can leave all of this null since the server will set all of this anyways.
-            Message = new BwoinkMessage(string.Empty, null, DateTime.UtcNow, text, MessageFlags.None),
+            Message = new BwoinkMessage(string.Empty, null, DateTime.UtcNow, text, MessageFlags.None, gameTickerNonsense.roundTime, gameTickerNonsense.roundId),
             Channel = channel,
         });
     }
@@ -165,10 +160,12 @@ public sealed partial class ClientBwoinkManager : SharedBwoinkManager
     /// </summary>
     public void SendMessageAdmin(BwoinkChannelPrototype channel, NetUserId user, string text, MessageFlags flags)
     {
+        var gameTickerNonsense = GetRoundIdAndTime();
+
         _netManager.ClientSendMessage(new MsgBwoink()
         {
             // We can leave all of this null since the server will set all of this anyways.
-            Message = new BwoinkMessage(string.Empty, null, DateTime.UtcNow, text, flags),
+            Message = new BwoinkMessage(string.Empty, null, DateTime.UtcNow, text, flags, gameTickerNonsense.roundTime, gameTickerNonsense.roundId),
             Channel = channel,
             Target = user,
         });

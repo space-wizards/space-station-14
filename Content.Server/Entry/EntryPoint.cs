@@ -191,6 +191,7 @@ namespace Content.Server.Entry
                     _watchlistWebhookManager.Update();
                     _connection.Update();
                     _bwoinkManager.Update();
+                    _bwoinkDiscordRelayManager.Update();
                     break;
             }
         }
@@ -210,6 +211,7 @@ namespace Content.Server.Entry
             // TODO Should this be awaited?
             _discordLink.Shutdown();
             _discordChatLink.Shutdown();
+            _bwoinkDiscordRelayManager.Shutdown();
         }
 
         private static void LoadConfigPresets(IConfigurationManager cfg, IResourceManager res, ISawmill sawmill)
