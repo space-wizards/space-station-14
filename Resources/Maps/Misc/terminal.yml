@@ -1429,7 +1429,7 @@ entities:
     - type: Godmode
     - type: BatterySelfRecharger
       autoRechargeRate: 50000
-          - type: Fixtures
+    - type: Fixtures
       fixtures: {}
     missingComponents:
     - Construction
@@ -1446,7 +1446,7 @@ entities:
     - type: Godmode
     - type: BatterySelfRecharger
       autoRechargeRate: 50000
-          - type: Fixtures
+    - type: Fixtures
       fixtures: {}
     missingComponents:
     - Construction
@@ -1462,7 +1462,7 @@ entities:
     - type: Godmode
     - type: BatterySelfRecharger
       autoRechargeRate: 50000
-          - type: Fixtures
+    - type: Fixtures
       fixtures: {}
     missingComponents:
     - Construction
