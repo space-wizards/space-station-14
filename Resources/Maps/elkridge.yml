@@ -4,8 +4,8 @@ meta:
   engineVersion: 267.3.0
   forkId: ""
   forkVersion: ""
-  time: 11/01/2025 07:57:27
-  entityCount: 18699
+  time: 11/04/2025 19:47:26
+  entityCount: 18697
 maps:
 - 1
 grids:
@@ -91608,18 +91608,6 @@ entities:
     - type: Transform
       pos: -18.5,15.5
       parent: 2
-- proto: MagazinePistolSubMachineGunTopMounted
-  entities:
-  - uid: 17542
-    components:
-    - type: Transform
-      pos: -2.0215707,-37.446384
-      parent: 2
-  - uid: 17543
-    components:
-    - type: Transform
-      pos: -1.9121957,-37.30576
-      parent: 2
 - proto: MailingUnit
   entities:
   - uid: 11816
@@ -104364,6 +104352,13 @@ entities:
     - type: Transform
       pos: -32.5,-11.5
       parent: 2
+- proto: SpawnPointHeadOfSecurityWeapon
+  entities:
+  - uid: 17541
+    components:
+    - type: Transform
+      pos: -2.5,-37.5
+      parent: 2
 - proto: SpawnPointJanitor
   entities:
   - uid: 987
@@ -104676,6 +104671,13 @@ entities:
     components:
     - type: Transform
       pos: -4.5,-29.5
+      parent: 2
+- proto: SpawnPointWardenWeapon
+  entities:
+  - uid: 15170
+    components:
+    - type: Transform
+      pos: -5.5,-32.5
       parent: 2
 - proto: SpawnVendingMachineRestockFoodDrink
   entities:
@@ -124297,20 +124299,6 @@ entities:
     components:
     - type: Transform
       pos: 15.412306,-25.452839
-      parent: 2
-- proto: WeaponShotgunEnforcerRubber
-  entities:
-  - uid: 15170
-    components:
-    - type: Transform
-      pos: -5.520319,-32.186012
-      parent: 2
-- proto: WeaponSubMachineGunWt550
-  entities:
-  - uid: 17541
-    components:
-    - type: Transform
-      pos: -2.6153207,-37.27451
       parent: 2
 - proto: Welder
   entities:
