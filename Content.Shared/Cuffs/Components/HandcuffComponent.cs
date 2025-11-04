@@ -1,3 +1,4 @@
+using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -45,10 +46,16 @@ public sealed partial class HandcuffComponent : Component
     public EntProtoId? BrokenPrototype;
 
     /// <summary>
-    ///     If set, the cuffs will break if the cuffed entity takes damage at or over the threshold.
+    ///     If set, the cuffs will break if the cuffed entity takes total damage over the threshold.
     /// </summary>
     [DataField]
-    public float? BreakOnDamageThreshold;
+    public FixedPoint2? BreakOnDamageThreshold;
+
+    /// <summary>
+    ///     If set, the cuffs will break if the cuffed entity takes total damage over the threshold.
+    /// </summary>
+    [DataField]
+    public FixedPoint2 DamageWhileWorn;
 
     /// <summary>
     /// Whether or not these cuffs are in the process of being removed.

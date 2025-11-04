@@ -189,7 +189,7 @@
       spawnedPrototype: ThrowingStarNinja
     - action: ActionCreateHolocuffs
       charge: 14.4
-      spawnedPrototype: Holocuffs
+      spawnedPrototype: HolocuffsNinja
     noPowerPopup: ninja-no-power
   # core ninja suit stuff
   - type: NinjaSuit

@@ -159,11 +159,12 @@
     sprite: Clothing/OuterClothing/Misc/straight_jacket.rsi
     state: icon
 
+# Need a version of holo-cuffs without a despawn timer to work with the guidebook.
 - type: entity
   parent: Handcuffs
   id: Holocuffs
   name: holo-cuffs
-  description: Cuffs made of hardlight that lasts for 30 seconds. Breaks on the wearer taking damage.
+  description: Fragile cuffs made of hardlight that lasts for 45 seconds. Breaks on the wearer taking damage.
   components:
   - type: TimedDespawn
     lifetime: 45
@@ -173,7 +174,14 @@
     cuffedRSI: Objects/Misc/holocuffs.rsi
     bodyIconState: body-overlay
     breakOnRemove: true
-    breakOnDamageThreshold: 2
+    breakOnDamageThreshold: 15
   - type: Sprite
     sprite: Objects/Misc/holocuffs.rsi
     state: holocuff
+
+- type: entity
+  parent: Holocuffs
+  id: HolocuffsNinja
+  components:
+  - type: TimedDespawn
+    lifetime: 45
