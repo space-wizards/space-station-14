@@ -324,7 +324,7 @@ public enum MessageFlags : byte
     ManagerOnly = 4,
 
     /// <summary>
-    /// No manager recieved this specific message.
+    /// No manager received this specific message.
     /// </summary>
     NoReceivers = 8,
 }
