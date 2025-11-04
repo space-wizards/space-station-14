@@ -45,7 +45,7 @@ public abstract class SharedHailerSystem : EntitySystem
         SubscribeLocalEvent<HailerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
         SubscribeLocalEvent<HailerComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<HailerComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<HailerComponent, SecHailerToolDoAfterEvent>(OnToolDoAfter);
+        SubscribeLocalEvent<HailerComponent, HailerToolDoAfterEvent>(OnToolDoAfter);
     }
 
 
@@ -282,7 +282,7 @@ public abstract class SharedHailerSystem : EntitySystem
             return;
         }
 
-        _sharedDoAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, time.Value, new SecHailerToolDoAfterEvent(quality), ent.Owner, target: args.Target, used: args.Used)
+        _sharedDoAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, time.Value, new HailerToolDoAfterEvent(quality), ent.Owner, target: args.Target, used: args.Used)
         {
             Broadcast = true,
             BreakOnMove = true,
@@ -290,7 +290,7 @@ public abstract class SharedHailerSystem : EntitySystem
         });
     }
 
-    private void OnToolDoAfter(Entity<HailerComponent> ent, ref SecHailerToolDoAfterEvent args)
+    private void OnToolDoAfter(Entity<HailerComponent> ent, ref HailerToolDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || !HasComp<HailerComponent>(args.Args.Target))
             return;
@@ -310,7 +310,7 @@ public abstract class SharedHailerSystem : EntitySystem
         Dirty(ent);
     }
 
-    private void OnCuttingDoAfter(Entity<HailerComponent> ent, ref SecHailerToolDoAfterEvent args)
+    private void OnCuttingDoAfter(Entity<HailerComponent> ent, ref HailerToolDoAfterEvent args)
     {
         _sharedAudio.PlayPredicted(ent.Comp.CutSounds, ent.Owner, args.User);
 
@@ -326,7 +326,7 @@ public abstract class SharedHailerSystem : EntitySystem
         Dirty(ent);
     }
 
-    private void OnScrewingDoAfter(Entity<HailerComponent> ent, ref SecHailerToolDoAfterEvent args)
+    private void OnScrewingDoAfter(Entity<HailerComponent> ent, ref HailerToolDoAfterEvent args)
     {
         _sharedAudio.PlayPredicted(ent.Comp.ScrewedSounds, ent.Owner, args.User);
         IncreaseAggressionLevel(ent, args.User);

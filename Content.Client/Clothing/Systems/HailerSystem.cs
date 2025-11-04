@@ -13,11 +13,11 @@ public sealed class HailerSystem : SharedHailerSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HailerComponent, SecHailerActionEvent>(OnHailAction);
+        SubscribeLocalEvent<HailerComponent, HailerActionEvent>(OnHailAction);
         SubscribeLocalEvent<HailerComponent, ItemMaskToggledEvent>(OnMaskToggle);
     }
 
-    private void OnHailAction(Entity<HailerComponent> ent, ref SecHailerActionEvent ev)
+    private void OnHailAction(Entity<HailerComponent> ent, ref HailerActionEvent ev)
     {
         if (ev.Handled)
             return;
@@ -25,7 +25,7 @@ public sealed class HailerSystem : SharedHailerSystem
         //Try to get BUI if already open
         if (_ui.TryGetOpenUi(ent.Owner, HailerUiKey.Key, out var bui))
         {
-            ev.Handled = true;
+            //ev.Handled = true;
         }
         else if (TryComp<MaskComponent>(ent, out var mask))
         {
@@ -33,7 +33,7 @@ public sealed class HailerSystem : SharedHailerSystem
             {
                 //Otherwise, open it
                 _ui.TryOpenUi(ent.Owner, HailerUiKey.Key, ev.Performer, predicted: true);
-                ev.Handled = true;
+                //ev.Handled = true;
             }
         }
     }

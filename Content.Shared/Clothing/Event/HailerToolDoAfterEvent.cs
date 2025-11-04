@@ -9,12 +9,12 @@ namespace Content.Shared.Clothing.Event;
 /// Handles the screwing / cutting of a security gas mask and its impacts on the hailer
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class SecHailerToolDoAfterEvent : SimpleDoAfterEvent
+public sealed partial class HailerToolDoAfterEvent : SimpleDoAfterEvent
 {
 
     public ProtoId<ToolQualityPrototype> ToolQuality;
 
-    public SecHailerToolDoAfterEvent(ProtoId<ToolQualityPrototype> quality)
+    public HailerToolDoAfterEvent(ProtoId<ToolQualityPrototype> quality)
     {
         ToolQuality = quality;
     }
