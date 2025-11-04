@@ -54,7 +54,6 @@
     proto: WatcherBolt
     fireCost: 50
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 50
   - type: Battery
     maxCharge: 1000

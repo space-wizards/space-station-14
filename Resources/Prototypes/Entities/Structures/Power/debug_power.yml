@@ -140,7 +140,6 @@
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
-    autoRecharge: True
   - type: Tag
     tags:
     - Debug
@@ -161,7 +160,6 @@
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
-    autoRecharge: True
   - type: Tag
     tags:
     - Debug
@@ -182,7 +180,6 @@
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
-    autoRecharge: True
   - type: Tag
     tags:
     - Debug
@@ -203,7 +200,6 @@
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
-    autoRecharge: True
   - type: Tag
     tags:
     - Debug
