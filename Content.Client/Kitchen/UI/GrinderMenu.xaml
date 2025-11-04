@@ -5,7 +5,7 @@
     <BoxContainer Orientation="Horizontal">
         <BoxContainer Orientation="Vertical" VerticalAlignment="Top" Margin="8" MinWidth="100">
             <Label Text="{Loc grinder-menu-auto-label}" HorizontalAlignment="Center"/>
-            <Button Name="AutoModeButton" Text="{Loc grinder-menu-auto-button}" TextAlign="Center" MinSize="64 48" Margin="0 0 0 16" />
+            <Button Name="AutoModeButton" Text="{Loc grinder-menu-auto-button-off}" TextAlign="Center" MinSize="64 48" Margin="0 0 0 16" />
             <Label Text="{Loc grinder-menu-manual-label}" HorizontalAlignment="Center"/>
             <Button Name="GrindButton" Text="{Loc grinder-menu-grind-button}" TextAlign="Center" MinSize="64 48" Margin="0 0 0 16" />
             <Button Name="JuiceButton" Text="{Loc grinder-menu-juice-button}" TextAlign="Center" MinSize="64 48" />
