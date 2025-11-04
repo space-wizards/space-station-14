@@ -180,17 +180,12 @@ public abstract partial class SharedBwoinkManager : IPostInjectInit
         if (!conversations.TryGetValue(userId, out var conversation))
             return null;
 
-        conversation.Messages.RemoveAll(x => x.Flags.HasFlag(MessageFlags.ManagerOnly));
+        var filteredMessages = conversation.Messages
+            .Where(x => !x.Flags.HasFlag(MessageFlags.ManagerOnly))
+            .Select(x => x with { SenderId = filterSender ? null : x.SenderId })
+            .ToList();
 
-        if (!filterSender)
-            return conversation;
-
-        foreach (var message in conversation.Messages)
-        {
-            message.SenderId = null;
-        }
-
-        return conversation;
+        return conversation with { Messages = filteredMessages };
     }
 
     /// <summary>
