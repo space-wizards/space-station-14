@@ -184,3 +184,11 @@
     entitiesPerReplacementStdDev: 5
     replacements:
     - id: SolarAssembly
+
+- type: entity
+  id: IanAdventureVariationPass
+  parent: BaseVariationPass
+  components:
+  - type: EntityMisplacementVariationPass
+    misplacedEntity: SpawnMobCorgi
+    replacementEntity: PaperWrittenIanAdventureNote
