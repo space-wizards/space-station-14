@@ -524,3 +524,4 @@
       prob: 0.50
       orGroup: monospaceDecals
     - id: IanAdventureVariationPass
+      prob: 0.04
