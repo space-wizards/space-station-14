@@ -88,13 +88,13 @@ public sealed class RCDSystem : EntitySystem
         if (!component.AvailablePrototypes.Contains(args.ProtoId))
             return;
 
-        if (!_protoManager.HasIndex(args.ProtoId))
+        RCDPrototype? prototype;
+        if (!_protoManager.Resolve<RCDPrototype>(args.ProtoId, out prototype))
             return;
 
         // Set the current RCD prototype to the one supplied
         component.ProtoId = args.ProtoId;
 
-        var prototype = _protoManager.Index(component.ProtoId);
         _adminLogger.Add(LogType.RCD, LogImpact.Low, $"{ToPrettyString(args.Actor):user} set RCD mode to: {prototype.Mode} : {prototype.Prototype}");
 
         Dirty(uid, component);
