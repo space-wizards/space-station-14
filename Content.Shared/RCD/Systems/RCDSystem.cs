@@ -94,7 +94,7 @@ public sealed class RCDSystem : EntitySystem
         // Set the current RCD prototype to the one supplied
         component.ProtoId = args.ProtoId;
 
-        _adminLogger.Add(LogType.RCD, LogImpact.Low, $"{ToPrettyString(args.Actor):user} set RCD mode to: {prototype.Mode} : {prototype.Prototype}");
+        _adminLogger.Add(LogType.RCD, LogImpact.Low, $"{args.Actor} set RCD mode to: {prototype.Mode} : {prototype.Prototype}");
 
         Dirty(uid, component);
     }
