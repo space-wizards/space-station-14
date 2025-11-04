@@ -1,4 +1,6 @@
-﻿AdminOnly: true
+AdminOnly: true
+Name: Admin
+Order: 3
 Entries:
 - author: DrSmugleaf
   changes:
@@ -1476,5 +1478,18 @@ Entries:
   id: 179
   time: '2025-10-17T15:38:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40904
-Name: Admin
-Order: 2
+- author: PJB3005
+  changes:
+  - message: Fixed pre-round lobby Discord ahelps showing incorrect round number
+    type: Fix
+  id: 180
+  time: '2025-10-23T14:16:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41060
+- author: beck
+  changes:
+  - message: TPTO command links are now added for admin logs that involve players
+      or coordinates!
+    type: Add
+  id: 181
+  time: '2025-10-27T02:51:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40472
