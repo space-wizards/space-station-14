@@ -88,8 +88,7 @@ public sealed class RCDSystem : EntitySystem
         if (!component.AvailablePrototypes.Contains(args.ProtoId))
             return;
 
-        RCDPrototype? prototype;
-        if (!_protoManager.Resolve<RCDPrototype>(args.ProtoId, out prototype))
+        if (!_protoManager.Resolve<RCDPrototype>(args.ProtoId, out var prototype))
             return;
 
         // Set the current RCD prototype to the one supplied
