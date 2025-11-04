@@ -47,8 +47,14 @@ public sealed partial class BwoinkPanel : BoxContainer
 
         OnVisibilityChanged += c =>
         {
-            if (c.Visible && _managingFor.HasValue)
+            if (!c.Visible)
+                return;
+
+            if (_managingFor.HasValue)
                 _bwoinkManager.GetOrCreatePlayerPropertiesForChannel(_channel.ID, _managingFor.Value).Unread = 0;
+
+            if (!_manager)
+                parentWindow.Title = Loc.GetString(channel.Name);
         };
         SenderLineEdit.OnTextEntered += Input_OnTextEntered;
         SenderLineEdit.OnTextChanged += Input_OnTextChanged;
