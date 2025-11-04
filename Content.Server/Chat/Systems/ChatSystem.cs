@@ -271,8 +271,8 @@ public sealed partial class ChatSystem : SharedChatSystem
             return;
 
         // Systems can differentiate Looc and DeadChat by type, and cancel the speak attempt if necessary.
-        var ev = new LoocSpeakAttemptEvent(sendType);
-        RaiseLocalEvent(source, ref ev);
+        var ev = new InGameOocMessageAttemptEvent(player, sendType);
+        RaiseLocalEvent(source, ref ev, true);
         if (ev.Cancelled)
             return;
 
