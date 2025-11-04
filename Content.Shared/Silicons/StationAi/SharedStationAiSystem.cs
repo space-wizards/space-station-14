@@ -611,6 +611,19 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         return true;
     }
 
+    private bool CanAiRemoteInteract(EntityUid ai, EntityUid target)
+    {
+        var blockedEvent = new StationAiRemoteInteractEvent
+        {
+            InteractedEntity = target,
+            AiEntity = ai,
+        };
+
+        RaiseLocalEvent(target, ref blockedEvent, true);
+
+        return !blockedEvent.Canceled;
+    }
+
     /// <summary>
     /// BUI validation for ai interactions.
     /// </summary>
@@ -654,4 +667,27 @@ public enum StationAiState : byte
     Dead,
     Rebooting,
     Hologram,
+}
+
+
+/// <summary>
+/// Raised on an entity when an AI tries to remotely interact with it.
+/// </summary>
+[ByRefEvent]
+public record struct StationAiRemoteInteractEvent(EntityUid AiEntity, EntityUid InteractedEntity)
+{
+    /// <summary>
+    /// The AI itself
+    /// </summary>
+    public EntityUid AiEntity = AiEntity;
+
+    /// <summary>
+    /// Entity being interacted with
+    /// </summary>
+    public EntityUid InteractedEntity = InteractedEntity;
+
+    /// <summary>
+    /// If the interaction should be cancled or not.
+    /// </summary>
+    public bool Canceled = false;
 }

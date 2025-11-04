@@ -155,15 +155,17 @@ public abstract partial class SharedStationAiSystem
 
     private void OnHeldInteraction(Entity<StationAiHeldComponent> ent, ref InteractionAttemptEvent args)
     {
-        // Cancel if it's not us or something with a whitelist, or whitelist is disabled.
-        args.Cancelled = (!TryComp(args.Target, out StationAiWhitelistComponent? whitelistComponent)
-                          || !whitelistComponent.Enabled)
-                         && ent.Owner != args.Target
-                         && args.Target != null;
-        if (whitelistComponent is { Enabled: false })
-        {
-            ShowDeviceNotRespondingPopup(ent.Owner);
-        }
+        // If its on ourselves or not targeting a specific entity, don't ever block it
+        if (ent.Owner == args.Target || args.Target == null)
+            return;
+
+        // Cancel if it's something with a whitelist, or whitelist is disabled.
+        if (!TryComp<StationAiWhitelistComponent>(args.Target, out var comp) || !comp.Enabled)
+            args.Cancelled = true;
+
+        // Cancel if we can't remotely interact with it
+        if (!CanAiRemoteInteract(args.Uid, args.Target.Value))
+            args.Cancelled = true;
     }
 
     private void OnTargetVerbs(Entity<StationAiWhitelistComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)

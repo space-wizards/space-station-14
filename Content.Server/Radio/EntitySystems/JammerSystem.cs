@@ -13,7 +13,6 @@ public sealed class JammerSystem : SharedJammerSystem
 {
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedDeviceNetworkJammerSystem _jammer = default!;
 
     public override void Initialize()
@@ -109,25 +108,5 @@ public sealed class JammerSystem : SharedJammerSystem
         {
             args.Cancelled = true;
         }
-    }
-
-    private bool ShouldCancelSend(EntityUid sourceUid, int frequency)
-    {
-        var source = Transform(sourceUid).Coordinates;
-        var query = EntityQueryEnumerator<ActiveRadioJammerComponent, RadioJammerComponent, TransformComponent>();
-
-        while (query.MoveNext(out var uid, out _, out var jam, out var transform))
-        {
-            // Check if this jammer excludes the frequency
-            if (jam.FrequenciesExcluded != null && jam.FrequenciesExcluded.Contains(frequency))
-                continue;
-
-            if (_transform.InRange(source, transform.Coordinates, GetCurrentRange((uid, jam))))
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

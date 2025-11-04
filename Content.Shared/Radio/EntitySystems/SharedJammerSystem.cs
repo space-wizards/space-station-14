@@ -3,6 +3,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Examine;
 using Content.Shared.Radio.Components;
 using Content.Shared.DeviceNetwork.Systems;
+using Content.Shared.Silicons.StationAi;
 
 namespace Content.Shared.Radio.EntitySystems;
 
@@ -11,6 +12,7 @@ public abstract class SharedJammerSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedDeviceNetworkJammerSystem _jammer = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -18,6 +20,7 @@ public abstract class SharedJammerSystem : EntitySystem
 
         SubscribeLocalEvent<RadioJammerComponent, GetVerbsEvent<Verb>>(OnGetVerb);
         SubscribeLocalEvent<RadioJammerComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<StationAiRemoteInteractEvent>(OnStationAIRemoteInteractEvent);
     }
 
     private void OnGetVerb(Entity<RadioJammerComponent> entity, ref GetVerbsEvent<Verb> args)
@@ -91,4 +94,28 @@ public abstract class SharedJammerSystem : EntitySystem
         _appearance.SetData(ent, RadioJammerVisuals.ChargeLevel, chargeLevel, ent.Comp);
     }
 
+    private void OnStationAIRemoteInteractEvent(ref StationAiRemoteInteractEvent args)
+    {
+        args.Canceled = ShouldCancelSend(args.InteractedEntity, null);
+    }
+
+    protected bool ShouldCancelSend(EntityUid sourceUid, int? frequency)
+    {
+        var source = Transform(sourceUid).Coordinates;
+        var query = EntityQueryEnumerator<ActiveRadioJammerComponent, RadioJammerComponent, TransformComponent>();
+
+        while (query.MoveNext(out var uid, out _, out var jam, out var transform))
+        {
+            // Check if this jammer excludes the frequency
+            if (frequency != null && jam.FrequenciesExcluded.Contains(frequency.Value))
+                continue;
+
+            if (_transform.InRange(source, transform.Coordinates, GetCurrentRange((uid, jam))))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
