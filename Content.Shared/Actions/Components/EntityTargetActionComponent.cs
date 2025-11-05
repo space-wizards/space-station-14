@@ -26,6 +26,12 @@ public sealed partial class EntityTargetActionComponent : Component
     public EntityTargetActionEvent? Event;
 
     /// <summary>
+    /// Local events to raise when this action is performed.
+    /// </summary>
+    [DataField, NonSerialized]
+    public List<EntityTargetActionEvent> Events = [];
+
+    /// <summary>
     /// Determines which entities are valid targets for this action.
     /// </summary>
     /// <remarks>No whitelist check when null.</remarks>

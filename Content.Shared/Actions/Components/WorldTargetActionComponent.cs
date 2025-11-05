@@ -22,6 +22,12 @@ public sealed partial class WorldTargetActionComponent : Component
     public WorldTargetActionEvent? Event;
 
     /// <summary>
+    /// Local events to raise when this action is performed.
+    /// </summary>
+    [DataField, NonSerialized]
+    public List<WorldTargetActionEvent> Events = [];
+
+    /// <summary>
     /// Whether to make the user face towards the direction where they targeted this action.
     /// </summary>
     [DataField, AutoNetworkedField]

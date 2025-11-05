@@ -78,6 +78,8 @@ public abstract partial class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<WorldTargetActionComponent, ActionSetTargetEvent>(OnWorldSetTarget);
 
         SubscribeLocalEvent<InstantActionComponent, ActionGetEventsEvent>(OnInstantGetEvents);
+        SubscribeLocalEvent<EntityTargetActionComponent, ActionGetEventsEvent>(OnEntityGetEvents);
+        SubscribeLocalEvent<WorldTargetActionComponent, ActionGetEventsEvent>(OnWorldGetEvents);
 
         SubscribeAllEvent<RequestPerformActionEvent>(OnActionRequest);
     }
@@ -495,7 +497,22 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
     private void OnInstantGetEvents(Entity<InstantActionComponent> ent, ref ActionGetEventsEvent args)
     {
-        Log.Debug("OnInstantGetEvents called");
+        if (ent.Comp.Events is {} evs)
+        {
+            args.Events = evs.OfType<BaseActionEvent>().ToList();
+        }
+    }
+
+    private void OnEntityGetEvents(Entity<EntityTargetActionComponent> ent, ref ActionGetEventsEvent args)
+    {
+        if (ent.Comp.Events is {} evs)
+        {
+            args.Events = evs.OfType<BaseActionEvent>().ToList();
+        }
+    }
+
+    private void OnWorldGetEvents(Entity<WorldTargetActionComponent> ent, ref ActionGetEventsEvent args)
+    {
         if (ent.Comp.Events is {} evs)
         {
             args.Events = evs.OfType<BaseActionEvent>().ToList();
@@ -573,7 +590,8 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
         if (actionEvents is { Count: > 0 } evs)
         {
-            Log.Debug("Performing multiple action events");
+            // Performing multiple action events
+
             foreach (var eve in evs)
             {
                 eve.Performer = performer;
@@ -610,7 +628,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
             return;
         }
 
-        Log.Debug("Performing singular action event");
+        // Performing singular action event
 
         actionEvent ??= GetEvent(action);
 
