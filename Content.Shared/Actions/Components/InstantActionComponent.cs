@@ -17,4 +17,10 @@ public sealed partial class InstantActionComponent : Component
     /// </summary>
     [DataField(required: true), NonSerialized]
     public InstantActionEvent? Event;
+
+    /// <summary>
+    /// Local events to raise when this action is performed.
+    /// </summary>
+    [DataField, NonSerialized]
+    public List<InstantActionEvent> Events = [];
 }

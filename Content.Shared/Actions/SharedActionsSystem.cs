@@ -77,6 +77,8 @@ public abstract partial class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<EntityTargetActionComponent, ActionSetTargetEvent>(OnEntitySetTarget);
         SubscribeLocalEvent<WorldTargetActionComponent, ActionSetTargetEvent>(OnWorldSetTarget);
 
+        SubscribeLocalEvent<InstantActionComponent, ActionGetEventsEvent>(OnInstantGetEvents);
+
         SubscribeAllEvent<RequestPerformActionEvent>(OnActionRequest);
     }
 
@@ -491,6 +493,15 @@ public abstract partial class SharedActionsSystem : EntitySystem
             args.Event = ev;
     }
 
+    private void OnInstantGetEvents(Entity<InstantActionComponent> ent, ref ActionGetEventsEvent args)
+    {
+        Log.Debug("OnInstantGetEvents called");
+        if (ent.Comp.Events is {} evs)
+        {
+            args.Events = evs.OfType<BaseActionEvent>().ToList();
+        }
+    }
+
     private void OnInstantSetEvent(Entity<InstantActionComponent> ent, ref ActionSetEventEvent args)
     {
         if (args.Event is InstantActionEvent ev)
@@ -544,8 +555,9 @@ public abstract partial class SharedActionsSystem : EntitySystem
     /// <param name="performer">The entity performing the action</param>
     /// <param name="action">The action being performed</param>
     /// <param name="actionEvent">An event override to perform. If null, uses <see cref="GetEvent"/></param>
+    /// <param name="actionEvents">List of event overrides to perform. If null, uses <see cref="GetEvents"/></param>
     /// <param name="predicted">If false, prevents playing the action's sound on the client</param>
-    public void PerformAction(Entity<ActionsComponent?> performer, Entity<ActionComponent> action, BaseActionEvent? actionEvent = null, bool predicted = true)
+    public void PerformAction(Entity<ActionsComponent?> performer, Entity<ActionComponent> action, BaseActionEvent? actionEvent = null, List<BaseActionEvent>? actionEvents = null, bool predicted = true)
     {
         var handled = false;
 
@@ -555,6 +567,16 @@ public abstract partial class SharedActionsSystem : EntitySystem
             Log.Error($"{ToPrettyString(performer)} is attempting to perform an action {ToPrettyString(action)} that is attached to another entity {ToPrettyString(action.Comp.AttachedEntity)}");
             return;
         }
+
+        actionEvents ??= GetEvents(action);
+
+        if (actionEvents != null)
+        {
+            Log.Debug("Performing multiple action events");
+            return;
+        }
+
+        Log.Debug("Performing singular action event");
 
         actionEvent ??= GetEvent(action);
 
@@ -1023,6 +1045,14 @@ public abstract partial class SharedActionsSystem : EntitySystem
         var ev = new ActionGetEventEvent();
         RaiseLocalEvent(uid, ref ev);
         return ev.Event;
+    }
+
+    public List<BaseActionEvent>? GetEvents(EntityUid uid)
+    {
+        DebugTools.Assert(_actionQuery.HasComp(uid), $"Entity {ToPrettyString(uid)} is missing ActionComponent");
+        var ev = new ActionGetEventsEvent();
+        RaiseLocalEvent(uid, ref ev);
+        return ev.Events;
     }
 
     public bool SetEventTarget(EntityUid uid, EntityUid target)
