@@ -1099,6 +1099,11 @@ public abstract partial class SharedActionsSystem : EntitySystem
         return ev.Event;
     }
 
+    /// <summary>
+    /// Raises an event that gets the type of event of the supplied action through component subscriptions
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <returns></returns>
     public List<BaseActionEvent>? GetEvents(EntityUid uid)
     {
         DebugTools.Assert(_actionQuery.HasComp(uid), $"Entity {ToPrettyString(uid)} is missing ActionComponent");
