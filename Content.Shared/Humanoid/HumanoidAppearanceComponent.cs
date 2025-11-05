@@ -106,6 +106,12 @@ public sealed partial class HumanoidAppearanceComponent : Component
     /// </summary>
     [DataField]
     public Dictionary<HumanoidVisualLayers, DisplacementData> MarkingsDisplacement = new();
+
+    /// <summary>
+    /// Alternate displacement maps, which if available, will be selected for the player of the appropriate gender.
+    /// </summary>
+    [DataField]
+    public Dictionary<HumanoidVisualLayers, DisplacementData> FemaleMarkingsDisplacement = new();
 }
 
 [DataDefinition]
