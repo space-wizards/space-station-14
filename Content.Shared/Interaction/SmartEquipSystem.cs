@@ -10,7 +10,6 @@ using Content.Shared.Stacks;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Whitelist;
-using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
@@ -38,12 +37,17 @@ public sealed class SmartEquipSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        _netConfigurationManager.OnClientCVarChanges(CCVars.TakeBeforeStorage, (x, session) =>
+        _netConfigurationManager.OnClientCVarChanges(CCVars.TakeBeforeStorage,
+        (x, session) =>
         {
             if (x)
                 _getItemBeforeStorage.Add(session);
             else
                 _getItemBeforeStorage.Remove(session);
+        },
+        (session) =>
+        {
+            _getItemBeforeStorage.Remove(session);
         });
 
         CommandBinds.Builder
