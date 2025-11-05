@@ -102,7 +102,11 @@
   # - type: FootPrints
     # leftBarePrint: "footprint-left-bare-lizard"
     # rightBarePrint: "footprint-right-bare-lizard"
-
+  - type: Language
+    selectedLanguage: GeneralLanguage
+    knownLanguages:
+    - KoboltLanguage
+    - GeneralLanguage
 
 - type: entity
   parent: BaseSpeciesDummy
@@ -129,8 +133,3 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
-  - type: Language
-    selectedLanguage: GeneralLanguage
-    knownLanguages:
-    - KoboltLanguage
-    - GeneralLanguage
