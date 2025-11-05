@@ -590,8 +590,8 @@ public abstract partial class SharedActionsSystem : EntitySystem
                 RaiseLocalEvent(eveTarget, (object) eve, broadcast: true);
                 handled = eve.Handled;
 
-                //if (!handled)
-                    //return;
+                if (!handled)
+                    return;
 
                 if (eve.Toggle)
                     SetToggled((action, action), !action.Comp.Toggled);
@@ -606,8 +606,6 @@ public abstract partial class SharedActionsSystem : EntitySystem
                 var evePerformed = new ActionPerformedEvent(performer);
                 RaiseLocalEvent(action, ref evePerformed);
             }
-
-
 
             return;
         }
