@@ -14,15 +14,18 @@ public sealed partial class ChargedElectrovaeDischargeReaction : IGasReactionEff
 {
     public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem, float heatScale)
     {
+        const float intensityDivisor = 2f;
+        const float dischargeRate = 0.025f;
+
         var initialCE = mixture.GetMoles(Gas.ChargedElectrovae);
         if (holder is not TileAtmosphere tileAtmos)
             return ReactionResult.NoReaction;
 
-        var intensity = Math.Min(initialCE / 2f, 1f);
+        var intensity = Math.Min(initialCE / intensityDivisor, 1f);
         atmosphereSystem.ChargedElectrovaeExpose(tileAtmos, intensity);
 
         // Slowly discharge: ChargedElectrovae -> Electrovae
-        var dischargeAmount = Math.Min(initialCE * 0.025f, initialCE);
+        var dischargeAmount = Math.Min(initialCE * dischargeRate, initialCE);
         mixture.AdjustMoles(Gas.ChargedElectrovae, -dischargeAmount);
         mixture.AdjustMoles(Gas.Electrovae, dischargeAmount);
 

@@ -15,26 +15,31 @@ public sealed partial class ElectrovaeChargeReaction : IGasReactionEffect
 {
     public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem, float heatScale)
     {
+        const float minimumMolesToReact = 0.01f;
+        const float chargeRateMultiplier = 0.1f;
+
         var initialE = mixture.GetMoles(Gas.Electrovae);
-        if (initialE < 0.01f || holder is not TileAtmosphere tileAtmos)
+        if (holder is not TileAtmosphere tileAtmos)
             return ReactionResult.NoReaction;
 
         var efficiency = CalculateHeatBasedEfficiency(mixture.Temperature);
-        if (efficiency < 0.01f)
+        if (efficiency < minimumMolesToReact)
             return ReactionResult.NoReaction;
 
         // Scale the reaction by efficiency and available electrovae
-        var chargeAmount = Math.Min(initialE * efficiency * 0.1f, initialE);
+        var chargeAmount = Math.Min(initialE * efficiency * chargeRateMultiplier, initialE);
 
         mixture.AdjustMoles(Gas.Electrovae, -chargeAmount);
         mixture.AdjustMoles(Gas.ChargedElectrovae, chargeAmount);
 
         // Expose the tile to charged electrovae - AtmosphereSystem will handle the rest
-        var intensity = Math.Min(mixture.GetMoles(Gas.ChargedElectrovae) / 2f, 1f);
+        const float intensityDivisor = 2f;
+        var intensity = Math.Min(mixture.GetMoles(Gas.ChargedElectrovae) / intensityDivisor, 1f);
         atmosphereSystem.ChargedElectrovaeExpose(tileAtmos, intensity);
 
         // Consume some heat energy during the charging process
-        var energyConsumed = chargeAmount * 5000f; // 5kJ per mole
+        const float energyPerMole = 5000f; // 5kJ per mole
+        var energyConsumed = chargeAmount * energyPerMole;
         var oldHeatCapacity = atmosphereSystem.GetHeatCapacity(mixture, true);
         if (oldHeatCapacity > Atmospherics.MinimumHeatCapacity)
             mixture.Temperature = Math.Max(mixture.Temperature - energyConsumed / oldHeatCapacity, Atmospherics.TCMB);
@@ -50,6 +55,7 @@ public sealed partial class ElectrovaeChargeReaction : IGasReactionEffect
         // Efficient above 1508K, peaks around 1984K+
         const float minTemp = 1508f;
         const float maxTemp = 1984f;
+        const float temperatureExponent = 1.2f;
 
         if (temperature < minTemp)
             return 0f;
@@ -58,6 +64,6 @@ public sealed partial class ElectrovaeChargeReaction : IGasReactionEffect
             return 1f;
 
         var normalized = (temperature - minTemp) / (maxTemp - minTemp);
-        return MathF.Pow(normalized, 1.2f);
+        return MathF.Pow(normalized, temperatureExponent);
     }
 }

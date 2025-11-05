@@ -9,7 +9,7 @@ namespace Content.Server.Atmos.Reactions;
 ///     Produces electrovae from water vapor and nitrous oxide;
 ///     Chemical Equation: 11N₂O + 2H₂O → H₄N₂₂O₁₁ + O₂
 ///     (H₄N₂₂O₁₁ = Electrovae), and yes, O₂ is created;
-///     So avoid having electricity nearby if you don't want it rapidly changing to charged electrovae and EMPing everything.
+///     So avoid having electrovae at high temperature if you don't want it rapidly changing to charged electrovae and discharging.
 ///     This reaction is temperature-dependent, with higher temperatures increasing efficiency.
 ///     Nitrogen acts as both a catalyst (enabling the reaction) and a limiter (preventing runaway production), is not consumed.
 /// </summary>
@@ -24,12 +24,11 @@ public sealed partial class ElectrovaeProductionReaction : IGasReactionEffect
 
         const float h2oRatio = 2f;
         const float n2oRatio = 11f;
+        const float minimumEfficiency = 0.01f;
 
         // The amount of catalyst determines the MAXIMUM amount of reaction that can occur.
         // 6% is the optimal catalyst proportion. We calculate a catalyst factor.
         var totalMoles = initialN2 + initialH2O + initialN2O;
-        if (totalMoles < 0.01f)
-            return ReactionResult.NoReaction;
 
         var catalystProportion = initialN2 / totalMoles;
         var catalystFactor = Math.Clamp(catalystProportion / Atmospherics.ElectrovaeProductionNitrogenRatio, 0f, 1f);
@@ -44,7 +43,7 @@ public sealed partial class ElectrovaeProductionReaction : IGasReactionEffect
 
         // Arrhenius: Yield is highest at high temperatures and drops to zero as temperature decreases.
         var efficiency = CalculateArrheniusEfficiency(mixture.Temperature);
-        if (efficiency < 0.01f)
+        if (efficiency < minimumEfficiency)
             return ReactionResult.NoReaction;
 
         // Scale the reaction by the inverse thermal efficiency.
@@ -59,7 +58,7 @@ public sealed partial class ElectrovaeProductionReaction : IGasReactionEffect
         mixture.AdjustMoles(Gas.Electrovae, electrovaeProduced);
         mixture.AdjustMoles(Gas.Oxygen, electrovaeProduced);
 
-        return (reactionSets > 0.01f) ? ReactionResult.Reacting : ReactionResult.NoReaction;
+        return (reactionSets > minimumEfficiency) ? ReactionResult.Reacting : ReactionResult.NoReaction;
     }
 
     private static float CalculateArrheniusEfficiency(float temperature)

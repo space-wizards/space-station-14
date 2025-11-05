@@ -33,6 +33,9 @@ public sealed partial class AtmosphereSystem
         Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
         TileAtmosphere tile)
     {
+        const float minimumChargedMoles = 0.01f;
+        const float intensityDivisor = 2f;
+
         if (!tile.ChargedEffect.Active)
             return;
 
@@ -44,27 +47,33 @@ public sealed partial class AtmosphereSystem
         }
 
         var chargedMoles = mixture.GetMoles(Gas.ChargedElectrovae);
-        if (chargedMoles < 0.01f)
+        if (chargedMoles < minimumChargedMoles)
         {
             RestorePowerRequirements(tile);
             tile.ChargedEffect = default;
             return;
         }
 
-        tile.ChargedEffect.Intensity = Math.Min(chargedMoles / 2f, 1f);
+        tile.ChargedEffect.Intensity = Math.Min(chargedMoles / intensityDivisor, 1f);
 
         // Update visual state based on intensity
+        const float highIntensityThreshold = 0.75f;  // 1.5+ moles
+        const float mediumIntensityThreshold = 0.5f;  // 1.0+ moles
+        const float lowIntensityThreshold = 0.25f;    // 0.5+ moles
+
         tile.ChargedEffect.State = tile.ChargedEffect.Intensity switch
         {
-            >= 0.75f => 3,  // 1.5+ moles
-            >= 0.5f => 2,   // 1.0+ moles
-            >= 0.25f => 1,  // 0.5+ moles
+            >= highIntensityThreshold => 3,
+            >= mediumIntensityThreshold => 2,
+            >= lowIntensityThreshold => 1,
             _ => 0
         };
 
+        const float lookupFlags = 0f;
+
         _entSet.Clear();
         _lookup.GetLocalEntitiesIntersecting(
-            tile.GridIndex, tile.GridIndices, _entSet, 0f);
+            tile.GridIndex, tile.GridIndices, _entSet, lookupFlags);
 
         foreach (var entity in _entSet)
         {
@@ -83,7 +92,8 @@ public sealed partial class AtmosphereSystem
             // Lightning strikes on mobs
             if (_mobQuery.HasComponent(entity))
             {
-                var strikeChance = tile.ChargedEffect.Intensity * 0.01f;
+                const float lightningChanceMultiplier = 0.01f;
+                var strikeChance = tile.ChargedEffect.Intensity * lightningChanceMultiplier;
                 if (_random.Prob(strikeChance))
                 {
                     ApplyLightningStrike(entity, tile.ChargedEffect.Intensity);
@@ -98,9 +108,11 @@ public sealed partial class AtmosphereSystem
     /// </summary>
     private void RestorePowerRequirements(TileAtmosphere tile)
     {
+        const float lookupFlags = 0f;
+
         _entSet.Clear();
         _lookup.GetLocalEntitiesIntersecting(
-            tile.GridIndex, tile.GridIndices, _entSet, 0f);
+            tile.GridIndex, tile.GridIndices, _entSet, lookupFlags);
 
         foreach (var entity in _entSet)
         {
@@ -117,7 +129,10 @@ public sealed partial class AtmosphereSystem
     /// </summary>
     private void ChargeBattery(EntityUid uid, BatteryComponent battery, float intensity, float chargedMoles)
     {
-        if (intensity < 0.1f)
+        const float minimumIntensityToCharge = 0.1f;
+        const float chargeRatePerIntensity = 400f; // Watts
+
+        if (intensity < minimumIntensityToCharge)
         {
             // Restore original max charge if we had expanded it
             RestoreBatteryCapacity(uid, battery);
@@ -125,7 +140,7 @@ public sealed partial class AtmosphereSystem
         }
 
         // Charge rate scales with intensity (0 to 0.4kW)
-        var chargeRate = intensity * 400f;
+        var chargeRate = intensity * chargeRatePerIntensity;
         _battery.ChangeCharge(uid, chargeRate, battery);
 
         ExpandBatteryCapacity(uid, battery, chargedMoles);
@@ -137,6 +152,8 @@ public sealed partial class AtmosphereSystem
     /// </summary>
     private void ExpandBatteryCapacity(EntityUid uid, BatteryComponent battery, float chargedMoles)
     {
+        const float expansionDecayConstant = 20f; // Controls how quickly we approach 2x capacity
+
         if (!_originalBatteryCapacities.TryGetValue(uid, out var originalMaxCharge))
         {
             originalMaxCharge = battery.MaxCharge;
@@ -145,7 +162,7 @@ public sealed partial class AtmosphereSystem
 
         // Calculate expansion multiplier using asymptotic curve
         // 20 moles = 1.63x, 40 moles = 1.86x, 80 moles = 1.98x, 200 moles = 1.9999x
-        var expansionMultiplier = 1f + (1f - MathF.Exp(-chargedMoles / 20f));
+        var expansionMultiplier = 1f + (1f - MathF.Exp(-chargedMoles / expansionDecayConstant));
 
         var newMaxCharge = originalMaxCharge * expansionMultiplier;
         _battery.SetMaxCharge(uid, newMaxCharge, battery);
@@ -170,7 +187,9 @@ public sealed partial class AtmosphereSystem
         ApcPowerReceiverComponent receiver,
         float intensity)
     {
-        if (intensity < 0.1f)
+        const float minimumIntensityToPower = 0.1f;
+
+        if (intensity < minimumIntensityToPower)
         {
             if (!receiver.NeedsPower)
                 receiver.NeedsPower = true;
@@ -188,8 +207,13 @@ public sealed partial class AtmosphereSystem
         // Scale damage and stun time based on intensity
         // At low intensity: 5 damage, 1 second stun
         // At high intensity: 10 damage, 3 seconds stun
-        var damage = (int)(5 + intensity * 5);
-        var stunTime = TimeSpan.FromSeconds(1 + intensity * 2);
+        const int baseDamage = 5;
+        const int damagePerIntensity = 5;
+        const float baseStunSeconds = 1f;
+        const float stunSecondsPerIntensity = 2f;
+
+        var damage = (int)(baseDamage + intensity * damagePerIntensity);
+        var stunTime = TimeSpan.FromSeconds(baseStunSeconds + intensity * stunSecondsPerIntensity);
 
         _electrocution.TryDoElectrocution(
             target,
