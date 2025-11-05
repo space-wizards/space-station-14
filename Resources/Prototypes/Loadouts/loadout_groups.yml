@@ -485,18 +485,12 @@
   - JanitorWintercoat
 
 - type: loadoutGroup
-  id: JanitorPlunger
-  name: loadout-group-janitor-plunger
-  minLimit: 0
-  loadouts:
-  - JanitorGoldenPlunger
-
-- type: loadoutGroup
   id: JanitorJobTrinkets
   name: loadout-group-jobtrinkets
   minLimit: 0
   loadouts:
   - LizardPlushieJanitor
+  - JanitorGoldenPlunger
 
 - type: loadoutGroup
   id: BotanistHead
