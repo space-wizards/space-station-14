@@ -18,7 +18,8 @@ public sealed partial class WorldTargetActionComponent : Component
     /// <summary>
     ///     The local-event to raise when this action is performed.
     /// </summary>
-    [DataField(required: true), NonSerialized]
+    [DataField, NonSerialized]
+    [Obsolete("Actions can now use multiple events instead")]
     public WorldTargetActionEvent? Event;
 
     /// <summary>

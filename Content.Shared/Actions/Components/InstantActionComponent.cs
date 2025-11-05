@@ -16,6 +16,7 @@ public sealed partial class InstantActionComponent : Component
     ///     The local-event to raise when this action is performed.
     /// </summary>
     [DataField, NonSerialized]
+    [Obsolete("Actions can now use multiple events instead")]
     public InstantActionEvent? Event;
 
     /// <summary>
