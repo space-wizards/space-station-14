@@ -22,18 +22,13 @@ public sealed class HailerSystem : SharedHailerSystem
         if (ev.Handled)
             return;
 
-        //Try to get BUI if already open
-        if (_ui.TryGetOpenUi(ent.Owner, HailerUiKey.Key, out var bui))
-        {
-            //ev.Handled = true;
-        }
-        else if (TryComp<MaskComponent>(ent, out var mask))
+        if (TryComp<MaskComponent>(ent, out var mask))
         {
             if (!mask.IsToggled && !ent.Comp.AreWiresCut)
             {
                 //Otherwise, open it
+                ev.Handled = true;
                 _ui.TryOpenUi(ent.Owner, HailerUiKey.Key, ev.Performer, predicted: true);
-                //ev.Handled = true;
             }
         }
     }

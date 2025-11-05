@@ -1,4 +1,3 @@
-## TEST
 - type: entity
   id: HailerBase
   abstract: true
@@ -18,7 +17,7 @@
     speechVerb: DefaultExclamationStrong
     suffixSpeechVerbs:
       chat-speech-verb-suffix-exclamation: DefaultExclamationStrong
-##
+
 - type: entity
   id: HailerSecurity
   abstract: true
@@ -79,4 +78,3 @@
     interfaces:
       enum.HailerUiKey.Key:
         type: HailerBoundUserInterface
-##

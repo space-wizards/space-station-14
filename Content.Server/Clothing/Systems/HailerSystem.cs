@@ -1,6 +1,9 @@
+using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Emag.Components;
+using Content.Shared.Timing;
 using Robust.Server.Audio;
 using Robust.Shared.Audio;
 
@@ -9,6 +12,7 @@ namespace Content.Server.Clothing.Systems;
 public sealed class HailerSystem : SharedHailerSystem
 {
     [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private readonly UseDelaySystem _delay = default!;
 
     public override void Initialize()
     {
@@ -17,31 +21,35 @@ public sealed class HailerSystem : SharedHailerSystem
         SubscribeLocalEvent<HailerComponent, HailerOrderMessage>(OnHailOrder);
     }
 
-    private void OnHailOrder(EntityUid uid, HailerComponent comp, HailerOrderMessage args)
+    private void OnHailOrder(Entity<HailerComponent> ent, ref HailerOrderMessage args)
     {
+        if (TryComp<UseDelayComponent>(ent.Owner, out var delay))
+        {
+            _delay.TryResetDelay(ent.Owner);
+        }
+
         string soundCollection;
         string localeText;
-        Entity<HailerComponent> ent = (uid, comp);
 
-        if (HasComp<EmaggedComponent>(ent) && comp.EmagLevelPrefix != null)
+        if (HasComp<EmaggedComponent>(ent) && ent.Comp.EmagLevelPrefix != null)
         {
             //Emag lines
-            localeText = soundCollection = comp.EmagLevelPrefix;
+            localeText = soundCollection = ent.Comp.EmagLevelPrefix;
         }
         else
         {
             //Set the strings needed for choosing a file in the SoundCollection and the corresponding loc string
-            var orderUsed = comp.Orders[args.OrderIndex];
-            var hailLevel = comp.CurrentHailLevel != null ? "-" + comp.CurrentHailLevel.Value.Name : String.Empty;
+            var orderUsed = ent.Comp.Orders[args.OrderIndex];
+            var hailLevel = ent.Comp.CurrentHailLevel != null ? "-" + ent.Comp.CurrentHailLevel.Value.Name : String.Empty;
             soundCollection = orderUsed.SoundCollection + hailLevel;
             localeText = orderUsed.LocalePrefix + hailLevel;
         }
 
         //Play voice audio line and we get the index of the randomly choosen sound in the SoundCollection
-        var index = PlayVoiceLineSound((uid, comp), soundCollection);
+        var index = PlayVoiceLineSound(ent, soundCollection);
 
         //Send chat message, based on the index of the audio file to match with the loc string
-        SubmitChatMessage((uid, comp), localeText, index);
+        SubmitChatMessage(ent, localeText, index);
     }
 
     /// <summary>
