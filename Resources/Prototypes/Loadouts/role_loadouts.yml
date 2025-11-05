@@ -91,6 +91,7 @@
   - ChefJumpsuit
   - CommonBackpack
   - ChefOuterClothing
+  - ChefShoes
   - Glasses
   - Survival
   - Trinkets
@@ -240,6 +241,7 @@
   - CargoTechnicianJumpsuit
   - CargoTechnicianBackpack
   - CargoTechnicianOuterClothing
+  - CargoTechnicianGloves
   - CargoTechnicianShoes
   - CargoTechnicianID
   - Glasses

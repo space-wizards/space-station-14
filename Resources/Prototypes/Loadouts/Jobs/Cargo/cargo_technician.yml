@@ -57,6 +57,12 @@
   equipment:
     outerClothing: ClothingOuterWinterCargo
 
+# Gloves
+- type: loadout
+  id: FingerlessGloves # Not putting "CargoTechnician" in the ID here; this is a pretty generic item and this loadout prototype should probably be moved once we have a "generic" loadout-item file
+  equipment:
+    gloves: ClothingHandsGlovesFingerless
+
 # Shoes
 - type: loadout
   id: CargoWinterBoots

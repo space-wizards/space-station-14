@@ -50,6 +50,7 @@ loadout-group-chef-head = Chef head
 loadout-group-chef-mask = Chef mask
 loadout-group-chef-jumpsuit = Chef jumpsuit
 loadout-group-chef-outerclothing = Chef outer clothing
+loadout-group-chef-shoes = Chef shoes
 
 loadout-group-librarian-jumpsuit = Librarian jumpsuit
 
@@ -101,6 +102,7 @@ loadout-group-cargo-technician-head = Cargo Technician head
 loadout-group-cargo-technician-jumpsuit = Cargo Technician jumpsuit
 loadout-group-cargo-technician-backpack = Cargo Technician backpack
 loadout-group-cargo-technician-outerclothing = Cargo Technician outer clothing
+loadout-group-cargo-technician-gloves = Cargo technician gloves
 loadout-group-cargo-technician-shoes = Cargo Technician shoes
 loadout-group-cargo-technician-id = Cargo Technician ID
 

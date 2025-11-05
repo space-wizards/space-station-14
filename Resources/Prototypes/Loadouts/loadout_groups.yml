@@ -340,6 +340,13 @@
   - ChefWintercoat
 
 - type: loadoutGroup
+  id: ChefShoes
+  name: loadout-group-chef-shoes
+  loadouts:
+  - ChefClothingShoes
+  - BlackShoes
+
+- type: loadoutGroup
   id: ChefJobTrinkets
   name: loadout-group-jobtrinkets
   minLimit: 0
@@ -792,6 +799,13 @@
   - CargoTechnicianWintercoat
 
 - type: loadoutGroup
+  id: CargoTechnicianGloves
+  name: loadout-group-cargo-technician-gloves
+  minLimit: 0
+  loadouts:
+  - FingerlessGloves
+
+- type: loadoutGroup
   id: CargoTechnicianShoes
   name: loadout-group-cargo-technician-shoes
   loadouts:
@@ -1073,6 +1087,7 @@
   loadouts:
   - ScientistJumpsuit
   - ScientistJumpskirt
+  - ScientistJumpsuitFormal
   - RoboticistJumpsuit
   - RoboticistJumpskirt
   - SeniorResearcherJumpsuit
@@ -1232,6 +1247,7 @@
   - SecurityJumpskirt
   - SecurityJumpsuitGrey
   - SecurityJumpskirtGrey
+  - SecurityJumpsuitBlue
   - SeniorOfficerJumpsuit
   - SeniorOfficerJumpskirt
   - TrooperUniform

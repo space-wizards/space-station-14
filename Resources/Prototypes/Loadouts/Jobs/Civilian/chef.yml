@@ -36,3 +36,9 @@
   id: ChefWintercoat
   equipment:
     outerClothing: ClothingOuterWinterChef
+
+# Shoes
+- type: loadout
+  id: ChefClothingShoes
+  equipment:
+    shoes: ClothingShoesChef
