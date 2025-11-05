@@ -1,7 +1,7 @@
 ent-BaseShutter = shutter
     .desc = One shudders to think about what might be behind this shutter.
-ent-ShuttersNormal = { ent-BaseShutter }
-    .desc = { ent-BaseShutter.desc }
+ent-ShuttersNormal = { ent-BaseDeltaPressureGlass }
+    .desc = { ent-BaseDeltaPressureGlass.desc }
 ent-ShuttersNormalOpen = { ent-ShuttersNormal }
     .suffix = Open
     .desc = { ent-ShuttersNormal.desc }

@@ -1,10 +1,9 @@
 - type: entity
-  parent: DrinkGlassBase
+  parent: DrinkGlass
   id: ADTVodkaAntivirusGlass
   name: водка "Антивирус"
   description: Может уничтожить 99,9% микрофлоры вашего кишечника и желудка. Бонусом от вас уйдет печень.
   components:
-  - type: Drink
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -12,6 +11,6 @@
         reagents:
         - ReagentId: ADTVodkaAntivirus
           Quantity: 30
-  - type: Sprite
+  - type: Icon
     sprite: _ADT/Objects/Consumable/Drinks/vodka_antivirusglass.rsi
     state: icon

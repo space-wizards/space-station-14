@@ -45,4 +45,3 @@ stack-plastitanium =
         [few] листа
        *[other] листов
     } пластитана
-

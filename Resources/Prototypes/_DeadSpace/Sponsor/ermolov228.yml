@@ -9,7 +9,7 @@
   files:
     - /Audio/_DeadSpace/Sponsor/ermolov228/whistle_1.ogg
     - /Audio/_DeadSpace/Sponsor/ermolov228/whistle_2.ogg
-  
+
 # Backpack
 - type: entity
   parent: ClothingBackpack
@@ -27,13 +27,13 @@
     - 0,0,15,5
   - type: StorageFill
     contents:
-      - id: ClothingNeckErmolov228 
-      - id: ClothingOuterHardsuitErmolov228 
-      - id: WhistleErmolov228 
-      - id: JetpackVoidFilledErmolov228 
-      - id: ClothingBeltErmolov228 
-      - id: PDAErmolov228 
-      - id: ObjectsMugErmolov228 
+      - id: ClothingNeckErmolov228
+      - id: ClothingOuterHardsuitErmolov228
+      - id: WhistleErmolov228
+      - id: JetpackVoidFilledErmolov228
+      - id: ClothingBeltErmolov228
+      - id: PDAErmolov228
+      - id: ObjectsMugErmolov228
       - id: ClothingShoesBootsMagErmolov228
       - id: ClothingHandsGlovesCombatErmolov228
       - id: PaperLawErmolov228
@@ -61,7 +61,7 @@
       - id: JawsOfLife
       - id: WelderExperimental
       - id: Multitool
-      
+
 # Neck
 - type: entity
   parent: ClothingNeckBase

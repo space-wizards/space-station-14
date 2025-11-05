@@ -49374,7 +49374,6 @@ entities:
     - pos: -21.5,2.5
       parent: 30
       type: Transform
-    - type: BombingTarget
 - proto: WarpPointBeaconCargo
   entities:
   - uid: 2367
@@ -49382,7 +49381,6 @@ entities:
     - pos: -20.5,17.5
       parent: 30
       type: Transform
-    - type: BombingTarget
   - uid: 6650
     components:
     - rot: -1.5707963267948966 rad
@@ -49393,7 +49391,6 @@ entities:
       type: NavMapBeacon
     - location: salvage
       type: WarpPoint
-    - type: BombingTarget
 - proto: WarpPointBeaconCommand
   entities:
   - uid: 600
@@ -49406,7 +49403,6 @@ entities:
       type: NavMapBeacon
     - location: hop's office
       type: WarpPoint
-    - type: BombingTarget
   - uid: 910
     components:
     - rot: 1.5707963267948966 rad
@@ -49417,7 +49413,6 @@ entities:
       type: NavMapBeacon
     - location: bridge
       type: WarpPoint
-    - type: BombingTarget
   - uid: 1071
     components:
     - pos: 22.5,6.5
@@ -49446,7 +49441,6 @@ entities:
       type: NavMapBeacon
     - location: telecomms
       type: WarpPoint
-    - type: BombingTarget
   - uid: 6531
     components:
     - rot: 1.5707963267948966 rad
@@ -49457,7 +49451,6 @@ entities:
       type: NavMapBeacon
     - location: vault
       type: WarpPoint
-    - type: BombingTarget
   - uid: 7600
     components:
     - rot: 3.141592653589793 rad
@@ -49485,7 +49478,6 @@ entities:
     - pos: -32.5,2.5
       parent: 30
       type: Transform
-    - type: BombingTarget
   - uid: 6318
     components:
     - pos: -34.5,9.5
@@ -49504,7 +49496,6 @@ entities:
       type: NavMapBeacon
     - location: atmospherics
       type: WarpPoint
-    - type: BombingTarget
 - proto: WarpPointBeaconMedical
   entities:
   - uid: 2493
@@ -49512,7 +49503,6 @@ entities:
     - pos: 6.5,-1.5
       parent: 30
       type: Transform
-    - type: BombingTarget
   - uid: 4301
     components:
     - pos: 11.5,-7.5
@@ -49671,13 +49661,11 @@ entities:
       type: NavMapBeacon
     - location: armory
       type: WarpPoint
-    - type: BombingTarget
   - uid: 930
     components:
     - pos: 9.5,10.5
       parent: 30
       type: Transform
-    - type: BombingTarget
   - uid: 962
     components:
     - rot: 3.141592653589793 rad
@@ -49763,7 +49751,6 @@ entities:
       type: Transform
     - location: chapel
       type: WarpPoint
-    - type: BombingTarget
     missingComponents:
     - NavMapBeacon
 - proto: WaterCooler

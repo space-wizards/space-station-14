@@ -1,7 +1,9 @@
 ent-BaseImplanter = implanter
     .desc = { ent-BaseItem.desc }
-ent-Implanter = { ent-BaseImplanter }
-    .desc = A disposable syringe exclusively designed for the injection and extraction of subdermal implants.
+ent-Implanter = implant extractor
+    .desc =
+        A dual-purpose syringe designed for the removal of specific subdermal implants. Once an implant is extracted, it is stored within and can be re-administered.
+        WARNING: Operator error, such as selecting a non-present implant type, causes severe genetic trauma to the operator.
 ent-ImplanterAdmeme = { ent-Implanter }
     .suffix = Admeme
     .desc = { ent-Implanter.desc }

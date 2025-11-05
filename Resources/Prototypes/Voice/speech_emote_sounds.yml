@@ -503,9 +503,11 @@
     variation: 0.125
   sounds:
     Laugh:
-      collection: MaleLaugh
+      collection: VulpkaninLaugh # DS14
     Sneeze:
-      collection: MaleSneezes
+      collection: VulpkaninSneezes # DS14
+    Crying:
+      collection: VulpkaninCry # DS14
     Cough:
       collection: MaleCoughs
     Whistle:
@@ -513,7 +515,7 @@
     Sigh:
       collection: MaleSigh
     Scream:
-      collection: VulpkaninScreams
+      collection: VulpkaninMaleScreams # DS14
     Growl:
       collection: VulpkaninGrowls
     Snarl:
@@ -523,7 +525,7 @@
     Whine:
       collection: VulpkaninWhines
     Howl:
-      collection: VulpkaninHowls
+      collection: VulpkaninMaleHowl # DS14
     Gasp:
       collection: MaleGasp
     DefaultDeathgasp:
@@ -535,9 +537,11 @@
     variation: 0.125
   sounds:
     Laugh:
-      collection: FemaleLaugh
+      collection: VulpkaninLaugh # DS14
     Sneeze:
-      collection: FemaleSneezes
+      collection: VulpkaninSneezes # DS14
+    Crying:
+      collection: VulpkaninCry # DS14
     Cough:
       collection: FemaleCoughs
     Whistle:
@@ -545,7 +549,7 @@
     Sigh:
       collection: FemaleSigh
     Scream:
-      collection: VulpkaninScreams
+      collection: VulpkaninFemaleScreams # DS14
     Growl:
       collection: VulpkaninGrowls
     Snarl:
@@ -555,7 +559,7 @@
     Whine:
       collection: VulpkaninWhines
     Howl:
-      collection: VulpkaninHowls
+      collection: VulpkaninFemaleHowl # DS14
     Gasp:
       collection: FemaleGasp
     DefaultDeathgasp:

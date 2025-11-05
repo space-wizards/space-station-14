@@ -8,7 +8,6 @@
     solutions:
       drink:
         maxVol: 5
-  - type: Drink
   - type: Openable
     opened: true
   - type: FitsInDispenser

@@ -1,5 +1,7 @@
 ent-ClothingNeckPinBase = pin
     .desc = Be nothing do crime.
+ent-ClothingGenderPinBase = { ent-ClothingNeckPinBase }
+    .desc = { ent-ClothingNeckPinBase.desc }
 ent-ClothingNeckLGBTPin = LGBT pin
     .desc = Be gay do crime.
 ent-ClothingNeckAllyPin = straight ally pin

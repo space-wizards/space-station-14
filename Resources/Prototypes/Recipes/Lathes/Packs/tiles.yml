@@ -41,8 +41,6 @@
   - FloorTileItemWhiteMono
   - FloorTileItemWhitePavement
   - FloorTileItemWhitePavementVertical
-  - FloorTileItemWhiteMarble # DS14
-  - FloorTileItemDarkMarble # DS14
 
 - type: latheRecipePack
   id: FloorMaintsTilesStatic
@@ -98,6 +96,12 @@
   - FloorGreenCircuit
   - FloorBlueCircuit
   - FloorRedCircuit
+
+- type: latheRecipePack
+  id: FloorMarbleTilesStatic
+  recipes:
+  - FloorTileItemWhiteMarble
+  - FloorTileItemDarkMarble
 
 ## Dynamic
 

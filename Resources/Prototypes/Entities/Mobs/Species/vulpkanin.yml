@@ -5,6 +5,18 @@
   id: BaseMobVulpkanin
   name: Urist McBark
   components:
+  # DS14-start
+  - type: Language
+    selectedLanguage: GeneralLanguage
+    knownLanguages:
+    - VulpkaninLanguage
+    - GeneralLanguage
+  - type: TypingIndicator
+    proto: vulpkanin
+  - type: Vulpkanin
+  - type: Sanity
+  - type: RoarAccent
+  # DS14-end
   - type: Hunger
   - type: Thirst
   - type: MessyDrinker
@@ -69,27 +81,27 @@
     - map: [ "enum.HumanoidVisualLayers.LArm" ]
     - map: [ "enum.HumanoidVisualLayers.RLeg" ]
     - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-    - map: [ "enum.HumanoidVisualLayers.UndergarmentBottom" ]
-    - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
-    - map: [ "jumpsuit" ]
-    - map: [ "enum.HumanoidVisualLayers.LHand" ]
-    - map: [ "enum.HumanoidVisualLayers.RHand" ]
-    - map: [ "enum.HumanoidVisualLayers.LFoot" ]
-    - map: [ "enum.HumanoidVisualLayers.RFoot" ]
-    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
-      color: "#ffffff"
-      sprite: Objects/Misc/handcuffs.rsi
-      state: body-overlay-2
-      visible: false
-    - map: [ "id" ]
+    - map: [ "underwearb" ] # Sirena-Underwear
+    - map: [ "underweart" ] # Sirena-Underwear
+    # - map: [ "enum.HumanoidVisualLayers.UndergarmentBottom" ]
+    # - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
+    # - map: ["jumpsuit"]
+    - map: ["enum.HumanoidVisualLayers.LFoot"]
+    - map: ["enum.HumanoidVisualLayers.RFoot"]
+    - map: [ "socks" ] # Sirena-Underwear
+    - map: ["jumpsuit"]
+    - map: ["enum.HumanoidVisualLayers.LHand"]
+    - map: ["enum.HumanoidVisualLayers.RHand"]
     - map: [ "gloves" ]
     - map: [ "shoes" ]
     - map: [ "ears" ]
     - map: [ "outerClothing" ]
     - map: [ "eyes" ]
     - map: [ "belt" ]
-    - map: [ "neck" ]
+    - map: [ "id" ]
+    # - map: [ "outerClothing" ]
     - map: [ "back" ]
+    - map: [ "neck" ]
     - map: [ "enum.HumanoidVisualLayers.SnoutCover" ]
     - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
     - map: [ "enum.HumanoidVisualLayers.Hair" ]
@@ -100,74 +112,79 @@
     - map: [ "head" ]
     - map: [ "pocket1" ]
     - map: [ "pocket2" ]
+    - map: ["enum.HumanoidVisualLayers.Handcuffs"]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
     - map: [ "clownedon" ]
       sprite: "Effects/creampie.rsi"
       state: "creampie_vulpkanin"
       visible: false
   - type: HumanoidAppearance
     species: Vulpkanin
-    undergarmentTop: UndergarmentTopTanktopVulpkanin
-    undergarmentBottom: UndergarmentBottomBoxersVulpkanin
     hideLayersOnEquip:
     - Snout
     - SnoutCover
     - HeadTop
     - HeadSide
+    - Hair # DS14
     - FacialHair
+    - Tail # DS14
     markingsDisplacement:
       Hair:
         sizeMaps:
           32:
             sprite: Mobs/Species/Vulpkanin/displacement.rsi
             state: hair
-  - type: Inventory
-    speciesId: vulpkanin
-    displacements:
-      jumpsuit:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: jumpsuit
-      back:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: back
-      outerClothing:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: outerwear
-      gloves:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: hand
-      shoes:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: shoes
-      head:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: head
-      neck:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: neck
-      eyes:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: eyes
-      belt:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: belt
+#  - type: Inventory
+#    speciesId: vulpkanin
+#    displacements:
+#      jumpsuit:
+#        sizeMaps:
+#          32:
+#            sprite: Mobs/Species/Human/displacement.rsi
+#            state: jumpsuit
+#      back:
+#        sizeMaps:
+#          32:
+#            sprite: Mobs/Species/Human/displacement.rsi
+#            state: back
+#      outerClothing:
+#        sizeMaps:
+#          32:
+#            sprite: Mobs/Species/Human/displacement.rsi
+#            state: outerwear
+#      gloves:
+#        sizeMaps:
+#          32:
+#            sprite: Mobs/Species/Human/displacement.rsi
+#            state: hand
+#      shoes:
+#        sizeMaps:
+#          32:
+#            sprite: Mobs/Species/Human/displacement.rsi
+#            state: shoes
+#      head:
+#        sizeMaps:
+#          32:
+#            sprite: Mobs/Species/Human/displacement.rsi
+#            state: head
+#      neck:
+#        sizeMaps:
+#          32:
+#            sprite: Mobs/Species/Human/displacement.rsi
+#            state: neck
+#      eyes:
+#        sizeMaps:
+#          32:
+#            sprite: Mobs/Species/Human/displacement.rsi
+#            state: eyes
+#      belt:
+#        sizeMaps:
+#          32:
+#            sprite: Mobs/Species/Human/displacement.rsi
+#            state: belt
 
 - type: entity
   parent: [BaseSpeciesDummy]
@@ -180,57 +197,58 @@
     - Snout
     - HeadTop
     - HeadSide
+    - Tail # DS14
     markingsDisplacement:
       Hair:
         sizeMaps:
           32:
             sprite: Mobs/Species/Vulpkanin/displacement.rsi
             state: hair
-  - type: Inventory
-    speciesId: vulpkanin
-    displacements:
-      jumpsuit:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: jumpsuit
-      back:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: back
-      outerClothing:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: outerwear
-      gloves:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: hand
-      shoes:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: shoes
-      head:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: head
-      neck:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: neck
-      eyes:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: eyes
-      belt:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: belt
+#  - type: Inventory
+#    speciesId: vulpkanin
+#    displacements:
+#      jumpsuit:
+#        sizeMaps:
+#          32:
+#            sprite: Mobs/Species/Human/displacement.rsi
+#            state: jumpsuit
+#      back:
+#        sizeMaps:
+#          32:
+#            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+#            state: back
+#      outerClothing:
+#        sizeMaps:
+#          32:
+#            sprite: Mobs/Species/Human/displacement.rsi
+#            state: outerwear
+#      gloves:
+#        sizeMaps:
+#          32:
+#            sprite: Mobs/Species/Human/displacement.rsi
+#            state: hand
+#      shoes:
+#        sizeMaps:
+#          32:
+#            sprite: Mobs/Species/Human/displacement.rsi
+#            state: shoes
+#      head:
+#        sizeMaps:
+#          32:
+#            sprite: Mobs/Species/Human/displacement.rsi
+#            state: head
+#      neck:
+#        sizeMaps:
+#          32:
+#            sprite: Mobs/Species/Human/displacement.rsi
+#            state: neck
+#      eyes:
+#        sizeMaps:
+#          32:
+#            sprite: Mobs/Species/Human/displacement.rsi
+#            state: eyes
+#      belt:
+#        sizeMaps:
+#          32:
+#            sprite: Mobs/Species/Human/displacement.rsi
+#            state: belt

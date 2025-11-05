@@ -32,9 +32,6 @@
             "name": "armory"
         },
         {
-            "name": "arrivals"
-        },
-        {
             "name": "barbershop"
         },
         {
@@ -176,10 +173,6 @@
             "directions": 4
         },
         {
-            "name": "direction_evac_glow",
-            "directions": 4
-        },
-        {
             "name": "direction_supply",
             "directions": 4
         },
@@ -237,10 +230,6 @@
         },
         {
             "name": "direction_pods",
-            "directions": 4
-        },
-        {
-            "name": "direction_law",
             "directions": 4
         },
         {

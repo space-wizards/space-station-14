@@ -113,3 +113,36 @@
       state: coyote
     - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
       state: coyote-inner
+
+# DS14-start
+- type: marking
+  id: VulpEarWolf
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: wolf
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: wolf-inner
+
+- type: marking
+  id: VulpEarTajaran
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: msai
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: msai-inner
+
+- type: marking
+  id: VulpEarDalmatian
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: dalmatian
+# DS14-end

@@ -42,13 +42,13 @@
     requirements:
     - !type:RoleTimeRequirement
       role: JobAtmosphericTechnician
-      time: 18000 #5 hrs
+      time: 5h
     - !type:RoleTimeRequirement
       role: JobTaipanTechnician
-      time: 18000 #5 hrs
+      time: 5h
     - !type:DepartmentTimeRequirement
       department: Taipan
-      time: 36000 #10 hrs
+      time: 10h
     raffle:
       settings: default
 
@@ -96,10 +96,10 @@
     requirements:
     - !type:DepartmentTimeRequirement
       department: Civilian
-      time: 18000 # 5 hours
+      time: 5h
     - !type:RoleTimeRequirement
       role: JobBotanist
-      time: 3600 # 1 hour
+      time: 1h
     raffle:
       settings: default
 
@@ -147,7 +147,7 @@
     requirements:
     - !type:RoleTimeRequirement
       role: JobSalvageSpecialist
-      time: 36000 # 10 hours
+      time: 10h
     raffle:
       settings: default
 
@@ -195,13 +195,13 @@
     requirements:
     - !type:DepartmentTimeRequirement
       department: Civilian
-      time: 18000 # 5 hours
+      time: 5h
     - !type:RoleTimeRequirement
       role: JobChef
-      time: 3600 # 1 hour
+      time: 1h
     - !type:RoleTimeRequirement
       role: JobBartender
-      time: 3600 # 1 hour
+      time: 1h
     raffle:
       settings: default
 
@@ -249,10 +249,10 @@
     requirements:
     - !type:RoleTimeRequirement
       role: JobTaipanRecruit
-      time: 36000 # 10 hours
+      time: 10h
     - !type:DepartmentTimeRequirement
       department: Taipan
-      time: 360000 # 100 hours
+      time: 100h
     raffle:
       settings: default
 
@@ -300,10 +300,10 @@
     requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 36000 # 10 hours
+      time: 10h
     - !type:RoleTimeRequirement
       role: JobChemist
-      time: 18000 # 5 hours
+      time: 5h
     raffle:
       settings: default
 
@@ -351,7 +351,7 @@
     requirements:
     - !type:RoleTimeRequirement
       role: JobTaipanMedic
-      time: 36000 # 10 hours
+      time: 10h
     raffle:
       settings: default
 
@@ -399,7 +399,7 @@
     requirements:
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 # 10 hours
+      time: 10h
     raffle:
       settings: default
 
@@ -447,13 +447,13 @@
     requirements:
     - !type:DepartmentTimeRequirement
       department: Taipan
-      time: 216000 # 60 hours
+      time: 60h
     - !type:RoleTimeRequirement
       role: JobTaipanResearcher
-      time: 72000 # 20 hours
+      time: 20h
     - !type:RoleTimeRequirement
       role: JobTaipanMedic
-      time: 36000 # 10 hours
+      time: 10h
     raffle:
       settings: default
 
@@ -501,10 +501,10 @@
     requirements:
     - !type:DepartmentTimeRequirement
       department: Science
-      time: 36000 # 10 hours
+      time: 10h
     - !type:RoleTimeRequirement
       role: JobChemist
-      time: 18000 # 5 hours
+      time: 5h
     raffle:
       settings: default
 
@@ -552,7 +552,7 @@
     requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 36000 #10 hrs
+      time: 10h
     raffle:
       settings: default
 
@@ -600,12 +600,12 @@
     requirements:
     - !type:RoleTimeRequirement
       role: JobTaipanCargotech
-      time: 36000 # 10 hours
+      time: 10h
     - !type:RoleTimeRequirement
       role: JobTaipanAtmosphericsEngineer
-      time: 18000 # 5 hours
+      time: 5h
     - !type:DepartmentTimeRequirement
       department: Taipan
-      time: 144000 # 40 hours
+      time: 40h
     raffle:
       settings: default

@@ -5,6 +5,26 @@
     "size": {"x": 32, "y": 32},
     "states": [
         {
+            "name": "nose",
+            "directions": 4
+        },
+        {
+            "name": "muzzle",
+            "directions": 4
+        },
+        {
+            "name": "muzzle_sharp",
+            "directions": 4
+        },
+        {
+            "name": "muzzle_fade",
+            "directions": 4
+        },
+        {
+            "name": "muzzle_alt",
+            "directions": 4
+        },
+        {
             "name": "blaze",
             "directions": 4
         },

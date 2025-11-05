@@ -1,5 +1,7 @@
-ent-BaseMob = { "" }
+ent-BaseControllable = { "" }
     .desc = { "" }
+ent-BaseMob = { ent-BaseControllable }
+    .desc = { ent-BaseControllable.desc }
 ent-MobPolymorphable = { "" }
     .desc = { "" }
 ent-MobDamageable = { "" }

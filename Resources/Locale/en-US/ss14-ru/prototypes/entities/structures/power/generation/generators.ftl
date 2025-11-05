@@ -21,4 +21,4 @@ ent-GeneratorRTG = RTG
     .suffix = 10kW
 ent-GeneratorRTGDamaged = damaged RTG
     .desc = A Radioisotope Thermoelectric Generator for long term power. This one has damaged shielding.
-    .suffix = 10kW
+    .suffix = 1kW

@@ -808,7 +808,7 @@
         amount: 1
       # - id: FoodMealFriesCheesy
       #   amount: 1
-      - id: DrinkColaBottleFull
+      - id: DrinkColaCan # DS14
         amount: 1
       - id: FoodPieAppleSlice
         amount: 1

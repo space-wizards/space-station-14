@@ -1,7 +1,6 @@
 construction-recipe-diagonal-mining-wall = шахтёрская стена (диагональ)
 construction-recipe-mining-window-diagonal = шахтёрское окно (диагональ)
 construction-recipe-shuttle-window-diagonal = окно шаттла (диагональ)
-
 construction-recipe-stairs-stage-red = красные деревянные ступеньки (одиночные)
 construction-recipe-stairs-red = красные деревянные ступеньки
 construction-recipe-stairs-stage-light = светлые деревянные ступеньки (одиночные)

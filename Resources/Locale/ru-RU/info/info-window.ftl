@@ -1,6 +1,5 @@
 ### Info Window
 
-
 ## General stuff
 
 ui-info-title = Информация

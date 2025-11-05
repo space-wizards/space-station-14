@@ -96,20 +96,7 @@ public sealed partial class EmergencyShuttleSystem
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleRepealMessage>(OnEmergencyRepeal);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleRepealAllMessage>(OnEmergencyRepealAll);
 
-        // DS14: Emag support for early launch
-        SubscribeLocalEvent<EmergencyShuttleConsoleComponent, ActivatableUIOpenAttemptEvent>(OnEmergencyOpenAttempt);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, GotEmaggedEvent>(OnEmagged);
-    }
-
-    // DS14: Emag support for early launch
-    private void OnEmergencyOpenAttempt(EntityUid uid, EmergencyShuttleConsoleComponent component, ActivatableUIOpenAttemptEvent args)
-    {
-        // I'm hoping ActivatableUI checks it's open before allowing these messages.
-        if (!ConfigManager.GetCVar(CCVars.EmergencyEarlyLaunchAllowed))
-        {
-            args.Cancel();
-            Popup.PopupEntity(Loc.GetString("emergency-shuttle-console-no-early-launches"), uid, args.User);
-        }
     }
 
     // DS14: Emag support for early launch
