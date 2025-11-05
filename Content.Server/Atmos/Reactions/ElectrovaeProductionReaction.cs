@@ -12,6 +12,7 @@ namespace Content.Server.Atmos.Reactions;
 ///     So avoid having electrovae at high temperature if you don't want it rapidly changing to charged electrovae and discharging.
 ///     This reaction is temperature-dependent, with higher temperatures increasing efficiency.
 ///     Nitrogen acts as both a catalyst (enabling the reaction) and a limiter (preventing runaway production), is not consumed.
+///     Carbon dioxide acts as an inhibitor, reducing or preventing the reaction when present.
 /// </summary>
 [UsedImplicitly]
 public sealed partial class ElectrovaeProductionReaction : IGasReactionEffect
@@ -21,17 +22,25 @@ public sealed partial class ElectrovaeProductionReaction : IGasReactionEffect
         var initialN2 = mixture.GetMoles(Gas.Nitrogen);
         var initialN2O = mixture.GetMoles(Gas.NitrousOxide);
         var initialH2O = mixture.GetMoles(Gas.WaterVapor);
+        var initialCO2 = mixture.GetMoles(Gas.CarbonDioxide);
 
         const float h2oRatio = 2f;
         const float n2oRatio = 11f;
         const float minimumEfficiency = 0.01f;
+        const float inhibitorSensitivity = 0.05f; // 5% CO2 causes 50% inhibition
 
         // The amount of catalyst determines the MAXIMUM amount of reaction that can occur.
         // 6% is the optimal catalyst proportion. We calculate a catalyst factor.
-        var totalMoles = initialN2 + initialH2O + initialN2O;
+        var totalMoles = initialN2 + initialH2O + initialN2O + initialCO2;
 
         var catalystProportion = initialN2 / totalMoles;
         var catalystFactor = Math.Clamp(catalystProportion / Atmospherics.ElectrovaeProductionNitrogenRatio, 0f, 1f);
+
+        // CO2 acts as an inhibitor, higher concentrations reduce reaction rate
+        var inhibitorProportion = initialCO2 / totalMoles;
+        var inhibitorFactor = Math.Clamp(1f - inhibitorProportion / inhibitorSensitivity, 0f, 1f);
+        if (inhibitorFactor < minimumEfficiency)
+            return ReactionResult.NoReaction;
 
         // Find the limiting reactant, respecting the 2:11 ratio.
         var maxSetsByH2O = initialH2O / h2oRatio;
@@ -40,6 +49,7 @@ public sealed partial class ElectrovaeProductionReaction : IGasReactionEffect
 
         // Apply catalyst limit: The reaction cannot proceed faster than the catalyst allows.
         possibleSets *= catalystFactor;
+        possibleSets *= inhibitorFactor;
 
         // Arrhenius: Yield is highest at high temperatures and drops to zero as temperature decreases.
         var efficiency = CalculateArrheniusEfficiency(mixture.Temperature);
