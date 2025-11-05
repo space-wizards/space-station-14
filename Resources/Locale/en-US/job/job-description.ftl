@@ -46,4 +46,4 @@ job-description-serviceworker = Learn the basics of bartending, cooking, and gro
 job-description-station-ai = Follow your laws. Use cameras, computers, and the radio to remotely interface with the station.
 job-description-visitor = Enjoy your visit to the station!
 job-description-warden = Guard the Security department, keep the armory secure, and ensure that all prisoners are properly charged, processed, and discharged.
-job-description-zookeeper = Put on a joyful display of cute animals and space carps for all the crew to see. Currently available on Oasis.
+job-description-zookeeper = Put on a joyful display of cute animals for all the crew to see. Currently available on Oasis.
