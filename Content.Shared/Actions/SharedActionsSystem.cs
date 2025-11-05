@@ -568,9 +568,10 @@ public abstract partial class SharedActionsSystem : EntitySystem
             return;
         }
 
+        // Checking for action list first, then singular action if there's none
         actionEvents ??= GetEvents(action);
 
-        if (actionEvents != null)
+        if (actionEvents is { Count: > 0 } evs)
         {
             Log.Debug("Performing multiple action events");
             return;
