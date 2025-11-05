@@ -523,5 +523,4 @@
     - id: BasicDecalDirtMonospaceVariationPass
       prob: 0.50
       orGroup: monospaceDecals
-    - id: IanAdventureVariationPass
-      prob: 0.025
+    - id: EntityMisplacementVariationPass

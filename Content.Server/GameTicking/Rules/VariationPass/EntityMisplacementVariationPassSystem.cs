@@ -6,10 +6,9 @@ namespace Content.Server.GameTicking.Rules.VariationPass;
 
 /// <summary>
 ///     Tries to moves entities to a random non-spaced tile.
-///     Not optimized to be used for a lot of entities!
-///     Entities moved by this component require a <see cref="MisplacementMarkerComponent"/>.
+///     Moving determined by <see cref="MisplacementMarkerComponent"/>.
 /// </summary>
-///
+
 public sealed class EntityMisplacementVariationPassSystem : VariationPassSystem<EntityMisplacementVariationPassComponent>
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
@@ -17,10 +16,9 @@ public sealed class EntityMisplacementVariationPassSystem : VariationPassSystem<
     protected override void ApplyVariation(Entity<EntityMisplacementVariationPassComponent> ent, ref StationVariationPassEvent args)
     {
         var enumerator = AllEntityQuery<MisplacementMarkerComponent, TransformComponent>();
-        while (enumerator.MoveNext(out var uid, out _, out var xform))
+        while (enumerator.MoveNext(out var uid, out var misplaceMarker, out var xform))
         {
-            var protoId = MetaData(uid).EntityPrototype;
-            if (protoId == null || protoId != ent.Comp.MisplacedEntity)
+            if (!Random.Prob(misplaceMarker.MisplacementChance))
                 continue;
 
             if (!IsMemberOfStation((uid, xform), ref args))
@@ -30,10 +28,10 @@ public sealed class EntityMisplacementVariationPassSystem : VariationPassSystem<
             if (!TryFindRandomTileOnStation(args.Station, out _, out _, out var coords))
                 return;
 
-            if (ent.Comp.ReplacementEntity != null)
+            if (misplaceMarker.ReplacementEntity != null)
             {
                 if (TryComp(uid, out TransformComponent? comp))
-                    _entManager.SpawnEntity(ent.Comp.ReplacementEntity, comp.Coordinates);
+                    _entManager.SpawnAtPosition(misplaceMarker.ReplacementEntity, comp.Coordinates);
             }
 
             _transform.SetCoordinates(uid, coords);

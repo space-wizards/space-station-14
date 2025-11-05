@@ -186,9 +186,7 @@
     - id: SolarAssembly
 
 - type: entity
-  id: IanAdventureVariationPass
+  id: EntityMisplacementVariationPass
   parent: BaseVariationPass
   components:
   - type: EntityMisplacementVariationPass
-    misplacedEntity: SpawnMobCorgi
-    replacementEntity: PaperWrittenIanAdventureNote
