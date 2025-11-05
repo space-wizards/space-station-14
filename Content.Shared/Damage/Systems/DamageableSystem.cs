@@ -108,10 +108,10 @@ public sealed partial class DamageableSystem : EntitySystem
             var group = _prototypeManager.Index<DamageGroupPrototype>(damageGroupId);  //get group
             foreach (var type in group.DamageTypes) //go through each type inside that group
             {
-                if (damage.DamageDict.TryGetValue(type, out var damageValue) && damageValue > 0)  //get value and make sure it isn't 0
-                {
-                    damageTypes.Add(type, damageValue);
-                }
+                if (!damage.DamageDict.TryGetValue(type, out var damageValue) || damageValue == 0) //get value and make sure it isn't 0
+                    continue;
+
+                damageTypes.Add(type, damageValue);
             }
         }
         return damageTypes;
