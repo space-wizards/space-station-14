@@ -4,8 +4,8 @@ meta:
   engineVersion: 267.3.0
   forkId: ""
   forkVersion: ""
-  time: 11/04/2025 19:47:26
-  entityCount: 18697
+  time: 11/04/2025 23:08:41
+  entityCount: 18700
 maps:
 - 1
 grids:
@@ -55488,13 +55488,6 @@ entities:
     - type: Transform
       pos: -19.5,25.5
       parent: 2
-- proto: DefaultStationBeaconReporter
-  entities:
-  - uid: 18696
-    components:
-    - type: Transform
-      pos: -25.5,-32.5
-      parent: 2
 - proto: DefaultStationBeaconRND
   entities:
   - uid: 16585
@@ -91608,6 +91601,18 @@ entities:
     - type: Transform
       pos: -18.5,15.5
       parent: 2
+- proto: MagazinePistolSubMachineGunTopMounted
+  entities:
+  - uid: 17542
+    components:
+    - type: Transform
+      pos: -2.0215707,-37.446384
+      parent: 2
+  - uid: 17543
+    components:
+    - type: Transform
+      pos: -1.9121957,-37.30576
+      parent: 2
 - proto: MailingUnit
   entities:
   - uid: 11816
@@ -101311,6 +101316,22 @@ entities:
       parent: 2
     - type: Fixtures
       fixtures: {}
+- proto: SignArrivals
+  entities:
+  - uid: 18696
+    components:
+    - type: Transform
+      pos: -8.5,47.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 18700
+    components:
+    - type: Transform
+      pos: -8.5,38.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
 - proto: SignAtmos
   entities:
   - uid: 12611
@@ -104352,13 +104373,6 @@ entities:
     - type: Transform
       pos: -32.5,-11.5
       parent: 2
-- proto: SpawnPointHeadOfSecurityWeapon
-  entities:
-  - uid: 17541
-    components:
-    - type: Transform
-      pos: -2.5,-37.5
-      parent: 2
 - proto: SpawnPointJanitor
   entities:
   - uid: 987
@@ -104671,13 +104685,6 @@ entities:
     components:
     - type: Transform
       pos: -4.5,-29.5
-      parent: 2
-- proto: SpawnPointWardenWeapon
-  entities:
-  - uid: 15170
-    components:
-    - type: Transform
-      pos: -5.5,-32.5
       parent: 2
 - proto: SpawnVendingMachineRestockFoodDrink
   entities:
@@ -124299,6 +124306,20 @@ entities:
     components:
     - type: Transform
       pos: 15.412306,-25.452839
+      parent: 2
+- proto: WeaponShotgunEnforcerRubber
+  entities:
+  - uid: 15170
+    components:
+    - type: Transform
+      pos: -5.520319,-32.186012
+      parent: 2
+- proto: WeaponSubMachineGunWt550
+  entities:
+  - uid: 17541
+    components:
+    - type: Transform
+      pos: -2.6153207,-37.27451
       parent: 2
 - proto: Welder
   entities:
