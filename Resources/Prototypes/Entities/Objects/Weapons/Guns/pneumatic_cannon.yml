@@ -99,6 +99,7 @@
     quickEquip: false
     slots:
     - Back
+    - suitStorage
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
