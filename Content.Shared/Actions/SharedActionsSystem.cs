@@ -574,6 +574,41 @@ public abstract partial class SharedActionsSystem : EntitySystem
         if (actionEvents is { Count: > 0 } evs)
         {
             Log.Debug("Performing multiple action events");
+            foreach (var eve in evs)
+            {
+                eve.Performer = performer;
+                eve.Handled = false;
+                var eveTarget = performer.Owner;
+                eve.Action = action;
+
+                if (!action.Comp.RaiseOnUser && action.Comp.Container is {} eveContainer && !_mindQuery.HasComp(eveContainer))
+                    eveTarget = eveContainer;
+
+                if (action.Comp.RaiseOnAction)
+                    eveTarget = action;
+
+                RaiseLocalEvent(eveTarget, (object) eve, broadcast: true);
+                handled = eve.Handled;
+
+                //if (!handled)
+                    //return;
+
+                if (eve.Toggle)
+                    SetToggled((action, action), !action.Comp.Toggled);
+
+                _audio.PlayPredicted(action.Comp.Sound, performer, predicted ? performer : null);
+
+                RemoveCooldown((action, action));
+                StartUseDelay((action, action));
+
+                UpdateAction(action);
+
+                var evePerformed = new ActionPerformedEvent(performer);
+                RaiseLocalEvent(action, ref evePerformed);
+            }
+
+
+
             return;
         }
 
