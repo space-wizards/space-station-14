@@ -53,11 +53,15 @@ public sealed class CharacterInfoSystem : EntitySystem
                 showDefaultObjectives = false;
             }
 
-            if (showDefaultObjectives && _jobs.MindTryGetJob(mindId, out var job) && job.LocalizedDescription != null && _proto.TryIndex(job.Icon, out var iconProto))
+            if (showDefaultObjectives &&
+                _jobs.MindTryGetJob(mindId, out var job) &&
+                job.LocalizedName != null &&
+                job.LocalizedDescription != null &&
+                _proto.TryIndex(job.Icon, out var iconProto))
             {
                 objectives["Nanotrasen"] = new List<ObjectiveInfo>()
                 {
-                    new ObjectiveInfo("Fulfil your role", job.LocalizedDescription, iconProto.Icon, 0)
+                    new ObjectiveInfo(Loc.GetString("character-info-fulfil-role"), Loc.GetString("character-info-job-desc", ("jobName", job.LocalizedName), ("jobDescription", job.LocalizedDescription)), iconProto.Icon, 0)
                 };
             }
 
