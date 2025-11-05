@@ -71,3 +71,49 @@
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
       state: patch
+
+# DS14-start
+- type: marking
+  id: VulpSnoutMuzzle
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
+      state: muzzle
+    - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
+      state: nose
+
+- type: marking
+  id: VulpSnoutMuzzleAlt
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
+      state: muzzle_alt
+    - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
+      state: nose
+
+- type: marking
+  id: VulpSnoutSharp
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
+      state: muzzle_sharp
+    - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
+      state: nose
+
+- type: marking
+  id: VulpSnoutFade
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
+      state: muzzle_fade
+    - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
+      state: nose
+# DS14-end

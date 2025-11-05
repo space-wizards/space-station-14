@@ -1,5 +1,5 @@
 ent-ShuttleWindow = shuttle window
-    .desc = { ent-WindowRCDResistant.desc }
+    .desc = { ent-BaseDeltaPressureReinforcedGlass.desc }
 ent-ShuttleWindowDiagonal = { ent-ShuttleWindow }
     .suffix = diagonal
     .desc = { ent-ShuttleWindow.desc }

@@ -11,7 +11,6 @@
         reagents:
         - ReagentId: ADTVodkaAntivirus
           Quantity: 100
-  - type: Drink
   - type: Sprite
     sprite: _ADT/Objects/Consumable/Drinks/vodka_antivirusbottle.rsi
     state: icon

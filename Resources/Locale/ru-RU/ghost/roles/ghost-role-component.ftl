@@ -37,6 +37,8 @@ ghost-role-information-silicon-rules =
     Вам [color=red]НЕ[/color] разрешается помнить или говорить имя, внешность и т.д. вашего предыдущего персонажа.
 ghost-role-information-mouse-name = Мышь
 ghost-role-information-mouse-description = Голодная и озорная мышь.
+ghost-role-information-cancer-mouse-name = Раковая мышь
+ghost-role-information-cancer-mouse-description = Облучённая мышь. Распространяйте свой недуг и ищите еду.
 ghost-role-information-mothroach-name = Таракамоль
 ghost-role-information-mothroach-description = Милая озорная таракамоль.
 ghost-role-information-moproach-name = Швабракан
@@ -155,7 +157,7 @@ ghost-role-information-hellspawn-name = Адское отродье
 ghost-role-information-hellspawn-description = Несите смерть всем, кто не повинуется великой богине Нар'Си.
 ghost-role-information-Death-Squad-name = Боец эскадрона смерти
 ghost-role-information-Death-Squad-description = Боец напичканный всевозможными имплантами и обладающий самой лучшей экипировкой с одной целью - аннигиляция.
-ghost-role-information-Death-Squad-rules =  Вы обязаны подчиняться ВСЕМ приказам офицера специальных операций.
+ghost-role-information-Death-Squad-rules = Вы обязаны подчиняться ВСЕМ приказам офицера специальных операций.
 ghost-role-information-SyndiCat-name = СиндиКот
 ghost-role-information-SyndiCat-description = Вы — верный дрессированный питомец ядерных оперативников с микробомбой. Служите своему хозяину до самой смерти!
 ghost-role-information-SyndiCat-rules = Вы [color={ role-type-team-antagonist-color }][bold]{ role-type-team-antagonist-name }[/bold][/color], в команде с агентом, который вас призвал.

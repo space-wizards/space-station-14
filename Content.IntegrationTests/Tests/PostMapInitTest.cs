@@ -56,34 +56,17 @@ namespace Content.IntegrationTests.Tests
         private static readonly Dictionary<string, HashSet<EntProtoId>> DoNotMapWhitelistSpecific = new()
         {
             {"/Maps/bagel.yml", ["RubberStampMime"]},
-            {"/Maps/reach.yml", ["HandheldCrewMonitor"]},
             {"/Maps/Shuttles/ShuttleEvent/honki.yml", ["GoldenBikeHorn", "RubberStampClown"]},
             {"/Maps/Shuttles/ShuttleEvent/syndie_evacpod.yml", ["RubberStampSyndicate"]},
-            {"/Maps/Shuttles/ShuttleEvent/cruiser.yml", ["ShuttleGunPerforator"]},
-            {"/Maps/Shuttles/ShuttleEvent/instigator.yml", ["ShuttleGunFriendship"]},
             // DS14-start: Add our custom maps to whitelist
-            {"/Maps/corvax_astra.yml", ["ShuttleGunSvalinn"]},
-            {"/Maps/amber.yml", ["ShuttleGunSvalinn"]},
-            {"/Maps/barratry.yml", ["RubberStampClown", "RubberStampMime"]},
+            {"/Maps/barratry.yml", ["RubberStampCaptain"]},
             {"/Maps/cluster.yml", ["RubberStampMime"]},
-            {"/Maps/corvax_avrit.yml", ["CatEars", "DogEars", "EliteMiningSuit", "ShuttleGunFriendship", "Ptk800Dematerializer", "Ptk800DematerializerMachineBoard", "ShuttleGunPerforatorMachineBoard", "ShuttleGunSvalinn"]},
-            {"/Maps/corvax_paper.yml", ["CatEars"]},
-            {"/Maps/corvax_spectrum.yml", ["RubberStampChaplain", "ShuttleGunSvalinn"]},
+            {"/Maps/corvax_avrit.yml", ["ClothingHeadHatCatEars", "ClothingHeadHatDogEars", "ClothingOuterHardsuitLuxury"]},
+            {"/Maps/corvax_paper.yml", ["ClothingHeadHatCatEars"]},
             {"/Maps/ds_box.yml", ["RubberStampSyndicate"]},
-            {"/Maps/ds_silly.yml", ["RubberStampClown", "RubberStampMime", "Ptk800DematerializerMachineBoard"]},
-            {"/Maps/ds_silly_snow.yml", ["RubberStampClown", "RubberStampMime", "Ptk800DematerializerMachineBoard"]},
+            {"/Maps/ds_silly.yml", ["RubberStampClown", "RubberStampMime"]},
+            {"/Maps/ds_silly_snow.yml", ["RubberStampClown", "RubberStampMime"]},
             {"/Maps/gemini.yml", ["RubberStampClown", "RubberStampSyndicate"]},
-            {"/Maps/Shuttles/ERT/amber.yml", []}, // ERT shuttle
-            {"/Maps/Shuttles/ERT/cburn_scnt.yml", []}, // ERT shuttle
-            {"/Maps/Shuttles/ERT/cburn_scst.yml", []}, // ERT shuttle
-            {"/Maps/Shuttles/ERT/cburn.yml", []}, // ERT shuttle
-            {"/Maps/Shuttles/ERT/deathsquad.yml", []}, // ERT shuttle
-            {"/Maps/Shuttles/ERT/engineers.yml", []}, // ERT shuttle
-            {"/Maps/Shuttles/ERT/gamma.yml", []}, // ERT shuttle
-            {"/Maps/Shuttles/ERT/janitors.yml", []}, // ERT shuttle
-            {"/Maps/Shuttles/ERT/red.yml", []}, // ERT shuttle
-            {"/Maps/Shuttles/ERT/sierra.yml", []}, // ERT shuttle
-            {"/Maps/ds_taipan.yml", []},
             // DS14-end
         };
 
@@ -97,7 +80,11 @@ namespace Content.IntegrationTests.Tests
         private static readonly string[] DoNotMapWhitelist =
         {
             "/Maps/centcomm.yml",
-            "/Maps/Shuttles/AdminSpawn/**" // admin gaming
+            "/Maps/Shuttles/AdminSpawn/**", // admin gaming
+            // DS14-start
+            "/Maps/ds_taipan.yml", // Taipan
+            "/Maps/Shuttles/ERT/**", // ERT shuttle
+            // DS14-end
         };
 
         /// <summary>
@@ -115,7 +102,7 @@ namespace Content.IntegrationTests.Tests
             "CentComm",
             "MeteorArena",
             "dm01-entryway",
-            // "DSTaipan", // remap in progress
+            "DSTaipan",
             "Amber",
             // "Aspid", // remap in progress
             "Bagel",
@@ -152,7 +139,6 @@ namespace Content.IntegrationTests.Tests
         private static readonly string[] GameMapsExcludedFromTests =
         {
             "Aspid", // remap in progress
-            "DSTaipan" // remap in progress
         };
         // DS14-end
 
@@ -535,8 +521,6 @@ namespace Content.IntegrationTests.Tests
 
             await pair.CleanReturnAsync();
         }
-
-
 
         private static int GetCountLateSpawn<T>(List<EntityUid> gridUids, IEntityManager entManager)
             where T : ISpawnPoint, IComponent

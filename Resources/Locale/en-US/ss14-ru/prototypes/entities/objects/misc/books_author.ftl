@@ -33,7 +33,9 @@ ent-BookIanMountain = the adventures of ian and renault - a mountain expedition
 ent-BookIanCity = the adventures of ian and renault - exploring the city
     .desc = The book is in new condition, with crisp pages and a glossy cover. The cover features a colorful illustration of Ian and Renault exploring the city, with tall buildings and bustling streets in the background. Ian is leading the way, with his tail wagging excitedly, while Renault follows close behind, her ears perked up and her eyes wide with wonder. The title, "The Adventures of Ian and Renault," is written in bold, playful letters, with the subtitle, "Exploring the City," written below in smaller font.
 ent-BookIanArctic = the adventures of ian and renault - an arctic journey of courage and friendship
-    .desc = The book looks new and adventurous, with a picture of Ian and Renault standing in front of an icy landscape with snowflakes falling all around them. The title, "The Adventures of Ian and Renault," is written in bold letters at the top, with a subtitle that reads, "An Arctic Journey of Courage and Friendship."
+    .desc =
+        The book looks new and adventurous, with a picture of Ian and Renault standing in front of an icy landscape with snowflakes falling all around them. The title, "The Adventures of Ian and Renault," is written in bold letters at the top, with a subtitle that reads, "An Arctic Journey of Courage and Friendship."
+        2nd Edition.
 ent-BookIanDesert = the adventures of ian and renault - exploring the mysterious desert
     .desc = The book is in new condition and would have a colorful cover depicting Ian and Renault against a desert backdrop. The cover would feature images of various animals and plants that the two encountered on their adventure, such as a rattlesnake, coyotes, sand dunes, and an oasis. The title, "The Adventures of Ian and Renault" is prominently displayed on the cover in bold letters, while the subtitle "Exploring the Mysterious Desert" is written in smaller letters underneath.
 ent-BookNames = the power of names - a philosophical exploration

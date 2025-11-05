@@ -8,7 +8,7 @@
   isTaipan: true
   startingGear: TaipanRecruitGear
   icon: "JobIconTaipanRecruit"
-  supervisors: job-supervisors-taipan-telecommunications-officer
+  supervisors: job-supervisors-taipan-communications-officer
   canBeAntag: false
   requirements:
   - !type:DepartmentTimeRequirement

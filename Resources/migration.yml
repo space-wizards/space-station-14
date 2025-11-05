@@ -459,6 +459,7 @@ ClothingHeadsetAltCSO: null
 ClothingBackpackLeaderDuffelCBURNNECROFilled: null
 ClothingBackpackDuffelCBURNNECROFilled: null
 ClothingBackpackDuffelCBURNSCSTFilled: null
+ClothingBackpackDuffelCBURN: null
 ActionToggleMagbootsAdvanced: null
 ADTClothingHeadHatBeretBlueshield: ClothingHeadHatBeretBlueShield
 ADTClothingBlueshieldArmor: ClothingOuterArmorBasicBlueShield
@@ -939,7 +940,8 @@ ClothingBeltPlantTypan: ClothingBeltPlantTaipan
 ClothingBeltPlantTypanFilled: ClothingBeltPlantTaipanFilled
 TypanPlantBag: TaipanPlantBag
 ClothingOuterApronTypanBotanist: ClothingOuterApronTaipanBotanist
-ClothingBeltAssaultTypan: ClothingBeltAssaultTaipan
+ClothingBeltAssaultTypan: null
+ClothingBeltAssaultTaipan: null
 ClothingBeltTypanSecurityWebbing: null
 ClothingHeadsetAltTypan: ClothingHeadsetAltTaipan
 ClothingEyesHudSyndicateAgentTypan: null
@@ -1098,6 +1100,7 @@ ADTInquisitoryHead: null
 ADTClothingOuterCoatLabSec: null
 ADTVeteranSecHardsuit: null
 ADTVeteranSecHardsuitHelm: null
+ADTDrinkTeacup: DrinkTeacupEmpty
 LedLightTubeGreen: LightTubeCrystalGreen
 LedLightTubeRed: LightTubeCrystalRed
 LedLightTubeBlue: LightTubeCrystalBlue

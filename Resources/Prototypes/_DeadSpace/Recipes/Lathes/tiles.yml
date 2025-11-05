@@ -31,16 +31,6 @@
 - type: latheRecipe
   abstract: true
   parent: BaseTileRecipe
-  id: BaseCircuitTileRecipe
-  categories:
-  - Circuits
-  completetime: 2
-  materials:
-    Steel: 100
-
-- type: latheRecipe
-  abstract: true
-  parent: BaseTileRecipe
   id: BaseSpecializedTileRecipe
   categories:
   - Specialized

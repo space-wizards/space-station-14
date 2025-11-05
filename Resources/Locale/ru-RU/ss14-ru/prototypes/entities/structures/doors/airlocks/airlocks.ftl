@@ -51,6 +51,7 @@ ent-AirlockXenoborg = шлюз ксеноборгов
     .desc = { ent-Airlock.desc }
 ent-AirlockHatchMaintenance = герметичный люк техобслуживания
     .desc = { ent-Airlock.desc }
+
 ent-AirlockEngineeringGlass = { ent-AirlockGlass }
     .suffix = Инженерный
     .desc = { ent-AirlockGlass.desc }

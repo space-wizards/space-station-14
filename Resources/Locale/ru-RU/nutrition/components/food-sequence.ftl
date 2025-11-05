@@ -154,6 +154,7 @@ food-sequence-cotton-burger-content-plushie-xeno = ксено
 food-sequence-cotton-burger-content-plushie-penguin = пинг
 food-sequence-cotton-burger-content-plushie-human = уристмак
 food-sequence-cotton-burger-content-plushie-moth = пуши
+food-sequence-cotton-burger-content-plushie-vulp = вульп
 food-sequence-cotton-burger-content-plushie-ian = корги
 food-sequence-cotton-burger-content-among-pequeno = сас
 food-sequence-taco-gen = тако с { $content }

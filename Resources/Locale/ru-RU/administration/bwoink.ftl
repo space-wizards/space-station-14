@@ -1,4 +1,5 @@
 bwoink-user-title = Сообщение от администратора
+bwoink-admin-title = Admin Help
 bwoink-system-starmute-message-no-other-users = *Система: Никто не доступен для получения вашего сообщения. Попробуйте обратиться к администраторам в Discord.
 bwoink-system-messages-being-relayed-to-discord =
     Ваше сообщение будет передано администраторам в том числе в Discord.

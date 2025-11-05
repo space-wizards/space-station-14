@@ -1,2 +1,2 @@
-ent-ClothingNeckMimeSexy = шарф сексуального мима
+ent-ClothingNeckMimeSexy = шарф застенчивого мима
     .desc = ...

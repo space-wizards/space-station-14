@@ -411,7 +411,7 @@
     - id: EmergencyOxygenTankFilled
     - id: EmergencyMedipen
     - id: Flare
-    - id: FoodBreadBaguette
+    - id: FoodBreadNutriBatard
     - id: DrinkBeerCan
 
 - type: entity

@@ -1,5 +1,5 @@
 ent-UraniumWindow = uranium window
-    .desc = { ent-WindowRCDResistant.desc }
+    .desc = { ent-BaseDeltaPressurePlasma.desc }
 ent-UraniumWindowDirectional = directional uranium window
     .desc = Don't smudge up the glass down there.
 ent-UraniumWindowDiagonal = { ent-UraniumWindow }

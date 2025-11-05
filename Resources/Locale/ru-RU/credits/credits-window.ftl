@@ -11,6 +11,8 @@ credits-window-codebases-section-title = Код Space Station 13
 credits-window-original-remake-team-section-title = Команда ремейка оригинальной Space Station 13
 credits-window-immortals-title = В память о
 credits-window-special-thanks-section-title = Особая благодарность
+credits-window-previous-page-button = Предыдущая страница
+credits-window-next-page-button = Следующая страница
 credits-window-attributions-directory = [color=white]Директория:[/color] { $directory }
 credits-window-attributions-files = [color=white]Файлы:[/color] { $files }
 credits-window-attributions-copyright = [color=white]Копирайт:[/color] { $copyright }

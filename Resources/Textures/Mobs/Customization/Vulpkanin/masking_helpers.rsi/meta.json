@@ -1,67 +1,20 @@
 {
-    "copyright": "Discord PJB#3005 Altered By Floofers in: Taken from https://github.com/DeltaV-Station/Delta-v/commit/65d35d0b3c20aa4e8a0e749a4de8392e53051e86",
+    "version": 1,
+    "size": { "x": 32, "y": 32 },
     "license": "CC-BY-SA-3.0",
-    "size": {
-        "x": 32,
-        "y": 32
-    },
+    "copyright": "Discord PJB#3005",
     "states": [
         {
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ],
-            "directions": 4,
-            "name": "female_none"
+            "name": "female_full",
+            "directions": 4
         },
         {
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ],
-            "directions": 4,
-            "name": "female_full"
+            "name": "female_none",
+            "directions": 1
         },
         {
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ],
-            "directions": 4,
-            "name": "female_top"
-        },
-        {
-            "name": "none"
+            "name": "female_top",
+            "directions": 4
         },
         {
             "name": "male_full",
@@ -92,9 +45,12 @@
             "directions": 4
         },
         {
+            "name": "none",
+            "directions": 1
+        },
+        {
             "name": "top",
             "directions": 4
         }
-    ],
-    "version": 1
+    ]
 }

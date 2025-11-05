@@ -7,3 +7,7 @@ ent-OrganVoxLiver = liver
     .desc = Smells flammable.
 ent-OrganVoxHeart = heart
     .desc = The strange heart of a vox.
+ent-OrganVoxBrain = brain
+    .desc = { ent-OrganHumanBrain.desc }
+ent-OrganVoxKidneys = kidneys
+    .desc = { ent-OrganHumanKidneys.desc }

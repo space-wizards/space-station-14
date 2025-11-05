@@ -1,40 +1,7 @@
 - type: entity
-  parent: DrinkGlassBase
-  id: DrinkKvassGlass
-  suffix: kvass
-  components:
-    - type: SolutionContainerManager
-      solutions:
-        drink:
-          maxVol: 30
-          reagents:
-            - ReagentId: Kvass
-              Quantity: 30
-    - type: Sprite
-      sprite: _Corvax/Objects/Consumable/Drinks/kvass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkYorshGlass
-  name: yorsh glass
-  description: Taste of childhood.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Yorsh
-          Quantity: 30
-  - type: Drink
-  - type: Sprite
-    sprite: _Corvax/Objects/Consumable/Drinks/yorsh.rsi
-
-- type: entity
-  parent: DrinkGlassBase
+  parent: DrinkGlass
   id: DrinkAlexanderGlass
-  name: alexander glass
-  description: No Alexander was harmed during production. Maybe...
+  suffix: alexander
   components:
   - type: SolutionContainerManager
     solutions:
@@ -43,49 +10,14 @@
         reagents:
         - ReagentId: Alexander
           Quantity: 30
-  - type: Drink
-  - type: Sprite
+  - type: Icon
     sprite: _Corvax/Objects/Consumable/Drinks/alexander.rsi
+    state: icon
 
 - type: entity
-  parent: DrinkGlassBase
-  id: DrinkNegroniGlass
-  name: negroni glass
-  description: Americano for alcoholics.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Negroni
-          Quantity: 30
-  - type: Drink
-  - type: Sprite
-    sprite: _Corvax/Objects/Consumable/Drinks/negroni.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkOldFashionedGlass
-  name: old fashioned glass
-  description: "As the greatest classic said: “This is a classic”."
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: OldFashioned
-          Quantity: 30
-  - type: Drink
-  - type: Sprite
-    sprite: _Corvax/Objects/Consumable/Drinks/oldFashioned.rsi
-
-- type: entity
-  parent: DrinkGlassBase
+  parent: DrinkGlass
   id: DrinkBadTouchGlass
-  name: bad touch glass
-  description: "We're nothing but mammals after all."
+  suffix: bad touch
   components:
   - type: SolutionContainerManager
     solutions:
@@ -94,83 +26,14 @@
         reagents:
         - ReagentId: BadTouch
           Quantity: 30
-  - type: Drink
-  - type: Sprite
+  - type: Icon
     sprite: _Corvax/Objects/Consumable/Drinks/badTouch.rsi
+    state: icon
 
 - type: entity
-  parent: DrinkGlassBase
-  id: DrinkDarkAndStormyGlass
-  name: dark and stormy glass
-  description: "Straight from Bermuda! The pirate on the left says that this is why the drink disappears."
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: DarkAndStormy
-          Quantity: 30
-  - type: Drink
-  - type: Sprite
-    sprite: _Corvax/Objects/Consumable/Drinks/darkAndStormy.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkBrambleGlass
-  name: bramble glass
-  description: "Berries, gin, and a rather creepy look."
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Bramble
-          Quantity: 30
-  - type: Drink
-  - type: Sprite
-    sprite: _Corvax/Objects/Consumable/Drinks/bramble.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkMaiTaiGlass
-  name: mai tai glass
-  description: "The first person who tried this cocktail exclaimed: ”Mai tai — roa ae!”. What does it mean in Thai... I don't know. Sounds cool!"
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: MaiTai
-          Quantity: 30
-  - type: Drink
-  - type: Sprite
-    sprite: _Corvax/Objects/Consumable/Drinks/maiTai.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkPalomaGlass
-  name: paloma glass
-  description: "Cowboys on top. Maracas on bottom. Hard choice..."
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Paloma
-          Quantity: 30
-  - type: Drink
-  - type: Sprite
-    sprite: _Corvax/Objects/Consumable/Drinks/paloma.rsi
-
-- type: entity
-  parent: DrinkGlassBase
+  parent: DrinkGlass
   id: DrinkBoyarskyGlass
-  name: boyarsky glass
-  description: "What to do if you are tired of life? MIX VODKA!"
+  suffix: boyarsky
   components:
   - type: SolutionContainerManager
     solutions:
@@ -179,6 +42,117 @@
         reagents:
         - ReagentId: Boyarsky
           Quantity: 30
-  - type: Drink
-  - type: Sprite
+  - type: Icon
     sprite: _Corvax/Objects/Consumable/Drinks/boyarsky.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkBrambleGlass
+  suffix: bramble
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Bramble
+          Quantity: 30
+  - type: Icon
+    sprite: _Corvax/Objects/Consumable/Drinks/bramble.rsi
+    state: icon
+
+- type: entity
+  parent: [ DrinkBaseMaterialGlass, DrinkBaseCup ]
+  id: DrinkKvassGlass
+  suffix: kvass
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Kvass
+          Quantity: 30
+  - type: Sprite
+    sprite: _Corvax/Objects/Consumable/Drinks/kvass.rsi
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkMaiTaiGlass
+  suffix: mai tai
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: MaiTai
+          Quantity: 30
+  - type: Icon
+    sprite: _Corvax/Objects/Consumable/Drinks/maiTai.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkNegroniGlass
+  suffix: negroni
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Negroni
+          Quantity: 30
+  - type: Icon
+    sprite: _Corvax/Objects/Consumable/Drinks/negroni.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkOldFashionedGlass
+  suffix: old fashioned
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: OldFashioned
+          Quantity: 30
+  - type: Icon
+    sprite: _Corvax/Objects/Consumable/Drinks/oldFashioned.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkPalomaGlass
+  suffix: paloma
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Paloma
+          Quantity: 30
+  - type: Icon
+    sprite: _Corvax/Objects/Consumable/Drinks/paloma.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkYorshGlass
+  suffix: yorsh
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Yorsh
+          Quantity: 30
+  - type: Icon
+    sprite: _Corvax/Objects/Consumable/Drinks/yorsh.rsi
+    state: icon

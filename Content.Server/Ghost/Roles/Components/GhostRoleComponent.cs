@@ -15,6 +15,12 @@ public sealed partial class GhostRoleComponent : Component
 
     [DataField("rules")] private string _roleRules = "ghost-role-component-default-rules";
 
+    // Actually make use of / enforce this requirement?
+    // Why is this even here.
+    // Move to ghost role prototype & respect CCvars.GameRoleTimerOverride
+    [DataField("requirements")]
+    public HashSet<JobRequirement>? Requirements;
+
     /// <summary>
     /// Whether the <see cref="MakeSentientCommand"/> should run on the mob.
     /// </summary>
@@ -105,4 +111,3 @@ public sealed partial class GhostRoleComponent : Component
     [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // also FIXME Friends
     public ProtoId<JobPrototype>? JobProto = null;
 }
-
