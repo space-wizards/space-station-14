@@ -7,7 +7,7 @@ using Robust.Shared.Network;
 namespace Content.Server.Database;
 
 /// <summary>
-/// Implements logic to match a <see cref="ServerBanDef"/> against a player query.
+/// Implements logic to match a <see cref="ServerBanDef"/> or a <see cref="ServerRoleBan"/> against a player query.
 /// </summary>
 /// <remarks>
 /// <para>
@@ -30,6 +30,33 @@ public static class BanMatcher
     /// <param name="player">Information about the player to match against.</param>
     /// <returns>True if the ban matches the provided player info.</returns>
     public static bool BanMatches(ServerBanDef ban, in PlayerInfo player)
+    {
+        var info = new BanInfo
+        {
+            UserId = ban.UserId,
+            Address = ban.Address,
+            HWId = ban.HWId,
+            ExemptFlags = ban.ExemptFlags,
+        };
+        return BanMatches(info, player);
+    }
+
+    /// <inheritdoc cref="BanMatches(ServerBanDef, in PlayerInfo)" />
+    public static bool BanMatches(ServerRoleBanDef ban, in PlayerInfo player)
+    {
+        var info = new BanInfo
+        {
+            UserId = ban.UserId,
+            Address = ban.Address,
+            HWId = ban.HWId,
+            // Ban exemptions for rolebans are not real as rolebans have no exemptions field.
+            // While it is theoretically possible for a range to be banned, this is for purposes like IPv6 bans.
+            ExemptFlags = ServerBanExemptFlags.None,
+        };
+
+        return BanMatches(info, player);
+    }
+    private static bool BanMatches(in BanInfo ban, in PlayerInfo player)
     {
         var exemptFlags = player.ExemptFlags;
         // Any flag to bypass BlacklistedRange bans.
@@ -76,6 +103,31 @@ public static class BanMatcher
 
         return false;
     }
+
+
+    /// <summary>
+    /// A struct containing ban info used to match against players.
+    /// </summary>
+    private struct BanInfo
+    {
+        /// <summary>
+        /// The user ID of the banned player.
+        /// </summary>
+        public NetUserId? UserId;
+        /// <summary>
+        /// The IP address of the banned player.
+        /// </summary>
+        public (IPAddress, int CidrMask)? Address;
+        /// <summary>
+        /// The HWId of the banned player
+        /// </summary>
+        public ImmutableTypedHwid? HWId;
+        /// <summary>
+        /// Flags used to determine whether a player is exempt from the ban.
+        /// </summary>
+        public ServerBanExemptFlags ExemptFlags;
+    }
+
 
     /// <summary>
     /// A simple struct containing player info used to match bans against.
