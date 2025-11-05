@@ -214,7 +214,7 @@ public sealed class SpreaderSystem : EntitySystem
 
             // If we're on a blocked tile work out which directions we can go.
             if (!airtightQuery.TryGetComponent(ent, out var airtight) || !airtight.AirBlocked ||
-                _tag.HasTag(ent.Value, IgnoredTag))
+                !_tag.HasTag(ent.Value, IgnoredTag))
             {
                 continue;
             }
@@ -225,9 +225,7 @@ public sealed class SpreaderSystem : EntitySystem
                     continue;
 
                 blockedAtmosDirs |= value;
-                break;
             }
-            break;
         }
 
         // Add the normal neighbors.
