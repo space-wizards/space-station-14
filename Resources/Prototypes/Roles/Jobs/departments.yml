@@ -58,6 +58,7 @@
   color: "#334E6D"
   roles:
   - Captain
+  - SiteD
   - ChiefEngineer
   - ChiefMedicalOfficer
   - HeadOfPersonnel

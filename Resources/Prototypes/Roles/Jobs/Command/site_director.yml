@@ -1,0 +1,58 @@
+- type: job
+  id: SiteDirector
+  name: job-name-siteD
+  description: job-description-SiteD
+  playTimeTracker: JobSiteD
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 4h
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 4h
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 4h
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 4h
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 4h
+  weight: 20
+  startingGear: CaptainGear
+  icon: "JobIconWarden"
+  joinNotifyCrew: true
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  accessGroups:
+  - Security
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
+
+- type: startingGear
+  id: CaptainGear
+  equipment:
+    shoes: ClothingShoesBootsLaceup
+    eyes: ClothingEyesGlassesCommand
+    gloves: ClothingHandsGlovesCaptain
+    id: CaptainPDA
+    ears: ClothingHeadsetAltCommand
+  storage:
+    back:
+    - Flash
+    # - StationCharter
+
+- type: chameleonOutfit
+  id: CaptainChameleonOutfit
+  job: Captain
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHatCapcap
+    eyes: ClothingEyesGlassesCommand
+    mask: ClothingMaskGasCaptain
+    neck: ClothingNeckCloakCap

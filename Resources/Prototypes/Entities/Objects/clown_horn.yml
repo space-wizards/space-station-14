@@ -1,0 +1,9 @@
+- type: entity
+  name: Clownious Horn
+  parent: BaseItem
+  id: ClowniousHorn
+  description: Beep Beep
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/bikehorn.rsi
+    state: icon
