@@ -1,6 +1,4 @@
-AdminOnly: true
-Name: Admin
-Order: 3
+﻿AdminOnly: true
 Entries:
 - author: DrSmugleaf
   changes:
@@ -1493,3 +1491,19 @@ Entries:
   id: 181
   time: '2025-10-27T02:51:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40472
+- author: slarticodefast
+  changes:
+  - message: Added a new admin item, the DNA injector!
+    type: Add
+  id: 182
+  time: '2025-11-03T12:14:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41271
+- author: ScarKy0
+  changes:
+  - message: Clone toolshed command for VERY limited entity cloning purposes.
+    type: Add
+  id: 183
+  time: '2025-11-03T13:16:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41261
+Name: Admin
+Order: 3
