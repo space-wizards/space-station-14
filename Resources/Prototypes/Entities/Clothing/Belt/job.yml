@@ -2,47 +2,9 @@
 
 - type: entity
   abstract: true
-  parent: ClothingBeltStorageBase
+  parent: ClothingBeltUtilityBase # DS14
   id: BaseClothingBeltEngineering
   components:
-  - type: Storage
-    # Don't add more than absolutely needed to this whitelist!
-    # Utility belts shouldn't just be free extra storage.
-    # This is only intended for basic engineering equipment.
-    whitelist:
-      tags:
-      - Powerdrill
-      - Wirecutter
-      - Crowbar
-      - Screwdriver
-      - Flashlight
-      - Wrench
-      - GeigerCounter
-      - Flare
-      - CableCoil
-      - CigPack
-      - Radio
-      - HolofanProjector
-      - Multitool
-      - AppraisalTool
-      - JawsOfLife
-      - GPS
-      - WeldingMask
-      - RemoteSignaller
-      - UtilityKnife
-      components:
-      - StationMap
-      - SprayPainter
-      - SprayPainterAmmo
-      - NetworkConfigurator
-      - RCD
-      - RCDAmmo
-      - Welder
-      - PowerCell
-      - Geiger
-      - TrayScanner
-      - GasAnalyzer
-      - HandLabeler
   - type: ItemMapper
     sprite: &BeltOverlay Clothing/Belt/belt_overlay.rsi
     mapLayers:
@@ -78,6 +40,28 @@
         whitelist:
           tags:
           - Multitool
+      # DS14-start
+      welding:
+        whitelist:
+          tags:
+          - WeldingMaskGray
+      welding_flameblue:
+        whitelist:
+          tags:
+          - WeldingMaskFlameBlue
+      welding_flame:
+        whitelist:
+          tags:
+          - WeldingMaskFlame
+      welding_gasmask:
+        whitelist:
+          tags:
+          - WeldingMaskWhite
+      welding_painted:
+        whitelist:
+          tags:
+          - WeldingMaskPainted
+      # DS14-end
   - type: Appearance
 
 - type: entity
@@ -137,6 +121,13 @@
       - Plunger
       - GoldenPlunger
       - WireBrush
+      # DS14-start
+      - SoapSyndie
+      - TrashBagBlue
+      - GoldenPlunger
+      - LightReplacer
+      - CleanerGrenade
+      # DS14-end
       components:
       - LightReplacer
       - SmokeOnTrigger
@@ -155,6 +146,48 @@
         whitelist:
           tags:
           - Wrench
+      # DS14-start
+      soap:
+        whitelist:
+          tags:
+          - Soap
+      soapsyndie:
+        whitelist:
+          tags:
+          - SoapSyndie
+      trashbag:
+        whitelist:
+          tags:
+          - TrashBag
+      trashbag_blue:
+        whitelist:
+          tags:
+          - TrashBagBlue
+      wetfloorsign:
+        whitelist:
+          tags:
+          - WetFloorSign
+      holosign:
+        whitelist:
+          tags:
+          - HolosignProjector
+      plunger:
+        whitelist:
+          tags:
+          - Plunger
+      golden_plunger:
+        whitelist:
+          tags:
+          - GoldenPlunger
+      cleaner_grenade:
+        whitelist:
+          tags:
+          - CleanerGrenade
+      light_replacer:
+        whitelist:
+          tags:
+          - LightReplacer
+      # DS14-end
   - type: Appearance
 
 - type: entity
@@ -183,6 +216,8 @@
       - DiscreteHealthAnalyzer
       - SurgeryTool
       - Dropper
+      - Medkit # DS14
+      - CompactDefibrillator # DS14
       components:
       - Hypospray
       - Injector
@@ -366,6 +401,12 @@
         whitelist:
           tags:
           - PepperShaker
+      # DS14-start
+      goldenkitchenknife:
+        whitelist:
+          tags:
+          - ChefGoldenKnife
+      # DS14-end
   - type: Appearance
 
 - type: entity
@@ -393,6 +434,7 @@
       - CombatKnife
       - Truncheon
       - HandGrenade
+      - EnergyCartridge # DS14
       components:
       - Stunbaton
       - FlashOnTrigger

@@ -1,6 +1,6 @@
-ent-DrinkKvassGlass = { ent-DrinkGlassBase }
+ent-DrinkKvassGlass = { ent-DrinkGlass }
     .suffix = kvass
-    .desc = { ent-DrinkGlassBase.desc }
+    .desc = { ent-DrinkGlass.desc }
 ent-DrinkYorshGlass = yorsh glass
     .desc = Taste of childhood.
 ent-DrinkAlexanderGlass = alexander glass

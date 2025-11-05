@@ -1,6 +1,5 @@
 ### Gravity Generator
 
-
 ## UI
 
 gravity-generator-window-title = Генератор гравитации

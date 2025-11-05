@@ -61,3 +61,23 @@
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/head_markings.rsi
       state: vulpine
+
+# DS14-start
+- type: marking
+  id: VulpHeadTiger
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/head_markings.rsi
+      state: tiger_head
+
+- type: marking
+  id: VulpHeadTigerFace
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/head_markings.rsi
+      state: tiger_face
+# DS14-end

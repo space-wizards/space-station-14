@@ -8,6 +8,7 @@ construction-graph-tag-clown-bike-horn = клаксон
 construction-graph-tag-clowne-horn = сломанный клаксон
 construction-graph-tag-happy-honk-meal = обед Хэппи Хонк
 construction-graph-tag-woeful-cluwne-meal = обед Жалкий Клувень
+construction-graph-tag-boxhug = коробка обнимашек
 # mime
 construction-graph-tag-suspenders = подтяжки
 construction-graph-tag-mime-meal = обед Хэппи Хонк мимское издание
@@ -92,6 +93,7 @@ construction-graph-tag-ripley-peripherals-control-module = модуль упра
 construction-graph-tag-door-electronics-circuit-board = микросхема шлюза
 construction-graph-tag-firelock-electronics-circuit-board = микросхема пожарного шлюза
 construction-graph-tag-conveyor-belt-assembly = конвейерная лента
+construction-graph-tag-station-ai-core-electronics = микросхема ядра ИИ
 # tools
 construction-graph-tag-multitool = мультитул
 construction-graph-tag-health-analyzer = анализатор здоровья

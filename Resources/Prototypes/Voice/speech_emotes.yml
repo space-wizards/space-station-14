@@ -260,17 +260,23 @@
   category: Vocal
   available: false
   whitelist:
+    requireAll: true
     components:
     - Vocal
+    - Vulpkanin
   blacklist:
     components:
     - BorgChassis
+    - SiliconIPSIPCEmotes
   chatMessages: ["chat-emote-msg-bark"]
   chatTriggers:
   - bark
   - barks
   - barked
   - barking
+  - лает
+  - гавкает
+  - тявкает
 
 - type: emote
   id: Snarl
@@ -278,17 +284,22 @@
   category: Vocal
   available: false
   whitelist:
+    requireAll: true
     components:
     - Vocal
+    - Vulpkanin
   blacklist:
     components:
     - BorgChassis
+    - SiliconIPSIPCEmotes
   chatMessages: ["chat-emote-msg-snarl"]
   chatTriggers:
   - snarl
   - snarls
   - snarled
   - snarling
+  - огрызается
+  - оскаливается
 
 - type: emote
   id: Whine
@@ -296,17 +307,24 @@
   category: Vocal
   available: false
   whitelist:
+    requireAll: true
     components:
     - Vocal
+    - Vulpkanin
   blacklist:
     components:
     - BorgChassis
+    - SiliconIPSIPCEmotes
   chatMessages: ["chat-emote-msg-whine"]
   chatTriggers:
   - whine
   - whines
   - whined
   - whining
+  - скулит
+  - похныкивает
+  - поскуливает
+  - жалобно воет
 
 - type: emote
   id: Howl
@@ -314,17 +332,23 @@
   category: Vocal
   available: false
   whitelist:
+    requireAll: true
     components:
     - Vocal
+    - Vulpkanin
   blacklist:
     components:
     - BorgChassis
+    - SiliconIPSIPCEmotes
   chatMessages: ["chat-emote-msg-howl"]
   chatTriggers:
   - howl
   - howls
   - howling
   - howled
+  - воет
+  - завывает
+  - подвывает
 
 - type: emote
   id: Growl
@@ -332,17 +356,23 @@
   category: Vocal
   available: false
   whitelist:
+    requireAll: true
     components:
     - Vocal
+    - Vulpkanin
   blacklist:
     components:
     - BorgChassis
+    - SiliconIPSIPCEmotes
   chatMessages: ["chat-emote-msg-growl"]
   chatTriggers:
   - growl
   - growls
   - growled
   - growling
+  - рычит
+  - ворчит
+  - урчит
 
 # hand emotes
 - type: emote

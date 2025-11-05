@@ -1,3 +1,15 @@
 ent-ClothingBeltMedicalSecurityWebbingFilled = { ent-ClothingBeltMedicalSecurityWebbing }
     .suffix = Filled
     .desc = { ent-ClothingBeltMedicalSecurityWebbing.desc }
+ent-ClothingBeltSheathSyndieFilled = { ent-ClothingBeltSheathSyndie }
+    .suffix = Filled
+    .desc = { ent-ClothingBeltSheathSyndie.desc }
+ent-ClothingBeltPlantTaipanFilled = пояс ботаника
+    .desc = Пояс, используемый для хранения основных принадлежностей для гидропоники. На удивление, не чёрный.
+    .suffix = Тайпан, Заполненный
+ent-ClothingUtilityWebbingFilled = { ent-ClothingUtilityWebbing }
+    .suffix = Filled
+    .desc = { ent-ClothingUtilityWebbing.desc }
+ent-ClothingUtilityWebbingEngineering = { ent-ClothingUtilityWebbing }
+    .suffix = Engineering
+    .desc = { ent-ClothingUtilityWebbing.desc }

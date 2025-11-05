@@ -93,7 +93,7 @@
   parent: ClothingOuterHardsuitSecurityRed
   id: ClothingOuterHardsuitTaipanCommunicationsOfficer
   name: скафандр офицера телекоммуникаций
-  description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor.
+  description: Специальный костюм, защищающий от опасных сред с низким давлением. Имеет дополнительный слой брони.
   components:
   - type: Sprite
     sprite: _DeadSpace/Clothing/OuterClothing/Hardsuits/taipan_co.rsi
@@ -101,3 +101,5 @@
     sprite: _DeadSpace/Clothing/OuterClothing/Hardsuits/taipan_co.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitTaipanCO
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag

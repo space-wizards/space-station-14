@@ -16,10 +16,6 @@
   name: lathe-category-precious
 
 - type: latheCategory
-  id: Faux
-  name: lathe-category-faux
-
-- type: latheCategory
   id: Specialized
   name: lathe-category-specialized
 

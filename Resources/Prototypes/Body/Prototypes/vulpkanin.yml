@@ -47,3 +47,5 @@
       part: RightFootVulpkanin
     left foot:
       part: LeftFootVulpkanin
+    tail:
+      part: TailVulpkanin

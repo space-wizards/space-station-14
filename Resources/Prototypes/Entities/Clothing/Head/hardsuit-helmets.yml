@@ -159,26 +159,6 @@
     sprite: Clothing/Head/Hardsuits/spatiohelm.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/spatiohelm.rsi
-  - type: HandheldLight
-    addPrefix: false
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-      head-vox:
-      - state: equipped-head-light-vox
-        shader: unshaded
-      head-vulpkanin:
-      - state: equipped-head-light-vulpkanin
-        shader: unshaded
-      head-reptilian:
-      - state: equipped-head-light-reptilian
-        shader: unshaded
-      head-dog:
-      - state: equipped-head-light-dog
-        shader: unshaded
-  - type: Clothing
     clothingVisuals:
       head:
       - state: equipped-head
@@ -199,6 +179,25 @@
       head-dog:
       - state: equipped-head-dog
       - state: equipped-head-unshaded-dog
+        shader: unshaded
+  - type: HandheldLight
+    addPrefix: false
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-light-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-light-reptilian
+        shader: unshaded
+      head-dog:
+      - state: equipped-head-light-dog
         shader: unshaded
   - type: PointLight
     radius: 6

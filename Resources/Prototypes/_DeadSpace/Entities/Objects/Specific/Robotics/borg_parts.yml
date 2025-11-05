@@ -50,7 +50,7 @@
   - type: Construction
     graph: TaipanCyborg
     node: start
-    defaultTarget: cyborg
+    defaultTarget: taipan_cyborg
     containers:
     - part-container
     - cell_slot

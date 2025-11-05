@@ -29,7 +29,6 @@
     DrinkMugRed: 2
     ADTIronTray: 2 # ADT
     ADTDrinkTeapot: 1 # ADT
-    ADTDrinkTeacup: 5 # ADT
   contrabandInventory:
     CandyBowl: 1
     BarSpoon: 2

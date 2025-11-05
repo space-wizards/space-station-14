@@ -1,5 +1,7 @@
 ent-BaseWeaponBattery = { ent-BaseItem }
     .desc = { ent-BaseItem.desc }
+ent-BaseLaserRifle = { ent-BaseWeaponBattery }
+    .desc = { ent-BaseWeaponBattery.desc }
 ent-BaseWeaponPowerCell = { ent-BaseItem }
     .desc = { ent-BaseItem.desc }
 ent-BaseWeaponBatterySmall = { ent-BaseWeaponBattery }
@@ -53,6 +55,8 @@ ent-WeaponBehonkerLaser = eye of a behonker
     .desc = The eye of a behonker, it fires a laser when squeezed.
 ent-WeaponEnergyShotgun = energy shotgun
     .desc = A one-of-a-kind prototype energy weapon that uses various shotgun configurations. It offers the possibility of both lethal and non-lethal shots, making it a versatile weapon.
+ent-WeaponEnergyMagnum = energy magnum
+    .desc = A high powered self-charging energy pistol designed for elite security personnel. It has has three firing modes allowing for either high damage, window piercing, or non-lethal disabling.
 ent-WeaponTemperatureGun = temperature gun
     .desc = An advanced gun that shoots body-temperature-changing beams. This probably constitutes as some kind of war crime.
 ent-XenoborgLaserGun = xenoborg laser gun

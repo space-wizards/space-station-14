@@ -1,5 +1,5 @@
 - type: entity
-  parent: DrinkGlassBase
+  parent: DrinkGlass
   id: BluespaceHotGlass
   name: телеголь
   description: Немного настабилен.
@@ -11,11 +11,12 @@
         reagents:
         - ReagentId: BluespaceHot
           Quantity: 30
-  - type: Sprite
+  - type: Icon
     sprite: /Textures/_DeadSpace/Objects/Consumable/Drinks/bluespacehotglass.rsi
+    state: icon
 
 - type: entity
-  parent: DrinkGlassBase
+  parent: DrinkGlass
   id: SontseGlass
   name: солнечный смузи
   description: Сегодня будет солнечно.
@@ -27,11 +28,12 @@
         reagents:
         - ReagentId: Sontse
           Quantity: 30
-  - type: Sprite
+  - type: Icon
     sprite: /Textures/_DeadSpace/Objects/Consumable/Drinks/sontse.rsi
+    state: icon
 
 - type: entity
-  parent: DrinkGlassBase
+  parent: DrinkGlass
   id: UplinkDrinkGlass
   name: странный напиток
   description: Ни слова по русски
@@ -43,8 +45,9 @@
         reagents:
         - ReagentId: UplinkDrink
           Quantity: 30
-  - type: Sprite
+  - type: Icon
     sprite: /Textures/_DeadSpace/Objects/Consumable/Drinks/uplinkglass.rsi
+    state: icon
 
 - type: entity
   parent: DrinkGlass

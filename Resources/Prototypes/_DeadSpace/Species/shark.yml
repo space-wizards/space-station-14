@@ -66,8 +66,8 @@
 - type: humanoidBaseSprite
   id: MobSharkEyes
   baseSprite:
-    sprite: Mobs/Customization/eyes.rsi
-    state: vulpkanin_eyes_s
+    sprite: Mobs/Species/Vulpkanin/parts.rsi
+    state: eyes
 
 - type: humanoidBaseSprite
   id: MobSharkTail
