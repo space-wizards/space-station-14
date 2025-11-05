@@ -62,18 +62,12 @@
 
 - type: stack
   parent: BaseTileStack
-  id: FloorTileWhiteVerticalSlatsContinuous
-  name: stack-white-steel-vertical-slats-tile-continuous
-  spawn: FloorTileItemWhiteVerticalSlatsContinuous
+  id: FloorTileWhiteSlatsContinuous
+  name: stack-white-steel-slats-tile-continuous
+  spawn: FloorTileItemWhiteSlatsContinuous
 
 - type: stack
   parent: BaseTileStack
   id: FloorTileWhiteHorizontalSlatsBordered
   name: stack-white-steel-horizontal-slats-tile-bordered
   spawn: FloorTileItemWhiteHorizontalSlatsBordered
-
-- type: stack
-  parent: BaseTileStack
-  id: FloorTileWhiteHorizontalSlatsContinuous
-  name: stack-white-steel-horizontal-slats-tile-continuous
-  spawn: FloorTileItemWhiteHorizontalSlatsContinuous
