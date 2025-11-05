@@ -3,7 +3,7 @@
   name: job-name-centcomoff
   description: job-description-centcomoff
   playTimeTracker: JobCentralCommandOfficial
-  setPreference: false
+  setPreference: true
   startingGear: CentcomGear
   icon: "JobIconNanotrasen"
   supervisors: job-supervisors-hos
