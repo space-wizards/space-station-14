@@ -25,4 +25,4 @@ gravity-generator-window-eta-none = N/A
 gravity-generator-window-eta-value = { TOSTRING($left, "m\\:ss") }
 
 ## Popup
-gravity-generator-unanchoring-failed = Can't unanchor an active gravity generator
+gravity-generator-unanchoring-failed = Can't unanchor an active gravity generator.
