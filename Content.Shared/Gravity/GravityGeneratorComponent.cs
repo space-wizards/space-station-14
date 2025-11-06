@@ -42,6 +42,6 @@ public sealed partial class GravityGeneratorComponent : Component
     /// <summary>
     /// Is the gravity generator currently "producing" gravity?
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField, AutoNetworkedField, Access(typeof(SharedGravityGeneratorSystem))]
     public bool GravityActive = false;
 }
