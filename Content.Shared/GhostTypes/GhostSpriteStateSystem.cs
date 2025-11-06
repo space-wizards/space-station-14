@@ -55,14 +55,15 @@ public sealed class GhostSpriteStateSystem : EntitySystem
         highestTypes.Sort();
         if (highestTypes.Count == 3 && highestTypes[0] == "Blunt" && highestTypes[1] == "Heat" && highestTypes[2] == "Piercing") // Specific case for explosions (not an ideal way of doing it)
         {
-            spriteState = "Explosion" + _random.Next(1, 4);
+            spriteState = "Explosion" + _random.Next(0, 3);
         }
         else
         {
             spriteState = highestTypes[_random.Next(0, highestTypes.Count)]; // Chooses a random damage type from the list
-            if (ent.Comp.DamageMap.TryGetValue(spriteState, out var spriteAmount) && spriteAmount > 1)  // Chooses a random sprite state if needed.
+            if (ent.Comp.DamageMap.TryGetValue(spriteState, out var spriteAmount))  // Chooses a random sprite state
             {
-                spriteState += _random.Next(1, spriteAmount + 1);
+                spriteState += _random.Next(0, spriteAmount - 1);
+                Log.Debug($"weh weh {spriteState}");
             }
         }
         _appearance.SetData(ent, GhostComponent.GhostVisuals.Damage, ent.Comp.Prefix + spriteState, appearance);

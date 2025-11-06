@@ -23,6 +23,10 @@
             "directions": 4
         },
         {
+            "name": "ghost_Blunt0",
+            "directions": 4
+        },
+        {
             "name": "ghost_Blunt1",
             "directions": 4
         },
@@ -31,7 +35,7 @@
             "directions": 4
         },
         {
-            "name": "ghost_Blunt3",
+            "name": "ghost_Slash0",
             "directions": 4
         },
         {
@@ -43,7 +47,7 @@
             "directions": 4
         },
         {
-            "name": "ghost_Slash3",
+            "name": "ghost_Piercing0",
             "directions": 4
         },
         {
@@ -55,11 +59,7 @@
             "directions": 4
         },
         {
-            "name": "ghost_Piercing3",
-            "directions": 4
-        },
-        {
-            "name": "ghost_Heat",
+            "name": "ghost_Heat0",
             "directions": 4,
             "delays": [
                 [
@@ -89,11 +89,11 @@
             ]
         },
         {
-            "name": "ghost_Cold",
+            "name": "ghost_Cold0",
             "directions": 4
         },
         {
-            "name": "ghost_Shock",
+            "name": "ghost_Shock0",
             "directions": 4,
             "delays": [
                 [
@@ -131,7 +131,7 @@
             ]
         },
         {
-            "name": "ghost_Radiation",
+            "name": "ghost_Radiation0",
             "directions": 4,
             "delays": [
                 [
@@ -161,15 +161,19 @@
             ]
         },
         {
-            "name": "ghost_Cellular",
+            "name": "ghost_Cellular0",
             "directions": 4
         },
         {
-            "name": "ghost_Poison",
+            "name": "ghost_Poison0",
             "directions": 4
         },
         {
-            "name": "ghost_Asphyxiation",
+            "name": "ghost_Asphyxiation0",
+            "directions": 4
+        },
+        {
+            "name": "ghost_Explosion0",
             "directions": 4
         },
         {
@@ -178,10 +182,6 @@
         },
         {
             "name": "ghost_Explosion2",
-            "directions": 4
-        },
-        {
-            "name": "ghost_Explosion3",
             "directions": 4
         }
       ]
