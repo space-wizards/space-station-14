@@ -27,6 +27,12 @@ public struct ActionValidateEvent
     /// <summary>
     /// If set to true, the client sent invalid event data and this should be logged as an error.
     /// For functioning input that happens to not be allowed this should not be set, for example a range check.
+    /// Use <see cref="Cancel"/> instead
     /// </summary>
     public bool Invalid;
+
+    /// <summary>
+    /// If set to to true, the Action failed Valdiation and should be Canceld from executing.
+    /// </summary>
+    public bool Cancel;
 }
