@@ -72,20 +72,20 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
         if (TryGetRandomStation(out targetStation))
         {
             return TryFindRandomTileOnStation((targetStation.Value, Comp<StationDataComponent>(targetStation.Value)),
-                safeOnly,
                 out tile,
                 out targetGrid,
-                out targetCoords);
+                out targetCoords,
+                safeOnly);
         }
 
         return false;
     }
 
     protected bool TryFindRandomTileOnStation(Entity<StationDataComponent> station,
-        bool safeOnly,
         out Vector2i tile,
         out EntityUid targetGrid,
-        out EntityCoordinates targetCoords)
+        out EntityCoordinates targetCoords,
+        bool safeOnly = false)
     {
         tile = default;
         targetCoords = EntityCoordinates.Invalid;
@@ -116,7 +116,7 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
         var found = false;
         var aabb = gridComp.LocalAABB;
 
-        for (var i = 0; i < 10; i++)
+        for (var i = 0; i < 20; i++)
         {
             var randomX = RobustRandom.Next((int) aabb.Left, (int) aabb.Right);
             var randomY = RobustRandom.Next((int) aabb.Bottom, (int) aabb.Top);
