@@ -54,10 +54,10 @@
                     <BoxContainer Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                         <info:DevInfoBanner Name="DevInfoBanner" VerticalExpand="false" Margin="3 3 3 3" />
                         <PanelContainer StyleClasses="BackgroundPanel" Margin="3 3 3 3">
-                            <RichTextLabel Name="LobbySong" Access="Public" HorizontalAlignment="Center" />
-                        </PanelContainer>
-                        <PanelContainer StyleClasses="BackgroundPanel" Margin="3 3 3 3">
-                            <RichTextLabel Name="LobbyBackground" Access="Public" HorizontalAlignment="Center" />
+                            <BoxContainer Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                                <RichTextLabel Name="LobbySong" Access="Public" HorizontalAlignment="Center" />
+                                <RichTextLabel Name="LobbyBackground" Access="Public" HorizontalAlignment="Center" />
+                            </BoxContainer>
                         </PanelContainer>
                     </BoxContainer>
                 </Control>
