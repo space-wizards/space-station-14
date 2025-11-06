@@ -7,7 +7,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 {
     [TestFixture]
     [TestOf(typeof(GravitySystem))]
-    [TestOf(typeof(SharedGravityGeneratorComponent))]
+    [TestOf(typeof(GravityGeneratorComponent))]
     public sealed class WeightlessStatusTests
     {
         [TestPrototypes]

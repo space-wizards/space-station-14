@@ -10,7 +10,7 @@ namespace Content.IntegrationTests.Tests
     /// Tests the behavior of GravityGeneratorComponent,
     /// making sure that gravity is applied to the correct grids.
     [TestFixture]
-    [TestOf(typeof(SharedGravityGeneratorComponent))]
+    [TestOf(typeof(GravityGeneratorComponent))]
     public sealed class GravityGridTest
     {
         [TestPrototypes]
@@ -57,7 +57,7 @@ namespace Content.IntegrationTests.Tests
                 generator = entityMan.SpawnEntity("GridGravityGeneratorDummy", new EntityCoordinates(grid1, 0.5f, 0.5f));
                 Assert.Multiple(() =>
                 {
-                    Assert.That(entityMan.HasComponent<SharedGravityGeneratorComponent>(generator));
+                    Assert.That(entityMan.HasComponent<GravityGeneratorComponent>(generator));
                     Assert.That(entityMan.HasComponent<ApcPowerReceiverComponent>(generator));
                 });
 
@@ -69,7 +69,7 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitAssertion(() =>
             {
-                var generatorComponent = entityMan.GetComponent<SharedGravityGeneratorComponent>(generator);
+                var generatorComponent = entityMan.GetComponent<GravityGeneratorComponent>(generator);
                 var powerComponent = entityMan.GetComponent<ApcPowerReceiverComponent>(generator);
 
                 Assert.Multiple(() =>
@@ -88,7 +88,7 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitAssertion(() =>
             {
-                var generatorComponent = entityMan.GetComponent<SharedGravityGeneratorComponent>(generator);
+                var generatorComponent = entityMan.GetComponent<GravityGeneratorComponent>(generator);
 
                 Assert.Multiple(() =>
                 {
