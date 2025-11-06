@@ -2,9 +2,11 @@ namespace Content.Shared.Actions.Events;
 
 /// <summary>
 /// Raised on an action entity before it is executed, to:
-/// 1. Verify that the client is providing the correct type of target (if applicable)
-/// 2. Perform any necessary validation on the target
-/// 3. Provide the action system with an event to raise on the performer to carry out the action
+/// <list type="number">
+/// <item> Verify that the client is providing the correct type of target (if applicable). </item>
+/// <item> Perform any necessary validation on the target. </item>
+/// <item> Provide the action system with an event to raise on the performer to carry out the action. </item>
+/// </list>
 /// </summary>
 [ByRefEvent]
 public struct ActionValidateEvent
